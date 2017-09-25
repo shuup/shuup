@@ -1,0 +1,224 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015
+# Antti Mäki <antti@anttimaki.com>, 2015
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
+# Janne Tammi <janne@shuup.com>, 2017
+# Janne Tammi <janne@shuup.com>, 2015
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
+# Juha Kujala, 2015
+# Juha Louhiranta <charni@gmail.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015
+# Shuup Admin <admin@shuup.com>, 2015-2016
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+# tomijarvi <tomi@jarvi.pro>, 2015
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 11:02+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Customer Information Editing"
+msgstr "Shuup Frontend - asiakastietojen muokkaus"
+
+msgid "Customer Information"
+msgstr "Asiakkaan tiedot"
+
+msgid "Company Information"
+msgstr "Yrityksen tiedot"
+
+msgid "Edit Company Information."
+msgstr "Muokkaa yrityksen tietoja"
+
+msgid "Address Book"
+msgstr "Osoitekirja"
+
+msgid "Language"
+msgstr "Kieli"
+
+msgid "Will become default user email when linked"
+msgstr "Tee tästä oletussähköpostiosoite"
+
+msgid "Given Tax Number already exists. Please contact support."
+msgstr "Antamasi veronumero on jo syötetty. Olethan yhteydessä tukipalveluun."
+
+msgid "Address Title"
+msgstr "Osoitteen otsikko"
+
+msgid "Address Type"
+msgstr "Osoitteen tyyppi"
+
+msgid "Address Status"
+msgstr "Osoitteen tila"
+
+msgid "Home"
+msgstr "Etusivu"
+
+msgid "Dashboard"
+msgstr "Hallintapaneeli"
+
+msgid "General Information"
+msgstr "Yleiset tiedot"
+
+msgid "Contact Information"
+msgstr "Yhteystiedot"
+
+msgid "Address"
+msgstr "Osoite"
+
+msgid "Default Addresses"
+msgstr "Oletusosoite"
+
+msgid "Edit"
+msgstr "Muokkaa"
+
+msgid "Default Billing Address"
+msgstr "Oletus laskutusosoite"
+
+msgid "No Default Billing Address set."
+msgstr "Oletus laskutusosoitetta ei ole asetettu."
+
+msgid "Default Shipping Address"
+msgstr "Oletus toimitusosoite."
+
+msgid "No Default Shipping Address set."
+msgstr "Oletus toimitusosoitetta ei ole asetettu."
+
+msgid "Additional Addresses"
+msgstr "Toissijaiset osoitteet"
+
+msgid "Create new"
+msgstr "Luo uusi"
+
+msgid "Role"
+msgstr "Rooli"
+
+msgid "Status"
+msgstr "Tila"
+
+msgid "Delete"
+msgstr "Poista"
+
+msgid "You don't have any additional addresses"
+msgstr "Sinulla ei ole toissijaisia osoitteita"
+
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+msgid "Change password"
+msgstr "Vaihda salasana"
+
+msgid "Basic Information"
+msgstr "Perustiedot"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Email"
+msgstr "Sähköposti"
+
+msgid "Phone"
+msgstr "Puhelin"
+
+msgid "Tax Number"
+msgstr "Y-tunnus"
+
+msgid "Birth Date"
+msgstr "Syntymäpäivä"
+
+msgid "Gender"
+msgstr "Sukupuoli"
+
+msgid "Marketing Permission"
+msgstr "Markkinointilupa"
+
+msgid "Yes"
+msgstr "Kyllä"
+
+msgid "No"
+msgstr "Ei"
+
+msgid "Company account information"
+msgstr "Yrityksen käyttäjätilin tiedot"
+
+msgid "User account information"
+msgstr "Käyttäjätunnuksen tiedot"
+
+msgid "Not specified"
+msgstr "Ei määritetty"
+
+msgid "Street"
+msgstr "Katu"
+
+msgid "Postal code"
+msgstr "Postinumero"
+
+msgid "City"
+msgstr "Kaupunki"
+
+msgid "Country"
+msgstr "Maa"
+
+msgid "Billing information"
+msgstr "Laskutustiedot"
+
+msgid "Copy to shipping information"
+msgstr "Kopioi toimitustietoihin"
+
+msgid "Shipping information"
+msgstr "Toimitustiedot"
+
+msgid "Copy to billing information"
+msgstr "Kopioi laskutustietoihin"
+
+msgid "Edit user account information"
+msgstr "Muokkaa käyttäjän tietoja"
+
+msgid "Save password"
+msgstr "Tallenna salasana"
+
+msgid "Save changes"
+msgstr "Tallenna muutokset"
+
+msgid "Edit company information"
+msgstr "Muokkaa yrityksen tietoja"
+
+msgid "Link account to company"
+msgstr "Linkitä käyttäjätili yritykseen"
+
+msgid "Company information"
+msgstr "Yrityksen tiedot"
+
+msgid "User information"
+msgstr "Käyttäjätiedot"
+
+msgid "Password successfully changed."
+msgstr "Salasana vaihdettu."
+
+msgid "Account information saved successfully."
+msgstr "Tilitiedot tallennettu."
+
+msgid "Company information saved successfully."
+msgstr "Yrityksen tiedot tallennettu onnistuneesti."
+
+msgid "Address information saved successfully."
+msgstr "Osoitetiedot tallennettu."
+
+msgid "Cannot remove address"
+msgstr "Osoitetta ei voi poistaa."

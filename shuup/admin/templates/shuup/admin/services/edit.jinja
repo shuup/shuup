@@ -1,0 +1,90 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="service_form") %}
+        <form method="post" id="service_form">
+            {% csrf_token %}
+            {% set form_defs = form.form_defs %}
+            {% include form_defs["base"].template_name with context %}
+            {% if form_defs|length > 1 %}
+            {% call content_block(_("Behavior"), ("fa-cubes")) %}
+                <div class="form-group">
+                    <label class="control-label" for="id_component-select">{% trans %}Behavior component type{% endtrans %}</label>
+                    <select class="form-control" id="component-select">
+                        {% for form_def in form_defs %}
+                            {% if form_def != "base" %}
+                                {% set form_prefix = form_def %}
+                                {% set formset = form[form_def] %}
+                                <option data-target-id="id_{{ form_prefix }}" value="{{ form_prefix }}">{{ formset.get_name() }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <span class="help-popover-btn">
+                        <a
+                            class="btn" data-toggle="popover" data-placement="bottom" role="button" tabindex="50000"
+                            data-html="true" data-trigger="focus" title="{% trans %}Behavior component type{% endtrans %}"
+                            data-content="{% trans %}The behaviors for this service. These behaviors can be used to add costs to the order or can be used to restrict availability of the service.{% endtrans %}" >
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <div class="form-group text-center">
+                    <a class="btn btn-lg btn-text" id="component-button" href="#">+ {% trans %}Add component{% endtrans %}</a>
+                </div>
+                {% for form_def in form_defs %}
+                    {% if form_def != "base" %}
+                        {% set form_prefix = form_def %}
+                        {% set formset = form[form_def] %}
+                        {% set template_name = form_defs[form_def].template_name %}
+                        {% include template_name with context %}
+                    {% endif %}
+                {% endfor %}
+                <div class="hide" id="insert-placeholder"></div>
+            {% endcall %}
+            {% endif %}
+        </form>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+{{ super() }}
+<script>
+    $(function () {
+        $("#component-button").on("click", function (event) {
+            event.preventDefault();
+            var $selection = $("#component-select").find("option:selected");
+            var component = $selection.val();
+            var $source = $("#" + component+ "-placeholder");
+
+            // Remove activated select2 spans from placeholder
+            $source.find("span.select2.select2-container").remove();
+            $source.find("select.select2-hidden-accessible").removeClass("select2-hidden-accessible");
+            var targetID = $selection.data("target-id");
+            var $totalFormsField = $("#" + targetID + "-TOTAL_FORMS");
+            var componentCount = parseInt($totalFormsField.val());
+            var html = $source.html().replace(/__prefix__/g, componentCount);
+            var $componentsPlaceholder = $("#insert-placeholder");
+            $(html).insertAfter($componentsPlaceholder);
+            $totalFormsField.val(componentCount + 1);
+
+            // reactivate possible select2 widgets
+            activateSelects();
+            // ... and help text
+            $("[data-toggle='popover']").popover();
+        });
+        $("#id_base-payment_processor,#id_base-carrier").on("change", function() {
+            var url = window.location.href.split('?')[0];
+            var srch = window.location.search;
+            if (srch.length) {
+                url = url + srch + "&";
+            }
+            else {
+                url = url + "?";
+            }
+            location.href = url + "provider=" + $(this).val();
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/customer_information/macros/buttons.jinja" import save_changes_button %}
+
+{% block header -%}{{ edit_title }}{%- endblock %}
+
+{% block action_buttons %}
+    <div class="btn-toolbar" role="toolbar">
+        <button class="btn btn-success" form="mass_edit" type="submit">
+            <i class="fa fa-save"></i>&nbsp;{% trans %}Save and Exit{% endtrans %}
+        </button>
+    </div>
+{% endblock %}
+
+{% block content %}
+{% call content_block() %}
+    <h3 class="text-center">
+    {% if is_all_selected %}
+        {% trans%}This action effects on all products.{% endtrans %}
+    {% else %}
+        {% trans item_count=item_count %}This action effects {{ item_count }} products.{% endtrans %}
+    {% endif %}
+    </h3>
+
+    <form method="post" id="mass_edit">
+        {% csrf_token %}
+        {{ bs3.form(form) }}
+    </form>
+{% endcall %}
+{% endblock %}

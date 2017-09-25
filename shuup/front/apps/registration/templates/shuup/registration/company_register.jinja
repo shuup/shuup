@@ -1,0 +1,68 @@
+{% extends "shuup/front/base.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_field %}
+
+{% block title %}{% trans %}Register as a Company{% endtrans %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+            <h1 class="page-header text-center">
+                {% trans %}Company Registration{% endtrans %}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+            <div class="well">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <h2>{{ _("Company information") }}</h2>
+
+                    <p class="small">
+                        {{ _("Company billing information") }}
+                    </p>
+
+                    {{ render_form(form.forms.company) }}
+                    {{ render_address_form(form.forms.billing) }}
+
+                    <hr>
+
+                    <h2>{{ _("Contact person") }}</h2>
+
+                    <p class="small">
+                        {{ _("Contact information for primary company contact") }}
+                    </p>
+
+                    {{ render_form(form.forms.contact_person) }}
+
+                    <h3>{{ _("Login information") }}</h3>
+
+                    <p class="small">
+                        {{ _("The information you will log in with.") }}
+                    </p>
+
+                    {{ render_form(form.forms.user_account) }}
+
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        <i class="fa fa-check"></i> {% trans %}Register as a Company{% endtrans %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% macro render_address_form(form) %}
+    {{ render_form(form, except_fields=['name', 'name_ext']) }}
+{% endmacro %}
+
+{% macro render_form(form, except_fields=[]) %}
+    {{ form.non_field_errors() }}
+    {% for field in form.hidden_fields() %}{{ field|safe }}{% endfor %}
+    {% for field in form.visible_fields() %}
+        {% if field not in except_fields %}
+            {{ render_field(field) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

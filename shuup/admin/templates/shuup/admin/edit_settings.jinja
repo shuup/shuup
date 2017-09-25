@@ -1,0 +1,88 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% block title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% macro sortable_checkbox(field) %}
+    <div class="sortable-field">
+        {{ field }} <label for="id_{{ field.name }}">{{ field.label }}</label>
+    </div>
+{% endmacro %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="settings_form") %}
+        <form method="post" id="settings_form">
+        <textarea id="defaults" name="defaults" class="hidden">{{ defaults }}</textarea>
+        <textarea id="ordering" name="ordering" class="hidden"></textarea>
+        {% call content_block(_("Table Columns"), "fa-table") %}
+        <div class="row">
+            {% csrf_token %}
+            <div class="col-md-6">
+                <h2>{% trans %}Active headers{% endtrans %}</h2>
+                <ul id="target-sortable" class="sortable">
+                {% for identifier in form.selected %}
+                    {% set formfield = form[identifier] %}
+                    <li>
+                        <i class="fa fa-bars sorting-handle"></i> {{ sortable_checkbox(formfield) }}
+                        <button class="btn btn-xs btn-red btn-remove-sortable"
+                                data-name="{{ formfield.name }}"
+                                data-label="{{ formfield.label }}">{% trans %}Remove{% endtrans %}</button>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>{% trans %}Selectable headers{% endtrans %}</h2>
+                <ul id="source-sortable" class="sortable">
+                {% for identifier in form.non_selected %}
+                    {% set formfield = form[identifier] %}
+                    <li>
+                        {{ sortable_checkbox(formfield) }}
+                        <button class="btn btn-xs btn-success btn-add-sortable"
+                                data-name="{{ formfield.name }}"
+                                data-label="{{ formfield.label }}">{% trans %}Add{% endtrans %}</button>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endcall %}
+        </form>
+        <div class="hidden">
+            <ul id="target-placeholder">
+                <li>
+                    <div class="sortable-field">
+                    <input id="id_NAME"
+                           name="NAME"
+                           type="checkbox"> <label for="id_NAME">LABEL</label>
+                    </div>
+                    <button class="btn btn-xs btn-success btn-add-sortable" data-name="NAME" data-label="LABEL">{% trans %}Add{% endtrans %}</button>
+                </li>
+            </ul>
+            <ul id="source-placeholder">
+                <li>
+                    <i class="fa fa-bars sorting-handle"></i>
+                    <div class="sortable-field">
+                    <input checked="checked"
+                           id="id_NAME"
+                           name="NAME"
+                           type="checkbox"> <label for="id_NAME">LABEL</label>
+                    </div>
+                    <button class="btn btn-xs btn-red btn-remove-sortable" data-name="NAME" data-label="LABEL">{% trans %}Remove{% endtrans %}</button>
+                </li>
+            </ul>
+        </div>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        function resetDefaultValues() {
+            $("#ordering").text($("#defaults").text());
+            $("#settings_form").submit();
+        }
+        (function() {
+            activateSortable("target-sortable", "source-sortable");
+        })();
+    </script>
+{% endblock %}

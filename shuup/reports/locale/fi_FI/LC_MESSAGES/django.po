@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Ville-Pekka Altti <ville-pekka.altti@anders.fi>, 2017\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
+"teams/55306/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Reports"
+msgstr "Raportit"
+
+msgid "Type"
+msgstr "Tyyppi"
+
+msgid "Select the type of report to run."
+msgstr "Valitse ajettavan raportin tyyppi."
+
+msgid "Custom"
+msgstr "Mukautettu"
+
+msgid "Today"
+msgstr "Tänään"
+
+msgid "Running Week (last 7 days)"
+msgstr "Kuluva Viikko (viimeiset 7 päivää)"
+
+msgid "Running Month (last 30 days)"
+msgstr "Kuluva Kuukausi (viimeiset 30 päivää)"
+
+msgid "This Month"
+msgstr "Tämä Kuukausi"
+
+msgid "This Year"
+msgstr "Tämä Vuosi"
+
+msgid "All Time"
+msgstr "Kaikki"
+
+msgid "Shop"
+msgstr "Kauppa"
+
+msgid "Filter report results by shop."
+msgstr "Rajaa raportin tulokset kaupan mukaan"
+
+msgid "Date Range"
+msgstr "Aikaväli"
+
+msgid "Filter report results by a date range."
+msgstr "Rajaa raportin tulokset aikavälin mukaan"
+
+msgid "Start Date"
+msgstr "Alkupäivämäärä"
+
+msgid "For a custom date range."
+msgstr "Mukautetulle aikavälille."
+
+msgid "End Date"
+msgstr "Loppupäivämäärä"
+
+msgid "Output Format"
+msgstr "Tulostusformaatti"
+
+msgid "The format to show the report results."
+msgstr "Formaatti raportin tulosten näyttämiseen."
+
+msgid "Download"
+msgstr "Lataa"
+
+msgid "Check this to download the report."
+msgstr " Valitse tämä, jos haluat ladata raportin."
+
+msgid "Toggle Filters"
+msgstr "Vaihda Suodattimet"
+
+msgid "Get Report"
+msgstr "Muodosta Raportti"

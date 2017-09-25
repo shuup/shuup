@@ -1,0 +1,22 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title %}{% trans %}Thank you for your order!{% endtrans %}{% endblock %}
+
+{% block content_title %}{% trans name=order.billing_address.name %}Thank you for your order!{% endtrans %}{% endblock %}
+
+{% block content %}
+    <p><i class="fa fa-check text-success"></i> {% trans %}Your order has been received. You can see the details of your order below.{% endtrans %}</p>
+    <hr>
+    {% if user.id and activation_form %}
+        <form role="form" method="post" action="{{ url("user_activation", pk=user.id) }}">
+            <legend>{% trans %}User account activation{% endtrans %}</legend>
+            {% csrf_token %}
+            <p>{% trans email=user.email %}If you want to be able to see your order history, please create a password for your account: {% endtrans %}<strong>{{ email }}</strong></p>
+            {% for field in activation_form %}
+                {{ macros.render_field(field) }}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary btn-lg">{% trans %}Send{% endtrans %}</button>
+        </form>
+    {% endif %}
+    {{ order_macros.print_order_detail(order, True) }}
+{% endblock %}

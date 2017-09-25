@@ -1,0 +1,14 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title %}{% trans %}Payment canceled{% endtrans %}{% endblock %}
+
+{% block content_title %}{% trans %}Payment canceled{% endtrans %}{% endblock %}
+
+{% block content %}
+    <p>{% trans %}You have canceled payment{% endtrans %}</p>
+    <p>
+        <a href="{{ payment_urls.payment_url }}" class="btn btn-primary btn-lg">
+            {% trans %}Retry payment{% endtrans %}
+        </a>
+    </p>
+{% endblock %}

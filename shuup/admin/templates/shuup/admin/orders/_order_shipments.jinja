@@ -1,0 +1,60 @@
+<div id="order-shipments" class="table-responsive {% if not shipments %} hidden{% endif %}">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{% trans %}Supplier{% endtrans %}</th>
+                <th>{% trans %}Status{% endtrans %}</th>
+                <th>{% trans %}Tracking Code{% endtrans %}</th>
+                <th>{% trans %}Description{% endtrans %}</th>
+                <th>{% trans %}Created{% endtrans %}</th>
+                <th>{% trans %}Delete{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shipment in shipments %}
+                <tr>
+                    <td>{{ shipment.supplier.name }}</td>
+                    <td>{{ shipment.status }}</td>
+                    <td>{{ shipment.tracking_code }}</td>
+                    <td>{{ shipment.description }}</td>
+                    <td>{{ shipment.created_on|datetime }}</td>
+                    <td>
+                        {% if not shipment.is_deleted() %}
+                        <a href="{{ url("shuup_admin:order.delete-shipment", pk=shipment.pk) }}" onclick="handleDelete(event, this)">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if not shipments %}
+    <div id="no-shipments-text">
+        <p>{% trans %}No shipments have been created yet.{% endtrans %}</p>
+    </div>
+{% endif %}
+
+{% block extra_js %}
+<script>
+    function handleDelete(event, link) {
+        event.preventDefault();
+        var warningMessage = "{% trans %}Shipped shipments should not be deleted. Deletion will affect products physical stock count. Delete anyway?{% endtrans %}";
+        if (confirm(warningMessage)) {
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = $(link).attr("href");
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "csrfmiddlewaretoken";
+            input.id = "language-field";
+            input.value = "{{ csrf_token }}";
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+        return false;
+    }
+</script>
+{% endblock %}

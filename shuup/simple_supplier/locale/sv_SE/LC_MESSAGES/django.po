@@ -1,0 +1,253 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-06 14:20+0000\n"
+"PO-Revision-Date: 2017-04-05 05:15+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Stock management"
+msgstr "Lageradministration"
+
+msgid "SKU"
+msgstr "Artikelnummer"
+
+msgid "Filter by SKU..."
+msgstr "Filtrera enligt artikelnummer..."
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Filter by name..."
+msgstr "Filtrera på namn..."
+
+msgid "Supplier"
+msgstr "Leverantör"
+
+msgid "Stock information"
+msgstr "Lagerinformation"
+
+msgid "Adjust stock"
+msgstr "Justera lager"
+
+#, python-format
+msgid ""
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr ""
+"Tillagda %(delta)s %(unit_symbol)s för produkten %(product_name)s i lageret "
+"(%(supplier_name)s)"
+
+#, python-format
+msgid ""
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr ""
+"Borttagna %(delta)s %(unit_symbol)s från produkten %(product_name)s i "
+"lageret (%(supplier_name)s)"
+
+#, python-format
+msgid "Alert limit for product %(product_name)s set to %(value)s."
+msgstr ""
+"Varningsgränsen för produkten %(product_name)s inställd till %(value)s."
+
+msgid "Not allowed"
+msgstr "Ej tillåten"
+
+msgid "Error, please check submitted values and try again."
+msgstr "Fel, vänligen kontrollera skickade värden och försök igen."
+
+#, python-format
+msgid "Error, please check submitted values and try again (%(error)s)."
+msgstr "Fel, vänligen kontrollera skickade värden och försök igen (%(error)s)."
+
+#, python-format
+msgid "Purchase price per unit (%(currency_name)s)"
+msgstr "Inköpspriset per enhet (%(currency_name)s)"
+
+msgid "Quantity"
+msgstr "Antal"
+
+msgid "Only non-zero values can be added to stock."
+msgstr "Endast icke-noll värden kan läggas till lager."
+
+msgid "Alert limit"
+msgstr "Varningsgräns"
+
+msgid "product"
+msgstr "produkt"
+
+msgid "supplier"
+msgstr "leverantör"
+
+msgid "created on"
+msgstr "skapad den"
+
+msgid "created by"
+msgstr "skapad av"
+
+msgid "delta"
+msgstr "skillnad"
+
+msgid "type"
+msgstr "typ"
+
+msgid "alert limit"
+msgstr "varningsgräns"
+
+msgid "logical count"
+msgstr "logiskt antal"
+
+msgid "physical count"
+msgstr "fysiskt antal"
+
+msgid "Alert Limit Reached"
+msgstr "Varningsgräns nådd"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Fired in the last 24 hours?"
+msgstr "Hänt under de senaste 24 timmarna?"
+
+msgid ""
+"This will be True if this event was already dispatched in the last 24 hours "
+"for the same product and supplier. This is useful to prevent sending "
+"identical notifications in a short period of time."
+msgstr ""
+"Detta är True om denna händelse skickats inom de senaste 24 timmarna för "
+"samma produkt och leverantör. Detta är användbart för att förhindra att "
+"skicka identiska meddelanden inom en kort tidsperiod."
+
+msgid "Send to?"
+msgstr "Skicka till?"
+
+msgid "Send email to whom?"
+msgstr "Skicka mail till vem?"
+
+msgid "Do not send the same email within 24 hours."
+msgstr "Skicka inte samma e-post inom 24 timmar."
+
+msgid ""
+"If enabled, avoids sending the same email for the same product and supplier "
+"within 24 hours."
+msgstr ""
+"Om aktiverad, undviker att skicka samma för samma produkt och leverantör "
+"inom 24 timmar."
+
+msgid "Send Stock Limit Alert Email"
+msgstr "Skicka e-post när lagergränsen uppnås"
+
+msgid ""
+"Send me an email when a product stock is lower than the configured limit."
+msgstr ""
+"Skicka mig ett mail när en produkt lager är lägre än den inställda gränsen."
+
+msgid ""
+"This script will send an email to the configured destination alerting about "
+"the a product's low stock of a supplier. You can configure to not send the "
+"same email multiple times in a period of 24 hours. Every time a product's "
+"stock reach its configured limit, this notification will be fired and the "
+"email sent."
+msgstr ""
+"Detta skript kommer att skicka ett mail till den konfigurerade mottagaren, "
+"och notifiera den om en produkts låga lagersaldo. Du kan konfigurera att "
+"inte skicka samma email flera gånger under en period på 24 timmar. Varje "
+"gång en produkts lager når sin konfigurerade gräns, kommer detta notifiering "
+"att skapas och e-postmeddelandet skickas."
+
+msgid "Low stock of: {{ product }} from {{ supplier }}"
+msgstr "Lågt lager av: {{produkten}} från {{leverantör}}"
+
+msgid ""
+"Hi!\n"
+"You are receiving this message because the product {{ product}} from "
+"{{ supplier }} has a low stock."
+msgstr ""
+"Hej!\n"
+"Du får det här meddelandet eftersom produkten {{ product}} från "
+"{{ supplier }} har ett lågt lagersaldo."
+
+msgid "Add stock"
+msgstr "Lägg till i lager"
+
+#, python-format
+msgid ""
+"Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
+"scripts</a> are executed when product stock falls below set quantity."
+msgstr ""
+"<a href=\"%(notify_url)s\" target=\"_blank\">Skript för notifiering av "
+"varningsgränst</a> körs när produktens lager faller under ett fastställd "
+"antal."
+
+msgid "Change alert limit"
+msgstr "Ändra varningsgräns"
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"does not have suppliers with %(module_name)s module."
+msgstr ""
+"Produkt <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"har inga leverantörer med %(module_name)s modulen."
+
+msgid "Please set suppliers at Purchasing section."
+msgstr "Vänligen ange leverantörer under Uppköp."
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"is not stocked."
+msgstr ""
+"Produkten <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"finns inte i lagret."
+
+msgid "Please set product stock behavior at Additional Details section."
+msgstr "Vänligen ange produktlagerbeteendet ybder Ytterligare information."
+
+#, python-format
+msgid "No suppliers with %(module_name)s available."
+msgstr "Inga leverantörer med %(module_name)s tillgängliga."
+
+#, python-format
+msgid ""
+"Please set %(module_name)s module for at least one of the <a href="
+"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr ""
+"Vänligen ställ in %(module_name)s modulen för minst en av de <a href="
+"\"%(supplier_url)s\" target=\"_blank\">leverantörerna</a>."
+
+#, python-format
+msgid "Physical count: %(count)s %(sales_unit)s"
+msgstr "Fysist antal: %(count)s %(sales_unit)s"
+
+#, python-format
+msgid "Logical count: %(count)s %(sales_unit)s"
+msgstr "Logiskt antal: %(count)s %(sales_unit)s"
+
+#, python-format
+msgid "Value per unit: %(value)s"
+msgstr "Värde per enhet: %(value)s"
+
+#, python-format
+msgid "Total value: %(value)s"
+msgstr "Totalt värde: %(value)s"
+
+#, python-format
+msgid "Alert limit: %(limit)s"
+msgstr "Alert gräns: %(limit)s"
+
+msgid "No stock information available."
+msgstr "Ingen lagerinformation tillgänglig."

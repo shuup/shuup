@@ -1,0 +1,29 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="xsell_form") %}
+        <form method="post" id="xsell_form">
+            {% csrf_token %}
+            {% for mf in form.management_form %}{{ mf|safe }}{% endfor %}
+            {% call content_block(_("Cross-sells"), ("fa-exchange")) %}
+                {% for f in form %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">{% trans %}Cross-sell{% endtrans %} {{ loop.index }}</h2>
+                        </div>
+                        <div class="panel-body">
+                            {{ bs3.field(f.product2) }}
+                            {{ bs3.field(f.weight) }}
+                            {{ bs3.field(f.type) }}
+                            {% if f.instance.pk and f.DELETE %}
+                                {{ bs3.field(f.DELETE) }}
+                            {% endif %}
+                            {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

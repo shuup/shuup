@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-11 00:26+0000\n"
+"PO-Revision-Date: 2016-10-09 12:58+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr "Inserire %(username)s e password corretti. Nota che entrambi i campi distinguono maiuscolo/minuscolo. In caso di account multipli con la stessa email, può essere utilizzato solo il Nome Utente per accedere."
+
+msgid "This account is inactive."
+msgstr "Questo account non è attivo."
+
+msgid "Username or email address"
+msgstr "Nome utente o indirizzo email"
+
+msgid "Username"
+msgstr "Nome Utente"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Please provide either username or email, not both."
+msgstr "Inserisci Nome Utente o Email, non entrambi."
+
+msgid "Please provide either username or email."
+msgstr "Inserisci Nome Utente o Email."
+
+msgid "shop"
+msgstr "negozio"
+
+msgid "Log in"
+msgstr "Entra"
+
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr "Hai già effettuato l'accesso come <strong>%(username)s</strong>"
+
+msgid "Go to Homepage"
+msgstr "Vai alla Pagina Iniziale"
+
+msgid "Forgot your password?"
+msgstr "Hai dimenticato la password?"
+
+msgid "New user? Register here!"
+msgstr "Nuovo utente? Registrati ora!"
+
+msgid "Logged out"
+msgstr "Disconnesso"
+
+msgid "You have been logged out. Thank you for visiting!"
+msgstr "Ti sei disconnesso. Grazie per aver visitato il nostro negozio!"
+
+msgid "Recover your password"
+msgstr "Recupera la tua password."
+
+msgid "You can recover your password with either username or email."
+msgstr "Puoi recuperare la password utilizzando la tua email o il tuo nome utente."
+
+msgid "Send password recovery instructions"
+msgstr "Invia le istruzioni di recupero password"
+
+msgid "Password Changed"
+msgstr "Password Modificata"
+
+msgid "Your password has been changed and you have been logged in."
+msgstr "La tua password è stata modificata e sei stato autenticato."
+
+msgid "Password Recovery"
+msgstr "Recupero Password"
+
+msgid "Change Password"
+msgstr "Modifica Password"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr "Ciao %(fullname)s "
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr "Nel caso tu l'abbia dimenticato, il tuo Nome Utente è %(username)s. "
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr "Ricevi questa email perchè qualcuno ha richiesto un recupero password per il tuo account su %(site_name)s. "
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "Vai sulla seguente pagina e scegli una nuova password:"
+
+msgid ""
+"If a user account is associated with the information you entered, you "
+"should receive instructions on how to reset your password shortly."
+msgstr "Se un account utente è associato con le informazioni che ci hai fornito, a breve dovresti ricevere le istruzioni su come reimpostare la tua password.\n    "
+
+msgid "This recovery link is invalid."
+msgstr "Questo link di recupero password non è valido."

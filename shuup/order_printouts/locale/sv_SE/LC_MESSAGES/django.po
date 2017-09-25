@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
+"sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "To"
+msgstr "Till"
+
+msgid "Email Subject"
+msgstr "E-postämne"
+
+msgid "Email Body"
+msgstr "E-post meddelandetext"
+
+#, python-format
+msgid ""
+"Important information regarding your order, see attachment.\n"
+"\n"
+"Best Regards,\n"
+"%(shop)s"
+msgstr ""
+"Viktig information angående din beställning, se bifogad fil.\n"
+"\n"
+"Bästa hälsningar, \n"
+"%(shop)s"
+
+msgid "Printouts"
+msgstr "Utskrifter"
+
+#, python-format
+msgid "%(shop)s: Order %(pk)s"
+msgstr "%(shop)s: Beställning %(pk)s"
+
+msgid "Not allowed"
+msgstr "Ej tillåten"
+
+msgid "Delivery slip"
+msgstr "Leveransanteckning"
+
+msgid "Order"
+msgstr "Beställning"
+
+msgid "Order confirmation"
+msgstr "Orderbekräftelse"
+
+msgid "Order printouts"
+msgstr "Beställa utskrifter"
+
+msgid "Shipped products"
+msgstr "Levererade produkter"
+
+msgid "Payment and shipping methods"
+msgstr "Betalning och leverans metoder"
+
+msgid "Order number"
+msgstr "Beställningsnummer"
+
+msgid "Total price"
+msgstr "Totalbelopp"
+
+msgid "Payment status"
+msgstr "Betalstatus"
+
+msgid "Shipping status"
+msgstr "Leveransstatus"
+
+msgid "Order date"
+msgstr "Beställningsdatum"
+
+msgid "Comment"
+msgstr "Kommentar"
+
+msgid "Identifier"
+msgstr "Identifierare"
+
+msgid "Shipment date"
+msgstr "Utleveransdatum"
+
+msgid "SKU"
+msgstr "Artikelnummer"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Quantity"
+msgstr "Antal"
+
+msgid "Tax"
+msgstr "Skatt"
+
+msgid "Taxful total"
+msgstr "Summa (inkl. skatter)"
+
+msgid "Taxless total"
+msgstr "Summa (exkl. skatt)"
+
+msgid "Tax percentage"
+msgstr "Skatteprocent"
+
+msgid "Based on amount"
+msgstr "Baserat på belopp"
+
+msgid "Amount of tax"
+msgstr "Skattebeloppet"
+
+msgid "Total including tax"
+msgstr "Totalt inklusive moms"
+
+msgid "Billing address"
+msgstr "Faktureringsadress"
+
+msgid "Confirmation"
+msgstr "Bekräftelse"
+
+msgid "Get Order Confirmation PDF"
+msgstr "Få orderbekräftelse som PDF"
+
+msgid "Get Order Confirmation HTML"
+msgstr "Få orderbekräftelse som HTML"
+
+msgid "Shipments"
+msgstr "Sändningar"
+
+#, python-format
+msgid "Get Delivery Slip PDF (Shipment %(id)s)"
+msgstr "Få leveransanteckning som PDF (leverans %(id)s)"
+
+#, python-format
+msgid "Get Delivery Slip HTML (Shipment %(id)s)"
+msgstr "Få leveransanteckning som HTML (leverans %(id)s)"
+
+msgid "Send Email"
+msgstr "Skicka e-post"
+
+msgid "Send Order Confirmation"
+msgstr "Skicka orderbekräftelse"
+
+#, python-format
+msgid "Send Delivery Slip (Shipment %(id)s)"
+msgstr "Skicka leveransanteckning (leverans %(id)s)"
+
+msgid "Email sent successfully!"
+msgstr "E-postmeddelandet skickades framgångsrikt!"
+
+msgid "Could not sent the email, please try again."
+msgstr "Kunde inte skicka e-postmeddelandet, vänligen försök igen."

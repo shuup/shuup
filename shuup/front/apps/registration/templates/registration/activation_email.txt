@@ -1,0 +1,7 @@
+Hello!
+
+Thank you for your registration.
+
+To activate your account, go here:
+
+{{ request.scheme }}://{{ request.get_host }}{% url "shuup:registration_activate" activation_key=activation_key %}

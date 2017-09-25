@@ -1,0 +1,4109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015
+# Antti Mäki <antti@anttimaki.com>, 2015
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
+# Janne Tammi <janne@shuup.com>, 2016-2017
+# Janne Tammi <janne@shuup.com>, 2015
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
+# Juha Kujala, 2015-2016
+# Juha Louhiranta <charni@gmail.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
+# Sami Haltia <sami.haltia@anders.fi>, 2016
+# Shuup Admin <admin@shuup.com>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2016
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+# tomijarvi <tomi@jarvi.pro>, 2015
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016-2017
+# Ville-Pekka Altti <ville-pekka.altti@anders.fi>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-04 16:50+0000\n"
+"PO-Revision-Date: 2017-03-01 13:48+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Home"
+msgstr "Etusivu"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr ""
+"Syötä oikea %(username)s ja salasana. Huomaathan, että molemmissa kentissä "
+"voi olla isoja ja pieniä kirjaimia. Jos teillä on useita tilejä samalla "
+"sähköpostilla, niin vain käyttäjätunnusta voidaan käyttää kirjautumiseen."
+
+msgid "This account is inactive."
+msgstr "Tämä tili ei ole aktiivinen"
+
+msgid "Username or email address"
+msgstr "Käyttäjänimi tai sähköpostiosoite"
+
+msgid "Browse"
+msgstr "Selaa"
+
+msgid "Clear"
+msgstr "Tyhjennä"
+
+msgid "Select"
+msgstr "Valitse"
+
+msgid "Create New"
+msgstr "Luo Uusi"
+
+msgid "Orders"
+msgstr "Tilaukset"
+
+msgid "Products"
+msgstr "Tuotteet"
+
+msgid "Contacts"
+msgstr "Kontaktit"
+
+msgid "Campaigns"
+msgstr "Kampanjat"
+
+msgid "Content"
+msgstr "Sisältö"
+
+msgid "Elements"
+msgstr "Elementit"
+
+msgid "Design"
+msgstr "Suunnittelu"
+
+msgid "Other"
+msgstr "Muut"
+
+msgid "Reports"
+msgstr "Raportit"
+
+msgid "Shops"
+msgstr "Kaupat"
+
+msgid "Settings"
+msgstr "Asetukset"
+
+msgid "Taxes"
+msgstr "Verot"
+
+msgid "Currency"
+msgstr "Valuutta"
+
+msgid "Attributes"
+msgstr "Attribuutit"
+
+msgid "Other settings"
+msgstr "Muut asetukset"
+
+msgid "Addons"
+msgstr "Lisäosat"
+
+msgid "Data Transfer"
+msgstr "Tiedonsiirto"
+
+msgid "Payment & Shipping"
+msgstr "Toimitus ja maksu"
+
+msgid "Permissions"
+msgstr "Oikeudet"
+
+msgid "Other Settings"
+msgstr "Muut asetukset"
+
+msgid "Identifier"
+msgstr "Tunniste"
+
+msgid "Filter by identifier..."
+msgstr "Rajaa tunnisteen mukaan"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Filter by name..."
+msgstr "Rajaa nimen mukaan"
+
+msgid "Type"
+msgstr "Tyyppi"
+
+msgid "Visibility Mode"
+msgstr "Näkyvyystila"
+
+msgid "Searchable"
+msgstr "Haettavissa"
+
+msgid "Used in # Product Types"
+msgstr "Käytössä # Tuotetyypissä"
+
+msgid "Categories"
+msgstr "Kategoriat"
+
+msgid "Add a product category to organize your products"
+msgstr "Lisää tuoteryhmä tuotteiden ryhmittelyä varten"
+
+msgid "New category"
+msgstr "Uusi kategoria"
+
+msgid "Primary Category"
+msgstr "Pääkategoria"
+
+msgid "Set this category as a primary for selected products."
+msgstr "Aseta tämä kategoria ensisijaiseksi valituille tuotteille."
+
+msgid "Additional Category"
+msgstr "Lisäkategoria"
+
+msgid "Add selected products to this category"
+msgstr "Lisää valitut tuotteet tähän kategoriaan"
+
+msgid "Remove Products"
+msgstr "Poista tuotteet"
+
+msgid "Remove selected products from this category"
+msgstr "Poista valitut tuotteet tästä kategoriasta"
+
+msgid "Invalid category"
+msgstr "Epäkelpo kategoria"
+
+#, python-format
+msgid "Visibility settings copied to %d product(s)"
+msgstr "Näkyvyysasetukset kopioitu %d tuotteelle/tuotteille"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s poistettu."
+
+msgid "Image"
+msgstr "Kuva"
+
+msgid "Status"
+msgstr "Tila"
+
+msgid "Visibility"
+msgstr "Näkyvyys"
+
+msgid "Contact Groups"
+msgstr "Kontaktiryhmät"
+
+msgid "Price display mode"
+msgstr "Hintojen näyttötapa"
+
+msgid "Set how prices are displayed to contacts in this group."
+msgstr "Aseta hintojen näyttötapa tämän ryhmän kontakteille"
+
+msgid "unspecified"
+msgstr "määrittelemätön"
+
+msgid "show prices with taxes included"
+msgstr "näytä hinnat, joissa verot ovat sisällytettynä"
+
+msgid "show pre-tax prices"
+msgstr "näytä verottomat hinnat"
+
+msgid "hide prices"
+msgstr "piilota hinnat"
+
+msgid "member"
+msgstr "jäsen"
+
+msgid "Remove"
+msgstr "Poista"
+
+#, python-format
+msgid "%(count)s member added"
+msgid_plural "%(count)s members added"
+msgstr[0] "%(count)s jäsen lisätty"
+msgstr[1] "%(count)s jäsentä lisätty"
+
+#, python-format
+msgid "%(count)s member removed"
+msgid_plural "%(count)s members removed"
+msgstr[0] "%(count)s jäsen poistettu"
+msgstr[1] "%(count)s jäsentä poistettu"
+
+msgid "Number of Members"
+msgstr "Jäsenien määrä"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr "Käyttäjällä %(bind_user)s on jo kontakti"
+
+msgid ""
+"The contact groups this contact belongs to. Contact groups are defined in "
+"Contacts - Contact Groups and are used to configure sales, campaigns, and "
+"product pricing tailored for a set of users."
+msgstr ""
+"Asiakasryhmät joihin tämä kontakti kuuluu. Asiakasryhmät määritellään "
+"Kontaktit - Asiakasryhmät ja niillä määritellään myyntiä, kampanjoita ja "
+"tuotehinnoittelua tietylle ryhmälle asiakkaita."
+
+msgid "Language"
+msgstr "Kieli"
+
+msgid "The primary language to be used in all communications with the contact."
+msgstr "Pääkieli asiakaskommunikaatioon."
+
+msgid "The company name."
+msgstr "Yrityksen nimi."
+
+msgid "The contacts that are members of this company."
+msgstr "Tämän yrityksen kontaktit."
+
+msgid "Gender"
+msgstr "Sukupuoli"
+
+msgid "Merchant Notes"
+msgstr "Kauppiaan merkinnät"
+
+msgid "Website URL"
+msgstr "Verkkosivun osoite"
+
+msgid "Account Manager"
+msgstr "Tilin haltija"
+
+msgid "Company: Tax Number"
+msgstr "Yritys: Y-tunnus"
+
+msgid "Company: Members"
+msgstr "Yritys: Jäsenet"
+
+msgid "Select Language"
+msgstr "Valitse kieli"
+
+msgid "Contact Group"
+msgstr "Kontaktiryhmä"
+
+msgid "Edit Contacts"
+msgstr "Muokkaa kontakteja"
+
+msgid "Set Contact Groups"
+msgstr "Aseta kontaktiryhmät"
+
+msgid "Basic Information"
+msgstr "Perustiedot"
+
+msgid "Addresses"
+msgstr "Osoitteet"
+
+msgid "Members"
+msgstr "Jäsenet"
+
+msgid "The Shuup frontend is not enabled."
+msgstr "Shuup kauppasi julkista puolta ei ole otettu käyttöön."
+
+msgid "Contact has no associated user."
+msgstr "Kontaktilla ei ole liitettyä käyttäjää."
+
+msgid "User has no associated email."
+msgstr "Käyttäjällä ei ole sähköpostia."
+
+msgid "Reset password"
+msgstr "Nollaa salasana"
+
+msgid "Send a password renewal email."
+msgstr "Lähetä salasananuusintasähköposti."
+
+#, python-format
+msgid "Are you sure you wish to send a password recovery email to %s?"
+msgstr ""
+"Haluatko varmasti lähettää salasananpalautussähköpostin osoitteeseen %s?"
+
+msgid "New User"
+msgstr "Uusi käyttäjä"
+
+msgid "Create a user for the contact."
+msgstr "Luo kontaktille käyttäjä."
+
+msgid "New Order"
+msgstr "Uusi tilaus"
+
+msgid "Create an order for the contact."
+msgstr "Luo kontaktille käyttäjä"
+
+msgid "Deactivate Contact"
+msgstr "Deaktivoi kontakti"
+
+msgid "Activate Contact"
+msgstr "Aktivoi kontakti"
+
+msgid "Actions"
+msgstr "Toiminnot"
+
+msgid "Edit..."
+msgstr "Muokkaa..."
+
+msgid "You can not deactivate a superuser."
+msgstr "Et voi deaktivoida pääkäyttäjää."
+
+msgid "You can not deactivate yourself."
+msgstr "Et voi deaktivoida itseäsi"
+
+#, python-format
+msgid "%(contact)s is now %(state)s."
+msgstr "%(contact)s on nyt %(state)s."
+
+msgid "active"
+msgstr "aktiivinen"
+
+msgid "inactive"
+msgstr "passiivinen"
+
+msgid "New Company"
+msgstr "Lisää yritys"
+
+msgid "New Contact"
+msgstr "Uusi kontakti"
+
+msgid "Person"
+msgstr "Henkilö"
+
+msgid "Company"
+msgstr "Yritys"
+
+msgid "Email"
+msgstr "Sähköposti"
+
+msgid "Phone"
+msgstr "Puhelin"
+
+msgid "Active"
+msgstr "Aktiivinen"
+
+msgid "no"
+msgstr "ei"
+
+msgid "yes"
+msgstr "kyllä"
+
+msgid "# Orders"
+msgstr "Tilauslkm"
+
+msgid "Groups"
+msgstr "Ryhmät"
+
+msgid "Contact"
+msgstr "Kontakti"
+
+msgid "Inactive"
+msgstr "Passiivinen"
+
+#, python-format
+msgid "Email: %s"
+msgstr "Sähköposti: %s"
+
+#, python-format
+msgid "Phone: %s"
+msgstr "Puhelin: %s"
+
+#, python-format
+msgid "%d orders"
+msgstr "%d tilausta"
+
+msgid "Mass Edit: Contacts"
+msgstr "Massamuokkaus: Kontaktit"
+
+msgid "Contacts changed successfully"
+msgstr "Kontaktien muokkaus onnistui"
+
+msgid "Mass Edit: Contact Groups"
+msgstr "Massamuokkaus: Kontaktiryhmät"
+
+msgid "Contacts Groups changed successfully"
+msgstr "Kontaktiryhmien muokkaus onnistui"
+
+msgid "The contact does not have an associated user."
+msgstr "Kontaktilla ei ole liitettyä käyttäjää."
+
+msgid "About Us"
+msgstr "Tietoja meistä"
+
+msgid "Privacy Policy"
+msgstr "Tietosuojakäytäntö"
+
+msgid "Terms and Conditions"
+msgstr "Käyttöehdot"
+
+msgid "Refund Policy"
+msgstr "Palautusoikeus"
+
+msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
+msgstr "{{ order.shop }} - Tilaus {{ order.identifier }} vastaanotettu"
+
+msgid "Send customer order confirmation email"
+msgstr "Lähetä asiakkaalle tilausvahvistussähköposti"
+
+msgid ""
+"We will configure a notification to send the customer an email after a "
+"placed order. You can disable this option later or even change the layout of "
+"the email."
+msgstr ""
+"Määritämme sähköposti-ilmoituksen joka lähetetään asiakkaalle kun hän tekee "
+"tilauksen. Voit myöhemmin muuttaa tätä asetusta tai jopa koko sähköpostia."
+
+msgid "Create About Us page"
+msgstr "Luo Tietoja Meistä -sivu"
+
+msgid ""
+"We have already created an 'About Us' template for you based on your shop "
+"information. You must review the page and change it accordingly."
+msgstr ""
+"Olemme jo luoneet 'Tietoja Meistä' pohjan käyttöösi kauppasi tietoihin "
+"perustuen. Sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
+
+msgid ""
+"We will create an 'About Us' template for you. We will base content of the "
+"page on your shop information. After we are done, you must review the page "
+"and change it accordingly."
+msgstr ""
+"Luomme 'Tietoja Meistä' pohjan sinulle. Käytämme sisällön pohjana kauppasi "
+"tietoja. Kun olemme valmiita, sinun pitää tarkistaa sivu ja muuttaa sitä "
+"tarpeen mukaan."
+
+msgid "Create Privacy Policy page"
+msgstr "Luo tietosuojakäytäntö -sivu"
+
+msgid ""
+"We have already created a 'Privacy Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr ""
+"Olemme jo luoneet 'Tietosuojakäytäntö' -sivun perustuen kauppasi tietoihin. "
+"Sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
+
+msgid ""
+"We will create a 'Privacy Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr ""
+"Luomme 'Tietosuojakäytäntö' -sivun sinulle. Käytämme sisällön pohjana "
+"kauppasi tietoja. Kun olemme valmiita, sinun pitää tarkistaa sivu ja muuttaa "
+"sitä tarpeen mukaan."
+
+msgid "Create Terms and Conditions page"
+msgstr "Luo Käyttöehdot -sivu"
+
+msgid ""
+"We have already created a 'Terms & Conditions' template for you based on "
+"your shop information. You must review the page and change it accordingly."
+msgstr ""
+"Olemme jo luoneet 'Käyttöehdot' pohjan käyttöösi kauppasi tietoihin "
+"perustuen. Sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
+
+msgid ""
+"We will create an 'Terms & Conditions' template for you. We will base "
+"content of the page on your shop information. After we are done, you must "
+"review the page and change it accordingly."
+msgstr ""
+"Luomme 'Käyttöehdot' -sivun sinulle. Käytämme sisällön pohjana kauppasi "
+"tietoja. Kun olemme valmiita, sinun pitää tarkistaa sivu ja muuttaa sitä "
+"tarpeen mukaan."
+
+msgid "Create Refund Policy page"
+msgstr "Luo Palautusoikeus -sivu"
+
+msgid ""
+"We have already created a 'Refund Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr ""
+"Olemme jo luoneet 'Palautusoikeus' -sivun perustuen kauppasi tietoihin. "
+"Sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
+
+msgid ""
+"We will create an 'Refund Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr ""
+"Luomme 'Palautusoikeus' -sivun sinulle. Käytämme sisällön pohjana kauppasi "
+"tietoja. Kun olemme valmiita, sinun pitää tarkistaa sivu ja muuttaa sitä "
+"tarpeen mukaan."
+
+msgid "Configure the footer"
+msgstr "Muokkaa alatunnistetta"
+
+msgid ""
+"We will now configure your shop footer and fill it with some of your shop's "
+"information. Don't worry, you can change this at any time."
+msgstr ""
+"Muokkaamme nyt kauppasi alatunnistetta. Lisäämme sinne joitain kauppasi "
+"tietoja. Älä silti huoli, voit vaihtaa tätä koska tahansa."
+
+msgid "Content & Behavior"
+msgstr "Sisältö & Käyttäytyminen"
+
+msgid ""
+"Add the initial content and configure the customer notifications for your "
+"shop"
+msgstr ""
+"Lisää alustava sisältö kaupallesi ja muokkaa kauppasi asiakasilmoituksia "
+
+msgid "Configure notifications for your shop"
+msgstr "Muokkaa kauppasi ilmoituksia"
+
+msgid "Add the initial content"
+msgstr "Lisää alustava sisältö"
+
+msgid "Configure the initial content pages"
+msgstr "Muokkaa alustavia sisältösivuja"
+
+msgid "Configure some notifications"
+msgstr "Muokkaa joitakin ilmoituksia"
+
+msgid "Currencies"
+msgstr "Valuutat"
+
+msgid "Code"
+msgstr "Koodi"
+
+msgid "Filter by code"
+msgstr "Suodata koodilla"
+
+msgid "Decimal places"
+msgstr "Desimaalipaikat"
+
+msgid "Customers Dashboard"
+msgstr "Asiakkuuksien hallintapaneeli"
+
+msgid "Active customers"
+msgstr "Aktiivisia asiakkaita"
+
+msgid "Based on orders within 30 days"
+msgstr "Perustuen viimeisen 30 päivän tilauksiin"
+
+msgid "Demo"
+msgstr "Demo"
+
+msgid "Manufacturers"
+msgstr "Valmistajat"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "Media browser"
+msgstr "Mediaselain"
+
+msgid "Root"
+msgstr "Juuri"
+
+#, python-brace-format
+msgid "{num} subfolders moved to {folder}."
+msgstr "{num} alikansiota siirretty kansioon {folder}."
+
+#, python-brace-format
+msgid "{num} files moved to {folder}."
+msgstr "{num} tiedostoa siirretty kansioon {folder}."
+
+#, python-format
+msgid "Folder %s deleted."
+msgstr "Kansio %s poistettu."
+
+msgid "Browse Media"
+msgstr "Selaa mediaa"
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr "%(file)s lähetetty kansioon %(folder)s"
+
+msgid "Folder renamed."
+msgstr "Kansio uudelleennimetty."
+
+msgid "File renamed."
+msgstr "Tiedosto uudelleennimetty."
+
+msgid "File deleted."
+msgstr "Tiedosto poistettu."
+
+#, python-format
+msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr "%(file)s siirretty sijainnista %(old)s sijaintiin %(new)s."
+
+msgid "Show orders"
+msgstr "Näytä tilaukset"
+
+msgid "Order Status"
+msgstr "Tilauksen tila"
+
+msgid "List Statuses"
+msgstr "Listaa tilat"
+
+msgid "Outstanding Orders"
+msgstr "Avoimet tilaukset"
+
+#, python-format
+msgid "%d outstanding orders"
+msgstr "%d avointa tilausta"
+
+msgid "New order"
+msgstr "Uusi tilaus"
+
+#, python-format
+msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "Määrä '%(quantity)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+#, python-format
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "Hinta '%(price)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+#, python-format
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
+msgstr ""
+"Alennus '%(discount)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+msgid "Product line does not have a product set."
+msgstr "Tuoterivillä ei ole asetettua tuotetta."
+
+#, python-format
+msgid "Product %s does not exist."
+msgstr "Tuotetta %s ei ole olemassa"
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
+
+msgid "Please add lines to the order."
+msgstr "Lisää rivejä tilaukseen"
+
+msgid "Tax number is not set for company."
+msgstr "Yritykselle ei ole asetettu veronumeroa ."
+
+msgid "Please choose a valid shop."
+msgstr "Valitse kelvollinen kauppa"
+
+msgid "Please select shipping method."
+msgstr "Valitse toimitustapa."
+
+msgid "Please select payment method."
+msgstr "Valitse maksutapa."
+
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgid "Print Confirmation PDF(s)"
+msgstr "Tulosta PDF-vahvistukset"
+
+msgid "Selecting all is not supported."
+msgstr "Kaikkien valinta ei ole tuettu toiminto"
+
+msgid "Print Delivery PDF(s)"
+msgstr "Tulosta Toimitus-PDF:t"
+
+msgid "Payments"
+msgstr "Maksut"
+
+msgid "Shipments"
+msgstr "Lähetykset"
+
+msgid "Log Entries"
+msgstr "Lokimerkinnät"
+
+msgid "Admin comment/notes"
+msgstr "Pääkäyttäjän kommentti/muistiinpanot"
+
+msgid "Set Status"
+msgstr "Aseta tila"
+
+msgid "Set Complete"
+msgstr "Aseta käsitellyksi"
+
+msgid "This order can not be set as complete at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
+
+msgid "Cancel Order"
+msgstr "Peruuta tilaus"
+
+msgid "Paid, shipped, or canceled orders cannot be canceled"
+msgstr "Maksettuja, toimitettuja, tai jo peruutettuja tilauksia ei voi perua."
+
+msgid "Edit order"
+msgstr "Muokkaa tilausta"
+
+msgid "This order cannot modified at this point"
+msgstr "Tätä tilausta ei voi muokata tällä hetkellä"
+
+msgid "Create Payment"
+msgstr "Luo maksu"
+
+msgid "Set Paid"
+msgstr "Aseta maksetuksi"
+
+msgid "Create Shipment"
+msgstr "Luo lähetys"
+
+msgid "Create Refund"
+msgstr "Luo hyvitys"
+
+msgid "Edit Addresses"
+msgstr "Muokkaa osoitteita"
+
+msgid "Billing Address"
+msgstr "Laskutusosoite"
+
+msgid "Shipping Address"
+msgstr "Toimitusosoitteet"
+
+#, python-format
+msgid "%(field)s updated from: %(old_address)s"
+msgstr "%(field)s muokattu osoitteesta: %(old_address)s"
+
+#, python-format
+msgid "%(field)s saved successfully."
+msgstr "%(field)s tallennettu onnistuneesti."
+
+#, python-format
+msgid "Edit Addresses -- %s"
+msgstr "Muokkaa osoitteita -- %s"
+
+msgid "Unable to set order as completed at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
+
+#, python-brace-format
+msgid "Order status changed: {old_status} to {new_status}"
+msgstr "Tilauksen tila ({old_status} tmuutettu ({new_status})"
+
+msgid "Create Order"
+msgstr "Luo tilaus"
+
+#, python-format
+msgid "Contact %s does not exist."
+msgstr "Yhteystietoa %s ei ole olemassa."
+
+#, python-format
+msgid "Order %(identifier)s updated."
+msgstr "Tilauksen %(identifier)s päivitetty"
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr "Tilaus %(identifier)s luotu"
+
+msgid "Could not proceed with order:"
+msgstr "Ei voitu luoda tilausta:"
+
+msgid "Could not finalize order:"
+msgstr "Tilausta ei voitu luoda"
+
+msgid "Order"
+msgstr "Tilaus"
+
+msgid "Order Date"
+msgstr "Tilauspäivämäärä"
+
+msgid "Customer"
+msgstr "Asiakas"
+
+msgid "Payment Status"
+msgstr "Maksutila"
+
+msgid "Shipping Status"
+msgstr "Toimitustila"
+
+msgid "Total"
+msgstr "Yhteensä"
+
+#, python-format
+msgid "Create Payment -- %s"
+msgstr "Luo maksu -- %s"
+
+msgid "Payment amount"
+msgstr "Maksun määrä"
+
+msgid "Payment amount cannot be 0"
+msgstr "Maksun määrä ei voi olla 0"
+
+#, python-format
+msgid "Payment %s created."
+msgstr "Maksu %s luotu"
+
+msgid "Order has already been paid"
+msgstr "Tilaus on jo maksettu"
+
+msgid "Only orders which are not paid or deferred can be set as paid."
+msgstr "Vain maksamattomat tai viivästyneet tilaukset voi asettaa maksetuksi."
+
+msgid "Only zero price orders can be set as paid without creating a payment."
+msgstr ""
+"Vain nollahintaiset tilaukset voidaan asettaa maksetuiksi ilman maksun "
+"luontia."
+
+msgid "Zero amount payment"
+msgstr "Nollahintainen maksu"
+
+msgid "Order marked as paid."
+msgstr "Tilaus merkitty maksetuksi."
+
+msgid "Line"
+msgstr "Rivi"
+
+msgid ""
+"The line to refund. To refund an amount not associated with any line, select "
+"'Refund arbitrary amount'."
+msgstr ""
+"Hyvitettävä tili. Hyvittääksesi vapaan määrän, valitse 'Hyvitä vapaa määrä'."
+
+msgid "Quantity"
+msgstr "Määrä"
+
+msgid "The number of units to refund."
+msgstr "Hyvitettävien yksiköiden määrä."
+
+msgid "Line Text/Comment"
+msgstr "Rivin teksti / Kommentti"
+
+msgid ""
+"The text describing the nature of the refund and/or the reason for the "
+"refund."
+msgstr "Teksti, joka kuvaa palautuksen syytä."
+
+msgid "Amount"
+msgstr "Määrä"
+
+msgid "The amount including tax to refund."
+msgstr "Verollinen palautusmäärä."
+
+msgid "Restock products"
+msgstr "Uudelleenvarastoi tuotteet"
+
+msgid ""
+"If checked, the quantity is adding back into the sellable product inventory."
+msgstr "Jos tämä valitaan, tuotemäärä lisätään myytävään varastoon."
+
+#, python-format
+msgid "Create Refund -- %s"
+msgstr "Luo hyvitys -- %s"
+
+msgid "Refund Entire Order"
+msgstr "Hyvitä koko tilaus"
+
+msgid "This order already has existing refunds"
+msgstr "Tällä tilauksella on jo hyvityksiä"
+
+msgid "Refund arbitrary amount"
+msgstr "Hyvitä vapaa määrä"
+
+msgid "Refund amount exceeds order amount."
+msgstr "Hyvityksen määrä on suurempi kuin tilauksen summa."
+
+msgid "Refund amounts should match sign on parent line."
+msgstr "Hyvitysten summan tulee täsmätä isäntä rivin kanssa."
+
+msgid "Refund created."
+msgstr "Hyvitys luotu."
+
+#, python-format
+msgid "Create Full Refund -- %s"
+msgstr "Luo kokonaishyvitys -- %s"
+
+msgid "Could not create full refund."
+msgstr "Ei voitu luoda hyvitystä."
+
+msgid "Full refund created."
+msgstr "Kokonaishyvitys luotu."
+
+#, python-format
+msgid "Create Shipment -- %s"
+msgstr "Luo toimitus -- %s"
+
+msgid "Supplier"
+msgstr "Toimittaja"
+
+msgid "No products to ship."
+msgstr "Ei toimitettavia tuotteita."
+
+msgid "Shipping address is not set."
+msgstr "Toimitusosoitetta ei ole asetettu."
+
+#, python-format
+msgid "Shipment %s created."
+msgstr "Lähetys %s luotu."
+
+#, python-format
+msgid "Shipment %s has been deleted."
+msgstr "Toimitus %s on poistettu."
+
+msgid "Identifier already exists"
+msgstr "Tunniste on jo olemassa"
+
+msgid "Order Statuses"
+msgstr "Tilausten Tilat"
+
+msgid "Public Name"
+msgstr "Julkinen Nimi"
+
+msgid "Role"
+msgstr "Rooli"
+
+msgid "Default"
+msgstr "Oletus"
+
+msgid "Permission Groups"
+msgstr "Käyttöoikeusryhmät"
+
+msgid "The permission group name."
+msgstr "Oikeusryhmän nimi"
+
+msgid "Module Permissions"
+msgstr "Modulin käyttöoikeudet"
+
+msgid ""
+"Select the modules that should be accessible by this permission group. "
+"Modules with the same permissions as selected modules will be added "
+"automatically."
+msgstr ""
+"Valitse moduulit, jotka ovat käytettävissä oikeusryhmälle. Modulit, jotka "
+"jakavat samat oikeudet, lisätään automaattisesti."
+
+msgid "Set the users that belong to this permission group."
+msgstr "Aseta käyttäjät, jotka kuuluvat oikeusryhmään."
+
+msgid "Create new Permission Group"
+msgstr "Luo uusi Käyttöoikeusryhmä"
+
+msgid "Product Types"
+msgstr "Tuotetyypit"
+
+msgid "Product types"
+msgstr "Tuotetyypit"
+
+msgid ""
+"Select attributes that go with your product type. These are defined in "
+"Products Settings - Attributes."
+msgstr ""
+"Aseta muuttujat tuotetyypillesi. Nämä määritellään Tuoteasetukset - "
+"Muuttujat."
+
+msgid "Number of Attributes"
+msgstr "Attribuuttien määrä"
+
+#, python-format
+msgid "Create Product Called \"%s\""
+msgstr "Luo tuote \"%s\""
+
+#, python-format
+msgid "Create Product with SKU \"%s\""
+msgstr "Luo tuote tuotekoodilla \"%s\""
+
+msgid "New product"
+msgstr "Uusi tuote"
+
+msgid "Import"
+msgstr "Tuo"
+
+msgid "Add a product to see it in your store"
+msgstr "Lisää tuote kauppaan"
+
+msgid "Primary Product Image"
+msgstr "Päätuotekuva"
+
+msgid ""
+"The main product image. You can add additional images on the Product Images "
+"tab."
+msgstr "Tuotteen pääkuva. Voit lisätä lisäkuvia Tuotekuvat välilehdellä."
+
+msgid "Given value is already in use, please use unique SKU and try again."
+msgstr ""
+"Annettu arvon on jo käytössä, ole hyvä ja tarkista että tuotenumero ei ole "
+"käytössä."
+
+msgid ""
+"Number of units that can be purchased after the product is out of stock. Set "
+"to blank for product to be purchasable without limits"
+msgstr ""
+"Tuotemäärä joka voidaan vielä ostaa kun tuotetta ei ole varastossa. Aseta "
+"tyhjäksi mikäli jälkimyyntiä ei haluta rajoittaa."
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr "Minimiostomäärän tulee olla vähintään 0."
+
+msgid "Backorder maximum must be greater than or equal to 0."
+msgstr "Jälkimyynniin maksimi. Arvon täytää olla positivinen tai 0."
+
+#, python-format
+msgid "Thumbnail generation of %(media)s failed: %(error)s"
+msgstr "Pikkukuvan muodostus  %(media)s :lle epäonnistui: %(error)s"
+
+msgid "Use only URL or file, not both"
+msgstr "Vain URL-osoite tai tiedosto, ei molempia"
+
+msgid "Is primary"
+msgstr "On ensisijainen"
+
+msgid "Only images allowed in this field"
+msgstr "Voit liittää tähän vain kuvatiedostoja"
+
+#, python-format
+msgid "Unable to make package %(product)s: %(error)s"
+msgstr "Paketin luominen epäonnistui %(product)s: %(error)s"
+
+#, python-format
+msgid "New: %d"
+msgstr "Uusi: %d"
+
+#, python-format
+msgid "Removed: %d"
+msgstr "Poistettu: %d"
+
+#, python-format
+msgid "Couldn't add product %s to own package"
+msgstr "Tuotteen %s lisäämineen pakettiin epäonnistui"
+
+msgid "child"
+msgstr "lapsi"
+
+msgid "Unlink"
+msgstr "Poista linkki"
+
+#, python-format
+msgid "Unable to link %(product)s: %(error)s"
+msgstr "Tuotteiden %(product)s  linkittäminen epäonnistui: %(error)s"
+
+msgid "variable combination"
+msgstr "muuttujayhdistelmä"
+
+msgid "Set visible"
+msgstr "Aseta näkyväksi"
+
+msgid "Set invisible"
+msgstr "Aseta pois näkyvistä"
+
+msgid "Export CSV"
+msgstr "Vie CSV"
+
+msgid "Edit products"
+msgstr "Muokkaa tuotteita"
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s on merkitty poistetuksi."
+
+msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
+msgstr "Minimiostomäärä pyöristettiin yhteensopivaksi myyntikoon kanssa."
+
+#, python-format
+msgid "Changes to shop instance for %s saved"
+msgstr "Muutokset kauppaan %s tallennettu"
+
+msgid "Product is not available."
+msgstr "Tuote ei ole saatavilla."
+
+msgid "Product"
+msgstr "Tuote"
+
+#, python-format
+msgid "Edit Cross-Sell: %s"
+msgstr "Muokkaa ristiinmyyntiä: %s"
+
+msgid "Save"
+msgstr "Tallenna"
+
+msgid "Changes saved."
+msgstr "Muutokset tallennettu."
+
+#, python-format
+msgid "Edit Media: %s"
+msgstr "Muokkaa mediaa: %s"
+
+msgid "Files added to product."
+msgstr "Tiedostot lisätty tuotteelle."
+
+msgid "Clear package"
+msgstr "Tyhjennä paketti"
+
+msgid "Are you sure? This will remove all products from package."
+msgstr "Oletko varma? Tämä toiminto poistaa kaikki tuotteet paketista."
+
+#, python-format
+msgid "Edit Package: %s"
+msgstr "Muokkaa pakettia: %s"
+
+msgid "Package cleared."
+msgstr "Paketti tyhjennetty."
+
+msgid ""
+"Are you sure? This will unlink all children and remove all variation "
+"variables."
+msgstr ""
+"Oletko varma? Tämä toiminto poistaa liitokset kaikkiin lapsiin ja poistaa "
+"kaikki variaatiomuuttujat."
+
+msgid "Clear variation"
+msgstr "Tyhjennä variaatio"
+
+msgid ""
+"Are you sure? This will remove all variation variables, converting children "
+"to direct links."
+msgstr ""
+"Oletko varma? Tämä toiminto poistaa kaikki variaatiomuuttujat ja muuttaa "
+"lapset suoriksi linkeiksi."
+
+msgid "Convert to simple variation"
+msgstr "Muunna yksinkertaiseksi variaatioksi"
+
+#, python-format
+msgid "Edit Variation: %s"
+msgstr "Muokkaa variaatiota: %s"
+
+msgid "Variation cleared."
+msgstr "Variaatio tyhjennetty."
+
+msgid "Variation simplified."
+msgstr "Variaatio yksinkertaistettu."
+
+msgid "Primary Image"
+msgstr "Pääkuva"
+
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+msgid "Barcode"
+msgstr "Viivakoodi"
+
+msgid "Filter by barcode..."
+msgstr "Rajaa viivakoodin mukaan"
+
+msgid "Mode"
+msgstr "Tila"
+
+msgid "Additional Categories"
+msgstr "Lisätuoteryhmät."
+
+msgid "Purchasable"
+msgstr "Tilattavissa"
+
+msgid "Mass Edit: Products"
+msgstr "Massamuokkaus: Tuotteet"
+
+msgid "Products changed successfully"
+msgstr "Tuotteiden muokkaus onnistui"
+
+msgid "Save as a copy"
+msgstr "Tallenna kopiona"
+
+msgid "Manage Cross-Selling"
+msgstr "Hallinnoi ristiinmyyntiä"
+
+msgid "Cross-Selling"
+msgstr "Ristiinmyynti"
+
+#, python-format
+msgid "Child: %s"
+msgstr "Lapsi: %s"
+
+#, python-format
+msgid "Parent: %s"
+msgstr "Isäntä: %s"
+
+#, python-format
+msgid "Sibling: %s"
+msgstr "Sisarus: %s"
+
+msgid "Variations"
+msgstr "Variaatiot"
+
+msgid "Manage Variations"
+msgstr "Hallinnoi variaatioita"
+
+msgid "Packages"
+msgstr "Paketit"
+
+msgid "Manage Package"
+msgstr "Hallinnoi pakettia"
+
+msgid "Convert to Package Parent"
+msgstr "Muunna paketti-isännäksi"
+
+msgid "Convert to Variation Parent"
+msgstr "Muunna variaatioisännäksi"
+
+msgid "Sales Dashboard"
+msgstr "Myynnin hallintapaneeli"
+
+msgid "Sales per Month (past 12 months)"
+msgstr "Kuukausittainen myynti (viimeiset 12 kuukautta)"
+
+msgid "Average Sales"
+msgstr "Keskimääräinen myynti"
+
+msgid "Sales"
+msgstr "Myynnit"
+
+msgid "Cumulative Total Sales"
+msgstr "Kumulatiivinen kokonaismyynti"
+
+#, python-format
+msgid "Based on %d orders"
+msgstr "Perustuen %d tilaukseen"
+
+msgid "Today's Sales"
+msgstr "Päivän myynti"
+
+msgid "Lifetime Sales"
+msgstr "Myynti kautta aikain"
+
+msgid "Average Purchase"
+msgstr "Keskiostos"
+
+msgid "Open Orders Value"
+msgstr "Avoimia tilauksia"
+
+msgid "Sales Units"
+msgstr "Myyntiyksiköt"
+
+msgid "Display Units"
+msgstr "Näyttöyksiköt"
+
+msgid "Symbol"
+msgstr "Symboli"
+
+msgid "Allowed decimals"
+msgstr "Sallitut desimaalit"
+
+msgid ""
+"There is sample data installed. Access \"Settings > Sample Data\" for more "
+"information."
+msgstr ""
+"Mallitietueet asennettu. Mene \"Asetukset > Mallitietueet\" saadaksesi "
+"lisätietoja."
+
+msgid ""
+"There is sample data installed. Click here to consolidate or delete them."
+msgstr "Mallitietueet asennettu. Klikkaa tästä pitääksesi tai poistaaksesi ne."
+
+msgid "Sample Data"
+msgstr "Mallitietueet"
+
+msgid "Cosmetics and perfumes"
+msgstr "Kosmetiikka ja parfyymit"
+
+msgid "USpicy Makeup Brushes"
+msgstr "USpicy Meikkiharjat"
+
+msgid ""
+"Professional 10 pieces makeup brush set with soft oval toothbrush design"
+msgstr ""
+"Ammattilaisten 10 osainen meikkiharjasetti pehmeällä ovaalilla harjapäällä"
+
+msgid "Precision Eyelash Curler"
+msgstr "Precision Silmäripsikiharrin"
+
+msgid ""
+"Precision Eyelash Curler is the professional choice of makeup artists "
+"everywhere."
+msgstr "Precision Silmäripsikiharrin on ammattilaisten valinta kaikkialla."
+
+msgid "PureMoist Lipstick"
+msgstr "PureMoist Huulipuna"
+
+msgid ""
+"PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
+"and protect lips."
+msgstr "PureMoist Huulipuna kostetuttaa ja suojelee huuliasi."
+
+msgid "Clinique Happy"
+msgstr "Clinique Happy"
+
+msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
+msgstr "Ripaus sitrushedelmiä. Runsaasti kukkia. Sekoitus tunteita."
+
+msgid "Tommy Girld by Tommy Hilfiger Perfume"
+msgstr "Tommy Girld by Tommy Hilfiger Perfume"
+
+msgid ""
+"A refreshing and energetic floral - with low notes of sandalwood and heather."
+msgstr ""
+"Virkistävän ja energisen kukkainen - santelipuun ja kanervan viitteillä."
+
+msgid "Bvlgari Omnia Crystalline Eau de Toilette"
+msgstr "Bvlgari Omnia Crystalline Eau de Toilette"
+
+msgid ""
+"Give yourself over to this fragrance as intoxicating and pure as a woman's "
+"soul is fragile."
+msgstr ""
+"Antaudu tälle huumaavalle tuoksulle joka on huumaava ja puhdas kuin naisen "
+"sielu on hauras."
+
+msgid "Still Jennifer Lopez Perfume"
+msgstr "Still Jennifer Lopez Perfume"
+
+msgid ""
+"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still "
+"fragrance."
+msgstr "Ole itsevarma ja energinen kun käytät Jennifer Lopez Still tuoksuja."
+
+msgid "La Vie Est Belle"
+msgstr "La Vie Est Belle"
+
+msgid "A captivating new scent joins the La vie est belle path to happiness."
+msgstr "Mahtava uusi tuoksu liittyy La Vie Est Bellen iloiseen tuoksusarjaan."
+
+msgid "Smooth Viking Beard Brush"
+msgstr "Pehmeä Viking Beard harja"
+
+msgid "Just a beard brush."
+msgstr "Vain partaharja."
+
+msgid "Beard & Stash Oil"
+msgstr "Beard & Stash Öljy"
+
+msgid "This oil is natural, and is made with the perfect combination of oils."
+msgstr "Tämä luonnontuote on täydellinen yhdistelmä öljyjä."
+
+msgid "Sample Carousel"
+msgstr "Mallikaruselli"
+
+msgid "Business Segment"
+msgstr "Liiketoimintasegmentti"
+
+msgid "Select your business segment to install categories."
+msgstr "Valitse liiketoimintasegmenttisi tuoteryhmien asentamiseen."
+
+msgid "Install Categories"
+msgstr "Asenna tuoteryhmät"
+
+msgid "Check this to install sample categories."
+msgstr "Valitse tämä asentaaksesi tuoteryhmät."
+
+msgid "Install Products"
+msgstr "Asenna tuotteet"
+
+msgid "Check this to install sample products."
+msgstr "Valitse tämä asentaaksesi mallituotteet."
+
+msgid "Install Carousel"
+msgstr "Asenna karuselli"
+
+msgid "Check this to install a sample carousel."
+msgstr "Valitse tämä asentaaksesi mallikarusellin."
+
+msgid "Uninstall Categories"
+msgstr "Poista tuoteryhmät"
+
+msgid "Uninstall Products"
+msgstr "Poista tuotteet"
+
+msgid "Uninstall Carousel"
+msgstr "Poista karuselli"
+
+msgid "Sample data were consolidated"
+msgstr "Mallitietueet pidetään"
+
+msgid ""
+"To start shopping right now, please install some sample data into your shop"
+msgstr ""
+"Ole hyvä ja asenna joitakin mallitietueita kauppaasi aloittaaksesi "
+"kaupankäynnin välittömästi."
+
+msgid "Service Providers"
+msgstr "Palveluntarjoajat"
+
+msgid "Payment and Shipping"
+msgstr "Maksaminen ja toimitus"
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr "Muokkaa %(model)s"
+
+msgid ""
+"The service provider type. This can be any of the shipping carriers or "
+"payment processors configured for your shop."
+msgstr ""
+"Palveluntarjoajan tyyppi. Tämä voi olla mikä tahansa kauppaasi määritelty "
+"toimitus- tai maksupalvelu."
+
+#, python-brace-format
+msgid "Create {service_name}"
+msgstr "Luo {service_name}"
+
+msgid "Provider"
+msgstr "Tarjoaja"
+
+#, python-format
+msgid "Please activate at least one %s."
+msgstr "Ole hyvä ja aktivoi ainakin yksi %s."
+
+msgid "Carrier"
+msgstr "Kuljetusliike"
+
+msgid ""
+"To start shipping products right away, please add shipping methods for your "
+"shop"
+msgstr ""
+"Ole hyvä ja valitse toimitustapa kauppaasi aloittaaksesi tuotteiden "
+"toimittamisen."
+
+msgid "shipping method"
+msgstr "toimitustapa"
+
+msgid "Payment Provider"
+msgstr "Maksutapatarjoaja"
+
+msgid ""
+"To start accepting payments right away, please add payment methods for your "
+"shop"
+msgstr ""
+"Ole hyvä ja valitse maksutapa kauppaasi aloittaaksesi maksujen hyväksymisen"
+
+msgid "payment method"
+msgstr "maksutapa"
+
+msgid "Service name"
+msgstr "Palvelun nimi"
+
+msgid "The name shown in the shop checkout process."
+msgstr "Nimi, joka näytetään ostotapahtuman yhteydessä."
+
+msgid "Instructions"
+msgstr "Ohjeet"
+
+msgid "Additional instructions shown in the shop checkout process."
+msgstr "Lisätiedot, jotka näytetään ostotapahtuman yhteydessä."
+
+msgid "Shipping Methods"
+msgstr "Toimitustavat"
+
+msgid "Payment Methods"
+msgstr "Maksutavat"
+
+msgid "Service"
+msgstr "Palvelu"
+
+msgid "Select a service to use for this service provider."
+msgstr "Valitse palvelu tälle palveluntarjoajalle."
+
+msgid ""
+"The carrier to use for this shipping method. Select a carrier before filling "
+"other fields."
+msgstr ""
+"Toimitustavan palvelu. Valitse palvelu ennen muiden kenttien täyttämistä."
+
+msgid ""
+"The payment processor to use for this payment method. Select a payment "
+"processor before filling out the other fields."
+msgstr ""
+"Maksuprosessori maksutavalle. Valitse maksuprosessori ennen muiden kenttien "
+"täyttämistä."
+
+msgid "Price"
+msgstr "Hinta"
+
+msgid "Waive limit"
+msgstr "Luopumisraja"
+
+msgid "Available in countries"
+msgstr "Saatavilla maille"
+
+msgid "Unavailable in countries"
+msgstr "Ei saatavilla maille"
+
+msgid "Select accepted countries for this service."
+msgstr "Valitse hyväksytyt maat tälle palvelulle."
+
+msgid "Select this to accept all countries in EU."
+msgstr "Valitse tämä hyväksyäksesi kaikki EU maat."
+
+msgid "Select restricted countries for this service."
+msgstr "Valitse rajoitetut maat tälle palvelulle."
+
+msgid "Select this to restrict this service for countries in EU"
+msgstr "Valitse tämä rajoittaaksesi kaikki EU maat palvelun ulkopuolelle"
+
+msgid "Service choice"
+msgstr "Palvelun valinta"
+
+msgid "Enabled"
+msgstr "Käytössä"
+
+msgid "Shop"
+msgstr "Kauppa"
+
+msgid "Payment Processor"
+msgstr "Maksupalvelun tarjoaja"
+
+msgid "Weight-based pricing range"
+msgstr "Painon mukaan määräytyvä hinnoittelu"
+
+msgid "System Settings"
+msgstr "Järjestelmäasetukset"
+
+msgid "unique"
+msgstr "yksilöllinen"
+
+msgid "running"
+msgstr "juokseva"
+
+msgid "shop running"
+msgstr "juokseva kauppakohtainen"
+
+msgid "Reference number length"
+msgstr "Viitenumeron pituus"
+
+msgid ""
+"Length of the order reference number not including the checksum number. This "
+"can vary based on the country your shop is in. If you set the length to 19, "
+"the actual length is going to be 20 because the checksum is being added."
+msgstr ""
+"Viitenumeron pituus ei sisällä tarkistenumeroa. Tämä voi vaihdella kauppasi "
+"maan mukaan. Mikäli pituus asetetaan 19 merkkiin, oikea merkkipituus on 20, "
+"koska sarjaan lisätään tarkistenumero."
+
+msgid "Reference number prefix"
+msgstr "Viitenumeron etuliite"
+
+msgid "Order minimum total"
+msgstr "Tilauksen nimimiarvo"
+
+msgid "The minimum sum that an order needs to reach to be created."
+msgstr "Minimiarvo tilaukselle, jotta tilaus voidaan tehdä."
+
+msgid "Order Settings"
+msgstr "Tilausten asetukset"
+
+msgid "Order Reference number method"
+msgstr "Viitenumerometodi"
+
+msgid ""
+"This option defines how the reference numbers for orders are built. The "
+"options are:<br><br><b>Unique</b><br>Order reference number is unique system "
+"wide, regardless of the amount of shops.<br><br><b>Running</b><br>Order "
+"number is running system wide, regardless of the amount of shops."
+"<br><br><b>Shop Running</b><br>Every shop has its own running numbers for "
+"reference."
+msgstr ""
+"Tämä asetus määrittelee miten viitenumerot rakennetaan tilaukselle. "
+"Vaihtoehdot ovat:<br><br><b>Yksilöllinen</b><br>Tilausnumero on yksilöllinen "
+"koko järjestelmälle riippumatta kauppojen määrästä.<br><br><b>Juokseva</"
+"b><br>Tilausnumero on juokseva koko järjestelmälle riippumatta kauppojen "
+"määrästä.<br><br><b>Juokseva kauppakohtainen</b><br>Jokaisella kaupalla on "
+"oma juokseva tilausnumeronsa."
+
+msgid "Registration Settings"
+msgstr "Rekisteröinnin asetukset"
+
+msgid "Allow company registration"
+msgstr "Salli yritysten rekisteröinti"
+
+msgid ""
+"If you select this, companies can register into your store. Registered "
+"companies must be manually approved by admin."
+msgstr ""
+"Jos valitset tämän, yritykset voivat rekisteröityä kauppaasi. Pääkäyttäjän "
+"pitää silti käsin hyväksyä rekisteröidyt yritykset."
+
+msgid "Settings saved"
+msgstr "Asetukset tallennettu"
+
+msgid "Reset Defaults"
+msgstr "Palauta oletukset"
+
+msgid "Changes saved successfully"
+msgstr "Muutokset tallennettu onnistuneesti"
+
+msgid "No changes detected"
+msgstr "Ei havaittuja muutoksia"
+
+msgid "Save system settings"
+msgstr "Tallenna järjestelmäasetukset"
+
+msgid "Add a logo to make your store stand out"
+msgstr "Lisää logo kaupallesi, jotta kauppasi erottuu"
+
+msgid "Add logo"
+msgstr "Lisää logo"
+
+msgid ""
+"This field cannot be changed since there are existing orders for this shop."
+msgstr ""
+"Tätä kenttää ei voi muuttaa, koska tälle kaupalle on olemassa tilauksia."
+
+msgid ""
+"The primary shop currency. This is the currency used when selling your "
+"products."
+msgstr "Kaupan päävaluutta. Tätä valuuttaa käytetään tuotteiden myyntiin."
+
+msgid "Staff"
+msgstr "Henkilökunta"
+
+msgid "Select staff members for this shop."
+msgstr "Valitse henkilökunnan jäsenet tälle kaupalle."
+
+msgid "Shop name"
+msgstr "Kaupan nimi"
+
+msgid "First name"
+msgstr "Etunimi"
+
+msgid "Your first name."
+msgstr "Etunimesi."
+
+msgid "Last name"
+msgstr "Sukunimi"
+
+msgid "Your last name."
+msgstr "Sukunimesi."
+
+msgid "Zip/Postal code"
+msgstr "Postinumero"
+
+msgid "State/Province"
+msgstr "Osavaltio"
+
+msgid "Address"
+msgstr "Osoite"
+
+msgid "Address (2)"
+msgstr "Osoite (2)"
+
+msgid ""
+"The shop street address. This may be used to provide estimated shipping "
+"costs."
+msgstr "Kaupan katuosoite. Tätä voidaan käyttää toimituskulujen arviointiin."
+
+msgid "The shop zip/postal code."
+msgstr "Kaupan postinumero."
+
+msgid "The city in which your shop is located."
+msgstr "Kaupunki, jossa kauppa sijaitsee."
+
+msgid "The country in which your shop is located."
+msgstr "Maa, jossa kauppa sijaitsee."
+
+msgid "There are still some pending actions to complete!"
+msgstr "Joitakin asioita on yhä kesken!"
+
+msgid "Your store is now live!"
+msgstr "Kauppasi on nyt auki!"
+
+msgid "Domain"
+msgstr "Verkkotunnus"
+
+msgid "Shop Details"
+msgstr "Kaupan tiedot"
+
+msgid "Add an address so you can get paid"
+msgstr "Lisää osoite, jotta saat maksuja"
+
+msgid "Default Tax Class"
+msgstr "Oletusveroluokka"
+
+msgid "Suppliers"
+msgstr "Toimittajat"
+
+#, python-format
+msgid "No %s module"
+msgstr "Ei %s -moduulia"
+
+msgid "Module"
+msgstr "Moduuli"
+
+msgid "Shuup Support"
+msgstr "Shuup tuki"
+
+msgid "System"
+msgstr "Järjestelmä"
+
+msgid "Telemetry"
+msgstr "Telemetria"
+
+msgid ""
+"Statistics will be periodically sent to Shuup.com after 24 hours. Click here "
+"for more information."
+msgstr ""
+"Statistiikat tullaan jaksoittain lähettämään Shuup.com:lle 24 tunnin "
+"jälkeen. Paina tästä saadaksesi lisäinformaatiota."
+
+msgid "Customer Tax Groups"
+msgstr "Asiakasveroryhmät"
+
+msgid "Tax Classes"
+msgstr "Veroluokat"
+
+msgid "Rate"
+msgstr "Määrä"
+
+msgid "Users"
+msgstr "Käyttäjät"
+
+msgid "Add some users to help manage your shop"
+msgstr "Lisää käyttäjiä kauppasi hallinnan helpottamiseksi"
+
+msgid "New user"
+msgstr "Uusi käyttäjä"
+
+#, python-format
+msgid ""
+"\n"
+"    Welcome %(first_name)s!\n"
+"\n"
+"    You've been added as an administrator to %(shop_url)s. Here are some "
+"details:\n"
+"        Shop url: %(shop_url)s\n"
+"        Login url: %(admin_url)s\n"
+"        Your username: %(username)s\n"
+"        Your password: Please contact your admin.\n"
+msgstr ""
+"\n"
+"Tervetuloa %(first_name)s!\n"
+"\n"
+"Sinut on lisätty ylläpitäjäksi %(shop_url)s. Tässä hieman tietoja:\n"
+"Kaupan osoite: %(shop_url)s\n"
+"Kirjautumisosoite: %(admin_url)s\n"
+"Käyttäjänimesi: %(username)s\n"
+"Salasanasi: Ota yhteys pääylläpitäjään.\n"
+
+msgid "Password"
+msgstr "Salasana"
+
+msgid "The user password."
+msgstr "Käyttäjän salasana."
+
+msgid "See the permissions view to change these."
+msgstr "Katso käyttöoikeusnäkymää muuttaaksesi näitä."
+
+msgid "See Contacts - Permission Groups to change these."
+msgstr "Avaa Kontaktit - Oikeusryhmät muokataksesi näitä."
+
+msgid "The user email address. Used for password resets."
+msgstr "Käyttäjän sähköpostiosoite. Käytetään salasanojen nollaamiseen. "
+
+msgid "The first name of the user."
+msgstr "Käyttäjän etunimi."
+
+msgid "The last name of the user."
+msgstr "Käyttäjän sukunimi."
+
+msgid "staff"
+msgstr "henkilökunta"
+
+msgid "superuser"
+msgstr "pääkäyttäjä"
+
+msgid "No special permissions"
+msgstr "Ei erityisiä oikeuksia"
+
+msgid "No permission groups"
+msgstr "Ei käyttöoikeusryhmiä"
+
+msgid "Send email confirmation"
+msgstr "Lähetä sähköpostivahvistus"
+
+msgid ""
+"Send an email to the user to let them know they've been added as a shop "
+"user. Applicable only for users with staff status."
+msgstr ""
+"Lisää sähköposti käyttäjälle lähettääksesi heille tiedon, että heidät on "
+"lisätty kaupan käyttäjäksi. Tätä käytetään vain henkilökuntastatuksen "
+"omaaville käyttäjille."
+
+msgid "Please enter an email to send a confirmation"
+msgstr "Anna sähköpostiosoite lähettääksesi sähköpostivahvistuksen"
+
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+msgid "User has no email address"
+msgstr "Käyttäjällä ei ole sähköpostia"
+
+msgid "Send Password Reset Email"
+msgstr "Lähetä salasanan palautussähköposti"
+
+msgid "Edit Permissions"
+msgstr "Muokkaa oikeuksia"
+
+msgid "Contact Details"
+msgstr "Yhteystiedot"
+
+msgid "Create a new contact and associate it with this user"
+msgstr "Luo uusi kontakti ja liitä se tähän käyttäjään"
+
+msgid "Activate User"
+msgstr "Aktivoi käyttäjä"
+
+msgid "Deactivate User"
+msgstr "Deaktivoi käyttäjä"
+
+msgid "Login as User"
+msgstr "Kirjaudu käyttäjänä"
+
+#, python-format
+msgid "User bound to contact %(contact)s."
+msgstr "Käyttäjä liitetty kontaktiin %(contact)s."
+
+#, python-format
+msgid "You've been added as an admin user to %s"
+msgstr "Sinut on lisätty pääkäyttäjäksi kauppaan %s"
+
+msgid "User"
+msgstr "Käyttäjä"
+
+#, python-format
+msgid "%(user)s is now %(state)s."
+msgstr "%(user)s on nyt %(state)s."
+
+msgid "No shop configured."
+msgstr "Kauppaa ei ole konfiguroitu."
+
+msgid "You are already logged in."
+msgstr "Olet jo kirjautunut sisään."
+
+msgid "This user is not active."
+msgstr "Tämä käyttäjä ei ole aktiivinen."
+
+#, python-brace-format
+msgid "You're now logged in as {username}"
+msgstr "Olet nyt kirjautunut käyttäjänä {username}"
+
+msgid "Username"
+msgstr "Käyttäjänimi"
+
+msgid "First Name"
+msgstr "Etunimi"
+
+msgid "Last Name"
+msgstr "Sukunimi"
+
+msgid "Superuser"
+msgstr "Pääkäyttäjä"
+
+#, python-format
+msgid "First Name: %s"
+msgstr "Etunimi: %s"
+
+#, python-format
+msgid "Last Name: %s"
+msgstr "Sukunimi: %s"
+
+msgid "The two password fields didn't match."
+msgstr "Salasanakentät eivät täsmää"
+
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr "Syötit vanhan salasanan väärin. Kokeiletko uudelleen, kiitos."
+
+msgid "Your Password"
+msgstr "Salasanasi"
+
+msgid "For security purposes, we need your current password."
+msgstr "Turvallisuussyistä tarvitsemme nykyisen salasanasi."
+
+msgid "New Password"
+msgstr "Uusi salasana"
+
+msgid "New Password (again)"
+msgstr "Uusi salasana (uudelleen)"
+
+msgid "You can not change the password of a superuser."
+msgstr "Et voi vaihtaa pääkäyttäjän salasanaa."
+
+msgid "Change User Password"
+msgstr "Muuta käyttäjän salasana"
+
+#, python-format
+msgid "Password changed for %s."
+msgstr "Käyttäjän %s salasana vaihdettu."
+
+msgid "Reset User Password"
+msgstr "Nollaa käyttäjän salasana"
+
+msgid "The `shuup.front.apps.auth` app needs to be enabled for password reset."
+msgstr ""
+"`shuup.front.apps.auth`  sovellus tarvitsee olla otettuna käyttöön "
+"palauttaaksesi salasanan."
+
+#, python-format
+msgid "Password recovery email sent to %(email)s"
+msgstr "Salasananpalautussähköposti lähetetty: %(email)s"
+
+msgid "Sending the password recovery email failed."
+msgstr "Salasanan palauttamissähköpostin lähettäminen epäonnistui."
+
+msgid ""
+"The permission groups that this user belongs to. Permission groups are "
+"configured through Contacts - Permission Groups."
+msgstr ""
+"Käyttöoikeusryhmä, johon käyttäjä kuuluu. Käyttöoikeusryhmiä voi muokata: "
+"Kontaktit - Käyttöoikeusryhmät."
+
+msgid "You can't unset this status for yourself."
+msgstr "Et voi poistaa tätä tilaa itseltäsi."
+
+msgid "Change User Permissions"
+msgstr "Muokkaa käyttäjän oikeuksia"
+
+#, python-format
+msgid "Change Permissions: %s"
+msgstr "Muokkaa oikeuksia: %s"
+
+#, python-format
+msgid "Permissions changed for %s."
+msgstr "Käyttäjän %s oikeuksia muutettu."
+
+msgid "New Attribute"
+msgstr "Uusi attribuutti"
+
+msgid "Login"
+msgstr "Kirjaudu sisään"
+
+msgid "Forgot your password?"
+msgstr "Unohditko salasanasi?"
+
+msgid "Logged out"
+msgstr "Kirjaudu ulos"
+
+msgid "You have been securely logged out. Hope to see you soon!"
+msgstr "Turvallinen uloskirjautuminen onnistui. Nähdään pian!"
+
+msgid "Log in again"
+msgstr "Kirjaudu uudelleen"
+
+msgid "Visit shop"
+msgstr "Vieraile kaupassa."
+
+msgid "Quicklinks"
+msgstr "Pikalinkit"
+
+msgid "Menu"
+msgstr "Valikko"
+
+msgid "Dashboard"
+msgstr "Hallintapaneeli"
+
+msgid "Go home"
+msgstr "Mene etusivulle"
+
+msgid "Search for"
+msgstr "Etsi"
+
+msgid "Support ID: "
+msgstr "Tukinumero: "
+
+msgid "Hello"
+msgstr "Hei"
+
+msgid "Show Tour"
+msgstr "Näytä kierros"
+
+msgid "Log out"
+msgstr "Kirjaudu ulos"
+
+msgid "General Information"
+msgstr "Yleiset tiedot"
+
+msgid "Copy visibility settings to products"
+msgstr "Kopioi näkyvyysasetukset tuotteille"
+
+msgid "Category Image"
+msgstr "Kategorian kuva"
+
+msgid "* Products that has this category as a primary category."
+msgstr "* Tuotteet joilla on tämä kategoria ensisijaisena kategoriana."
+
+msgid "Add a new product category"
+msgstr "Lisää uusi tuoteryhmä"
+
+msgid ""
+"You are adding a new product category. When people search your store, they "
+"can find your product under the category you choose for it, like the aisle "
+"signs at the supermarket."
+msgstr ""
+"Olet lisäämässä uutta tuoteryhmää. Kun ihmiset selaavat kauppaasi, voivat he "
+"löytää tuotteet siitä tuoteryhmästä, johon lisäät ne, hieman kuin "
+"supermarketin käytävällä."
+
+msgid ""
+"You can add a name, description, picture or anything you want to make it "
+"stand out."
+msgstr ""
+"Voit lisätä nimen, kuvauksen, kuvan tai mitä vaan nostaaksesi tätä esiin."
+
+msgid "General information"
+msgstr "Yleiset tiedot"
+
+msgid "Add Members"
+msgstr "Lisää jäseniä"
+
+msgid "Add more"
+msgstr "Lisää enemmän"
+
+msgid "Billing address"
+msgstr "Laskutusosoite"
+
+msgid "No billing address defined."
+msgstr "Laskutusosoitetta ei ole asetettu."
+
+msgid "Shipping address"
+msgstr "Toimitusosoite"
+
+msgid "No shipping address defined."
+msgstr "Toimitusosoitetta ei ole asetettu."
+
+msgid "Full Name"
+msgstr "Koko nimi"
+
+msgid "No groups"
+msgstr "Ei ryhmiä"
+
+msgid "Bound User"
+msgstr "Sidottu käyttäjä"
+
+msgid "Companies"
+msgstr "Yritykset"
+
+msgid "No members."
+msgstr "Ei jäseniä."
+
+msgid "Use billing address as shipping address"
+msgstr "Käytä laskutusosoitetta toimitusosoitteena"
+
+msgid "Basic details"
+msgstr "Perustiedot"
+
+msgid "COMPANY NAME"
+msgstr "YRITYKSEN NIMI"
+
+#, python-format
+msgid ""
+"You can enter here the information about <strong>%(public_name)s</strong>."
+msgstr "Tähän voit lisätä tietoa kaupasta <strong>%(public_name)s</strong>."
+
+msgid "Your order has been received and will be processed as soon as possible."
+msgstr "Tilauksesi on vastaanotettu ja käsitellään mahdollisimman nopeasti."
+
+msgid "For reference, here's a list of your order's contents."
+msgstr "Tässä tilauksesi sisältö."
+
+msgid "Please note that no record of your order being paid currently exists."
+msgstr ""
+"Huomaathan, että meillä ei ole tietoa siitä, että tilauksesi olisi maksettu."
+
+msgid "Thank you for shopping with us!"
+msgstr "Kiitos kun ostit kaupastamme!"
+
+msgid "YOUR E-MAIL HERE"
+msgstr "SINUN SÄHKÖPOSTISI TÄHÄN"
+
+msgid "YOUR ADDRESS HERE"
+msgstr "SINUN OSOITE TÄHÄN"
+
+msgid "SECTION 1 - WHAT DO WE DO WITH YOUR INFORMATION?"
+msgstr "KOHTA 1 - MITÄ TEEMME TIETOJESI KANSSA?"
+
+msgid ""
+"When you purchase something from our store, as part of the buying and "
+"selling process, we collect the personal information you give us such as "
+"your name, address and email address."
+msgstr ""
+"Kun ostat jotain kaupastamme, osana osto- ja myyntiprosessia, meidän pitää "
+"kerätä joitakin yksityisiä tietoja sinusta kuten nimesi, osoitteesi ja "
+"sähköpostisi."
+
+msgid ""
+"When you browse our store, we also automatically receive your computer’s "
+"internet protocol (IP) address in order to provide us with information that "
+"helps us learn about your browser and operating system."
+msgstr ""
+"Kun selaat kauppaamme, saamme myös automaattisesti tietokoneesi Internet "
+"Protocol (IP) osoitteen, joka auttaa meitä oppimaan selaimestasi ja "
+"käyttöjärjestelmästäsi."
+
+msgid ""
+"Email marketing (if applicable): With your permission, we may send you "
+"emails about our store, new products and other updates."
+msgstr ""
+"Markkinointilupa (mikäli käytössä): Luvallasi, voimme lähettää sähköposteja "
+"kauppaamme, tuotteisiimme tai päivityksiimme liittyen."
+
+msgid "SECTION 2 - CONSENT"
+msgstr "KOHTA 2 - SUOSTUMUS"
+
+msgid "How do you get my consent?"
+msgstr "Miten saatte suostumukseni?"
+
+msgid ""
+"When you provide us with personal information to complete a transaction, "
+"verify your credit card, place an order, arrange for a delivery or return a "
+"purchase, we imply that you consent to our collecting it and using it for "
+"that specific reason only."
+msgstr ""
+"Kun annat meille yksityistä tietoa jonkin transaktion yhteydessä, "
+"esimerkiksi luottokorttia käyttäessäsi, tilausta tehdessäsi, toimitusta "
+"sopiessasi tai tuotepalautusta tehdessäsi, käsitämme että olette antaneet "
+"meille suostumuksesi käyttää tietojasi tähän kyseiseen tapahtumaan."
+
+msgid ""
+"If we ask for your personal information for a secondary reason, like "
+"marketing, we will either ask you directly for your expressed consent, or "
+"provide you with an opportunity to say no."
+msgstr ""
+"Mikäli kysymme yksityisiä tietoja toissijaisesta syystä, esimerkiksi "
+"markkinointiin, kysymme aina lupaasi tai annamme mahdollisuuden sanoa ei."
+
+msgid "How do I withdraw my consent?"
+msgstr "Miten poistan suostumukseni?"
+
+#, python-format
+msgid ""
+"If after you opt-in, you change your mind, you may withdraw your consent for "
+"us to contact you, for the continued collection, use or disclosure of your "
+"information, at anytime, by contacting us at <strong>%(shop_email)s</strong> "
+"or mailing us at: <strong>%(shop_address)s</strong>"
+msgstr ""
+"Kun muutat mieltäsi suostumuksen antamisen jälkeen, voit poistaa "
+"suostumuksesi lähettämällä meille sähköpostia, jossa ilmoitat ettet halua "
+"enää että tietojasi kerätään tai käytetään. Voit lähettää sähköpostin "
+"osoitteeseen <strong>%(shop_email)s</strong> tai kirjeen osoitteeseen: "
+"<strong>%(shop_address)s</strong>"
+
+msgid "SECTION 3 - DISCLOSURE"
+msgstr "KOHTA 3 - PALJASTUS"
+
+msgid ""
+"We may disclose your personal information if we are required by law to do so "
+"or if you violate our Terms of Service."
+msgstr ""
+"Voimme paljastaa tietosi, mikäli laki niin vaatii tai rikot käyttöehtoja."
+
+msgid "SECTION 4 - SHUUP"
+msgstr "KOHTA 4 - SHUUP"
+
+msgid ""
+"Our store is hosted on Shuup. They provide us with the online e-commerce "
+"platform that allows us to sell our products and services to you."
+msgstr "Kauppamme toimii Shuup verkkokauppa-alustalla."
+
+msgid ""
+"Your data is stored through Shuup’s data storage, databases and the general "
+"Shuup application. They store your data on a secure server behind a firewall."
+msgstr ""
+"Tietosi tallennetaan Shuupin tietojärjestelmiin, tietokantaan ja Shuup "
+"järjestelmään. Tiedot tallennetaan palomuurin taakse."
+
+msgid "Payment"
+msgstr "Maksu"
+
+msgid ""
+"If you choose a direct payment gateway to complete your purchase, then Shuup "
+"stores your credit card data. It is encrypted through the Payment Card "
+"Industry Data Security Standard (PCI-DSS). Your purchase transaction data is "
+"stored only as long as is necessary to complete your purchase transaction. "
+"After that is complete, your purchase transaction information is deleted."
+msgstr ""
+"Korttitietojasi ei tallenneta missään vaiheessa Shuupin järjestelmiin. "
+
+msgid ""
+"All direct payment gateways adhere to the standards set by PCI-DSS as "
+"managed by the PCI Security Standards Council, which is a joint effort of "
+"brands like Visa, MasterCard, American Express and Discover."
+msgstr ""
+"Kaikki maksutapatarjoajat käyttävät PCI-DSS standardia jota ylläpitää PCI "
+"Security Standards Council. Tämä on Visan, MasterCardin, American Expressin "
+"ja Discoverin yhteistyötä."
+
+msgid ""
+"PCI-DSS requirements help ensure the secure handling of credit card "
+"information by our store and its service providers."
+msgstr ""
+"PCI-DSS vaatimukset varmistavat luottokorttitietojen turvallisen käsittelyn."
+
+msgid ""
+"For more insight, you may also want to read Shuup’s Terms of Service here or "
+"Privacy Statement here."
+msgstr "Shuupin Käyttöehdot ja tietosuojalausunto sisältää lisätietoa."
+
+msgid "SECTION 5 - THIRD-PARTY SERVICES"
+msgstr "KOHTA 5 - KOLMANNEN OSAPUOLEN PALVELUT"
+
+msgid ""
+"In general, the third-party providers used by us will only collect, use and "
+"disclose your information to the extent necessary to allow them to perform "
+"the services they provide to us."
+msgstr ""
+"Kolmannen osapuolen palvelut keräävät ja käyttävät pääosin vain niitä "
+"tietoja, joita he tarvitsevat palvelun toteuttamiseen."
+
+msgid ""
+"However, certain third-party service providers, such as payment gateways and "
+"other payment transaction processors, have their own privacy policies in "
+"respect to the information we are required to provide to them for your "
+"purchase-related transactions."
+msgstr ""
+"Jotkin kolmannen osapuolen palvelut, kuten maksutapapalvelut ja muut "
+"maksujen käsittelijät tarjoavat omat tietosuojakäytäntönsä, jotka joudumme "
+"toimittamaan teille tapahtuman yhteydessä."
+
+msgid ""
+"For these providers, we recommend that you read their privacy policies so "
+"you can understand the manner in which your personal information will be "
+"handled by these providers."
+msgstr ""
+"Suosittelemme, että luette tietosuojakäytännöt näiden palveluntarjoajien "
+"kohdalla, jotta ymmärrät mitä tietoja he käsittelevät."
+
+msgid ""
+"In particular, remember that certain providers may be located in or have "
+"facilities that are located in a different jurisdiction than either you or "
+"us. So if you elect to proceed with a transaction that involves the services "
+"of a third-party service provider, then your information may become subject "
+"to the laws of the jurisdiction(s) in which that service provider or its "
+"facilities are located."
+msgstr ""
+"Huomaathan, että jotkin tarjoajat voivat sijaita eri lainkäyttöalueilla kuin "
+"sinä tai me. Joten jos päätät käyttää näitä palveluita, tietosi voidaan "
+"altistaa sen lainkäyttöalueen laille, jossa palveluntarjoaja sijaitsee."
+
+msgid ""
+"As an example, if you are located in Canada and your transaction is "
+"processed by a payment gateway located in the United States, then your "
+"personal information used in completing that transaction may be subject to "
+"disclosure under United States legislation, including the Patriot Act."
+msgstr ""
+"Esimerkiksi, jos kauppasi sijaitsee Suomessa ja maksusi käsittelee "
+"maksutapapalvelu, joka sijaitsee USA:ssa, tietosi voidaan luovuttaa USA:n "
+"lakien mukaisesti, mukaan lukien Patriot Act:n mukaisesti."
+
+msgid ""
+"Once you leave our store’s website or are redirected to a third-party "
+"website or application, you are no longer governed by this Privacy Policy or "
+"our website’s Terms of Service."
+msgstr ""
+"Kun lähdet kauppamme verkkosivuilta kolmannen osapuolen verkkosivuille tai "
+"applikaatioon, et ole enää tämän tietosuojakäytännön tai verkkosivujemme "
+"käyttöehtojen piirissä."
+
+msgid "Links"
+msgstr "Linkit"
+
+msgid ""
+"When you click on links on our store, they may direct you away from our "
+"site. We are not responsible for the privacy practices of other sites and "
+"encourage you to read their privacy statements."
+msgstr ""
+"Kun klikkaat linkkiä kaupassamme, ne voivat ohjata sinut pois sivuiltamme. "
+"Emme ole vastuussa toisten sivujen yksityisyyskäytännöistä ja "
+"suosittelemmekin, että luette ne."
+
+msgid "SECTION 6 - SECURITY"
+msgstr "KOHTA 6 - TURVALLISUUS"
+
+msgid ""
+"To protect your personal information, we take reasonable precautions and "
+"follow industry best practices to make sure it is not inappropriately lost, "
+"misused, accessed, disclosed, altered or destroyed."
+msgstr ""
+"Suojataksemme tietosi, teemme kaikki kohtuulliset toimenpiteet ja seuraamme "
+"alan parhaita toimintatapoja, jottei tietojasi häviä, väärinkäytetä, "
+"käsitellä, paljasteta, muuteta tai tuhota."
+
+#, python-format
+msgid ""
+"If you provide us with your credit card information, the information is "
+"encrypted using secure socket layer technology (SSL) and stored with a "
+"AES-256 encryption.  Although no method of transmission over the Internet or "
+"electronic storage is 100%% secure, we follow all PCI-DSS requirements and "
+"implement additional generally accepted industry standards."
+msgstr ""
+"Mikäli tarjoat luottokorttitietosi kolmansien osapuolien käyttöön, "
+"siirretään ne Secure Socket Layer Technology (SSL) teknologialla salattuna. "
+"Vaikka mikään palvelu ei ole 100%% turvallinen, kumppaniemme maksupalvelut "
+"seuraavat PCI-DSS vaatimuksia ja usein AES-256 salauksella."
+
+msgid "COOKIES"
+msgstr "KEKSIT"
+
+msgid ""
+"Here is a list of cookies that we use. We’ve listed them here so you can "
+"choose if you want to opt-out of cookies or not."
+msgstr ""
+"Tässä on lista kekseistä, joita käytämme. Listaamme ne täällä, jotta voit "
+"valita haluatko toimia ilman keksejä vaiko et."
+
+msgid ""
+"unique token, sessional, Allows Shuup to store information about your "
+"session (referrer, landing page, etc)."
+msgstr ""
+"Yksilöllinen tunnus. Tämä on sessiokohtainen ja se sallii Shuupin tallentaa "
+"tietoa sessiostasi (viittaukset, saapumissivu, jne)."
+
+msgid "SECTION 7 - AGE OF CONSENT"
+msgstr "KOHTA 6 - TÄYSI-IKÄISYYS"
+
+msgid ""
+"By using this site, you represent that you are at least the age of majority "
+"in your state or province of residence, or that you are the age of majority "
+"in your state or province of residence and you have given us your consent to "
+"allow any of your minor dependents to use this site."
+msgstr ""
+"Käyttämällä tätä sivua vakuutat, että olet vähintään täysi-ikäinen omassa "
+"valtiossasi tai asuinläänissäsi ja että olet antanut alaikäisten "
+"huollettaviesi luvan käyttää tätä sivustoa."
+
+msgid "SECTION 8 - CHANGES TO THIS PRIVACY POLICY"
+msgstr "KOHTA 8 - MUUTOKSET TÄHÄN TIETOSUOJAKÄYTÄNTÖÖN"
+
+msgid ""
+"We reserve the right to modify this privacy policy at any time, so please "
+"review it frequently. Changes and clarifications will take effect "
+"immediately upon their posting on the website. If we make material changes "
+"to this policy, we will notify you here that it has been updated, so that "
+"you are aware of what information we collect, how we use it, and under what "
+"circumstances, if any, we use and/or disclose it."
+msgstr ""
+"Varaamme oikeuden muuttaa tätä tietosuojakäytäntöä milloin vain, joten "
+"tarkista se usein. Muutokset ja tarkennukset vaikuttavat välittömästi kun ne "
+"on lisätty verkkosivuille. Mikäli teemme olennaisia muutoksia tähän "
+"käytäntöön, ilmoitamme teille siitä. Teemme tämän, jotta olet tietoinen mitä "
+"tietoa keräämme, miten käytämme sitä ja missä tilanteissa, jos missään, "
+"paljastamme niitä."
+
+msgid ""
+"If our store is acquired or merged with another company, your information "
+"may be transferred to the new owners so that we may continue to sell "
+"products to you."
+msgstr ""
+"Jos kauppamme ostetaan tai sulautetaan toiseen yritykseen, tietosi "
+"siirretään uusille omistajille, jotta he voivat jatkaa tuotteiden myyntiä."
+
+msgid "QUESTIONS AND CONTACT INFORMATION"
+msgstr "KYSYMYKSET JA YHTEYSTIEDOT"
+
+#, python-format
+msgid ""
+"If you would like to: access, correct, amend or delete any personal "
+"information we have about you, register a complaint, or simply want more "
+"information contact our Privacy Compliance Officer at <strong>"
+"%(shop_email)s</strong> or by mail at <strong>%(shop_address)s</strong>."
+msgstr ""
+"Mikäli haluat: nähdä, korjata, muuttaa tai poistaa yksilöllisiä tietojasi me "
+"olemme tallentaneet, tehdä valituksen tai tai muuten saada lisätietoa, ota "
+"yhteyttä meihin sähköpostilla <strong>%(shop_email)s</strong> or postilla "
+"<strong>%(shop_address)s</strong>."
+
+msgid "YOUR COMPANY NAME HERE"
+msgstr "YRITYKSESI NIMI TÄHÄN"
+
+msgid ""
+"Our policy lasts 30 days. If 30 days have gone by since your purchase, "
+"unfortunately we can’t offer you a refund or exchange."
+msgstr ""
+"Käytäntömme kestää 30 päivää. Mikäli 30 päivää on kulunut ostoksestasi, emme "
+"voi valitettavasti tarjota sinulle palautusta tai vaihtoa."
+
+msgid ""
+"To be eligible for a return, your item must be unused and in the same "
+"condition that you received it. It must also be in the original packaging."
+msgstr ""
+"Jotta tavaran voi palauttaa, sen pitää olla käyttämätön ja samassa kunnossa "
+"kuin sen saamishetkellä. Sen pitää olla myös alkuperäispakkauksessa."
+
+msgid ""
+"Several types of goods are exempt from being returned. Perishable goods such "
+"as food, flowers, newspapers or magazines cannot be returned. We also do not "
+"accept products that are intimate or sanitary goods, hazardous materials, or "
+"flammable liquids or gases."
+msgstr ""
+"Useita eri tuotteita ei voi palauttaa. Pilaantuvia tuotteita kuten ruoka, "
+"kukat, sanomalehdet tai lehdet ei voi palauttaa. Me emme myöskään hyväksy "
+"palautettavaksi intiimi- tai saniteettituotteita, vaarallisia materiaaleja, "
+"palavia nesteitä tai kaasuja. "
+
+msgid "Additional non-returnable items:"
+msgstr "Muut ei-palautettavat tuotteet:"
+
+msgid "Gift cards"
+msgstr "Lahjakortit"
+
+msgid "Downloadable software products"
+msgstr "Ladattavat ohjelmistotuotteet"
+
+msgid "Some health and personal care items"
+msgstr "Jotkin terveys- ja omahoitotuotteet"
+
+msgid "To complete your return, we require a receipt or proof of purchase."
+msgstr "Tehdäksesi palautuksen, tarvitsemme kuitin tai todisteen ostosta."
+
+msgid "Please do not send your purchase back to the manufacturer."
+msgstr "Älä lähetä palautuksia suoraan valmistajalle."
+
+msgid ""
+"There are certain situations where only partial refunds are granted: (if "
+"applicable)"
+msgstr ""
+"Joissakin tilanteissa, voidaan antaa vain osahyvityksiä: (mikäli käytössä)"
+
+msgid "Book with obvious signs of use"
+msgstr "Kirjat, joissa on selkeitä käytön merkkejä"
+
+msgid ""
+"CD, DVD, VHS tape, software, video game, cassette tape, or vinyl record that "
+"has been opened."
+msgstr ""
+"CD, DVD, VHS kasetit, ohjelmistot, videopelit, kasetit tai vinyylit, jotka "
+"on avattu."
+
+msgid ""
+"Any item not in its original condition, is damaged or missing parts for "
+"reasons not due to our error."
+msgstr ""
+"Kaikki tuotteet, jotka eivät ole alkuperäisessä kunnossa, ovat "
+"vahingoittuneet tai joiden osia puuttuu meistä riippumattomista syistä."
+
+msgid "Any item that is returned more than 30 days after delivery"
+msgstr "Kaikki tuotteet, jotka on palautettu 30 päivää toimituksen jälkeen."
+
+msgid "Refunds (if applicable)"
+msgstr "Hyvitykset (mikäli käytössä)"
+
+msgid ""
+"Once your return is received and inspected, we will send you an email to "
+"notify you that we have received your returned item. We will also notify you "
+"of the approval or rejection of your refund."
+msgstr ""
+"Kun palautuksesi on saapunut ja olemme tutkineet sen, lähetämme sinulle "
+"sähköpostia ilmoittaaksemme, että olemme vastaanottaneet palautetun "
+"tuotteen. Ilmoitamme myös sinulle onko palautettu tuote hyväksytty "
+"hyvitykseen."
+
+msgid ""
+"If you are approved, then your refund will be processed, and a credit will "
+"automatically be applied to your credit card or original method of payment, "
+"within a certain amount of days."
+msgstr ""
+"Mikäli hyväksymme hyvityksen, se käsitellään ja raha palautetaan "
+"alkuperäiselle maksutavallesi tietyn määrän päiviä jälkeen."
+
+msgid "Late or missing refunds (if applicable)"
+msgstr "Myöhästyneet tai puuttuvat hyvitykset (mikäli käytössä)"
+
+msgid ""
+"If you haven’t received a refund yet, first check your bank account again."
+msgstr ""
+"Jos et ole saanut hyvitystä vielä, tarkista ensin pakkitilisi tai "
+"maksutapasi."
+
+msgid ""
+"Then contact your credit card company, it may take some time before your "
+"refund is officially posted."
+msgstr ""
+"Voit sitten ottaa yhteyttä luottokorttiyhtiöösi, voi kestää joitakin päiviä, "
+"ennenkuin hyvitys on virallisesti tehty."
+
+msgid ""
+"Next contact your bank. There is often some processing time before a refund "
+"is posted."
+msgstr ""
+"Seuraavaksi ota yhteys pankkiisi, palautusten käsittely kestää yleensä "
+"jonkin aikaa."
+
+#, python-format
+msgid ""
+"If you’ve done all of this and you still have not received your refund yet, "
+"please contact us at <strong>%(shop_email)s</strong>."
+msgstr ""
+"Jos olet tehnyt kaikki yllämainitut kohdat, etkä ole vieläkään saanut "
+"palautustasi, ole hyvä ja ota meihin yhteyttä: <strong>%(shop_email)s</"
+"strong>."
+
+msgid "Sale items (if applicable)"
+msgstr "Alennustuotteet (mikäli käytössä)"
+
+msgid ""
+"Only regular priced items may be refunded, unfortunately sale items cannot "
+"be refunded."
+msgstr ""
+"Vain normaalihintaiset tuotteet voidaan hyvittää. Emme valitettavasti hyvitä "
+"alennustuotteita."
+
+msgid "Exchanges (if applicable)"
+msgstr "Vaihdot (mikäli käytössä)"
+
+#, python-format
+msgid ""
+"We only replace items if they are defective or damaged.  If you need to "
+"exchange it for the same item, send us an email at <strong>%(shop_email)s</"
+"strong> and send your item to: <strong>%(shop_address)s</strong>."
+msgstr ""
+"Voimme vain korvata tuotteita jos ne ovat viallisia tai vahingoittuneita. "
+"Mikäli haluat vaihtaa sen samanlaiseen tuotteeseen, lähetä meille "
+"sähköpostia osoitteeseen <strong>%(shop_email)s</strong> ja tuote "
+"osoitteeseen: <strong>%(shop_address)s</strong>."
+
+msgid "Gifts"
+msgstr "Lahjat"
+
+msgid ""
+"If the item was marked as a gift when purchased and shipped directly to you, "
+"you’ll receive a gift credit for the value of your return. Once the returned "
+"item is received, a gift certificate will be mailed to you."
+msgstr ""
+"Mikäli tavara oli merkitty lahjaksi kun ostit sen ja postitettu suoraan "
+"sinulle, saat lahjakortin, joka vastaa palautettavaa arvoa. Kun palautettu "
+"tuote on vastaanotettu, lahjakortti postitetaan sinulle."
+
+msgid ""
+"If the item wasn’t marked as a gift when purchased, or the gift giver had "
+"the order shipped to themselves to give to you later, we will send a refund "
+"to the gift giver and he will find out about your return."
+msgstr ""
+"Mikäli tuotetta ei merkitty lahjaksi ostohetkellä, tai lahjan antaja "
+"postitutti tuotteen itselleen, lähetämme hyvityksen lahjan antajalle ja hän "
+"saa tietoonsa, että palautit tuotteen."
+
+msgid "Shipping"
+msgstr "Toimitus"
+
+#, python-format
+msgid ""
+"To return your product, you should mail your product to: <strong>"
+"%(shop_address)s</strong>."
+msgstr ""
+"Palauttaaksesi tuotteen, sinun tulisi postittaa tuote osoitteeseen <strong>"
+"%(shop_address)s</strong>."
+
+msgid ""
+"You will be responsible for paying for your own shipping costs for returning "
+"your item. Shipping costs are non-refundable. If you receive a refund, the "
+"cost of return shipping will be deducted from your refund."
+msgstr ""
+"Olet vastuussa toimitusmaksujen maksamisesta palautettavalle tuotteelle. "
+"Toimtusmaksuja ei palauteta. Jos saat hyvityksen, toimitusmaksu vähennetään "
+"siitä."
+
+msgid ""
+"Depending on where you live, the time it may take for your exchanged product "
+"to reach you, may vary."
+msgstr ""
+"Asuinpaikastasi riippuen, vaihdetun tuotteen saapumisaika saattaa vaihdella."
+
+msgid ""
+"If you are shipping an item over $75, you should consider using a trackable "
+"shipping service or purchasing shipping insurance. We don’t guarantee that "
+"we will receive your returned item."
+msgstr ""
+"Mikäli lähetät tuotteen, jonka arvo on yli $75, kannattaa harkita "
+"seurattavaa palvelua tai toimituksen vakuuttamista. Me emme takaa, että "
+"saamme palautetun tuotteen."
+
+msgid "OVERVIEW"
+msgstr "YLEISKATSAUS"
+
+#, python-format
+msgid ""
+"This website is operated by <strong>%(public_name)s</strong>. Throughout the "
+"site, the terms “we”, “us” and “our” refer to <strong>%(public_name)s</"
+"strong>. <strong>%(public_name)s</strong> offers this website, including all "
+"information, tools and services available from this site to you, the user, "
+"conditioned upon your acceptance of all terms, conditions, policies and "
+"notices stated here."
+msgstr ""
+"Tätä verkkosivua ylläpitää <strong>%(public_name)s</strong>. Sivustollamme, "
+"termit “me”, “meille” ja “meidän” viittaavat <strong>%(public_name)s</"
+"strong>. <strong>%(public_name)s</strong> tarjoaa tämän verkkosivun, kaiken "
+"sen sisällön, työkalut ja palvelut sinun, käyttäjän käyttöön sillä ehdolla, "
+"että hyväksyt kaikki ehdot, säännöt ja ilmoitukset, jotka täällä kerrotaan."
+
+msgid ""
+"By visiting our site and/ or purchasing something from us, you engage in our "
+"“Service” and agree to be bound by the following terms and conditions "
+"(“Terms of Service”, “Terms”), including those additional terms and "
+"conditions and policies referenced herein and/or available by hyperlink. "
+"These Terms of Service apply  to all users of the site, including without "
+"limitation users who are browsers, vendors, customers, merchants, and/ or "
+"contributors of content."
+msgstr ""
+"Vierailemalla sivuillamme ja/tai ostamalla jotakin meiltä, liityt "
+"palveluumme ja hyväksyt, että seuraavat ehdot sitovat sinua (\"Palveluehdot"
+"\", \"Ehdot\"), sisältäen lisäehdot jotka ovat saatavilla täällä tai "
+"linkkien välityksellä. Nämä Palveluehdot koskevat kaikkia sivuston "
+"käyttäjiä; selaajia, kauppiaita, jälleenmyyjiä, asiakkaita ja/tai "
+"sisällöntuottajia."
+
+msgid ""
+"Please read these Terms of Service carefully before accessing or using our "
+"website. By accessing or using any part of the site, you agree to be bound "
+"by these Terms of Service. If you do not agree to all the terms and "
+"conditions of this agreement, then you may not access the website or use any "
+"services. If these Terms of Service are considered an offer, acceptance is "
+"expressly limited to these Terms of Service."
+msgstr ""
+"Ole hyvä ja lue nämä käyttöehdot tarkkaan ennen sivustomme käyttöä. Kun "
+"menet mihinkään osioon sivuillamme, sitoudut näihin käyttöehtoihin. Jos et "
+"hyväksy kaikkia ehtoja tässä sopimuksessa, voit poistua sivuilta. Mikäli "
+"näiden käyttöehtojen katsotaan olevan tarjous, hyväksyntä rajoittuu vain "
+"näihin käyttöehtoihin."
+
+msgid ""
+"Any new features or tools which are added to the current store shall also be "
+"subject to the Terms of Service. You can review the most current version of "
+"the Terms of Service at any time on this page. We reserve the right to "
+"update, change or replace any part of these Terms of Service by posting "
+"updates and/or changes to our website. It is your responsibility to check "
+"this page periodically for changes. Your continued use of or access to the "
+"website following the posting of any changes constitutes acceptance of those "
+"changes."
+msgstr ""
+"Kaikki uudet ominaisuudet ja työkalut, jotka lisätään nykyiseen kauppaan "
+"ovat myös näiden käyttöehtojen alaisia. Voit aina tarkistaa käyttöehtojen "
+"viimeisimmän version tällä sivulla. Me varaamme oikeuden päivittää, vaihtaa "
+"tai korvata mitä tahansa osioita näistä käyttöehdoista lisäämällä muutokset "
+"näkyville tälle sivulle. On sinun vastuullasi tarkistaa tämä sivu aika-"
+"ajoin. Sivuston käyttö katsotaan hyväksynnäksi muutoksille."
+
+msgid "SECTION 1 - ONLINE STORE TERMS"
+msgstr "KOHTA 1 - VERKKOKAUPAN EHDOT"
+
+msgid ""
+"By agreeing to these Terms of Service, you represent that you are at least "
+"the age of majority in your state or province of residence, or that you are "
+"the age of majority in your state or province of residence and you have "
+"given us your consent to allow any of your minor dependents to use this site."
+msgstr ""
+"Hyväksymällä nämä käyttöehdot vakuutat, että olet vähintään täysi-ikäinen "
+"omassa valtiossasi tai asuinläänissäsi ja että olet antanut alaikäisten "
+"huollettaviesi luvan käyttää tätä sivustoa."
+
+msgid ""
+"You may not use our products for any illegal or unauthorized purpose nor may "
+"you, in the use of the Service, violate any laws in your jurisdiction "
+"(including but not limited to copyright laws)."
+msgstr ""
+"Et saa käyttää tuotteitamme mihinkään laittomaan tai kiellettyyn etkä saa "
+"palvelua käyttäessäsi rikkoa mitään lakeja (mm. tekijänoikeuslakeja)."
+
+msgid ""
+"You must not transmit any worms or viruses or any code of a destructive "
+"nature."
+msgstr "Et saa lähettää matoja, viruksia tai mitään koodia haittamielessä."
+
+msgid ""
+"A breach or violation of any of the Terms will result in an immediate "
+"termination of your Services."
+msgstr "Käyttöehtojen rikkominen johtaa välittömään palveluiden lopettamiseen."
+
+msgid "SECTION 2 - GENERAL CONDITIONS"
+msgstr "KOHTA 2 - YLEISET EHDOT"
+
+msgid ""
+"We reserve the right to refuse service to anyone for any reason at any time."
+msgstr "Varaamme oikeuden kieltäytyä palvelemasta ketä tahansa koska vain."
+
+msgid ""
+"You understand that your content (not including credit card information), "
+"may be transferred unencrypted and involve (a) transmissions over various "
+"networks; and (b) changes to conform and adapt to technical requirements of "
+"connecting networks or devices. Credit card information is always encrypted "
+"during transfer over networks."
+msgstr ""
+"Ymmärrät, että sisältösi (ei luottokorttitiedot), voidaan siirtää ilman "
+"salausta ja sisältää (a) siirtoja erinäisten verkkojen yli ja (b) muuttaa "
+"vastaamaan verkkojen teknisiä vaatimuksia. Luottokorttitiedot siirretään "
+"aina salattuna."
+
+msgid ""
+"You agree not to reproduce, duplicate, copy, sell, resell or exploit any "
+"portion of the Service, use of the Service, or access to the Service or any "
+"contact on the website through which the service is provided, without "
+"express written permission by us."
+msgstr ""
+"Käyttäjä sitoutuu ettei jäljennä, monista, kopioi, myy, jälleenmyy tai "
+"hyödynnä mitään osaa Palvelusta, käytä Palvelua tai Palvelun yhteystietoja "
+"ilman meiltä saatua kirjallista lupaa."
+
+msgid ""
+"The headings used in this agreement are included for convenience only and "
+"will not limit or otherwise affect these Terms."
+msgstr ""
+"Tässä sopimuksessa käytetyt otsikot on lisätty vain lukemisen "
+"helpottamiseksi eivätkä ne rajaa ehtoja tai muuten vaikuta niihin."
+
+msgid "SECTION 3 - ACCURACY, COMPLETENESS AND TIMELINESS OF INFORMATION"
+msgstr "KOHTA 3 - TARKKUUS, TÄYDELLISYYS JA TIETOJEN AJANTASAISUUS"
+
+msgid ""
+"We are not responsible if information made available on this site is not "
+"accurate, complete or current. The material on this site is provided for "
+"general information only and should not be relied upon or used as the sole "
+"basis for making decisions without consulting primary, more accurate, more "
+"complete or more timely sources of information. Any reliance on the material "
+"on this site is at your own risk."
+msgstr ""
+"Emme ole vastuussa mikäli sivuilla olevat tiedot eivät ole tarkkoja, "
+"täydellisiä tai ajantasaisia. Materiaalit tällä sivulla tarjotaan yleisenä "
+"tietona eikä siihen pidä luottaa tai sitä pidä käyttää päätöksenteon ainoana "
+"tietolähteenä ilman täydellisempien tietolähteiden konsultointia. Kaikki "
+"tämän sivuston tietojen käyttö tehdään käyttäjän omalla vastuulla."
+
+msgid ""
+"This site may contain certain historical information. Historical "
+"information, necessarily, is not current and is provided for your reference "
+"only. We reserve the right to modify the contents of this site at any time, "
+"but we have no obligation to update any information on our site. You agree "
+"that it is your responsibility to monitor changes to our site."
+msgstr ""
+"Tämä sivusto saattaa sisältää jotain historiatietoa. Historiatieto ei "
+"pakosta ole ajantasaista ja se tarjotaan vain viittaustarkoituksissa. Me "
+"pidätämme oikeuden muuttaa tämän sivuston sisältöä koska tahansa, mutta emme "
+"ole mitenkään velvoitettuja päivittämään tietoa sivuillamme. Hyväksyt, että "
+"on sinun vastuullasi seurata sivulla tapahtuvia muutoksia."
+
+msgid "SECTION 4 - MODIFICATIONS TO THE SERVICE AND PRICES"
+msgstr "KOHTA 4 - MUUTOKSET PALVELUUN JA HINTOIHIN"
+
+msgid "Prices for our products are subject to change without notice."
+msgstr "Tuotteidemme hinnat voivat koska vain muuttua ilman eri ilmoitusta."
+
+msgid ""
+"We reserve the right at any time to modify or discontinue the Service (or "
+"any part or content thereof) without notice at any time."
+msgstr ""
+"Varaamme oikeuden muuttaa tai lopettaa Palvelun (tai minkä tahansa osan tai "
+"sisällön) milloin tahansa ilman eri ilmoitusta."
+
+msgid ""
+"We shall not be liable to you or to any third-party for any modification, "
+"price change, suspension or discontinuance of the Service."
+msgstr ""
+"Meitä ei voi pitää vastuussa kenellekkään mistään muutoksesta, hinnan "
+"vaihtumisesta tai Palvelun lopettamisesta."
+
+msgid "SECTION 5 - PRODUCTS OR SERVICES (if applicable)"
+msgstr "KOHTA 5 - TUOTTEET JA PALVELUT (mikäli käytössä)"
+
+msgid ""
+"Certain products or services may be available exclusively online through the "
+"website. These products or services may have limited quantities and are "
+"subject to return or exchange only according to our Return Policy."
+msgstr ""
+"Tietyt tuotteet tai palvelut voivat olla saatavilla vain verkossa "
+"verkkosivun välityksellä. Näitä tuotteita tai palveluita voi olla rajattu "
+"määrä ja ne ovat meidän normaalin palautuskäytännön piirissä."
+
+msgid ""
+"We have made every effort to display as accurately as possible the colors "
+"and images of our products that appear at the store. We cannot guarantee "
+"that your computer monitor's display of any color will be accurate."
+msgstr ""
+"Olemme tehneet kaikkemme, jotta värit ja kuvat tuotteistamme ovat "
+"mahdollisimman tarkkoja. Emme voi taata, että tietokoneesi näyttö kaikkien "
+"värien osalta on tarkka."
+
+msgid ""
+"We reserve the right, but are not obligated, to limit the sales of our "
+"products or Services to any person, geographic region or jurisdiction. We "
+"may exercise this right on a case-by-case basis. We reserve the right to "
+"limit the quantities of any products or services that we offer. All "
+"descriptions of products or product pricing are subject to change at anytime "
+"without notice, at the sole discretion of us. We reserve the right to "
+"discontinue any product at any time. Any offer for any product or service "
+"made on this site is void where prohibited."
+msgstr ""
+"Varaamme oikeuden, mutta emme ole velvoitettuja, rajoittamaan tuotteidemme "
+"tai palveluidemme myyntiä tai palvelumme käyttöä mille tahansa henkilön, "
+"maantieteellisen alueen tai lakialueen perusteella. Tuotekuvaukset tai -"
+"hinnoittelu voi muuttua koska vain ilman eri ilmoitusta. Varaamme oikeuden "
+"lopettaa tuotteen koska tahansa. Jokainen tarjous tuotteesta tai palvelusta "
+"tällä sivulla ei ole voimassa siellä missä se on kiellettyä."
+
+msgid ""
+"We do not warrant that the quality of any products, services, information, "
+"or other material purchased or obtained by you will meet your expectations, "
+"or that any errors in the Service will be corrected."
+msgstr ""
+"Me emme takaa että laatu millekkään tuotteellamme, palvelullamme, "
+"tiedollemme tai muille materiaaleille, jonka olet ostanut vastaa odotuksiasi "
+"tai että mikään virhe Palvelussa tulisi korjattua."
+
+msgid "SECTION 6 - ACCURACY OF BILLING AND ACCOUNT INFORMATION"
+msgstr "KOHTA 6 - MAKSU- JA TILITIETOJEN TARKKUUS"
+
+msgid ""
+"We reserve the right to refuse any order you place with us. We may, in our "
+"sole discretion, limit or cancel quantities purchased per person, per "
+"household or per order. These restrictions may include orders placed by or "
+"under the same customer account, the same credit card, and/or orders that "
+"use the same billing and/or shipping address. In the event that we make a "
+"change to or cancel an order, we may attempt to notify you by contacting the "
+"e-mail and/or billing address/phone number provided at the time the order "
+"was made. We reserve the right to limit or prohibit orders that, in our sole "
+"judgment, appear to be placed by dealers, resellers or distributors."
+msgstr ""
+"Pidätämme oikeuden kieltäytyä tekemästänne tilauksesta. Me voimme, oman "
+"harkintamme mukaisesti, rajoittaa tai peruuttaa henkilön, talouden tai "
+"tilauksella ostettujen tuotteiden määriä. Nämä rajoitukset voivat koskea "
+"saman asiakastilin alla, saman luottokortin kanssa tai saman maksu- / "
+"toimitusosoitteen kanssa tehtyjä tilauksia. Mikäli teemme muutoksen "
+"tilaukseesi, pyrimme ilmoittamaan asiasta tilaushetkellä annettujen tietojen "
+"perusteella joko sähköpostitse ja/tai laskutusosoitteen puhelinumeroon. "
+"Varaamme oikeuden rajoittaa tai estää tilauksia, jotka meidän tulkintamme "
+"mukana, on tehty jälleenmyyjien tai jakelijoiden toimesta."
+
+msgid ""
+"You agree to provide current, complete and accurate purchase and account "
+"information for all purchases made at our store. You agree to promptly "
+"update your account and other information, including your email address and "
+"credit card numbers and expiration dates, so that we can complete your "
+"transactions and contact you as needed."
+msgstr ""
+"Hyväksyt toimittavasi ajantasaiset, täydelliset ja tarkat osto- ja "
+"tilitietosi kaikissa kaupassa tehdyissä ostotapahtumissa. Hyväksyt "
+"päivittäväsi tilitietosi ja muut tietosi, mukaanlukien sähköpostiosoitteesi, "
+"luottokorttinumerosi ja vanhenemispäivän, jotta voimme hyväksyä tilauksesi "
+"ja kontaktoida teitä tarpeen mukaan."
+
+msgid "For more detail, please review our Returns Policy."
+msgstr "Lue Palautusehtomme saadaksesi lisätietoja."
+
+msgid "SECTION 7 - OPTIONAL TOOLS"
+msgstr "KOHTA 7 - VALINNAISET TYÖKALUT"
+
+msgid ""
+"We may provide you with access to third-party tools over which we neither "
+"monitor nor have any control nor input."
+msgstr ""
+"Me voimme tarjota sinulle pääsyn kolmannen osapuolen työkaluihin mitä me "
+"emme tarkkaille, mihin meillä ei ole kontrollia ja johon emme syötä tietoja."
+
+msgid ""
+"You acknowledge and agree that we provide access to such tools ”as is” and "
+"“as available” without any warranties, representations or conditions of any "
+"kind and without any endorsement. We shall have no liability whatsoever "
+"arising from or relating to your use of optional third-party tools."
+msgstr ""
+"Huomaat ja hyväksyt, että me toimitamme pääsyn sellaisiin työkaluihin "
+"\"sellaisenaan\" ilman mitään takuita, esityksiä tai minkäänlaisia ehtoja ja "
+"ilman mitään hyväksyntää. Meillä ei ole mitään vastuuta liittyen käyttämiisi "
+"kolmannen osapuolen työkaluihin."
+
+msgid ""
+"Any use by you of optional tools offered through the site is entirely at "
+"your own risk and discretion and you should ensure that you are familiar "
+"with and approve of the terms on which tools are provided by the relevant "
+"third-party provider(s)."
+msgstr ""
+"Käytät kaikkia kolmannen osapuolen työkaluja omalla vastuullasi ja sinun "
+"pitäisi tutustua kolmannen osapuolen työkalun käyttöehtoihin ennen käyttöä."
+
+msgid ""
+"We may also, in the future, offer new services and/or features through the "
+"website (including, the release of new tools and resources). Such new "
+"features and/or services shall also be subject to these Terms of Service."
+msgstr ""
+"Voimme myös tulevaisuudessa tarjota uusia palveluita ja/tai ominaisuuksia "
+"verkkosivuillamme (esimerkiksi uusien työkalujen ja tietojen julkaisuja). "
+"Nämä ominaisuudet ja/tai palvelut ovat näiden käyttöehtojen alaisia."
+
+msgid "SECTION 8 - THIRD-PARTY LINKS"
+msgstr "KOHTA 8 - KOLMANNEN OSAPUOLEN LINKIT"
+
+msgid ""
+"Certain content, products and services available via our Service may include "
+"materials from third-parties."
+msgstr ""
+"Tietyt sisällöt, tuotteet ja palvelut palvelussamme voivat sisältää "
+"materiaalia kolmansilta osapuolilta."
+
+msgid ""
+"Third-party links on this site may direct you to third-party websites that "
+"are not affiliated with us. We are not responsible for examining or "
+"evaluating the content or accuracy and we do not warrant and will not have "
+"any liability or responsibility for any third-party materials or websites, "
+"or for any other materials, products, or services of third-parties."
+msgstr ""
+"Kolmansien osapuolien linkit sivuillamme voivat ohjata sinut kolmannen "
+"osapuolen verkkosivuille, joiden kanssa meillä ei ole mitään tekemistä. Me "
+"emme ole vastuussa materiaalista tai materiaalin tarkkuudesta, jota nämä "
+"kolmannen osapuolen sivustot tarjoavat."
+
+msgid ""
+"We are not liable for any harm or damages related to the purchase or use of "
+"goods, services, resources, content, or any other transactions made in "
+"connection with any third-party websites. Please review carefully the third-"
+"party's policies and practices and make sure you understand them before you "
+"engage in any transaction. Complaints, claims, concerns, or questions "
+"regarding third-party products should be directed to the third-party."
+msgstr ""
+"Me emme ole vastuussa mistään haitasta tai vahingosta ostaessasi tuotteita, "
+"palveluita, resursseja, sisältöä tai mitään muuta kun se tehdään yhteydessä "
+"kolmannen osapuolen verkkosivuihin. Ole hyvä ja tarkastele tarkoin "
+"kolmansien osapuolien ehdot ja käytännöt ennen kuin alat käyttämään heidän "
+"palveluitaan. Valitukset, vaateet, huolet ja kysymykset kolmansien "
+"osapuolien tuotteista pitää ohjata suoraan kolmansille osapuolille."
+
+msgid "SECTION 9 - USER COMMENTS, FEEDBACK AND OTHER SUBMISSIONS"
+msgstr "KOHTA 9 - KÄYTTÄJÄKOMMENTIT, PALAUTE JA MUUT NÄKÖKANNAT"
+
+msgid ""
+"If, at our request, you send certain specific submissions (for example "
+"contest entries) or without a request from us you send creative ideas, "
+"suggestions, proposals, plans, or other materials, whether online, by email, "
+"by postal mail, or otherwise (collectively, 'comments'), you agree that we "
+"may, at any time, without restriction, edit, copy, publish, distribute, "
+"translate and otherwise use in any medium any comments that you forward to "
+"us. We are and shall be under no obligation (1) to maintain any comments in "
+"confidence; (2) to pay compensation for any comments; or (3) to respond to "
+"any comments."
+msgstr ""
+"Mikäli pyynnöstämme lähetät tiettyjä tietoja (esimerkiksi "
+"kilpailuosallistumisia) tai ilman meidän pyyntöämme lähetät luovia ideoita, "
+"ehdotuksia, suunnitelmia tai muita materiaaleja joko verkossa sähköpostitse "
+"tai postitse tai muuten (yleensä kommenteissa), hyväksyt että voimme koska "
+"tahansa, ilman mitään rajoituksia, muokata, kopioida, julkaista, jakaa, "
+"kääntää ja käyttää kommentteja missä haluamme. Me emme ole velvoitettuja (1) "
+"pitämään mitään kommentteja luottamuksellisina; (2) maksamaan kompensaatiota "
+"mistään kommenteista; tai (3) vastaamaan mihinkään kommentteihin."
+
+msgid ""
+"We may, but have no obligation to, monitor, edit or remove content that we "
+"determine in our sole discretion are unlawful, offensive, threatening, "
+"libelous, defamatory, pornographic, obscene or otherwise objectionable or "
+"violates any party’s intellectual property or these Terms of Service."
+msgstr ""
+"Me voimme, mutta emme ole velvoitettuja, tarkkailla, muokata tai poistaa "
+"sisältöä, jonka katsomme, oman harkintamme mukaisesti, olevan laitonta, "
+"hyökkäävää, uhkaavaa, herjaavaa, halventavaa, pornografista, hävytöntä tai "
+"muuten kyseenalaista tai rikkoo mitään tekijäoikeuksia tai näitä "
+"käyttöehtoja."
+
+msgid ""
+"You agree that your comments will not violate any right of any third-party, "
+"including copyright, trademark, privacy, personality or other personal or "
+"proprietary right. You further agree that your comments will not contain "
+"libelous or otherwise unlawful, abusive or obscene material, or contain any "
+"computer virus or other malware that could in any way affect the operation "
+"of the Service or any related website. You may not use a false e-mail "
+"address, pretend to be someone other than yourself, or otherwise mislead us "
+"or third-parties as to the origin of any comments. You are solely "
+"responsible for any comments you make and their accuracy. We take no "
+"responsibility and assume no liability for any comments posted by you or any "
+"third-party."
+msgstr ""
+"Käyttäjä hyväksyy, että kommentit eivät riko minkään kolmannen osapuolen "
+"oikeutta, kuten tekijänoikeuksia, tavaramerkkejä, yksityisyyttä, "
+"persoonallisuus tai muita henkilökohtaisia tai omistusoikeuksia. Lisäksi "
+"käyttäjä hyväksyy, että kommentit eivät sisällä herjaavaa tai muutoin "
+"laittomia, väärää tai säädytöntä materiaalia tai tietokonevirusta tai muita "
+"haittaohjelmia, jotka voivat mitenkään vaikuttaa Palvelun tai verkkosivun "
+"toimintaan. Et voi käyttää väärää sähköpostiosoitetta, teeskennellä olevasi "
+"joku muu kuin itse, tai muuten johtaa harhaan meitä tai kolmansia osapuolia "
+"kommenteissasi. Olet yksin vastuussa kommenteistasi ja niiden tarkkuudesta. "
+"Emme ota vastuuta, eikä meitä voi pitää vastuussa mistään käyttäjien tai "
+"kolmansien osapuolien kommenteista."
+
+msgid "SECTION 10 - PERSONAL INFORMATION"
+msgstr "KOHTA 10 - OMAT TIEDOT"
+
+msgid ""
+"Your submission of personal information through the store is governed by our "
+"Privacy Policy. To view our Privacy Policy."
+msgstr "Yksityisiä tietoja käsitellään tietosuojakäytäntömme mukaisesti."
+
+msgid "SECTION 11 - ERRORS, INACCURACIES AND OMISSIONS"
+msgstr "KOHTA 11 - VIRHEET, EPÄKOHDAT JA PUUTTEET"
+
+msgid ""
+"Occasionally there may be information on our site or in the Service that "
+"contains typographical errors, inaccuracies or omissions that may relate to "
+"product descriptions, pricing, promotions, offers, product shipping charges, "
+"transit times and availability. We reserve the right to correct any errors, "
+"inaccuracies or omissions, and to change or update information or cancel "
+"orders if any information in the Service or on any related website is "
+"inaccurate at any time without prior notice (including after you have "
+"submitted your order)."
+msgstr ""
+"Toisinaan sivuillamme tai palvelussamme voi esiintyä tietoa, joka sisältää "
+"kirjoitusvirheitä, epätarkkuuksia muita puutteita, jotka voivat liittyä "
+"tuotteen kuvauksiin, hintoihin, kampanjoihin, tarjouksiin, toimituskuluihin, "
+"toimitusaikoihin ja saatavuuteen. Varaamme oikeuden korjata virheet, "
+"epäkohdat ja puutteet  ja varaamme oikeuden muuttaa tai päivittää tietoa tai "
+"päivittää tilauksen mikäli mikään tieto palvelussa tai liittyvillä "
+"verkkosivuilla on epätarkkaa, koska tahansa, ilman eri ilmoitusta (myös "
+"tehtyjen tilausten jälkeen)."
+
+msgid ""
+"We undertake no obligation to update, amend or clarify information in the "
+"Service or on any related website, including without limitation, pricing "
+"information, except as required by law. No specified update or refresh date "
+"applied in the Service or on any related website, should be taken to "
+"indicate that all information in the Service or on any related website has "
+"been modified or updated."
+msgstr ""
+"Emme ota vastuuta päivittää, muuttaa tai tarkentaa tietoa palvelussa tai "
+"missään liittyvässä verkkosivustossa, sisältäen ilman rajoituksia, "
+"hintatiedot, muuten kuin lain puitteissa. Mitään tiettyä päivämäärää ei pidä "
+"pitää indikaationa tiedosta, että palvelun tai liittyvän verkkosivun tiedot "
+"olisivat ajantasalla."
+
+msgid "SECTION 12 - PROHIBITED USES"
+msgstr "KOHTA 12 - KIELLETYT KÄYTÖT"
+
+msgid ""
+"In addition to other prohibitions as set forth in the Terms of Service, you "
+"are prohibited from using the site or its content: (a) for any unlawful "
+"purpose; (b) to solicit others to perform or participate in any unlawful "
+"acts; (c) to violate any international, federal, provincial or state "
+"regulations, rules, laws, or local ordinances; (d) to infringe upon or "
+"violate our intellectual property rights or the intellectual property rights "
+"of others; (e) to harass, abuse, insult, harm, defame, slander, disparage, "
+"intimidate, or discriminate based on gender, sexual orientation, religion, "
+"ethnicity, race, age, national origin, or disability; (f) to submit false or "
+"misleading information; (g) to upload or transmit viruses or any other type "
+"of malicious code that will or may be used in any way that will affect the "
+"functionality or operation of the Service or of any related website, other "
+"websites, or the Internet; (h) to collect or track the personal information "
+"of others; (i) to spam, phish, pharm, pretext, spider, crawl, or scrape; (j) "
+"for any obscene or immoral purpose; or (k) to interfere with or circumvent "
+"the security features of the Service or any related website, other websites, "
+"or the Internet. We reserve the right to terminate your use of the Service "
+"or any related website for violating any of the prohibited uses."
+msgstr ""
+"Käyttöehdoissa esitettyjen rajoitusten lisäksi, et saa käyttää sivustoa tai "
+"sen sisältöä: (a) mihinkään laittomaan tarkoitukseen; (b) taivuttamaan "
+"toisia, saada heitä suorittamaan tai osallistumaan laittomuuksiin; (c) "
+"rikkomaan mitään kansainvälisiä, liittovaltion, provinssin tai valtion "
+"määräyksiä, sääntöjä, lakeja tai muita paikallisia säädöksiä; (d) meidän tai "
+"muiden immateriaalioikeuksien rikkomiseen; (e) häiritsemiseen, "
+"väärinkäyttöön, loukkaamiseen, vahingotekoon, halventamiseen, panetteluun, "
+"väheksymiseen, uhkailuun tai syrjimiseen joko sukupuolen, sukupuolisen "
+"suuntautumisen, uskonnon, etnisen alkuperän, rodun, iän, kansallisen "
+"alkuperän tai vamman vuoksi; (f) esittämään vääriä tai harhaanjohtavia "
+"tietoja; (g) lähettämään tai välittämään viruksia tai muuta haitallista "
+"koodia joka tullaan toteuttamaan tai voidaan käyttää tavalla, joka vaikuttaa "
+"Palvelun, minkään liittyvän verkkosivuston, muiden sivustojen, tai "
+"Internetin toimivuuteen; (h) toisten henkilökohtaisten tietojen keräämiseen "
+"tai seuraamiseen; (i) roskapostiin, phishingiin, pharmingiin, pretextingiin, "
+"spiderointiin, crawlingiin tai tiedonkaavintaan; (J) mihinkään säädyttömään "
+"tai moraalittomaan tarkoitukseen; tai (k) minkä tahansa palvelun, liittyvän "
+"verkkosivuston, minkä tahansa verkkosivuston tai Internetin tietoturvan "
+"häirintään tai kiertämiseen. Pidätämme oikeuden lopettaa Palvelun tai "
+"liittyvän sivuston käytön, mikäli käyttäjä rikkoo mitä tahansa kielletyistä "
+"ehdoista."
+
+msgid "SECTION 13 - DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY"
+msgstr "KOHTA 13 - VASTUUVAPAUSLAUSEKE; VASTUUN RAJOITUS"
+
+msgid ""
+"We do not guarantee, represent or warrant that your use of our service will "
+"be uninterrupted, timely, secure or error-free."
+msgstr ""
+"We emme takaa, esitä tai vakuuta, että palvelun käyttö tapahtuu "
+"keskeyttämättä, ajantasaisesti, turvallisesti tai virheettömästi."
+
+msgid ""
+"We do not warrant that the results that may be obtained from the use of the "
+"service will be accurate or reliable."
+msgstr ""
+"We emme takaa, että palvelun käytöstä saadut tulokset ovat tarkkoja tai "
+"luotettavia."
+
+msgid ""
+"You agree that from time to time we may remove the service for indefinite "
+"periods of time or cancel the service at any time, without notice to you."
+msgstr ""
+"Käyttäjä hyväksyy, että voimme poistaa palvelun määräämättömäksi ajaksi tai "
+"lopettaa palvelun koska tahansa, ilman eri ilmoitusta käyttäjälle."
+
+msgid ""
+"You expressly agree that your use of, or inability to use, the service is at "
+"your sole risk. The service and all products and services delivered to you "
+"through the service are (except as expressly stated by us) provided 'as is' "
+"and 'as available' for your use, without any representation, warranties or "
+"conditions of any kind, either express or implied, including all implied "
+"warranties or conditions of merchantability, merchantable quality, fitness "
+"for a particular purpose, durability, title, and non-infringement."
+msgstr ""
+"Käyttäjä hyväksyy nimenomaisesti, että hänen käyttönsä, tai kyvyttömyytensä "
+"käyttää palvelua on hänen omalla vastuullaan. Palvelu ja kaikki tuotteet ja "
+"palvelut toimitetaan käyttäjälle palvelun kautta ovat (ellei nimenomaisesti "
+"muuta mainittu meidän toimesta) \"sellaisenaan\" ja \"kuten saatavilla\" "
+"omaan käyttöön, ilman edustusta, takuita tai ehtoja, ilmaan minkäänlaisia "
+"nimenomaista tai hiljaista takuuta soveltuvuudesta kaupankäyntiin, "
+"myyntikelpoisuudesta, sopivuudesta tiettyyn tarkoitukseen, kestävyydestä ja "
+"loukkaamattomuudesta."
+
+#, python-format
+msgid ""
+"In no case shall <strong>%(public_name)s</strong>, our directors, officers, "
+"employees, affiliates, agents, contractors, interns, suppliers, service "
+"providers or licensors be liable for any injury, loss, claim, or any direct, "
+"indirect, incidental, punitive, special, or consequential damages of any "
+"kind, including, without limitation lost profits, lost revenue, lost "
+"savings, loss of data, replacement costs, or any similar damages, whether "
+"based in contract, tort (including negligence), strict liability or "
+"otherwise, arising from your use of any of the service or any products "
+"procured using the service, or for any other claim related in any way to "
+"your use of the service or any product, including, but not limited to, any "
+"errors or omissions in any content, or any loss or damage of any kind "
+"incurred as a result of the use of the service or any content (or product) "
+"posted, transmitted, or otherwise made available via the service, even if "
+"advised of their possibility. Because some states or jurisdictions do not "
+"allow the exclusion or the limitation of liability for consequential or "
+"incidental damages, in such states or jurisdictions, our liability shall be "
+"limited to the maximum extent permitted by law."
+msgstr ""
+"Missään olosuhteissa <strong>%(public_name)s</strong>, johtajamme, "
+"toimihenkilömme, työntekijämme, tytäryhtiömme, edustajamme, alihankkijamme, "
+"harjoittelijamme, toimittajamme, palveluntarjoajamme tai lisenssinantajamme "
+"eivät ole vastuussa mistään vahingosta, menetyksestä, vaatimuksesta, tai "
+"mistä tahansa suorista, satunnaisista, vahingoista, suorista tai "
+"välillisistä vahingoista mukaanlukien rajoituksetta menetetyt voitot, "
+"menetetyt tulot, säästöjen menetykset, tietojen menetys, kustannusten "
+"korvaamisesta, tai muita vastaavia vahinkoja, onko perustuu sopimukseen, "
+"oikeudenloukkaukseen (mukaan lukien huolimattomuus), ankaraan vastuuseen tai "
+"muutoin, jotka aiheutuvat käytöstä jonkin palvelun tai tuotteiden "
+"hankittavien käyttävät palvelua, tai muita väitteitä liity millään tavalla "
+"oman palvelun käytön tai minkä tahansa tuotteen, mukaan lukien, mutta ei "
+"rajoittuen, mahdolliset virheisiin tai laiminlyönteihin sisällössä tai "
+"mistään menetyksestä tai vahingoista, jotka aiheutuvat palvelun käytöstä tai "
+"mistään sisällöstä joka on saatettu käytettäväksi palvelussa. Koska jotkut "
+"lainkäyttöalueet eivät salli vastuun poissulkemista tai rajoittamista "
+"välillisistä tai satunnaisista vahingoista, on tällaisissa "
+"lainkäyttöalueilla, vastuumme rajoitettu lain sallimiin rajoihin."
+
+msgid "SECTION 14 - INDEMNIFICATION"
+msgstr "KOHTA 14 - VAHINGONKORVAUS"
+
+#, python-format
+msgid ""
+"You agree to indemnify, defend and hold harmless <strong>%(public_name)s</"
+"strong> and our parent, subsidiaries, affiliates, partners, officers, "
+"directors, agents, contractors, licensors, service providers, "
+"subcontractors, suppliers, interns and employees, harmless from any claim or "
+"demand, including reasonable attorneys’ fees, made by any third-party due to "
+"or arising out of your breach of these Terms of Service or the documents "
+"they incorporate by reference, or your violation of any law or the rights of "
+"a third-party."
+msgstr ""
+"Käyttäjä sitoutuu hyvittämään, puolustamaan ja suojaamaan <strong>"
+"%(public_name)s</strong> ja meidän tytäryhtiöitämme, kumppaneitamme, "
+"johtajiamme, agenttejamme, alihankkijoitamme, lisenssinhaltiojoitamme, "
+"palveluntarjoajiamme, toimittajiamme, harjoittelijoitamme ja "
+"työntekijöitämme, kaikissa vaatimuksissa, mukaan lukien kohtuulliset "
+"asianajokulut, joita syntyy kolmansien osapuolien vuoksi tai johtuvat näiden "
+"käyttöehtojen rikkomisesta tai johtuu käyttäjän rikkomista laeista tai "
+"kolmansien osapuolien oikeuksista."
+
+msgid "SECTION 15 - SEVERABILITY"
+msgstr "KOHTA 15 - PILKKOMINEN"
+
+msgid ""
+"In the event that any provision of these Terms of Service is determined to "
+"be unlawful, void or unenforceable, such provision shall nonetheless be "
+"enforceable to the fullest extent permitted by applicable law, and the "
+"unenforceable portion shall be deemed to be severed from these Terms of "
+"Service, such determination shall not affect the validity and enforceability "
+"of any other remaining provisions."
+msgstr ""
+"Mikäli jokin säännös näistä käyttöehdoista todetaan laittomaksi, "
+"mitättömäksi tai pakottamiskelvottomaksi, säännöstä pidetään kuitenkin "
+"pakottavana niin täysimittaisena kuin laki sen sallii ja pakottamiskelvotin "
+"osa säännöksestä poistetaan näistä käyttöehdoista. Näillä toimilla ei ole "
+"vaikutusta jäljelle jääneisiin säännöksiin."
+
+msgid "SECTION 16 - TERMINATION"
+msgstr "KOHTA 16 - PÄÄTTYMINEN"
+
+msgid ""
+"The obligations and liabilities of the parties incurred prior to the "
+"termination date shall survive the termination of this agreement for all "
+"purposes."
+msgstr ""
+"Osapuolten, ennen päättymispäivää aiheutuneet, velvoitteet ja vastuut "
+"pysyvät voimassa tämän sopimuksen kaikkiin tarkoituksiin."
+
+msgid ""
+"These Terms of Service are effective unless and until terminated by either "
+"you or us. You may terminate these Terms of Service at any time by notifying "
+"us that you no longer wish to use our Services, or when you cease using our "
+"site."
+msgstr ""
+"Nämä käyttöehdot ovat voimassa ellei tai kunnes ne lakkautetaan joko "
+"käyttäjän tai meidän toimesta. Voit ilmoittaa tahtosi käyttöoikeuksien "
+"hyväksymiseen koska tahansa ilmoittamalla meille, ettet halua enää käyttää "
+"palveluitamme, tai kun lopetat sivuston käytön."
+
+msgid ""
+"If in our sole judgment you fail, or we suspect that you have failed, to "
+"comply with any term or provision of these Terms of Service, we also may "
+"terminate this agreement at any time without notice and you will remain "
+"liable for all amounts due up to and including the date of termination; and/"
+"or accordingly may deny you access to our Services (or any part thereof)."
+msgstr ""
+"Mikäli toteamme, tai epäilemme, että ettet noudata jotain käyttöehtojemme "
+"ehtoa tai säännöstä, voimme lopettaa tämän sopimuksen ilman mitään "
+"ilmoitusta ja pitää sinua vastuullisena saamisista aina lopettamispäivään "
+"asti ja/tai estää sinulta pääsyn palveluihimme (mihin tahansa osioon)."
+
+msgid "SECTION 17 - ENTIRE AGREEMENT"
+msgstr "KOHTA 17 - KOKO SOPIMUS"
+
+msgid ""
+"The failure of us to exercise or enforce any right or provision of these "
+"Terms of Service shall not constitute a waiver of such right or provision."
+msgstr ""
+"Meidän epäonnistuminen käyttää tai tai pakottaa mitä tahansa näiden "
+"käyttöoikeuksien oikeutta tai säännöstä ei merkitse luopumista kyseisestä "
+"oikeudesta tai säännöksestä."
+
+msgid ""
+"These Terms of Service and any policies or operating rules posted by us on "
+"this site or in respect to The Service constitutes the entire agreement and "
+"understanding between you and us and govern your use of the Service, "
+"superseding any prior or contemporaneous agreements, communications and "
+"proposals, whether oral or written, between you and us (including, but not "
+"limited to, any prior versions of the Terms of Service)."
+msgstr ""
+"Meidän sivuille lisäämien käyttöehtojen ja minkä tahansa muiden ehtojen tai "
+"käyttösääntöjen Palvelua koskien muodostavat koko sopimuksen ja käyttäjän ja "
+"meidän välillä ja säätelevät Palvelun käyttöä ja korvaa kaikki aiemmat tai "
+"samanaikaiset sopimukset, tiedonannot ja ehdotukset, sekä kirjalliset että "
+"suulliset, käyttäjän ja meidän (mukaan lukien, mutta ei rajoittuen, kaikki "
+"aiemmat käyttöehdot) välillä."
+
+msgid ""
+"Any ambiguities in the interpretation of these Terms of Service shall not be "
+"construed against the drafting party."
+msgstr ""
+"Käyttöehtojen tulkinnan epäselvyyksiä ei pidä tulkita laativaa osapuolta "
+"vastaan."
+
+msgid "SECTION 18 - GOVERNING LAW"
+msgstr "KOHTA 18 - SOVELLETTAVA LAINSÄÄDÄNTÖ"
+
+#, python-format
+msgid ""
+"These Terms of Service and any separate agreements whereby we provide you "
+"Services shall be governed by and construed in accordance with the laws of "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+"Näihin käyttöehtoihin ja kaikkiin muihin sopimuksiin mitä me toimitamme "
+"käyttäjälle Palvelua koskien sovelletaan ja tulkitaan suhteessa lakiin "
+"kaupan sijaintimaassa: <strong>%(shop_address)s</strong>."
+
+msgid "SECTION 19 - CHANGES TO TERMS OF SERVICE"
+msgstr "KOHTA 19 - MUUTOKSET KÄYTTÖEHTOIHIN"
+
+msgid ""
+"You can review the most current version of the Terms of Service at any time "
+"at this page."
+msgstr ""
+"Voit tarkastella uusinta versiota käyttöehdoista koska tahansa tältä sivulta."
+
+msgid ""
+"We reserve the right, at our sole discretion, to update, change or replace "
+"any part of these Terms of Service by posting updates and changes to our "
+"website. It is your responsibility to check our website periodically for "
+"changes. Your continued use of or access to our website or the Service "
+"following the posting of any changes to these Terms of Service constitutes "
+"acceptance of those changes."
+msgstr ""
+"Pidätämme oikeuden, harkitamme mukaan, päivittää, muuttaa tai korvata mitä "
+"tahansa osia näistä käyttöehdoista lisäämällä muutokset sivuillemme. On "
+"käyttäjän vastuulla tarkistaa käyttöehdot aika ajoin. Jatkunut käyttö tai "
+"sivuillamme käynti mahdollisten muutosten jälkeen katsotaan käyttöehtojen "
+"hyväksymiseksi."
+
+msgid "SECTION 20 - CONTACT INFORMATION"
+msgstr "KOHTA 20 - YHTEYSTIEDOT"
+
+#, python-format
+msgid ""
+"Questions about the Terms of Service should be sent to us at <strong>"
+"%(shop_email)s</strong>."
+msgstr ""
+"Kysymykset käyttöehtoja koskien voi lähettää <strong>%(shop_email)s</strong>."
+
+msgid "Remove block"
+msgstr "Poista lohko"
+
+msgid "Resize block"
+msgstr "Muuta lohkon kokoa"
+
+msgid "Welcome!"
+msgstr "Tervetuloa!"
+
+msgid "Notifications"
+msgstr "Ilmoitukset"
+
+msgid "Mark as read"
+msgstr "Merkitse luetuksi"
+
+msgid "Activity Feed"
+msgstr "Syöte"
+
+#, python-format
+msgid "Shuup %(version)s"
+msgstr "Shuup %(version)s"
+
+msgid ""
+"This is the dashboard for your store. It’s like the flight deck for your "
+"ecommerce spaceship. You can control everything from here."
+msgstr ""
+"Tämä on kojelauta kaupallesi. Se on kuin avaruusaluksen ohjaamo kaupallesi. "
+"Voit hallita kaikkea täältä."
+
+msgid ""
+"Check out your shoppers’ info, add more products or categories, setup "
+"marketing campaigns, see orders and sales stats, and track the money you’ve "
+"made."
+msgstr ""
+"Tarkistele asiakkaittesi tietoja, lisää tuotteita tai tuoteryhmiä, hallitse "
+"kampanjoita, tarkistele tilauskia ja myyntitilastoja ja seuraa "
+"rahaliikennettäsi."
+
+msgid "Every setting you could possibly need is in here."
+msgstr "Kaikki mahdolliset asetukset löytyvät täältä."
+
+msgid "Table Columns"
+msgstr "Taulun sarakkeet"
+
+msgid "Active headers"
+msgstr "Aktiiviset otsakkeet"
+
+msgid "Selectable headers"
+msgstr "Valittavat otsakkeet"
+
+msgid "Add"
+msgstr "Lisää"
+
+msgid "Bad Request"
+msgstr "Epäkelpo pyyntö"
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr "Palvelin ei voinut valitettavasti käsitellä pyyntöäsi."
+
+msgid "Permission Denied"
+msgstr "Ei käyttöoikeutta"
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr "Sinulla ei valitettavasti ole käyttöoikeutta tarkastella tätä sivua."
+
+msgid "Internal Server Error"
+msgstr "Sisäinen palvelinvirhe"
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr ""
+"Sisäinen palvelinvirhe. Koita päivittää sivu tai yritä myöhemmin uudelleen."
+
+msgid "Welcome to Shuup!"
+msgstr "Tervetuloa Shuuppiin!"
+
+msgid ""
+"You're almost done! Complete the following steps to sell your products online"
+msgstr ""
+"Olet melkein valmis! Suorita seuraavat vaiheet aloittaaksesi kaupanteon."
+
+msgid "Hi, new shop owner!"
+msgstr "Terve uusi kauppias!"
+
+msgid "Welcome to your store admin!"
+msgstr "Tervetuloa kauppasi hallintaan!"
+
+msgid ""
+"Let’s go through some of the things you can do here. Click next to begin."
+msgstr ""
+"Käydään läpi joitakin juttuja, joita voit tehdä täällä. Klikkaa seuraava "
+"aloittaaksesi."
+
+msgid "Date"
+msgstr "Päivämäärä"
+
+msgid "Save and Exit"
+msgstr "Tallenna ja poistu"
+
+msgid "This action effects on all products."
+msgstr "Tämä vaikuttaa kaikkiin tuotteisiin."
+
+#, python-format
+msgid "This action effects %(item_count)s products."
+msgstr "Tämä vaikuttaa %(item_count)s tuotteeseen."
+
+msgid "Edit"
+msgstr "Muokkaa"
+
+msgid "Upload"
+msgstr "Lataa"
+
+msgid "Comment"
+msgstr "Kommentti"
+
+msgid "Save comment"
+msgstr "Tallenna kommentti"
+
+msgid "Comment saved."
+msgstr "Kommentti tallennettu."
+
+msgid "There was an error updating the admin comment."
+msgstr "Kommentin päivitys ei onnistunut."
+
+msgid "Description"
+msgstr "Kuvaus"
+
+msgid "No payments have been created yet."
+msgstr "Yhtään maksua ei ole vielä luotu."
+
+msgid "Order Contents"
+msgstr "Tilauksen sisältö"
+
+msgid "Text"
+msgstr "Teksti"
+
+msgid "Taxless Unit Price"
+msgstr "Veroton yksikköhinta"
+
+msgid "Taxless Discount"
+msgstr "Veroton alennus"
+
+msgid "Taxless Discount Percentage"
+msgstr "Veroton alennusprosentti"
+
+msgid "Tax"
+msgstr "Vero"
+
+msgid "Taxless Total"
+msgstr "Veroton yhteensä"
+
+msgid "Total incl. Tax"
+msgstr "Verollinen yhteensä"
+
+msgid "Discount"
+msgstr "Alennus"
+
+msgid "Taxless"
+msgstr "Veroton"
+
+msgid "Message"
+msgstr "Viesti"
+
+msgid "No log entries have been added yet."
+msgstr "Yhtään lokimerkintää ei ole vielä lisätty."
+
+msgid "Use the input below to add new log entries."
+msgstr "Lisää uusia lokimerkintöjä alla."
+
+msgid "Add to Log"
+msgstr "Lisää lokiin"
+
+msgid "Log entry added."
+msgstr "Logimerkintä lisätty."
+
+msgid "There was an error adding the log entry."
+msgstr "Lokimerkinnän lisäämisessä tapahtui virhe."
+
+msgid "Tracking Code"
+msgstr "Seurantakoodi"
+
+msgid "Created"
+msgstr "Luotu"
+
+msgid "Delete"
+msgstr "Poista"
+
+msgid "No shipments have been created yet."
+msgstr "Toimituksia ei ole vielä luotu."
+
+msgid ""
+"Shipped shipments should not be deleted. Deletion will affect products "
+"physical stock count. Delete anyway?"
+msgstr ""
+"Toimitettuja toimituksia ei tule poistaa. Poistaminen vaikuttaa tuotteet "
+"fyysiseen saldoon. Vahvista poisto."
+
+msgid "Line #"
+msgstr "Rivi #"
+
+msgid "Refunded Quantity"
+msgstr "Hyvitetty määrä"
+
+msgid "Refund Amount"
+msgstr "Hyvityksen määrä"
+
+msgid "Are you sure you want to create a full refund?"
+msgstr "Oletko varma, että haluat tehdä kokonaishyvityksen?"
+
+msgid "Confirm Refund"
+msgstr "Vahvista hyvitys"
+
+msgid "Paid"
+msgstr "Maksettu"
+
+msgid "Remaining"
+msgstr "Jäljellä"
+
+msgid "Refunded"
+msgstr "Hyvitetty"
+
+msgid "Add Another Refund"
+msgstr "Lisää toinen hyvitys"
+
+msgid "To Ship"
+msgstr "Lähetettäväksi"
+
+msgid "Ordered"
+msgstr "Tilattu"
+
+msgid "Shipped"
+msgstr "Lähetetty"
+
+msgid "Unshipped"
+msgstr "Lähettämätön"
+
+msgid "Set All Products To Ship"
+msgstr "Aseta kaikki tuotteet lähetettäväksi"
+
+msgid "Ship All"
+msgstr "Lähetä kaikki"
+
+msgid "Details"
+msgstr "Tiedot"
+
+msgid "Order Number"
+msgstr "Tilausnumero"
+
+msgid "Reference"
+msgstr "Viite"
+
+msgid "Label"
+msgstr "Merkki"
+
+msgid "Ordered by"
+msgstr "Järjestä"
+
+msgid "Creator"
+msgstr "Laatija"
+
+msgid "Tax number"
+msgstr "veronumero"
+
+msgid "Total Price (taxless)"
+msgstr "Kokonaishinta (veroton)"
+
+msgid "Total Price"
+msgstr "Kokonaishinta"
+
+msgid "Customer Comment"
+msgstr "Asiakaskommentti"
+
+msgid "Payment Method"
+msgstr "Maksutapa"
+
+msgid "Shipping Method"
+msgstr "Toimitustapa"
+
+msgid "Tracking codes"
+msgstr "Seurantakoodit"
+
+msgid "Address Information"
+msgstr "Osoitetieto"
+
+msgid "Error!"
+msgstr "Virhe!"
+
+msgid "All the required product information."
+msgstr "Kaikki tarvittava tuotetieto."
+
+msgid "Additional Details"
+msgstr "Lisätietoja"
+
+msgid "Product features such as size, weight and keywords are located here."
+msgstr ""
+"Löydät täältä muun muassa seuraavia tuotteen ominaisuuksia: koko, paino ja "
+"avainsanat."
+
+msgid "Manufacturer"
+msgstr "Valmistaja"
+
+msgid "If you know the manufacturer of the product select it here."
+msgstr "Mikäli tiedät tuotteen valmistajan, voit valita sen täällä."
+
+msgid "Additional"
+msgstr "Lisätiedot"
+
+msgid ""
+"Strictly shop related information. For example set the minimum price "
+"applicable in this shop."
+msgstr ""
+"Vain kauppaan sidotut tiedot. Voit asettaa minimihinnan vain tässä kaupassa "
+"myytävälle tuotteelle."
+
+#, python-format
+msgid "These settings apply only for shop: <b>%(shop_name)s</b>."
+msgstr "Nämä asetukset toimivat vain kaupassa <b>%(shop_name)s</b>."
+
+#, python-format
+msgid "Product image %(index)s"
+msgstr "Tuotekuva %(index)s"
+
+#, python-format
+msgid "Product media %(index)s"
+msgstr "Tuotemedia %(index)s"
+
+msgid "Primary image"
+msgstr "Pääkuva"
+
+msgid "Set as primary image"
+msgstr "Aseta pääkuvaksi"
+
+msgid "Advanced options"
+msgstr "Edistyneet asetukset"
+
+msgid "Product Images"
+msgstr "Tuotekuvat"
+
+msgid "Product Files"
+msgstr "Tuotetiedostot"
+
+msgid "You can attach files such as manual to the merchandise(s) here."
+msgstr "Voit liittää tiedostoja kuten manuaaleja tuotteellesi."
+
+msgid "Showcase your merchandise here."
+msgstr "Esittele tuotettasi täällä."
+
+msgid "All the orders that have this product."
+msgstr "Kaikki tilaukset, joissa tämä tuote on."
+
+msgid "No orders found"
+msgstr "Tilauksia ei löytynyt"
+
+msgid "This product is currently not orderable."
+msgstr "Tämä tuote ei ole tällä hetkellä tilattavissa."
+
+msgid "You are adding a product."
+msgstr "Olet lisäämässä tuotetta."
+
+msgid ""
+"To make it stand out, give it an awesome description and picture. This is "
+"what will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr ""
+"Nostaaksesi tuotteen esiin, anna sille mahtava kuvaus ja kuva. Tämä "
+"helpottaa asiakkaitasi löytämään tuotteesi sekä kauppasi sisältä, että "
+"hakukoneilla verkosta."
+
+msgid ""
+"You can set its price or size and many other things in the option boxes for "
+"each product."
+msgstr ""
+"Voit asettaa tuotteen hinnan tai koon ja useita muita asetuksia tuotteelle."
+
+msgid "If you know the product manufacturer, it can be set here."
+msgstr "Mikäli tiedät tuotteen valmistajan, voit asettaa sen täällä."
+
+msgid "Additional Information"
+msgstr "Lisätiedot"
+
+msgid "Images"
+msgstr "Kuvat"
+
+msgid "Contact Group Pricing"
+msgstr "Asiakasryhmähinnoittelu"
+
+msgid ""
+"Set specific prices for your customer segments such as loyalty, tier status "
+"or season here."
+msgstr ""
+"Aseta hintoja suoraan asiakasryhmille. Voit segementoida asiakkaita ryhmiin "
+"esimerkiksi tilausten määrän, statuksen tai vuodenajan mukaan."
+
+msgid "Cross-sells"
+msgstr "Ristiinmyynnit"
+
+msgid "Cross-sell"
+msgstr "Ristiinmyynti"
+
+msgid "File "
+msgstr "Tiedosto"
+
+#, python-format
+msgid "Logical count: %(logical_count)s %(sales_unit)s"
+msgstr "Looginen luku: %(logical_count)s %(sales_unit)s"
+
+#, python-format
+msgid "Physical count: %(physical_count)s %(sales_unit)s"
+msgstr "Fyysinen luku: %(physical_count)s %(sales_unit)s"
+
+msgid "This product is not yet a package."
+msgstr "Tämä tuote ei ole pakettituote"
+
+msgid "To create a package, choose products below."
+msgstr "Valitse tuotteet alta, jotka haluat lisätä pakettiin"
+
+msgid "Package Products"
+msgstr "Pakettituotteet"
+
+msgid "Simple Variation Children"
+msgstr "Yksinkertainen variaatiolapsi"
+
+msgid "Variable Children"
+msgstr "Variaatiolapsi"
+
+msgid "Combination"
+msgstr "Yhdistelmä"
+
+msgid "Variables"
+msgstr "Muuttujat"
+
+msgid "This product is not yet a variation."
+msgstr "Tämä tuote ei ole vielä variaatio."
+
+msgid "To create a simple variation, choose products below."
+msgstr "Valitse alla olevat tuotteet tehdäksesi yksinkertaisen variaation."
+
+msgid ""
+"To create a variation with multiple variables, create the variables on the "
+"Variables tab and then link them to products here."
+msgstr ""
+"Luodaksesi variaation useammalla muuttujalla, luo muuttujat Muuttujat-"
+"välilehdellä ja linkitä ne sitten täällä tuotteisiin."
+
+msgid "Recent Orders"
+msgstr "Viimeaikaiset tilaukset"
+
+msgid "Store Overview"
+msgstr "Kaupan yleiskatsaus"
+
+msgid "Customers"
+msgstr "Asiakkaat"
+
+msgid "Today"
+msgstr "Tänään"
+
+msgid "MTD"
+msgstr "MTD"
+
+msgid "YTD"
+msgstr "YTD"
+
+msgid "Totals"
+msgstr "Yhteensä"
+
+msgid ""
+"Your shop currently has some sample data installed. Select below which "
+"objects you want to uninstall."
+msgstr ""
+"Kaupassasi on mallitietueita asennettuna. Valitse mitkä haluat poistaa."
+
+msgid ""
+"After the consolidation, preserved objects will lose their status of Sample "
+"Object and it will be no longer possible to distinguish them from the others."
+msgstr ""
+"Yhdistämisen jälkeen, säästetyt tietueet menettävät mallitietue-tilansa eikä "
+"niitä voi enää erottaa muista."
+
+msgid "Caution: this action cannot be undone."
+msgstr "Varoitus: Tätä toimintoa ei voi peruuttaa."
+
+msgid "Consolidate"
+msgstr "Yhdistä"
+
+msgid "Your shop has no sample data installed!"
+msgstr "Kaupassasi ei ole yhtään mallitietueita asennettuna!"
+
+msgid "Select the objects you want to install"
+msgstr "Valitse tietueet, jotka haluat asentaa"
+
+msgid "Manually process payments"
+msgstr "Käsittele maksut käsin"
+
+msgid "Manage payments outside of Shuup"
+msgstr "Hallitse maksut Shuupin ulkopuolella"
+
+msgid "Manual"
+msgstr "Manuaalinen"
+
+msgid "Manual process shipping"
+msgstr "Käsittele toimitukset käsin"
+
+msgid "Handle shipping outside of Shuup"
+msgstr "Käsittele toimitukset Shuupin ulkopuolella"
+
+msgid "Deactivate"
+msgstr "Deaktivoi"
+
+msgid "Activate"
+msgstr "Aktivoi"
+
+msgid ""
+"Define price based basket weight range. Range minimum is counted in range "
+"only as zero."
+msgstr "Määritä painoperusteiset hintapisteet. "
+
+msgid "Behavior"
+msgstr "Käyttäytyminen"
+
+msgid "Behavior component type"
+msgstr "Käyttäytymiskomponentin tyyppi"
+
+msgid ""
+"The behaviors for this service. These behaviors can be used to add costs to "
+"the order or can be used to restrict availability of the service."
+msgstr ""
+"Käyttäytymismallit tälle palvelulle. Näitä käyttäytymismalleja voidaan "
+"käyttää maksujen lisäämisessä tilaukselle tai ne voivat rajoittaa palvelun "
+"saatavuutta."
+
+msgid "Add component"
+msgstr "Lisää komponentti"
+
+msgid "Order Configuration"
+msgstr "Tilauksen asetukset"
+
+#, python-format
+msgid ""
+"The field \"Reference number prefix\" is disabled because the order "
+"reference number generation method doesn't support a prefix. You can edit "
+"this setting from <a href=\"%(url)s\">system settings</a>."
+msgstr ""
+"Kenttä \"Viitenumeron etuliite\" on poistettu käytöstä, koska viitenumeron "
+"luontitapa ei tue etuliitteitä. Voit vaihtaa tämän asetuksen <a href="
+"\"%(url)s\">järjestelmän asetuksista</a>."
+
+msgid "Shop Images"
+msgstr "Kaupan kuvat"
+
+msgid "Maintenance Mode"
+msgstr "Huoltotila"
+
+msgid "Contact Address"
+msgstr "Yhteystiedot"
+
+msgid "News &amp; Updates"
+msgstr "Uutiset &amp; Päivitykset"
+
+msgid "FAQ"
+msgstr "UKK"
+
+msgid "Support"
+msgstr "Tuki"
+
+msgid "Community Links"
+msgstr "Yhteisölinkit"
+
+msgid "Community Forums"
+msgstr "Keskustelupalsta"
+
+msgid "Shuup Blog"
+msgstr "Shuup Blog"
+
+msgid "Contact Us"
+msgstr "Ota yhteyttä"
+
+msgid "About Shuup Telemetry"
+msgstr "Lisää Shuup telemetriasta"
+
+msgid "Shuup will occasionally send telemetry data to a Shuup.com server."
+msgstr "Shuup lähettää ajoittain telemetriikkaa Shuup.com palvelimelle."
+
+#, python-format
+msgid ""
+"The data contains an unique installation key, as well as the hostname of the "
+"installation (as sent by the visiting browser; currently <code>%(host)s</"
+"code>)."
+msgstr ""
+"Tiedot sisältävät uniikin asennusavaimen sekä asennuksen osoitteen (selaimen "
+"lähettämänä; tällä hetkellä <code>%(host)s</code>). "
+
+msgid ""
+"No business data or other customer information is ever sent. Shuup.com only "
+"uses the telemetry data for statistical purposes and for insights about the "
+"software's installation base."
+msgstr ""
+"Mitään liiketoimintadataa tai asiakasinformaatiota ei kerätä. Shuup.com "
+"käyttää telemetriikkaa ainoastaan tilastollisiin tarpeisiin sekä ohjelmiston "
+"asennusasetusten keräämiseen."
+
+msgid "Opt-in / opt-out"
+msgstr "Mukanaolo"
+
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shuup.com."
+msgstr ""
+"Sinä olet tällä hetkellä <span class=\"lead label label-success"
+"\">hyväksynyt</span> Shuup telemetriikan."
+
+msgid "Thank you for your valuable contribution."
+msgstr "Kiitos arvokkaasta panostuksestasi."
+
+msgid "Opt out"
+msgstr "Jättäydy syrjään"
+
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shuup telemetry."
+msgstr ""
+"Sinä olet tällä hetkellä <span class=\"label label-warning\">jättäytynyt "
+"pois</span> Shuup telemetriikasta."
+
+msgid "Opt in"
+msgstr "Tule mukaan"
+
+msgid "Last Telemetry"
+msgstr "Viimeisin telemetria"
+
+msgid ""
+"Telemetry submission is currently suspended; data will only be sent 24 hours "
+"after installation if still opted in at that point."
+msgstr ""
+"Telemetrialähetykset ovat tällä hetkellä keskeytetty. Tietoja lähetetään "
+"vasta 24 tunnin kuluessa asennuksesta jollei lähetystä ole siihen mennessä "
+"kytketty pois päältä."
+
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
+msgstr ""
+"Telemetriatiedot lähetettiin viimeksi %(submission_datetime)s - "
+"(%(submission_timesince)s)"
+
+msgid "See the data that was submitted."
+msgstr "Katso data, joka toimitettiin."
+
+msgid "Telemetry data has not yet been submitted."
+msgstr "Telemetriadataa ei ole vielä toimitettu."
+
+msgid "Telemetry Data"
+msgstr "Telemetrian data"
+
+msgid "Here is an example of the data that would be submitted right now."
+msgstr "Tässä on esimerkki datasta, joka lähetettäisiin tällä hetkellä."
+
+msgid "User Information"
+msgstr "Käyttäjän tiedot"
+
+#, python-format
+msgid "Send a password reset email to %(email)s?"
+msgstr "Lähetä salasananpalautussähköposti osoitteeseen %(email)s?"
+
+msgid "Send Reset Email"
+msgstr "Lähetä palautussähköposti"
+
+msgid ""
+"Please fill out the following information to get your store up and running"
+msgstr "Ole hyvä ja täytä seuraavat tiedot saadaksesi kaupan toimimaan"
+
+msgid "All information entered here can be edited later."
+msgstr "Kaikki täällä lisättävä tieto voidaan vaihtaa myöhemmin."
+
+msgid "Click here for help"
+msgstr "Klikkaa tästä saadaksesi apua"
+
+msgid "Create new"
+msgstr "Luo uusi"
+
+#, python-format
+msgid "New %(model)s"
+msgstr "Uusi %(model)s"
+
+msgid "Discard Changes"
+msgstr "Hylkää muutokset"
+
+msgid "Save and Create New"
+msgstr "Tallenna ja luo uusi"
+
+#, python-format
+msgid "Are you sure you wish to delete %s?"
+msgstr "Haluatko poistaa %s?"
+
+#, python-format
+msgid "Required. %s"
+msgstr "Vaadittu. %s"
+
+#, python-format
+msgid "Optional. %s"
+msgstr "Valinnainen. %s"
+
+#, python-format
+msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
+msgstr "Näytetään %(per_page)s/%(n_items)s %(verbose_name_plural)s-kohdetta"
+
+msgid "objects"
+msgstr "esineet"
+
+msgid "Unknown error"
+msgstr "Tuntematon virhe"
+
+msgid "Mass Action"
+msgstr "Massatoiminto"
+
+#, python-format
+msgid "Can't view this page. %(reason)s"
+msgstr "Sivua ei voida näyttää. %(reason)s"
+
+msgid "Log in with different credentials..."
+msgstr "Kirjaudu sisään toisilla tunnuksilla..."
+
+msgid "You must be logged in."
+msgstr "Sinun täytyy olla kirjautunut sisään."
+
+msgid "You must be a staff member."
+msgstr "Sinun tulee olla henkilökunnan jäsen."
+
+#, python-format
+msgid "You do not have the required permissions: %s"
+msgstr "Sinulla ei ole riittäviä käyttöoikeuksia: %s"
+
+msgid "Unnamed"
+msgstr "Nimetön"
+
+#, python-format
+msgid "New %s created."
+msgstr "Uusi %s luotu."
+
+#, python-format
+msgid "%s edited."
+msgstr "%s muokattu."
+
+#, python-format
+msgid "New %s"
+msgstr "Uusi %s"
+
+#, python-format
+msgid "Unnamed %s"
+msgstr "Nimeämätön %s"
+
+#, python-format
+msgid "Only one %(model)s permitted."
+msgstr "Vain yksi %(model)s sallittu"
+
+msgid "Mass Edit"
+msgstr "Massamuokkaus"
+
+msgid "Storefront"
+msgstr "Kaupan näkymä"
+
+msgid "General"
+msgstr "Yleinen"
+
+msgid "Complete wizard"
+msgstr "Lopeta velho"
+
+msgid "Complete the setup wizard"
+msgstr "Lopeta asennusvelho"
+
+msgid "Publish your store"
+msgstr "Julkaise kauppasi"
+
+msgid "Let customers browse your store and make purchases"
+msgstr "Salli asiakkaiden selata kauppaasi ja tehdä ostoksia"
+
+msgid "Publish shop"
+msgstr "Julkaise kauppa"
+
+#, python-format
+msgid "Couldn't get selections for %s."
+msgstr "%s valintoja ei voitu hakea"

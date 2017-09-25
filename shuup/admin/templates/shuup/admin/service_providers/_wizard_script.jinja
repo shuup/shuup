@@ -1,0 +1,41 @@
+<script>
+    $(document).ready(function() {
+        var $providers = $(".{{ pane.identifier }} input[name='{{ form_def.name }}-providers']");
+        var activeProviders = [];
+        if($providers.val() != "") {
+            activeProviders = $providers.val().split(",");
+        }
+
+        function addToActiveProviderList(name){
+            if(activeProviders.indexOf(name) < 0){
+                activeProviders.push(name);
+            }
+            $providers.val(activeProviders.join(","));
+        }
+
+        function removeFromActiveProviderList(name){
+            var index = activeProviders.indexOf(name);
+            if(index >= 0){
+                activeProviders.splice(index, 1);
+            }
+            $providers.val(activeProviders.join(","));
+        }
+
+        // Initialize activeProciders with active form defs
+        $("div.form-def[data-is-active='True']").each(function() {
+            addToActiveProviderList($(this).data("name"));
+        });
+
+        $(".{{ pane.identifier }} button[name='activate']").on("click", function(e){
+            var $formDef = $(this).parents(".form-def");
+            if($(this).hasClass("btn-primary")){
+                $(this).text(gettext("Deactivate")).removeClass("btn-primary").addClass("btn-danger");
+                addToActiveProviderList($formDef.attr("data-name"));
+            } else {
+                $(this).text(gettext("Activate")).removeClass("btn-danger").addClass("btn-primary");
+                removeFromActiveProviderList($formDef.attr("data-name"));
+            }
+            $formDef.find(".service-detail-form").toggleClass("hidden");
+        });
+    });
+</script>

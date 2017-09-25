@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"PO-Revision-Date: 2016-10-09 09:17+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Addons"
+msgstr "Addon"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Attiva %s"
+
+#, python-format
+msgid "%d new addons enabled."
+msgstr "%d nuovi addon attivati"
+
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr "%d addon disattivati in precedenza."
+
+msgid "No changes were made."
+msgstr "Non è stato apportato alcun cambiamento."
+
+msgid "Save addon changes"
+msgstr "Salva modifiche addon"
+
+msgid "Upload new addon"
+msgstr "Carica nuovo addon"
+
+msgid "Reload application"
+msgstr "Ricarica l'applicazione"
+
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr "Non sono disponibili metodi di riavvio. Si prega di contattare l'amministratore di sistema."
+
+msgid "Reload Method"
+msgstr "Metodo di Riavvio"
+
+msgid "Reloading."
+msgstr "Riavvio."
+
+msgid "Addon file (ZIP)"
+msgstr "File Addon (ZIP)"
+
+msgid "Only upload addon files you trust."
+msgstr "Carica solo addon di cui ti fidi."
+
+msgid "Only ZIP files are supported"
+msgstr "Sono supportati solo file ZIP"
+
+msgid "Upload"
+msgstr "Carica"
+
+msgid "Install Addon"
+msgstr "Installa Addon"
+
+msgid "Installed addons"
+msgstr "Addon Installati"
+
+msgid "Addon name"
+msgstr "Nome Addon"
+
+msgid "Is enabled"
+msgstr "È attivo"
+
+msgid "You don't have any installed addons"
+msgstr "Non hai nessun addon installato"
+
+msgid "Reload Application Server"
+msgstr "Riavvia il Server dell'applicazione"
+
+msgid ""
+"When you reload the application server, it may take some time for the new "
+"instance of your application to properly initialize."
+msgstr "Quando riavvii il server, ci può volere qualche minuto prima che l'applicazione si inizializzi correttamente."
+
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem "
+"yourself (or have a system administrator handy)."
+msgstr "Oltretutto, è sempre possibile che il server non si riavvi correttamente, nel caso avrai bisogno di analizzare il problema in autonomia (oppure rivolgendoti all'amministratore di sistema)"
+
+msgid "Reload steps"
+msgstr "Passi per riavviare"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr "Conclusione dell'installazione degli addon (migrazioni e raccolta file statici)"
+
+msgid "Reload application server"
+msgstr "Riavvia il server"
+
+msgid "Reload initiated."
+msgstr "Riavvio inizializzato."
+
+msgid "Error while reloading application."
+msgstr "Errore durante il riavvio dell'applicazione."
+
+msgid "Finalizing installations."
+msgstr "Finalizzazione installazioni."
+
+msgid "Your Shuup seems to be back up!"
+msgstr "Il tuo Shuup si è ripristinato!"
+
+msgid "Your Shuup is not up yet. Trying again soon."
+msgstr "Il tuo Shuup non è ancora ripristinato. Riprova tra poco."
+
+msgid "Select file"
+msgstr "Seleziona file"
+
+msgid "Installation Finished"
+msgstr "Installazione Conclusa"
+
+msgid "Installation Failed"
+msgstr "Installazione Fallita"
+
+msgid "Success"
+msgstr "Sucesso"
+
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
+" the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
+" class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr "Poi, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>attiva il nuovo addon</strong></a> e <a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>ricarica il server</strong></a>."
+
+msgid "Error"
+msgstr "Errore"
+
+msgid "Installer Log"
+msgstr "Log d'installazione"
+
+msgid "Upload Addon - Install"
+msgstr "Carica Addon - Installazione"
+
+msgid "Package Information"
+msgstr "Informazioni Pacchetto"
+
+msgid "No package information could be extracted."
+msgstr "Non è stato possibile estrarre informazioni dal pacchetto."
+
+msgid "File List"
+msgstr "Lista dei File"

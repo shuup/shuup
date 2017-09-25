@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}shuup/front/img/favicon.ico">
+    <link href='//code.cdn.mozilla.net/fonts/fira.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <title>{{ _("Page Not Found") }} (404)</title>
+    <style>
+        body {
+            font-family: "Fira Sans", sans-sefif;
+            background: #f4f4f4;
+            color: #666;
+        }
+        h1 {
+            font-weight: normal;
+            font-size: 2.6em;
+            margin-bottom: 25px;
+        }
+        .container {
+            padding: 75px 0px;
+        }
+        .well {
+            background: #fff;
+            box-shadow: none;
+            padding: 20px;
+        }
+        .texts {
+            padding: 25px 15px;
+        }
+        .error-icon {
+            margin-bottom: 20px;
+            color: #F29E02;
+            font-size: 84px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+            <div class="well text-center">
+                <div class="texts">
+                    <i class="fa fa-exclamation-triangle error-icon"></i>
+                    <h1>{% trans %}Page Not Found{% endtrans %} (404)</h1>
+                    <p class="lead">
+                        {% trans %}Unfortunately the page you were looking for does not exist.{% endtrans %}
+                    </p>
+                    <i class="fa fa-angle-double-left"></i>
+                    <script>
+                        document.write('<a href="' + document.referrer + '">{{ _("Go Back") }}</a>');
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

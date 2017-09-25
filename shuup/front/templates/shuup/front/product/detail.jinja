@@ -1,0 +1,56 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block extrameta %}
+{{ macros.render_metadata(product, product.name, product.short_description, "product") }}
+{% endblock %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {% set category = shop_product.primary_category %}
+        {% if category %}
+            {% for c in category.get_ancestors(include_self=True) if c.is_visible(customer=request.customer) %}
+                {{ macros.render_breadcrumb_item(shuup.urls.model_url(c), c.name) }}
+            {% endfor %}
+        {% else %}
+            {{ macros.render_breadcrumb_item(url('shuup:xtheme_extra_view', view='products'), _("Products")) }}
+        {% endif %}
+        {{ macros.render_breadcrumb_item(None, product.name, True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block content %}
+    <div class="row product-main">
+        <div class="visible-xs">
+            <div class="col-sm-12">
+                {{ product_macros.render_product_basic_information(product) }}
+            </div>
+        </div>
+        <div class="product-image col-sm-6 col-md-5">
+            {{ product_macros.render_product_image_section(product) }}
+        </div>
+        <div class="product-basic-details col-sm-6 col-md-7">
+            <div class="hidden-xs">
+                {{ product_macros.render_product_basic_information(product) }}
+            </div>
+            {% placeholder "product_extra_1" %}{% endplaceholder %}
+            {{ order_form }}
+            <hr>
+            {% placeholder "product_extra_2" %}{% endplaceholder %}
+        </div>
+    </div>
+
+    {{ product_macros.render_product_information(product) }}
+    {# By default this extra section contains placeholders for cross sells #}
+    {{ product_macros.render_product_placeholder_section() }}
+    {# By default this lists all children for package parent #}
+    {{ product_macros.render_also_available_products(product) }}
+{% endblock %}
+
+{% block extrajs %}
+    {{ product_macros.render_extrajs() }}
+{% endblock %}

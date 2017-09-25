@@ -1,0 +1,7 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% set facet_form = form["product_list_facets"] %}
+
+{% call content_block(_("Product list sorts and filters"), icon="fa-th-list") %}
+    {{ render_monolingual_fields(facet_form) }}
+{% endcall %}

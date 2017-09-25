@@ -1,0 +1,27 @@
+include README.rst
+include LICENSE
+include VENDOR-LICENSES.md
+
+include tox.ini
+
+recursive-include shuup \
+    *.jinja *.txt *.js *.css *.json *.less *.map \
+    *.ico *.png *.svg *.jpg \
+    *.woff *.woff2 *.eot *.otf *.ttf *.po *.mo
+
+recursive-include shuup_tests *.jinja
+
+# No extra extensions to include from shuup_workbench, but it will be
+# included still, since it's a Python package.
+# recursive-include shuup_workbench ...
+
+prune shuup/*/bower_components
+prune shuup/*/*/bower_components
+prune shuup/*/*/*/bower_components
+prune shuup/*/*/*/*/bower_components
+prune shuup/*/*/*/*/node_modules
+prune shuup/*/*/*/node_modules
+prune shuup/*/*/node_modules
+prune shuup/*/node_modules
+
+recursive-include doc *.rst *.py *.LICENSE Makefile make.bat

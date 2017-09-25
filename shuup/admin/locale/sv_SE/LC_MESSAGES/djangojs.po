@@ -1,0 +1,824 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# Translators:
+# Frank Wickström <frwickst@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-06 14:20+0000\n"
+"PO-Revision-Date: 2017-04-05 04:59+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Unexpected error while uploading files."
+msgstr "Oväntat fel påträffades när filen laddades upp."
+
+msgid "Error:"
+msgstr "Fel:"
+
+msgid "Uploaded:"
+msgstr "Uppladdad:"
+
+msgid "New file name?"
+msgstr "Nytt filnamn?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr "Är du säker du vill ta bort filen %s?"
+
+msgid "New folder name?"
+msgstr "Nytt mappnamn?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr "Är du säker du vill ta bort mappen %s?"
+
+msgid "New folder"
+msgstr "Ny mapp"
+
+msgid "current"
+msgstr "nuvarande"
+
+msgid "Oldest first"
+msgstr "Äldsta först"
+
+msgid "Newest first"
+msgstr "Nyast först"
+
+msgid "Smallest first"
+msgstr "Minsta först"
+
+msgid "Largest first"
+msgstr "Största första"
+
+msgid "Drop your files here"
+msgstr "Släpp dina filer här"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Size"
+msgstr "Storlek"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Edit"
+msgstr "Redigera"
+
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr "Klicka på knappen <strong>Ladda upp</strong> för att överföra filer."
+
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr ""
+"<span>Dra och släpp</span> filer här<br> eller klicka på knappen <span>Ladda "
+"upp</span> ."
+
+msgid "Rename file"
+msgstr "Byt namn på fil"
+
+msgid "Delete file"
+msgstr "Radera fil"
+
+msgid "Rename folder"
+msgstr "Byt namn på mappen"
+
+msgid "Delete folder"
+msgstr "Radera mappen"
+
+#, javascript-format
+msgid "Order %s created."
+msgstr "Beställning %s skapad."
+
+msgid "An unspecified error occurred.\n"
+msgstr "Ett ospecificerat fel har inträffat.\n"
+
+msgid "SKU"
+msgstr "Artikelnummer"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Quantity"
+msgstr "Antal"
+
+msgid "Unit Price"
+msgstr "Enhetspris"
+
+msgid "Discounted Unit Price"
+msgstr "Rabatterade enhetspris"
+
+msgid "Discount amount"
+msgstr "Rabatterat belopp"
+
+msgid "Discount percent"
+msgstr "Rabattprocent"
+
+msgid "Total (excluding taxes)"
+msgstr "Totalt (exklusive skatter)"
+
+msgid "Tax percent"
+msgstr "Skatteprocent"
+
+msgid "Total"
+msgstr "Summa"
+
+msgid "Billing address"
+msgstr "Faktureringsadress"
+
+msgid "Shipping address"
+msgstr "Leveransadress"
+
+#, javascript-format
+msgid "Customer with same %s already exists."
+msgstr "Kund med samma %s finns redan."
+
+#, javascript-format
+msgid "Click to select user %s."
+msgstr "Klicka på välja användaren %s."
+
+msgid "Save customer details while creating order"
+msgstr "Spara kunduppgifter medan beställning skapas"
+
+msgid ""
+"Checking this box will save entered customer data to your contacts list."
+msgstr ""
+"Genom att markerar den här rutan kommer kunddatan att lagras i din "
+"kontaktlista."
+
+msgid "Ship to billing address"
+msgstr "Leverera till faktureringsadress"
+
+msgid ""
+"Checking this will make the shipping address the same as the billing address."
+msgstr ""
+"Markera denna ruta om du vill att leveransadressen skall vara den samma som "
+"faktureringsadressen."
+
+msgid "Order for company"
+msgstr "Beställ som företag"
+
+msgid "Check this if the order is for a company or business with a tax ID."
+msgstr ""
+"Markera detta om beställningen är för ett företag eller verksamhet med ett "
+"moms-ID."
+
+msgid "Billing Address"
+msgstr "Faktureringsadress"
+
+msgid "Shipping Address"
+msgstr "Leveransadress"
+
+msgid "Full Name"
+msgstr "Fullständigt namn"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "Tax Number"
+msgstr "Momsnummer"
+
+msgid "Groups"
+msgstr "Grupper"
+
+msgid "Companies"
+msgstr "Företag"
+
+msgid "Merchant Notes"
+msgstr "Köpmannens anteckningar"
+
+msgid "Year"
+msgstr "År"
+
+msgid "Total Sales"
+msgstr "Total försäljning"
+
+msgid "Shipment Status"
+msgstr "Försändelsens status"
+
+msgid "Payment Status"
+msgstr "Betalningsstatus"
+
+msgid "Order Status"
+msgstr "Beställningsstatus"
+
+msgid "Search by name or email"
+msgstr "Sök efter namn eller e-post"
+
+msgid "Customer Search"
+msgstr "Kundsökning"
+
+msgid ""
+"Search for existing customers by searching by name or email or click the "
+"magnifying glass for more fine-grained filtering. Clear the search filter to "
+"create an order for a new customer."
+msgstr ""
+"Sök efter befintliga kunder genom att söka efter namn eller e-post eller "
+"klicka på förstoringsglaset för mer finkornig filtrering. Rensa sökfiltret "
+"om du vill skapa en beställning för en ny kund."
+
+msgid "Customer"
+msgstr "Kund"
+
+msgid "View Details"
+msgstr "Visa detaljer"
+
+msgid "A new customer will be created based on billing address."
+msgstr "En ny kund skapas baserat på faktureringsadressen."
+
+msgid "Customer Information"
+msgstr "Kundinformation"
+
+msgid "Order Summary"
+msgstr "Ordersummering"
+
+msgid "Recent Orders"
+msgstr "Tidigare köp"
+
+msgid "Close"
+msgstr "Stäng"
+
+msgid "Warning: No customer account is currently associated with this order."
+msgstr ""
+"Varning: Inget kundkonto är för närvarande är associerade med denna "
+"beställning."
+
+msgid "Back"
+msgstr "Tillbaka"
+
+msgid "Confirm"
+msgstr "Bekräfta"
+
+msgid "Discard Changes"
+msgstr "Kasta ändringar"
+
+msgid "Select Shop"
+msgstr "Välj butik"
+
+msgid "Customer Details"
+msgstr "Kunduppgifter"
+
+msgid "Order Contents"
+msgstr "Beställningsinnehåll"
+
+msgid "Shipping Method"
+msgstr "Leveranssätt"
+
+msgid "Payment Method"
+msgstr "Betalningssätt"
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr ""
+"Regler, skatter och eventuella extra rabatter beräknas i slutet av "
+"beställningen."
+
+msgid "Proceed"
+msgstr "Fortsätt"
+
+msgid "Logical Count"
+msgstr "Logiskt antal"
+
+msgid "Physical Count"
+msgstr "Fysiskt antal"
+
+msgid "Select product"
+msgstr "Välj produkt"
+
+msgid "Text/Comment"
+msgstr "Text/kommentar"
+
+msgid ""
+"Enter a comment or text note about the order. This could be anything from "
+"special order requests to special shipping needs."
+msgstr ""
+"Ange en kommentar eller textnotering om beställningen. Detta kan vara allt "
+"från specialbegäran till särskilda leveransbehov."
+
+msgid "Qty"
+msgstr "Antal"
+
+msgid "Enter the number of units of the product ordered."
+msgstr "Ange antalet av beställda artiklar."
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings. Total price will be automatically calculated."
+msgstr ""
+"Ange det regelbundna grundpriset för en enhet av produkten. Om en befintlig "
+"produkt väljs så är priset redan bestämt utgående från produktens "
+"inställningar. Totalpriset kommer att beräknas automatiskt."
+
+msgid "Total Price"
+msgstr "Totalbelopp"
+
+msgid ""
+"Enter the total amount for the line item. Unit price will be automatically "
+"calculated."
+msgstr ""
+"Ange det totala beloppet för artikeln. Enhetspriset beräknas automatiskt."
+
+msgid "Base Unit Price"
+msgstr "Basenheten pris"
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings."
+msgstr ""
+"Ange det regelbundna grundpriset för en enhet av produkten. Om en befintlig "
+"produkt väljs så är priset redan bestämt utgående från produktens "
+"inställningar. Totalpriset kommer att beräknas automatiskt."
+
+msgid ""
+"Enter the total discounted price for a single product unit in the order. "
+"Discount percent, Total Discount Amount, and Line Total will be "
+"automatically calculated."
+msgstr ""
+"Ange det totala rabatterat priset för en enda produktenhet i beställningen. "
+"Rabattprocenten, totala rabattbelopp och radsumma kommer att beräknas "
+"automatiskt."
+
+msgid "Discount Percent"
+msgstr "Rabattprocent"
+
+msgid ""
+"Enter the discount percentage (%) for the line item. Discounted Unit Price, "
+"Total Discount Amount, and Line Total will be automatically."
+msgstr ""
+"Ange procentuella rabatt (%) för artikeln. Rabatterade enhetspris, totalt "
+"rabattbelopp och radsumma skapas automatiskt."
+
+msgid "Total Discount Amount"
+msgstr "Totala rabattbelopp"
+
+msgid ""
+"Enter the total discount amount for the line item. Discounted Unit Price, "
+"Discount percent, and Line Total will be automatically calculated."
+msgstr ""
+"Ange det totala rabattbeloppet för artikeln. Rabatterade enhetspris, totalt "
+"rabattbelopp och radsumma skapas automatiskt."
+
+msgid "Line Total"
+msgstr "Summa"
+
+msgid ""
+"Enter the total amount for the line item. Discounted Unit Price, Discount "
+"percent, and Total Discount Amount will be automatically calculated."
+msgstr ""
+"Ange det totala beloppet för artikeln. Rabatterade Enhetspris, rabatt i "
+"procent och totala rabattbelopp kommer att beräknas automatiskt."
+
+msgid "Orderline type"
+msgstr "Beställningsradens typ"
+
+msgid "Search product by name, SKU, or barcode"
+msgstr "Sök produkt efter namn, artikelnummer eller streckkod"
+
+msgid ""
+"If your product prices vary based on customer, you might want to select "
+"customer first."
+msgstr ""
+"Om din produktpriserna varierar beroende på kund, kanske du vill markera "
+"kunden först."
+
+#, javascript-format
+msgid "All prices are in %s and include taxes."
+msgstr "Alla priser är i %s och inkluderar skatter."
+
+#, javascript-format
+msgid "All prices are in %s. Taxes not included"
+msgstr "Alla priser är i %s. Skatter som ingår ej."
+
+msgid "Product Quick Adder"
+msgstr "Lägg snabbt till produkter"
+
+msgid ""
+"Search for products to add to the order by searching by name, SKU, or "
+"barcode or click the magnifying glass for more fine-grained filtering."
+msgstr ""
+"Sök efter produkter att lägga till i beställningen genom att söka efter "
+"namn, artikelnummer, streckkod eller klicka på förstoringsglaset för mer "
+"finkornig filtrering."
+
+msgid "Automatically add selected product"
+msgstr "Lägg automatiskt till den valda produkten"
+
+msgid "Add new line"
+msgstr "Lägg till en ny rad"
+
+msgid "No shipping method"
+msgstr "Inget leveranssätt"
+
+msgid ""
+"Select a shipping method for the order. These methods are defined in "
+"shipping settings."
+msgstr ""
+"Välj ett leveranssätt för beställningen. Dessa kan definieras under "
+"leveransinställningar."
+
+msgid "No payment method"
+msgstr "Inget betalningssätt"
+
+msgid ""
+"Select a payment method for the order. These methods are defined in payment "
+"settings."
+msgstr ""
+"Välj ett betalningssätt för beställningen. Dessa kan definieras under "
+"betalningsinställningar."
+
+msgid "Shop"
+msgstr "Butik"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Other"
+msgstr "Övrigt"
+
+msgid "billing"
+msgstr "fakturering"
+
+msgid "shipping"
+msgstr "leverans"
+
+#, javascript-format
+msgid "Enter the name for the %s address."
+msgstr "Ange ett namn för adressen %s."
+
+msgid "Tax number"
+msgstr "Momsnummer"
+
+msgid "Enter the company tax (ID) number."
+msgstr "Ange det företagets ID nummer."
+
+#, javascript-format
+msgid "Enter the best %s contact phone number."
+msgstr "Ange det bästa %s telefonnummret."
+
+#, javascript-format
+msgid "Enter the %s email address for transaction receipts and communications."
+msgstr ""
+"Ange den %s e-postadressen för transaktionen kvitton och kommunikation."
+
+msgid "Street"
+msgstr "Gata"
+
+#, javascript-format
+msgid "Enter the %s street address."
+msgstr "Ange den %s gatuadressen."
+
+msgid "Street (2)"
+msgstr "Gata (2)"
+
+#, javascript-format
+msgid "Enter the %s street address (2)."
+msgstr "Ange den %s gatuadressen (2)."
+
+msgid "ZIP / Postal code"
+msgstr "Postnummer"
+
+#, javascript-format
+msgid "Enter the zip or postal code of the %s address."
+msgstr "Ange postnummer för den %s adressen."
+
+msgid "City"
+msgstr "Stad"
+
+#, javascript-format
+msgid "Enter the city of the %s address."
+msgstr "Ange adressen för den %s staden."
+
+msgid "Region"
+msgstr "Region"
+
+#, javascript-format
+msgid "Enter the region, state, or province of the %s address."
+msgstr "Ange region, stat eller provins för den %s adressen"
+
+msgid "Country"
+msgstr "Land"
+
+#, javascript-format
+msgid "Enter the country of the %s address."
+msgstr "Ange landet för den %s adressen."
+
+msgid "No records found."
+msgstr "Kunde inte hitta några poster."
+
+msgid "Missing JavaScript dependencies detected"
+msgstr "Saknade JavaScript beroenden upptäckt"
+
+msgid "Identifier"
+msgstr "Identifierare"
+
+#, javascript-format
+msgid "Value %s Name"
+msgstr "Värdet %s Namn"
+
+msgid "Delete value"
+msgstr "Ta bort värde"
+
+msgid "Are you sure?"
+msgstr "Är du säker?"
+
+msgid "Delete Variable"
+msgstr "Ta bort variabel"
+
+msgid "Add new value"
+msgstr "Lägga till nytt värde"
+
+msgid "Variable Name"
+msgstr "Variabelnamn"
+
+msgid "Variable"
+msgstr "Variabel"
+
+msgid "Identifer"
+msgstr "Identifierare"
+
+msgid "Show identifier fields (for advanced users)"
+msgstr "Visa identifieringsfält (för avancerade användare)"
+
+msgid "There are no variables defined."
+msgstr "Det finns inga definierade variabler."
+
+msgid "Add new variable"
+msgstr "Lägg till ny variabel"
+
+msgid "No browser URL for kind:"
+msgstr "Ingen webbläsar URL för typ:"
+
+msgid "Clear"
+msgstr "Rensa"
+
+msgid "Drop files here or click to browse."
+msgstr "Släpp filer här eller klicka för att bläddra."
+
+msgid "only images can be uploaded!"
+msgstr "endast bilder kan laddas upp!"
+
+msgid "No results."
+msgstr "Inga resultat."
+
+msgid "The results could not be loaded"
+msgstr "Resultaten kunde inte läsas in"
+
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] "Ta bort %s tecken"
+msgstr[1] "Ta bort %s tecken"
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr "Vänligen ange %s eller flera tecken"
+
+msgid "Loading more results..."
+msgstr "Laddar fler resultat..."
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] "Du kan endast välja %s objekt"
+msgstr[1] "Du kan endast välja %s objekt"
+
+msgid "No results found"
+msgstr "Inga resultat hittades"
+
+msgid "Searching..."
+msgstr "Söker…"
+
+msgid "Quick Links"
+msgstr "Snabblänkar"
+
+msgid "Quick Links to your most used features."
+msgstr "Snabblänkar till dina favoritfunktioner."
+
+msgid "Orders"
+msgstr "Beställningar"
+
+msgid "Track and filter your customers’ orders here."
+msgstr "Spåra och filtrera dina kunders beställningar här."
+
+msgid "Products"
+msgstr "Produkter"
+
+msgid "All your exciting products and features are located here."
+msgstr "Här finns alla dina spännande produkter och funktioner finns här."
+
+msgid "Contacts"
+msgstr "Kontakter"
+
+msgid ""
+"All your customer data is located here. Target and organize your clients "
+"details your way!"
+msgstr ""
+"Alla din kunddata ligger här. Rikta och organisera dina kunder till denna "
+"sida!"
+
+msgid "Campaigns"
+msgstr "Erbjudanden"
+
+msgid ""
+"Great loyalty tool for creating marketing, campaigns, special offers and "
+"coupons to entice your shoppers!"
+msgstr ""
+"Ett ypperligt verktyg för att skapa marknadsföring, kampanjer, speciella "
+"erbjudanden och kuponger för att locka din kunder!"
+
+msgid ""
+"Set offers based on their previous purchase behavior to up- and cross sale "
+"your inventory."
+msgstr "Ställ in erbjudanden baserat på deras tidigare köp beteende."
+
+msgid "Content"
+msgstr "Innehåll"
+
+msgid ""
+"The make-over tool to customize you site themes, add pages and product "
+"carousels. Incorporate any media to make your store pop!"
+msgstr ""
+"Verktyget för att anpassa temat för din webbplats, lägga till sidor och "
+"produktkaruseller. Lägg till olika sorters media för att få din butik att "
+"stå ut!"
+
+msgid "Reports"
+msgstr "Rapporter"
+
+msgid ""
+"Your reporting tool to build and analyze your consumer behavior information "
+"that can assist with your business decisions."
+msgstr ""
+"Ditt rapporteringverktyg för att bygga och analysera din konsumenten "
+"beteende som kan hjälpa dig med dina affärsbeslut."
+
+msgid "Shops"
+msgstr "Butiker"
+
+msgid ""
+"Place for your Shop specific settings. You can customize taxes, currencies, "
+"customer groups, and many other things in this menu."
+msgstr ""
+"En plats för dina butik-specifika inställningar. Du kan anpassa skatter, "
+"valutor, kundgrupper och många andra saker i den här menyn."
+
+msgid "Addons"
+msgstr "Tillägg"
+
+msgid ""
+"This is your connection interface. Addons and other systems you use can be "
+"attached to your store through powerful data connections."
+msgstr ""
+"Detta är ditt anslutningsgränssnitt. Tillägg och andra system som du "
+"använder kan kopplas till din butik genom kraftfulla dataanslutningar."
+
+msgid ""
+"Supercharge your site and gather crazy amounts of data with integrations to "
+"CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of."
+msgstr ""
+"Gör din webbplats ännu häftigare genom att integrera den med CRMer, ERPer, "
+"POS- och PIM-system eller någon annan akronym som du kan tänka dig."
+
+msgid "Settings"
+msgstr "Inställningar"
+
+msgid ""
+"The nuts and bolts of your store are found here. From individual country tax-"
+"regulations to your contact details."
+msgstr ""
+"Byggstenarna för din butik hittar du här. Från enskilda länders skatteregler "
+"till dina kontaktuppgifter."
+
+msgid "Search"
+msgstr "Sök"
+
+msgid ""
+"Lost and cannot find your way? No worries, you can search contacts, "
+"settings, add-ons and more features from here."
+msgstr ""
+"Tappat bort dig och kan inte hitta vägen? Inga bekymmer, du kan söka "
+"kontakter, inställningar, tillägg och fler funktioner här."
+
+msgid "View your storefront"
+msgstr "Visa din butik"
+
+msgid "Preview your shop and all the cool features you have created!"
+msgstr ""
+"Förhandsgranska din butik och alla de häftiga funktioner som du har skapat!"
+
+msgid "We're done!"
+msgstr "Vi är klara!"
+
+msgid "It was nice to show you around!"
+msgstr "Det var trevligt att visa dig runt!"
+
+msgid "If you need to run it again, fire it up from the menu in the top right."
+msgstr "Om du behöver köra den igen, kör den från menyn längst upp till höger."
+
+msgid "Learn more at the Shuup Help Center"
+msgstr "Läs mer i Shuups hjälpcenter"
+
+msgid "Mass actions"
+msgstr "Hantera många"
+
+msgid "From"
+msgstr "Från"
+
+msgid "To"
+msgstr "Till"
+
+msgid "Items per page"
+msgstr "Objekt per sida"
+
+msgid "Reset filters"
+msgstr "Återställ filter"
+
+msgid "Reset"
+msgstr "Rensa"
+
+msgid "Sort by"
+msgstr "Sortera enligt"
+
+msgid "ascending"
+msgstr "stigande"
+
+msgid "descending"
+msgstr "fallande"
+
+msgid "Default sorting"
+msgstr "Standardsortering"
+
+msgid "Previous"
+msgstr "Föregående"
+
+msgid "Next"
+msgstr "Nästa"
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr "Filtrera efter %s"
+
+msgid "Filters"
+msgstr "Filter"
+
+msgid "Select Action"
+msgstr "Välj åtgärd"
+
+msgid "Clear Selections"
+msgstr "Rensa val"
+
+msgid "Select All"
+msgstr "Markera alla"
+
+#, javascript-format
+msgid "Select All %s Items"
+msgstr "Markera alla %s objekt"
+
+#, javascript-format
+msgid "All %s Items Selected"
+msgstr "Alla %s markerade objekt"
+
+msgid "Mass Action complete."
+msgstr "Hantering av ett flertal artiklar slutfört."
+
+msgid "Something went wrong."
+msgstr "Någonting gick snett."
+
+msgid "You haven't selected anything"
+msgstr "Du har inte valt något"
+
+msgid "Confirm action by clicking OK!"
+msgstr "Bekräfta åtgärden genom att klicka på OK!"
+
+msgid "Are you sure you want to delete this media?"
+msgstr "Är du säker på att du vill radera denna bild?"
+
+msgid "Set as primary image"
+msgstr "Ange som primärbild"
+
+msgid "Primary image"
+msgstr "Primärbild"
+
+msgid "Finish"
+msgstr "Avsluta"
+
+msgid "Skip"
+msgstr "Hoppa över"

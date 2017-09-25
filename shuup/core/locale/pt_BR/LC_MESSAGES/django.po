@@ -1,0 +1,1298 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-23 21:46+0000\n"
+"PO-Revision-Date: 2016-08-26 11:35+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "internal identifier"
+msgstr "identificador interno"
+
+msgid "Do not change this value if you are not sure what you're doing."
+msgstr "Não altere este valor se não tem certeza do que está fazendo."
+
+msgid "Error"
+msgstr "Erro"
+
+msgid "shipping address"
+msgstr "endereço de entrega"
+
+msgid "billing address"
+msgstr "endereço de cobrança"
+
+msgid "disabled"
+msgstr "desabilitado"
+
+msgid "enabled"
+msgstr "habilitado"
+
+msgid "name prefix"
+msgstr "prefixo do nome"
+
+msgid "name"
+msgstr "nome"
+
+msgid "name suffix"
+msgstr "sufixo do nome"
+
+msgid "name extension"
+msgstr "extensão do nome"
+
+msgid "company name"
+msgstr "nome da empresa"
+
+msgid "tax number"
+msgstr "número de contribuinte"
+
+msgid "phone"
+msgstr "telefone"
+
+msgid "email"
+msgstr "e-mail"
+
+msgid "street"
+msgstr "endereço"
+
+msgid "street (2)"
+msgstr "complemento"
+
+msgid "street (3)"
+msgstr "bairro"
+
+msgid "postal code"
+msgstr "código postal"
+
+msgid "city"
+msgstr "cidade"
+
+msgid "region code"
+msgstr "código do estado"
+
+msgid "region"
+msgstr "estado"
+
+msgid "country"
+msgstr "país"
+
+msgid "address"
+msgstr "endereço"
+
+msgid "addresses"
+msgstr "endereços"
+
+msgid "owner"
+msgstr "proprietário"
+
+msgid "role"
+msgstr "função"
+
+msgid "status"
+msgstr "status"
+
+msgid "title"
+msgstr "título"
+
+msgid "saved address"
+msgstr "endereço salvo"
+
+msgid "saved addresses"
+msgstr "endereços salvos"
+
+msgid "hidden"
+msgstr "oculto"
+
+msgid "shown on product page"
+msgstr "mostrado na página do produto"
+
+msgid "searchable metadata"
+msgstr "metadados pesquisáveis"
+
+msgid "private metadata"
+msgstr "metadados privados"
+
+msgid "integer"
+msgstr "inteiro"
+
+msgid "decimal"
+msgstr "decimal"
+
+msgid "boolean"
+msgstr "booleano"
+
+msgid "time interval"
+msgstr "intervalo de tempo"
+
+msgid "date and time"
+msgstr "data e hora"
+
+msgid "date only"
+msgstr "data apenas"
+
+msgid "translated string"
+msgstr "string traduzida"
+
+msgid "untranslated string"
+msgstr "string não traduzida"
+
+msgid "searchable"
+msgstr "pesquisável"
+
+msgid "type"
+msgstr "tipo"
+
+msgid "visibility mode"
+msgstr "modo de visibilidade"
+
+msgid "attribute"
+msgstr "atributo"
+
+msgid "attributes"
+msgstr "atributos"
+
+msgid "numeric value"
+msgstr "valor numérico"
+
+msgid "datetime value"
+msgstr "valor data e hora"
+
+msgid "untranslated value"
+msgstr "valor não traduzido"
+
+msgid "The following fields can not be changed"
+msgstr "Os campos a seguir não podem ser alterados"
+
+msgid "invisible"
+msgstr "invisível"
+
+msgid "visible"
+msgstr "visível"
+
+msgid "deleted"
+msgstr "excluído"
+
+msgid "visible to all"
+msgstr "visível a todos"
+
+msgid "visible to logged in customers"
+msgstr "visível a clientes autenticados"
+
+msgid "visible to certain customer groups"
+msgstr "visível a determinados grupos de clientes"
+
+msgid "parent category"
+msgstr "categoria pai"
+
+msgid "shops"
+msgstr "lojas"
+
+msgid "image"
+msgstr "imagem"
+
+msgid "ordering"
+msgstr "ordenação"
+
+msgid "visibility limitations"
+msgstr "limitações de visibilidade"
+
+msgid "visible for groups"
+msgstr "visível para os grupos"
+
+msgid "description"
+msgstr "descrição"
+
+msgid "slug"
+msgstr "slug"
+
+msgid "category"
+msgstr "categoria"
+
+msgid "categories"
+msgstr "categorias"
+
+msgid "shop"
+msgstr "loja"
+
+msgid "key"
+msgstr "chave"
+
+msgid "value"
+msgstr "valor"
+
+msgid "configuration item"
+msgstr "item de configuração"
+
+msgid "configuration items"
+msgstr "itens de configuração"
+
+#, python-format
+msgid "%(key)s for shop %(shop)s"
+msgstr "%(key)s para loja %(shop)s"
+
+#, python-format
+msgid "%(key)s (global)"
+msgstr "%(key)s (global)"
+
+msgid "members"
+msgstr "membros"
+
+msgid "show as pricing option"
+msgstr "mostrar como opção de preço"
+
+msgid "show prices including taxes"
+msgstr "mostrar preços incluindo impostos"
+
+msgid "hide prices"
+msgstr "ocultar preços"
+
+msgid "contact group"
+msgstr "grupo de contatos"
+
+msgid "contact groups"
+msgstr "grupos de contatos"
+
+msgid "Can't delete. This object is protected."
+msgstr "Não é possível excluir. Este objeto está protegido."
+
+msgid "created on"
+msgstr "criado em"
+
+msgid "active"
+msgstr "ativo"
+
+msgid "default shipping method"
+msgstr "forma de entrega padrão"
+
+msgid "default payment method"
+msgstr "forma de pagamento padrão"
+
+msgid "language"
+msgstr "idioma"
+
+msgid "marketing permission"
+msgstr "permissão de marketing"
+
+msgid "web address"
+msgstr "endereço web"
+
+msgid "time zone"
+msgstr "fuso horário"
+
+msgid "tax group"
+msgstr "grupo de impostos"
+
+msgid "merchant notes"
+msgstr "notas do lojista"
+
+msgid "account manager"
+msgstr "administrador da conta"
+
+msgid "contact"
+msgstr "contato"
+
+msgid "contacts"
+msgstr "contatos"
+
+msgid "Company Contacts"
+msgstr "Contatos Empresariais"
+
+msgid "e.g. EIN in US or VAT code in Europe"
+msgstr "p. ex. EIN nos EUA ou código VAT na Europa"
+
+msgid "company"
+msgstr "empresa"
+
+msgid "companies"
+msgstr "empresas"
+
+msgid "undisclosed"
+msgstr "não revelado"
+
+msgid "male"
+msgstr "masculino"
+
+msgid "female"
+msgstr "feminino"
+
+msgid "other"
+msgstr "outro"
+
+msgid "Person Contacts"
+msgstr "Contatos Pessoais"
+
+msgid "user"
+msgstr "usuário"
+
+msgid "gender"
+msgstr "sexo"
+
+msgid "birth date"
+msgstr "data de nascimento"
+
+msgid "first name"
+msgstr "primeiro nome"
+
+msgid "last name"
+msgstr "sobrenome"
+
+msgid "person"
+msgstr "pessoa"
+
+msgid "persons"
+msgstr "pessoas"
+
+msgid "Anonymous Contacts"
+msgstr "Contatos Anônimos"
+
+msgid "order reference"
+msgstr "referência do pedido"
+
+msgid "identifier"
+msgstr "identificador"
+
+msgid "counter"
+msgstr "contador"
+
+msgid "counters"
+msgstr "contadores"
+
+msgid "added"
+msgstr "adicionado"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "manufacturer"
+msgstr "fabricante"
+
+msgid "manufacturers"
+msgstr "fabricantes"
+
+msgid "product"
+msgstr "produto"
+
+msgid "shipping"
+msgstr "entrega"
+
+msgid "payment"
+msgstr "pagamento"
+
+msgid "discount"
+msgstr "desconto"
+
+msgid "refund"
+msgstr "devolução"
+
+msgid "rounding"
+msgstr "arredondamento"
+
+msgid "order"
+msgstr "pedido"
+
+msgid "supplier"
+msgstr "fornecedor"
+
+msgid "parent line"
+msgstr "item pai"
+
+msgid "line type"
+msgstr "tipo de item"
+
+msgid "line SKU"
+msgstr "SKU do item"
+
+msgid "line text"
+msgstr "texto do item"
+
+msgid "accounting identifier"
+msgstr "identificador contábil"
+
+msgid "require verification"
+msgstr "exigir a verificação"
+
+msgid "verified"
+msgstr "verificado"
+
+msgid "extra data"
+msgstr "dados adicionais"
+
+msgid "quantity"
+msgstr "quantidade"
+
+msgid "unit price amount (undiscounted)"
+msgstr "valor do preço unitário (não descontado)"
+
+msgid "total amount of discount"
+msgstr "valor total de desconto"
+
+msgid "order line"
+msgstr "item de pedido"
+
+msgid "order lines"
+msgstr "itens de pedido"
+
+msgid "tax"
+msgstr "imposto"
+
+msgid "tax name"
+msgstr "nome do imposto"
+
+msgid "tax amount"
+msgstr "valor do imposto"
+
+msgid "base amount"
+msgstr "valor base"
+
+msgid "Amount that this tax is calculated from"
+msgstr "Valor a partir do qual este imposto é calculado"
+
+msgid "not paid"
+msgstr "não pago"
+
+msgid "partially paid"
+msgstr "parcialmente pago"
+
+msgid "fully paid"
+msgstr "totalmente pago"
+
+msgid "canceled"
+msgstr "cancelado"
+
+msgid "deferred"
+msgstr "deferido"
+
+msgid "not shipped"
+msgstr "não enviado"
+
+msgid "partially shipped"
+msgstr "parcialmente enviado"
+
+msgid "fully shipped"
+msgstr "totalmente enviado"
+
+msgid "none"
+msgstr "nenhum"
+
+msgid "initial"
+msgstr "inicial"
+
+msgid "complete"
+msgstr "completo"
+
+msgid "default"
+msgstr "padrão"
+
+msgid "modified on"
+msgstr "modificado em"
+
+msgid "order identifier"
+msgstr "identificador do pedido"
+
+msgid "label"
+msgstr "rótulo"
+
+msgid "reference number"
+msgstr "número de referência"
+
+msgid "customer"
+msgstr "cliente"
+
+msgid "orderer"
+msgstr "comprador"
+
+msgid "email address"
+msgstr "endereço de e-mail"
+
+msgid "creating user"
+msgstr "usuário criação"
+
+msgid "modifier user"
+msgstr "usuário modificação"
+
+msgid "payment status"
+msgstr "status do pagamento"
+
+msgid "shipping status"
+msgstr "status de entrega"
+
+msgid "payment method"
+msgstr "forma de pagamento"
+
+msgid "payment method name"
+msgstr "nome da forma de pagamento"
+
+msgid "payment data"
+msgstr "dados de pagamento"
+
+msgid "shipping method"
+msgstr "forma de entrega"
+
+msgid "shipping method name"
+msgstr "nome da forma de entrega"
+
+msgid "shipping data"
+msgstr "dados de entrega"
+
+msgid "grand total"
+msgstr "total geral"
+
+msgid "taxless total"
+msgstr "total sem impostos"
+
+msgid "currency"
+msgstr "moeda"
+
+msgid "prices include tax"
+msgstr "preços incluem impostos"
+
+msgid "display currency"
+msgstr "moeda de exibição"
+
+msgid "display currency rate"
+msgstr "taxa de câmbio de exibição"
+
+msgid "IP address"
+msgstr "Endereço IP"
+
+msgid "order date"
+msgstr "data do pedido"
+
+msgid "payment date"
+msgstr "data de pagamento"
+
+msgid "customer comment"
+msgstr "comentário do cliente"
+
+msgid "admin comment/notes"
+msgstr "comentário/notas do administrador"
+
+msgid "requires verification"
+msgstr "requer verificação"
+
+msgid "all lines verified"
+msgstr "todos os itens verificados"
+
+msgid "codes"
+msgstr "códigos"
+
+msgid "orders"
+msgstr "pedidos"
+
+msgid "Order marked as paid."
+msgstr "Pedido marcado como pago."
+
+msgid "Order marked as partially paid."
+msgstr "Pedido marcado como parcialmente pago."
+
+#, python-format
+msgid "%(name)s (physical stock: %(quantity)s)"
+msgstr "%(name)s (estoque físico: %(quantity)s)"
+
+#, python-format
+msgid ""
+"Insufficient physical stock count for following products: %(product_counts)s"
+msgstr "Contagem de estoque físico insuficiente para os seguintes produtos: %(product_counts)s"
+
+#, python-format
+msgid "Shipment #%d created."
+msgstr "Remessa #%d criada."
+
+#, python-format
+msgid "Refund for %s"
+msgstr "Devolução para %s"
+
+msgid "All rows requiring verification have been verified."
+msgstr "Todas as linhas que necessitam de verificação foram verificadas."
+
+#, python-format
+msgid "New shipping status set: %(shipping_status)s"
+msgstr "Novo status de entrega definido: %(shipping_status)s"
+
+msgid "gateway ID"
+msgstr "ID do gateway"
+
+msgid "amount"
+msgstr "valor"
+
+msgid "foreign amount"
+msgstr "valor em moeda estrangeira"
+
+msgid "foreign amount currency"
+msgstr "moeda estrangeira"
+
+msgid "payments"
+msgstr "pagamentos"
+
+msgid "module"
+msgstr "módulo"
+
+msgid "time"
+msgstr "hora"
+
+msgid "data"
+msgstr "dados"
+
+msgid "cache entry"
+msgstr "entrada de cache"
+
+msgid "cache entries"
+msgstr "entradas de cache"
+
+msgid "file"
+msgstr "arquivo"
+
+msgid "documentation"
+msgstr "documentação"
+
+msgid "sample"
+msgstr "amostra"
+
+msgid "kind"
+msgstr "tipo"
+
+msgid ""
+"Enter URL to external file. If this field is filled, the selected media "
+"doesn't apply."
+msgstr "Digite o URL para um arquivo externo. Se este campo for preenchido, a mídia selecionada não se aplica."
+
+msgid "public (shown on product page)"
+msgstr "público (mostrado na página do produto)"
+
+msgid "purchased (shown for finished purchases)"
+msgstr "comprado (mostrado para compras realizadas)"
+
+msgid "product attachment"
+msgstr "anexo do produto"
+
+msgid "product attachments"
+msgstr "anexos do produto"
+
+msgid "attachment"
+msgstr "anexo"
+
+msgid "parent product"
+msgstr "produto pai"
+
+msgid "child product"
+msgstr "produto filho"
+
+msgid "not visible"
+msgstr "não visível"
+
+msgid "listed"
+msgstr "listado"
+
+msgid "always visible"
+msgstr "sempre visível"
+
+msgid "suppliers"
+msgstr "fornecedores"
+
+msgid "purchasable"
+msgstr "comprável"
+
+msgid "backorder maximum"
+msgstr "máximo de pedidos em espera"
+
+msgid "purchase multiple"
+msgstr "múltiplos de compra"
+
+msgid "minimum purchase"
+msgstr "compra mínima"
+
+msgid "limited for shipping methods"
+msgstr "limitado para as formas de entrega"
+
+msgid "limited for payment methods"
+msgstr "limitado para as formas de pagamento"
+
+msgid "shipping methods"
+msgstr "formas de entrega"
+
+msgid "payment methods"
+msgstr "formas de pagamento"
+
+msgid "primary category"
+msgstr "categoria principal"
+
+msgid "primary image"
+msgstr "imagem principal"
+
+msgid "default price"
+msgstr "preço padrão"
+
+msgid "minimum price"
+msgstr "preço mínimo"
+
+msgid "This product has been deleted."
+msgstr "Este produto foi excluído."
+
+msgid "This product is not visible."
+msgstr "Este produto não é visível."
+
+msgid "The Product is invisible to users not logged in."
+msgstr "O Produto é invisível para os usuários não autenticados."
+
+msgid "This product is not visible to your group."
+msgstr "Este produto não é visível para o seu grupo."
+
+msgid "The product has no supplier."
+msgstr "O produto não tem nenhum fornecedor."
+
+#, python-format
+msgid "The purchase quantity needs to be at least %d for this product."
+msgstr "A quantidade de compra deve ser de pelo menos %d para este produto."
+
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr "O produto não é fornecido por %s."
+
+#, python-brace-format
+msgid ""
+"The product can only be ordered in multiples of {package_size}, for example "
+"{amount}"
+msgstr "O produto só pode ser comprado em múltiplos de {package_size}, por exemplo {amount}"
+
+#, python-brace-format
+msgid ""
+"The product can only be ordered in multiples of {package_size}, for example "
+"{smaller_amount} or {larger_amount}"
+msgstr "O produto só pode ser comprado em múltiplos de {package_size}, por exemplo {smaller_amount} ou {larger_amount}"
+
+msgid "variation variable"
+msgstr "variável de variação"
+
+msgid "variation variables"
+msgstr "variáveis de variação"
+
+msgid "variation value"
+msgstr "valor da variação"
+
+msgid "variation values"
+msgstr "valores da variação"
+
+msgid "combination hash"
+msgstr "hash de combinação"
+
+msgid "result"
+msgstr "resultado"
+
+msgid "variation result"
+msgstr "resultado da variação"
+
+msgid "variation results"
+msgstr "resultados da variação"
+
+msgid "normal"
+msgstr "comum"
+
+msgid "package parent"
+msgstr "pacote pai"
+
+msgid "variation parent (simple)"
+msgstr "variação pai (simples)"
+
+msgid "variation parent (variable)"
+msgstr "variação pai (variável)"
+
+msgid "variation child"
+msgstr "variação filho"
+
+msgid "visible to logged in"
+msgstr "visível a autenticados"
+
+msgid "visible to groups"
+msgstr "visível a grupos"
+
+msgid "stocked"
+msgstr "estocado"
+
+msgid "unstocked"
+msgstr "não estocado"
+
+msgid "recommended"
+msgstr "recomendado"
+
+msgid "related"
+msgstr "relacionado"
+
+msgid "computed"
+msgstr "computado"
+
+msgid "bought with"
+msgstr "comprado com"
+
+msgid "shipped"
+msgstr "enviado"
+
+msgid "no verification required"
+msgstr "nenhuma verificação necessária"
+
+msgid "admin verification required"
+msgstr "verificação do administrador necessária"
+
+msgid "third party verification required"
+msgstr "verificação por terceiros necessária"
+
+msgid "product type"
+msgstr "tipo de produto"
+
+msgid "product types"
+msgstr "tipos de produtos"
+
+msgid "mode"
+msgstr "modo"
+
+msgid "variation parent"
+msgstr "variação pai"
+
+msgid "stock"
+msgstr "estoque"
+
+msgid "shipping mode"
+msgstr "modo de transporte"
+
+msgid "unit"
+msgstr "unidade"
+
+msgid "tax class"
+msgstr "classe fiscal"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "GTIN"
+msgstr "GTIN"
+
+msgid "Global Trade Item Number"
+msgstr "Global Trade Item Number (Número Global de Item Comercial)"
+
+msgid "barcode"
+msgstr "código de barras"
+
+msgid "bookkeeping account"
+msgstr "conta contabilidade"
+
+msgid "profit center"
+msgstr "centro de lucro"
+
+msgid "cost center"
+msgstr "centro de custo"
+
+msgid "only used for administration and reporting"
+msgstr "utilizado apenas para administração e geração de relatórios"
+
+msgid "width (mm)"
+msgstr "largura (mm)"
+
+msgid "height (mm)"
+msgstr "altura (mm)"
+
+msgid "depth (mm)"
+msgstr "profundidade (mm)"
+
+msgid "net weight (g)"
+msgstr "peso líquido (g)"
+
+msgid "gross weight (g)"
+msgstr "peso bruto (g)"
+
+msgid "keywords"
+msgstr "palavras-chave"
+
+msgid "status text"
+msgstr "texto de status"
+
+msgid ""
+"This text will be shown alongside the product in the shop. (Ex.: \"Available"
+" in a month\")"
+msgstr "Este texto será mostrado ao lado do produto na loja. (Ex.: \"Disponível em um mês\")"
+
+msgid "variation name"
+msgstr "nome da variação"
+
+msgid "products"
+msgstr "produtos"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (parent is a child "
+"already)"
+msgstr "Não há suporte a hierarquias de vários níveis de filiação (pai já é um filho)"
+
+msgid "Parent is a variable variation parent, yet variables were not passed"
+msgstr "Pai é uma variação de variáveis pai, no entanto, as variáveis não foram passadas"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a simple "
+"variation parent)"
+msgstr "Não há suporte a hierarquias de vários níveis de filiação (este produto é um pai de variação simples)"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a "
+"variable variation parent)"
+msgstr "Não há suporte a hierarquias de vários níveis de filiação (este produto é um pai de variação de variáveis)"
+
+msgid "Product is currently not a normal product, can't turn into package"
+msgstr "O produto não é mais um produto comum, não pode ser convertido em pacote"
+
+msgid "Variation parents can not belong into a package"
+msgstr "Pais de variações não podem pertencer a um pacote"
+
+msgid "Packages can't be nested"
+msgstr "Os pacotes não podem ser agrupados"
+
+#, python-format
+msgid "Quantity %s is invalid"
+msgstr "Quantidade %s é inválida"
+
+msgid "primary product"
+msgstr "produto principal"
+
+msgid "secondary product"
+msgstr "produto secundário"
+
+msgid "weight"
+msgstr "peso"
+
+msgid "cross sell link"
+msgstr "link de venda cruzada"
+
+msgid "cross sell links"
+msgstr "links de vendas cruzadas"
+
+msgid "translated value"
+msgstr "valor traduzido"
+
+msgid "product attribute"
+msgstr "atributo de produto"
+
+msgid "product attributes"
+msgstr "atributos de produtos"
+
+msgid "logo"
+msgstr "logotipo"
+
+msgid "choice identifier"
+msgstr "identificador de escolha"
+
+msgid "behavior components"
+msgstr "componentes de comportamento"
+
+#, python-format
+msgid "%s is disabled"
+msgstr "%s está desabilitado"
+
+#, python-format
+msgid "%s is for different shop"
+msgstr "%s é para uma loja diferente"
+
+#, python-format
+msgid "%(service_name)s: %(sub_item)s"
+msgstr "%(service_name)s: %(sub_item)s"
+
+msgid "Fixed cost"
+msgstr "Custo fixo"
+
+msgid "Add fixed cost to price of the service."
+msgstr "Adiciona um custo fixo ao preço do serviço."
+
+msgid "Waiving cost"
+msgstr "Isenção de custo"
+
+msgid ""
+"Add cost to price of the service if total price of products is less than a "
+"waive limit."
+msgstr "Adiciona um custo ao preço do serviço se o preço total dos produtos for inferior a um limite de isenção."
+
+msgid "Weight limits"
+msgstr "Limites de peso"
+
+msgid "Limit availability of the service based on total weight of products."
+msgstr "Limita a disponibilidade do serviço com base no peso total dos produtos."
+
+msgid "minimum weight"
+msgstr "peso mínimo"
+
+msgid "maximum weight"
+msgstr "peso máximo"
+
+msgid "Minimum weight not met."
+msgstr "Peso mínimo não atendido."
+
+msgid "Maximum weight exceeded."
+msgstr "Peso máximo excedido."
+
+msgid "min weight"
+msgstr "peso mín."
+
+msgid "max weight"
+msgstr "peso máx."
+
+msgid "Weight-based pricing"
+msgstr "Preços com base no peso"
+
+msgid ""
+"Define price based on basket weight. Range minimums is counted in range only"
+" as zero."
+msgstr "Define o preço com base no peso do carrinho. Mínimos do intervalo são contabilizados na faixa como zero apenas."
+
+msgid "Weight does not match with any range."
+msgstr "O peso não é compatível com nenhum intervalo."
+
+msgid "Contact group availability"
+msgstr "Disponibilidade do grupo de contatos"
+
+msgid "Limit service availability for specific contact groups."
+msgstr "Limita a disponibilidade do serviço para grupos de contatos específicos."
+
+msgid "groups"
+msgstr "grupos"
+
+msgid "Customer does not belong to any group."
+msgstr "Cliente não pertence a nenhum grupo."
+
+msgid "Service is not available for any of the customers groups."
+msgstr "Serviço não está disponível para nenhum dos grupos de clientes."
+
+msgid "Staff only availability"
+msgstr "Disponibilidade apenas membros da equipe"
+
+msgid "Limit service availability to staff only"
+msgstr "Limita a disponibilidade do serviço para membros da equipe apenas"
+
+msgid "Service is only available for staff"
+msgstr "Serviço só está disponível para os membros da equipe"
+
+msgid "round to nearest with ties going away from zero"
+msgstr "arredonda para o mais próximo com os intermediários se afastando de zero"
+
+msgid "round to nearest with ties going towards zero"
+msgstr "arredonda para o mais próximo com os intermediários se aproximando a zero"
+
+msgid "round away from zero"
+msgstr "arredonda para longe de zero"
+
+msgid "round towards zero"
+msgstr "arredonda em direção a zero"
+
+msgid "payment processor"
+msgstr "processador de pagamentos"
+
+msgid "rounding quantize"
+msgstr "quantize de arredondamento"
+
+msgid "Rounding quantize for cash payment."
+msgstr "Quantize de arredondamento para pagamentos em dinheiro."
+
+msgid "rounding mode"
+msgstr "modo de arredondamento"
+
+msgid "Rounding mode for cash payment."
+msgstr "Modo de arredondamento para pagamentos em dinheiro."
+
+msgid "custom payment processor"
+msgstr "processador de pagamentos personalizado"
+
+msgid "custom payment processors"
+msgstr "processadores de pagamentos personalizados"
+
+msgid "Manually processed payment"
+msgstr "Pagamento processado manualmente"
+
+msgid "Cash payment"
+msgstr "Pagamento em dinheiro"
+
+msgid "carrier"
+msgstr "transportadora"
+
+msgid "custom carrier"
+msgstr "transportadora personalizada"
+
+msgid "custom carriers"
+msgstr "transportadoras personalizadas"
+
+msgid "Manually processed shipment"
+msgstr "Remessa processada manualmente"
+
+msgid "not sent"
+msgstr "não enviado"
+
+msgid "sent"
+msgstr "enviado"
+
+msgid "received"
+msgstr "recebido"
+
+msgid "error"
+msgstr "erro"
+
+msgid "tracking code"
+msgstr "código de rastreamento"
+
+msgid "volume"
+msgstr "volume"
+
+msgid "shipment"
+msgstr "remessa"
+
+msgid "shipments"
+msgstr "remessas"
+
+msgid "unit volume"
+msgstr "unidade de volume"
+
+msgid "unit weight"
+msgstr "unidade de peso"
+
+msgid "sent product"
+msgstr "produto enviado"
+
+msgid "sent products"
+msgstr "produtos enviados"
+
+msgid ""
+"The following fields cannot be changed since there are existing orders for "
+"this shop"
+msgstr "Os campos a seguir não podem ser alterados pois existem pedidos em aberto para esta loja"
+
+msgid "domain"
+msgstr "domínio"
+
+msgid "options"
+msgstr "opções"
+
+msgid "maintenance mode"
+msgstr "modo de manutenção"
+
+msgid "contact address"
+msgstr "endereço de contato"
+
+msgid "public name"
+msgstr "nome público"
+
+msgid "maintenance message"
+msgstr "mensagem de manutenção"
+
+msgid "alert limit"
+msgstr "limite de alerta"
+
+msgid "physical stock count"
+msgstr "contagem de estoque físico"
+
+msgid "logical stock count"
+msgstr "contagem de estoque lógico"
+
+msgid "internal"
+msgstr "interno"
+
+msgid "external"
+msgstr "externo"
+
+msgid "supplier type"
+msgstr "tipo de fornecedor"
+
+msgid "stock managed"
+msgstr "estoque gerenciado"
+
+msgid "module data"
+msgstr "dados do módulo"
+
+msgid "Cannot change business critical fields of Tax that is in use"
+msgstr "Não é possível alterar os campos críticos de negócio de um Imposto que está em uso"
+
+msgid "code"
+msgstr "código"
+
+msgid "tax rate"
+msgstr "taxa de imposto"
+
+msgid "The percentage rate of the tax."
+msgstr "A taxa percentual do imposto."
+
+msgid "tax amount value"
+msgstr "valor total do imposto"
+
+msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
+msgstr "O valor fixo do imposto. Mutuamente exclusivo com as taxas percentuais."
+
+msgid "currency of tax amount"
+msgstr "moeda do valor do imposto"
+
+msgid "Either rate or amount is required"
+msgstr "Ou taxa ou valor é obrigatório"
+
+msgid "Cannot have both rate and amount"
+msgstr "Não é possível ter ambos taxa e valor"
+
+msgid "Currency is required if amount is specified"
+msgstr "Moeda é obrigatória caso o valor seja especificado"
+
+msgid "taxes"
+msgstr "impostos"
+
+msgid "tax classes"
+msgstr "classes fiscais"
+
+msgid "customer tax group"
+msgstr "grupo de impostos do cliente"
+
+msgid "customer tax groups"
+msgstr "grupos de impostos do cliente"
+
+msgid "Retail Customers"
+msgstr "Clientes Varejistas"
+
+msgid "Company Customers"
+msgstr "Clientes Empresariais"
+
+msgid "allowed decimals"
+msgstr "casas decimais permitidas"
+
+msgid "sales unit"
+msgstr "unidade de vendas"
+
+msgid "sales units"
+msgstr "unidades de vendas"
+
+msgid "No Choice"
+msgstr "Nenhuma Escolha"
+
+#, python-format
+msgid "%s not available in this shop"
+msgstr "%s não disponível nesta loja"
+
+msgid "Default Pricing"
+msgstr "Preço Padrão"
+
+msgid "Insufficient stock"
+msgstr "Estoque insuficiente"
+
+msgid "inventory"
+msgstr "inventário"
+
+msgid "restock"
+msgstr "reabastecimento"
+
+msgid "restock logical"
+msgstr "reabastecimento lógico"
+
+msgid "Untaxed"
+msgstr "Não tributado"
+
+msgid "This field cannot be changed since it is protected."
+msgstr "Este campo não pode ser alterado uma vez que está protegido."
+
+msgid "First Last"
+msgstr "Primeiro Último"

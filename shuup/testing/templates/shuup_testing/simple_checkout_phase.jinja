@@ -1,0 +1,10 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+{% from "shuup/front/macros/checkout.jinja" import default_buttons %}
+
+{% block checkout_phase_content %}
+<form role="form" method="post" action="">
+    {% csrf_token %}
+    {{ bs3.field(form.input_field) }}
+    {{ default_buttons() }}
+</form>
+{% endblock %}

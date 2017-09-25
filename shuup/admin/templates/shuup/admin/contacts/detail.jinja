@@ -1,0 +1,22 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, info_row, content_with_sidebar %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="contact_details") %}
+        <div id="contact_details">
+            {% for contact_section in contact_sections %}
+                {% call content_block(contact_section.name, contact_section.icon) %}
+                    {% include contact_section.template with context %}
+                {% endcall %}
+            {% endfor %}
+        </div>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+{% for contact_section in contact_sections %}
+    {% if contact_section.extra_js %}
+        {% include contact_section.extra_js with context %}
+    {% endif %}
+{% endfor %}
+{% endblock %}

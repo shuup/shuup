@@ -1,0 +1,26 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% set members_formset = form["members"] %}
+
+{% call content_block(_("Add Members"), "fa-users") %}
+    {% for mf in members_formset.management_form %}{{ mf|safe }}{% endfor %}
+    <table class="table table-striped">
+        <tbody>
+        {% for f in members_formset %}
+            <tr>
+                <td>
+                    {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
+                    {{ f.member|safe }}
+                </td>
+                <td class="text-right">
+                    {% if f.DELETE and f.initial.member %}{{ bs3.field(f.DELETE) }}{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if members_formset.extra %}
+        <a href="#" type="button" class="btn btn-lg btn-text" id="add-more">
+            <i class="fa fa-plus"></i> {% trans %}Add more{% endtrans %}
+        </a>
+    {% endif %}
+{% endcall %}

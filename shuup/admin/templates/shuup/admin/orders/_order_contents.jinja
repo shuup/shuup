@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-header"><i class="fa fa-file-text"></i> {% trans %}Order Contents{% endtrans %}</h4>
+        <div class="hidden-xs">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% trans %}SKU{% endtrans %}</th>
+                        <th>{% trans %}Text{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Taxless Unit Price{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Taxless Discount{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Taxless Discount Percentage{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Tax{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Taxless Total{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Total incl. Tax{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th colspan="7"></th>
+                        <th class="text-right">{{ order.taxless_total_price|money }}</th>
+                        <th class="text-right">{{ order.taxful_total_price|money }}</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for line in order.lines.order_by("ordering") %}
+                    <tr>
+                        <td>{{ line.sku }}</td>
+                        <td>{{ line.text }}</td>
+                        <td class="text-right">{{ line.taxless_base_unit_price|money }}</td>
+                        <td class="text-right">{{ line.unit.render_quantity(line.quantity) }}</td>
+                        <td class="text-right">{% if line.taxless_discount_amount %}{{ line.taxless_discount_amount|money }}{% else %}-{% endif %}</td>
+                        <td class="text-right">{% if line.taxless_discount_amount %}{{ line|discount_percent }}{% else %}-{% endif %}</td>
+                        <td class="text-right">{{ line.tax_rate|percent }}</td>
+                        <td class="text-right">{{ line.taxless_price|money }}</td>
+                        <td class="text-right">{{ line.taxful_price|money }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="visible-xs mobile-list-group">
+            <ul class="list-group">
+                {% for line in order.lines.order_by("ordering") %}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>{{ line.sku }}</strong>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                {{ line.text }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                {{ line.quantity|number }} &times; {{ line.taxless_base_unit_price|money }} {% if line.taxless_discount_amount %}<span class="text-muted">{% trans %}Discount{% endtrans %}{{ line.taxless_discount_amount|money }}</span>{% endif %}
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>{% trans %}Total{% endtrans %}: {{ line.taxful_price|money }}</strong>
+                            </div>
+                            <div class="col-xs-12 text-right text-muted">
+                                {{ line.tax_rate|percent }} {% trans %}Tax{% endtrans %} ({{ line.taxless_price|money }} {% trans %}Taxless{% endtrans %})
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="clearfix">
+                <div class="col-xs-6"><strong>{% trans %}Taxless Total{% endtrans %}</strong></div>
+                <div class="col-xs-6 text-right"><strong>{{ order.taxless_total_price|money }}</strong></div>
+            </div>
+            <div class="clearfix">
+                <div class="col-xs-6"><strong>{% trans %}Total incl. Tax{% endtrans %}</strong></div>
+                <div class="col-xs-6 text-right"><strong>{{ order.taxful_total_price|money }}</strong></div>
+            </div>
+        </div>
+    </div>
+</div>

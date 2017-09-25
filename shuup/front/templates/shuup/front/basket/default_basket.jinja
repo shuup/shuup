@@ -1,0 +1,47 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title %}{% trans %}Shopping cart{% endtrans %}{% endblock %}
+
+{% block content_title %}{% trans %}Shopping cart{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% if basket.is_empty and not basket.get_unorderable_lines() %}
+        <p class="lead">
+            <i class="fa fa-exclamation-circle text-danger"></i>
+            {% trans %}Your shopping cart is empty.{% endtrans %}
+        </p>
+        <hr>
+        <div class="cart-actions">
+            {{ basket_macros.render_empty_basket_actions() }}
+        </div>
+    {% else %}
+        {% if errors %}
+            <p class="text-danger">
+                {% trans %}There were errors on following items{% endtrans %}:
+            </p>
+            {% for error in errors %}
+                <p>{{ error.message }}</p>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% placeholder "cart_top_extra" %}{% endplaceholder %}
+        {{ basket_macros.render_basket_content(basket) }}
+        <div class="cart-actions clearfix">
+            {% if errors %}
+                <p class="lead text-right">
+                    <i class="fa fa-exclamation-triangle text-danger"></i>
+                    {% trans %}You are unable to proceed to checkout!{% endtrans %}
+                </p>
+            {% else %}
+                {{ basket_macros.continue_shopping_button() }}
+                {{ basket_macros.proceed_to_checkout_button() }}
+            {% endif %}
+        </div>
+        {{ basket_macros.render_cart_saver() }}
+    {% endif %}
+    {% placeholder "cart_bottom_extra" %}{% endplaceholder %}
+{% endblock %}
+
+{% block extrajs %}
+    {{ basket_macros.render_extrajs() }}
+{% endblock %}

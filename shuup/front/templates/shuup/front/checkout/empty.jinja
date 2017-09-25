@@ -1,0 +1,9 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+
+{% block checkout_phase_bar %}{% endblock %}
+
+{% block checkout_phase_content %}
+    <div class="alert alert-danger">
+        {% trans %}Your shopping cart is empty.{% endtrans %}
+    </div>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "shuup/admin/base.jinja" %}
+{% block title -%}
+    {% trans %}Welcome!{% endtrans %}
+{%- endblock %}
+{% macro regular_block(width) %}
+    <div class="block width-{{ width }}">
+        <div class="block-inner">
+            {{ caller() }}
+        </div>
+    </div>
+{% endmacro %}
+{% macro large_value_block(b) %}
+    <div class="block width-{{ b.size }}">
+        <div class="block-inner color-block block-{{ b.color }}">
+            <div class="block-header">
+                <div class="text-wrap"><span>{{ b.title }}</span></div>
+                {% if b.icon %}
+                    <div class="icon-wrap"><i class="{{ b.icon }}"></i></div>
+                {% endif %}
+            </div>
+            <div class="block-content">
+                <h2>{{ b.value }}</h2>
+                {% if b.subtitle %}
+                    <div class="subtitle">{{ b.subtitle }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+{% macro notification_block_content(notifications) %}
+    <div class="color-block block-red">
+        <div class="block-header">
+            <div class="text-wrap"><span>{% trans %}Notifications{% endtrans %}</span></div>
+            <div class="icon-wrap"><i class="fa fa-line-chart"></i></div>
+        </div>
+        <div class="block-content">
+            <table>
+            {% for notification in notifications %}
+                <tr id="notif-{{ notification.id }}">
+                    <td class="dismiss-td">
+                        {% if notification.dismissal_url %}
+                        <button class="btn dismiss-button" title="{{ _("Mark as read") }}"
+                            data-dismiss-url="{{ notification.dismissal_url }}"
+                            data-dismiss-target="#notif-{{ notification.id }}">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        {% endif %}
+                    </td>
+                    <td>
+                    {%- if notification.title %}<span class="label label-{{ notification.kind }}">{{ notification.title }}</span>&nbsp;{% endif %}
+                    {%- if notification.url %}<a href="{{ notification.url }}">{% endif -%}
+                    {{ notification.text }}
+                    {%- if notification.url -%}</a>{%- endif %}
+                    </td>
+                    {% if notification.datetime %}<td class="timestamp timesince" data-ts="{{ notification.datetime.isoformat() }}"></td>{% endif %}
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro activity_block_content(activities) %}
+<div class="activity-list">
+    <h2 class="block-title"><i class="fa fa-pencil-square-o"></i>{% trans %}Activity Feed{% endtrans %}</h2>
+    <ul>
+        {% for act in activities %}
+            <li>
+                <div class="activity-name">
+                    {% if act.url %}<a href="{{ act.url }}">{% endif %}
+                    {{ act.text }}
+                    {% if act.url %}</a>{% endif %}
+                </div>
+                <div class="timestamp timesince" data-ts="{{ act.datetime.isoformat() }}"></div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endmacro %}
+
+{% block content_wrap %}
+    <main id="main-content" class="dashboard">
+
+        {% block content %}
+            <div id="dashboard-wrapper">
+
+                {% for b in blocks %}
+                    {% if b.type == "value" %}
+                        {{ large_value_block(b) }}
+                    {% else %}
+                        {% call regular_block(b.size) %}
+                            {{ b.content|safe }}
+                        {% endcall %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if notifications %}
+                    {% call regular_block("medium") %}{{ notification_block_content(notifications) }}{% endcall %}
+                {% endif %}
+
+                {% if activity %}
+                    {% call regular_block("medium") %}{{ activity_block_content(activity) }}{% endcall %}
+                {% endif %}
+                <div class="block width-large">
+                    <p>{{ _("Shuup %(version)s", version=version) }}</p>
+                </div>
+            </div>
+        {% endblock %}
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ static("shuup_admin/js/dashboard.js") }}"></script>
+    <script>
+        (function(){
+            $.tour("setPageSteps", [{
+                text: [
+                    "{% trans %}This is the dashboard for your store. It’s like the flight deck for your ecommerce spaceship. You can control everything from here.{% endtrans %}",
+                    "{% trans %}Check out your shoppers’ info, add more products or categories, setup marketing campaigns, see orders and sales stats, and track the money you’ve made.{% endtrans %}",
+                    "{% trans %}Every setting you could possibly need is in here.{% endtrans %}"
+                ]
+            }]);
+        })();
+    </script>
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ static("shuup_admin/css/dashboard.css") }}">
+{% endblock %}

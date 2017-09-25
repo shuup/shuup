@@ -1,0 +1,13 @@
+{% from "shuup/admin/service_providers/wizard_macros.jinja" import service_provider_section %}
+{% set form = pane.forms[form_def.name] %}
+
+{% call service_provider_section(
+    identifier=form_def.name,
+    header=gettext("Manually process payments"),
+    description=gettext("Manage payments outside of Shuup"),
+    is_active = form.is_active()
+)%}
+    <input type="hidden" name="{{ form.name.html_name }}" value="{% trans %}Manual{% endtrans %}">
+    {{ bs3.field(form.service_name) }}
+    {{ bs3.field(form.service_description) }}
+{% endcall %}

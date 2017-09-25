@@ -1,0 +1,544 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
+"sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Campaigns"
+msgstr "Erbjudanden"
+
+msgid "Catalog Campaigns"
+msgstr "Katalogerbjundanden"
+
+msgid "Show Catalog Campaigns"
+msgstr "Visa katalogerbjundanden"
+
+msgid "Basket Campaigns"
+msgstr "Korg-erbjudanden"
+
+msgid "Show Basket Campaigns"
+msgstr "Visa korgerbjudanden"
+
+msgid "Coupons"
+msgstr "Rabattkoder"
+
+msgid "Show Coupons"
+msgstr "Visa rabattkoder"
+
+msgid "Set up a sales campaign"
+msgstr "Ställa in en försäljningserbjudande"
+
+msgid "New basket campaign"
+msgstr "Nytt korg-erbjudande"
+
+msgid "New catalog campaign"
+msgstr "Nytt katalogerbjudande"
+
+msgid "New coupon"
+msgstr "Ny rabattkod"
+
+msgid "Minimum value"
+msgstr "Lägsta värde"
+
+msgid "Maximum value"
+msgstr "Högsta värde"
+
+msgid "Leave empty for no maximum"
+msgstr "Lämna tom för inget högsta värde"
+
+msgid "Campaign end date can't be before start date."
+msgstr "Erbjudandets slutdatum kan inte vara innan startdatument."
+
+msgid "Define the required coupon for this campaign."
+msgstr "Definiera den krävda rabattkoden för detta erbjudande."
+
+msgid "Coupon"
+msgstr "Rabattkod"
+
+msgid "discount percentage"
+msgstr "rabattprocent"
+
+msgid "The discount percentage for this campaign."
+msgstr "Rabattprocenten för det här erbjudandet."
+
+msgid "Only amount or percentage can be set."
+msgstr "Endast ett belopp eller procentsats kan ställas in."
+
+msgid "Autogenerate code"
+msgstr "Generera kod"
+
+msgid "Discount Code already in use."
+msgstr "Rabattkoden är redan i bruk."
+
+msgid "Active Campaigns"
+msgstr "Aktiva erbjudanden"
+
+msgid "Catalog Campaign"
+msgstr "Katalogerbjudanden"
+
+msgid "Basket Campaign"
+msgstr "Korg-erbjudanden"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Starts"
+msgstr "Börjar"
+
+msgid "Ends"
+msgstr "Slutar"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "No"
+msgstr "Nej"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "CatalogCampaign"
+msgstr "Katalogerbjudande"
+
+msgid "Create new Catalog Campaign"
+msgstr "Skapa ett nytt katalogerbjudande"
+
+msgid "Create new Basket Campaign"
+msgstr "Skapa ett nytt korg-erbjudande"
+
+msgid "Code"
+msgstr "Kod"
+
+msgid "Usages"
+msgstr "Användningar"
+
+msgid "Usages Limit per contact"
+msgstr "Användningsgräns per kontakt"
+
+msgid "Usage Limit"
+msgstr "Användningsgräns"
+
+msgid "Created by"
+msgstr "Skapad av"
+
+msgid "Date created"
+msgstr "Skapad den"
+
+msgid "Create new Coupon"
+msgstr "Skapa nya rabattkod"
+
+msgid "Basket condition"
+msgstr "Korgens tillstånd"
+
+msgid "Basket product count"
+msgstr "Korgens produktantal"
+
+msgid "product count in basket"
+msgstr "antal produkter i korgen"
+
+msgid ""
+"Limit the campaign to match when basket has at least the product count "
+"entered here."
+msgstr ""
+"Begränsa kampanjen för att stämma överens med när korgen har minst antalet "
+"produkten som angivits här."
+
+msgid "Basket total value"
+msgstr "Korgens totala värde"
+
+msgid "basket total amount"
+msgstr "totala antalet varor i korgen"
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products."
+msgstr ""
+"Begränsa kampanjen för att stämma överens med när den har en summa av minst "
+"det värde som anges här."
+
+msgid "Basket maximum product count"
+msgstr "Högsta antalet varor i korgen"
+
+msgid "maximum product count in basket"
+msgstr "Högsta antalet varor i korgen"
+
+msgid ""
+"Limit the campaign to match when basket has at maximum the product count "
+"entered here."
+msgstr ""
+"Begränsa kampanjen för att stämma överens med när korgen har ett maximalt "
+"antalet produkten som anges här."
+
+msgid "Basket maximum total value"
+msgstr "Korgen högsta totala värde"
+
+msgid "maximum basket total amount"
+msgstr "maximala korg totalbeloppet"
+
+msgid ""
+"Limit the campaign to match when it has at maximum the total value entered "
+"here worth of products."
+msgstr ""
+"Begränsa kampanjen för att stämma överens med när den har högst det totalt "
+"värde som angivits här."
+
+msgid "Exactly"
+msgstr "Exakt"
+
+msgid "Greater than or equal to"
+msgstr "Större än eller lika med"
+
+msgid "Products in basket"
+msgstr "Produkter i korgen"
+
+msgid "operator"
+msgstr "operatör"
+
+msgid "quantity"
+msgstr "antal"
+
+msgid "products"
+msgstr "produkter"
+
+msgid "Limit the campaign to have the selected products in basket."
+msgstr "Begränsa kampanjen till när korgen har de utvalda produkterna."
+
+msgid "Contact Group"
+msgstr "Kontaktgrupp"
+
+msgid "contact groups"
+msgstr "kontaktgrupper"
+
+msgid "Limit the campaign to members of the selected contact groups."
+msgstr "Begränsa kampanjen för medlemmar i de valda kontaktgrupper."
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "contacts"
+msgstr "kontakter"
+
+msgid "Limit the campaign to selected contacts."
+msgstr "Begränsa kampanjen till utvalda kontakter."
+
+msgid "Category products in basket"
+msgstr "Kategoriprodukter i korgen"
+
+msgid "categories"
+msgstr "kategorier"
+
+msgid "excluded categories"
+msgstr "uteslutna kategorier"
+
+msgid ""
+"If the customer has even a single product in the basket from these "
+"categories this rule won't match thus the campaign cannot be applied to the "
+"basket."
+msgstr ""
+"Om kunden har en enda produkt i korgen från dessa kategorier som denna regel "
+"stämmer överens med så kan inte erbjudandet tillämpas på korgen."
+
+msgid "Limit the campaign to match the products from selected categories."
+msgstr ""
+"Begränsa kampanjen för att stämma överens med produkterna från de valda "
+"kategorier."
+
+msgid "campaign"
+msgstr "erbjudande"
+
+msgid "Discount amount value"
+msgstr "Rabattvärde"
+
+msgid "discount amount"
+msgstr "rabattvärde"
+
+msgid "Flat amount of discount."
+msgstr "Fast belopp i rabatt."
+
+msgid "Give discount amount."
+msgstr "Ge rebattbelopp"
+
+msgid "Discount amount percentage"
+msgstr "Rabatt i procent för belopp"
+
+msgid "Give percentage discount."
+msgstr "Ge procentrabatt."
+
+msgid "Free Product(s)"
+msgstr "Gratis produkt(er)"
+
+msgid "product"
+msgstr "produkt"
+
+msgid "Select product(s) to give free."
+msgstr "Välj produkter att ge gratis."
+
+msgid "Discount from Product"
+msgstr "Rabatt från produkten"
+
+msgid "per line discount"
+msgstr "per rad rabatt"
+
+msgid "Uncheck this if you want to give discount for each matched product."
+msgstr "Avmarkera det om du vill ge rabatt för varje matchade produkt."
+
+msgid "Select discount amount and products."
+msgstr "Välj rabattbelopp och produkter."
+
+msgid "Discount from Category products"
+msgstr "Rabatt från kategoriprodukter"
+
+msgid "category"
+msgstr "kategori"
+
+msgid ""
+"Select discount amount and category. Please note that the discount will be "
+"given to all matching products in basket."
+msgstr ""
+"Välj rabattbelopp och kategori. Observera att rabatten kommer att ges till "
+"alla matchande produkter i korgen."
+
+msgid "shop"
+msgstr "butik"
+
+msgid "The shop where the campaign is active."
+msgstr "Butiken där erbjudandet är aktivt."
+
+msgid "name"
+msgstr "namn"
+
+msgid "The name for this campaign."
+msgstr "Namnet för detta erbjudande."
+
+msgid "active"
+msgstr "aktiv"
+
+msgid ""
+"Check this if the campaign is currently active. Please also set a start and "
+"end date."
+msgstr ""
+"Markera detta om erbjudandet är aktivt. Ställ också in en start- och "
+"slutdatum."
+
+msgid "start date and time"
+msgstr "startdatum och -tid"
+
+msgid ""
+"The date and time the campaign starts. This is only applicable if the "
+"campaign is marked as active."
+msgstr ""
+"Datum och tid då erbjudandet startar. Detta gäller endast om kampanjen är "
+"markerad som aktiv."
+
+msgid "end date and time"
+msgstr "slutdatum och -tid"
+
+msgid ""
+"The date and time the campaign ends. This is only applicable if the campaign "
+"is marked as active."
+msgstr ""
+"Datum och tid då erbjudandet avslutas. Detta gäller endast om kampanjen är "
+"markerad som aktiv."
+
+msgid "created by"
+msgstr "skapad av"
+
+msgid "modified by"
+msgstr "ändrad av"
+
+msgid "created on"
+msgstr "skapad den"
+
+msgid "modified on"
+msgstr "ändrad på"
+
+msgid "Campaign"
+msgstr "Erbjudande"
+
+msgid "The campaign name to show in the store front."
+msgstr "Erbjudandets namn som visas i butiken."
+
+#, python-format
+msgid "Catalog Campaign: %(name)s"
+msgstr "Katalogerbjudande: %(name)s"
+
+msgid "basket line text"
+msgstr "korgen radtext"
+
+msgid "This text will be shown in basket."
+msgstr "Denna text kommer att visas i korgen."
+
+msgid "coupon"
+msgstr "rabattkod"
+
+msgid "public name"
+msgstr "offentligt namn"
+
+#, python-format
+msgid "Basket Campaign: %(name)s"
+msgstr "Katalogerbjudande: %(name)s"
+
+msgid "usage limit per customer"
+msgstr "användningsgräns per kund"
+
+msgid "Limit the amount of usages per a single customer."
+msgstr "Begränsa mängden användningar för en enskild kund."
+
+msgid "usage limit"
+msgstr "användningsgräns"
+
+msgid ""
+"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
+"coupon cannot be used."
+msgstr ""
+"Ange den absoluta gränsen för användningarna för denna kupong. Om "
+"gränsvärdet är noll (0) kan inte kupong användas."
+
+msgid "is active"
+msgstr "är aktiv"
+
+msgid "Cannot have two same codes active at the same time."
+msgstr "Kan inte ha två likadanna koder aktiva samtidigt."
+
+msgid "Base Catalog Filter"
+msgstr "Bas-katalogs filter"
+
+msgid "Product type"
+msgstr "Produkttyp"
+
+msgid "product Types"
+msgstr "produkttyper"
+
+msgid "Limit the campaign to selected product types."
+msgstr "Begränsa kampanjen till valda produkttyper."
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Limit the campaign to selected products."
+msgstr "Begränsa kampanjen på utvalda produkter."
+
+msgid "Product Category"
+msgstr "Produktkategori"
+
+msgid "Limit the campaign to products in selected categories."
+msgstr "Begränsa kampanjen till produkter i valda kategorier."
+
+msgid "group"
+msgstr "grupp"
+
+msgid "min amount"
+msgstr "minsta belopp"
+
+msgid "max amount"
+msgstr "högsta belopp"
+
+msgid "Can not add sales limits for default contact groups"
+msgstr "Kan inte lägga till försäljning gränser för standard kontaktgrupper"
+
+msgid "Context Condition"
+msgstr "Sammanhangstillstånd"
+
+msgid "Campaign Basket Discounts"
+msgstr "Korgerbjudandets rabetter"
+
+msgid "Coupon Code:"
+msgstr "Rabattkod:"
+
+msgid "Filter report results by coupon."
+msgstr "Filtrera rapporter efter rabattkoder"
+
+msgid "Coupons Usage"
+msgstr "Kupongeranvändning"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Coupon code"
+msgstr "Rabattkod"
+
+msgid "Order"
+msgstr "Beställning"
+
+msgid "Taxful total"
+msgstr "Summa (inkl. skatter)"
+
+msgid "Taxful subtotal"
+msgstr "Delumma (inkl. skatter)"
+
+msgid "Total discount"
+msgstr "Rabatt totalt"
+
+msgid "General Information"
+msgstr "Allmän information"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Not set"
+msgstr "Inte angiven"
+
+msgid "No campaigns found"
+msgstr "Inga aktuella erbjudanden"
+
+msgid "This section shows all the <b>active</b> campaigns this product is in."
+msgstr "Här visas alla <b>aktiva</b> produkter som finns med i erbjudandet."
+
+#, python-format
+msgid "Active campaings for shop: %(shop)s"
+msgstr "Aktiva erbjudanden för butiken: %(shop)s"
+
+msgid "Rules"
+msgstr "Regler"
+
+msgid "Rule type"
+msgstr "Regeltyp"
+
+msgid "The criteria used to determine whether this campaign is applied."
+msgstr "De kriterier som används för att avgöra om kampanjen tillämpas."
+
+msgid "Add rule"
+msgstr "Lägg till regel"
+
+msgid "Effects"
+msgstr "Effekter"
+
+msgid "Effect type"
+msgstr "Effekttyp"
+
+msgid "Add effect"
+msgstr "Lägga till effekt"
+
+msgid "New Discount Code"
+msgstr "Lägg till ny rabattkod"
+
+msgid "General information"
+msgstr "Allmänna information"
+
+msgid "Generate"
+msgstr "Skapa"
+
+#, python-format
+msgid "%(coupons)s used"
+msgstr "%(coupons)s används"
+
+msgid "Sales Ranges"
+msgstr "Försäljningområden"
+
+msgid "Customers within this sales range are assigned to this contact group."
+msgstr "Kunder inom detta försäljningsområde tilldelas denna kontaktgrupp."

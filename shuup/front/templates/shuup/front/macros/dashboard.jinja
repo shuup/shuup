@@ -1,0 +1,23 @@
+{% extends "shuup/front/macros/theme/dashboard.jinja" %}
+
+{% macro content_block(heading, icon=None, url=None, text=None) %}
+    <div class="panel panel-default">
+        {% if heading %}
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                {% if icon %}
+                    <i class="{{ icon }}"></i> {{ heading }}
+                {% else %}
+                    {{ heading }}
+                {% endif %}
+                {% if url and text %}
+                    <a class="pull-right" role="button" href="{{ url }}">{{ text }}</a>
+                {% endif %}
+            </h2>
+        </div>
+        {% endif %}
+        <div class="panel-body">
+            {{ caller() }}
+        </div>
+    </div>
+{% endmacro %}

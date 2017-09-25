@@ -1,0 +1,39 @@
+
+<p class="section-description">{% trans %}All the orders that have this product.{% endtrans %}</p>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans %}Order{% endtrans %}</th>
+                <th>{% trans %}Order Date{% endtrans %}</th>
+                <th>{% trans %}Customer{% endtrans %}</th>
+                <th>{% trans %}Status{% endtrans %}</th>
+                <th>{% trans %}Payment Status{% endtrans %}</th>
+                <th>{% trans %}Shipping Status{% endtrans %}</th>
+                <th class="text-right">{% trans %}Total{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in product_orders %}
+            {% set order_url = shuup_admin.model_url(order, "detail") %}
+            <tr>
+                <td>
+                {% if order_url %}
+                <a href="{{ order_url }}">{{ order.identifier }}</a>
+                {% else %}
+                {{ order.identifier }}
+                {% endif %}
+                </td>
+                <td>{{ order.order_date|datetime }}</td>
+                <td>{{ order.customer }}</td>
+                <td>{{ order.get_status_display() }}</td>
+                <td>{{ order.get_payment_status_display() }}</td>
+                <td>{{ order.get_shipping_status_display() }}</td>
+                <td class="text-right">{{ order.taxful_total_price|money }}</td>
+            </tr>
+        {% else %}
+            <tr><td class="text-center" colspan="7"><em>{% trans %}No orders found{% endtrans %}</em></td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

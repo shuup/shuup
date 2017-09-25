@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-28 18:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.1.1\n"
+
+msgid "Shuup Utilities"
+msgstr ""
+
+msgid "other"
+msgstr ""
+
+msgid "audit"
+msgstr ""
+
+msgid "edit"
+msgstr ""
+
+msgid "deletion"
+msgstr ""
+
+msgid "note"
+msgstr ""
+
+msgid "email"
+msgstr ""
+
+msgid "warning"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "identifier"
+msgstr ""
+
+msgid "log entry kind"
+msgstr ""
+
+msgid "extra data"
+msgstr ""
+
+msgid "target"
+msgstr ""
+
+#, python-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(min)s--%(max)s days"
+msgstr ""
+
+msgid "This field is required."
+msgstr ""
+
+msgid ""
+"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
+"marks to negate (A-Z,!G will not match G)."
+msgstr ""
+
+msgid ""
+"Could not create PDF since Weasyprint is not available. Please contact "
+"support."
+msgstr ""

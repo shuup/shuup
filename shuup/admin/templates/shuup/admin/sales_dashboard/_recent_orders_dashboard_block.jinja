@@ -1,0 +1,30 @@
+<div class="color-block block-red">
+    <div class="block-header">
+        <div class="text-wrap">
+            <span>{% trans %}Recent Orders{% endtrans %}</span>
+        </div>
+    </div>
+    <div class="block-content">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% trans %}Order{% endtrans %}</th>
+                        <th>{% trans %}Customer{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Total{% endtrans %}</th>
+                        <th>{% trans %}Order Date{% endtrans %}</th>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td><a href="{{ shuup_admin.model_url(order, "detail") }}">{{ order.id }}</a></td>
+                            <td>{{ order.get_customer_name() }}</td>
+                            <td class="text-right">{{ order.taxful_total_price|money }}</td>
+                            <td>{{ order.order_date|datetime }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

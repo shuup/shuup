@@ -1,0 +1,31 @@
+.theme-screenshot {
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 50px;
+    border: 1px solid transparent;
+    max-height: 370px;
+    margin-bottom: 20px;
+    &:hover, &.active {
+        border: 1px solid #cecece;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    &.active {
+        .tools button {
+           display: none;
+        }
+
+        .tools:after {
+            content: "\f00c";
+            font-family: FontAwesome;
+            color: #2c8975;
+            font-size: 30px;
+        }
+    }
+
+    img {
+        max-height: 280px;
+    }
+}

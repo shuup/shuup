@@ -1,0 +1,26 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% block content %}
+    <div class="container-fluid">
+        {% if not is_package %}
+        <p class="text-info lead"><i class="fa fa-exclamation-circle fa-1.5x"></i> {% trans %}This product is not yet a package.{% endtrans %}</p>
+        <ul>
+        <li><p>{% trans %}To create a package, choose products below.{% endtrans %}</p></li>
+        </ul>
+        <hr class="separator-line dark">
+        {% endif %}
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="product_form"></div>
+            <div class="col-md-9">
+                <form method="post" id="product_form">
+                    {% csrf_token %}
+                    {% call content_block(_("Package Products"), "fa-sitemap") %}
+                        {% for form_def in form.form_defs.values() %}
+                            {% include form_def.template_name with context %}
+                        {% endfor %}
+                    {% endcall %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

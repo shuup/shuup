@@ -1,0 +1,25 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+{% block title %}{% trans %}Upload Addon - Install{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="install_form") %}
+        <form method="post" enctype="multipart/form-data" id="install_form">
+            {% csrf_token %}
+            {% call content_block(_("Package Information"), "fa-info-circle") %}
+                {% if pkg_info %}
+                    <pre><code>{{ pkg_info }}</code></pre>
+                {% else %}
+                    <i>{% trans %}No package information could be extracted.{% endtrans %}</i>
+                {% endif %}
+            {% endcall %}
+            {% call content_block(_("File List"), "fa-files-o") %}
+                <table class="table table-striped">
+                    {% for filename in filenames %}
+                        <tr><td>{{ filename }}</td></tr>
+                    {% endfor %}
+                </table>
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

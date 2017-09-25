@@ -1,0 +1,13 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% set order_form = form["order_configuration"] %}
+
+{% call content_block(_("Order Configuration"), icon="fa-th-list") %}
+    {% if order_form.prefix_disabled %}
+        {% set admin_url = url("shuup_admin:settings.list") %}
+        <p>
+            {% trans url=admin_url%}The field "Reference number prefix" is disabled because the order reference number generation method doesn't support a prefix. You can edit this setting from <a href="{{ url }}">system settings</a>.{% endtrans %}
+        </p>
+    {% endif %}
+    {{ render_monolingual_fields(order_form) }}
+{% endcall %}

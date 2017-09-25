@@ -1,0 +1,38 @@
+{% extends "shuup/front/dashboard/dashboard_base.jinja" %}
+{%- from "shuup/front/macros/dashboard.jinja" import content_block -%}
+{%- from "shuup/customer_information/macros/address.jinja" import render_address -%}
+
+{% block dashboard_item_content %}
+<div class="row">
+    <div class="col-md-4">
+    {% call content_block(_("Basic Information")) %}
+        <p><b>{% trans %}Name{% endtrans %}:</b> {{ customer.full_name }}</p>
+        <p><b>{% trans %}Email{% endtrans %}:</b> {{ customer.email or "-" }}</p>
+        <p><b>{% trans %}Phone{% endtrans %}:</b> {{ customer.phone or "-" }}</p>
+        {% if is_company %}
+            <p><b>{% trans %}Tax Number{% endtrans %}:</b> {{ customer.tax_number }}</p>
+        {% else %}
+            <p><b>{% trans %}Birth Date{% endtrans %}:</b> {{ customer.birth_date or "-" }}</p>
+            <p><b>{% trans %}Gender{% endtrans %}:</b> {{ customer.gender or "-" }}</p>
+        {% endif %}
+        <p><b>{% trans %}Marketing Permission{% endtrans %}:</b> {{ _("Yes") if customer.marketing_permission else _("No") }}</p>
+    {% endcall %}
+    </div>
+    <div class="col-md-4">
+    {% call content_block(_("Default Billing Address")) %}
+        {% set address = customer.default_billing_address %}
+        {% if address %}
+        {{ render_address(address) }}
+        {% endif %}
+    {% endcall %}
+    </div>
+    <div class="col-md-4">
+    {% call content_block(_("Default Shipping Address")) %}
+        {% set address = customer.default_shipping_address %}
+        {% if address %}
+        {{ render_address(address) }}
+        {% endif %}
+    {% endcall %}
+    </div>
+</div>
+{% endblock %}

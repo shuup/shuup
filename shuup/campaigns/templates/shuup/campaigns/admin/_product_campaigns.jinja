@@ -1,0 +1,32 @@
+{% macro campaign_table(title, campaigns) %}
+<h3>{{ title }}</h3>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}Starts{% endtrans %}</th>
+                <th>{% trans %}Ends{% endtrans %}</th>
+        </thead>
+        <tbody>
+            {% for campaign in campaigns %}
+            {% set campaign_url = shuup_admin.model_url(campaign, "detail") %}
+            <tr>
+                <td>{% if campaign_url %}<a href="{{ campaign_url }}">{{ campaign.name }}</a>{% else %}{{ campaign.name }}{% endif %}</td>
+                <td>{% if campaign.start_datetime %}{{ campaign.start_datetime|datetime }}{% else %}{% trans %}Not set{% endtrans %}{% endif %}</td>
+                <td>{% if campaign.end_datetime %}{{ campaign.end_datetime|datetime }}{% else %}{% trans %}Not set{% endtrans %}{% endif %}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">{% trans %}No campaigns found{% endtrans %}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endmacro %}
+
+<p class="section-description">{% trans %}This section shows all the <b>active</b> campaigns this product is in.{% endtrans %}</p>
+{% for shop, data in product_campaigns.items() %}
+    <h2>{% trans shop=shop %}Active campaings for shop: {{ shop }}{% endtrans %}</h2>
+    {{ campaign_table(_("Basket Campaigns"), data["basket_campaigns"]) }}
+    {{ campaign_table(_("Catalog Campaigns"), data["catalog_campaigns"]) }}
+{% endfor %}

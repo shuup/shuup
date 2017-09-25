@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shuup.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-03-09 10:20+0000\n"
+"Last-Translator: Jessica Wang <jessica.wang@shuup.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
+"language/cmn/)\n"
+"Language: cmn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Stock management"
+msgstr "库存管理"
+
+msgid "Products"
+msgstr "产品"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Filter by SKU..."
+msgstr "按SKU过滤……"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Filter by name..."
+msgstr "按名称过滤……"
+
+msgid "Supplier"
+msgstr "供应商"
+
+msgid "Stock information"
+msgstr "库存信息"
+
+msgid "Adjust stock"
+msgstr "调整库存"
+
+#, python-format
+msgid ""
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr ""
+
+#, python-format
+msgid ""
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr ""
+
+msgid "Not allowed"
+msgstr "不允许"
+
+msgid "Error, please check submitted values and try again."
+msgstr "错误，请查看所提交的值并重试。"
+
+#, python-format
+msgid "Error, please check submitted values and try again (%(error)s)."
+msgstr "错误，请查看所提交的值并重试 (%(error)s)。"
+
+#, python-format
+msgid "Purchase price per unit (%(currency_name)s)"
+msgstr ""
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Only non-zero values can be added to stock."
+msgstr "只有非零值可加进库存。"
+
+msgid "product"
+msgstr "产品"
+
+msgid "supplier"
+msgstr "供应商"
+
+msgid "created on"
+msgstr "创建"
+
+msgid "created by"
+msgstr "创建于"
+
+msgid "delta"
+msgstr ""
+
+msgid "logical count"
+msgstr "逻辑盘点"
+
+msgid "physical count"
+msgstr "实物盘点"
+
+msgid "Add stock"
+msgstr "添加库存"
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"does not have suppliers with %(module_name)s module."
+msgstr ""
+
+msgid "Please set suppliers at Purchasing section."
+msgstr ""
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"is not stocked."
+msgstr ""
+"该产品<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a>无备"
+"有。"
+
+msgid "Please set product stock behavior at Additional Details section."
+msgstr ""
+
+#, python-format
+msgid "No suppliers with %(module_name)s available."
+msgstr ""
+
+#, python-format
+msgid ""
+"Please set %(module_name)s module for at least one of the <a href="
+"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr ""
+
+msgid "Physical count"
+msgstr "实物盘点"
+
+msgid "Logical count"
+msgstr "逻辑盘点"
+
+msgid "Value per unit"
+msgstr ""
+
+msgid "Total value"
+msgstr ""
+
+msgid "No stock information available."
+msgstr ""

@@ -1,0 +1,21 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            {% include "shuup/admin/orders/_refund_order_contents.jinja" with context %}
+            <form method="post" id="create_refund">
+                {% csrf_token %}
+                <div class="text-right">
+                    <h3>{% trans %}Refund Amount{% endtrans %}: {{ order.get_total_unrefunded_amount()|money }}</h3>
+                </div>
+                {{ bs3.form(form) }}
+                <div class="content">
+                    <p><i class="fa fa-warning text-warning"></i> {% trans %}Are you sure you want to create a full refund?{% endtrans %}</p>
+                    <button id="create-full-refund" class="btn btn-info">{% trans %}Confirm Refund{% endtrans %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

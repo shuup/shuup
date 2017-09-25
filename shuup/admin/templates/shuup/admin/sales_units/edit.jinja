@@ -1,0 +1,11 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+
+{% block content %}
+    {% call single_section_form("sales_unit_form", form) %}
+        {{ language_dependent_content_tabs(form, ["name", "symbol"]) }}
+        <div class="form-divider"></div>
+        {{ bs3.field(form.decimals) }}
+    {% endcall %}
+{% endblock %}

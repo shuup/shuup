@@ -1,0 +1,39 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/block.jinja" import link_block with context %}
+
+{% block title -%}
+    {% trans %}Welcome!{% endtrans %}
+{%- endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ static("shuup_admin/css/home.css") }}">
+{% endblock %}
+{% block support_content %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="home-header header text-center">
+            <img src="{{ static("shuup_admin/img/logo-icon.svg") }}">
+            <h1>{% trans %}Welcome to Shuup!{% endtrans %}</h1>
+            <p>{% trans %}You're almost done! Complete the following steps to sell your products online{% endtrans %}</p>
+        </div>
+        {% for b in blocks %}
+            {{ link_block(b, redirect=url("shuup_admin:home")) }}
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        (function(){
+            $.tour("setPageSteps", [{
+                banner: "{{ static("shuup_admin/img/welcome_banner.png") }}",
+                showCancelLink: false,
+                classes: "shepherd-theme-arrows has-banner",
+                text: [
+                    "{% trans %}Hi, new shop owner!{% endtrans %}",
+                    "{% trans %}Welcome to your store admin!{% endtrans %}",
+                    "{% trans %}Let’s go through some of the things you can do here. Click next to begin.{% endtrans %}"
+                ]
+            }]);
+        })();
+    </script>
+{% endblock %}

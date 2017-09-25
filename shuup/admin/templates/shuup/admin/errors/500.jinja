@@ -1,0 +1,13 @@
+{% extends "shuup/admin/base.jinja" %}
+
+{% block title %}{% trans %}Internal Server Error{% endtrans %} (500){% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <p class="lead">
+            <i class="text-warning fa fa-exclamation-triangle fa-5x"></i>
+            <h1>{% trans %}Internal Server Error{% endtrans %} (500)</h1>
+            {% trans %}Unfortunately an internal server error occurred. Try refreshing the page or try again later.{% endtrans %}
+        </p>
+    </div>
+{% endblock %}

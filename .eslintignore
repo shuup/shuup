@@ -1,0 +1,8 @@
+**/node_modules/**/*.js
+**/bower_components/**/*.js
+shuup/admin/static/**/*.js
+**/webpack.config.js
+**/gulpfile.js
+**/vendor/**.js
+shuup/themes/classic_gray/static/**/*.js
+shuup/xtheme/static/**/*.js

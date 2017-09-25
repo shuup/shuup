@@ -1,0 +1,106 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-06 14:20+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
+"sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "API"
+msgstr "API"
+
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+msgid "Admin Users"
+msgstr "Administratör"
+
+msgid "Authenticated Users - Read/Write"
+msgstr "Autentiserade användare - Läs/Skriv"
+
+msgid "Authenticated Users - Read only"
+msgstr "Autentiserade användare - Endast läs"
+
+msgid "Public Users - Read/Write"
+msgstr "Offentliga användare - Läs/Skriv"
+
+msgid "Public Users - Read only"
+msgstr "Offentliga användare - Endast läs"
+
+msgid "API permissions saved"
+msgstr "API-behörigheter sparade"
+
+msgid "API Permissions"
+msgstr "API-behörigheter"
+
+msgid "Configure API permissions"
+msgstr "Konfigurera behörigheter för API"
+
+msgid ""
+"Please, configure the API permission level for each service by selecting the "
+"level below."
+msgstr ""
+"Vänligen ställ in API-behörighetsnivåer för alla tjänster genom att välja "
+"nivån nedan."
+
+msgid "Note:"
+msgstr "Notera:"
+
+msgid "No one can make requests."
+msgstr "Ingen kan göra förfrågningar."
+
+msgid "Admin users"
+msgstr "Administratör"
+
+msgid ""
+"Only administrators can make requests to the API to fetch, save, delete or "
+"update data."
+msgstr ""
+"Endast administratörer kan göra förfrågningar för att hämta, spara, ta bort "
+"eller uppdatera information."
+
+msgid "Authenticated users - Read/Write"
+msgstr "Autentiserade användare - Läs/Skriv"
+
+msgid "Any authenticated user can fetch, save, delete or update data."
+msgstr ""
+"Alla användare kan göra förfrågningar för att hämta, spara, ta bort eller "
+"uppdatera information."
+
+msgid "Authenticated users - Read"
+msgstr "Autentiserade användare - Endast läs"
+
+msgid "Any authenticated user can only fetch data."
+msgstr "Alla användare kan endast hämta information."
+
+msgid "Public users - Read/Write"
+msgstr "Offentliga användare - Läs/Skriv"
+
+msgid "Any user (authenticated or not) can fetch, save, delete or update data."
+msgstr ""
+"Alla användare (inloggad eller ej) kan göra förfrågningar för att hämta, "
+"spara, ta bort eller uppdatera information."
+
+msgid "Use this with caution."
+msgstr "Använd detta med försiktighet."
+
+msgid "Public users - Read"
+msgstr "Offentliga användare - Endast läs"
+
+msgid "Any user (authenticated or not) can only fetch data."
+msgstr "Alla användare (inloggad eller ej) kan endast hämta information."
+
+msgid "Save"
+msgstr "Spara"

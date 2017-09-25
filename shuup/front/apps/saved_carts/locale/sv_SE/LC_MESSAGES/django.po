@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-06 14:20+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
+"sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr "Shuup Framsida - Sparade varukorgar"
+
+msgid "Saved Carts"
+msgstr "Sparade varukorgar"
+
+msgid "Home"
+msgstr "Start"
+
+msgid "Dashboard"
+msgstr "Översikt"
+
+msgid "My Saved Carts"
+msgstr "Mina sparade varukorgar"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Quantity"
+msgstr "Antal"
+
+msgid "Price"
+msgstr "Pris"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Product Count"
+msgstr "Produktantal"
+
+msgid "Details"
+msgstr "Detaljer"
+
+msgid "You haven't saved any carts yet."
+msgstr "Du har inte sparat några varukorg ännu."
+
+msgid "Add all products to cart"
+msgstr "Lägga till alla produkter i varukorg"
+
+msgid "Delete cart"
+msgstr "Ta bort varukorg"
+
+msgid "Please enter a basket title."
+msgstr "Vänliga ange ett namn för din varukorg"
+
+msgid "Cannot save an empty basket."
+msgstr "Kan inte spara en tom korg."
+
+msgid "Product not available in this shop"
+msgstr "Produkt finns inte i denna butik"
+
+msgid "Invalid supplier"
+msgstr "Ogiltig leverantör"
+
+#, python-format
+msgid "%d product(s) added to cart"
+msgstr "%d produkt(er) tillagda i varukorgen"

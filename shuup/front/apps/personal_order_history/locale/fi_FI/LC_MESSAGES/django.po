@@ -1,0 +1,141 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015
+# Antti Mäki <antti@anttimaki.com>, 2015
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
+# Juha Kujala, 2015
+# Juha Louhiranta <charni@gmail.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015
+# Shuup Admin <admin@shuup.com>, 2015-2016
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+# tomijarvi <tomi@jarvi.pro>, 2015
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-03-03 09:29+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Personal Order History"
+msgstr "Shuup Frontend - henkilökohtainen tilaushistoria"
+
+msgid "Order history"
+msgstr "Tilaushistoria"
+
+msgid "Show all"
+msgstr "Näytä kaikki"
+
+msgid "Identifier"
+msgstr "Tunniste"
+
+msgid "Order date"
+msgstr "Tilauspäivämäärä"
+
+msgid "Status"
+msgstr "Tila"
+
+msgid "Total price"
+msgstr "Kokonaishinta"
+
+msgid "Details"
+msgstr "Tiedot"
+
+msgid "You haven't made any orders yet."
+msgstr "Et ole tehnyt yhtään tilausta vielä"
+
+msgid "Add all products to cart"
+msgstr "Lisää kaikki tuotteet koriin"
+
+msgid "Basic Information"
+msgstr "Perustiedot"
+
+msgid "Order Number"
+msgstr "Tilausnumero"
+
+msgid "Order Date"
+msgstr "Tilauspäivämäärä"
+
+msgid "Reference"
+msgstr "Viite"
+
+msgid "Label"
+msgstr "Merkki"
+
+msgid "Customer"
+msgstr "Asiakas"
+
+msgid "Ordered by"
+msgstr "Tilaaja"
+
+msgid "Creator"
+msgstr "Laatija"
+
+msgid "Phone"
+msgstr "Puhelin"
+
+msgid "Email"
+msgstr "Sähköposti"
+
+msgid "Tax Number"
+msgstr "Y-tunnus"
+
+msgid "Total Price"
+msgstr "Kokonaishinta"
+
+msgid "Total Price (taxless)"
+msgstr "Kokonaishinta (veroton)"
+
+msgid "Tracking codes"
+msgstr "Seurantakoodit"
+
+msgid "Order Status"
+msgstr "Tilauksen tila"
+
+msgid "Payment Status"
+msgstr "Maksutila"
+
+msgid "Shipping Status"
+msgstr "Toimitustila"
+
+msgid "Shipping Address"
+msgstr "Toimitusosoitteet"
+
+msgid "Billing Address"
+msgstr "Laskutusosoitteet"
+
+msgid "Order Contents"
+msgstr "Tilauksen sisältö"
+
+#, python-format
+msgid "Order %(identifier)s"
+msgstr "Tilaus %(identifier)s"
+
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr "Tilauksen %(identifier)s tiedot"
+
+msgid "Home"
+msgstr "Etusivu"
+
+msgid "Dashboard"
+msgstr "Hallintapaneeli"
+
+msgid "Order History"
+msgstr "Tilaushistoria"

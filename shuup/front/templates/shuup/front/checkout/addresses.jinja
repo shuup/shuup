@@ -1,0 +1,16 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+
+{% block checkout_phase_content %}
+    <form role="form" method="post" action="" id="addresses">
+        {% set forms = form.forms %}
+        {% csrf_token %}
+        {{ checkout_macros.address_phase_billing_well(forms.billing, forms.company, forms.saved_billing) }}
+        {{ checkout_macros.address_phase_shipping_well(forms.shipping, saved_address_form=forms.saved_shipping) }}
+        {{ checkout_macros.default_buttons() }}
+    </form>
+{% endblock %}
+
+{% block extrajs %}
+    {{ super() }}
+    {{ checkout_macros.address_phase_extrajs() }}
+{% endblock %}

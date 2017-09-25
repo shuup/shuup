@@ -1,0 +1,33 @@
+@media screen { body { max-width: 70em; } }
+body {
+    font: 11pt/1.5 Arial, sans-serif;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table thead {
+    display: table-header-group;
+}
+table tfoot {
+    font: 8pt/1.5 Arial, sans-serif;
+    display: table-footer-group;
+}
+table td {
+    vertical-align: top;
+}
+table th {
+    text-align: left;
+}
+.align-right {
+    text-align: right;
+}
+.totals-row td {
+    font-weight: bold;
+}
+table thead th {
+    border-bottom: thin solid black;
+}
+table tfoot tr:first-child td {
+    border-top: thin solid grey;
+}

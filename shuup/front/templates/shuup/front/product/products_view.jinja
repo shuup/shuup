@@ -1,0 +1,41 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title %}{% trans %}Newest products{% endtrans %}{% endblock %}
+
+{% block content_title %}{% trans %}Newest products{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(None, _("Newest products"), True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block content %}
+    {% placeholder "products_extra" %}{% endplaceholder %}
+    <hr>
+    <div class="row">
+        <div class="col-md-3 categories-nav">
+            {{ category_macros.render_category_menu() }}
+            {% placeholder "category_menu_extras" %}{% endplaceholder %}
+        </div>
+        <div class="col-md-9 products-wrap">
+            <div class="clearfix product-list-actions">
+                {{ category_macros.render_toggle_view() }}
+            </div>
+            <hr class="visible-sm visible-xs">
+            <div class="row product-list-view grid">
+                {% for product in shuup.general.get_newest_products(n_products=9) if shuup.product.is_visible(product) %}
+                    <div class="single-product">
+                        {{ product_macros.product_box(
+                            product, show_description=True, class="product-card category-view box") }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    {{ category_macros.render_extrajs() }}
+{% endblock %}

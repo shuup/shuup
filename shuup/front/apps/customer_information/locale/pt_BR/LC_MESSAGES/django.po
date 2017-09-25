@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 19:11+0000\n"
+"PO-Revision-Date: 2016-07-30 11:34+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
+"language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Frontend - Customer Information Editing"
+msgstr "Front-end do Shuup - Edição das Informações do Cliente"
+
+msgid "Will become default user email when linked"
+msgstr "Vai se tornar o e-mail de usuário padrão quando vinculado"
+
+msgid "Given Tax Number already exists. Please contact support."
+msgstr ""
+"Número de Contribuinte fornecido já existe. Entre em contato com o suporte."
+
+msgid "Change Password"
+msgstr "Alterar Senha"
+
+msgid "Home"
+msgstr ""
+
+#, fuzzy
+#| msgid "Change Password"
+msgid "Change password"
+msgstr "Alterar Senha"
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Edit user account information"
+msgstr "Informações da conta de usuário"
+
+msgid "Save password"
+msgstr "Salvar senha"
+
+msgid "Company account information"
+msgstr "Informações da conta empresarial"
+
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+msgid "Company information"
+msgstr "Informações da empresa"
+
+msgid "User account information"
+msgstr "Informações da conta de usuário"
+
+#, fuzzy
+#| msgid "Company information"
+msgid "Edit company information"
+msgstr "Informações da empresa"
+
+msgid "Link account to company"
+msgstr ""
+
+msgid "User information"
+msgstr "Informações do usuário"
+
+msgid "Billing information"
+msgstr "Informações de cobrança"
+
+#, fuzzy
+#| msgid "Shipping information"
+msgid "Copy to shipping information"
+msgstr "Informações de entrega"
+
+msgid "Shipping information"
+msgstr "Informações de entrega"
+
+#, fuzzy
+#| msgid "Billing information"
+msgid "Copy to billing information"
+msgstr "Informações de cobrança"
+
+msgid "Password successfully changed."
+msgstr "Senha alterada com sucesso."
+
+msgid "Account information saved successfully."
+msgstr "Informações da conta salvas com sucesso."
+
+msgid "Company information saved successfully."
+msgstr "Informações da empresa salvas com sucesso."

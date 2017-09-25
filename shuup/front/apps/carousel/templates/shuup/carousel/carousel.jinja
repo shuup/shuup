@@ -1,0 +1,38 @@
+{% if carousel and active %}
+    {% set slides = carousel.slides.visible() %}
+{% else %}
+    {% set slides = [] %}
+{% endif %}
+
+{% if slides|length %}
+<section{% if type == "banner_box" %} class="carousel-banner-section"{% endif %}>
+    {% if type == "carousel" %}
+        <div
+            class="owl-carousel carousel-plugin one"
+            data-autoplay="{% if carousel.interval > 0 %}true{% else %}false{% endif %}"
+            data-interval="{{ carousel.interval * 1000 }}"
+            data-arrows-visible="{{ carousel.is_arrows_visible }}"
+            data-pause-on-hover="{{ carousel.pause_on_hover }}"
+            data-use-dot-navigation="{{ carousel.use_dot_navigation }}">
+    {% elif type == "banner_box" %}
+        {% if title %}
+            <div class="title-bar light">
+                <h2>{{ title }}</h2>
+            </div>
+        {% endif %}
+        <div
+            class="owl-carousel carousel-plugin banner"
+            data-slide-count="{{ slides|length }}"
+            data-arrows-visible="{{ carousel.is_arrows_visible }}">
+    {% endif %}
+    {% for slide in slides %}
+        {% set link = slide.get_link_url() %}
+        {% set cropped_slide = slide|thumbnail(size=(carousel.image_width, carousel.image_height), crop="smart", upscale=True) %}
+        {% set caption_text = slide.get_translated_field("caption_text") or "" %}
+        {% if link %}<a href="{{ link }}" target="{{ slide.get_link_target() }}" class="col-inner" data-toggle="tooltip" title="{{ caption_text }}">{% endif %}
+            <img src="{{ cropped_slide }}" alt="{{ caption_text }}">
+        {% if link %}</a>{% endif %}
+    {% endfor %}
+    </div>
+</section>
+{% endif %}

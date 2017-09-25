@@ -1,0 +1,179 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-05 11:58+0000\n"
+"PO-Revision-Date: 2016-10-16 08:36+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Stock management"
+msgstr "Gestione magazzino"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Filter by SKU..."
+msgstr "Filtra per SKU..."
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Filter by name..."
+msgstr "Filtra per nome..."
+
+msgid "Supplier"
+msgstr "Fornitore"
+
+msgid "Stock information"
+msgstr "Informazione magazzino"
+
+msgid "Adjust stock"
+msgstr "Modifica disponibilità"
+
+#, python-format
+msgid ""
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr "Aggiunti %(delta)s %(unit_symbol)s per il prodotto %(product_name)s scorte (%(supplier_name)s)"
+
+#, python-format
+msgid ""
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr "Rimossi %(delta)s %(unit_symbol)s per il prodotto dalle scorte di %(product_name)s (%(supplier_name)s)"
+
+#, python-format
+msgid "Alert limit for product %(product_name)s set to %(value)s."
+msgstr "La soglia limite per il prodotto %(product_name)s è impostata a %(value)s."
+
+msgid "Not allowed"
+msgstr "Non consentito"
+
+msgid "Error, please check submitted values and try again."
+msgstr "Errore, controllare il valore inserito e provare di nuovo."
+
+#, python-format
+msgid "Error, please check submitted values and try again (%(error)s)."
+msgstr "Errore, controllare il valori inseriti e provare di nuovo (%(error)s). "
+
+#, python-format
+msgid "Purchase price per unit (%(currency_name)s)"
+msgstr "Prezzo d'acquisto per unità (%(currency_name)s) "
+
+msgid "Quantity"
+msgstr "Quantità"
+
+msgid "Only non-zero values can be added to stock."
+msgstr "Possono essere inseriti solo valori diversi da zero per il magazzino."
+
+msgid "Alert limit"
+msgstr "Soglia limite"
+
+msgid "product"
+msgstr "prodotto"
+
+msgid "supplier"
+msgstr "fornitore"
+
+msgid "created on"
+msgstr "creato il"
+
+msgid "created by"
+msgstr "creato da"
+
+msgid "delta"
+msgstr "differenza"
+
+msgid "type"
+msgstr "tipo"
+
+msgid "alert limit"
+msgstr "soglia limite"
+
+msgid "logical count"
+msgstr "conto logico"
+
+msgid "physical count"
+msgstr "conto fisico"
+
+msgid "Alert Limit Reached"
+msgstr "Soglia Limite Raggiunta"
+
+msgid "Product"
+msgstr "Prodotto"
+
+msgid "Add stock"
+msgstr "Aggiungi scorte"
+
+#, python-format
+msgid ""
+"Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
+"scripts</a> are executed when product stock falls below set quantity."
+msgstr "Gli <a href=\"%(notify_url)s\" target=\"_blank\">script di notifica</a> per la soglia limite sono eseguiti quanto le scorte scendono sotto la quantità impostata."
+
+msgid "Change alert limit"
+msgstr "Cambia soglia limite"
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"does not have suppliers with %(module_name)s module."
+msgstr "Il prodotto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> non ha fornitori dal modulo %(module_name)s."
+
+msgid "Please set suppliers at Purchasing section."
+msgstr "Prego, impostare dei fornitori nella sezione Acquisti."
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"is not stocked."
+msgstr "Il prodotto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> non è gestito dal magazzino."
+
+msgid "Please set product stock behavior at Additional Details section."
+msgstr "Configurare il comportamento di assortimento nella sezione Dettagli Aggiuntivi."
+
+#, python-format
+msgid "No suppliers with %(module_name)s available."
+msgstr "Nessun fornitore disponibile per %(module_name)s."
+
+#, python-format
+msgid ""
+"Please set %(module_name)s module for at least one of the <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr "Configurare il modulo %(module_name)s per alemno uno dei <a href=\"%(supplier_url)s\" target=\"_blank\">Fornitori</a>."
+
+#, python-format
+msgid "Physical count: %(count)s %(sales_unit)s"
+msgstr "Conteggio fisico: %(count)s %(sales_unit)s"
+
+#, python-format
+msgid "Logical count: %(count)s %(sales_unit)s"
+msgstr "Conteggio Logico: %(count)s %(sales_unit)s"
+
+#, python-format
+msgid "Value per unit: %(value)s"
+msgstr "Valore per unità: %(value)s"
+
+#, python-format
+msgid "Total value: %(value)s"
+msgstr "Valore totale: %(value)s"
+
+#, python-format
+msgid "Alert limit: %(limit)s"
+msgstr "Soglia limite: %(limit)s"
+
+msgid "No stock information available."
+msgstr "Nessuna informazione di magazzino disponibile."

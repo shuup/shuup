@@ -1,0 +1,476 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
+"language/cmn/)\n"
+"Language: cmn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Unexpected error while uploading files."
+msgstr "上传文件时发生意外错误。"
+
+msgid "Error:"
+msgstr "错误："
+
+msgid "Uploaded:"
+msgstr "已上传："
+
+msgid "New file name?"
+msgstr "新文件名？"
+
+#, javascript-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr "您确定要删除 %s 文件吗？"
+
+msgid "New folder name?"
+msgstr "新文件夹名？"
+
+#, javascript-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr "您确定要删除 %s 文件夹吗？ "
+
+msgid "New folder"
+msgstr "新文件夹"
+
+msgid "current"
+msgstr ""
+
+msgid "Oldest first"
+msgstr "最老优先"
+
+msgid "Newest first"
+msgstr "最新优先"
+
+msgid "Smallest first"
+msgstr "最小优先"
+
+msgid "Largest first"
+msgstr "最大优先"
+
+msgid "Drop your files here"
+msgstr "拖放您的文件在这"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Size"
+msgstr "大小"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr "点击 <strong>上传</strong> 按钮上传文件。"
+
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr "<span>拖放</span> 文件在这<br> 或 点击<span>上传</span> 按钮。"
+
+msgid "Rename file"
+msgstr "文件重命名"
+
+msgid "Delete file"
+msgstr "删除文件"
+
+msgid "Rename folder"
+msgstr "文件夹重命名"
+
+msgid "Delete folder"
+msgstr "删除文件夹"
+
+#, javascript-format
+msgid "Order %s created."
+msgstr "订单 %s 已形成。"
+
+msgid "An unspecified error occurred.\n"
+msgstr "出现未知错误。\n"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr "文本"
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Unit Price"
+msgstr "单价"
+
+msgid "Discount amount"
+msgstr "折扣金额"
+
+msgid "Total (excluding taxes)"
+msgstr "总共 (不含税)"
+
+msgid "Tax percent"
+msgstr "税率"
+
+msgid "Total"
+msgstr "总共"
+
+msgid "Billing address"
+msgstr "账单地址"
+
+msgid "Shipping address"
+msgstr "收货地址"
+
+msgid "Full Name"
+msgstr ""
+
+msgid "Phone"
+msgstr "电话"
+
+msgid "Email"
+msgstr "电子邮箱"
+
+msgid "Groups"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Total Sales"
+msgstr ""
+
+msgid "Shipment Status"
+msgstr ""
+
+msgid "Payment Status"
+msgstr ""
+
+msgid "Order Status"
+msgstr ""
+
+msgid "Customer Information"
+msgstr ""
+
+msgid "Order Summary"
+msgstr ""
+
+msgid "Recent Orders"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "A new customer will be created based on billing address."
+msgstr "根据账单地址建立新的顾客。"
+
+msgid "Customer"
+msgstr "顾客"
+
+msgid "Select Existing Customer"
+msgstr "选择现有的顾客"
+
+msgid "New Customer"
+msgstr "新顾客"
+
+msgid "View Details"
+msgstr ""
+
+msgid "Save customer details while creating order"
+msgstr "订单形成时保存顾客信息"
+
+msgid "Ship to billing address"
+msgstr "发货至账单地址"
+
+msgid "Order for company"
+msgstr "为公司订购"
+
+msgid "Billing Address"
+msgstr "账单地址"
+
+msgid "Shipping Address"
+msgstr "收货地址"
+
+msgid "Back"
+msgstr "后退"
+
+msgid "Confirm"
+msgstr "确定"
+
+msgid "Discard Changes"
+msgstr ""
+
+msgid "Select Shop"
+msgstr "选择商店"
+
+msgid "Customer Details"
+msgstr "顾客详细信息"
+
+msgid "Order Contents"
+msgstr "订单内容"
+
+msgid "Shipping Method"
+msgstr "配送方式"
+
+msgid "Payment Method"
+msgstr "支付方式"
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr "方式，税收与有可能的额外折扣将会在进行后结算。"
+
+msgid "Proceed"
+msgstr "进行"
+
+msgid "Logical Count"
+msgstr ""
+
+msgid "Physical Count"
+msgstr ""
+
+msgid "Select product"
+msgstr "选择产品"
+
+msgid "Text/Comment"
+msgstr "文本/注释"
+
+msgid "Qty"
+msgstr "数量"
+
+msgid "Total Price"
+msgstr "总价"
+
+msgid "Base Unit Price"
+msgstr "基本单价"
+
+msgid "Discounted Unit Price"
+msgstr "已折扣的单价"
+
+msgid "Discount Percent"
+msgstr "折扣率"
+
+msgid "Total Discount Amount"
+msgstr "总折扣金额"
+
+msgid "Line Total"
+msgstr "总行"
+
+msgid "Orderline type"
+msgstr "订单行类型"
+
+msgid ""
+"If your product prices vary based on customer, you might want to select "
+"customer first."
+msgstr ""
+
+#, javascript-format
+msgid "All prices are in %s currency."
+msgstr ""
+
+msgid "All prices include taxes."
+msgstr "全部价格包含税。"
+
+msgid "Taxes not included."
+msgstr "不包含税。"
+
+msgid "Add new line"
+msgstr "添加新行"
+
+msgid "No shipping method"
+msgstr "无配送方式"
+
+msgid "No payment method"
+msgstr "无支付方式"
+
+msgid "Shop"
+msgstr "商店"
+
+msgid "Product"
+msgstr "产品"
+
+msgid "Other"
+msgstr "其他"
+
+msgid "Tax number"
+msgstr "税号"
+
+msgid "Street"
+msgstr "街道"
+
+msgid "Street (2)"
+msgstr "街道 (2)"
+
+msgid "ZIP / Postal code"
+msgstr "邮政编码"
+
+msgid "City"
+msgstr "城市"
+
+msgid "Region"
+msgstr "区域"
+
+msgid "Country"
+msgstr "国家"
+
+msgid "No records found."
+msgstr ""
+
+msgid "Identifier"
+msgstr "标识符"
+
+#, javascript-format
+msgid "Value %s Name"
+msgstr "值%s名"
+
+msgid "Delete value"
+msgstr "删除值"
+
+msgid "Are you sure?"
+msgstr "您确定吗？"
+
+msgid "Delete Variable"
+msgstr "删除变量"
+
+msgid "Add new value"
+msgstr "添加新值"
+
+msgid "Variable Name"
+msgstr "变量名"
+
+msgid "DELETE"
+msgstr "删除"
+
+msgid "Variable"
+msgstr "变量"
+
+msgid "Show identifier fields (for advanced users)"
+msgstr "显示标识符域 (供高级用户)"
+
+msgid "There are no variables defined."
+msgstr "变量未定义"
+
+msgid "Add new variable"
+msgstr "添加新变量"
+
+msgid "No browser URL for kind:"
+msgstr "无浏览器URL："
+
+msgid "Expand Editor"
+msgstr "展开编辑器"
+
+msgid "No results."
+msgstr "无搜索结果。"
+
+msgid "The results could not be loaded"
+msgstr ""
+
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] ""
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr ""
+
+msgid "Loading more results..."
+msgstr ""
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "Searching..."
+msgstr ""
+
+msgid "From"
+msgstr "从"
+
+msgid "To"
+msgstr "至"
+
+msgid "Items per page"
+msgstr "每页物品"
+
+msgid "Reset filters"
+msgstr "重置过滤器"
+
+msgid "Reset"
+msgstr "重新设置"
+
+msgid "Sort by"
+msgstr "排列依据"
+
+msgid "ascending"
+msgstr "升序"
+
+msgid "descending"
+msgstr "降序"
+
+msgid "Default sorting"
+msgstr "默认排序"
+
+msgid "Previous"
+msgstr "上一页"
+
+msgid "Next"
+msgstr "下一页"
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr "按%s过滤"
+
+msgid "Filters"
+msgstr "过滤器"
+
+msgid "Are you sure you want to delete this media?"
+msgstr "您确定要删除该媒体吗？"
+
+msgid "Set as primary image"
+msgstr "设置为主要图像"
+
+msgid "Primary image"
+msgstr "主要图像"
+
+msgid "Bold"
+msgstr "粗体"
+
+msgid "Italic"
+msgstr "斜体"
+
+msgid "List"
+msgstr "列表"
+
+msgid "Ordered list"
+msgstr "订单列表"
+
+msgid "Link"
+msgstr "链接"
+
+msgid "Editor"
+msgstr "编辑器"
+
+msgid "Done"
+msgstr "完成"

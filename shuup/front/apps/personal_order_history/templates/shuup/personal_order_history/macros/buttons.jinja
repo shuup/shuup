@@ -1,0 +1,9 @@
+{% macro render_action_buttons(order) %}
+{% if order_is_reorderable %}
+    <div class="pull-right inline">
+        <a class="btn btn-success" href="{{ url("shuup:reorder-order", pk=order.pk) }}">
+            <i class="fa fa-plus"></i> {% trans %}Add all products to cart{% endtrans %}
+        </a>
+    </div>
+{% endif %}
+{% endmacro %}

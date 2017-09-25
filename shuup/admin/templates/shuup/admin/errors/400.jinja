@@ -1,0 +1,12 @@
+{% extends "shuup/admin/base.jinja" %}
+
+{% block title %}{% trans %}Bad Request{% endtrans %} (400){% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <p class="lead">
+            <i class="fa fa-info-circle text-info"></i>
+            {% trans %}Unfortunately the server couldn't process your request.{% endtrans %}
+        </p>
+    </div>
+{% endblock %}

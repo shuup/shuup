@@ -1,0 +1,30 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% block title %}
+    {% if success %}
+        {% trans %}Installation Finished{% endtrans %}
+    {% else %}
+        {% trans %}Installation Failed{% endtrans %}
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            {% if success %}
+                <h2><i class="fa fa-check text-success"></i> {% trans %}Success{% endtrans %}</h2>
+                <p>{% trans addon_list_url=url("shuup_admin:addon.list"), addon_reload_url=url("shuup_admin:addon.reload") %}Next, <a href="{{ addon_list_url }}" class="text-success"><strong>activate the newly installed addon</strong></a> and <a href="{{ addon_reload_url }}" class="text-success"><strong>reload your application server</strong></a>.{% endtrans %}</p>
+            {% endif %}
+            {% if error %}
+                <h2><i class="fa fa-exclamation-circle text-danger"></i> {% trans %}Error{% endtrans %}</h2>
+                <div class="alert alert-danger">
+                    {{ error|linebreaks }}
+                </div>
+            {% endif %}
+            {% if log_content %}
+                <hr>
+                <h4><i class="fa fa-file-text"></i> {% trans %}Installer Log{% endtrans %}</h4>
+                <pre><code>{{ log_content }}</code></pre>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

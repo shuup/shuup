@@ -1,0 +1,21 @@
+{% extends "shuup/customer_information/macros/theme/contact.jinja" %}
+
+{% from "shuup/front/macros/general.jinja" import render_field %}
+
+{% macro render_company_contact_form(form) %}
+    {{ render_contact_form(_("Company information"), form) }}
+{% endmacro %}
+
+{% macro render_person_contact_form(form) %}
+    {{ render_contact_form(_("User information"), form) }}
+{% endmacro %}
+
+{% macro render_contact_form(title, form) %}
+    <fieldset>
+        <legend>{{ title }}</legend>
+        {% for field in form.visible_fields() %}
+            {{ render_field(field, show_help_text=False) }}
+        {% endfor %}
+    </fieldset>
+
+{% endmacro %}

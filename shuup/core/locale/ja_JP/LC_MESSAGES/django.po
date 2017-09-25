@@ -1,0 +1,1274 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 21:59+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "internal identifier"
+msgstr ""
+
+msgid "Do not change this value if you are not sure what you're doing."
+msgstr ""
+
+msgid "Error"
+msgstr "エラー"
+
+msgid "shipping address"
+msgstr "届け先住所"
+
+msgid "billing address"
+msgstr "請求先住所"
+
+msgid "disabled"
+msgstr "使用禁止"
+
+msgid "enabled"
+msgstr "使用可能"
+
+msgid "name prefix"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "name suffix"
+msgstr ""
+
+msgid "name extension"
+msgstr ""
+
+msgid "company name"
+msgstr "会社名"
+
+msgid "tax number"
+msgstr ""
+
+msgid "phone"
+msgstr "電話"
+
+msgid "email"
+msgstr "Eメール"
+
+msgid "street"
+msgstr "通り"
+
+msgid "street (2)"
+msgstr "通り (2)"
+
+msgid "street (3)"
+msgstr "通り (3)"
+
+msgid "postal code"
+msgstr ""
+
+msgid "city"
+msgstr "市"
+
+msgid "region code"
+msgstr "郵便番号"
+
+msgid "region"
+msgstr "地域"
+
+msgid "country"
+msgstr "国"
+
+msgid "address"
+msgstr "住所"
+
+msgid "addresses"
+msgstr "住所"
+
+msgid "owner"
+msgstr ""
+
+msgid "role"
+msgstr ""
+
+msgid "status"
+msgstr "ステータス"
+
+msgid "title"
+msgstr "タイトル"
+
+msgid "saved address"
+msgstr "登録された住所"
+
+msgid "saved addresses"
+msgstr "登録された住所"
+
+msgid "hidden"
+msgstr ""
+
+msgid "shown on product page"
+msgstr "商品ページに表示"
+
+msgid "searchable metadata"
+msgstr "検索可能なメタデータ"
+
+msgid "private metadata"
+msgstr "プライベートメタデータ"
+
+msgid "integer"
+msgstr ""
+
+msgid "decimal"
+msgstr "小数"
+
+msgid "boolean"
+msgstr "ブーリアン"
+
+msgid "time interval"
+msgstr ""
+
+msgid "date and time"
+msgstr "日時"
+
+msgid "date only"
+msgstr "日付のみ"
+
+msgid "translated string"
+msgstr "翻訳された文字列"
+
+msgid "untranslated string"
+msgstr "翻訳されていない文字列"
+
+msgid "searchable"
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid "visibility mode"
+msgstr ""
+
+msgid "attribute"
+msgstr "アトリビュート"
+
+msgid "attributes"
+msgstr "アトリビュート"
+
+msgid "numeric value"
+msgstr ""
+
+msgid "datetime value"
+msgstr ""
+
+msgid "untranslated value"
+msgstr ""
+
+msgid "The following fields can not be changed"
+msgstr ""
+
+msgid "invisible"
+msgstr ""
+
+msgid "visible"
+msgstr ""
+
+msgid "deleted"
+msgstr "削除された"
+
+msgid "visible to all"
+msgstr "全員に見える"
+
+msgid "visible to logged in customers"
+msgstr "ログインされたカスタマーに見える"
+
+msgid "visible to certain customer groups"
+msgstr "特定のカスタマーグループに見える"
+
+msgid "parent category"
+msgstr ""
+
+msgid "shops"
+msgstr ""
+
+msgid "image"
+msgstr "画像"
+
+msgid "ordering"
+msgstr ""
+
+msgid "visibility limitations"
+msgstr ""
+
+msgid "visible for groups"
+msgstr "グループに見える"
+
+msgid "description"
+msgstr "説明"
+
+msgid "slug"
+msgstr "スラッグ"
+
+msgid "category"
+msgstr "カテゴリー"
+
+msgid "categories"
+msgstr "カテゴリー"
+
+msgid "shop"
+msgstr ""
+
+msgid "key"
+msgstr "キー"
+
+msgid "value"
+msgstr "値"
+
+msgid "configuration item"
+msgstr ""
+
+msgid "configuration items"
+msgstr ""
+
+#, python-format
+msgid "%(key)s for shop %(shop)s"
+msgstr ""
+
+#, python-format
+msgid "%(key)s (global)"
+msgstr ""
+
+msgid "members"
+msgstr "メンバー"
+
+msgid "show as pricing option"
+msgstr "価格設定オプションとして表示"
+
+msgid "show prices including taxes"
+msgstr ""
+
+msgid "hide prices"
+msgstr ""
+
+msgid "contact group"
+msgstr "コンタクトグループ"
+
+msgid "contact groups"
+msgstr "コンタクトグループ"
+
+msgid "Can't delete. This object is protected."
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "default shipping method"
+msgstr "通常配送方法"
+
+msgid "default payment method"
+msgstr "ts"
+
+msgid "language"
+msgstr "言語"
+
+msgid "marketing permission"
+msgstr "販売許可"
+
+msgid "web address"
+msgstr "ウェブアドレス"
+
+msgid "time zone"
+msgstr ""
+
+msgid "tax group"
+msgstr ""
+
+msgid "merchant notes"
+msgstr ""
+
+msgid "account manager"
+msgstr ""
+
+msgid "contact"
+msgstr "コンタクト"
+
+msgid "contacts"
+msgstr "コンタクト"
+
+msgid "Company Contacts"
+msgstr ""
+
+msgid "e.g. EIN in US or VAT code in Europe"
+msgstr ""
+
+msgid "company"
+msgstr "会社"
+
+msgid "companies"
+msgstr "会社"
+
+msgid "undisclosed"
+msgstr ""
+
+msgid "male"
+msgstr ""
+
+msgid "female"
+msgstr ""
+
+msgid "other"
+msgstr "他"
+
+msgid "Person Contacts"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "gender"
+msgstr ""
+
+msgid "birth date"
+msgstr ""
+
+msgid "first name"
+msgstr ""
+
+msgid "last name"
+msgstr ""
+
+msgid "person"
+msgstr "人物"
+
+msgid "persons"
+msgstr "人物"
+
+msgid "Anonymous Contacts"
+msgstr ""
+
+msgid "order reference"
+msgstr "オーダー参照"
+
+msgid "identifier"
+msgstr ""
+
+msgid "counter"
+msgstr "カウンター"
+
+msgid "counters"
+msgstr "カウンター"
+
+msgid "added"
+msgstr "追加されました"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "manufacturer"
+msgstr "メーカー"
+
+msgid "manufacturers"
+msgstr "メーカー"
+
+msgid "product"
+msgstr "商品"
+
+msgid "shipping"
+msgstr ""
+
+msgid "payment"
+msgstr ""
+
+msgid "discount"
+msgstr ""
+
+msgid "refund"
+msgstr ""
+
+msgid "order"
+msgstr "オーダー"
+
+msgid "supplier"
+msgstr ""
+
+msgid "parent line"
+msgstr ""
+
+msgid "line type"
+msgstr ""
+
+msgid "line SKU"
+msgstr ""
+
+msgid "line text"
+msgstr ""
+
+msgid "accounting identifier"
+msgstr ""
+
+msgid "require verification"
+msgstr ""
+
+msgid "verified"
+msgstr "検証済み"
+
+msgid "extra data"
+msgstr ""
+
+msgid "quantity"
+msgstr "数量"
+
+msgid "unit price amount (undiscounted)"
+msgstr ""
+
+msgid "total amount of discount"
+msgstr ""
+
+msgid "order line"
+msgstr ""
+
+msgid "order lines"
+msgstr ""
+
+msgid "tax"
+msgstr "税"
+
+msgid "tax name"
+msgstr "税名"
+
+msgid "tax amount"
+msgstr "課税額"
+
+msgid "base amount"
+msgstr "基準額"
+
+msgid "Amount that this tax is calculated from"
+msgstr ""
+
+msgid "not paid"
+msgstr "支払われていません"
+
+msgid "partially paid"
+msgstr "部分的に支払われています"
+
+msgid "fully paid"
+msgstr "完全に支払われています"
+
+msgid "canceled"
+msgstr "キャンセル"
+
+msgid "deferred"
+msgstr ""
+
+msgid "not shipped"
+msgstr ""
+
+msgid "partially shipped"
+msgstr ""
+
+msgid "fully shipped"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "initial"
+msgstr ""
+
+msgid "complete"
+msgstr "完成"
+
+msgid "default"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid "order identifier"
+msgstr "オーダー識別子"
+
+msgid "label"
+msgstr "ラベル"
+
+msgid "reference number"
+msgstr "参照番号"
+
+msgid "customer"
+msgstr "カスタマー"
+
+msgid "orderer"
+msgstr "注文者"
+
+msgid "email address"
+msgstr "Eメールアドレス"
+
+msgid "creating user"
+msgstr "ユーザーを作成"
+
+msgid "modifier user"
+msgstr ""
+
+msgid "payment status"
+msgstr "支払状況"
+
+msgid "shipping status"
+msgstr ""
+
+msgid "payment method"
+msgstr "お支払い方法"
+
+msgid "payment method name"
+msgstr "お支払い方法名"
+
+msgid "payment data"
+msgstr ""
+
+msgid "shipping method"
+msgstr "配送方法"
+
+msgid "shipping method name"
+msgstr "配送方法名"
+
+msgid "shipping data"
+msgstr ""
+
+msgid "grand total"
+msgstr "総計"
+
+msgid "taxless total"
+msgstr "税抜き合計"
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "display currency"
+msgstr ""
+
+msgid "display currency rate"
+msgstr ""
+
+msgid "IP address"
+msgstr "IPアドレス"
+
+msgid "order date"
+msgstr "注文日"
+
+msgid "payment date"
+msgstr "支払期日"
+
+msgid "customer comment"
+msgstr "カスタマーコメント"
+
+msgid "admin comment/notes"
+msgstr "管理者コメント/ノート"
+
+msgid "requires verification"
+msgstr "検証が必要です"
+
+msgid "all lines verified"
+msgstr ""
+
+msgid "codes"
+msgstr ""
+
+msgid "orders"
+msgstr "注文"
+
+msgid "Order marked as paid."
+msgstr ""
+
+msgid "Order marked as partially paid."
+msgstr ""
+
+#, python-format
+msgid "Shipment #%d created."
+msgstr ""
+
+#, python-format
+msgid "Refund for %s"
+msgstr ""
+
+msgid "Manual refund"
+msgstr ""
+
+msgid "All rows requiring verification have been verified."
+msgstr ""
+
+msgid "All products have been shipped. Fully Shipped status set."
+msgstr ""
+
+msgid "gateway ID"
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "foreign amount"
+msgstr ""
+
+msgid "foreign amount currency"
+msgstr ""
+
+msgid "payments"
+msgstr "支払い"
+
+msgid "module"
+msgstr "モジュール"
+
+msgid "time"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "cache entry"
+msgstr "キャッシュエントリ"
+
+msgid "cache entries"
+msgstr "キャッシュエントリ"
+
+msgid "file"
+msgstr "ファイル"
+
+msgid "documentation"
+msgstr "ドキュメンテーション"
+
+msgid "sample"
+msgstr "サンプル"
+
+msgid "kind"
+msgstr "種類"
+
+msgid ""
+"Enter URL to external file. If this field is filled, the selected media "
+"doesn't apply."
+msgstr ""
+
+msgid "public (shown on product page)"
+msgstr ""
+
+msgid "purchased (shown for finished purchases)"
+msgstr ""
+
+msgid "product attachment"
+msgstr ""
+
+msgid "product attachments"
+msgstr ""
+
+msgid "attachment"
+msgstr ""
+
+msgid "parent product"
+msgstr ""
+
+msgid "child product"
+msgstr ""
+
+msgid "suppliers"
+msgstr ""
+
+msgid "listed"
+msgstr ""
+
+msgid "purchasable"
+msgstr ""
+
+msgid "purchase multiple"
+msgstr ""
+
+msgid "minimum purchase"
+msgstr "最低購入"
+
+msgid "limited for shipping methods"
+msgstr ""
+
+msgid "limited for payment methods"
+msgstr ""
+
+msgid "shipping methods"
+msgstr "配送方法"
+
+msgid "payment methods"
+msgstr "お支払い方法"
+
+msgid "primary category"
+msgstr ""
+
+msgid "primary image"
+msgstr ""
+
+msgid "default price"
+msgstr ""
+
+msgid "minimum price"
+msgstr ""
+
+msgid "This product has been deleted."
+msgstr "この商品は削除されました。"
+
+msgid "This product is not visible."
+msgstr "この商品は表示されません。"
+
+msgid "The Product is invisible to users not logged in."
+msgstr "この商品は、ログインされてないユーザーには表示されません。"
+
+msgid "This product is not visible to your group."
+msgstr "この商品は、あなたのグループには表示されません。"
+
+msgid "The product has no supplier."
+msgstr "製品にはサプライヤーがありません。"
+
+#, python-format
+msgid "The purchase quantity needs to be at least %d for this product."
+msgstr ""
+
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"The product can only be ordered in multiples of {package_size}, for example "
+"{amount}"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"The product can only be ordered in multiples of {package_size}, for example "
+"{smaller_amount} or {larger_amount}"
+msgstr ""
+
+msgid "variation variable"
+msgstr ""
+
+msgid "variation variables"
+msgstr ""
+
+msgid "variation value"
+msgstr "変動値"
+
+msgid "variation values"
+msgstr "変動値"
+
+msgid "combination hash"
+msgstr ""
+
+msgid "result"
+msgstr ""
+
+msgid "variation result"
+msgstr ""
+
+msgid "variation results"
+msgstr ""
+
+msgid "normal"
+msgstr "ノーマル"
+
+msgid "package parent"
+msgstr ""
+
+msgid "variation parent (simple)"
+msgstr ""
+
+msgid "variation parent (variable)"
+msgstr ""
+
+msgid "variation child"
+msgstr ""
+
+msgid "visible to logged in"
+msgstr ""
+
+msgid "visible to groups"
+msgstr "グループに見える"
+
+msgid "stocked"
+msgstr "在庫あり"
+
+msgid "unstocked"
+msgstr "在庫なし"
+
+msgid "recommended"
+msgstr ""
+
+msgid "related"
+msgstr ""
+
+msgid "computed"
+msgstr ""
+
+msgid "bought with"
+msgstr ""
+
+msgid "shipped"
+msgstr ""
+
+msgid "no verification required"
+msgstr ""
+
+msgid "admin verification required"
+msgstr ""
+
+msgid "third party verification required"
+msgstr ""
+
+msgid "product type"
+msgstr "商品タイプ"
+
+msgid "product types"
+msgstr "商品タイプ"
+
+msgid "mode"
+msgstr ""
+
+msgid "variation parent"
+msgstr ""
+
+msgid "stock"
+msgstr "在庫"
+
+msgid "shipping mode"
+msgstr "配送モード"
+
+msgid "unit"
+msgstr ""
+
+msgid "tax class"
+msgstr "税クラス"
+
+msgid "SKU"
+msgstr "最小管理単位"
+
+msgid "GTIN"
+msgstr ""
+
+msgid "Global Trade Item Number"
+msgstr ""
+
+msgid "barcode"
+msgstr "バーコード"
+
+msgid "bookkeeping account"
+msgstr ""
+
+msgid "profit center"
+msgstr ""
+
+msgid "cost center"
+msgstr ""
+
+msgid "only used for administration and reporting"
+msgstr ""
+
+msgid "width (mm)"
+msgstr "幅 (ミリメートル)"
+
+msgid "height (mm)"
+msgstr "高さ (ミリメートル)"
+
+msgid "depth (mm)"
+msgstr ""
+
+msgid "net weight (g)"
+msgstr ""
+
+msgid "gross weight (g)"
+msgstr ""
+
+msgid "keywords"
+msgstr "キーワード"
+
+msgid "status text"
+msgstr ""
+
+msgid ""
+"This text will be shown alongside the product in the shop. (Ex.: \"Available "
+"in a month\")"
+msgstr ""
+
+msgid "variation name"
+msgstr ""
+
+msgid "products"
+msgstr "商品"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (parent is a child already)"
+msgstr ""
+
+msgid "Parent is a variable variation parent, yet variables were not passed"
+msgstr ""
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a simple "
+"variation parent)"
+msgstr ""
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a "
+"variable variation parent)"
+msgstr ""
+
+msgid "Product is currently not a normal product, can't turn into package"
+msgstr ""
+
+msgid "Variation parents can not belong into a package"
+msgstr ""
+
+msgid "Packages can't be nested"
+msgstr ""
+
+#, python-format
+msgid "Quantity %s is invalid"
+msgstr ""
+
+msgid "primary product"
+msgstr ""
+
+msgid "secondary product"
+msgstr ""
+
+msgid "weight"
+msgstr ""
+
+msgid "cross sell link"
+msgstr ""
+
+msgid "cross sell links"
+msgstr ""
+
+msgid "translated value"
+msgstr ""
+
+msgid "product attribute"
+msgstr ""
+
+msgid "product attributes"
+msgstr ""
+
+msgid "logo"
+msgstr "ロゴ"
+
+msgid "choice identifier"
+msgstr ""
+
+msgid "behavior components"
+msgstr ""
+
+#, python-format
+msgid "%s is disabled"
+msgstr ""
+
+#, python-format
+msgid "%s is for different shop"
+msgstr ""
+
+#, python-format
+msgid "%(service_name)s: %(sub_item)s"
+msgstr ""
+
+msgid "Fixed cost"
+msgstr ""
+
+msgid "Add fixed cost to price of the service."
+msgstr ""
+
+msgid "Waiving cost"
+msgstr ""
+
+msgid ""
+"Add cost to price of the service if total price of products is less than a "
+"waive limit."
+msgstr ""
+
+msgid "Weight limits"
+msgstr ""
+
+msgid "Limit availability of the service based on total weight of products."
+msgstr ""
+
+msgid "minimum weight"
+msgstr "最小重量"
+
+msgid "maximum weight"
+msgstr "最大重量"
+
+msgid "Minimum weight not met."
+msgstr "最小重量が満たされていません。"
+
+msgid "Maximum weight exceeded."
+msgstr "最大重量を超えています。"
+
+msgid "min weight"
+msgstr ""
+
+msgid "max weight"
+msgstr ""
+
+msgid "Weight-based pricing"
+msgstr ""
+
+msgid ""
+"Define price based on basket weight. Range minimums is counted in range only "
+"as zero."
+msgstr ""
+
+msgid "Weight does not match with any range."
+msgstr ""
+
+msgid "Contact group availability"
+msgstr ""
+
+msgid "Limit service availability for specific contact groups."
+msgstr ""
+
+msgid "groups"
+msgstr ""
+
+msgid "Customer does not belong to any group."
+msgstr ""
+
+msgid "Service is not available for any of the customers groups."
+msgstr ""
+
+msgid "Staff only availability"
+msgstr ""
+
+msgid "Limit service availability to staff only"
+msgstr ""
+
+msgid "Service is only available for staff"
+msgstr ""
+
+msgid "round to nearest with ties going away from zero"
+msgstr ""
+
+msgid "round to nearest with ties going towards zero"
+msgstr ""
+
+msgid "round away from zero"
+msgstr ""
+
+msgid "round towards zero"
+msgstr ""
+
+msgid "Rounding"
+msgstr ""
+
+msgid "Round total order price to the nearest quant."
+msgstr ""
+
+msgid "rounding quant"
+msgstr ""
+
+msgid "rounding mode"
+msgstr ""
+
+msgid "rounding"
+msgstr ""
+
+msgid "payment processor"
+msgstr ""
+
+msgid "custom payment processor"
+msgstr ""
+
+msgid "custom payment processors"
+msgstr ""
+
+msgid "Manually processed payment"
+msgstr ""
+
+msgid "Cash payment"
+msgstr ""
+
+msgid "carrier"
+msgstr ""
+
+msgid "custom carrier"
+msgstr ""
+
+msgid "custom carriers"
+msgstr ""
+
+msgid "Manually processed shipment"
+msgstr ""
+
+msgid "not sent"
+msgstr ""
+
+msgid "sent"
+msgstr ""
+
+msgid "received"
+msgstr ""
+
+msgid "error"
+msgstr "エラー"
+
+msgid "tracking code"
+msgstr ""
+
+msgid "volume"
+msgstr ""
+
+msgid "shipment"
+msgstr ""
+
+msgid "shipments"
+msgstr ""
+
+msgid "unit volume"
+msgstr ""
+
+msgid "unit weight"
+msgstr ""
+
+msgid "sent product"
+msgstr ""
+
+msgid "sent products"
+msgstr ""
+
+msgid ""
+"The following fields cannot be changed since there are existing orders for "
+"this shop"
+msgstr ""
+
+msgid "domain"
+msgstr ""
+
+msgid "options"
+msgstr ""
+
+msgid "maintenance mode"
+msgstr "メンテナンスモード"
+
+msgid "contact address"
+msgstr ""
+
+msgid "public name"
+msgstr ""
+
+msgid "maintenance message"
+msgstr ""
+
+msgid "alert limit"
+msgstr ""
+
+msgid "physical stock count"
+msgstr ""
+
+msgid "logical stock count"
+msgstr ""
+
+msgid "internal"
+msgstr ""
+
+msgid "external"
+msgstr ""
+
+msgid "supplier type"
+msgstr ""
+
+msgid "stock managed"
+msgstr ""
+
+msgid "module data"
+msgstr ""
+
+msgid "Cannot change business critical fields of Tax that is in use"
+msgstr ""
+
+msgid "code"
+msgstr "コード"
+
+msgid "tax rate"
+msgstr "税率"
+
+msgid "The percentage rate of the tax."
+msgstr ""
+
+msgid "tax amount value"
+msgstr ""
+
+msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
+msgstr ""
+
+msgid "currency of tax amount"
+msgstr ""
+
+msgid "Either rate or amount is required"
+msgstr ""
+
+msgid "Cannot have both rate and amount"
+msgstr ""
+
+msgid "Currency is required if amount is specified"
+msgstr ""
+
+msgid "taxes"
+msgstr "税"
+
+msgid "tax classes"
+msgstr ""
+
+msgid "customer tax group"
+msgstr ""
+
+msgid "customer tax groups"
+msgstr ""
+
+msgid "Retail Customers"
+msgstr ""
+
+msgid "Company Customers"
+msgstr ""
+
+msgid "allowed decimals"
+msgstr ""
+
+msgid "sales unit"
+msgstr ""
+
+msgid "sales units"
+msgstr ""
+
+msgid "No Choice"
+msgstr ""
+
+#, python-format
+msgid "%s not available in this shop"
+msgstr ""
+
+msgid "Default Pricing"
+msgstr ""
+
+msgid "Insufficient stock"
+msgstr ""
+
+msgid "Untaxed"
+msgstr "課税対象外"
+
+msgid "This field cannot be changed since it is protected."
+msgstr ""
+
+msgid "First Last"
+msgstr ""

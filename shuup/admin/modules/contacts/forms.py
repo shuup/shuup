@@ -1,0 +1,125 @@
+# -*- coding: utf-8 -*-
+# This file is part of Shuup.
+#
+# Copyright (c) 2012-2017, Shoop Commerce Ltd. All rights reserved.
+#
+# This source code is licensed under the OSL-3.0 license found in the
+# LICENSE file in the root directory of this source tree.
+from django import forms
+from django.utils.encoding import force_text
+from django.utils.translation import ugettext_lazy as _
+from django_countries import countries
+from django_countries.fields import LazyTypedChoiceField
+from enumfields import EnumField
+
+from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.widgets import PersonContactChoiceWidget
+from shuup.core.fields import LanguageFormField
+from shuup.core.models import (
+    CompanyContact, Contact, ContactGroup, Gender, PersonContact
+)
+
+FIELDS_BY_MODEL_NAME = {
+    "Contact": (
+        "is_active", "marketing_permission", "phone", "www",
+        "timezone", "prefix", "suffix", "name_ext", "email", "tax_group",
+        "merchant_notes", "account_manager"
+    ),
+    "PersonContact": (
+        "first_name", "last_name", "gender", "language", "birth_date"
+    ),
+    "CompanyContact": (
+        "name", "tax_number", "members"
+    )
+}
+
+
+class ContactBaseFormMixin(object):
+    def __init__(self, *args, **kwargs):
+        super(ContactBaseFormMixin, self).__init__(*args, **kwargs)
+        self.init_fields()
+
+    def init_fields(self):
+        self.fields["groups"] = forms.ModelMultipleChoiceField(
+            queryset=ContactGroup.objects.all_except_defaults(),
+            initial=(self.instance.groups.all_except_defaults() if self.instance.pk else ()),
+            required=False,
+            widget=forms.SelectMultiple(),
+            label=_("Contact Groups"),
+            help_text=_(
+                "The contact groups this contact belongs to. Contact groups are defined in Contacts - Contact Groups "
+                "and are used to configure sales, campaigns, and product pricing tailored for a set of users."
+            )
+        )
+        if "account_manager" in self.fields:
+            self.fields["account_manager"].widget = PersonContactChoiceWidget(clearable=True)
+
+    def save(self, commit=True):
+        if not self.instance.pk:
+            self.instance.is_active = True
+        obj = super(ContactBaseFormMixin, self).save(commit)
+        obj.groups = [obj.get_default_group()] + list(self.cleaned_data["groups"])
+        return obj
+
+
+class PersonContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
+    language = LanguageFormField(label=_("Language"), required=False, include_blank=True, help_text=_(
+        "The primary language to be used in all communications with the contact."
+    ))
+
+    class Meta:
+        model = PersonContact
+        fields = list(FIELDS_BY_MODEL_NAME["PersonContact"]) + list(FIELDS_BY_MODEL_NAME["Contact"])
+
+    def __init__(self, user=None, *args, **kwargs):
+        self.user = user
+        super(PersonContactBaseForm, self).__init__(*args, **kwargs)
+
+    def init_fields(self):
+        super(PersonContactBaseForm, self).init_fields()
+        for field_name in ("first_name", "last_name"):
+            self.fields[field_name].required = True
+        self.initial["language"] = self.instance.language
+
+    def save(self, commit=True):
+        self.instance.name = self.cleaned_data["first_name"] + " " + self.cleaned_data["last_name"]
+        self.instance.language = self.cleaned_data["language"]
+        obj = super(PersonContactBaseForm, self).save(commit)
+        if self.user and not getattr(obj, "user", None):  # Allow binding only once
+            obj.user = self.user
+            obj.save()
+        return obj
+
+
+class CompanyContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
+    class Meta:
+        model = CompanyContact
+        fields = list(FIELDS_BY_MODEL_NAME["CompanyContact"]) + list(FIELDS_BY_MODEL_NAME["Contact"])
+
+    def init_fields(self):
+        super(CompanyContactBaseForm, self).init_fields()
+        self.fields["name"].help_text = _("The company name.")
+        members_field = Select2MultipleField(model=PersonContact, required=False, help_text=_(
+            "The contacts that are members of this company."
+        ))
+        if self.instance.pk and hasattr(self.instance, "members"):
+            members_field.widget.choices = [
+                (object.pk, force_text(object)) for object in self.instance.members.all()
+            ]
+        self.fields["members"] = members_field
+
+
+class MassEditForm(forms.Form):
+    gender = EnumField(Gender).formfield(default=Gender.UNDISCLOSED, label=_('Gender'), required=False)
+    merchant_notes = forms.CharField(label=_('Merchant Notes'), widget=forms.Textarea, required=False)
+    www = forms.URLField(required=False, label=_("Website URL"))
+    account_manager = forms.ModelChoiceField(PersonContact.objects.all(), label=_("Account Manager"), required=False)
+    tax_number = forms.CharField(label=_("Company: Tax Number"), max_length=32, required=False)
+    members = forms.ModelMultipleChoiceField(Contact.objects.all(), label=_("Company: Members"), required=False)
+    language = LazyTypedChoiceField(
+        choices=[("", _("Select Language"))] + list(countries), label=_('Language'), required=False)
+
+
+class GroupMassEditForm(forms.Form):
+    contact_group = forms.ModelMultipleChoiceField(
+        ContactGroup.objects.all(), label=_("Contact Group"), required=False)

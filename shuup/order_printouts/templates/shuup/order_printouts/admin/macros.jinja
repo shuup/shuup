@@ -1,0 +1,162 @@
+{% macro print_address(address) %}
+    {% for line in address.as_string_list() if line %}
+        {% if loop.first %}<strong>{{ line }}</strong>
+        {% else %}{{ line }}{% endif %}
+        {% if not loop.last %}<br>{% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro order_information_table(order) %}
+    <table>
+        <tr>
+            <td>{% trans %}Order number{% endtrans %}</td>
+            <td>{{ order.id }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Total price{% endtrans %}</td>
+            <td>{{ order.taxful_total_price|money }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Payment status{% endtrans %}</td>
+            <td>{{ order.get_payment_status_display() }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Shipping status{% endtrans %}</td>
+            <td>{{ order.get_shipping_status_display() }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Order date{% endtrans %}</td>
+            <td>{{ order.order_date|localtime|date("j.n.Y H:i") }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Comment{% endtrans %}</td>
+            <td>{{ order.customer_comment }}</td>
+        </tr>
+    </table>
+{% endmacro %}
+
+{% macro shipment_information_table(order, shipment, extra_fields=None) %}
+    <table>
+        <tr>
+            <td>{% trans %}Identifier{% endtrans %}</td>
+            <td>{{ shipment.pk }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Shipment date{% endtrans %}</td>
+            <td>{{ shipment.created_on|localtime|date("j.n.Y H:i") }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Order date{% endtrans %}</td>
+            <td>{{ order.order_date|localtime|date("j.n.Y H:i") }}</td>
+        </tr>
+        {% if extra_fields %}
+            {% for field_name, field_value in extra_fields.items() %}
+                <tr>
+                    <td>{{ field_name }}</td>
+                    <td>{{ field_value }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+{% endmacro %}
+
+{% macro shipped_products_table(order, shipment) %}
+    <table>
+         <thead>
+            <tr>
+                <th>{% trans %}SKU{% endtrans %}</th>
+                <th>{% trans %}Text{% endtrans %}</th>
+                <th class="align-right">{% trans %}Quantity{% endtrans %}</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for shipment_product in shipment.products.all() %}
+                {% set product = shipment_product.product %}
+                <tr>
+                    <td>{{ product.sku }}</td>
+                    <td>{{ product.name }}</td>
+                    <td class="align-right">{{ shipment_product.quantity|floatformat(2) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro order_lines_table(order, order_lines, show_totals=True, show_sku=True) %}
+    <table>
+        <thead>
+            <tr>
+                {% if show_sku %}<th width="10">{% trans %}SKU{% endtrans %}</th>{% endif %}
+                <th width="60">{% trans %}Text{% endtrans %}</th>
+                <th width="10" class="align-right">{% trans %}Quantity{% endtrans %}</th>
+                <th width="10" class="align-right">{% trans %}Tax{% endtrans %}</th>
+                <th width="10" class="align-right">{% trans %}Total price{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ol in order_lines %}
+                <tr>
+                    {% if show_sku %}<td width="10">{{ ol.sku }}</td>{% endif %}
+                    <td width="60">{{ ol.text }}</td>
+                    {% if ol.quantity != 0 %}
+                        <td width="10" class="align-right">{{ ol.quantity|floatformat(2) }}</td>
+                        <td width="10" class="align-right">{{ ol.tax_rate|percent(ndigits=3) }}</td>
+                        <td width="10" class="align-right">{{ ol.taxful_price|money }}</td>
+                    {% else %}
+                        <td width="30"></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+        {% if show_totals %}
+            <tfoot>
+                <tr class="totals-row">
+                    <td width="10"></td>
+                    <td width="60"></td>
+                    <td width="10"></td>
+                    <td width="10" class="align-right">{% trans %}Taxful total{% endtrans %}</td>
+                    <td width="10" class="align-right">{{ order.taxful_total_price|money }}</td>
+                </tr>
+                <tr class="totals-row">
+                    <td width="10"></td>
+                    <td width="60"></td>
+                    <td width="10"></td>
+                    <td width="10" class="align-right">{% trans %}Taxless total{% endtrans %}</td>
+                    <td width="10" class="align-right">{{ order.taxless_total_price|money }}</td>
+                </tr>
+            </tfoot>
+        {% endif %}
+    </table>
+{% endmacro %}
+
+{% macro tax_information_table(order) %}
+    <table>
+        <thead>
+            <tr>
+                <th>{% trans %}Tax{% endtrans %}</th>
+                <th class="align-right">{% trans %}Tax percentage{% endtrans %}</th>
+                <th class="align-right">{% trans %}Based on amount{% endtrans %}</th>
+                <th class="align-right">{% trans %}Amount of tax{% endtrans %}</th>
+                <th class="align-right">{% trans %}Total including tax{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set tax_summary = order.get_tax_summary() %}
+            {% if tax_summary %}
+                {% for item in tax_summary %}
+                    <tr>
+                        <td>{{ item.tax_name }}</td>
+                        <td class="align-right">
+                            {%- if item.tax_rate is not none -%}
+                                {{ item.tax_rate|percent(ndigits=3) }}
+                            {%- endif -%}
+                        </td>
+                        <td class="align-right">{{ item.based_on|money }}</td>
+                        <td class="align-right">{{ item.tax_amount|money }}</td>
+                        <td class="align-right">{{ item.taxful|money }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endmacro %}

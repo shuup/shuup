@@ -1,0 +1,75 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Christian Hess <christianhess.rlz@gmail.com>, 2016
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"PO-Revision-Date: 2016-07-19 19:08+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "An error occurred."
+msgstr "Ocorreu um erro."
+
+msgid "Success."
+msgstr "Sucesso."
+
+msgid "An unspecified error occurred."
+msgstr "Ocorreu um erro não especificado."
+
+msgid "Unexpected edit data received."
+msgstr "Dados de edição inesperados recebidos."
+
+msgid "Add new"
+msgstr "Adicionar novo"
+
+msgid ""
+"Delete this item?\n"
+"This can not be undone."
+msgstr "Excluir este item?\nEsta ação não poderá ser desfeita."
+
+msgid "New"
+msgstr "Novo"
+
+msgid "Move Up"
+msgstr "Mover para Cima"
+
+msgid "Move Down"
+msgstr "Mover para Baixo"
+
+msgid "Disable"
+msgstr "Desabilitar"
+
+msgid "Enable"
+msgstr "Habilitar"
+
+msgid "Delete"
+msgstr "Excluir"
+
+msgid "Are you sure you wish to delete this step?"
+msgstr "Tem certeza que deseja excluir esta instrução?"
+
+#, javascript-format
+msgid "If %s of these conditions hold..."
+msgstr "Se %s destas condições se realizarem..."
+
+msgid "then execute these actions..."
+msgstr "então, execute estas ações..."
+
+msgid "and then..."
+msgstr "e então..."
+
+msgid "New step"
+msgstr "Nova instrução"

@@ -1,0 +1,183 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+
+    &.admin-tools-visible {
+        margin-top: 50px;
+    }
+}
+
+p {
+    a {
+        text-decoration: underline;
+    }
+}
+
+hr {
+    margin: 30px 0px;
+}
+
+footer {
+    padding: 30px 0px;
+}
+
+.container, .container-fluid {
+    min-width: 320px;
+}
+
+.jumbotron {
+    border-bottom: 1px solid @border-color;
+}
+
+table tr {
+    &.info, &.success, &.danger, &.warning {
+        color: #fff;
+        td { border-color: rgba(0,0,0,0.2); }
+    }
+}
+
+.btn {
+    transition: color 0.1s, background 0.1s, border-color 0.1s;
+    &-primary{
+        border-color: @brand-primary;
+    }
+    &-success {
+        border-color: @brand-success;
+    }
+    &-danger {
+        border-color: @brand-danger;
+    }
+    &-warning {
+        border-color: @brand-warning;
+    }
+    &-info {
+        border-color: @brand-info;
+    }
+}
+.btn-group .btn + .btn {
+    &-primary{
+        border-left-color: darken(@brand-primary, 5%);
+    }
+    &-success {
+        border-left-color: darken(@brand-success, 7%);
+    }
+    &-danger {
+        border-left-color: darken(@brand-danger, 7%);
+    }
+    &-warning {
+        border-left-color: darken(@brand-warning, 10%);
+    }
+    &-info {
+        border-left-color: darken(@brand-info, 8%);
+    }
+}
+
+.alert {
+    .alert-link {
+        text-decoration: underline;
+        color: #fff;
+    }
+    .close {
+        opacity: 1;
+    }
+    &.alert-top {
+        margin: 0;
+    }
+}
+
+.progress {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1) inset;
+    border: 1px solid lighten(@border-color, 3%);
+}
+
+.label {
+    border-radius: 0;
+}
+
+.panel {
+    box-shadow: none;
+}
+
+.form-control {
+    &:focus {
+        box-shadow: none !important;
+    }
+}
+
+.form-group .help-block {
+    font-size: 1.3rem;
+}
+
+label {
+    font-weight: normal;
+}
+
+.well {
+    box-shadow: none;
+}
+
+.breadcrumb {
+    padding: 0px 0px 8px 0px;
+    font-size: 1.2rem;
+    color: @text-muted;
+    background: transparent;
+}
+
+.page-header {
+    border: 0;
+    margin: 20px 0px;
+    .lead {
+        color: @text-color;
+    }
+}
+
+.bootstrap-select .btn-default {
+    border: 1px solid @border-color;
+}
+
+.nav-tabs {
+    li.active a {
+        background: #fff;
+        &:hover, &:focus {
+            background: #fff;
+        }
+    }
+    li a {
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+    li a:hover,
+    li a:focus {
+        background: #fff;
+    }
+}
+
+.tab-content {
+    padding: 30px 15px;
+    background: #fff;
+    border: solid @border-color;
+    border-width: 0px 1px 1px 1px;
+    dl {
+        margin: 0;
+    }
+}
+
+.dl-horizontal {
+    dd {
+        margin-bottom: 10px;
+    }
+    @media (min-width: @screen-sm-min) {
+        dt {
+            width: 180px;
+            padding: 3px 0px;
+        }
+        dd {
+            margin-left: 200px;
+            padding: 3px 0px;
+            margin-bottom: 0;
+        }
+    }
+}

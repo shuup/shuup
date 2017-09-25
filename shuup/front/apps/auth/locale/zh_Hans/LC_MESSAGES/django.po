@@ -1,0 +1,128 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 19:12+0000\n"
+"PO-Revision-Date: 2016-03-09 09:30+0000\n"
+"Last-Translator: Jessica Wang <jessica.wang@shuup.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
+"language/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr ""
+"请输入正确的%(username)s和密码， 该两个字段区分大小写。如果一个邮箱地址拥有多"
+"个账号，请使用用户名登录。"
+
+msgid "This account is inactive."
+msgstr "该账号无效。"
+
+msgid "Username or email address"
+msgstr "用户名或者邮箱地址"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Email"
+msgstr "电子邮箱"
+
+msgid "Please provide either username or email, not both."
+msgstr "请在用户名和邮箱之间提供其一。"
+
+msgid "Please provide either username or email."
+msgstr "请提供用户名或邮箱。"
+
+msgid "shop"
+msgstr "商店"
+
+msgid "Log in"
+msgstr "登录"
+
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr ""
+
+msgid "Go to Homepage"
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr "忘记密码？"
+
+msgid "New user? Register here!"
+msgstr ""
+
+msgid "Logged out"
+msgstr "已退出"
+
+#, fuzzy
+#| msgid "You have been logged out."
+msgid "You have been logged out. Thank you for visiting!"
+msgstr "您已经退出"
+
+msgid "Recover your password"
+msgstr "取回密码"
+
+#, fuzzy
+#| msgid "Please provide either username or email."
+msgid "You can recover your password with either username or email."
+msgstr "请提供用户名或邮箱。"
+
+msgid "Send password recovery instructions"
+msgstr "发送密码恢复指示"
+
+msgid "Password Changed"
+msgstr "密码已更改"
+
+msgid "Your password has been changed and you have been logged in."
+msgstr "密码已更改，您已登录。"
+
+msgid "Password Recovery"
+msgstr "密码恢复"
+
+msgid "Change Password"
+msgstr "更改密码"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr "Hi %(fullname)s"
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr "以防您忘记，您的用户名是%(username)s。"
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr "您收到此邮件是因为您要求您的  %(site_name)s 用户账号密码重置。"
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "请到下列页面并设置新密码："
+
+msgid ""
+"\n"
+"    If a user account is associated with the information you entered,\n"
+"    you should receive instructions on how to reset your password shortly.\n"
+"    "
+msgstr ""
+"\n"
+"如果用户账号与您所填的信息绑定，\n"
+"您应该很快会收到重设密码的指示。 "
+
+msgid "This recovery link is invalid."
+msgstr "该恢复链接无效。"

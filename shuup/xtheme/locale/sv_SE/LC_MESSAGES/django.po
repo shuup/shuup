@@ -1,0 +1,337 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:33+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Global plugins"
+msgstr "Globala insticksmoduler"
+
+msgid "Theme plugins"
+msgstr "Temats insticksmoduler"
+
+msgid "Shuup Extensible Theme Engine"
+msgstr "Shuup temamotor"
+
+msgid "Themes"
+msgstr "Teman"
+
+msgid "Customize the look and feel of your shop"
+msgstr "Anpassa utseendet och känslan av din butik"
+
+msgid "Customize theme"
+msgstr "Anpassa tema"
+
+msgid "No theme is active. Click here to activate one."
+msgstr "Inget aktiverat tema. Klicka här för att aktivera ett."
+
+msgid "Theming"
+msgstr "Ställ in tema"
+
+msgid "activate"
+msgstr "aktivera"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Choose a theme for your shop"
+msgstr "Välj ett tema för din butik"
+
+msgid "Theme activated."
+msgstr "Tema aktiverat."
+
+msgid "Stylesheets"
+msgstr "Utseendemallar"
+
+msgid "The fonts, colors, and styles to use with your theme."
+msgstr "Typsnitt, färger och annan styling för ditt tema."
+
+msgid "current draft"
+msgstr "nuvarande utkast"
+
+msgid "old version"
+msgstr "gammal version"
+
+msgid "public"
+msgstr "offentlig"
+
+msgid "theme identifier"
+msgstr "temaidentifierare"
+
+msgid "view name"
+msgstr "vynamn"
+
+msgid "created on"
+msgstr "skapad den"
+
+msgid "status"
+msgstr "status"
+
+msgid "internal data"
+msgstr "intern information"
+
+msgid "active"
+msgstr "aktiv"
+
+msgid "data"
+msgstr "information"
+
+#, python-format
+msgid "Theme configuration for %s"
+msgstr "Konfiguration för temat %s"
+
+msgid "Plugin"
+msgstr "Insticksmodul"
+
+msgid "Category Links"
+msgstr "Kategorilänkar"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Show all categories"
+msgstr "Visa alla kategorier"
+
+msgid "All categories are shown, even if not selected"
+msgstr "Alla kategorier visas, även om detta inte är valt"
+
+msgid "Image"
+msgstr "Bild"
+
+msgid "Image Link URL"
+msgstr "Bildens webbadress"
+
+msgid "Full width"
+msgstr "Fullständig bredd"
+
+msgid "Set image to full width of cell"
+msgstr "Ställ in cellens bredd till samma som bildens"
+
+msgid "Width (px)"
+msgstr "Bredd (px)"
+
+msgid "Leave blank for default width"
+msgstr "Lämna tomt för standardbredd"
+
+msgid "Height (px)"
+msgstr "Höjd (px)"
+
+msgid "Product Highlights"
+msgstr "Produkthöjdpunkter"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Count"
+msgstr "Antal"
+
+msgid "Only show in-stock and orderable items"
+msgstr "Visas endast produkter som finns i lager och är beställningsbara"
+
+msgid "Product Cross Sells"
+msgstr "Produkters korsförsäljningar"
+
+msgid "category"
+msgstr "kategori"
+
+msgid "Category Products Highlight"
+msgstr "Höjdpunkter från produktkategorier"
+
+msgid "Snippets"
+msgstr "Utdrag"
+
+msgid "In-Place Snippet"
+msgstr "In-place utdrag"
+
+msgid "Resource snippet for end of head"
+msgstr "Utdrag från slutet till början"
+
+msgid "Resource snippet for beginning of body"
+msgstr "Utdrag för början av sidinnehållet"
+
+msgid "Resource for end of body"
+msgstr "Utdrag för slutet av sidan"
+
+msgid "URL"
+msgstr "Webbadress"
+
+msgid "Ordering"
+msgstr "Ordning"
+
+msgid "Social Media Links"
+msgstr "Länkar till sociala medier"
+
+msgid "Topic"
+msgstr "Ämnen"
+
+msgid "Icon Size"
+msgstr "Ikonstorlek"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Large"
+msgstr "Stor"
+
+msgid "Alignment"
+msgstr "Placering"
+
+msgid "Left"
+msgstr "Vänster"
+
+msgid "Center"
+msgstr "Centrerad"
+
+msgid "Right"
+msgstr "Höger"
+
+msgid "text"
+msgstr "text"
+
+#, python-format
+msgid "Click to edit placeholder: %s"
+msgstr "Klicka för att redigera platshållare: %s"
+
+msgid "Delete This Cell"
+msgstr "Ta bort denna cell"
+
+msgid "Untranslated"
+msgstr "Inte översatt"
+
+msgid "There's nothing to configure in this plugin."
+msgstr "Det finns inget att konfigurera i denna insticksmodul"
+
+msgid "Save Plugin"
+msgstr "Spara insticksmodul"
+
+msgid "Edit Placeholder"
+msgstr "Redigera platshållare"
+
+msgid "Add new cell"
+msgstr "Lägg till ny cell"
+
+msgid "Delete row"
+msgstr "Radera rad"
+
+msgid "Move row"
+msgstr "Flytta rad"
+
+msgid "Add new row"
+msgstr "Lägg till ny rad"
+
+msgid "Theme Configuration"
+msgstr "Temats inställningar"
+
+msgid "No themes are installed."
+msgstr "Inga teman är installerat."
+
+#, python-format
+msgid "Theme Configuration: %(name)s"
+msgstr "Temat inställningar: %(name)s"
+
+msgid "There's nothing to configure in this theme."
+msgstr "Det finns inget att konfigurera i detta tema."
+
+msgid "Select theme"
+msgstr "Välj tema"
+
+msgid "Guide"
+msgstr "Guide"
+
+msgid "Actions"
+msgstr "Åtgärder"
+
+msgid "Author"
+msgstr "Skapare"
+
+msgid "Show guide"
+msgstr "Visa guide"
+
+msgid "Activate theme to show guide"
+msgstr "Aktivera tema för att visa guiden"
+
+msgid "No guide"
+msgstr "Ingen guide"
+
+msgid "Currently active"
+msgstr "Aktiv just nu"
+
+msgid "Activate"
+msgstr "Aktivera"
+
+msgid "Configure"
+msgstr "Konfigurera"
+
+msgid "Theme Name"
+msgstr "Temats namn"
+
+msgid "Revert Changes"
+msgstr "Återställ ändringar"
+
+msgid "Publish Changes"
+msgstr "Publicera ändringar"
+
+msgid "No access to editing"
+msgstr "Ingen tillgång till redigering"
+
+#, python-format
+msgid "Unknown command %s"
+msgstr "Okänt kommando %s"
+
+msgid "Unable to determine current theme."
+msgstr "Det går inte att bestämma det aktuella temat."
+
+#, python-format
+msgid "Cannot add more than %d cells in one row."
+msgstr "Det går inte att lägga till mer än %d celler på en rad."
+
+msgid "Published"
+msgstr "Publicerad"
+
+msgid "Reverted"
+msgstr "Tillbakarullad"
+
+msgid "Full Width"
+msgstr "Fullbredd"
+
+msgid "Three Fourths (3/4)"
+msgstr "Tre fjärdedelar (3/4)"
+
+msgid "Two Thirds (2/3)"
+msgstr "Två tredjedelar (2/3)"
+
+msgid "Half (1/2)"
+msgstr "Hälften (1/2)"
+
+msgid "One Third (1/3)"
+msgstr "En tredjedel (1/3)"
+
+msgid "One Fourth (1/4)"
+msgstr "En fjärdedel (1/4)"
+
+msgid "Auto"
+msgstr "Automatisk"
+
+msgid "Cell width"
+msgstr "Cellbredd"
+
+msgid "Cell align"
+msgstr "Celljustering"
+
+msgid "No Plugin"
+msgstr "Ingen insticksmodul"

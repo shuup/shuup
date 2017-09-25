@@ -1,0 +1,45 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+
+{% block checkout_phase_content %}
+    <div class="row">
+        {% set forms = form.forms %}
+        <div class="col-md-6">
+            <form class="single-page-refresh-after" role="form" method="post" action="">
+                {% csrf_token %}
+                {% set login_form = forms["login"] %}
+                {% for error in login_form.non_field_errors() %}
+                    {{ macros.alert(error, mode="danger") }}
+                {% endfor %}
+                {% for f in login_form.hidden_fields() %}{{ f }}{% endfor %}
+                {{ macros.render_field(login_form.username) }}
+                {{ macros.render_field(login_form.password) }}
+                <button type="submit" class="btn btn-primary btn-block" name="login">
+                    <i class="fa fa-sign-in"></i> {% trans %}Log in{% endtrans %}
+                </button>
+                <hr>
+                <a href="{{ url("shuup:recover_password") }}">
+                    {% trans %}Forgot your password?{% endtrans %}
+                </a>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form role="form" method="post" action="">
+                {% csrf_token %}
+                {% set method_form = forms["checkout_method_choice"] %}
+                {{ macros.render_field(method_form.register) }}
+                {{ checkout_macros.default_buttons() }}
+            </form>
+            {% placeholder "checkout_method_choice_right" %}{% endplaceholder %}
+        </div>
+    </div>
+    {% placeholder "checkout_method_choice_bottom" %}{% endplaceholder %}
+{% endblock %}
+
+{% block extrajs %}
+    {{ super() }}
+    <script>
+        $(function() {
+            $(".selectpicker").selectpicker();
+        });
+    </script>
+{% endblock %}

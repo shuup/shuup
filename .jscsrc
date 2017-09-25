@@ -1,0 +1,20 @@
+{
+  "preset": "airbnb",
+  "disallowMultipleVarDecl": null,
+  "disallowQuotedKeysInObjects": null,
+  "maximumLineLength": 120,
+  "requirePaddingNewLinesAfterBlocks": null,
+  "safeContextKeyword": null,
+  "validateIndentation": 4,
+  "validateQuoteMarks": true,
+  "requireTrailingComma": false,
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+  "excludeFiles": [
+    '.git/**',
+    '**/node_modules/**',
+    '**/bower_components/**',
+    '**/vendor/**',
+    'shuup/xtheme/static/**',
+    'shuup/themes/**/static/**'
+  ]
+}

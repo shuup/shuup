@@ -1,0 +1,29 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{# use the base form #}
+{% set base_form_name = form_def.name.split('_')[0] %}
+{% set shop_product_form = form[base_form_name] %}
+{% set shop_name = shop_product_form.instance.shop.name %}
+{% set shop_name_prefix = shop_name ~ " - " %}
+
+{% call content_block(shop_name_prefix ~ _("Additional"), "fa-truck") %}
+    <p class="section-description">
+        {% trans %}Strictly shop related information. For example set the minimum price applicable in this shop.{% endtrans %}<br>
+        {% trans shop_name=shop_name %}These settings apply only for shop: <b>{{ shop_name }}</b>.{% endtrans %}
+    </p>
+    {{ bs3.field(shop_product_form.visibility_limit) }}
+    {{ bs3.field(shop_product_form.visibility_groups) }}
+
+    {{ bs3.field(shop_product_form.minimum_price_value) }}
+    {{ bs3.field(shop_product_form.suppliers) }}
+    {{ bs3.field(shop_product_form.purchase_multiple) }}
+    {{ bs3.field(shop_product_form.minimum_purchase_quantity) }}
+    {{ bs3.field(shop_product_form.backorder_maximum) }}
+    {{ bs3.field(shop_product_form.display_unit) }}
+
+    {{ bs3.field(shop_product_form.limit_payment_methods) }}
+    {{ bs3.field(shop_product_form.limit_shipping_methods) }}
+    {{ bs3.field(shop_product_form.payment_methods) }}
+    {{ bs3.field(shop_product_form.shipping_methods) }}
+
+{% endcall %}
+

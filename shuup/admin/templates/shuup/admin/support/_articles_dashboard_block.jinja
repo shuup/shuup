@@ -1,0 +1,16 @@
+<div class="color-block block-green">
+    <div class="block-header">
+        <div class="text-wrap">
+            <span>{% trans %}News &amp; Updates{% endtrans %}</span>
+        </div>
+    </div>
+    <div class="block-content">
+        <ul class="list-unstyled">
+            {% for article in articles %}
+                <li>
+                    <p><a target="_blank" href="{{ article["url"] }}">{{ article["title"] }}</a></p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

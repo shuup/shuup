@@ -1,0 +1,12 @@
+{% extends "shuup/admin/base.jinja" %}
+
+{% block title %}{% trans %}Permission Denied{% endtrans %} (403){% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <p class="lead">
+            <i class="fa fa-info-circle text-info"></i>
+            {% trans %}Unfortunately you didn't have permission to display this page.{% endtrans %}
+        </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title %}{% trans %}Home{% endtrans %}{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block content %}
+    {% if xtheme.get("show_welcome_text", True) %}
+        <h1 class="page-header">{{ _("Welcome to %(shop_name)s!", shop_name=request.shop.public_name) }}</h1>
+    {% endif %}
+
+    {% placeholder "front_content" %}
+        {% row %}
+            {% column {"md": 12} %}
+                {% plugin "product_highlight" %}
+                    type = "newest"
+                    title = "Newest Products"
+                {% endplugin %}
+            {% endcolumn %}
+        {% endrow %}
+        {% row %}
+            {% column {"md": 12} %}
+                {% plugin "product_highlight" %}type = "best_selling"{% endplugin %}
+            {% endcolumn %}
+        {% endrow %}
+    {% endplaceholder %}
+{% endblock %}

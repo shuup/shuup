@@ -1,0 +1,79 @@
+{% extends "shuup/admin/base.jinja" %}
+
+{% block title -%}
+    {% trans %}Welcome!{% endtrans %}
+{%- endblock %}
+{% block extra_css %}
+<link href="{{ static("shuup_admin/css/wizard.css") }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block top %}{% endblock %}
+{% block support_content %}{% endblock %}
+{% block content_wrap %}
+<div id="wizard-page" class="container-fluid">
+    <div class="wizard-header">
+        <img class="logo" src="{{ static("shuup_admin/img/logo-icon.svg") }}">
+        <h1>{% trans %}Welcome to Shuup!{% endtrans %}</h1>
+        <p>{% trans %}Please fill out the following information to get your store up and running{% endtrans %}</p>
+    </div>
+    <div class="content-block wizard-block">
+        <div class="wizard">
+            <div class="wizard-pane-container">
+                {% for pane in panes %}
+                    <div class="wizard-pane {{ pane.identifier }}" data-can_skip="{{ pane.can_skip }}">
+                        <div class="pane-header text-center">
+                            {% if pane.icon %}
+                                <img src="{{ static(pane.icon) }}">
+                            {% else %}
+                                <br>
+                            {% endif %}
+                            <p>
+                            {{ pane.text }}
+                            <br>
+                            {% if pane.editable %}
+                                <small>{% trans %}All information entered here can be edited later.{% endtrans %}</small>
+                            {% endif %}
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="errors col-sm-6 col-sm-offset-3"></div>
+                        </div>
+                        <form method="POST" class="form-lg">
+                            {% csrf_token %}
+                            <input type="hidden" name="pane_id" value="{{ pane.identifier }}">
+                            {% for form_def in pane.form_defs.values() %}
+                                {% if form_def.template_name %}
+                                    {% include form_def.template_name with context %}
+                                {% else %}
+                                    {% for field in pane.forms[form_def.name] %}
+                                        {{ bs3.field(field) }}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ static("shuup_admin/js/wizard.js") }}"></script>
+<script>
+    (function(){
+        $($(".help-popover-btn .btn")[0]).append(" {% trans %}Click here for help{% endtrans %}")
+        $(".wizard").wizard({
+            hidePrevious: false,
+            redirectOnLastPane: "{{ url("shuup_admin:home") }}"
+        });
+    }());
+</script>
+{% for pane in panes %}
+    {% for form_def in pane.form_defs.values() %}
+        {% if form_def.extra_js %}
+            {% include form_def.extra_js with context %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% set shop_product_form = form[form_def.name] %}
+{% set shop_name = shop_product_form.instance.shop.name %}
+
+<div class="title">
+    <h2 class="block-subtitle"><i class="fa fa-home"></i>{{ shop_name }}</h2>
+</div>
+<div class="row content">
+    <div class="col-md-12">
+        {{ bs3.field(shop_product_form.default_price_value) }}
+        {{ bs3.field(shop_product_form.primary_category) }}
+        {{ bs3.field(shop_product_form.categories) }}
+        {{ bs3.field(shop_product_form.visibility) }}
+    </div>
+</div>

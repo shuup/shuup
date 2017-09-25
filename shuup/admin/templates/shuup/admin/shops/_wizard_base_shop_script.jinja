@@ -1,0 +1,37 @@
+<script>
+function enableRegionsDropdown(regions) {
+    var regionOptions = [];
+    $.each(regions, function(idx, region){
+        regionOptions.push("<option value='" + region.code + "'>" + region.name + "</option>");
+    });
+    $("select[name='address-region_code']").html(regionOptions.join()).parent(".form-group").removeClass("hidden");
+}
+
+function disableRegionsDropdown() {
+    $("input[name='address-region']").val("").parent(".form-group").addClass("hidden");
+    $("select[name='address-region_code']").val("").parent(".form-group").addClass("hidden");
+}
+
+$("select[name='address-country']").on("change", function(){
+    var country = $(this).val();
+    if(country in window.REGIONS) {
+        enableRegionsDropdown(window.REGIONS[country]);
+    } else {
+        disableRegionsDropdown();
+    }
+
+    $(".wizard *[data-allowed-countries]").each(function(idx, el) {
+        if($(el).attr("data-allowed-countries").indexOf(country) < 0) {
+            $(el).hide();
+        } else {
+            $(el).show();
+        }
+    });
+});
+
+$(".general").on("change", "select[name='address-region_code']", function(){
+    var region = $(this).find("option:selected").text();
+    $("input[name='address-region']").val(region);
+});
+disableRegionsDropdown();
+</script>

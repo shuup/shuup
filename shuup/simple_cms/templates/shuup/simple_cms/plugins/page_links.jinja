@@ -1,0 +1,12 @@
+<section class="cms-page-links-plugin">
+    {% if title %}<h2>{{ title }}</h2>{% endif %}
+    {% if pages %}
+        <ul>
+        {% for page in pages %}
+            <li>
+                <a href="/{{ page.url }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</section>

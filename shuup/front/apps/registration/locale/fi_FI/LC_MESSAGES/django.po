@@ -1,0 +1,145 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015
+# Antti Mäki <antti@anttimaki.com>, 2015
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Janne Tammi <janne@shuup.com>, 2017
+# Janne Tammi <janne@shuup.com>, 2015
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
+# Juha Kujala, 2015
+# Juha Louhiranta <charni@gmail.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015
+# Shuup Admin <admin@shuup.com>, 2015
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+# tomijarvi <tomi@jarvi.pro>, 2015
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-15 12:11+0000\n"
+"PO-Revision-Date: 2017-02-10 11:15+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Name of the company"
+msgstr "Yrityksen nimi"
+
+msgid "Registration Received"
+msgstr "Rekisteröityminen vastaanotettu"
+
+msgid "Customer"
+msgstr "Asiakas"
+
+msgid "Customer Email"
+msgstr "Asiakkaan sähköpostiosoite"
+
+msgid "Activation URL"
+msgstr "Aktivointi-URL"
+
+msgid "Is User Active"
+msgstr "Onko Käyttäjä Aktiivinen"
+
+msgid "Company Registration Received"
+msgstr "Yrityksen rekisteröityminen vastaanotettu"
+
+msgid "Company Approved"
+msgstr "Yritystili hyväksytty"
+
+msgid "Company has been activated."
+msgstr "Yritys on aktivoitu."
+
+msgid "Send Registration Received Email"
+msgstr "Lähetä \"Rekisteröityminen vastaanotettu\" -sähköposti"
+
+msgid "Send email when a user registers."
+msgstr "Lähetä sähköposti kun käyttäjä rekisteröityy."
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a user get registered."
+msgstr ""
+"Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille "
+"sähköposteille välittömästi käyttäjän rekisteröitymisen jälkeen."
+
+msgid "{{ order.shop }} - Welcome!"
+msgstr "{{ order.shop }} - Tervetuloa!"
+
+msgid "Send Company Registration Received Email"
+msgstr "Lähetä \"Yrityksen rekisteröityminen vastaanotettu\" -sähköposti"
+
+msgid "Send email when a user registers as a company."
+msgstr "Lähetä sähköposti kun käyttäjä rekisteröityy yrityksenä."
+
+msgid "Send Company Activated Email"
+msgstr "Lähetä \"Yritys aktivoitu\" -sähköposti"
+
+msgid "Notify company's contact person that company account is activated"
+msgstr "Ilmoita yrityksen yhteyshenkilölle, että yritys on aktivoitu"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr ""
+"Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille "
+"sähköposteille, kun yritystili aktivoidaan."
+
+msgid "Account activation"
+msgstr "Tilin aktivointi"
+
+msgid "Account activation failed."
+msgstr "Tilin aktivointi epäonnistui"
+
+msgid "Register as a Company"
+msgstr "Rekisteröidy yrityksenä"
+
+msgid "Company Registration"
+msgstr "Yritysrekisteröityminen"
+
+msgid "Company information"
+msgstr "Yrityksen tiedot"
+
+msgid "Company billing information"
+msgstr "Yrityksen laskutustiedot"
+
+msgid "Contact person"
+msgstr "Yhteyshenkilö"
+
+msgid "Contact information for primary company contact"
+msgstr "Yrityksen pääyhteyshenkilön yhteystiedot"
+
+msgid "Login information"
+msgstr "Kirjautumistiedot"
+
+msgid "The information you will log in with."
+msgstr "Tiedot joilla kirjaudutaan sisään."
+
+msgid "Register"
+msgstr "Rekisteröidy"
+
+msgid "Registration"
+msgstr "Rekisteröityminen"
+
+msgid "Register as a company."
+msgstr "Rekisteröidy yrityksenä."
+
+msgid "Activation successful!"
+msgstr "Aktivointi onnistui!"
+
+msgid ""
+"Registration complete. Please follow the instructions sent to your email "
+"address."
+msgstr ""
+"Rekisteröinti valmis. Ole hyvä ja seuraa sähköpostiosoitteeseesi lähetettyjä "
+"ohjeita."

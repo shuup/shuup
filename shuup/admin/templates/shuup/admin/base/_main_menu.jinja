@@ -1,0 +1,81 @@
+{% from "shuup/admin/macros/block.jinja" import link_block %}
+
+{% set categories = shuup_admin.get_menu_entry_categories() %}
+{% set quicklinks = shuup_admin.get_quicklinks() %}
+
+{% for category in categories %}
+    {% set width = "double" if category.children|length >= 2 else "single" %}
+<div class="category-submenu {{ width }}" id="category-{{ category.identifier }}">
+    <div class="category-menu-title">{{ category.name }}</div>
+    <a href="#" class="category-menu-close"><i class="fa fa-close"></i></a>
+    <div class="category-menu-content">
+        {% for child in category.children %}
+            <div class="submenu-container">
+            <h3>{{ child.name }}</h3>
+            <ul>
+            {% for entry in child %}
+                <li>
+                    <a href="{{ entry.url }}">{{ entry.text }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+            </div>
+        {% endfor %}
+        <div class="submenu-container">
+            <ul>
+            {% for entry in category %}
+                <li>
+                    <a href="{{ entry.url }}">{{ entry.text }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<div class="category-submenu quicklink-submenu" id="quicklinks">
+    <div class="category-menu-title">{% trans %}Quicklinks{% endtrans %}</div>
+    <a href="#" class="category-menu-close"><i class="fa fa-close"></i></a>
+    <div class="category-menu-content">
+        {% for category, links in quicklinks.items() %}
+            <div class="submenu-container">
+            <h3>{{ category.label }}</h3>
+            <ul>
+            {% for quicklink in links %}
+                 {% for action in quicklink.actions %}
+                    <li>
+                        {% if quicklink.icon_url %}
+                        <img src="{{ static(quicklink.icon_url) }}">
+                        {% endif %}
+                        <a href="{{ action.url }}{% if redirect %}?redirect={{ redirect }}{% endif %}">{{ action.text }}</a>
+                     </li>
+                 {% endfor %}
+            {% endfor %}
+            </ul>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<nav id="main-menu">
+    <div class="scroll-inner-content">
+        <ul class="menu-list">
+            {% if quicklinks %}
+            <li class="quicklinks">
+                <a href="#" data-target-id="quicklinks">
+                    <i class="fa fa-bolt"></i>
+                    <span class="item-name parent">{% trans %}Quicklinks{% endtrans %}</span>
+                </a>
+            </li>
+            {% endif %}
+            {% for category in categories %}
+            {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
+            <li>
+                <a href="{% if not only_entry %}#{% else %}{{ only_entry.url }}{% endif %}" data-target-id="category-{{ category.identifier }}">
+                    <i class="{{ category.icon }}"></i>
+                    <span class="item-name parent">{{ category.name }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

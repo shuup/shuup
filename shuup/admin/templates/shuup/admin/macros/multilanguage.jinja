@@ -1,0 +1,67 @@
+{#
+Render a "language-dependent content" tab block.
+May be called
+* with `field_names` (a list of field names to render within each tab)
+* leaving `field_names` empty renders all translated fields
+* or using a `call(form, language, map) ...` block, where `map` is the `trans_name_map` for
+  the given language.
+
+When using multiple language_dependent_content_tabs in a single page, do remember to pass `tab_id_prefix`.
+#}
+{% macro language_dependent_content_tabs(form, field_names=[], exclude=[], tab_id_prefix="language") %}
+<div class="language-dependent-content">
+    {% if form.languages|length > 1 %}
+    <div class="row language-tabs">
+        <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+            <ul class="nav nav-tabs">
+                {% for language in form.languages %}
+                <li role="presentation" {% if loop.first %}class="active"{% endif %} data-lang="{{ language }}">
+                    <a href="#{{ tab_id_prefix }}-{{ language }}" role="tab" data-toggle="tab">{{ form.language_names[language] }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    <div class="tab-content">
+        {% for language in form.languages %}
+            <div class="tab-pane fade {% if loop.first %}in active{% endif %}" id="{{ tab_id_prefix }}-{{ language }}" data-lang="{{ language }}">
+                {% set map = form.trans_name_map[language] %}
+                {% if caller %}
+                    {{ caller(form, language, map) }}
+                {% else %}
+                    {% if field_names %}
+                        {% for field_name in field_names %}
+                            {{ bs3.field(form[map[field_name]]) }}
+                        {% endfor %}
+                    {% else %}
+                        {% for field_name in map if field_name not in exclude %}
+                            {{ bs3.field(form[map[field_name]]) }}
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{#
+Render fields that is not translated for MultiLanguageModelForm.
+Optional `field_names` parameter to render only specific fields.
+#}
+{% macro render_monolingual_fields(form, field_names=[], exclude=[]) %}
+    {% if form %}
+        {% for field in form %}
+            {% if field.name not in form.translated_field_names %}
+                {% if field_names and field.name not in field_names %}
+                    {% continue %}
+                {% elif exclude and field.name in exclude %}
+                    {% continue %}
+                {% else %}
+                    {{ bs3.field(field) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}

@@ -1,0 +1,196 @@
+{% extends "shuup/front/macros/theme/category.jinja" %}
+{%- from "shuup/front/macros/general.jinja" import render_field, render_pagination -%}
+{%- from "shuup/front/macros/product.jinja" import product_box with context -%}
+
+{% macro render_information() %}
+    {% if category.description %}
+        <div class="category-description">
+            <p class="lead">{{ category.description|safe }}</p>
+        </div>
+    {% endif %}
+    {% set category_image = category.image|thumbnail(size=(1140,350), crop="smart", upscale=True) %}
+    {% if category_image %}
+        <div class="category-image">
+            <img src="{{ category_image }}" alt="{{ category.name }}">
+        </div>
+    {% endif %}
+    <hr>
+{% endmacro %}
+
+{% macro render_products_section() %}
+    <div class="row">
+        <div class="col-md-3 categories-nav">
+            {{ render_category_menu() }}
+            <br>
+            {{ render_product_filters_left_side() }}
+            {% placeholder "category_menu_extras" %}
+                {% row %}
+                    {% column {"md": 12} %}
+                        {% plugin "recently_viewed_products" %}
+                        {% endplugin %}
+                    {% endcolumn %}
+                {% endrow %}
+            {% endplaceholder %}
+        </div>
+        <div class="col-md-9 products-wrap">
+            {% placeholder "category_top_extra" %}{% endplaceholder %}
+            {{ render_product_filters_top() }}
+            {{ render_product_list() }}
+        </div>
+    </div>
+    {% placeholder "category_bottom_extra" %}{% endplaceholder %}
+{% endmacro %}
+
+{% macro render_category_menu() %}
+    <a href="#collapse-categories"
+       role="button"
+       data-toggle="collapse"
+       class="category-title collapsed"
+       aria-expanded="false"
+       aria-controls="collapse-categories">
+        {% trans %}Categories{% endtrans %} <i class="collapse-icon fa fa-chevron-up"></i>
+    </a>
+    <div class="category-wrap collapse" id="collapse-categories">
+        <ul>
+            {% for c in shuup.general.get_root_categories() if c.visible_in_menu recursive %}
+                {% set children = c.get_children() %}
+                <li{% if category and c == category %} class="current-page"{% endif %}>
+                    {% if children %}
+                        <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">
+                            <i class="fa menu-arrow"></i> {{ c }}
+                        </a>
+                        <ul>{{ loop(children) }}</ul>
+                    {% else %}
+                        <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro render_product_filters_top() %}
+    <div class="row product-list-actions">
+        <div class="col-sm-4">
+            {% if "sort" in form.fields.keys() %}
+                {{ render_field(form.sort) }}
+            {% endif %}
+        </div>
+        <div class="col-sm-4">
+            {% if "limit" in form.fields.keys() %}
+                {{ render_field(form.limit) }}
+            {% endif %}
+        </div>
+        <div class="col-sm-4">
+            {{ render_toggle_view() }}
+        </div>
+    </div>
+    <hr class="visible-sm visible-xs">
+{% endmacro %}
+
+
+{% macro render_product_filters_left_side() %}
+    <div class="sidebar-filters">
+        <div class="mobile-filter-toggle">
+            <a href="#filters"
+               class="toggle-btn collapsed"
+               data-toggle="collapse"
+               aria-expanded="false"
+               aria-controls="filters">{% trans %}Filter Products{% endtrans %} <i class="fa fa-angle-up"></i></a>
+        </div>
+
+        <div id="filters" class="filters collapse" aria-expanded="false">
+            {% for field in form %}
+                {% if field.name not in ["sort", "q", "limit"] %}
+                    <div class="filter-block">
+                        <a href="#{{ field.name }}"
+                           class="block-title"
+                           data-toggle="collapse"
+                           aria-expanded="true"
+                           aria-controls="categories">{{ field.label }}</a>
+                        <br>
+                        {{ bs3.field(field, render_label=False) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro render_product_list() %}
+    <div id="ajax_content">
+            {%  set pagination = shuup.general.get_pagination_variables(products, page_size or 12) %}
+            <div class="row product-list-view grid">
+                {% for product in pagination.objects if shuup.product.is_visible(product) %}
+                    <div class="single-product">
+                        {{ product_box(product, show_description=True, class="product-card category-view box") }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="clearfix">
+                {% if pagination.is_paginated %}
+                    {{ render_pagination(pagination.page, pagination.paginator, pagination.page_range) }}
+                {% endif %}
+            </div>
+    </div>
+{% endmacro %}
+
+{% macro render_toggle_view() %}
+    <div class="toggle-view">
+        <span class="control-label">{% trans %}Show Grid/List{% endtrans %}</span>
+        <input id="product-list-view-type" type="checkbox">
+        <label data-original-title="{% trans %}Grid/list view{% endtrans %}"
+               for="product-list-view-type"
+               data-toggle="tooltip"
+               title="">
+            <i class="grid fa fa-th"></i>
+            <i class="list fa fa-list"></i>
+        </label>
+    </div>
+{% endmacro %}
+
+{% macro render_extrajs() %}
+    <script>
+        {{ render_category_list_view_type_js() }}
+        $(function() {
+            {{ initialize_sorter() }}
+            $(".selectpicker").selectpicker();
+        });
+    </script>
+{% endmacro %}
+
+{% macro render_category_list_view_type_js() %}
+    function setProductListViewMode(isInListMode) {
+        if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("product_list_view_list_mode", (isInListMode ? "list" : "grid"));
+        }
+    }
+
+    function getProductListViewMode() {
+        if (typeof (Storage) !== "undefined") {
+            return localStorage.getItem("product_list_view_list_mode");
+        }
+        return "grid";
+    }
+    $(function() {
+        var $productListViewType = $("#product-list-view-type");
+        var $productListView = $(".product-list-view");
+        $productListViewType.on("change", function() {
+            $productListView.toggleClass("list");
+            setProductListViewMode($productListView.hasClass("list"));
+        });
+
+        // By default product list view is in grid mode
+        if ($productListView.length > 0 && getProductListViewMode() === "list") {
+            $productListView.addClass("list");
+            $productListViewType.prop("checked", true);
+        }
+    });
+{% endmacro %}
+
+{% macro initialize_sorter() %}
+    $("#sorter :input").change(function() {
+        $("#sorter").submit();
+    });
+{% endmacro %}

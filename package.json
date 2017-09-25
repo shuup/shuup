@@ -1,0 +1,30 @@
+{
+  "name": "Shuup",
+  "version": "1.0.0",
+  "description": "Open Source E-Commerce",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "build": "python setup.py build_resources",
+    "dev:test": "py.test -vvv --cov shuup --cov-report html shuup_tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shuupio/shuup.git"
+  },
+  "keywords": [
+    "ecommerce"
+  ],
+  "author": "Shuup Team <shuup@shuup.com>",
+  "license": "OSL-3.0",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/shuupio/shuup/issues"
+  },
+  "homepage": "https://shuup.com/",
+  "devDependencies": {
+    "eslint": "^1.6.0",
+    "jscs": "^2.3.0"
+  }
+}

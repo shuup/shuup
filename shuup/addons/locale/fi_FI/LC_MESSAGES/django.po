@@ -1,0 +1,184 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015
+# Antti Mäki <antti@anttimaki.com>, 2015
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
+# Juha Kujala, 2015-2016
+# Juha Louhiranta <charni@gmail.com>, 2015
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2015-2016
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+# tomijarvi <tomi@jarvi.pro>, 2015
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-03-01 13:50+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Addons"
+msgstr "Lisäosat"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Ota käyttöön %s"
+
+#, python-format
+msgid "%d new addons enabled."
+msgstr "%d uutta lisäosaa otettu käyttöön."
+
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr "%d aiemmin käytössä ollutta lisäosaa poistettu käytöstä."
+
+msgid "No changes were made."
+msgstr "Ei muutoksia."
+
+msgid "Save addon changes"
+msgstr "Tallenna lisäosien muutokset"
+
+msgid "Upload new addon"
+msgstr "Lataa uusi lisäosa"
+
+msgid "Reload application"
+msgstr "Lataa sovellus uudelleen"
+
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr ""
+"Järjestelmän käynnistäminen uudelleen ei ole mahdollista. Ole hyvä ja ota "
+"yhteys järjestelmän ylläpitäjään."
+
+msgid "Reload Method"
+msgstr "Lataa menetelmä uudelleen"
+
+msgid "Reloading."
+msgstr "Ladataan uudelleen."
+
+msgid "Addon file (ZIP)"
+msgstr "Lisäosan tiedosto (ZIP)"
+
+msgid "Only upload addon files you trust."
+msgstr "Lataa vain lisäosia joihin luotat."
+
+msgid "Only wheel files are supported"
+msgstr "Vain wheel-tiedostot ovat tuettuja"
+
+msgid "Upload"
+msgstr "Lataa"
+
+msgid "Install Addon"
+msgstr "Asenna lisäosa"
+
+msgid "Installed addons"
+msgstr "Asennetut lisäosat"
+
+msgid "Addon name"
+msgstr "Lisäosan nimi"
+
+msgid "Is enabled"
+msgstr "Käytössä"
+
+msgid "You don't have any installed addons"
+msgstr "Et ole asentanut yhtään lisäosaa"
+
+msgid "Reload Application Server"
+msgstr "Käynnistä sovelluspalvelin uudelleen"
+
+msgid ""
+"When you reload the application server, it may take some time for the new "
+"instance of your application to properly initialize."
+msgstr "Palvelimen päivittäminen saattaa kestää pienen hetken."
+
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem "
+"yourself (or have a system administrator handy)."
+msgstr ""
+"On aina mahdollisuus, että sovelluspalvelin ei uudelleenkäynnisty, jolloin "
+"joudut tutkimaan ongelmaa itse (tai ottamaan yhteyttä "
+"järjestelmäylläpitäjään)."
+
+msgid "Reload steps"
+msgstr "Lataa askeleet uudelleen"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr "Viimeistele laajennustesi asennus."
+
+msgid "Reload application server"
+msgstr "Käynnistä sovelluspalvelin uudelleen"
+
+msgid "Reload initiated."
+msgstr "Uudelleenkäynnistäminen aloitettu."
+
+msgid "Error while reloading application."
+msgstr "Virhe sovelluspalvelimen uudelleenlatauksessa."
+
+msgid "Finalizing installations."
+msgstr "Viimeistellään asennuksia."
+
+msgid "Your Shuup seems to be back up!"
+msgstr "Shuup on jälleen toiminnassa!"
+
+msgid "Your Shuup is not up yet. Trying again soon."
+msgstr "Shuup ei ole vielä toiminnassa. Kokeilen hetken kuluttua uudestaan."
+
+msgid "Select file"
+msgstr "Valitse tiedosto"
+
+msgid "Installation Finished"
+msgstr "Asennus valmis"
+
+msgid "Installation Failed"
+msgstr "Asennus epäonnistunut"
+
+msgid "Success"
+msgstr "Onnistui"
+
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
+"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
+"class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr ""
+"Seuraavaksi: <a href=\"%(addon_list_url)s\" class=\"text-success"
+"\"><strong>aktivoi asennettu laajennus</strong></a> ja<a href="
+"\"%(addon_reload_url)s\" class=\"text-success\"><strong>käynnistä "
+"järjestelmä uudelleen</strong></a>."
+
+msgid "Error"
+msgstr "Virhe"
+
+msgid "Installer Log"
+msgstr "Asennusloki"
+
+msgid "Upload Addon - Install"
+msgstr "Lataa lisäosa - Asennus"
+
+msgid "Package Information"
+msgstr "Paketin tiedot"
+
+msgid "No package information could be extracted."
+msgstr "Paketin tietoja ei voitu purkaa."
+
+msgid "File List"
+msgstr "Tiedostolistaus"

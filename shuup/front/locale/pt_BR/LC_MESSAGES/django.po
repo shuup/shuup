@@ -1,0 +1,715 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-05 11:58+0000\n"
+"PO-Revision-Date: 2016-09-06 12:09+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+
+msgid "Abandoned Cart Value"
+msgstr "Valor de Carrinhos Abandonados"
+
+#, python-brace-format
+msgid "Based on {b} carts over the last {d} days"
+msgstr "Baseado em {b} carrinhos nos últimos {d} dias"
+
+msgid "Carts"
+msgstr "Carrinhos"
+
+msgid "Show carts"
+msgstr "Mostrar carrinhos"
+
+msgid "Created on"
+msgstr "Criado em"
+
+msgid "Last updated on"
+msgstr "Última atualização em"
+
+msgid "Abandoned"
+msgstr "Abandonado"
+
+msgid "yes"
+msgstr "sim"
+
+msgid "no"
+msgstr "não"
+
+msgid "Shop"
+msgstr "Loja"
+
+msgid "Product count"
+msgstr "Estoque do produto"
+
+msgid "Customer"
+msgstr "Cliente"
+
+msgid "Orderer"
+msgstr "Comprador"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Ordered"
+msgstr "Comprado"
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr "Front-end do Shuup - Carrinhos Salvos"
+
+msgid "Home"
+msgstr "Início"
+
+msgid "My Saved Carts"
+msgstr "Meus Carrinhos Salvos"
+
+msgid "Product"
+msgstr "Produto"
+
+msgid "Quantity"
+msgstr "Quantidade"
+
+msgid "Price"
+msgstr "Preço"
+
+msgid "Saved Carts"
+msgstr "Carrinhos Salvos"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Product Count"
+msgstr "Estoque do Produto"
+
+msgid "Details"
+msgstr "Detalhes"
+
+msgid "You haven't saved any carts yet."
+msgstr "Você não salvou nenhum carrinho ainda."
+
+msgid "Add all products to cart"
+msgstr "Adicionar todos os produtos ao carrinho"
+
+msgid "Delete cart"
+msgstr "Excluir carrinho"
+
+msgid "Please enter a basket title."
+msgstr "Por favor, digite um título para o carrinho."
+
+msgid "Cannot save an empty basket."
+msgstr "Não é possível salvar um carrinho vazio."
+
+msgid "Product not available in this shop"
+msgstr "Produto não disponível nesta loja"
+
+msgid "Invalid supplier"
+msgstr "Fornecedor inválido"
+
+#, python-format
+msgid "%d product(s) added to cart"
+msgstr "%d produto(s) adicionado(s) ao carrinho"
+
+#, python-format
+msgid "Invalid command %s"
+msgstr "Comando inválido %s"
+
+#, python-format
+msgid "The quantity %f is not allowed. Please use an integer value."
+msgstr "A quantidade %f não é permitida. Por favor, informe um valor inteiro."
+
+#, python-format
+msgid "The quantity %s is not valid."
+msgstr "A quantidade %s não é válida."
+
+msgid "This variation is not available."
+msgstr "Esta variação não está disponível."
+
+#, python-format
+msgid "Basket loading failed: Incompatible basket (%s)"
+msgstr "Falha ao carregar carrinho: Carrinho incompatível (%s)"
+
+msgid "Try to remove some products from the basket and order them separately."
+msgstr "Tente remover alguns produtos do carrinho e comprá-los separadamente."
+
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr "Os produtos no carrinho não podem ser enviados juntos. %s"
+
+#, python-format
+msgid "Products in basket have no common payment method. %s"
+msgstr "Os produtos no carrinho não têm formas de pagamento em comum. %s"
+
+msgid "Tax number required for companies"
+msgstr "Número de contribuinte obrigatório para empresas"
+
+msgid "Cannot use tax number without company name"
+msgstr "Não é possível usar o número de contribuinte sem o nome da empresa"
+
+msgid "Addresses"
+msgstr "Endereços"
+
+msgid "I accept the terms and conditions"
+msgstr "Eu aceito os termos e condições"
+
+msgid "I want to subscribe to your newsletter"
+msgstr "Quero me inscrever em seu boletim informativo"
+
+msgid "Comment"
+msgstr "Comentário"
+
+msgid ""
+"There has been a change in product availability. Please review your cart and"
+" reconfirm your order."
+msgstr "Houve uma mudança na disponibilidade do produto. Por favor, reveja o seu carrinho e reconfirme o seu pedido."
+
+msgid "Confirmation"
+msgstr "Confirmação"
+
+msgid "Empty Basket"
+msgstr "Carrinho Vazio"
+
+msgid "shipping method"
+msgstr "forma de entrega"
+
+msgid "payment method"
+msgstr "forma de pagamento"
+
+msgid "Shipping & Payment"
+msgstr "Entrega & Pagamento"
+
+msgid "Company name"
+msgstr "Nome da empresa"
+
+msgid "Tax number"
+msgstr "Número de contribuinte"
+
+msgid "Shipping method"
+msgstr "Forma de entrega"
+
+msgid "Payment method"
+msgstr "Forma de pagamento"
+
+msgid "Please send me marketing correspondence"
+msgstr "Por favor, me envie correspondências de marketing"
+
+msgid "Logged out since this account is inactive."
+msgstr "Desconectado uma vez que esta conta está inativa."
+
+msgid "key"
+msgstr "chave"
+
+msgid "shop"
+msgstr "loja"
+
+msgid "customer"
+msgstr "cliente"
+
+msgid "orderer"
+msgstr "comprador"
+
+msgid "creator"
+msgstr "criador"
+
+msgid "created on"
+msgstr "criado em"
+
+msgid "updated on"
+msgstr "atualizado em"
+
+msgid "persistent"
+msgstr "persistente"
+
+msgid "deleted"
+msgstr "excluído"
+
+msgid "finished"
+msgstr "finalizado"
+
+msgid "title"
+msgstr "título"
+
+msgid "data"
+msgstr "dados"
+
+msgid "taxless total price"
+msgstr "preço total sem impostos"
+
+msgid "taxful total price"
+msgstr "preço total tributável"
+
+msgid "currency"
+msgstr "moeda"
+
+msgid "prices include tax"
+msgstr "preços incluem impostos"
+
+msgid "product_count"
+msgstr "estoque do produto"
+
+msgid "products"
+msgstr "produtos"
+
+msgid "Order Received"
+msgstr "Pedido Recebido"
+
+msgid "Order"
+msgstr "Pedido"
+
+msgid "Customer Email"
+msgstr "E-mail do Cliente"
+
+msgid "Customer Phone"
+msgstr "Telefone do Cliente"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Shipment Created"
+msgstr "Remessa Criada"
+
+msgid "Shipment"
+msgstr "Remessa"
+
+msgid "Order Shipping Status"
+msgstr "Status de Entrega do Pedido"
+
+#, python-brace-format
+msgid "Possible values: {0}"
+msgstr "Possíveis valores: {0}"
+
+msgid "Shipment Status"
+msgstr "Status da Remessa"
+
+msgid "Shipment Deleted"
+msgstr "Remessa Excluída"
+
+msgid "Payment Created"
+msgstr "Pagamento Criado"
+
+msgid "Order Payment Status"
+msgstr "Status do Pagamento do Pedido"
+
+msgid "Payment"
+msgstr "Pagamento"
+
+msgid "Refund Created"
+msgstr "Devolução Criada"
+
+msgid "Shopping cart"
+msgstr "Carrinho de compras"
+
+msgid "Your shopping cart is empty."
+msgstr "Seu carrinho de compras está vazio."
+
+msgid "Back to Products"
+msgstr "Voltar aos Produtos"
+
+msgid "There were errors on following items"
+msgstr "Houve erros nos seguintes itens"
+
+msgid "You are unable to proceed to checkout!"
+msgstr "Você está impossibilitado de avançar para o check-out!"
+
+msgid "Checkout"
+msgstr "Check-out"
+
+msgid "There are errors"
+msgstr "Existem erros"
+
+msgid "Errors"
+msgstr "Erros"
+
+msgid "Ordering for a company?"
+msgstr "Comprando para uma empresa?"
+
+msgid "Please fill out these fields if you are ordering for a company."
+msgstr "Por favor, preencha estes campos se está comprando para uma empresa."
+
+msgid "Bad Request"
+msgstr "Requisição Inválida"
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr "Infelizmente, o servidor não pôde processar sua solicitação."
+
+msgid "Back to Homepage"
+msgstr "Voltar à Página Inicial"
+
+msgid "Permission Denied"
+msgstr "Permissão Negada"
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr "Infelizmente você não tem permissão para visualizar esta página."
+
+msgid "Page not Found"
+msgstr "Página não Encontrada"
+
+msgid "Unfortunately the page you were looking for does not exist."
+msgstr "Infelizmente, a página que você estava procurando não existe."
+
+msgid "Internal Server Error"
+msgstr "Erro Interno do Servidor"
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr "Infelizmente ocorreu um erro interno do servidor. Experimente atualizar a página ou tente novamente mais tarde."
+
+msgid "Welcome to Shuup!"
+msgstr "Bem-vindo ao Shuup!"
+
+#, python-format
+msgid "Welcome to %(name)s!"
+msgstr "Bem-vindo à %(name)s!"
+
+msgid "your shop"
+msgstr "sua loja"
+
+msgid ""
+"You are seeing this page because there is no theme selected for the default "
+"frontend."
+msgstr "Você está visualizando esta página porque não existe nenhum tema selecionado para o front-end padrão."
+
+msgid "Log in to the administration interface"
+msgstr "Autentique-se na interface de administração"
+
+msgid "to choose a theme and set up your shop."
+msgstr "para escolher um tema e configurar a sua loja."
+
+msgid ""
+"The administration interface does not seem to be available. Use other means "
+"to choose a theme."
+msgstr "A interface de administração parece não estar disponível. Utilize outros meios para escolher um tema."
+
+msgid "You are not an administrator"
+msgstr "Você não é um administrador"
+
+msgid "ask an administrator to select a theme."
+msgstr "solicite a um administrador para selecionar um tema."
+
+msgid "Product added to cart"
+msgstr "O produto foi adicionado ao carrinho"
+
+msgid "There was an error adding the product to the basket"
+msgstr "Houve um erro ao adicionar o produto no carrinho"
+
+msgid "Qty"
+msgstr "Qtd."
+
+msgid "Remove product from basket"
+msgstr "Remover produto do carrinho"
+
+msgid ""
+"The following items are not currently available (or are not available in the"
+" desired quantity) and cannot be included in your order."
+msgstr "Os seguintes itens não estão disponíveis no momento (ou não estão disponíveis na quantidade desejada) e não podem ser incluídos em seu pedido."
+
+msgid "Continue Shopping"
+msgstr "Continuar Comprando"
+
+msgid "Proceed to checkout"
+msgstr "Fazer o check-out"
+
+msgid "Have a coupon code? Enter it here"
+msgstr "Tem um código de cupom? Insira-o aqui"
+
+msgid "Coupon Code"
+msgstr "Código do Cupom"
+
+msgid "Submit Code"
+msgstr "Enviar Código"
+
+msgid "Save cart"
+msgstr "Salvar carrinho"
+
+msgid "Cart Title"
+msgstr "Título do Carrinho"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Coupon is not available."
+msgstr "Cupom não está disponível."
+
+msgid "Error when adding coupon."
+msgstr "Erro ao adicionar cupom."
+
+msgid "Categories"
+msgstr "Categorias"
+
+msgid "Show Grid/List"
+msgstr "Mostrar Grade/Lista"
+
+msgid "Grid/list view"
+msgstr "View de grade/lista"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Billing address"
+msgstr "Endereço de cobrança"
+
+msgid "Shipping address"
+msgstr "Endereço de entrega"
+
+msgid "Ship to my billing address"
+msgstr "Enviar para o meu endereço de cobrança"
+
+msgid "Choose Shipping Method"
+msgstr "Escolha a Forma de Entrega"
+
+msgid "Choose Payment Method"
+msgstr "Escolha a Forma de Pagamento"
+
+msgid "Delivery"
+msgstr "Entrega"
+
+msgid "Delivery method"
+msgstr "Forma de entrega"
+
+msgid "Billing"
+msgstr "Cobrança"
+
+msgid "Add comment"
+msgstr "Adicionar comentário"
+
+msgid "Other information"
+msgstr "Outras informações"
+
+msgid "Place Order"
+msgstr "Fazer Pedido"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Próximo"
+
+msgid "Shop is currently in maintenance mode."
+msgstr "A loja está em modo de manutenção."
+
+msgid ""
+"There were errors on submitted form fields. Please check them and try again."
+msgstr "Houve erros em alguns campos do formulário enviado. Por favor, verifique-os e tente novamente."
+
+msgid "Edit account details"
+msgstr "Editar detalhes da conta"
+
+msgid "Edit company details"
+msgstr "Editar detalhes da empresa"
+
+msgid "My orders"
+msgstr "Meus pedidos"
+
+msgid "My saved carts"
+msgstr "Meus carrinhos salvos"
+
+msgid "My wishlists"
+msgstr "Minhas listas de desejos"
+
+msgid "Admin panel"
+msgstr "Painel de administração"
+
+msgid "Log out"
+msgstr "Sair"
+
+msgid "Username or email address"
+msgstr "Nome de usuário ou endereço de e-mail"
+
+msgid "Password"
+msgstr "Senha"
+
+msgid "Log in"
+msgstr "Entrar"
+
+msgid "Forgot your password?"
+msgstr "Esqueceu sua senha?"
+
+msgid "New user? Register here!"
+msgstr "Novo usuário? Cadastre-se aqui!"
+
+msgid "Cart"
+msgstr "Carrinho"
+
+msgid "Items"
+msgstr "Itens"
+
+msgid "View cart"
+msgstr "Ver carrinho"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Products"
+msgstr "Produtos"
+
+msgid "Files"
+msgstr "Arquivos"
+
+msgid "excl. tax"
+msgstr "excl. imposto"
+
+msgid "Products ordered"
+msgstr "Produtos comprados"
+
+msgid "Tax breakdown"
+msgstr "Detalhamento de impostos"
+
+msgid "Tax"
+msgstr "Imposto"
+
+msgid "Tax percentage"
+msgstr "Alíquota de imposto"
+
+msgid "Based on amount"
+msgstr "Baseado na quantia"
+
+msgid "Amount of tax"
+msgstr "Valor do imposto"
+
+msgid "Total including tax"
+msgstr "Total incluindo imposto"
+
+msgid "Company"
+msgstr "Empresa"
+
+msgid "Preview"
+msgstr "Pré-visualizar"
+
+msgid "Also available in"
+msgstr "Também disponível em"
+
+#, python-format
+msgid "Save %(discount_percent)s"
+msgstr "Economizar %(discount_percent)s"
+
+msgid "Product Information"
+msgstr "Informações do Produto"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Attributes"
+msgstr "Atributos"
+
+msgid "Includes these products"
+msgstr "Inclui estes produtos"
+
+msgid "No product description available"
+msgstr "Nenhuma descrição do produto disponível"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Barcode"
+msgstr "Código de barras"
+
+msgid "Manufacturer"
+msgstr "Fabricante"
+
+msgid "Package Size"
+msgstr "Tamanho do Pacote"
+
+msgid "Width"
+msgstr "Largura"
+
+msgid "Height"
+msgstr "Altura"
+
+msgid "Depth"
+msgstr "Profundidade"
+
+msgid "Net Weight"
+msgstr "Peso Líquido"
+
+msgid "Gross Weight"
+msgstr "Peso Bruto"
+
+msgid "External link"
+msgstr "Link externo"
+
+msgid "Select"
+msgstr "Selecionar"
+
+msgid "Select product"
+msgstr "Selecionar produto"
+
+msgid "Add to cart"
+msgstr "Adicionar ao carrinho"
+
+msgid "Product is not orderable."
+msgstr "O produto não pode ser comprado."
+
+msgid "Maintenance mode"
+msgstr "Modo de manutenção"
+
+msgid "Shop is currently down for maintenance."
+msgstr "A loja está indisponível para manutenção no momento."
+
+msgid "Thank you for your order!"
+msgstr "Obrigado pela sua preferência!"
+
+msgid ""
+"Your order has been received. You can see the details of your order below."
+msgstr "Seu pedido foi recebido. Você pode ver os detalhes do seu pedido logo abaixo."
+
+msgid "User account activation"
+msgstr "Ativação da conta de usuário"
+
+msgid ""
+"If you want to be able to see your order history, please create a password "
+"for your account: "
+msgstr "Se você quer ter a possibilidade de acompanhar o seu histórico de pedidos, por favor, crie uma senha para sua conta:"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Payment canceled"
+msgstr "Pagamento cancelado"
+
+msgid "You have canceled payment"
+msgstr "Você cancelou o pagamento"
+
+msgid "Retry payment"
+msgstr "Repetir pagamento"
+
+msgid "Error"
+msgstr "Erro"
+
+msgid "Combination not available"
+msgstr "Combinação não disponível"
+
+msgid "Open product page"
+msgstr "Abrir a página do produto"
+
+msgid "Newest products"
+msgstr "Produtos mais recentes"
+
+msgid "This product is not available in this shop."
+msgstr "Este produto não está disponível nesta loja."
+
+msgid "Name - A-Z"
+msgstr "Nome - A-Z"
+
+msgid "Name - Z-A"
+msgstr "Nome - Z-A"
+
+msgid "Price - Low to High"
+msgstr "Preço - Menor até Maior"
+
+msgid "Price - High to Low"
+msgstr "Preço - Maior até Menor"
+
+msgid "Sort"
+msgstr "Ordenar"

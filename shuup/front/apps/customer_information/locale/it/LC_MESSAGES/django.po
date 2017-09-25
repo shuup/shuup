@@ -1,0 +1,205 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-05 21:27+0000\n"
+"PO-Revision-Date: 2016-10-22 08:44+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Customer Information Editing"
+msgstr "Shuup Frontend - Modifica Informazioni Cliente"
+
+msgid "Customer Information"
+msgstr "Informazioni Cliente"
+
+msgid "Company Information"
+msgstr "Informazioni Azienda"
+
+msgid "Edit Company Information."
+msgstr "Modifica informazioni azienda."
+
+msgid "Address Book"
+msgstr "Rubrica indirizzi"
+
+msgid "Will become default user email when linked"
+msgstr "Diventerà l'indirizzo email di default quando collegato"
+
+msgid "Given Tax Number already exists. Please contact support."
+msgstr "La partita iva inserita esiste già. Contatta il nostro supporto."
+
+msgid "Address Title"
+msgstr "Indirizzo"
+
+msgid "Address Type"
+msgstr "Tipo Indirizzo"
+
+msgid "Address Status"
+msgstr "Stato Indirizzo"
+
+msgid "Home"
+msgstr "Pagina Iniziale"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "General Information"
+msgstr "Informazioni Generali"
+
+msgid "Contact Information"
+msgstr "Informazioni di Contatto"
+
+msgid "Address"
+msgstr "Indirizzo"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Telefono"
+
+msgid "Street"
+msgstr "Indirizzo"
+
+msgid "Postal code"
+msgstr "Codice postale"
+
+msgid "City"
+msgstr "Città"
+
+msgid "Region"
+msgstr "Provincia"
+
+msgid "Default Addresses"
+msgstr "Indirizzi Predefiniti"
+
+msgid "Edit"
+msgstr "Modifica"
+
+msgid "Default Billing Address"
+msgstr "Indirizzo Fatturazione Predefinito"
+
+msgid "No Default Billing Address set."
+msgstr "Nessun Indirizzo Fatturazione Predefinito selezionato."
+
+msgid "Default Shipping Address"
+msgstr "Indirizzo di Spedizione Predefinito"
+
+msgid "No Default Shipping Address set."
+msgstr "Nessun Indirizzo di Spedizione Predefinito selezionato."
+
+msgid "Additional Addresses"
+msgstr "Indirizzi Aggiuntivi"
+
+msgid "Create new"
+msgstr "Crea nuovo"
+
+msgid "Role"
+msgstr "Ruolo"
+
+msgid "Status"
+msgstr "Stato"
+
+msgid "Delete"
+msgstr "Cancella"
+
+msgid "You don't have any additional addresses"
+msgstr "Non hai alcun indirizzo aggiuntivo"
+
+msgid "Change Password"
+msgstr "Modifica Password"
+
+msgid "Change password"
+msgstr "Cambia password"
+
+msgid "Basic Information"
+msgstr "Informazioni base"
+
+msgid "Tax Number"
+msgstr "Partita IVA"
+
+msgid "Birth Date"
+msgstr "Data di Nascita"
+
+msgid "Gender"
+msgstr "Sesso"
+
+msgid "Marketing Permission"
+msgstr "Permessi Marketing"
+
+msgid "Yes"
+msgstr "Sì"
+
+msgid "No"
+msgstr "No"
+
+msgid "Company account information"
+msgstr "Informazioni Account Azienda"
+
+msgid "User account information"
+msgstr "Informazioni Account Utente"
+
+msgid "Billing information"
+msgstr "Informazioni Fatturazione"
+
+msgid "Copy to shipping information"
+msgstr "Copia nelle informazioni di spedizione"
+
+msgid "Shipping information"
+msgstr "Informazioni Spedizione"
+
+msgid "Copy to billing information"
+msgstr "Copia nelle informazioni di fatturazione"
+
+msgid "Edit user account information"
+msgstr "Modifica informazioni account utente"
+
+msgid "Save password"
+msgstr "Salva Password"
+
+msgid "Save changes"
+msgstr "Salva le modifiche"
+
+msgid "Edit company information"
+msgstr "Modifica informazioni azienda"
+
+msgid "Link account to company"
+msgstr "Collega l'account all'azienda"
+
+msgid "Company information"
+msgstr "Informazioni Azienda"
+
+msgid "User information"
+msgstr "Informazioni Utente"
+
+msgid "Password successfully changed."
+msgstr "La password è stata modificata"
+
+msgid "Account information saved successfully."
+msgstr "Informazione Account salvate."
+
+msgid "Company information saved successfully."
+msgstr "Informazioni Account Azienda salvate."
+
+msgid "Address information saved successfully."
+msgstr "Informazioni indirizzo salvate con successo."
+
+msgid "Cannot remove address"
+msgstr "Impossibile rimuovere l'indirizzo"

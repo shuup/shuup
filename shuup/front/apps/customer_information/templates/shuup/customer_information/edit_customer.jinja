@@ -1,0 +1,40 @@
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
+{% from "shuup/customer_information/macros/address.jinja" import render_address_forms, render_address_forms_js %}
+{% from "shuup/customer_information/macros/buttons.jinja" import change_password_button, company_account_button, save_changes_button %}
+{% from "shuup/customer_information/macros/contact.jinja" import render_person_contact_form %}
+
+{% block title %}{% trans %}User account information{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}User account information{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
+        {{ macros.render_breadcrumb_item(None, _("User account information"), True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="user-account">
+        <form role="form" method="post" action="">
+            {% csrf_token %}
+            {% for field in form.contact.hidden_fields() %}{{ field|safe }}{% endfor %}
+            <div class="btn-toolbar pull-right" role="toolbar">
+                {{ company_account_button(request) }}
+                {{ change_password_button() }}
+                {{ save_changes_button() }}
+            </div>
+            <div class="clearfix"></div>
+            {{ render_person_contact_form(form.contact) }}
+            {{ render_address_forms(form.billing, form.shipping) }}
+            <div class="btn-toolbar pull-right" role="toolbar">
+                {{ save_changes_button() }}
+            </div>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    {{ render_address_forms_js() }}
+{% endblock %}

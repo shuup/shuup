@@ -1,0 +1,522 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-21 18:42+0000\n"
+"PO-Revision-Date: 2016-10-23 10:03+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Unexpected error while uploading files."
+msgstr "Si è verificato un errore durante il caricamento dei file."
+
+msgid "Error:"
+msgstr "Errore:"
+
+msgid "Uploaded:"
+msgstr "Caricati:"
+
+msgid "New file name?"
+msgstr "Nuovo nome del file?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr "Sei sicuro di voler cancellare il file %s?"
+
+msgid "New folder name?"
+msgstr "Nuovo nome della cartella?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr "Sei sicuro di voler cancellare la cartella %s?"
+
+msgid "New folder"
+msgstr "Nuova cartella"
+
+msgid "current"
+msgstr "corrente"
+
+msgid "Oldest first"
+msgstr "Prima il più vecchio"
+
+msgid "Newest first"
+msgstr "Prima il più recente"
+
+msgid "Smallest first"
+msgstr "Prima il più piccolo"
+
+msgid "Largest first"
+msgstr "Prima il più grande"
+
+msgid "Drop your files here"
+msgstr "Trascina qui i tuoi file"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Size"
+msgstr "Dimensione"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Edit"
+msgstr "Modifica"
+
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr "Premi in pulsante <strong>Carica</strong> per caricare i file."
+
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr "<span>Trascina</span> qui i file<br>o premi il pulsante <span>Carica</span> ."
+
+msgid "Rename file"
+msgstr "Rinomina file"
+
+msgid "Delete file"
+msgstr "Cancella file"
+
+msgid "Rename folder"
+msgstr "Rinomina cartella"
+
+msgid "Delete folder"
+msgstr "Cancella cartella"
+
+#, javascript-format
+msgid "Order %s created."
+msgstr "Ordine %s creato."
+
+msgid "An unspecified error occurred.\n"
+msgstr "Qualcosa è andato storto\n"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr "Testo"
+
+msgid "Quantity"
+msgstr "Quantità"
+
+msgid "Unit Price"
+msgstr "Prezzo Unitario"
+
+msgid "Discounted Unit Price"
+msgstr "Prezzo Unitario Scontato"
+
+msgid "Discount amount"
+msgstr "Ammontare sconto"
+
+msgid "Discount percent"
+msgstr "Percentuale Sconto"
+
+msgid "Total (excluding taxes)"
+msgstr "Totale (tasse escluse)"
+
+msgid "Tax percent"
+msgstr "Percentuale tasse"
+
+msgid "Total"
+msgstr "Totale"
+
+msgid "Billing address"
+msgstr "Indirizzo Fatturazione"
+
+msgid "Shipping address"
+msgstr "Indirizzo Spedizione"
+
+#, javascript-format
+msgid "Customer with same %s already exists."
+msgstr "Un cliente con lo stesso %s esiste già"
+
+#, javascript-format
+msgid "Click to select user %s."
+msgstr "CLicca per selezionare l'utente %s."
+
+msgid "Full Name"
+msgstr "Nome completo"
+
+msgid "Phone"
+msgstr "Telefono"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Tax Number"
+msgstr "Partita IVA"
+
+msgid "Groups"
+msgstr "Gruppi"
+
+msgid "Companies"
+msgstr "Aziende"
+
+msgid "Merchant Notes"
+msgstr "Note del Negoziante"
+
+msgid "Year"
+msgstr "Anno"
+
+msgid "Total Sales"
+msgstr "Totale Vendite"
+
+msgid "Shipment Status"
+msgstr "Stato Spedizione"
+
+msgid "Payment Status"
+msgstr "Stato Pagamento"
+
+msgid "Order Status"
+msgstr "Stato Ordine"
+
+msgid "Customer Information"
+msgstr "Informazioni Cliente"
+
+msgid "Order Summary"
+msgstr "Riepilogo Ordine"
+
+msgid "Recent Orders"
+msgstr "Ordini Recenti"
+
+msgid "Close"
+msgstr "Chiudi"
+
+msgid "Warning: No customer account is currently associated with this order."
+msgstr "Attenzione: nessun account utente è ora associato con questo ordine."
+
+msgid "A new customer will be created based on billing address."
+msgstr "Un nuovo utente sarà creato su questo indirizzo di fatturazione."
+
+msgid "Customer"
+msgstr "Cliente"
+
+msgid "Select Existing Customer"
+msgstr "Seleziona un cliente esistente"
+
+msgid "New Customer"
+msgstr "Nuovo Cliente"
+
+msgid "View Details"
+msgstr "Visualizza Dettagl"
+
+msgid "Save customer details while creating order"
+msgstr "Salva i dettagli cliente mentre crei l'ordine"
+
+msgid "Ship to billing address"
+msgstr "Spedisci all'indirizzo di fatturazione"
+
+msgid "Order for company"
+msgstr "Ordine per azienda"
+
+msgid "Billing Address"
+msgstr "Indirizzi Fatturazione"
+
+msgid "Shipping Address"
+msgstr "Indirrizzi Spedizione"
+
+msgid "Back"
+msgstr "Indietro"
+
+msgid "Confirm"
+msgstr "Conferma"
+
+msgid "Discard Changes"
+msgstr "Annulla Modifich"
+
+msgid "Select Shop"
+msgstr "Seleziona Negozio"
+
+msgid "Customer Details"
+msgstr "Dettagli Cliente"
+
+msgid "Order Contents"
+msgstr "Contenuto Ordine"
+
+msgid "Shipping Method"
+msgstr "Metodo Spedizione"
+
+msgid "Payment Method"
+msgstr "Metodo Pagamento"
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr "Le regole, tasse e possibili extra del metodo selezionato saranno calcolati successivamente."
+
+msgid "Proceed"
+msgstr "Procedi"
+
+msgid "Logical Count"
+msgstr "Conto Logico"
+
+msgid "Physical Count"
+msgstr "Conto Fisico"
+
+msgid "Select product"
+msgstr "Seleziona prodotto"
+
+msgid "Text/Comment"
+msgstr "Testo/Commento"
+
+msgid "Qty"
+msgstr "Qtà"
+
+msgid "Total Price"
+msgstr "Prezzo Totale"
+
+msgid "Base Unit Price"
+msgstr "Prezzo Unitario Base"
+
+msgid "Discount Percent"
+msgstr "Percentuale Sconto"
+
+msgid "Total Discount Amount"
+msgstr "Ammontare Total di Sconto"
+
+msgid "Line Total"
+msgstr "Totale Linea"
+
+msgid "Orderline type"
+msgstr "Tipo Linea d'ordine"
+
+msgid "Missing JavaScript dependencies detected"
+msgstr "Riscontrate dipendenze JavaScript mancanti"
+
+msgid ""
+"If your product prices vary based on customer, you might want to select "
+"customer first."
+msgstr "Se i prezzi del tuo prodotto cambiano in base al cliente, dovresti prima selezionare un cliente."
+
+#, javascript-format
+msgid "All prices are in %s currency."
+msgstr "Tutti i pressi sono in %s."
+
+msgid "All prices include taxes."
+msgstr "Tutti i prezzi sono tasse incluse."
+
+msgid "Taxes not included."
+msgstr "Tasse escluse"
+
+msgid "Add new line"
+msgstr "Aggiungi una linea"
+
+msgid "Quick add product line"
+msgstr "Aggiungi velocemente un rigo prodotto"
+
+msgid ""
+"Search product by name, SKU, or barcode and press button to add product "
+"line."
+msgstr "Cerca prodotti per nome, SKU o codice a barre e premi il bottone per aggiungere una"
+
+msgid "Automatically add selected product"
+msgstr "Aggiungi il prodotto selezionato automaticamente"
+
+msgid "No shipping method"
+msgstr "Nessun metodo di spedizione."
+
+msgid "No payment method"
+msgstr "Nessun metodo di pagamento"
+
+msgid "Shop"
+msgstr "Negozio"
+
+msgid "Product"
+msgstr "Prodotto"
+
+msgid "Other"
+msgstr "Altri"
+
+msgid "Tax number"
+msgstr "Codice Tasse"
+
+msgid "Street"
+msgstr "Indirizzo"
+
+msgid "Street (2)"
+msgstr "Indirizzo (2)"
+
+msgid "ZIP / Postal code"
+msgstr "CAP"
+
+msgid "City"
+msgstr "Città"
+
+msgid "Region"
+msgstr "Provincia"
+
+msgid "Country"
+msgstr "Nazione"
+
+msgid "No records found."
+msgstr "Nessun risutato trovato"
+
+msgid "Identifier"
+msgstr "Identificativo"
+
+#, javascript-format
+msgid "Value %s Name"
+msgstr "Valore %s Nome"
+
+msgid "Delete value"
+msgstr "Cancella valore"
+
+msgid "Are you sure?"
+msgstr "Sei sicuro?"
+
+msgid "Delete Variable"
+msgstr "Cancella Variabile"
+
+msgid "Add new value"
+msgstr "Aggiungi nuovo valore"
+
+msgid "Variable Name"
+msgstr "Nome Variabile"
+
+msgid "Variable"
+msgstr "Variabile"
+
+msgid "Show identifier fields (for advanced users)"
+msgstr "Mostra campi identificativi (per utenti esperti)"
+
+msgid "There are no variables defined."
+msgstr "Non ci sono variabili definite."
+
+msgid "Add new variable"
+msgstr "Aggiungi nuova variabile."
+
+msgid "No browser URL for kind:"
+msgstr "Nessun URL per tipo:"
+
+msgid "Expand Editor"
+msgstr "Espandi l'Editor"
+
+msgid "No results."
+msgstr "Nessun risultato."
+
+msgid "The results could not be loaded"
+msgstr "I risultati non possono essere caricati."
+
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] "Cancellare %s carattere"
+msgstr[1] "Cancellare %s caratteri"
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr "Inserisci altri %s caratteri"
+
+msgid "Loading more results..."
+msgstr "Sto caricando altri risultati..."
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] "Puoi selezionare solo %s elemento"
+msgstr[1] "Puoi selezionare solo %s elementi"
+
+msgid "No results found"
+msgstr "Nessun risultato trovato"
+
+msgid "Searching..."
+msgstr "Sto cercando..."
+
+msgid "Mass actions"
+msgstr "Azioni di Gruppo"
+
+msgid "From"
+msgstr "Da"
+
+msgid "To"
+msgstr "A"
+
+msgid "Items per page"
+msgstr "Elementi per pagina"
+
+msgid "Reset filters"
+msgstr "Pulisci filtri"
+
+msgid "Reset"
+msgstr "Pulisci"
+
+msgid "Sort by"
+msgstr "Ordina per"
+
+msgid "ascending"
+msgstr "ascendente"
+
+msgid "descending"
+msgstr "discendente"
+
+msgid "Default sorting"
+msgstr "Ordine di default"
+
+msgid "Previous"
+msgstr "Precedente"
+
+msgid "Next"
+msgstr "Avanti"
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr "Filtra per %s"
+
+msgid "Filters"
+msgstr "Filtri"
+
+msgid "Select Action"
+msgstr "Seleziona Azione"
+
+msgid "Mass Action complete."
+msgstr "Azione di Gruppo completata."
+
+msgid "You haven't selected anything"
+msgstr "Non hai selezionato nulla"
+
+msgid "Are you sure you want to delete this media?"
+msgstr "Sei sicuro di voler cancellare questo media?"
+
+msgid "Set as primary image"
+msgstr "Segna come immagine primaria"
+
+msgid "Primary image"
+msgstr "Immagine primaria"
+
+msgid "Bold"
+msgstr "Grassetto"
+
+msgid "Italic"
+msgstr "Corsivo"
+
+msgid "List"
+msgstr "List"
+
+msgid "Ordered list"
+msgstr "Lista Ordinata"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Editor"
+msgstr "Editor"
+
+msgid "Done"
+msgstr "Fatto"
+
+msgid "Skip Setup"
+msgstr "Salta il Setup"

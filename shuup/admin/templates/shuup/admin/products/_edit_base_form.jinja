@@ -1,0 +1,21 @@
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+{% set product_form = form["base"] %}
+
+<p class="section-description">{% trans %}All the required product information.{% endtrans %}</p>
+<div class="row">
+    <div class="col-md-12">
+        {% call(form, language, map) language_dependent_content_tabs(product_form, tab_id_prefix="language") %}
+            {{ bs3.field(product_form[map.name]) }}
+            {{ bs3.field(product_form[map.short_description]) }}
+            {{ bs3.field(product_form[map.description]) }}
+        {% endcall %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {{ bs3.field(product_form.file) }}
+        {{ bs3.field(product_form.type) }}
+        {{ bs3.field(product_form.sku) }}
+    </div>
+</div>

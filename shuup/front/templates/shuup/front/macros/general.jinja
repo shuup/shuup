@@ -1,0 +1,261 @@
+{% extends "shuup/front/macros/theme/general.jinja" %}
+
+{% macro alert(message, title=None, mode="") %}
+    <div class="alert{% if mode %} alert-{{ mode }}{% endif %}">
+        {% if title %}
+            <strong>{{ title }}</strong>
+        {% endif %}
+        {% if not caller %}
+            {{ message|safe }}
+        {% else %}
+            {{ caller() }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro breadcrumb() %}
+    <ol class="breadcrumb">
+        {{ caller() }}
+    </ol>
+{% endmacro %}
+
+{% macro render_breadcrumb_item(url, name, active=False) %}
+    <li{% if active %} class="active"{% endif %}>
+        {% if url %}<a href="{{ url }}">{{ name }}</a>{% else %}{{ name }}{% endif %}
+    </li>
+{% endmacro %}
+
+{% macro render_field(field, classes="", layout="", show_help_text=True) %}
+    {% if field.field.widget.is_hidden %}
+        {{ field.as_widget()|safe }}
+    {% else %}
+        {% set widget_name = field.field.widget.__class__.__name__|lower %}
+        {% if widget_name == "checkboxinput" %}
+            <div class="custom-checkbox {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                {{ field.as_widget()|safe }}
+                <label for="{{ field.auto_id }}">
+                    {{ field.label }}
+                </label>
+                {% if field.errors %}
+                    <p class="help-block">
+                        {% for error in field.errors %}
+                            {{ error}}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        {% elif widget_name == "radio" %}
+            <div class="custom-radio {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                {{ field.as_widget()|safe }}
+                <label for="{{ field.auto_id }}">
+                    {{ field.label }}
+                </label>
+            </div>
+        {% elif widget_name == "select" %}
+            <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                <label class="control-label {% if layout == "horizontal" %}col-md-3{% endif %}" for="{{ field.auto_id }}">{{ field.label }}</label>
+                {% if layout == "horizontal" %}
+                    <div class="col-md-9">
+                {% endif %}
+                {{ field.as_widget(attrs={"class": "form-control selectpicker"})|safe }}
+                {% if field.help_text and show_help_text %}
+                    <p class="help-block">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    <p class="help-block">
+                        {% for error in field.errors %}
+                            {{ error}}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+                {% if layout == "horizontal" %}
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                <label class="control-label {% if layout == "horizontal" %}col-md-3{% endif %}" for="{{ field.auto_id }}">{{ field.label }}</label>
+                {% if layout == "horizontal" %}
+                    <div class="col-md-9">
+                {% endif %}
+                {{ field.as_widget(attrs={"class": "form-control"})|safe }}
+                {% if field.help_text and show_help_text %}
+                    <p class="help-block">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    <p class="help-block">
+                        {% for error in field.errors %}
+                            {{ error}}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+                {% if layout == "horizontal" %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_pagination(page, paginator, page_range=None, show_details=True) %}
+    <script>
+        window.PAGE_NUMBER = "{{ page.number }}";
+    </script>
+    <nav class="text-center">
+        <ul class="pagination">
+            {% if page.has_previous() %}
+                <li id="previous_page">
+                    <a href="#"
+                       onclick="refreshFilters({{ page.previous_page_number()}}); return false;"
+                       aria-label="{% trans %}Previous{% endtrans %}">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li id="previous_page" class="disabled">
+                    <span aria-label="{% trans %}Previous{% endtrans %}">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    </span>
+                </li>
+            {% endif %}
+            {% for i in page_range or paginator.page_range %}
+                <li id="pagination_page_{{ i }}" class="{% if i == page.number %}active{% endif %}">
+                    <a href="#" onclick="refreshFilters({{ i }}); return false;">{{ i }}</a>
+                </li>
+            {% endfor %}
+            {% if page.has_next() %}
+                <li id="next_page">
+                    <a href="#"
+                       onclick="refreshFilters({{ page.next_page_number() }}); return false;"
+                       aria-label="{% trans %}Next{% endtrans %}">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li id="next_page" class="disabled">
+                    <span aria-label="{% trans %}Next{% endtrans %}">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+            {% endif %}
+        </ul>
+        {% if show_details %}
+            <p class="text-muted">
+                {{ gettext("Items %(start_index)d of %(end_index)d of %(count)d total", start_index=page.start_index(), end_index=page.end_index(), count=paginator.count) }}
+            <p>
+        {% endif %}
+    </nav>
+{% endmacro %}
+
+{% macro render_maintenance_mode_notification() %}
+    {{ render_admin_tools() }}
+{% endmacro %}
+
+{% macro render_admin_tools() %}
+    {% if request.user.is_superuser %}
+    <nav class="navbar navbar-default navbar-admin-tools navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#admin-tools-menu"
+                        aria-expanded="false">
+                    <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    {% trans %}Administration Tools{% endtrans %}
+                    <br>
+                    <small>{% trans %}Maintenance mode{% endtrans %}:
+                        {% if request.shop.maintenance_mode %}
+                            <span class="maintenance-on">{% trans %}ON{% endtrans %}</span>
+                        {% else %}
+                            <span class="maintenance-off">{% trans %}OFF{% endtrans %}</span>
+                        {% endif %}
+                    </small>
+                </a>
+            </div>
+            {%- set allseeing = request.customer.is_all_seeing -%}
+            <div class="collapse navbar-collapse" id="admin-tools-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{{ url("shuup_admin:dashboard") }}">{% trans %}Shop Administration{% endtrans %}</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">{% trans %}Tools{% endtrans %} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ url("shuup:toggle-all-seeing") }}">
+                                {% if allseeing %}
+                                {% trans %}Show only visible products and categories{% endtrans %}
+                                {% else %}
+                                {% trans %}Show all products and categories{% endtrans %}
+                                {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-dismissible alert-{{ message.tags }}" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_errors() %}
+    {% if form %}
+        {% if form.non_field_errors and form.non_field_errors() %}
+            {% for error in form.non_field_errors() %}
+            <div class="alert alert-dismissible alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i class="fa fa-exclamation-circle"></i> {{ error }}
+            </div>
+            {% endfor %}
+        {% elif form.errors %}
+            <div class="alert alert-dismissible alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i class="fa fa-exclamation-circle"></i> {% trans %}There were errors on submitted form fields. Please check them and try again.{% endtrans %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_metadata(object, title, text, content_type) %}
+    {% if text %}
+        <meta name="description" content="{{ text|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
+    {% endif %}
+    {{ render_open_graph_metadata(object, title, text, content_type) }}
+{% endmacro %}
+
+{% macro render_open_graph_metadata(object, title, text, content_type) %}
+    <meta property="og:site_name" content="{{ request.shop }}">
+    <meta property="og:type" content="{{ content_type }}">
+    <meta property="og:url" content="{{ shuup.urls.model_url(object, absolute=True) }}">
+    <meta property="og:title" content="{{ title }}">
+    {% if text %}
+        <meta property="og:description" content="{{ text|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
+    {% endif %}
+    {% if primary_image %}
+        <meta property="og:image" content="{{ request.build_absolute_uri(primary_image.url) }}">
+    {% endif %}
+{% endmacro %}

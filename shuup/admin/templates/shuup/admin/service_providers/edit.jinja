@@ -1,0 +1,32 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="service_provider_form") %}
+        <form method="post" id="service_provider_form">
+            {% csrf_token %}
+            {% call content_block(_("General information"), "fa-info-circle") %}
+                {{ bs3.field(form["type"]) }}
+                {{ language_dependent_content_tabs(form) }}
+                <div class="form-divider"></div>
+                {{ render_monolingual_fields(form, exclude=["type"]) }}
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}
+
+
+{% block extra_js %}
+    {{ super() }}
+    {% if is_new %}
+    <script>
+        $(function () {
+            $("#id_type").on("change", function() {
+                location.href = "{{ url('shuup_admin:service_provider.new') }}?type=" + $(this).val();
+            });
+        });
+    </script>
+    {% endif %}
+    {{ form.media }}
+{% endblock %}

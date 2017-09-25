@@ -1,0 +1,42 @@
+{% extends "shuup/admin/base.jinja" %}
+{% block title %}{% trans %}Edit Script{% endtrans %}: {{ script }} <small>- {{ script.event_class.name }}</small>{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div id="script-editor-wrapper">
+            <div id="step-table-container"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block post_content %}
+    <div class="shuup-modal-bg" id="step-item-wrapper" style="display: none;">
+        <div class="shuup-modal-container">
+            <div class="shuup-modal-header">
+                <h2 class="pull-left">{% trans %}Edit Step{% endtrans %}</h2>
+                <button class="btn btn-success pull-right" onclick="ScriptEditor.hideEditModal()" type="button">
+                    <i class="fa fa-check"></i>
+                    {% trans %}Done{% endtrans %}
+                </button>
+            </div>
+            <iframe src="about:blank" frameborder="0" name="step-item-frame" id="step-item-frame"></iframe>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ static("notify/admin/script-editor-bundle.js") }}"></script>
+<script>
+$(function() {
+    $("#step-item-frame").on("load", function() {
+        $(this).css('height', $(this.contentWindow.document.body).outerHeight(true) + 'px');
+    });
+});
+ScriptEditor.init({
+    eventIdentifier: {{ script.event_class.identifier|json }},
+    apiUrl: {{ request.path|json }},
+    itemEditorUrl: {{ url("shuup_admin:notify.script-item-editor")|json }},
+    actionInfos: {{ action_infos|json }},
+    conditionInfos: {{ condition_infos|json }},
+    condOps: {{ cond_op_names|json }},
+    stepNexts: {{ step_next_names|json }},
+});
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title %}{% trans %}Search{% endtrans %}{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">{% trans %}Search{% endtrans %}</h1>
+    <form method="get" id="product_search" role="form" action="">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="id_q">{% trans %}Search for products{% endtrans %}</label>
+                    <div class="input-group">
+                        <input class="form-control"
+                               id="id_q"
+                               name="q"
+                               placeholder="Search"
+                               type="text"
+                               value="{{ form.q.value() or "" }}">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i> {% trans %}Search{% endtrans %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                {% if "sort" in form.fields.keys() %}{{ macros.render_field(form.sort) }}{% endif %}
+            </div>
+        </div>
+        <hr>
+    </form>
+    {% if no_results %}
+        <p class="lead">
+            {% trans query=form.cleaned_data.q %}No results found for "<strong>{{ query }}</strong>".{% endtrans %}
+        </p>
+    {% elif products %}
+        {% if products|count == 150 %}
+        <p class="lead">{% trans %}Limiting results to first 150 products. Refine search terms for better results.{% endtrans %}</p>
+        {% endif %}
+        <p class="lead">{% trans query=form.cleaned_data.q, n=products|count %}{{ n }} results found for "<strong>{{ query }}</strong>".{% endtrans %}</p>
+        <div class="row product-list-view search-results-view">
+        {% for product in products %}
+            <div class="single-product">
+                {{ product_macros.product_box(product, show_description=True, class="product-card box search-view") }}
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block extrajs %}
+    <script>
+        $(function() {
+            $("#product_search #id_sort").change(function() {
+                $("#product_search").submit();
+            });
+        });
+    </script>
+{% endblock %}

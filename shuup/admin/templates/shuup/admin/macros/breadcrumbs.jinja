@@ -1,0 +1,15 @@
+{% macro render_breadcrumbs(breadcrumbs) %}
+    {% set entries = breadcrumbs.get_entries(request) %}
+    {% if entries %}
+    <ol class="breadcrumbs">
+        {% for entry in entries %}
+        <li{% if loop.last %} class="active"{% endif %}>
+            <a href="{{ entry.url }}">
+                {% if entry.icon %}<i class="{{ entry.icon }}"></i>&nbsp;{% endif %}
+                {{ entry.text }}
+            </a>
+        </li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+{% endmacro %}

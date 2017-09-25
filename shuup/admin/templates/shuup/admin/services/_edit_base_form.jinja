@@ -1,0 +1,14 @@
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% set shipping_method_form = form["base"] %}
+{% set priority_fields = ["carrier", "payment_processor", "choice_identifier"] %}
+
+{% call content_block(_("General Information"), ("fa-info-circle")) %}
+    {{ render_monolingual_fields(shipping_method_form, field_names=priority_fields) }}
+    {% call(form, language, map) language_dependent_content_tabs(shipping_method_form, tab_id_prefix="base") %}
+        {{ bs3.field(shipping_method_form[map.name]) }}
+        {{ bs3.field(shipping_method_form[map.description]) }}
+    {% endcall %}
+    <div class="form-divider"></div>
+    {{ render_monolingual_fields(shipping_method_form, exclude=priority_fields) }}
+{% endcall %}

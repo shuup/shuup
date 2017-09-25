@@ -1,0 +1,45 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar %}
+
+{% block title %}{{ carousel.name or _("New Carousel") }}{% endblock %}
+{% block content %}
+    {% call content_with_sidebar(content_id="carousel_form") %}
+        <form method="post" id="carousel_form">
+            {% csrf_token %}
+            {% for form_def in form.form_defs.values() %}
+                {% include form_def.template_name with context %}
+            {% endfor %}
+        </form>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $(function () {
+            $(".slide-add-new-panel").on("click", function (e) {
+                e.preventDefault();
+                var panelCount = $("#" + $(this).data("target-panels") + " .panel").length;
+                var $source = $("#placeholder-panel");
+                // Remove activated select2 spans from placeholder
+                $source.find("span.select2.select2-container").remove();
+                $source.find("select.select2-hidden-accessible").removeClass("select2-hidden-accessible");                
+                var $html = $($source.html().replace(/__prefix__/g, panelCount - 1));
+                $html.find('.panel-title .title').text('{{ _('Slide') }}' + ' ' + panelCount);
+                $html.insertAfter($source);
+                var targetId = $(this).data("target-id");
+                var $totalFormsField = $("#" + targetId + "-TOTAL_FORMS");
+                $totalFormsField.val(parseInt($totalFormsField.val()) + 1);
+                $(".form-control.datetime").datetimepicker({
+                    format: "yyyy-mm-dd hh:ii",
+                    autoclose: true,
+                    todayBtn: true,
+                    todayHighlight: true,
+                    fontAwesome: true
+                });
+                activateSelects();                
+                $("[data-toggle='popover']").popover();
+                activateDropzones();
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="campaign_form") %}
+        <form method="post" id="campaign_form">
+            {% csrf_token %}
+            {% set form_defs = form.form_defs %}
+            {% include form_defs["base"].template_name with context %}
+            {% if form_defs|length > 1 %}
+            {% call content_block(_("Rules"), ("fa-cubes")) %}
+                <div class="form-group">
+                    <label class="control-label" for="rule-select">{% trans %}Rule type{% endtrans %}</label>
+                    <select class="form-control" id="rule-select">
+                        {% for form_def in form_defs %}
+                            {% if "conditions_" in form_def or "filters_" in form_def %}
+                                {% set form_prefix = form_def %}
+                                {% set formset = form[form_def] %}
+                                <option data-target-id="id_{{ form_prefix }}" value="{{ form_prefix }}">{{ formset.get_name() }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <span class="help-popover-btn">
+                        <a
+                            class="btn" data-toggle="popover" data-placement="bottom" role="button" tabindex="50000"
+                            data-html="true" data-trigger="focus" title="{% trans %}Rule type{% endtrans %}"
+                            data-content="{% trans %}The criteria used to determine whether this campaign is applied.{% endtrans %}" >
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <div class="form-group text-center">
+                    <a class="btn btn-lg btn-text" id="rule-button" href="#">+ {% trans %}Add rule{% endtrans %}</a>
+                </div>
+                {% for form_def in form_defs %}
+                    {% if "conditions_" in form_def or "filters_" in form_def %}
+                        {% set form_prefix = form_def %}
+                        {% set formset = form[form_def] %}
+                        {% set template_name = form_defs[form_def].template_name %}
+                        {% include template_name with context %}
+                    {% endif %}
+                {% endfor %}
+                <div class="hide" id="insert-rule-placeholder"></div>
+            {% endcall %}
+            {% call content_block(_("Effects"), ("fa-cubes")) %}
+                <div class="form-group">
+                    <label class="control-label" for="effect-select">{% trans %}Effect type{% endtrans %}</label>
+                    <select class="form-control" id="effect-select">
+                        {% for form_def in form_defs %}
+                            {% if "effects_" in form_def %}
+                                {% set form_prefix = form_def %}
+                                {% set formset = form[form_def] %}
+                                <option data-target-id="id_{{ form_prefix }}" value="{{ form_prefix }}">{{ formset.get_name() }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group text-center">
+                    <a class="btn btn-lg btn-text" id="effect-button" href="#">+ {% trans %}Add effect{% endtrans %}</a>
+                </div>
+                {% for form_def in form_defs %}
+                    {% if "effects_" in form_def %}
+                        {% set form_prefix = form_def %}
+                        {% set formset = form[form_def] %}
+                        {% set template_name = form_defs[form_def].template_name %}
+                        {% include template_name with context %}
+                    {% endif %}
+                {% endfor %}
+                <div class="hide" id="insert-effect-placeholder"></div>
+            {% endcall %}
+            {% endif %}
+        </form>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+{{ super() }}
+<script>
+    $(function () {
+        $("#rule-button, #effect-button").on("click", function (event) {
+            const targetName = $(this).attr("id").split("-")[0];
+            event.preventDefault();
+            var $selection = $("#"+targetName+"-select").find("option:selected");
+            var component = $selection.val();
+            var $source = $("#" + component + "-placeholder");
+
+            // Remove activated select2 spans from placeholder
+            $source.find("span.select2.select2-container").remove();
+            $source.find("select.select2-hidden-accessible").removeClass("select2-hidden-accessible");
+            var targetID = $selection.data("target-id");
+            var $totalFormsField = $("#" + targetID + "-TOTAL_FORMS");
+            var componentCount = parseInt($totalFormsField.val());
+            var html = $source.html().replace(/__prefix__/g, componentCount);
+            var $componentsPlaceholder = $("#insert-"+targetName+"-placeholder");
+            $(html).insertAfter($componentsPlaceholder);
+            $totalFormsField.val(componentCount + 1);
+
+            // reactivate possible select2 widgets
+            activateSelects();
+            // ... and help text
+            $("[data-toggle='popover']").popover();
+        });
+    });
+</script>
+{% endblock %}

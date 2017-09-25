@@ -1,0 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-03-29 08:44+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Simple CMS"
+msgstr "シンプルなCMS"
+
+msgid "Pages"
+msgstr "ページ"
+
+msgid "Show pages"
+msgstr "ページを見る"
+
+msgid "Available from"
+msgstr ""
+
+msgid "Available to"
+msgstr ""
+
+msgid "URL already exists."
+msgstr ""
+
+#, python-format
+msgid "%(label)s is required when any %(language)s field is filled."
+msgstr ""
+
+msgid "Please fill at least one language fully."
+msgstr ""
+
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Created by"
+msgstr ""
+
+msgid "Date created"
+msgstr ""
+
+msgid "Page"
+msgstr "ページ"
+
+msgid "available from"
+msgstr ""
+
+msgid "available to"
+msgstr ""
+
+msgid "created by"
+msgstr ""
+
+msgid "modified by"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid "This identifier can be used in templates to create URLs"
+msgstr ""
+
+msgid "visible in menu"
+msgstr ""
+
+msgid "parent"
+msgstr ""
+
+msgid "list children on page"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "content"
+msgstr ""
+
+msgid "page"
+msgstr "ページ"
+
+msgid "pages"
+msgstr "ページ"
+
+msgid "Untitled"
+msgstr "タイトルなし"
+
+msgid "CMS Page Links"
+msgstr ""
+
+msgid "Show all pages"
+msgstr ""
+
+msgid "All pages are shown, even if not selected"
+msgstr ""
+
+msgid "Hide expired pages"
+msgstr ""
+
+msgid "New Page"
+msgstr ""
+
+msgid "General Information"
+msgstr "基本情報"
+
+msgid "Availability"
+msgstr ""
+
+msgid "Extras"
+msgstr ""

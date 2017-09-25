@@ -1,0 +1,33 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+{% set product_form = form["base"] %}
+
+{% call content_block(_("Additional Details"), "fa-file-text", id="additional-details-section") %}
+    <p class="section-description">{% trans %}Product features such as size, weight and keywords are located here.{% endtrans %}</p>
+
+    {{ bs3.field(product_form.stock_behavior) }}
+    {{ bs3.field(product_form.shipping_mode) }}
+    {{ bs3.field(product_form.tax_class) }}
+
+    {{ bs3.field(product_form.barcode) }}
+    {{ bs3.field(product_form.gtin) }}
+
+    {{ bs3.field(product_form.width) }}
+    {{ bs3.field(product_form.height) }}
+    {{ bs3.field(product_form.depth) }}
+    {{ bs3.field(product_form.sales_unit) }}
+    {{ bs3.field(product_form.net_weight) }}
+    {{ bs3.field(product_form.gross_weight) }}
+
+    {% call(form, language, map) language_dependent_content_tabs(product_form, tab_id_prefix="additional-language") %}
+        {{ bs3.field(product_form[map.slug]) }}
+        {{ bs3.field(product_form[map.variation_name]) }}
+        {{ bs3.field(product_form[map.status_text]) }}
+        {{ bs3.field(product_form[map.keywords]) }}
+    {% endcall %}
+{% endcall %}
+
+{% call content_block(_("Manufacturer"), "fa-building", id="manufacturer-section") %}
+    <p class="section-description">{% trans %}If you know the manufacturer of the product select it here.{% endtrans %}</p>
+    {{ bs3.field(product_form.manufacturer) }}
+{% endcall %}

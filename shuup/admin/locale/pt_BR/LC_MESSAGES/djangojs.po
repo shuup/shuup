@@ -1,0 +1,505 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-17 00:26+0000\n"
+"PO-Revision-Date: 2016-08-17 12:33+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Unexpected error while uploading files."
+msgstr "Erro inesperado ao enviar arquivos."
+
+msgid "Error:"
+msgstr "Erro:"
+
+msgid "Uploaded:"
+msgstr "Enviado:"
+
+msgid "New file name?"
+msgstr "Novo nome do arquivo?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr "Tem certeza que deseja excluir o arquivo %s?"
+
+msgid "New folder name?"
+msgstr "Novo nome da pasta?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr "Tem certeza que deseja excluir a pasta %s?"
+
+msgid "New folder"
+msgstr "Nova pasta"
+
+msgid "current"
+msgstr "atual"
+
+msgid "Oldest first"
+msgstr "Mais antigo primeiro"
+
+msgid "Newest first"
+msgstr "Mais recente primeiro"
+
+msgid "Smallest first"
+msgstr "Menores primeiro"
+
+msgid "Largest first"
+msgstr "Maiores primeiro"
+
+msgid "Drop your files here"
+msgstr "Solte os seus arquivos aqui"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Size"
+msgstr "Tamanho"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr "Clique no botão <strong>Fazer upload</strong> para enviar arquivos."
+
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr "<span>Arraste e solte</span> os arquivos aqui<br> ou clique no botão <span>Fazer upload</ span>."
+
+msgid "Rename file"
+msgstr "Renomear arquivo"
+
+msgid "Delete file"
+msgstr "Excluir arquivo"
+
+msgid "Rename folder"
+msgstr "Renomear pasta"
+
+msgid "Delete folder"
+msgstr "Excluir pasta"
+
+#, javascript-format
+msgid "Order %s created."
+msgstr "Pedido %s criado."
+
+msgid "An unspecified error occurred.\n"
+msgstr "Ocorreu um erro não especificado.\n"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Quantity"
+msgstr "Quantidade"
+
+msgid "Unit Price"
+msgstr "Preço Unitário"
+
+msgid "Discounted Unit Price"
+msgstr "Preço Unitário com Desconto"
+
+msgid "Discount amount"
+msgstr "Valor do desconto"
+
+msgid "Discount percent"
+msgstr "%% de desconto"
+
+msgid "Total (excluding taxes)"
+msgstr "Total (excluindo impostos)"
+
+msgid "Tax percent"
+msgstr "Alíquota de imposto"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Billing address"
+msgstr "Endereço de cobrança"
+
+msgid "Shipping address"
+msgstr "Endereço de entrega"
+
+#, javascript-format
+msgid "Customer with same %s already exists."
+msgstr "Cliente com mesmo %s já existe."
+
+#, javascript-format
+msgid "Click to select user %s."
+msgstr "Clique para selecionar o usuário %s."
+
+msgid "Full Name"
+msgstr "Nome Completo"
+
+msgid "Phone"
+msgstr "Telefone"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Tax Number"
+msgstr "Número de Contribuinte"
+
+msgid "Groups"
+msgstr "Grupos"
+
+msgid "Companies"
+msgstr "Empresas"
+
+msgid "Merchant Notes"
+msgstr "Notas do Lojista"
+
+msgid "Year"
+msgstr "Ano"
+
+msgid "Total Sales"
+msgstr "Vendas Totais"
+
+msgid "Shipment Status"
+msgstr "Status da Remessa"
+
+msgid "Payment Status"
+msgstr "Status do Pagamento"
+
+msgid "Order Status"
+msgstr "Status do Pedido"
+
+msgid "Customer Information"
+msgstr "Informações do Cliente"
+
+msgid "Order Summary"
+msgstr "Resumo do Pedido"
+
+msgid "Recent Orders"
+msgstr "Pedidos Recentes"
+
+msgid "Close"
+msgstr "Fechar"
+
+msgid "Warning: No customer account is currently associated with this order."
+msgstr "Aviso: Nenhuma conta de cliente está associada a este pedido atualmente."
+
+msgid "A new customer will be created based on billing address."
+msgstr "Um novo cliente será criado com base no endereço de cobrança."
+
+msgid "Customer"
+msgstr "Cliente"
+
+msgid "Select Existing Customer"
+msgstr "Selecionar Cliente Existente"
+
+msgid "New Customer"
+msgstr "Novo Cliente"
+
+msgid "View Details"
+msgstr "Ver Detalhes"
+
+msgid "Save customer details while creating order"
+msgstr "Salvar detalhes do cliente durante a criação do pedido"
+
+msgid "Ship to billing address"
+msgstr "Enviar para o endereço de cobrança"
+
+msgid "Order for company"
+msgstr "Comprar para empresa"
+
+msgid "Billing Address"
+msgstr "Endereço de Cobrança"
+
+msgid "Shipping Address"
+msgstr "Endereço de Entrega"
+
+msgid "Back"
+msgstr "Voltar"
+
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgid "Discard Changes"
+msgstr "Descartar Alterações"
+
+msgid "Select Shop"
+msgstr "Selecionar Loja"
+
+msgid "Customer Details"
+msgstr "Detalhes do Cliente"
+
+msgid "Order Contents"
+msgstr "Conteúdo do Pedido"
+
+msgid "Shipping Method"
+msgstr "Forma de Entrega"
+
+msgid "Payment Method"
+msgstr "Forma de Pagamento"
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr "Regras das formas de entrega e pagamento, impostos e eventuais descontos extras são calculados após prosseguir."
+
+msgid "Proceed"
+msgstr "Prosseguir"
+
+msgid "Logical Count"
+msgstr "Estoque Lógico"
+
+msgid "Physical Count"
+msgstr "Estoque Físico"
+
+msgid "Select product"
+msgstr "Selecionar produto"
+
+msgid "Text/Comment"
+msgstr "Texto/Comentário"
+
+msgid "Qty"
+msgstr "Qtd."
+
+msgid "Total Price"
+msgstr "Preço Total"
+
+msgid "Base Unit Price"
+msgstr "Preço Unitário Base"
+
+msgid "Discount Percent"
+msgstr "%% de Desconto"
+
+msgid "Total Discount Amount"
+msgstr "Valor Total de Desconto"
+
+msgid "Line Total"
+msgstr "Total do Item"
+
+msgid "Orderline type"
+msgstr "Tipo do item de pedido"
+
+msgid "Missing JavaScript dependencies detected"
+msgstr "Dependências JavaScript que estão faltando detectadas"
+
+msgid ""
+"If your product prices vary based on customer, you might want to select "
+"customer first."
+msgstr "Se os preços de seus produtos variarem de acordo com o cliente, você pode querer selecionar o cliente primeiro."
+
+#, javascript-format
+msgid "All prices are in %s currency."
+msgstr "Todos os preços estão em moeda %s."
+
+msgid "All prices include taxes."
+msgstr "Todos os preços incluem impostos."
+
+msgid "Taxes not included."
+msgstr "Impostos não inclusos."
+
+msgid "Add new line"
+msgstr "Adicionar novo item"
+
+msgid "Quick add product line"
+msgstr "Adição rápida de item de produto"
+
+msgid ""
+"Search product by name, SKU, or barcode and press button to add product "
+"line."
+msgstr "Procure o produto pelo nome, SKU ou código de barras e pressione o botão para adicionar o item de produto."
+
+msgid "Automatically add selected product"
+msgstr "Adicionar o produto selecionado automaticamente"
+
+msgid "No shipping method"
+msgstr "Nenhuma forma de entrega"
+
+msgid "No payment method"
+msgstr "Nenhuma forma de pagamento"
+
+msgid "Shop"
+msgstr "Loja"
+
+msgid "Product"
+msgstr "Produto"
+
+msgid "Other"
+msgstr "Outro"
+
+msgid "Tax number"
+msgstr "Número de contribuinte"
+
+msgid "Street"
+msgstr "Endereço"
+
+msgid "Street (2)"
+msgstr "Complemento"
+
+msgid "ZIP / Postal code"
+msgstr "CEP / Código postal"
+
+msgid "City"
+msgstr "Cidade"
+
+msgid "Region"
+msgstr "Estado"
+
+msgid "Country"
+msgstr "País"
+
+msgid "No records found."
+msgstr "Nenhum registro encontrado."
+
+msgid "Identifier"
+msgstr "Identificador"
+
+#, javascript-format
+msgid "Value %s Name"
+msgstr "Nome do Valor %s"
+
+msgid "Delete value"
+msgstr "Excluir valor"
+
+msgid "Are you sure?"
+msgstr "Você tem certeza?"
+
+msgid "Delete Variable"
+msgstr "Excluir Variável"
+
+msgid "Add new value"
+msgstr "Adicionar novo valor"
+
+msgid "Variable Name"
+msgstr "Nome da Variável"
+
+msgid "Variable"
+msgstr "Variável"
+
+msgid "Show identifier fields (for advanced users)"
+msgstr "Mostrar campos identificadores (para usuários avançados)"
+
+msgid "There are no variables defined."
+msgstr "Não há variáveis definidas."
+
+msgid "Add new variable"
+msgstr "Adicionar nova variável"
+
+msgid "No browser URL for kind:"
+msgstr "Nenhum URL do navegador para o tipo:"
+
+msgid "Expand Editor"
+msgstr "Expandir Editor"
+
+msgid "No results."
+msgstr "Nenhum resultado."
+
+msgid "The results could not be loaded"
+msgstr "Os resultados não puderam ser carregados"
+
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] "Por favor, remova %s caractere"
+msgstr[1] "Por favor, remova %s caracteres"
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr "Por favor, insira %s ou mais caracteres"
+
+msgid "Loading more results..."
+msgstr "Carregando mais resultados..."
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] "Você só pode selecionar %s item"
+msgstr[1] "Você só pode selecionar %s itens"
+
+msgid "No results found"
+msgstr "Nenhum resultado encontrado"
+
+msgid "Searching..."
+msgstr "Procurando..."
+
+msgid "From"
+msgstr "De"
+
+msgid "To"
+msgstr "Até"
+
+msgid "Items per page"
+msgstr "Itens por página"
+
+msgid "Reset filters"
+msgstr "Redefinir filtros"
+
+msgid "Reset"
+msgstr "Redefinir"
+
+msgid "Sort by"
+msgstr "Ordenar por"
+
+msgid "ascending"
+msgstr "ascendente"
+
+msgid "descending"
+msgstr "descendente"
+
+msgid "Default sorting"
+msgstr "Ordenação padrão"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Próximo"
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr "Filtrar por %s"
+
+msgid "Filters"
+msgstr "Filtros"
+
+msgid "Are you sure you want to delete this media?"
+msgstr "Tem certeza que deseja excluir esta mídia?"
+
+msgid "Set as primary image"
+msgstr "Definir como imagem principal"
+
+msgid "Primary image"
+msgstr "Imagem principal"
+
+msgid "Bold"
+msgstr "Negrito"
+
+msgid "Italic"
+msgstr "Itálico"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "Ordered list"
+msgstr "Lista ordenada"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Editor"
+msgstr "Editor"
+
+msgid "Done"
+msgstr "Concluído"

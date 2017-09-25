@@ -1,0 +1,22 @@
+<script>
+    (function(){
+        $("#order-admin-comment button").on("click", function(event){
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "{{ url('shuup_admin:order.update-admin-comment', pk=order.pk) }}",
+                data: {
+                    "comment": $("#admin-comment").val(),
+                    "csrfmiddlewaretoken": '{{ csrf_token }}',
+                },
+                success: function(data){
+                    $("#admin-comment").val(data["comment"]);
+                    window.Messages.enqueue({tags: "success", text: "{% trans %}Comment saved.{% endtrans %}"});
+                },
+                error: function(){
+                    alert("{% trans %}There was an error updating the admin comment.{% endtrans %}")
+                },
+            });
+        });
+    })();
+</script>

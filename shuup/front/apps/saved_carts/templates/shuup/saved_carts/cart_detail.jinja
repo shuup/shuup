@@ -1,0 +1,58 @@
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
+{% from "shuup/saved_carts/macros/cart_detail.jinja" import render_action_buttons, render_extra_js with context %}
+
+{% block title -%}{{ cart.title }}{%- endblock %}
+{% block content_title %}{{ cart.title }}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:saved_cart.list"), _("My Saved Carts")) }}
+        {{ macros.render_breadcrumb_item(None,  cart.title, True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block dashboard_content %}
+    <h1 class="page-header">{{ cart.title }}{{ render_action_buttons() }}</h1>
+    <div id="message-container"></div>
+    <div class="well">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 70px"></th>
+                        <th>{% trans %}Product{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
+                        {% if show_prices() %}
+                        <th class="text-right">{% trans %}Price{% endtrans %}</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for line in lines %}
+                    {% set product = line.product %}
+                    {% set unit = line.product.get_shop_instance(request.shop).unit -%}
+                    {% set image = product.primary_image %}
+                    {% if not image and product.variation_parent %}
+                        {% set image = product.variation_parent.primary_image %}
+                    {% endif %}
+                    {% set thumbnail = image|thumbnail(size=(70, 70), crop="smart", upscale=True) %}
+                    <tr>
+                        <td>{% if thumbnail %}<img src="{{ thumbnail }}" alt="{{ product.name }}">{% endif %}</td>
+                        <td><a href="{{ shuup.urls.model_url(line.product) }}">{{ product.name }}</a></td>
+                        <td class="text-right">{{ unit.render_quantity(line.quantity) }}</td>
+                        {% if show_prices() %}
+                        <td class="text-right">{{ line.product|price }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    {{ render_extra_js() }}
+{% endblock %}

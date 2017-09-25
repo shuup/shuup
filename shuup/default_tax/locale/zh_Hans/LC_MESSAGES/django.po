@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-03-09 10:32+0000\n"
+"Last-Translator: Jessica Wang <jessica.wang@shuup.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
+"language/cmn/)\n"
+"Language: cmn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Shuup Default Tax"
+msgstr "Shuup默认税收"
+
+msgid "Tax Rules"
+msgstr "税款规定"
+
+msgid "Taxes"
+msgstr "税收"
+
+msgid "Show tax rules"
+msgstr "显示税款规定"
+
+msgid "Use ISO 3166-1 country codes (US, FI etc.)"
+msgstr "请使用ISO 3166-1国家代码 (US, FI 等等)"
+
+msgid "Use two letter state codes for the US"
+msgstr "请使用美国两个字母的州代码"
+
+msgid "Tax Rule"
+msgstr "税款规定"
+
+msgid "Tax"
+msgstr "税收"
+
+msgid "Tax Classes"
+msgstr "税种"
+
+msgid "Customer Tax Groups"
+msgstr "顾客税组"
+
+msgid "Countries"
+msgstr "国家"
+
+msgid "Regions"
+msgstr "区域"
+
+msgid "Postal Codes"
+msgstr "邮编号码"
+
+msgid "Priority"
+msgstr "优先"
+
+msgid "Override Group"
+msgstr "覆盖组"
+
+msgid "Enabled"
+msgstr "启用"
+
+msgid "enabled"
+msgstr "启用"
+
+msgid "tax classes"
+msgstr "税种"
+
+msgid "Tax classes of the items to be taxed"
+msgstr "物品税种需交税"
+
+msgid "customer tax groups"
+msgstr "顾客税组"
+
+msgid "country codes pattern"
+msgstr "国家代码模式"
+
+msgid "region codes pattern"
+msgstr "区域代码模式"
+
+msgid "postal codes pattern"
+msgstr "邮政编码模式"
+
+msgid "priority"
+msgstr "优先"
+
+msgid ""
+"Rules with same priority define added taxes (e.g. US taxes) and rules with "
+"different priority define compound taxes (e.g. Canada Quebec PST case)"
+msgstr ""
+"同样的优先权规定是增值税 (例如美国税收)，不同的优先权规定是复合税 (例如加拿大"
+"魁北克省的省税) "
+
+msgid "override group number"
+msgstr "覆写组号"
+
+msgid ""
+"If several rules match, only the rules with the highest override group "
+"number will be effective.  This can be used, for example, to implement tax "
+"exemption by adding a rule with very high override group that sets a zero "
+"tax."
+msgstr ""
+"如果多个规定匹配，只有最高的覆写组号规定有效。这比如可用于添加新的免税规定并"
+"带有极高覆盖组零税收设置。"
+
+msgid "tax"
+msgstr "税收"
+
+msgid "Tax rule {} ({})"
+msgstr "税款规定{} ({})"
+
+msgid "Default Taxation"
+msgstr "默认税收"
+
+msgid "Tax rule information"
+msgstr "税款规定信息"
+
+msgid "Matching criteria"
+msgstr "匹配标准"
+
+msgid "Grouping"
+msgstr ""
+
+msgid "Applied tax"
+msgstr "应用税"
+
+msgid ""
+"\n"
+"            The following fields determine when this rule applies.  All\n"
+"            non-empty fields must match for the rule to apply.  Empty fields "
+"are\n"
+"            not considered, e.g. if \"Customer tax groups\" is left empty, "
+"all\n"
+"            customer tax groups will match.\n"
+"        "
+msgstr ""
+"\n"
+"下列字段中采用该规定。所有\n"
+"已填的字段一定要与规定匹配。字段为空的\n"
+"不包括在内，例如，如果\"顾客税组\"字段为空，\n"
+"所有的顾客税组将会与其匹配。 "
+
+msgid ""
+"\n"
+"            Pattern can be a single value or a comma separated list of "
+"items,\n"
+"            where each item can be a single value or a range, such as\n"
+"            \"value1-value2\".  Special value \"*\" matches everything.  "
+"For\n"
+"            example, a pattern \"1,2,50-90\" will match values \"1\" and "
+"\"2\", and\n"
+"            \"50\", \"90\", and everything between.  The range uses "
+"alphabetical\n"
+"            ordering unless start, end and the string to be matched are all\n"
+"            numerical, i.e. \"50-90\" will match also \"6a\" and \"700X\", "
+"since they\n"
+"            are alphabetically between \"50\" and \"90\", but it will not "
+"match\n"
+"            \"700000\" since for numerical items natural numeric ordering is "
+"used.\n"
+"        "
+msgstr ""
+"\n"
+"模式可以是一个单值或者是一个分开项目的逗号，\n"
+"其中每个项目可以是一个单值或者范围，例如\n"
+"“value1-value2”。特殊的值\"*\" 与全部匹配。譬如，\n"
+"一个\"1,2,50-90\"的模式能与数值\"1\" 和 \"2\", 还有\n"
+"\"50\", \"90\", 之间的一切匹配。 范围是按字母顺序排列的，\n"
+"除非与开始，结束和字符串匹配的是数值，例如\"50-90\"\n"
+"模式可与 \"6a\" 和 \"700X\"匹配，因为它们是按字母顺序\n"
+"排列在\"50\" 与 \"90\" 范围内，但是不会与\"700000\"匹配，\n"
+"因为数值项目里面肯定是按数字次序使用的。\n"
+" "
+
+msgid ""
+"\n"
+"            Use the following fields to configure added or compounded\n"
+"            taxes (when several taxes apply for an item), or to create a\n"
+"            tax rule or a set of tax rules that override other tax rules.\n"
+"        "
+msgstr ""
+
+msgid "When this rule applies, apply the following tax."
+msgstr "当采用这条规定时，请使用以下的税收。"

@@ -1,0 +1,51 @@
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
+{% from "shuup/customer_information/macros/buttons.jinja" import save_changes_button %}
+{% from "shuup/front/macros/general.jinja" import render_field %}
+
+{% block title %}{% trans %}Address Book{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}Address Book{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
+        {{ macros.render_breadcrumb_item(None,  _("Address Book"), True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block dashboard_content %}
+{% set address_form = form["address"] %}
+{% set saved_form = form["saved_address"] %}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title">{% trans %}General Information{% endtrans %}</div>
+            {{ render_field(saved_form.title) }}
+            {{ render_field(saved_form.role) }}
+            {{ render_field(saved_form.status) }}
+        </div>
+        <div class="col-md-6">
+            <div class="title">{% trans %}Contact Information{% endtrans %}</div>
+            {{ render_field(address_form.name, show_help_text=False) }}
+            {% if "phone" in address_form.fields %}
+                {{ render_field(address_form.phone, show_help_text=False) }}
+            {% endif %}
+            {% if "email" in address_form.fields %}
+                {{ render_field(address_form.email, show_help_text=False) }}
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <div class="title">{% trans %}Address{% endtrans %}</div>
+            {% for field in address_form %}
+                {% if field.name not in ["name", "phone", "email"] %}
+                    {{ render_field(field, show_help_text=False) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="btn-toolbar pull-right" role="toolbar">
+       {{ save_changes_button() }}
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,25 @@
+<canvas id="canvas" height="450" width="800"></canvas>
+
+<script>
+    var randomScalingFactorLine = function(){
+        return Math.round(Math.random()*100)
+    };
+
+    var lineChartData = {
+        labels : ["January","February","March","April","May","June","July"],
+        datasets : [
+            {
+                label: "My Second dataset",
+                fillColor : "rgba(255,255,255,0)",
+                strokeColor : "rgba(53,154,140,1)",
+                pointColor : "rgba(53,154,140,1)",
+                pointStrokeColor : "#fff",
+                pointHighlightFill : "#fff",
+                pointHighlightStroke : "rgba(0,0,0,1)",
+                data : [randomScalingFactorLine(),randomScalingFactorLine(),randomScalingFactorLine(),randomScalingFactorLine(),randomScalingFactorLine(),randomScalingFactorLine(),randomScalingFactorLine()]
+            }
+        ]
+
+    }
+
+</script>

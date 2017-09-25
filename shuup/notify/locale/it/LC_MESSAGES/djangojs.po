@@ -1,0 +1,74 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"PO-Revision-Date: 2016-06-30 07:38+0000\n"
+"Last-Translator: Fabrizio Arzeni <fabrizio.arz@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "An error occurred."
+msgstr "Qualcosa è andato storto."
+
+msgid "Success."
+msgstr "Successo."
+
+msgid "An unspecified error occurred."
+msgstr "Qualcosa di non specificato è andato storto."
+
+msgid "Unexpected edit data received."
+msgstr "Sono stati ricevuti dati di modifica inattesi."
+
+msgid "Add new"
+msgstr "Aggiungi nuovo"
+
+msgid ""
+"Delete this item?\n"
+"This can not be undone."
+msgstr "Cancellare questo elemento?\nQuesta azione non potrà essere ripristinata."
+
+msgid "New"
+msgstr "Nuovo"
+
+msgid "Move Up"
+msgstr "Sposta su"
+
+msgid "Move Down"
+msgstr "Sposta giù"
+
+msgid "Disable"
+msgstr "Disattiva"
+
+msgid "Enable"
+msgstr "Attiva"
+
+msgid "Delete"
+msgstr "Cancella"
+
+msgid "Are you sure you wish to delete this step?"
+msgstr "Sei sicuro di voler canellare questo passo?"
+
+#, javascript-format
+msgid "If %s of these conditions hold..."
+msgstr "Se sussiste %s una di queste condizioni..."
+
+msgid "then execute these actions..."
+msgstr "allora esegui queste azioni..."
+
+msgid "and then..."
+msgstr "e poi..."
+
+msgid "New step"
+msgstr "Nuovo passo"

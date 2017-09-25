@@ -1,0 +1,17 @@
+Shuup 0.4.0 Release Notes
+=========================
+
+Released on 2016-06-30 06:00 +0300.
+
+This is the first Shuup release.
+
+Content of Shuup 0.4.0 is same as Shoop 4.0.0 with all "shoop" texts
+replaced with "shuup".  See :doc:`shoop-4.0.0` for highlights of the
+changes since Shoop 3.0.0.
+
+Updating from Shoop 4.0.0
+-------------------------
+
+There is a management command ``shuup_migrate_from_shoop`` for migrating
+the database from Shoop 4.0.0.  It renames shoop tables to shuup and
+amends ``django_migrations`` and ``django_content_type tables``.

@@ -1,0 +1,145 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"PO-Revision-Date: 2016-07-25 18:33+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Stock management"
+msgstr "Gerenciamento de estoque"
+
+msgid "Products"
+msgstr "Produtos"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Filter by SKU..."
+msgstr "Filtrar por SKU..."
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Filter by name..."
+msgstr "Filtrar por nome..."
+
+msgid "Supplier"
+msgstr "Fornecedor"
+
+msgid "Stock information"
+msgstr "Informações do estoque"
+
+msgid "Adjust stock"
+msgstr "Ajustar estoque"
+
+#, python-format
+msgid ""
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr "Adicionado %(delta)s %(unit_symbol)s ao estoque do produto %(product_name)s (%(supplier_name)s)"
+
+#, python-format
+msgid ""
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr "Removido %(delta)s %(unit_symbol)s do estoque do produto %(product_name)s (%(supplier_name)s)"
+
+msgid "Not allowed"
+msgstr "Não permitido"
+
+msgid "Error, please check submitted values and try again."
+msgstr "Erro, por favor, verifique os valores apresentados e tente novamente."
+
+#, python-format
+msgid "Error, please check submitted values and try again (%(error)s)."
+msgstr "Erro, por favor, verifique os valores apresentados e tente novamente (%(error)s)."
+
+#, python-format
+msgid "Purchase price per unit (%(currency_name)s)"
+msgstr "Preço de compra por unidade (%(currency_name)s)"
+
+msgid "Quantity"
+msgstr "Quantidade"
+
+msgid "Only non-zero values can be added to stock."
+msgstr "Somente valores acima de zero podem ser adicionados ao estoque."
+
+msgid "product"
+msgstr "produto"
+
+msgid "supplier"
+msgstr "fornecedor"
+
+msgid "created on"
+msgstr "criado em"
+
+msgid "created by"
+msgstr "criado por"
+
+msgid "delta"
+msgstr "delta"
+
+msgid "logical count"
+msgstr "estoque lógico"
+
+msgid "physical count"
+msgstr "estoque físico"
+
+msgid "Add stock"
+msgstr "Adicionar estoque"
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"does not have suppliers with %(module_name)s module."
+msgstr "O produto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> não tem fornecedores com o módulo %(module_name)s."
+
+msgid "Please set suppliers at Purchasing section."
+msgstr "Por favor, defina os fornecedores na seção Compras."
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"is not stocked."
+msgstr "O produto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> não é estocado."
+
+msgid "Please set product stock behavior at Additional Details section."
+msgstr "Por favor, defina o comportamento do estoque do produto na seção Detalhes Adicionais."
+
+#, python-format
+msgid "No suppliers with %(module_name)s available."
+msgstr "Não há fornecedores com o módulo %(module_name)s disponível."
+
+#, python-format
+msgid ""
+"Please set %(module_name)s module for at least one of the <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr "Por favor, defina o módulo %(module_name)s para, pelo menos, um de seus <a href=\"%(supplier_url)s\" target=\"_blank\">Fornecedores</a>."
+
+msgid "Physical count"
+msgstr "Estoque físico"
+
+msgid "Logical count"
+msgstr "Estoque lógico"
+
+msgid "Value per unit"
+msgstr "Valor por unidade"
+
+msgid "Total value"
+msgstr "Valor total"
+
+msgid "No stock information available."
+msgstr "Nenhuma informação do estoque disponível."

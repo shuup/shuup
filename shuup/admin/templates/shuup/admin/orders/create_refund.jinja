@@ -1,0 +1,126 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+
+{% macro render_form(form) %}
+    <div class="form-group">
+      <label class="control-label" for="">{{ form.line_number.label }}</label>
+      <select class="form-control" id="id_{{ form.line_number.html_name }}" name="{{ form.line_number.html_name }}">
+      {% for value, display in line_number_choices %}
+          <option value="{{ value }}"{% if loop.first %} selected="selected"{% endif %}>{{ display }}</option>
+      {% endfor %}
+      </select>
+    </div>
+    {{ bs3.field(form.quantity, form_group_class="form-group hidden") }}
+    {{ bs3.field(form.text, form_group_class="form-group hidden") }}
+    {{ bs3.field(form.amount, form_group_class="form-group hidden") }}
+    {{ bs3.field(form.restock_products, form_group_class="form-group hidden") }}
+{% endmacro %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            {% include "shuup/admin/orders/_refund_order_contents.jinja" with context %}
+            <form method="post" id="create_refund">
+                {% csrf_token %}
+                {% for mf in form.management_form %}{{ mf|safe }}{% endfor %}
+                <div class="text-right">
+                    <h3>{% trans %}Refunded{% endtrans %}: {{ order.get_total_refunded_amount()|money }}</h3>
+                    <h3>{% trans %}Remaining{% endtrans %}: {{ order.get_total_unrefunded_amount()|money }}</h3>
+                </div>
+                <hr>
+                <div id="empty-form" class="refund-line hidden">
+                    <hr>
+                    {{ render_form(form.empty_form) }}
+                </div>
+                {% for f in form.forms %}
+                    <div class="refund-line">
+                        {{ render_form(f) }}
+                        {% if not loop.last %}
+                            <hr>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="input-actions">
+                        <button id="add-refund" class="btn btn-info">{% trans %}Add Another Refund{% endtrans %}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+<script>
+    window.LineData = {{ json_line_data|json }};
+    (function(){
+        function getTotalFormsNumber(){
+            return parseInt($("#id_form-TOTAL_FORMS").val());
+        }
+
+        function incrementTotalForms(){
+            totalField = $("#id_form-TOTAL_FORMS");
+            totalField.val(parseInt(totalField.val()) + 1);
+        }
+
+        function addRefundForm(){
+            var $lastForm = $(".refund-line").last();
+            var $blankForm = $("#empty-form");
+            $blankForm.find("span.select2.select2-container").remove();
+            $blankForm.find("select").removeClass("select2-hidden-accessible");
+            var $newForm = $blankForm.clone();
+            var html = $newForm.get(0).outerHTML.replace(/__prefix__/g, getTotalFormsNumber());
+            $newForm = $(html).removeClass('hidden');
+            $newForm.insertAfter($lastForm);
+            $("[data-toggle='popover']").popover();
+        }
+
+        $("#add-refund").on("click", function(event){
+            event.preventDefault();
+            addRefundForm();
+            incrementTotalForms();
+            activateSelects();
+            activateLineTypeListeners();
+        });
+
+        function setFormGroupVisibility($input, show){
+            if(show) {
+                $input.closest('.form-group').removeClass('hidden');
+            }
+            else {
+                $input.closest('.form-group').addClass('hidden');
+            }
+        }
+
+        function activateLineTypeListeners(){
+            $(".refund-line").find("select").on("change", function(){
+                var $refund = $(this).closest('.refund-line');
+                var lineId = $(this).val();
+                if(lineId === "amount") {
+                    setFormGroupVisibility(
+                        $refund.find("input[id$='quantity']"), false);
+                    setFormGroupVisibility(
+                        $refund.find("input[id$='amount']"), true);
+                    setFormGroupVisibility(
+                        $refund.find("input[id$='text']"), true);
+                    setFormGroupVisibility(
+                        $refund.find("input[id$='restock_products']"), false);
+                } else {
+                    var line = LineData[lineId];
+                    setFormGroupVisibility(
+                        $refund.find("input[id$='quantity']"), line && line["quantity"] != 0);
+                    setFormGroupVisibility(
+                        $refund.find("input[id$='amount']"), line && line["amount"] != 0);
+                    setFormGroupVisibility(
+                        $refund.find("input[id$='text']"), false);
+                    setFormGroupVisibility(
+                        $refund.find("input[id$='restock_products']"), line && line["type"] === "product");
+                    $refund.find("input[id$='quantity']").val(line? line.quantity : 0);
+                    $refund.find("input[id$='amount']").val(line? line.amount : 0);
+                }
+            });
+        }
+
+        activateLineTypeListeners();
+    })()
+</script>
+{% endblock %}

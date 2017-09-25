@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 19:11+0000\n"
+"PO-Revision-Date: 2016-02-05 12:24+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr ""
+
+msgid "This account is inactive."
+msgstr ""
+
+msgid "Username or email address"
+msgstr "ユーザーネーム又はEメールアドレス"
+
+msgid "Username"
+msgstr "ユーザーネーム"
+
+msgid "Email"
+msgstr "Eメール"
+
+msgid "Please provide either username or email, not both."
+msgstr ""
+
+msgid "Please provide either username or email."
+msgstr ""
+
+msgid "shop"
+msgstr "ショップ"
+
+msgid "Log in"
+msgstr "ログイン"
+
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr ""
+
+msgid "Go to Homepage"
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr "パスワードをお忘れですか？"
+
+msgid "New user? Register here!"
+msgstr ""
+
+msgid "Logged out"
+msgstr "ログアウト"
+
+#, fuzzy
+#| msgid "You have been logged out."
+msgid "You have been logged out. Thank you for visiting!"
+msgstr "あなたはログアウトしました"
+
+msgid "Recover your password"
+msgstr ""
+
+msgid "You can recover your password with either username or email."
+msgstr ""
+
+msgid "Send password recovery instructions"
+msgstr ""
+
+msgid "Password Changed"
+msgstr "パスワードは変更されました"
+
+msgid "Your password has been changed and you have been logged in."
+msgstr ""
+
+msgid "Password Recovery"
+msgstr ""
+
+msgid "Change Password"
+msgstr "パスワードを変更する"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr ""
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+msgid ""
+"\n"
+"    If a user account is associated with the information you entered,\n"
+"    you should receive instructions on how to reset your password shortly.\n"
+"    "
+msgstr ""
+
+msgid "This recovery link is invalid."
+msgstr ""

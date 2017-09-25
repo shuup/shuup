@@ -1,0 +1,40 @@
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
+{% from "shuup/personal_order_history/macros/buttons.jinja" import render_action_buttons with context %}
+{% from "shuup/personal_order_history/macros/order_detail.jinja" import basic_info, shipping_address, billing_address, status, order_contents with context %}
+
+{% block title %}{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{% endblock %}
+{% set main_title = _("Details of order %(identifier)s", identifier=order.identifier) %}
+{% block content_title %}{{ main_title }}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:personal-orders"), _("Order History")) }}
+        {{ macros.render_breadcrumb_item(None, main_title, True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block dashboard_content %}
+    <h2 class="page-header">{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{{ render_action_buttons(order) }}</h2>
+    <div class="row order-dashboard-container">
+        <div class="col-sm-12">
+            {{ basic_info() }}
+        </div>
+        <div class="col-sm-6 col-md-3">
+            {{ shipping_address() }}
+        </div>
+        <div class="col-sm-6 col-md-3">
+            {{ billing_address() }}
+        </div>
+        <div class="col-sm-12 col-md-6">
+            {{ status() }}
+        </div>
+        <div class="col-sm-12">
+            {{ order_contents() }}
+        </div>
+        <div class="col-sm-12">
+            {{ order_macros.render_ordered_files(order) }}
+        </div>
+    </div>
+{% endblock %}

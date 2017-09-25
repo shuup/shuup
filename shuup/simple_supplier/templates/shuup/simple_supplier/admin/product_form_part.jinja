@@ -1,0 +1,72 @@
+{% from "shuup/admin/macros/general.jinja" import content_block with context %}
+{% set ss_form = form["simple_supplier"] %}
+
+{%  macro render_product(suppliers, product, product_url, product_qty) %}
+    {% if suppliers %}
+        {% if product_qty > 1 %}<h2><a href="{{ product_url }}" target="_blank">{{ product.name }}</a></h2>{% endif %}
+        {% for supplier in suppliers %}
+            <h3>{{ supplier.name }}</h3>
+                <div class="col-md-6">
+                    {{ ss_form.get_stock_information(supplier, product)|safe }}
+                </div>
+                <div class="col-md-6">
+                    {{ ss_form.get_stock_adjustment_form(supplier, product)|safe }}
+                </div>
+        {% endfor %}
+    {% else %}
+        <p>
+            {% trans product_name=product.name, product_url=product_url, module_name=ss_form.module_name -%}
+                Product <a href="{{ product_url }}" target="_blank">{{ product_name }}</a> does not have suppliers with {{ module_name }} module.
+            {%- endtrans %}
+            {% trans -%}
+                Please set suppliers at Purchasing section.
+            {%- endtrans %}
+        </p>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_products(form) %}
+    {% set product_qty = ss_form.products|length %}
+    {% for product in form.products %}
+        {% set product_url = shuup_admin.model_url(product) %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% if product.is_stocked() %}
+                    {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
+                {% else %}
+                    <p>
+                        {% trans product_name=product.name, product_url=product_url -%}
+                            Product <a href="{{ product_url }}" target="_blank">{{ product_name }}</a> is not stocked.
+                        {%- endtrans %}
+                        {% trans -%}
+                            Please set product stock behavior at Additional Details section.
+                        {%- endtrans %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% call content_block(_("Stock management"), "fa-cubes") %}
+    {% if ss_form.can_manage_stock() %}
+        {{ render_products(ss_form) }}
+    {% else %}
+        <div class="row">
+            <div class="col-sm-12">
+                <p class="section-description">
+                    {% trans module_name=ss_form.module_name -%}
+                        No suppliers with {{ module_name }} available.
+                    {%- endtrans %}
+                    {% trans module_name=ss_form.module_name, supplier_url=shuup_admin.model_url(ss_form.supplier_model, kind="list", default="#") -%}
+                        Please set {{ module_name }} module for at least one of the <a href="{{ supplier_url }}" target="_blank">Suppliers</a>.
+                    {%- endtrans %}
+                </p>
+            </div>
+        </div>
+    {% endif %}
+{% endcall %}
+
+{% block extra_js %}
+    <script src="{{ static("simple_supplier/js/extra.js") }}"></script>
+{% endblock %}

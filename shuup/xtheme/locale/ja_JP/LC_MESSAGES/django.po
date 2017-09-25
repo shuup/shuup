@@ -1,0 +1,291 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 20:11+0000\n"
+"PO-Revision-Date: 2016-08-04 13:14-0700\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.8\n"
+
+msgid "Shuup Extensible Theme Engine"
+msgstr ""
+
+msgid "Themes"
+msgstr "テーマ"
+
+msgid "No theme is active. Click here to activate one."
+msgstr ""
+"テーマはアクティブではありません。 アクティブ化するにはここをクリック"
+"してください。"
+
+msgid "Theming"
+msgstr ""
+
+msgid "activate"
+msgstr ""
+
+msgid "Theme activated."
+msgstr "テーマはアクティブ化されました。"
+
+msgid "current draft"
+msgstr ""
+
+msgid "old version"
+msgstr ""
+
+msgid "public"
+msgstr ""
+
+msgid "theme identifier"
+msgstr ""
+
+msgid "view name"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "status"
+msgstr ""
+
+msgid "internal data"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+#, python-format
+msgid "Theme configuration for %s"
+msgstr ""
+
+msgid "Plugin"
+msgstr "プラグイン"
+
+msgid "Category Links"
+msgstr ""
+
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Show all categories"
+msgstr ""
+
+msgid "All categories are shown, even if not selected"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Image Link URL"
+msgstr ""
+
+msgid "Full width"
+msgstr ""
+
+msgid "Set image to full width of cell"
+msgstr ""
+
+msgid "Width (px)"
+msgstr ""
+
+msgid "Leave blank for default width"
+msgstr ""
+
+msgid "Height (px)"
+msgstr ""
+
+msgid "Product Highlights"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid "Product Cross Sells"
+msgstr ""
+
+msgid "Snippets"
+msgstr ""
+
+msgid "In-Place Snippet"
+msgstr ""
+
+msgid "Resource snippet for end of head"
+msgstr ""
+
+msgid "Resource snippet for beginning of body"
+msgstr ""
+
+msgid "Resource for end of body"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "Ordering"
+msgstr ""
+
+msgid "Social Media Links"
+msgstr ""
+
+msgid "Topic"
+msgstr ""
+
+msgid "Icon Size"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Large"
+msgstr ""
+
+msgid "Alignment"
+msgstr ""
+
+msgid "Left"
+msgstr ""
+
+msgid "Center"
+msgstr ""
+
+msgid "Right"
+msgstr ""
+
+msgid "text"
+msgstr ""
+
+msgid "(Untranslated)"
+msgstr ""
+
+#, python-format
+msgid "Click to edit placeholder: %s"
+msgstr "プレースホルダーを編集するにはクリックしてください: %s"
+
+msgid "Delete This Cell"
+msgstr "このセルを削除"
+
+msgid "There's nothing to configure in this plugin."
+msgstr ""
+
+msgid "Save Plugin"
+msgstr "プラグインを保存する"
+
+msgid "Edit Placeholder"
+msgstr "プレースホルダーを編集する"
+
+msgid "Add new cell"
+msgstr "新しいセルを追加"
+
+msgid "Delete row"
+msgstr "行を削除"
+
+msgid "Add new row"
+msgstr "新しい行を追加"
+
+msgid "Theme Configuration"
+msgstr "テーマ設定"
+
+msgid "No themes are installed."
+msgstr "テーマはインストールされていません。"
+
+msgid "Theme"
+msgstr ""
+
+msgid "Actions"
+msgstr "アクション"
+
+msgid "Author"
+msgstr ""
+
+msgid "Currently active"
+msgstr "現在アクティブ"
+
+msgid "Activate"
+msgstr ""
+
+msgid "Configure"
+msgstr ""
+
+#, python-format
+msgid "Theme Configuration: %(name)s"
+msgstr ""
+
+msgid "There's nothing to configure in this theme."
+msgstr ""
+
+msgid "Revert Changes"
+msgstr "変更を元に戻す"
+
+msgid "Publish Changes"
+msgstr "変更を保存する"
+
+msgid "No access to editing"
+msgstr ""
+
+#, python-format
+msgid "Unknown command %s"
+msgstr ""
+
+msgid "Unable to determine current theme."
+msgstr ""
+
+#, python-format
+msgid "Cannot add more than %d cells in one row."
+msgstr ""
+
+#, fuzzy
+#| msgid "Publish Changes"
+msgid "Published"
+msgstr "変更を保存する"
+
+#, fuzzy
+#| msgid "Revert Changes"
+msgid "Reverted"
+msgstr "変更を元に戻す"
+
+msgid "Full Width"
+msgstr "全幅"
+
+msgid "Three Fourths (3/4)"
+msgstr ""
+
+msgid "Two Thirds (2/3)"
+msgstr "三分の二 (2/3)"
+
+msgid "Half (1/2)"
+msgstr "半分 (1/2)"
+
+msgid "One Third (1/3)"
+msgstr " 三分の一 (1/3)"
+
+msgid "One Fourth (1/4)"
+msgstr "四分の一 (1/4)"
+
+msgid "Cell width"
+msgstr "セルの幅"
+
+msgid "No Plugin"
+msgstr ""
