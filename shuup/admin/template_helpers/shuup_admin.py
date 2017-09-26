@@ -72,6 +72,7 @@ def get_support_id(context):
 
 # TODO: Figure out a more extensible way to deal with this
 BROWSER_URL_NAMES = {
+    "select": "shuup_admin:select",
     "media": "shuup_admin:media.browse",
     "product": "shuup_admin:shop_product.list",
     "contact": "shuup_admin:contact.list",
