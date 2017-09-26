@@ -8,7 +8,6 @@
 import pytest
 from django.conf import settings
 from django.db.models import Sum
-from django.test.utils import override_settings
 
 from shuup.core.models import ShippingMode
 from shuup.front.basket import get_basket
@@ -24,11 +23,7 @@ from .utils import get_unstocked_package_product_and_stocked_child
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("storage", [
-    "shuup.front.basket.storage:DirectSessionBasketStorage",
-    "shuup.front.basket.storage:DatabaseBasketStorage",
-])
-def test_basket(rf, storage):
+def test_basket(rf):
     StoredBasket.objects.all().delete()
     quantities = [3, 12, 44, 23, 65]
     shop = get_default_shop()
@@ -39,43 +34,40 @@ def test_basket(rf, storage):
         product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
         products_and_quantities.append((product, quantity))
 
-    is_database = (storage == "shuup.front.basket.storage:DatabaseBasketStorage")
-    with override_settings(SHUUP_BASKET_STORAGE_CLASS_SPEC=storage):
-        for product, q in products_and_quantities:
-            request = rf.get("/")
-            request.session = {}
-            request.shop = shop
-            apply_request_middleware(request)
-            basket = get_basket(request)
-            assert basket == request.basket
-            assert basket.product_count == 0
-            line = basket.add_product(supplier=supplier, shop=shop, product=product, quantity=q)
-            basket.shipping_method = get_shipping_method(shop=shop)  # For shippable product
-            assert line.quantity == q
-            assert basket.get_lines()
-            assert basket.get_product_ids_and_quantities().get(product.pk) == q
-            assert basket.product_count == q
-            basket.save()
-            delattr(request, "basket")
-            basket = get_basket(request)
-            assert basket.get_product_ids_and_quantities().get(product.pk) == q
-            if is_database:
-                product_ids = set(StoredBasket.objects.last().products.values_list("id", flat=True))
-                assert product_ids == set([product.pk])
+    for product, q in products_and_quantities:
+        request = rf.get("/")
+        request.session = {}
+        request.shop = shop
+        apply_request_middleware(request)
+        basket = get_basket(request)
+        assert basket == request.basket
+        assert basket.product_count == 0
+        line = basket.add_product(supplier=supplier, shop=shop, product=product, quantity=q)
+        basket.shipping_method = get_shipping_method(shop=shop)  # For shippable product
+        assert line.quantity == q
+        assert basket.get_lines()
+        assert basket.get_product_ids_and_quantities().get(product.pk) == q
+        assert basket.product_count == q
+        basket.save()
+        delattr(request, "basket")
+        basket = get_basket(request)
+        assert basket.get_product_ids_and_quantities().get(product.pk) == q
 
-        if is_database:
-            stats = StoredBasket.objects.all().aggregate(
-                n=Sum("product_count"),
-                tfs=Sum("taxful_total_price_value"),
-                tls=Sum("taxless_total_price_value"),
-            )
-            assert stats["n"] == sum(quantities)
-            if shop.prices_include_tax:
-                assert stats["tfs"] == sum(quantities) * 50
-            else:
-                assert stats["tls"] == sum(quantities) * 50
+        product_ids = set(StoredBasket.objects.last().products.values_list("id", flat=True))
+        assert product_ids == set([product.pk])
 
-        basket.finalize()
+    stats = StoredBasket.objects.all().aggregate(
+        n=Sum("product_count"),
+        tfs=Sum("taxful_total_price_value"),
+        tls=Sum("taxless_total_price_value"),
+    )
+    assert stats["n"] == sum(quantities)
+    if shop.prices_include_tax:
+        assert stats["tfs"] == sum(quantities) * 50
+    else:
+        assert stats["tls"] == sum(quantities) * 50
+
+    basket.finalize()
 
 
 @pytest.mark.django_db
