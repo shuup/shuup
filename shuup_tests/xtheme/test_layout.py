@@ -13,9 +13,9 @@ from shuup.xtheme.rendering import get_view_config, render_placeholder
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.xtheme.utils import (
-    close_enough, get_jinja2_engine, get_request,
-    get_test_template_bits, plugin_override,
-    FauxTheme)
+    close_enough, FauxTheme, get_jinja2_engine, get_request,
+    get_test_template_bits, plugin_override
+)
 
 
 def test_layout_serialization():

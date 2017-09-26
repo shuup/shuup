@@ -86,7 +86,7 @@ def add_edit_resources(context):
     from ._theme import get_current_theme
     from .rendering import get_view_config  # avoid circular import
     view_config = get_view_config(context)
-    theme = get_current_theme(request=request)
+    theme = get_current_theme(request.shop)
     if not theme:
         return
     add_resource(context, "body_end", InlineScriptResource.from_vars("XthemeEditorConfig", {

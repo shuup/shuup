@@ -46,6 +46,7 @@ class GenericThemeForm(forms.ModelForm):
             fields = fields.items()
         for name, field in fields:
             self.fields[name] = deepcopy(field)
+
         self.initial.update(self.instance.get_settings())
 
     def save(self, commit=True):

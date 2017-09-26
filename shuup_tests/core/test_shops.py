@@ -31,7 +31,7 @@ def teardown_module(module):
 def test_shop_wont_be_deleted():
     shop = Shop.objects.create(
         name=DEFAULT_NAME,
-        identifier=DEFAULT_IDENTIFIER,
+        identifier="zoombie",
         status=ShopStatus.ENABLED,
         public_name=DEFAULT_NAME
     )
@@ -43,7 +43,7 @@ def test_shop_wont_be_deleted():
     shop.save()
     img.delete()
 
-    Shop.objects.get(pk=shop.pk)
+    assert Shop.objects.filter(pk=shop.pk).exists()
 
 
 @pytest.mark.django_db

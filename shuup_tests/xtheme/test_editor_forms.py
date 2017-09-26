@@ -5,33 +5,35 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from shuup.xtheme._theme import override_current_theme_class, get_current_theme
+import pytest
+
+from shuup.testing.factories import get_default_shop
+from shuup.xtheme._theme import get_current_theme, override_current_theme_class
 from shuup.xtheme.layout import LayoutCell
 from shuup.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
 from shuup.xtheme.views.forms import (
     LayoutCellFormGroup, LayoutCellGeneralInfoForm
 )
-from shuup_tests.xtheme.utils import get_request
 from shuup_tests.xtheme.utils import plugin_override
 
 
+@pytest.mark.django_db
 def test_pluginless_lcfg():
     with plugin_override():
         with override_current_theme_class(None):
-            request = get_request(edit=False)
-            theme = get_current_theme(request)
+            theme = get_current_theme(get_default_shop())
             cell = LayoutCell(theme, None)
             assert not cell.instantiate_plugin()
             lcfg = LayoutCellFormGroup(layout_cell=cell, theme=theme)
             assert "plugin" not in lcfg.forms
 
 
+@pytest.mark.django_db
 def test_formless_plugin_in_lcfg():
     two_thirds = int(LayoutCellGeneralInfoForm.CELL_FULL_WIDTH * 2 / 3)
     with plugin_override():
         with override_current_theme_class(None):
-            request = get_request(edit=False)
-            theme = get_current_theme(request)
+            theme = get_current_theme(get_default_shop())
 
             cell = LayoutCell(theme, "inject")
             assert cell.instantiate_plugin()
@@ -43,12 +45,12 @@ def test_formless_plugin_in_lcfg():
             assert cell.sizes["md"] == two_thirds  # Something got saved even if the plugin doesn't need config
 
 
+@pytest.mark.django_db
 def test_lcfg():
     two_thirds = int(LayoutCellGeneralInfoForm.CELL_FULL_WIDTH * 2 / 3)
     with plugin_override():
         with override_current_theme_class(None):
-            request = get_request(edit=False)
-            theme = get_current_theme(request)
+            theme = get_current_theme(get_default_shop())
 
             cell = LayoutCell(theme, "text", sizes={"md": two_thirds, "sm": two_thirds})
             lcfg = LayoutCellFormGroup(layout_cell=cell, theme=theme)

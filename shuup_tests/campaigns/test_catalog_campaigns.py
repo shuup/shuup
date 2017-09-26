@@ -9,11 +9,12 @@ import decimal
 import json
 from decimal import Decimal
 
+import pytest
 from django.utils.timezone import now
 from django.utils.translation import activate
 
-import pytest
 from shuup.admin.modules.orders.views.edit import OrderEditView
+from shuup.admin.shop_provider import set_shop
 from shuup.campaigns.models.campaigns import CatalogCampaign
 from shuup.campaigns.models.catalog_filters import (
     CategoryFilter, ProductFilter, ProductTypeFilter
@@ -402,6 +403,7 @@ def test_admin_order_with_campaign(rf, admin_user):
         "id": product.id,
         "quantity": 1
     }), user=admin_user)
+    set_shop(request, shop)
     response = OrderEditView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
     assert decimal.Decimal(data['unitPrice']['value']) == shop.create_price(10).value

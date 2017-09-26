@@ -14,7 +14,7 @@ from shuup.core.fields import TaggedJSONField
 
 
 class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore
-    def appropriate(self, theme, view_name, draft):
+    def appropriate(self, theme, shop, view_name, draft):
         """
         Get an "appropriate" `SavedViewConfig` for the parameters given.
 
@@ -39,6 +39,7 @@ class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore
         """
         svc_kwargs = dict(
             theme_identifier=theme.identifier,
+            shop=shop,
             view_name=view_name
         )
         svc_qs = SavedViewConfig.objects.filter(**svc_kwargs).order_by("-id")
@@ -86,6 +87,7 @@ class SavedViewConfigStatus(Enum):
 
 class SavedViewConfig(models.Model):
     theme_identifier = models.CharField(max_length=64, db_index=True, verbose_name=_("theme identifier"))
+    shop = models.ForeignKey("shuup.Shop", related_name="saved_views_config", null=True)
     view_name = models.CharField(max_length=64, db_index=True, verbose_name=_("view name"))
     created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created on"))
     status = EnumIntegerField(SavedViewConfigStatus, db_index=True, verbose_name=_("status"))
@@ -132,12 +134,16 @@ class SavedViewConfig(models.Model):
 
 
 class ThemeSettings(models.Model):
-    theme_identifier = models.CharField(max_length=64, db_index=True, unique=True, verbose_name=_("theme identifier"))
+    theme_identifier = models.CharField(max_length=64, db_index=True, verbose_name=_("theme identifier"))
+    shop = models.ForeignKey("shuup.Shop", related_name="themes_settings", null=True)
     active = models.BooleanField(db_index=True, default=False, verbose_name=_("active"))
     data = TaggedJSONField(db_column="data", default=dict, verbose_name=_("data"))
 
+    class Meta:
+        unique_together = ("theme_identifier", "shop")
+
     def activate(self):
-        self.__class__.objects.all().update(active=False)
+        self.__class__.objects.filter(shop=self.shop).update(active=False)
         self.active = True
         self.save()
 

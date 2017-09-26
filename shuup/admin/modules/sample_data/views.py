@@ -210,7 +210,7 @@ class SampleObjectsWizardPane(WizardPane):
             from shuup.xtheme.layout import Layout
             from shuup.xtheme._theme import get_current_theme
 
-            theme = get_current_theme()
+            theme = get_current_theme(shop)
 
             if theme:
                 layout = Layout(theme, "front_content")
@@ -227,6 +227,7 @@ class SampleObjectsWizardPane(WizardPane):
 
                 svc = SavedViewConfig(
                     theme_identifier=theme.identifier,
+                    shop=shop,
                     view_name="IndexView",
                     status=SavedViewConfigStatus.CURRENT_DRAFT
                 )

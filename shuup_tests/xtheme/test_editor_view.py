@@ -12,6 +12,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.test.client import RequestFactory
 
 from shuup.apps.provides import override_provides
+from shuup.testing.factories import get_default_shop
 from shuup.utils.excs import Problem
 from shuup.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shuup.xtheme.layout import Layout
@@ -29,6 +30,7 @@ from shuup_tests.xtheme.utils import FauxTheme, plugin_override
 def initialize_editor_view(view_name, placeholder_name, request=None):
     if request is None:
         request = RequestFactory().get("/")
+    request.shop = get_default_shop()
     request.user = SuperUser()
     if hasattr(request.GET, "_mutable"):
         request.GET._mutable = True  # Ahem
@@ -47,6 +49,7 @@ def initialize_editor_view(view_name, placeholder_name, request=None):
 def get_test_layout_and_svc():
     svc = SavedViewConfig(
         theme_identifier=FauxTheme.identifier,
+        shop=get_default_shop(),
         view_name=printable_gibberish(),
         status=SavedViewConfigStatus.CURRENT_DRAFT
     )
@@ -57,16 +60,20 @@ def get_test_layout_and_svc():
     return layout, svc
 
 
+@pytest.mark.django_db
 def test_anon_cant_edit(rf):
     request = rf.get("/")
     request.user = AnonymousUser()
+    request.shop = get_default_shop()
     with pytest.raises(Problem):
         EditorView.as_view()(request)
 
 
+@pytest.mark.django_db
 def test_unknown_theme_fails(rf):
     request = rf.get("/", {"theme": printable_gibberish()})
     request.user = SuperUser()
+    request.shop = get_default_shop()
     with pytest.raises(Problem):
         EditorView.as_view()(request)
 

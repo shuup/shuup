@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import logging
+import threading
 import warnings
 from contextlib import contextmanager
 
@@ -22,7 +23,13 @@ from shuup.xtheme.extenders import MenuExtenderLocation
 
 log = logging.getLogger(__name__)
 
-THEME_CACHE_KEY = "current_theme"
+
+# keeps the current middleware state here
+_xtheme_middleware_state = threading.local()
+
+
+def get_theme_cache_key(shop=None):
+    return "shop-{}-current_theme".format(shop.id if shop else "default")
 
 
 # TODO: Document how to create Xthemes
@@ -103,40 +110,49 @@ class Theme(object):
     # Guide template location
     guide_template = None
 
-    def __init__(self, settings_obj=None):
+    def __init__(self, theme_settings=None, shop=None):
         """
-        Initialize this theme, with an optional `ThemeSettings` object
+        Initialize this theme, with an optional `ThemeSettings` or `Shop` object. One should be passed.
 
-        :param settings_obj: A theme settings object for this theme, if one exists.
-                             Passing this in will avoid extraneous database queries.
-        :type settings_obj: ThemeSettings|None
+        :param theme_settings: A theme settings object for this theme
+        :type theme_settings: ThemeSettings|None
+
+        :param shop: The shop for this theme
+        :type shop: Shop|None
         """
-        self._settings_obj = None
-        if settings_obj and settings_obj.theme_identifier == self.identifier:  # fine, let's accept that
-            self._settings_obj = settings_obj
+        self._shop = None
+        self._theme_settings = None
+
+        if theme_settings:
+            if theme_settings.theme_identifier != self.identifier:
+                raise ValueError(_("Theme identifier must match"))
+
+            self._theme_settings = theme_settings
+            self._shop = theme_settings.shop
+
+        elif shop:
+            from shuup.xtheme.models import ThemeSettings
+            self._shop = shop
+            self._theme_settings = ThemeSettings.objects.get_or_create(theme_identifier=self.identifier, shop=shop)[0]
+
+        else:
+            raise ValueError(_("Either theme_settings or shop should be informed"))
 
     @property
     def settings_obj(self):
         """
-        Get a saved settings model for this theme. If one does not yet exist, an unsaved one is returned.
-
-        If one was passed in the ctor, naturally that one is returned.
-
+        Get a saved settings model for this theme
         :rtype: shuup.xtheme.models.ThemeSettings
         """
-        # Ensure this module can be imported from anywhere by lazily importing the model
-        from shuup.xtheme.models import ThemeSettings
-        if self._settings_obj is None:
-            self._settings_obj = ThemeSettings.objects.filter(theme_identifier=self.identifier).first()
-            if not self._settings_obj:
-                self._settings_obj = ThemeSettings(theme_identifier=self.identifier)
-        return self._settings_obj
+        return self._theme_settings
 
     def set_current(self):
         """
         Set this theme as the active theme.
         """
-        self.settings_obj.activate()
+        if not self.settings_obj.active:
+            self.settings_obj.activate()
+
     set_current.alters_data = True
 
     def get_setting(self, key, default=None):
@@ -344,11 +360,10 @@ class Theme(object):
 
 
 _not_set = object()  # Can't use `None` here.
-_current_theme_class = _not_set
 
 
 @contextmanager
-def override_current_theme_class(theme_class=_not_set):
+def override_current_theme_class(theme_class=_not_set, shop=None):
     """
     Context manager for overriding the currently active theme class for testing.
 
@@ -360,89 +375,127 @@ def override_current_theme_class(theme_class=_not_set):
     :param theme_class: A theme class object
     :type theme_class: class[Theme]
     """
-    global _current_theme_class
     # Circular import avoidance:
     from shuup.xtheme.views.extra import clear_view_cache
-    old_theme_class = _current_theme_class
-    _current_theme_class = theme_class
+    old_theme_class = cache.get(get_theme_cache_key(shop))
+
+    if theme_class is _not_set or not theme_class:
+        cache.set(get_theme_cache_key(shop), None)
+    else:
+        from shuup.xtheme.models import ThemeSettings
+        theme_settings = ThemeSettings.objects.get_or_create(
+            shop=shop,
+            theme_identifier=theme_class.identifier
+        )[0]
+        theme = theme_class(theme_settings)
+        set_middleware_current_theme(theme)
+        cache.set(get_theme_cache_key(shop), theme)
+
     clear_view_cache()
     yield
-    _current_theme_class = old_theme_class
+
+    cache.set(get_theme_cache_key(shop), old_theme_class)
     clear_view_cache()
 
 
-def get_current_theme(request=None):
+def get_current_theme(shop):
     """
     Get the currently active theme object.
 
-    :param request: Request, if available
-    :type request: HttpRequest|None
+    :param shop: The shop to get the active theme
+    :type shop: shuup.core.models.Shop
     :return: Theme object or None
     :rtype: Theme
     """
-
-    if _current_theme_class is not _not_set:
-        if _current_theme_class:
-            return _current_theme_class()
-        return None  # No theme (usually for testing)
-
-    value = cache.get(THEME_CACHE_KEY)
+    value = cache.get(get_theme_cache_key(shop))
     if value:
+        set_middleware_current_theme(value)
         return value
 
-    if request and hasattr(request, "_current_xtheme"):
-        return request._current_xtheme
+    theme = _get_current_theme(shop)
+    cache.set(get_theme_cache_key(shop), theme)
+    # set this theme as the current for this thread
+    set_middleware_current_theme(theme)
 
-    theme = _get_current_theme()
-
-    if request:
-        request._current_xtheme = theme
-
-    cache.set(THEME_CACHE_KEY, theme)
     return theme
 
 
-def get_theme_by_identifier(identifier, settings_obj=None):
+def set_middleware_current_theme(theme):
+    """"
+    Set the theme as the current for this thread
+    """
+    _xtheme_middleware_state.theme = theme
+
+
+def get_middleware_current_theme():
+    """
+    Returns the current middleware state theme
+    """
+    return getattr(_xtheme_middleware_state, "theme", None)
+
+
+def get_theme_by_identifier(identifier, shop):
     """
     Get an instantiated theme by identifier.
 
     :param identifier: Theme identifier
     :type identifier: str
-    :param settings_obj: Optional ThemeSettings object for the theme constructor
-    :type settings_obj: shuup.xtheme.models.ThemeSettings
+
+    :param shop: Shop to fetch the theme settings
+    :type shop: shuup.core.models.Shop
+
     :return: Theme object or None
     :rtype: Theme
     """
     for theme_cls in get_provide_objects("xtheme"):
         if theme_cls.identifier == identifier:
-            return theme_cls(settings_obj=settings_obj)
+            from shuup.xtheme.models import ThemeSettings
+            theme_settings = ThemeSettings.objects.get_or_create(
+                theme_identifier=identifier,
+                shop=shop
+            )[0]
+
+            return theme_cls(theme_settings=theme_settings)
+
     return None  # No such thing.
 
 
-def set_current_theme(identifier):
+def set_current_theme(identifier, shop):
     """
     Activate a theme based on identifier.
 
     :param identifier: Theme identifier
     :type identifier: str
+    :param shop: Shop to fetch the theme settings
+    :type shop: shuup.core.models.Shop
     :return: Activated theme
     :rtype: Theme
     """
-    cache.bump_version(THEME_CACHE_KEY)
-    theme = get_theme_by_identifier(identifier)
+    cache.bump_version(get_theme_cache_key(shop))
+    theme = get_theme_by_identifier(identifier, shop)
     if not theme:
         raise ValueError("Invalid theme identifier")
     theme.set_current()
-    cache.set(THEME_CACHE_KEY, theme)
+    cache.set(get_theme_cache_key(shop), theme)
+    set_middleware_current_theme(theme)
     return theme
 
 
-def _get_current_theme():
+def _get_current_theme(shop):
     theme = None
     try:
         # Ensure this module can be imported from anywhere by lazily importing the model
         from shuup.xtheme.models import ThemeSettings
-        ts = ThemeSettings.objects.filter(active=True).first()
+        theme_settings = ThemeSettings.objects.filter(active=True, shop=shop).first()
+
+        # no active found, take the first and activate
+        if not theme_settings:
+            theme_settings = ThemeSettings.objects.filter(shop=shop).first()
+
+            if theme_settings:
+                theme_settings.activate()
+                theme_settings.refresh_from_db()
+
     except Exception as exc:
         # This is unfortunate and weird, but I don't want other tests to depend
         # on Xtheme's state or require the `djangodb` mark for every test.
@@ -450,11 +503,13 @@ def _get_current_theme():
         # message here and let everything else pass.
         if "Database access not allowed" not in str(exc):
             raise
-        ts = None
-    if ts:
-        theme_cls = get_identifier_to_object_map("xtheme").get(ts.theme_identifier)
+        theme_settings = None
+
+    if theme_settings:
+        theme_cls = get_identifier_to_object_map("xtheme").get(theme_settings.theme_identifier)
         if theme_cls is not None:
-            theme = theme_cls(settings_obj=ts)
+            theme = theme_cls(theme_settings=theme_settings)
         else:
-            log.warn("The active theme %r is not currently installed", ts.theme_identifier)
+            log.warn("The active theme %r is not currently installed", theme_settings.theme_identifier)
+
     return theme

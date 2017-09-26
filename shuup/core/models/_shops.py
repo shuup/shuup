@@ -103,7 +103,6 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     objects = ShopManager()
 
     class Meta:
-        permissions = (('view_shop', 'Can view shops'),)
         verbose_name = _('shop')
         verbose_name_plural = _('shops')
 

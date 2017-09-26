@@ -2,15 +2,16 @@
 {% set themes = form_def.context["theme_classes"] %}
 {% set active_theme = form_def.context["current_theme"] %}
 {% set active_stylesheet = form_def.context["active_stylesheet"] %}
+{% set shop = form_def.context["shop"] %}
 <input type="hidden" name="theme-activate" value="{{ active_theme.identifier }}">
 <input type="hidden" name="theme-selected_style" value="{{ active_stylesheet }}">
 <div class="hidden">
-{{ wizard_theme_table(themes, active_theme, "chooseTheme(this)", True) }}
+{{ wizard_theme_table(themes, active_theme, shop, "chooseTheme(this)", True) }}
 </div>
 
 <div id="theme-images">
 {% for theme in themes %}
-    {% if theme().has_images() %}
+    {% if theme(shop=shop).has_images() %}
         <div class="row">
         {% for style_definition in theme.stylesheets %}
             {% if style_definition.identifier %}

@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from jinja2.utils import contextfunction
 
-from shuup.xtheme._theme import get_current_theme
+from shuup.xtheme._theme import get_current_theme, get_middleware_current_theme
 from shuup.xtheme.editing import is_edit_mode
 from shuup.xtheme.rendering import get_view_config
 
@@ -57,7 +57,7 @@ class XthemeNamespace(object):
         :rtype: object
         """
         request = context["request"]
-        theme = get_current_theme(request)
+        theme = get_current_theme(request.shop)
         if theme:
             return theme.get_setting(name, default=default)
         return default
@@ -73,7 +73,7 @@ class XthemeNamespace(object):
         :return: Template helper, maybe
         :rtype: object|None
         """
-        theme = get_current_theme()
+        theme = get_middleware_current_theme()
         if theme:
             helper = getattr(theme, item, None)
             if helper and callable(helper) and not getattr(helper, "alters_data", False):

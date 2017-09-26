@@ -7,17 +7,18 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.core.exceptions import ImproperlyConfigured
-from django.test.utils import override_settings
 from django.utils.encoding import force_text
 
+from shuup.testing.factories import get_default_shop
 from shuup.xtheme.testing import override_current_theme_class
 from shuup.xtheme.views.extra import extra_view_dispatch
 from shuup_tests.xtheme.utils import H2G2Theme
 
 
 def test_xtheme_extra_views(rf):
-    with override_current_theme_class(H2G2Theme):
+    with override_current_theme_class(H2G2Theme, get_default_shop()):
         request = rf.get("/", {"name": "Arthur Dent"})
+        request.shop = get_default_shop()
         # Simulate /xtheme/greeting
         response = extra_view_dispatch(request, "greeting")
         assert force_text(response.content) == "So long, and thanks for all the fish, Arthur Dent"
@@ -29,8 +30,9 @@ def test_xtheme_extra_views(rf):
 
 
 def test_xtheme_extra_view_exceptions(rf):
-    with override_current_theme_class(H2G2Theme):
+    with override_current_theme_class(H2G2Theme, get_default_shop()):
         request = rf.get("/")
+        request.shop = get_default_shop()
         assert extra_view_dispatch(request, "vogons").status_code == 404
         with pytest.raises(ImproperlyConfigured):
             assert extra_view_dispatch(request, "true")

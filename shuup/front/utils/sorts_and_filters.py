@@ -17,7 +17,7 @@ from shuup import configuration
 from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
 from shuup.core.utils import context_cache
-from shuup.xtheme import THEME_CACHE_KEY
+from shuup.xtheme import get_theme_cache_key
 
 FACETED_DEFAULT_CONF_KEY = "front_faceted_configurations"
 FACETED_CATEGORY_CONF_KEY_PREFIX = "front_faceted_category_configurations_%s"
@@ -202,7 +202,7 @@ def set_configuration(shop=None, category=None, data=None):
         configuration.set(None, _get_category_configuration_key(category), data)
     elif shop:
         configuration.set(shop, FACETED_DEFAULT_CONF_KEY, data)
-        cache.bump_version(THEME_CACHE_KEY)
+        cache.bump_version(get_theme_cache_key(shop))
 
     # clear active keys
     context_cache.bump_cache_for_item(category)

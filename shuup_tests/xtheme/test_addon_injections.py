@@ -8,6 +8,7 @@
 import pytest
 
 from shuup.apps.provides import override_provides
+from shuup.testing.factories import get_default_shop
 from shuup.xtheme.resources import add_resource, InlineScriptResource
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.xtheme.utils import get_jinja2_engine, get_request
@@ -20,6 +21,7 @@ def add_test_injection(context, content):
 @pytest.mark.django_db
 def test_simple_addon_injection():
     request = get_request(edit=False)
+    request.shop = get_default_shop()
     jeng = get_jinja2_engine()
     template = jeng.get_template("resinject.jinja")
 

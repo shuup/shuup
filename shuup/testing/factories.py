@@ -426,7 +426,8 @@ def get_default_shop():
             identifier=DEFAULT_IDENTIFIER,
             status=ShopStatus.ENABLED,
             public_name=DEFAULT_NAME,
-            currency=get_default_currency().code
+            currency=get_default_currency().code,
+            domain="default.shuup.com"
         )
         assert str(shop) == DEFAULT_NAME
     return shop
