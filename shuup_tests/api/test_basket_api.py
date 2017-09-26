@@ -13,6 +13,7 @@ from decimal import Decimal
 import pytest
 import six
 from django.contrib.auth.models import User
+from django.test import override_settings
 from pytest_django.fixtures import django_user_model, django_username_field
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -173,25 +174,26 @@ def test_create_new_basket(admin_user, settings):
 
 @pytest.mark.django_db
 def test_fetch_basket(admin_user, settings):
-    configure(settings)
-    shop = factories.get_default_shop()
-    shop2 = create_shop("foobar")
-    basket = factories.get_basket()
-    factories.get_default_payment_method()
-    factories.get_default_shipping_method()
-    assert basket.shop == shop
-    client = _get_client(admin_user)
-    response = client.get('/api/shuup/basket/{}-{}/'.format(shop.pk, basket.key))
-    assert response.status_code == status.HTTP_200_OK
-    basket_data = json.loads(response.content.decode("utf-8"))
-    assert basket_data["key"] == basket.key
-    assert not basket_data["validation_errors"]
-    # malformed uuid
-    response = client.get('/api/shuup/basket/{}/'.format(basket.key))
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    # wrong shop
-    response = client.get('/api/shuup/basket/{}-{}/'.format(shop2.pk, basket.key))
-    assert response.status_code == 400
+    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+        configure(settings)
+        shop = factories.get_default_shop()
+        shop2 = create_shop("foobar")
+        basket = factories.get_basket()
+        factories.get_default_payment_method()
+        factories.get_default_shipping_method()
+        assert basket.shop == shop
+        client = _get_client(admin_user)
+        response = client.get('/api/shuup/basket/{}-{}/'.format(shop.pk, basket.key))
+        assert response.status_code == status.HTTP_200_OK
+        basket_data = json.loads(response.content.decode("utf-8"))
+        assert basket_data["key"] == basket.key
+        assert not basket_data["validation_errors"]
+        # malformed uuid
+        response = client.get('/api/shuup/basket/{}/'.format(basket.key))
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        # wrong shop
+        response = client.get('/api/shuup/basket/{}-{}/'.format(shop2.pk, basket.key))
+        assert response.status_code == 404
 
 
 @pytest.mark.django_db
@@ -906,7 +908,7 @@ def test_permissions(admin_user, settings):
     # someone figured out the first param is shop!! oh noes
     client = _get_client(user_one)
     response = client.get("/api/shuup/basket/{}-{}/".format(shop_two.pk, basket.key))
-    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert response.status_code == status.HTTP_404_NOT_FOUND
 
     basket = Basket.objects.first()
     assert basket.key == basket_data['uuid'].split("-")[1]
