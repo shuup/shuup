@@ -147,7 +147,6 @@ def test_campaign_all_rules_must_match1(rf):
 
     ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount)
 
-
     product = create_product("Just-A-Product-Too", shop, default_price=original_price)
 
     price = shop.create_price
@@ -379,7 +378,6 @@ def test_availability(rf):
 
     ProductDiscountAmount.objects.create(discount_amount=discount_amount, campaign=campaign)
 
-
     assert not campaign.is_available()
 
 
@@ -437,7 +435,6 @@ def test_product_catalog_campaigns():
     # category filter that matches
     shop_product.categories.add(cat)
     assert CatalogCampaign.get_for_product(shop_product).count() == 1
-
 
     # create other shop
     shop1 = Shop.objects.create(name="testshop", identifier="testshop", status=ShopStatus.ENABLED, public_name="testshop")

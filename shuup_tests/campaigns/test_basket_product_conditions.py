@@ -110,7 +110,6 @@ def test_basket_total_amount_conditions(rf):
     assert not condition2.matches(basket, [])
 
 
-
 @pytest.mark.django_db
 def test_basket_total_value_conditions(rf):
     request, shop, group = initialize_test(rf, False)

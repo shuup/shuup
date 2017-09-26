@@ -14,6 +14,7 @@ from shuup.campaigns.models.campaigns import BasketCampaign, Coupon
 from shuup.testing import factories
 
 
+
 @pytest.mark.django_db
 def test_utf8_coupon_force_text(rf):
     code = u"HEINÄ"

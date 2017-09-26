@@ -39,7 +39,7 @@ def test_basket_free_product(rf):
 
     single_product_price = "50"
     original_quantity = 2
-     # create basket rule that requires 2 products in basket
+    # create basket rule that requires 2 products in basket
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=2)
     basket.shipping_method = get_shipping_method(shop=shop)
@@ -86,9 +86,8 @@ def test_basket_free_product_coupon(rf):
     supplier = get_default_supplier()
 
     single_product_price = "50"
-    discount_amount_value = "10"
 
-     # create basket rule that requires 2 products in basket
+    # create basket rule that requires 2 products in basket
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
@@ -140,7 +139,7 @@ def test_productdiscountamount(rf):
     discount_amount_value = "10"
     quantity = 2
 
-     # create basket rule that requires 2 products in basket
+    # create basket rule that requires 2 products in basket
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=quantity)
     basket.shipping_method = get_shipping_method(shop=shop)
@@ -181,10 +180,10 @@ def test_productdiscountamount_with_minimum_price(rf, per_line_discount):
 
     single_product_price = Decimal("50")
     single_product_min_price = Decimal("40")
-    discount_amount_value = Decimal("200") # will exceed the minimum price
+    discount_amount_value = Decimal("200")  # will exceed the minimum price
     quantity = 2
 
-     # create basket rule that requires 2 products in basket
+    # create basket rule that requires 2 products in basket
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
     shop_product = ShopProduct.objects.get(product=product, shop=shop)
     shop_product.minimum_price_value = single_product_min_price
@@ -229,7 +228,7 @@ def test_product_category_discount_amount_with_minimum_price(rf):
 
     single_product_price = Decimal("50")
     single_product_min_price = Decimal("40")
-    discount_amount_value = Decimal("200") # will exceed the minimum price
+    discount_amount_value = Decimal("200")  # will exceed the minimum price
     quantity = 2
 
     # the expected discount amount should not be greater than the products
@@ -237,7 +236,7 @@ def test_product_category_discount_amount_with_minimum_price(rf):
 
     category = CategoryFactory()
 
-     # create basket rule that requires 2 products in basket
+    # create basket rule that requires 2 products in basket
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
     shop_product = ShopProduct.objects.get(shop=shop, product=product)
     shop_product.minimum_price_value = single_product_min_price

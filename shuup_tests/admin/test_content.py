@@ -18,9 +18,7 @@ from shuup.admin.modules.content.forms import (
     ContentWizardForm
 )
 from shuup.admin.utils import wizard
-from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.wizard import WizardView
-from shuup.core.models import Shop
 from shuup.notify.actions.email import SendEmail
 from shuup.notify.models import Script
 from shuup.notify.script import StepNext
@@ -315,7 +313,6 @@ def test_content_wizard_pane(rf, admin_user, settings):
     assert Script.objects.count() == 0
     settings.INSTALLED_APPS.remove("shuup.xtheme")
     SavedViewConfig.objects.all().delete()
-
 
     # add the notify - create only the notification
     settings.INSTALLED_APPS.append("shuup.notify")
