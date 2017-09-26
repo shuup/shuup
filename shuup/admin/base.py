@@ -8,13 +8,10 @@
 from __future__ import unicode_literals
 
 import hashlib
-import warnings
 
 import six
 from django.core.urlresolvers import reverse
 from django.utils.encoding import force_bytes, force_text
-
-from shuup.utils.deprecation import RemovedFromShuupWarning
 
 
 class AdminModule(object):
@@ -229,18 +226,19 @@ class Section(object):
     extra_js = ""
     order = 0
 
-    @staticmethod
-    def visible_for_object(obj):
+    @classmethod
+    def visible_for_object(cls, obj, request=None):
         """
         Returns whether this sections must be visible for the provided object (e.g. `order`)
         :type model object: e.g. shuup.core.models.Order
+        :type request: HttpRequest
         :return whether this section must be shown in order section list, defaults to false
         :rtype: bool
         """
         return False
 
-    @staticmethod
-    def get_context_data(obj):
+    @classmethod
+    def get_context_data(cls, obj, request=None):
         """
         Returns additional information to be used in the template
 
@@ -251,23 +249,8 @@ class Section(object):
 
 
         :type object: e.g. shuup.core.models.Order
+        :type request: HttpRequest
         :return additional context data
         :rtype: object|None
         """
         return None
-
-
-class OrderSection(Section):
-    """
-    Deprecated use Section instead
-    """
-    def __new__(cls):
-        warnings.warn("OrderSection in shuup.admin.base is deprecated, use Section instead ", RemovedFromShuupWarning)
-        return super(OrderSection, cls).__new__(cls)
-
-    @classmethod
-    def visible_for_object(cls, order):
-        """
-        Support for the deprecated `visible_for_order` function
-        """
-        return cls.visible_for_order(order) or super(OrderSection, cls).visible_for_object(order)

@@ -21,12 +21,14 @@ class BasicInfoContactSection(Section):
     template = "shuup/admin/contacts/_contact_basic_info.jinja"
     order = 1
 
-    @staticmethod
-    def visible_for_object(contact):
-        return True
+    @classmethod
+    def visible_for_object(cls, contact, request=None):
+        if not request:
+            return True  # backwards compatibility
+        return request.user.has_perm('shuup.view_contact')
 
-    @staticmethod
-    def get_context_data(contact):
+    @classmethod
+    def get_context_data(cls, contact, request=None):
         context = {}
 
         context['groups'] = sorted(
@@ -51,13 +53,13 @@ class AddressesContactSection(Section):
     template = "shuup/admin/contacts/_contact_addresses.jinja"
     order = 2
 
-    @staticmethod
-    def visible_for_object(contact):
+    @classmethod
+    def visible_for_object(cls, contact, request=None):
         return (contact.default_shipping_address_id or
                 contact.default_billing_address_id)
 
-    @staticmethod
-    def get_context_data(contact):
+    @classmethod
+    def get_context_data(cls, contact, request=None):
         return None
 
 
@@ -68,13 +70,15 @@ class OrdersContactSection(Section):
     template = "shuup/admin/contacts/_contact_orders.jinja"
     order = 3
 
-    @staticmethod
-    def visible_for_object(contact):
-        return (contact.default_shipping_address_id or
-                contact.default_billing_address_id)
+    @classmethod
+    def visible_for_object(cls, contact, request=None):
+        has_addresses = bool(contact.default_shipping_address_id or contact.default_billing_address_id)
+        if not request:
+            return has_addresses  # backwards compatibility
+        return bool(request.user.has_perm('shuup.view_contact') and has_addresses)
 
-    @staticmethod
-    def get_context_data(contact):
+    @classmethod
+    def get_context_data(cls, contact, request=None):
         return contact.customer_orders.valid().order_by("-id")
 
 
@@ -85,12 +89,15 @@ class MembersContactSection(Section):
     template = "shuup/admin/contacts/_contact_members.jinja"
     order = 4
 
-    @staticmethod
-    def visible_for_object(contact):
-        return hasattr(contact, 'members')
+    @classmethod
+    def visible_for_object(cls, contact, request=None):
+        has_members = hasattr(contact, 'members')
+        if not request:
+            return has_members  # backwards compatibility
+        return bool(request.user.has_perm('shuup.view_contact') and has_members)
 
-    @staticmethod
-    def get_context_data(contact):
+    @classmethod
+    def get_context_data(cls, contact, request=None):
         if contact.members:
             return contact.members.all()
 
