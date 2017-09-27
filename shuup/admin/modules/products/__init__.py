@@ -165,7 +165,7 @@ class ProductModule(AdminModule):
             get_default_model_permissions(File)
         )
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         if isinstance(object, Product):
             shop = Shop.objects.first()
             object = object.get_shop_instance(shop)

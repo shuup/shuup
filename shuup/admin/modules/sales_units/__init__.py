@@ -43,7 +43,7 @@ class SalesUnitModule(AdminModule):
     def get_required_permissions(self):
         return get_default_model_permissions(SalesUnit)
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         return derive_model_url(SalesUnit, "shuup_admin:sales_unit", object, kind)
 
 
@@ -74,5 +74,5 @@ class DisplayUnitModule(AdminModule):
     def get_required_permissions(self):
         return get_default_model_permissions(DisplayUnit)
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         return derive_model_url(DisplayUnit, "shuup_admin:display_unit", object, kind)

@@ -192,7 +192,7 @@ class OrderModule(AdminModule):
                 kind="danger"
             )
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         if hasattr(object, "role"):
             return derive_model_url(OrderStatus, "shuup_admin:order_status", object, kind)
         return derive_model_url(Order, "shuup_admin:order", object, kind)

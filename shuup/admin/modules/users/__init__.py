@@ -120,5 +120,5 @@ class UserModule(AdminModule):
     def get_required_permissions(self):
         return get_default_model_permissions(get_user_model())
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         return derive_model_url(get_user_model(), "shuup_admin:user", object, kind)

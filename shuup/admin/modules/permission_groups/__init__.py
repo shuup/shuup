@@ -41,5 +41,5 @@ class PermissionGroupModule(AdminModule):
     def get_required_permissions(self):
         return get_default_model_permissions(PermissionGroup)
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         return derive_model_url(PermissionGroup, "shuup_admin:permission_group", object, kind)

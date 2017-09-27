@@ -35,6 +35,11 @@ Core
 - API: add person contact endpoint
 - API: add address endpoint
 
+Admin
+~~~~~
+
+- Breaking change: add optional shop parameter in `get_model_url` method of admin module
+
 Campaigns
 ~~~~~~~~~
 

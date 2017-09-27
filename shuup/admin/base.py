@@ -82,7 +82,7 @@ class AdminModule(object):
         """
         return ()
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         """
         Retrieve an admin URL for the given object of the kind `kind`.
 
@@ -93,6 +93,8 @@ class AdminModule(object):
         :type object: django.db.models.Model
         :param kind: URL kind. Currently "detail", "list" or "new".
         :type kind: str
+        :param shop: The shop that owns the resource
+        :type shop: shuup.core.models.Shop|None
         :return: The reversed URL or none.
         :rtype: str|None
         """

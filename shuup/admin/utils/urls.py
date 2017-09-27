@@ -166,7 +166,7 @@ class NoModelUrl(ValueError):
     pass
 
 
-def get_model_url(object, kind="detail", user=None, required_permissions=None):
+def get_model_url(object, kind="detail", user=None, required_permissions=None, shop=None):
     """
     Get a an admin object URL for the given object or object class by
     interrogating each admin module.
@@ -184,11 +184,13 @@ def get_model_url(object, kind="detail", user=None, required_permissions=None):
     :type user: django.contrib.auth.models.User|None
     :param required_permissions: Optional iterable of permission strings
     :type required_permissions: Iterable[str]|None
+    :param shop: The shop that owns the resource
+    :type request: shuup.core.models.Shop|None
     :return: Resolved URL.
     :rtype: str
     """
     for module in get_modules():
-        url = module.get_model_url(object, kind)
+        url = module.get_model_url(object, kind, shop)
         if not url:
             continue
         if user is None:

@@ -89,7 +89,7 @@ class CampaignAdminModule(AdminModule):
     def get_required_permissions(self):
         return get_permissions_from_urls(self.get_urls())
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         if not hasattr(object, "admin_url_suffix"):
             return super(CampaignAdminModule, self).get_model_url(object, kind)
         admin_url = "shuup_admin:%s" % object.admin_url_suffix
