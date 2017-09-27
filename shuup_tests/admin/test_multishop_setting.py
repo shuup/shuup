@@ -18,7 +18,7 @@ def test_multishop_edit_view(rf, admin_user):
     get_default_shop()
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    view = ShopEditView(request=request, kwargs={"pk": None}) 
+    view = ShopEditView(request=request, kwargs={"pk": None})
 
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=False):
         with pytest.raises(Problem):
@@ -26,4 +26,4 @@ def test_multishop_edit_view(rf, admin_user):
 
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         new_shop = view.get_object()
-        assert new_shop.pk is None 
+        assert new_shop.pk is None

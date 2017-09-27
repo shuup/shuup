@@ -34,12 +34,12 @@ from shuup.utils.importing import load
     "shuup.admin.modules.products.views:ProductListView",
 ])
 @pytest.mark.django_db
-def test_list_view(rf, class_spec):
+def test_list_view(rf, class_spec, admin_user):
     shop = get_default_shop()
     view = load(class_spec).as_view()
-    request = rf.get("/", {
+    request = apply_request_middleware(rf.get("/", {
         "jq": json.dumps({"perPage": 100, "page": 1})
-    })
+    }), user=admin_user)
     response = view(request)
     assert 200 <= response.status_code < 300
 
@@ -101,6 +101,7 @@ def test_edit_view_adding_messages_to_form_group(rf, admin_user):
 @pytest.mark.django_db
 def test_product_edit_view(rf, admin_user, settings):
     shop = get_default_shop()  # obvious prerequisite
+    shop.staff_members.add(admin_user)
     product = get_default_product()
     shop_product = product.get_shop_instance(shop)
     cat = CategoryFactory()
@@ -158,6 +159,8 @@ def test_product_edit_view(rf, admin_user, settings):
     response = view(request, pk=product.pk)
 
     shop_product = ShopProduct.objects.first()
+    assert shop_product.primary_category
+
     if settings.SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES:
         assert shop_product.categories.count() == 1
         assert shop_product.categories.first() == cat

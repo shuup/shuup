@@ -13,17 +13,18 @@ from shuup import configuration
 from shuup.admin.modules.products.views import ProductListView
 from shuup.admin.modules.settings.views import ListSettingsView
 from shuup.testing.factories import get_default_shop
+from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
-def test_view_default_columns(rf):
+def test_view_default_columns(rf, admin_user):
     shop = get_default_shop()
 
     view = ProductListView.as_view()
 
-    request = rf.get("/", {
+    request = apply_request_middleware(rf.get("/", {
         "jq": json.dumps({"perPage": 100, "page": 1})
-    })
+    }), user=admin_user)
     response = view(request)
     assert 200 <= response.status_code < 300
 

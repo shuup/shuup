@@ -118,7 +118,7 @@ def test_behavior_add_save(rf, admin_user, view, model, get_object, service_prov
         components_before = object.behavior_components.count()
         assert not components_before
 
-        request = apply_request_middleware(rf.post("/", data=data, user=admin_user))
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         view(request, pk=object.pk)
         components_after = object.behavior_components.count()
         assert components_after == len(get_default_behavior_settings())
@@ -149,7 +149,7 @@ def test_behavior_delete_save(rf, admin_user, view, model, get_object, service_p
         data["weightlimitsbehaviorcomponent-INITIAL_FORMS"] = 1
         data["weightlimitsbehaviorcomponent-TOTAL_FORMS"] = 2
 
-        request = apply_request_middleware(rf.post("/", data=data, user=admin_user))
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         response = view(request, pk=object.pk)
         if hasattr(response, "render"):
             response.render()

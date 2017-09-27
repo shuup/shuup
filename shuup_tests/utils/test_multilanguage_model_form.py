@@ -6,16 +6,17 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import override_settings
-from django.test.client import RequestFactory
 from django.utils.translation import activate
 
 from shuup.admin.modules.services.forms import PaymentMethodForm
 from shuup.admin.modules.shops.forms import ShopBaseForm, ShopWizardForm
-from shuup.testing.factories import get_default_shop, get_default_payment_method
+from shuup.testing.factories import (
+    get_default_payment_method, get_default_shop
+)
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.forms import get_form_data
 
 
@@ -72,63 +73,65 @@ def test_default_language_english():
 
 
 @pytest.mark.django_db
-@override_settings(**{"LANGUAGES": (("en", "en"), ("fi", "fi"), ("ja", "ja")), "PARLER_DEFAULT_LANGUAGE_CODE": "en"})
-def test_model_form_partially_translated():
-    activate("en")
-    request = RequestFactory().get("/")
-    test_name_en = "Test shop"
-    payment_method = get_default_payment_method()
-    payment_method.name = test_name_en
-    payment_method.save()
+def test_model_form_partially_translated(rf, admin_user):
+    with override_settings(**{"LANGUAGES": (("en", "en"), ("fi", "fi"), ("ja", "ja")),
+                              "PARLER_DEFAULT_LANGUAGE_CODE": "en"}):
+        activate("en")
+        get_default_shop()
+        request = apply_request_middleware(rf.get("/"), user=admin_user)
+        test_name_en = "Test shop"
+        payment_method = get_default_payment_method()
+        payment_method.name = test_name_en
+        payment_method.save()
 
-    form = PaymentMethodForm(instance=payment_method, request=request, languages=settings.LANGUAGES)
-    data = get_form_data(form, prepared=True)
-    assert data.get("name__en") == test_name_en
-    assert not data.get("name__fi")
-    form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
-    form.full_clean()
-    assert form.is_valid() and not form.errors
-    payment_method = form.save()
+        form = PaymentMethodForm(instance=payment_method, request=request, languages=settings.LANGUAGES)
+        data = get_form_data(form, prepared=True)
+        assert data.get("name__en") == test_name_en
+        assert not data.get("name__fi")
+        form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
+        form.full_clean()
+        assert form.is_valid() and not form.errors
+        payment_method = form.save()
 
-    # Add description for Finnish and and name in Finnish should be required
-    data["description__fi"] = "Some description"
-    form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
-    form.full_clean()
-    assert not form.is_valid() and form.errors
+        # Add description for Finnish and and name in Finnish should be required
+        data["description__fi"] = "Some description"
+        form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
+        form.full_clean()
+        assert not form.is_valid() and form.errors
 
-    test_name_fi = "Some method name in finnish"
-    data["name__fi"] = test_name_fi
-    form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
-    form.full_clean()
-    assert form.is_valid() and not form.errors
-    payment_method = form.save()
+        test_name_fi = "Some method name in finnish"
+        data["name__fi"] = test_name_fi
+        form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
+        form.full_clean()
+        assert form.is_valid() and not form.errors
+        payment_method = form.save()
 
-    assert payment_method.name == test_name_en, "Object in English"
+        assert payment_method.name == test_name_en, "Object in English"
 
-    activate("fi")
-    payment_method.set_current_language("fi")
-    assert payment_method.name == test_name_fi, "Object in Finnish"
+        activate("fi")
+        payment_method.set_current_language("fi")
+        assert payment_method.name == test_name_fi, "Object in Finnish"
 
-    activate("ja")
-    payment_method.set_current_language("ja")
-    assert payment_method.name == test_name_en, "Should fallback to English"
+        activate("ja")
+        payment_method.set_current_language("ja")
+        assert payment_method.name == test_name_en, "Should fallback to English"
 
-    # Check that no sneaky translations is not created for Japan
-    with pytest.raises(ObjectDoesNotExist):
-        translation = payment_method.get_translation("ja")
-        translation.refresh_from_db()  # Just in case if the translation object comes from cache or something
+        # Check that no sneaky translations is not created for Japan
+        with pytest.raises(ObjectDoesNotExist):
+            translation = payment_method.get_translation("ja")
+            translation.refresh_from_db()  # Just in case if the translation object comes from cache or something
 
-    # Empty finnish translations and see if Finnish starts fallbacks too
-    data["name__fi"] = data["description__fi"] = ""
-    form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
-    form.full_clean()
-    assert form.is_valid() and not form.errors
-    form.save()
+        # Empty finnish translations and see if Finnish starts fallbacks too
+        data["name__fi"] = data["description__fi"] = ""
+        form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
+        form.full_clean()
+        assert form.is_valid() and not form.errors
+        form.save()
 
-    # Check that no sneaky translations is not created for Finnish
-    with pytest.raises(ObjectDoesNotExist):
-        translation = payment_method.get_translation("fi")
-        translation.refresh_from_db()  # Just in case if the translation object comes from cache or something
+        # Check that no sneaky translations is not created for Finnish
+        with pytest.raises(ObjectDoesNotExist):
+            translation = payment_method.get_translation("fi")
+            translation.refresh_from_db()  # Just in case if the translation object comes from cache or something
 
 
 @pytest.mark.django_db

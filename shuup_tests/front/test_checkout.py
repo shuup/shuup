@@ -10,7 +10,6 @@ from django.test import override_settings
 
 from shuup.core.models import get_person_contact
 from shuup.core.utils.forms import MutableAddressForm
-from shuup.front.checkout import CheckoutProcess
 from shuup.front.checkout.addresses import AddressesPhase
 from shuup.front.views.checkout import BaseCheckoutView
 from shuup.testing.factories import get_default_shop
@@ -53,9 +52,12 @@ class AddressesOnlyCheckoutView(BaseCheckoutView):
 
 @pytest.mark.django_db
 def test_address_phase_authorized_user(rf, admin_user):
-    request = apply_request_middleware(rf.get("/"), shop=get_default_shop(), customer=get_person_contact(admin_user))
-    view_func = AddressesOnlyCheckoutView.as_view()
-    resp = view_func(request, phase='addresses')
+    request = apply_request_middleware(rf.get("/"),
+                                       shop=get_default_shop(),
+                                       customer=get_person_contact(admin_user),
+                                       user=admin_user)
+    view_func = AddressesPhase.as_view()
+    resp = view_func(request)
     assert 'company' not in resp.context_data['form'].form_defs
 
 

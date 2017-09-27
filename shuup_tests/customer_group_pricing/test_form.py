@@ -26,6 +26,9 @@ def _get_test_product():
     CgpPrice.objects.create(
         product=product, shop=shop, group=get_default_customer_group(),
         price_value=250)
+    CgpDiscount.objects.create(
+        product=product, shop=shop, group=get_default_customer_group(),
+        discount_amount_value=100)
     return product
 
 
@@ -35,9 +38,14 @@ def test_basic_form_sanity(form):
     shop = get_default_shop()
     group = get_default_customer_group()
     product = _get_test_product()
-    frm = form(product=product, empty_permitted=True)
+
+    kwargs = dict(product=product, shop=shop)
+    if form == CustomerGroupPricingForm:
+        kwargs.update(dict(empty_permitted=True))
+
+    frm = form(**kwargs)
+
     assert len(frm.groups) == ContactGroup.objects.count()
-    assert len(frm.shops) == Shop.objects.count()
 
     assert "s_%d_g_%d" % (shop.id, group.id) in frm.fields
 
@@ -47,17 +55,18 @@ def test_basic_form_sanity(form):
 def test_no_changes_into_form(form):
     product = _get_test_product()
     shop = get_default_shop()
-    frm = form(product=product, empty_permitted=True)
+
+    frm = form(product=product, shop=shop, empty_permitted=True)
     # No changes made, right?
     form_data = get_form_data(frm, prepared=True)
-    frm = form(product=product, data=form_data, empty_permitted=True)
+    frm = form(product=product, shop=shop, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
 
     if form == CustomerGroupPricingForm:
         assert CgpPrice.objects.get(product=product, shop=shop).price.value == 250
     else:
-        assert CgpDiscount.objects.filter(product=product, shop=shop).count() == 0
+        assert CgpDiscount.objects.get(product=product, shop=shop).discount_amount.value == 100
 
 
 @pytest.mark.parametrize("form", [CustomerGroupPricingForm, CustomerGroupDiscountForm])
@@ -69,28 +78,27 @@ def test_change_shop_price(form):
     price = shop.create_price
 
     form_field = "s_%d_g_%d" % (shop.id, group.id)
-
-    frm = form(product=product, empty_permitted=True)
+    frm = form(product=product, shop=shop, empty_permitted=True)
     form_data = get_form_data(frm, prepared=True)
 
     if form == CustomerGroupPricingForm:
-        # Price hike time!
         form_data[form_field] = "4000"
     else:
-        form_data[form_field] = "200"
+        form_data[form_field] = "50"
 
-    frm = form(product=product, data=form_data, empty_permitted=True)
+    frm = form(product=product, shop=shop, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
 
     if form == CustomerGroupPricingForm:
         assert CgpPrice.objects.get(product=product, shop=shop, group=group).price == price(4000)
     else:
-        assert CgpDiscount.objects.get(product=product, shop=shop, group=group).discount_amount == price(200)
+        assert CgpDiscount.objects.get(product=product, shop=shop, group=group).discount_amount == price(50)
 
     # Never mind actually, same price for all shops
     form_data[form_field] = ""
-    frm = form(product=product, data=form_data, empty_permitted=True)
+
+    frm = form(product=product, shop=shop, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
 
@@ -104,15 +112,10 @@ def test_change_shop_price(form):
 @pytest.mark.django_db
 def test_clear_prices(form):
     product = _get_test_product()
+    shop = get_default_shop()
     # We can clear the prices out, can't we?
     form_data = {}
-
-    if form == CustomerGroupDiscountForm:
-        group = get_default_customer_group()
-        shop = get_default_shop()
-        CgpDiscount.objects.create(product=product, shop=shop, group=group, discount_amount_value=10)
-
-    frm = form(product=product, data=form_data, empty_permitted=True)
+    frm = form(product=product, shop=shop, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
 
