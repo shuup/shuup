@@ -8,8 +8,7 @@
 from __future__ import unicode_literals
 
 import json
-import random
-from datetime import date, datetime, timedelta
+from datetime import datetime
 from decimal import Decimal
 
 import pytest
@@ -22,8 +21,9 @@ from shuup.core.models import (
 )
 from shuup.core.order_creator import OrderCreator
 from shuup.default_reports.reports import (
-    CustomerSalesReport, NewCustomersReport, ProductSalesReport, SalesPerHour,
-    SalesReport, ShippingReport, TaxesReport, TotalSales, RefundedSalesReport
+    CustomerSalesReport, NewCustomersReport, ProductSalesReport,
+    RefundedSalesReport, SalesPerHour, SalesReport, ShippingReport,
+    TaxesReport, TotalSales
 )
 from shuup.reports.admin_module.views import ReportView
 from shuup.reports.forms import DateRangeChoices
@@ -31,21 +31,22 @@ from shuup.reports.writer import get_writer_instance
 from shuup.testing.factories import (
     CompanyFactory, create_order_with_product, create_product,
     create_random_order, create_random_person, get_address,
-    get_default_payment_method, get_default_product, get_default_shop,
-    get_default_supplier, get_default_tax_class, get_initial_order_status,
-    get_test_tax, OrderLineType, UserFactory, get_default_shipping_method
+    get_default_payment_method, get_default_product,
+    get_default_shipping_method, get_default_shop, get_default_supplier,
+    get_default_tax_class, get_initial_order_status, get_test_tax,
+    OrderLineType, UserFactory
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.core.test_basic_order import create_order
 from shuup_tests.reports.test_reports import initialize_report_test
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
-from shuup.utils.money import Money
 
 
 class InfoTest(object):
     def __init__(self, **kwargs):
         for k, v in six.iteritems(kwargs):
             setattr(self, k, v)
+
 
 def initialize_simple_report(cls, data_overrides={}):
     product_price = 100
@@ -145,11 +146,11 @@ def test_total_sales_customers_report(rf):
     data = json_data.get("tables")[0].get("data")[0]
 
     avg_sales = (
-        order1.taxful_total_price
-        + order2.taxful_total_price
-        + order3.taxful_total_price
-        + order4.taxful_total_price
-        + order5.taxful_total_price
+        order1.taxful_total_price +
+        order2.taxful_total_price +
+        order3.taxful_total_price +
+        order4.taxful_total_price +
+        order5.taxful_total_price
     ) / Decimal(5)
 
     assert int(data["customers"]) == 2
@@ -176,7 +177,7 @@ def test_total_sales_per_hour_report(rf):
     return_data = test_info.json_data.get("tables")[0].get("data")
     order_hour = test_info.order.order_date.strftime("%H")
 
-    assert len(return_data) == 24 # all hours present
+    assert len(return_data) == 24  # all hours present
     assert min([int(data_item.get("hour")) for data_item in return_data]) == 0
     assert max([int(data_item.get("hour")) for data_item in return_data]) == 23
     for hour_data in return_data:
@@ -220,7 +221,11 @@ def test_contact_filters(rf, admin_user):
     expected_order_count = 2
     test_info = initialize_simple_report(SalesReport, data_overrides={"creator": [admin_user.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
+    _assert_expected_values(expected_order_count,
+                            expected_taxful_total_price,
+                            expected_taxless_total_price,
+                            products_per_order,
+                            return_data)
 
     # test that new admin user gets one order
     expected_taxful_total_price = order_three.taxful_total_price
@@ -228,15 +233,24 @@ def test_contact_filters(rf, admin_user):
     expected_order_count = 1
     test_info = initialize_simple_report(SalesReport, data_overrides={"creator": [user.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price,products_per_order, return_data)
+    _assert_expected_values(expected_order_count,
+                            expected_taxful_total_price,
+                            expected_taxless_total_price,
+                            products_per_order,
+                            return_data)
 
     # test that new admin user and second_customer gets one order
     expected_taxful_total_price = order_three.taxful_total_price
     expected_taxless_total_price = order_three.taxless_total_price
     expected_order_count = 1
-    test_info = initialize_simple_report(SalesReport, data_overrides={"creator": [user.pk], "customer": [second_customer.pk]})
+    test_info = initialize_simple_report(SalesReport,
+                                         data_overrides={"creator": [user.pk], "customer": [second_customer.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
+    _assert_expected_values(expected_order_count,
+                            expected_taxful_total_price,
+                            expected_taxless_total_price,
+                            products_per_order,
+                            return_data)
 
     # test that second_customer gets two orders
     expected_taxful_total_price = order_three.taxful_total_price + order_two.taxful_total_price
@@ -244,19 +258,31 @@ def test_contact_filters(rf, admin_user):
     expected_order_count = 2
     test_info = initialize_simple_report(SalesReport, data_overrides={"customer": [second_customer.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
+    _assert_expected_values(expected_order_count,
+                            expected_taxful_total_price,
+                            expected_taxless_total_price,
+                            products_per_order,
+                            return_data)
 
     # test that second_customer gets two orders
     expected_taxful_total_price = order_three.taxful_total_price
     expected_taxless_total_price = order_three.taxless_total_price
     expected_order_count = 1
-    test_info = initialize_simple_report(SalesReport, data_overrides={"customer": [second_customer.pk], "orderer": [customer.pk]})
+    test_info = initialize_simple_report(SalesReport,
+                                         data_overrides={"customer": [second_customer.pk], "orderer": [customer.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
+    _assert_expected_values(expected_order_count,
+                            expected_taxful_total_price,
+                            expected_taxless_total_price,
+                            products_per_order,
+                            return_data)
 
 
-def _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price,
-                         products_per_order, return_data):
+def _assert_expected_values(expected_order_count,
+                            expected_taxful_total_price,
+                            expected_taxless_total_price,
+                            products_per_order,
+                            return_data):
     assert len(return_data) == 1  # only one row since both are on same day
     assert int(return_data[0].get("order_count")) == expected_order_count
     assert int(return_data[0].get("product_count")) == products_per_order * expected_order_count
@@ -266,7 +292,7 @@ def _assert_expected_values(expected_order_count, expected_taxful_total_price, e
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("order_by", ["quantity", "taxless_total", "taxful_total"])
-def test_product_total_sales_report(rf, order_by):
+def test_product_total_sales_report(rf, admin_user, order_by):
     with override_provides("reports", ["shuup.default_reports.reports.product_total_sales:ProductSalesReport"]):
         shop = get_default_shop()
         supplier = get_default_supplier()
@@ -296,7 +322,7 @@ def test_product_total_sales_report(rf, order_by):
         }
 
         view = ReportView.as_view()
-        request = apply_request_middleware(rf.post("/", data=data))
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         response = view(request)
         if hasattr(response, "render"):
             response.render()
@@ -342,7 +368,7 @@ def test_product_total_sales_report(rf, order_by):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("group_by", ["%Y", "%Y-%m", "%Y-%m-%d"])
-def test_new_customers_report(rf, group_by):
+def test_new_customers_report(rf, admin_user, group_by):
     with override_provides("reports", ["shuup.default_reports.reports.new_customers:NewCustomersReport"]):
         shop = get_default_shop()
 
@@ -377,12 +403,11 @@ def test_new_customers_report(rf, group_by):
             datetime(2015, 8, 8),
             datetime(2015, 9, 9),
         ]
-         # create company contacts
+        # create company contacts
         for creation_date in company_creation_dates:
             company = CompanyFactory()
             company.created_on = creation_date
             company.save()
-
 
         data = {
             "report": NewCustomersReport.get_name(),
@@ -394,7 +419,7 @@ def test_new_customers_report(rf, group_by):
         }
 
         view = ReportView.as_view()
-        request = apply_request_middleware(rf.post("/", data=data))
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         response = view(request)
         if hasattr(response, "render"):
             response.render()
@@ -405,7 +430,7 @@ def test_new_customers_report(rf, group_by):
         data = json_data["tables"][0]["data"]
 
         if group_by == "%Y":
-            assert len(data) == 2
+            assert len(data) == 3
 
             assert data[0]["date"] == "2015"
             assert int(data[0]["personcontact"]) == 5
@@ -418,7 +443,7 @@ def test_new_customers_report(rf, group_by):
             assert int(data[1]["users"]) == 3
 
         elif group_by == "%Y-%m":
-            assert len(data) == 9
+            assert len(data) == 10
 
             assert data[0]["date"] == "2015-01"
             assert int(data[0]["personcontact"]) == 2
@@ -466,7 +491,7 @@ def test_new_customers_report(rf, group_by):
             assert int(data[8]["users"]) == 1
 
         elif group_by == "%Y-%m-%d":
-            assert len(data) == 10
+            assert len(data) == 11
 
             assert data[0]["date"] == "2015-01-01"
             assert int(data[0]["personcontact"]) == 1
@@ -633,7 +658,7 @@ def test_taxes_report(rf):
     supplier = get_default_supplier()
     product1 = create_product("p1", shop=shop, supplier=supplier)
     product2 = create_product("p2", shop=shop, supplier=supplier)
-    product3 = create_product("p3", shop=shop, supplier=supplier)
+    create_product("p3", shop=shop, supplier=supplier)
     tax_rate1 = Decimal("0.3")
     tax_rate2 = Decimal("0.45")
 
@@ -684,9 +709,9 @@ def test_taxes_report(rf):
     assert len(data) == 2
 
     tax1_rate1_total = (
-          (order1.taxful_total_price_value - order1.taxless_total_price_value)
-        + (order2.taxful_total_price_value - order2.taxless_total_price_value)
-        + (order4.taxful_total_price_value - order4.taxless_total_price_value)
+        (order1.taxful_total_price_value - order1.taxless_total_price_value) +
+        (order2.taxful_total_price_value - order2.taxless_total_price_value) +
+        (order4.taxful_total_price_value - order4.taxless_total_price_value)
     )
     tax1_pretax_total = (
         order1.taxless_total_price_value +
@@ -770,10 +795,10 @@ def test_shipping_report(rf):
     source3 = seed_source(sm2)
     source4 = seed_source(sm3)
 
-    order1 = creator.create_order(source1)
-    order2 = creator.create_order(source2)
-    order3 = creator.create_order(source3)
-    order4 = creator.create_order(source4)
+    creator.create_order(source1)
+    creator.create_order(source2)
+    creator.create_order(source3)
+    creator.create_order(source4)
 
     # pay orders
     [o.create_payment(o.taxful_total_price) for o in Order.objects.all()]
@@ -826,7 +851,7 @@ def test_shipping_report(rf):
 @pytest.mark.django_db
 def test_refunds_report(rf):
     shop = get_default_shop()
-    tax_class = get_default_tax_class()
+    get_default_tax_class()
     creator = OrderCreator()
 
     source1 = seed_source()
@@ -843,14 +868,20 @@ def test_refunds_report(rf):
     [o.create_payment(o.taxful_total_price) for o in Order.objects.all()]
 
     order1.create_full_refund()
-    order2.create_refund([{"line": order2.lines.first(), "amount": order2.taxful_total_price.amount * Decimal(0.5), "quantity": 1}])
-    order3.create_refund([{"line": order3.lines.first(), "amount": order3.taxful_total_price.amount * Decimal(0.3), "quantity": 1}])
-    order4.create_refund([{"line": order4.lines.first(), "amount": order4.taxful_total_price.amount * Decimal(0.1), "quantity": 1}])
+    order2.create_refund(
+        [{"line": order2.lines.first(), "amount": order2.taxful_total_price.amount * Decimal(0.5), "quantity": 1}]
+    )
+    order3.create_refund(
+        [{"line": order3.lines.first(), "amount": order3.taxful_total_price.amount * Decimal(0.3), "quantity": 1}]
+    )
+    order4.create_refund(
+        [{"line": order4.lines.first(), "amount": order4.taxful_total_price.amount * Decimal(0.1), "quantity": 1}]
+    )
 
-    total_refunded = (order1.get_total_refunded_amount()
-                      + order2.get_total_refunded_amount()
-                      + order3.get_total_refunded_amount()
-                      + order4.get_total_refunded_amount())
+    total_refunded = (order1.get_total_refunded_amount() +
+                      order2.get_total_refunded_amount() +
+                      order3.get_total_refunded_amount() +
+                      order4.get_total_refunded_amount())
 
     data = {
         "report": RefundedSalesReport.get_name(),

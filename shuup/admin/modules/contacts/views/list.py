@@ -12,6 +12,7 @@ from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, TextFilter
@@ -66,13 +67,18 @@ class ContactListView(PicotableListView):
         ])
 
     def get_queryset(self):
+        qs = super(ContactListView, self).get_queryset()
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
+        if not self.request.user.is_superuser:
+            shop = get_shop(self.request)
+            qs = qs.filter(shop=shop)
         return (
-            super(ContactListView, self).get_queryset()
+            qs
             .filter(query)
             .annotate(n_orders=Count("customer_orders"))
-            .order_by("-created_on"))
+            .order_by("-created_on")
+        )
 
     def get_type_display(self, instance):
         if isinstance(instance, PersonContact):

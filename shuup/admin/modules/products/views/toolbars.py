@@ -33,7 +33,7 @@ class EditProductToolbar(Toolbar):
         super(EditProductToolbar, self).__init__()
         self.view = view
         self.request = view.request
-        self.product = view.object
+        self.product = view.object.product
         self.extend(get_default_edit_toolbar(
             self.view, "product_form",
             delete_url="shuup_admin:shop_product.delete"

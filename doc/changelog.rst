@@ -35,6 +35,14 @@ Core
 - API: add person contact endpoint
 - API: add address endpoint
 
+Admin
+~~~~~
+
+- Breaking change: add optional shop parameter in `get_model_url` method of admin module
+- Add middleware to select the active admin shop using session
+- Only categories, orders, products, contacts, campaigns and services for the active shop are displayed in the admin
+- Menu categories without any children are hidden
+
 Campaigns
 ~~~~~~~~~
 

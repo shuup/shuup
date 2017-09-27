@@ -19,6 +19,7 @@ from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 )
 from shuup.admin.modules.shops.forms import ContactAddressForm, ShopBaseForm
+from shuup.admin.shop_provider import set_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import (
     check_and_raise_if_only_one_allowed, CreateOrUpdateView
@@ -103,3 +104,11 @@ class ShopEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     @atomic
     def form_valid(self, form):
         return self.save_form_parts(form)
+
+
+class ShopSelectView(View):
+    def get(self, request, *args, **kwargs):
+        shop = Shop.objects.filter(pk=kwargs.get("pk")).first()
+        set_shop(request, shop)
+        messages.info(request, (_("Shop {} is now active!")).format(shop.name))
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("shuup_admin:home")))

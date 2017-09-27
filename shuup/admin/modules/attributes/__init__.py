@@ -46,5 +46,5 @@ class AttributeModule(AdminModule):
     def get_required_permissions(self):
         return get_default_model_permissions(Attribute)
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Attribute, "shuup_admin:attribute", object, kind)

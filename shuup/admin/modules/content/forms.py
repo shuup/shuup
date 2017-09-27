@@ -120,6 +120,8 @@ class ContentWizardForm(forms.Form):
 
     def __init__(self, **kwargs):
         self.shop = kwargs.pop("shop")
+        if not self.shop:
+            raise ValueError("No shop provided")
         super(ContentWizardForm, self).__init__(**kwargs)
 
         if djangoenv.has_installed("shuup.simple_cms"):

@@ -19,6 +19,13 @@ from shuup.core.models import Shop, ShopStatus
 class ShopListView(PicotableListView):
     model = Shop
     default_columns = [
+        Column("logo",
+               _(u"Logo"),
+               display="logo",
+               class_name="text-center",
+               raw=True,
+               ordering=1,
+               sortable=False),
         Column("name", _(u"Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
             filter_field="translations__name",
             placeholder=_("Filter by name...")
@@ -27,6 +34,12 @@ class ShopListView(PicotableListView):
         Column("identifier", _(u"Identifier")),
         Column("status", _(u"Status"), filter_config=ChoicesFilter(choices=ShopStatus.choices)),
     ]
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return super(ShopListView, self).get_queryset()
+        else:
+            return Shop.objects.get_for_user(self.request.user)
 
     def get_toolbar(self):
         if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:

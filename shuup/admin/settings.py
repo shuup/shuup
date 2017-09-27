@@ -26,3 +26,9 @@ SHUUP_SETUP_WIZARD_PANE_SPEC = []
 #: This function should return a list of `shuup.admin.base.AdminModule`
 #:
 SHUUP_GET_ADMIN_MODULES_SPEC = ("shuup.admin.module_registry.get_admin_modules")
+
+#: Spec which defines the Shop provider.
+#: The shop provider is the interface responsible for fetching and setting
+#: the active shop in admin module
+#:
+SHUUP_SHOP_PROVIDER_SPEC = ("shuup.admin.shop_provider.AdminShopProvider")

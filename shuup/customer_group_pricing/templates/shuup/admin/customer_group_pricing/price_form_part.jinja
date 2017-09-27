@@ -6,8 +6,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2 class="panel-title">
-                {% for shop in sp_form.shops %}
-                    {% if shop %}{{ shop }}{% else %}{% trans %}Other shops{% endtrans %}{% endif %}
+                {{ sp_form.shop }}
             </h2>
         </div>
         <div class="panel-body">
@@ -15,8 +14,7 @@
                 <div class="form-group">
                     {% for group in sp_form.groups %}
                         <label>{{ group }}</label>
-                        {{ bs3.field(sp_form.get_shop_group_field(shop, group), set_placeholder=False, render_label=False) }}
-                    {% endfor %}
+                        {{ bs3.field(sp_form.get_shop_group_field(sp_form.shop, group), set_placeholder=False, render_label=False) }}
                     {% endfor %}
                 </div>
             </div>

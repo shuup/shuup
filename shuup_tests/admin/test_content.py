@@ -290,7 +290,7 @@ def test_content_wizard_pane(rf, admin_user, settings):
     request = apply_request_middleware(rf.get("/"))
     response = WizardView.as_view()(request)
     assert response.status_code == 302
-    assert response["Location"] == reverse("shuup_admin:dashboard")
+    assert response["Location"].startswith(reverse("shuup:login"))
 
     # add the simple cms - create only the pages and footer
     settings.INSTALLED_APPS.append("shuup.simple_cms")

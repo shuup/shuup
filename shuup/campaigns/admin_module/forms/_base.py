@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import QuickAddRelatedObjectSelect
+from shuup.admin.shop_provider import get_shop
 
 
 class BaseCampaignForm(ShuupAdminForm):
@@ -23,6 +24,8 @@ class BaseCampaignForm(ShuupAdminForm):
         self.request = kwargs.pop("request")
         self.instance = kwargs.get("instance")
         super(BaseCampaignForm, self).__init__(**kwargs)
+        self.fields["shop"].widget = forms.HiddenInput()
+        self.fields["shop"].required = False
 
     @property
     def service_provider(self):
@@ -31,6 +34,9 @@ class BaseCampaignForm(ShuupAdminForm):
     @service_provider.setter
     def service_provider(self, value):
         setattr(self.instance, self.service_provider_attr, value)
+
+    def clean_shop(self):
+        return get_shop(self.request)
 
     def clean(self):
         data = super(BaseCampaignForm, self).clean()

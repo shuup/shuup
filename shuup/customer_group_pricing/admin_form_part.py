@@ -12,21 +12,24 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.core.models import ContactGroup, Shop
+from shuup.admin.shop_provider import get_shop
+from shuup.core.models import ContactGroup
 from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 
 
 class CustomerGroupPricingForm(forms.Form):
     def __init__(self, **kwargs):
         self.product = kwargs.pop("product", None)
+        self.request = kwargs.pop("request", None)
+        self.shop = kwargs.pop('shop', None)
         super(CustomerGroupPricingForm, self).__init__(**kwargs)
-        self.shops = []
         self.groups = []
+        if not self.shop:
+            self.shop = get_shop(self.request)
         if self.product:
             self._build_fields()
 
     def _build_fields(self):
-        self.shops = list(Shop.objects.all())
         self.groups = list(ContactGroup.objects.filter(
             Q(show_pricing=True) |
             Q(
@@ -42,17 +45,15 @@ class CustomerGroupPricingForm(forms.Form):
         )
 
         for group in self.groups:
-            for shop in self.shops:
-                shop_group_id_tuple = self._get_id_tuple(shop, group)
-                name = self._get_field_name(shop_group_id_tuple)
-                price = prices_by_shop_and_group.get(shop_group_id_tuple)
-                price_field = forms.DecimalField(
-                    min_value=0, initial=price,
-                    label=(_("Price (%(shop)s/%(group)s)") %
-                           {"shop": shop, "group": group}),
-                    required=False
-                )
-                self.fields[name] = price_field
+            shop_group_id_tuple = self._get_id_tuple(self.shop, group)
+            name = self._get_field_name(shop_group_id_tuple)
+            price = prices_by_shop_and_group.get(shop_group_id_tuple)
+            price_field = forms.DecimalField(
+                min_value=0, initial=price,
+                label=(_("Price (%(shop)s/%(group)s)") % {"shop": self.shop, "group": group}),
+                required=False
+            )
+            self.fields[name] = price_field
 
     def _get_id_tuple(self, shop, group):
         return (
@@ -87,8 +88,7 @@ class CustomerGroupPricingForm(forms.Form):
             return
 
         for group in self.groups:
-            for shop in self.shops:
-                self._process_single_save(shop, group)
+            self._process_single_save(self.shop, group)
 
     def get_shop_group_field(self, shop, group):
         shop_group_id_tuple = self._get_id_tuple(shop, group)
@@ -99,14 +99,18 @@ class CustomerGroupPricingForm(forms.Form):
 class CustomerGroupDiscountForm(forms.Form):
     def __init__(self, **kwargs):
         self.product = kwargs.pop("product", None)
+        self.request = kwargs.pop("request", None)
+        self.shop = kwargs.pop('shop', None)
         super(CustomerGroupDiscountForm, self).__init__(**kwargs)
-        self.shops = []
         self.groups = []
+
+        if not self.shop:
+            self.shop = get_shop(self.request)
+
         if self.product:
             self._build_fields()
 
     def _build_fields(self):
-        self.shops = list(Shop.objects.all())
         self.groups = list(ContactGroup.objects.filter(
             Q(show_pricing=True) |
             Q(
@@ -122,17 +126,15 @@ class CustomerGroupDiscountForm(forms.Form):
         )
 
         for group in self.groups:
-            for shop in self.shops:
-                shop_group_id_tuple = self._get_id_tuple(shop, group)
-                name = self._get_field_name(shop_group_id_tuple)
-                discount_amount = discounts_by_shop_and_group.get(shop_group_id_tuple)
-                discount_amount_field = forms.DecimalField(
-                    min_value=0, initial=discount_amount,
-                    label=(_("Discount (%(shop)s/%(group)s)") %
-                           {"shop": shop, "group": group}),
-                    required=False
-                )
-                self.fields[name] = discount_amount_field
+            shop_group_id_tuple = self._get_id_tuple(self.shop, group)
+            name = self._get_field_name(shop_group_id_tuple)
+            discount_amount = discounts_by_shop_and_group.get(shop_group_id_tuple)
+            discount_amount_field = forms.DecimalField(
+                min_value=0, initial=discount_amount,
+                label=(_("Discount (%(shop)s/%(group)s)") % {"shop": self.shop, "group": group}),
+                required=False
+            )
+            self.fields[name] = discount_amount_field
 
     def _get_id_tuple(self, shop, group):
         return (
@@ -167,8 +169,7 @@ class CustomerGroupDiscountForm(forms.Form):
             return
 
         for group in self.groups:
-            for shop in self.shops:
-                self._process_single_save(shop, group)
+            self._process_single_save(self.shop, group)
 
     def get_shop_group_field(self, shop, group):
         shop_group_id_tuple = self._get_id_tuple(shop, group)
@@ -185,7 +186,7 @@ class CustomerGroupPricingFormPart(FormPart):
             form_class=CustomerGroupPricingForm,
             template_name="shuup/admin/customer_group_pricing/price_form_part.jinja",
             required=False,
-            kwargs={"product": self.object}
+            kwargs={"product": self.object.product, "request": self.request}
         )
 
     def form_valid(self, form):
@@ -201,7 +202,7 @@ class CustomerGroupPricingDiscountFormPart(FormPart):
             form_class=CustomerGroupDiscountForm,
             template_name="shuup/admin/customer_group_pricing/discount_form_part.jinja",
             required=False,
-            kwargs={"product": self.object}
+            kwargs={"product": self.object.product, "request": self.request}
         )
 
     def form_valid(self, form):

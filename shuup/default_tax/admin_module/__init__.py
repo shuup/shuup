@@ -42,5 +42,5 @@ class TaxRulesAdminModule(AdminModule):
     def get_required_permissions(self):
         return get_default_model_permissions(TaxRule)
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         return derive_model_url(TaxRule, "shuup_admin:default_tax.tax_rule", object, kind)

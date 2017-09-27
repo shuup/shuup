@@ -8,6 +8,7 @@ from babel.dates import format_datetime
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
@@ -27,6 +28,10 @@ class CampaignListView(PicotableListView):
         Column("end_datetime", _("Ends")),
         Column("active", _("Active"), filter_config=ChoicesFilter(choices=[(0, _("No")), (1, _("Yes"))])),
     ]
+
+    def get_queryset(self):
+        shop = get_shop(self.request)
+        return self.model.objects.filter(shop=shop)
 
     def start_datetime(self, instance, *args, **kwargs):
         if not instance.start_datetime:

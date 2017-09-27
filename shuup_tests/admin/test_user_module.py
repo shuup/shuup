@@ -95,7 +95,7 @@ def test_user_create(rf, admin_user):
 
 
 @pytest.mark.django_db
-def test_user_detail_contact_seed(rf):
+def test_user_detail_contact_seed(rf, admin_user):
     get_default_shop()
     contact = create_random_person()
 
@@ -107,7 +107,7 @@ def test_user_detail_contact_seed(rf):
 
     view_func = UserDetailView.as_view()
     # Check that fields populate . . .
-    request = apply_request_middleware(rf.get("/", {"contact_id": contact.pk}))
+    request = apply_request_middleware(rf.get("/", {"contact_id": contact.pk}), user=admin_user)
     response = view_func(request)
     response.render()
     content = force_text(response.content)
@@ -123,7 +123,7 @@ def test_user_detail_contact_seed(rf):
     assert response.status_code < 500
     # Check this new user is visible in the details now
     user = Contact.objects.get(pk=contact.pk).user
-    request = apply_request_middleware(rf.get("/", {"contact_id": contact.pk}))
+    request = apply_request_middleware(rf.get("/", {"contact_id": contact.pk}), user=admin_user)
     response = view_func(request, pk=user.pk)
     response.render()
     content = force_text(response.content)

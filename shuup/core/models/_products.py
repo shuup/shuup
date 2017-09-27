@@ -183,8 +183,10 @@ class ProductQuerySet(TranslatableQuerySet):
         from ._product_shops import ShopProductVisibility
         return self._get_qs(shop, customer, language, ShopProductVisibility.SEARCHABLE)
 
-    def all_except_deleted(self, language=None):
+    def all_except_deleted(self, language=None, shop=None):
         qs = (self.language(language) if language else self).exclude(deleted=True)
+        if shop:
+            qs = qs.filter(shop_products__shop=shop)
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED)
         return qs
 

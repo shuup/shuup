@@ -17,9 +17,11 @@ import factory.fuzzy as fuzzy
 import faker
 import six
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.core.validators import validate_email, ValidationError
 from django.db.transaction import atomic
+from django.utils.text import slugify
 from django.utils.timezone import now
 from django_countries.data import COUNTRIES
 from factory.django import DjangoModelFactory
@@ -815,6 +817,16 @@ def create_random_product_attribute():
         visibility_mode=random.choice(vis_choices),
         name=name,
     )
+
+
+def create_random_user(locale="en", **kwargs):
+    user_model = get_user_model()
+    faker = get_faker(["person"], locale)
+    params = {
+        user_model.USERNAME_FIELD: slugify(faker.first_name())
+    }
+    params.update(kwargs or {})
+    return user_model.objects.create(**params)
 
 
 def _get_pricing_context(shop, customer=None):

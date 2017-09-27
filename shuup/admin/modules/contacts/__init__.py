@@ -101,5 +101,5 @@ class ContactModule(AdminModule):
                     category=_("Contacts"), relevance=relevance
                 )
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Contact, "shuup_admin:contact", object, kind)

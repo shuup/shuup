@@ -80,8 +80,11 @@ class CategoryManager(TreeManager, TranslatableManager):
 
         return qs.distinct()
 
-    def all_except_deleted(self, language=None):
-        return (self.language(language) if language else self).exclude(status=CategoryStatus.DELETED)
+    def all_except_deleted(self, language=None, shop=None):
+        qs = (self.language(language) if language else self).exclude(status=CategoryStatus.DELETED)
+        if shop:
+            qs = qs.filter(shops=shop)
+        return qs
 
 
 @python_2_unicode_compatible

@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.http import HttpResponseRedirect
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.signals import object_created
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import add_create_or_change_message
@@ -100,6 +101,6 @@ class SaveFormPartsMixin(object):
             return HttpResponseRedirect(self.get_success_url())
 
         if is_new:
-            return HttpResponseRedirect(get_model_url(self.object))
+            return HttpResponseRedirect(get_model_url(self.object, shop=get_shop(self.request)))
         else:
             return HttpResponseRedirect(self.request.path)

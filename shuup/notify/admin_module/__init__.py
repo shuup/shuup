@@ -121,5 +121,5 @@ class NotifyAdminModule(AdminModule):
                 datetime=notif.created_on
             )
 
-    def get_model_url(self, object, kind):
+    def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Script, "shuup_admin:notify.script", object, kind)

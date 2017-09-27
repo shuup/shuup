@@ -46,7 +46,7 @@ class ReportView(FormView):
         return [(k, v.title) for k, v in six.iteritems(get_report_classes())]
 
     def _get_form(self, selected):
-        form = self.form_class(**self.get_form_kwargs())
+        form = self.form_class(request=self.request, **self.get_form_kwargs())
         report_field = forms.ChoiceField(
             choices=self._get_choices(),
             label=_("Type"),
