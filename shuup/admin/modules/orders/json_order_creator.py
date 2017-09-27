@@ -303,9 +303,6 @@ class JsonOrderCreator(object):
         if not self.is_valid:  # If we encountered any errors thus far, don't bother going forward
             return None
 
-        if not self.is_valid:
-            return None
-
         if order_to_update:
             for code in order_to_update.codes:
                 source.add_code(code)
@@ -368,6 +365,9 @@ class JsonOrderCreator(object):
         :return: The created order, or None if something failed along the way
         :rtype: Order|None
         """
+        # Collect ids for products that were removed from the order for stock update
+        removed_product_ids = self.get_removed_product_ids(state, order_to_update)
+
         source = self.create_source_from_state(state, order_to_update=order_to_update, save=True)
         if source:
             source.modified_by = modified_by
@@ -375,7 +375,51 @@ class JsonOrderCreator(object):
         try:
             order = modifier.update_order_from_source(order_source=source, order=order_to_update)
             self._postprocess_order(order, state)
-            return order
         except Exception as exc:
             self.add_error(exc)
             return
+
+        # Update stock for products that were completely removed from the order
+        if removed_product_ids:
+            self.update_stock_for_removed_products(removed_product_ids, source.shop)
+
+        return order
+
+    def get_removed_product_ids(self, state, order_to_update):
+        """
+        Collects product ids for products which were removed from the order.
+
+        :param state: State dictionary
+        :type state: dict
+        :param order_to_update: Order object to edit
+        :type order_to_update: shuup.core.models.Order
+        :return: set
+        """
+
+        current_lines = state.get("lines", [])
+        current_product_ids = set()
+        for line in current_lines:
+            if line["type"] == "product" and line["product"] is not None:
+                current_product_ids.add(line["product"]["id"])
+
+        old_prod_ids = set()
+        for line in order_to_update.lines.exclude(product_id=None):
+            old_prod_ids.add(line.product.id)
+
+        return old_prod_ids - current_product_ids
+
+    def update_stock_for_removed_products(self, removed_ids, shop):
+        """
+        Update stocks for products which were completely removed from the updated order.
+
+        :param removed_ids: Set of removed product ids
+        :type removed_ids: set
+        :param shop: Shop instance where this order is made
+        :type shop: shuup.core.models.Shop
+        """
+        for prod_id in removed_ids:
+            product = Product.objects.get(id=prod_id)
+            shop_product = product.get_shop_instance(shop)
+            supplier = shop_product.suppliers.first()
+            if supplier:
+                supplier.module.update_stock(product)
