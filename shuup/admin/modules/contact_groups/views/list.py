@@ -31,8 +31,12 @@ class ContactGroupListView(PicotableListView):
 
     def get_context_data(self, **kwargs):
         context = super(ContactGroupListView, self).get_context_data(**kwargs)
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(ContactGroup, return_url="contact_group")
+        else:
+            settings_button = None
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:contact_group.new"),
-            SettingsActionButton.for_model(ContactGroup, return_url="contact_group")
+            settings_button
         ])
         return context

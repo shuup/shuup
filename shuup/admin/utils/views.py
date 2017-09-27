@@ -215,7 +215,10 @@ class PicotableListView(PicotableViewMixin, ListView):
             buttons.append(new_button)
 
         return_url = self.url_identifier if self.url_identifier else None
-        settings_button = SettingsActionButton.for_model(model, return_url=return_url)
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(model, return_url=return_url)
+        else:
+            settings_button = None
         if settings_button:
             buttons.append(settings_button)
 

@@ -58,12 +58,18 @@ class ContactListView(PicotableListView):
     ]
 
     def get_toolbar(self):
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(Contact, return_url="contact")
+        else:
+            settings_button = None
         return Toolbar([
             NewActionButton.for_model(
-                PersonContact, url=reverse("shuup_admin:contact.new") + "?type=person"),
+                PersonContact, url=reverse("shuup_admin:contact.new") + "?type=person"
+            ),
             NewActionButton.for_model(
-                CompanyContact, extra_css_class="btn-info", url=reverse("shuup_admin:contact.new") + "?type=company"),
-            SettingsActionButton.for_model(Contact, return_url="contact")
+                CompanyContact, extra_css_class="btn-info", url=reverse("shuup_admin:contact.new") + "?type=company"
+            ),
+            settings_button
         ])
 
     def get_queryset(self):
