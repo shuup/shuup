@@ -1,0 +1,69 @@
+# This file is part of Shuup.
+#
+# Copyright (c) 2012-2017, Shoop Commerce Ltd. All rights reserved.
+#
+# This source code is licensed under the OSL-3.0 license found in the
+# LICENSE file in the root directory of this source tree.
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.utils.translation import ugettext_lazy as _
+
+from shuup.core.models import Shop
+from shuup.utils.importing import cached_load
+
+SHOP_SESSION_KEY = "admin_shop"
+
+
+class AdminShopProvider(object):
+
+    def get_shop(self, request):
+        if not request.user.is_staff:
+            raise PermissionDenied(_("You must be a staff user"))
+
+        elif SHOP_SESSION_KEY in request.session:
+            return Shop.objects.get(pk=request.session[SHOP_SESSION_KEY])
+
+        # no shop set, fetch the first shop available
+        first_available_shop = Shop.objects.get_for_user(request.user).first()
+        if first_available_shop:
+            return first_available_shop
+
+        # take the first if multishop is disabled or we are superuser
+        elif request.user.is_superuser or not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+            return Shop.objects.first()
+
+        raise ObjectDoesNotExist(_("Shop not set"))
+
+    def set_shop(self, request, shop=None):
+        if not request.user.is_staff:
+            raise PermissionDenied(_("You must be a staff user"))
+
+        if shop:
+            # only can set if the user is superuser or is the shop staff
+            if shop.staff_members.filter(pk=request.user.pk).exists() or request.user.is_superuser:
+                request.session[SHOP_SESSION_KEY] = shop.id
+            else:
+                raise PermissionDenied(_("You are not a staff member of this shop"))
+
+        elif SHOP_SESSION_KEY in request.session:
+            del request.session[SHOP_SESSION_KEY]
+
+    def unset_shop(self, request):
+        if SHOP_SESSION_KEY in request.session:
+            del request.session[SHOP_SESSION_KEY]
+
+
+def get_shop_provider():
+    return cached_load("SHUUP_SHOP_PROVIDER_SPEC")()
+
+
+def get_shop(request):
+    return get_shop_provider().get_shop(request)
+
+
+def set_shop(request, shop=None):
+    return get_shop_provider().set_shop(request, shop)
+
+
+def unset_shop(request):
+    get_shop_provider().unset_shop(request)

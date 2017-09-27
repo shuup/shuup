@@ -60,7 +60,7 @@ class SimpleSupplierFormPart(FormPart):
                 form_class=self.form,
                 template_name="shuup/simple_supplier/admin/product_form_part.jinja",
                 required=False,
-                kwargs={"product": self.object, "request": self.request}
+                kwargs={"product": self.object.product, "request": self.request}
             )
 
     def form_valid(self, form):

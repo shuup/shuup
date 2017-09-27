@@ -53,6 +53,14 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
 
         self.disable_protected_fields()
 
+    def clean_domain(self):
+        domain = self.cleaned_data["domain"]
+        if not domain:
+            return None
+        if Shop.objects.filter(domain=domain).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError(_("Domain is unique. Please enter a unique value."), code="invalid_domain")
+        return domain
+
 
 class ContactAddressForm(forms.ModelForm):
     class Meta:

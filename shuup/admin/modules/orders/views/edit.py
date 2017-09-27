@@ -25,6 +25,7 @@ from django.views.generic import View
 from django_countries import countries
 
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.signals import object_created
 from shuup.admin.toolbar import Toolbar
 from shuup.admin.utils.urls import get_model_url
@@ -175,10 +176,14 @@ class OrderEditView(CreateOrUpdateView):
 
     def get_config(self):
         order = self.object
-        shops = [encode_shop(shop) for shop in Shop.objects.filter(status=ShopStatus.ENABLED)]
+        shop_queryset = Shop.objects.filter(status=ShopStatus.ENABLED)
+        if getattr(self.request.user, "is_superuser", False):
+            shop_queryset = shop_queryset.filter(staff_members=self.request.user)
+        shop = get_shop(self.request)
+        shops = [encode_shop(shop)]
         customer_id = self.request.GET.get("contact_id")
-        shipping_methods = ShippingMethod.objects.enabled()
-        payment_methods = PaymentMethod.objects.enabled()
+        shipping_methods = ShippingMethod.objects.for_shop(shop).enabled()
+        payment_methods = PaymentMethod.objects.for_shop(shop).enabled()
         return {
             "shops": shops,
             "countryDefault": settings.SHUUP_ADDRESS_HOME_COUNTRY,
@@ -290,7 +295,7 @@ class OrderEditView(CreateOrUpdateView):
             "product": {
                 "text": product.name,
                 "id": product.id,
-                "url": get_model_url(product)
+                "url": get_model_url(product, shop=get_shop(request))
             }
         }
 
@@ -359,10 +364,16 @@ class OrderEditView(CreateOrUpdateView):
             ]
         }
 
+    def get_request_body(self, request):
+        body = request.body.decode("utf-8")
+        if not body:
+            raise RuntimeError("No response received")
+        return body
+
     @transaction.atomic
     def _handle_source_data(self, request):
         self.object = self.get_object()
-        state = json.loads(request.body.decode("utf-8"))["state"]
+        state = json.loads(self.get_request_body(request))["state"]
         source = create_source_from_state(
             state,
             creator=request.user,
@@ -382,7 +393,7 @@ class OrderEditView(CreateOrUpdateView):
 
     @transaction.atomic
     def _handle_finalize(self, request):
-        state = json.loads(request.body.decode("utf-8"))["state"]
+        state = json.loads(self.get_request_body(request))["state"]
         self.object = self.get_object()
         if self.object.pk:  # Edit
             order = update_order_from_state(
@@ -398,7 +409,7 @@ class OrderEditView(CreateOrUpdateView):
                 creator=request.user,
                 ip_address=request.META.get("REMOTE_ADDR"),
             )
-            object_created.send(sender=Order, object=order)
+            object_created.send(sender=Order, object=order, request=request)
             messages.success(request, _("Order %(identifier)s created.") % vars(order))
         return JsonResponse({
             "success": True,

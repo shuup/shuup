@@ -12,6 +12,7 @@ from django.views.generic.base import TemplateView
 import shuup
 from shuup.admin.dashboard import get_activity
 from shuup.admin.module_registry import get_modules
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.wizard import setup_wizard_complete
@@ -37,8 +38,8 @@ class DashboardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         try_send_telemetry(request)
-        if not setup_wizard_complete():
+        if not setup_wizard_complete(request):
             return HttpResponseRedirect(reverse("shuup_admin:wizard"))
-        elif request.shop.maintenance_mode:
+        elif get_shop(request).maintenance_mode:
             return HttpResponseRedirect(reverse("shuup_admin:home"))
         return super(DashboardView, self).get(request, *args, **kwargs)

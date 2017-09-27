@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.conf import settings
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
@@ -16,8 +15,7 @@ from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.utils.forms import filter_form_field_choices
 from shuup.core.models import (
-    Category, CategoryStatus, Product, Shop, ShopProduct,
-    ShopProductVisibility
+    Category, CategoryStatus, Product, ShopProduct, ShopProductVisibility
 )
 
 
@@ -26,7 +24,6 @@ class CategoryBaseForm(ShuupAdminForm):
         model = Category
         fields = (
             "parent",
-            "shops",
             "status",
             "ordering",
             "visibility",
@@ -44,27 +41,14 @@ class CategoryBaseForm(ShuupAdminForm):
             "description": TextEditorWidget()
         }
 
-    def __init__(self, **kwargs):
-        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
-            initial = kwargs.get("initial", {})
-            initial["shops"] = [Shop.objects.first().pk]
-            kwargs["initial"] = initial
-
+    def __init__(self, request, **kwargs):
+        self.request = request
         super(CategoryBaseForm, self).__init__(**kwargs)
         # Exclude `DELETED`. We don't want people to use that field to set a category as deleted.
         filter_form_field_choices(self.fields["status"], (CategoryStatus.DELETED.value,), invert=True)
 
         # Exclude current category from parents, because it cannot be its own child anyways
         filter_form_field_choices(self.fields["parent"], (kwargs["instance"].pk,), invert=True)
-
-        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
-            self.fields["shops"].disabled = True
-
-    def clean_shops(self):
-        shops = self.cleaned_data["shops"]
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
-            return shops
-        return [Shop.objects.first().pk]
 
 
 class CategoryProductForm(forms.Form):

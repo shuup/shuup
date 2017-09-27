@@ -8,8 +8,9 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import Section
+from shuup.admin.shop_provider import get_shop
 from shuup.campaigns.models import BasketCampaign, CatalogCampaign
-from shuup.core.models import Shop, ShopProduct
+from shuup.core.models import ShopProduct
 
 
 class ProductCampaignsSection(Section):
@@ -27,12 +28,11 @@ class ProductCampaignsSection(Section):
     @classmethod
     def get_context_data(cls, product, request=None):
         ctx = {}
-
-        for shop in Shop.objects.all():
-            try:
-                shop_product = product.get_shop_instance(shop)
-            except ShopProduct.DoesNotExist:
-                continue
+        shop = get_shop(request)
+        try:
+            shop_product = product.get_shop_instance(shop)
+        except ShopProduct.DoesNotExist:
+            return ctx
 
             ctx[shop] = {
                 "basket_campaigns": BasketCampaign.get_for_product(shop_product),

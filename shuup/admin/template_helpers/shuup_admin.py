@@ -19,9 +19,11 @@ from jinja2.utils import contextfunction
 from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import (
     get_model_url, manipulate_query_string, NoModelUrl
 )
+from shuup.core.models import Shop
 from shuup.core.telemetry import is_telemetry_enabled
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
@@ -73,7 +75,7 @@ BROWSER_URL_NAMES = {
     "media": "shuup_admin:media.browse",
     "product": "shuup_admin:shop_product.list",
     "contact": "shuup_admin:contact.list",
-    "setLanguage": "shuup_admin:set-language",
+    "setLanguage": "shuup_admin:set-language"
 }
 
 
@@ -130,6 +132,24 @@ def model_url(context, model, kind="detail", default=None):
     """
     user = context.get("user")
     try:
-        return get_model_url(model, kind=kind, user=user)
+        request = context.get("request")
+        shop = get_shop(request) if request else None
+        return get_model_url(model, kind=kind, user=user, shop=shop)
     except NoModelUrl:
         return default
+
+
+@contextfunction
+def get_shop_count(context):
+    """
+    Return the number of shops accessible by the currently logged in user
+    """
+    request = context["request"]
+    if not request or request.user.is_anonymous():
+        return 0
+    return Shop.objects.get_for_user(request.user).count()
+
+
+@contextfunction
+def get_admin_shop(context):
+    return get_shop(context["request"])

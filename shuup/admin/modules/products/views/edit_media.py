@@ -20,9 +20,12 @@ from filer.models import File
 
 from shuup.admin.base import MenuEntry
 from shuup.admin.forms.widgets import MediaChoiceWidget
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import get_model_url
-from shuup.core.models import Product, ProductMedia, ProductMediaKind, Shop
+from shuup.core.models import (
+    Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
+)
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -89,9 +92,18 @@ class ProductMediaEditView(UpdateView):
         return [
             MenuEntry(
                 text="%s" % self.object,
-                url=get_model_url(self.object)
+                url=get_model_url(self.object, shop=get_shop(self.request))
             )
         ]
+
+    def get_object(self, queryset=None):
+        if not self.kwargs.get(self.pk_url_kwarg):
+            return self.model()
+        # modify kwargs to match the product instead
+        # TODO: Change this to use ShopProduct
+        key = self.pk_url_kwarg
+        self.kwargs[key] = ShopProduct.objects.get(pk=self.kwargs[key]).product.pk
+        return super(ProductMediaEditView, self).get_object(queryset)
 
     def get_context_data(self, **kwargs):
         context = super(ProductMediaEditView, self).get_context_data(**kwargs)
@@ -128,7 +140,8 @@ class ProductMediaBulkAdderView(View):
         ids = self.request.POST.getlist("file_ids")
         product_id = kwargs.pop("pk")
         kind = self.request.POST.get("kind")
-        shop_id = self.request.POST.get("shop_id", Shop.objects.first().pk)
+        shop = get_shop(self.request)
+        shop_id = self.request.POST.get("shop_id", shop.pk)
         if not ids or not product_id:
             return JsonResponse({"response": "error", "message": "bad request"}, status=400)
         if not Shop.objects.filter(pk=shop_id).exists():

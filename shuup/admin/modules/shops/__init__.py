@@ -12,6 +12,7 @@ from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
@@ -53,7 +54,7 @@ class ShopModule(AdminModule):
 
     def get_help_blocks(self, request, kind):
         if kind == "setup":
-            shop = Shop.objects.first()
+            shop = get_shop(request)
             yield SimpleHelpBlock(
                 text=_("Add a logo to make your store stand out"),
                 actions=[{

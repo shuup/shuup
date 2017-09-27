@@ -82,6 +82,14 @@ shuup.admin.settings module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.shop_provider module
+--------------------------------
+
+.. automodule:: shuup.admin.shop_provider
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.signals module
 --------------------------
 
