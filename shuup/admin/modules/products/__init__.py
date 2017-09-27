@@ -98,6 +98,7 @@ class ProductModule(AdminModule):
         ]
 
     def get_search_results(self, request, query):
+        shop = get_shop(request)
         minimum_query_length = 3
         skus_seen = set()
         if len(query) >= minimum_query_length:
@@ -111,7 +112,7 @@ class ProductModule(AdminModule):
             )
             pks = [pk for (pk, count) in pk_counter.most_common(10)]
 
-            for product in Product.objects.filter(pk__in=pks):
+            for product in Product.objects.filter(pk__in=pks, shop_products__shop_id=shop.id):
                 relevance = 100 - pk_counter.get(product.pk, 0)
                 skus_seen.add(product.sku.lower())
                 yield SearchResult(
