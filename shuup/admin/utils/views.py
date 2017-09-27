@@ -30,6 +30,7 @@ from shuup.admin.utils.picotable import Column, PicotableViewMixin
 from shuup.admin.utils.urls import (
     get_model_front_url, get_model_url, NoModelUrl
 )
+from shuup.core.settings_provider import ShuupSettings
 from shuup.utils.excs import Problem
 from shuup.utils.form_group import FormGroup
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
@@ -176,7 +177,7 @@ def get_create_or_change_title(request, instance, name_field=None):
 
 
 def check_and_raise_if_only_one_allowed(setting_name, obj):
-    if getattr(settings, setting_name, True):
+    if ShuupSettings.get_setting(setting_name):
         return
     if not obj.pk and obj.__class__.objects.count() >= 1:
         raise Problem(_("Only one %(model)s permitted.") % {"model": obj._meta.verbose_name})

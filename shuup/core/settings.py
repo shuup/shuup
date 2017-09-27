@@ -179,7 +179,7 @@ SHUUP_ADDRESS_MODEL_FORM = (
 #:    "postal_code": {"required": True}
 #: }
 #:
-#: Some of the Django form field properties will not affect the Address API.
+#: Some of the Django form field properties will not affect Address API.
 #: The valid set of properties are those defined by the Serializer fields core arguments
 #: like read_only, required, allow_null, etc. See the Django Rest Framework documentation
 #: for more properties.

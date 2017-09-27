@@ -58,6 +58,14 @@ shuup.core.settings module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.settings_provider module
+-----------------------------------
+
+.. automodule:: shuup.core.settings_provider
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.signals module
 -------------------------
 
