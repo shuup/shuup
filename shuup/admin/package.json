@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm i && gulp bower && gulp build",
-    "watch": "npm i && gulp watch"
+    "watch": "npm i && gulp build --watch"
   },
   "author": "Shuup Team <shuup@shuup.com>",
   "license": "OSL-3.0",

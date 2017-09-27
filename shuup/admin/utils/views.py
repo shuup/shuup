@@ -143,10 +143,17 @@ class CreateOrUpdateView(UpdateView):
 
 
 def add_create_or_change_message(request, instance, is_new):
-    if is_new:
-        messages.success(request, _(u"New %s created.") % instance._meta.verbose_name)
+    if instance:
+        msg = instance._meta.verbose_name if is_new else instance._meta.verbose_name.title()
     else:
-        messages.success(request, _(u"%s edited.") % instance._meta.verbose_name.title())
+        msg = _("Item")  # instance is not always present. For example when saving configurations.
+
+    if is_new:
+        msg = _(u"New %s created.") % msg
+    else:
+        msg = _(u"%s edited.") % msg
+
+    messages.success(request,  msg)
 
 
 def get_create_or_change_title(request, instance, name_field=None):

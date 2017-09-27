@@ -17,7 +17,7 @@ function activateSelect($select, model, attrs={}) {
         language: "xx",
         minimumInputLength: 3,
         ajax: {
-            url: "/sa/select",
+            url: window.ShuupAdminConfig.browserUrls.select,
             dataType: "json",
             data: function(params) {
                 return {model: model, search: params.term};

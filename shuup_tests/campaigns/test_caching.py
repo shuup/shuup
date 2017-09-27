@@ -31,7 +31,6 @@ def test_filter_caching(rf):
     catalog_filter = ProductFilter.objects.create()
     catalog_filter.products.add(product)
 
-
     catalog_campaign = CatalogCampaign.objects.create(shop=shop, active=True, name="test")
     catalog_campaign.filters.add(catalog_filter)
     assert CatalogFilterCachedShopProduct.objects.count() == 1

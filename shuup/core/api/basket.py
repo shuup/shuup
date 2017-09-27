@@ -363,7 +363,11 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
     def get_object(self):
         uuid = get_key(self.kwargs.get(self.lookup_field, ""))
         shop = self.request.shop
-        loaded_basket = Basket.objects.filter(key=uuid).first()
+
+        loaded_basket = Basket.objects.filter(key=uuid, shop=shop).first()
+
+        if not loaded_basket:
+            raise exceptions.NotFound()
 
         # ensure correct owner
         if not self.request.user.is_superuser:
@@ -387,7 +391,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
 
         # Hack: the storage should do this already
         # set the correct basket customer
-        if loaded_basket and loaded_basket.customer:
+        if loaded_basket.customer:
             basket.customer = loaded_basket.customer
 
         return basket

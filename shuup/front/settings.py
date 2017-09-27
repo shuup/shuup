@@ -39,10 +39,9 @@ SHUUP_BASKET_CLASS_SPEC = (
 
 #: The spec string defining which basket storage class to use for the frontend.
 #:
-#: Basket storages are responsible for persisting visitor basket state, whether
-#: in the database (DatabaseBasketStorage) or directly in the session
-#: (DirectSessionBasketStorage).  Custom storage backends could use caches, flat
-#: files, etc. if required.
+#: Basket storages are responsible for persisting visitor basket state,
+#: the default stores the basket to database (DatabaseBasketStorage)
+#: Custom storage backends could use caches, flat files, etc. if required.
 SHUUP_BASKET_STORAGE_CLASS_SPEC = (
     "shuup.front.basket.storage:DatabaseBasketStorage")
 

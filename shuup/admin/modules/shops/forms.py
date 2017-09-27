@@ -46,8 +46,9 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
             help_text=_("Select staff members for this shop."),
             model=get_user_model(),
             initial=initial_members,
-            required=False,
-            widget=QuickAddUserMultiSelect())
+            required=False)
+
+        staff_members.widget = QuickAddUserMultiSelect(attrs={"data-model": "auth.User"})
         staff_members.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
         self.fields["staff_members"] = staff_members
 
