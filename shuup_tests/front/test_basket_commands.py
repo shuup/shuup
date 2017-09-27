@@ -22,8 +22,8 @@ from shuup.front.basket import get_basket, get_basket_command_dispatcher
 from shuup.front.basket.command_dispatcher import BasketCommandDispatcher
 from shuup.front.signals import get_basket_command_handler
 from shuup.testing.factories import (
-    create_product, create_random_person, get_default_product,
-    get_default_shop, get_default_supplier
+    create_product, create_random_person, get_default_product, get_default_shop,
+    get_default_supplier, complete_product
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_request_with_basket
@@ -46,19 +46,25 @@ def test_dne():
 
 @pytest.mark.django_db
 def test_add_and_remove_and_clear():
-    product = get_default_product()
+    product = create_product('fractionable', fractional=True)
+    complete_product(product)
     supplier = get_default_supplier()
     request = get_request_with_basket()
     basket = request.basket
 
     with pytest.raises(ValidationError):
-        basket_commands.handle_add(request, basket, product_id=product.pk, quantity=-3)  # Ordering antimatter is not supported
+        # Ordering antimatter is not supported
+        basket_commands.handle_add(request, basket, product_id=product.pk, quantity=-3)
 
     # These will get merged into one line...
     basket_commands.handle_add(request, basket, **{"product_id": product.pk, "quantity": 1, "supplier_id": supplier.pk})
     basket_commands.handle_add(request, basket, **{"product_id": product.pk, "quantity": 2})
+
+    # Fractions should also be supported
+    basket_commands.handle_add(request, basket, **{"product_id": product.pk, "quantity": 0.75})
+
     # ... so there will be 3 products but one line
-    assert basket.product_count == 3
+    assert basket.product_count == 3.75
     lines = basket.get_lines()
     assert len(lines) == 1
     # ... and deleting that line will clear the basket...
@@ -175,13 +181,15 @@ def test_complex_variation():
         kwargs = {"var_%d" % color_var.pk: yellow_color_value.pk, "var_%d" % size_var.pk: small_size_value.pk + 1}
         basket_commands.handle_add_var(request, basket, parent.id, **kwargs)
 
+
 @pytest.mark.django_db
 def test_basket_update():
     request = get_request_with_basket()
     basket = request.basket
-    product = get_default_product()
-    basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1)
-    assert basket.product_count == 1
+    product = create_product('fractionable', fractional=True)
+    complete_product(product)
+    basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1.75)
+    assert basket.product_count == 1.75
     line_id = basket.get_lines()[0].line_id
     basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "2"})
     assert basket.product_count == 2

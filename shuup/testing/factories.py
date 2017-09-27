@@ -448,21 +448,25 @@ def get_shop(prices_include_tax, currency=DEFAULT_CURRENCY):
     return shop
 
 
+def complete_product(product):
+    image = get_random_filer_image()
+    media = ProductMedia.objects.create(
+        product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True,
+        public=True)
+    product.primary_image = media
+    product.save()
+    assert product.primary_image_id
+    sp = ShopProduct.objects.create(
+        product=product, shop=get_default_shop(), visibility=ShopProductVisibility.ALWAYS_VISIBLE
+    )
+    sp.suppliers.add(get_default_supplier())
+
+
 def get_default_product():
     product = Product.objects.filter(sku=DEFAULT_IDENTIFIER).first()
     if not product:
         product = create_product(DEFAULT_IDENTIFIER)
-        image = get_random_filer_image()
-        media = ProductMedia.objects.create(
-            product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True,
-            public=True)
-        product.primary_image = media
-        product.save()
-        assert product.primary_image_id
-        sp = ShopProduct.objects.create(
-            product=product, shop=get_default_shop(), visibility=ShopProductVisibility.ALWAYS_VISIBLE
-        )
-        sp.suppliers.add(get_default_supplier())
+        complete_product(product)
     return product
 
 
@@ -486,6 +490,15 @@ def get_default_sales_unit():
         )
         assert str(unit) == DEFAULT_NAME
     return unit
+
+
+def get_fractional_sales_unit():
+    return SalesUnit.objects.create(
+        identifier="fractional",
+        decimals=2,
+        name="Fractional unit",
+        short_name="fra"
+    )
 
 
 def get_default_category():
@@ -513,6 +526,11 @@ def get_completed_order_status():
 def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
     if default_price is not None:
         default_price = shop.create_price(default_price)
+    if 'fractional' in attrs:
+        attrs.pop('fractional')
+        get_sales_unit = get_fractional_sales_unit
+    else:
+        get_sales_unit = get_default_sales_unit
 
     product_attrs = dict(
         type=get_default_product_type(),
@@ -524,7 +542,7 @@ def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
         depth=100,
         net_weight=100,
         gross_weight=100,
-        sales_unit=get_default_sales_unit(),
+        sales_unit=get_sales_unit(),
         stock_behavior=StockBehavior.UNSTOCKED
     )
     product_attrs.update(attrs)
