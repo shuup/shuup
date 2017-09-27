@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 import os
 
-from django.conf import settings
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
@@ -19,6 +18,7 @@ from shuup.admin.modules.sample_data import manager as sample_manager
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.core.models import Shop
+from shuup.core.settings_provider import ShuupSettings
 
 SAMPLE_BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SAMPLE_IMAGES_BASE_DIR = os.path.join(SAMPLE_BASE_DIR, "sample_data/images")
@@ -37,7 +37,7 @@ class SampleDataAdminModule(AdminModule):
 
     def get_menu_entries(self, request):
         # not supported
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        if ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             return []
 
         return [
@@ -56,7 +56,7 @@ class SampleDataAdminModule(AdminModule):
     def get_notifications(self, request):
         """ Injects a message to the user and also a notification """
         # multi-shop not supported
-        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             # there would be only sample data for single-shops envs
             shop = Shop.objects.first()
 

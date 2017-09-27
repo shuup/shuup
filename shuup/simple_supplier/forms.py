@@ -11,6 +11,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Shop
+from shuup.core.settings_provider import ShuupSettings
 from shuup.utils.i18n import get_currency_name
 
 
@@ -24,7 +25,7 @@ class StockAdjustmentForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(StockAdjustmentForm, self).__init__(*args, **kwargs)
-        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             self.fields["purchase_price"].label = "Purchase price per unit (%(currency_name)s)" % {
                 "currency_name": get_currency_name(Shop.objects.first().currency)
             }

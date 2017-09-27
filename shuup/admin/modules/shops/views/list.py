@@ -7,13 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.toolbar import Toolbar
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Shop, ShopStatus
+from shuup.core.settings_provider import ShuupSettings
 
 
 class ShopListView(PicotableListView):
@@ -42,7 +42,7 @@ class ShopListView(PicotableListView):
             return Shop.objects.get_for_user(self.request.user)
 
     def get_toolbar(self):
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        if ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             return super(ShopListView, self).get_toolbar()
         else:
             return Toolbar([])

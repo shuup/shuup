@@ -37,6 +37,7 @@ from shuup.core.fields import (
     UnsavedForeignKey
 )
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.core.settings_provider import ShuupSettings
 from shuup.core.signals import (
     payment_created, refund_created, shipment_created,
     shipment_created_and_processed
@@ -411,7 +412,7 @@ class Order(MoneyPropped, models.Model):
             name = self.billing_address.name
         else:
             name = "-"
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        if ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             return "Order %s (%s, %s)" % (self.identifier, self.shop.name, name)
         else:
             return "Order %s (%s)" % (self.identifier, name)
