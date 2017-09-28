@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import TextEditorWidget
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.forms import filter_form_field_choices
 from shuup.core.models import (
     Category, CategoryStatus, Product, ShopProduct, ShopProductVisibility
@@ -49,6 +50,10 @@ class CategoryBaseForm(ShuupAdminForm):
 
         # Exclude current category from parents, because it cannot be its own child anyways
         filter_form_field_choices(self.fields["parent"], (kwargs["instance"].pk,), invert=True)
+
+    def save(self, commit=True):
+        instance = super(CategoryBaseForm, self).save(commit)
+        instance.shops = [get_shop(self.request)]
 
 
 class CategoryProductForm(forms.Form):
