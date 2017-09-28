@@ -26,7 +26,7 @@ from shuup.admin.forms.widgets import (
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import (
     Attribute, AttributeType, Category, PaymentMethod, Product, ProductMedia,
-    ProductMediaKind, ShippingMethod, ShopProduct
+    ProductMediaKind, ShippingMethod, ShopProduct, Supplier
 )
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import (
@@ -149,16 +149,20 @@ class ShopProductForm(forms.ModelForm):
         }
 
     def __init__(self, **kwargs):
+        # TODO: Revise this. Since this is shop product form then maybe we should have shop available insted of request
         self.request = kwargs.pop("request", None)
         super(ShopProductForm, self).__init__(**kwargs)
         payment_methods_qs = PaymentMethod.objects.all()
         shipping_methods_qs = ShippingMethod.objects.all()
+        suppliers_qs = Supplier.objects.all()
         if self.request:
             shop = get_shop(self.request)
             payment_methods_qs = payment_methods_qs.filter(shop=shop)
             shipping_methods_qs = ShippingMethod.objects.filter(shop=shop)
+            suppliers_qs = shop.suppliers.all()
         self.fields["payment_methods"].queryset = payment_methods_qs
         self.fields["shipping_methods"].queryset = shipping_methods_qs
+        self.fields["suppliers"].queryset = suppliers_qs
         category_qs = Category.objects.all_except_deleted().prefetch_related('translations')
         self.fields["default_price_value"].required = True
         self.fields["primary_category"].queryset = category_qs

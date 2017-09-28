@@ -294,8 +294,8 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             except ShopProduct.DoesNotExist:
                 continue
 
-            supplier = cross_shop_product.suppliers.first()
             quantity = cross_shop_product.minimum_purchase_quantity
+            supplier = cross_shop_product.get_supplier(customer, quantity)
 
             if not cross_shop_product.is_orderable(supplier=supplier, customer=customer, quantity=quantity):
                 continue

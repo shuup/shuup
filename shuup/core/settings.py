@@ -219,3 +219,11 @@ SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES = True
 #: If no handler is set (blank), Shuup will use default Django's handlers.
 #:
 SHUUP_ERROR_PAGE_HANDLERS_SPEC = []
+
+#: Spec which defines shop product supplier strategy
+#: Used to determine how the supplier is selected for source line and orderability checks.
+#:
+#: This spec defines class which should implement `get_supplier`-method for which
+#: the current shop product with customer, quantity and shipping address is passed as kwargs.
+SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY = (
+    "shuup.core.suppliers.FirstSupplierStrategy")

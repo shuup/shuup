@@ -123,7 +123,8 @@ class JsonOrderCreator(object):
                 "shop": source.shop
             }), code="no_shop_product"))
             return False
-        supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
+
+        supplier = shop_product.get_supplier(source.customer, sl_kwargs["quantity"], source.shipping_address)
 
         sl_kwargs["product"] = product
         sl_kwargs["supplier"] = supplier

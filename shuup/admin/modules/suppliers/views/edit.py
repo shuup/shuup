@@ -24,6 +24,12 @@ class SupplierForm(forms.ModelForm):
             "module_identifier": forms.Select
         }
 
+    def save(self, commit=True):
+        instance = super(SupplierForm, self).save(commit)
+        instance.shop_products.remove(
+            *list(instance.shop_products.exclude(shop_id__in=instance.shops.all()).values_list("pk", flat=True)))
+        return instance
+
 
 class SupplierEditView(CreateOrUpdateView):
     model = Supplier

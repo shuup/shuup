@@ -432,10 +432,10 @@ def get_default_shop():
     return shop
 
 
-def get_shop(prices_include_tax, currency=DEFAULT_CURRENCY):
+def get_shop(prices_include_tax, currency=DEFAULT_CURRENCY, identifier=None):
     key = "shop:%s/taxful=%s" % (currency, prices_include_tax)
     values = {"prices_include_tax": prices_include_tax, "currency": currency}
-    shop = Shop.objects.get_or_create(identifier=key, defaults=values)[0]
+    shop = Shop.objects.get_or_create(identifier=identifier or key, defaults=values)[0]
 
     # make sure that the currency is available throughout the Shuup
     get_currency(code=currency)
@@ -797,7 +797,7 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
         quantity = random.randint(1, 5)
         price_info = product.get_price_info(pricing_context, quantity=quantity)
         shop_product = product.get_shop_instance(source.shop)
-        supplier = shop_product.suppliers.first()
+        supplier = shop_product.get_supplier(source.customer, quantity, source.shipping_address)
         line = source.add_line(
             type=OrderLineType.PRODUCT,
             product=product,

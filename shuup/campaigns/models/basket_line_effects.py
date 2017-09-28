@@ -58,9 +58,10 @@ class FreeProductLine(BasketLineEffect):
         shop = order_source.shop
         for product in self.products.all():
             shop_product = product.get_shop_instance(shop)
-            supplier = shop_product.suppliers.first()
+            supplier = shop_product.get_supplier(order_source.customer, self.quantity, order_source.shipping_address)
             if not shop_product.is_orderable(
-                    supplier=supplier, customer=order_source.customer, quantity=1, allow_cache=False):
+                    supplier=supplier, customer=order_source.customer,
+                    quantity=self.quantity, allow_cache=False):
                 continue
             line_data = dict(
                 line_id="free_product_%s" % str(random.randint(0, 0x7FFFFFFF)),

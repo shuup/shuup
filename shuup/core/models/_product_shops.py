@@ -23,6 +23,7 @@ from shuup.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shuup.core.signals import get_orderability_errors, get_visibility_errors
 from shuup.core.utils import context_cache
 from shuup.utils.analog import define_log_model
+from shuup.utils.importing import cached_load
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 from ._product_media import ProductMediaKind
@@ -420,7 +421,8 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             return val
 
         if not supplier:
-            supplier = self.suppliers.first()  # TODO: Allow multiple suppliers
+            supplier = self.get_supplier(customer, quantity)
+
         for message in self.get_orderability_errors(supplier=supplier, quantity=quantity, customer=customer):
             if customer:
                 context_cache.set_cached_value(key, False)
@@ -505,6 +507,16 @@ class ShopProduct(MoneyPropped, TranslatableModel):
     @property
     def public_images(self):
         return self.images.filter(public=True)
+
+    def get_supplier(self, customer=None, quantity=None, shipping_address=None):
+        supplier_strategy = cached_load("SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY")
+        kwargs = {
+            "shop_product": self,
+            "customer": customer,
+            "quantity": quantity,
+            "shipping_address": shipping_address
+        }
+        return supplier_strategy().get_supplier(**kwargs)
 
 
 ShopProductLogEntry = define_log_model(ShopProduct)
