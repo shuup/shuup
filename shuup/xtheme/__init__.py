@@ -22,7 +22,9 @@ __all__ = [
     "get_theme_by_identifier",
     "set_current_theme",
     "templated_plugin_factory",
-    "get_theme_cache_key"
+    "get_theme_cache_key",
+    "get_middleware_current_theme",
+    "set_middleware_current_theme"
 ]
 
 XTHEME_GLOBAL_VIEW_NAME = "_XthemeGlobalView"
