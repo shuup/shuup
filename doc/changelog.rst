@@ -71,4 +71,26 @@ General/miscellaneous
 Shuup 2.0.0
 -----------
 
-Initial release of Shuup 2.0.0
+Initial release of Shuup Lite 2.0.0. This release lays the foundations for
+basic webstore building. No new features were introduced in this release.
+
+API
+~~~
+- Removed for now.
+
+Campaigns
+~~~~~~~~~
+- Removed various filters and conditions not required in basic store.
+
+Front
+~~~~~
+- Removed Recently Viewed Products.
+- Removed Simple order notification.
+
+Customer Group Pricing
+~~~~~~~~~~~~~~~~~~~~~~
+- Removed Customer Group Pricing.
+
+Importer
+~~~~~~~~
+- Removed product and customer importers.
