@@ -38,7 +38,8 @@ class CategoryListView(PicotableListView):
 
     def get_name_filter_choices(self):
         choices = []
-        for c in Category.objects.all_except_deleted():
+        shop = get_shop(self.request)
+        for c in Category.objects.all_except_deleted(shop=shop):
             name = self.format_name(c)
             choices.append((c.pk, name))
         return choices
