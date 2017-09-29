@@ -85,13 +85,14 @@ class EditorView(TemplateView):
         return super(EditorView, self).get(request, *args, **kwargs)
 
     def _populate_vars(self):
-        theme = get_theme_by_identifier(self.request.GET["theme"])
+        theme = get_theme_by_identifier(self.request.GET["theme"], self.request.shop)
         if not theme:
             raise Problem(_("Unable to determine current theme."))
         view_name = self.request.GET["view"]
         global_type = self.request.GET.get("global_type", None)
         self.view_config = ViewConfig(
             theme=theme,
+            shop=self.request.shop,
             view_name=view_name,
             draft=True,
             global_type=global_type,

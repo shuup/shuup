@@ -36,6 +36,7 @@ def test_cross_sell_plugin_renders():
     assert computed.sku in rendered
 
 
+@pytest.mark.django_db
 def test_cross_sell_plugin_accepts_initial_config_as_string_or_enum():
     plugin = ProductCrossSellsPlugin({"type": "computed"})
     assert plugin.config["type"] == ProductCrossSellType.COMPUTED
@@ -44,6 +45,7 @@ def test_cross_sell_plugin_accepts_initial_config_as_string_or_enum():
     assert plugin.config["type"] == ProductCrossSellType.RECOMMENDED
 
 
+@pytest.mark.django_db
 def test_cross_sell_plugin_with_invalid_type():
     plugin = ProductCrossSellsPlugin({"type": "foobar"})
     assert plugin.config['type'] == ProductCrossSellType.RELATED

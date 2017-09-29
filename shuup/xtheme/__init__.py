@@ -8,8 +8,9 @@ from shuup.apps import AppConfig
 from shuup.utils import update_module_attributes
 
 from ._theme import (
-    get_current_theme, get_theme_by_identifier, set_current_theme, Theme,
-    THEME_CACHE_KEY
+    get_current_theme, get_middleware_current_theme, get_theme_by_identifier,
+    get_theme_cache_key, set_current_theme, set_middleware_current_theme,
+    Theme
 )
 from .plugins._base import Plugin, templated_plugin_factory, TemplatedPlugin
 
@@ -20,10 +21,12 @@ __all__ = [
     "get_current_theme",
     "get_theme_by_identifier",
     "set_current_theme",
-    "templated_plugin_factory"
+    "templated_plugin_factory",
+    "get_theme_cache_key",
+    "get_middleware_current_theme",
+    "set_middleware_current_theme"
 ]
 
-THEME_CACHE_KEY
 XTHEME_GLOBAL_VIEW_NAME = "_XthemeGlobalView"
 
 

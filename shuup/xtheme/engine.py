@@ -14,7 +14,7 @@ from jinja2.environment import Environment, Template
 from jinja2.utils import concat, internalcode
 
 from shuup.apps.provides import get_provide_objects
-from shuup.xtheme._theme import get_current_theme
+from shuup.xtheme._theme import get_middleware_current_theme
 from shuup.xtheme.editing import add_edit_resources
 from shuup.xtheme.resources import (
     inject_resources, RESOURCE_CONTAINER_VAR_NAME, ResourceContainer
@@ -125,7 +125,10 @@ class XthemeEnvironment(Environment):
         """
         if name.startswith("shuup/admin"):  # Ignore the admin.
             return name
-        theme = get_current_theme()
+
+        # we strongly depend on the XthemMiddleware as it should set the current theme
+        # for this thread based on the request it processes
+        theme = get_middleware_current_theme()
         if not theme:
             return name
         theme_template = "%s/%s" % ((theme.template_dir or theme.identifier), name)

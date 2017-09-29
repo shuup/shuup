@@ -14,24 +14,35 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
 from shuup.xtheme._theme import (
-    get_current_theme, get_theme_by_identifier, set_current_theme,
-    THEME_CACHE_KEY
+    get_theme_by_identifier, get_theme_cache_key, set_current_theme
 )
 from shuup.xtheme.models import ThemeSettings
 
 
-def get_theme_context():
+def get_theme_context(shop):
+    themes = []
+    active_theme = None
+
+    # create one ThemeSettings for each theme if needed
+    for theme in get_provide_objects("xtheme"):
+        if not theme.identifier:
+            continue
+
+        theme_settings = ThemeSettings.objects.get_or_create(theme_identifier=theme.identifier, shop=shop)[0]
+        themes.append(theme)
+
+        if theme_settings.active:
+            active_theme = theme
+
     return {
-        "theme_classes": sorted(
-            [t for t in get_provide_objects("xtheme") if t.identifier],
-            key=lambda t: (t.name or t.identifier)
-        ),
-        "current_theme": get_current_theme()
+        "theme_classes": sorted(themes, key=lambda t: (t.name or t.identifier)),
+        "current_theme": active_theme
     }
 
 
@@ -50,18 +61,19 @@ class ThemeWizardPane(WizardPane):
     text = _("Choose a theme for your shop")
 
     def visible(self):
-        return not get_current_theme()
+        return (ThemeSettings.objects.filter(active=False, shop=self.object).count() == 0)
 
     def get_form_defs(self):
-        context = get_theme_context()
-        if not context["current_theme"] and len(context["theme_classes"]) > 0:
-            context["current_theme"] = context["theme_classes"][0]
+        shop = self.object
+        context = get_theme_context(shop)
+        context.update({"shop": shop})
 
-        theme_settings = ThemeSettings.objects.filter(theme_identifier=context["current_theme"].identifier).first()
-        if theme_settings:
-            context["active_stylesheet"] = theme_settings.data.get("settings", {}).get("stylesheet", None)
-        else:
-            context["active_stylesheet"] = context["current_theme"]().get_default_style().get("stylesheet", None)
+        current_theme_class = (context["current_theme"] or context["theme_classes"][0])
+        current_theme_settings = ThemeSettings.objects.get_or_create(
+            shop=shop,
+            theme_identifier=current_theme_class.identifier
+        )[0]
+        context["active_stylesheet"] = current_theme_settings.data.get("settings", {}).get("stylesheet", None)
 
         return [
             TemplatedWizardFormDef(
@@ -74,19 +86,23 @@ class ThemeWizardPane(WizardPane):
 
     def form_valid(self, form):
         identifier = form["theme"].cleaned_data["activate"]
-        theme = set_current_theme(identifier)
         data = {
             "settings": {
                "stylesheet": form["theme"].cleaned_data["selected_style"]
             }
         }
-        theme_settings, created = ThemeSettings.objects.get_or_create(theme_identifier=theme.identifier)
+        theme_settings, created = ThemeSettings.objects.get_or_create(
+            theme_identifier=identifier,
+            shop=get_shop(self.request)
+        )
         if created:
             theme_settings.data = data
+            theme_settings.save()
         else:
             theme_settings.update_settings(data["settings"])
-        theme_settings.activate()
-        cache.bump_version(THEME_CACHE_KEY)
+
+        set_current_theme(identifier, self.object)
+        cache.bump_version(get_theme_cache_key(get_shop(self.request)))
 
 
 class ThemeConfigView(FormView):
@@ -98,12 +114,12 @@ class ThemeConfigView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigView, self).get_context_data(**kwargs)
-        context.update(get_theme_context())
+        context.update(get_theme_context(get_shop(self.request)))
         return context
 
     def form_valid(self, form):
         identifier = form.cleaned_data["activate"]
-        set_current_theme(identifier)
+        set_current_theme(identifier, get_shop(self.request))
         messages.success(self.request, _("Theme activated."))
         return HttpResponseRedirect(self.request.path)
 
@@ -119,8 +135,10 @@ class ThemeConfigDetailView(CreateOrUpdateView):
     add_form_errors_as_messages = True
 
     def get_object(self, queryset=None):
-        ts, _ = ThemeSettings.objects.get_or_create(theme_identifier=self.kwargs["theme_identifier"])
-        return ts
+        return ThemeSettings.objects.get_or_create(
+            theme_identifier=self.kwargs["theme_identifier"],
+            shop=get_shop(self.request)
+        )[0]
 
     def get_theme(self):
         """
@@ -131,7 +149,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         """
         return get_theme_by_identifier(
             identifier=self.kwargs["theme_identifier"],
-            settings_obj=self.object
+            shop=get_shop(self.request)
         )
 
     def get_context_data(self, **kwargs):
@@ -150,13 +168,13 @@ class ThemeConfigDetailView(CreateOrUpdateView):
 
     def save_form(self, form):
         super(ThemeConfigDetailView, self).save_form(form)
-        cache.bump_version(THEME_CACHE_KEY)
+        cache.bump_version(get_theme_cache_key(get_shop(self.request)))
 
 
 class ThemeGuideTemplateView(TemplateView):
     template_name = None
 
     def dispatch(self, request, *args, **kwargs):
-        theme = get_theme_by_identifier(kwargs["theme_identifier"])
+        theme = get_theme_by_identifier(kwargs["theme_identifier"], shop=get_shop(self.request))
         self.template_name = theme.guide_template
         return super(ThemeGuideTemplateView, self).dispatch(request, *args, **kwargs)

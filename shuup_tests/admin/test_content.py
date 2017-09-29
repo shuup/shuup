@@ -167,6 +167,7 @@ def test_content_form(settings):
     assert SavedViewConfig.objects.count() == 1
     svc = SavedViewConfig.objects.first()
     assert configuration.get(shop, CONTENT_FOOTER_KEY) == svc.pk
+    assert svc.shop == shop
     assert svc.view_name == XTHEME_GLOBAL_VIEW_NAME
     assert svc.status == SavedViewConfigStatus.PUBLIC
     content = loader.render_to_string(data.FOOTER_TEMPLATE, context).strip()

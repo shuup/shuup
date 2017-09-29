@@ -16,6 +16,8 @@ from shuup.testing.utils import apply_request_middleware
 def initialize_test(rf, include_tax=False):
     activate("en")
     shop = get_shop(prices_include_tax=include_tax)
+    shop.domain = "campaign"
+    shop.save()
 
     # Valid baskets needs some payment methods to be available
     get_payment_method(shop)
@@ -29,6 +31,7 @@ def initialize_test(rf, include_tax=False):
 
     request = rf.get("/")
     request.shop = shop
+    request.META["HTTP_HOST"] = "campaign.shuup.com"
     apply_request_middleware(request)
     request.customer = customer
     return request, shop, group

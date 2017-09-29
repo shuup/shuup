@@ -54,7 +54,7 @@
     </table>
 {% endmacro %}
 
-{% macro wizard_theme_table(theme_classes, current_theme, on_activate="", new_tab=False) %}
+{% macro wizard_theme_table(theme_classes, current_theme, shop, on_activate="", new_tab=False) %}
     <table class="table table-striped table-bordered table-shuup theme-table">
         <thead>
             <tr>
@@ -82,7 +82,7 @@
                         name="activate"
                         value="{{ theme.identifier }}"
                         id="theme-activate-{{ theme.identifier }}"
-                        data-default-stylesheet="{{ theme().get_default_style().stylesheet }}"
+                        data-default-stylesheet="{{ theme(shop=shop).get_default_style().stylesheet }}"
                         {% if on_activate != "" %} type="button" onclick="{{ on_activate }}" {% else %} type="submit" {% endif %}
                         class="btn btn-sm btn-success {% if active_theme %} hidden {% endif %}">
                         <i class="fa fa-check-circle"></i> {% trans %}Activate{% endtrans %}

@@ -15,6 +15,7 @@ from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import QuickAddUserMultiSelect
 from shuup.core.models import Currency, MutableAddress, Shop
+from shuup.core.settings_provider import ShuupSettings
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
 from shuup.utils.i18n import get_current_babel_locale
 
@@ -51,7 +52,7 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
         staff_members.widget = QuickAddUserMultiSelect(attrs={"data-model": "auth.User"})
         staff_members.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
         self.fields["staff_members"] = staff_members
-
+        self.fields["domain"].required = ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS")
         self.disable_protected_fields()
 
     def clean_domain(self):

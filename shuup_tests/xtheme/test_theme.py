@@ -8,6 +8,7 @@
 import pytest
 
 from shuup.apps.provides import override_provides
+from shuup.testing.factories import get_default_shop
 from shuup.xtheme import (
     get_current_theme, get_theme_by_identifier, set_current_theme
 )
@@ -19,33 +20,38 @@ from shuup_tests.xtheme.utils import FauxTheme, FauxTheme2
 
 @pytest.mark.django_db
 def test_theme_activation():
+    shop = get_default_shop()
     with override_current_theme_class():
         with override_provides("xtheme", [
             "shuup_tests.xtheme.utils:FauxTheme",
             "shuup_tests.xtheme.utils:FauxTheme2"
         ]):
             ThemeSettings.objects.all().delete()
-            assert not get_current_theme()
-            set_current_theme(FauxTheme.identifier)
-            assert isinstance(get_current_theme(), FauxTheme)
-            set_current_theme(FauxTheme2.identifier)
-            assert isinstance(get_current_theme(), FauxTheme2)
+            # ThemeSettings will be created on the fly
+            theme = get_current_theme(shop)
+            assert theme
+            assert theme.settings_obj
+            set_current_theme(FauxTheme.identifier, shop)
+            assert isinstance(get_current_theme(shop), FauxTheme)
+            set_current_theme(FauxTheme2.identifier, shop)
+            assert isinstance(get_current_theme(shop), FauxTheme2)
             with pytest.raises(ValueError):
-                set_current_theme(printable_gibberish())
+                set_current_theme(printable_gibberish(), shop)
 
 
 
 @pytest.mark.django_db
 def test_theme_settings_api():
+    shop = get_default_shop()
     with override_provides("xtheme", [
         "shuup_tests.xtheme.utils:FauxTheme",
         "shuup_tests.xtheme.utils:FauxTheme2"
     ]):
         ThemeSettings.objects.all().delete()
-        theme = get_theme_by_identifier(FauxTheme2.identifier)
+        theme = get_theme_by_identifier(FauxTheme2.identifier, shop)
         theme.set_setting("foo", "bar")
         theme.set_settings(quux=[4, 8, 15, 16, 23, 42])
-        theme = get_theme_by_identifier(FauxTheme2.identifier)
+        theme = get_theme_by_identifier(FauxTheme2.identifier, shop)
         assert theme.get_setting("foo") == "bar"
         assert theme.get_settings() == {
             "foo": "bar",

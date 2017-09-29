@@ -17,6 +17,8 @@ from django_jinja.backend import Jinja2
 from django_jinja.builtins import DEFAULT_EXTENSIONS
 
 from shuup.apps.provides import override_provides
+from shuup.testing.factories import get_default_shop
+from shuup.testing.utils import apply_request_middleware
 from shuup.xtheme import parsing, Theme
 from shuup.xtheme.editing import is_edit_mode, set_edit_mode
 from shuup.xtheme.view_config import Layout
@@ -98,7 +100,8 @@ def get_test_template_bits(request, pass_view=True, **extra_ctx):
 
 
 def get_request(edit=False):
-    request = RequestFactory().get("/")
+    get_default_shop()
+    request = apply_request_middleware(RequestFactory().get("/"))
     request.session = {}
     if edit:
         request.user = SuperUser()

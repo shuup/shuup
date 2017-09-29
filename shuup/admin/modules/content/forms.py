@@ -268,7 +268,7 @@ class ContentWizardForm(forms.Form):
     def _handle_xtheme_save(self):
         svc_pk = config.get(self.shop, CONTENT_FOOTER_KEY)
         svc = SavedViewConfig.objects.filter(pk=svc_pk).first()
-        theme = get_current_theme()
+        theme = get_current_theme(self.shop)
 
         if not svc and theme:
             context = {"shop": self.shop}
@@ -281,6 +281,7 @@ class ContentWizardForm(forms.Form):
 
             svc = SavedViewConfig(
                 theme_identifier=theme.identifier,
+                shop=self.shop,
                 view_name=XTHEME_GLOBAL_VIEW_NAME,
                 status=SavedViewConfigStatus.CURRENT_DRAFT
             )

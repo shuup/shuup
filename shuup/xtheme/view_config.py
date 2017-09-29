@@ -22,12 +22,14 @@ class ViewConfig(object):
     container for `SavedViewConfig` objects, and wraps the `SavedViewConfig` API.
     """
 
-    def __init__(self, theme, view_name, draft, global_type=False):
+    def __init__(self, theme, shop, view_name, draft, global_type=False):
         """
         Initialize a view configuration.
 
         :param theme: Theme object (could be None to not touch the database)
         :type theme: shuup.xtheme.Theme|None
+        :param shop: Shop object
+        :type shop: shuup.core.models.Shop
         :param view_name: View name (the class name of the view)
         :type view_name: str
         :param draft: Load in draft mode?
@@ -36,6 +38,7 @@ class ViewConfig(object):
         :type global_type: bool|False
         """
         self.theme = theme
+        self.shop = shop
         self.view_name = (XTHEME_GLOBAL_VIEW_NAME if global_type else force_text(view_name))
         self.draft = bool(draft)
         self._saved_view_config = None
@@ -48,12 +51,13 @@ class ViewConfig(object):
         :return: A SavedViewConfig object for the current theme/view/draft mode, or None
         :rtype: shuup.xtheme.models.SavedViewConfig|None
         """
-        if not self.theme or not self.theme.identifier:
+        if not self.theme or not self.theme.identifier or not self.shop:
             return None
 
         if self._saved_view_config is None:
             self._saved_view_config = SavedViewConfig.objects.appropriate(
                 theme=self.theme,
+                shop=self.shop,
                 view_name=self.view_name,
                 draft=self.draft
             )
