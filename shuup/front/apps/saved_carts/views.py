@@ -90,11 +90,11 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
     def get_object(self):
         return get_object_or_404(self.get_queryset(), pk=self.kwargs.get("pk"))
 
-    def _get_supplier(self, shop_product, supplier_id):
+    def _get_supplier(self, shop_product, supplier_id, customer, quantity, shipping_address):
         if supplier_id:
             supplier = shop_product.suppliers.filter(pk=supplier_id).first()
         else:
-            supplier = shop_product.suppliers.first()
+            supplier = shop_product.get_supplier(customer, quantity, shipping_address)
         return supplier
 
     @atomic
@@ -112,7 +112,8 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
             if not shop_product:
                 errors.append({"product": line.text, "message": _("Product not available in this shop")})
                 continue
-            supplier = self._get_supplier(shop_product, line.get("supplier_id"))
+            supplier = self._get_supplier(
+                shop_product, line.get("supplier_id"), basket.customer, line.get("quantity"), basket.shipping_address)
             if not supplier:
                 errors.append({"product": line.text, "message": _("Invalid supplier")})
                 continue

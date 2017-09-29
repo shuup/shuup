@@ -109,7 +109,8 @@ def encode_line(line):
     }
 
 
-def get_line_data_for_edit(shop, line):
+def get_line_data_for_edit(order, line):
+    shop = order.shop
     total_price = line.taxful_price.value if shop.prices_include_tax else line.taxless_price.value
     base_data = {
         "id": line.id,
@@ -125,7 +126,7 @@ def get_line_data_for_edit(shop, line):
     }
     if line.product:
         shop_product = line.product.get_shop_instance(shop)
-        supplier = shop_product.suppliers.first()
+        supplier = shop_product.get_supplier(order.customer, line.quantity, order.shipping_address)
         stock_status = supplier.get_stock_status(line.product.pk) if supplier else None
         base_data.update({
             "type": "product",
@@ -202,7 +203,7 @@ class OrderEditView(CreateOrUpdateView):
         return {
             "shop": encode_shop(order.shop),
             "lines": [
-                get_line_data_for_edit(order.shop, line) for line in order.lines.filter(
+                get_line_data_for_edit(order, line) for line in order.lines.filter(
                     type__in=[OrderLineType.PRODUCT, OrderLineType.OTHER], parent_line_id=None
                 )
             ],
@@ -250,6 +251,7 @@ class OrderEditView(CreateOrUpdateView):
         product_id = request.GET["id"]
         shop_id = request.GET["shop_id"]
         customer_id = request.GET.get("customer_id")
+        supplier_id = request.GET.get("supplier_id")
         quantity = decimal.Decimal(request.GET.get("quantity", 1))
         product = Product.objects.filter(pk=product_id).first()
         if not product:
@@ -268,7 +270,14 @@ class OrderEditView(CreateOrUpdateView):
         quantity = (min_quantity if quantity < min_quantity else quantity)
         customer = Contact.objects.filter(pk=customer_id).first() if customer_id else None
         price_info = get_price_info(shop, customer, product, quantity)
-        supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
+
+        supplier = None
+        if supplier_id:
+            supplier = shop_product.suppliers.filter(id=supplier_id).first()
+
+        if not supplier:
+            supplier = shop_product.get_supplier(customer, quantity)
+
         stock_status = supplier.get_stock_status(product.pk) if supplier else None
         return {
             "id": product.id,

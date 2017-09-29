@@ -49,6 +49,11 @@ class Supplier(ModuleInterface, ShuupModel):
         "Supplier modules define the rules by which inventory is managed."
     ))
     module_data = JSONField(blank=True, null=True, verbose_name=_("module data"))
+    shops = models.ManyToManyField(
+        "Shop", blank=True, related_name="suppliers", verbose_name=_("shops"), help_text=_(
+            "You can select which shops the supplier is available to."
+        )
+    )
 
     def __str__(self):
         return self.name

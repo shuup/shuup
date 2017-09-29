@@ -86,10 +86,11 @@ class OrderCreateRefundView(UpdateView):
         # Setting the line_numbers choices dynamically creates issues with the blank formset,
         # So adding that to the context to be rendered manually
         context["line_number_choices"] = self._get_line_number_choices()
-        context["json_line_data"] = [self._get_line_data(self.object.shop, line) for line in self.object.lines.all()]
+        context["json_line_data"] = [self._get_line_data(self.object, line) for line in self.object.lines.all()]
         return context
 
-    def _get_line_data(self, shop, line):
+    def _get_line_data(self, order, line):
+        shop = order.shop
         total_price = line.taxful_price.value if shop.prices_include_tax else line.taxless_price.value
         base_data = {
             "id": line.id,
@@ -106,7 +107,7 @@ class OrderCreateRefundView(UpdateView):
         }
         if line.product:
             shop_product = line.product.get_shop_instance(shop)
-            supplier = shop_product.suppliers.first()
+            supplier = line.supplier
             stock_status = supplier.get_stock_status(line.product.pk) if supplier else None
             base_data.update({
                 "type": "product",

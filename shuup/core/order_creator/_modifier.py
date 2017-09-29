@@ -42,9 +42,15 @@ class OrderModifier(OrderProcessor):
         for module in get_order_source_modifier_modules():
             module.clear_codes(order)
 
+        products_to_adjust_stock = set()
         for line in order.lines.all():
+            if line.product:
+                products_to_adjust_stock.add((line.product, line.supplier))
             line.taxes.all().delete()  # Delete all tax lines before OrderLine's
             line.child_lines.all().delete()  # Ditto for child lines
             line.delete()
+
+        for product, supplier in products_to_adjust_stock:
+            supplier.module.update_stock(product)
 
         return self.finalize_creation(order, order_source)

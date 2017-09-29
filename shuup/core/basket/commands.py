@@ -47,7 +47,7 @@ def handle_add(  # noqa (C901)
     if supplier_id:
         supplier = shop_product.suppliers.filter(pk=supplier_id).first()
     else:
-        supplier = shop_product.suppliers.first()
+        supplier = shop_product.get_supplier(basket.customer, quantity, basket.shipping_address)
 
     if not supplier:
         raise ValidationError("Invalid supplier", code="invalid_supplier")

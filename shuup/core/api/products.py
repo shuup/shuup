@@ -54,9 +54,9 @@ class ShopProductSerializer(TranslatableModelSerializer):
         }
 
     def get_orderable(self, shop_product):
-        supplier = shop_product.suppliers.first()
         customer = self.context["request"].customer
         quantity = shop_product.minimum_purchase_quantity
+        supplier = shop_product.get_supplier(customer, quantity)
         try:
             return shop_product.is_orderable(supplier=supplier, customer=customer, quantity=quantity)
         except:
