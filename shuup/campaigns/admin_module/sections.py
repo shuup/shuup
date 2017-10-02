@@ -21,9 +21,7 @@ class ProductCampaignsSection(Section):
 
     @classmethod
     def visible_for_object(cls, product, request=None):
-        if not request:
-            return True  # backwards compatibility
-        return bool(product.pk) and request.user.has_perm('shuup.view_campaign')
+        return bool(product.pk)
 
     @classmethod
     def get_context_data(cls, product, request=None):
