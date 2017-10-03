@@ -136,11 +136,12 @@ class ContactDetailView(DetailView):
 
     def get_object(self, *args, **kwargs):
         obj = super(ContactDetailView, self).get_object(*args, **kwargs)
-        if self.request.user.is_superuser:
-            return obj
-        shop = get_shop(self.request)
-        if shop not in obj.shop_set.all():
-            raise PermissionDenied()
+
+        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and not self.request.user.is_superuser:
+            shop = get_shop(self.request)
+            if shop not in obj.shops.all():
+                raise PermissionDenied()
+
         return obj
 
     def get_context_data(self, **kwargs):

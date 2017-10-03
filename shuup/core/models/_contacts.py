@@ -98,6 +98,9 @@ class Contact(PolymorphicShuupModel):
     is_active = models.BooleanField(default=True, db_index=True, verbose_name=_('active'), help_text=_(
         "Check this if the contact is an active customer."
     ))
+    shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_('shops'), help_text=_(
+        "Inform which shops have access to this contact."
+    ))
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(
         "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('shipping address'),
