@@ -8,7 +8,6 @@ from babel.dates import format_datetime
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
@@ -30,7 +29,7 @@ class CampaignListView(PicotableListView):
     ]
 
     def get_queryset(self):
-        shop = get_shop(self.request)
+        shop = self.request.shop
         return self.model.objects.filter(shop=shop)
 
     def start_datetime(self, instance, *args, **kwargs):

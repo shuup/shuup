@@ -14,7 +14,6 @@ from django_jinja.backend import Jinja2
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
@@ -66,7 +65,7 @@ class XthemeAdminModule(AdminModule):
         ]
 
     def get_help_blocks(self, request, kind):
-        theme = get_current_theme(get_shop(request))
+        theme = get_current_theme(request.shop)
         if kind == "quicklink" and theme:
             yield SimpleHelpBlock(
                 text=_("Customize the look and feel of your shop"),
@@ -90,7 +89,7 @@ class XthemeAdminModule(AdminModule):
 
         if engine and isinstance(engine, Jinja2):  # The engine is what we expect...
             if isinstance(engine.env, XthemeEnvironment):  # ... and it's capable of loading themes...
-                if not get_current_theme(get_shop(request)):  # ... but there's no theme active?!
+                if not get_current_theme(request.shop):  # ... but there's no theme active?!
                     # Panic!
                     yield Notification(
                         text=_("No theme is active. Click here to activate one."),

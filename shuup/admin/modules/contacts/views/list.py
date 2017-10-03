@@ -13,7 +13,6 @@ from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, TextFilter
@@ -79,7 +78,7 @@ class ContactListView(PicotableListView):
         query = Q(groups__in=groups) if groups else Q()
 
         if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and not self.request.user.is_superuser:
-            shop = get_shop(self.request)
+            shop = self.request.shop
             qs = qs.filter(shops=shop)
 
         return (

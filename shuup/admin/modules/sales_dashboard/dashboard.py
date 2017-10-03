@@ -22,7 +22,6 @@ from shuup.admin.dashboard import (
     ChartDataType, ChartType, DashboardChartBlock, DashboardContentBlock,
     DashboardMoneyBlock, MixedChart
 )
-from shuup.admin.shop_provider import get_shop
 from shuup.core.models import Order, Shop
 from shuup.core.pricing import TaxfulPrice
 from shuup.core.utils.query import group_by_period
@@ -31,7 +30,7 @@ from shuup.utils.i18n import get_current_babel_locale
 
 
 def get_orders_for_shop(request, currency=None):
-    shop = get_shop(request)
+    shop = request.shop
     if not currency:
         currency = shop.currency
     return Order.objects.filter(shop=shop, currency=currency)
@@ -49,7 +48,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
     default_size = "small"
 
     def __init__(self, id, request, **kwargs):
-        shop = get_shop(request)
+        shop = request.shop
         self.cached_chart = None
         self.request = request
         self.currency = shop.currency
@@ -149,7 +148,7 @@ def get_subtitle(count):
 def get_sales_of_the_day_block(request, currency=None):
     orders = get_orders_for_shop(request)
     if not currency:
-        shop = get_shop(request)
+        shop = request.shop
         currency = shop.currency
 
     # Sales of the day
@@ -170,7 +169,7 @@ def get_sales_of_the_day_block(request, currency=None):
 def get_lifetime_sales_block(request, currency=None):
     orders = get_orders_for_shop(request)
     if not currency:
-        shop = get_shop(request)
+        shop = request.shop
         currency = shop.currency
 
     # Lifetime sales
@@ -192,7 +191,7 @@ def get_lifetime_sales_block(request, currency=None):
 
 def get_avg_purchase_size_block(request, currency=None):
     orders = get_orders_for_shop(request)
-    shop = get_shop(request)
+    shop = request.shop
     if not currency:
         currency = shop.currency
 
@@ -219,7 +218,7 @@ def get_avg_purchase_size_block(request, currency=None):
 def get_open_orders_block(request, currency=None):
     orders = get_orders_for_shop(request)
     if not currency:
-        shop = get_shop(request)
+        shop = request.shop
         currency = shop.currency
 
     # Open orders / open orders value
@@ -264,7 +263,7 @@ def get_shop_overview_block(request, currency, for_date=None):
     start_of_day = to_aware(end.date(), time=time.min)
     start_of_month = start_of_day.replace(day=1)
     start_of_year = start_of_day.replace(month=1, day=1)
-    shop = get_shop(request)
+    shop = request.shop
 
     if not currency:
         currency = shop.currency

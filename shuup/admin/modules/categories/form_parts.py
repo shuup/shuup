@@ -11,7 +11,6 @@ from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.modules.categories.forms import (
     CategoryBaseForm, CategoryProductForm
 )
-from shuup.admin.shop_provider import get_shop
 from shuup.core.models import Category
 
 
@@ -42,7 +41,7 @@ class CategoryProductFormPart(FormPart):
         if not self.object.pk:
             return
 
-        shop = get_shop(self.request)
+        shop = self.request.shop
         yield TemplatedFormDef(
             self._get_form_name(shop),
             CategoryProductForm,

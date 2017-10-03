@@ -19,7 +19,6 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import (
     DropdownActionButton, PostActionButton, Toolbar, URLActionButton
 )
@@ -138,7 +137,7 @@ class ContactDetailView(DetailView):
         obj = super(ContactDetailView, self).get_object(*args, **kwargs)
 
         if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and not self.request.user.is_superuser:
-            shop = get_shop(self.request)
+            shop = self.request.shop
             if shop not in obj.shops.all():
                 raise PermissionDenied()
 

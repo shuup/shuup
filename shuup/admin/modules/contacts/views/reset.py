@@ -10,7 +10,6 @@ from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.modules.users.views.password import UserResetPasswordView
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.models import Contact
 from shuup.utils.excs import Problem
@@ -20,7 +19,7 @@ class ContactResetPasswordView(UserResetPasswordView):
     def get_contact(self):
         contact = Contact.objects.get(pk=self.kwargs[self.pk_url_kwarg])
         if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and not self.request.user.is_superuser:
-            shop = get_shop(self.request)
+            shop = self.request.shop
             if shop not in contact.shops.all():
                 raise PermissionDenied()
         return contact

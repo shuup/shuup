@@ -11,7 +11,6 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, Picotable, RangeFilter, TextFilter
 )
@@ -100,7 +99,7 @@ class ProductListView(PicotableListView):
 
     def get_queryset(self):
         filter = self.get_filter()
-        shop = get_shop(self.request)
+        shop = self.request.shop
         qs = ShopProduct.objects.filter(product__deleted=False, shop=shop)
         q = Q()
         for mode in filter.get("modes", []):

@@ -14,7 +14,7 @@ from django_countries import Countries
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.widgets import TextEditorWidget
-from shuup.admin.shop_provider import get_shop
+
 from shuup.core.models import (
     CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
     GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
@@ -67,7 +67,7 @@ class BaseMethodForm(ShuupAdminForm):
         setattr(self.instance, self.service_provider_attr, value)
 
     def _save_master(self, commit=True):
-        self.cleaned_data['shop'] = get_shop(self.request)
+        self.cleaned_data['shop'] = self.request.shop
         if self.instance.pk:
             return super(BaseMethodForm, self)._save_master(commit)
 

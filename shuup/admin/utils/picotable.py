@@ -21,7 +21,6 @@ from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.files import get_thumbnailer
 from filer.models import Image
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import ProductMedia
@@ -516,7 +515,7 @@ class PicotableViewMixin(object):
 
     def get_object_url(self, instance):
         try:
-            return get_model_url(instance, user=self.request.user, shop=get_shop(self.request))
+            return get_model_url(instance, user=self.request.user, shop=self.request.shop)
         except NoModelUrl:
             pass
         return None

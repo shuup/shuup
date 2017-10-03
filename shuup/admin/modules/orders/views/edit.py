@@ -25,7 +25,6 @@ from django.views.generic import View
 from django_countries import countries
 
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.signals import object_created
 from shuup.admin.toolbar import Toolbar
 from shuup.admin.utils.urls import get_model_url
@@ -180,7 +179,7 @@ class OrderEditView(CreateOrUpdateView):
         shop_queryset = Shop.objects.filter(status=ShopStatus.ENABLED)
         if getattr(self.request.user, "is_superuser", False):
             shop_queryset = shop_queryset.filter(staff_members=self.request.user)
-        shop = get_shop(self.request)
+        shop = self.request.shop
         shops = [encode_shop(shop)]
         customer_id = self.request.GET.get("contact_id")
         shipping_methods = ShippingMethod.objects.for_shop(shop).enabled()
@@ -304,7 +303,7 @@ class OrderEditView(CreateOrUpdateView):
             "product": {
                 "text": product.name,
                 "id": product.id,
-                "url": get_model_url(product, shop=get_shop(request))
+                "url": get_model_url(product, shop=request.shop)
             }
         }
 

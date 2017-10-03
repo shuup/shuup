@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
     TextFilter
@@ -75,7 +74,7 @@ class OrderListView(PicotableListView):
     def get_queryset(self):
         qs = super(OrderListView, self).get_queryset().exclude(deleted=True)
         if not self.request.user.is_superuser:
-            shop = get_shop(self.request)
+            shop = self.request.shop
             qs = qs.filter(shop=shop)
         return qs
 

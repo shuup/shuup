@@ -17,7 +17,6 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
-from shuup.admin.shop_provider import get_shop
 from shuup.core.models import Carrier, Contact, Product
 
 
@@ -76,7 +75,7 @@ class MultiselectAjaxView(TemplateView):
         cls = apps.get_model(model_name)
         qs = cls.objects.all()
         if hasattr(cls.objects, "all_except_deleted"):
-            shop = get_shop(self.request) if not self.request.user.is_superuser else None
+            shop = self.request.shop if not self.request.user.is_superuser else None
             qs = cls.objects.all_except_deleted(shop=shop)
         if hasattr(cls.objects, "get_for_user"):
             qs = cls.objects.get_for_user(self.request.user)

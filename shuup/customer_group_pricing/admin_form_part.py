@@ -12,7 +12,6 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.shop_provider import get_shop
 from shuup.core.models import ContactGroup
 from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 
@@ -25,7 +24,7 @@ class CustomerGroupPricingForm(forms.Form):
         super(CustomerGroupPricingForm, self).__init__(**kwargs)
         self.groups = []
         if not self.shop:
-            self.shop = get_shop(self.request)
+            self.shop = self.request.shop
         if self.product:
             self._build_fields()
 
@@ -105,7 +104,7 @@ class CustomerGroupDiscountForm(forms.Form):
         self.groups = []
 
         if not self.shop:
-            self.shop = get_shop(self.request)
+            self.shop = self.request.shop
 
         if self.product:
             self._build_fields()

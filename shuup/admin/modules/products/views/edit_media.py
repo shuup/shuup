@@ -20,7 +20,6 @@ from filer.models import File
 
 from shuup.admin.base import MenuEntry
 from shuup.admin.forms.widgets import MediaChoiceWidget
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.models import (
@@ -92,7 +91,7 @@ class ProductMediaEditView(UpdateView):
         return [
             MenuEntry(
                 text="%s" % self.object,
-                url=get_model_url(self.object, shop=get_shop(self.request))
+                url=get_model_url(self.object, shop=self.request.shop)
             )
         ]
 
@@ -140,7 +139,7 @@ class ProductMediaBulkAdderView(View):
         ids = self.request.POST.getlist("file_ids")
         product_id = kwargs.pop("pk")
         kind = self.request.POST.get("kind")
-        shop = get_shop(self.request)
+        shop = self.request.shop
         shop_id = self.request.POST.get("shop_id", shop.pk)
         if not ids or not product_id:
             return JsonResponse({"response": "error", "message": "bad request"}, status=400)

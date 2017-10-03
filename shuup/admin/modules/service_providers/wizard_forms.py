@@ -11,7 +11,6 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
-from shuup.admin.shop_provider import get_shop
 from shuup.core.models import (
     CustomCarrier, CustomPaymentProcessor, PaymentMethod, PaymentProcessor,
     ShippingMethod, TaxClass
@@ -50,7 +49,7 @@ class ServiceWizardForm(ShuupAdminForm):
         provider.save()
         if is_new:
             service_choice = self.get_service_choice(provider)
-            shop = get_shop(self.request)
+            shop = self.request.shop
             provider.create_service(
                 service_choice,
                 name=self.cleaned_data.get("service_name", service_choice.name),

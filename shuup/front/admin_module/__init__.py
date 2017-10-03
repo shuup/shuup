@@ -16,7 +16,6 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.dashboard import DashboardMoneyBlock
 from shuup.admin.menu import ORDERS_MENU_CATEGORY
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.front.models import StoredBasket
@@ -31,7 +30,7 @@ def get_unfinalized_cart_block(request, days=14):
     # unupdated for two hours.
     late_cutoff = now() - datetime.timedelta(hours=2)
 
-    shop = get_shop(request)
+    shop = request.shop
     data = (
         StoredBasket.objects.filter(shop=shop, currency=shop.currency)
         .filter(updated_on__range=(early_cutoff, late_cutoff), product_count__gte=0)

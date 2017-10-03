@@ -17,7 +17,6 @@ from shuup.admin.modules.contacts.form_parts import (
     CompanyContactBaseFormPart, ContactAddressesFormPart,
     PersonContactBaseFormPart
 )
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
@@ -38,7 +37,7 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         contact = super(CreateOrUpdateView, self).get_object(queryset)
 
         if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and not self.request.user.is_superuser:
-            shop = get_shop(self.request)
+            shop = self.request.shop
             if shop not in contact.shops.all():
                 raise PermissionDenied()
 
@@ -69,7 +68,7 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     def form_valid(self, form):
         response = self.save_form_parts(form)
         if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
-            self.object.shops.add(get_shop(self.request))
+            self.object.shops.add(self.request.shop)
         return response
 
     def get_toolbar(self):

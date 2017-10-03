@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import ChoicesFilter, Column, MPTTFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Category, CategoryStatus, CategoryVisibility
@@ -38,14 +37,14 @@ class CategoryListView(PicotableListView):
 
     def get_name_filter_choices(self):
         choices = []
-        shop = get_shop(self.request)
+        shop = self.request.shop
         for c in Category.objects.all_except_deleted(shop=shop):
             name = self.format_name(c)
             choices.append((c.pk, name))
         return choices
 
     def get_queryset(self):
-        shop = get_shop(self.request)
+        shop = self.request.shop
         return Category.objects.all_except_deleted(shop=shop)
 
     def format_name(self, instance, *args, **kwargs):

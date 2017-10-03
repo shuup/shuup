@@ -9,7 +9,6 @@ from django.conf import settings
 
 from shuup import configuration
 from shuup.admin.module_registry import get_modules
-from shuup.admin.shop_provider import get_shop
 from shuup.utils.importing import load
 
 
@@ -63,7 +62,7 @@ def setup_wizard_complete(request):
     if getattr(settings, "SHUUP_ENABLE_MULTIPLE_SHOPS", False):
         # setup wizard is only applicable in single shop mode
         return True
-    shop = get_shop(request)
+    shop = request.shop
     complete = configuration.get(shop, "setup_wizard_complete")
     if complete is None:
         return not setup_wizard_visible_panes(shop)
