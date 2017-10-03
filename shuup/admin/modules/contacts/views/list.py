@@ -7,12 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, TextFilter
@@ -76,9 +76,11 @@ class ContactListView(PicotableListView):
         qs = super(ContactListView, self).get_queryset()
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
-        if not self.request.user.is_superuser:
-            shop = get_shop(self.request)
-            qs = qs.filter(shop=shop)
+
+        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and not self.request.user.is_superuser:
+            shop = self.request.shop
+            qs = qs.filter(shops=shop)
+
         return (
             qs
             .filter(query)

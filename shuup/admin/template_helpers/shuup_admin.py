@@ -12,6 +12,7 @@ This module is installed as the `shuup_admin` template function namespace.
 
 import itertools
 
+from django.conf import settings
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 from jinja2.utils import contextfunction
@@ -19,7 +20,6 @@ from jinja2.utils import contextfunction
 from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import (
     get_model_url, manipulate_query_string, NoModelUrl
 )
@@ -134,7 +134,7 @@ def model_url(context, model, kind="detail", default=None):
     user = context.get("user")
     try:
         request = context.get("request")
-        shop = get_shop(request) if request else None
+        shop = request.shop if request else None
         return get_model_url(model, kind=kind, user=user, shop=shop)
     except NoModelUrl:
         return default
@@ -153,4 +153,9 @@ def get_shop_count(context):
 
 @contextfunction
 def get_admin_shop(context):
-    return get_shop(context["request"])
+    return context["request"].shop
+
+
+@contextfunction
+def is_multishop_enabled(context):
+    return settings.SHUUP_ENABLE_MULTIPLE_SHOPS is True

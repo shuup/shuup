@@ -7,15 +7,23 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied
+from django.test.utils import override_settings
 
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.modules.contacts.forms import (
     CompanyContactBaseForm, PersonContactBaseForm
 )
+from shuup.admin.modules.contacts.views import (
+    ContactDetailView, ContactEditView, ContactListView
+)
 from shuup.core.models import (
     CompanyContact, Gender, get_person_contact, PersonContact
 )
-from shuup.testing.factories import create_random_company, create_random_person
+from shuup.testing.factories import (
+    create_random_company, create_random_person, create_random_user, get_shop
+)
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
 
 
@@ -82,3 +90,156 @@ def test_company_contact_edit_form():
     assert isinstance(contact, CompanyContact)
     assert isinstance(contact_base_form.fields["members"], Select2MultipleField)
     assert contact.name == new_company_name
+
+
+@pytest.mark.django_db
+def test_contact_edit_multishop(rf):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+        staff_user = create_random_user(is_staff=True)
+
+        shop1 = get_shop(identifier="shop-1", enabled=True)
+        shop2 = get_shop(identifier="shop-2", enabled=True)
+
+        shop1.staff_members.add(staff_user)
+        shop2.staff_members.add(staff_user)
+
+        contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+        # only available in shop2
+        contact.shops.add(shop2)
+
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
+        view = ContactDetailView.as_view()
+
+        # contact not found for this shop
+        with pytest.raises(PermissionDenied):
+            response = view(request, pk=contact.id)
+
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
+        response = view(request, pk=contact.id)
+        assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_contact_company_edit_multishop(rf):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+        staff_user = create_random_user(is_staff=True)
+
+        shop1 = get_shop(identifier="shop-1", enabled=True)
+        shop2 = get_shop(identifier="shop-2", enabled=True)
+
+        shop1.staff_members.add(staff_user)
+        shop2.staff_members.add(staff_user)
+
+        # only available in shop2
+        contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+        contact.shops.add(shop2)
+
+        # only available in shop1
+        company = create_random_company()
+        company.shops.add(shop1)
+
+        view = ContactEditView.as_view()
+
+        # permission denied for contact and shop1
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
+        with pytest.raises(PermissionDenied):
+            response = view(request, pk=contact.id)
+        # permission granted for contact and shop2
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
+        response = view(request, pk=contact.id)
+        assert response.status_code == 200
+
+        # permission denied for company and shop2
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
+        with pytest.raises(PermissionDenied):
+            response = view(request, pk=company.id)
+        # permission granted for company and shop1
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
+        response = view(request, pk=company.id)
+        assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_contact_detail_multishop(rf):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+        staff_user = create_random_user(is_staff=True)
+
+        shop1 = get_shop(identifier="shop-1", enabled=True)
+        shop2 = get_shop(identifier="shop-2", enabled=True)
+
+        shop1.staff_members.add(staff_user)
+        shop2.staff_members.add(staff_user)
+
+        contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+        # only available in shop2
+        contact.shops.add(shop2)
+
+        view = ContactDetailView.as_view()
+
+        # contact not found for this shop
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
+        with pytest.raises(PermissionDenied):
+            response = view(request, pk=contact.id)
+
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
+        response = view(request, pk=contact.id)
+        assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_company_contact_detail_multishop(rf):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+        staff_user = create_random_user(is_staff=True)
+
+        shop1 = get_shop(identifier="shop-1", enabled=True)
+        shop2 = get_shop(identifier="shop-2", enabled=True)
+
+        shop1.staff_members.add(staff_user)
+        shop2.staff_members.add(staff_user)
+
+        company = create_random_company()
+        # only available in shop1
+        company.shops.add(shop1)
+
+        view = ContactDetailView.as_view()
+
+        # company not found for this shop
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
+        with pytest.raises(PermissionDenied):
+            response = view(request, pk=company.id)
+
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
+        response = view(request, pk=company.id)
+        assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_contact_company_list_multishop(rf):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+        staff_user = create_random_user(is_staff=True)
+
+        shop1 = get_shop(identifier="shop-1", enabled=True)
+        shop2 = get_shop(identifier="shop-2", enabled=True)
+
+        shop1.staff_members.add(staff_user)
+        shop2.staff_members.add(staff_user)
+
+        # only available in shop2
+        contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+        contact.shops.add(shop2)
+
+        # only available in shop1
+        company = create_random_company()
+        company.shops.add(shop1)
+
+        view = ContactListView()
+
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
+        view.request = request
+        assert company in view.get_queryset()
+        assert contact not in view.get_queryset()
+
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
+        view.request = request
+        assert contact in view.get_queryset()
+        assert company not in view.get_queryset()

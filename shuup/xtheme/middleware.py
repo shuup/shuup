@@ -19,7 +19,7 @@ class XthemeMiddleware(object):
     """
     Handle Shuup specific tasks for each request and response.
 
-    This middleware requires the ShuupFrontMiddleware or some other that
+    This middleware requires the ShuupMiddleware or some other that
     can set the current shop in the request
     """
     def process_request(self, request):

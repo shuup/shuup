@@ -23,9 +23,7 @@ class PaymentOrderSection(Section):
 
     @classmethod
     def visible_for_object(cls, order, request=None):
-        if not request:
-            return True  # Backwards compatibility
-        return request.user.has_perm('shuup.view_order')
+        return True
 
     @classmethod
     def get_context_data(cls, order, request=None):
@@ -41,9 +39,7 @@ class ShipmentSection(Section):
 
     @staticmethod
     def visible_for_object(order, request=None):
-        if not request:
-            return True  # Backwards compatibility
-        return request.user.has_perm('shuup.view_order')
+        return True
 
     @staticmethod
     def get_context_data(order, request=None):
@@ -60,9 +56,7 @@ class LogEntriesOrderSection(Section):
 
     @classmethod
     def visible_for_object(cls, order, request=None):
-        if not request:
-            return True  # Backwards compatibility
-        return request.user.has_perm('shuup.view_order')
+        return True
 
     @classmethod
     def get_context_data(cls, order, request=None):
@@ -80,9 +74,7 @@ class AdminCommentSection(Section):
 
     @classmethod
     def visible_for_object(cls, order, request=None):
-        if not request:
-            return True  # Backwards compatibility
-        return request.user.has_perm('shuup.view_order')
+        return True
 
     @classmethod
     def get_context_data(cls, order, request=None):

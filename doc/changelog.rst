@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Add setting to manage contacts per shop
+- Add `ShuupMiddleware` to set the current request shop
 - Add `get_supplier` for shop product to define the business logic of getting supplier for order/basket line
 - Add shops to supplier to define which shops the supplier is available for
 - Introduce settings provider through new provide key `shuup_settings_provider`
@@ -41,6 +43,7 @@ Core
 Admin
 ~~~~~
 
+- Add middleware to select and set the current shop in the request
 - Breaking change: add optional shop parameter in `get_model_url` method of admin module
 - Add middleware to select the active admin shop using session
 - Only categories, orders, products, contacts, campaigns and services for the active shop are displayed in the admin

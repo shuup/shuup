@@ -78,8 +78,10 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'shuup.front.middleware.ProblemMiddleware',
+    'shuup.core.middleware.ShuupMiddleware',
     'shuup.front.middleware.ShuupFrontMiddleware',
     'shuup.xtheme.middleware.XthemeMiddleware',
+    'shuup.admin.middleware.ShuupAdminMiddleware'
 ]
 
 ROOT_URLCONF = 'shuup_workbench.test_urls'

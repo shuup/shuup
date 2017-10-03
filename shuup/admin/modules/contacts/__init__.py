@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import six
+from django.conf import settings
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
@@ -90,10 +91,13 @@ class ContactModule(AdminModule):
     def get_search_results(self, request, query):
         minimum_query_length = 3
         if len(query) >= minimum_query_length:
-            contacts = Contact.objects.filter(
-                Q(name__icontains=query) |
-                Q(email=query)
-            )
+            filters = Q(Q(name__icontains=query) | Q(email=query))
+
+            # show only contacts which the shop has access
+            if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+                filters &= Q(shops=request.shop)
+
+            contacts = Contact.objects.filter(filters)
             for i, contact in enumerate(contacts[:10]):
                 relevance = 100 - i
                 yield SearchResult(

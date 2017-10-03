@@ -23,7 +23,6 @@ from shuup.admin.forms.widgets import (
     QuickAddManufacturerSelect, QuickAddPaymentMethodsSelect,
     QuickAddProductTypeSelect, QuickAddShippingMethodsSelect, TextEditorWidget
 )
-from shuup.admin.shop_provider import get_shop
 from shuup.core.models import (
     Attribute, AttributeType, Category, PaymentMethod, Product, ProductMedia,
     ProductMediaKind, ShippingMethod, ShopProduct, Supplier
@@ -107,7 +106,7 @@ class ProductBaseForm(MultiLanguageModelForm):
                 file_id=self.cleaned_data["file"],
                 kind=ProductMediaKind.IMAGE,
             )
-            shop = get_shop(self.request)
+            shop = self.request.shop
             image.shops.add(shop)
             instance.primary_image = image
             instance.save()
@@ -156,7 +155,7 @@ class ShopProductForm(forms.ModelForm):
         shipping_methods_qs = ShippingMethod.objects.all()
         suppliers_qs = Supplier.objects.all()
         if self.request:
-            shop = get_shop(self.request)
+            shop = self.request.shop
             payment_methods_qs = payment_methods_qs.filter(shop=shop)
             shipping_methods_qs = ShippingMethod.objects.filter(shop=shop)
             suppliers_qs = shop.suppliers.all()
@@ -329,7 +328,7 @@ class BaseProductMediaForm(MultiLanguageModelForm):
 
     def pre_master_save(self, instance):
         instance.product = self.product
-        shop = get_shop(self.request)
+        shop = self.request.shop
         instance.shops.add(shop)
 
 

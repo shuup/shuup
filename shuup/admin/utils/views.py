@@ -18,7 +18,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
 
 from shuup.admin.modules.settings.view_settings import ViewSettings
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.signals import object_created
 from shuup.admin.toolbar import (
     get_default_edit_toolbar, NewActionButton, SettingsActionButton, Toolbar
@@ -74,16 +73,16 @@ class CreateOrUpdateView(UpdateView):
         return getattr(self, "save_form_id", None) or "%s_form" % self.get_context_object_name(self.object)
 
     def get_return_url(self):
-        return get_model_url(self.object, kind="list", shop=get_shop(self.request))
+        return get_model_url(self.object, kind="list", shop=self.request.shop)
 
     def get_new_url(self):
-        return get_model_url(self.object, kind="new", shop=get_shop(self.request))
+        return get_model_url(self.object, kind="new", shop=self.request.shop)
 
     def get_success_url(self):
         if self.request.GET.get("mode", "") == "iframe":
             quick_add_target = self.request.GET.get("quick_add_target")
             return "%s?mode=iframe&quick_add_target=%s&iframe_close=yes" % (
-                get_model_url(self.object, shop=get_shop(self.request)), quick_add_target)
+                get_model_url(self.object, shop=self.request.shop), quick_add_target)
 
         next = self.request.POST.get("__next")
         try:
@@ -100,7 +99,7 @@ class CreateOrUpdateView(UpdateView):
             pass
 
         try:
-            return get_model_url(self.object, shop=get_shop(self.request))
+            return get_model_url(self.object, shop=self.request.shop)
         except NoModelUrl:
             pass
 

@@ -7,7 +7,16 @@
 {% block extra_css %}
     <link rel="stylesheet" href="{{ static("shuup_admin/css/home.css") }}">
 {% endblock %}
-{% block support_content %}{% endblock %}
+
+{% block support_content %}
+    {% if shuup_admin.is_multishop_enabled() %}
+    <div class="container-fluid support-nav-wrap{% if iframe_mode %} iframe-mode{% endif %}">
+        <div class="flex-wrapper">
+            <h3>Active shop: <strong>{{ shuup_admin.get_admin_shop().name }}</strong></h3>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <div class="container-fluid">

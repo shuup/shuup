@@ -15,7 +15,6 @@ from django.views.generic import TemplateView
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.wizard import (
     load_setup_wizard_pane, load_setup_wizard_panes
 )
@@ -75,7 +74,7 @@ class WizardView(TemplateView):
 
     @cached_property
     def panes(self):
-        shop = get_shop(self.request)
+        shop = self.request.shop
         pane_id = self.request.GET.get("pane_id", None)
         panes = load_setup_wizard_panes(
             shop=shop,

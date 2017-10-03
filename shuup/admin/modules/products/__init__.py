@@ -22,7 +22,6 @@ from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
 from shuup.admin.modules.products.signal_handlers import (
     update_categories_post_save, update_categories_through
 )
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -98,7 +97,7 @@ class ProductModule(AdminModule):
         ]
 
     def get_search_results(self, request, query):
-        shop = get_shop(request)
+        shop = request.shop
         minimum_query_length = 3
         skus_seen = set()
         if len(query) >= minimum_query_length:
@@ -117,7 +116,7 @@ class ProductModule(AdminModule):
                 skus_seen.add(product.sku.lower())
                 yield SearchResult(
                     text=force_text(product),
-                    url=get_model_url(product, shop=get_shop(request)),
+                    url=get_model_url(product, shop=request.shop),
                     category=_("Products"),
                     relevance=relevance
                 )

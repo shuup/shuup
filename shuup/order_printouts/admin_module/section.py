@@ -33,9 +33,7 @@ class PrintoutsSection(Section):
 
     @classmethod
     def visible_for_object(cls, obj, request=None):
-        if not request:
-            return True  # backwards compatibility
-        return request.user.has_perm('shuup.view_order')
+        return True
 
     @classmethod
     def get_context_data(cls, obj, request=None):

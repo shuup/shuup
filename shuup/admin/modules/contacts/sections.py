@@ -23,9 +23,7 @@ class BasicInfoContactSection(Section):
 
     @classmethod
     def visible_for_object(cls, contact, request=None):
-        if not request:
-            return True  # backwards compatibility
-        return request.user.has_perm('shuup.view_contact')
+        return True
 
     @classmethod
     def get_context_data(cls, contact, request=None):
@@ -72,10 +70,7 @@ class OrdersContactSection(Section):
 
     @classmethod
     def visible_for_object(cls, contact, request=None):
-        has_addresses = bool(contact.default_shipping_address_id or contact.default_billing_address_id)
-        if not request:
-            return has_addresses  # backwards compatibility
-        return bool(request.user.has_perm('shuup.view_contact') and has_addresses)
+        return bool(contact.default_shipping_address_id or contact.default_billing_address_id)
 
     @classmethod
     def get_context_data(cls, contact, request=None):
@@ -91,10 +86,7 @@ class MembersContactSection(Section):
 
     @classmethod
     def visible_for_object(cls, contact, request=None):
-        has_members = hasattr(contact, 'members')
-        if not request:
-            return has_members  # backwards compatibility
-        return bool(request.user.has_perm('shuup.view_contact') and has_members)
+        return hasattr(contact, 'members')
 
     @classmethod
     def get_context_data(cls, contact, request=None):

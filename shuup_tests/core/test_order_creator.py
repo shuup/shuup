@@ -21,10 +21,11 @@ from shuup.core.order_creator.constants import ORDER_MIN_TOTAL_CONFIG_KEY
 from shuup.testing.factories import (
     create_package_product, get_address, get_default_product, get_default_shop,
     get_default_supplier, get_initial_order_status, get_payment_method,
-    get_shipping_method
+    get_shipping_method, get_shop, create_random_company, create_random_person, create_random_user
 )
 from shuup.utils.models import get_data_dict
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
+from django.test import override_settings
 
 
 def test_invalid_order_source_updating():
@@ -236,3 +237,47 @@ def test_order_creator_min_total(rf, admin_user):
 
     # do not mess with other tests
     configuration.set(shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(0))
+
+
+@pytest.mark.django_db
+def test_order_creator_contact_multishop():
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+        user = create_random_user()
+        customer = create_random_person("en")
+        customer.user = user
+        customer.save()
+        shop = get_shop(identifier="random-shop", enabled=True)
+
+        source = seed_source(user, shop)
+        source.add_line(
+            type=OrderLineType.PRODUCT,
+            product=get_default_product(),
+            supplier=get_default_supplier(),
+            quantity=1,
+            base_unit_price=source.create_price(10),
+        )
+        creator = OrderCreator()
+        creator.create_order(source)
+        customer.refresh_from_db()
+        assert shop in customer.shops.all()
+
+
+@pytest.mark.django_db
+def test_order_creator_company_multishop():
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+        company = create_random_company()
+        shop = get_shop(identifier="random-shop", enabled=True)
+
+        source = seed_source(create_random_user(), shop)
+        source.customer = company
+        source.add_line(
+            type=OrderLineType.PRODUCT,
+            product=get_default_product(),
+            supplier=get_default_supplier(),
+            quantity=1,
+            base_unit_price=source.create_price(10),
+        )
+        creator = OrderCreator()
+        creator.create_order(source)
+        company.refresh_from_db()
+        assert shop in company.shops.all()

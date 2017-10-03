@@ -17,6 +17,7 @@ from registration.backends.default import views as default_views
 from registration.backends.simple import views as simple_views
 
 from shuup import configuration
+from shuup.core.models import get_company_contact, get_person_contact
 from shuup.front.apps.registration.forms import CompanyRegistrationForm
 from shuup.front.template_helpers import urls
 
@@ -44,6 +45,14 @@ class RegistrationViewMixin(object):
         if url and is_safe_url(url, self.request.get_host()):
             return url
         return ('shuup:registration_complete', (), {})
+
+    def register(self, form):
+        user = super(RegistrationViewMixin, self).register(form)
+
+        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+            get_person_contact(user).shops.add(self.request.shop)
+
+        return user
 
 
 class RegistrationNoActivationView(RegistrationViewMixin, simple_views.RegistrationView):
@@ -74,6 +83,13 @@ class CompanyRegistrationView(RegistrationViewMixin, default_views.RegistrationV
         if not configuration.get(None, "allow_company_registration"):
             return HttpResponseNotFound()
         return super(CompanyRegistrationView, self).dispatch(request, *args, **kwargs)
+
+    def register(self, form):
+        user = super(CompanyRegistrationView, self).register(form)
+
+        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+            company = get_company_contact(user)
+            company.shops.add(self.request.shop)
 
 
 class ActivationView(default_views.ActivationView):

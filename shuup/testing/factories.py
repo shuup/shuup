@@ -433,9 +433,12 @@ def get_default_shop():
     return shop
 
 
-def get_shop(prices_include_tax, currency=DEFAULT_CURRENCY, identifier=None):
+def get_shop(prices_include_tax=True, currency=DEFAULT_CURRENCY, identifier=None, enabled=False, **kwargs):
     key = "shop:%s/taxful=%s" % (currency, prices_include_tax)
     values = {"prices_include_tax": prices_include_tax, "currency": currency}
+    if enabled:
+        values["status"] = ShopStatus.ENABLED
+    values.update(kwargs)
     shop = Shop.objects.get_or_create(identifier=identifier or key, defaults=values)[0]
 
     # make sure that the currency is available throughout the Shuup

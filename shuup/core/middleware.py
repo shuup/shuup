@@ -7,12 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.core.shop_provider import get_shop
 from shuup.utils.excs import ExceptionalResponse, Problem
 
 
@@ -52,3 +53,19 @@ class ExceptionMiddleware(object):
             "problem.html",
         ])
         return templates
+
+
+class ShuupMiddleware(object):
+    """
+    Handle Shuup specific tasks for each request and response.
+
+    * Sets the current shop according to the host name
+      ``request.shop`` : :class:`shuup.core.models.Shop`
+          Currently active Shop.
+    """
+
+    def process_request(self, request):
+        request.shop = get_shop(request)
+
+        if not request.shop:
+            raise ImproperlyConfigured(_("No shop!"))

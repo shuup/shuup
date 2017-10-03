@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from django.conf import settings
 
 from shuup import configuration
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.views.wizard import TemplatedWizardFormDef
 
 from .wizard_forms import ManualPaymentWizardForm, ManualShippingWizardForm
@@ -20,7 +19,7 @@ class ServiceWizardFormDef(TemplatedWizardFormDef):
     priority = 0
 
     def __init__(self, name, form_class, template_name, request, extra_js=""):
-        shop = get_shop(request)
+        shop = request.shop
         form_def_kwargs = {
             "name": name,
             "kwargs": {

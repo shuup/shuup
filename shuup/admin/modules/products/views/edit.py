@@ -22,7 +22,6 @@ from shuup.admin.modules.products.forms import (
     ProductAttributesForm, ProductBaseForm, ProductImageMediaFormSet,
     ProductMediaFormSet, ShopProductForm
 )
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
@@ -87,7 +86,7 @@ class ShopProductFormPart(FormPart):
 
     def __init__(self, request, object=None):
         super(ShopProductFormPart, self).__init__(request, object)
-        self.shop = get_shop(request)
+        self.shop = request.shop
 
     def get_form_defs(self):
         yield TemplatedFormDef(
@@ -199,7 +198,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     def get_object(self, queryset=None):
         if not self.kwargs.get(self.pk_url_kwarg):
             instance = self.model()
-            instance.shop = get_shop(self.request)
+            instance.shop = self.request.shop
             instance.product = Product()
             return instance
         return super(CreateOrUpdateView, self).get_object(queryset)
@@ -216,7 +215,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         orderability_errors = []
 
         if self.object.pk:
-            shop = get_shop(self.request)
+            shop = self.request.shop
             try:
                 shop_product = self.object
                 orderability_errors.extend(
