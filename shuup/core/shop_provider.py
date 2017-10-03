@@ -5,22 +5,21 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from shuup.core.models import Shop
+from shuup.core.utils.shops import get_shop_from_host
 from shuup.utils.importing import cached_load
 
 
 class DefaultShopProvider(object):
     @classmethod
     def get_shop(cls, request, **kwargs):
+        shop = None
+
         host = request.META.get("HTTP_HOST")
-        if not host:
+        if host:
+            shop = get_shop_from_host(host)
+
+        if not shop:
             shop = Shop.objects.first()
-        else:
-            shop = Shop.objects.filter(domain=host).first()
-            if not shop:
-                subdomain = host.split(".")[0]
-                shop = Shop.objects.filter(domain=subdomain).first()
-            if not shop:
-                shop = Shop.objects.first()
 
         return shop
 

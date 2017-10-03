@@ -31,4 +31,4 @@ SHUUP_GET_ADMIN_MODULES_SPEC = ("shuup.admin.module_registry.get_admin_modules")
 #: The shop provider is the interface responsible for fetching and setting
 #: the active shop in admin module
 #:
-SHUUP_SHOP_PROVIDER_SPEC = ("shuup.admin.shop_provider.AdminShopProvider")
+SHUUP_ADMIN_SHOP_PROVIDER_SPEC = ("shuup.admin.shop_provider.AdminShopProvider")

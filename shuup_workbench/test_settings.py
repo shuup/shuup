@@ -81,6 +81,7 @@ MIDDLEWARE_CLASSES = [
     'shuup.core.middleware.ShuupMiddleware',
     'shuup.front.middleware.ShuupFrontMiddleware',
     'shuup.xtheme.middleware.XthemeMiddleware',
+    'shuup.admin.middleware.ShuupAdminMiddleware'
 ]
 
 ROOT_URLCONF = 'shuup_workbench.test_urls'

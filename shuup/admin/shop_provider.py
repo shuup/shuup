@@ -5,10 +5,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Shop
+from shuup.core.utils.shops import get_shop_from_host
 from shuup.utils.importing import cached_load
 
 SHOP_SESSION_KEY = "admin_shop"
@@ -18,21 +19,33 @@ class AdminShopProvider(object):
 
     def get_shop(self, request):
         if not request.user.is_staff:
-            raise PermissionDenied(_("You must be a staff user"))
+            return None
 
-        elif SHOP_SESSION_KEY in request.session:
-            return Shop.objects.get(pk=request.session[SHOP_SESSION_KEY])
+        # take the first if multishop is disabled
+        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+            return Shop.objects.first()
+
+        permitted_shops = Shop.objects.get_for_user(request.user)
+
+        if SHOP_SESSION_KEY in request.session:
+            shop = Shop.objects.filter(pk=request.session[SHOP_SESSION_KEY]).first()
+            if shop and shop in permitted_shops:
+                return shop
+
+        # try loading the shop from the host
+        host = request.META.get("HTTP_HOST")
+        shop = get_shop_from_host(host) if host else None
+        if shop and shop in permitted_shops:
+            return shop
 
         # no shop set, fetch the first shop available
-        first_available_shop = Shop.objects.get_for_user(request.user).first()
+        first_available_shop = permitted_shops.first()
         if first_available_shop:
             return first_available_shop
 
-        # take the first if multishop is disabled or we are superuser
-        elif request.user.is_superuser or not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        # so return the first if we are superuser
+        if request.user.is_superuser:
             return Shop.objects.first()
-
-        raise ObjectDoesNotExist(_("Shop not set"))
 
     def set_shop(self, request, shop=None):
         if not request.user.is_staff:
@@ -45,8 +58,8 @@ class AdminShopProvider(object):
             else:
                 raise PermissionDenied(_("You are not a staff member of this shop"))
 
-        elif SHOP_SESSION_KEY in request.session:
-            del request.session[SHOP_SESSION_KEY]
+        else:
+            self.unset_shop(request)
 
     def unset_shop(self, request):
         if SHOP_SESSION_KEY in request.session:
@@ -54,7 +67,7 @@ class AdminShopProvider(object):
 
 
 def get_shop_provider():
-    return cached_load("SHUUP_SHOP_PROVIDER_SPEC")()
+    return cached_load("SHUUP_ADMIN_SHOP_PROVIDER_SPEC")()
 
 
 def get_shop(request):

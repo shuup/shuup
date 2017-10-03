@@ -68,4 +68,4 @@ class ShuupMiddleware(object):
         request.shop = get_shop(request)
 
         if not request.shop:
-            raise ImproperlyConfigured("No shop!")
+            raise ImproperlyConfigured(_("No shop!"))
