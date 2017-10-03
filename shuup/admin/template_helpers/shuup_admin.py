@@ -12,6 +12,7 @@ This module is installed as the `shuup_admin` template function namespace.
 
 import itertools
 
+from django.conf import settings
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 from jinja2.utils import contextfunction
@@ -153,3 +154,8 @@ def get_shop_count(context):
 @contextfunction
 def get_admin_shop(context):
     return context["request"].shop
+
+
+@contextfunction
+def is_multishop_enabled(context):
+    return settings.SHUUP_ENABLE_MULTIPLE_SHOPS is True
