@@ -16,7 +16,6 @@ from shuup.admin.modules.categories.forms import (
 from shuup.admin.modules.categories.views import (
     CategoryCopyVisibilityView, CategoryEditView
 )
-from shuup.admin.shop_provider import set_shop
 from shuup.core.models import (
     Category, CategoryStatus, CategoryVisibility,
     ProductMode, ShopProductVisibility
@@ -44,8 +43,7 @@ def test_category_form_saving(rf, admin_user):
     with transaction.atomic():
         shop = get_default_shop()
         category = CategoryFactory()
-        request = apply_request_middleware(rf.get("/"), user=admin_user)
-        set_shop(request, shop)
+        request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)
         form_kwargs = dict(instance=category, request=request, languages=("sw",), default_language="sw")
         form = CategoryBaseForm(**form_kwargs)
         assert isinstance(form, CategoryBaseForm)
@@ -221,8 +219,7 @@ def test_category_create(rf, admin_user):
             "base-ordering": 1
         }
         assert Category.objects.count() == 0
-        request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
-        set_shop(request, shop)
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user, shop=shop)
         response = view(request, pk=None)
         if hasattr(response, "render"):
             response.render()

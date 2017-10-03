@@ -19,7 +19,7 @@ from shuup.admin.modules.products.views import (
 from shuup.admin.modules.services import (
     PaymentMethodModule, ShippingMethodModule
 )
-from shuup.admin.shop_provider import get_shop, set_shop
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.views.search import get_search_results
 from shuup.core.models import ProductMedia, ProductMediaKind, ProductVisibility
@@ -93,50 +93,42 @@ def test_product_media_bulk_adder(rf, admin_user):
 
     view_func = ProductMediaBulkAdderView.as_view()
     # bad request - no params
-    request = apply_request_middleware(rf.post("/"), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
     response = view_func(request, pk=product.pk)
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
     # bad request - invalid shop
-    request = apply_request_middleware(rf.post("/", {"shop_id": 0, "file_ids": [f.id], "kind": "media"}), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", {"shop_id": 0, "file_ids": [f.id], "kind": "media"}), user=admin_user, shop=shop)
     response = view_func(request, pk=product.pk)
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
     # bad request - invalid product
-    request = apply_request_middleware(rf.post("/", {"file_ids": [f.id], "kind": "media"}), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", {"file_ids": [f.id], "kind": "media"}), user=admin_user, shop=shop)
     response = view_func(request, pk=100)
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
     # bad request - invalid kind
-    request = apply_request_middleware(rf.post("/", {"file_ids": [f.id], "kind": "test"}), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", {"file_ids": [f.id], "kind": "test"}), user=admin_user, shop=shop)
     response = view_func(request, pk=product.pk)
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
     # bad request - invalid file
-    request = apply_request_middleware(rf.post("/", {"file_ids": [0], "kind": "media"}), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", {"file_ids": [0], "kind": "media"}), user=admin_user, shop=shop)
     response = view_func(request, pk=product.pk)
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
     # bad request - empty file array
-    request = apply_request_middleware(rf.post("/", {"file_ids": [], "kind": "media"}), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", {"file_ids": [], "kind": "media"}), user=admin_user, shop=shop)
     response = view_func(request, pk=product.pk)
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
     # add one file
-    request = apply_request_middleware(rf.post("/", {"file_ids":[f.id], "kind": "media"}), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", {"file_ids":[f.id], "kind": "media"}), user=admin_user, shop=shop)
     response = view_func(request, pk=product.pk)
     assert response.status_code == 200
     assert ProductMedia.objects.filter(product_id=product.pk, file_id=f.id, kind=ProductMediaKind.GENERIC_FILE).exists()
     # add two files but one already exists
-    request = apply_request_middleware(rf.post("/", {"file_ids":[f.id, f2.id], "kind": "media"}), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", {"file_ids":[f.id, f2.id], "kind": "media"}), user=admin_user, shop=shop)
     response = view_func(request, pk=product.pk)
     assert response.status_code == 200
     assert ProductMedia.objects.count() == 2

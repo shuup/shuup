@@ -10,7 +10,6 @@ import pytest
 from bs4 import BeautifulSoup
 from django.core.urlresolvers import reverse
 
-from shuup.admin.shop_provider import set_shop
 from shuup.admin.views.wizard import WizardView
 from shuup.apps.provides import override_provides
 from shuup.core.models import (
@@ -36,8 +35,7 @@ def _extract_fields(rf, user):
 
 
 def assert_redirect_to_dashboard(rf, user, shop):
-    request = apply_request_middleware(rf.get("/"), user=user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.get("/"), user=user, shop=shop)
     response = WizardView.as_view()(request)
     assert response.status_code == 302
     assert response["Location"] == reverse("shuup_admin:dashboard")
@@ -61,8 +59,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     assert not TaxClass.objects.exists()
     fields = _extract_fields(rf, admin_user)
     fields["shop-logo"] = ""  # Correct init value for this is not None, but empty string
-    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user, shop=shop)
     response = WizardView.as_view()(request)
     # fields are missing
     assert response.status_code == 400
@@ -74,8 +71,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     fields["address-street"] = "test"
     fields["address-country"] = "US"
 
-    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user, shop=shop)
     response = WizardView.as_view()(request)
     assert response.status_code == 200
     shop.refresh_from_db()
@@ -100,8 +96,7 @@ def test_shipping_method_wizard_pane(rf, admin_user, settings):
     fields["shipping_method_base-providers"] = "manual_shipping"
     fields["manual_shipping-service_name"] = "test"
 
-    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
-    set_shop(request, shop)
+    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user, shop=shop)
     response = WizardView.as_view()(request)
     assert response.status_code == 200
     assert ServiceProvider.objects.count() == 1

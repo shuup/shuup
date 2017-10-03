@@ -17,7 +17,6 @@ from shuup.admin.modules.contacts.forms import (
 from shuup.admin.modules.contacts.views import (
     ContactDetailView, ContactEditView, ContactListView
 )
-from shuup.admin.shop_provider import set_shop
 from shuup.core.models import (
     CompanyContact, Gender, get_person_contact, PersonContact
 )
@@ -108,15 +107,14 @@ def test_contact_edit_multishop(rf):
         # only available in shop2
         contact.shops.add(shop2)
 
-        request = apply_request_middleware(rf.get("/"), user=staff_user)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         view = ContactDetailView.as_view()
 
         # contact not found for this shop
-        set_shop(request, shop1)
         with pytest.raises(PermissionDenied):
             response = view(request, pk=contact.id)
 
-        set_shop(request, shop2)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
         response = view(request, pk=contact.id)
         assert response.status_code == 200
 
@@ -141,23 +139,22 @@ def test_contact_company_edit_multishop(rf):
         company.shops.add(shop1)
 
         view = ContactEditView.as_view()
-        request = apply_request_middleware(rf.get("/"), user=staff_user)
 
         # permission denied for contact and shop1
-        set_shop(request, shop1)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         with pytest.raises(PermissionDenied):
             response = view(request, pk=contact.id)
         # permission granted for contact and shop2
-        set_shop(request, shop2)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
         response = view(request, pk=contact.id)
         assert response.status_code == 200
 
         # permission denied for company and shop2
-        set_shop(request, shop2)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
         with pytest.raises(PermissionDenied):
             response = view(request, pk=company.id)
         # permission granted for company and shop1
-        set_shop(request, shop1)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         response = view(request, pk=company.id)
         assert response.status_code == 200
 
@@ -177,15 +174,14 @@ def test_contact_detail_multishop(rf):
         # only available in shop2
         contact.shops.add(shop2)
 
-        request = apply_request_middleware(rf.get("/"), user=staff_user)
         view = ContactDetailView.as_view()
 
         # contact not found for this shop
-        set_shop(request, shop1)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         with pytest.raises(PermissionDenied):
             response = view(request, pk=contact.id)
 
-        set_shop(request, shop2)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
         response = view(request, pk=contact.id)
         assert response.status_code == 200
 
@@ -205,15 +201,14 @@ def test_company_contact_detail_multishop(rf):
         # only available in shop1
         company.shops.add(shop1)
 
-        request = apply_request_middleware(rf.get("/"), user=staff_user)
         view = ContactDetailView.as_view()
 
         # company not found for this shop
-        set_shop(request, shop2)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
         with pytest.raises(PermissionDenied):
             response = view(request, pk=company.id)
 
-        set_shop(request, shop1)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         response = view(request, pk=company.id)
         assert response.status_code == 200
 
@@ -237,15 +232,14 @@ def test_contact_company_list_multishop(rf):
         company = create_random_company()
         company.shops.add(shop1)
 
-        request = apply_request_middleware(rf.get("/"), user=staff_user)
         view = ContactListView()
 
-        set_shop(request, shop1)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         view.request = request
         assert company in view.get_queryset()
         assert contact not in view.get_queryset()
 
-        set_shop(request, shop2)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
         view.request = request
         assert contact in view.get_queryset()
         assert company not in view.get_queryset()

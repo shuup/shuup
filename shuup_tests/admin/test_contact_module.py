@@ -10,7 +10,6 @@ from django.test.utils import override_settings
 
 from shuup.admin.modules.contacts import ContactModule
 from shuup.admin.modules.contacts.views.detail import ContactDetailView
-from shuup.admin.shop_provider import set_shop
 from shuup.core.models import Contact
 from shuup.testing.factories import (
     create_random_person, create_random_user, get_default_shop, get_shop
@@ -63,13 +62,12 @@ def test_contact_module_search_multishop(rf):
         contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
         contact.shops.add(shop2)
 
-        request = apply_request_middleware(rf.get("/"), user=staff_user)
-        set_shop(request, shop2)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
 
         # find the shop
         assert not empty_iterable(cm.get_search_results(request, query=contact.email))
         assert not empty_iterable(cm.get_search_results(request, query=contact.first_name))
 
         # no shop found
-        set_shop(request, shop1)
+        request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         assert empty_iterable(cm.get_search_results(request, query=contact.email))
