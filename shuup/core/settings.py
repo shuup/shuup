@@ -227,3 +227,7 @@ SHUUP_ERROR_PAGE_HANDLERS_SPEC = []
 #: the current shop product with customer, quantity and shipping address is passed as kwargs.
 SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY = (
     "shuup.core.suppliers.FirstSupplierStrategy")
+
+#: Spec which provides the current shop for a given request and set of parameters.
+SHUUP_REQUEST_SHOP_PROVIDER_SPEC = (
+    "shuup.core.shop_provider.DefaultShopProvider")

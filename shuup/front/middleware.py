@@ -10,16 +10,14 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.signals import user_logged_in, user_logged_out
-from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.middleware import ExceptionMiddleware
-from shuup.core.models import (
-    Contact, get_company_contact, get_person_contact, Shop
-)
+from shuup.core.models import Contact, get_company_contact, get_person_contact
+from shuup.core.shop_provider import get_shop
 from shuup.front.basket import get_basket
 
 __all__ = ["ProblemMiddleware", "ShuupFrontMiddleware"]
@@ -46,8 +44,6 @@ class ShuupFrontMiddleware(object):
       ``request.shop`` : :class:`shuup.core.models.Shop`
           Currently active Shop.
 
-          .. TODO:: Define better
-
       ``request.person`` : :class:`shuup.core.models.Contact`
           :class:`~shuup.core.models.PersonContact` of currently logged
           in user or :class:`~shuup.core.models.AnonymousContact` if
@@ -73,21 +69,11 @@ class ShuupFrontMiddleware(object):
         self._set_price_display_options(request)
 
     def _set_shop(self, request):
-        host = request.META.get("HTTP_HOST")
-        if not host:
-            shop = Shop.objects.first()
-        else:
-            shop = Shop.objects.filter(domain=host).first()
-            if not shop:
-                subdomain = host.split(".")[0]
-                shop = Shop.objects.filter(domain=subdomain).first()
-            if not shop:
-                shop = Shop.objects.first()
-
-        request.shop = shop
-
-        if not request.shop:
-            raise ImproperlyConfigured("No shop!")
+        """
+        Set the shop here again, even if the ShuupCore already did it.
+        As we use this middleware alone in `refresh_on_user_change`, we should ensure the request shop.
+        """
+        request.shop = get_shop(request)
 
     def _set_person(self, request):
         request.person = get_person_contact(request.user)

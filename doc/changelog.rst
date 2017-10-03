@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add `ShuupMiddleware` to set the current request shop
 - Add `get_supplier` for shop product to define the business logic of getting supplier for order/basket line
 - Add shops to supplier to define which shops the supplier is available for
 - Introduce settings provider through new provide key `shuup_settings_provider`
