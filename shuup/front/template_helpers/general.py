@@ -59,7 +59,7 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         products_qs = products_qs.order_by(ordering)
 
     if orderable_only:
-        suppliers = Supplier.objects.all()
+        suppliers = Supplier.objects.filter(shops__in=[shop])
         products = []
         for product in products_qs[:(n_products * 4)]:
             if len(products) == n_products:
@@ -69,6 +69,7 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
                 if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
                     products.append(product)
                     break
+
         return products
 
     products = products_qs[:n_products]
@@ -82,8 +83,8 @@ def _can_use_cache(products, shop, customer):
     If any of the products is no more orderable refetch the products
     """
     product_ids = [prod.id for prod in products]
-    for supplier in Supplier.objects.all():
-        for sp in ShopProduct.objects.filter(product__id__in=product_ids):
+    for supplier in Supplier.objects.filter(shops__in=[shop]):
+        for sp in ShopProduct.objects.filter(product__id__in=product_ids, shop=shop):
             if not sp.is_orderable(supplier, customer=customer, quantity=sp.minimum_purchase_quantity):
                 return False
     return True
@@ -122,7 +123,7 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request)
     products = []
     if orderable_only:
         # get suppliers for later use
-        suppliers = Supplier.objects.all()
+        suppliers = Supplier.objects.filter(shops__in=[request.shop])
     for product in Product.objects.filter(id__in=product_ids):
         shop_product = product.get_shop_instance(request.shop, allow_cache=True)
         if orderable_only:

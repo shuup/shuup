@@ -415,6 +415,8 @@ def get_default_supplier():
     if not supplier:
         supplier = Supplier.objects.create(name=DEFAULT_NAME, identifier=DEFAULT_IDENTIFIER, type=SupplierType.INTERNAL)
         assert str(supplier) == DEFAULT_NAME
+    shop = get_default_shop()
+    supplier.shops.add(shop)
     return supplier
 
 
