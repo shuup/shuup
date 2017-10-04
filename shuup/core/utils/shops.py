@@ -17,6 +17,9 @@ def get_shop_from_host(host):
     """
     shop = Shop.objects.filter(domain=host).first()
 
+    if not shop and ":" in host:
+        shop = Shop.objects.filter(domain=host.rsplit(":")[0]).first()
+
     if not shop:
         subdomain = host.split(".")[0]
         shop = Shop.objects.filter(domain=subdomain).first()
