@@ -10,13 +10,9 @@ from django.core.urlresolvers import reverse
 
 from shuup.testing.utils import initialize_front_browser_test
 from shuup.testing.factories import (
-    create_product, get_default_category, get_default_shop,
-    get_default_supplier
+    create_product, get_default_category, get_default_shop
 )
-from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_appeared,
-    wait_until_disappeared
-)
+from shuup.testing.browser_utils import wait_until_appeared
 from shuup.core.models import CategoryStatus
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
@@ -39,9 +35,13 @@ def test_recently_viewed_products(browser, live_server, settings):
     category.status = CategoryStatus.VISIBLE
     category.save()
     category_url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
-    browser = initialize_front_browser_test(browser, live_server)
+
+    products = []
     for i in range(1, 7):
-        product = new_product(i, shop, category)
+        products.append(new_product(i, shop, category))
+
+    browser = initialize_front_browser_test(browser, live_server)
+    for i, product in enumerate(products, 1):
         product_url = reverse("shuup:product", kwargs={"pk": product.pk, "slug": product.slug})
         browser.visit(live_server + product_url)
         wait_until_appeared(browser, ".product-main")

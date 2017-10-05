@@ -11,6 +11,7 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
+from shuup.core import cache
 from shuup.core.models import (
     Order, OrderStatus, OrderStatusRole, PersonContact, Product
 )
@@ -39,11 +40,12 @@ def create_orderable_product(name, sku, price):
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_checkout_with_login_and_register(browser, live_server, settings):
+    cache.clear()  # Avoid caches from past tests
     # initialize
     product_name = "Test Product"
     get_default_shop()
-    pm = get_default_payment_method()
-    sm = get_default_shipping_method()
+    get_default_payment_method()
+    get_default_shipping_method()
     product = create_orderable_product(product_name, "test-123", price=100)
     OrderStatus.objects.create(
         identifier="initial",
@@ -77,11 +79,13 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_single_page_checkout_with_login_and_register(browser, live_server, settings):
+    cache.clear()  # Avoid caches from past tests
+
     # initialize
     product_name = "Test Product"
     get_default_shop()
-    pm = get_default_payment_method()
-    sm = get_default_shipping_method()
+    get_default_payment_method()
+    get_default_shipping_method()
     product = create_orderable_product(product_name, "test-123", price=100)
     OrderStatus.objects.create(
         identifier="initial",
