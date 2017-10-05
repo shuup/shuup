@@ -14,7 +14,6 @@ from django_countries import Countries
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.widgets import TextEditorWidget
-
 from shuup.core.models import (
     CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
     GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
