@@ -201,7 +201,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
             instance.shop = self.request.shop
             instance.product = Product()
             return instance
-        return super(CreateOrUpdateView, self).get_object(queryset)
+        return super(ProductEditView, self).get_object(queryset)
 
     @atomic
     def form_valid(self, form):
@@ -215,6 +215,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         orderability_errors = []
 
         if self.object.pk:
+            context["title"] = self.object.product.name
             shop = self.request.shop
             try:
                 shop_product = self.object
