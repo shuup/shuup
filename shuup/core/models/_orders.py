@@ -92,25 +92,25 @@ class OrderStatusRole(Enum):
     class Labels:
         NONE = _('none')
         INITIAL = _('Initial')
-        PROCESSING = _('Processing')
         COMPLETE = _('Complete')
         CANCELED = _('Canceled')
+        PROCESSING = _('Processing')
 
 
 class DefaultOrderStatus(Enum):
     NONE = "none"
     INITIAL = "initial"
-    COMPLETE = "processing"
-    CANCELED = "complete"
-    PROCESSING = "canceled"
+    COMPLETE = "complete"
+    CANCELED = "canceled"
+    PROCESSING = "processing"
     # TODO: Failed state?
 
     class Labels:
         NONE = _('none')
         INITIAL = _('Received')
-        PROCESSING = _('In Progress')
         COMPLETE = _('Complete')
         CANCELED = _('Canceled')
+        PROCESSING = _('In Progress')
 
 
 class OrderStatusQuerySet(TranslatableQuerySet):
@@ -263,7 +263,7 @@ class OrderQuerySet(models.QuerySet):
         return self.filter(payment_status=PaymentStatus.FULLY_PAID)
 
     def incomplete(self):
-        return self.filter(status__role__in=(OrderStatusRole.NONE, OrderStatusRole.INITIAL))
+        return self.filter(status__role__in=(OrderStatusRole.NONE, OrderStatusRole.INITIAL, OrderStatusRole.PROCESSING))
 
     def complete(self):
         return self.filter(status__role=OrderStatusRole.COMPLETE)    # TODO: read status
