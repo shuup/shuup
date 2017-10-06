@@ -136,7 +136,9 @@ class ContactDetailView(DetailView):
     def get_object(self, *args, **kwargs):
         obj = super(ContactDetailView, self).get_object(*args, **kwargs)
 
-        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and not self.request.user.is_superuser:
+        limited = (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
+                   not self.request.user.is_superuser)
+        if limited:
             shop = self.request.shop
             if shop not in obj.shops.all():
                 raise PermissionDenied()

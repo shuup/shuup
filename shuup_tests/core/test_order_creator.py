@@ -241,7 +241,7 @@ def test_order_creator_min_total(rf, admin_user):
 
 @pytest.mark.django_db
 def test_order_creator_contact_multishop():
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         user = create_random_user()
         customer = create_random_person("en")
         customer.user = user
@@ -264,7 +264,7 @@ def test_order_creator_contact_multishop():
 
 @pytest.mark.django_db
 def test_order_creator_company_multishop():
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         company = create_random_company()
         shop = get_shop(identifier="random-shop", enabled=True)
 

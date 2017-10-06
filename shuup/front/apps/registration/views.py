@@ -49,7 +49,7 @@ class RegistrationViewMixin(object):
     def register(self, form):
         user = super(RegistrationViewMixin, self).register(form)
 
-        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
             get_person_contact(user).shops.add(self.request.shop)
 
         return user
@@ -87,7 +87,7 @@ class CompanyRegistrationView(RegistrationViewMixin, default_views.RegistrationV
     def register(self, form):
         user = super(CompanyRegistrationView, self).register(form)
 
-        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
             company = get_company_contact(user)
             company.shops.add(self.request.shop)
 

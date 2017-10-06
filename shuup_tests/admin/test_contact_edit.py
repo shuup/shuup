@@ -94,7 +94,7 @@ def test_company_contact_edit_form():
 
 @pytest.mark.django_db
 def test_contact_edit_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
@@ -121,7 +121,7 @@ def test_contact_edit_multishop(rf):
 
 @pytest.mark.django_db
 def test_contact_company_edit_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
@@ -161,7 +161,7 @@ def test_contact_company_edit_multishop(rf):
 
 @pytest.mark.django_db
 def test_contact_detail_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
@@ -188,7 +188,7 @@ def test_contact_detail_multishop(rf):
 
 @pytest.mark.django_db
 def test_company_contact_detail_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
@@ -215,7 +215,7 @@ def test_company_contact_detail_multishop(rf):
 
 @pytest.mark.django_db
 def test_contact_company_list_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
