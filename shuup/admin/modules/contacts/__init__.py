@@ -94,7 +94,7 @@ class ContactModule(AdminModule):
             filters = Q(Q(name__icontains=query) | Q(email=query))
 
             # show only contacts which the shop has access
-            if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+            if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
                 filters &= Q(shops=request.shop)
 
             contacts = Contact.objects.filter(filters)

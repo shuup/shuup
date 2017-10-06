@@ -26,7 +26,8 @@ def test_registration_person_multiple_shops(django_user_model, client):
 
     with override_settings(
         SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False,
-        SHUUP_MANAGE_CONTACTS_PER_SHOP=True
+        SHUUP_MANAGE_CONTACTS_PER_SHOP=True,
+        SHUUP_ENABLE_MULTIPLE_SHOPS=True
     ):
         username = "u-%d" % uuid.uuid4().time
         email = "%s@shuup.local" % username
@@ -58,7 +59,8 @@ def test_registration_company_multiple_shops(django_user_model, client):
 
     with override_settings(
         SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False,
-        SHUUP_MANAGE_CONTACTS_PER_SHOP=True
+        SHUUP_MANAGE_CONTACTS_PER_SHOP=True,
+        SHUUP_ENABLE_MULTIPLE_SHOPS=True
     ):
         url = reverse("shuup:registration_register_company")
         client.post(url, data={

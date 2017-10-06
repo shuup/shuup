@@ -36,7 +36,9 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
 
         contact = super(CreateOrUpdateView, self).get_object(queryset)
 
-        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and not self.request.user.is_superuser:
+        limited = (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
+                   not self.request.user.is_superuser)
+        if limited:
             shop = self.request.shop
             if shop not in contact.shops.all():
                 raise PermissionDenied()
