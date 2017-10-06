@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from shuup.core.models import Supplier
-
+from shuup.testing.factories import get_default_shop
 
 IDENTIFIER = "test_simple_supplier"
 
@@ -19,4 +19,6 @@ def get_simple_supplier():
             name="Simple Supplier",
             module_identifier="simple_supplier",
         )
+    shop = get_default_shop()
+    supplier.shops.add(shop)
     return supplier
