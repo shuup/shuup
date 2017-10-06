@@ -16,7 +16,7 @@ from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import PersonContactChoiceWidget
 from shuup.core.fields import LanguageFormField
 from shuup.core.models import (
-    CompanyContact, Contact, ContactGroup, Gender, PersonContact
+    CompanyContact, Contact, ContactGroup, Gender, PersonContact, Shop
 )
 
 FIELDS_BY_MODEL_NAME = {
@@ -54,11 +54,26 @@ class ContactBaseFormMixin(object):
         if "account_manager" in self.fields:
             self.fields["account_manager"].widget = PersonContactChoiceWidget(clearable=True)
 
+        if not self.request or (self.request and self.request.user.is_superuser):
+            shops_qs = Shop.objects.all()
+        else:
+            shops_qs = Shop.objects.filter(staff_members__in=[self.request.user])
+
+        self.fields["shops"] = forms.ModelMultipleChoiceField(
+            queryset=shops_qs,
+            initial=(self.instance.shops.all() if self.instance.pk else ()),
+            required=False,
+            widget=forms.SelectMultiple(),
+            label=_("Shops"),
+            help_text=_("The shops this contact belongs to")
+        )
+
     def save(self, commit=True):
         if not self.instance.pk:
             self.instance.is_active = True
         obj = super(ContactBaseFormMixin, self).save(commit)
         obj.groups = [obj.get_default_group()] + list(self.cleaned_data["groups"])
+        obj.shops = [self.request.shop] + list(self.cleaned_data["shops"])
         return obj
 
 
@@ -73,6 +88,7 @@ class PersonContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
 
     def __init__(self, user=None, *args, **kwargs):
         self.user = user
+        self.request = kwargs.pop("request", None)
         super(PersonContactBaseForm, self).__init__(*args, **kwargs)
 
     def init_fields(self):
@@ -95,6 +111,10 @@ class CompanyContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
     class Meta:
         model = CompanyContact
         fields = list(FIELDS_BY_MODEL_NAME["CompanyContact"]) + list(FIELDS_BY_MODEL_NAME["Contact"])
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        super(CompanyContactBaseForm, self).__init__(*args, **kwargs)
 
     def init_fields(self):
         super(CompanyContactBaseForm, self).init_fields()

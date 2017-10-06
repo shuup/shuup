@@ -28,7 +28,7 @@ from shuup_tests.utils import printable_gibberish
 
 
 @pytest.mark.django_db
-def test_person_contact_create_form():
+def test_person_contact_create_form(rf, admin_user):
     user = get_user_model().objects.create_user(
         username=printable_gibberish(),
         first_name=printable_gibberish(),
@@ -36,11 +36,14 @@ def test_person_contact_create_form():
     )
     test_first_name = printable_gibberish()
     test_last_name = printable_gibberish()
-    contact_base_form = PersonContactBaseForm(data={
+
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    contact_base_form = PersonContactBaseForm(request=request, data={
         "first_name": test_first_name,
         "last_name": test_last_name,
         "gender": Gender.UNDISCLOSED.value
     }, user=user)
+
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, PersonContact)
@@ -50,11 +53,12 @@ def test_person_contact_create_form():
 
 
 @pytest.mark.django_db
-def test_person_contact_edit_form():
+def test_person_contact_edit_form(rf, admin_user):
     person = create_random_person()
     new_first_name = "test first name"
     new_name = "%s %s" % (new_first_name, person.last_name)
-    contact_base_form = PersonContactBaseForm(instance=person, data={
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    contact_base_form = PersonContactBaseForm(request=request, instance=person, data={
         "first_name": "test first name",
         "last_name": person.last_name,
         "gender": person.gender.value
@@ -67,9 +71,10 @@ def test_person_contact_edit_form():
 
 
 @pytest.mark.django_db
-def test_company_contact_create_form():
+def test_company_contact_create_form(rf, admin_user):
     company_name = "test company"
-    contact_base_form = CompanyContactBaseForm(data={
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    contact_base_form = CompanyContactBaseForm(request=request, data={
         "name": company_name,
     })
     assert contact_base_form.is_valid(), contact_base_form.errors
@@ -79,10 +84,11 @@ def test_company_contact_create_form():
 
 
 @pytest.mark.django_db
-def test_company_contact_edit_form():
+def test_company_contact_edit_form(rf, admin_user):
     company = create_random_company()
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
     new_company_name = "test company"
-    contact_base_form = CompanyContactBaseForm(instance=company, data={
+    contact_base_form = CompanyContactBaseForm(request=request, instance=company, data={
         "name": new_company_name,
     })
     assert contact_base_form.is_valid(), contact_base_form.errors

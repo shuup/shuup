@@ -55,7 +55,10 @@ class PersonContactBaseFormPart(FormPart):
             PersonContactBaseForm,
             template_name="shuup/admin/contacts/_edit_base_form.jinja",
             required=True,
-            kwargs={"instance": self.object if self.object.pk else None, "user": self.get_user()}
+            kwargs={
+                "instance": self.object if self.object.pk else None,
+                "user": self.get_user(),
+                "request": self.request}
         )
 
     def form_valid(self, form):
