@@ -15,11 +15,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
-    ChoicesFilter, Column, RangeFilter, TextFilter
+    ChoicesFilter, Column, RangeFilter, Select2Filter, TextFilter
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import (
-    CompanyContact, Contact, ContactGroup, PersonContact
+    CompanyContact, Contact, ContactGroup, PersonContact, Shop
 )
 
 
@@ -49,7 +49,10 @@ class ContactListView(PicotableListView):
             filter_config=ChoicesFilter([(False, _("no")), (True, _("yes"))], default=True)
         ),
         Column("n_orders", _(u"# Orders"), class_name="text-right", filter_config=RangeFilter(step=1)),
-        Column("groups", _("Groups"), filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"))
+        Column("groups", _("Groups"),
+               filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"),
+               display="get_groups_display"),
+        Column("shops", _("Shops"), filter_config=Select2Filter(Shop.objects.all()), display="get_shop_display")
     ]
 
     mass_actions = [
@@ -97,6 +100,16 @@ class ContactListView(PicotableListView):
             return _(u"Company")
         else:
             return _(u"Contact")
+
+    def get_groups_display(self, instance):
+        if instance.groups.count():
+            return ", ".join(instance.groups.values_list("translations__name", flat=True))
+        return _("No group")
+
+    def get_shop_display(self, instance):
+        if instance.shops.count():
+            return ", ".join(instance.shops.values_list("translations__name", flat=True))
+        return _("No shop")
 
     def get_object_abstract(self, instance, item):
         """

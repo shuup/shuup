@@ -34,6 +34,11 @@ class BasicInfoContactSection(Section):
             key=(lambda x: force_text(x))
         )
 
+        context['shops'] = sorted(
+            contact.shops.all(),
+            key=(lambda x: force_text(x))
+        )
+
         context["companies"] = []
         if isinstance(contact, PersonContact):
             context["companies"] = sorted(
