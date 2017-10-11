@@ -45,6 +45,9 @@ class ServiceListView(PicotableListView):
                 if choice.identifier == instance.choice_identifier:
                     return force_text(choice.name)
 
+    def get_queryset(self):
+        return super(ServiceListView, self).get_queryset().filter(shop=self.request.shop)
+
 
 class ShippingMethodListView(ServiceListView):
     model = ShippingMethod
