@@ -137,17 +137,19 @@ class ProductMediaBulkAdderView(View):
     @atomic
     def post(self, *args, **kwargs):
         ids = self.request.POST.getlist("file_ids")
-        product_id = kwargs.pop("pk")
+        shop_product_id = kwargs.pop("pk")
         kind = self.request.POST.get("kind")
         shop = self.request.shop
         shop_id = self.request.POST.get("shop_id", shop.pk)
-        if not ids or not product_id:
+        if not ids or not shop_product_id:
             return JsonResponse({"response": "error", "message": "bad request"}, status=400)
         if not Shop.objects.filter(pk=shop_id).exists():
             return JsonResponse({"response": "error", "message": "invalid shop id: %s" % shop_id}, status=400)
-        if not Product.objects.filter(pk=product_id).exists():
+
+        shop_product = ShopProduct.objects.filter(pk=shop_product_id, shop_id=shop_id).first()
+        if not shop_product:
             return JsonResponse(
-                {"response": "error", "message": "invalid product id: %s" % product_id}, status=400)
+                {"response": "error", "message": "invalid shop product id: %s" % shop_product_id}, status=400)
         if kind == "images":
             kind = ProductMediaKind.IMAGE
         elif kind == "media":
@@ -160,9 +162,9 @@ class ProductMediaBulkAdderView(View):
 
         for file_id in ids:
             if not ProductMedia.objects.filter(
-                    product_id=product_id, file_id=file_id, kind=kind, shops__in=[shop_id]).exists():
+                    product_id=shop_product.product_id, file_id=file_id, kind=kind, shops__in=[shop_id]).exists():
                 image = ProductMedia.objects.create(
-                    product_id=product_id,
+                    product_id=shop_product.product_id,
                     file_id=file_id,
                     kind=kind,
                 )
