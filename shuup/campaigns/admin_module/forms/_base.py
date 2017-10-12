@@ -47,10 +47,14 @@ class BaseCampaignForm(ShuupAdminForm):
 
 
 class CampaignsSelectMultipleField(Select2MultipleField):
-    def __init__(self, campaign_model, *args, **kwargs):
+    def __init__(self, campaign_model, field, *args, **kwargs):
+        field_count = len([f for f
+                           in campaign_model._meta.get_fields(include_parents=False)
+                           if isinstance(f, ManyToManyField)])
+        label = field.verbose_name if field_count > 1 else campaign_model.name
+        help_text = field.help_text if field_count > 1 else campaign_model().description
         super(CampaignsSelectMultipleField, self).__init__(
-            model=campaign_model.model, label=campaign_model.name,
-            help_text=campaign_model().description, *args, **kwargs
+            model=campaign_model.model, label=label, help_text=help_text, *args, **kwargs
         )
 
 
@@ -77,10 +81,10 @@ def _process_fields(form, **kwargs):
     instance = kwargs.get("instance")
     model_obj = form._meta.model
     for field in model_obj._meta.get_fields(include_parents=False):
-        # TODO: Enable categories for Select2 widget
-        if not isinstance(field, ManyToManyField) or "categories" in field.name:
+        if not isinstance(field, ManyToManyField):
             continue
-        formfield = CampaignsSelectMultipleField(model_obj)
+
+        formfield = CampaignsSelectMultipleField(model_obj, field)
         objects = (getattr(instance, field.name).all() if instance else model_obj.model.objects.none())
         formfield.required = False
         formfield.initial = objects

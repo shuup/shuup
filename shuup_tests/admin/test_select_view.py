@@ -7,14 +7,18 @@
 # LICENSE file in the root directory of this source tree.
 
 import json
-import pytest
 
+import pytest
 from django.contrib.auth import get_user_model
 from django.utils.translation import activate, get_language
 
 from shuup.admin.views.select import MultiselectAjaxView
-from shuup.core.models import CompanyContact, get_person_contact, PersonContact
-from shuup.testing.factories import create_product, get_default_category, get_default_shop
+from shuup.core.models import (
+    Category, CompanyContact, get_person_contact, PersonContact
+)
+from shuup.testing.factories import (
+    create_product, get_default_category, get_default_shop
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
 
@@ -34,11 +38,13 @@ def test_ajax_select_view_with_products(rf, admin_user):
     shop = get_default_shop()
     activate("en")
     view = MultiselectAjaxView.as_view()
+
+    # No products, no results
     results = _get_search_results(rf, view, "shuup.Product", "some str", admin_user)
     assert len(results) == 0
 
     product_name_en = "The Product"
-    product = create_product("the product", **{"name": product_name_en})
+    product = create_product("the product", shop=shop, **{"name": product_name_en})
 
     product_name_fi = "tuote"
     product.set_current_language("fi")
@@ -47,6 +53,7 @@ def test_ajax_select_view_with_products(rf, admin_user):
     product.save()
 
     view = MultiselectAjaxView.as_view()
+
     results = _get_search_results(rf, view, "shuup.Product", "some str", admin_user)
     assert len(results) == 0
 
@@ -111,10 +118,21 @@ def test_ajax_select_view_with_categories(rf, admin_user):
     activate("en")
     shop = get_default_shop()
     view = MultiselectAjaxView.as_view()
+
+    # No categories, no results
     results = _get_search_results(rf, view, "shuup.Category", "some str", admin_user)
     assert len(results) == 0
 
-    category = get_default_category()
+    category = Category.objects.create(
+        parent=None,
+        identifier="test",
+        name="test",
+    )
+    category.shops.add(shop)
+
+    results = _get_search_results(rf, view, "shuup.Category", "some str", admin_user)
+    assert len(results) == 0
+
     results = _get_search_results(rf, view, "shuup.Category", category.name, admin_user)
     assert len(results) == 1
 
