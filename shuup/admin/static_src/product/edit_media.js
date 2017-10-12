@@ -81,6 +81,7 @@ $(function() {
                 fileIds.push(parseInt($($fileInputs[i]).val()));
             }
         }
+
         $.ajax({
             url: "/sa/products/" + productId + "/media/add/",
             method: "POST",
@@ -121,8 +122,7 @@ $(function() {
             queueComplete: "media"
         }
     ];
-    for (var i = 0; i < dropzones.length; i++) {
-        var zoneData = dropzones[i];
+    dropzones.forEach(function(zoneData) {
         var fieldId = "#" + zoneData.field + "-dropzone";
         if ($(fieldId).length) {
             const mediaUrl = window.ShuupAdminConfig.browserUrls.media;
@@ -137,5 +137,5 @@ $(function() {
                 }
             });
         }
-    }
+    });
 });
