@@ -95,8 +95,8 @@ MAIN_MENU = [
                 "title": _("Settings")
             },
             {
-                "identifier": "taxes",
-                "title": _("Taxes")
+                "identifier": "payment_shipping",
+                "title": _("Payment & Shipping")
             },
             {
                 "identifier": "currency",
@@ -128,8 +128,8 @@ MAIN_MENU = [
                 "title": _("Data Transfer")
             },
             {
-                "identifier": "payment_shipping",
-                "title": _("Payment & Shipping")
+                "identifier": "taxes",
+                "title": _("Taxes")
             },
             {
                 "identifier": "permissions",

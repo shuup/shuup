@@ -214,6 +214,7 @@ class ContactBasketCondition(BasketCondition):
 
 
 class CategoryProductsBasketCondition(BasketCondition):
+    model = Category
     identifier = "basket_category_condition"
     name = _("Category products in basket")
 

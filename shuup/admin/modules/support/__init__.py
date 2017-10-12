@@ -30,15 +30,6 @@ class ShuupSupportModule(AdminModule):
                 pass
         return resource or {}
 
-    def _get_faq_block(self, request):
-        faqs = self._get_resource(request, "faq")
-        if faqs.get("faqs"):
-            faq_block = DashboardContentBlock.by_rendering_template(
-                "faq", request, "shuup/admin/support/_faq_dashboard_block.jinja", faqs)
-            faq_block.size = "small"
-            return [faq_block]
-        return []
-
     def _get_article_block(self, request):
         articles = self._get_resource(request, "articles")
         if articles.get("articles"):
@@ -56,7 +47,6 @@ class ShuupSupportModule(AdminModule):
 
     def get_dashboard_blocks(self, request):
         blocks = []
-        blocks.extend(self._get_faq_block(request))
         blocks.extend(self._get_article_block(request))
         blocks.extend(self._get_support_block(request))
         return blocks

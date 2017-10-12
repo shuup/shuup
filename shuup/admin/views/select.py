@@ -17,7 +17,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
-from shuup.core.models import Carrier, Contact, Product
+from shuup.core.models import Carrier, Contact, Product, ShopProduct
 
 
 def _field_exists(model, field):
@@ -74,11 +74,8 @@ class MultiselectAjaxView(TemplateView):
             return []
         cls = apps.get_model(model_name)
         qs = cls.objects.all()
-        if hasattr(cls.objects, "all_except_deleted"):
-            shop = self.request.shop if not self.request.user.is_superuser else None
-            qs = cls.objects.all_except_deleted(shop=shop)
-        if hasattr(cls.objects, "get_for_user"):
-            qs = cls.objects.get_for_user(self.request.user)
+        shop = self.request.shop
+        qs = self._filter_query(cls, qs, shop)
         self.init_search_fields(cls)
         if not self.search_fields:
             return [{"id": None, "name": _("Couldn't get selections for %s.") % model_name}]
@@ -91,6 +88,21 @@ class MultiselectAjaxView(TemplateView):
                 query &= Q(is_active=True)
             qs = qs.filter(query).distinct()
         return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
+
+    def _filter_query(self, cls, qs, shop):
+        if hasattr(cls.objects, "all_except_deleted"):
+            qs = cls.objects.all_except_deleted(shop=shop)
+        if hasattr(cls.objects, "get_for_user"):
+            qs = cls.objects.get_for_user(self.request.user)
+        if issubclass(cls, Product):
+            qs = qs.filter(shop_products__shop=shop)
+        if issubclass(cls, ShopProduct):
+            qs = qs.filter(shop=shop)
+        if hasattr(cls.objects, "shop"):
+            qs = qs.filter(shop=shop)
+        if hasattr(cls.objects, "shops"):
+            qs = qs.filter(shops__in=[shop])
+        return qs
 
     def get(self, request, *args, **kwargs):
         return JsonResponse({"results": self.get_data(request, *args, **kwargs)})

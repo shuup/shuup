@@ -162,7 +162,7 @@ class ShopProductForm(forms.ModelForm):
         self.fields["payment_methods"].queryset = payment_methods_qs
         self.fields["shipping_methods"].queryset = shipping_methods_qs
         self.fields["suppliers"].queryset = suppliers_qs
-        category_qs = Category.objects.all_except_deleted().prefetch_related('translations')
+        category_qs = Category.objects.all_except_deleted(shop=self.request.shop).prefetch_related('translations')
         self.fields["default_price_value"].required = True
         self.fields["primary_category"].queryset = category_qs
         self.fields["categories"].queryset = category_qs
