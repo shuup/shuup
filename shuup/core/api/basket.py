@@ -106,6 +106,22 @@ class BasketLineSerializer(serializers.Serializer):
                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     discount_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    discounted_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    taxful_base_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    taxful_discount_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    taxful_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    taxful_discounted_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    tax_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                          decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    can_delete = serializers.BooleanField()
+    can_change_quantity = serializers.BooleanField()
+    is_discounted = serializers.BooleanField()
+
     type = EnumField(OrderLineType)
     shop = serializers.SerializerMethodField()
     shop_product = serializers.SerializerMethodField()
@@ -167,6 +183,7 @@ class BasketSerializer(serializers.Serializer):
                                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     validation_errors = serializers.SerializerMethodField()
     customer_comment = serializers.SerializerMethodField()
+    prices_include_tax = serializers.BooleanField()
 
     def get_shipping_address(self, basket):
         if basket._data.get('shipping_address_id'):
