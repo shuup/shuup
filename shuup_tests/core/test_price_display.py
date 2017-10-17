@@ -177,7 +177,6 @@ def test_filter_parameter():
 
 @pytest.mark.django_db
 def test_filter_parameter_contact_groups():
-    (engine, context) = _get_template_engine_and_context()
     customer_price = 10.3
     anonymous_price = 14.6
 
@@ -189,12 +188,15 @@ def test_filter_parameter_contact_groups():
         return PriceInfo(quantity * price, quantity * price, quantity)
 
     with patch.object(DummyPricingModule, 'get_price_info', side_effect=get_price_info_mock):
+        (engine, context) = _get_template_engine_and_context(product_sku="123")
         # test with anonymous
         context['request'].customer = AnonymousContact()
         context['request'].person = context['request'].customer
         result = engine.from_string("{{ prod|price(quantity=2) }}")
         assert result.render(context) == "$%0.2f" % (anonymous_price * 2)
 
+        # Get fresh content. I guess the prices shouldn't change between request.
+        (engine, context) = _get_template_engine_and_context(product_sku="1234")
         # test with customer
         context['request'].customer = create_random_person()
         context['request'].person = context['request'].customer
@@ -202,7 +204,7 @@ def test_filter_parameter_contact_groups():
         assert result.render(context) == "$%0.2f" % (customer_price * 2)
 
 
-def _get_template_engine_and_context():
+def _get_template_engine_and_context(product_sku='6.0745'):
     engine = django.template.engines['jinja2']
     assert isinstance(engine, django_jinja.backend.Jinja2)
 
@@ -221,7 +223,7 @@ def _get_template_engine_and_context():
     tax_class = get_default_tax_class()
     order, order_line = _get_order_and_order_line(request)
 
-    product = create_product(sku='6.0745', shop=shop, tax_class=tax_class)
+    product = create_product(sku=product_sku, shop=shop, tax_class=tax_class)
 
     context = {
         'request': request,
