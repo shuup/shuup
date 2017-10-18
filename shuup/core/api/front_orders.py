@@ -13,6 +13,8 @@ from shuup.core.api.address import AddressSerializer
 from shuup.core.api.orders import OrderFilter
 from shuup.core.models import get_person_contact, Order, OrderLine, Shop
 
+from .mixins import BaseLineSerializerMixin, BaseOrderTotalSerializerMixin
+
 
 class ShopSerializer(serializers.ModelSerializer):
     logo = serializers.SerializerMethodField()
@@ -28,9 +30,8 @@ class ShopSerializer(serializers.ModelSerializer):
             return self.context["request"].build_absolute_uri(shop.logo.url)
 
 
-class OrderLineSerializer(serializers.ModelSerializer):
+class OrderLineSerializer(BaseLineSerializerMixin, serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
-    taxful_price = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderLine
@@ -57,11 +58,8 @@ class OrderLineSerializer(serializers.ModelSerializer):
         else:
             return self.context["request"].build_absolute_uri(primary_image.file.url)
 
-    def get_taxful_price(self, line):
-        return line.taxful_price.value
 
-
-class OrderSerializer(serializers.ModelSerializer):
+class OrderSerializer(BaseOrderTotalSerializerMixin, serializers.ModelSerializer):
     shop = ShopSerializer()
 
     class Meta:
@@ -69,7 +67,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class OrderDetailSerializer(serializers.ModelSerializer):
+class OrderDetailSerializer(BaseOrderTotalSerializerMixin, serializers.ModelSerializer):
     lines = OrderLineSerializer(many=True)
 
     class Meta:
