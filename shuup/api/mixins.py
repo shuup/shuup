@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.db.models.deletion import ProtectedError
 from rest_framework import status
+from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 
 
@@ -31,3 +32,11 @@ class ProtectedModelViewSetMixin(object):
             ref_obj = exc.protected_objects[0].__class__.__name__
             msg = "This object can not be deleted because it is referenced by {}".format(ref_obj)
             return Response(data={"error": msg}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SearchableMixin(object):
+    """
+    Mixin to give search capabilities for `ViewSet`
+    """
+    filter_backends = (SearchFilter,)
+    search_fields = ("=id",)

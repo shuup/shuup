@@ -22,7 +22,7 @@ class ManufacturerModule(AdminModule):
 
     def get_urls(self):
         return get_edit_and_list_urls(
-            url_prefix="^Manufacturers",
+            url_prefix="^manufacturers",
             view_template="shuup.admin.modules.manufacturers.views.Manufacturer%sView",
             name_template="manufacturer.%s",
             permissions=get_default_model_permissions(Manufacturer),
