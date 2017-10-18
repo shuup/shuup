@@ -10,7 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
 
-from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
+from shuup.api.mixins import (
+    PermissionHelperMixin, ProtectedModelViewSetMixin, SearchableMixin
+)
 from shuup.core.models import Manufacturer
 
 
@@ -23,7 +25,7 @@ class ManufacturerSerializer(serializers.ModelSerializer):
         }
 
 
-class ManufacturerViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewSet):
+class ManufacturerViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, SearchableMixin, ModelViewSet):
     """
     retrieve: Fetches a manufacturer by its ID.
 
@@ -40,7 +42,7 @@ class ManufacturerViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, Mod
     partial_update: Updates an existing manufacturer.
     You can update only a set of attributes.
     """
-
+    search_fields = SearchableMixin.search_fields + ("name",)
     queryset = Manufacturer.objects.all()
     serializer_class = ManufacturerSerializer
 
