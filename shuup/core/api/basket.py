@@ -41,6 +41,7 @@ from shuup.core.models import (
 )
 from shuup.utils.importing import cached_load
 
+from .mixins import BaseLineSerializerMixin, BaseOrderTotalSerializerMixin
 from .service import PaymentMethodSerializer, ShippingMethodSerializer
 
 
@@ -93,34 +94,13 @@ class BasketCustomerSerializer(PersonContactSerializer):
             return getattr(user, 'pk', None)
 
 
-class BasketLineSerializer(serializers.Serializer):
+class BasketLineSerializer(BaseLineSerializerMixin, serializers.Serializer):
     product = BasketProductSerializer(required=False)
     image = serializers.SerializerMethodField()
     text = serializers.CharField()
     sku = serializers.CharField()
-    quantity = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    base_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                          decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    discount_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                               decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    discounted_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_base_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_discount_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_discounted_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    tax_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                          decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     can_delete = serializers.BooleanField()
     can_change_quantity = serializers.BooleanField()
-    is_discounted = serializers.BooleanField()
 
     type = EnumField(OrderLineType)
     shop = serializers.SerializerMethodField()
@@ -155,7 +135,7 @@ class BasketLineSerializer(serializers.Serializer):
         return line.shop.id if line.shop else None
 
 
-class BasketSerializer(serializers.Serializer):
+class BasketSerializer(BaseOrderTotalSerializerMixin, serializers.Serializer):
     shop = serializers.SerializerMethodField()
     key = serializers.CharField(max_length=32, min_length=32)
     items = serializers.SerializerMethodField()
@@ -167,23 +147,19 @@ class BasketSerializer(serializers.Serializer):
     available_shipping_methods = serializers.SerializerMethodField()
     available_payment_methods = serializers.SerializerMethodField()
     customer = BasketCustomerSerializer()
-    total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                  decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxless_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                   decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    validation_errors = serializers.SerializerMethodField()
+    customer_comment = serializers.SerializerMethodField()
+
     total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                               decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxful_total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxless_total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                       decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     total_price_of_products = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    validation_errors = serializers.SerializerMethodField()
-    customer_comment = serializers.SerializerMethodField()
-    prices_include_tax = serializers.BooleanField()
 
     def get_shipping_address(self, basket):
         if basket._data.get('shipping_address_id'):
