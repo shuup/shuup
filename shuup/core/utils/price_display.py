@@ -222,13 +222,12 @@ def _get_priceful(request, item, quantity):
 
         if hasattr(item, 'is_variation_parent') and item.is_variation_parent():
             priced_children_key = PRICED_CHILDREN_CACHE_KEY % (item.id, quantity)
-            if hasattr(request, priced_children_key):
-                price = getattr(request, priced_children_key)[0][1]
-            else:
+            priced_children = getattr(request, priced_children_key, None)
+            if priced_children is None:
                 priced_children = item.get_priced_children(request, quantity)
                 setattr(request, priced_children_key, priced_children)
-                price = (priced_children[0][1] if priced_children
-                         else item.get_cheapest_child_price_info(request, quantity))
+            price = (priced_children[0][1] if priced_children
+                     else item.get_cheapest_child_price_info(request, quantity))
         else:
             price = item.get_price_info(request, quantity=quantity)
         setattr(request, price_key, price)

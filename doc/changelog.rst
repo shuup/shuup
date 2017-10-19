@@ -60,10 +60,30 @@ Customer Group Pricing
 
 - Introduce Customer Group Discounts. A discount module to configure discounts by contact group.
 
+Shuup 1.2.1
+-----------
+
+Released on 2017-10-19 12:30 +0300.
+
+Core
+~~~~
+
+- price_display: Fix IndexError when product has no orderable children
+
+Front
+~~~~~
+
+- Add missing Finnish translations for customer information app
+
+Notify
+~~~~~~
+
+- Serialize Boolean event variable as boolean rather than text
+
 Shuup 1.2.0
 -----------
 
-Not yet released, still in beta.
+Released on 2017-10-17 15:00 +0300.
 
 Core
 ~~~~
