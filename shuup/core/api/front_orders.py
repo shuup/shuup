@@ -32,6 +32,8 @@ class ShopSerializer(serializers.ModelSerializer):
 
 class OrderLineSerializer(BaseLineSerializerMixin, serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
+    gross_weight = serializers.ReadOnlyField(source="product.gross_weight")
+    net_weight = serializers.ReadOnlyField(source="product.net_weight")
 
     class Meta:
         model = OrderLine
