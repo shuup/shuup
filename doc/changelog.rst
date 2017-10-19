@@ -1,18 +1,30 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.2.1
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2017-10-19 12:30 +0300.
+
+Core
+~~~~
+
+- price_display: Fix IndexError when product has no orderable children
+
+Front
+~~~~~
+
+- Add missing Finnish translations for customer information app
+
+Notify
+~~~~~~
+
+- Serialize Boolean event variable as boolean rather than text
 
 Shuup 1.2.0
 -----------
 
-Not yet released, still in beta.
+Released on 2017-10-17 15:00 +0300.
 
 Core
 ~~~~
