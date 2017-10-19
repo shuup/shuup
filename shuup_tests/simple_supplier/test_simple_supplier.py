@@ -215,7 +215,7 @@ def test_alert_limit_notification(rf, admin_user):
     assert cache.get(cache_key) is None
 
     event = AlertLimitReached(product=product, supplier=supplier)
-    assert  event.variable_values["dispatched_last_24hs"] == "False"
+    assert event.variable_values["dispatched_last_24hs"] is False
 
     # stock should be 6, lower then the alert limit
     supplier.adjust_stock(product.pk, -5)
@@ -223,7 +223,7 @@ def test_alert_limit_notification(rf, admin_user):
     assert last_run is not None
 
     event = AlertLimitReached(product=product, supplier=supplier)
-    assert event.variable_values["dispatched_last_24hs"] == "True"
+    assert event.variable_values["dispatched_last_24hs"] is True
 
     # stock should be 1, lower then the alert limit
     supplier.adjust_stock(product.pk, -5)
@@ -232,10 +232,10 @@ def test_alert_limit_notification(rf, admin_user):
     assert cache.get(cache_key) != last_run
 
     event = AlertLimitReached(product=product, supplier=supplier)
-    assert event.variable_values["dispatched_last_24hs"] == "True"
+    assert event.variable_values["dispatched_last_24hs"] is True
 
     # fake we have a cache with more than 24hrs
     cache.set(cache_key, time() - (24 * 60 * 60 * 2))
 
     event = AlertLimitReached(product=product, supplier=supplier)
-    assert event.variable_values["dispatched_last_24hs"] == "False"
+    assert event.variable_values["dispatched_last_24hs"] is False
