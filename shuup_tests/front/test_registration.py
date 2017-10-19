@@ -191,7 +191,7 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client, r
                         "template_data": {},
                         "v1": {"variable": "user_is_active"},
                         "identifier": "boolean_equal",
-                        "v2": {"constant": "False"}
+                        "v2": {"constant": False}
                     }
                 ],
                 'next': 'stop',
