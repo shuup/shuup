@@ -8,12 +8,15 @@
 from __future__ import unicode_literals
 
 import json
+from decimal import Decimal
 
 import pytest
 from rest_framework import status
-from rest_framework.test import APIClient, force_authenticate
+from rest_framework.test import APIClient
+
 from shuup.core import cache
-from shuup.core.models import get_person_contact
+from shuup.core.api.front_orders import sum_order_lines_price
+from shuup.core.models import get_person_contact, OrderLine, OrderLineType
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
     get_default_shop, get_default_supplier
@@ -56,10 +59,57 @@ def test_retrieve_order(admin_user):
     order = create_random_order(get_person_contact(admin_user), [product])
     order2 = create_random_order(create_random_person(), [product])
     client = _get_client(admin_user)
+
+    for (index, line) in enumerate(order.lines.filter(type=OrderLineType.PRODUCT)):
+        line.base_unit_price_value = Decimal(index + 1)
+        line.save()
+
+    order.save()
+
     response = client.get("/api/shuup/front/orders/{}/".format(order.pk))
     response_data = json.loads(response.content.decode("utf-8"))
     assert response.status_code == status.HTTP_200_OK
     assert response_data["id"] == order.pk
+
+    order.refresh_from_db()
+    total_of_products = sum([line.price.value for line in order.lines.filter(type=OrderLineType.PRODUCT)])
+    assert Decimal(response_data["taxful_total_price"]) == Decimal(order.taxful_total_price)
+    assert Decimal(response_data["total_price_of_products"]) == Decimal(total_of_products)
+    assert Decimal(response_data["taxful_total_discount"]) == Decimal(0)
+
+    # add shipping
+    OrderLine.objects.create(
+        text="Shipping",
+        order=order,
+        type=OrderLineType.SHIPPING,
+        ordering=order.lines.count(),
+        base_unit_price_value=Decimal(5),
+        quantity=1
+    )
+    # add discount
+    OrderLine.objects.create(
+        text="Discount",
+        order=order,
+        type=OrderLineType.DISCOUNT,
+        ordering=order.lines.count(),
+        discount_amount_value=Decimal(2),
+        quantity=1
+    )
+
+    order.save()
+    order.refresh_from_db()
+
+    response = client.get("/api/shuup/front/orders/{}/".format(order.pk))
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == status.HTTP_200_OK
+    assert response_data["id"] == order.pk
+
+    total_of_products = sum([line.price.value for line in order.lines.filter(type=OrderLineType.PRODUCT)])
+    assert Decimal(response_data["taxful_total_price"]) == Decimal(order.taxful_total_price)
+    assert Decimal(response_data["total_price_of_products"]) == Decimal(total_of_products)
+    assert Decimal(response_data["taxful_total_discount"]) == Decimal(2)
+
+    assert Decimal(sum_order_lines_price(order, "price", lambda line: line.type == OrderLineType.SHIPPING)) == Decimal(5)
 
     response = client.get("/api/shuup/front/orders/{}/".format(100))
     assert response.status_code == 404
