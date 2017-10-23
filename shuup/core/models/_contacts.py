@@ -94,6 +94,8 @@ class Contact(PolymorphicShuupModel):
     default_contact_group_name = None
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
+    modified_on = models.DateTimeField(
+        auto_now=True, editable=False, db_index=True, null=True, verbose_name=_('modified on'))
     identifier = InternalIdentifierField(unique=True, null=True, blank=True)
     is_active = models.BooleanField(default=True, db_index=True, verbose_name=_('active'), help_text=_(
         "Check this if the contact is an active customer."
