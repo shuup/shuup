@@ -402,6 +402,8 @@ class BaseBasket(OrderSource):
         :type extra: dict
         :return:
         """
+        if current_line_data.get("line_id", "").startswith("custom_product"):
+            return False
         if current_line_data.get("product_id") != product.id:
             return False
         if current_line_data.get("supplier_id") != supplier.id:
