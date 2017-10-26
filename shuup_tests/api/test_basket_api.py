@@ -29,8 +29,8 @@ from shuup.core.pricing import TaxfulPrice
 from shuup.testing import factories
 from shuup.testing.factories import (
     create_product, create_random_order, get_default_currency,
-    get_default_product, get_default_supplier, get_random_filer_image
-)
+    get_default_product, get_default_supplier, get_random_filer_image,
+    UserFactory)
 from shuup_tests.campaigns.test_discount_codes import (
     Coupon, get_default_campaign
 )
@@ -203,7 +203,8 @@ def test_add_product_to_basket(admin_user):
         factories.get_default_payment_method()
         factories.get_default_shipping_method()
         shop_product = factories.get_default_shop_product()
-        shop_product.default_price = TaxfulPrice(1, shop.currency)
+        product_price = 1
+        shop_product.default_price = TaxfulPrice(product_price, shop.currency)
         shop_product.save()
         client = _get_client(admin_user)
         # add shop product
@@ -217,7 +218,7 @@ def test_add_product_to_basket(admin_user):
         assert len(response_data["items"]) == 1
         assert response_data["items"][0]["shop_product"] == shop_product.pk
         assert not response_data["validation_errors"]
-        assert float(response_data["total_price"]) == 1
+        assert float(response_data["total_price"]) == 1 * product_price
 
         # add product
         payload = {
@@ -229,7 +230,161 @@ def test_add_product_to_basket(admin_user):
         response_data = json.loads(response.content.decode("utf-8"))
         assert len(response_data["items"]) == 1
         assert not response_data["validation_errors"]
-        assert float(response_data["total_price"]) == 2
+        assert float(response_data["total_price"]) == 2 * product_price
+
+        # add zero priced product
+        payload = {
+            'product': shop_product.product.pk,
+            'shop': shop.pk,
+            'price': 0,
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 2
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == 2 * product_price
+        assert response_data["items"][-1]["text"] == "%s (Custom Price)" % shop_product.product.name
+
+        # add custom priced product
+        payload = {
+            'product': shop_product.product.pk,
+            'shop': shop.pk,
+            'price': 2,
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 3
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == 2 + (2 * product_price)
+        assert response_data["items"][-1]["text"] == "%s (Custom Price)" % shop_product.product.name
+
+        # add custom priced product with description
+        expected_text = 'testing description'
+        payload = {
+            'product': shop_product.product.pk,
+            'shop': shop.pk,
+            'price': 2,
+            'description': expected_text
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 4
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == 4 + (2 * product_price)
+        assert response_data["items"][-1]["text"] == expected_text
+
+        # try non staff situation
+        admin_user.is_superuser = False
+        admin_user.is_staff = False
+        admin_user.save()
+        client = _get_client(admin_user)
+        payload = {
+            'product': shop_product.product.pk,
+            'shop': shop.pk,
+            'price': 200,
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 4
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == 4 + (3 * product_price)
+        assert response_data["items"][-1]["text"] == expected_text
+
+        # try staff situation
+        admin_user.is_superuser = False
+        admin_user.is_staff = True
+        admin_user.save()
+        client = _get_client(admin_user)
+        payload = {
+            'product': shop_product.product.pk,
+            'shop': shop.pk,
+            'price': 20,
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 5 # one added
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == 4 + (3 * product_price) + 20
+        assert response_data["items"][-1]["text"] == "%s (Custom Price)" % shop_product.product.name
+
+        # none values
+        admin_user.is_superuser = True
+        admin_user.is_staff = True
+        admin_user.save()
+        client = _get_client(admin_user)
+        payload = {
+            'product': shop_product.product.pk,
+            'shop': shop.pk,
+            'price': None,
+            'description': None,
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload, format="json")
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 5
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == 4 + (4 * product_price) + 20
+
+
+@pytest.mark.django_db
+def test_line_not_updated(admin_user):
+    with override_settings(**REQUIRED_SETTINGS):
+        set_configuration()
+        shop = factories.get_default_shop()
+        basket = factories.get_basket()
+        factories.get_default_payment_method()
+        factories.get_default_shipping_method()
+        shop_product = factories.get_default_shop_product()
+        product_price = 1
+        shop_product.default_price = TaxfulPrice(product_price, shop.currency)
+        shop_product.save()
+        client = _get_client(admin_user)
+        payload = {
+            'product': shop_product.product.pk,
+            'shop': shop.pk,
+            'price': 0,
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload, format="json")
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 1
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == 0
+
+        # just add, should be a new line
+        payload = {
+            'shop_product': shop_product.id
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 2
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == product_price
+
+        # just add, should update the product line
+        payload = {
+            'shop_product': shop_product.id
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        assert len(response_data["items"]) == 2
+        assert not response_data["validation_errors"]
+        assert float(response_data["total_price"]) == product_price * 2
+
+        first_line = response_data["items"][0]
+        second_line = response_data["items"][1]
+
+        assert "custom_product" in first_line["line_id"]
+        assert "custom_product" not in second_line["line_id"]
+        assert float(first_line["quantity"]) == 1
+        assert float(second_line["quantity"]) == 2
 
 
 @pytest.mark.django_db
