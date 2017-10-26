@@ -18,7 +18,9 @@ from shuup.testing.factories import (
     create_product, get_default_shop, get_default_shop_product,
     get_default_supplier
 )
+from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup_tests.simple_supplier.utils import get_simple_supplier
+from shuup.simple_supplier.models import StockAdjustment
 
 
 def create_simple_supplier(identifier):
@@ -79,7 +81,7 @@ def test_get_suppliers(admin_user):
     assert supplier_data["type"] == supplier2.type.value
 
     # get stocks by supplier
-    response = client.get("/api/shuup/supplier/%s/stock/" % supplier1.pk)
+    response = client.get("/api/shuup/supplier/%s/stock_statuses/" % supplier1.pk)
     assert response.status_code == status.HTTP_200_OK
     supplier_data = sorted(json.loads(response.content.decode("utf-8")),
                            key=lambda sup: sup["product"])
@@ -95,7 +97,9 @@ def test_get_suppliers(admin_user):
     assert supplier_data[1]["logical_count"] == supplier1.get_stock_status(product2.pk).logical_count
 
     # get stocks by supplier - filter by product id
-    response = client.get("/api/shuup/supplier/%s/stock/?product=%d" % (supplier1.pk, product1.id))
+    response = client.get("/api/shuup/supplier/%s/stock_statuses/" % supplier1.pk, format="json", data={
+        "products": [product1.id]
+    })
     assert response.status_code == status.HTTP_200_OK
     supplier_data = json.loads(response.content.decode("utf-8"))
     assert len(supplier_data) == 1
@@ -105,7 +109,9 @@ def test_get_suppliers(admin_user):
     assert supplier_data[0]["logical_count"] == supplier1.get_stock_status(product1.pk).logical_count
 
     # get stocks by supplier - filter by sku
-    response = client.get("/api/shuup/supplier/%s/stock/?sku=%s" % (supplier1.pk, product2.sku))
+    response = client.get("/api/shuup/supplier/%s/stock_statuses/" % supplier1.pk, format="json", data={
+        "skus": [product2.sku]
+    })
     assert response.status_code == status.HTTP_200_OK
     supplier_data = json.loads(response.content.decode("utf-8"))
     assert len(supplier_data) == 1
@@ -122,64 +128,77 @@ def test_adjust_stock(admin_user):
     sp.stock_behavior = StockBehavior.STOCKED
     sp.save()
     client = _get_client(admin_user)
-    supplier = get_default_supplier()
-    simple_supplier = get_simple_supplier()
+    supplier1 = get_simple_supplier()
+    supplier2 = get_default_supplier()
     # invalid type
-    response = client.post("/api/shuup/supplier/%s/stock/" % supplier.pk, data={
+    response = client.post("/api/shuup/supplier/%s/adjust_stock/" % supplier1.pk, format="json", data={
         "product": sp.product.pk,
         "delta": 100,
-        "type": 100
+        "type": 200
     })
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     data = json.loads(response.content.decode("utf-8"))
     assert "type" in data
 
     # invalid supplier
-    response = client.post("/api/shuup/supplier/%s/stock/" % 100, data={
+    response = client.post("/api/shuup/supplier/%s/adjust_stock/" % 100, format="json", data={
         "product": sp.product.pk,
         "delta": 100,
-        "type": 100
+        "type": StockAdjustmentType.INVENTORY.value
     })
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
     # invalid product
-    response = client.post("/api/shuup/supplier/%s/stock/" % supplier.pk, data={
+    response = client.post("/api/shuup/supplier/%s/adjust_stock/" % supplier1.pk, format="json", data={
         "product": 100,
         "delta": 100,
-        "type": 1
+        "type": StockAdjustmentType.INVENTORY.value
     })
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     data = json.loads(response.content.decode("utf-8"))
     assert "product" in data
 
     # invalid delta
-    response = client.post("/api/shuup/supplier/%s/stock/" % supplier.pk, data={
+    response = client.post("/api/shuup/supplier/%s/adjust_stock/" % supplier1.pk, format="json", data={
         "product": sp.product.pk,
         "delta": "not-a-number",
-        "type": 1
+        "type": StockAdjustmentType.INVENTORY.value
     })
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     data = json.loads(response.content.decode("utf-8"))
     assert "delta" in data
 
     # adjust stock not implemented
-    response = client.post("/api/shuup/supplier/%s/stock/" % supplier.pk, data={
+    response = client.post("/api/shuup/supplier/%s/adjust_stock/" % supplier2.pk, format="json", data={
         "product": sp.product.pk,
         "delta": 100,
-        "type": 1
+        "type": StockAdjustmentType.INVENTORY.value
     })
-    assert response.status_code == 400
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     # add 100 to inventory
-    response = client.post("/api/shuup/supplier/%s/stock/" % simple_supplier.pk, data={
+    response = client.post("/api/shuup/supplier/%s/adjust_stock/" % supplier1.pk, format="json", data={
         "product": sp.product.pk,
         "delta": 100,
-        "type": 1
+        "type": StockAdjustmentType.RESTOCK.value
     })
-    assert response.status_code == 201
-    stock = simple_supplier.get_stock_status(sp.product.pk)
+    assert response.status_code == status.HTTP_200_OK
+    stock = supplier1.get_stock_status(sp.product.pk)
     assert stock.logical_count == 100
     assert stock.physical_count == 100
+
+    # remove the stocks adjustments and calculate the stock again
+    StockAdjustment.objects.all().delete()
+
+    # update the stock,
+    response = client.post("/api/shuup/supplier/%s/update_stocks/" % supplier1.pk, format="json", data={
+        "products": [sp.product.pk]
+    })
+    assert response.status_code == status.HTTP_200_OK
+    # everything should be zero
+    stock = supplier1.get_stock_status(sp.product.pk)
+    assert stock.logical_count == 0
+    assert stock.physical_count == 0
 
 
 def _get_client(admin_user):
