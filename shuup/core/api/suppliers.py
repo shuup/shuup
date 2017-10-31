@@ -6,113 +6,131 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import serializers, status, viewsets
+from rest_framework import serializers, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from shuup.api.decorators import schema_serializer_class
-from shuup.api.mixins import PermissionHelperMixin
-from shuup.core.fields import (
-    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
+from shuup.api.fields import EnumField, FormattedDecimalField
+from shuup.api.mixins import (
+    PermissionHelperMixin, ProtectedModelViewSetMixin, SearchableMixin
 )
 from shuup.core.models import Product, Supplier
 from shuup.core.suppliers.enums import StockAdjustmentType
-from shuup.utils.numbers import parse_decimal_string
 
 
-class ProductStockSerializer(serializers.Serializer):
-    stock = serializers.SerializerMethodField()
-
-    def get_stock(self, product):
-        stock_status = self.context["supplier"].get_stock_status(product.id)
-
-        return {
-            "product": product.id,
-            "sku": product.sku,
-            "logical_count": stock_status.logical_count,
-            "physical_count": stock_status.physical_count,
-            "message": stock_status.message,
-            "error": stock_status.error
-        }
-
-    def to_representation(self, obj):
-        # just flatten data
-        representation = super(ProductStockSerializer, self).to_representation(obj)
-        return representation.get("stock")
+class ProductStockStatusSerializer(serializers.Serializer):
+    product = serializers.IntegerField(source="product_id")
+    sku = serializers.CharField(source="product.sku")
+    logical_count = FormattedDecimalField(coerce_to_string=False)
+    physical_count = FormattedDecimalField(coerce_to_string=False)
+    message = serializers.CharField()
+    error = serializers.CharField()
 
 
 class StockAdjustmentSerializer(serializers.Serializer):
-    type = serializers.ChoiceField(choices=StockAdjustmentType.choices(), default=StockAdjustmentType.INVENTORY)
+    type = EnumField(StockAdjustmentType, default=StockAdjustmentType.INVENTORY)
     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all_except_deleted())
-    delta = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-
-    def create(self, validated_data):
-        supplier = validated_data["supplier"]
-        product_id = validated_data["product"].pk
-        delta = validated_data["delta"]
-        type = validated_data["type"]
-        try:
-            return supplier.adjust_stock(product_id, delta, type=type)
-        except NotImplementedError:
-            raise serializers.ValidationError("This supplier does not support stock adjustments")
+    delta = FormattedDecimalField()
 
 
 class SupplierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Supplier
-        fields = ["id", "name", "type"]
+        fields = "__all__"
 
 
-class SupplierViewSet(PermissionHelperMixin, viewsets.ReadOnlyModelViewSet):
+class SupplierProductsSerialzier(serializers.Serializer):
+    products = serializers.ListField(
+        child=serializers.PrimaryKeyRelatedField(queryset=Product.objects.all_except_deleted()),
+        required=False
+    )
+    skus = serializers.ListField(
+        child=serializers.SlugRelatedField(queryset=Product.objects.all_except_deleted(), slug_field="sku"),
+        required=False
+    )
+
+
+class SupplierViewSet(SearchableMixin, PermissionHelperMixin, ProtectedModelViewSetMixin, viewsets.ModelViewSet):
     """
     retrieve: Fetches a supplier by its ID.
 
     list: Lists all available suppliers.
-    """
 
+    delete: Deletes a supplier.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new supplier.
+
+    update: Fully updates an existing supplier.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existing supplier.
+    """
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+    search_fields = SearchableMixin.search_fields + ("name",)
 
     def get_view_name(self):
         return _("Suppliers")
 
     @classmethod
     def get_help_text(cls):
-        return _("Suppliers can be listed and fetched and stock can be updated.")
+        return _("Suppliers can be listed, fetched, created, updated and deleted. Stocks can be updated.")
+
+    def get_serializer_class(self):
+        if self.action in ["update_stocks", "stock_statuses"]:
+            return SupplierProductsSerialzier
+        elif self.action == "adjust_stock":
+            return StockAdjustmentSerializer
+        return super(SupplierViewSet, self).get_serializer_class()
 
     @schema_serializer_class(StockAdjustmentSerializer)
-    @detail_route(methods=['get', 'post'])
-    def stock(self, request, pk=None):
-        """
-        Retrieve or Update the current stocks of the Supplier.
-        You can filter the stocks through `product` and `sku` parameters.
-        """
-
-        if request.method == 'POST':
-            return self._adjust_stock(request, pk)
-
+    @detail_route(methods=['post'])
+    def adjust_stock(self, request, pk=None):
         supplier = self.get_object()
-        products_qs = Product.objects.all_except_deleted().filter(shop_products__suppliers=supplier)
-
-        # filter by id
-        product_id = int(parse_decimal_string(request.query_params.get("product", 0)))
-        if product_id:
-            products_qs = products_qs.filter(pk=product_id)
-
-        # filter by sku
-        product_sku = request.query_params.get("sku")
-        if product_sku:
-            products_qs = products_qs.filter(sku=product_sku)
-
-        page = self.paginate_queryset(products_qs)
-        context = {'request': request, 'supplier': supplier}
-        serializer = ProductStockSerializer((page or products_qs), many=True, context=context)
-        return Response(serializer.data)
-
-    def _adjust_stock(self, request, pk=None):
-        supplier = self.get_object()
-        serializer = StockAdjustmentSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(supplier=supplier)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        try:
+            supplier.adjust_stock(
+                product_id=serializer.validated_data["product"].id,
+                delta=serializer.validated_data["delta"],
+                type=serializer.validated_data["type"],
+                created_by=request.user
+            )
+        except NotImplementedError:
+            raise serializers.ValidationError("This supplier does not support stock adjustments")
+        status = supplier.get_stock_status(serializer.validated_data["product"].id)
+        return Response(ProductStockStatusSerializer(status).data)
+
+    @schema_serializer_class(SupplierProductsSerialzier)
+    @detail_route(methods=["post"])
+    def update_stocks(self, request, pk=None):
+        supplier = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        product_ids = [product.id for product in (
+            serializer.validated_data.get("products") or
+            serializer.validated_data.get("skus") or
+            Product.objects.all_except_deleted().filter(shop_products__suppliers=supplier)
+        )]
+        try:
+            supplier.update_stocks(product_ids)
+        except NotImplementedError:
+            raise serializers.ValidationError("This supplier does not support stock updates")
+        return Response()
+
+    @schema_serializer_class(SupplierProductsSerialzier)
+    @detail_route(methods=["get"])
+    def stock_statuses(self, request, pk=None):
+        supplier = self.get_object()
+        serializer = self.get_serializer(data=request.query_params)
+        serializer.is_valid(raise_exception=True)
+        product_ids = [product.id for product in (
+            serializer.validated_data.get("products") or
+            serializer.validated_data.get("skus") or
+            Product.objects.all_except_deleted().filter(shop_products__suppliers=supplier)
+        )]
+        statuses = supplier.get_stock_statuses(product_ids)
+        return Response(ProductStockStatusSerializer((statuses and statuses.values()), many=True).data)
