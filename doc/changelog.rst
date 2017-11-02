@@ -9,6 +9,12 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Front
+~~~~~
+
+- Add SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES setting which can be used
+  to change confirm form field properties on order confirm page
+
 Shuup 1.2.1
 -----------
 
