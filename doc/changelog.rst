@@ -61,6 +61,15 @@ Customer Group Pricing
 
 - Introduce Customer Group Discounts. A discount module to configure discounts by contact group.
 
+UNRELEASED Shuup 1.3
+--------------------
+
+Front
+~~~~~
+
+- Add SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES setting which can be used
+  to change confirm form field properties on order confirm page
+
 Shuup 1.2.1
 -----------
 
