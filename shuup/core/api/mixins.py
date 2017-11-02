@@ -7,38 +7,27 @@
 # LICENSE file in the root directory of this source tree.
 from rest_framework import serializers
 
-from shuup.core.fields import (
-    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
-)
+from shuup.api.fields import FormattedDecimalField
 
 
 class BaseLineSerializerMixin(serializers.Serializer):
-    quantity = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    base_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                          decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    discount_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                               decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    discounted_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_base_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_discount_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_discounted_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    tax_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                          decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    quantity = FormattedDecimalField()
+    price = FormattedDecimalField()
+    base_price = FormattedDecimalField()
+    discount_amount = FormattedDecimalField()
+    discounted_unit_price = FormattedDecimalField()
     is_discounted = serializers.BooleanField()
 
 
+class TaxLineSerializerMixin(serializers.Serializer):
+    taxful_base_unit_price = FormattedDecimalField()
+    taxful_discount_amount = FormattedDecimalField()
+    taxful_price = FormattedDecimalField()
+    taxful_discounted_unit_price = FormattedDecimalField()
+    tax_amount = FormattedDecimalField()
+
+
 class BaseOrderTotalSerializerMixin(serializers.Serializer):
-    taxful_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                  decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxless_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                   decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    taxful_total_price = FormattedDecimalField()
+    taxless_total_price = FormattedDecimalField()
     prices_include_tax = serializers.BooleanField()

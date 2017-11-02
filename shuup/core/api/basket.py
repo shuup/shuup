@@ -43,7 +43,10 @@ from shuup.core.models import (
 from shuup.core.order_creator._source import LineSource
 from shuup.utils.importing import cached_load
 
-from .mixins import BaseLineSerializerMixin, BaseOrderTotalSerializerMixin
+from .mixins import (
+    BaseLineSerializerMixin, BaseOrderTotalSerializerMixin,
+    TaxLineSerializerMixin
+)
 from .service import PaymentMethodSerializer, ShippingMethodSerializer
 
 
@@ -96,13 +99,14 @@ class BasketCustomerSerializer(PersonContactSerializer):
             return getattr(user, 'pk', None)
 
 
-class BasketLineSerializer(BaseLineSerializerMixin, serializers.Serializer):
+class BasketBaseLineSerializer(BaseLineSerializerMixin, serializers.Serializer):
     product = BasketProductSerializer(required=False)
     image = serializers.SerializerMethodField()
     text = serializers.CharField()
     sku = serializers.CharField()
     can_delete = serializers.BooleanField()
     can_change_quantity = serializers.BooleanField()
+    supplier = serializers.IntegerField(source="supplier.id")
 
     type = EnumField(OrderLineType)
     shop = serializers.SerializerMethodField()
@@ -135,6 +139,14 @@ class BasketLineSerializer(BaseLineSerializerMixin, serializers.Serializer):
 
     def get_shop(self, line):
         return line.shop.id if line.shop else None
+
+
+class BasketLineSerializer(TaxLineSerializerMixin, BasketBaseLineSerializer):
+    pass
+
+
+class BasketUnorderableLineSerializer(BasketBaseLineSerializer):
+    pass
 
 
 class BasketSerializer(BaseOrderTotalSerializerMixin, serializers.Serializer):
@@ -175,7 +187,7 @@ class BasketSerializer(BaseOrderTotalSerializerMixin, serializers.Serializer):
         return BasketLineSerializer(basket.get_final_lines(with_taxes=True), many=True, context=self.context).data
 
     def get_unorderable_items(self, basket):
-        return BasketLineSerializer(basket.get_unorderable_lines(), many=True, context=self.context).data
+        return BasketUnorderableLineSerializer(basket.get_unorderable_lines(), many=True, context=self.context).data
 
     def get_shop(self, basket):
         return basket.shop.id
