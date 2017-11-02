@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import datetime
+import random
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -39,8 +40,10 @@ from shuup.core.models import (
     Order, OrderLineType, OrderStatus, PaymentMethod, Product, ShippingMethod,
     Shop, ShopProduct
 )
+from shuup.core.order_creator._source import LineSource
 from shuup.utils.importing import cached_load
 
+from .mixins import BaseLineSerializerMixin, BaseOrderTotalSerializerMixin
 from .service import PaymentMethodSerializer, ShippingMethodSerializer
 
 
@@ -93,34 +96,13 @@ class BasketCustomerSerializer(PersonContactSerializer):
             return getattr(user, 'pk', None)
 
 
-class BasketLineSerializer(serializers.Serializer):
+class BasketLineSerializer(BaseLineSerializerMixin, serializers.Serializer):
     product = BasketProductSerializer(required=False)
     image = serializers.SerializerMethodField()
     text = serializers.CharField()
     sku = serializers.CharField()
-    quantity = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    base_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                          decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    discount_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                               decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    discounted_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_base_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_discount_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_discounted_unit_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    tax_amount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                          decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     can_delete = serializers.BooleanField()
     can_change_quantity = serializers.BooleanField()
-    is_discounted = serializers.BooleanField()
 
     type = EnumField(OrderLineType)
     shop = serializers.SerializerMethodField()
@@ -155,7 +137,7 @@ class BasketLineSerializer(serializers.Serializer):
         return line.shop.id if line.shop else None
 
 
-class BasketSerializer(serializers.Serializer):
+class BasketSerializer(BaseOrderTotalSerializerMixin, serializers.Serializer):
     shop = serializers.SerializerMethodField()
     key = serializers.CharField(max_length=32, min_length=32)
     items = serializers.SerializerMethodField()
@@ -167,23 +149,19 @@ class BasketSerializer(serializers.Serializer):
     available_shipping_methods = serializers.SerializerMethodField()
     available_payment_methods = serializers.SerializerMethodField()
     customer = BasketCustomerSerializer()
-    total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                  decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxless_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                   decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    validation_errors = serializers.SerializerMethodField()
+    customer_comment = serializers.SerializerMethodField()
+
     total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                               decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxful_total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxless_total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                       decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     total_price_of_products = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    validation_errors = serializers.SerializerMethodField()
-    customer_comment = serializers.SerializerMethodField()
-    prices_include_tax = serializers.BooleanField()
 
     def get_shipping_address(self, basket):
         if basket._data.get('shipping_address_id'):
@@ -223,6 +201,10 @@ class BaseProductAddBasketSerializer(serializers.Serializer):
     quantity = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                         decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES,
                                         required=False)
+    price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES,
+                                     required=False, allow_null=True)
+    description = serializers.CharField(max_length=128, required=False, allow_null=True)
 
 
 class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
@@ -740,7 +722,6 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             serializer = ShopProductAddBasketSerializer(data=data, context={"shop": request.shop})
         else:
             serializer = ProductAddBasketSerializer(data=data, context={"shop": request.shop})
-
         if serializer.is_valid():
             cmd_kwargs = {
                 "request": request._request,
@@ -753,8 +734,19 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             # we call `add` directly, assuming the user will handle variations
             # as he can know all product variations easily through product API
             try:
-                self._handle_cmd(request, "add", cmd_kwargs)
-                request.basket.save()
+                price = serializer.validated_data.get("price", None)
+                if price is not None and (request.user.is_superuser or request.user.is_staff):
+                    self._add_with_price(
+                        request,
+                        shop_id=cmd_kwargs["shop_id"],
+                        product_id=cmd_kwargs["product_id"],
+                        quantity=cmd_kwargs["quantity"],
+                        price=price,
+                        description=serializer.validated_data.get("description", None),
+                    )
+                else:
+                    self._handle_cmd(request, "add", cmd_kwargs)
+                    request.basket.save()
             except ValidationError as exc:
                 return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
             except ProductNotOrderableProblem as exc:
@@ -765,3 +757,38 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
                 return Response(self.get_serializer(request.basket).data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def _add_with_price(self, request, shop_id, product_id, quantity, price, **kwargs):
+        basket = request.basket
+        shop = Shop.objects.get(pk=shop_id)
+        product = Product.objects.get(pk=product_id)
+        shop_product = product.get_shop_instance(shop)
+        supplier = shop_product.get_supplier(basket.customer, quantity, basket.shipping_address)
+        shop_product.raise_if_not_orderable(
+            supplier=supplier,
+            quantity=quantity,
+            customer=basket.customer
+        )
+
+        description = kwargs.get("description")
+        if not description:
+            description = "%s (%s)" % (product.name, _("Custom Price"))
+
+        line_source = LineSource.SELLER
+        if request.user.is_superuser:
+            line_source = LineSource.ADMIN
+
+        line_data = dict(
+            line_id="custom_product_%s" % str(random.randint(0, 0x7FFFFFFF)),
+            type=OrderLineType.PRODUCT,
+            quantity=quantity,
+            shop=shop,
+            text=description,
+            base_unit_price=shop.create_price(price),
+            product=product,
+            sku=product.sku,
+            supplier=supplier,
+            line_source=line_source
+        )
+        basket.add_line(**line_data)
+        basket.save()

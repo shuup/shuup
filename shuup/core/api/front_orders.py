@@ -4,6 +4,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from decimal import Decimal
+
 from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, serializers, viewsets
@@ -12,6 +14,40 @@ from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.address import AddressSerializer
 from shuup.core.api.orders import OrderFilter
 from shuup.core.models import get_person_contact, Order, OrderLine, Shop
+from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+
+from .mixins import BaseLineSerializerMixin, BaseOrderTotalSerializerMixin
+from .orders import PaymentSerializer
+
+
+def filter_products_lines(line):
+    return line.product
+
+
+def sum_order_lines_price(order, attribute, filter_line_fn=None):
+    """
+    Calculate the totals same way as for orders which is from rounded
+    line prices.
+
+    :param order The order
+    :type order shuup.Order
+
+    :param attribute The attribute to sum
+    :type attribute string
+
+    :param filter_line_fn A callable to filter the line,
+                          must return `True` if the line should be considered
+    :type filter_line_fn callable
+    """
+    if "taxful" in attribute:
+        taxful = True
+    elif "taxless" in attribute:
+        taxful = False
+    else:
+        taxful = order.prices_include_tax
+
+    zero = (TaxfulPrice if taxful else TaxlessPrice)(0, order.currency)
+    return sum([getattr(x, attribute) for x in order.lines.all() if (not filter_line_fn or filter_line_fn(x))], zero)
 
 
 class ShopSerializer(serializers.ModelSerializer):
@@ -28,9 +64,10 @@ class ShopSerializer(serializers.ModelSerializer):
             return self.context["request"].build_absolute_uri(shop.logo.url)
 
 
-class OrderLineSerializer(serializers.ModelSerializer):
+class OrderLineSerializer(BaseLineSerializerMixin, serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
-    taxful_price = serializers.SerializerMethodField()
+    gross_weight = serializers.ReadOnlyField(source="product.gross_weight")
+    net_weight = serializers.ReadOnlyField(source="product.net_weight")
 
     class Meta:
         model = OrderLine
@@ -57,20 +94,34 @@ class OrderLineSerializer(serializers.ModelSerializer):
         else:
             return self.context["request"].build_absolute_uri(primary_image.file.url)
 
-    def get_taxful_price(self, line):
-        return line.taxful_price.value
+
+class OrderSumTotalSerializerMixin(serializers.Serializer):
+    taxful_total_discount = serializers.SerializerMethodField()
+    taxless_total_discount = serializers.SerializerMethodField()
+    total_price_of_products = serializers.SerializerMethodField()
+
+    def get_taxful_total_discount(self, order):
+        return Decimal(sum_order_lines_price(order, "taxful_discount_amount"))
+
+    def get_taxless_total_discount(self, order):
+        return Decimal(sum_order_lines_price(order, "taxless_discount_amount"))
+
+    def get_total_price_of_products(self, order):
+        return Decimal(sum_order_lines_price(order, "price", filter_products_lines))
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializerMixin, serializers.ModelSerializer):
     shop = ShopSerializer()
+    payments = PaymentSerializer(many=True)
 
     class Meta:
         model = Order
         fields = "__all__"
 
 
-class OrderDetailSerializer(serializers.ModelSerializer):
+class OrderDetailSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializerMixin, serializers.ModelSerializer):
     lines = OrderLineSerializer(many=True)
+    payments = PaymentSerializer(many=True)
 
     class Meta:
         model = Order

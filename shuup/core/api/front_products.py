@@ -18,10 +18,8 @@ from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
+from shuup.api.fields import FormattedDecimalField
 from shuup.api.mixins import PermissionHelperMixin
-from shuup.core.fields import (
-    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
-)
 from shuup.core.models import (
     Category, get_person_contact, Product, ProductAttribute,
     ProductCrossSellType, ProductMode, ProductPackageLink, SalesUnit, Shop,
@@ -128,13 +126,6 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ("id", "name", "slug", "image")
-
-
-class FormattedDecimalField(serializers.DecimalField):
-    def __init__(self, *args, **kwargs):
-        kwargs['max_digits'] = FORMATTED_DECIMAL_FIELD_MAX_DIGITS
-        kwargs['decimal_places'] = FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES
-        super(FormattedDecimalField, self).__init__(*args, **kwargs)
 
 
 class PricefulSerializer(serializers.Serializer):

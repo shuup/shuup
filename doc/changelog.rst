@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: Improved suppliers stock endpoints
 - Add setting to manage contacts per shop
 - Add `ShuupMiddleware` to set the current request shop
 - Add `get_supplier` for shop product to define the business logic of getting supplier for order/basket line
