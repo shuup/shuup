@@ -16,7 +16,10 @@ from shuup.core.api.orders import OrderFilter
 from shuup.core.models import get_person_contact, Order, OrderLine, Shop
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 
-from .mixins import BaseLineSerializerMixin, BaseOrderTotalSerializerMixin
+from .mixins import (
+    BaseLineSerializerMixin, BaseOrderTotalSerializerMixin,
+    TaxLineSerializerMixin
+)
 from .orders import PaymentSerializer
 
 
@@ -64,7 +67,7 @@ class ShopSerializer(serializers.ModelSerializer):
             return self.context["request"].build_absolute_uri(shop.logo.url)
 
 
-class OrderLineSerializer(BaseLineSerializerMixin, serializers.ModelSerializer):
+class OrderLineSerializer(BaseLineSerializerMixin, TaxLineSerializerMixin, serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     gross_weight = serializers.ReadOnlyField(source="product.gross_weight")
     net_weight = serializers.ReadOnlyField(source="product.net_weight")
