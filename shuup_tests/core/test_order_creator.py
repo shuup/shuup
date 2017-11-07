@@ -11,21 +11,23 @@ from decimal import Decimal
 import pytest
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.test import override_settings
 
 from shuup import configuration
 from shuup.core.models import (
     get_person_contact, Order, OrderLineType, Shop, StockBehavior
 )
 from shuup.core.order_creator import OrderCreator, OrderSource, SourceLine
+from shuup.core.order_creator._creator import OrderProcessor
 from shuup.core.order_creator.constants import ORDER_MIN_TOTAL_CONFIG_KEY
 from shuup.testing.factories import (
-    create_package_product, get_address, get_default_product, get_default_shop,
-    get_default_supplier, get_initial_order_status, get_payment_method,
-    get_shipping_method, get_shop, create_random_company, create_random_person, create_random_user
+    create_package_product, create_product, create_random_company,
+    create_random_person, create_random_user, get_address, get_default_product,
+    get_default_shop, get_default_supplier, get_initial_order_status,
+    get_payment_method, get_shipping_method, get_shop
 )
 from shuup.utils.models import get_data_dict
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
-from django.test import override_settings
 
 
 def test_invalid_order_source_updating():
@@ -118,7 +120,7 @@ def test_order_creator_with_package_product(rf, admin_user):
     supplier = get_simple_supplier()
     package_product = create_package_product("Package-Product-Test", shop=shop, supplier=supplier,
                                              children=2)
-    shop_product =  package_product.get_shop_instance(shop)
+    shop_product = package_product.get_shop_instance(shop)
     quantity_map = package_product.get_package_child_to_quantity_map()
     product_1, product_2 = quantity_map.keys()
     product_1.stock_behavior = StockBehavior.STOCKED
@@ -184,6 +186,58 @@ def test_order_creator_supplierless_product_line_conversion_should_fail(rf, admi
     creator = OrderCreator()
     with pytest.raises(ValueError):
         order = creator.create_order(source)
+
+
+@pytest.mark.django_db
+def test_order_creator_orderability(admin_user):
+    source = OrderSource(get_default_shop())
+    product = get_default_product()
+
+    line = source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=product,
+        supplier=get_default_supplier(),
+        quantity=1,
+        shop=get_default_shop(),
+        base_unit_price=source.create_price(10),
+    )
+    assert len(list(source.get_validation_errors())) == 0
+
+    # delete the shop product
+    product.get_shop_instance(get_default_shop()).delete()
+
+    errors = list(source.get_validation_errors())
+    assert len(errors) == 1
+    assert "product_not_available_in_shop" in errors[0].code
+
+
+@pytest.mark.django_db
+def test_processor_orderability(admin_user):
+    source = OrderSource(Shop())
+    processor = OrderProcessor()
+    line = source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        shop=get_default_shop(),
+        base_unit_price=source.create_price(10),
+    )
+    line.order = Order(shop=get_default_shop())
+    assert processor._check_orderability(line) is None
+
+    unorderable_line = source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=create_product("no-shop"),
+        supplier=get_default_supplier(),
+        quantity=1,
+        shop=get_default_shop(),
+        base_unit_price=source.create_price(20),
+    )
+    unorderable_line.order = Order(shop=get_default_shop())
+    with pytest.raises(ValidationError) as exc:
+        processor._check_orderability(unorderable_line)
+    assert "Not available in" in exc.value.message
 
 
 @pytest.mark.django_db
