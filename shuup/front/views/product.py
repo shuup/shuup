@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import get_language
 from django.views.generic import DetailView
 
-from shuup.core.models import Product, ProductMode
+from shuup.core.models import Product, ProductMode, ShopProduct
 from shuup.front.utils.product import get_product_context
 from shuup.utils.excs import extract_messages, Problem
 
@@ -38,8 +38,9 @@ class ProductDetailView(DetailView):
         if product.mode == ProductMode.VARIATION_CHILD:
             return redirect("shuup:product", pk=product.variation_parent.pk, slug=product.variation_parent.slug)
 
-        shop_product = self.shop_product = product.get_shop_instance(request.shop, allow_cache=True)
-        if not shop_product:
+        try:
+            shop_product = self.shop_product = product.get_shop_instance(request.shop, allow_cache=True)
+        except ShopProduct.DoesNotExist:
             raise Problem(_(u"This product is not available in this shop."))
 
         errors = list(shop_product.get_visibility_errors(customer=request.customer))

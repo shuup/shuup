@@ -64,7 +64,11 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         for product in products_qs[:(n_products * 4)]:
             if len(products) == n_products:
                 break
-            shop_product = product.get_shop_instance(shop, allow_cache=True)
+            try:
+                shop_product = product.get_shop_instance(shop, allow_cache=True)
+            except ShopProduct.DoesNotExist:
+                continue
+
             for supplier in suppliers:
                 if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
                     products.append(product)
@@ -105,7 +109,7 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
     return products
 
 
-def _get_best_selling_products(cutoff_days, n_products, orderable_only, request):
+def _get_best_selling_products(cutoff_days, n_products, orderable_only, request):  # noqa (C901)
     data = get_best_selling_product_info(
         shop_ids=[request.shop.pk],
         cutoff_days=cutoff_days
@@ -125,7 +129,10 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request)
         # get suppliers for later use
         suppliers = Supplier.objects.filter(shops__in=[request.shop])
     for product in Product.objects.filter(id__in=product_ids):
-        shop_product = product.get_shop_instance(request.shop, allow_cache=True)
+        try:
+            shop_product = product.get_shop_instance(request.shop, allow_cache=True)
+        except ShopProduct.DoesNotExist:
+            continue
         if orderable_only:
             for supplier in suppliers:
                 if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):

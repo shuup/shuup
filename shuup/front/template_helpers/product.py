@@ -9,7 +9,7 @@ from jinja2.utils import contextfunction
 
 from shuup.core.models import (
     AttributeVisibility, Product, ProductAttribute, ProductCrossSell,
-    ProductCrossSellType, Supplier
+    ProductCrossSellType, ShopProduct, Supplier
 )
 from shuup.core.utils import context_cache
 from shuup.utils.text import force_ascii
@@ -47,7 +47,11 @@ def is_visible(context, product):
     if val is not None:
         return val
 
-    shop_product = product.get_shop_instance(shop=request.shop, allow_cache=True)
+    try:
+        shop_product = product.get_shop_instance(shop=request.shop, allow_cache=True)
+    except ShopProduct.DoesNotExist:
+        return False
+
     for error in shop_product.get_visibility_errors(customer=request.customer):  # pragma: no branch
         context_cache.set_cached_value(key, False)
         return False
@@ -69,7 +73,10 @@ def get_product_cross_sells(
 
     related_products = []
     for product in Product.objects.filter(id__in=related_product_ids):
-        shop_product = product.get_shop_instance(request.shop, allow_cache=True)
+        try:
+            shop_product = product.get_shop_instance(request.shop, allow_cache=True)
+        except ShopProduct.DoesNotExist:
+            continue
         if orderable_only:
             for supplier in Supplier.objects.all():
                 if shop_product.is_orderable(
