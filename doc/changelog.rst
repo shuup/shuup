@@ -18,6 +18,17 @@ Front
 - Add SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES setting which can be used
   to change confirm form field properties on order confirm page
 
+Shuup 1.2.2
+-----------
+
+Released on 2017-11-08 12:35 +0200.
+
+Core
+~~~~
+
+- Fix default OrderStatus identifiers and add a management command
+  ``shuup_fix_order_status_identifiers`` to fix them in the database too
+
 Shuup 1.2.1
 -----------
 
