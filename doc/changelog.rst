@@ -9,6 +9,12 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Core
+~~~~
+
+- Fix default OrderStatus identifiers and add a management command
+  ``shuup_fix_order_status_identifiers`` to fix them in the database too
+
 Shuup 1.2.1
 -----------
 
