@@ -61,8 +61,10 @@ Customer Group Pricing
 
 - Introduce Customer Group Discounts. A discount module to configure discounts by contact group.
 
-UNRELEASED Shuup 1.3
---------------------
+Shuup 1.3.0
+-----------
+
+Released on 2017-11-08 12:50 +0200.
 
 Front
 ~~~~~
