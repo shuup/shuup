@@ -11,11 +11,10 @@ import datetime
 import itertools
 from operator import iand, ior
 
-import dateutil.parser
 import six
 import xlrd
 from django.db.models import AutoField, ForeignKey, Q
-from django.db.models.fields import BooleanField, DateField, DateTimeField
+from django.db.models.fields import BooleanField
 from django.db.models.fields.related import RelatedField
 from django.db.transaction import atomic
 from django.utils.text import force_text
@@ -274,14 +273,7 @@ class DataImporter(object):
     def _handle_row_field(self, field, mapping, orig_value, row_session, target, value):
         value = self._get_field_choices_value(field, value)
 
-        # Ensure the datetime, date, and boolean values are presented properly
-        if isinstance(field, DateField) or isinstance(field, DateTimeField):
-            try:
-                value = dateutil.parser.parse(value)
-            except ValueError:
-                # todo: Handle these somehow
-                value = None
-        elif isinstance(field, BooleanField):
+        if isinstance(field, BooleanField):
             if not value or value == "" or value == " ":
                 value = False
 

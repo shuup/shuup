@@ -204,12 +204,20 @@ def test_add_product_to_basket(admin_user):
             'product': shop_product.product.pk,
             'shop': shop.pk
         }
+        precision = Decimal("0.01")
         response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
         assert response.status_code == status.HTTP_200_OK
         response_data = json.loads(response.content.decode("utf-8"))
         assert len(response_data["items"]) == 1
         assert not response_data["validation_errors"]
-        assert float(response_data["total_price"]) == 2 * product_price
+
+        expected_price = Decimal(2 * product_price).quantize(precision)
+        assert Decimal(response_data["total_price"]) == expected_price
+        assert Decimal(response_data["items"][0]["taxful_base_unit_price"]) == Decimal(product_price).quantize(precision)
+        assert Decimal(response_data["items"][0]["taxful_discount_amount"]) == Decimal()
+        assert Decimal(response_data["items"][0]["taxful_price"]) == expected_price
+        assert Decimal(response_data["items"][0]["taxful_discounted_unit_price"]) == Decimal(product_price).quantize(precision)
+        assert Decimal(response_data["items"][0]["tax_amount"]) == Decimal()
 
         # add zero priced product
         payload = {
