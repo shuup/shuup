@@ -9,7 +9,9 @@ from __future__ import unicode_literals
 
 import six
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 
+from shuup.core.models import ShopProduct
 from shuup.utils.numbers import parse_decimal_string
 
 
@@ -48,7 +50,14 @@ class BasketUpdateMethods(object):
         basket_quantities = self.basket.get_product_ids_and_quantities()
         product_basket_quantity = basket_quantities.get(product.id, 0)
         total_product_quantity = delta + product_basket_quantity
-        shop_product = product.get_shop_instance(shop=self.request.shop)
+        try:
+            shop_product = product.get_shop_instance(shop=self.request.shop)
+        except ShopProduct.DoesNotExist:
+            return [
+                ValidationError("%s not available in %s" % (product, self.request.shop),
+                                code="product_not_available_in_shop")
+            ]
+
         errors = list(shop_product.get_orderability_errors(
             supplier=supplier,
             customer=self.basket.customer,
@@ -58,12 +67,21 @@ class BasketUpdateMethods(object):
             for child_product, child_quantity in six.iteritems(product.get_package_child_to_quantity_map()):
                 child_basket_quantity = basket_quantities.get(child_product.id, 0)
                 total_child_quantity = (delta * child_quantity) + child_basket_quantity
-                shop_product = child_product.get_shop_instance(shop=self.request.shop)
-                child_errors = list(shop_product.get_orderability_errors(
-                    supplier=supplier,
-                    customer=self.basket.customer,
-                    quantity=total_child_quantity
-                ))
+                try:
+                    shop_product = child_product.get_shop_instance(shop=self.request.shop)
+                except ShopProduct.DoesNotExist:
+                    child_errors = [
+                        ValidationError(
+                            "%s not available in %s" % (child_product, self.request.shop),
+                            code="product_not_available_in_shop"
+                        )
+                    ]
+                else:
+                    child_errors = list(shop_product.get_orderability_errors(
+                        supplier=supplier,
+                        customer=self.basket.customer,
+                        quantity=total_child_quantity
+                    ))
                 errors.extend(child_errors)
         return errors
 

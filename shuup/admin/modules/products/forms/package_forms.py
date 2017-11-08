@@ -10,14 +10,13 @@ from __future__ import unicode_literals
 import six
 from django import forms
 from django.contrib import messages
-from django.db.models import ObjectDoesNotExist
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.widgets import PackageProductChoiceWidget
 from shuup.admin.modules.products.utils import clear_existing_package
 from shuup.core.excs import ImpossibleProductModeException, Problem
-from shuup.core.models import Product, Shop
+from shuup.core.models import Product, Shop, ShopProduct
 
 from .parent_forms import ProductChildBaseFormSet
 
@@ -35,7 +34,7 @@ class PackageChildForm(forms.Form):
                 try:
                     shop_product = self.product.get_shop_instance(shop)
                     self.shop_products.append(shop_product)
-                except ObjectDoesNotExist:
+                except ShopProduct.DoesNotExist:
                     continue
         super(PackageChildForm, self).__init__(**kwargs)
 

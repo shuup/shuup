@@ -150,6 +150,34 @@ def test_basket_orderability_change(rf):
 
 
 @pytest.mark.django_db
+def test_basket_orderability_change_shop_product(rf):
+    StoredBasket.objects.all().delete()
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
+    request = rf.get("/")
+    request.session = {}
+    request.shop = shop
+    apply_request_middleware(request)
+    basket = get_basket(request)
+    line = basket.add_product(
+        supplier=supplier,
+        shop=shop,
+        product=product,
+        quantity=1,
+        force_new_line=True,
+        extra={"foo": "foo"}
+    )
+    assert len(basket.get_lines()) == 1
+    assert len(basket.get_unorderable_lines()) == 0
+    product.get_shop_instance(shop).delete()
+    basket.uncache()
+    assert basket.dirty
+    assert len(basket.get_lines()) == 0
+    assert len(basket.get_unorderable_lines()) == 1
+
+
+@pytest.mark.django_db
 def test_basket_package_product_orderability_change(rf):
     if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
         pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")

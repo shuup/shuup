@@ -320,7 +320,11 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         if self.product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
             sellable = False
             for child_product in self.product.variation_children.all():
-                child_shop_product = child_product.get_shop_instance(self.shop)
+                try:
+                    child_shop_product = child_product.get_shop_instance(self.shop)
+                except ShopProduct.DoesNotExist:
+                    continue
+
                 if child_shop_product.is_orderable(
                         supplier=supplier,
                         customer=customer,
@@ -338,7 +342,11 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                 res = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
                 if not res:
                     continue
-                child_shop_product = res.get_shop_instance(self.shop)
+                try:
+                    child_shop_product = res.get_shop_instance(self.shop)
+                except ShopProduct.DoesNotExist:
+                    continue
+
                 if child_shop_product.is_orderable(
                         supplier=supplier,
                         customer=customer,

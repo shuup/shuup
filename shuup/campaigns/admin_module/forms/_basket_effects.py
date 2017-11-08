@@ -14,7 +14,7 @@ from shuup.campaigns.models.basket_effects import (
 from shuup.campaigns.models.basket_line_effects import (
     DiscountFromCategoryProducts, DiscountFromProduct, FreeProductLine
 )
-from shuup.core.models import Category, Product
+from shuup.core.models import Category, Product, ShopProduct
 
 from ._base import BaseEffectModelForm
 
@@ -46,7 +46,14 @@ class FreeProductLineForm(BaseEffectModelForm):
         campaign = self.cleaned_data["campaign"]
         for product_id in self.cleaned_data.get("products"):
             product = Product.objects.get(pk=product_id)
-            shop_product = product.get_shop_instance(campaign.shop)
+            try:
+                shop_product = product.get_shop_instance(campaign.shop)
+            except ShopProduct.DoesNotExist:
+                raise ValidationError(_("Product %(product)s is not available in the %(shop)s shop.") % {
+                    "product": product.name,
+                    "shop": campaign.shop.name
+                })
+
             for error in shop_product.get_quantity_errors(self.cleaned_data["quantity"]):
                 raise ValidationError({'quantity': error.message})
 

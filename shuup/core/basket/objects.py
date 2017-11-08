@@ -18,7 +18,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.core.models import (
-    MutableAddress, OrderLineType, PaymentMethod, ShippingMethod
+    MutableAddress, OrderLineType, PaymentMethod, ShippingMethod, ShopProduct
 )
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
@@ -319,7 +319,7 @@ class BaseBasket(OrderSource):
         self.dirty = bool(self.dirty or modified)
         return modified
 
-    def _cache_lines(self):
+    def _cache_lines(self):     # noqa (C901)
         lines = [BasketLine.from_dict(self, line) for line in self._data_lines]
         lines_by_line_id = {}
         orderable_counter = Counter()
@@ -331,7 +331,13 @@ class BaseBasket(OrderSource):
             else:
                 product = line.product
                 quantity = line.quantity + orderable_counter[product.id]
-                if line.shop_product.is_orderable(line.supplier, self.customer, quantity, allow_cache=False):
+
+                try:
+                    shop_product = line.shop_product
+                except ShopProduct.DoesNotExist:
+                    continue
+
+                if shop_product.is_orderable(line.supplier, self.customer, quantity, allow_cache=False):
                     if product.is_package_parent():
                         quantity_map = product.get_package_child_to_quantity_map()
                         orderable = True

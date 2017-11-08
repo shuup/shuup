@@ -198,6 +198,17 @@ def test_complex_orderability(admin_user):
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
         code="no_sellable_children")
 
+    # no sellable children with no shop product
+    for combo in combinations:
+        result_product = ProductVariationResult.resolve(parent, combo["variable_to_value"])
+        sp = result_product.get_shop_instance(shop)
+        sp.delete()
+        sp.save()
+
+    assert error_exists(
+        shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
+        code="no_sellable_children")
+
 
 def test_simple_orderability(admin_user):
     shop = get_default_shop()
@@ -236,6 +247,15 @@ def test_simple_orderability(admin_user):
         child_sp = child.get_shop_instance(shop)
         child_sp.visibility = ShopProductVisibility.NOT_VISIBLE
         child_sp.save()
+
+    assert error_exists(
+        shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
+        code="no_sellable_children")
+
+    # delete all children shop products
+    for child in children:
+        child_sp = child.get_shop_instance(shop)
+        child_sp.delete()
 
     assert error_exists(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),

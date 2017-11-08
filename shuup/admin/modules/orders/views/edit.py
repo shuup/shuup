@@ -14,7 +14,7 @@ from babel.numbers import format_currency, format_decimal
 from django.conf import settings
 from django.contrib import messages
 from django.core import serializers
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Sum
@@ -31,7 +31,8 @@ from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import (
     AnonymousContact, CompanyContact, Contact, Order, OrderLineType,
-    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopStatus
+    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopProduct,
+    ShopStatus
 )
 from shuup.core.pricing import get_pricing_module
 from shuup.utils.i18n import (
@@ -258,7 +259,7 @@ class OrderEditView(CreateOrUpdateView):
         shop = Shop.objects.get(pk=shop_id)
         try:
             shop_product = product.get_shop_instance(shop)
-        except ObjectDoesNotExist:
+        except ShopProduct.DoesNotExist:
             return {
                 "errorText": _("Product %(product)s is not available in the %(shop)s shop.") %
                 {"product": product.name, "shop": shop.name}

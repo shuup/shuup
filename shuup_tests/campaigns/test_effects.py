@@ -50,6 +50,9 @@ def test_basket_free_product(rf):
                                     supplier=supplier,
                                     default_price=single_product_price)
 
+    # no shop
+    third_product = create_product(printable_gibberish(), supplier=supplier)
+
     rule = BasketTotalProductAmountCondition.objects.create(value="2")
 
     campaign = BasketCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
@@ -57,6 +60,12 @@ def test_basket_free_product(rf):
 
     effect = FreeProductLine.objects.create(campaign=campaign, quantity=2)
     effect.products.add(second_product)
+    discount_lines_count = len(effect.get_discount_lines(basket, []))
+    assert discount_lines_count == 1
+
+    # do not affect as there is no shop product for the product
+    effect.products.add(third_product)
+    assert len(effect.get_discount_lines(basket, [])) == discount_lines_count
 
     basket.uncache()
     final_lines = basket.get_final_lines()

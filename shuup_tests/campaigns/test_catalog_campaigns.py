@@ -410,31 +410,46 @@ def test_admin_order_with_campaign(rf, admin_user):
 @pytest.mark.django_db
 def test_product_catalog_campaigns():
     shop = get_default_shop()
+
     product = create_product("test", shop, default_price=20)
+    parent_product = create_product("parent", shop, default_price=40)
+    no_shop_child = create_product("child-no-shop")
+    shop_child = create_product("child-shop", shop, default_price=60)
+
+    shop_child.link_to_parent(parent_product)
+    no_shop_child.link_to_parent(parent_product)
+
     shop_product = product.get_shop_instance(shop)
+    parent_shop_product = parent_product.get_shop_instance(shop)
+    child_shop_product =shop_child.get_shop_instance(shop)
 
     cat = Category.objects.create(name="test")
     campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
 
     # no rules
     assert CatalogCampaign.get_for_product(shop_product).count() == 0
+    assert CatalogCampaign.get_for_product(parent_shop_product).count() == 0
+    assert CatalogCampaign.get_for_product(child_shop_product).count() == 0
 
     # category filter that doesn't match
     cat_filter = CategoryFilter.objects.create()
     cat_filter.categories.add(cat)
     campaign.filters.add(cat_filter)
     assert CatalogCampaign.get_for_product(shop_product).count() == 0
+    assert CatalogCampaign.get_for_product(parent_shop_product).count() == 0
+    assert CatalogCampaign.get_for_product(child_shop_product).count() == 0
 
-    shop_product.primary_category = cat
-    shop_product.save()
-    assert CatalogCampaign.get_for_product(shop_product).count() == 1
-    shop_product.categories.remove(cat)
-    shop_product.primary_category = None
-    shop_product.save()
-    assert CatalogCampaign.get_for_product(shop_product).count() == 0
-    # category filter that matches
-    shop_product.categories.add(cat)
-    assert CatalogCampaign.get_for_product(shop_product).count() == 1
+    for sp in [shop_product, parent_shop_product, child_shop_product]:
+        sp.primary_category = cat
+        sp.save()
+        assert CatalogCampaign.get_for_product(sp).count() == 1
+        sp.categories.remove(cat)
+        sp.primary_category = None
+        sp.save()
+        assert CatalogCampaign.get_for_product(sp).count() == 0
+        # category filter that matches
+        sp.categories.add(cat)
+        assert CatalogCampaign.get_for_product(sp).count() == 1
 
     # create other shop
     shop1 = Shop.objects.create(name="testshop", identifier="testshop", status=ShopStatus.ENABLED, public_name="testshop")

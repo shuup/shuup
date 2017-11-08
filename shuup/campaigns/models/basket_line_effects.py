@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import MoneyValueField, QuantityField
 from shuup.core.models import (
-    Category, OrderLineType, PolymorphicShuupModel, Product
+    Category, OrderLineType, PolymorphicShuupModel, Product, ShopProduct
 )
 from shuup.core.order_creator._source import LineSource
 
@@ -57,7 +57,10 @@ class FreeProductLine(BasketLineEffect):
         lines = []
         shop = order_source.shop
         for product in self.products.all():
-            shop_product = product.get_shop_instance(shop)
+            try:
+                shop_product = product.get_shop_instance(shop)
+            except ShopProduct.DoesNotExist:
+                continue
             supplier = shop_product.get_supplier(order_source.customer, self.quantity, order_source.shipping_address)
             if not shop_product.is_orderable(
                     supplier=supplier, customer=order_source.customer,
@@ -191,11 +194,16 @@ def _limit_discount_amount_by_min_price(line, order_source):
     """
 
     # make sure the discount respects the minimum price of the product, if set
-    shop_product = line.product.get_shop_instance(order_source.shop)
-    if shop_product.minimum_price:
-        min_total = shop_product.minimum_price.value * line.quantity
-        base_price = line.base_unit_price.value * line.quantity
+    try:
+        shop_product = line.product.get_shop_instance(order_source.shop)
 
-        # check if the discount makes the line less than the minimum total
-        if (base_price - line.discount_amount.value) < min_total:
-            line.discount_amount = order_source.create_price(base_price - min_total)
+        if shop_product.minimum_price:
+            min_total = shop_product.minimum_price.value * line.quantity
+            base_price = line.base_unit_price.value * line.quantity
+
+            # check if the discount makes the line less than the minimum total
+            if (base_price - line.discount_amount.value) < min_total:
+                line.discount_amount = order_source.create_price(base_price - min_total)
+
+    except ShopProduct.DoesNotExist:
+        pass

@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, CouponUsage
 )
-from shuup.core.models import OrderLineType
+from shuup.core.models import OrderLineType, ShopProduct
 from shuup.core.order_creator import OrderSourceModifierModule
 from shuup.core.order_creator._source import LineSource
 from shuup.core.pricing import DiscountModule
@@ -30,7 +30,10 @@ class CatalogCampaignModule(DiscountModule):
         Minimum price will be selected if the cheapest price is under that.
         """
         create_price = context.shop.create_price
-        shop_product = product.get_shop_instance(context.shop)
+        try:
+            shop_product = product.get_shop_instance(context.shop)
+        except ShopProduct.DoesNotExist:
+            return price_info
 
         best_discount = None
         for campaign in CatalogCampaign.get_matching(context, shop_product):

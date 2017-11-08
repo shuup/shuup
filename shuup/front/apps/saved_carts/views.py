@@ -13,7 +13,7 @@ from django.views.generic import DetailView, ListView, View
 from django.views.generic.detail import SingleObjectMixin
 
 from shuup.core.excs import ProductNotOrderableProblem
-from shuup.core.models import OrderLineType, Product
+from shuup.core.models import OrderLineType, Product, ShopProduct
 from shuup.core.utils.users import real_user_or_none
 from shuup.front.models import StoredBasket
 from shuup.front.views.dashboard import DashboardViewMixin
@@ -108,8 +108,9 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
             if line.get("type", None) != OrderLineType.PRODUCT:
                 continue
             product = Product.objects.get(id=line.get("product_id", None))
-            shop_product = product.get_shop_instance(shop=request.shop)
-            if not shop_product:
+            try:
+                shop_product = product.get_shop_instance(shop=request.shop)
+            except ShopProduct.DoesNotExist:
                 errors.append({"product": line.text, "message": _("Product not available in this shop")})
                 continue
             supplier = self._get_supplier(
