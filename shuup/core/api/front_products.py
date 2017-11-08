@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
 from collections import defaultdict
 
 import six
@@ -209,19 +208,6 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def _get_pricing_context(self, request, shop):
         return PricingContext(shop=shop, customer=self.context["customer"])
 
-    def _get_product_price_info(self, shop_product):
-        key, val = context_cache.get_cached_value(identifier="shop_product_price_info",
-                                                  item=shop_product,
-                                                  context={"customer": self.context["customer"]},
-                                                  allow_cache=True)
-        if val is not None:
-            return val
-
-        context = self._get_pricing_context(self.context["request"], shop_product.shop)
-        price_info = shop_product.product.get_price_info(context)
-        context_cache.set_cached_value(key, price_info)
-        return price_info
-
     def get_image(self, shop_product):
         image = shop_product.product.primary_image
         if not image:
@@ -235,11 +221,29 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_attributes(self, shop_product):
         return AttributeSerializer(shop_product.product.attributes, many=True).data
 
+    def _get_product_price_info(self, shop_product):
+        context = self._get_pricing_context(self.context["request"], shop_product.shop)
+        return shop_product.product.get_price_info(context)
+
+    def _get_cached_product_price_info(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="shop_product_price_info",
+                                                  item=shop_product,
+                                                  context={"customer": self.context["customer"]},
+                                                  allow_cache=True)
+        if val is not None:
+            return val
+
+        price_info = self._get_product_price_info(shop_product)
+        context_cache.set_cached_value(key, price_info)
+        return price_info
+
     def get_price_info(self, shop_product):
-        return PricefulSerializer(self._get_product_price_info(shop_product)).data
+        price_info = self._get_cached_product_price_info(shop_product)
+        return PricefulSerializer(price_info).data
 
     def get_price(self, shop_product):
-        return self._get_product_price_info(shop_product).price.value
+        price_info = self._get_cached_product_price_info(shop_product)
+        return price_info.price.value
 
     def get_net_weight(self, shop_product):
         return shop_product.product.net_weight
@@ -257,14 +261,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             return False
         return False
 
-    def get_cross_sell(self, shop_product):
-        key, val = context_cache.get_cached_value(identifier="cross_sell",
-                                                  item=shop_product,
-                                                  context={"customer": self.context["customer"]},
-                                                  allow_cache=True)
-        if val is not None:
-            return val
-
+    def _get_cross_sell(self, shop_product):
         cross_sell_data = {
             "recommended": [],
             "related": [],
@@ -293,17 +290,21 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
 
             key = keys[cross_sell.type]
             cross_sell_data[key].append(self.children_serializer(cross_shop_product, context=self.context).data)
-
-        context_cache.set_cached_value(key, cross_sell_data)
         return cross_sell_data
 
-    def get_variations(self, shop_product):
-        key, val = context_cache.get_cached_value(identifier="variations",
+    def get_cross_sell(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="cross_sell",
                                                   item=shop_product,
                                                   context={"customer": self.context["customer"]},
                                                   allow_cache=True)
         if val is not None:
             return val
+
+        cross_sell_data = self._get_cross_sell(shop_product)
+        context_cache.set_cached_value(key, cross_sell_data)
+        return cross_sell_data
+
+    def _get_variations(self, shop_product):
         data = []
         combinations = list(shop_product.product.get_all_available_combinations() or [])
         if not combinations and shop_product.product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
@@ -330,17 +331,21 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
                     force_text(k): force_text(v) for k, v in six.iteritems(combination["variable_to_value"])
                 }
             })
-        context_cache.set_cached_value(key, data)
         return data
 
-    def get_package_content(self, shop_product):
-        key, val = context_cache.get_cached_value(identifier="package_contents",
+    def get_variations(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="variations",
                                                   item=shop_product,
                                                   context={"customer": self.context["customer"]},
                                                   allow_cache=True)
         if val is not None:
             return val
 
+        variations = self._get_variations(shop_product)
+        context_cache.set_cached_value(key, variations)
+        return variations
+
+    def _get_package_content(self, shop_product):
         package_contents = []
         pkge_links = ProductPackageLink.objects.filter(parent=shop_product.product)
         for pkge_link in pkge_links:
@@ -353,7 +358,17 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
                 })
             except ShopProduct.DoesNotExist:
                 continue
+        return package_contents
 
+    def get_package_content(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="package_contents",
+                                                  item=shop_product,
+                                                  context={"customer": self.context["customer"]},
+                                                  allow_cache=True)
+        if val is not None:
+            return val
+
+        package_contents = self._get_package_content(shop_product)
         context_cache.set_cached_value(key, package_contents)
         return package_contents
 
