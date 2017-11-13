@@ -397,11 +397,17 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
           List of products and their price infos sorted from cheapest to
           most expensive.
         """
-        priced_children = (
-            (child, child.get_price_info(context, quantity=quantity))
-            for child in self.variation_children.all()
-            if child.get_shop_instance(context.shop).is_orderable(supplier=None, customer=context.customer, quantity=1)
-        )
+        from shuup.core.models import ShopProduct
+        priced_children = []
+        for child in self.variation_children.all():
+            try:
+                shop_product = child.get_shop_instance(context.shop)
+            except ShopProduct.DoesNotExist:
+                continue
+
+            if shop_product.is_orderable(supplier=None, customer=context.customer, quantity=1):
+                priced_children.append((child, child.get_price_info(context, quantity=quantity)))
+
         return sorted(priced_children, key=(lambda x: x[1].price))
 
     def get_cheapest_child_price(self, context, quantity=1):

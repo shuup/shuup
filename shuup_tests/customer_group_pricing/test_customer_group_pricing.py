@@ -103,6 +103,26 @@ def test_set_taxful_price_works(rf):
 
 
 @pytest.mark.django_db
+def test_price_works_no_shop_product(rf):
+    request, shop, group = initialize_test(rf, True)
+    price = shop.create_price
+
+    product = create_product("Anuva-Product", shop, default_price=300)
+
+    # create ssp with higher price
+    spp = CgpPrice(product=product, shop=shop, group=group, price_value=250)
+    spp.save()
+    price_info = product.get_price_info(request, quantity=1)
+    assert price_info.price == price(250)
+    assert product.get_price(request, quantity=1) == price(250)
+
+    product.get_shop_instance(shop).delete()
+    price_info = product.get_price_info(request, quantity=1)
+    assert price_info.price == price(0)
+    assert product.get_price(request, quantity=1) == price(0)
+
+
+@pytest.mark.django_db
 def test_set_taxful_price_works_with_product_id(rf):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price

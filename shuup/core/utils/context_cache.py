@@ -104,13 +104,16 @@ def bump_cache_for_product(product, shop=None):
     :param shop: shop object
     :type shop: shuup.core.models.Shop|None
     """
+    from shuup.core.models import ShopProduct
     if not shop:
-        from shuup.core.models import ShopProduct
         for sp in ShopProduct.objects.filter(product_id=product.id):
             bump_cache_for_shop_product(sp)
     else:
-        shop_product = product.get_shop_instance(shop=shop, allow_cache=False)
-        bump_cache_for_shop_product(shop_product)
+        try:
+            shop_product = product.get_shop_instance(shop=shop, allow_cache=False)
+            bump_cache_for_shop_product(shop_product)
+        except ShopProduct.DoesNotExist:
+            bump_cache_for_item(product)
 
 
 def bump_cache_for_item(item):

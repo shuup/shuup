@@ -22,12 +22,16 @@ class CustomerGroupPricingModule(PricingModule):
     def get_price_info(self, context, product, quantity=1):
         shop = context.shop
 
-        if isinstance(product, six.integer_types):
-            product_id = product
-            shop_product = ShopProduct.objects.get(product_id=product_id, shop=shop)
-        else:
-            shop_product = product.get_shop_instance(shop)
-            product_id = product.pk
+        try:
+            if isinstance(product, six.integer_types):
+                product_id = product
+                shop_product = ShopProduct.objects.get(product_id=product_id, shop=shop)
+            else:
+                shop_product = product.get_shop_instance(shop)
+                product_id = product.pk
+        except ShopProduct.DoesNotExist:
+            # shop product does not exist, zero price
+            return PriceInfo(price=shop.create_price(0), base_price=shop.create_price(0), quantity=quantity)
 
         default_price = (shop_product.default_price_value or 0)
 

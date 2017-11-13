@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 import decimal
 
-from shuup.core.models import ProductVariationResult
+from shuup.core.models import ProductVariationResult, ShopProduct
 from shuup.front.views.product import ProductDetailView
 from shuup.utils.numbers import parse_simple_decimal
 
@@ -29,7 +29,10 @@ class ProductPriceView(ProductDetailView):
         product = self.object
         if not product:
             return False
-        shop_product = product.get_shop_instance(self.request.shop)
+        try:
+            shop_product = product.get_shop_instance(self.request.shop)
+        except ShopProduct.DoesNotExist:
+            return False
         quantity = self._get_quantity()
         if not quantity:
             return False
@@ -56,7 +59,10 @@ class ProductPriceView(ProductDetailView):
         if unit_type == 'internal':
             return quantity
         else:
-            shop_product = self.object.get_shop_instance(self.request.shop)
+            try:
+                shop_product = self.object.get_shop_instance(self.request.shop)
+            except ShopProduct.DoesNotExist:
+                return None
             return shop_product.unit.from_display(decimal.Decimal(quantity))
 
     def get_variation_variables(self):

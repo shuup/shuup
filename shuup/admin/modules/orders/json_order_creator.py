@@ -10,12 +10,12 @@ from __future__ import unicode_literals
 from copy import deepcopy
 
 from django import forms
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 from shuup.core.models import (
     CompanyContact, Contact, MutableAddress, OrderLineType, OrderStatus,
-    PaymentMethod, PersonContact, Product, ShippingMethod, Shop
+    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopProduct
 )
 from shuup.core.order_creator import OrderCreator, OrderModifier, OrderSource
 from shuup.core.order_creator._source import LineSource
@@ -117,7 +117,7 @@ class JsonOrderCreator(object):
             return False
         try:
             shop_product = product.get_shop_instance(source.shop)
-        except ObjectDoesNotExist:
+        except ShopProduct.DoesNotExist:
             self.add_error(ValidationError((_("Product %(product)s is not available in the %(shop)s shop.") % {
                 "product": product,
                 "shop": source.shop

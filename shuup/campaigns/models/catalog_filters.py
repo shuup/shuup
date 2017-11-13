@@ -101,19 +101,30 @@ class CategoryFilter(CatalogFilter):
         for parent in ShopProduct.objects.filter(categories__id__in=cat_ids).select_related("product"):
             shop_products.append(parent)
             for child in parent.product.variation_children.all():
-                child_sp = child.get_shop_instance(shop)
+                try:
+                    child_sp = child.get_shop_instance(shop)
+                except ShopProduct.DoesNotExist:
+                    continue
                 shop_products.append(child_sp)
         return shop_products
 
     def matches(self, shop_product):
         ids = list(shop_product.categories.all_except_deleted().values_list("id", flat=True))
         for child in shop_product.product.variation_children.all():
-            child_sp = child.get_shop_instance(shop_product.shop)
+            try:
+                child_sp = child.get_shop_instance(shop_product.shop)
+            except ShopProduct.DoesNotExist:
+                continue
+
             ids += list(child_sp.categories.all_except_deleted().values_list("id", flat=True))
 
         if shop_product.product.variation_parent:
-            parent_sp = shop_product.product.variation_parent.get_shop_instance(shop_product.shop)
-            ids += list(parent_sp.categories.all_except_deleted().values_list("id", flat=True))
+            try:
+                parent_sp = shop_product.product.variation_parent.get_shop_instance(shop_product.shop)
+            except ShopProduct.DoesNotExist:
+                pass
+            else:
+                ids += list(parent_sp.categories.all_except_deleted().values_list("id", flat=True))
 
         new_ids = self.values.values_list("id", flat=True)
         return bool([x for x in ids if x in new_ids])

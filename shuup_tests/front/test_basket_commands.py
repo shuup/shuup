@@ -13,6 +13,8 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect, JsonResponse
 
+from shuup.core.basket.update_methods import BasketUpdateMethods
+from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import (
     ProductMode, ProductVariationVariable, ProductVariationVariableValue,
     SalesUnit, ShopProductVisibility
@@ -22,8 +24,8 @@ from shuup.front.basket import get_basket, get_basket_command_dispatcher
 from shuup.front.basket.command_dispatcher import BasketCommandDispatcher
 from shuup.front.signals import get_basket_command_handler
 from shuup.testing.factories import (
-    create_product, create_random_person, get_default_product, get_default_shop,
-    get_default_supplier, complete_product
+    complete_product, create_product, create_random_person,
+    get_default_product, get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_request_with_basket
@@ -76,6 +78,25 @@ def test_add_and_remove_and_clear():
     # ... that can be cleared.
     basket_commands.handle_clear(request, basket)
     assert basket.product_count == 0
+
+
+@pytest.mark.django_db
+def test_add_and_invalid_product():
+    shop = get_default_shop()
+    product = create_product('fractionable', fractional=True)
+    complete_product(product)
+    supplier = get_default_supplier()
+    request = get_request_with_basket()
+    basket = request.basket
+
+    # remove the shop product
+    product.get_shop_instance(shop).delete()
+
+    with pytest.raises(ValidationError) as exc:
+        basket_commands.handle_add(request, basket, **{
+            "product_id": product.pk, "quantity": 1, "supplier_id": supplier.pk
+        })
+    assert "Product not available in this shop" in exc.value.message
 
 
 @pytest.mark.django_db
@@ -363,6 +384,23 @@ def test_basket_update_with_package_product():
     assert basket.product_count == 1
     basket_commands.handle_update(request, basket, **{"q_%s" % package_line.line_id: "2"})
     assert basket.product_count == 2
+
+    # Clear basket
+    basket_commands.handle_clear(request, basket)
+    assert basket.product_count == 0
+
+    # Remove the Shop Product from the child
+    child.get_shop_instance(shop).delete()
+
+    # Child not available for this shop
+    with pytest.raises(ProductNotOrderableProblem):
+        basket_commands.handle_add(request, basket, product_id=parent.pk, quantity=1)
+
+    # use the update methods object to check orderability errors
+    update_methods = BasketUpdateMethods(request, basket)
+    errors = update_methods._get_orderability_errors(parent, supplier, 1)
+    assert len(errors) == 2
+    assert any(["product_not_available_in_shop" in error.code for error in errors])
 
 
 @pytest.mark.django_db

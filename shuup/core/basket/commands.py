@@ -14,7 +14,10 @@ from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Product, ProductMode, ProductVariationResult
+from shuup.core.excs import ProductNotOrderableProblem
+from shuup.core.models import (
+    Product, ProductMode, ProductVariationResult, ShopProduct
+)
 from shuup.core.order_creator import is_code_usable
 from shuup.utils.importing import cached_load
 from shuup.utils.numbers import parse_decimal_string
@@ -40,8 +43,9 @@ def handle_add(  # noqa (C901)
     if product.mode in (ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT):
         raise ValidationError("Invalid product", code="invalid_product")
 
-    shop_product = product.get_shop_instance(shop=request.shop)
-    if not shop_product:
+    try:
+        shop_product = product.get_shop_instance(shop=request.shop)
+    except ShopProduct.DoesNotExist:
         raise ValidationError("Product not available in this shop", code="product_not_available_in_shop")
 
     if supplier_id:
@@ -82,7 +86,11 @@ def handle_add(  # noqa (C901)
         for child_product, child_quantity in six.iteritems(product.get_package_child_to_quantity_map()):
             already_in_basket_qty = product_ids_and_quantities.get(child_product.id, 0)
             total_child_quantity = (quantity * child_quantity)
-            sp = child_product.get_shop_instance(shop=request.shop)
+            try:
+                sp = child_product.get_shop_instance(shop=request.shop)
+            except ShopProduct.DoesNotExist:
+                raise ProductNotOrderableProblem("%s not available in %s" % (child_product, request.shop))
+
             sp.raise_if_not_orderable(
                 supplier=supplier,
                 quantity=(already_in_basket_qty + total_child_quantity),

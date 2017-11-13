@@ -13,14 +13,14 @@ from django.utils.translation import get_language
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
-    AttributeVisibility, ProductMode, ProductVariationResult
+    AttributeVisibility, ProductMode, ProductVariationResult, ShopProduct
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils.views import cache_product_things
 from shuup.utils.numbers import get_string_sort_order
 
 
-def get_product_context(request, product, language=None):
+def get_product_context(request, product, language=None):   # noqa (C901)
     """
     Get product context
 
@@ -47,10 +47,14 @@ def get_product_context(request, product, language=None):
                 key=lambda p: get_string_sort_order(p.variation_name or p.name)
             )
         )
-        context["orderable_variation_children"] = [
-            p for p in context["variation_children"]
-            if p.get_shop_instance(request.shop).is_orderable(supplier=None, customer=request.customer, quantity=1)
-        ]
+        context["orderable_variation_children"] = []
+        for p in context["variation_children"]:
+            try:
+                if p.get_shop_instance(request.shop).is_orderable(supplier=None, customer=request.customer, quantity=1):
+                    context["orderable_variation_children"].append(p)
+            except ShopProduct.DoesNotExist:
+                pass
+
     elif product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
         variation_variables = product.variation_variables.all().prefetch_related("values")
         orderable_children, is_orderable = get_orderable_variation_children(product, request, variation_variables)
@@ -84,7 +88,7 @@ def _get_order_form(request, context, product, language):
     return None
 
 
-def get_orderable_variation_children(product, request, variation_variables):
+def get_orderable_variation_children(product, request, variation_variables):    # noqa (C901)
     if not variation_variables:
         variation_variables = product.variation_variables.all().prefetch_related("values")
 
@@ -103,7 +107,12 @@ def get_orderable_variation_children(product, request, variation_variables):
                 orderable_variation_children[k] = []
 
         res = ProductVariationResult.resolve(product, combo)
-        if res and res.get_shop_instance(request.shop).is_orderable(
+        try:
+            shop_product = res.get_shop_instance(request.shop)
+        except ShopProduct.DoesNotExist:
+            continue
+
+        if res and shop_product.is_orderable(
                 supplier=None,
                 customer=request.customer,
                 quantity=1

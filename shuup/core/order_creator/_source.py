@@ -24,7 +24,7 @@ from shuup.core import taxing
 from shuup.core.fields.utils import ensure_decimal_places
 from shuup.core.models import (
     AnonymousContact, OrderStatus, PaymentMethod, Product, ShippingMethod,
-    ShippingMode, Shop, Supplier, TaxClass
+    ShippingMode, Shop, ShopProduct, Supplier, TaxClass
 )
 from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
@@ -521,7 +521,7 @@ class OrderSource(object):
         for error_message in self.get_validation_errors():
             raise ValidationError(error_message.args[0], code="invalid_order_source")
 
-    def get_validation_errors(self):
+    def get_validation_errors(self):  # noqa (C901)
         # check for the minimum sum of order total
         min_total = configuration.get(self.shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(0))
         total = (self.taxful_total_price.value if self.shop.prices_include_tax else self.taxless_total_price.value)
@@ -543,12 +543,14 @@ class OrderSource(object):
 
         for supplier in self._get_suppliers():
             for product, quantity in iteritems(self._get_products_and_quantities(supplier)):
-                shop_product = product.get_shop_instance(shop=self.shop)
-                if not shop_product:
+                try:
+                    shop_product = product.get_shop_instance(shop=self.shop)
+                except ShopProduct.DoesNotExist:
                     yield ValidationError(
                         _("%s not available in this shop") % product.name,
                         code="product_not_available_in_shop"
                     )
+                    continue
                 for error in shop_product.get_orderability_errors(
                         supplier=supplier, quantity=quantity, customer=self.customer):
                     error.message = "%s: %s" % (product.name, error.message)

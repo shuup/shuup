@@ -11,9 +11,10 @@ import warnings
 from decimal import Decimal
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 
-from shuup.core.models import Order, OrderLine, OrderLineType
+from shuup.core.models import Order, OrderLine, OrderLineType, ShopProduct
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.shortcuts import update_order_line_from_product
 from shuup.core.utils import context_cache
@@ -106,7 +107,11 @@ class OrderProcessor(object):
         if not order_line.supplier:
             raise ValueError("Order line has no supplier")
         order = order_line.order
-        shop_product = order_line.product.get_shop_instance(order.shop)
+        try:
+            shop_product = order_line.product.get_shop_instance(order.shop)
+        except ShopProduct.DoesNotExist:
+            raise ValidationError("%s: Not available in %s" % (order_line.product, order.shop), code="invalid_shop")
+
         shop_product.raise_if_not_orderable(
             supplier=order_line.supplier,
             quantity=order_line.quantity,

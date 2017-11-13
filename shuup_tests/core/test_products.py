@@ -15,8 +15,8 @@ from shuup.core.models import (
 )
 from shuup.testing.factories import (
     create_product, get_default_customer_group, get_default_shop,
-    get_default_shop_product,
-    get_all_seeing_key)
+    get_default_shop_product, get_default_supplier, get_all_seeing_key
+)
 from shuup_tests.core.utils import modify
 from shuup_tests.utils.fixtures import regular_user
 
@@ -90,3 +90,25 @@ def test_product_query_with_group_visibility(regular_user):
     shop_product.visibility_groups.add(regular_contact.get_default_group())
     # Multiple visibility groups for shop product shouldn't cause duplicate matches
     assert Product.objects.listed(shop=shop, customer=regular_contact).filter(pk=product.pk).count() == 1
+
+
+@pytest.mark.django_db
+def test_get_prices_children(rf, regular_user):
+    shop = get_default_shop()
+    parent = create_product("parent", shop, get_default_supplier())
+    child = create_product("child-no-shop")
+    child.link_to_parent(parent)
+
+    request = rf.get("/")
+    request.shop = shop
+    request.customer = get_person_contact(regular_user)
+
+    parent.refresh_from_db()
+    prices = parent.get_priced_children(request)
+    assert len(prices) == 0
+
+    child_with_shop = create_product("child-shop", shop, get_default_supplier(), 10)
+    child_with_shop.link_to_parent(parent)
+    parent.refresh_from_db()
+    prices = parent.get_priced_children(request)
+    assert len(prices) == 1
