@@ -11,6 +11,7 @@ import json
 
 import six
 from django.core.urlresolvers import reverse_lazy
+from django.forms import TimeInput as DjangoTimeInput
 from django.forms import HiddenInput, Select, SelectMultiple, Textarea, Widget
 from django.forms.utils import flatatt
 from django.utils.encoding import force_text
@@ -297,3 +298,7 @@ class QuickAddShippingMethodsSelect(QuickAddRelatedObjectMultiSelect):
 
 class QuickAddUserMultiSelect(QuickAddRelatedObjectMultiSelect):
     url = reverse_lazy("shuup_admin:user.new")
+
+
+class TimeInput(DjangoTimeInput):
+    input_type = "time"

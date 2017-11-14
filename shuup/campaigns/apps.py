@@ -50,6 +50,7 @@ class CampaignAppConfig(AppConfig):
         "campaign_context_condition": [
             "shuup.campaigns.admin_module.forms:ContactGroupConditionForm",
             "shuup.campaigns.admin_module.forms:ContactConditionForm",
+            "shuup.campaigns.admin_module.forms:HourConditionForm",
         ],
         "campaign_catalog_filter": [
             "shuup.campaigns.admin_module.forms:ProductTypeFilterForm",
