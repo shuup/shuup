@@ -23,7 +23,7 @@
 <div class="hide" id="{{ form_prefix }}-placeholder">
     {{ render_form(formset.empty_form, form_prefix, "__prefix__") }}
 </div>
-{%  for f in formset %}
+{% for f in formset %}
     {% set form_prefix = form_prefix + "-" + (loop.index - 1)|string %}
     {{ render_form(f, form_prefix, loop.index) }}
 {% endfor %}
