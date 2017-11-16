@@ -7,7 +7,10 @@
 from decimal import Decimal
 from numbers import Number
 
-from django.forms import DecimalField, Field, SelectMultiple
+from django.forms import (
+    DecimalField, Field, MultipleChoiceField, SelectMultiple
+)
+from django.utils.translation import ugettext_lazy as _
 
 
 class PercentageField(DecimalField):
@@ -53,3 +56,23 @@ class Select2MultipleField(Field):
         model_name = "%s.%s" % (self.model._meta.app_label, self.model._meta.model_name)
         attrs.update({"data-model": model_name})
         return attrs
+
+
+class WeekdayField(MultipleChoiceField):
+    DAYS_OF_THE_WEEK = {
+        (0, _("Monday")),
+        (1, _("Tuesday")),
+        (2, _("Wednesday")),
+        (3, _("Thursday")),
+        (4, _("Friday")),
+        (5, _("Saturday")),
+        (6, _("Sunday")),
+    }
+
+    def __init__(self, choices=(), required=True, widget=None, label=None, initial=None, help_text='', *args, **kwargs):
+        if not choices:
+            choices = self.DAYS_OF_THE_WEEK
+        super(WeekdayField, self).__init__(choices, required, widget, label, initial, help_text, *args, **kwargs)
+
+    def clean(self, value):
+        return ",".join(super(WeekdayField, self).clean(value))
