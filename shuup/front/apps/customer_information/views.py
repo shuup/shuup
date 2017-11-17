@@ -17,7 +17,8 @@ from registration.signals import user_registered
 
 from shuup import configuration
 from shuup.core.models import (
-    get_company_contact, get_person_contact, MutableAddress, SavedAddress
+    CompanyContact, get_company_contact, get_person_contact, MutableAddress,
+    SavedAddress
 )
 from shuup.front.views.dashboard import DashboardViewMixin
 from shuup.utils.form_group import FormGroup
@@ -124,11 +125,6 @@ class CompanyEditView(DashboardViewMixin, FormView):
         if shipping_address.pk != company.default_shipping_address_id:  # Identity changed due to immutability
             company.default_shipping_address = shipping_address
 
-        user.email = company.email
-        user.first_name = company.name
-        user.last_name = ""
-        user.save()
-
         message = _("Company information saved successfully.")
         # If company registration requires activation,
         # company will be created as inactive.
@@ -146,6 +142,12 @@ class CompanyEditView(DashboardViewMixin, FormView):
 
         messages.success(self.request, message)
         return redirect("shuup:company_edit")
+
+    def get_context_data(self, **kwargs):
+        context = super(CompanyEditView, self).get_context_data(**kwargs)
+        context["pending_company_approval"] = CompanyContact.objects.filter(
+            members__in=[self.request.customer], is_active=False).exists()
+        return context
 
 
 class AddressBookView(DashboardViewMixin, TemplateView):
