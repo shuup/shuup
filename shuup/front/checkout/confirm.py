@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
@@ -20,12 +21,17 @@ from shuup.front.checkout import CheckoutPhaseViewMixin
 class ConfirmForm(forms.Form):
     product_ids = forms.CharField(widget=forms.HiddenInput(), required=True)
     accept_terms = forms.BooleanField(required=True, label=_(u"I accept the terms and conditions"))
-    marketing = forms.BooleanField(required=False, label=_(u"I want to receive marketing material"), initial=True)
+    marketing = forms.BooleanField(required=False, label=_(u"I want to receive marketing material"), initial=False)
     comment = forms.CharField(widget=forms.Textarea(), required=False, label=_(u"Comment"))
 
     def __init__(self, *args, **kwargs):
         self.current_product_ids = kwargs.pop("current_product_ids", "")
         super(ConfirmForm, self).__init__(*args, **kwargs)
+
+        field_properties = settings.SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES
+        for field, properties in field_properties.items():
+            for prop in properties:
+                setattr(self.fields[field], prop, properties[prop])
 
     def clean(self):
         product_ids = set(self.cleaned_data.get('product_ids', "").split(','))

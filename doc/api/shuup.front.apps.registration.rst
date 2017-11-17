@@ -28,6 +28,14 @@ shuup.front.apps.registration.settings module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.apps.registration.signals module
+--------------------------------------------
+
+.. automodule:: shuup.front.apps.registration.signals
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.apps.registration.urls module
 -----------------------------------------
 
