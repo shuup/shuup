@@ -55,6 +55,9 @@ class Boolean(Type):
     name = _("Boolean")
     identifier = "boolean"
 
+    def get_field(self, **kwargs):
+        return forms.BooleanField(**kwargs)
+
 
 class Integer(_Number):
     name = _("Integer Number")

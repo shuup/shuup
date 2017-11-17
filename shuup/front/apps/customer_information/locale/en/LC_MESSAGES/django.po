@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-14 17:34+0000\n"
+"POT-Creation-Date: 2017-10-19 05:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -142,6 +142,10 @@ msgstr ""
 msgid "Company account information"
 msgstr ""
 
+msgid ""
+"You have already linked your account to a company and it is pending approval."
+msgstr ""
+
 msgid "User account information"
 msgstr ""
 
@@ -200,6 +204,11 @@ msgid "Account information saved successfully."
 msgstr ""
 
 msgid "Company information saved successfully."
+msgstr ""
+
+msgid ""
+"Company information saved successfully. Please follow the instructions sent "
+"to your email address."
 msgstr ""
 
 msgid "Address information saved successfully."

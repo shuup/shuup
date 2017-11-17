@@ -26,6 +26,8 @@ from shuup.core.utils import context_cache
 
 from .prices import convert_taxness
 
+PRICED_CHILDREN_CACHE_KEY = "%s-%s_priced_children"
+
 
 def render_price_property(request, item, priceful, property_name='price'):
     """
@@ -163,7 +165,6 @@ class PriceRangeDisplayFilter(_ContextFilter):
         """
         :type product: shuup.core.models.Product
         """
-
         key, val = context_cache.get_cached_value(
             identifier=self.cache_identifier, item=product, context=context.get('request', context),
             quantity=quantity, name=self.name, allow_cache=allow_cache)
@@ -177,7 +178,12 @@ class PriceRangeDisplayFilter(_ContextFilter):
             return val
 
         request = context.get('request')
-        priced_children = product.get_priced_children(request, quantity)
+        priced_children_key = PRICED_CHILDREN_CACHE_KEY % (product.id, quantity)
+        if hasattr(request, priced_children_key):
+            priced_children = getattr(request, priced_children_key)
+        else:
+            priced_children = product.get_priced_children(request, quantity)
+            setattr(request, priced_children_key, priced_children)
         priced_products = priced_children if priced_children else [
             (product, _get_priceful(request, product, quantity))]
 
@@ -209,11 +215,25 @@ def _get_priceful(request, item, quantity):
     :rtype: shuup.core.pricing.Priceful|None
     """
     if hasattr(item, 'get_price_info'):
-        if hasattr(item, 'is_variation_parent'):
-            if item.is_variation_parent():
-                return item.get_cheapest_child_price_info(request, quantity)
-        return item.get_price_info(request, quantity=quantity)
+        key_prefix = "%s-%s-" % (item.id, quantity)
+        price_key = "%s_get_priceful" % key_prefix
+        if hasattr(request, price_key):
+            return getattr(request, price_key)
+
+        if hasattr(item, 'is_variation_parent') and item.is_variation_parent():
+            priced_children_key = PRICED_CHILDREN_CACHE_KEY % (item.id, quantity)
+            priced_children = getattr(request, priced_children_key, None)
+            if priced_children is None:
+                priced_children = item.get_priced_children(request, quantity)
+                setattr(request, priced_children_key, priced_children)
+            price = (priced_children[0][1] if priced_children
+                     else item.get_cheapest_child_price_info(request, quantity))
+        else:
+            price = item.get_price_info(request, quantity=quantity)
+        setattr(request, price_key, price)
+        return price
     if hasattr(item, 'get_total_cost'):
         return item.get_total_cost(request.basket)
+
     assert isinstance(item, Priceful)
     return item

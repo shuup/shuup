@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"POT-Creation-Date: 2017-10-19 05:24+0000\n"
 "PO-Revision-Date: 2017-02-10 11:02+0000\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -157,6 +157,9 @@ msgstr "Ei"
 msgid "Company account information"
 msgstr "Yrityksen käyttäjätilin tiedot"
 
+msgid "You have already linked your account to a company and it is pending approval."
+msgstr "Olet jo liittänyt tunnuksesi yritykseen ja se odottaa hyväksyntää."
+
 msgid "User account information"
 msgstr "Käyttäjätunnuksen tiedot"
 
@@ -216,6 +219,12 @@ msgstr "Tilitiedot tallennettu."
 
 msgid "Company information saved successfully."
 msgstr "Yrityksen tiedot tallennettu onnistuneesti."
+
+msgid ""
+"Company information saved successfully. Please follow the instructions sent "
+"to your email address."
+msgstr ""
+"Yritystiedot ovat tallennettu onnistuneesti. Seuraa sähköpostiisi lähetettyjä ohjeita."
 
 msgid "Address information saved successfully."
 msgstr "Osoitetiedot tallennettu."

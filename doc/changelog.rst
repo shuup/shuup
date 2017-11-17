@@ -61,10 +61,52 @@ Customer Group Pricing
 
 - Introduce Customer Group Discounts. A discount module to configure discounts by contact group.
 
+Shuup 1.3.0
+-----------
+
+Released on 2017-11-08 12:50 +0200.
+
+Front
+~~~~~
+
+- Add SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES setting which can be used
+  to change confirm form field properties on order confirm page
+
+Shuup 1.2.2
+-----------
+
+Released on 2017-11-08 12:35 +0200.
+
+Core
+~~~~
+
+- Fix default OrderStatus identifiers and add a management command
+  ``shuup_fix_order_status_identifiers`` to fix them in the database too
+
+Shuup 1.2.1
+-----------
+
+Released on 2017-10-19 12:30 +0300.
+
+Core
+~~~~
+
+- price_display: Fix IndexError when product has no orderable children
+
+Front
+~~~~~
+
+- Add missing Finnish translations for customer information app
+
+Notify
+~~~~~~
+
+- Serialize Boolean event variable as boolean rather than text
+
 Shuup 1.2.0
 -----------
 
-Not yet released, still in beta.
+Released on 2017-10-17 15:00 +0300.
 
 Core
 ~~~~
@@ -83,9 +125,6 @@ Core
 - Make shop identifier max length to 128 characters
 - Add `staff_members` manytomanyfield for shop
 
-Localization
-~~~~~~~~~~~~
-
 Admin
 ~~~~~
 
@@ -101,9 +140,6 @@ Admin
 - Fix bug in "Select All" mass action
 - Fix bug in product choice widget
 - Display last 12 months of sales in the dashboard chart
-
-Addons
-~~~~~~
 
 Front
 ~~~~~
@@ -136,45 +172,15 @@ Xtheme
 - Fix Social Media Links plugin
 - Fix product highlight plugin best selling products
 
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
-
 Campaigns
 ~~~~~~~~~
 
 - Fix handling of non-integer quantity in FreeProductLine
 
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
-Importer
-~~~~~~~~
-
 Reporting
 ~~~~~~~~~
 
 - Extend default tax report with pre-tax amount and total
-
-Regions
-~~~~~~~
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
@@ -182,7 +188,7 @@ General/miscellaneous
 - Fix usages of non-unicode ``gettext_lazy``
 - Improve API documentation of the models with model field descriptions
 
-SHUUP 1.1.0
+Shuup 1.1.0
 -----------
 
 Addons
@@ -224,7 +230,7 @@ General/miscellaneous
 
 - Add Shuup version to static urls
 
-SHUUP 1.0.0
+Shuup 1.0.0
 -----------
 
 Core
@@ -317,7 +323,7 @@ Simple CMS
 - Add rich text editor for CMS content
 
 
-SHUUP 0.5.8
+Shuup 0.5.8
 -----------
 
 Admin
@@ -333,7 +339,7 @@ Front
 - Fix bugs in rendering address and customer forms
 - Add admin link to toolbar
 
-SHUUP 0.5.7
+Shuup 0.5.7
 -----------
 
 Admin
@@ -348,7 +354,7 @@ Admin
 - List wizard phases at home view
 
 
-SHUUP 0.5.6
+Shuup 0.5.6
 -----------
 
 Admin
@@ -357,7 +363,7 @@ Admin
 - Add drag-and-drop support for product image and file uploads
 
 
-SHUUP 0.5.5
+Shuup 0.5.5
 -----------
 
 Core
@@ -387,7 +393,7 @@ Simple Supplier
   and counts
 
 
-SHUUP 0.5.4
+Shuup 0.5.4
 -----------
 
 Core
@@ -418,7 +424,7 @@ Xtheme
 
 - Add screenshot support for stylesheets
 
-SHUUP 0.5.3
+Shuup 0.5.3
 -----------
 
 Core
@@ -483,7 +489,7 @@ Importer
 - Fix `ForeignKey` importing.
 - Add `fields_to_skip` for skipping certain items in import.
 
-SHUUP 0.5.1
+Shuup 0.5.1
 -----------
 
 Released on 2016-10-12 09:30pm -0800.
@@ -553,7 +559,7 @@ General/miscellaneous
 
 - Personal Order history: URL has now been changed from ``/orders`` to ``/order-history``
 
-SHUUP 0.5.0
+Shuup 0.5.0
 -----------
 
 Released on 2016-09-29 12:20pm -0800.
@@ -577,7 +583,7 @@ General/miscellaneous
 
 - Add support for Django 1.9.x
 
-SHUUP 0.4.7
+Shuup 0.4.7
 -----------
 
 Released on 2016-09-20 3:45pm -0800.
@@ -594,7 +600,7 @@ Front
 
 - Enhance default footer
 
-SHUUP 0.4.6.1
+Shuup 0.4.6.1
 -------------
 
 Released on 2016-09-12 3:45pm -0800.
@@ -619,7 +625,7 @@ Regions
 
 - Fix bug in regions encoding for Python 2
 
-SHUUP 0.4.6
+Shuup 0.4.6
 -----------
 
 Released on 2016-09-11 8:00pm -0800.
@@ -713,7 +719,7 @@ General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
 
-SHUUP 0.4.5
+Shuup 0.4.5
 -----------
 
 Released on 2016-09-04 3:45pm -0800.
@@ -759,7 +765,7 @@ General/miscellaneous
    - Ensure required fields if language is partially translated
 - MultiLanguageModelForm: Use Parler default as a default
 
-SHUUP 0.4.4
+Shuup 0.4.4
 -----------
 
 Released on 2016-08-28 6:40pm -0800.
@@ -838,7 +844,7 @@ General/miscellaneous
 * Fix bug in importing macro in registration app
 * Fix bug in pdf utils while fetching static resources
 
-SHUUP 0.4.3
+Shuup 0.4.3
 -----------
 
 Released on 2016-08-21 22:40pm -0800.
@@ -885,7 +891,7 @@ Campaigns
 - Campaigns affecting a product are now shown on product page in admin
 
 
-SHUUP 0.4.2
+Shuup 0.4.2
 -----------
 
 Released on 2016-08-12 03:00pm -0800.
@@ -944,7 +950,7 @@ Reporting
 - Add Sales Per Hour Report
 - Add Reporting core
 
-SHUUP 0.4.1
+Shuup 0.4.1
 -----------
 
 Released on 2016-08-02 07:30pm -0800.
