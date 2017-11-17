@@ -4,8 +4,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.core.validators import validate_comma_separated_integer_list
 from django.db import models
 from django.utils.encoding import force_text
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from polymorphic.models import PolymorphicModel
@@ -247,3 +249,23 @@ class CategoryProductsBasketCondition(BasketCondition):
     @property
     def description(self):
         return _("Limit the campaign to match the products from selected categories.")
+
+
+class HourBasketCondition(BasketCondition):
+    identifier = "hour_condition"
+    name = _("Day and hour")
+
+    hour_start = models.TimeField(verbose_name=_("hour start"))
+    hour_end = models.TimeField(verbose_name=_("hour start"))
+    days = models.CharField(max_length=255, verbose_name=_("days"), validators=[validate_comma_separated_integer_list])
+
+    def matches(self, basket, lines):
+        return ((self.hour_start.hour <= now().hour <= self.hour_end.hour) and (now().date().weekday() in self.values))
+
+    @property
+    def description(self):
+        return _("Limit the campaign to selected days.")
+
+    @property
+    def values(self):
+        return [v for v in map(int, self.days.split(","))]
