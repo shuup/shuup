@@ -35,6 +35,9 @@ TEST_STEP_ACTIONS = [
         "recipient": {
             "constant": "some.email@domain.net"
         },
+        "reply-to": {
+            "constant": "replyto.email@domain.net"
+        },
         "template_data": {
             "fi": {
                 "body": "Irrelevant body",
