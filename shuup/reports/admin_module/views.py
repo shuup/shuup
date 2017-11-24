@@ -62,5 +62,11 @@ class ReportView(FormView):
         report = form.get_report_instance()
         if not self.request.POST.get("force_download") and writer.writer_type in ("html", "pprint", "json"):
             output = writer.render_report(report, inline=True)
-            return self.render_to_response(self.get_context_data(form=form, result=output, current_report=report))
+            return self.render_to_response(self.get_context_data(form=form, result=output))
         return writer.get_response(report=report)
+
+    def get_context_data(self, **kwargs):
+        context = super(ReportView, self).get_context_data(**kwargs)
+        selected_report = self.request.GET.get("report")
+        context["current_report"] = self.report_classes[selected_report] if selected_report else None
+        return context
