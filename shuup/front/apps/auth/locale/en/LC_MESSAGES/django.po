@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-23 11:18+0000\n"
+"POT-Creation-Date: 2017-11-28 14:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -32,19 +32,7 @@ msgstr ""
 msgid "Username or email address"
 msgstr ""
 
-msgid "Username"
-msgstr ""
-
-msgid "Email"
-msgstr ""
-
-msgid "Please provide either username or email, not both."
-msgstr ""
-
-msgid "Please provide either username or email."
-msgstr ""
-
-msgid "shop"
+msgid "You are not allowed to login to this shop."
 msgstr ""
 
 msgid "Log in"

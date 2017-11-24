@@ -34,6 +34,11 @@ class LoginView(FormView):
         context[REDIRECT_FIELD_NAME] = self.request.GET.get(REDIRECT_FIELD_NAME)
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super(LoginView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
     def get_form(self, form_class=None):
         form = super(LoginView, self).get_form(form_class)
         form.fields[REDIRECT_FIELD_NAME] = forms.CharField(

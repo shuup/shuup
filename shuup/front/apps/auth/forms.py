@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
@@ -56,4 +57,9 @@ class EmailAuthenticationForm(AuthenticationForm):
                 self.error_messages['inactive'],
                 code='inactive',
             )
+        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+            if not user.is_superuser:
+                shop = self.request.shop
+                if shop not in user.contact.shops.all():
+                    raise forms.ValidationError(_("You are not allowed to login to this shop."))
         super(EmailAuthenticationForm, self).confirm_login_allowed(user)
