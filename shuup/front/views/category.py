@@ -28,6 +28,13 @@ class CategoryView(DetailView):
             shop=self.request.shop,
         )
 
+    def get_product_filters(self):
+        return {
+            "shop_products__shop": self.request.shop,
+            "variation_parent__isnull": True,
+            "shop_products__categories": self.object,
+        }
+
     def get_context_data(self, **kwargs):
         context = super(CategoryView, self).get_context_data(**kwargs)
         category = self.object
@@ -45,9 +52,7 @@ class CategoryView(DetailView):
             customer=self.request.customer,
             shop=self.request.shop
         ).filter(
-            shop_products__shop=self.request.shop,
-            variation_parent__isnull=True,
-            shop_products__categories=category
+            **self.get_product_filters()
         ).filter(get_query_filters(self.request, category, data=data))
         products = get_product_queryset(products, self.request, category, data).distinct()
 
