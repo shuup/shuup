@@ -12,6 +12,16 @@
                 {{ render_monolingual_fields(form, field_names="report") }}
                 <div{% if result %} class="collapse"{% endif %} id="collapse">
                     {{ render_monolingual_fields(form, exclude="report") }}
+                    {% if current_report and current_report.get_description() %}
+                    <div class="form-group">
+                        <div class="control-label">
+                            Report Description
+                        </div>
+                        <div style="margin-top: 10px;">
+                            {{ current_report.get_description() }}
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
                 {% if result %}
                 <div class="row">
@@ -27,7 +37,6 @@
                 {% endif %}
             </form>
         {% endcall %}
-
         {% if result %}
             <div class="content-block">{{ result }}</div>
         {% endif %}
