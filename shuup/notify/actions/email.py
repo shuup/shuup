@@ -36,6 +36,7 @@ class SendEmail(Action):
     }
 
     recipient = Binding(_("Recipient"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
+    reply_to_address = Binding(_("Reply-To"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT)
     language = Binding(_("Language"), type=Language, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
     fallback_language = Binding(
         _("Fallback language"), type=Language, constant_use=ConstantUse.CONSTANT_ONLY, default="en"
@@ -86,8 +87,11 @@ class SendEmail(Action):
             )
             return
 
+        reply_to = self.get_value(context, "reply_to_address")
+        reply_to = [reply_to] if reply_to else None  # Push email to a list, unless it is None
+
         subject = " ".join(subject.splitlines())  # Email headers may not contain newlines
-        message = EmailMessage(subject=subject, body=body, to=[recipient])
+        message = EmailMessage(subject=subject, body=body, to=[recipient], reply_to=reply_to)
         message.content_subtype = content_type
         message.send()
         context.log(logging.INFO, "%s: Mail sent to %s :)", self.identifier, recipient)
