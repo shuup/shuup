@@ -50,6 +50,11 @@ Admin
 - Only categories, orders, products, contacts, campaigns and services for the active shop are displayed in the admin
 - Menu categories without any children are hidden
 
+Front
+~~~~~
+
+- Limit reqular user login access to own specified shop only
+
 Campaigns
 ~~~~~~~~~
 
