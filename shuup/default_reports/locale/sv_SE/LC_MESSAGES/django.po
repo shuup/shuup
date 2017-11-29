@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:35+0000\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"POT-Creation-Date: 2017-11-29 08:13+0000\n"
+"PO-Revision-Date: 2017-11-29 12:18+0200\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
 "language/sv_SE/)\n"
 "Language: sv_SE\n"
@@ -155,6 +155,15 @@ msgstr "Skatter"
 
 msgid "Rate (%)"
 msgstr "Taxa (%)"
+
+msgid "Pre-tax Total"
+msgstr "Totalt före skatt"
+
+msgid "Total Tax Amount"
+msgstr "Totalt skattebelopp"
+
+msgid "Total"
+msgstr "Total"
 
 msgid "Shop Name"
 msgstr "Butiksnamn"
