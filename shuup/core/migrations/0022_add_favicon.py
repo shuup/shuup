@@ -10,7 +10,7 @@ import filer.fields.image
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('filer', '0006_auto_20160623_1627'),
+        ('filer', '0002_auto_20150606_2003'),
         ('shuup', '0021_country_limit_behavior_component'),
     ]
 

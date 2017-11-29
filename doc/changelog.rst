@@ -61,6 +61,26 @@ Customer Group Pricing
 
 - Introduce Customer Group Discounts. A discount module to configure discounts by contact group.
 
+Shuup 1.4.0
+-----------
+
+Released on 2017-11-29 13:00 +0200.
+
+Admin
+~~~~~
+
+- Picotable: Make it possible to provide custom columns
+
+Front
+~~~~~
+
+- Category View: Extract product filters to a function
+
+Notify
+~~~~~~
+
+- Allow Reply-To header for email notifications
+
 Shuup 1.3.0
 -----------
 

@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('shuup', '0009_update_tax_name_max_length'),
         ('shuup_simple_cms', '0001_initial'),
-        ('filer', '0006_auto_20160623_1627'),
+        ('filer', '0002_auto_20150606_2003'),
     ]
 
     operations = [

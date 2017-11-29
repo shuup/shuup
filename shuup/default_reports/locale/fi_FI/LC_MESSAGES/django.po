@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
-"PO-Revision-Date: 2017-02-10 10:33+0000\n"
+"POT-Creation-Date: 2017-11-29 07:50+0000\n"
+"PO-Revision-Date: 2017-11-29 10:08+0200\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
@@ -158,6 +158,15 @@ msgstr "Verot"
 
 msgid "Rate (%)"
 msgstr "Määrä (%)"
+
+msgid "Pre-tax Total"
+msgstr "Veroton kokonaishinta"
+
+msgid "Total Tax Amount"
+msgstr "Veron määrä yhteensä"
+
+msgid "Total"
+msgstr "Yhteensä"
 
 msgid "Shop Name"
 msgstr "Kaupan nimi"
