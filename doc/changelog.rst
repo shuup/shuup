@@ -9,6 +9,21 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Admin
+~~~~~
+
+- Picotable: Make it possible to provide custom columns
+
+Front
+~~~~~
+
+- Category View: Extract product filters to a function
+
+Notify
+~~~~~~
+
+- Allow Reply-To header for email notifications
+
 Shuup 1.3.0
 -----------
 
