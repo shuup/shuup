@@ -37,16 +37,15 @@ class CategorySerializer(TranslatableModelSerializer):
 
 
 class CategoryFilter(FilterSet):
-    parent = django_filters.ModelChoiceFilter(name="parent",
-                                              queryset=Category.objects.all(),
-                                              lookup_expr="exact")
-    shop = django_filters.ModelChoiceFilter(name="shops",
-                                            queryset=Shop.objects.all(),
-                                            lookup_expr="exact")
+    parent = django_filters.ModelChoiceFilter(
+        name="parent", queryset=Category.objects.all(), lookup_expr="exact")
+    shop = django_filters.ModelChoiceFilter(
+        name="shops", queryset=Shop.objects.all(), lookup_expr="exact")
+    status = django_filters.ChoiceFilter(name="status", choices=CategoryStatus.choices, lookup_expr="exact")
 
     class Meta:
         model = Category
-        fields = ["id", "parent", "shop", "identifier"]
+        fields = ["id", "parent", "shop", "identifier", "status"]
 
 
 class CategoryViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.ModelViewSet):
