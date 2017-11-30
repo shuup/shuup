@@ -73,7 +73,27 @@ def test_category_api(admin_user):
     assert category.name == data[0]["translations"]["en"]["name"]
     assert category.ordering == data[0]["ordering"]
 
+    response = client.get("/api/shuup/category/?status=%s" % CategoryStatus.VISIBLE.value)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data) == 1
+
+    response = client.get("/api/shuup/category/?status=%s" % CategoryStatus.INVISIBLE.value)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data) == 0
+
+    response = client.get("/api/shuup/category/?status=%s" % CategoryStatus.DELETED.value)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data) == 0
+
     # soft delete
     response = client.delete("/api/shuup/category/%d/" % category.id)
     assert response.status_code == status.HTTP_204_NO_CONTENT
     assert Category.objects.first().status == CategoryStatus.DELETED
+
+    response = client.get("/api/shuup/category/?status=%s" % CategoryStatus.DELETED.value)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data) == 1
