@@ -26,6 +26,7 @@ from shuup.core.models import (
 )
 from shuup.core.pricing._context import PricingContext
 from shuup.core.utils import context_cache
+from shuup.core.utils.prices import convert_taxness
 from shuup.core.utils.product_statistics import get_best_selling_product_info
 
 DISTANCE_PER_DEGREE = 111.045   # 111.045km in a latitude degree
@@ -135,6 +136,7 @@ class PricefulSerializer(serializers.Serializer):
     discount_percentage = FormattedDecimalField(required=False, coerce_to_string=False)
     taxful_price = FormattedDecimalField(source='taxful_price.value', required=False, coerce_to_string=False)
     taxless_price = FormattedDecimalField(source='taxless_price.value', required=False, coerce_to_string=False)
+    tax_amount = FormattedDecimalField(source='tax_amount.value', required=False, coerce_to_string=False)
     is_discounted = serializers.BooleanField()
 
     class Meta:
@@ -223,7 +225,8 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
 
     def _get_product_price_info(self, shop_product):
         context = self._get_pricing_context(self.context["request"], shop_product.shop)
-        return shop_product.product.get_price_info(context)
+        price_info = shop_product.product.get_price_info(context)
+        return convert_taxness(self.context["request"], shop_product.product, price_info, True)
 
     def _get_cached_product_price_info(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="shop_product_price_info",
@@ -441,7 +444,10 @@ class ShopProductOrderingFilter(filters.BaseFilterBackend):
         return queryset
 
 
-class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+class FrontShopProductViewSet(PermissionHelperMixin,
+                              mixins.RetrieveModelMixin,
+                              mixins.ListModelMixin,
+                              viewsets.GenericViewSet):
     """
     list: Lists all available shop products to be used in storefront.
     """

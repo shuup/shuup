@@ -11,13 +11,15 @@ import datetime
 import decimal
 import json
 
-from django.utils.timezone import datetime as dt
-
 import pytest
+from django.utils.timezone import datetime as dt
 from rest_framework import status
 from rest_framework.test import APIClient
+
 from shuup.core import cache
-from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
+from shuup.core.models import (
+    Currency, Order, OrderStatus, PaymentStatus, ShippingStatus
+)
 from shuup.testing.factories import (
     create_default_order_statuses, create_empty_order,
     create_order_with_product, create_product, create_random_person,
@@ -131,9 +133,13 @@ def test_get_by_status(admin_user):
     assert len(order_data) == 1
 
 
-def test_create_order(admin_user):
+@pytest.mark.parametrize("currency", ["USD", "BRL", "GBP", "USD", "IDR", "LYD"])
+def test_create_order(admin_user, currency):
     create_default_order_statuses()
     shop = get_default_shop()
+    shop.currency = currency
+    Currency.objects.create(code=currency, decimal_places=2)
+    shop.save()
     sm = get_default_shipping_method()
     pm = get_default_payment_method()
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
@@ -172,6 +178,7 @@ def test_create_order(admin_user):
     assert order.status == OrderStatus.objects.get_default_initial()
     assert order.taxful_total_price_value == decimal.Decimal(10)
     assert order.lines.count() == 6 # shipping line, payment line, 2 product lines, 2 other lines
+    assert order.currency == currency
     for idx, line in enumerate(order.lines.all()[:4]):
         assert line.quantity == decimal.Decimal(lines[idx].get("quantity"))
         assert line.base_unit_price_value == decimal.Decimal(lines[idx].get("base_unit_price_value", 0))

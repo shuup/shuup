@@ -24,6 +24,12 @@ class TaxLineSerializerMixin(serializers.Serializer):
     taxful_discount_amount = FormattedDecimalField()
     taxful_price = FormattedDecimalField()
     taxful_discounted_unit_price = FormattedDecimalField()
+
+    taxless_base_unit_price = FormattedDecimalField()
+    taxless_discount_amount = FormattedDecimalField()
+    taxless_price = FormattedDecimalField()
+    taxless_discounted_unit_price = FormattedDecimalField()
+
     tax_amount = FormattedDecimalField()
 
 

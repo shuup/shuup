@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import json
 from decimal import Decimal
 
+import babel
 import pytest
 import six
 from django.contrib.auth.models import User
@@ -21,16 +22,22 @@ from rest_framework.test import APIClient
 from shuup import configuration
 from shuup.core import cache
 from shuup.core.models import (
-    Basket, get_person_contact, Order, OrderStatus, PaymentStatus, Product,
-    ProductMedia, ProductMediaKind, ProductVariationVariable, ShippingStatus,
-    Shop, ShopProduct, ShopProductVisibility, ShopStatus
+    Basket, CustomerTaxGroup, get_person_contact, Order, OrderStatus,
+    PaymentStatus, Product, ProductMedia, ProductMediaKind,
+    ProductVariationVariable, ShippingStatus, Shop, ShopProduct,
+    ShopProductVisibility, ShopStatus, Tax, TaxClass, Currency
 )
 from shuup.core.pricing import TaxfulPrice
+from shuup.default_tax.models import TaxRule
+from shuup.default_tax.module import DefaultTaxModule
 from shuup.testing import factories
 from shuup.testing.factories import (
     create_product, create_random_order, get_default_currency,
     get_default_product, get_default_supplier, get_random_filer_image,
-    UserFactory)
+    UserFactory
+)
+from shuup.utils.i18n import get_current_babel_locale
+from shuup.utils.money import Money
 from shuup_tests.campaigns.test_discount_codes import (
     Coupon, get_default_campaign
 )
@@ -1113,7 +1120,6 @@ def test_anonymous_basket():
         assert response.status_code == status.HTTP_200_OK
 
 
-
 @pytest.mark.django_db
 def test_add_product_to_basket_with_custom_shop_product_fields(admin_user):
     with override_settings(**REQUIRED_SETTINGS):
@@ -1420,3 +1426,70 @@ def test_basket_reorder_staff_user():
         response = client.post('/api/shuup/basket/{}-{}/add_from_order/'.format(shop.pk, basket.key), data={"order": order.pk}, format="json")
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert 'invalid order' in response.content.decode("utf-8")
+
+
+@pytest.mark.parametrize("prices_include_tax, tax_rate, product_price, expected_taxful_price, expected_taxless_price", [
+    (True, 0, 50, 50, 50),
+    (False, 0, 50, 50, 50),
+    (True, 0.1, 100, 100, 90.91),
+    (False, 0.1, 100, 110, 100)
+])
+@pytest.mark.django_db
+def test_basket_taxes(admin_user, prices_include_tax, tax_rate, product_price, expected_taxful_price, expected_taxless_price):
+    with override_settings(**REQUIRED_SETTINGS):
+        set_configuration()
+        shop = factories.get_shop(prices_include_tax, enabled=True)
+        factories.get_payment_method(shop)
+        factories.get_shipping_method(shop)
+        product = factories.create_product("product", shop, factories.get_default_supplier(), product_price)
+        shop_product = product.shop_products.filter(shop=shop).first()
+        client = _get_client(admin_user)
+
+        tax = factories.get_default_tax()
+        tax.rate = Decimal(tax_rate)
+        tax.save()
+
+        response = client.post("/api/shuup/basket/new/", {"shop": shop.pk}, format="json")
+        assert response.status_code == status.HTTP_201_CREATED
+        basket_key = response.data['uuid']
+
+        response = client.post('/api/shuup/basket/%s/add/' % basket_key, {'shop_product': shop_product.id}, format="json")
+        assert response.status_code == status.HTTP_200_OK
+
+        precision = Decimal("0.01")
+        data = response.data
+        assert len(data["items"]) == 1
+        assert data["items"][0]["shop_product"] == shop_product.pk
+        assert not data["validation_errors"]
+        assert Decimal(data["items"][0]["quantity"]) == Decimal(1)
+        assert Decimal(data["items"][0]["taxful_price"]).quantize(precision) == Decimal(expected_taxful_price).quantize(precision)
+        assert Decimal(data["items"][0]["taxless_price"]).quantize(precision) == Decimal(expected_taxless_price).quantize(precision)
+        assert Decimal(data["taxful_total_price"]).quantize(precision) == Decimal(expected_taxful_price).quantize(precision)
+        assert Decimal(data["taxless_total_price"]).quantize(precision) == Decimal(expected_taxless_price).quantize(precision)
+
+
+@pytest.mark.parametrize("currency, currency_decimals", [
+    ("USD", 2),
+    ("BRL", 2),
+    ("GBP", 2),
+    ("USD", 2),
+    ("IDR", 0),
+    ("LYD", 3)
+])
+@pytest.mark.django_db
+def test_basket_taxes(admin_user, currency, currency_decimals):
+    with override_settings(**REQUIRED_SETTINGS):
+        set_configuration()
+        shop = factories.get_shop(enabled=True, currency=currency)
+        factories.get_payment_method(shop)
+        factories.get_shipping_method(shop)
+        client = _get_client(admin_user)
+
+        Currency.objects.update_or_create(code=currency, defaults={"decimal_places": currency_decimals})
+
+        response = client.post("/api/shuup/basket/new/", {"shop": shop.pk}, format="json")
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.data
+        assert shop.currency == data["currency"]["code"]
+        assert data["currency"]["symbol"] == babel.numbers.get_currency_symbol(shop.currency, get_current_babel_locale())
+        assert data["currency"]["decimal_places"] == currency_decimals

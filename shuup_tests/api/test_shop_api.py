@@ -10,33 +10,45 @@ from __future__ import unicode_literals
 import json
 import math
 
+import babel
+import pytest
 from django.utils.translation import activate
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
-from shuup.core.models import MutableAddress, Shop, ShopStatus
+from shuup.core.models import Currency, MutableAddress, Shop, ShopStatus
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
     get_default_shop, get_default_supplier
 )
+from shuup.utils.i18n import get_current_babel_locale
 
 
 def setup_function(fn):
     cache.clear()
 
 
-def test_shop_api(admin_user):
+@pytest.mark.parametrize("currency, currency_decimals", [
+    ("USD", 2),
+    ("BRL", 2),
+    ("GBP", 2),
+    ("USD", 2),
+    ("IDR", 0),
+    ("LYD", 3)
+])
+def test_shop_api(admin_user, currency, currency_decimals):
     activate("en")
     default_shop = get_default_shop()
     client = APIClient()
     client.force_authenticate(user=admin_user)
+    Currency.objects.create(code=currency, decimal_places=currency_decimals)
 
     shop_data = {
         "domain": "shuup.com",
         "status": ShopStatus.ENABLED.value,
         "owner": create_random_person().pk,
-        "currency": "USD",
+        "currency": currency,
         "prices_include_tax": True,
         "maintenance_mode": False,
         "translations":{
@@ -74,7 +86,9 @@ def test_shop_api(admin_user):
     assert shop.domain == data["domain"]
     assert shop.status.value == data["status"]
     assert shop.owner.pk == data["owner"]
-    assert shop.currency == data["currency"]
+    assert shop.currency == data["currency"]["code"]
+    assert data["currency"]["symbol"] == babel.numbers.get_currency_symbol(shop.currency, get_current_babel_locale())
+    assert data["currency"]["decimal_places"] == currency_decimals
     assert shop.maintenance_mode == data["maintenance_mode"]
     assert shop.prices_include_tax == data["prices_include_tax"]
     assert shop.name == data["translations"]["en"]["name"]
