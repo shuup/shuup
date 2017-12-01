@@ -71,7 +71,7 @@ class ProductParentBaseView(FormPartsViewMixin, UpdateView):
         return [
             MenuEntry(
                 text=self.object,
-                url=get_model_url(self.object)
+                url=get_model_url(self.object, shop=self.request.shop)
             )
         ]
 

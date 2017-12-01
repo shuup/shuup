@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"POT-Creation-Date: 2017-11-28 14:02+0000\n"
 "PO-Revision-Date: 2017-02-10 07:38+0000\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -49,20 +49,8 @@ msgstr "Tämä tili ei ole aktiivinen"
 msgid "Username or email address"
 msgstr "Käyttäjänimi tai sähköpostiosoite"
 
-msgid "Username"
-msgstr "Käyttäjänimi"
-
-msgid "Email"
-msgstr "Sähköposti"
-
-msgid "Please provide either username or email, not both."
-msgstr "Syötäthän joko käyttäjätunnuksen tai sähköpostin, ei molempia."
-
-msgid "Please provide either username or email."
-msgstr "Syötäthän joko käyttäjätunnuksen tai sähköpostin"
-
-msgid "shop"
-msgstr "kauppa"
+msgid "You are not allowed to login to this shop."
+msgstr "Sinulla ei ole oikeutta kirjautua sisään tähän kauppaan."
 
 msgid "Log in"
 msgstr "Kirjaudu sisään"

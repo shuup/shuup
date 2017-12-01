@@ -71,7 +71,7 @@ class ProductCrossSellEditView(UpdateView):
         return [
             MenuEntry(
                 text="%s" % self.object,
-                url=get_model_url(self.object)
+                url=get_model_url(self.object, shop=self.request.shop)
             )
         ]
 
