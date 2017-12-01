@@ -23,7 +23,7 @@ class ProductDeleteView(DetailView):
     context_object_name = "product"
 
     def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect(get_model_url(self.get_object()))
+        return HttpResponseRedirect(get_model_url(self.get_object(), shop=self.request.shop))
 
     def post(self, request, *args, **kwargs):
         product = self.get_object()
