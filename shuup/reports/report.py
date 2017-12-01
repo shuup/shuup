@@ -22,6 +22,10 @@ from shuup.reports.utils import parse_date_range
 
 
 class ShuupReportBase(object):
+    title = ""
+    description = ""
+    identifier = ""
+
     filename_template = None
     icon = "fa-money"
 
@@ -52,6 +56,10 @@ class ShuupReportBase(object):
     @classmethod
     def get_title(cls):
         return force_text(cls.title)
+
+    @classmethod
+    def get_description(cls):
+        return force_text(cls.description)
 
     def ensure_texts(self):
         """
