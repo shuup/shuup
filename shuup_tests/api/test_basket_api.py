@@ -15,29 +15,26 @@ import pytest
 import six
 from django.contrib.auth.models import User
 from django.test import override_settings
-from pytest_django.fixtures import django_user_model, django_username_field
+from pytest_django.fixtures import (
+    django_user_model, django_username_field
+)
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup import configuration
 from shuup.core import cache
 from shuup.core.models import (
-    Basket, CustomerTaxGroup, get_person_contact, Order, OrderStatus,
-    PaymentStatus, Product, ProductMedia, ProductMediaKind,
-    ProductVariationVariable, ShippingStatus, Shop, ShopProduct,
-    ShopProductVisibility, ShopStatus, Tax, TaxClass, Currency
+    Basket, Currency, get_person_contact, Product,
+    ProductMedia, ProductMediaKind, Shop, ShopProduct,
+    ShopProductVisibility, ShopStatus
 )
 from shuup.core.pricing import TaxfulPrice
-from shuup.default_tax.models import TaxRule
-from shuup.default_tax.module import DefaultTaxModule
 from shuup.testing import factories
 from shuup.testing.factories import (
-    create_product, create_random_order, get_default_currency,
-    get_default_product, get_default_supplier, get_random_filer_image,
-    UserFactory
+    create_product, get_default_currency, get_default_supplier,
+    get_random_filer_image
 )
 from shuup.utils.i18n import get_current_babel_locale
-from shuup.utils.money import Money
 from shuup_tests.campaigns.test_discount_codes import (
     Coupon, get_default_campaign
 )
@@ -122,6 +119,9 @@ def test_create_new_basket(admin_user):
         basket = Basket.objects.first()
         assert basket.key == basket_data['uuid'].split("-")[1]
         assert basket.shop == shop2
+        admin_contact = get_person_contact(admin_user)
+        assert basket.customer == admin_contact
+        assert basket.orderer == admin_contact
         assert basket.creator == admin_user
 
         # invalid shop
@@ -142,18 +142,9 @@ def test_create_new_basket(admin_user):
             basket = Basket.objects.all()[1]
             assert basket.key == basket_data['uuid'].split("-")[1]
             assert basket.shop == shop
+            assert basket.customer == admin_contact
+            assert basket.orderer == admin_contact
             assert basket.creator == admin_user
-
-            person = factories.create_random_person()
-
-            response = client.post("/api/shuup/basket/new/?customer_id={}".format(person.pk), data={"customer_id": person.pk})
-            assert response.status_code == status.HTTP_201_CREATED
-            basket_data = json.loads(response.content.decode("utf-8"))
-            basket = Basket.objects.all()[2]
-            assert basket.key == basket_data['uuid'].split("-")[1]
-            assert basket.shop == shop
-            assert basket.creator == admin_user
-            assert basket.customer.pk == person.pk
 
 
 @pytest.mark.django_db
@@ -766,120 +757,66 @@ def test_multiple_coupons_work_properly(admin_user):
         assert len(basket_data["codes"]) == 2
 
 
-@pytest.mark.parametrize("target_customer", ["admin", "other"])
-@pytest.mark.django_db
-def test_create_order(admin_user, target_customer):
-    with override_settings(**REQUIRED_SETTINGS):
-        set_configuration()
-        shop = factories.get_default_shop()
-        basket = factories.get_basket()
-        factories.create_default_order_statuses()
-        shop_product = factories.get_default_shop_product()
-        shop_product.default_price = TaxfulPrice(1, shop.currency)
-        shop_product.save()
-        client = _get_client(admin_user)
-        # add shop product
-        payload = {
-            'shop_product': shop_product.id
-        }
-
-        if target_customer == "other":
-            target = factories.create_random_person()
-            payload["customer_id"] = target.pk
-        else:
-            target = get_person_contact(admin_user)
-
-
-        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
-        assert response.status_code == status.HTTP_200_OK
-
-        response_data = json.loads(response.content.decode("utf-8"))
-        assert len(response_data["items"]) == 1
-        response = client.post('/api/shuup/basket/{}-{}/create_order/'.format(shop.pk, basket.key), payload)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        response_data = json.loads(response.content.decode("utf-8"))
-        assert "errors" in response_data
-
-        factories.get_default_payment_method()
-        factories.get_default_shipping_method()
-        response = client.post('/api/shuup/basket/{}-{}/create_order/'.format(shop.pk, basket.key), payload)
-        assert response.status_code == status.HTTP_201_CREATED
-        response_data = json.loads(response.content.decode("utf-8"))
-        basket.refresh_from_db()
-        assert basket.finished
-        order = Order.objects.get(reference_number=response_data["reference_number"])
-        assert order.status == OrderStatus.objects.get_default_initial()
-        assert order.payment_status == PaymentStatus.NOT_PAID
-        assert order.shipping_status == ShippingStatus.NOT_SHIPPED
-        assert not order.payment_method
-        assert not order.shipping_method
-        assert float(order.taxful_total_price_value) == 1
-        assert order.customer == target
-        assert order.orderer == get_person_contact(admin_user)
-        assert order.creator == admin_user
-        assert not order.billing_address
-        assert not order.shipping_address
-
-
 @pytest.mark.django_db
 def test_set_shipping_address(admin_user):
-    shop = factories.get_default_shop()
-    basket = factories.get_basket()
-    factories.get_default_payment_method()
-    factories.get_default_shipping_method()
-    client = _get_client(admin_user)
-    addr1 = factories.get_address()
-    addr1.save()
+    with override_settings(**REQUIRED_SETTINGS):
+        shop = factories.get_default_shop()
+        basket = factories.get_basket()
+        factories.get_default_payment_method()
+        factories.get_default_shipping_method()
+        client = _get_client(admin_user)
+        addr1 = factories.get_address()
+        addr1.save()
 
-    # use existing address
-    payload = {
-        'id': addr1.id
-    }
-    response = client.post('/api/shuup/basket/{}-{}/set_shipping_address/'.format(shop.pk, basket.key), payload)
-    assert response.status_code == status.HTTP_200_OK
-    response_data = json.loads(response.content.decode("utf-8"))
-    shipping_addr = response_data["shipping_address"]
-    assert shipping_addr["id"] == addr1.id
-    assert shipping_addr["prefix"] == addr1.prefix
-    assert shipping_addr["name"] == addr1.name
-    assert shipping_addr["postal_code"] == addr1.postal_code
-    assert shipping_addr["street"] == addr1.street
-    assert shipping_addr["city"] == addr1.city
-    assert shipping_addr["country"] == addr1.country
+        # use existing address
+        payload = {
+            'id': addr1.id
+        }
+        response = client.post('/api/shuup/basket/{}-{}/set_shipping_address/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        shipping_addr = response_data["shipping_address"]
+        assert shipping_addr["id"] == addr1.id
+        assert shipping_addr["prefix"] == addr1.prefix
+        assert shipping_addr["name"] == addr1.name
+        assert shipping_addr["postal_code"] == addr1.postal_code
+        assert shipping_addr["street"] == addr1.street
+        assert shipping_addr["city"] == addr1.city
+        assert shipping_addr["country"] == addr1.country
 
-    # create a new address
-    address_data = {
-        'name': 'name',
-        'prefix': 'prefix',
-        'postal_code': 'postal_code',
-        'street': 'street',
-        'city': 'city',
-        'country': 'BR'
-    }
-    response = client.post('/api/shuup/basket/{}-{}/set_shipping_address/'.format(shop.pk, basket.key), address_data)
-    assert response.status_code == status.HTTP_200_OK
-    response_data = json.loads(response.content.decode("utf-8"))
-    shipping_addr = response_data["shipping_address"]
-    assert shipping_addr["id"] == addr1.id+1
-    assert shipping_addr["prefix"] == address_data["prefix"]
-    assert shipping_addr["name"] == address_data["name"]
-    assert shipping_addr["postal_code"] == address_data["postal_code"]
-    assert shipping_addr["street"] == address_data["street"]
-    assert shipping_addr["city"] == address_data["city"]
-    assert shipping_addr["country"] == address_data["country"]
+        # create a new address
+        address_data = {
+            'name': 'name',
+            'prefix': 'prefix',
+            'postal_code': 'postal_code',
+            'street': 'street',
+            'city': 'city',
+            'country': 'BR'
+        }
+        response = client.post('/api/shuup/basket/{}-{}/set_shipping_address/'.format(shop.pk, basket.key), address_data)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        shipping_addr = response_data["shipping_address"]
+        assert shipping_addr["id"] == addr1.id+1
+        assert shipping_addr["prefix"] == address_data["prefix"]
+        assert shipping_addr["name"] == address_data["name"]
+        assert shipping_addr["postal_code"] == address_data["postal_code"]
+        assert shipping_addr["street"] == address_data["street"]
+        assert shipping_addr["city"] == address_data["city"]
+        assert shipping_addr["country"] == address_data["country"]
 
-    # get the basket and check the address
-    response = client.get('/api/shuup/basket/{}-{}/'.format(shop.pk, basket.key))
-    assert response.status_code == status.HTTP_200_OK
-    response_data = json.loads(response.content.decode("utf-8"))
-    shipping_addr = response_data["shipping_address"]
-    assert shipping_addr["id"] == addr1.id+1
-    assert shipping_addr["prefix"] == address_data["prefix"]
-    assert shipping_addr["name"] == address_data["name"]
-    assert shipping_addr["postal_code"] == address_data["postal_code"]
-    assert shipping_addr["street"] == address_data["street"]
-    assert shipping_addr["city"] == address_data["city"]
-    assert shipping_addr["country"] == address_data["country"]
+        # get the basket and check the address
+        response = client.get('/api/shuup/basket/{}-{}/'.format(shop.pk, basket.key))
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+        shipping_addr = response_data["shipping_address"]
+        assert shipping_addr["id"] == addr1.id+1
+        assert shipping_addr["prefix"] == address_data["prefix"]
+        assert shipping_addr["name"] == address_data["name"]
+        assert shipping_addr["postal_code"] == address_data["postal_code"]
+        assert shipping_addr["street"] == address_data["street"]
+        assert shipping_addr["city"] == address_data["city"]
+        assert shipping_addr["country"] == address_data["country"]
 
 
 def _get_client(admin_user):
@@ -1283,149 +1220,6 @@ def test_basket_with_methods(admin_user):
             response_data = json.loads(response.content.decode("utf-8"))
             assert response_data.get("payment_method") is None
             assert response_data.get("shipping_method") is None
-
-
-@pytest.mark.django_db
-def test_basket_with_staff_user():
-    with override_settings(**REQUIRED_SETTINGS):
-        set_configuration()
-        shop = factories.get_default_shop()
-        staff_user = User.objects.create(username="staff", is_staff=True)
-
-        client = _get_client(staff_user)
-        person = factories.create_random_person()
-        response = client.post(
-            "/api/shuup/basket/new/?customer_id={}".format(person.pk),
-            data={"shop": shop.pk, "customer_id": person.pk})
-        # Only stuff linked to shop can create baskets for someone else
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-
-        # Can still add personal baskets
-        staff_person = get_person_contact(staff_user)
-        response = client.post(
-            "/api/shuup/basket/new/?customer_id={}".format(staff_person.pk),
-            data={"shop": shop.pk, "customer_id": staff_person.pk})
-        assert response.status_code == status.HTTP_201_CREATED
-        basket_data = json.loads(response.content.decode("utf-8"))
-        basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
-        assert basket.shop == shop
-        assert basket.creator == staff_user
-        assert basket.customer.pk == staff_person.pk
-        response = client.get("/api/shuup/basket/{}/".format(basket_data["uuid"]))
-        assert response.status_code == 200
-
-        basket_uuid = basket_data["uuid"]
-        assert basket_data['customer']['id'] == staff_person.pk
-        assert basket_data['customer']['user'] == staff_user.pk
-
-        # retrieve the basket
-        response = client.get("/api/shuup/basket/{}/".format(basket_uuid))
-        basket_data = json.loads(response.content.decode("utf-8"))
-        assert basket_data['customer']['id'] == staff_person.pk
-        assert basket_data['customer']['user'] == staff_user.pk
-
-        # Ok let's link the staff member to the shop and
-        # the basket create for random person should work
-        shop.staff_members.add(staff_user)
-        response = client.post(
-            "/api/shuup/basket/new/?customer_id={}".format(person.pk),
-            data={"shop": shop.pk, "customer_id": person.pk})
-        assert response.status_code == status.HTTP_201_CREATED
-        basket_data = json.loads(response.content.decode("utf-8"))
-        basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
-        assert basket.shop == shop
-        assert basket.creator == staff_user
-        assert basket.customer.pk == person.pk
-        response = client.get("/api/shuup/basket/{}/".format(basket_data["uuid"]))
-        assert response.status_code == 200
-
-        basket_uuid = basket_data["uuid"]
-        assert basket_data['customer']['id'] == person.pk
-        assert basket_data['customer']['user'] is None
-
-        # retrieve the basket
-        response = client.get("/api/shuup/basket/{}/".format(basket_uuid))
-        basket_data = json.loads(response.content.decode("utf-8"))
-        assert basket_data['customer']['id'] == person.pk
-        assert basket_data['customer']['user'] is None
-
-
-@pytest.mark.django_db
-def test_basket_reorder_staff_user():
-    with override_settings(**REQUIRED_SETTINGS):
-        set_configuration()
-        shop = factories.get_default_shop()
-        factories.get_default_payment_method()
-        factories.get_default_shipping_method()
-        staff_user = User.objects.create(username="staff", is_staff=True)
-
-        client = _get_client(staff_user)
-        person = factories.create_random_person()
-
-        # create an order for the person
-        product = create_product("product", shop=shop, supplier=get_default_supplier(), default_price='12.4')
-        order = create_random_order(customer=person, products=[product], completion_probability=1, shop=shop)
-
-        # create the basket
-        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer_id": person.pk}, format="json")
-        # Only stuff linked to shop can create baskets for someone else
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-
-        # Can still add personal baskets
-        staff_person = get_person_contact(staff_user)
-        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer_id": staff_person.pk}, format="json")
-        assert response.status_code == status.HTTP_201_CREATED
-        basket_data = json.loads(response.content.decode("utf-8"))
-        basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
-        assert basket.shop == shop
-        assert basket.creator == staff_user
-        assert basket.customer.pk == staff_person.pk
-        response = client.get("/api/shuup/basket/{}/".format(basket_data["uuid"]))
-        assert response.status_code == 200
-
-        # Ok let's link the staff member to the shop and
-        # the basket create for random person should work
-        shop.staff_members.add(staff_user)
-        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer_id": person.pk}, format="json")
-        assert response.status_code == status.HTTP_201_CREATED
-        basket_data = json.loads(response.content.decode("utf-8"))
-        basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
-        assert basket.shop == shop
-        assert basket.creator == staff_user
-        assert basket.customer.pk == person.pk
-        response = client.get("/api/shuup/basket/{}/".format(basket_data["uuid"]))
-        assert response.status_code == 200
-
-        # add contents to the basket from a customer order
-        response = client.post('/api/shuup/basket/{}-{}/add_from_order/'.format(shop.pk, basket.key), data={"order": order.pk}, format="json")
-        assert response.status_code == status.HTTP_200_OK
-        basket_data = json.loads(response.content.decode("utf-8"))
-        assert len(basket_data['items']) > 0
-        assert Decimal(basket_data['taxful_total_price']) == order.taxful_total_price_value
-
-        # finally create the order
-        response = client.post('/api/shuup/basket/{}-{}/create_order/'.format(shop.pk, basket.key))
-        assert response.status_code == status.HTTP_201_CREATED
-        response_data = json.loads(response.content.decode("utf-8"))
-        created_order = Order.objects.get(id=response_data['id'])
-        assert created_order.customer == person
-        assert created_order.creator == staff_user
-
-        # create a second customer
-        person2 = factories.create_random_person()
-        # create a basket for customer 2 and try to fill with contents of customer 1 order - it should not be possible
-        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer_id": person2.pk}, format="json")
-        assert response.status_code == status.HTTP_201_CREATED
-        basket_data = json.loads(response.content.decode("utf-8"))
-        basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
-        assert basket.shop == shop
-        assert basket.creator == staff_user
-        assert basket.customer.pk == person2.pk
-
-        # add contents to the basket from customer 1 order - error
-        response = client.post('/api/shuup/basket/{}-{}/add_from_order/'.format(shop.pk, basket.key), data={"order": order.pk}, format="json")
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert 'invalid order' in response.content.decode("utf-8")
 
 
 @pytest.mark.parametrize("prices_include_tax, tax_rate, product_price, expected_taxful_price, expected_taxless_price", [
