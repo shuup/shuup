@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-30 01:08+0000\n"
+"POT-Creation-Date: 2017-12-06 23:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,6 +72,10 @@ msgid "discount percentage"
 msgstr ""
 
 msgid "The discount percentage for this campaign."
+msgstr ""
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr ""
 
 msgid "Only amount or percentage can be set."
@@ -242,6 +246,29 @@ msgid ""
 msgstr ""
 
 msgid "Limit the campaign to match the products from selected categories."
+msgstr ""
+
+msgid "Day and hour"
+msgstr ""
+
+msgid "start time"
+msgstr ""
+
+msgid "12pm is considered noon and 12am as midnight."
+msgstr ""
+
+msgid "end time"
+msgstr ""
+
+msgid ""
+"12pm is considered noon and 12am as midnight. End time is not considered "
+"match."
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "Limit the campaign to selected days."
 msgstr ""
 
 msgid "campaign"

@@ -19,7 +19,7 @@ from shuup.campaigns.models.catalog_filters import (
     CategoryFilter, ProductFilter, ProductTypeFilter
 )
 from shuup.campaigns.models.context_conditions import (
-    ContactGroupCondition, HourCondition
+    ContactGroupCondition
 )
 from shuup.campaigns.models.product_effects import (
     ProductDiscountAmount, ProductDiscountPercentage
@@ -526,84 +526,3 @@ def test_product_catalog_campaigns3():
     type_filter.products.add(product)
     campaign.filters.add(type_filter)
     assert CatalogCampaign.get_for_product(shop_product).count() == 1
-
-
-@pytest.mark.django_db
-def test_hourly_campaigns(rf):
-    activate("en")
-    request, shop, group = initialize_test(rf, False)
-    cat = Category.objects.create(name="test")
-    hour_start = (now() - datetime.timedelta(hours=2)).time()
-    hour_end = (now() + datetime.timedelta(hours=2)).time()
-
-    w_today = now().date().weekday()
-    w_tomorrow = (now() + datetime.timedelta(days=1)).date().weekday()
-    w_future = (now() + datetime.timedelta(days=2)).date().weekday()
-    matching_days = ",".join(map(str,[w_today]))
-    non_matching_days = ",".join(map(str, [w_tomorrow, w_future]))
-
-    hour_condition = HourCondition.objects.create(hour_start=hour_start, hour_end=hour_end, days=matching_days)
-    assert hour_condition.matches(None)
-
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
-    campaign.conditions.add(hour_condition)
-    campaign.save()
-
-    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=20)
-
-    price = shop.create_price
-
-    default_price = 199
-    product = create_product("Just-A-Product-Too", shop, default_price=default_price)
-    assert product.get_price_info(request, quantity=2).price == price(179) * 2
-
-    # days change
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
-
-    # time in future
-    hour_condition.hour_start = (now() + datetime.timedelta(hours=2)).time()
-    hour_condition.hour_end = (now() + datetime.timedelta(hours=4)).time()
-
-    hour_condition.days = matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
-
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
-
-
-    # time in past
-    hour_condition.hour_start = (now() - datetime.timedelta(hours=3)).time()
-    hour_condition.hour_end = (now() - datetime.timedelta(hours=2)).time()
-    hour_condition.days = matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
-
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
-
-    # time in future and
-    hour_condition.hour_start = (now() + datetime.timedelta(hours=2)).time()
-    hour_condition.hour_end = (now() + datetime.timedelta(hours=4)).time()
-    hour_condition.days = matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
-
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
-
-    # time in past
-    hour_condition.hour_start = (now() - datetime.timedelta(hours=3)).time()
-    hour_condition.hour_end = (now() - datetime.timedelta(hours=2)).time()
-    hour_condition.days = matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
-
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None)
