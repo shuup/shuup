@@ -13,7 +13,9 @@ from rest_framework import mixins, serializers, viewsets
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.address import AddressSerializer
 from shuup.core.api.orders import OrderFilter
-from shuup.core.models import get_person_contact, Order, OrderLine, Shop
+from shuup.core.models import (
+    Currency, get_person_contact, Order, OrderLine, Shop
+)
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 
 from .mixins import (
@@ -21,6 +23,7 @@ from .mixins import (
     TaxLineSerializerMixin
 )
 from .orders import PaymentSerializer
+from .shop import CurrencySerializer
 
 
 def filter_products_lines(line):
@@ -113,7 +116,17 @@ class OrderSumTotalSerializerMixin(serializers.Serializer):
         return Decimal(sum_order_lines_price(order, "price", filter_products_lines))
 
 
-class OrderSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializerMixin, serializers.ModelSerializer):
+class BaseOrderSerializer(serializers.Serializer):
+    currency = serializers.SerializerMethodField()
+
+    def get_currency(self, order):
+        return CurrencySerializer(Currency.objects.get(code=order.currency), context=self.context).data
+
+
+class OrderSerializer(BaseOrderTotalSerializerMixin,
+                      OrderSumTotalSerializerMixin,
+                      BaseOrderSerializer,
+                      serializers.ModelSerializer):
     shop = ShopSerializer()
     payments = PaymentSerializer(many=True)
 
@@ -122,7 +135,10 @@ class OrderSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializerMixi
         fields = "__all__"
 
 
-class OrderDetailSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializerMixin, serializers.ModelSerializer):
+class OrderDetailSerializer(BaseOrderTotalSerializerMixin,
+                            OrderSumTotalSerializerMixin,
+                            BaseOrderSerializer,
+                            serializers.ModelSerializer):
     lines = OrderLineSerializer(many=True)
     payments = PaymentSerializer(many=True)
 

@@ -868,10 +868,11 @@ def get_all_seeing_key(user_or_contact):
     return "is_all_seeing:%d" % user.pk
 
 
-def get_basket():
+def get_basket(shop=None):
+    shop = (shop or get_default_shop())
     return Basket.objects.create(
         key=uuid.uuid1().hex,
-        shop=get_default_shop(),
-        prices_include_tax=True,
-        currency=get_default_shop().currency
+        shop=shop,
+        prices_include_tax=shop.prices_include_tax,
+        currency=shop.currency
     )

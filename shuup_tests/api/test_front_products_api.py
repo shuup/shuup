@@ -32,7 +32,9 @@ from shuup.core.models import (
     ProductVisibility, Shop, ShopProduct, ShopProductVisibility, ShopStatus,
     Supplier
 )
+from shuup.utils.money import Money
 from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
+from shuup.testing import factories
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_package_product,
     create_product, create_random_contact_group, create_random_person,
@@ -669,9 +671,12 @@ def add_product_image(product):
     product.save()
 
 
-@pytest.mark.parametrize("prices_include_tax", [True, False])
+@pytest.mark.parametrize("prices_include_tax, product_price, discount, tax_rate, taxful_price, taxless_price", [
+    (True, 200.0, 15.0, 0.1, 185.0, 168.18),
+    (False, 200.0, 15.0, 0.1, 203.5, 185.0)
+])
 @pytest.mark.django_db
-def test_product_price_info(admin_user, prices_include_tax):
+def test_product_price_info(admin_user, prices_include_tax, product_price, discount, tax_rate, taxful_price, taxless_price):
     shop = get_default_shop()
     shop.prices_include_tax = prices_include_tax
     shop.save()
@@ -682,28 +687,42 @@ def test_product_price_info(admin_user, prices_include_tax):
     customer.groups.add(group)
     customer.save()
 
-    PRICE = 200.0
-    DISCOUNT = 15.0
+    tax = factories.get_default_tax()
+    tax.rate = Decimal(tax_rate)
+    tax.save()
 
-    product = create_product("Just-A-Product", shop, default_price=PRICE)
-    CgpDiscount.objects.create(product=product, shop=shop, group=group, discount_amount_value=DISCOUNT)
+    product = create_product("Just-A-Product", shop, default_price=product_price)
+    CgpDiscount.objects.create(product=product, shop=shop, group=group, discount_amount_value=discount)
 
     client = _get_client(admin_user)
-    response = client.get("/api/shuup/front/shop_products/")
-    products_data = json.loads(response.content.decode("utf-8"))
+    response = client.get("/api/shuup/front/shop_products/", format="json")
+    data = response.data[0]
 
-    assert products_data[0]["price"] == (PRICE-DISCOUNT)
-    assert products_data[0]["price_info"]['base_price'] == PRICE
-    assert products_data[0]["price_info"]['price'] == (PRICE-DISCOUNT)
-    assert products_data[0]["price_info"]['discount_amount'] == DISCOUNT
-    assert products_data[0]["price_info"]['discount_rate'] == DISCOUNT/PRICE
-    assert products_data[0]["price_info"]['is_discounted'] is True
-    assert products_data[0]["price_info"]['discount_percentage'] == DISCOUNT/PRICE * 100
+    discounted_price = (product_price - discount)
+    price = (discounted_price if prices_include_tax else discounted_price * (1 + tax_rate))
+    base_price = (product_price if prices_include_tax else (product_price * (1 + tax_rate)))
+    discount_value = (discount if prices_include_tax else (discount * (1 + tax_rate)))
+
+    price_info = data["price_info"]
+
+    def money_round(value):
+        return Money(value, shop.currency).as_rounded(2)
+
+    assert money_round(data["price"]) == money_round(price)
+    assert money_round(price_info['base_price']) == money_round(base_price)
+    assert money_round(price_info['taxful_price']) == money_round(taxful_price)
 
     if prices_include_tax:
-        assert products_data[0]["price_info"]['taxful_price'] == (PRICE-DISCOUNT)
+        assert 'taxless_price' not in price_info
+        assert 'tax_amount' not in price_info
     else:
-        assert products_data[0]["price_info"]['taxless_price'] == (PRICE-DISCOUNT)
+        assert money_round(price_info['taxless_price']) == money_round(taxless_price)
+        assert money_round(price_info['tax_amount']) == money_round((product_price - discount) * tax_rate)
+
+    assert money_round(price_info['price']) == money_round(price)
+    assert money_round(price_info['discount_amount']) == money_round(discount_value)
+    assert money_round(price_info['discount_rate']) == money_round(discount_value / price if discount else 0)
+    assert price_info['is_discounted'] is (True if discount else False)
 
 
 @pytest.mark.django_db
