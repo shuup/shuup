@@ -44,8 +44,9 @@ class CheckoutMethodPhase(CheckoutPhaseViewMixin, LoginView):
     checkout_method_choice_key = "checkout_method_choice"
 
     def get_form(self, form_class=None):
-        form_group = FormGroup(**self.get_form_kwargs())
-        form_group.add_form_def(name=self.login_form_key, form_class=LoginView.form_class, required=False)
+        form_group = FormGroup(**self.get_initial_form_group_kwargs())
+        form_group.add_form_def(name=self.login_form_key, form_class=LoginView.form_class, required=False,
+                                kwargs={"request": self.request})
         form_group.add_form_def(name=self.checkout_method_choice_key, form_class=ChooseToRegisterForm, required=False)
         return form_group
 
@@ -71,6 +72,22 @@ class CheckoutMethodPhase(CheckoutPhaseViewMixin, LoginView):
 
     def process(self):
         return
+
+    def get_initial_form_group_kwargs(self):
+        """
+        Returns the keyword arguments for instantiating the form group.
+        """
+        kwargs = {
+            'initial': self.get_initial(),
+            'prefix': self.get_prefix(),
+        }
+
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return kwargs
 
 
 class RegisterPhase(CheckoutPhaseViewMixin, RegistrationNoActivationView):
