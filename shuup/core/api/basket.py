@@ -30,12 +30,12 @@ from shuup.core.api.contacts import PersonContactSerializer
 from shuup.core.basket import (
     get_basket_command_dispatcher, get_basket_order_creator
 )
-from shuup.core.basket.storage import BasketCompatibilityError
+from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import (
-    Basket, Contact, Currency, get_company_contact, get_person_contact,
-    MutableAddress, Order, OrderLineType, OrderStatus, PaymentMethod, Product,
-    ShippingMethod, Shop, ShopProduct
+    Basket, CompanyContact, Contact, Currency, get_company_contact,
+    get_person_contact, MutableAddress, Order, OrderLineType, OrderStatus,
+    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopProduct
 )
 from shuup.core.order_creator._source import LineSource
 from shuup.utils.importing import cached_load
@@ -366,38 +366,29 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         return [contact.pk] + list(contact.company_memberships.all().values_list("pk", flat=True))
 
     def get_object(self):
-        uuid = get_key(self.kwargs.get(self.lookup_field, ""))
+        basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         shop = self.request.shop
-
-        loaded_basket = Basket.objects.filter(key=uuid, shop=shop).first()
-
-        if not loaded_basket:
+        uuid = get_key(self.kwargs.get(self.lookup_field, ""))
+        storage = get_storage()
+        if not storage.basket_exists(uuid, shop):
             raise exceptions.NotFound()
 
-        # ensure correct owner
-        if not self.request.user.is_superuser:
-            if not loaded_basket.shop == shop:
-                raise exceptions.PermissionDenied("No permission")
-
-            customer_id = (loaded_basket.customer.pk if loaded_basket.customer else None)
-            controlled_contact_ids = self._get_controlled_contacts_by_user(self.request.user)
-            is_staff = self.is_staff_user(shop, self.request.user)
-            if customer_id and customer_id not in controlled_contact_ids and not is_staff:
-                raise exceptions.PermissionDenied("No permission")
-
-        # actually load basket
-        basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(self.request._request, basket_name=uuid)
-
         try:
             basket._data = basket.storage.load(basket)
         except BasketCompatibilityError as error:
             raise exceptions.ValidationError(str(error))
 
-        # Hack: the storage should do this already
-        # set the correct basket customer
-        if loaded_basket.customer:
-            basket.customer = loaded_basket.customer
+        # ensure correct creator
+        if not self.request.user.is_superuser:
+            if not basket.shop == shop:
+                raise exceptions.PermissionDenied("No permission")
+
+            customer_id = (basket.customer.pk if basket.customer else None)
+            controlled_contact_ids = self._get_controlled_contacts_by_user(self.request.user)
+            is_staff = self.is_staff_user(shop, self.request.user)
+            if customer_id and customer_id not in controlled_contact_ids and not is_staff:
+                raise exceptions.PermissionDenied("No permission")
 
         return basket
 
@@ -413,16 +404,23 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(request._request)
 
-        customer_id = request.POST.get("customer_id")
-        if not customer_id:
-            customer_id = request.data.get("customer_id")
-
+        customer_id = self._get_customer_params(request, "customer_id")
         if customer_id:
             is_staff = self.is_staff_user(self.request.shop, self.request.user)
             is_superuser = self.request.user.is_superuser
-
             if int(customer_id) in self._get_controlled_contacts_by_user(self.request.user) or is_superuser or is_staff:
-                basket.customer = Contact.objects.get(pk=int(customer_id))
+                customer = Contact.objects.get(pk=int(customer_id))
+                basket.customer = customer
+                if isinstance(customer, PersonContact):
+                    basket.orderer = customer
+                elif isinstance(customer, CompanyContact):
+                    orderer_id = self._get_customer_params(request, "orderer_id")
+                    if not orderer_id:
+                        exceptions.ValidationError(
+                            _("Can not assign order to company without orderer."),
+                            code="company-with-no-order"
+                        )
+                    basket.orderer = PersonContact.objects.get(pk=int(orderer_id))
             else:
                 raise exceptions.PermissionDenied("No permission")
 
@@ -433,6 +431,12 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         response_data.update(self.get_serializer(basket).data)
         return Response(data=response_data, status=status.HTTP_201_CREATED)
 
+    def _get_customer_params(self, request, key):
+        value = request.POST.get(key)
+        if not value:
+            value = request.data.get(key)
+        return value
+
     def _handle_cmd(self, request, command, kwargs):
         cmd_dispatcher = get_basket_command_dispatcher(request)
         cmd_handler = cmd_dispatcher.get_command_handler(command)
@@ -442,6 +446,9 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
 
     @list_route(methods=['get'])
     def abandoned(self, request, *args, **kwargs):
+        if settings.SHUUP_BASKET_STORAGE_CLASS_SPEC != "shuup.core.basket.storage:DatabaseBasketStorage":
+            raise exceptions.NotAcceptable("Invalid basket storage for this route.")
+
         self.process_request(with_basket=False)
         days = int(request.GET.get("days_ago", 14))
 
@@ -670,19 +677,6 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
         order_creator = get_basket_order_creator()
 
-        customer_id = request.POST.get("customer_id")
-        if not customer_id:
-            customer_id = request.data.get("customer_id")
-
-        if customer_id:
-            # staff and superuser can set custom customer to the basket
-            is_staff = self.is_staff_user(self.request.shop, self.request.user)
-            is_superuser = self.request.user.is_superuser
-            if is_superuser or is_staff:
-                from shuup.core.models import PersonContact
-                customer = PersonContact.objects.get(pk=customer_id)
-                request.basket.customer = customer
-
         order = order_creator.create_order(request.basket)
         request.basket.finalize()
         return Response(data=OrderSerializer(order).data, status=status.HTTP_201_CREATED)
@@ -704,7 +698,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         order = order_queryset.first()
         if not order:
             return Response({"error": "invalid order"}, status=status.HTTP_404_NOT_FOUND)
-        self.clear(request, *args, **kwargs)
+
         for line in order.lines.products():
             try:
                 self._add_product(request, add_data={

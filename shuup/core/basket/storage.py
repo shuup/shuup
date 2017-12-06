@@ -91,6 +91,18 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         """
         self.delete(basket=basket)
 
+    def basket_exists(self, key, shop):
+        """
+        Check if basket exists in the storage
+
+        For example this is used from API to check whether the basket
+        actually exists for certain shop when accessed with key.
+
+        :type key: str
+        :type shop: shuup.core.models.Shop
+        """
+        return False
+
 
 class BaseDatabaseBasketStorage(BasketStorage):
     model = Basket
@@ -139,6 +151,9 @@ class BaseDatabaseBasketStorage(BasketStorage):
                 prices_include_tax=basket.prices_include_tax,
             )
         return stored_basket
+
+    def basket_exists(self, key, shop):
+        return self.model.objects.filter(key=key, shop=shop).exists()
 
 
 class DatabaseBasketStorage(BaseDatabaseBasketStorage):

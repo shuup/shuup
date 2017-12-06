@@ -106,7 +106,7 @@ def test_group_basket_condition_with_anonymous_contact(rf):
 
 @pytest.mark.django_db
 def test_contact_group_basket_condition_with_none(rf):
-    request = rf.get("/")
+    request = apply_request_middleware(rf.get("/"))
     request.shop = Shop()
     basket = get_basket(request)
     condition = ContactGroupBasketCondition.objects.create()
