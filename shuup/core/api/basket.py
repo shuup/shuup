@@ -169,7 +169,7 @@ class BasketSerializer(BaseOrderTotalSerializerMixin, serializers.Serializer):
     payment_method = PaymentMethodSerializer()
     available_shipping_methods = serializers.SerializerMethodField()
     available_payment_methods = serializers.SerializerMethodField()
-    customer = BasketCustomerSerializer()
+    customer = serializers.SerializerMethodField()
     validation_errors = serializers.SerializerMethodField()
     customer_comment = serializers.SerializerMethodField()
 
@@ -181,6 +181,10 @@ class BasketSerializer(BaseOrderTotalSerializerMixin, serializers.Serializer):
 
     prices_include_tax = serializers.BooleanField()
     currency = serializers.SerializerMethodField()
+
+    def get_customer(self, basket):
+        if basket.customer:
+            return BasketCustomerSerializer(basket.customer).data
 
     def get_currency(self, basket):
         return CurrencySerializer(Currency.objects.get(code=basket.currency), context=self.context).data
