@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 from decimal import Decimal
+from itertools import chain
 
 from django.utils.translation import ugettext as _
 
@@ -56,6 +57,9 @@ class TaxSummary(list):
 
 
 class TaxSummaryLine(object):
+    _FIELDS = ["tax_id", "tax_code", "tax_name", "tax_rate", "raw_based_on", "based_on", "tax_amount", "taxful"]
+    _MONEY_FIELDS = set(["tax_amount", "taxful", "based_on", "raw_based_on"])
+
     @classmethod
     def from_tax(cls, tax, based_on, raw_based_on, tax_amount):
         return cls(
@@ -82,3 +86,15 @@ class TaxSummaryLine(object):
             type(self).__name__,
             self.tax_id, self.tax_code, float(self.tax_rate or 0),
             self.based_on, self.tax_amount)
+
+    def to_dict(self):
+        return dict(chain(*(self._serialize_field(x) for x in self._FIELDS)))
+
+    def _serialize_field(self, key):
+        value = getattr(self, key)
+        if isinstance(value, Money):
+            if key not in self._MONEY_FIELDS:
+                raise TypeError('Non-price field "%s" has %r' % (key, value))
+            return [(key, value.value), (key + '_currency', value.currency)]
+        assert not isinstance(value, Money)
+        return [(key, value)]

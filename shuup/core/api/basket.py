@@ -27,6 +27,7 @@ from shuup.api.fields import EnumField, FormattedDecimalField
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.address import AddressSerializer
 from shuup.core.api.contacts import PersonContactSerializer
+from shuup.core.api.tax import SourceLineTaxSerializer, TaxSummarySerializer
 from shuup.core.basket import (
     get_basket_command_dispatcher, get_basket_order_creator
 )
@@ -853,3 +854,28 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         )
         basket.add_line(**line_data)
         basket.save()
+
+    @detail_route(methods=['get'])
+    def taxes(self, request, *args, **kwargs):
+        """
+        Get taxes for basket
+        """
+        self.process_request()
+        basket = request.basket
+        tax_summary = basket.get_tax_summary()
+        rows = [row.to_dict() for row in tax_summary]
+        basket_summary_serializer = TaxSummarySerializer(data=rows, many=True)
+        basket_summary_serializer.is_valid(True)
+        lines = []
+        for line in basket.get_final_lines(True):
+            items = []
+            for source_line_tax in line.taxes:
+                source_line_tax.line_id = line.line_id
+                items.append(source_line_tax)
+            ts = SourceLineTaxSerializer(items, many=True)
+            for row in ts.data:
+                lines.append(row)
+        return Response({
+            "summary": basket_summary_serializer.validated_data,
+            "lines": lines
+        })

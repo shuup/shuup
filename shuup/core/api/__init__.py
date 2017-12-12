@@ -31,6 +31,7 @@ from shuup.core.api.products import (
 from shuup.core.api.shipments import ShipmentViewSet
 from shuup.core.api.shop import ShopViewSet
 from shuup.core.api.suppliers import SupplierViewSet
+from shuup.core.api.tax import TaxViewSet
 from shuup.core.api.tax_class import TaxClassViewSet
 from shuup.core.api.units import SalesUnitViewSet
 from shuup.core.api.users import UserViewSet
@@ -61,6 +62,7 @@ def populate_core_api(router):
     router.register("shuup/supplier", SupplierViewSet)
     router.register("shuup/user", UserViewSet)
     router.register("shuup/sales_unit", SalesUnitViewSet)
+    router.register("shuup/tax", TaxViewSet)
     router.register("shuup/tax_class", TaxClassViewSet)
     router.register("shuup/basket", BasketViewSet)
 

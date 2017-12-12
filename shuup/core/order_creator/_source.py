@@ -599,6 +599,26 @@ class OrderSource(object):
             self._object_cache[(model, pk)] = obj
         return obj
 
+    def get_total_tax_amount(self):
+        """
+        :rtype: Money
+        :return:
+        """
+        return sum([line.tax_amount.value for line in self.get_final_lines()])
+
+    def get_tax_summary(self):
+        """
+        :rtype: TaxSummary
+        """
+        all_line_taxes = []
+        untaxed = TaxlessPrice(self.create_price(0).amount)
+        for line in self.get_final_lines():
+            line_taxes = list(line.taxes)
+            all_line_taxes.extend(line_taxes)
+            if not line_taxes:
+                untaxed += line.taxless_price
+        return taxing.TaxSummary.from_line_taxes(all_line_taxes, untaxed)
+
 
 def _collect_lines_from_signal(signal_results):
     for (receiver, response) in signal_results:

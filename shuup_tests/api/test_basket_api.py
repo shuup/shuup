@@ -31,8 +31,8 @@ from shuup.core.models import (
 from shuup.core.pricing import TaxfulPrice
 from shuup.testing import factories
 from shuup.testing.factories import (
-    create_product, get_default_currency, get_default_supplier,
-    get_random_filer_image
+    create_default_tax_rule, create_product, get_default_currency,
+    get_default_supplier, get_default_tax, get_random_filer_image, get_tax
 )
 from shuup.utils.i18n import get_current_babel_locale
 from shuup_tests.campaigns.test_discount_codes import (
@@ -312,6 +312,58 @@ def test_add_product_to_basket(admin_user):
         assert len(response_data["items"]) == 5
         assert not response_data["validation_errors"]
         assert float(response_data["total_price"]) == 4 + (4 * product_price) + 20
+
+@pytest.mark.django_db
+def test_add_product_to_basket_with_summary(admin_user):
+    tax = get_default_tax()
+    tax2 = get_tax("simple-tax-2", "Simple tax 2", Decimal("0.25"))
+    create_default_tax_rule(tax2)
+
+    with override_settings(**REQUIRED_SETTINGS):
+        set_configuration()
+        shop = factories.get_default_shop()
+        basket = factories.get_basket()
+        factories.get_default_payment_method()
+        factories.get_default_shipping_method()
+        shop_product = factories.get_default_shop_product()
+        product_price = 1
+        shop_product.default_price = TaxfulPrice(product_price, shop.currency)
+        shop_product.save()
+        client = _get_client(admin_user)
+        # add shop product
+        payload = {
+            'shop_product': shop_product.id
+        }
+        response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+
+        # Tax summary should not be present here
+        assert "summary" not in response_data
+        assert "summary" not in response_data["items"][0]
+
+        # Get the tax summary
+        response = client.get('/api/shuup/basket/{}-{}/taxes/'.format(shop.pk, basket.key))
+        assert response.status_code == status.HTTP_200_OK
+        response_data = json.loads(response.content.decode("utf-8"))
+
+        assert "lines" in response_data
+        assert "summary" in response_data
+        line_summary = response_data["lines"]
+        basket_summary = response_data["summary"]
+        first_tax_summary = basket_summary[0]
+        second_tax_summary = basket_summary[1]
+
+        assert int(first_tax_summary["tax_id"]) == tax.id
+        assert int(second_tax_summary["tax_id"]) == tax2.id
+
+        assert first_tax_summary["tax_rate"] == tax.rate
+        assert second_tax_summary["tax_rate"] == tax2.rate
+
+        first_line_summary = line_summary[0]
+        second_line_summary = line_summary[1]
+        assert "tax" in first_line_summary
+        assert "tax" in second_line_summary
 
 
 @pytest.mark.django_db

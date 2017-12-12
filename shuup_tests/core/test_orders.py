@@ -18,12 +18,13 @@ from shuup.core.excs import (
     NoProductsToShipException, RefundExceedsAmountException
 )
 from shuup.core.models import (
-    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentStatus,
-    ShippingStatus, StockBehavior
+    AnonymousContact, Order, OrderLine, OrderLineTax, OrderLineType,
+    OrderStatus, PaymentStatus, ShippingStatus, StockBehavior
 )
-from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.core.pricing import get_pricing_module, TaxfulPrice, TaxlessPrice
 from shuup.testing.factories import (
-    create_empty_order, create_order_with_product, create_product, get_address,
+    _get_pricing_context, add_product_to_order, create_empty_order,
+    create_order_with_product, create_product, get_address,
     get_default_product, get_default_shop, get_default_supplier,
     get_default_tax, get_initial_order_status
 )
@@ -173,6 +174,45 @@ def test_basic_order():
     assert summary[1].tax_amount == Money(0, currency)
     assert summary[1].tax_rate == 0
     assert order.get_total_tax_amount() == 50
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("include_taxes", [True, False])
+def test_complex_order_tax(include_taxes):
+    tax = get_default_tax()
+    quantities = [44, 23, 65]
+    product = get_default_product()
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    shop.prices_include_tax = include_taxes
+    shop.save()
+
+    order = create_empty_order(shop=shop)
+    order.full_clean()
+    order.save()
+
+    pricing_context = get_pricing_module().get_context_from_data(
+        shop=shop,
+        customer=order.customer or AnonymousContact(),
+    )
+
+    total_price = Decimal("0")
+    price = Decimal("50")
+
+    for quantity in quantities:
+        total_price += quantity * price
+        add_product_to_order(order, supplier, product, quantity, price, tax.rate, pricing_context)
+    order.cache_prices()
+    order.save()
+
+    currency = "EUR"
+    summary = order.get_tax_summary()[0]
+
+    assert summary.tax_rate == tax.rate
+    assert summary.based_on == Money(total_price, currency)
+    assert summary.tax_amount == Money(total_price * tax.rate, currency)
+    assert summary.taxful == summary.based_on + summary.tax_amount
+    assert order.get_total_tax_amount() == total_price * tax.rate
 
 
 @pytest.mark.django_db
