@@ -24,7 +24,7 @@ from shuup.testing.factories import (
     create_default_order_statuses, create_empty_order,
     create_order_with_product, create_product, create_random_person,
     get_default_payment_method, get_default_shipping_method, get_default_shop,
-    get_default_supplier
+    get_default_supplier, get_default_tax
 )
 from shuup_tests.utils import printable_gibberish
 
@@ -133,11 +133,12 @@ def test_get_by_status(admin_user):
     assert len(order_data) == 1
 
 
-@pytest.mark.parametrize("currency", ["USD", "BRL", "GBP", "USD", "IDR", "LYD"])
+@pytest.mark.parametrize("currency", ["USD", "BRL", "GBP", "USD", "IDR", "LYD", "CAD"])
 def test_create_order(admin_user, currency):
     create_default_order_statuses()
     shop = get_default_shop()
     shop.currency = currency
+    tax = get_default_tax()
     Currency.objects.create(code=currency, decimal_places=2)
     shop.save()
     sm = get_default_shipping_method()
@@ -183,6 +184,27 @@ def test_create_order(admin_user, currency):
         assert line.quantity == decimal.Decimal(lines[idx].get("quantity"))
         assert line.base_unit_price_value == decimal.Decimal(lines[idx].get("base_unit_price_value", 0))
         assert line.discount_amount_value == decimal.Decimal(lines[idx].get("discount_amount_value", 0))
+
+    # Test tax summary
+    response_data = json.loads(response.content.decode("utf-8"))
+    # Tax summary should not be present here
+    assert "summary" not in response_data
+
+    response = client.get('/api/shuup/order/{}/taxes/'.format(order.pk))
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+
+    assert "lines" in response_data
+    assert "summary" in response_data
+    line_summary = response_data["lines"]
+    summary = response_data["summary"]
+    first_tax_summary = summary[0]
+
+    assert int(first_tax_summary["tax_id"]) == tax.id
+    assert first_tax_summary["tax_rate"] == tax.rate
+
+    first_line_summary = line_summary[0]
+    assert "tax" in first_line_summary
 
 
 def test_create_without_a_contact(admin_user):

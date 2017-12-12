@@ -14,7 +14,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from shuup.api.fields import FormattedDecimalField
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
-from shuup.core.models import Tax, TaxClass
+from shuup.core.api.front_orders import OrderLineSerializer
+from shuup.core.models import OrderLineTax, Tax, TaxClass
 
 
 class TaxSerializer(TranslatableModelSerializer):
@@ -43,6 +44,15 @@ class TaxSummarySerializer(serializers.Serializer):
         for field, value in validated_data.items():
             setattr(instance, field, value)
         return instance
+
+
+class OrderLineTaxSerializer(serializers.ModelSerializer):
+    tax = TaxSerializer(read_only=True)
+    order_line = OrderLineSerializer(read_only=True)
+
+    class Meta:
+        model = OrderLineTax
+        fields = "__all__"
 
 
 class SourceLineTaxSerializer(serializers.Serializer):
