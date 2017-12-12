@@ -16,7 +16,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import (
-    Product, ProductMode, ProductVariationResult, ShopProduct
+    CompanyContact, PersonContact, Product, ProductMode,
+    ProductVariationResult, ShopProduct
 )
 from shuup.core.order_creator import is_code_usable
 from shuup.utils.importing import cached_load
@@ -178,6 +179,20 @@ def handle_remove_campaign_code(request, basket, code):
 
 def handle_clear_campaign_codes(request, basket):
     return {"ok": basket.clear_codes()}
+
+
+def handle_set_customer(request, basket, customer, orderer=None):
+    basket.customer = customer
+
+    if isinstance(customer, PersonContact):
+        basket.orderer = customer
+
+    elif isinstance(customer, CompanyContact):
+        if not orderer:
+            raise ValidationError(_("Can not assign order to company without orderer."), code="invalid-orderer")
+        basket.orderer = orderer
+
+    return {"ok": True}
 
 
 def handle_update(request, basket, **kwargs):

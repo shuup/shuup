@@ -33,9 +33,9 @@ from shuup.core.basket import (
 from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import (
-    Basket, CompanyContact, Contact, Currency, get_company_contact,
+    AnonymousContact, Basket, Contact, Currency, get_company_contact,
     get_person_contact, MutableAddress, Order, OrderLineType, OrderStatus,
-    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopProduct
+    PaymentMethod, Product, ShippingMethod, Shop, ShopProduct
 )
 from shuup.core.order_creator._source import LineSource
 from shuup.utils.importing import cached_load
@@ -68,6 +68,11 @@ class BasketProductSerializer(TranslatableModelSerializer):
     class Meta:
         model = Product
         fields = ["id", "translations"]
+
+
+class BasketSetCustomerSerializer(serializers.Serializer):
+    customer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True)
+    orderer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True, required=False)
 
 
 class BasketCustomerSerializer(PersonContactSerializer):
@@ -395,6 +400,29 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
     def is_staff_user(self, shop, user):
         return (shop and user.is_staff and shop.staff_members.filter(pk=user.pk).exists())
 
+    def _can_set_customer(self, customer):
+        is_staff = self.is_staff_user(self.request.shop, self.request.user)
+        is_superuser = self.request.user.is_superuser
+
+        if is_superuser or is_staff:
+            return True
+        elif customer and customer.id in self._get_controlled_contacts_by_user(self.request.user):
+            return True
+        return False
+
+    def _handle_set_customer(self, request, basket, customer, orderer=None):
+        if self._can_set_customer(customer):
+            cmd_kwargs = {
+                "request": request,
+                "basket": basket,
+                "customer": customer,
+                "orderer": orderer
+            }
+            return self._handle_cmd(self.request, "set_customer", cmd_kwargs)
+        else:
+            raise exceptions.PermissionDenied("No permission")
+
+
     @list_route(methods=['post'])
     def new(self, request, *args, **kwargs):
         """
@@ -605,6 +633,25 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
         else:
             return Response({"invalid_command": "Invalid command"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @schema_serializer_class(BasketSetCustomerSerializer)
+    @detail_route(methods=['post'])
+    def set_customer(self, request, *args, **kwargs):
+        """
+        Set the basket customer
+        """
+        self.process_request()
+        serializer = BasketSetCustomerSerializer(data=request.data, context=self.get_serializer_context())
+        serializer.is_valid(raise_exception=True)
+        self._handle_set_customer(
+            request=request,
+            basket=request.basket,
+            customer=serializer.validated_data["customer"] or AnonymousContact(),
+            orderer=serializer.validated_data.get("orderer", get_person_contact(request.user))
+        )
+        request.basket.refresh_lines()
+        request.basket.save()
+        return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
     @schema_serializer_class(AddressSerializer)
     @detail_route(methods=['post'])
