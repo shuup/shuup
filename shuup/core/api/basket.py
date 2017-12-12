@@ -81,6 +81,12 @@ class BasketSetCustomerSerializer(serializers.Serializer):
     orderer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True, required=False)
 
 
+class BasketRequestAbandonedSerializer(serializers.Serializer):
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.all())
+    days_ago = serializers.IntegerField(required=False)
+    not_updated_in_hours = serializers.IntegerField(required=False)
+
+
 class BasketCustomerSerializer(PersonContactSerializer):
     default_shipping_address = serializers.PrimaryKeyRelatedField(read_only=True)
     default_billing_address = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -476,19 +482,24 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         response = cmd_handler(**cmd_kwargs)
         return cmd_dispatcher.postprocess_response(command, cmd_kwargs, response)
 
+    @schema_serializer_class(BasketRequestAbandonedSerializer)
     @list_route(methods=['get'])
     def abandoned(self, request, *args, **kwargs):
         if settings.SHUUP_BASKET_STORAGE_CLASS_SPEC != "shuup.core.basket.storage:DatabaseBasketStorage":
             raise exceptions.NotAcceptable("Invalid basket storage for this route.")
 
-        self.process_request(with_basket=False)
-        days = int(request.GET.get("days_ago", 14))
+        serializer = BasketRequestAbandonedSerializer(data=request.query_params)
+        serializer.is_valid(True)
+        data = serializer.validated_data
+
+        self.process_request(with_basket=False, shop=data["shop"])
+        days = data.get("days_ago", 14)
 
         days_ago = None
         if days:
             days_ago = now() - datetime.timedelta(days=days)
 
-        not_updated_in_hours = int(request.GET.get("not_updated_in_hours", 2))
+        not_updated_in_hours = data.get("not_updated_in_hours", 2)
         late_cutoff = now() - datetime.timedelta(hours=not_updated_in_hours)
 
         if days_ago:
