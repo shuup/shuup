@@ -194,6 +194,8 @@ class OrderSource(object):
     taxless_total_discount_or_none = taxless_total_discount.or_none
 
     total_price_of_products = _PriceSum("price", "get_product_lines")
+    taxful_total_price_of_products = _PriceSum("taxful_price", "get_product_lines")
+    taxless_total_price_of_products = _PriceSum("taxless_price", "get_product_lines")
 
     @property
     def customer(self):

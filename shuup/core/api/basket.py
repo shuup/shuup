@@ -189,6 +189,8 @@ class BasketSerializer(BaseOrderTotalSerializerMixin, serializers.Serializer):
     taxful_total_discount = FormattedDecimalField()
     taxless_total_discount = FormattedDecimalField()
     total_price_of_products = FormattedDecimalField()
+    taxful_total_price_of_products = FormattedDecimalField()
+    taxless_total_price_of_products = FormattedDecimalField()
 
     prices_include_tax = serializers.BooleanField()
     currency = serializers.SerializerMethodField()
