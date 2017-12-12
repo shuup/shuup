@@ -21,8 +21,9 @@ from rest_framework.test import APIClient
 from shuup import configuration
 from shuup.core import cache
 from shuup.core.models import (
-    Basket, get_person_contact, Order, OrderStatus, PaymentStatus, Product, ProductMedia, ProductMediaKind,
-    ShippingStatus, Shop, ShopProduct, ShopProductVisibility, ShopStatus
+    Basket, get_person_contact, Order, OrderStatus, PaymentStatus, Product,
+    ProductMedia, ProductMediaKind, ShippingStatus, Shop, ShopProduct,
+    ShopProductVisibility, ShopStatus
 )
 from shuup.core.pricing import TaxfulPrice
 from shuup.testing import factories
@@ -33,7 +34,6 @@ from shuup.testing.factories import (
 from shuup_tests.campaigns.test_discount_codes import (
     Coupon, get_default_campaign
 )
-
 
 REQUIRED_SETTINGS = dict(
     SHUUP_ENABLE_MULTIPLE_SHOPS=True,
@@ -122,10 +122,8 @@ def test_create_new_basket(admin_user):
         assert basket.creator == admin_user
 
         # invalid shop
-        response = client.post("/api/shuup/basket/new/", {
-            "shop": 1000
-        })
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        response = client.post("/api/shuup/basket/new/", data={"shop": 1000})
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
         # no shop in multishop mode
         response = client.post("/api/shuup/basket/new/")
@@ -145,8 +143,7 @@ def test_create_new_basket(admin_user):
 
             person = factories.create_random_person()
 
-            response = client.post(
-                "/api/shuup/basket/new/?customer_id={}".format(person.pk), data={"customer_id": person.pk})
+            response = client.post("/api/shuup/basket/new/", data={"customer": person.pk})
             assert response.status_code == status.HTTP_201_CREATED
             basket_data = json.loads(response.content.decode("utf-8"))
             basket = Basket.objects.all()[2]
@@ -182,13 +179,13 @@ def test_create_order(admin_user, target_customer):
         target = orderer = get_person_contact(admin_user)
         if target_customer == "other_person":
             target = orderer = factories.create_random_person()
-            payload["customer_id"] = target.pk
+            payload["customer"] = target.pk
         elif target_customer == "company":
             target = factories.create_random_company()
             orderer = factories.create_random_person()
             payload.update({
-                "customer_id": target.pk,
-                "orderer_id": orderer.pk
+                "customer": target.pk,
+                "orderer": orderer.pk
             })
 
         response = client.post("/api/shuup/basket/new/", payload)
@@ -245,17 +242,14 @@ def test_basket_with_staff_user():
 
         client = _get_client(staff_user)
         person = factories.create_random_person()
-        response = client.post(
-            "/api/shuup/basket/new/?customer_id={}".format(person.pk),
-            data={"shop": shop.pk, "customer_id": person.pk})
+        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer": person.pk})
         # Only stuff linked to shop can create baskets for someone else
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
         # Can still add personal baskets
         staff_person = get_person_contact(staff_user)
         response = client.post(
-            "/api/shuup/basket/new/?customer_id={}".format(staff_person.pk),
-            data={"shop": shop.pk, "customer_id": staff_person.pk})
+            "/api/shuup/basket/new/", data={"shop": shop.pk, "customer": staff_person.pk})
         assert response.status_code == status.HTTP_201_CREATED
         basket_data = json.loads(response.content.decode("utf-8"))
         basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
@@ -279,8 +273,7 @@ def test_basket_with_staff_user():
         # the basket create for random person should work
         shop.staff_members.add(staff_user)
         response = client.post(
-            "/api/shuup/basket/new/?customer_id={}".format(person.pk),
-            data={"shop": shop.pk, "customer_id": person.pk})
+            "/api/shuup/basket/new/", data={"shop": shop.pk, "customer": person.pk})
         assert response.status_code == status.HTTP_201_CREATED
         basket_data = json.loads(response.content.decode("utf-8"))
         basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
@@ -318,13 +311,13 @@ def test_basket_reorder_staff_user():
         order = create_random_order(customer=person, products=[product], completion_probability=1, shop=shop)
 
         # create the basket
-        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer_id": person.pk}, format="json")
+        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer": person.pk}, format="json")
         # Only stuff linked to shop can create baskets for someone else
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
         # Can still add personal baskets
         staff_person = get_person_contact(staff_user)
-        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer_id": staff_person.pk}, format="json")
+        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer": staff_person.pk}, format="json")
         assert response.status_code == status.HTTP_201_CREATED
         basket_data = json.loads(response.content.decode("utf-8"))
         basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
@@ -337,7 +330,7 @@ def test_basket_reorder_staff_user():
         # Ok let's link the staff member to the shop and
         # the basket create for random person should work
         shop.staff_members.add(staff_user)
-        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer_id": person.pk}, format="json")
+        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer": person.pk}, format="json")
         assert response.status_code == status.HTTP_201_CREATED
         basket_data = json.loads(response.content.decode("utf-8"))
         basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
@@ -367,7 +360,7 @@ def test_basket_reorder_staff_user():
         # create a second customer
         person2 = factories.create_random_person()
         # create a basket for customer 2 and try to fill with contents of customer 1 order - it should not be possible
-        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer_id": person2.pk}, format="json")
+        response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer": person2.pk}, format="json")
         assert response.status_code == status.HTTP_201_CREATED
         basket_data = json.loads(response.content.decode("utf-8"))
         basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
