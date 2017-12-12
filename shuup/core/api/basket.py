@@ -70,6 +70,12 @@ class BasketProductSerializer(TranslatableModelSerializer):
         fields = ["id", "translations"]
 
 
+class NewBasketSerializer(serializers.Serializer):
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.all(), required=False)
+    customer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True, required=False)
+    orderer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True, required=False)
+
+
 class BasketSetCustomerSerializer(serializers.Serializer):
     customer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True)
     orderer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True, required=False)
@@ -317,29 +323,26 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
 
     def get_basket_shop(self):
         if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+            shop_id = None
             uuid = self.kwargs.get(self.lookup_field, "")
             if uuid:
                 shop_id = get_shop_id(self.kwargs.get(self.lookup_field, ""))
-            else:
-                # shop will be part of POST'ed data for basket creation
-                shop_id = self.request.data.get("shop")
+
             if not shop_id:
-                try:
-                    shop_id = self.request.GET["shop"]
-                except:
-                    raise exceptions.ValidationError("No basket shop specified.")
+                raise exceptions.ValidationError("No basket shop specified.")
+
             # this shop should be the shop associated with the basket
             return get_object_or_404(Shop, pk=shop_id)
         else:
             return Shop.objects.first()
 
-    def process_request(self, with_basket=True):
+    def process_request(self, with_basket=True, shop=None):
         """
         Add context to request that's expected by basket
         """
         request = self.request._request
         user = self.request.user
-        request.shop = self.get_basket_shop()
+        request.shop = shop or self.get_basket_shop()
         request.person = get_person_contact(user)
         company = get_company_contact(user)
         request.customer = (company or request.person)
@@ -404,10 +407,13 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         is_staff = self.is_staff_user(self.request.shop, self.request.user)
         is_superuser = self.request.user.is_superuser
 
-        if is_superuser or is_staff:
+        if customer == get_person_contact(self.request.user):
+            return True
+        elif is_superuser or is_staff:
             return True
         elif customer and customer.id in self._get_controlled_contacts_by_user(self.request.user):
             return True
+
         return False
 
     def _handle_set_customer(self, request, basket, customer, orderer=None):
@@ -415,42 +421,42 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             cmd_kwargs = {
                 "request": request,
                 "basket": basket,
-                "customer": customer,
+                "customer": customer or AnonymousContact(),
                 "orderer": orderer
             }
             return self._handle_cmd(self.request, "set_customer", cmd_kwargs)
         else:
             raise exceptions.PermissionDenied("No permission")
 
-
+    @schema_serializer_class(NewBasketSerializer)
     @list_route(methods=['post'])
     def new(self, request, *args, **kwargs):
         """
         Create a brand new basket object
         """
-        self.process_request(with_basket=False)
+        serializer = NewBasketSerializer(data=request.data)
+        serializer.is_valid(True)
+        data = serializer.validated_data
+
+        self.process_request(with_basket=False, shop=data.get("shop"))
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(request._request)
 
-        customer_id = self._get_customer_params(request, "customer_id")
-        if customer_id:
-            is_staff = self.is_staff_user(self.request.shop, self.request.user)
-            is_superuser = self.request.user.is_superuser
-            if int(customer_id) in self._get_controlled_contacts_by_user(self.request.user) or is_superuser or is_staff:
-                customer = Contact.objects.get(pk=int(customer_id))
-                basket.customer = customer
-                if isinstance(customer, PersonContact):
-                    basket.orderer = customer
-                elif isinstance(customer, CompanyContact):
-                    orderer_id = self._get_customer_params(request, "orderer_id")
-                    if not orderer_id:
-                        exceptions.ValidationError(
-                            _("Can not assign order to company without orderer."),
-                            code="company-with-no-order"
-                        )
-                    basket.orderer = PersonContact.objects.get(pk=int(orderer_id))
-            else:
-                raise exceptions.PermissionDenied("No permission")
+        if "customer" in data:
+            customer = data["customer"]
+        else:
+            customer = get_company_contact(request.user) or get_person_contact(request.user)
+
+        orderer = data.get("orderer", get_person_contact(request.user))
+
+        # set the request basket to perform the basket command
+        self.request.basket = basket
+        self._handle_set_customer(
+            request=self.request._request,
+            basket=basket,
+            customer=customer,
+            orderer=orderer
+        )
 
         stored_basket = basket.save()
         response_data = {
@@ -458,12 +464,6 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         }
         response_data.update(self.get_serializer(basket).data)
         return Response(data=response_data, status=status.HTTP_201_CREATED)
-
-    def _get_customer_params(self, request, key):
-        value = request.POST.get(key)
-        if not value:
-            value = request.data.get(key)
-        return value
 
     def _handle_cmd(self, request, command, kwargs):
         cmd_dispatcher = get_basket_command_dispatcher(request)
@@ -646,7 +646,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         self._handle_set_customer(
             request=request,
             basket=request.basket,
-            customer=serializer.validated_data["customer"] or AnonymousContact(),
+            customer=serializer.validated_data["customer"],
             orderer=serializer.validated_data.get("orderer", get_person_contact(request.user))
         )
         request.basket.refresh_lines()

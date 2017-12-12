@@ -193,14 +193,14 @@ class BaseBasket(OrderSource):
 
     @property
     def customer(self):
-        if self._customer or isinstance(self._customer, AnonymousContact):
+        if self._customer:
             return self._customer
 
         customer_id = self._get_value_from_data("customer_id")
         if customer_id:
             return Contact.objects.get(pk=customer_id)
 
-        return getattr(self.request, "customer", AnonymousContact())
+        return AnonymousContact()
 
     @customer.setter
     def customer(self, value):
