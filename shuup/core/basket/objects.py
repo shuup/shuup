@@ -23,6 +23,7 @@ from shuup.core.models import (
 )
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
+from shuup.core.pricing._context import PricingContext
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.objects import compare_partial_dicts
 
@@ -42,10 +43,10 @@ class BasketLine(SourceLine):
         """
         return self.product.get_shop_instance(self.shop)
 
-    def cache_info(self, request):
+    def cache_info(self, pricing_context):
         product = self.product
         # TODO: ensure shop identity?
-        price_info = product.get_price_info(request, quantity=self.quantity)
+        price_info = product.get_price_info(pricing_context, quantity=self.quantity)
         self.base_unit_price = price_info.base_unit_price
         self.discount_amount = price_info.discount_amount
         assert self.price == price_info.price
@@ -199,7 +200,7 @@ class BaseBasket(OrderSource):
         if customer_id:
             return Contact.objects.get(pk=customer_id)
 
-        return getattr(self.request, "customer", AnonymousContact())
+        return AnonymousContact()
 
     @customer.setter
     def customer(self, value):
@@ -501,13 +502,23 @@ class BaseBasket(OrderSource):
 
         return self.update_line(data, quantity=new_quantity, **extra)
 
+    def refresh_lines(self):
+        """
+        Refresh lines recalculating prices
+        """
+        pricing_context = PricingContext(shop=self.shop, customer=self.customer)
+        for line_data in self._data_lines:
+            line = BasketLine.from_dict(self, line_data)
+            line.cache_info(pricing_context)
+            self._add_or_replace_line(line)
+
     def update_line(self, data_line, **kwargs):
         line = BasketLine.from_dict(self, data_line)
         new_quantity = kwargs.pop("quantity", None)
         if new_quantity is not None:
             line.set_quantity(new_quantity)
         line.update(**kwargs)
-        line.cache_info(self.request)
+        line.cache_info(PricingContext(shop=self.shop, customer=self.customer))
         self._add_or_replace_line(line)
         return line
 
