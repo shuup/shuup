@@ -35,7 +35,7 @@ from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import (
     AnonymousContact, Basket, Contact, Currency, get_company_contact,
     get_person_contact, MutableAddress, Order, OrderLineType, OrderStatus,
-    PaymentMethod, Product, ShippingMethod, Shop, ShopProduct
+    PaymentMethod, Product, ShippingMethod, Shop, ShopProduct, ShopStatus
 )
 from shuup.core.order_creator._source import LineSource
 from shuup.utils.importing import cached_load
@@ -71,18 +71,22 @@ class BasketProductSerializer(TranslatableModelSerializer):
 
 
 class NewBasketSerializer(serializers.Serializer):
-    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.all(), required=False)
-    customer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True, required=False)
-    orderer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True, required=False)
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.filter(status=ShopStatus.ENABLED), required=False)
+    customer = serializers.PrimaryKeyRelatedField(
+        queryset=Contact.objects.filter(is_active=True), allow_null=True, required=False)
+    orderer = serializers.PrimaryKeyRelatedField(
+        queryset=Contact.objects.filter(is_active=True), allow_null=True, required=False)
 
 
 class BasketSetCustomerSerializer(serializers.Serializer):
-    customer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True)
-    orderer = serializers.PrimaryKeyRelatedField(queryset=Contact.objects.all(), allow_null=True, required=False)
+    customer = serializers.PrimaryKeyRelatedField(
+        queryset=Contact.objects.filter(is_active=True), allow_null=True)
+    orderer = serializers.PrimaryKeyRelatedField(
+        queryset=Contact.objects.filter(is_active=True), allow_null=True, required=False)
 
 
 class BasketRequestAbandonedSerializer(serializers.Serializer):
-    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.all())
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.filter(status=ShopStatus.ENABLED))
     days_ago = serializers.IntegerField(required=False)
     not_updated_in_hours = serializers.IntegerField(required=False)
 
@@ -236,7 +240,7 @@ class BaseProductAddBasketSerializer(serializers.Serializer):
 
 
 class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
-    shop_product = serializers.PrimaryKeyRelatedField(queryset=ShopProduct.objects.all())
+    shop_product = serializers.PrimaryKeyRelatedField(queryset=ShopProduct.objects.filter(purchasable=True))
     shop = serializers.SerializerMethodField()
     product = serializers.SerializerMethodField()
 
@@ -255,8 +259,8 @@ class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
 
 
 class ProductAddBasketSerializer(BaseProductAddBasketSerializer):
-    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.all())
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.filter(status=ShopStatus.ENABLED))
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.filter(deleted=False))
 
     def validate(self, data):
         # TODO - we probably eventually want this ability
