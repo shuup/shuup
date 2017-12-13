@@ -187,6 +187,7 @@ def test_create_order(admin_user, target_customer):
                 "customer": target.pk,
                 "orderer": orderer.pk
             })
+            target.members.add(orderer)
 
         response = client.post("/api/shuup/basket/new/", payload)
         assert response.status_code == status.HTTP_201_CREATED

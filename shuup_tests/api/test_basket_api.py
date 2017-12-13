@@ -1403,12 +1403,8 @@ def test_set_customer(admin_user, user_mode):
         response = client.post('/api/shuup/basket/%s/set_customer/' % uuid, format="json", data={
             "customer": None
         })
-        # nornal user can not change the customer
-        if user_mode == "normal":
-            assert response.status_code == status.HTTP_403_FORBIDDEN
-        else:
-            assert response.status_code == status.HTTP_200_OK
-            assert response.data["customer"] is None
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["customer"] is None
 
 
 @pytest.mark.django_db
