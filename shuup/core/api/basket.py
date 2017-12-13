@@ -417,30 +417,20 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
     def is_staff_user(self, shop, user):
         return (shop and user.is_staff and shop.staff_members.filter(pk=user.pk).exists())
 
-    def _can_set_customer(self, customer):
-        is_staff = self.is_staff_user(self.request.shop, self.request.user)
-        is_superuser = self.request.user.is_superuser
-
-        if customer == get_person_contact(self.request.user):
-            return True
-        elif is_superuser or is_staff:
-            return True
-        elif customer and customer.id in self._get_controlled_contacts_by_user(self.request.user):
-            return True
-
-        return False
-
     def _handle_set_customer(self, request, basket, customer, orderer=None):
-        if self._can_set_customer(customer):
+        try:
             cmd_kwargs = {
                 "request": request,
                 "basket": basket,
                 "customer": customer or AnonymousContact(),
                 "orderer": orderer
             }
-            return self._handle_cmd(self.request, "set_customer", cmd_kwargs)
-        else:
-            raise exceptions.PermissionDenied("No permission")
+            self._handle_cmd(self.request, "set_customer", cmd_kwargs)
+        except ValidationError as exc:
+            if exc.code in ["no_permission", "orderer_not_company_member", "not_company_member"]:
+                raise exceptions.PermissionDenied(exc.message)
+            else:
+                raise exceptions.ValidationError(exc.message)
 
     @schema_serializer_class(NewBasketSerializer)
     @list_route(methods=['post'])
