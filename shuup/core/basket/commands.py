@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import (
-    CompanyContact, PersonContact, Product, ProductMode,
+    AnonymousContact, CompanyContact, PersonContact, Product, ProductMode,
     ProductVariationResult, ShopProduct
 )
 from shuup.core.order_creator import is_code_usable
@@ -181,16 +181,65 @@ def handle_clear_campaign_codes(request, basket):
     return {"ok": basket.clear_codes()}
 
 
-def handle_set_customer(request, basket, customer, orderer=None):
+def handle_set_customer(request, basket, customer, orderer=None):   # noqa (C901)
+
+    if isinstance(customer, AnonymousContact):
+        basket.orderer = AnonymousContact()
+    else:
+        if not customer.is_active:
+            raise ValidationError(_("Customer is not active."), code="invalid_customer")
+
+        if customer.pk:
+            customer_shops = customer.shops.all()
+            if customer_shops and basket.shop not in customer_shops:
+                raise ValidationError(
+                    _("Shop does not have permission for this customer."),
+                    code="invalid_customer_shop"
+                )
+
+        if request.user.is_authenticated():
+            request_contact = PersonContact.objects.filter(user=request.user).first() or AnonymousContact()
+        else:
+            request_contact = AnonymousContact()
+
+        is_superuser = getattr(request.user, "is_superuser", False)
+        is_staff = getattr(request.user, "is_staff", False) and request.user in basket.shop.staff_members.all()
+
+        if isinstance(customer, PersonContact):
+            # to set a customer different from the current one
+            # he must be a super user or at least staff
+            # but allow to set a customer when the current one is not authenticated
+            if customer != request_contact and request.user.is_authenticated():
+
+                if not (is_superuser or is_staff):
+                    raise ValidationError(
+                        _("You don't have the required permission to assign this customer."),
+                        code="no_permission"
+                    )
+
+            basket.orderer = customer
+
+        elif isinstance(customer, CompanyContact):
+            if not orderer:
+                raise ValidationError(
+                    _("You must specify the order when customer is a company."), code="invalid_orderer")
+
+            # make sure the company is saved in db
+            valid_customer = (customer and customer.pk)
+            if not valid_customer:
+                raise ValidationError(_("Invalid customer."), code="invalid_customer")
+
+            company_members = customer.members.all()
+
+            if orderer not in company_members:
+                raise ValidationError(_("Orderer is not member of the company."), code="orderer_not_company_member")
+
+            elif not (is_superuser or is_staff) and request_contact not in company_members:
+                raise ValidationError(_("You are not member of the company."), code="not_company_member")
+
+            basket.orderer = orderer
+
     basket.customer = customer
-
-    if isinstance(customer, PersonContact):
-        basket.orderer = customer
-
-    elif isinstance(customer, CompanyContact):
-        if not orderer:
-            raise ValidationError(_("Can not assign order to company without orderer."), code="invalid-orderer")
-        basket.orderer = orderer
 
     return {"ok": True}
 
