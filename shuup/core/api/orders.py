@@ -127,7 +127,7 @@ class OrderTaxesMixin(object):
         from shuup.core.api.tax import OrderLineTaxSerializer, TaxSummarySerializer
         order = self.get_object()
         tax_summary = order.get_tax_summary()
-        rows = [row.to_dict() for row in tax_summary]
+        rows = [row.to_dict() for row in tax_summary if row.tax_id]
         serializer = TaxSummarySerializer(data=rows, many=True)
         serializer.is_valid(True)
         lines = []
