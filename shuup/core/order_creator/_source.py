@@ -194,6 +194,8 @@ class OrderSource(object):
     taxless_total_discount_or_none = taxless_total_discount.or_none
 
     total_price_of_products = _PriceSum("price", "get_product_lines")
+    taxful_total_price_of_products = _PriceSum("taxful_price", "get_product_lines")
+    taxless_total_price_of_products = _PriceSum("taxless_price", "get_product_lines")
 
     @property
     def customer(self):
@@ -598,6 +600,26 @@ class OrderSource(object):
             obj = model.objects.get(pk=pk)
             self._object_cache[(model, pk)] = obj
         return obj
+
+    def get_total_tax_amount(self):
+        """
+        :rtype: Money
+        :return:
+        """
+        return sum([line.tax_amount.value for line in self.get_final_lines()])
+
+    def get_tax_summary(self):
+        """
+        :rtype: TaxSummary
+        """
+        all_line_taxes = []
+        untaxed = TaxlessPrice(self.create_price(0).amount)
+        for line in self.get_final_lines():
+            line_taxes = list(line.taxes)
+            all_line_taxes.extend(line_taxes)
+            if not line_taxes:
+                untaxed += line.taxless_price
+        return taxing.TaxSummary.from_line_taxes(all_line_taxes, untaxed)
 
 
 def _collect_lines_from_signal(signal_results):

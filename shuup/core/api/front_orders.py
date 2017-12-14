@@ -12,7 +12,7 @@ from rest_framework import mixins, serializers, viewsets
 
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.address import AddressSerializer
-from shuup.core.api.orders import OrderFilter
+from shuup.core.api.orders import OrderFilter, OrderTaxesMixin
 from shuup.core.models import (
     Currency, get_person_contact, Order, OrderLine, Shop
 )
@@ -147,7 +147,8 @@ class OrderDetailSerializer(BaseOrderTotalSerializerMixin,
         fields = "__all__"
 
 
-class FrontOrderViewSet(PermissionHelperMixin,
+class FrontOrderViewSet(OrderTaxesMixin,
+                        PermissionHelperMixin,
                         mixins.ListModelMixin,
                         mixins.RetrieveModelMixin,
                         viewsets.GenericViewSet):
