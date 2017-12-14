@@ -14,11 +14,14 @@ Core
 
 - API: Improved suppliers stock endpoints
 - Add setting to manage contacts per shop
-- Add `ShuupMiddleware` to set the current request shop
-- Add `get_supplier` for shop product to define the business logic of getting supplier for order/basket line
+- Add ``ShuupMiddleware`` to set the current request shop
+- Add ``get_supplier`` for shop product to define the business logic of
+  getting supplier for order/basket line
 - Add shops to supplier to define which shops the supplier is available for
-- Introduce settings provider through new provide key `shuup_settings_provider`
-- Breaking change: Admin Section receives the request object and get methods converted to classmethod
+- Introduce settings provider through new provide key
+  ``shuup_settings_provider``
+- Breaking change: Admin Section receives the request object and get methods
+  converted to classmethod
 - API: allow user to remove and clear basket coupons
 - API: allow custom Basket serializer
 - API: only return shop products of enabled shops
@@ -27,15 +30,15 @@ Core
 - API: Return basket customer information
 - API: Add option to reset password for authenticated users
 - API: Add opiton to reset password with token
-- API: `shuup.front.apps.auth.forms.PasswordRecoveryForm` to core
+- API: ``shuup.front.apps.auth.forms.PasswordRecoveryForm`` to core
 - Add name, description and short_description fields to ShopProduct model
 - API: add basket endpoint
 - API: created front simple product endpoint
 - API: add front orders endpoint to fetch users order history
 - API: added nearby filter for products
 - API: added nearby filter for shops
-- API: allow orders to be created without customer, addresses, or
-  service methods
+- API: allow orders to be created without customer, addresses, or service
+  methods
 - API: add front user endpoint
 - API: add address endpoint
 - API: add person contact endpoint
@@ -45,9 +48,11 @@ Admin
 ~~~~~
 
 - Add middleware to select and set the current shop in the request
-- Breaking change: add optional shop parameter in `get_model_url` method of admin module
+- Breaking change: add optional shop parameter in ``get_model_url`` method of
+  admin module
 - Add middleware to select the active admin shop using session
-- Only categories, orders, products, contacts, campaigns and services for the active shop are displayed in the admin
+- Only categories, orders, products, contacts, campaigns and services for the
+  active shop are displayed in the admin
 - Menu categories without any children are hidden
 
 Front
@@ -64,7 +69,8 @@ Campaigns
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 
-- Introduce Customer Group Discounts. A discount module to configure discounts by contact group.
+- Introduce Customer Group Discounts.  A discount module to configure
+  discounts by contact group.
 
 Shuup 1.4.0
 -----------
@@ -183,8 +189,9 @@ Front
 - Add new provide category called `product_context_extra`
   which can be used to add extra data to the product context.
 - It's now possible to re-order old order from order history
-- It's now possible for addons to extend front main menu using the
-  new `front_menu_extender` provide. See :doc:`provides.rst` for more information.
+- It's now possible for addons to extend front main menu using the new
+  ``front_menu_extender`` provide.  See :doc:`provides.rst` for more
+  information.
 - Fix default error handler always returning 200 OK as an HTTP status code.
   Now returns the appropriate status code.
 
@@ -287,7 +294,8 @@ Core
 - API: Add option to filter cotacts with id, email and group id
 - API: add endpoint for Shipments
 - Add option to limit service availability based on order total
-- Add the setting `SHUUP_ERROR_PAGE_HANDLERS_SPEC` to handle custom error pages (400, 403, 404 and 500)
+- Add the setting ``SHUUP_ERROR_PAGE_HANDLERS_SPEC`` to handle custom error
+  pages (400, 403, 404 and 500)
 
 Admin
 ~~~~~
@@ -337,7 +345,7 @@ Campaigns
 ~~~~~~~~~
 
 - Match child products for parents
-- In `CategoryProductsBasketCondition` add option to exclude baskets
+- In ``CategoryProductsBasketCondition`` add option to exclude baskets
   containing products from certain categories.
 - Add option to select multiple categories to basket condition
 - Variation children should match rules based on parent
@@ -395,7 +403,7 @@ Core
 ~~~~
 
 - Allow refunding by arbitrary amounts and quantity-only refunds
-- Fix bug in `Order.can_set_complete`
+- Fix bug in ``Order.can_set_complete``
 - Currencies can be now created and edited through admin.
 
 Admin
@@ -455,15 +463,15 @@ Shuup 0.5.3
 Core
 ~~~~
 
-- Products shipping mode is now `SHIPPED` by default
+- Products shipping mode is now ``SHIPPED`` by default
 - Do not include not shipped products to shipments
-- `OrderSource.language` is now properly used.
-- Start using `Contact.language`.
-  It fallbacks to `settings.LANGUAGE_CODE` if not set.
-- Add `SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES` option that
-  allows autopopulating categories. Default is `True`.
+- ``OrderSource.language`` is now properly used.
+- Start using ``Contact.language``.
+  It fallbacks to ``settings.LANGUAGE_CODE`` if not set.
+- Add ``SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES`` option that
+  allows autopopulating categories. Default is ``True``.
 - Populate some unfilled customer fields from order
-- Add `is_not_paid` function for `Order` model.
+- Add ``is_not_paid`` function for ``Order`` model.
 - Allow zero price payments for zero price orders.
 
 Localization
@@ -480,21 +488,21 @@ Admin
 - Remove language layer from shop configurations
 - Fix bug in product cross-sell editview
 - Allow product attribute form extension through provides
-- Make form modifiers reusable. Users of `ShipmentFormModifier`
+- Make form modifiers reusable. Users of ``ShipmentFormModifier``
   should update any references to implement the
-  `shuup.admin.form_modifier.FormModifier` interface instead
+  ``shuup.admin.form_modifier.FormModifier`` interface instead
 - Add mass actions to products list
 - Add mass actions to orders list
 - Add mass actions to contacts list
 - Picotable lists now support mass actions.
-- Add `PostActionDropdownItem` baseclass for toolbar so actions requiring
+- Add ``PostActionDropdownItem`` baseclass for toolbar so actions requiring
   a POST request do not have to have a toolbar button of its own.
 - Add option to set zero price orders as paid without creating a payment manually.
 
 Front
 ~~~~~
 
-- Basket validation errors are now shown as messages instead of `HttpResponse 500`.
+- Basket validation errors are now shown as messages instead of ``HttpResponse 500``.
 - Show variation parents in highlight plugins
 - Fallback to variation parent image for variation children
   in basket, checkout and saved carts.
@@ -524,7 +532,7 @@ Core
 
 - Fetch support id for shops sending telemetry
 - Remove shop languages, category, tax class, service provider and services
-  default record creation from `shuup_init` management command
+  default record creation from ``shuup_init`` management command
 
 Admin
 ~~~~~
@@ -556,7 +564,7 @@ Front
     - Enable option to configure sorts and filters for search.
     - Activate option for manufacturer filter
     - This change should be noted when updating latest
-      front for projects using `shuup.front`
+      front for projects using ``shuup.front``
 - Fix macro name in Single Page Checkout
 - Add Saved Carts to Dashboard
 - Add Order History to Dashboard
@@ -895,6 +903,7 @@ Front
 ~~~~~
 
 - Refactor default templates to allow better extensibility
+
   - Split up templates to small parts to allow small changes to template without
     overriding the whole template
   - Move included files to macros
@@ -903,6 +912,7 @@ Front
   - This change will probably cause issues with existing themes and
     all existing themes should be tested over this change before updating
     to live environment.
+
 - Add product SKU to searchable fields for simple search
 - Limit search results for simple search
 - Fix password recovery form bug with invalid email
@@ -924,8 +934,8 @@ Released on 2016-08-12 03:00pm -0800.
 Core
 ~~~~
 
-- Fix `FormattedDecimalField` default value for form fields
-- Combine `TreeManager` and `TranslatableManager` querysets for categories
+- Fix ``FormattedDecimalField`` default value for form fields
+- Combine ``TreeManager`` and ``TranslatableManager`` querysets for categories
 - Exclude deleted orders from valid queryset
 - Enable soft delete for shipments
 
@@ -983,20 +993,20 @@ Released on 2016-08-02 07:30pm -0800.
 Core
 ~~~~
 
-- Add `get_customer_name` for `Order`
-- Exclude images from product `get_public_media`
-- Add parameter to `PriceDisplayFilter` to specify tax display mode
+- Add ``get_customer_name`` for ``Order``
+- Exclude images from product ``get_public_media``
+- Add parameter to ``PriceDisplayFilter`` to specify tax display mode
 - Add soft deletion of categories
 - Add support to sell products after stock is zero
 - Fix refunds for discount lines
 - Fix restocking issue when refunding unshipped products
-- Make payments for `CustomPaymentProcessor` not paid by default
+- Make payments for ``CustomPaymentProcessor`` not paid by default
 - Fix shipping status for orders with refunds
 - Fix bug in order total price rounding
-- Fix bug with duplicates in `Product.objects.list_visible()`
+- Fix bug with duplicates in ``Product.objects.list_visible()``
 - Fix restocking issues with refunded products
 - Add separate order line types for quantity and amount refunds
-- Add `can_create_shipment` and `can_create_payment` to `Order`
+- Add ``can_create_shipment`` and ``can_create_payment`` to ``Order``
 - Ensure refund amounts are associated with an order line
 - Fix tax handling for refunds
 - Fix bug: Prevent duplicate categories from all_visible-filter
@@ -1013,7 +1023,7 @@ Admin
 - Fix product "Add new image" link
 - Fix content block styles that are styled by id
 - Add Orders section to product detail page
-- Add `admin_product_section` provide to make product detail extendable
+- Add ``admin_product_section`` provide to make product detail extendable
 - Fix bug with empty customer names in order list view
 - Add warning when editing order with no customer contact
 - Show account manager info on order detail page
@@ -1047,14 +1057,14 @@ Admin
 - Populate tax number from contact for admin order creator
 - Move various dashboard blocks to own admin modules
 - Prevent shipments from being created for refunded products
-- Add `StockAdjustmentType` Enum
+- Add ``StockAdjustmentType`` Enum
 - Fix payment and shipment visibility in Orders admin
 - Manage category products from category edit view
 - Filter products based on category
 - Add permission check for dashboard blocks
 - Fix required permission issues for various modules
-- Make `model_url` context function and add permission check
-- Add permission check option to `get_model_url`
+- Make ``model_url`` context function and add permission check
+- Add permission check option to ``get_model_url``
 - Add permission check to toolbar button classes
 - Enable remarkable editor for service description
 - Add option to filter product list with manufacturer

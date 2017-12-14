@@ -23,6 +23,7 @@ from shuup.admin.forms.widgets import (
     QuickAddManufacturerSelect, QuickAddPaymentMethodsSelect,
     QuickAddProductTypeSelect, QuickAddShippingMethodsSelect, TextEditorWidget
 )
+from shuup.admin.signals import form_post_clean, form_pre_clean
 from shuup.core.models import (
     Attribute, AttributeType, Category, PaymentMethod, Product, ProductMedia,
     ProductMediaKind, ShippingMethod, ShopProduct, Supplier
@@ -112,6 +113,13 @@ class ProductBaseForm(MultiLanguageModelForm):
             instance.save()
         return instance
 
+    def clean(self):
+        form_pre_clean.send(
+            Product, instance=self.instance, cleaned_data=self.cleaned_data)
+        super(ProductBaseForm, self).clean()
+        form_post_clean.send(
+            Product, instance=self.instance, cleaned_data=self.cleaned_data)
+
 
 class ShopProductForm(forms.ModelForm):
     class Meta:
@@ -181,6 +189,8 @@ class ShopProductForm(forms.ModelForm):
         return backorder_maximum
 
     def clean(self):
+        form_pre_clean.send(
+            ShopProduct, instance=self.instance, cleaned_data=self.cleaned_data)
         data = super(ShopProductForm, self).clean()
         if not getattr(settings, "SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES", False):
             return data
@@ -195,6 +205,8 @@ class ShopProductForm(forms.ModelForm):
             categories = Category.objects.filter(pk__in=combined)
         data["primary_category"] = primary_category
         data["categories"] = categories
+        form_post_clean.send(
+            ShopProduct, instance=self.instance, cleaned_data=data)
         return data
 
 

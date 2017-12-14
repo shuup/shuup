@@ -20,7 +20,9 @@ from shuup.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
 )
 from shuup.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
-from shuup.core.signals import get_orderability_errors, get_visibility_errors
+from shuup.core.signals import (
+    get_orderability_errors, get_visibility_errors, post_clean, pre_clean
+)
 from shuup.core.utils import context_cache
 from shuup.utils.analog import define_log_model
 from shuup.utils.importing import cached_load
@@ -200,6 +202,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             supplier.module.update_stock(product_id=self.product.id)
 
     def clean(self):
+        pre_clean.send(type(self), instance=self)
         super(ShopProduct, self).clean()
         if self.display_unit:
             if self.display_unit.internal_unit != self.product.sales_unit:
@@ -207,6 +210,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                     "Invalid display unit: Internal unit of "
                     "the selected display unit does not match "
                     "with the sales unit of the product")})
+        post_clean.send(type(self), instance=self)
 
     def is_list_visible(self):
         """
