@@ -144,7 +144,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='category',
             name='image',
-            field=filer.fields.image.FilerImageField(blank=True, help_text='Category image. Will be shown at theme.', null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.FILER_IMAGE_MODEL, verbose_name='image'),
+            field=filer.fields.image.FilerImageField(blank=True, help_text='Category image. Will be shown at theme.', null=True, on_delete=django.db.models.deletion.SET_NULL, to='filer.Image', verbose_name='image'),
         ),
         migrations.AlterField(
             model_name='category',
@@ -814,12 +814,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='shop',
             name='favicon',
-            field=filer.fields.image.FilerImageField(blank=True, help_text='Shop favicon. Will be shown next to the address on browser.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='shop_favicons', to=settings.FILER_IMAGE_MODEL, verbose_name='favicon'),
+            field=filer.fields.image.FilerImageField(blank=True, help_text='Shop favicon. Will be shown next to the address on browser.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='shop_favicons', to='filer.Image', verbose_name='favicon'),
         ),
         migrations.AlterField(
             model_name='shop',
             name='logo',
-            field=filer.fields.image.FilerImageField(blank=True, help_text='Shop logo. Will be shown at theme.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='shop_logos', to=settings.FILER_IMAGE_MODEL, verbose_name='logo'),
+            field=filer.fields.image.FilerImageField(blank=True, help_text='Shop logo. Will be shown at theme.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='shop_logos', to='filer.Image', verbose_name='logo'),
         ),
         migrations.AlterField(
             model_name='shop',

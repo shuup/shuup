@@ -85,6 +85,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='slidetranslation',
             name='image',
-            field=filer.fields.image.FilerImageField(blank=True, help_text='The slide image to show.', null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to=settings.FILER_IMAGE_MODEL, verbose_name='image'),
+            field=filer.fields.image.FilerImageField(blank=True, help_text='The slide image to show.', null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='filer.Image', verbose_name='image'),
         ),
     ]
