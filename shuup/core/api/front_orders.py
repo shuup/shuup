@@ -105,6 +105,8 @@ class OrderSumTotalSerializerMixin(serializers.Serializer):
     taxful_total_discount = serializers.SerializerMethodField()
     taxless_total_discount = serializers.SerializerMethodField()
     total_price_of_products = serializers.SerializerMethodField()
+    taxful_total_price_of_products = serializers.SerializerMethodField()
+    taxless_total_price_of_products = serializers.SerializerMethodField()
 
     def get_taxful_total_discount(self, order):
         return Decimal(sum_order_lines_price(order, "taxful_discount_amount"))
@@ -114,6 +116,12 @@ class OrderSumTotalSerializerMixin(serializers.Serializer):
 
     def get_total_price_of_products(self, order):
         return Decimal(sum_order_lines_price(order, "price", filter_products_lines))
+
+    def get_taxful_total_price_of_products(self, order):
+        return Decimal(sum_order_lines_price(order, "taxful_price", filter_products_lines))
+
+    def get_taxless_total_price_of_products(self, order):
+        return Decimal(sum_order_lines_price(order, "taxless_price", filter_products_lines))
 
 
 class BaseOrderSerializer(serializers.Serializer):

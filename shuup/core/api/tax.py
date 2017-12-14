@@ -47,6 +47,8 @@ class TaxSummarySerializer(serializers.Serializer):
 
 
 class OrderLineTaxSerializer(serializers.ModelSerializer):
+    tax_id = serializers.CharField(required=False)
+    tax_code = serializers.CharField(required=False)
     tax = TaxSerializer(read_only=True)
     order_line = OrderLineSerializer(read_only=True)
 
