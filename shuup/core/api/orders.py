@@ -131,9 +131,9 @@ class OrderTaxesMixin(object):
         serializer = TaxSummarySerializer(data=rows, many=True)
         serializer.is_valid(True)
         lines = []
-        for line in order.lines.all():
+        for line in order.lines.filter(taxes__isnull=False):
             taxes = line.taxes.all()
-            ts = OrderLineTaxSerializer(taxes, many=True)
+            ts = OrderLineTaxSerializer(taxes, many=True, context=self.get_serializer_context())
             for row in ts.data:
                 lines.append(row)
         return Response({
