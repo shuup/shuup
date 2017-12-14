@@ -128,6 +128,27 @@ def test_basket_shipping_error(rf):
 
 
 @pytest.mark.django_db
+def test_basket_data_fields(rf):
+    StoredBasket.objects.all().delete()
+    shop = get_default_shop()
+    request = rf.get("/")
+    request.session = {}
+    request.shop = shop
+    apply_request_middleware(request)
+    basket = get_basket(request)
+    basket.shipping_data = {"shipment": True}
+    basket.payment_data = {"payment": True}
+    basket.extra_data = {"extra": True}
+    basket.save()
+    request.basket = None
+    request.baskets = None
+    basket = get_basket(request)
+    assert basket.shipping_data["shipment"] is True
+    assert basket.payment_data["payment"] is True
+    assert basket.extra_data["extra"] is True
+
+
+@pytest.mark.django_db
 def test_basket_orderability_change(rf):
     StoredBasket.objects.all().delete()
     shop = get_default_shop()

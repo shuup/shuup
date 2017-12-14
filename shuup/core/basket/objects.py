@@ -91,6 +91,20 @@ class BasketLine(SourceLine):
         return (self.type == OrderLineType.PRODUCT and self.line_source != LineSource.DISCOUNT_MODULE)
 
 
+class _DataValueProperty(object):
+    def __init__(self, name, default=None):
+        self.name = name
+        self.default = default
+
+    def __get__(self, instance, type=None):
+        if instance is None:
+            return self
+        return instance._get_value_from_data(self.name) or self.default
+
+    def __set__(self, instance, value):
+        instance._set_value_to_data(self.name, value)
+
+
 class BaseBasket(OrderSource):
     def __init__(self, request, basket_name="basket"):
         super(BaseBasket, self).__init__(request.shop)
@@ -288,6 +302,10 @@ class BaseBasket(OrderSource):
     def customer_comment(self, value):
         self._customer_comment = value or ""
         self._set_value_to_data("customer_comment", value or "")
+
+    extra_data = _DataValueProperty('extra_data', {})
+    shipping_data = _DataValueProperty('shipping_data', {})
+    payment_data = _DataValueProperty('payment_data', {})
 
     @property
     def _data_lines(self):

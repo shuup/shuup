@@ -9,3 +9,7 @@
 from django.dispatch import Signal
 
 object_created = Signal(providing_args=["object"], use_caching=True)
+form_post_clean = Signal(
+    providing_args=["instance", "cleaned_data"], use_caching=True)
+form_pre_clean = Signal(
+    providing_args=["instance", "cleaned_data"], use_caching=True)

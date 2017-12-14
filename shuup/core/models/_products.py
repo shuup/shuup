@@ -19,6 +19,7 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.fields import InternalIdentifierField, MeasurementField
+from shuup.core.signals import post_clean, pre_clean
 from shuup.core.taxing import TaxableItem
 from shuup.core.utils import context_cache
 from shuup.core.utils.slugs import generate_multilanguage_slugs
@@ -561,11 +562,17 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         return getattr(translation, "name", self.sku)
 
     def save(self, *args, **kwargs):
+        self.clean()
         if self.net_weight and self.net_weight > 0:
             self.gross_weight = max(self.net_weight, self.gross_weight)
         rv = super(Product, self).save(*args, **kwargs)
         generate_multilanguage_slugs(self, self._get_slug_name)
         return rv
+
+    def clean(self):
+        pre_clean.send(type(self), instance=self)
+        super(Product, self).clean()
+        post_clean.send(type(self), instance=self)
 
     def delete(self, using=None):
         raise NotImplementedError("Not implemented: Use `soft_delete()` for products.")
