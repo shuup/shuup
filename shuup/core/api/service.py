@@ -59,7 +59,7 @@ class ServiceBaseSerializer(TranslatableModelSerializer):
         price = None
         source = self.context.get("source")
         if source:
-            price = service.get_total_cost(source).taxful_price.value
+            price = service.get_total_cost(source).price.value
         return price
 
     def get_behavior_components(self, service):

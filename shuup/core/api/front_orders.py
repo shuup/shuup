@@ -12,8 +12,10 @@ from rest_framework import mixins, serializers, viewsets
 
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.address import AddressSerializer
-from shuup.core.api.orders import OrderFilter
-from shuup.core.models import get_person_contact, Order, OrderLine, Shop
+from shuup.core.api.orders import OrderFilter, OrderTaxesMixin
+from shuup.core.models import (
+    Currency, get_person_contact, Order, OrderLine, Shop
+)
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 
 from .mixins import (
@@ -21,6 +23,7 @@ from .mixins import (
     TaxLineSerializerMixin
 )
 from .orders import PaymentSerializer
+from .shop import CurrencySerializer
 
 
 def filter_products_lines(line):
@@ -102,6 +105,8 @@ class OrderSumTotalSerializerMixin(serializers.Serializer):
     taxful_total_discount = serializers.SerializerMethodField()
     taxless_total_discount = serializers.SerializerMethodField()
     total_price_of_products = serializers.SerializerMethodField()
+    taxful_total_price_of_products = serializers.SerializerMethodField()
+    taxless_total_price_of_products = serializers.SerializerMethodField()
 
     def get_taxful_total_discount(self, order):
         return Decimal(sum_order_lines_price(order, "taxful_discount_amount"))
@@ -112,8 +117,24 @@ class OrderSumTotalSerializerMixin(serializers.Serializer):
     def get_total_price_of_products(self, order):
         return Decimal(sum_order_lines_price(order, "price", filter_products_lines))
 
+    def get_taxful_total_price_of_products(self, order):
+        return Decimal(sum_order_lines_price(order, "taxful_price", filter_products_lines))
 
-class OrderSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializerMixin, serializers.ModelSerializer):
+    def get_taxless_total_price_of_products(self, order):
+        return Decimal(sum_order_lines_price(order, "taxless_price", filter_products_lines))
+
+
+class BaseOrderSerializer(serializers.Serializer):
+    currency = serializers.SerializerMethodField()
+
+    def get_currency(self, order):
+        return CurrencySerializer(Currency.objects.get(code=order.currency), context=self.context).data
+
+
+class OrderSerializer(BaseOrderTotalSerializerMixin,
+                      OrderSumTotalSerializerMixin,
+                      BaseOrderSerializer,
+                      serializers.ModelSerializer):
     shop = ShopSerializer()
     payments = PaymentSerializer(many=True)
 
@@ -122,7 +143,10 @@ class OrderSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializerMixi
         fields = "__all__"
 
 
-class OrderDetailSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializerMixin, serializers.ModelSerializer):
+class OrderDetailSerializer(BaseOrderTotalSerializerMixin,
+                            OrderSumTotalSerializerMixin,
+                            BaseOrderSerializer,
+                            serializers.ModelSerializer):
     lines = OrderLineSerializer(many=True)
     payments = PaymentSerializer(many=True)
 
@@ -131,7 +155,8 @@ class OrderDetailSerializer(BaseOrderTotalSerializerMixin, OrderSumTotalSerializ
         fields = "__all__"
 
 
-class FrontOrderViewSet(PermissionHelperMixin,
+class FrontOrderViewSet(OrderTaxesMixin,
+                        PermissionHelperMixin,
                         mixins.ListModelMixin,
                         mixins.RetrieveModelMixin,
                         viewsets.GenericViewSet):

@@ -18,12 +18,13 @@ from shuup.core.excs import (
     NoProductsToShipException, RefundExceedsAmountException
 )
 from shuup.core.models import (
-    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentStatus,
-    ShippingStatus, StockBehavior
+    AnonymousContact, Order, OrderLine, OrderLineTax, OrderLineType,
+    OrderStatus, PaymentStatus, ShippingStatus, StockBehavior
 )
-from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.core.pricing import get_pricing_module, TaxfulPrice, TaxlessPrice
 from shuup.testing.factories import (
-    create_empty_order, create_order_with_product, create_product, get_address,
+    _get_pricing_context, add_product_to_order, create_empty_order,
+    create_order_with_product, create_product, get_address,
     get_default_product, get_default_shop, get_default_supplier,
     get_default_tax, get_initial_order_status
 )
@@ -172,6 +173,46 @@ def test_basic_order():
     assert summary[1].tax_code == ''
     assert summary[1].tax_amount == Money(0, currency)
     assert summary[1].tax_rate == 0
+    assert order.get_total_tax_amount() == 50
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("include_taxes", [True, False])
+def test_complex_order_tax(include_taxes):
+    tax = get_default_tax()
+    quantities = [44, 23, 65]
+    product = get_default_product()
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    shop.prices_include_tax = include_taxes
+    shop.save()
+
+    order = create_empty_order(shop=shop)
+    order.full_clean()
+    order.save()
+
+    pricing_context = get_pricing_module().get_context_from_data(
+        shop=shop,
+        customer=order.customer or AnonymousContact(),
+    )
+
+    total_price = Decimal("0")
+    price = Decimal("50")
+
+    for quantity in quantities:
+        total_price += quantity * price
+        add_product_to_order(order, supplier, product, quantity, price, tax.rate, pricing_context)
+    order.cache_prices()
+    order.save()
+
+    currency = "EUR"
+    summary = order.get_tax_summary()[0]
+
+    assert summary.tax_rate == tax.rate
+    assert summary.based_on == Money(total_price, currency)
+    assert summary.tax_amount == Money(total_price * tax.rate, currency)
+    assert summary.taxful == summary.based_on + summary.tax_amount
+    assert order.get_total_tax_amount() == total_price * tax.rate
 
 
 @pytest.mark.django_db
@@ -305,6 +346,7 @@ def test_refunds():
     assert order.taxless_total_price.amount == taxless_base_unit_price.amount
     assert order.taxful_total_price.amount == taxless_base_unit_price.amount * (1 + tax_rate)
     assert order.can_create_refund()
+    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
 
     # Try to refunding remaining amount without a parent line
     with pytest.raises(AssertionError):
@@ -318,6 +360,7 @@ def test_refunds():
 
     assert not order.taxful_total_price.amount
     assert not order.can_create_refund()
+    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
 
     with pytest.raises(RefundExceedsAmountException):
         order.create_refund([{"line": product_line, "quantity": 1, "amount": taxless_base_unit_price.amount}])
@@ -431,6 +474,7 @@ def test_refund_with_shipment(restock):
     else:
         # Make sure maximum restockable quantity is not 0
         check_stock_counts(supplier, product, physical=8, logical=6)
+    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
 
 
 @pytest.mark.django_db
@@ -462,6 +506,7 @@ def test_refund_without_shipment(restock):
     else:
         check_stock_counts(supplier, product, physical=10, logical=8)
     assert product_line.refunded_quantity == 2
+    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
 
 
 @pytest.mark.django_db
@@ -485,6 +530,7 @@ def test_max_refundable_amount():
 
     order.create_refund([{"line": line, "quantity": 1, "amount": partial_refund_amount}])
     assert line.max_refundable_amount == line.taxful_price.amount - partial_refund_amount
+    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
 
 
 @pytest.mark.django_db

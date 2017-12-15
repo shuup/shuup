@@ -5,18 +5,25 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from decimal import Decimal
+
 import pytest
 from django.conf import settings
 from django.db.models import Sum
+from django.utils.translation import activate
 
 from shuup.core.models import ShippingMode
+from shuup.default_tax.models import TaxRule
 from shuup.front.basket import get_basket
 from shuup.front.models import StoredBasket
 from shuup.testing.factories import (
-    create_product, get_default_shop, get_default_payment_method,
-    get_default_supplier, get_shipping_method,
-    get_default_shipping_method)
+    create_default_tax_rule, create_product, get_default_payment_method,
+    get_default_shipping_method, get_default_shop, get_default_supplier,
+    get_default_tax, get_default_tax_class, get_shipping_method, get_tax
+)
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.money import Money
+from shuup.utils.numbers import bankers_round
 from shuup_tests.utils import printable_gibberish
 
 from .utils import get_unstocked_package_product_and_stocked_child
@@ -66,7 +73,6 @@ def test_basket(rf):
         assert stats["tfs"] == sum(quantities) * 50
     else:
         assert stats["tls"] == sum(quantities) * 50
-
     basket.finalize()
 
 
@@ -281,4 +287,3 @@ def test_basket_clearing(rf):
 
     assert not basket.shipping_method
     assert not basket.payment_method
-

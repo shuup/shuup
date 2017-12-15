@@ -72,9 +72,12 @@ def test_retrieve_order(admin_user):
     assert response_data["id"] == order.pk
 
     order.refresh_from_db()
-    total_of_products = sum([line.price.value for line in order.lines.filter(type=OrderLineType.PRODUCT)])
+    taxful_total_of_products = sum([line.price.value for line in order.lines.filter(type=OrderLineType.PRODUCT)])
+    taxless_total_of_products = sum([line.taxless_price.value for line in order.lines.filter(type=OrderLineType.PRODUCT)])
     assert Decimal(response_data["taxful_total_price"]) == Decimal(order.taxful_total_price)
-    assert Decimal(response_data["total_price_of_products"]) == Decimal(total_of_products)
+    assert Decimal(response_data["total_price_of_products"]) == Decimal(taxful_total_of_products)
+    assert Decimal(response_data["taxful_total_price_of_products"]) == Decimal(taxful_total_of_products)  # prices include tax
+    assert Decimal(response_data["taxless_total_price_of_products"]) == Decimal(taxless_total_of_products)
     assert Decimal(response_data["taxful_total_discount"]) == Decimal(0)
 
     # add shipping

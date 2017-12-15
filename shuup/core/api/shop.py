@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import babel
 import django_filters
 from django.db.models.expressions import RawSQL
 from django.utils.translation import ugettext_lazy as _
@@ -19,7 +20,19 @@ from rest_framework.settings import api_settings
 from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.api.address import AddressSerializer
-from shuup.core.models import Shop, ShopStatus
+from shuup.core.models import Currency, Shop, ShopStatus
+from shuup.utils.i18n import get_current_babel_locale
+
+
+class CurrencySerializer(serializers.ModelSerializer):
+    symbol = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Currency
+        exclude = ["id"]
+
+    def get_symbol(self, currency):
+        return babel.numbers.get_currency_symbol(currency.code, get_current_babel_locale())
 
 
 class ShopSerializer(TranslatableModelSerializer):
@@ -38,6 +51,11 @@ class ShopSerializer(TranslatableModelSerializer):
             "created_on": {"read_only": True},
         }
         exclude = ("identifier",)
+
+    def to_representation(self, instance):
+        data = super(ShopSerializer, self).to_representation(instance)
+        data["currency"] = CurrencySerializer(Currency.objects.get(code=instance.currency), context=self.context).data
+        return data
 
     def get_logo(self, shop):
         if shop.logo:

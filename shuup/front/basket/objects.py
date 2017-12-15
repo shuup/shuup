@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.basket.objects import BaseBasket as Basket
 from shuup.core.basket.storage import BasketCompatibilityError
+from shuup.core.models import AnonymousContact, Contact
 
 
 class BaseBasket(Basket):
@@ -38,3 +39,19 @@ class BaseBasket(Basket):
             self.dirty = False
             self.uncache()
         return self._data
+
+    @property
+    def customer(self):
+        if self._customer:
+            return self._customer
+
+        customer_id = self._get_value_from_data("customer_id")
+        if customer_id:
+            return Contact.objects.get(pk=customer_id)
+
+        return getattr(self.request, "customer", AnonymousContact())
+
+    @customer.setter
+    def customer(self, value):
+        self._customer = value
+        self._set_value_to_data("customer_id", getattr(value, "pk", None))

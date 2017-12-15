@@ -4,18 +4,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import datetime
 from decimal import Decimal
 
 import pytest
 from django.db import IntegrityError
-from django.utils.timezone import now
 
 from shuup.campaigns.admin_module.forms import BasketCampaignForm
 from shuup.campaigns.models.basket_conditions import (
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
-    CategoryProductsBasketCondition, HourBasketCondition,
-    ProductsInBasketCondition
+    CategoryProductsBasketCondition, ProductsInBasketCondition
 )
 from shuup.campaigns.models.basket_effects import (
     BasketDiscountAmount, BasketDiscountPercentage
@@ -446,82 +443,3 @@ def test_product_basket_campaigns2():
     campaign.save()
     assert BasketCampaign.get_for_product(shop_product).count() == 0
     assert BasketCampaign.get_for_product(sp).count() == 1
-
-
-@pytest.mark.django_db
-def test_hourly_campaigns(rf):
-    shop = get_default_shop()
-    product = create_product("test", shop, default_price=20)
-    shop_product = product.get_shop_instance(shop)
-    cat = Category.objects.create(name="test")
-
-    hour_start = (now() - datetime.timedelta(hours=2)).time()
-    hour_end = (now() + datetime.timedelta(hours=2)).time()
-
-    w_today = now().date().weekday()
-    w_tomorrow = (now() + datetime.timedelta(days=1)).date().weekday()
-    w_future = (now() + datetime.timedelta(days=2)).date().weekday()
-    matching_days = ",".join(map(str,[w_today]))
-    non_matching_days = ",".join(map(str, [w_tomorrow, w_future]))
-
-    hour_condition = HourBasketCondition.objects.create(hour_start=hour_start, hour_end=hour_end, days=matching_days)
-    assert hour_condition.matches(None, None)
-
-    campaign = BasketCampaign.objects.create(shop=shop, name="test", active=True)
-    campaign.conditions.add(hour_condition)
-    campaign.save()
-
-    price = shop.create_price
-
-    default_price = 199
-    product = create_product("Just-A-Product-Too", shop, default_price=default_price)
-
-    # days change
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)
-
-    # time in future
-    hour_condition.hour_start = (now() + datetime.timedelta(hours=2)).time()
-    hour_condition.hour_end = (now() + datetime.timedelta(hours=4)).time()
-
-    hour_condition.days = matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)
-
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)
-
-    # time in past
-    hour_condition.hour_start = (now() - datetime.timedelta(hours=3)).time()
-    hour_condition.hour_end = (now() - datetime.timedelta(hours=2)).time()
-    hour_condition.days = matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)
-
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)
-
-    # time in future and
-    hour_condition.hour_start = (now() + datetime.timedelta(hours=2)).time()
-    hour_condition.hour_end = (now() + datetime.timedelta(hours=4)).time()
-    hour_condition.days = matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)
-
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)
-
-    # time in past
-    hour_condition.hour_start = (now() - datetime.timedelta(hours=3)).time()
-    hour_condition.hour_end = (now() - datetime.timedelta(hours=2)).time()
-    hour_condition.days = matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)
-
-    hour_condition.days = non_matching_days
-    hour_condition.save()
-    assert not hour_condition.matches(None, None)

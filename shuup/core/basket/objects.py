@@ -18,10 +18,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.core.models import (
-    MutableAddress, OrderLineType, PaymentMethod, ShippingMethod, ShopProduct
+    AnonymousContact, Contact, MutableAddress, OrderLineType, PaymentMethod,
+    PersonContact, ShippingMethod, ShopProduct
 )
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
+from shuup.core.pricing._context import PricingContext
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.objects import compare_partial_dicts
 
@@ -41,10 +43,10 @@ class BasketLine(SourceLine):
         """
         return self.product.get_shop_instance(self.shop)
 
-    def cache_info(self, request):
+    def cache_info(self, pricing_context):
         product = self.product
         # TODO: ensure shop identity?
-        price_info = product.get_price_info(request, quantity=self.quantity)
+        price_info = product.get_price_info(pricing_context, quantity=self.quantity)
         self.base_unit_price = price_info.base_unit_price
         self.discount_amount = price_info.discount_amount
         assert self.price == price_info.price
@@ -116,8 +118,6 @@ class BaseBasket(OrderSource):
         self._shipping_address = None
         self._billing_address = None
         self._customer_comment = u""
-        self.customer = getattr(request, "customer", None)
-        self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
 
         # {Note: Being "dirty" means "not saved".  It's independent of
@@ -204,6 +204,38 @@ class BaseBasket(OrderSource):
     def _get_value_from_data(self, field_attr):
         if hasattr(self, "_data") and self._load().get(field_attr):
             return self._load()[field_attr]
+
+    @property
+    def customer(self):
+        if self._customer:
+            return self._customer
+
+        customer_id = self._get_value_from_data("customer_id")
+        if customer_id:
+            return Contact.objects.get(pk=customer_id)
+
+        return AnonymousContact()
+
+    @customer.setter
+    def customer(self, value):
+        self._customer = value
+        self._set_value_to_data("customer_id", getattr(value, "pk", None))
+
+    @property
+    def orderer(self):
+        if self._orderer:
+            return self._orderer
+
+        orderer_id = self._get_value_from_data("orderer_id")
+        if orderer_id:
+            return PersonContact.objects.get(pk=orderer_id)
+
+        return getattr(self.request, "person", AnonymousContact())
+
+    @orderer.setter
+    def orderer(self, value):
+        self._orderer = value
+        self._set_value_to_data("orderer_id", getattr(value, "pk", None))
 
     @property
     def shipping_address(self):
@@ -488,13 +520,23 @@ class BaseBasket(OrderSource):
 
         return self.update_line(data, quantity=new_quantity, **extra)
 
+    def refresh_lines(self):
+        """
+        Refresh lines recalculating prices
+        """
+        pricing_context = PricingContext(shop=self.shop, customer=self.customer)
+        for line_data in self._data_lines:
+            line = BasketLine.from_dict(self, line_data)
+            line.cache_info(pricing_context)
+            self._add_or_replace_line(line)
+
     def update_line(self, data_line, **kwargs):
         line = BasketLine.from_dict(self, data_line)
         new_quantity = kwargs.pop("quantity", None)
         if new_quantity is not None:
             line.set_quantity(new_quantity)
         line.update(**kwargs)
-        line.cache_info(self.request)
+        line.cache_info(PricingContext(shop=self.shop, customer=self.customer))
         self._add_or_replace_line(line)
         return line
 

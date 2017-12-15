@@ -23,22 +23,20 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from shuup.api.decorators import schema_serializer_class
-from shuup.api.fields import EnumField
+from shuup.api.fields import EnumField, FormattedDecimalField
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.address import AddressSerializer
 from shuup.core.api.contacts import PersonContactSerializer
+from shuup.core.api.tax import SourceLineTaxSerializer, TaxSummarySerializer
 from shuup.core.basket import (
     get_basket_command_dispatcher, get_basket_order_creator
 )
-from shuup.core.basket.storage import BasketCompatibilityError
+from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.core.excs import ProductNotOrderableProblem
-from shuup.core.fields import (
-    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
-)
 from shuup.core.models import (
-    Basket, Contact, get_company_contact, get_person_contact, MutableAddress,
-    Order, OrderLineType, OrderStatus, PaymentMethod, Product, ShippingMethod,
-    Shop, ShopProduct
+    AnonymousContact, Basket, Contact, Currency, get_company_contact,
+    get_person_contact, MutableAddress, Order, OrderLineType, OrderStatus,
+    PaymentMethod, Product, ShippingMethod, Shop, ShopProduct, ShopStatus
 )
 from shuup.core.order_creator._source import LineSource
 from shuup.utils.importing import cached_load
@@ -48,6 +46,7 @@ from .mixins import (
     TaxLineSerializerMixin
 )
 from .service import PaymentMethodSerializer, ShippingMethodSerializer
+from .shop import CurrencySerializer
 
 
 def get_shop_id(uuid):
@@ -70,6 +69,27 @@ class BasketProductSerializer(TranslatableModelSerializer):
     class Meta:
         model = Product
         fields = ["id", "translations"]
+
+
+class NewBasketSerializer(serializers.Serializer):
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.filter(status=ShopStatus.ENABLED), required=False)
+    customer = serializers.PrimaryKeyRelatedField(
+        queryset=Contact.objects.filter(is_active=True), allow_null=True, required=False)
+    orderer = serializers.PrimaryKeyRelatedField(
+        queryset=Contact.objects.filter(is_active=True), allow_null=True, required=False)
+
+
+class BasketSetCustomerSerializer(serializers.Serializer):
+    customer = serializers.PrimaryKeyRelatedField(
+        queryset=Contact.objects.filter(is_active=True), allow_null=True)
+    orderer = serializers.PrimaryKeyRelatedField(
+        queryset=Contact.objects.filter(is_active=True), allow_null=True, required=False)
+
+
+class BasketRequestAbandonedSerializer(serializers.Serializer):
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.filter(status=ShopStatus.ENABLED))
+    days_ago = serializers.IntegerField(required=False)
+    not_updated_in_hours = serializers.IntegerField(required=False)
 
 
 class BasketCustomerSerializer(PersonContactSerializer):
@@ -160,20 +180,27 @@ class BasketSerializer(BaseOrderTotalSerializerMixin, serializers.Serializer):
     payment_method = PaymentMethodSerializer()
     available_shipping_methods = serializers.SerializerMethodField()
     available_payment_methods = serializers.SerializerMethodField()
-    customer = BasketCustomerSerializer()
+    customer = serializers.SerializerMethodField()
     validation_errors = serializers.SerializerMethodField()
     customer_comment = serializers.SerializerMethodField()
 
-    total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                              decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxful_total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    taxless_total_discount = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                      decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    total_price_of_products = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                                       decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    total_discount = FormattedDecimalField()
+    total_price = FormattedDecimalField()
+    taxful_total_discount = FormattedDecimalField()
+    taxless_total_discount = FormattedDecimalField()
+    total_price_of_products = FormattedDecimalField()
+    taxful_total_price_of_products = FormattedDecimalField()
+    taxless_total_price_of_products = FormattedDecimalField()
+
+    prices_include_tax = serializers.BooleanField()
+    currency = serializers.SerializerMethodField()
+
+    def get_customer(self, basket):
+        if basket.customer:
+            return BasketCustomerSerializer(basket.customer).data
+
+    def get_currency(self, basket):
+        return CurrencySerializer(Currency.objects.get(code=basket.currency), context=self.context).data
 
     def get_shipping_address(self, basket):
         if basket._data.get('shipping_address_id'):
@@ -210,17 +237,13 @@ class StoredBasketSerializer(serializers.ModelSerializer):
 
 class BaseProductAddBasketSerializer(serializers.Serializer):
     supplier = serializers.IntegerField(required=False)
-    quantity = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES,
-                                        required=False)
-    price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES,
-                                     required=False, allow_null=True)
+    quantity = FormattedDecimalField(required=False)
+    price = FormattedDecimalField(required=False, allow_null=True)
     description = serializers.CharField(max_length=128, required=False, allow_null=True)
 
 
 class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
-    shop_product = serializers.PrimaryKeyRelatedField(queryset=ShopProduct.objects.all())
+    shop_product = serializers.PrimaryKeyRelatedField(queryset=ShopProduct.objects.filter(purchasable=True))
     shop = serializers.SerializerMethodField()
     product = serializers.SerializerMethodField()
 
@@ -239,8 +262,8 @@ class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
 
 
 class ProductAddBasketSerializer(BaseProductAddBasketSerializer):
-    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.all())
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.filter(status=ShopStatus.ENABLED))
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.filter(deleted=False))
 
     def validate(self, data):
         # TODO - we probably eventually want this ability
@@ -256,8 +279,7 @@ class RemoveBasketSerializer(serializers.Serializer):
 
 class LineQuantitySerializer(serializers.Serializer):
     line_id = serializers.CharField()
-    quantity = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+    quantity = FormattedDecimalField()
 
 
 class MethodIDSerializer(serializers.Serializer):
@@ -318,29 +340,26 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
 
     def get_basket_shop(self):
         if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+            shop_id = None
             uuid = self.kwargs.get(self.lookup_field, "")
             if uuid:
                 shop_id = get_shop_id(self.kwargs.get(self.lookup_field, ""))
-            else:
-                # shop will be part of POST'ed data for basket creation
-                shop_id = self.request.data.get("shop")
+
             if not shop_id:
-                try:
-                    shop_id = self.request.GET["shop"]
-                except:
-                    raise exceptions.ValidationError("No basket shop specified.")
+                raise exceptions.ValidationError("No basket shop specified.")
+
             # this shop should be the shop associated with the basket
             return get_object_or_404(Shop, pk=shop_id)
         else:
             return Shop.objects.first()
 
-    def process_request(self, with_basket=True):
+    def process_request(self, with_basket=True, shop=None):
         """
         Add context to request that's expected by basket
         """
         request = self.request._request
         user = self.request.user
-        request.shop = self.get_basket_shop()
+        request.shop = shop or self.get_basket_shop()
         request.person = get_person_contact(user)
         company = get_company_contact(user)
         request.customer = (company or request.person)
@@ -372,65 +391,79 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         return [contact.pk] + list(contact.company_memberships.all().values_list("pk", flat=True))
 
     def get_object(self):
-        uuid = get_key(self.kwargs.get(self.lookup_field, ""))
+        basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         shop = self.request.shop
-
-        loaded_basket = Basket.objects.filter(key=uuid, shop=shop).first()
-
-        if not loaded_basket:
+        uuid = get_key(self.kwargs.get(self.lookup_field, ""))
+        storage = get_storage()
+        if not storage.basket_exists(uuid, shop):
             raise exceptions.NotFound()
 
-        # ensure correct owner
-        if not self.request.user.is_superuser:
-            if not loaded_basket.shop == shop:
-                raise exceptions.PermissionDenied("No permission")
-
-            customer_id = (loaded_basket.customer.pk if loaded_basket.customer else None)
-            controlled_contact_ids = self._get_controlled_contacts_by_user(self.request.user)
-            is_staff = self.is_staff_user(shop, self.request.user)
-            if customer_id and customer_id not in controlled_contact_ids and not is_staff:
-                raise exceptions.PermissionDenied("No permission")
-
-        # actually load basket
-        basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(self.request._request, basket_name=uuid)
-
         try:
             basket._data = basket.storage.load(basket)
         except BasketCompatibilityError as error:
             raise exceptions.ValidationError(str(error))
 
-        # Hack: the storage should do this already
-        # set the correct basket customer
-        if loaded_basket.customer:
-            basket.customer = loaded_basket.customer
+        # ensure correct creator
+        if not self.request.user.is_superuser:
+            if not basket.shop == shop:
+                raise exceptions.PermissionDenied("No permission")
+
+            customer_id = (basket.customer.pk if basket.customer else None)
+            controlled_contact_ids = self._get_controlled_contacts_by_user(self.request.user)
+            is_staff = self.is_staff_user(shop, self.request.user)
+            if customer_id and customer_id not in controlled_contact_ids and not is_staff:
+                raise exceptions.PermissionDenied("No permission")
 
         return basket
 
     def is_staff_user(self, shop, user):
         return (shop and user.is_staff and shop.staff_members.filter(pk=user.pk).exists())
 
+    def _handle_set_customer(self, request, basket, customer, orderer=None):
+        try:
+            cmd_kwargs = {
+                "request": request,
+                "basket": basket,
+                "customer": customer or AnonymousContact(),
+                "orderer": orderer
+            }
+            self._handle_cmd(self.request, "set_customer", cmd_kwargs)
+        except ValidationError as exc:
+            if exc.code in ["no_permission", "orderer_not_company_member", "not_company_member"]:
+                raise exceptions.PermissionDenied(exc.message)
+            else:
+                raise exceptions.ValidationError(exc.message)
+
+    @schema_serializer_class(NewBasketSerializer)
     @list_route(methods=['post'])
     def new(self, request, *args, **kwargs):
         """
         Create a brand new basket object
         """
-        self.process_request(with_basket=False)
+        serializer = NewBasketSerializer(data=request.data)
+        serializer.is_valid(True)
+        data = serializer.validated_data
+
+        self.process_request(with_basket=False, shop=data.get("shop"))
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(request._request)
 
-        customer_id = request.POST.get("customer_id")
-        if not customer_id:
-            customer_id = request.data.get("customer_id")
+        if "customer" in data:
+            customer = data["customer"]
+        else:
+            customer = get_company_contact(request.user) or get_person_contact(request.user)
 
-        if customer_id:
-            is_staff = self.is_staff_user(self.request.shop, self.request.user)
-            is_superuser = self.request.user.is_superuser
+        orderer = data.get("orderer", get_person_contact(request.user))
 
-            if int(customer_id) in self._get_controlled_contacts_by_user(self.request.user) or is_superuser or is_staff:
-                basket.customer = Contact.objects.get(pk=int(customer_id))
-            else:
-                raise exceptions.PermissionDenied("No permission")
+        # set the request basket to perform the basket command
+        self.request.basket = basket
+        self._handle_set_customer(
+            request=self.request._request,
+            basket=basket,
+            customer=customer,
+            orderer=orderer
+        )
 
         stored_basket = basket.save()
         response_data = {
@@ -446,16 +479,24 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         response = cmd_handler(**cmd_kwargs)
         return cmd_dispatcher.postprocess_response(command, cmd_kwargs, response)
 
+    @schema_serializer_class(BasketRequestAbandonedSerializer)
     @list_route(methods=['get'])
     def abandoned(self, request, *args, **kwargs):
-        self.process_request(with_basket=False)
-        days = int(request.GET.get("days_ago", 14))
+        if settings.SHUUP_BASKET_STORAGE_CLASS_SPEC != "shuup.core.basket.storage:DatabaseBasketStorage":
+            raise exceptions.NotAcceptable("Invalid basket storage for this route.")
+
+        serializer = BasketRequestAbandonedSerializer(data=request.query_params)
+        serializer.is_valid(True)
+        data = serializer.validated_data
+
+        self.process_request(with_basket=False, shop=data["shop"])
+        days = data.get("days_ago", 14)
 
         days_ago = None
         if days:
             days_ago = now() - datetime.timedelta(days=days)
 
-        not_updated_in_hours = int(request.GET.get("not_updated_in_hours", 2))
+        not_updated_in_hours = data.get("not_updated_in_hours", 2)
         late_cutoff = now() - datetime.timedelta(hours=not_updated_in_hours)
 
         if days_ago:
@@ -605,6 +646,25 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         else:
             return Response({"invalid_command": "Invalid command"}, status=status.HTTP_400_BAD_REQUEST)
 
+    @schema_serializer_class(BasketSetCustomerSerializer)
+    @detail_route(methods=['post'])
+    def set_customer(self, request, *args, **kwargs):
+        """
+        Set the basket customer
+        """
+        self.process_request()
+        serializer = BasketSetCustomerSerializer(data=request.data, context=self.get_serializer_context())
+        serializer.is_valid(raise_exception=True)
+        self._handle_set_customer(
+            request=request,
+            basket=request.basket,
+            customer=serializer.validated_data["customer"],
+            orderer=serializer.validated_data.get("orderer", get_person_contact(request.user))
+        )
+        request.basket.refresh_lines()
+        request.basket.save()
+        return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
+
     @schema_serializer_class(AddressSerializer)
     @detail_route(methods=['post'])
     def set_shipping_address(self, request, *args, **kwargs):
@@ -676,19 +736,6 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
         order_creator = get_basket_order_creator()
 
-        customer_id = request.POST.get("customer_id")
-        if not customer_id:
-            customer_id = request.data.get("customer_id")
-
-        if customer_id:
-            # staff and superuser can set custom customer to the basket
-            is_staff = self.is_staff_user(self.request.shop, self.request.user)
-            is_superuser = self.request.user.is_superuser
-            if is_superuser or is_staff:
-                from shuup.core.models import PersonContact
-                customer = PersonContact.objects.get(pk=customer_id)
-                request.basket.customer = customer
-
         order = order_creator.create_order(request.basket)
         request.basket.finalize()
         return Response(data=OrderSerializer(order).data, status=status.HTTP_201_CREATED)
@@ -710,7 +757,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         order = order_queryset.first()
         if not order:
             return Response({"error": "invalid order"}, status=status.HTTP_404_NOT_FOUND)
-        self.clear(request, *args, **kwargs)
+
         for line in order.lines.products():
             try:
                 self._add_product(request, add_data={
@@ -809,3 +856,28 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         )
         basket.add_line(**line_data)
         basket.save()
+
+    @detail_route(methods=['get'])
+    def taxes(self, request, *args, **kwargs):
+        """
+        Get taxes for basket
+        """
+        self.process_request()
+        basket = request.basket
+        tax_summary = basket.get_tax_summary()
+        rows = [row.to_dict() for row in tax_summary]
+        basket_summary_serializer = TaxSummarySerializer(data=rows, many=True)
+        basket_summary_serializer.is_valid(True)
+        lines = []
+        for line in basket.get_final_lines(True):
+            items = []
+            for source_line_tax in line.taxes:
+                source_line_tax.line_id = line.line_id
+                items.append(source_line_tax)
+            ts = SourceLineTaxSerializer(items, many=True)
+            for row in ts.data:
+                lines.append(row)
+        return Response({
+            "summary": basket_summary_serializer.validated_data,
+            "lines": lines
+        })

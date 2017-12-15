@@ -94,3 +94,6 @@ class DatabaseBasketStorage(BaseDatabaseBasketStorage):
         if not stored_basket.pk and self.get_basket_kwargs(basket):
             basket.request.session.pop(self._get_session_key(basket), None)
         return stored_basket
+
+    def basket_exists(self, key, shop):
+        return self.model.objects.filter(key=key, shop=shop).exists()
