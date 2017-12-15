@@ -33,6 +33,23 @@ def test_set_from_customer_to_anonymous(rf):
         basket.customer = get_person_contact(user)
         assert basket_commands.handle_set_customer(request, basket, AnonymousContact())["ok"] is True
         assert basket.customer == AnonymousContact()
+        assert basket.orderer == AnonymousContact()
+        assert basket.creator == user
+
+
+@pytest.mark.django_db
+def test_set_from_admin_to_anonymous(admin_user, rf):
+    """
+    Set anonymous to the basket customer
+    """
+    with override_settings(**CORE_BASKET_SETTINGS):
+        request = apply_request_middleware(rf.get("/"), user=admin_user)
+        basket = get_basket(request, "basket")
+        basket.customer = get_person_contact(admin_user)
+        assert basket_commands.handle_set_customer(request, basket, AnonymousContact())["ok"] is True
+        assert basket.customer == AnonymousContact()
+        assert basket.orderer == AnonymousContact()
+        assert basket.creator == admin_user
 
 
 @pytest.mark.django_db
