@@ -54,6 +54,14 @@ shuup.xtheme.layout module
     :undoc-members:
     :show-inheritance:
 
+shuup.xtheme.middleware module
+------------------------------
+
+.. automodule:: shuup.xtheme.middleware
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.xtheme.models module
 --------------------------
 
