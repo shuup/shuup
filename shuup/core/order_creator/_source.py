@@ -604,9 +604,10 @@ class OrderSource(object):
     def get_total_tax_amount(self):
         """
         :rtype: Money
-        :return:
         """
-        return sum([line.tax_amount.value for line in self.get_final_lines()])
+        return sum(
+            (line.tax_amount for line in self.get_final_lines()),
+            self.zero_price.amount)
 
     def get_tax_summary(self):
         """

@@ -144,7 +144,7 @@ def test_broken_order(admin_user):
     assert summary.based_on == Money(expected_based_on, "EUR")
 
     # originally non-rounded value
-    assert bankers_round(source.get_total_tax_amount()) == summary.tax_amount.value
+    assert bankers_round(source.get_total_tax_amount()) == summary.tax_amount
 
     assert source.taxless_total_price.value == expected_based_on
     assert summary.taxful.value == source.taxful_total_price.value
@@ -161,4 +161,4 @@ def test_broken_order(admin_user):
     assert order.taxless_total_price.value == expected_based_on
 
     # originally non-rounded value
-    assert bankers_round(order.get_total_tax_amount()) == summary.tax_amount.value
+    assert bankers_round(order.get_total_tax_amount()) == summary.tax_amount
