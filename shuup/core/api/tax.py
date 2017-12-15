@@ -27,8 +27,8 @@ class TaxSerializer(TranslatableModelSerializer):
 
 
 class TaxSummarySerializer(serializers.Serializer):
-    tax_id = serializers.CharField(required=False)
-    tax_code = serializers.CharField(required=False)
+    tax_id = serializers.CharField(required=False, allow_null=True)
+    tax_code = serializers.CharField(required=False, allow_blank=True)
     tax_name = serializers.CharField(required=False)
     tax_rate = FormattedDecimalField(required=False)
     raw_based_on = FormattedDecimalField(required=False)
