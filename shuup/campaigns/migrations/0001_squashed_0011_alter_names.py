@@ -1108,8 +1108,15 @@ class Migration(migrations.Migration):
                     to='campaigns.ContextCondition',
                     parent_link=True,
                     primary_key=True)),
-                ('hour_start', models.TimeField(verbose_name='hour start')),
-                ('hour_end', models.TimeField(verbose_name='hour start')),
+                ('hour_start', models.TimeField(
+                    verbose_name='start time',
+                    help_text=(
+                        '12pm is considered noon and 12am as midnight.'))),
+                ('hour_end', models.TimeField(
+                    verbose_name='end time',
+                    help_text=(
+                        '12pm is considered noon and 12am as midnight. '
+                        'End time is not considered match.'))),
                 ('days', models.CharField(
                     validators=[
                         django.core.validators.RegexValidator(
@@ -1133,8 +1140,15 @@ class Migration(migrations.Migration):
                     to='campaigns.BasketCondition',
                     parent_link=True,
                     primary_key=True)),
-                ('hour_start', models.TimeField(verbose_name='hour start')),
-                ('hour_end', models.TimeField(verbose_name='hour start')),
+                ('hour_start', models.TimeField(
+                    verbose_name='start time',
+                    help_text=(
+                        '12pm is considered noon and 12am as midnight.'))),
+                ('hour_end', models.TimeField(
+                    verbose_name='end time',
+                    help_text=(
+                        '12pm is considered noon and 12am as midnight. '
+                        'End time is not considered match.'))),
                 ('days', models.CharField(
                     validators=[
                         django.core.validators.RegexValidator(

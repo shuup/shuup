@@ -83,12 +83,18 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='hourbasketcondition',
             name='hour_end',
-            field=models.TimeField(verbose_name='hour start'),
+            field=models.TimeField(
+                verbose_name='end time',
+                help_text=(
+                    '12pm is considered noon and 12am as midnight. '
+                    'End time is not considered match.')),
         ),
         migrations.AlterField(
             model_name='hourbasketcondition',
             name='hour_start',
-            field=models.TimeField(verbose_name='hour start'),
+            field=models.TimeField(
+                verbose_name='start time',
+                help_text='12pm is considered noon and 12am as midnight.'),
         ),
         migrations.AlterField(
             model_name='hourcondition',
@@ -98,11 +104,17 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='hourcondition',
             name='hour_end',
-            field=models.TimeField(verbose_name='hour start'),
+            field=models.TimeField(
+                verbose_name='end time',
+                help_text=(
+                    '12pm is considered noon and 12am as midnight. '
+                    'End time is not considered match.')),
         ),
         migrations.AlterField(
             model_name='hourcondition',
             name='hour_start',
-            field=models.TimeField(verbose_name='hour start'),
+            field=models.TimeField(
+                verbose_name='start time',
+                help_text='12pm is considered noon and 12am as midnight.'),
         ),
     ]
