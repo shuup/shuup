@@ -1,5 +1,35 @@
 {% extends "shuup/admin/base.jinja" %}
 {% block top %}{% endblock %}
+
+{% block support_content %}
+    <div class="container-fluid support-nav-wrap notify{% if iframe_mode %} iframe-mode{% endif %}">
+        {% if shuup_admin.is_multishop_enabled() %}
+        <div class="flex-wrapper">
+            <h3>Active shop: <strong>{{ shuup_admin.get_admin_shop().name }}</strong></h3>
+        </div>
+        {% endif %}
+        <div class="support-nav">
+            {% block breadcrumbs -%}
+                {% if not iframe_mode %}
+                    {% set breadcrumbs = breadcrumbs or shuup_admin.get_breadcrumbs() %}
+                    {%- if breadcrumbs -%}
+                        {% from "shuup/admin/macros/breadcrumbs.jinja" import render_breadcrumbs with context %}
+                        {{ render_breadcrumbs(breadcrumbs) }}
+                    {%- endif -%}
+                {% endif %}
+            {%- endblock %}
+            <div class="flex-wrapper">
+                <h1 class="main-header">{% block header %}{{ self.title() }}{% endblock %}</h1>
+                <div class="page-actions">
+                    {%- block action_buttons -%}
+                        {%- if toolbar -%}{{ toolbar.render_to_string(request)|safe }}{%- endif -%}
+                    {%- endblock -%}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% macro binding_view(form) %}
     <ul class="list-group">
         {% for binding_identifier, info in form.binding_field_info.items() %}

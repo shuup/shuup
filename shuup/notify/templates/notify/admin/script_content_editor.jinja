@@ -24,11 +24,6 @@
 {% block extra_js %}
 <script src="{{ static("notify/admin/script-editor-bundle.js") }}"></script>
 <script>
-$(function() {
-    $("#step-item-frame").on("load", function() {
-        $(this).css('height', $(this.contentWindow.document.body).outerHeight(true) + 'px');
-    });
-});
 ScriptEditor.init({
     eventIdentifier: {{ script.event_class.identifier|json }},
     apiUrl: {{ request.path|json }},
