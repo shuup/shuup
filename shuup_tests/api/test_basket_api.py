@@ -1709,7 +1709,7 @@ def test_anonymous(admin_user, with_admin):
         assert order.customer is None
         if with_admin:
             assert order.creator == user
-            assert order.orderer == get_person_contact(user)
+            assert order.orderer is None
         else:
             assert order.creator is None
             assert order.orderer is None

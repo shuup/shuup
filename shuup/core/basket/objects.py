@@ -27,6 +27,8 @@ from shuup.core.pricing._context import PricingContext
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.objects import compare_partial_dicts
 
+ANONYMOUS_ID = "anonymous"
+
 
 class BasketLine(SourceLine):
     def __init__(self, source=None, **kwargs):
@@ -207,27 +209,35 @@ class BaseBasket(OrderSource):
 
     @property
     def customer(self):
-        if self._customer:
+        if self._customer or isinstance(self._customer, AnonymousContact):
             return self._customer
 
         customer_id = self._get_value_from_data("customer_id")
         if customer_id:
+            if customer_id == ANONYMOUS_ID:
+                return AnonymousContact()
             return Contact.objects.get(pk=customer_id)
 
-        return AnonymousContact()
+        return getattr(self.request, "customer", AnonymousContact())
 
     @customer.setter
     def customer(self, value):
         self._customer = value
-        self._set_value_to_data("customer_id", getattr(value, "pk", None))
+
+        if isinstance(value, AnonymousContact):
+            self._set_value_to_data("customer_id", ANONYMOUS_ID)
+        else:
+            self._set_value_to_data("customer_id", getattr(value, "pk", None))
 
     @property
     def orderer(self):
-        if self._orderer:
+        if self._orderer or isinstance(self._orderer, AnonymousContact):
             return self._orderer
 
         orderer_id = self._get_value_from_data("orderer_id")
         if orderer_id:
+            if orderer_id == ANONYMOUS_ID:
+                return AnonymousContact()
             return PersonContact.objects.get(pk=orderer_id)
 
         return getattr(self.request, "person", AnonymousContact())
@@ -235,7 +245,10 @@ class BaseBasket(OrderSource):
     @orderer.setter
     def orderer(self, value):
         self._orderer = value
-        self._set_value_to_data("orderer_id", getattr(value, "pk", None))
+        if isinstance(value, AnonymousContact):
+            self._set_value_to_data("orderer_id", ANONYMOUS_ID)
+        else:
+            self._set_value_to_data("orderer_id", getattr(value, "pk", None))
 
     @property
     def shipping_address(self):
