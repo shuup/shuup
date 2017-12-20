@@ -1,6 +1,13 @@
-div.container-fluid.support-nav-wrap.iframe-mode {
-    top: 0;
-    padding-top: 50px;
+div.container-fluid.support-nav-wrap {
+    &.iframe-mode {
+        top: 0;
+        padding-top: 50px;
+    }
+
+    &.notify {
+        position: static;
+        padding-top: 0;
+    }
 }
 
 #create-object-overlay {
