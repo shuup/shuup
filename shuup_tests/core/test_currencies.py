@@ -16,7 +16,7 @@ from shuup.testing.factories import get_currency
 
 @pytest.mark.django_db
 def test_currency_validation():
-    currency = Currency(code="USD")
+    currency, _ = Currency.objects.get_or_create(code="USD")
     currency.full_clean()
     assert "USD" in str(currency)
 
