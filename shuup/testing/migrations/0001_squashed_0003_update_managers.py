@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import django
 from django.db import migrations, models
+from django.utils import version
 
 
 class Migration(migrations.Migration):
@@ -30,7 +32,11 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=('shuup.customcarrier', )),
+            bases=('shuup.customcarrier', ),
+            managers = (
+                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
+            )
+        ),
         migrations.CreateModel(
             name='ExpensiveSwedenBehaviorComponent',
             fields=[
@@ -58,7 +64,11 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=('shuup.custompaymentprocessor', ), ),
+            bases=('shuup.custompaymentprocessor', ),
+            managers=(
+                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
+            )
+        ),
         migrations.CreateModel(
             name='PseudoPaymentProcessor',
             fields=[
@@ -82,7 +92,11 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=('shuup.paymentprocessor', ), ),
+            bases=('shuup.paymentprocessor', ),
+            managers=(
+                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
+            )
+        ),
         migrations.CreateModel(
             name='UltraFilter',
             fields=[
