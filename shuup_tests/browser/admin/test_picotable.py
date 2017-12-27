@@ -47,7 +47,7 @@ list_view_settings = {
     "shop_product": {
         "page_header": "Shop Products",
         "default_column_count": 6,
-        "addable_fields": [(11, "Gtin"), (6, "Default Price")],
+        "addable_fields": [(13, "Gtin"), (6, "Default Price")],
         "creator": create_products,
         "test_pagination": False
     },
@@ -143,6 +143,7 @@ def _set_settings(browser, setting_type):
     # not selected by default
     for idx, text in addable_fields:
         assert not browser.is_text_present(text)
+
     #shuup_tests/browser/front/test_category_view.py
     settings_xpath = "(//a[contains(text(),'Settings')])[2]"
     # go to settings
@@ -154,7 +155,6 @@ def _set_settings(browser, setting_type):
         assert browser.is_text_present(text)
         browser.find_by_xpath("//ul[@id='source-sortable']/li[%d]/button" % index_key).first.click()
         wait_until_appeared_xpath(browser, "//ul[@id='target-sortable']/li[%d]/button" % expected_index)
-        # browser.find_by_css(".btn.btn-xs.btn-success.btn-add-sortable").first.click()
 
     # save settings
     browser.find_by_css(".btn.btn-success").first.click()

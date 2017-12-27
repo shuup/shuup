@@ -117,6 +117,58 @@ To run tests for all supported Python versions run:
    pip install tox  # To install tox, needed just once
    tox
 
+Running browser tests
+---------------------
+
+.. code-block:: shell
+
+   SHUUP_BROWSER_TESTS=1 py.test -v --nomigrations shuup_tests/browser
+
+Headless with Firefox:
+
+.. code-block:: shell
+
+   SHUUP_BROWSER_TESTS=1 MOZ_HEADLESS=1 py.test -v --nomigrations shuup_tests/browser
+
+For Chrome
+
+.. code-block:: shell
+
+   SHUUP_BROWSER_TESTS=1 py.test -v --nomigrations --splinter-webdriver=chrome shuup_tests/browser
+
+
+For OSX with Homebrew:
+
+.. code-block:: shell
+
+    # Install Chrome driver (tested with 2.34.522932 (4140ab217e1ca1bec0c4b4d1b148f3361eb3a03e)
+    brew install chromedriver
+
+    # Install Geckodriver (for Firefox)
+    brew install geckodriver
+
+    # If your current version is below 0.19.1 (for Firefox)
+    brew upgrade geckodriver
+
+    # Make sure the selenium is up to date (tested with 3.8.0)
+    pip install selenium -U
+
+    # Make sure splinter is up to date (tested with 0.7.6)
+    pip install splinter -U
+
+For other OS and browsers check package documentation directly:
+* `Geckodriver <https://github.com/mozilla/geckodriver>`__
+* `Selenium <https://github.com/SeleniumHQ/selenium>`__
+* `Splinter <https://github.com/cobrateam/splinter>`__
+
+Warning! There is inconsistency issues with browser tests and if you suspect your
+changes did not break the tests we suggest you rerun the test before
+starting debugging more.
+
+Known issues:
+* With Chrome test `shuup_tests/browser/front/test_checkout_with_login_and_register.py`
+is very unstable.
+
 Collecting translatable messages
 --------------------------------
 

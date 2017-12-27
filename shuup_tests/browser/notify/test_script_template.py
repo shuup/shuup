@@ -24,7 +24,9 @@ from shuup.notify.models import Script
 from shuup.simple_supplier.notify_script_template import (
     StockLimitEmailScriptTemplate
 )
-from shuup.testing.browser_utils import wait_until_condition
+from shuup.testing.browser_utils import (
+    click_element, wait_until_condition
+)
 from shuup.testing.notify_script_templates import DummyScriptTemplate
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -33,6 +35,16 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 def initialize(browser, live_server, settings):
     initialize_admin_browser_test(browser, live_server, settings)
+
+
+def post_initialize():
+    """
+    Does some post initialization for notify tests
+
+    This since straight after `initialize_admin_browser_test`
+    DB seems to be randomly locked and we want to wait
+    until we perform these post procedures.
+    """
     configuration.set(None, "shuup_product_tour_complete", True)
     Script.objects.all().delete()
 
@@ -54,6 +66,7 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     url = reverse("shuup_admin:notify.script.list")
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+    post_initialize()
 
     # find the button to load from template
     browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
@@ -62,7 +75,7 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     form_id = "form-" + identifier
     button_id = "#{} button.btn.btn-success".format(form_id)
     wait_until_condition(browser, lambda x: x.is_element_present_by_css(button_id))
-    browser.find_by_css(button_id).first.click()
+    click_element(browser, button_id)
 
     config_url = reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
     wait_until_condition(browser, lambda b: b.url.endswith(config_url), timeout=15)
@@ -106,6 +119,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     url = reverse("shuup_admin:notify.script.list")
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+    post_initialize()
 
     # find the button to load from template
     browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
@@ -114,7 +128,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     form_id = "form-" + identifier
     button_id = "#{} button.btn.btn-success".format(form_id)
     wait_until_condition(browser, lambda x: x.is_element_present_by_css(button_id))
-    browser.find_by_css(button_id).first.click()
+    click_element(browser, button_id)
 
     config_url = reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
     wait_until_condition(browser, lambda b: b.url.endswith(config_url), timeout=15)
@@ -197,6 +211,7 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
     url = reverse("shuup_admin:notify.script.list")
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+    post_initialize()
 
     # find the button to load from template
     browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
@@ -205,7 +220,9 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
     form_id = "form-" + identifier
     wait_until_condition(browser, lambda x: x.is_element_present_by_id(form_id))
 
-    browser.find_by_css("#{} button.btn.btn-success".format(form_id)).first.click()
+    button_selector = "#{} button.btn.btn-success".format(form_id)
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(button_selector))
+    click_element(browser, button_selector)
 
     config_url = reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
     wait_until_condition(browser, lambda b: b.url.endswith(config_url))
@@ -271,6 +288,7 @@ def test_dummy_script_template(browser, admin_user, live_server, settings):
         url = reverse("shuup_admin:notify.script.list")
         browser.visit("%s%s" % (live_server, url))
         wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+        post_initialize()
 
         # find the button to load from template
         browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
@@ -281,7 +299,7 @@ def test_dummy_script_template(browser, admin_user, live_server, settings):
 
         btn_create_css = "#{} button.btn.btn-success".format(form_id)
         wait_until_condition(browser, lambda x: x.is_element_present_by_css(btn_create_css))
-        browser.find_by_css(btn_create_css).first.click()
+        click_element(browser, btn_create_css)
 
         wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")))
 

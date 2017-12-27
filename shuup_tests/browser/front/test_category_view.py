@@ -11,7 +11,6 @@ import pytest
 
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
-from django.test import override_settings
 
 from shuup.core import cache
 from shuup.core.models import (
@@ -22,13 +21,9 @@ from shuup.core.models import (
 from shuup.front.utils.sorts_and_filters import (
     set_configuration
 )
-from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_condition,
-    wait_until_disappeared
-)
+from shuup.testing.browser_utils import click_element, wait_until_condition
 from shuup.testing.factories import (
-    create_product, get_default_category, get_default_shop,
-    get_default_supplier
+    create_product, get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import initialize_front_browser_test
 
@@ -54,18 +49,90 @@ FIRST_CATEGORY_PRODUCT_DATA = [
 ]
 
 
-
-def create_orderable_product(name, sku, price):
-    supplier = get_default_supplier()
-    shop = get_default_shop()
-    product = create_product(sku=sku, shop=shop, supplier=supplier, default_price=price, name=name)
-    return product
-
-
-@override_settings(DEBUG=True)
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_category_product_filters(browser, live_server, settings):
+def test_category_product_filters_1(browser, live_server, settings):
+    cache.clear()  # Avoid cache from past tests
+    shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
+
+    # initialize test and go to front page
+    browser = initialize_front_browser_test(browser, live_server)
+
+    # check that front page actually loaded
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
+
+    url = reverse("shuup:category", kwargs={"pk": first_cat.pk, "slug": first_cat.slug})
+    browser.visit("%s%s" % (live_server, url))
+    wait_until_condition(browser, lambda x: x.is_text_present("First Category"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Sort"))
+    assert not browser.is_text_present("Manufacturers")  # Since not in default configuration
+    hide_sorts_for_shop(browser, shop)
+    show_sorts_for_the_category_only(browser, first_cat)
+    second_category_page_change(browser, live_server, shop, second_cat)
+
+
+@pytest.mark.browser
+@pytest.mark.djangodb
+def test_category_product_filters_2(browser, live_server, settings):
+    cache.clear()  # Avoid cache from past tests
+    shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
+
+    # Activate limit page size changer for the shop
+    set_configuration(
+        shop=shop,
+        data={
+            "sort_products_by_name": True,
+            "sort_products_by_name_ordering": 1,
+            "sort_products_by_price": True,
+            "sort_products_by_price_ordering": 2,
+            "limit_product_list_page_size": True
+        }
+    )
+
+    # initialize test and go to front page
+    browser = initialize_front_browser_test(browser, live_server)
+
+    # check that front page actually loaded
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
+
+    url = reverse("shuup:category", kwargs={"pk": first_cat.pk, "slug": first_cat.slug})
+    browser.visit("%s%s" % (live_server, url))
+    wait_until_condition(browser, lambda x: x.is_text_present("First Category"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Sort"))
+    assert not browser.is_text_present("Manufacturers")  # Since not in default configuration
+    second_category_sort_test(browser, live_server, shop, second_cat)
+    second_category_sort_with_price_filter(browser, second_cat)
+
+
+@pytest.mark.browser
+@pytest.mark.djangodb
+def test_category_product_filters_3(browser, live_server, settings):
+    cache.clear()  # Avoid cache from past tests
+    shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
+
+    # initialize test and go to front page
+    browser = initialize_front_browser_test(browser, live_server)
+
+    # check that front page actually loaded
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
+
+    url = reverse("shuup:category", kwargs={"pk": first_cat.pk, "slug": first_cat.slug})
+    browser.visit("%s%s" % (live_server, url))
+    wait_until_condition(browser, lambda x: x.is_text_present("First Category"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Sort"))
+    assert not browser.is_text_present("Manufacturers")  # Since not in default configuration
+    hide_sorts_for_shop(browser, shop)
+    show_sorts_for_the_category_only(browser, first_cat)
+
+    # All sorts for first_cat is available test sorting
+    sort_category_products_test(browser, first_cat)
+
+    manufacturer_filter_test(browser, first_cat, first_manufacturer)
+    variations_filter_test(browser, first_cat)
+    categories_filter_test(browser, first_cat, second_cat, third_cat)
+
+
+def initialize_db():
     activate("en")
     # initialize
     cache.clear()
@@ -123,29 +190,14 @@ def test_category_product_filters(browser, live_server, settings):
     first_manufacturer = Manufacturer.objects.first()
     Product.objects.filter(sku="test-sku-1").update(manufacturer_id=first_manufacturer.id)
 
-    # initialize test and go to front page
-    browser = initialize_front_browser_test(browser, live_server)
+    return shop, first_cat, second_cat, third_cat, first_manufacturer
 
-    # check that front page actually loaded
-    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
 
-    url = reverse("shuup:category", kwargs={"pk": first_cat.pk, "slug": first_cat.slug})
-    browser.visit("%s%s" % (live_server, url))
-    wait_until_condition(browser, lambda x: x.is_text_present("First Category"))
-    wait_until_condition(browser, lambda x: x.is_text_present("Sort"))
-    assert not browser.is_text_present("Manufacturers")  # Since not in default configuration
-    hide_sorts_for_shop(browser, shop)
-    show_sorts_for_the_category_only(browser, first_cat)
-
-    # All sorts for first_cat is available test sorting
-    sort_category_products_test(browser, first_cat)
-
-    manufacturer_filter_test(browser, first_cat, first_manufacturer)
-    variations_filter_test(browser, first_cat)
-    categories_filter_test(browser, first_cat, second_cat, third_cat)
-
-    second_category_sort_test(browser, live_server, shop, second_cat)
-    second_category_sort_with_price_filter(browser, second_cat)
+def create_orderable_product(name, sku, price):
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    product = create_product(sku=sku, shop=shop, supplier=supplier, default_price=price, name=name)
+    return product
 
 
 def hide_sorts_for_shop(browser, shop):
@@ -316,7 +368,7 @@ def categories_filter_test(browser, first_cat, second_cat, third_cat):
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 12)
 
 
-def second_category_sort_test(browser, live_server, shop, category):
+def second_category_page_change(browser, live_server, shop, category):
     url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     browser.visit("%s%s" % (live_server, url))
     assert not browser.is_text_present("Sort")  # Sort shouldn't be available since default configurations
@@ -326,23 +378,16 @@ def second_category_sort_test(browser, live_server, shop, category):
     click_element(browser, "#previous_page a")
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 12, timeout=30)
 
-    # Activate limit page size changer
-    set_configuration(
-        shop=shop,
-        data={
-            "sort_products_by_name": True,
-            "sort_products_by_name_ordering": 1,
-            "sort_products_by_price": True,
-            "sort_products_by_price_ordering": 2,
-            "limit_product_list_page_size": True
-        }
-    )
-    browser.reload()
-    wait_until_condition(browser, lambda x: x.is_element_present_by_css("button[data-id='id_limit']"))
+
+def second_category_sort_test(browser, live_server, shop, category):
+    url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
+    browser.visit("%s%s" % (live_server, url))
+
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css("button[data-id='id_limit']"), timeout=30)
     # Set limit to 24
     click_element(browser, "button[data-id='id_limit']")
     click_element(browser, "button[data-id='id_limit'] + .dropdown-menu li[data-original-index='1'] a")
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13, timeout=30)
 
     # Check that visibility change affects the product count
     shop_products = ShopProduct.objects.filter(primary_category_id=category.id)[:3]
@@ -358,7 +403,7 @@ def second_category_sort_test(browser, live_server, shop, category):
         sp.save()
 
     browser.reload()
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13, timeout=30)
 
 
 def add_variations(shop, parent, colors, sizes):
@@ -368,10 +413,10 @@ def add_variations(shop, parent, colors, sizes):
         product_id=parent.id, identifier="size", name="Size")
 
     for color in colors:
-        var_value = ProductVariationVariableValue.objects.create(
+        ProductVariationVariableValue.objects.create(
             variable_id=color_var.id, value=color)
     for size in sizes:
-        var_value = ProductVariationVariableValue.objects.create(
+        ProductVariationVariableValue.objects.create(
             variable_id=size_var.id, value=size)
 
     combinations = list(parent.get_all_available_combinations())

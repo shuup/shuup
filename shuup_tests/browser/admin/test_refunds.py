@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 import os
-import time
 
 import pytest
 from django.core.urlresolvers import reverse
@@ -26,7 +25,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 
 @pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_refunds(browser, admin_user, live_server, settings):
     order = create_order_with_product(
         get_default_product(), get_default_supplier(), 10, decimal.Decimal("10"), n_lines=10,
@@ -43,17 +42,21 @@ def test_refunds(browser, admin_user, live_server, settings):
 
 def _check_create_refund_link(browser, order, present):
     url = reverse("shuup_admin:order.create-refund", kwargs={"pk": order.pk})
-    wait_until_condition(browser, lambda x: (len(x.find_by_css("a[href='%s']" % url)) > 0) == present)
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css("a[href='%s']" % url) == present)
+
+
+def _check_order_details_visible(browser):
+    wait_until_condition(browser, lambda x: x.is_element_present_by_id("order_details"))
 
 
 def _test_toolbar_visibility(browser, live_server, order):
     url = reverse("shuup_admin:order.detail", kwargs={"pk": order.pk})
     browser.visit("%s%s" % (live_server, url))
-    wait_until_appeared(browser, "#order_details")
+    _check_order_details_visible(browser)
     _check_create_refund_link(browser, order, False)
     order.create_payment(order.taxful_total_price)
-    browser.reload()
-    wait_until_appeared(browser, "#order_details")
+    browser.visit("%s%s" % (live_server, url))
+    _check_order_details_visible(browser)
     _check_create_refund_link(browser, order, True)
 
 
@@ -66,8 +69,8 @@ def _test_create_full_refund(browser, live_server, order):
     click_element(browser, "a[href='%s']" % url)
     wait_until_condition(browser, lambda x: x.is_text_present("Refund Amount: %s" % format_money(order.taxful_total_price)))
     click_element(browser, "#create-full-refund")
-    wait_until_appeared(browser, "#order_details")
     _check_create_refund_link(browser, order, False)
+    _check_order_details_visible(browser)
     order.refresh_from_db()
     assert not order.taxful_total_price
     assert order.is_paid()
@@ -90,10 +93,11 @@ def _test_refund_view(browser, live_server, order):
     click_element(browser, "#select2-id_form-1-line_number-container")
     wait_until_appeared(browser, "input.select2-search__field")
     browser.execute_script('$($(".select2-results__option")[2]).trigger({type: "mouseup"})') # select first line
-    browser.find_by_css("#id_form-1-amount").first.value == "100"
-    browser.find_by_css("#id_form-1-quantity").first.value == "10"
+    assert decimal.Decimal(browser.find_by_css("#id_form-1-amount").first.value) == decimal.Decimal("100.00")
+    assert int(decimal.Decimal(browser.find_by_css("#id_form-1-quantity").first.value)) == 10
     click_element(browser, "button[form='create_refund']")
     _check_create_refund_link(browser, order, True) # can still refund quantity
+    _check_order_details_visible(browser)
     order.refresh_from_db()
     assert not order.taxful_total_price
     assert order.is_paid()

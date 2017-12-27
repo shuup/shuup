@@ -8,6 +8,7 @@
 import os
 
 import pytest
+import time
 
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
@@ -16,10 +17,11 @@ from shuup import configuration
 from shuup.admin.signals import object_created
 from shuup.core.models import Category, Product
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition
+    click_element, wait_until_appeared, wait_until_condition,
+    wait_until_disappeared
 )
 from shuup.testing.factories import (
-    create_product, get_default_product_type, get_default_sales_unit,
+    get_default_product_type, get_default_sales_unit,
     get_default_shop, get_default_tax_class
 )
 from shuup.testing.utils import initialize_admin_browser_test
@@ -39,6 +41,7 @@ def test_product_create(browser, admin_user, live_server, settings):
     configuration.set(None, "shuup_product_tour_complete", True)
     object_created.connect(_add_custom_product_created_message, sender=Product, dispatch_uid="object_created_signal_test")
     initialize_admin_browser_test(browser, live_server, settings)
+    browser.driver.set_window_size(1920, 1080)
 
     url = reverse("shuup_admin:shop_product.new")
     browser.visit("%s%s" % (live_server, url))
@@ -74,13 +77,15 @@ def _add_primary_category(browser, shop):
     assert Category.objects.count() == 0
     select_id = "id_shop%s-primary_category" % shop.pk
     browser.execute_script('$("#%s").parent().find("span.quick-add-btn a.btn").click();' % select_id)
+
+    wait_until_condition(browser, condition=lambda x: x.find_by_id("create-object-content-pane").has_class("open"))
     with browser.get_iframe('create-object-iframe') as iframe:
-        wait_until_condition(iframe, lambda x: x.is_text_present("New category"))
-        category_test_name = "Test Category"
-        iframe.fill("base-name__en", category_test_name)
+        iframe.fill("base-name__en", "Test Category")
+        time.sleep(3)  # Let's just wait here to the iFrame to open fully (for Chrome and headless)
         click_element(iframe, "button[form='category_form']")
-    wait_until_condition(browser, lambda x: x.is_text_present("New product"))
-    assert Category.objects.count() == 1
+
+    wait_until_condition(browser, condition=lambda x: not x.is_element_present_by_id("create-object-overlay"))
+    check_category_count(browser, 1)
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option" % select_id)) == 2)
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='selected']" % select_id)) == 1)
 
@@ -90,11 +95,19 @@ def _add_additional_category(browser, shop):
     select_id = "id_shop%s-categories" % shop.pk
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 1)
     browser.execute_script('$("#%s").parent().find("span.quick-add-btn a.btn").click();' % select_id)
+    wait_until_condition(browser, condition=lambda x: x.find_by_id("create-object-content-pane").has_class("open"))
     with browser.get_iframe('create-object-iframe') as iframe:
-        wait_until_condition(iframe, lambda x: x.is_text_present("New category"))
-        category_test_name = "Test Category 2"
-        iframe.fill("base-name__en", category_test_name)
+        iframe.fill("base-name__en", "Test Category 2")
+        time.sleep(3)  # Let's just wait here to the iFrame to open fully (for Chrome and headless)
         click_element(iframe, "button[form='category_form']")
-    wait_until_condition(browser, lambda x: x.is_text_present("New product"))
-    assert Category.objects.count() == 2
+
+    wait_until_condition(browser, condition=lambda x: not x.is_element_present_by_id("create-object-overlay"))
+    check_category_count(browser, 2)
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 2)
+
+
+def check_category_count(browser, target_count):
+    wait_until_condition(
+        browser,
+        condition=lambda x: Category.objects.count() == target_count
+    )

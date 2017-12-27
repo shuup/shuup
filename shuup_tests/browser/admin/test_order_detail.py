@@ -57,7 +57,8 @@ def change_addresses(live_server, browser, order):
     browser.fill("billing_address-email", new_email)
     assert new_email != order.billing_address.email
     click_element(browser, "button[form='edit-addresses']")
-    assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 1
+    check_log_entries_count(browser, order, order_edited_log_entries + 1)
+
     order.refresh_from_db()
     assert new_email == order.billing_address.email
     assert order.billing_address.email != order.shipping_address.email
@@ -70,7 +71,8 @@ def change_addresses(live_server, browser, order):
     browser.fill("shipping_address-postal_code", new_postal_code)
     assert new_postal_code != order.shipping_address.postal_code
     click_element(browser, "button[form='edit-addresses']")
-    assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 2
+    check_log_entries_count(browser, order, order_edited_log_entries + 2)
+
     order.refresh_from_db()
     assert new_postal_code == order.shipping_address.postal_code
     assert order.billing_address.postal_code != order.shipping_address.postal_code
@@ -83,7 +85,7 @@ def change_addresses(live_server, browser, order):
     new_name = "%s (edited)" % order.billing_address.name
     browser.fill("billing_address-name", new_name)
     click_element(browser, "button[form='edit-addresses']")
-    assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 4
+    check_log_entries_count(browser, order, order_edited_log_entries + 4)
     order.refresh_from_db()
     assert new_name == order.shipping_address.name
     assert order.billing_address.name == order.shipping_address.name
@@ -98,3 +100,10 @@ def set_status(browser, order, status):
     wait_until_condition(browser, condition=lambda x: x.is_text_present("Order %s" % order.pk))
     order.refresh_from_db()
     assert order.status.pk == status.pk
+
+
+def check_log_entries_count(browser, order, target_count):
+    wait_until_condition(
+        browser,
+        condition=lambda x: order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == target_count
+    )

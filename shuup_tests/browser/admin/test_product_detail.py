@@ -11,7 +11,9 @@ import pytest
 from django.core.urlresolvers import reverse
 
 from shuup import configuration
-from shuup.testing.browser_utils import click_element
+from shuup.testing.browser_utils import (
+    click_element, wait_until_condition, wait_until_appeared
+)
 from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -36,14 +38,18 @@ def test_product_detail(browser, admin_user, live_server, settings):
     browser.execute_script("window.scrollTo(0,0)")
     click_element(browser, "button[form='product_form']")
 
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Product edited"))
+
     product.refresh_from_db()
-    assert product.sku == new_sku
+    check_product_name(browser, product, new_sku)
 
     # Test that toolbar action item is there
     dropdowns = browser.find_by_css(".btn.dropdown-toggle")
     for dropdown in dropdowns:
         if "Actions" in dropdown.text:
             dropdown.click()
+
+    wait_until_appeared(browser, "a[href='#%s']" % product.sku)
     click_element(browser, "a[href='#%s']" % product.sku)
 
     # Make sure that the tabs is clickable in small devices
@@ -51,3 +57,10 @@ def test_product_detail(browser, admin_user, live_server, settings):
 
     click_element(browser, "#product-images-section", header_height=320)
     click_element(browser, "#additional-details-section", header_height=320)
+
+
+def check_product_name(browser, product, target_name):
+    wait_until_condition(
+        browser,
+        condition=lambda x: product.sku == target_name
+    )
