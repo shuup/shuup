@@ -116,10 +116,26 @@ shuup.core.utils.product_caching_object module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.utils.product_statistics module
+------------------------------------------
+
+.. automodule:: shuup.core.utils.product_statistics
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.utils.query module
 -----------------------------
 
 .. automodule:: shuup.core.utils.query
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.utils.shops module
+-----------------------------
+
+.. automodule:: shuup.core.utils.shops
     :members:
     :undoc-members:
     :show-inheritance:

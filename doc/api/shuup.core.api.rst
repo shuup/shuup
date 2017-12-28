@@ -52,6 +52,14 @@ shuup.core.api.front_orders module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.api.front_passwords module
+-------------------------------------
+
+.. automodule:: shuup.core.api.front_passwords
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.api.front_products module
 ------------------------------------
 
@@ -72,6 +80,14 @@ shuup.core.api.manufacturer module
 ----------------------------------
 
 .. automodule:: shuup.core.api.manufacturer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.api.mixins module
+----------------------------
+
+.. automodule:: shuup.core.api.mixins
     :members:
     :undoc-members:
     :show-inheritance:
@@ -108,6 +124,14 @@ shuup.core.api.products module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.api.service module
+-----------------------------
+
+.. automodule:: shuup.core.api.service
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.api.shipments module
 -------------------------------
 
@@ -128,6 +152,14 @@ shuup.core.api.suppliers module
 -------------------------------
 
 .. automodule:: shuup.core.api.suppliers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.api.tax module
+-------------------------
+
+.. automodule:: shuup.core.api.tax
     :members:
     :undoc-members:
     :show-inheritance:

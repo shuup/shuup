@@ -20,6 +20,14 @@ shuup.core.suppliers.enums module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.suppliers.strategies module
+--------------------------------------
+
+.. automodule:: shuup.core.suppliers.strategies
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

@@ -28,6 +28,14 @@ shuup.campaigns.utils.sales_range module
     :undoc-members:
     :show-inheritance:
 
+shuup.campaigns.utils.time_range module
+---------------------------------------
+
+.. automodule:: shuup.campaigns.utils.time_range
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

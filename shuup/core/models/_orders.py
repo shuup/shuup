@@ -857,7 +857,9 @@ class Order(MoneyPropped, models.Model):
         return sum([line.max_refundable_quantity for line in self.lines.all()])
 
     def get_total_tax_amount(self):
-        return sum([line.tax_amount.value for line in self.lines.all()])
+        return sum(
+            (line.tax_amount for line in self.lines.all()),
+            Money(0, self.currency))
 
     def has_refunds(self):
         return self.lines.refunds().exists()

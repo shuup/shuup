@@ -825,7 +825,9 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         try:
             shop_product = product.get_shop_instance(shop)
         except ShopProduct.DoesNotExist:
-            raise ValidationError(_("Product %s is not available in the %s") % (product.name, shop.name))
+            raise ValidationError(
+                _("Product {product} is not available in {shop}").format(
+                    product=product.name, shop=shop.name))
 
         supplier = shop_product.get_supplier(basket.customer, quantity, basket.shipping_address)
         shop_product.raise_if_not_orderable(

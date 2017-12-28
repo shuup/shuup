@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-29 07:50+0000\n"
+"POT-Creation-Date: 2017-12-15 13:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -33,6 +33,27 @@ msgid "This account is inactive."
 msgstr ""
 
 msgid "Username or email address"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Sunday"
 msgstr ""
 
 msgid "Browse"
@@ -80,7 +101,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-msgid "Taxes"
+msgid "Payment & Shipping"
 msgstr ""
 
 msgid "Currency"
@@ -98,7 +119,7 @@ msgstr ""
 msgid "Data Transfer"
 msgstr ""
 
-msgid "Payment & Shipping"
+msgid "Taxes"
 msgstr ""
 
 msgid "Permissions"
@@ -228,6 +249,9 @@ msgid ""
 "The contact groups this contact belongs to. Contact groups are defined in "
 "Contacts - Contact Groups and are used to configure sales, campaigns, and "
 "product pricing tailored for a set of users."
+msgstr ""
+
+msgid "The shops this contact belongs to"
 msgstr ""
 
 msgid "Language"
@@ -374,6 +398,12 @@ msgid "Groups"
 msgstr ""
 
 msgid "Contact"
+msgstr ""
+
+msgid "No group"
+msgstr ""
+
+msgid "No shop"
 msgstr ""
 
 msgid "Inactive"
@@ -1099,6 +1129,9 @@ msgstr ""
 msgid "Primary Image"
 msgstr ""
 
+msgid "Shop"
+msgstr ""
+
 msgid "SKU"
 msgstr ""
 
@@ -1445,9 +1478,6 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-msgid "Shop"
-msgstr ""
-
 msgid "Payment Processor"
 msgstr ""
 
@@ -1538,6 +1568,12 @@ msgstr ""
 msgid "Add logo"
 msgstr ""
 
+msgid "Set \"{}\" as the active shop"
+msgstr ""
+
+msgid "Available Shops [currently active: {}]"
+msgstr ""
+
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr ""
@@ -1551,6 +1587,9 @@ msgid "Staff"
 msgstr ""
 
 msgid "Select staff members for this shop."
+msgstr ""
+
+msgid "Domain is unique. Please enter a unique value."
 msgstr ""
 
 msgid "Shop name"
@@ -1598,6 +1637,12 @@ msgid "There are still some pending actions to complete!"
 msgstr ""
 
 msgid "Your store is now live!"
+msgstr ""
+
+msgid "Shop {} is now active!"
+msgstr ""
+
+msgid "Logo"
 msgstr ""
 
 msgid "Domain"
@@ -1846,6 +1891,12 @@ msgstr ""
 msgid "Permissions changed for %s."
 msgstr ""
 
+msgid "You must be a staff user"
+msgstr ""
+
+msgid "You are not a staff member of this shop"
+msgstr ""
+
 msgid "New Attribute"
 msgstr ""
 
@@ -1948,6 +1999,9 @@ msgid "No groups"
 msgstr ""
 
 msgid "Bound User"
+msgstr ""
+
+msgid "No shops"
 msgstr ""
 
 msgid "Companies"
@@ -3384,9 +3438,6 @@ msgstr ""
 msgid "News &amp; Updates"
 msgstr ""
 
-msgid "FAQ"
-msgstr ""
-
 msgid "Support"
 msgstr ""
 
@@ -3545,6 +3596,9 @@ msgid "You do not have the required permissions: %s"
 msgstr ""
 
 msgid "Unnamed"
+msgstr ""
+
+msgid "Item"
 msgstr ""
 
 #, python-format

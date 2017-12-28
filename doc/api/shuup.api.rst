@@ -51,6 +51,14 @@ shuup.api.fields module
     :undoc-members:
     :show-inheritance:
 
+shuup.api.filters module
+------------------------
+
+.. automodule:: shuup.api.filters
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.api.mixins module
 -----------------------
 

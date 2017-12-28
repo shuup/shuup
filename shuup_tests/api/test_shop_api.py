@@ -42,7 +42,7 @@ def test_shop_api(admin_user, currency, currency_decimals):
     default_shop = get_default_shop()
     client = APIClient()
     client.force_authenticate(user=admin_user)
-    Currency.objects.create(code=currency, decimal_places=currency_decimals)
+    Currency.objects.get_or_create(code=currency, decimal_places=currency_decimals)
 
     shop_data = {
         "domain": "shuup.com",

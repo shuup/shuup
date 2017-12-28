@@ -139,7 +139,7 @@ def test_create_order(admin_user, currency):
     shop = get_default_shop()
     shop.currency = currency
     tax = get_default_tax()
-    Currency.objects.create(code=currency, decimal_places=2)
+    Currency.objects.get_or_create(code=currency, decimal_places=2)
     shop.save()
     sm = get_default_shipping_method()
     pm = get_default_payment_method()

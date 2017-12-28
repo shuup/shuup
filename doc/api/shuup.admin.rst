@@ -66,6 +66,14 @@ shuup.admin.menu module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.middleware module
+-----------------------------
+
+.. automodule:: shuup.admin.middleware
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.module_registry module
 ----------------------------------
 

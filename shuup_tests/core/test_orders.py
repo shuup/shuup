@@ -173,7 +173,7 @@ def test_basic_order():
     assert summary[1].tax_code == ''
     assert summary[1].tax_amount == Money(0, currency)
     assert summary[1].tax_rate == 0
-    assert order.get_total_tax_amount() == 50
+    assert order.get_total_tax_amount() == Money(50, currency)
 
 
 @pytest.mark.django_db
@@ -212,7 +212,7 @@ def test_complex_order_tax(include_taxes):
     assert summary.based_on == Money(total_price, currency)
     assert summary.tax_amount == Money(total_price * tax.rate, currency)
     assert summary.taxful == summary.based_on + summary.tax_amount
-    assert order.get_total_tax_amount() == total_price * tax.rate
+    assert order.get_total_tax_amount() == Money(total_price * tax.rate, currency)
 
 
 @pytest.mark.django_db
@@ -346,7 +346,9 @@ def test_refunds():
     assert order.taxless_total_price.amount == taxless_base_unit_price.amount
     assert order.taxful_total_price.amount == taxless_base_unit_price.amount * (1 + tax_rate)
     assert order.can_create_refund()
-    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
+    assert order.get_total_tax_amount() == Money(
+        (order.taxful_total_price_value - order.taxless_total_price_value),
+        order.currency)
 
     # Try to refunding remaining amount without a parent line
     with pytest.raises(AssertionError):
@@ -360,7 +362,9 @@ def test_refunds():
 
     assert not order.taxful_total_price.amount
     assert not order.can_create_refund()
-    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
+    assert order.get_total_tax_amount() == Money(
+        (order.taxful_total_price_value - order.taxless_total_price_value),
+        order.currency)
 
     with pytest.raises(RefundExceedsAmountException):
         order.create_refund([{"line": product_line, "quantity": 1, "amount": taxless_base_unit_price.amount}])
@@ -474,7 +478,9 @@ def test_refund_with_shipment(restock):
     else:
         # Make sure maximum restockable quantity is not 0
         check_stock_counts(supplier, product, physical=8, logical=6)
-    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
+    assert order.get_total_tax_amount() == Money(
+        order.taxful_total_price_value - order.taxless_total_price_value,
+        order.currency)
 
 
 @pytest.mark.django_db
@@ -506,7 +512,9 @@ def test_refund_without_shipment(restock):
     else:
         check_stock_counts(supplier, product, physical=10, logical=8)
     assert product_line.refunded_quantity == 2
-    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
+    assert order.get_total_tax_amount() == Money(
+        order.taxful_total_price_value - order.taxless_total_price_value,
+        order.currency)
 
 
 @pytest.mark.django_db
@@ -530,7 +538,9 @@ def test_max_refundable_amount():
 
     order.create_refund([{"line": line, "quantity": 1, "amount": partial_refund_amount}])
     assert line.max_refundable_amount == line.taxful_price.amount - partial_refund_amount
-    assert order.get_total_tax_amount() == (order.taxful_total_price_value - order.taxless_total_price_value)
+    assert order.get_total_tax_amount() == Money(
+        order.taxful_total_price_value - order.taxless_total_price_value,
+        order.currency)
 
 
 @pytest.mark.django_db
