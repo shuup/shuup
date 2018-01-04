@@ -23,6 +23,7 @@ from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shuup.admin.modules.orders.views.edit import encode_address
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.api.address import AddressSerializer
+from shuup.core.api.refunds import RefundMixin
 from shuup.core.models import (
     Contact, Order, OrderLine, OrderStatus, OrderStatusRole, Payment, Shop
 )
@@ -146,6 +147,7 @@ class OrderViewSet(PermissionHelperMixin,
                    ProtectedModelViewSetMixin,
                    OrderTaxesMixin,
                    OrderStatusChangeMixin,
+                   RefundMixin,
                    ModelViewSet):
     """
     retrieve: Fetches an order by its ID.
@@ -256,7 +258,7 @@ class OrderViewSet(PermissionHelperMixin,
         """ Set the order as Fully Paid. """
         order = self.get_object()
         if order.is_paid():
-            return Response({"status": "order is already fully paid"})
+            return Response({"error": _("Order is already fully paid")})
 
         request.data["currency"] = order.currency
         request.data["amount_value"] = (order.taxful_total_price_value - order.get_total_paid_amount().value)
@@ -265,13 +267,12 @@ class OrderViewSet(PermissionHelperMixin,
 
 def _handle_payment_creation(request, order):
     serializer = PaymentSerializer(data=request.data)
-    if serializer.is_valid():
-        data = serializer.validated_data
-        order.create_payment(
-            Money(data["amount_value"], order.currency),
-            data["payment_identifier"],
-            data.get("description", "")
-        )
-        return Response({'status': 'payment created'}, status=status.HTTP_201_CREATED)
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    serializer.is_valid(raise_exception=True)
+
+    data = serializer.validated_data
+    order.create_payment(
+        Money(data["amount_value"], order.currency),
+        data["payment_identifier"],
+        data.get("description", "")
+    )
+    return Response({"success": _("Payment created")}, status=status.HTTP_201_CREATED)

@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Enable refunds for order API
 - API: Improved suppliers stock endpoints
 - Add setting to manage contacts per shop
 - Add ``ShuupMiddleware`` to set the current request shop

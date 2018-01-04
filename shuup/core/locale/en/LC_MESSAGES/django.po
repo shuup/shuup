@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 13:47+0000\n"
+"POT-Creation-Date: 2018-01-05 22:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -105,6 +105,12 @@ msgstr ""
 msgid "Orders can be listed, fetched, created, updated and canceled."
 msgstr ""
 
+msgid "Order is already fully paid"
+msgstr ""
+
+msgid "Payment created"
+msgstr ""
+
 msgid "Product Media"
 msgstr ""
 
@@ -155,6 +161,15 @@ msgid "Product Package Link"
 msgstr ""
 
 msgid "Products package links can be fetched, updated and deleted."
+msgstr ""
+
+msgid "Order can not be refunded at the moment."
+msgstr ""
+
+msgid "Can not refund line."
+msgstr ""
+
+msgid "Refund created."
 msgstr ""
 
 msgid "Shipments"

@@ -827,12 +827,14 @@ class Order(MoneyPropped, models.Model):
         self.update_payment_status()
         refund_created.send(sender=type(self), order=self, refund_lines=refund_lines)
 
-    def create_full_refund(self, restock_products=False):
+    def create_full_refund(self, restock_products=False, created_by=None):
         """
         Create a full for entire order contents, with the option of
         restocking stocked products.
 
         :param restock_products: Boolean indicating whether to restock products
+        :param created_by: Refund creator's user instance, used for
+                           adjusting supplier stock.
         :type restock_products: bool|False
         """
         if self.has_refunds():
@@ -844,7 +846,7 @@ class Order(MoneyPropped, models.Model):
             "amount": line.taxful_price.amount,
             "restock_products": restock_products
         } for line in self.lines.all() if line.type != OrderLineType.REFUND]
-        self.create_refund(line_data)
+        self.create_refund(line_data, created_by)
 
     def get_total_refunded_amount(self):
         total = sum([line.taxful_price.amount.value for line in self.lines.refunds()])
