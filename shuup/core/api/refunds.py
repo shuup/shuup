@@ -37,7 +37,8 @@ class RefundMixin(object):
         order = self.get_object()
 
         if not order.can_create_refund():
-            return Response({"error": _("Order can not be refunded at the moment.")}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": _("Order can not be refunded at the moment.")}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = PartialRefundSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -64,7 +65,8 @@ class RefundMixin(object):
         order = self.get_object()
 
         if not order.can_create_refund():
-            return Response({"error": _("Order can not be refunded at the moment.")}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": _("Order can not be refunded at the moment.")}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = FullRefundSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

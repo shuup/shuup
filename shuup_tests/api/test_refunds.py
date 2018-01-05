@@ -86,7 +86,7 @@ def test_refunds(admin_user):
     response = client.post(refund_url, data, format="json")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     error_msg = json.loads(response.content.decode("utf-8"))["error"]
-    assert error_msg == "Order can not be refunded at the moment"
+    assert error_msg == "Order can not be refunded at the moment."
 
 
 @pytest.mark.django_db
