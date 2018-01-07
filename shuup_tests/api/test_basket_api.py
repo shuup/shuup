@@ -13,7 +13,6 @@ from decimal import Decimal
 
 import babel
 import pytest
-import six
 from django.contrib.auth.models import AnonymousUser, User
 from django.test import override_settings
 from django.utils.timezone import now
@@ -21,7 +20,6 @@ from pytest_django.fixtures import django_user_model, django_username_field
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from shuup import configuration
 from shuup.core import cache
 from shuup.core.models import (
     Basket, Currency, get_person_contact, Order, OrderLineType,
@@ -39,61 +37,13 @@ from shuup_tests.campaigns.test_discount_codes import (
     Coupon, get_default_campaign
 )
 
-REQUIRED_SETTINGS = dict(
-    SHUUP_ENABLE_MULTIPLE_SHOPS=True,
-    SHUUP_BASKET_ORDER_CREATOR_SPEC="shuup.core.basket.order_creator:BasketOrderCreator",
-    SHUUP_BASKET_STORAGE_CLASS_SPEC="shuup.core.basket.storage:DatabaseBasketStorage",
-    SHUUP_BASKET_CLASS_SPEC="shuup.core.basket.objects:Basket",
-    MIDDLEWARE_CLASSES=[
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.middleware.locale.LocaleMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware'
-    ]
+from shuup.testing.basket_helpers import (
+    get_client, REQUIRED_SETTINGS, set_configuration
 )
 
 
 def setup_function(fn):
     cache.clear()
-
-
-def set_configuration():
-    config = {
-        "api_permission_ShopViewSet": 3,
-        "api_permission_FrontShopProductViewSet": 3,
-        "api_permission_PersonContactViewSet": 4,
-        "api_permission_FrontUserViewSet": 2,
-        "api_permission_FrontOrderViewSet": 4,
-        "api_permission_AttributeViewSet": 5,
-        "api_permission_TaxClassViewSet": 5,
-        "api_permission_FrontProductViewSet": 3,
-        "api_permission_ProductVariationVariableValueViewSet": 5,
-        "api_permission_SalesUnitViewSet": 5,
-        "api_permission_UserViewSet": 5,
-        "api_permission_ShopReviewViewSet": 4,
-        "api_permission_BasketViewSet": 2,
-        "api_permission_CategoryViewSet": 1,
-        "api_permission_ShipmentViewSet": 5,
-        "api_permission_CgpPriceViewSet": 5,
-        "api_permission_ShopProductViewSet": 3,
-        "api_permission_ContactViewSet": 4,
-        "api_permission_OrderViewSet": 5,
-        "api_permission_ProductViewSet": 5,
-        "api_permission_ProductTypeViewSet": 5,
-        "api_permission_ProductVariationVariableViewSet": 5,
-        "api_permission_SupplierViewSet": 5,
-        "api_permission_ManufacturerViewSet": 5,
-        "api_permission_ProductMediaViewSet": 5,
-        "api_permission_ProductAttributeViewSet": 5,
-        "api_permission_MutableAddressViewSet": 5,
-        "api_permission_ProductPackageViewSet": 5,
-    }
-    for field, value in six.iteritems(config):
-        configuration.set(None, field, value)
 
 
 def create_shop(name):
@@ -110,7 +60,7 @@ def test_create_new_basket(admin_user):
     with override_settings(**REQUIRED_SETTINGS):
         shop = factories.get_default_shop()
         shop2 = create_shop("foobar")
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         response = client.post("/api/shuup/basket/new/", {
             "shop": shop2.pk
         })
@@ -155,7 +105,7 @@ def test_fetch_basket(admin_user):
         factories.get_default_payment_method()
         factories.get_default_shipping_method()
         assert basket.shop == shop
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         response = client.get('/api/shuup/basket/{}-{}/'.format(shop.pk, basket.key))
         assert response.status_code == status.HTTP_200_OK
         basket_data = json.loads(response.content.decode("utf-8"))
@@ -181,7 +131,7 @@ def test_add_product_to_basket(admin_user):
         product_price = 1
         shop_product.default_price = TaxfulPrice(product_price, shop.currency)
         shop_product.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         # add shop product
         payload = {
             'shop_product': shop_product.id
@@ -263,7 +213,7 @@ def test_add_product_to_basket(admin_user):
         admin_user.is_superuser = False
         admin_user.is_staff = False
         admin_user.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'product': shop_product.product.pk,
             'shop': shop.pk,
@@ -281,7 +231,7 @@ def test_add_product_to_basket(admin_user):
         admin_user.is_superuser = False
         admin_user.is_staff = True
         admin_user.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'product': shop_product.product.pk,
             'shop': shop.pk,
@@ -299,7 +249,7 @@ def test_add_product_to_basket(admin_user):
         admin_user.is_superuser = True
         admin_user.is_staff = True
         admin_user.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'product': shop_product.product.pk,
             'shop': shop.pk,
@@ -329,7 +279,7 @@ def test_add_product_to_basket_with_summary(admin_user):
         product_price = 1
         shop_product.default_price = TaxfulPrice(product_price, shop.currency)
         shop_product.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         # add shop product
         payload = {
             'shop_product': shop_product.id
@@ -378,7 +328,7 @@ def test_line_not_updated(admin_user):
         product_price = 1
         shop_product.default_price = TaxfulPrice(product_price, shop.currency)
         shop_product.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'product': shop_product.product.pk,
             'shop': shop.pk,
@@ -441,7 +391,7 @@ def test_add_variation_product_to_basket(admin_user):
         parent_shop_product = parent.get_shop_instance(shop)
         parent_shop_product.refresh_from_db()
 
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         # add parent shop product
         payload = {
@@ -472,7 +422,7 @@ def test_add_product_shop_mismatch(admin_user):
         factories.get_default_payment_method()
         factories.get_default_shipping_method()
         sp = factories.create_product("test", shop=shop2, supplier=factories.get_default_supplier()).get_shop_instance(shop2)
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'shop_product': sp.id
         }
@@ -497,7 +447,7 @@ def test_product_is_required_when_adding(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         shop_product = factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'shop': shop.id,
         }
@@ -525,7 +475,7 @@ def test_quantity_has_to_be_in_stock(admin_user):
         shop_product.suppliers.add(supplier)
         shop_product.save()
 
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'shop': shop.id,
             'product': shop_product.id,
@@ -542,7 +492,7 @@ def test_product_has_to_exist(admin_user):
         set_configuration()
         shop = factories.get_default_shop()
         basket = factories.get_basket()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         # invalid product
         payload = {
             'shop': shop.id,
@@ -572,7 +522,7 @@ def test_update_line_quantity(admin_user):
         shop_product = factories.get_default_shop_product()
         shop_product.default_price = TaxfulPrice(1, shop.currency)
         shop_product.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         # add shop product
         payload = {
             'shop_product': shop_product.id
@@ -606,7 +556,7 @@ def test_basket_can_be_cleared(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         shop_product = factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'shop': shop.id,
             'product': shop_product.id,
@@ -631,7 +581,7 @@ def test_can_delete_line(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         shop_product = factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'shop_product': shop_product.id,
         }
@@ -660,7 +610,7 @@ def test_add_blank_code(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         shop_product = factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'code': ''
         }
@@ -677,7 +627,7 @@ def test_cant_add_a_dummy_campaign_code(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'code': 'ABCDE'
         }
@@ -692,7 +642,7 @@ def test_cant_remove_a_dummy_campaign_code(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         payload = {
             'code': 'ABCDE'
         }
@@ -707,7 +657,7 @@ def test_cant_clear_dummy_campaign_codes(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         response = client.post('/api/shuup/basket/{}-{}/clear_codes/'.format(shop.pk, basket.key))
         assert response.status_code == status.HTTP_200_OK
 
@@ -719,7 +669,7 @@ def test_can_add_remove_a_valid_campaign_code(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         coupon = Coupon.objects.create(code="DACODE", active=True)
         get_default_campaign(coupon)
@@ -745,7 +695,7 @@ def test_can_clear_valid_campaign_codes(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         coupon1 = Coupon.objects.create(code="DACODE", active=True)
         get_default_campaign(coupon1)
@@ -780,7 +730,7 @@ def test_multiple_coupons_work_properly(admin_user):
         shop = factories.get_default_shop()
         basket = factories.get_basket()
         factories.get_default_shop_product()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         code_one = "DACODE"
         code_two = "DACODE1"
@@ -814,7 +764,7 @@ def test_set_shipping_address(admin_user):
         basket = factories.get_basket()
         factories.get_default_payment_method()
         factories.get_default_shipping_method()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         addr1 = factories.get_address()
         addr1.save()
 
@@ -869,48 +819,6 @@ def test_set_shipping_address(admin_user):
         assert shipping_addr["country"] == address_data["country"]
 
 
-def _get_client(admin_user):
-    client = APIClient()
-    client.force_authenticate(user=admin_user)
-    return client
-
-
-@pytest.mark.django_db
-def test_copy_order_to_basket(admin_user):
-    with override_settings(**REQUIRED_SETTINGS):
-        set_configuration()
-        shop = factories.get_default_shop()
-        basket = factories.get_basket()
-        p1 = factories.create_product("test", shop=shop, supplier=factories.get_default_supplier())
-        order = factories.create_order_with_product(factories.get_default_product(), factories.get_default_supplier(), 2, 10, shop=shop)
-        factories.add_product_to_order(order, factories.get_default_supplier(), p1, 2, 5)
-        order.customer = get_person_contact(admin_user)
-        order.save()
-        client = _get_client(admin_user)
-        payload = {
-            "order": order.pk
-        }
-        response = client.post('/api/shuup/basket/{}-{}/add_from_order/'.format(shop.pk, basket.key), payload)
-        assert response.status_code == status.HTTP_200_OK
-        response_data = json.loads(response.content.decode("utf-8"))
-        assert len(response_data["items"]) == 2
-        assert not response_data["validation_errors"]
-        basket.refresh_from_db()
-        assert len(basket.data["lines"]) == 2
-
-        # do it again, basket should clear first then read items
-        payload = {
-            "order": order.pk
-        }
-        response = client.post('/api/shuup/basket/{}-{}/add_from_order/'.format(shop.pk, basket.key), payload)
-        assert response.status_code == status.HTTP_200_OK
-        response_data = json.loads(response.content.decode("utf-8"))
-        assert len(response_data["items"]) == 2
-        assert not response_data["validation_errors"]
-        basket.refresh_from_db()
-        assert len(basket.data["lines"]) == 2
-
-
 @pytest.mark.django_db
 def test_abandoned_baskets(admin_user):
     with override_settings(**REQUIRED_SETTINGS):
@@ -924,7 +832,7 @@ def test_abandoned_baskets(admin_user):
         shop_product = factories.get_default_shop_product()
         shop_product.default_price = TaxfulPrice(1, shop.currency)
         shop_product.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         # add shop product
         payload = {'shop_product': shop_product.id}
         response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket1.key), payload)
@@ -1055,7 +963,7 @@ def test_permissions(admin_user):
         product_one = get_product("shop_one_product", shop_one)
         product_two = get_product("shop_two_product", shop_two)
 
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         response = client.post("/api/shuup/basket/new/", {
             "shop": shop_one.pk,
@@ -1072,7 +980,7 @@ def test_permissions(admin_user):
         assert response.status_code == status.HTTP_200_OK
 
         # someone figured out the first param is shop!! oh noes
-        client = _get_client(user_one)
+        client = get_client(user_one)
         response = client.get("/api/shuup/basket/{}-{}/".format(shop_two.pk, basket.key))
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
@@ -1136,7 +1044,7 @@ def test_add_product_to_basket_with_custom_shop_product_fields(admin_user):
 
         shop_product.product.name = product_name
         shop_product.product.save()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         payload = {
             'product': shop_product.product.pk,
@@ -1168,7 +1076,7 @@ def test_add_product_to_basket_with_custom_shop_product_fields(admin_user):
 
 def assert_basket_retrieve(admin_user, basket, data, person, shop, status):
     user = person if isinstance(person, User) else person.user
-    client = _get_client(user)
+    client = get_client(user)
     response = client.get("/api/shuup/basket/{}-{}/".format(shop.pk, basket.key))
     assert response.status_code == status
     basket = Basket.objects.first()
@@ -1184,7 +1092,7 @@ def test_basket_with_methods(admin_user):
         set_configuration()
         shop = factories.get_default_shop()
         shop2 = create_shop("foobar")
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
         response = client.post("/api/shuup/basket/new/", {
             "shop": shop2.pk
         })
@@ -1297,7 +1205,7 @@ def test_basket_taxes(admin_user, prices_include_tax, tax_rate, product_price, e
         factories.get_shipping_method(shop)
         product = factories.create_product("product", shop, factories.get_default_supplier(), product_price)
         shop_product = product.shop_products.filter(shop=shop).first()
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         tax = factories.get_default_tax()
         tax.rate = Decimal(tax_rate)
@@ -1337,7 +1245,7 @@ def test_basket_taxes(admin_user, currency, currency_decimals):
         shop = factories.get_shop(enabled=True, currency=currency)
         factories.get_payment_method(shop)
         factories.get_shipping_method(shop)
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         Currency.objects.update_or_create(code=currency, defaults={"decimal_places": currency_decimals})
 
@@ -1383,7 +1291,7 @@ def test_create_with_customer(admin_user, user_mode):
         else:
             raise Exception("It should never enter here!")
 
-        client = _get_client(user)
+        client = get_client(user)
 
         response = client.post("/api/shuup/basket/new/", {"shop": shop.pk, "customer": customer.id}, format="json")
         if user_mode == "normal":
@@ -1422,7 +1330,7 @@ def test_set_customer(admin_user, user_mode):
         else:
             raise Exception("It should never enter here!")
 
-        client = _get_client(user)
+        client = get_client(user)
 
         # create basket with the current user customer
         response = client.post("/api/shuup/basket/new/", {"shop": shop.pk}, format="json")
@@ -1480,7 +1388,7 @@ def test_set_company_customer(admin_user):
         company2.members.add(get_person_contact(user))
         company3.members.add(get_person_contact(user))
 
-        client = _get_client(user)
+        client = get_client(user)
 
         # create basket, the customer will be the first attached company
         response = client.post("/api/shuup/basket/new/", {"shop": shop.pk}, format="json")
@@ -1534,7 +1442,7 @@ def test_set_customer_group_prices(admin_user):
         from shuup.customer_group_pricing.models import CgpPrice
         CgpPrice.objects.create(product=product, shop=shop, group=group2, price_value=discounted_price)
 
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         # create basket with the current user customer
         response = client.post("/api/shuup/basket/new/", {"shop": shop.pk}, format="json")
@@ -1628,7 +1536,7 @@ def test_set_customer_campaigns(admin_user):
         )
         effect.products.add(product)
 
-        client = _get_client(admin_user)
+        client = get_client(admin_user)
 
         # create basket with the current user customer
         response = client.post("/api/shuup/basket/new/", {"shop": shop.pk}, format="json")

@@ -747,21 +747,16 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         """
         self.process_request()
         errors = []
-        order_queryset = Order.objects.filter(pk=request.data.get("order"))
+        order = self._get_order(request)
 
-        if self.request.basket.customer:
-            order_queryset = order_queryset.filter(customer_id=self.request.basket.customer.id)
-        else:
-            order_queryset = order_queryset.filter(customer_id=get_person_contact(request.user).id)
-
-        order = order_queryset.first()
         if not order:
             return Response({"error": "invalid order"}, status=status.HTTP_404_NOT_FOUND)
 
         for line in order.lines.products():
             try:
-                self._add_product(request, add_data={
-                    "product": line.product_id, "shop": order.shop_id, "quantity": line.quantity})
+                self._add_product(
+                    request, add_data={"product": line.product_id, "shop": order.shop_id, "quantity": line.quantity}
+                )
             except ValidationError as exc:
                 errors.append({exc.code: exc.message})
             except ProductNotOrderableProblem as exc:
@@ -772,8 +767,22 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
                 errors.append({"error": str(exc)})
         if len(errors) > 0:
             return Response({"errors": errors}, status.HTTP_400_BAD_REQUEST)
+        return Response(self.get_serializer(request.basket).data)
+
+    def _get_order(self, request):
+        order_queryset = Order.objects.filter(pk=request.data.get("order"))
+
+        if self.request.basket.customer.id:
+            order_queryset = order_queryset.filter(customer_id=request.basket.customer.id)
         else:
-            return Response(self.get_serializer(request.basket).data)
+            order_queryset = order_queryset.filter(customer__isnull=True)
+
+        if not self.request.shop.staff_members.filter(id=request.user.id).exists():
+            # If the current user is not staff member the order customer needs to match
+            # with the current user.
+            order_queryset = order_queryset.filter(customer_id=get_person_contact(request.user).id)
+
+        return order_queryset.first()
 
     def _add_product(self, request, *args, **kwargs):
         data = kwargs.pop("add_data", request.data)
