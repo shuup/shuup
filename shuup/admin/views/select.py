@@ -17,7 +17,9 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
-from shuup.core.models import Carrier, Contact, Product, ShopProduct
+from shuup.core.models import (
+    Carrier, Contact, Product, ProductMode, ShopProduct
+)
 
 
 def _field_exists(model, field):
@@ -72,6 +74,7 @@ class MultiselectAjaxView(TemplateView):
         model_name = request.GET.get("model")
         if not model_name:
             return []
+
         cls = apps.get_model(model_name)
         qs = cls.objects.all()
         shop = self.request.shop
@@ -79,14 +82,27 @@ class MultiselectAjaxView(TemplateView):
         self.init_search_fields(cls)
         if not self.search_fields:
             return [{"id": None, "name": _("Couldn't get selections for %s.") % model_name}]
+
         if request.GET.get("search"):
             query = Q()
             keyword = request.GET.get("search", "").strip()
             for field in self.search_fields:
                 query |= Q(**{"%s__icontains" % field: keyword})
+
             if issubclass(cls, Contact) or issubclass(cls, get_user_model()):
                 query &= Q(is_active=True)
-            qs = qs.filter(query).distinct()
+
+            qs = qs.filter(query)
+
+        search_mode = request.GET.get("searchMode")
+        if search_mode and search_mode == "main" and issubclass(cls, Product):
+            qs = qs.filter(mode__in=[
+                ProductMode.SIMPLE_VARIATION_PARENT,
+                ProductMode.VARIABLE_VARIATION_PARENT,
+                ProductMode.NORMAL
+            ])
+
+        qs = qs.distinct()
         return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
 
     def _filter_query(self, cls, qs, shop):

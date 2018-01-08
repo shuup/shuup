@@ -58,6 +58,14 @@ class Select2MultipleField(Field):
         return attrs
 
 
+class Select2MultipleMainProductField(Select2MultipleField):
+    """Search only from parent and normal products"""
+    def widget_attrs(self, widget):
+        attrs = super(Select2MultipleMainProductField, self).widget_attrs(widget)
+        attrs.update({"data-search-mode": "main"})
+        return attrs
+
+
 class WeekdayField(MultipleChoiceField):
     DAYS_OF_THE_WEEK = {
         (0, _("Monday")),
