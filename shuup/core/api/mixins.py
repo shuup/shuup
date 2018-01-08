@@ -8,6 +8,10 @@
 from rest_framework import serializers
 
 from shuup.api.fields import FormattedDecimalField
+from shuup.core.api.service import (
+    PaymentMethodSerializer, ShippingMethodSerializer
+)
+from shuup.core.models import Order
 
 
 class BaseLineSerializerMixin(serializers.Serializer):
@@ -37,3 +41,17 @@ class BaseOrderTotalSerializerMixin(serializers.Serializer):
     taxful_total_price = FormattedDecimalField()
     taxless_total_price = FormattedDecimalField()
     prices_include_tax = serializers.BooleanField()
+
+
+class AvailableOrderMethodsMixin(serializers.Serializer):
+    available_shipping_methods = serializers.SerializerMethodField()
+    available_payment_methods = serializers.SerializerMethodField()
+
+    def get_available_payment_methods(self, order):
+        if isinstance(order, Order):
+            return PaymentMethodSerializer(order.get_available_payment_methods(), many=True, context=self.context).data
+
+    def get_available_shipping_methods(self, order):
+        if isinstance(order, Order):
+            return ShippingMethodSerializer(
+                order.get_available_shipping_methods(), many=True, context=self.context).data

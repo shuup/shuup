@@ -206,6 +206,17 @@ def test_create_order(admin_user, currency):
     first_line_summary = line_summary[0]
     assert "tax" in first_line_summary
 
+    response = client.get("/api/shuup/order/%s/" % order.id)
+    assert response.status_code == status.HTTP_200_OK
+    order_data = json.loads(response.content.decode("utf-8"))
+    assert order_data.get("id") == order.id
+
+    assert "available_shipping_methods" in order_data
+    assert "available_payment_methods" in order_data
+
+    assert order_data["available_payment_methods"][0]["id"] == pm.id
+    assert order_data["available_shipping_methods"][0]["id"] == sm.id
+
 
 def test_create_without_a_contact(admin_user):
     create_default_order_statuses()

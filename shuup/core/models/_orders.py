@@ -1092,5 +1092,35 @@ class Order(MoneyPropped, models.Model):
             if getattr(self, "%s_id" % attr):
                 return getattr(self, attr).name
 
+    def get_available_shipping_methods(self):
+        """
+        Get available shipping methods.
+
+        :rtype: list[ShippingMethod]
+        """
+        from shuup.core.models import ShippingMethod
+
+        product_ids = self.lines.products().values_list("id", flat=True)
+        return [
+            m for m
+            in ShippingMethod.objects.available(shop=self.shop, products=product_ids)
+            if m.is_available_for(self)
+        ]
+
+    def get_available_payment_methods(self):
+        """
+        Get available payment methods.
+
+        :rtype: list[PaymentMethod]
+        """
+        from shuup.core.models import PaymentMethod
+
+        product_ids = self.lines.products().values_list("id", flat=True)
+        return [
+            m for m
+            in PaymentMethod.objects.available(shop=self.shop, products=product_ids)
+            if m.is_available_for(self)
+        ]
+
 
 OrderLogEntry = define_log_model(Order)

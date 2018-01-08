@@ -247,6 +247,9 @@ def test_empty_order():
     assert order.pk and order.deleted, "Order is soft-deleted"
     order.delete()  # Again! (This, too, should be a no-op)
 
+    assert not order.get_available_shipping_methods()
+    assert not order.get_available_shipping_methods()
+
 
 @pytest.mark.django_db
 def test_known_extra_data():
