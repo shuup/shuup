@@ -9,25 +9,26 @@
 import json
 
 import pytest
-from django.contrib.auth import get_user_model
 from django.utils.translation import activate, get_language
 
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.core.models import (
-    Category, CompanyContact, get_person_contact, PersonContact
+    Category, CompanyContact, PersonContact, Product, ProductMode
 )
-from shuup.testing.factories import (
-    create_product, get_default_category, get_default_shop
-)
+from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
 
 
-def _get_search_results(rf, view, model_name, search_str, user):
-    request = apply_request_middleware(rf.get("sa/search", {
+def _get_search_results(rf, view, model_name, search_str, user, search_mode=None):
+    data = {
         "model": model_name,
         "search": search_str
-    }), user=user)
+    }
+    if search_mode:
+        data.update({"searchMode": search_mode})
+
+    request = apply_request_middleware(rf.get("sa/search", data), user=user)
     response = view(request)
     assert response.status_code == 200
     return json.loads(response.content.decode("utf-8")).get("results")
@@ -80,6 +81,40 @@ def test_ajax_select_view_with_products(rf, admin_user):
     product.soft_delete()
     results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
     assert len(results) == 0
+
+
+@pytest.mark.django_db
+def test_multi_select_with_main_products(rf, admin_user):
+    shop = get_default_shop()
+    activate("en")
+    view = MultiselectAjaxView.as_view()
+
+    var1 = "size"
+    var2 = "color"
+    parent = create_product("test", shop=shop, **{"name": "test"})
+    for a in range(4):
+        for b in range(3):
+            product_name = "test-%s-%s" % (a, b)
+            child = create_product(product_name, shop=shop, **{"name": product_name})
+            child.link_to_parent(parent, variables={var1: a, var2: b})
+            assert child.mode == ProductMode.VARIATION_CHILD
+
+    assert parent.variation_children.count() == 4 * 3
+    assert Product.objects.count() == 4*3 + 1
+
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user)
+    assert len(results) == Product.objects.count()
+
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "main")
+    assert len(results) == 1
+
+    create_product("test1", shop=shop, **{"name": "test 123"})
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "main")
+    assert len(results) == 2
+
+    create_product("2", shop=shop, **{"name": "something that doesn not match with the search term"})
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "main")
+    assert len(results) == 2
 
 
 @pytest.mark.django_db
