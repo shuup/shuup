@@ -23,6 +23,7 @@ from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shuup.admin.modules.orders.views.edit import encode_address
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.api.address import AddressSerializer
+from shuup.core.api.mixins import AvailableOrderMethodsMixin
 from shuup.core.api.refunds import RefundMixin
 from shuup.core.models import (
     Contact, Order, OrderLine, OrderStatus, OrderStatusRole, Payment, Shop
@@ -47,7 +48,7 @@ class PaymentSerializer(serializers.ModelSerializer):
         fields = ("payment_identifier", "amount_value", "description")
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderSerializer(AvailableOrderMethodsMixin, serializers.ModelSerializer):
     lines = OrderLineSerializer(many=True)
     billing_address = AddressSerializer(read_only=True)
     shipping_address = AddressSerializer(read_only=True)

@@ -26,13 +26,15 @@ def create_order(request, creator, customer, product):
     billing_address = get_address().to_immutable()
     shipping_address = get_address(name="Shippy Doge").to_immutable()
     shipping_address.save()
+    default_pm = get_default_payment_method()
+    default_sm = get_default_shipping_method()
     shop = request.shop
     order = Order(
         creator=creator,
         customer=customer,
         shop=shop,
-        payment_method=get_default_payment_method(),
-        shipping_method=get_default_shipping_method(),
+        payment_method=default_pm,
+        shipping_method=default_sm,
         billing_address=billing_address,
         shipping_address=shipping_address,
         order_date=now(),
@@ -103,6 +105,13 @@ def create_order(request, creator, customer, product):
     assert order.is_paid()
     assert Order.objects.paid().filter(pk=order.pk).exists(), "It was paid! Honestly!"
     assert order.has_products()
+
+    assert order.get_available_shipping_methods()
+    assert order.get_available_payment_methods()
+
+    assert default_sm in order.get_available_shipping_methods()
+    assert default_pm in order.get_available_payment_methods()
+
 
 def create_simple_order(request, creator, customer):
     billing_address = get_address().to_immutable()
