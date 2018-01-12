@@ -10,9 +10,8 @@ from __future__ import unicode_literals
 import datetime
 
 import six
-from django.utils import timezone
 
-from shuup.utils.dates import try_parse_date
+from shuup.utils.dates import local_now, try_parse_date
 
 ERROR_MESSAGE = "Error fetching data"
 NO_DATA_MESSAGE = "No results"
@@ -39,10 +38,10 @@ def get_error_data(schema, sales_data):
 
 def parse_date_range_preset(value):
     from shuup.reports.forms import DateRangeChoices
-    now = timezone.now()
+    now = local_now()
     if value == DateRangeChoices.TODAY:
         midnight = now.replace(hour=0, minute=0, second=0)
-        tomorrow = midnight + datetime.timedelta(days=1)
+        tomorrow = midnight + datetime.timedelta(days=1) - datetime.timedelta(seconds=1)
         return (midnight, tomorrow)
     if value == DateRangeChoices.RUNNING_WEEK:
         return (now - datetime.timedelta(days=7), now)
