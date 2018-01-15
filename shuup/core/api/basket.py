@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import datetime
-import random
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -38,7 +37,6 @@ from shuup.core.models import (
     get_person_contact, MutableAddress, Order, OrderLineType, OrderStatus,
     PaymentMethod, Product, ShippingMethod, Shop, ShopProduct, ShopStatus
 )
-from shuup.core.order_creator._source import LineSource
 from shuup.utils.importing import cached_load
 
 from .mixins import (
@@ -238,7 +236,6 @@ class StoredBasketSerializer(serializers.ModelSerializer):
 class BaseProductAddBasketSerializer(serializers.Serializer):
     supplier = serializers.IntegerField(required=False)
     quantity = FormattedDecimalField(required=False)
-    price = FormattedDecimalField(required=False, allow_null=True)
     description = serializers.CharField(max_length=128, required=False, allow_null=True)
 
 
@@ -802,19 +799,8 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             # we call `add` directly, assuming the user will handle variations
             # as he can know all product variations easily through product API
             try:
-                price = serializer.validated_data.get("price", None)
-                if price is not None and (request.user.is_superuser or request.user.is_staff):
-                    self._add_with_price(
-                        request,
-                        shop_id=cmd_kwargs["shop_id"],
-                        product_id=cmd_kwargs["product_id"],
-                        quantity=cmd_kwargs["quantity"],
-                        price=price,
-                        description=serializer.validated_data.get("description", None),
-                    )
-                else:
-                    self._handle_cmd(request, "add", cmd_kwargs)
-                    request.basket.save()
+                self._handle_cmd(request, "add", cmd_kwargs)
+                request.basket.save()
             except ValidationError as exc:
                 return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
             except ProductNotOrderableProblem as exc:
@@ -825,48 +811,6 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
                 return Response(self.get_serializer(request.basket).data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def _add_with_price(self, request, shop_id, product_id, quantity, price, **kwargs):
-        basket = request.basket
-        shop = Shop.objects.get(pk=shop_id)
-        product = Product.objects.get(pk=product_id)
-
-        try:
-            shop_product = product.get_shop_instance(shop)
-        except ShopProduct.DoesNotExist:
-            raise ValidationError(
-                _("Product {product} is not available in {shop}").format(
-                    product=product.name, shop=shop.name))
-
-        supplier = shop_product.get_supplier(basket.customer, quantity, basket.shipping_address)
-        shop_product.raise_if_not_orderable(
-            supplier=supplier,
-            quantity=quantity,
-            customer=basket.customer
-        )
-
-        description = kwargs.get("description")
-        if not description:
-            description = "%s (%s)" % (product.name, _("Custom Price"))
-
-        line_source = LineSource.SELLER
-        if request.user.is_superuser:
-            line_source = LineSource.ADMIN
-
-        line_data = dict(
-            line_id="custom_product_%s" % str(random.randint(0, 0x7FFFFFFF)),
-            type=OrderLineType.PRODUCT,
-            quantity=quantity,
-            shop=shop,
-            text=description,
-            base_unit_price=shop.create_price(price),
-            product=product,
-            sku=product.sku,
-            supplier=supplier,
-            line_source=line_source
-        )
-        basket.add_line(**line_data)
-        basket.save()
 
     @detail_route(methods=['get'])
     def taxes(self, request, *args, **kwargs):
