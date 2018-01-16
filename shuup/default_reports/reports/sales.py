@@ -8,6 +8,7 @@
 import itertools
 
 from babel.dates import format_date
+from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
@@ -32,7 +33,7 @@ class SalesReport(OrderReportMixin, ShuupReportBase):
     ]
 
     def extract_date(self, entity):
-        return entity.order_date.date()
+        return localtime(entity.order_date).date()
 
     def get_data(self):
         orders = self.get_objects().order_by("-order_date")
