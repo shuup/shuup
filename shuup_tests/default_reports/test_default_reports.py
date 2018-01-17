@@ -988,3 +988,57 @@ def test_sales_report_timezone(server_timezone):
             assert report_data[0]["date"] == format_date(forth_date_local, locale=get_current_babel_locale())
             assert report_data[1]["date"] == format_date(second_date_local, locale=get_current_babel_locale())
             assert report_data[2]["date"] == format_date(first_date_local, locale=get_current_babel_locale())
+
+
+@pytest.mark.parametrize("server_timezone", ["America/Los_Angeles", "America/Sao_Paulo"])
+@pytest.mark.django_db
+def test_sales_report_per_hour_timezone(server_timezone):
+    with override_settings(TIME_ZONE = server_timezone):
+        """
+        TIME TABLE
+
+        | identifier  | ISO 8859-1                | UTC                 | America/Los_Angeles | America/Sao_Paulo   |
+        | first_date  | 2017-10-01T23:50:00+03:00 | 2017-10-01 20:50:00 | 2017-10-01 13:50:00 | 2017-10-01 17:50:00 |
+        | second_date | 2017-10-02T17:13:00+10:00 | 2017-10-02 07:13:00 | 2017-10-02 00:13:00 | 2017-10-02 04:13:00 |
+        | third_date  | 2017-10-02T22:04:44-01:00 | 2017-10-02 23:04:44 | 2017-10-02 16:04:44 | 2017-10-02 20:04:44 |
+        | forth_date  | 2017-10-02T23:04:44-05:00 | 2017-10-03 04:04:44 | 2017-10-02 21:04:44 | 2017-10-03 01:04:44 |
+        """
+
+        first_date = parse_datetime("2017-10-01T23:50:00+03:00")
+        second_date = parse_datetime("2017-10-02T17:13:00+10:00")
+        third_date = parse_datetime("2017-10-02T22:04:44-01:00")
+        forth_date = parse_datetime("2017-10-02T23:04:44-05:00")
+
+        inited_data = create_orders_for_dates([first_date, second_date, third_date, forth_date], as_paid=True)
+        assert Order.objects.count() == 4
+
+        first_date_local = first_date.astimezone(timezone(server_timezone))
+        second_date_local = second_date.astimezone(timezone(server_timezone))
+        third_date_local = third_date.astimezone(timezone(server_timezone))
+        forth_date_local = forth_date.astimezone(timezone(server_timezone))
+
+        data = {
+            "report": SalesPerHour.get_name(),
+            "shop": inited_data["shop"].pk,
+            "start_date": first_date_local.isoformat(),
+            "end_date": forth_date_local.isoformat(),
+        }
+        report = SalesPerHour(**data)
+        report_data = report.get_data()["data"]
+
+        if server_timezone == "America/Los_Angeles":
+            # should have orders in hours: 00, 13, 16 and 21
+            expected_hours = [0, 13, 16, 21]
+            for hour in range(24):
+                if hour in expected_hours:
+                    assert report_data[hour]["order_amount"] == 1
+                else:
+                    assert report_data[hour]["order_amount"] == 0
+        else:
+            # should have orders in hours: 01, 04, 17 and 20
+            expected_hours = [1, 4, 17, 20]
+            for hour in range(24):
+                if hour in expected_hours:
+                    assert report_data[hour]["order_amount"] == 1
+                else:
+                    assert report_data[hour]["order_amount"] == 0
