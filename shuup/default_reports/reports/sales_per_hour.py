@@ -8,6 +8,7 @@
 import itertools
 
 import six
+from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.default_reports.forms import OrderReportForm
@@ -24,12 +25,11 @@ class SalesPerHour(OrderReportMixin, ShuupReportBase):
     schema = [
         {"key": "hour", "title": _("Hour")},
         {"key": "order_amount", "title": _("Order Amount")},
-        {"key": "total_sales", "title": _("Total Sales")},
-
+        {"key": "total_sales", "title": _("Total Sales")}
     ]
 
     def date_hour(self, timestamp):
-        return timestamp.strftime("%H")
+        return localtime(timestamp).strftime("%H")
 
     def get_data(self, **kwargs):
         orders = self.get_objects()
