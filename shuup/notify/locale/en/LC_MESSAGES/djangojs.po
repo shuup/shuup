@@ -60,8 +60,10 @@ msgstr ""
 msgid "Are you sure you wish to delete this step?"
 msgstr ""
 
-#, javascript-format
-msgid "If %s of these conditions hold..."
+msgid "If"
+msgstr ""
+
+msgid "of these conditions hold..."
 msgstr ""
 
 msgid "then execute these actions..."
