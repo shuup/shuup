@@ -43,6 +43,7 @@ class Notification(models.Model):
     """
     A model for persistent notifications to be shown in the admin, etc.
     """
+    shop = models.ForeignKey("shuup.Shop", null=True, verbose_name=_("shop"))
     recipient_type = EnumIntegerField(RecipientType, default=RecipientType.ADMINS, verbose_name=_('recipient type'))
     recipient = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL,
