@@ -9,8 +9,9 @@ import django.core.mail as mail
 import pytest
 from django.conf import settings
 
-from shuup.notify.script import Context
 from shuup.notify.actions.email import SendEmail
+from shuup.notify.script import Context
+from shuup.testing import factories
 from shuup_tests.notify.fixtures import (
     get_initialized_test_event, TEST_TEMPLATE_DATA
 )
@@ -24,7 +25,7 @@ def test_email_action():
     mail.outbox = []  # Clear the Django testing mail outbox
 
     event = get_initialized_test_event()
-    ctx = Context.from_event(event)
+    ctx = Context.from_event(event, shop=factories.get_default_shop())
     ctx.set("name", "Luke Warm")  # This variable isn't published by the event, but it's used by the template
     se = SendEmail({
         "template_data": TEST_TEMPLATE_DATA,

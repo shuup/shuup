@@ -79,7 +79,7 @@ def _assert_stock_alert_limit_script(script, data):
     RegistrationReceivedEmailScriptTemplate
 ])
 def test_generic_script_template_manual(script_template_cls):
-    get_default_shop()
+    shop = get_default_shop()
     script_template = script_template_cls()
     form = script_template.get_form()
     initial = script_template.get_initial()
@@ -96,7 +96,7 @@ def test_generic_script_template_manual(script_template_cls):
     form = script_template.get_form(data=data)
     assert form.is_valid()
 
-    script = script_template.create_script(form)
+    script = script_template.create_script(shop, form)
     assert script is not None
     _assert_generic_script(script_template_cls, script, data)
 
@@ -131,13 +131,13 @@ def test_generic_script_template_manual(script_template_cls):
     ShipmentDeletedEmailScriptTemplate,
     RegistrationReceivedEmailScriptTemplate
 ])
-def test_generic_script_template_admin(rf, script_template_cls):
+def test_generic_script_template_admin(rf, admin_user, script_template_cls):
     get_default_shop()
     Script.objects.all().delete()
     identifier = script_template_cls.identifier
 
     # should redirect us since the script template has a bound form
-    request = apply_request_middleware(rf.post("/", {"id": identifier}))
+    request = apply_request_middleware(rf.post("/", {"id": identifier}), user=admin_user)
     response = ScriptTemplateView.as_view()(request)
     assert response.status_code == 302
     assert response.url == reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
@@ -151,7 +151,7 @@ def test_generic_script_template_admin(rf, script_template_cls):
         "fi-body": "my body FI",
         "fi-subject": "something FI"
     }
-    request = apply_request_middleware(rf.post("/", data))
+    request = apply_request_middleware(rf.post("/", data), user=admin_user)
     response = ScriptTemplateConfigView.as_view()(request, id=identifier)
     assert response.status_code == 302
     assert response.url == reverse("shuup_admin:notify.script.list")
@@ -164,7 +164,7 @@ def test_generic_script_template_admin(rf, script_template_cls):
         "en-body": "my body 2",
         "en-subject": "something 2"
     })
-    request = apply_request_middleware(rf.post("/", data))
+    request = apply_request_middleware(rf.post("/", data), user=admin_user)
     response = ScriptTemplateEditView.as_view()(request, pk=script.pk)
     assert response.status_code == 302
     assert response.url == reverse("shuup_admin:notify.script.list")
@@ -175,7 +175,7 @@ def test_generic_script_template_admin(rf, script_template_cls):
 
 @pytest.mark.django_db
 def test_stock_alert_limit_script_template_manual(rf):
-    get_default_shop()
+    shop = get_default_shop()
     script_template = StockLimitEmailScriptTemplate()
     form = script_template.get_form()
 
@@ -193,7 +193,7 @@ def test_stock_alert_limit_script_template_manual(rf):
     assert form.is_valid()
 
     # create
-    script = script_template.create_script(form)
+    script = script_template.create_script(shop, form)
     assert script is not None
     _assert_stock_alert_limit_script(script, data)
 
@@ -220,14 +220,14 @@ def test_stock_alert_limit_script_template_manual(rf):
 
 
 @pytest.mark.django_db
-def test_stock_alert_limit_script_template_admin(rf):
+def test_stock_alert_limit_script_template_admin(rf, admin_user):
     get_default_shop()
 
     Script.objects.all().delete()
     identifier = StockLimitEmailScriptTemplate.identifier
 
     # should redirect us since the script template has a bound form
-    request = apply_request_middleware(rf.post("/", {"id": identifier}))
+    request = apply_request_middleware(rf.post("/", {"id": identifier}), user=admin_user)
     response = ScriptTemplateView.as_view()(request)
     assert response.status_code == 302
     assert response.url == reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
@@ -240,7 +240,7 @@ def test_stock_alert_limit_script_template_admin(rf):
         "base-recipient": "someemail@shuup.com",
         "base-last24hrs": True
     }
-    request = apply_request_middleware(rf.post("/", data))
+    request = apply_request_middleware(rf.post("/", data), user=admin_user)
     response = ScriptTemplateConfigView.as_view()(request, id=identifier)
     assert response.status_code == 302
     assert response.url == reverse("shuup_admin:notify.script.list")
@@ -254,7 +254,7 @@ def test_stock_alert_limit_script_template_admin(rf):
         "en-subject": "something 2",
         "base-recipient": "someemail@shuup.comzzz",
     })
-    request = apply_request_middleware(rf.post("/", data))
+    request = apply_request_middleware(rf.post("/", data), user=admin_user)
     response = ScriptTemplateEditView.as_view()(request, pk=script.pk)
     assert response.status_code == 302
     assert response.url == reverse("shuup_admin:notify.script.list")
@@ -269,14 +269,14 @@ def test_dummy_script_template_manual(rf):
     with override_provides("notify_script_template", [
             "shuup.testing.notify_script_templates:DummyScriptTemplate"
         ]):
-        get_default_shop()
+        shop = get_default_shop()
         Script.objects.all().delete()
 
         script_template = DummyScriptTemplate()
         form = script_template.get_form()
         assert form is None
 
-        script = script_template.create_script()
+        script = script_template.create_script(shop)
         assert script is not None
 
         db_script = Script.objects.first()
@@ -292,7 +292,7 @@ def test_dummy_script_template_manual(rf):
 
 
 @pytest.mark.django_db
-def test_dummy_script_template_admin(rf):
+def test_dummy_script_template_admin(rf, admin_user):
 
     with override_provides("notify_script_template", [
             "shuup.testing.notify_script_templates:DummyScriptTemplate"
@@ -300,7 +300,7 @@ def test_dummy_script_template_admin(rf):
         get_default_shop()
 
         Script.objects.all().delete()
-        request = apply_request_middleware(rf.post("/", {"id": DummyScriptTemplate.identifier}))
+        request = apply_request_middleware(rf.post("/", {"id": DummyScriptTemplate.identifier}), user=admin_user)
         response = ScriptTemplateView.as_view()(request)
         assert response.status_code == 302
         assert response.url == reverse("shuup_admin:notify.script.list")

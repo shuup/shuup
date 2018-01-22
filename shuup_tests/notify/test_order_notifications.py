@@ -25,7 +25,7 @@ from shuup.notify.models import Script
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
     get_default_category, get_default_product, get_default_supplier,
-    get_default_tax_class, get_initial_order_status, get_shop
+    get_default_tax_class, get_initial_order_status, get_shop, get_default_shop
 )
 from shuup.testing.mock_population import populate_if_required
 from shuup.testing.soup_utils import extract_form_fields
@@ -130,7 +130,7 @@ def get_address(**overrides):
 
 
 def get_test_script(name, identifier):
-    sc = Script.objects.create(name=name, event_identifier=identifier, enabled=True)
+    sc = Script.objects.create(name=name, event_identifier=identifier, enabled=True, shop=get_default_shop())
     sc.set_serialized_steps(STEP_DATA)
     sc.save()
     return sc
@@ -401,7 +401,8 @@ def test_order_received_variables(rf, with_shop_contact):
             }
         })
 
-    sc = Script.objects.create(name="variables script", event_identifier="order_received", enabled=True)
+    sc = Script.objects.create(
+        name="variables script", event_identifier="order_received", enabled=True, shop=shop)
     sc.set_serialized_steps(STEP_DATA)
     sc.save()
 
