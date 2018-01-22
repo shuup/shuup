@@ -49,5 +49,6 @@ class AddNotification(Action):
             priority=values["priority"],
             identifier=values.get("message_identifier"),
             message=values["message"][:140],
-            url=values["url"]
+            url=values["url"],
+            shop=context.shop
         )
