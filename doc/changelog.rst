@@ -73,6 +73,11 @@ Customer Group Pricing
 - Introduce Customer Group Discounts.  A discount module to configure
   discounts by contact group.
 
+Notify
+~~~~~~
+
+- Add multi-shop support in notify scripts.
+
 Shuup 1.4.0
 -----------
 
