@@ -138,7 +138,7 @@ class CompanyEditView(DashboardViewMixin, FormView):
             user_registered.send(sender=self.__class__,
                                  user=self.request.user,
                                  request=self.request)
-            CompanyAccountCreated(contact=company, customer_email=company.email).run()
+            CompanyAccountCreated(contact=company, customer_email=company.email).run(shop=self.request.shop)
 
         messages.success(self.request, message)
         return redirect("shuup:company_edit")

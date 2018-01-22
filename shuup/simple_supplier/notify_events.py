@@ -41,7 +41,7 @@ class AlertLimitReached(Event):
 
         super(AlertLimitReached, self).__init__(**variable_values)
 
-    def run(self):
+    def run(self, shop):
         cache_key = self.cache_key_fmt % (self.variable_values["supplier"].pk, self.variable_values["product"].pk)
         cache.set(cache_key, time(), timeout=(60 * 60 * 24))
-        super(AlertLimitReached, self).run()
+        super(AlertLimitReached, self).run(shop=shop)

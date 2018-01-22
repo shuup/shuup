@@ -61,7 +61,7 @@ def send_user_registered_notification(user, request, **kwargs):
         activation_url=activation_url,
         user_is_active=user.is_active,
     )
-    event.run()
+    event.run(shop=request.shop)
 
 
 def send_company_activated_first_time_notification(instance, request, **kwargs):
@@ -90,7 +90,7 @@ def send_company_activated_first_time_notification(instance, request, **kwargs):
         user_is_active=user.is_active,
         activation_url=activation_url
     )
-    event.run()
+    event.run(shop=request.shop)
 
 
 RegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_factory(

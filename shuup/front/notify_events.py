@@ -99,7 +99,7 @@ def send_order_received_notification(order, **kwargs):
             shop_phone=order.shop.contact_address.phone
         ))
 
-    OrderReceived(**params).run()
+    OrderReceived(**params).run(shop=order.shop)
 
 
 @receiver(shipment_created_and_processed)
@@ -112,7 +112,7 @@ def send_shipment_created_notification(order, shipment, **kwargs):
         shipment=shipment,
         shipping_status=order.shipping_status,
         shipment_status=shipment.status
-    ).run()
+    ).run(shop=order.shop)
 
 
 @receiver(shipment_deleted)
@@ -124,7 +124,7 @@ def send_shipment_deleted_notification(shipment, **kwargs):
         language=shipment.order.language,
         shipment=shipment,
         shipping_status=shipment.order.shipping_status
-    ).run()
+    ).run(shop=shipment.order.shop)
 
 
 @receiver(payment_created)
@@ -136,7 +136,7 @@ def send_payment_created_notification(order, payment, **kwargs):
         language=order.language,
         payment_status=order.payment_status,
         payment=payment
-    ).run()
+    ).run(shop=order.shop)
 
 
 @receiver(refund_created)
@@ -147,4 +147,4 @@ def send_refund_created_notification(order, refund_lines, **kwargs):
         customer_phone=order.phone,
         language=order.language,
         payment_status=order.payment_status
-    ).run()
+    ).run(shop=order.shop)
