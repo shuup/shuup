@@ -175,7 +175,7 @@ class Event(Base):
             if variable.required and name not in self.variable_values:
                 raise ValueError("Required variable %r missing for event %s" % (name, self.identifier))
 
-    def run(self, shop=None):
+    def run(self, shop):
         from .runner import run_event
         run_event(event=self, shop=shop)
 
@@ -353,7 +353,7 @@ class ScriptTemplate(six.with_metaclass(abc.ABCMeta)):
         self.script_instance = script_instance
 
     @abstractmethod
-    def create_script(self, form=None):
+    def create_script(self, shop, form=None):
         """
         Create and returns the Script.
 

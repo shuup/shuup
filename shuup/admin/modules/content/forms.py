@@ -108,7 +108,12 @@ class BehaviorWizardForm(forms.Form):
 
             send_email_action = self._get_send_email_action()
 
-            script = Script(event_identifier=OrderReceived.identifier, name="Order Received", enabled=True)
+            script = Script(
+                event_identifier=OrderReceived.identifier,
+                name="Order Received",
+                enabled=True,
+                shop=self.shop
+            )
             script.set_steps([Step(next=StepNext.STOP, actions=(send_email_action,))])
             script.save()
 

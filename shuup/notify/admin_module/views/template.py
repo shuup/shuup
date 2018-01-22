@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.apps.provides import get_identifier_to_object_map
 from shuup.notify.admin_module import SCRIPT_TEMPLATES_PROVIDE_CATEGORY
 from shuup.notify.models import Script
@@ -54,7 +55,8 @@ class ScriptTemplateView(TemplateView):
             if script_template.get_form():
                 return redirect("shuup_admin:notify.script-template-config", id=identifier)
             else:
-                script = script_template.create_script()
+                shop = get_shop(request)
+                script = script_template.create_script(shop)
 
                 if script:
                     script.template = identifier
@@ -101,8 +103,9 @@ class ScriptTemplateConfigView(FormView):
         """
         Create the script from the template using the configuration from the form.
         """
+        shop = get_shop(self.request)
         script_template = self._get_script_template_class()()
-        script = script_template.create_script(form)
+        script = script_template.create_script(shop, form)
         if script:
             script.template = self.kwargs["id"]
             script.save(update_fields=["template"])
