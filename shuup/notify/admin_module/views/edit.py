@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import Toolbar, URLActionButton
 from shuup.admin.utils.views import (
     add_create_or_change_message, CreateOrUpdateView
@@ -62,6 +63,11 @@ class ScriptEditView(CreateOrUpdateView):
             context["toolbar"] = Toolbar(buttons)
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super(ScriptEditView, self).get_form_kwargs()
+        kwargs["shop"] = get_shop(self.request)
+        return kwargs
+
     def form_valid(self, form):
         is_new = (not self.object.pk)
         wf = form.save()
@@ -70,3 +76,6 @@ class ScriptEditView(CreateOrUpdateView):
         else:
             add_create_or_change_message(self.request, self.object, is_new=is_new)
             return redirect("shuup_admin:notify.script.edit", pk=wf.pk)
+
+    def get_queryset(self):
+        return super(ScriptEditView, self).get_queryset().filter(shop=get_shop(self.request))

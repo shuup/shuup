@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import (
     JavaScriptActionButton, Toolbar, URLActionButton
 )
@@ -57,3 +58,6 @@ class ScriptListView(PicotableListView):
             {"title": _("Event"), "text": item.get("event_identifier")},
             {"title": _("Enabled"), "text": item.get("enabled")}
         ]
+
+    def get_queryset(self):
+        return super(ScriptListView, self).get_queryset().filter(shop=get_shop(self.request))
