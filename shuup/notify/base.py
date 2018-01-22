@@ -175,9 +175,9 @@ class Event(Base):
             if variable.required and name not in self.variable_values:
                 raise ValueError("Required variable %r missing for event %s" % (name, self.identifier))
 
-    def run(self):
+    def run(self, shop=None):
         from .runner import run_event
-        run_event(event=self)
+        run_event(event=self, shop=shop)
 
 
 class ScriptItem(Base):
