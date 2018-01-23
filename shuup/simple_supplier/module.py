@@ -71,5 +71,6 @@ class SimpleSupplierModule(BaseSupplierModule):
                 product = Product.objects.filter(id=product_id).first()
                 if product and product.stock_behavior == StockBehavior.STOCKED:
                     from .notify_events import AlertLimitReached
-                    AlertLimitReached(supplier=self.supplier, product=product).run()
+                    for shop in self.supplier.shops.all():
+                        AlertLimitReached(supplier=self.supplier, product=product).run(shop=shop)
         sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))

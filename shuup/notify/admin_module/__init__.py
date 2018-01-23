@@ -15,6 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
@@ -93,9 +94,10 @@ class NotifyAdminModule(AdminModule):
 
     @csrf_exempt
     def mark_notification_read_view(self, request, pk):
+        shop = get_shop(request)
         if request.method == "POST":
             try:
-                notif = NotificationModel.objects.for_user(request.user).get(pk=pk)
+                notif = NotificationModel.objects.for_user(request.user).filter(shop=shop).get(pk=pk)
             except ObjectDoesNotExist:
                 return JsonResponse({"error": "no such notification"})
             notif.mark_read(request.user)
@@ -103,7 +105,8 @@ class NotifyAdminModule(AdminModule):
         return JsonResponse({"error": "POST only"})
 
     def get_notifications(self, request):
-        notif_qs = NotificationModel.objects.unread_for_user(request.user).order_by("-id")[:15]
+        shop = get_shop(request)
+        notif_qs = NotificationModel.objects.unread_for_user(request.user).filter(shop=shop).order_by("-id")[:15]
 
         for notif in notif_qs:
             if notif.priority == Priority.HIGH:

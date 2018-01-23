@@ -179,10 +179,12 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client, r
     if "shuup.front.apps.customer_information" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.customer_information required in installed apps")
 
+    shop = get_default_shop()
     Script.objects.create(
         event_identifier="registration_received",
         name="Send User Activation URL Email",
         enabled=True,
+        shop=shop,
         template="registration_received_email",
         _step_data=[
             {
@@ -217,9 +219,8 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client, r
         ],
     )
     with override_settings(
-            SHUUP_REGISTRATION_REQUIRES_ACTIVATION=requiring_activation,
+        SHUUP_REGISTRATION_REQUIRES_ACTIVATION=requiring_activation,
     ):
-        get_default_shop()
         response = client.post(reverse("shuup:registration_register"), data={
             "username": username,
             "email": email,
@@ -249,7 +250,7 @@ def test_company_registration(django_user_model, client, allow_company_registrat
     if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.registration required in installed apps")
 
-    get_default_shop()
+    shop = get_default_shop()
 
     configuration.set(None, "allow_company_registration", allow_company_registration)
     configuration.set(None, "company_registration_requires_approval", company_registration_requires_approval)
@@ -259,6 +260,7 @@ def test_company_registration(django_user_model, client, allow_company_registrat
         event_identifier="company_approved_by_admin",
         name="Send Company Activated Email",
         enabled=True,
+        shop=shop,
         template="company_activated_email",
         _step_data=[
             {'actions': [
@@ -287,6 +289,7 @@ def test_company_registration(django_user_model, client, allow_company_registrat
         event_identifier="company_registration_received",
         name="Send Company Registration Received Email",
         enabled=True,
+        shop=shop,
         template="company_registration_received_email",
         _step_data=[
             {
@@ -390,7 +393,7 @@ def test_create_company_from_customer_dashboard(allow_company_registration, comp
     if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.registration required in installed apps")
 
-    get_default_shop()
+    shop = get_default_shop()
     configuration.set(None, "allow_company_registration", allow_company_registration)
     configuration.set(None, "company_registration_requires_approval", company_registration_requires_approval)
 
@@ -398,6 +401,7 @@ def test_create_company_from_customer_dashboard(allow_company_registration, comp
         event_identifier="company_registration_received",
         name="Send Company Registration Received Email",
         enabled=True,
+        shop=shop,
         template="company_registration_received_email",
         _step_data=[
             {
@@ -425,6 +429,7 @@ def test_create_company_from_customer_dashboard(allow_company_registration, comp
         event_identifier="company_approved_by_admin",
         name="Send Company Activated Email",
         enabled=True,
+        shop=shop,
         template="company_activated_email",
         _step_data=[
             {'actions': [

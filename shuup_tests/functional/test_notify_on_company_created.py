@@ -44,13 +44,13 @@ def test_notify_on_company_created(regular_user, allow_company_registration):
         ],
         next=StepNext.STOP
     )
-    script = Script(event_identifier=CompanyAccountCreated.identifier, name="Test Script", enabled=True)
+    script = Script(
+        event_identifier=CompanyAccountCreated.identifier, name="Test Script", enabled=True, shop=get_default_shop())
     script.set_steps([step])
     script.save()
 
     assert not Notification.objects.filter(identifier="company_created").exists()
 
-    get_default_shop()
     assert get_person_contact(regular_user)
     assert not get_company_contact(regular_user)
 

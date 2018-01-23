@@ -263,7 +263,7 @@ function stepTableRows(ctrl) {
                 }, m("i.fa.fa-trash"))
             ]),
             m("div.step-conds", [
-                m("span.hint", interpolate(gettext("If %s of these conditions hold..."), [condOpSelect])),
+                m("span.hint", gettext("If"), condOpSelect, gettext("of these conditions hold...")),
                 workflowItemList(ctrl, step, "condition")
             ]),
             m("div.step-actions", [

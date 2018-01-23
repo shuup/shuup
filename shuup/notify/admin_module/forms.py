@@ -40,6 +40,7 @@ class ScriptForm(forms.ModelForm):
         fields = ("event_identifier", "name", "enabled")
 
     def __init__(self, **kwargs):
+        self.shop = kwargs.pop("shop", None)
         super(ScriptForm, self).__init__(**kwargs)
         event_choices = get_name_map("notify_event")
         self.fields["event_identifier"].choices = event_choices
@@ -48,6 +49,10 @@ class ScriptForm(forms.ModelForm):
             self.fields["event_identifier"].help_text = (
                 _(u"Warning: Changing the event for an existing script may have unexpected effects.")
             )
+
+    def save(self, commit=True):
+        self.instance.shop = self.shop
+        return super(ScriptForm, self).save(commit)
 
 
 class ScriptItemEditForm(forms.Form):

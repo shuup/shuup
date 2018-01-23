@@ -18,12 +18,12 @@ class DummyScriptTemplate(ScriptTemplate):
     description = "More Texts"
     help_text = "A good help here"
 
-    def create_script(self, form=None):
+    def create_script(self, shop, form=None):
         condition = BooleanEqual({
             "v1": {"constant": True},
             "v2": {"constant": False}
         })
-        script = Script(event_identifier=AlertLimitReached.identifier, name="Dummy Alert", enabled=True)
+        script = Script(event_identifier=AlertLimitReached.identifier, name="Dummy Alert", enabled=True, shop=shop)
         script.set_steps([Step(next=StepNext.STOP, conditions=(condition,))])
         script.save()
         return script

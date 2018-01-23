@@ -9,10 +9,11 @@ import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse, set_urlconf
 
-from shuup.notify.script import Context
 from shuup.notify.actions.notification import AddNotification
 from shuup.notify.enums import Priority, RecipientType
 from shuup.notify.models.notification import Notification
+from shuup.notify.script import Context
+from shuup.testing import factories
 from shuup_tests.notify.utils import make_bind_data
 from shuup_tests.utils import very_recently
 from shuup_tests.utils.fixtures import regular_user
@@ -32,7 +33,7 @@ def test_notification(admin_user, specific_user):
             "recipient": (admin_user if specific_user else None),
             "priority": Priority.CRITICAL
         }
-    )).execute(Context.from_variables(name="Justin Case"))
+    )).execute(Context.from_variables(name="Justin Case", shop=factories.get_default_shop()))
     notif = Notification.objects.last()
     assert isinstance(notif, Notification)
     if specific_user:
@@ -79,7 +80,7 @@ def test_misconfigured_specific_notification_fails():
 def test_notification_reverse_url():
     try:
         set_urlconf("shuup_tests.notify.notification_test_urls")
-        n = Notification()
+        n = Notification(shop=factories.get_default_shop())
         kwargs = dict(viewname="test", kwargs={"arg": "yes"})  # kwargs within kwargs, oh my
         n.set_reverse_url(**kwargs)
         n.save()
