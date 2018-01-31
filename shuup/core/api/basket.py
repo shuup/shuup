@@ -240,7 +240,10 @@ class BaseProductAddBasketSerializer(serializers.Serializer):
 
 
 class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
-    shop_product = serializers.PrimaryKeyRelatedField(queryset=ShopProduct.objects.filter(purchasable=True))
+    shop_product = serializers.PrimaryKeyRelatedField(
+        queryset=ShopProduct.objects.filter(purchasable=True),
+        error_messages={"does_not_exist": _("Product does not exist.")}
+    )
     shop = serializers.SerializerMethodField()
     product = serializers.SerializerMethodField()
 
@@ -260,7 +263,10 @@ class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
 
 class ProductAddBasketSerializer(BaseProductAddBasketSerializer):
     shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.filter(status=ShopStatus.ENABLED))
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.filter(deleted=False))
+    product = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.filter(deleted=False),
+        error_messages={"does_not_exist": _("Product does not exist.")}
+    )
 
     def validate(self, data):
         # TODO - we probably eventually want this ability
