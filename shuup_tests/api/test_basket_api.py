@@ -393,7 +393,7 @@ def test_product_has_to_exist(admin_user):
         }
         response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "object does not exist" in str(response.content)
+        assert "Product does not exist" in str(response.content)
 
         # invalid shop product
         payload = {
@@ -401,7 +401,7 @@ def test_product_has_to_exist(admin_user):
         }
         response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "object does not exist" in str(response.content)
+        assert "Product does not exist" in str(response.content)
 
 
 @pytest.mark.django_db
