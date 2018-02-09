@@ -11,6 +11,7 @@ from shuup.core.models import Product, StockBehavior
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.suppliers import BaseSupplierModule
 from shuup.core.suppliers.enums import StockAdjustmentType
+from shuup.core.utils import context_cache
 from shuup.simple_supplier.utils import get_current_stock_value
 
 from .models import StockAdjustment, StockCount
@@ -73,4 +74,6 @@ class SimpleSupplierModule(BaseSupplierModule):
                     from .notify_events import AlertLimitReached
                     for shop in self.supplier.shops.all():
                         AlertLimitReached(supplier=self.supplier, product=product).run(shop=shop)
+
         sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))
+        context_cache.bump_cache_for_product(Product.objects.get(id=product_id))
