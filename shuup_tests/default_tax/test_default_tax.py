@@ -13,7 +13,7 @@ from decimal import Decimal
 import pytest
 from django.test.utils import override_settings
 
-from shuup.core.models import Tax, TaxClass
+from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
 from shuup.core.taxing import get_tax_module, TaxingContext
 from shuup.default_tax.admin_module.views import TaxRuleEditView
 from shuup.default_tax.models import TaxRule
@@ -235,6 +235,59 @@ def test_rule_admin(rf, admin_user):
 
     postal_code = "99500"
     assert not TaxRule.objects.may_match_postal_code(postal_code).count()
+
+
+@pytest.mark.django_db
+def test_rules_with_anonymous():
+    """
+    Test the DefaultTaxModule with anonymous customer.
+    """
+
+    tax_class = TaxClass.objects.create(name="test")
+
+    # Create a product
+    shop = get_shop(prices_include_tax=False, currency='USD')
+    product = create_product('PROD', shop=shop, default_price=1000)
+    product.tax_class = tax_class
+    product.save()
+    price = product.get_shop_instance(shop).default_price
+
+    # create taxes
+    # When customer is company, it should pay additional taxes
+    tax_for_anyone = Tax.objects.create(code="any", rate=0.1, name="Tax for any customer")
+    tax_for_companies = Tax.objects.create(code="companies", rate=0.3, name="Additional tax for companies")
+
+    # create tax group for companies
+    companies_tax_group = CustomerTaxGroup.get_default_company_group()
+
+    # create the tax rule as follows:
+    # - 10% for any kind of customer, no matter what
+    # - 30% only for companies
+    any_tax_rule = TaxRule.objects.create(tax=tax_for_anyone)
+    any_tax_rule.tax_classes.add(tax_class)
+
+    company_tax_rule = TaxRule.objects.create(tax=tax_for_companies)
+    company_tax_rule.tax_classes.add(tax_class)
+    company_tax_rule.customer_tax_groups.add(companies_tax_group)
+
+    with override_settings(SHUUP_TAX_MODULE='default_tax'):
+        module = get_tax_module()
+        assert isinstance(module, DefaultTaxModule)
+
+        # 1) check the tax for anonymous
+        anonymous_context = TaxingContext()
+        taxed_price = module.get_taxed_price_for(anonymous_context, product, price)
+        expected_anonymous_codes = set(["any"])
+        assert set(x.tax.code for x in taxed_price.taxes) == expected_anonymous_codes
+
+        # 2) check the tax for comanies
+        company_context = TaxingContext(customer_tax_group=companies_tax_group)
+        taxed_price = module.get_taxed_price_for(company_context, product, price)
+        expected_companies_codes = set(["any", "companies"])
+        assert set(x.tax.code for x in taxed_price.taxes) == expected_companies_codes
+
+    # Clean-up the rules
+    TaxRule.objects.all().delete()
 
 
 def create_tax_from_string(string):
