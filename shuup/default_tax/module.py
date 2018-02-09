@@ -40,13 +40,14 @@ def _get_enabled_tax_rules(taxing_context, tax_class):
     :type taxing_context: shuup.core.taxing.TaxingContext
     :type tax_class: shuup.core.models.TaxClass
     """
-
     tax_rules = TaxRule.objects.may_match_postal_code(
         taxing_context.postal_code).filter(enabled=True, tax_classes=tax_class)
     if taxing_context.customer_tax_group:
         tax_rules = tax_rules.filter(
             Q(customer_tax_groups=taxing_context.customer_tax_group) |
             Q(customer_tax_groups=None))
+    else:
+        tax_rules = tax_rules.filter(customer_tax_groups=None)
     tax_rules = tax_rules.order_by('-override_group', 'priority')
     return tax_rules
 
