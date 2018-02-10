@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Reporting
+~~~~~~~~~
+
+- Make selected end date inclusive when filtering orders for reports
+
 Shuup 1.4.0
 -----------
 
