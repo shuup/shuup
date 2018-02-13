@@ -9,6 +9,18 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Reporting
+~~~~~~~~~
+
+- Consider timezone in sales report: Localize the order dates to the
+  current timezone before using that to group
+- Consider timezone in sales per hour report
+
+Tests
+~~~~~
+
+- Fix order report tests to use correctly typed datetime parameters
+
 Shuup 1.4.1
 -----------
 
