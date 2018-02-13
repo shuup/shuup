@@ -22,6 +22,7 @@ class Manufacturer(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, verbose_name=_('added'))
     identifier = InternalIdentifierField(unique=True)
 
+    shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_("shops"))
     name = models.CharField(max_length=128, verbose_name=_('name'), help_text=_(
         "Enter the manufacturer’s name. "
         "Products can be filtered by the manufacturer and can be useful for inventory and stock management."

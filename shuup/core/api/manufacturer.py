@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
@@ -14,6 +15,7 @@ from shuup.api.mixins import (
     PermissionHelperMixin, ProtectedModelViewSetMixin, SearchableMixin
 )
 from shuup.core.models import Manufacturer
+from shuup.core.shop_provider import get_shop
 
 
 class ManufacturerSerializer(serializers.ModelSerializer):
@@ -52,3 +54,6 @@ class ManufacturerViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, Sea
     @classmethod
     def get_help_text(cls):
         return _("Manufacturers can be listed, fetched, created, updated and deleted.")
+
+    def get_queryset(self):
+        return self.queryset.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True))
