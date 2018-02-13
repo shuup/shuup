@@ -219,6 +219,20 @@ def local_now(tz=None):
     return timezone.localtime(to_aware(timezone.now()), timezone=tz)
 
 
+def to_datetime_range(start, end):
+    for value in [start, end]:
+        if not isinstance(value, datetime.date):
+            raise TypeError("Not date or datetime: {!r}".format(value))
+    start_is_datetime = isinstance(start, datetime.datetime)
+    end_is_datetime = isinstance(end, datetime.datetime)
+    if start_is_datetime != end_is_datetime:
+        raise TypeError("Start and end must be same type: {!r} - {!r}"
+                        .format(start, end))
+    # Add +1 day to end if it's a date to make the range inclusive
+    end_delta = datetime.timedelta(days=(1 if not end_is_datetime else 0))
+    return (to_aware(start), to_aware(end) + end_delta)
+
+
 class DurationRange(object):
     """
     Present duration range, min days to max days.

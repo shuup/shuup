@@ -5,18 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from datetime import timedelta
-
 from django.db.models import Q
 
 from shuup.core.models import Order
-from shuup.utils.dates import to_aware
+from shuup.utils.dates import to_datetime_range
 
 
 class OrderReportMixin(object):
     def get_objects(self):
-        start = to_aware(self.start_date)  # 0:00 on start_date
-        end = to_aware(self.end_date) + timedelta(days=1)  # 24:00 on end_date
+        (start, end) = to_datetime_range(self.start_date, self.end_date)
         queryset = Order.objects.filter(
             shop=self.shop, order_date__range=(start, end))
         creator = self.options.get("creator")

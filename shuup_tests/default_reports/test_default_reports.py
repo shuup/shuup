@@ -948,8 +948,8 @@ def test_sales_report_timezone(server_timezone):
         data = {
             "report": SalesReport.get_name(),
             "shop": inited_data["shop"].pk,
-            "start_date": first_date_local.isoformat(),
-            "end_date": second_date_local.isoformat(),
+            "start_date": first_date_local,
+            "end_date": second_date_local,
         }
         report = SalesReport(**data)
         report_data = report.get_data()["data"]
@@ -961,8 +961,8 @@ def test_sales_report_timezone(server_timezone):
 
         # includes the 3rd order
         data.update({
-            "start_date": first_date_local.isoformat(),
-            "end_date": third_date_local.isoformat()
+            "start_date": first_date_local,
+            "end_date": third_date_local
         })
         report = SalesReport(**data)
         report_data = report.get_data()["data"]
@@ -973,8 +973,8 @@ def test_sales_report_timezone(server_timezone):
 
         # includes the 4th order - here the result is different for Los_Angeles and Sao_Paulo
         data.update({
-            "start_date": first_date_local.isoformat(),
-            "end_date": forth_date_local.isoformat()
+            "start_date": first_date_local,
+            "end_date": forth_date_local
         })
         report = SalesReport(**data)
         report_data = report.get_data()["data"]
@@ -988,6 +988,25 @@ def test_sales_report_timezone(server_timezone):
             assert report_data[0]["date"] == format_date(forth_date_local, locale=get_current_babel_locale())
             assert report_data[1]["date"] == format_date(second_date_local, locale=get_current_babel_locale())
             assert report_data[2]["date"] == format_date(first_date_local, locale=get_current_babel_locale())
+
+        # Using strings as start or end date should raise TypeError.
+        # Only date or datetime objects should be accepted.
+        data.update({
+            "start_date": first_date_local.isoformat(),
+            "end_date": forth_date_local.isoformat()
+        })
+        with pytest.raises(TypeError):
+            report = SalesReport(**data)
+            report_data = report.get_data()["data"]
+
+        # Using different date types in start and end date should raise TypeError.
+        data.update({
+            "start_date": first_date_local,
+            "end_date": forth_date_local.date()
+        })
+        with pytest.raises(TypeError):
+            report = SalesReport(**data)
+            report_data = report.get_data()["data"]
 
 
 @pytest.mark.parametrize("server_timezone", ["America/Los_Angeles", "America/Sao_Paulo"])
@@ -1020,8 +1039,8 @@ def test_sales_report_per_hour_timezone(server_timezone):
         data = {
             "report": SalesPerHour.get_name(),
             "shop": inited_data["shop"].pk,
-            "start_date": first_date_local.isoformat(),
-            "end_date": forth_date_local.isoformat(),
+            "start_date": first_date_local,
+            "end_date": forth_date_local,
         }
         report = SalesPerHour(**data)
         report_data = report.get_data()["data"]
