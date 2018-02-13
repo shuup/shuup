@@ -5,15 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from django.conf import settings
 from django.core.signals import setting_changed
 
-import pytest
 from shuup.apps.provides import clear_provides_cache
-from shuup.utils.importing import clear_load_cache
-from shuup.xtheme.testing import override_current_theme_class
-from shuup.xtheme import set_current_theme
 from shuup.testing.factories import get_default_shop
+from shuup.utils.importing import clear_load_cache
+from shuup.xtheme import set_current_theme
+from shuup.xtheme.testing import override_current_theme_class
 
 
 def clear_caches(setting, **kwargs):
@@ -50,3 +50,9 @@ def splinter_make_screenshot_on_failure():
 @pytest.fixture(autouse=True)
 def enable_db_access(db):
     pass
+
+
+@pytest.fixture()
+def staff_user():
+    from django.contrib.auth import get_user_model
+    return get_user_model().objects.create(is_staff=True, is_superuser=False, username="staff_user")

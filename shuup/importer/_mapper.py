@@ -106,7 +106,7 @@ class RelatedMapper(object):
         self.fk_cache[value] = mapped
         return mapped
 
-    def _create_new_object(self, mapped, value):
+    def _create_new_object(self, mapped, value):  # noqa (C901)
         obj = self.to()
 
         if self.is_translated:
@@ -122,8 +122,8 @@ class RelatedMapper(object):
             elif field.name in ("name", "title"):
                 setattr(obj, field.name, value)
 
-        if hasattr(obj, "shop"):
-            obj.shop = self.row_session.shop
+            elif field.name == "shop":
+                obj.shop = self.row_session.shop
 
         try:
             obj.save()
