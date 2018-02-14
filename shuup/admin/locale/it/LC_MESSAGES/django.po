@@ -1842,3 +1842,9 @@ msgstr "Pubblica Negozio"
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr "Non posso prendere la selezione per %s."
+
+msgid "not shipped (non-deliverable)"
+msgstr "non spedito"
+
+msgid "shipped (deliverable)"
+msgstr "spedito"

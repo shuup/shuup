@@ -4115,3 +4115,9 @@ msgstr "Julkaise kauppa"
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr "%s valintoja ei voitu hakea"
+
+msgid "not shipped (non-deliverable)"
+msgstr "ei toimitettava"
+
+msgid "shipped (deliverable)"
+msgstr "toimitettava"
