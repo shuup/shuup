@@ -290,6 +290,39 @@ def test_rules_with_anonymous():
     TaxRule.objects.all().delete()
 
 
+
+@pytest.mark.django_db
+def test_rules_with_disabled_tax():
+    """
+    Test whether rules match when tax is disabled
+    """
+    tax_class = TaxClass.objects.create(name="test")
+
+    # Create a product
+    shop = get_shop(prices_include_tax=False, currency='USD')
+    product = create_product('PROD', shop=shop, default_price=1000)
+    product.tax_class = tax_class
+    product.save()
+    price = product.get_shop_instance(shop).default_price
+
+    # create disabled tax
+    tax = Tax.objects.create(code="any", rate=0.1, name="Tax for any customer", enabled=False)
+    tax_rule = TaxRule.objects.create(tax=tax)
+    tax_rule.tax_classes.add(tax_class)
+
+    with override_settings(SHUUP_TAX_MODULE='default_tax'):
+        module = get_tax_module()
+        assert isinstance(module, DefaultTaxModule)
+
+        # 1) check the tax for anonymous
+        anonymous_context = TaxingContext()
+        taxed_price = module.get_taxed_price_for(anonymous_context, product, price)
+        assert len(list(taxed_price.taxes)) == 0
+
+    # Clean-up the rules
+    TaxRule.objects.all().delete()
+
+
 def create_tax_from_string(string):
     if ' ' in string:
         (spec, name) = string.split(' ', 1)
