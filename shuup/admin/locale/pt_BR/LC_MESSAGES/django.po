@@ -1606,3 +1606,9 @@ msgstr "Apenas um %(model)s permitido."
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr "Não foi possível obter seleções para %s."
+
+msgid "not shipped (non-deliverable)"
+msgstr "não enviado"
+
+msgid "shipped (deliverable)"
+msgstr "enviado"

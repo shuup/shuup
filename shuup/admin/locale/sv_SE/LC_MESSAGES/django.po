@@ -4191,3 +4191,9 @@ msgstr "Publicera butik"
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr "Det gick inte att få alternativ för %s."
+
+msgid "not shipped (non-deliverable)"
+msgstr "ej levererad"
+
+msgid "shipped (deliverable)"
+msgstr "levererad"
