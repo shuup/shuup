@@ -15,7 +15,9 @@ from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 
 from shuup.core.models import Order, OrderLine, OrderLineType, ShopProduct
-from shuup.core.order_creator.signals import order_creator_finished
+from shuup.core.order_creator.signals import (
+    order_creator_finished, post_order_line_save
+)
 from shuup.core.shortcuts import update_order_line_from_product
 from shuup.core.utils import context_cache
 from shuup.core.utils.users import real_user_or_none
@@ -151,6 +153,7 @@ class OrderProcessor(object):
         # And one last pass to call the subclass hook.
         for order_line in lines:
             self.process_saved_order_line(order=order, order_line=order_line)
+            post_order_line_save.send(sender=type(self), order=order, order_line=order_line)
 
     def add_line_taxes(self, lines):
         for line in lines:
