@@ -21,6 +21,7 @@ class DateRangeChoices(Enum):
     TODAY = "today"
     RUNNING_WEEK = "running_week"
     RUNNING_MONTH = "running_month"
+    THIS_WEEK = "this_week"
     THIS_MONTH = "this_month"
     THIS_YEAR = "this_year"
     ALL_TIME = "all_time"
@@ -30,6 +31,7 @@ class DateRangeChoices(Enum):
         TODAY = _("Today")
         RUNNING_WEEK = _("Running Week (last 7 days)")
         RUNNING_MONTH = _("Running Month (last 30 days)")
+        THIS_WEEK = _("This Week")
         THIS_MONTH = _("This Month")
         THIS_YEAR = _("This Year")
         ALL_TIME = _("All Time")
