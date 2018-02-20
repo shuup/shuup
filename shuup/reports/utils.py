@@ -11,7 +11,7 @@ import datetime
 
 import six
 
-from shuup.utils.dates import local_now, try_parse_date
+from shuup.utils import dates, i18n, iterables
 
 ERROR_MESSAGE = "Error fetching data"
 NO_DATA_MESSAGE = "No results"
@@ -36,23 +36,36 @@ def get_error_data(schema, sales_data):
         return get_empty_data(schema, sales_data, NO_DATA_MESSAGE)
 
 
+def get_first_day_of_the_current_week(today_start):
+    locale = i18n.get_current_babel_locale()
+    first_day_of_the_week = today_start
+    if today_start.weekday() == locale.first_week_day:
+        return first_day_of_the_week
+
+    def get_prospect(i):
+        return (today_start - datetime.timedelta(days=i))
+
+    return iterables.first([get_prospect(i) for i in range(1, 7) if get_prospect(i).weekday() == locale.first_week_day])
+
+
 def parse_date_range_preset(value):
     from shuup.reports.forms import DateRangeChoices
-    now = local_now()
+    now = dates.local_now()
+    today_start = now.replace(hour=0, minute=0, second=0)
     if value == DateRangeChoices.TODAY:
-        midnight = now.replace(hour=0, minute=0, second=0)
-        tomorrow = midnight + datetime.timedelta(days=1) - datetime.timedelta(seconds=1)
-        return (midnight, tomorrow)
-    if value == DateRangeChoices.RUNNING_WEEK:
-        return (now - datetime.timedelta(days=7), now)
-    if value == DateRangeChoices.RUNNING_MONTH:
-        return (now - datetime.timedelta(days=30), now)
-    if value == DateRangeChoices.THIS_MONTH:
-        return (now.replace(day=1), now)
-    if value == DateRangeChoices.THIS_YEAR:
-        return (now.replace(day=1, month=1), now)
-    if value == DateRangeChoices.ALL_TIME:
-        return (now.replace(year=2000), now)
+        return (today_start, now)
+    elif value == DateRangeChoices.RUNNING_WEEK:
+        return (today_start - datetime.timedelta(days=7), now)
+    elif value == DateRangeChoices.THIS_WEEK:
+        return (get_first_day_of_the_current_week(today_start), now)
+    elif value == DateRangeChoices.RUNNING_MONTH:
+        return (today_start - datetime.timedelta(days=30), now)
+    elif value == DateRangeChoices.THIS_MONTH:
+        return (today_start.replace(day=1), now)
+    elif value == DateRangeChoices.THIS_YEAR:
+        return (today_start.replace(day=1, month=1), now)
+    elif value == DateRangeChoices.ALL_TIME:
+        return (today_start.replace(year=2000), now)
 
 
 def parse_date_range(value):
@@ -72,7 +85,7 @@ def parse_date_range(value):
         start, end = value[:2]
     else:
         raise ValueError("Can't split date range: %r" % value)
-    date_range = (try_parse_date(start), try_parse_date(end))
+    date_range = (dates.try_parse_date(start), dates.try_parse_date(end))
     if any(p is None for p in date_range):
         raise ValueError("Invalid date range: %r (parsed as %r)" % (value, date_range))
     return date_range
