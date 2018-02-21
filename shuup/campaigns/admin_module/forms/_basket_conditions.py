@@ -7,6 +7,7 @@
 from shuup.campaigns.models.basket_conditions import (
     BasketMaxTotalAmountCondition, BasketMaxTotalProductAmountCondition,
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
+    BasketTotalUndiscountedProductAmountCondition,
     CategoryProductsBasketCondition, ContactBasketCondition,
     ContactGroupBasketCondition, ProductsInBasketCondition
 )
@@ -23,6 +24,11 @@ class BasketTotalProductAmountConditionForm(BaseRuleModelForm):
 class BasketTotalAmountConditionForm(BaseRuleModelForm):
     class Meta(BaseRuleModelForm.Meta):
         model = BasketTotalAmountCondition
+
+
+class BasketTotalUndiscountedProductAmountConditionForm(BaseRuleModelForm):
+    class Meta(BaseRuleModelForm.Meta):
+        model = BasketTotalUndiscountedProductAmountCondition
 
 
 class ProductsInBasketConditionForm(BaseRuleModelForm):
