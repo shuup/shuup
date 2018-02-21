@@ -28,7 +28,7 @@ SHUUP_BASKET_COMMAND_DISPATCHER_SPEC = (
 #: Spec string for the update method dispatcher used when the basket is updated (usually
 #: on the basket page).
 SHUUP_BASKET_UPDATE_METHODS_SPEC = (
-    "shuup.core.basket.update_methods:BasketUpdateMethods")
+    "shuup.front.basket.update_methods:BasketUpdateMethods")
 
 #: Spec string for the basket class used in the frontend.
 #:
