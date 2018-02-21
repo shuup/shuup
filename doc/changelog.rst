@@ -78,6 +78,16 @@ Notify
 
 - Add multi-shop support in notify scripts.
 
+Shuup 1.4.1
+-----------
+
+Released on 2018-02-10 14:15 +0200.
+
+Reporting
+~~~~~~~~~
+
+- Make selected end date inclusive when filtering orders for reports
+
 Shuup 1.4.0
 -----------
 
