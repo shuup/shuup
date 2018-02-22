@@ -3648,3 +3648,9 @@ msgstr ""
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr ""
+
+msgid "not shipped (non-deliverable)"
+msgstr "not shipped"
+
+msgid "shipped (deliverable)"
+msgstr "shipped"

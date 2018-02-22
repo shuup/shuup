@@ -90,8 +90,8 @@ class ShippingMode(Enum):
     SHIPPED = 1
 
     class Labels:
-        NOT_SHIPPED = _('not shipped')
-        SHIPPED = _('shipped')
+        NOT_SHIPPED = _('not shipped (non-deliverable)')
+        SHIPPED = _('shipped (deliverable)')
 
 
 class ProductVerificationMode(Enum):

@@ -1491,3 +1491,9 @@ msgstr "只允许一个 %(model)s。"
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr ""
+
+msgid "not shipped (non-deliverable)"
+msgstr "未发货"
+
+msgid "shipped (deliverable)"
+msgstr "已发货"
