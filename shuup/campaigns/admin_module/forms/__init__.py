@@ -8,14 +8,16 @@ from ._basket import BasketCampaignForm
 from ._basket_conditions import (
     BasketMaxTotalAmountConditionForm,
     BasketMaxTotalProductAmountConditionForm, BasketTotalAmountConditionForm,
-    BasketTotalProductAmountConditionForm, CategoryProductsBasketConditionForm,
-    ContactBasketConditionForm, ContactGroupBasketConditionForm,
-    HourBasketConditionForm, ProductsInBasketConditionForm
+    BasketTotalProductAmountConditionForm,
+    BasketTotalUndiscountedProductAmountConditionForm,
+    CategoryProductsBasketConditionForm, ContactBasketConditionForm,
+    ContactGroupBasketConditionForm, HourBasketConditionForm,
+    ProductsInBasketConditionForm
 )
 from ._basket_effects import (
     BasketDiscountAmountForm, BasketDiscountPercentageForm,
     DiscountFromCategoryProductsForm, DiscountFromProductForm,
-    FreeProductLineForm
+    DiscountPercentageFromUndiscountedForm, FreeProductLineForm
 )
 from ._catalog import CatalogCampaignForm
 from ._catalog_conditions import (
@@ -37,6 +39,7 @@ __all__ = [
     "BasketMaxTotalProductAmountConditionForm",
     "BasketTotalAmountConditionForm",
     "BasketTotalProductAmountConditionForm",
+    "BasketTotalUndiscountedProductAmountConditionForm",
     "CatalogCampaignForm",
     "CategoryFilterForm",
     "CategoryProductsBasketConditionForm",
@@ -49,6 +52,7 @@ __all__ = [
     "CouponForm",
     "DiscountFromCategoryProductsForm",
     "DiscountFromProductForm",
+    "DiscountPercentageFromUndiscountedForm",
     "FreeProductLineForm",
     "ProductDiscountAmountForm",
     "ProductDiscountPercentageForm",

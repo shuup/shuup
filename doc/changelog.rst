@@ -79,6 +79,28 @@ Notify
 
 - Add multi-shop support in notify scripts.
 
+Shuup 1.5.0
+-----------
+
+Released on 2018-02-22 9:00 +0200.
+
+Campaigns
+~~~~~~~~~
+
+- New basket condition and effect for undiscounted items
+
+Reporting
+~~~~~~~~~
+
+- Consider timezone in sales report: Localize the order dates to the
+  current timezone before using that to group
+- Consider timezone in sales per hour report
+
+Tests
+~~~~~
+
+- Fix order report tests to use correctly typed datetime parameters
+
 Shuup 1.4.1
 -----------
 

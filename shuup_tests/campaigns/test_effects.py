@@ -15,8 +15,8 @@ from shuup.campaigns.models.basket_conditions import (
     BasketTotalProductAmountCondition, ProductsInBasketCondition
 )
 from shuup.campaigns.models.basket_effects import (
-    BasketDiscountAmount, BasketDiscountPercentage
-)
+    BasketDiscountAmount, BasketDiscountPercentage,
+    DiscountPercentageFromUndiscounted)
 from shuup.campaigns.models.basket_line_effects import (
     DiscountFromCategoryProducts, DiscountFromProduct, FreeProductLine
 )
@@ -517,3 +517,59 @@ def test_discount_no_limits(rf, include_tax):
     line = final_lines[0]
     assert line.discount_amount == expected_discount_amount
     assert basket.total_price == original_price - expected_discount_amount
+
+
+@pytest.mark.parametrize("include_tax", (True, False))
+@pytest.mark.django_db
+def test_undiscounted_effects(rf, include_tax):
+    request, shop, _ = initialize_test(rf, include_tax)
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+
+    single_product_price = Decimal(50)
+    discounted_product_quantity = 4
+    normal_priced_product_quantity = 2
+    discount_percentage = Decimal(0.2)  # 20%
+    discount_amount = basket.create_price(single_product_price * normal_priced_product_quantity * discount_percentage)
+
+    category = CategoryFactory()
+
+    discounted_product = create_product(
+        printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
+    second_product = create_product(
+        printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
+
+    ShopProduct.objects.get(shop=shop, product=discounted_product).categories.add(category)
+    ShopProduct.objects.get(shop=shop, product=second_product).categories.add(category)
+    basket.add_product(supplier=supplier, shop=shop, product=discounted_product, quantity=discounted_product_quantity)
+    basket.add_product(supplier=supplier, shop=shop, product=second_product, quantity=normal_priced_product_quantity)
+    basket.shipping_method = get_shipping_method(shop=shop)
+    basket.save()
+
+    # Store basket price before any campaigns exists
+    original_price = basket.total_price
+
+    # CatalogCampaign
+    catalog_campaign = CatalogCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
+    # Limit catalog campaign to "discounted_product"
+    product_filter = ProductFilter.objects.create()
+    product_filter.products.add(discounted_product)
+    catalog_campaign.filters.add(product_filter)
+
+    # BasketCampaign
+    campaign = BasketCampaign.objects.create(
+        active=True, shop=shop, name="test2", public_name="test2")
+
+    final_lines = basket.get_final_lines()
+    assert len(final_lines) == 3
+
+    # Discount based on undiscounted product values
+    DiscountPercentageFromUndiscounted.objects.create(campaign=campaign, discount_percentage=discount_percentage)
+
+    basket.uncache()
+    final_lines = basket.get_final_lines()
+    assert len(final_lines) == 4
+
+    discounted_basket_price = original_price - discount_amount
+    assert basket.total_price.as_rounded() == discounted_basket_price.as_rounded()
