@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- OrderCreator: Dispatch a signal when adding lines to order
 - Enable refunds for order API
 - API: Improved suppliers stock endpoints
 - Add setting to manage contacts per shop
