@@ -1,6 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -169,6 +168,14 @@ msgid ""
 "here worth of products."
 msgstr ""
 
+msgid "Undiscounted basket total value"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products which doesn't have already discounts."
+msgstr ""
+
 msgid "Basket maximum product count"
 msgstr ""
 
@@ -290,6 +297,12 @@ msgid "Discount amount percentage"
 msgstr ""
 
 msgid "Give percentage discount."
+msgstr ""
+
+msgid "Discount amount percentage from undiscounted amount"
+msgstr ""
+
+msgid "Give percentage discount based on undiscounted product prices."
 msgstr ""
 
 msgid "Free Product(s)"

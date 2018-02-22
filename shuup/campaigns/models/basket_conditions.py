@@ -18,6 +18,7 @@ from shuup.core.fields import MoneyValueField
 from shuup.core.models import (
     Category, Contact, ContactGroup, Product, ShopProduct
 )
+from shuup.core.pricing import PricingContext
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 
@@ -69,6 +70,38 @@ class BasketTotalAmountCondition(MoneyPropped, BasketCondition):
     @property
     def description(self):
         return _("Limit the campaign to match when it has at least the total value entered here worth of products.")
+
+    @property
+    def value(self):
+        return self.amount_value
+
+    @value.setter
+    def value(self, value):
+        self.amount_value = value
+
+
+class BasketTotalUndiscountedProductAmountCondition(MoneyPropped, BasketCondition):
+    identifier = "basket_amount_condition_undiscounted"
+    name = _("Undiscounted basket total value")
+
+    amount = PriceProperty("amount_value", "campaign.shop.currency", "campaign.shop.prices_include_tax")
+    amount_value = MoneyValueField(default=None, blank=True, null=True, verbose_name=_("basket total amount"))
+
+    def matches(self, basket, lines):
+        from shuup.campaigns.models import CatalogCampaign
+
+        total_undiscounted_price_value = basket.total_price_of_products.value
+        shop = basket.shop
+        context = PricingContext(shop, basket.customer)
+        for line in basket.get_product_lines():
+            if CatalogCampaign.get_matching(context, line.product.get_shop_instance(shop)):
+                total_undiscounted_price_value -= line.price.value
+        return (total_undiscounted_price_value >= self.amount_value)
+
+    @property
+    def description(self):
+        return _("Limit the campaign to match when it has at least the total value "
+                 "entered here worth of products which doesn't have already discounts.")
 
     @property
     def value(self):
