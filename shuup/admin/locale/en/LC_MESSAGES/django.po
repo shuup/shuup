@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 13:42+0000\n"
+"POT-Creation-Date: 2018-02-22 08:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -569,6 +569,13 @@ msgid "Demo"
 msgstr ""
 
 msgid "Manufacturers"
+msgstr ""
+
+msgid ""
+"Select shops for this manufacturer. Keep it blank to share with all shops."
+msgstr ""
+
+msgid "You have no permission to change a shared Manufacturer."
 msgstr ""
 
 msgid "Media"
@@ -3648,9 +3655,3 @@ msgstr ""
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr ""
-
-msgid "not shipped (non-deliverable)"
-msgstr "not shipped"
-
-msgid "shipped (deliverable)"
-msgstr "shipped"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 22:28+0000\n"
+"POT-Creation-Date: 2018-02-22 08:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -30,19 +30,15 @@ msgstr ""
 msgid "Attributes can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Product does not exist."
+msgstr ""
+
 msgid "Basket"
 msgstr ""
 
 msgid ""
 "Basket items can be listed, added, removed and cleaned. Also campaign codes "
 "can be added."
-msgstr ""
-
-#, python-brace-format
-msgid "Product {product} is not available in {shop}"
-msgstr ""
-
-msgid "Custom Price"
 msgstr ""
 
 msgid "Category"
@@ -1531,7 +1527,10 @@ msgstr ""
 msgid "bought with"
 msgstr ""
 
-msgid "shipped"
+msgid "not shipped (non-deliverable)"
+msgstr ""
+
+msgid "shipped (deliverable)"
 msgstr ""
 
 msgid "no verification required"
