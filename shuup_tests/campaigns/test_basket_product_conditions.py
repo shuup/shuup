@@ -7,11 +7,12 @@
 import pytest
 from django.utils.encoding import force_text
 
+from shuup.campaigns.models import CatalogCampaign, ProductFilter
 from shuup.campaigns.models.basket_conditions import (
     BasketMaxTotalAmountCondition, BasketMaxTotalProductAmountCondition,
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
-    ComparisonOperator, ProductsInBasketCondition
-)
+    ComparisonOperator, ProductsInBasketCondition,
+    BasketTotalUndiscountedProductAmountCondition)
 from shuup.core.models import ProductMode
 from shuup.front.basket import get_basket
 from shuup.testing.factories import create_product, get_default_supplier
@@ -136,3 +137,37 @@ def test_basket_total_value_conditions(rf):
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     assert not condition2.matches(basket, [])
+
+
+@pytest.mark.django_db
+def test_basket_total_undiscounted_value_conditions(rf):
+    request, shop, group = initialize_test(rf, False)
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+
+    product = create_product("Just-A-Product", shop, default_price="150", supplier=supplier)
+    discounted_product = create_product("Just-A-Second-Product", shop, default_price="200", supplier=supplier)
+
+    # CatalogCampaign
+    catalog_campaign = CatalogCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
+    # Limit catalog campaign to "discounted_product"
+    product_filter = ProductFilter.objects.create()
+    product_filter.products.add(discounted_product)
+    catalog_campaign.filters.add(product_filter)
+
+    basket.add_product(supplier=supplier, shop=shop, product=discounted_product, quantity=1)
+
+    condition = BasketTotalUndiscountedProductAmountCondition.objects.create()
+    condition.value = 1
+    condition.save()
+    assert not condition.matches(basket, [])
+
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    assert condition.matches(basket, [])
+
+    # Too high amount for undiscounted value
+    condition.value = 151
+    condition.save()
+
+    assert not condition.matches(basket, [])

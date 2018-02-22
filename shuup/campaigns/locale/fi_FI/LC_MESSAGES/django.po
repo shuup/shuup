@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"POT-Creation-Date: 2018-02-21 10:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2016\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
@@ -170,6 +170,16 @@ msgstr ""
 "Rajoita kampanja täsmäämään kun siinä on vähintään tässä annetun "
 "kokonaisarvon verran tuotteita."
 
+msgid "Undiscounted basket total value"
+msgstr "Korin kokonaisarvo laskettuna ei alennuksessa olevista tuotteista"
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products which doesn't have already discounts."
+msgstr ""
+"Rajoita kampanja täsmäämään kun siinä on vähintään tässä annetun "
+"kokonaisarvon verran tuotteita, joilla ei ole vielä alennuksia."
+
 msgid "Basket maximum product count"
 msgstr "Korin maksimituotemäärä"
 
@@ -274,6 +284,12 @@ msgstr "Alennusprosentti"
 
 msgid "Give percentage discount."
 msgstr "Anna prosenttialennus."
+
+msgid "Discount amount percentage from undiscounted amount"
+msgstr "Alennusprosentti ei alennuksessa oleville tuotteille"
+
+msgid "Give percentage discount based on undiscounted product prices."
+msgstr "Anna prosenttialennus ei alennuksessa olevien tuotteiden arvosta laskettuna."
 
 msgid "Free Product(s)"
 msgstr "Ilmaiset tuotteet"
