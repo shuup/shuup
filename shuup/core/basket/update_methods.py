@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import six
-from django.contrib import messages
 from django.core.exceptions import ValidationError
 
 from shuup.core.models import ShopProduct
@@ -105,6 +104,9 @@ class BasketUpdateMethods(object):
             return False
         return self._update_quantity(line, new_quantity)
 
+    def _handle_orderability_error(self, line, error):
+        raise error
+
     def _update_quantity(self, line, new_quantity):
         if not (line and line["quantity"] != new_quantity):
             return False
@@ -133,9 +135,7 @@ class BasketUpdateMethods(object):
                 errors = self._get_orderability_errors(product, supplier, quantity_delta)
                 if errors:
                     for error in errors:
-                        error_texts = ", ".join(six.text_type(sub_error) for sub_error in error)
-                        message = u"%s: %s" % (linked_line.get("text") or linked_line.get("name"), error_texts)
-                        messages.warning(self.request, message)
+                        self._handle_orderability_error(line, error)
                     continue
                 self.basket.update_line(linked_line, quantity=new_quantity)
                 linked_line["quantity"] = new_quantity
