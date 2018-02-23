@@ -47,6 +47,9 @@ class BasketLine(SourceLine):
 
     def cache_info(self, pricing_context):
         product = self.product
+        if not product:
+            return
+
         # TODO: ensure shop identity?
         price_info = product.get_price_info(pricing_context, quantity=self.quantity)
         self.base_unit_price = price_info.base_unit_price
