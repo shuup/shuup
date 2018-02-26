@@ -81,6 +81,16 @@ Front
 - Make company registration per shop
 - Add option to enable company tax number validation for EU
 
+General/miscellaneous
+~~~~~~~~~~~~~~~~~~~~~
+
+- Add support for Django 1.11 and for now on Shuup is installed over Django 1.11
+by default. There is still unofficial support for Django 1.8 and 1.9 which
+means that after installing Shuup you can downgrade your Django and Django
+polymorphic versions. We will also still run tests for these old versions
+while adding new features to Shuup. See tox.ini for information about
+downgrades required to run Shuup with old Django.
+
 
 Shuup 1.6.0
 -----------
