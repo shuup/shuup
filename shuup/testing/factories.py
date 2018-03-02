@@ -515,6 +515,7 @@ def get_default_category():
             identifier=DEFAULT_IDENTIFIER,
             name=DEFAULT_NAME,
         )
+        category.shops.add(get_default_shop())
         assert str(category) == DEFAULT_NAME
     return category
 

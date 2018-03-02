@@ -52,7 +52,7 @@ class CategoryBaseForm(ShuupAdminForm):
 
     def save(self, commit=True):
         instance = super(CategoryBaseForm, self).save(commit)
-        instance.shops = [self.request.shop]
+        instance.shops.add(self.request.shop)
 
 
 class CategoryProductForm(forms.Form):
