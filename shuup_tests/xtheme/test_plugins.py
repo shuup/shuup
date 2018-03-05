@@ -93,6 +93,7 @@ def test_category_links_plugin(rf):
     or customer)
     """
     category = get_default_category()
+    category.shops.clear()
     context = get_context(rf)
     plugin = CategoryLinksPlugin({"show_all_categories": True})
     assert context["request"].customer.is_anonymous
