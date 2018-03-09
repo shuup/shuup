@@ -4,10 +4,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
 import math
-from django.conf import settings
 from decimal import Decimal, ROUND_FLOOR, ROUND_HALF_DOWN
+
+import pytest
+import six
+from django.conf import settings
 from mock import patch
 
 from shuup.utils import babel_precision_provider, money
@@ -155,3 +157,10 @@ def test_set_precision_provider():
 def test_set_precision_provider_with_non_callable():
     with pytest.raises(AssertionError):
         set_precision_provider(3)
+
+
+@pytest.mark.skipif(six.PY2, reason="FIXME: only works with python 3 for now")
+def test_parse_float_str():
+    money = Money(10, "USD")
+    assert float(money) == 10
+    assert str(money) == "10 USD"
