@@ -11,12 +11,16 @@ from enum import Enum
 from rest_framework.renderers import JSONRenderer
 from rest_framework.utils import encoders
 
+from shuup.utils.money import Money
+
 LOG = logging.getLogger(__name__)
 
 
 class ExtJSONEncoder(encoders.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Enum):
+            return obj.value
+        if isinstance(obj, Money):
             return obj.value
         return super(ExtJSONEncoder, self).default(obj)
 
