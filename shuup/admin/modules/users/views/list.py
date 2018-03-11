@@ -40,7 +40,7 @@ class UserListView(PicotableListView):
     def get_queryset(self):
         model = self.get_model()
         qs = self.get_model().objects.all()
-        if "date_joined" in model._meta.get_all_field_names():
+        if "date_joined" in [f.name for f in model._meta.get_fields()]:
             qs = qs.order_by("-date_joined")
         return qs
 

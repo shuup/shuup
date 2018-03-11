@@ -316,11 +316,11 @@ class OrderEditView(CreateOrUpdateView):
         field = request.GET["field"]
         value = request.GET["value"]
 
-        if field in Contact._meta.get_all_field_names():
+        if field in [f.name for f in Contact._meta.get_fields()]:
             contact_model = Contact
-        elif field in CompanyContact._meta.get_all_field_names():
+        elif field in [f.name for f in CompanyContact._meta.get_fields()]:
             contact_model = CompanyContact
-        elif field in PersonContact._meta.get_all_field_names():
+        elif field in [f.name for f in PersonContact._meta.get_fields()]:
             contact_model = PersonContact
         else:
             return {"error": "Invalid field name"}
