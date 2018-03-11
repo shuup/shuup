@@ -45,7 +45,7 @@ class OrderCreatePaymentView(UpdateView):
         kwargs.pop("instance")
         return kwargs
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         form = super(OrderCreatePaymentView, self).get_form(form_class)
         order = self.object
         form.fields["amount"] = forms.DecimalField(

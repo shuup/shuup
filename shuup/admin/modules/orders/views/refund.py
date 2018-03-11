@@ -147,7 +147,7 @@ class OrderCreateRefundView(UpdateView):
             line.type != OrderLineType.REFUND
         ]
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         formset = super(OrderCreateRefundView, self).get_form(form_class)
 
         # Line orderings are zero-indexed, but shouldn't display that way

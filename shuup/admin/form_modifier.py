@@ -72,7 +72,7 @@ class ModifiableViewMixin(object):
             for field_key, field in extend_class().get_extra_fields(object) or []:
                 form.fields[field_key] = field
 
-    def get_form(self):
+    def get_form(self, form_class=None):
         form = super(ModifiableViewMixin, self).get_form(self.form_class)
         self.add_extra_fields(form, self.object)
         return form

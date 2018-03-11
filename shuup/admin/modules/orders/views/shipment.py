@@ -56,9 +56,9 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         kwargs.pop("instance")
         return kwargs
 
-    def get_form(self):
+    def get_form(self, form_class=None):
         default_field_keys = set()
-        form = super(OrderCreateShipmentView, self).get_form()
+        form = super(OrderCreateShipmentView, self).get_form(form_class)
         order = self.object
 
         # We only allow creating shipment for order line suppliers by default.

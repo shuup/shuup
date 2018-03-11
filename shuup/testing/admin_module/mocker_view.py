@@ -68,7 +68,7 @@ class MockerView(FormView):
             ) for name in dir(self.mockers) if name.startswith("mock_")
         ]
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         form = super(MockerView, self).get_form(form_class)
         form.fields["type"].choices = self.get_mockers()
         return form
