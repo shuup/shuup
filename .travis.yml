@@ -12,13 +12,13 @@ env:
   - TOXENV=license_headers
 matrix:
   include:
-    - {python: 2.7, env: TOXENV=py27-django18-nomigrations}
-    - {python: 3.4, env: TOXENV=py34-django18-nomigrations}
-    - {python: 3.4, env: TOXENV=py34-django18}
-    - {python: 2.7, env: TOXENV=py27-django19-nomigrations}
-    - {python: 3.5, env: TOXENV=py35-django19-nomigrations}
-    - {python: 3.5, env: TOXENV=py35-django19}
-    - {python: 3.6, env: TOXENV=py36-django19-nomigrations}
+    - {python: 2.7, env: TOXENV=py27-nomigrations}
+    - {python: 3.4, env: TOXENV=py34-nomigrations}
+    - {python: 3.4, env: TOXENV=py34}
+    - {python: 2.7, env: TOXENV=py27-nomigrations}
+    - {python: 3.5, env: TOXENV=py35-nomigrations}
+    - {python: 3.5, env: TOXENV=py35}
+    - {python: 3.6, env: TOXENV=py36-nomigrations}
     #- {python: 3.5, env: TOXENV=py35-nomigrations-nocoverage-browser-admin}
     #- {python: 3.5, env: TOXENV=py35-nomigrations-nocoverage-browser-front}
 install:
