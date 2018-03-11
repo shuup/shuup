@@ -216,7 +216,7 @@ class QuickAddRelatedObjectSelect(Select):
     def render(self, name, value, attrs=None, choices=()):
         if value is None:
             value = ''
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(base_attrs=attrs, extra_attrs={"name": name})
         if self.model:
             final_attrs['data-model'] = self.model
             choices = []
@@ -248,7 +248,7 @@ class QuickAddRelatedObjectMultiSelect(SelectMultiple):
     def render(self, name, value, attrs=None, choices=()):
         if value is None:
             value = []
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(base_attrs=attrs, extra_attrs={"name": name})
         output = [format_html('<select multiple="multiple"{}>', flatatt(final_attrs))]
         options = self.render_options(choices, value)
         if options:
