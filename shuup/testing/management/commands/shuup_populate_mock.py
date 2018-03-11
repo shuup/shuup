@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from optparse import make_option
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
@@ -18,9 +16,10 @@ from shuup.testing.mock_population import Populator
 
 
 class Command(BaseCommand):
-    option_list = BaseCommand.option_list + (
-        make_option("--with-superuser", default=None),
-    )
+    def add_arguments(self, parser):
+        super(Command, self).add_arguments(parser)
+        parser.add_argument(
+            "--with-superuser", default=None)
 
     def handle(self, *args, **options):
         translation.activate(settings.LANGUAGES[0][0])
