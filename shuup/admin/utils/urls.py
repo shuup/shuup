@@ -26,6 +26,7 @@ from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_missing_permissions
 )
+from shuup.utils import importing
 from shuup.utils.excs import Problem
 
 try:
@@ -105,6 +106,10 @@ class AdminRegexURLPattern(RegexURLPattern):
         self._callback = self.wrap_with_permissions(callback)
         return self._callback
 
+    @callback.setter
+    def callback(self, value):
+        self._callback = value
+
 
 def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentication=True, permissions=()):
     if isinstance(view, six.string_types):
@@ -112,6 +117,9 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
             raise ImproperlyConfigured('Empty URL pattern view name not permitted (for pattern %r)' % regex)
         if prefix:
             view = prefix + '.' + view
+
+        view = importing.load(view)
+
     return AdminRegexURLPattern(
         regex, view, kwargs, name,
         require_authentication=require_authentication,
