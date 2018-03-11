@@ -58,4 +58,7 @@ def test_invalid_admin_url():
 
 
 def test_admin_url_prefix():
-    assert admin_url("", "foo", prefix="bar")._callback_str == "bar.foo"
+    from mock import patch
+    with patch("shuup.utils.importing.load") as mock:
+        admin_url("", "foo", prefix="bar")
+    mock.assert_called_once_with("bar.foo")
