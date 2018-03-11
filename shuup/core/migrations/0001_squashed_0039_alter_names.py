@@ -15,20 +15,14 @@ import parler.models
 import timezone_field.fields
 from django.conf import settings
 from django.db import migrations, models
-from django.utils import version
 
 import shuup.core.fields
 import shuup.core.models
-import shuup.core.models._attributes
-import shuup.core.models._base
-import shuup.core.models._basket
-import shuup.core.models._service_payment
-import shuup.core.models._shops
-import shuup.core.models._units
 import shuup.core.modules.interface
 import shuup.core.pricing
 import shuup.core.taxing
 import shuup.core.utils.line_unit_mixin
+import shuup.utils.migrations
 import shuup.core.utils.name_mixin
 import shuup.utils.analog
 import shuup.utils.properties
@@ -2625,9 +2619,7 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=(parler.models.TranslatableModelMixin, models.Model),
-            managers=(
-                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
-            )
+            managers=(shuup.utils.migrations.get_managers_for_migration())
         ),
         migrations.CreateModel(
             name='ServiceProviderTranslation',
@@ -3719,9 +3711,7 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('shuup.serviceprovider',),
-            managers=(
-                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
-            )
+            managers=(shuup.utils.migrations.get_managers_for_migration())
         ),
         migrations.CreateModel(
             name='CompanyContact',
@@ -3844,9 +3834,7 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('shuup.serviceprovider',),
-            managers=(
-                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
-            )
+            managers=(shuup.utils.migrations.get_managers_for_migration())
         ),
         migrations.CreateModel(
             name='PersonContact',
@@ -4427,9 +4415,7 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'custom carriers',
             },
             bases=('shuup.carrier',),
-            managers=(
-                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
-            )
+            managers=(shuup.utils.migrations.get_managers_for_migration())
         ),
         migrations.CreateModel(
             name='CustomPaymentProcessor',
@@ -4458,9 +4444,7 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'custom payment processors',
             },
             bases=('shuup.paymentprocessor',),
-            managers=(
-                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
-            )
+            managers=(shuup.utils.migrations.get_managers_for_migration())
         ),
         migrations.AlterUniqueTogether(
             name='weightbasedpricerangetranslation',

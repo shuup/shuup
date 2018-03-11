@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import django.db.models.manager
+import shuup.utils.migrations
 
 
 class Migration(migrations.Migration):
@@ -15,20 +15,14 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelManagers(
             name='carrierwithcheckoutphase',
-            managers=[
-                ('_default_manager', django.db.models.manager.Manager()),
-            ],
+            managers=(shuup.utils.migrations.get_managers_for_migration()),
         ),
         migrations.AlterModelManagers(
             name='paymentwithcheckoutphase',
-            managers=[
-                ('_default_manager', django.db.models.manager.Manager()),
-            ],
+            managers=(shuup.utils.migrations.get_managers_for_migration()),
         ),
         migrations.AlterModelManagers(
             name='pseudopaymentprocessor',
-            managers=[
-                ('_default_manager', django.db.models.manager.Manager()),
-            ],
+            managers=(shuup.utils.migrations.get_managers_for_migration()),
         ),
     ]
