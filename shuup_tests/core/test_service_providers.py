@@ -101,6 +101,6 @@ def test_service_provider_base_manager():
     Base manager of ServiceProvider is translatable.
     """
     obj = CustomCarrier.objects.language('en').create(name="Car")
-    found = ServiceProvider.base_objects.language('en').get(pk=obj.pk)
+    found = ServiceProvider.objects.non_polymorphic().language('en').get(pk=obj.pk)
     assert found.pk == obj.pk
     assert type(found) == ServiceProvider
