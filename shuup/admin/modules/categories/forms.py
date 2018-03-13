@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
@@ -48,7 +49,16 @@ class CategoryBaseForm(ShuupAdminForm):
         filter_form_field_choices(self.fields["status"], (CategoryStatus.DELETED.value,), invert=True)
 
         # Exclude current category from parents, because it cannot be its own child anyways
-        filter_form_field_choices(self.fields["parent"], (kwargs["instance"].pk,), invert=True)
+        self.fields["parent"].choices = [(None, "----")] + [
+            (shop.pk, shop.name) for shop in Category.objects.filter(
+                shops=request.shop).exclude(id=kwargs["instance"].pk)
+        ]
+
+    def clean_parent(self):
+        parent = self.cleaned_data.get("parent")
+        if parent and self.request.shop not in parent.shops.all():
+            raise ValidationError(_("Can not use this category as parent for this shop."), code="invalid_parent")
+        return parent
 
     def save(self, commit=True):
         instance = super(CategoryBaseForm, self).save(commit)
