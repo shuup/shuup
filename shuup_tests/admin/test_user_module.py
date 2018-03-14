@@ -15,9 +15,12 @@ from django.core.urlresolvers import reverse
 from django.forms.models import modelform_factory
 from django.utils.encoding import force_text
 
-from shuup.admin.modules.users.views import LoginAsUserView, UserDetailView
-from shuup.admin.modules.users.views.permissions import \
+from shuup.admin.modules.users.views import (
+    LoginAsUserView, UserChangePermissionsView, UserDetailView
+)
+from shuup.admin.modules.users.views.permissions import (
     PermissionChangeFormBase
+)
 from shuup.core.models import Contact, get_person_contact
 from shuup.testing.factories import (
     create_random_person, get_default_shop, UserFactory
@@ -51,7 +54,7 @@ def test_user_detail_works_at_all(rf, admin_user):
 
 @pytest.mark.django_db
 def test_user_create(rf, admin_user):
-    get_default_shop()
+    shop = get_default_shop()
     view_func = UserDetailView.as_view()
     before_count = get_user_model().objects.count()
     response = view_func(apply_request_middleware(rf.post("/", {
@@ -64,6 +67,8 @@ def test_user_create(rf, admin_user):
     }), user=admin_user))
     assert response.status_code == 302
     assert get_user_model().objects.count() == before_count + 1
+    last_user = get_user_model().objects.last()
+    assert last_user not in shop.staff_members.all()
     assert not len(mail.outbox), "mail not sent since user is not staff"
 
     response = view_func(apply_request_middleware(rf.post("/", {
@@ -77,6 +82,8 @@ def test_user_create(rf, admin_user):
     }), user=admin_user))
     assert response.status_code == 302
     assert get_user_model().objects.count() == before_count + 2
+    last_user = get_user_model().objects.last()
+    assert last_user in shop.staff_members.all()
     assert len(mail.outbox) == 1, "mail sent"
 
     user = get_user_model().objects.create(
@@ -92,6 +99,24 @@ def test_user_create(rf, admin_user):
     response.render()
     assert "Staff status" not in force_text(response.content)
     assert "Superuser status" not in force_text(response.content)
+
+    # remove user staff permission
+    view_func = UserChangePermissionsView.as_view()
+    response = view_func(apply_request_middleware(rf.post("/", {
+        "is_staff": False
+    }), user=admin_user), pk=last_user.id)
+    assert response.status_code == 302
+    last_user = get_user_model().objects.last()
+    assert last_user not in shop.staff_members.all()
+
+    # add again
+    view_func = UserChangePermissionsView.as_view()
+    response = view_func(apply_request_middleware(rf.post("/", {
+        "is_staff": True
+    }), user=admin_user), pk=last_user.id)
+    assert response.status_code == 302
+    last_user = get_user_model().objects.last()
+    assert last_user in shop.staff_members.all()
 
 
 @pytest.mark.django_db
