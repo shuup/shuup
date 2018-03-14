@@ -212,5 +212,5 @@ class OrderModule(AdminModule):
                 icon_url="shuup_admin/img/product.png",
                 priority=0,
                 category=HelpBlockCategory.ORDERS,
-                done=Order.objects.exists() if kind == "setup" else False
+                done=Order.objects.filter(shop=request.shop).exists() if kind == "setup" else False
             )
