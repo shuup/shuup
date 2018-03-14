@@ -15,10 +15,10 @@ from django.views.generic import TemplateView
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.wizard import (
     load_setup_wizard_pane, load_setup_wizard_panes
 )
-from shuup.core.models import Shop
 from shuup.utils.form_group import FormDef, FormGroup
 from shuup.utils.iterables import first
 
@@ -74,7 +74,7 @@ class WizardView(TemplateView):
 
     @cached_property
     def panes(self):
-        shop = self.request.shop
+        shop = get_shop(self.request)
         pane_id = self.request.GET.get("pane_id", None)
         panes = load_setup_wizard_panes(
             shop=shop,
@@ -141,7 +141,7 @@ class WizardView(TemplateView):
     def post(self, request, *args, **kwargs):
         abort = request.POST.get("abort", False)
         if self.request.POST.get("pane_id") == self.get_final_pane_identifier():
-            configuration.set(Shop.objects.first(), "setup_wizard_complete", True)
+            configuration.set(get_shop(request), "setup_wizard_complete", True)
         if abort:
             return JsonResponse({"success": "true"}, status=200)
         form = self.get_form()
@@ -154,7 +154,8 @@ class WizardView(TemplateView):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         if len(self.panes) == 0:
-            if request.shop.maintenance_mode:
+            shop = get_shop(request)
+            if shop.maintenance_mode:
                 return HttpResponseRedirect(reverse("shuup_admin:home"))
             else:
                 return HttpResponseRedirect(reverse("shuup_admin:dashboard"))
