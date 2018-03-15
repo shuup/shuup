@@ -133,6 +133,12 @@ class UserChangePermissionsView(UpdateView):
 
     def form_valid(self, form):
         form.save()
+
+        if getattr(self.object, "is_staff", False):
+            self.request.shop.staff_members.add(self.object)
+        else:
+            self.request.shop.staff_members.remove(self.object)
+
         messages.success(self.request, _("Permissions changed for %s.") % self.object)
         return HttpResponseRedirect(self.get_success_url())
 

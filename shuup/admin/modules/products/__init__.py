@@ -156,7 +156,7 @@ class ProductModule(AdminModule):
             icon_url="shuup_admin/img/product.png",
             priority=0,
             category=HelpBlockCategory.PRODUCTS,
-            done=Product.objects.exists() if kind == "setup" else False
+            done=Product.objects.filter(shop_products__shop=request.shop).exists() if kind == "setup" else False
         )
 
     def get_required_permissions(self):
