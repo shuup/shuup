@@ -714,8 +714,11 @@ def test_product_price_info(admin_user, prices_include_tax, product_price, disco
 
     if prices_include_tax:
         assert 'taxless_price' not in price_info
+        assert 'taxless_base_price' not in price_info
         assert 'tax_amount' not in price_info
     else:
+        assert money_round(price_info['taxless_base_price']) == money_round(product_price)
+        assert money_round(price_info['taxful_base_price']) == money_round(base_price)
         assert money_round(price_info['taxless_price']) == money_round(taxless_price)
         assert money_round(price_info['tax_amount']) == money_round((product_price - discount) * tax_rate)
 
