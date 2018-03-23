@@ -18,7 +18,8 @@ from django.utils.encoding import force_text
 from rest_framework import serializers
 
 from shuup.core.fields import (
-    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
+    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+    MONEY_FIELD_DECIMAL_PLACES
 )
 
 
@@ -127,3 +128,25 @@ class FormattedDecimalField(serializers.DecimalField):
         kwargs['max_digits'] = FORMATTED_DECIMAL_FIELD_MAX_DIGITS
         kwargs['decimal_places'] = FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES
         super(FormattedDecimalField, self).__init__(*args, **kwargs)
+
+
+class MoneyField(serializers.DecimalField):
+    def __init__(self, *args, **kwargs):
+        kwargs['max_digits'] = FORMATTED_DECIMAL_FIELD_MAX_DIGITS
+        kwargs['decimal_places'] = MONEY_FIELD_DECIMAL_PLACES
+        super(MoneyField, self).__init__(*args, **kwargs)
+
+    def to_representation(self, value):
+        return {
+            "value": super(MoneyField, self).to_representation(value.value),
+            "currency": value.currency
+        }
+
+    def to_internal_value(self, data):
+        if "value" not in data:
+            raise ValidationError("Value must be specified.")
+        if "currency" not in data:
+            raise ValidationError("Currency must be specified.")
+
+        from shuup.utils.money import Money
+        return Money(super(MoneyField, self).to_internal_value(data["value"]), data["currency"])

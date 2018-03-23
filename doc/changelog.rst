@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: add MoneyField and encoder for Money instances
 - OrderCreator: Dispatch a signal when adding lines to order
 - Enable refunds for order API
 - API: Improved suppliers stock endpoints
