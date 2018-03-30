@@ -11,7 +11,7 @@ from decimal import Decimal
 from pprint import pformat
 
 import six
-from babel.dates import format_date
+from babel.dates import format_datetime
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.template.defaultfilters import floatformat
@@ -76,8 +76,8 @@ class ReportWriter(object):
             self.write_heading(
                 "{title} {start} - {end}".format(
                     title=report.title,
-                    start=format_date(report_data["start"], format="short", locale=get_current_babel_locale()),
-                    end=format_date(report_data["end"], format="short", locale=get_current_babel_locale()))
+                    start=format_datetime(report_data["start"], format="short", locale=get_current_babel_locale()),
+                    end=format_datetime(report_data["end"], format="short", locale=get_current_babel_locale()))
             )
             report.ensure_texts()
             self.write_data_table(report, report_data["data"], has_totals=report_data["has_totals"])
