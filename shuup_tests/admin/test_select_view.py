@@ -118,6 +118,37 @@ def test_multi_select_with_main_products(rf, admin_user):
 
 
 @pytest.mark.django_db
+def test_multi_select_with_sellable_only_products(rf, admin_user):
+    shop = get_default_shop()
+    activate("en")
+    view = MultiselectAjaxView.as_view()
+
+    var1 = "size"
+    var2 = "color"
+    parent = create_product("test", shop=shop, **{"name": "test"})
+    for a in range(4):
+        for b in range(3):
+            product_name = "test-%s-%s" % (a, b)
+            child = create_product(product_name, shop=shop, **{"name": product_name})
+            child.link_to_parent(parent, variables={var1: a, var2: b})
+            assert child.mode == ProductMode.VARIATION_CHILD
+
+    assert parent.variation_children.count() == 4 * 3
+    assert Product.objects.count() == 4 * 3 + 1
+
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user)
+    assert len(results) == Product.objects.count()
+
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    assert len(results) ==  Product.objects.count() - 1
+
+    create_product("test1", shop=shop, **{"name": "test 123"})
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    assert len(results) == Product.objects.count() - 1  # Still only the parent is excluded
+    assert Product.objects.count() == 4 * 3 + 2
+
+
+@pytest.mark.django_db
 @pytest.mark.parametrize("contact_cls", [
     PersonContact, CompanyContact
 ])
