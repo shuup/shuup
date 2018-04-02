@@ -49,6 +49,7 @@ Core
 Admin
 ~~~~~
 
+- Add option to filter variation parents for product select view
 - Fix home view help blocks filtering objects by the current shop
 - Fix bug: Filter category parent choices based on current shop
 - Add middleware to select and set the current shop in the request
