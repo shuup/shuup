@@ -83,6 +83,19 @@ def _parse_date_str(value):
         pass
 
 
+def _parse_datetime_str(value):
+    value = value.strip()
+    for fmt in _date_formats:
+        try:
+            return datetime.datetime.strptime(value, fmt)
+        except:
+            pass
+    try:
+        return datetime.datetime.strptime(value, "%Y-%m-%d %H:%M:%S.%f")
+    except:
+        pass
+
+
 def _parse_time_str(value):
     value = value.strip()
     for fmt in _time_formats:
@@ -115,6 +128,27 @@ def parse_date(value):
     raise ValueError("Unable to parse %s as date (unknown type)." % value)
 
 
+def parse_datetime(value):
+    """
+    Tries to make a datetime out of the value. If impossible, it raises an exception.
+
+    :param value: A value of some ilk.
+    :return: DateTime
+    :rtype: datetime.datetime
+    :raise ValueError:
+    """
+    if isinstance(value, datetime.datetime):
+        return value
+    if isinstance(value, datetime.date):
+        return datetime.datetime.combine(value, datetime.datetime.min.time())
+    elif isinstance(value, six.string_types):
+        date = _parse_datetime_str(value)
+        if not date:
+            raise ValueError("Unable to parse %s as datetime." % value)
+        return date
+    raise ValueError("Unable to parse %s as datetime (unknown type)." % value)
+
+
 def parse_time(value):
     """
     Tries to make a time out of the value. If impossible, it raises an exception.
@@ -134,6 +168,22 @@ def parse_time(value):
             raise ValueError("Unable to parse %s as date." % value)
         return time
     raise ValueError("Unable to parse %s as date (unknown type)." % value)
+
+
+def try_parse_datetime(value):
+    """
+    Tries to make a datetime out of the value. If impossible, returns None.
+
+    :param value: A value of some ilk.
+    :return: Datetime
+    :rtype: datetime.datetime
+    """
+    if value is None:
+        return None
+    try:
+        return parse_datetime(value)
+    except ValueError:
+        return None
 
 
 def try_parse_date(value):
