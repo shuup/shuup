@@ -99,7 +99,7 @@ class Address(NameMixin, ShuupModel):
     city = models.CharField(verbose_name=_('city'), max_length=255, help_text=_(
         "The address city."
     ))
-    region_code = models.CharField(verbose_name=_('region code'), max_length=16, blank=True, help_text=_(
+    region_code = models.CharField(verbose_name=_('region code'), max_length=64, blank=True, help_text=_(
         "The address region, province, or state."
     ))
     region = models.CharField(verbose_name=_('region'), max_length=64, blank=True, help_text=_(
