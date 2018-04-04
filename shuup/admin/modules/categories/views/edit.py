@@ -38,3 +38,6 @@ class CategoryEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
 
     def form_valid(self, form):
         return self.save_form_parts(form)
+
+    def get_queryset(self):
+        return Category.objects.all_except_deleted(shop=self.request.shop)

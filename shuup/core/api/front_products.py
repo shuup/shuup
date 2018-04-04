@@ -136,6 +136,10 @@ class PricefulSerializer(serializers.Serializer):
     discount_percentage = FormattedDecimalField(required=False, coerce_to_string=False)
     taxful_price = FormattedDecimalField(source='taxful_price.value', required=False, coerce_to_string=False)
     taxless_price = FormattedDecimalField(source='taxless_price.value', required=False, coerce_to_string=False)
+    taxful_base_price = FormattedDecimalField(
+        source='taxful_base_price.value', required=False, coerce_to_string=False)
+    taxless_base_price = FormattedDecimalField(
+        source='taxless_base_price.value', required=False, coerce_to_string=False)
     tax_amount = FormattedDecimalField(source='tax_amount.value', required=False, coerce_to_string=False)
     is_discounted = serializers.BooleanField()
 

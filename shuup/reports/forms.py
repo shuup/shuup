@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.forms import ChoiceField, DateField, HiddenInput
+from django.forms import ChoiceField, DateTimeField, HiddenInput
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
@@ -44,8 +44,8 @@ class BaseReportForm(forms.Form):
         form_class=ChoiceField, label=_("Date Range"), initial=DateRangeChoices.RUNNING_WEEK, help_text=_(
             "Filter report results by a date range."
         ))
-    start_date = DateField(label=_("Start Date"), required=False, help_text=_("For a custom date range."))
-    end_date = DateField(label=_("End Date"), required=False, help_text=_("For a custom date range."))
+    start_date = DateTimeField(label=_("Start Date"), required=False, help_text=_("For a custom date range."))
+    end_date = DateTimeField(label=_("End Date"), required=False, help_text=_("For a custom date range."))
     writer = forms.ChoiceField(
         label=_("Output Format"), initial="html", choices=[(name, name.title()) for name in sorted(get_writer_names())],
         help_text=_("The format to show the report results.")

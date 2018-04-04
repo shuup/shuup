@@ -44,8 +44,7 @@ class CategoryListView(PicotableListView):
         return choices
 
     def get_queryset(self):
-        shop = self.request.shop
-        return Category.objects.all_except_deleted(shop=shop)
+        return Category.objects.all_except_deleted(shop=self.request.shop)
 
     def format_name(self, instance, *args, **kwargs):
         level = getattr(instance, instance._mptt_meta.level_attr)

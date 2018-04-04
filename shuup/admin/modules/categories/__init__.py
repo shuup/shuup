@@ -80,7 +80,7 @@ class CategoryModule(AdminModule):
             icon_url="shuup_admin/img/category.png",
             category=HelpBlockCategory.PRODUCTS,
             priority=1,
-            done=Category.objects.exists() if kind == "setup" else False
+            done=Category.objects.filter(shops=request.shop).exists() if kind == "setup" else False
         )
 
     def get_required_permissions(self):

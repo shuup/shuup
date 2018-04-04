@@ -258,10 +258,17 @@ class UserDetailView(CreateOrUpdateView):
     def save_form(self, form):
         self.object = form.save()
         contact = self._get_bind_contact()
+
+        if getattr(self.object, "is_staff", False):
+            self.request.shop.staff_members.add(self.object)
+        else:
+            self.request.shop.staff_members.remove(self.object)
+
         if contact and not contact.user:
             contact.user = self.object
             contact.save()
             messages.info(self.request, _(u"User bound to contact %(contact)s.") % {"contact": contact})
+
         if getattr(self.object, "is_staff", False) and form.cleaned_data.get("send_confirmation"):
             shop_url = "%s://%s/" % (self.request.scheme, self.request.get_host())
             admin_url = self.request.build_absolute_uri(reverse("shuup_admin:login"))

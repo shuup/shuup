@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Report: change date filter field to DateTime
 - OrderCreator: Dispatch a signal when adding lines to order
 - Enable refunds for order API
 - API: Improved suppliers stock endpoints
@@ -49,6 +50,9 @@ Core
 Admin
 ~~~~~
 
+- Add option to filter variation parents for product select view
+- Fix home view help blocks filtering objects by the current shop
+- Fix bug: Filter category parent choices based on current shop
 - Add middleware to select and set the current shop in the request
 - Breaking change: add optional shop parameter in ``get_model_url`` method of
   admin module

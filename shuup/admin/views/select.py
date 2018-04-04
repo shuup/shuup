@@ -102,6 +102,12 @@ class MultiselectAjaxView(TemplateView):
                 ProductMode.NORMAL
             ])
 
+        if search_mode and search_mode == "sellable_mode_only" and issubclass(cls, Product):
+            qs = qs.exclude(mode__in=[
+                ProductMode.SIMPLE_VARIATION_PARENT,
+                ProductMode.VARIABLE_VARIATION_PARENT,
+            ])
+
         qs = qs.distinct()
         return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
 

@@ -61,6 +61,50 @@ def test_category_form_saving(rf, admin_user):
 
 
 @pytest.mark.django_db
+def test_category_form_with_parent(rf, admin_user):
+    with transaction.atomic():
+        shop = get_default_shop()
+        category1 = CategoryFactory()
+        category2 = CategoryFactory()
+        category2.shops.clear()
+        assert shop not in category2.shops.all()
+        category3 = CategoryFactory()
+        category3.shops.clear()
+        assert shop not in category3.shops.all()
+
+        request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)
+        form_kwargs = dict(instance=category1, request=request, languages=("sw",), default_language="sw")
+        form = CategoryBaseForm(**form_kwargs)
+        assert isinstance(form, CategoryBaseForm)
+        form_data = get_form_data(form, prepared=True)
+        for lang, field_map in form.trans_name_map.items():
+            for dst_field in field_map.values():
+                form_data[form.add_prefix(dst_field)] = "IJWEHGWOHKSL"
+
+        # Make sure we have right parent options
+        parent_bound_field = [field for field in form.visible_fields() if field.name == "parent"][0]
+        assert len(parent_bound_field.field.choices) == 1
+        assert parent_bound_field.field.choices[0][0] is None
+
+        category2.shops.add(shop)
+        form_kwargs["data"] = form_data
+        form = CategoryBaseForm(**form_kwargs)
+        assert isinstance(form, CategoryBaseForm)
+
+        # Make sure category 2 is now in parent options
+        parent_bound_field = [field for field in form.visible_fields() if field.name == "parent"][0]
+        assert len(parent_bound_field.field.choices) == 2
+        assert parent_bound_field.field.choices[1][0] == category2.id
+
+        # Make sure saving the form still works
+        form.full_clean()
+        form.save()
+        category = form.instance
+        category.set_current_language("sw")
+        assert category.name == "IJWEHGWOHKSL"
+
+
+@pytest.mark.django_db
 def test_products_form_add():
     shop = get_default_shop()
     category = get_default_category()
@@ -226,6 +270,40 @@ def test_category_create(rf, admin_user):
         assert response.status_code in [200, 302]
         assert Category.objects.count() == 1
         assert Category.objects.first().name == cat_name
+
+
+@pytest.mark.django_db
+def test_category_create_with_parent(rf, admin_user):
+    shop = get_default_shop()
+    default_category = get_default_category()
+
+    default_category.shops.clear()
+    assert shop not in default_category.shops.all()
+    with override_settings(LANGUAGES=[("en", "en")]):
+        view = CategoryEditView.as_view()
+        cat_name = "Random name"
+        data = {
+            "base-name__en": cat_name,
+            "base-status": CategoryStatus.VISIBLE.value,
+            "base-visibility": CategoryVisibility.VISIBLE_TO_ALL.value,
+            "base-ordering": 1,
+            "base-parent": default_category.pk
+        }
+        assert Category.objects.count() == 1
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user, shop=shop)
+        response = view(request, pk=None)
+        if hasattr(response, "render"):
+            response.render()
+        assert response.status_code in [200, 302]
+        assert Category.objects.count() == 1
+
+        default_category.shops.add(shop)
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user, shop=shop)
+        response = view(request, pk=None)
+        if hasattr(response, "render"):
+            response.render()
+        assert response.status_code in [200, 302]
+        assert Category.objects.count() == 2
 
 
 @pytest.mark.django_db
