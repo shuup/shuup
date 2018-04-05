@@ -420,6 +420,18 @@ def get_default_supplier():
     return supplier
 
 
+def get_supplier(module_identifier, shop=None, **kwargs):
+    supplier = Supplier.objects.create(
+        name=DEFAULT_NAME,
+        module_identifier=module_identifier,
+        type=SupplierType.INTERNAL,
+        **kwargs
+    )
+    if shop:
+        supplier.shops.add(shop)
+    return supplier
+
+
 def get_default_shop():
     shop = default_by_identifier(Shop)
     if not shop:

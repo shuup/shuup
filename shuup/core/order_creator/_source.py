@@ -23,8 +23,8 @@ from shuup import configuration
 from shuup.core import taxing
 from shuup.core.fields.utils import ensure_decimal_places
 from shuup.core.models import (
-    AnonymousContact, OrderStatus, PaymentMethod, Product, ShippingMethod,
-    ShippingMode, Shop, ShopProduct, Supplier, TaxClass
+    AnonymousContact, OrderStatus, PaymentMethod, Product, ProductMode,
+    ShippingMethod, ShippingMode, Shop, ShopProduct, Supplier, TaxClass
 )
 from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
@@ -563,6 +563,7 @@ class OrderSource(object):
 
     def _get_products_and_quantities(self, supplier=None):
         q_counter = Counter()
+
         for line in self.get_lines():
             if not line.product:
                 continue
@@ -571,8 +572,12 @@ class OrderSource(object):
                 continue
 
             package_children = line.product.get_package_child_to_quantity_map()
+
+            # multiply the quantity by the number os packages in the line
+            package_quantity = (int(line.quantity) if line.product.mode == ProductMode.PACKAGE_PARENT else 1)
+
             for product, quantity in iteritems(package_children):
-                q_counter[product] += quantity
+                q_counter[product] += (quantity * package_quantity)
 
             product = line.product
             q_counter[product] += line.quantity

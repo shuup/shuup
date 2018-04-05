@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Order source: consider the packages quantities in order source lines
 - Report: change date filter field to DateTime
 - OrderCreator: Dispatch a signal when adding lines to order
 - Enable refunds for order API
