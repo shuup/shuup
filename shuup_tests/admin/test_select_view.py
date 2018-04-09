@@ -21,13 +21,16 @@ from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
 
 
-def _get_search_results(rf, view, model_name, search_str, user, search_mode=None):
+def _get_search_results(rf, view, model_name, search_str, user, search_mode=None, sales_units=None):
     data = {
         "model": model_name,
         "search": search_str
     }
     if search_mode:
         data.update({"searchMode": search_mode})
+
+    if sales_units:
+        data.update({"salesUnits": sales_units})
 
     request = apply_request_middleware(rf.get("sa/search", data), user=user)
     response = view(request)
@@ -153,16 +156,32 @@ def test_multi_select_with_sellable_only_products(rf, admin_user):
 def test_multi_select_with_product_sales_unit(rf, admin_user):
     shop = get_default_shop()
     activate("en")
-    sales_unit = SalesUnit.objects.create(symbol="g", name="Grams")
-    product_name_en = "The Product"
-    create_product("the product", shop=shop, **{"name": product_name_en, "sales_unit": sales_unit})
+    gram = SalesUnit.objects.create(symbol="g", name="Grams")
+    create_product("gram", shop=shop, **{"name": "Gram Product", "sales_unit": gram})
+
+    pieces = SalesUnit.objects.create(symbol="pcs", name="Pieces")
+    create_product("pcs", shop=shop, **{"name": "Pieces Product", "sales_unit": pieces})
+
+    kg = SalesUnit.objects.create(symbol="kg", name="Kilograms")
+    create_product("kg", shop=shop, **{"name": "Kilogram Product", "sales_unit": kg})
+
+    oz = SalesUnit.objects.create(symbol="oz", name="Ounce")
+    create_product("oz", shop=shop, **{"name": "Ounce Product", "sales_unit": oz})
+
+
     view = MultiselectAjaxView.as_view()
 
-    results = _get_search_results(rf, view, "shuup.Product", "pcs", admin_user)
-    assert len(results) == 0
+    results = _get_search_results(rf, view, "shuup.Product", "Product", admin_user)
+    assert len(results) == 4
 
-    results = _get_search_results(rf, view, "shuup.Product", "g", admin_user)
-    assert len(results) == 1
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="g")) == 1
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="pcs")) == 1
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="kg")) == 1
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="oz")) == 1
+
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="g,oz")) == 2
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="g,kg,pcs")) == 3
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="oz,pcs,g,kg")) == 4
 
 
 @pytest.mark.django_db
