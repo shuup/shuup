@@ -61,6 +61,8 @@ class MultiselectAjaxView(TemplateView):
         if issubclass(cls, Product):
             self.search_fields.append("sku")
             self.search_fields.append("barcode")
+            self.search_fields.append("sales_unit__translations__symbol")
+
         user_model = get_user_model()
         if issubclass(cls, user_model):
             if _field_exists(user_model, "username"):
