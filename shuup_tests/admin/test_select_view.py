@@ -13,7 +13,8 @@ from django.utils.translation import activate, get_language
 
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.core.models import (
-    Category, CompanyContact, PersonContact, Product, ProductMode
+    Category, CompanyContact, PersonContact, Product, ProductMode,
+    SalesUnit
 )
 from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
@@ -146,6 +147,22 @@ def test_multi_select_with_sellable_only_products(rf, admin_user):
     results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
     assert len(results) == Product.objects.count() - 1  # Still only the parent is excluded
     assert Product.objects.count() == 4 * 3 + 2
+
+
+@pytest.mark.django_db
+def test_multi_select_with_product_sales_unit(rf, admin_user):
+    shop = get_default_shop()
+    activate("en")
+    sales_unit = SalesUnit.objects.create(symbol="g", name="Grams")
+    product_name_en = "The Product"
+    create_product("the product", shop=shop, **{"name": product_name_en, "sales_unit": sales_unit})
+    view = MultiselectAjaxView.as_view()
+
+    results = _get_search_results(rf, view, "shuup.Product", "pcs", admin_user)
+    assert len(results) == 0
+
+    results = _get_search_results(rf, view, "shuup.Product", "g", admin_user)
+    assert len(results) == 1
 
 
 @pytest.mark.django_db
