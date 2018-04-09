@@ -61,7 +61,6 @@ class MultiselectAjaxView(TemplateView):
         if issubclass(cls, Product):
             self.search_fields.append("sku")
             self.search_fields.append("barcode")
-            self.search_fields.append("sales_unit__translations__symbol")
 
         user_model = get_user_model()
         if issubclass(cls, user_model):
@@ -109,6 +108,10 @@ class MultiselectAjaxView(TemplateView):
                 ProductMode.SIMPLE_VARIATION_PARENT,
                 ProductMode.VARIABLE_VARIATION_PARENT,
             ])
+
+        sales_units = request.GET.get("salesUnits")
+        if sales_units and issubclass(cls, Product):
+            qs = qs.filter(sales_unit__translations__symbol__in=sales_units.strip().split(","))
 
         qs = qs.distinct()
         return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
