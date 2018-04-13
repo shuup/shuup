@@ -169,6 +169,7 @@
     }
 
     .picotable-header {
+
         @media (max-width: @screen-sm-max) {
             .row;
             .clearfix;
@@ -181,6 +182,7 @@
         .picotable-mass-actions {
             @media (max-width: @screen-xs-max) {
                 text-align: center;
+                float: left;
             }
             @media (max-width: @screen-sm-max) {
                 .make-sm-column(6);
@@ -203,10 +205,11 @@
 
         .picotable-items-per-page-ctr {
             @media (max-width: @screen-xs-max) {
-                text-align: center;
+                text-align: left;
             }
             @media (max-width: @screen-sm-max) {
                 .make-sm-column(6);
+                text-align: right;
             }
             @media (min-width: @screen-md-min) {
                 display: block;
