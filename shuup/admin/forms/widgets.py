@@ -232,7 +232,7 @@ class QuickAddRelatedObjectSelect(Select):
                     data-url="%s?mode=iframe&quick_add_target=%s"
                     data-toggle="popover"
                     data-placement="bottom"
-                    data-trigger="hover"
+                    data-trigger="manual"
                     data-content="%s">
                         <i class="fa fa-plus text-primary"></i>
                 </a>

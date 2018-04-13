@@ -9,14 +9,14 @@
 
 window.addToSelect2 = function addToSelect2(target, value, name) {
     const newOption = new Option(name, value, true, true);
-    $("select[name='" + target + "']").append(newOption).trigger('change');
+    $("select[name='" + target + "']").append(newOption).trigger("change");
 
     // Product update or create
     if (target.includes("primary_category")) {
         const categories = $("select[name*='categories']");
         if (categories.length > 0) {
             const newOption = new Option(name, value, true, true);
-            categories.append(newOption).trigger('change');
+            categories.append(newOption).trigger("change");
         }
     }
 
@@ -31,15 +31,15 @@ window.closeQuickAddIFrame = function closeQuickAddIFrame(e) {
 };
 
 $(function() {
-    $('.quick-add-btn a.btn').on("click", function(e) {
+    $(".quick-add-btn a.btn").on("click", function(e) {
         e.preventDefault();
         window.closeQuickAddIFrame();
         const url = $(this).data("url");
         const overlay = document.createElement("div");
         overlay.id = "create-object-overlay";
 
-        const contentPane = document.createElement('div');
-        contentPane.id = "create-object-content-pane"
+        const contentPane = document.createElement("div");
+        contentPane.id = "create-object-content-pane";
         contentPane.className = "content-pane";
         overlay.appendChild(contentPane);
 
@@ -52,18 +52,18 @@ $(function() {
         closeButton.appendChild(closeIcon);
         contentPane.appendChild(closeButton);
 
-        const iframe = document.createElement('iframe');
-        iframe.frameBorder=0;
-        iframe.width="100%";
-        iframe.height="100%";
-        iframe.id="create-object-iframe";
+        const iFrame = document.createElement("iframe");
+        iFrame.frameBorder = 0;
+        iFrame.width = "100%";
+        iFrame.height = "100%";
+        iFrame.id = "create-object-iframe";
 
-        iframe.onload = function() {
+        iFrame.onload = function() {
             $("#create-object-content-pane").addClass("open");
         };
 
-        iframe.setAttribute("src", url);
-        contentPane.appendChild(iframe);
+        iFrame.setAttribute("src", url);
+        contentPane.appendChild(iFrame);
         $(document.body).append(overlay);
     });
 });
