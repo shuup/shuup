@@ -123,18 +123,18 @@ def command(filenames, dirnames, checkers, group=False):
         if not file_errors:
             continue
         if group:
-            print("%s:" % filename, file=sys.stderr)
+            print("%s:" % filename, file=sys.stderr)  # noqa
             for error in file_errors:
-                print("    %s" % error, file=sys.stderr)
+                print("    %s" % error, file=sys.stderr)  # noqa
                 error_count += 1
             continue
         for error in file_errors:
-            print("%s:%s" % (filename, error), file=sys.stderr)
+            print("%s:%s" % (filename, error), file=sys.stderr)  # noqa
             error_count += 1
 
-    print("###########################")
-    print("Total errors to handle: %d" % error_count)
-    print("###########################")
+    print("###########################")  # noqa
+    print("Total errors to handle: %d" % error_count)  # noqa
+    print("###########################")  # noqa
 
 
 if __name__ == "__main__":

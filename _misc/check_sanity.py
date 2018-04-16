@@ -43,7 +43,7 @@ def main():
     found_errors = False
     for error in errors:
         found_errors = True
-        print(error)
+        print(error)  # noqa
     if found_errors:
         raise SystemExit(1)
 

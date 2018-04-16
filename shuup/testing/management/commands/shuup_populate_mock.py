@@ -34,7 +34,7 @@ class Command(BaseCommand):
                     email="%s@shuup.local" % superuser_name,
                     password=superuser_name,
                 )
-                print("Superuser created: %s" % user)
+                print("Superuser created: %s" % user)  # noqa
             else:
-                print("Superuser pre-existed: %s" % user)
+                print("Superuser pre-existed: %s" % user)  # noqa
         Populator().populate()
