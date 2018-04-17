@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Add customer related fields account manager, tax group and customer
+  groups to order for sales reporting.
 - Order source: consider the packages quantities in order source lines
 - Report: change date filter field to DateTime
 - OrderCreator: Dispatch a signal when adding lines to order
