@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Refund: check the max refundable items when doing partial refunds
 - Add customer related fields account manager, tax group and customer
   groups to order for sales reporting.
 - Order source: consider the packages quantities in order source lines

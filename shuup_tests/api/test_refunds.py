@@ -161,6 +161,89 @@ def test_refund_entire_order_with_restock(admin_user):
     assert StockAdjustment.objects.filter(created_by=admin_user).exists()
 
 
+@pytest.mark.django_db
+def test_refund_errors(admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+    )
+    tax_rate = Decimal("0.1")
+    taxless_base_unit_price = shop.create_price(200)
+    order = create_order_with_product(product, supplier, 3, taxless_base_unit_price, tax_rate, shop=shop)
+    order.payment_status = PaymentStatus.DEFERRED
+    order.cache_prices()
+    order.save()
+
+    assert len(order.lines.all()) == 1
+    assert order.can_create_refund()
+    assert not order.has_refunds()
+
+    client = _get_client(admin_user)
+
+    refund_url = "/api/shuup/order/%s/create_refund/" % order.id
+    product_line = order.lines.first()
+
+    # error 1 - max refundable limit
+    data = {
+        "refund_lines": [{
+            "line": product_line.id,
+            "quantity": 1000,
+            "amount": 1,
+            "restock_products": False
+        }]
+    }
+    response = client.post(refund_url, data, format="json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "Refund exceeds quantity." in response.data
+
+    # error 2 - max amount
+    data = {
+        "refund_lines": [{
+            "line": product_line.id,
+            "quantity": 1,
+            "amount": 100000000,
+            "restock_products": False
+        }]
+    }
+    response = client.post(refund_url, data, format="json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "Refund exceeds amount." in response.data
+
+    # error 3 - invalid amount
+    data = {
+        "refund_lines": [{
+            "line": product_line.id,
+            "quantity": 1,
+            "amount": -10,
+            "restock_products": False
+        }]
+    }
+    response = client.post(refund_url, data, format="json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "Invalid refund amount." in response.data
+
+    # create partial refund
+    data = {
+        "refund_lines": [{
+            "line": product_line.id,
+            "quantity": 1,
+            "amount": 1,
+            "restock_products": False
+        }]
+    }
+    response = client.post(refund_url, data, format="json")
+    assert response.status_code == status.HTTP_201_CREATED
+
+    # error 4 - can't create full refund
+    data = {"restock_products": False}
+    response = client.post("/api/shuup/order/%s/create_full_refund/" % order.id, data, format="json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "It is not possible to create the refund." in response.data
+
+
 def _check_stock_counts(supplier, product, physical, logical):
     physical_count = supplier.get_stock_statuses([product.id])[product.id].physical_count
     logical_count = supplier.get_stock_statuses([product.id])[product.id].logical_count
