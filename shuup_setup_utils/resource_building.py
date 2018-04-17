@@ -75,7 +75,7 @@ class Builder(object):
 
     def build_dirs(self, directories):
         for (i, dir) in enumerate(directories, 1):
-            print("*** (%d/%d) Building: %s" % (i, len(directories), dir))
+            print("*** (%d/%d) Building: %s" % (i, len(directories), dir))  # noqa
             self.build(dir)
 
     def build(self, dir):
@@ -97,7 +97,7 @@ class Builder(object):
 
     def _save_to_cache(self, dir):
         cdir = self._get_cachedir_for(dir)
-        print("Saving build result of %s" % dir)
+        print("Saving build result of %s" % dir)  # noqa
         files = self._get_result_files(dir)
         self._copy_files(files, src=dir, dest=cdir, message="Caching to")
 
@@ -108,7 +108,7 @@ class Builder(object):
         return None
 
     def _update_from_cached_result(self, dir, cached_result):
-        print("Using cached result from %s" % cached_result)
+        print("Using cached result from %s" % cached_result)  # noqa
         files = self._get_result_files(dir)
         self._copy_files(files, src=cached_result, dest=dir,
                          message="Updating from cache")
@@ -118,7 +118,7 @@ class Builder(object):
             srcpath = os.path.join(src, filepath)
             destpath = os.path.join(dest, filepath)
             if message:
-                print('{}: {}'.format(message, destpath))
+                print('{}: {}'.format(message, destpath))  # noqa
             if os.path.exists(srcpath):
                 destdir = os.path.dirname(destpath)
                 if not os.path.isdir(destdir):
@@ -196,5 +196,5 @@ def remove_all_subdirs(root, subdir_name):
         if subdir_name in dirnames:
             dir_to_remove = os.path.join(dirpath, subdir_name)
             dirnames[:] = [dn for dn in dirnames if dn != subdir_name]
-            print('Removing directory %s' % dir_to_remove)
+            print('Removing directory %s' % dir_to_remove)  # noqa
             shutil.rmtree(dir_to_remove)

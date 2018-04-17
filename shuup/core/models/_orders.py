@@ -332,6 +332,15 @@ class Order(MoneyPropped, models.Model):
     phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'))
     email = models.EmailField(max_length=128, blank=True, verbose_name=_('email address'))
 
+    # Customer related information that might change after order, but is important
+    # for accounting and or reports later.
+    account_manager = models.ForeignKey(
+        "PersonContact", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('account manager'))
+    customer_groups = models.ManyToManyField(
+        "ContactGroup", related_name="customer_group_orders", verbose_name=_('customer groups'), blank=True)
+    tax_group = models.ForeignKey(
+        "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group'))
+
     # Status
     creator = UnsavedForeignKey(
         settings.AUTH_USER_MODEL, related_name='orders_created', blank=True, null=True,
@@ -458,6 +467,18 @@ class Order(MoneyPropped, models.Model):
                     setattr(self, field, val)
                     break
 
+        if not self.id and self.customer:
+            # These fields is used for reporting and should not
+            # change after create even if empty on moment of ordering.
+            self.account_manager = getattr(self.customer, "account_manager", None)
+            self.tax_group = self.customer.tax_group
+
+    def _cache_contact_values_post_create(self):
+        if self.customer:
+            # These fields is used for reporting and should not
+            # change after create even if empty on moment of ordering.
+            self.customer_groups = self.customer.groups.all()
+
     def _cache_values(self):
         self._cache_contact_values()
 
@@ -508,6 +529,8 @@ class Order(MoneyPropped, models.Model):
         super(Order, self).save(*args, **kwargs)
         if first_save:  # Have to do a double save the first time around to be able to save identifiers
             self._save_identifiers()
+            self._cache_contact_values_post_create()
+
         for line in self.lines.exclude(product_id=None):
             line.supplier.module.update_stock(line.product_id)
 

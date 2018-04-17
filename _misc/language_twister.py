@@ -62,7 +62,7 @@ def main():
     twist_set = rst.get_changes()
 
     for chg in twist_set.changes:
-        print(chg.get_description())
+        print(chg.get_description())  # noqa
 
     prj.do(twist_set)
 

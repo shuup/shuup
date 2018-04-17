@@ -11,6 +11,7 @@ from decimal import Decimal
 import pytest
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.db.models import ProtectedError
 from django.test import override_settings
 
 from shuup import configuration
@@ -24,7 +25,8 @@ from shuup.testing.factories import (
     create_package_product, create_product, create_random_company,
     create_random_person, create_random_user, get_address, get_default_product,
     get_default_shop, get_default_supplier, get_initial_order_status,
-    get_payment_method, get_shipping_method, get_shop
+    get_payment_method, get_shipping_method, get_shop, get_default_customer_group,
+    create_random_contact_group
 )
 from shuup.utils.models import get_data_dict
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
@@ -104,7 +106,13 @@ def test_order_creator(rf, admin_user):
     order = creator.create_order(source)
     assert get_data_dict(source.billing_address) == get_data_dict(order.billing_address)
     assert get_data_dict(source.shipping_address) == get_data_dict(order.shipping_address)
-    assert source.customer == order.customer
+    customer = source.customer
+    assert customer == order.customer
+    assert customer.groups.count() == 1
+    assert customer.groups.first() == order.customer_groups.first()
+    assert customer.tax_group is not None
+    assert customer.tax_group == order.tax_group
+
     assert source.payment_method == order.payment_method
     assert source.shipping_method == order.shipping_method
     assert order.pk
@@ -335,3 +343,88 @@ def test_order_creator_company_multishop():
         creator.create_order(source)
         company.refresh_from_db()
         assert shop in company.shops.all()
+
+
+@pytest.mark.django_db
+def test_order_customer_groups(rf, admin_user):
+    customer = create_random_person()
+    default_group = get_default_customer_group()
+    default_group.members.add(customer)
+    source = seed_source(admin_user)
+    source.customer=customer
+
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(10),
+    )
+    source.add_line(
+        type=OrderLineType.OTHER,
+        quantity=1,
+        base_unit_price=source.create_price(10),
+        require_verification=True,
+    )
+
+    creator = OrderCreator()
+    order = creator.create_order(source)
+    assert get_data_dict(source.billing_address) == get_data_dict(order.billing_address)
+    assert get_data_dict(source.shipping_address) == get_data_dict(order.shipping_address)
+    customer = source.customer
+    assert customer == order.customer
+    assert customer.groups.count() == 2
+    assert order.customer_groups.filter(id=default_group.id).exists()
+    with pytest.raises(ProtectedError):
+        default_group.delete()
+
+    assert customer.tax_group is not None
+    assert customer.tax_group == order.tax_group
+    with pytest.raises(ProtectedError):
+        customer.tax_group.delete()
+
+    new_group = create_random_contact_group()
+    new_group.members.add(customer)
+
+    order.phone = "911"
+    order.save()
+    assert order.customer_groups.filter(id=default_group.id).exists()
+    assert not order.customer_groups.filter(id=new_group.id).exists()
+
+
+@pytest.mark.django_db
+def test_order_creator_account_manager():
+    company = create_random_company()
+    shop = get_shop(identifier="random-shop", enabled=True)
+    source = seed_source(create_random_user(), shop)
+    source.customer = company
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(10),
+    )
+    creator = OrderCreator()
+    order = creator.create_order(source)
+    assert order.account_manager is None  # Company contact doesn't have account manager field
+
+    person = create_random_person()
+    person.account_manager = create_random_person()
+    person.save()
+
+    source = seed_source(create_random_user(), shop)
+    source.customer = person
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(10),
+    )
+    creator = OrderCreator()
+    order = creator.create_order(source)
+    assert order.account_manager is not None
+    assert order.account_manager == person.account_manager
+    with pytest.raises(ProtectedError):
+        person.account_manager.delete()

@@ -77,7 +77,10 @@ class ContactGroup(TranslatableShuupModel):
         )
 
     def can_delete(self):
-        return bool(self.identifier not in PROTECTED_CONTACT_GROUP_IDENTIFIERS)
+        return bool(
+            self.identifier not in PROTECTED_CONTACT_GROUP_IDENTIFIERS and
+            not self.customer_group_orders.count()
+        )
 
     def delete(self, *args, **kwargs):
         if not self.can_delete():
