@@ -32,6 +32,10 @@ class RefundExceedsAmountException(Exception):
     pass
 
 
+class RefundExceedsQuantityException(Exception):
+    pass
+
+
 class InvalidRefundAmountException(Exception):
     pass
 

@@ -30,7 +30,8 @@ from shuup.core import taxing
 from shuup.core.excs import (
     InvalidRefundAmountException, NoPaymentToCreateException,
     NoProductsToShipException, NoRefundToCreateException,
-    NoShippingAddressException, RefundExceedsAmountException
+    NoShippingAddressException, RefundExceedsAmountException,
+    RefundExceedsQuantityException
 )
 from shuup.core.fields import (
     CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
@@ -745,7 +746,7 @@ class Order(MoneyPropped, models.Model):
             )
         return refund_line
 
-    @atomic
+    @atomic    # noqa (C901) FIXME: simply this
     def create_refund(self, refund_data, created_by=None):
         """
         Create a refund if passed a list of refund line data.
@@ -772,6 +773,7 @@ class Order(MoneyPropped, models.Model):
         total_refund_amount = zero
         order_total = self.taxful_total_price.amount
         product_summary = self.get_product_summary()
+
         for refund in refund_data:
             index += 1
             amount = refund.get("amount", zero)
@@ -796,6 +798,11 @@ class Order(MoneyPropped, models.Model):
 
                 # If restocking products, calculate quantity of products to restock
                 product = parent_line.product
+
+                # ensure max refundable quantity is respected for products
+                if product and quantity > parent_line.max_refundable_quantity:
+                    raise RefundExceedsQuantityException
+
                 if (restock_products and quantity and product and (product.stock_behavior == StockBehavior.STOCKED)):
                     from shuup.core.suppliers.enums import StockAdjustmentType
                     # restock from the unshipped quantity first
