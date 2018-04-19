@@ -6,17 +6,33 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {addLine, deleteLine, retrieveProductData, setLineProperty, updateTotals, setQuickAddProduct, clearQuickAddProduct, setAutoAdd, addProduct} from "../actions";
-import {LINE_TYPES, selectBox, Select2, HelpPopover} from "./utils";
 import BrowseAPI from "BrowseAPI";
+import {
+    addLine,
+    deleteLine,
+    retrieveProductData,
+    setLineProperty,
+    updateTotals,
+    setQuickAddProduct,
+    clearQuickAddProduct,
+    setAutoAdd,
+    addProduct
+} from "../actions";
+import {
+    LINE_TYPES,
+    selectBox,
+    Select2,
+    HelpPopover
+} from "./utils";
+import ensureNumericValue from "../utils/numbers";
 
-function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
+function renderNumberCell(store, line, value, fieldId, canEditPrice, asInteger = false, min = null) {
     return m("input.form-control", {
             name: fieldId,
             type: "number",
             step: line.step,
-            min: min != null ? min : "",
-            value: value,
+            min: min !== null ? min : "",
+            value: ensureNumericValue(value, min, asInteger),
             disabled: !canEditPrice,
             onchange: function () {
                 store.dispatch(setLineProperty(line.id, fieldId, this.value));
@@ -45,9 +61,11 @@ export function renderOrderLines(store, shop, lines) {
                             filter: {"shop": shop.id},
                             onSelect: (obj) => {
                                 store.dispatch(setLineProperty(line.id, "product", obj));
-                                store.dispatch(retrieveProductData(
-                                    {id: obj.id, forLine: line.id, quantity: line.quantity}
-                                ));
+                                store.dispatch(retrieveProductData({
+                                    id: obj.id,
+                                    orLine: line.id,
+                                    quantity: line.quantity
+                                }));
                             }
                         });
                     }
@@ -72,16 +90,17 @@ export function renderOrderLines(store, shop, lines) {
                 }),
                 m.component(HelpPopover, {
                     title: gettext("Text/Comment"),
-                    content: gettext("Enter a comment or text note about the order. This could be anything from special order requests to special shipping needs.")
+                    content: gettext("Enter a comment or text note about the order. This could be anything " +
+                        "from special order requests to special shipping needs.")
                 })
             ];
         }
         const priceCells = [
             m("div.line-cell", [
                 m("label", gettext("Qty")),
-                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0),
+                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, true, 0),
                 m.component(HelpPopover, {
-                    title: "Quantity",
+                    title: gettext("Quantity"),
                     content: gettext("Enter the number of units of the product ordered.")
                 })
             ]),
@@ -89,25 +108,28 @@ export function renderOrderLines(store, shop, lines) {
                 m("label", gettext("Unit Price")),
                 renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice),
                 m.component(HelpPopover, {
-                    title: "Unit Price",
-                    content: gettext("Enter the regular base price for a single unit of the product. If an existing product is selected, the price is already determined in product settings. Total price will be automatically calculated.")
+                    title: gettext("Unit Price"),
+                    content: gettext("Enter the regular base price for a single unit of the product. If an " +
+                        "existing product is selected, the price is already determined in product settings. " +
+                        "Total price will be automatically calculated.")
                 })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Total Price")),
                 renderNumberCell(store, line, line.total, "total", canEditPrice),
                 m.component(HelpPopover, {
-                    title: "Total Price",
-                    content: gettext("Enter the total amount for the line item. Unit price will be automatically calculated.")
+                    title: gettext("Total Price"),
+                    content: gettext("Enter the total amount for the line item. Unit price will be " +
+                        "automatically calculated.")
                 })
             ])
         ];
         const productPriceCells = [
             m("div.line-cell", [
                 m("label", gettext("Qty")),
-                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0),
+                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, true, 0),
                 m.component(HelpPopover, {
-                    title: "Quantity",
+                    title: gettext("Quantity"),
                     content: gettext("Enter the number of units of the product ordered.")
                 })
             ]),
@@ -115,44 +137,49 @@ export function renderOrderLines(store, shop, lines) {
                 m("label", gettext("Base Unit Price")),
                 renderNumberCell(store, line, line.baseUnitPrice, "baseUnitPrice", false),
                 m.component(HelpPopover, {
-                    title: "Base Unit Price",
-                    content: gettext("Enter the regular base price for a single unit of the product. If an existing product is selected, the price is already determined in product settings.")
+                    title: gettext("Base Unit Price"),
+                    content: gettext("Enter the regular base price for a single unit of the product. " +
+                        "If an existing product is selected, the price is already determined in product settings.")
                 })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Discounted Unit Price")),
                 renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice),
                 m.component(HelpPopover, {
-                    title: "Discounted Unit Price",
-                    content: gettext("Enter the total discounted price for a single product unit in the order. Discount percent, Total Discount Amount, and Line Total will be automatically calculated.")
+                    title: gettext("Discounted Unit Price"),
+                    content: gettext("Enter the total discounted price for a single product unit in the order. " +
+                        "Discount percent, Total Discount Amount, and Line Total will be automatically calculated.")
                 })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Discount Percent")),
                 renderNumberCell(store, line, line.discountPercent, "discountPercent", canEditPrice),
                 m.component(HelpPopover, {
-                    title: "Discount Percent",
-                    content: gettext("Enter the discount percentage (%) for the line item. Discounted Unit Price, Total Discount Amount, and Line Total will be automatically.")
+                    title: gettext("Discount Percent"),
+                    content: gettext("Enter the discount percentage (%) for the line item. Discounted Unit " +
+                        "Price, Total Discount Amount, and Line Total will be automatically.")
                 })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Total Discount Amount")),
                 renderNumberCell(store, line, line.discountAmount, "discountAmount", canEditPrice),
                 m.component(HelpPopover, {
-                    title: "Total Discount Amount",
-                    content: gettext("Enter the total discount amount for the line item. Discounted Unit Price, Discount percent, and Line Total will be automatically calculated.")
+                    title: gettext("Total Discount Amount"),
+                    content: gettext("Enter the total discount amount for the line item. Discounted Unit Price, " +
+                        "Discount percent, and Line Total will be automatically calculated.")
                 })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Line Total")),
                 renderNumberCell(store, line, line.total, "total", canEditPrice),
                 m.component(HelpPopover, {
-                    title: "Line Total",
-                    content: gettext("Enter the total amount for the line item. Discounted Unit Price, Discount percent, and Total Discount Amount will be automatically calculated.")
+                    title: gettext("Line Total"),
+                    content: gettext("Enter the total amount for the line item. Discounted Unit Price, Discount " +
+                        "percent, and Total Discount Amount will be automatically calculated.")
                 })
             ])
         ];
-        if (line.type === "product" && line.product ){
+        if (line.type === "product" && line.product){
             editCell = m("div.line-cell.edit",
                 m("button.btn.btn-sm.text-info", {
                     onclick: function(e) {
@@ -197,7 +224,10 @@ var ProductQuickSelect = {
             attrs: {
                 placeholder: gettext("Search product by name, SKU, or barcode"),
                 ajax: {
-                    processResults: function (data) {
+                    processResults(data) {
+                        if (!data) {
+                            return {results: []};
+                        }
                         const {quickAdd} = store.getState();
                         const results = {
                             results: $.map(data.results, function (item) {

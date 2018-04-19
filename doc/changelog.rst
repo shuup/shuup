@@ -54,6 +54,7 @@ Core
 Admin
 ~~~~~
 
+- Improve admin order creator translations
 - Add option to filter variation parents for product select view
 - Fix home view help blocks filtering objects by the current shop
 - Fix bug: Filter category parent choices based on current shop
@@ -68,6 +69,7 @@ Admin
 Front
 ~~~~~
 
+- Add util for checking whether current user is admin
 - Limit reqular user login access to own specified shop only
 
 Campaigns

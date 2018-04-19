@@ -47,7 +47,7 @@
             {% if shuup.urls.has_url("shuup:personal_wishlists") %}
                 {{ _render_dropdown_item(url("shuup:personal_wishlists"), "fa fa-star fa-fw", _("My wishlists")) }}
             {% endif %}
-            {% if user.is_superuser %}
+            {% if shuup.general.is_shop_admin() %}
                 {{ _render_dropdown_item(url("shuup_admin:dashboard"), "fa fa-dashboard fa-fw", _("Admin panel")) }}
             {% endif %}
             {% if shuup.urls.has_url("shuup:logout") %}

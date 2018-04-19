@@ -19,6 +19,7 @@ from shuup.core.middleware import ExceptionMiddleware
 from shuup.core.models import Contact, get_company_contact, get_person_contact
 from shuup.core.shop_provider import get_shop
 from shuup.front.basket import get_basket
+from shuup.front.utils.user import is_admin_user
 
 __all__ = ["ProblemMiddleware", "ShuupFrontMiddleware"]
 
@@ -155,7 +156,7 @@ class ShuupFrontMiddleware(object):
         if resolver_match and resolver_match.app_name == "shuup_admin":
             return None
 
-        if request.shop.maintenance_mode and not getattr(request.user, 'is_superuser', False):
+        if request.shop.maintenance_mode and not is_admin_user(request):
             return HttpResponse(loader.render_to_string("shuup/front/maintenance.jinja", request=request), status=503)
 
 

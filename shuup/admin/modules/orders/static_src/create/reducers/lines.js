@@ -6,8 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {handleActions} from "redux-actions";
+import { handleActions } from "redux-actions";
 import _ from "lodash";
+import ensureNumericValue  from "../utils/numbers";
 
 function newLine() {
     return {
@@ -105,14 +106,6 @@ function updateLineFromProduct(state, {payload}) {
     return setLineProperties(state, id, updates);
 }
 
-function ensureNumericValue(value, defaultValue=0) {
-    value = parseFloat(value);
-    if (isNaN(value)) {
-        return defaultValue;
-    }
-    return value;
-}
-
 function setLineProperty(state, {payload}) {
     const {id, property, value} = payload;
     const line = _.detect(state, (sLine) => sLine.id === id);
@@ -145,7 +138,7 @@ function setLineProperty(state, {payload}) {
                 break;
             }
             case "quantity": {
-                const quantity = Math.max(0, ensureNumericValue(value, 1));
+                const quantity = Math.max(0, ensureNumericValue(value, 1, true));
                 updates = getDiscountsAndTotal(quantity, line.baseUnitPrice, line.unitPrice);
                 updates.quantity = quantity;
                 break;
@@ -201,7 +194,7 @@ function setLines(state, {payload}) {
             line,
             getFormattedStockCounts(line),
             getDiscountsAndTotal(
-                ensureNumericValue(line.quantity),
+                ensureNumericValue(line.quantity, 0, true),
                 ensureNumericValue(line.baseUnitPrice),
                 ensureNumericValue(line.unitPrice)
             )

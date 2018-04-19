@@ -8,11 +8,12 @@
 from django.http import HttpResponseRedirect
 
 from shuup import configuration
+from shuup.front.utils.user import is_admin_user
 
 
 def toggle_all_seeing(request):
     return_url = request.META["HTTP_REFERER"]
-    if not request.user.is_superuser:
+    if not is_admin_user(request):
         return HttpResponseRedirect(return_url)
     all_seeing_key = "is_all_seeing:%d" % request.user.pk
     is_all_seeing = not configuration.get(None, all_seeing_key, False)
