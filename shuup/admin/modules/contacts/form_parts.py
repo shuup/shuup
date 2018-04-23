@@ -28,7 +28,7 @@ class CompanyContactBaseFormPart(FormPart):
             CompanyContactBaseForm,
             template_name="shuup/admin/contacts/_edit_base_form.jinja",
             required=True,
-            kwargs={"instance": self.object if self.object.pk else None}
+            kwargs={"instance": self.object if self.object.pk else None, "request": self.request}
         )
 
     def form_valid(self, form):
