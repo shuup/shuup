@@ -5,10 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.contrib.auth.models import AnonymousUser
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.middleware.csrf import get_token
 
+from shuup.front.utils.user import is_admin_user
 from shuup.xtheme.resources import add_resource, InlineScriptResource
 
 EDIT_FLAG_NAME = "shuup_xtheme_edit"
@@ -23,9 +23,7 @@ def could_edit(request):
     :return: Would allow editing?
     :rtype: bool
     """
-    # TODO: Possibly other conditions?
-    user = getattr(request, "user", AnonymousUser())
-    return (getattr(user, 'is_superuser', False) or getattr(user, 'is_staff', False))
+    return is_admin_user(request)
 
 
 def is_edit_mode(request):

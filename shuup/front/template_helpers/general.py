@@ -19,6 +19,7 @@ from shuup.core.models import (
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils.product_statistics import get_best_selling_product_info
+from shuup.front.utils.user import is_admin_user
 from shuup.front.utils.views import cache_product_things
 from shuup.utils.translation import cache_translations_for_tree
 
@@ -312,3 +313,8 @@ def get_shop_language_choices(context):
         local_name = lang_info["name_local"]
         languages.append((code, name_in_current_lang, local_name))
     return languages
+
+
+@contextfunction
+def is_shop_admin(context):
+    return is_admin_user(context["request"])

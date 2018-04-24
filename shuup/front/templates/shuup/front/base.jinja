@@ -29,11 +29,11 @@
     {% else %}
         <link rel="stylesheet" href="{{ static("shuup/front/css/style.css") }}">
     {% endif %}
-    {% if user.is_superuser %}
+    {% if shuup.general.is_shop_admin() %}
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
     {% endif %}
 </head>
-<body {% if request.user and request.user.is_superuser %} class="admin-tools-visible" {% endif %}>
+<body {% if shuup.general.is_shop_admin() %} class="admin-tools-visible" {% endif %}>
     {{ macros.render_admin_tools() }}
     <nav class="main-nav">
         {{ render_navigation() }}
