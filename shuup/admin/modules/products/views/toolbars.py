@@ -106,20 +106,20 @@ class EditProductToolbar(Toolbar):
             yield DropdownItem(
                 text=_("Child: %s") % child,
                 icon="fa fa-eye",
-                url=get_model_url(child),
+                url=get_model_url(child, shop=self.request.shop),
             )
 
     def _get_parent_and_sibling_items(self, parent, siblings):
         yield DropdownItem(
             text=_("Parent: %s") % parent,
             icon="fa fa-eye",
-            url=get_model_url(parent),
+            url=get_model_url(parent, shop=self.request.shop),
         )
         for sib in siblings:
             yield DropdownItem(
                 text=_("Sibling: %s") % sib,
                 icon="fa fa-eye",
-                url=get_model_url(sib),
+                url=get_model_url(sib, shop=self.request.shop),
             )
 
     def _get_variation_menu_items(self, product):
