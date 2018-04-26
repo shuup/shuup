@@ -21,10 +21,10 @@ from shuup.core.models import (
     Currency, Order, OrderStatus, PaymentStatus, ShippingStatus
 )
 from shuup.testing.factories import (
-    create_default_order_statuses, create_empty_order,
-    create_order_with_product, create_product, create_random_person,
-    get_default_payment_method, get_default_shipping_method, get_default_shop,
-    get_default_supplier, get_default_tax
+    create_default_order_statuses, create_empty_order, create_product,
+    create_random_person, get_default_customer_group, get_default_payment_method,
+    get_default_shipping_method, get_default_shop, get_default_supplier,
+    get_default_tax,
 )
 from shuup_tests.utils import printable_gibberish
 
@@ -144,6 +144,12 @@ def test_create_order(admin_user, currency):
     sm = get_default_shipping_method()
     pm = get_default_payment_method()
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    default_group = get_default_customer_group()
+    default_group.members.add(contact)
+    account_manager = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    contact.account_manager = account_manager
+    contact.save()
+
     product = create_product(
         sku=printable_gibberish(),
         supplier=get_default_supplier(),
@@ -216,6 +222,14 @@ def test_create_order(admin_user, currency):
 
     assert order_data["available_payment_methods"][0]["id"] == pm.id
     assert order_data["available_shipping_methods"][0]["id"] == sm.id
+
+    assert order.account_manager == account_manager
+    assert order.customer_groups.count() == contact.groups.count()
+    for group in order.customer_groups.all():
+        assert contact.groups.filter(id=group.id).exists()
+
+    assert order.tax_group is not None
+    assert order.tax_group == contact.tax_group
 
 
 def test_create_without_a_contact(admin_user):

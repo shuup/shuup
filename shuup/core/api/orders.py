@@ -26,7 +26,7 @@ from shuup.core.api.address import AddressSerializer
 from shuup.core.api.mixins import AvailableOrderMethodsMixin
 from shuup.core.api.refunds import RefundMixin
 from shuup.core.models import (
-    Contact, Order, OrderLine, OrderStatus, OrderStatusRole, Payment, Shop
+    Order, OrderLine, OrderStatus, OrderStatusRole, Payment
 )
 from shuup.utils.money import Money
 
@@ -180,32 +180,41 @@ class OrderViewSet(PermissionHelperMixin,
         return _("Orders can be listed, fetched, created, updated and canceled.")
 
     def create(self, request, *args, **kwargs):
+        post_data = request.data
+
+        # Revise. We should not need to mutate the data for the serializer.
+        # Also one problem is that we use text lines later at the create
         text_lines = set()
-        for idx, line in enumerate(request.data.get("lines", [])):
+        for idx, line in enumerate(post_data.get("lines", [])):
             if "product" not in line:
                 line["product"] = None
             if line.get("type") == "text":
                 line["type"] = "other"
                 text_lines.add(idx)
+
         request.data["orderer"] = None
         request.data["modified_by"] = None
         request.data["creator"] = request.user.pk
-        if 'shipping_method' not in request.data:
-            request.data['shipping_method'] = None
-        if 'payment_method' not in request.data:
-            request.data['payment_method'] = None
-        serializer = self.get_serializer(data=request.data)
+
+        for attr in ["shipping_method", "payment_method", "account_manager", "tax_group"]:
+            if attr not in post_data:
+                post_data[attr] = None
+
+        if "customer_groups" not in post_data:
+            post_data["customer_groups"] = []
+
+        # Revise. Create should happen in the serializer, but then again
+        # we need to return the errors from JsonOrderCreator in some sane way.
+        serializer = self.get_serializer(data=post_data)
         serializer.is_valid(raise_exception=True)
-        shop = Shop.objects.get(pk=serializer.data["shop"])
-        if serializer.data.get('customer'):
-            customer = Contact.objects.get(pk=serializer.data["customer"])
-        else:
-            customer = None
+
+        shop = serializer.validated_data["shop"]
+        customer = serializer.validated_data["customer"]
         lines = [{
             "id": (idx + 1),
             "quantity": line["quantity"],
             "product": {
-                "id": line["product"]
+                "id": getattr(line["product"], "id", None)
             },
             "baseUnitPrice": line.get("base_unit_price_value"),
             "unitPrice": line.get("base_unit_price_value") if line["type"].label == "other" else None,
@@ -213,7 +222,7 @@ class OrderViewSet(PermissionHelperMixin,
             "sku": line.get("sku"),
             "text": line.get("text"),
             "type": force_text(line["type"].label) if idx not in text_lines else "text"
-        } for idx, line in enumerate(serializer.data["lines"])]
+        } for idx, line in enumerate(serializer.validated_data["lines"])]
 
         data = {
             "shop": {
@@ -225,17 +234,18 @@ class OrderViewSet(PermissionHelperMixin,
                 }
             },
             "methods": {
-                "shippingMethod": {"id": serializer.data["shipping_method"]},
-                "paymentMethod": {"id": serializer.data["payment_method"]},
+                "shippingMethod": {"id": getattr(serializer.validated_data["shipping_method"], "id", None)},
+                "paymentMethod": {"id": getattr(serializer.validated_data["payment_method"], "id", None)},
             },
             "lines": lines
         }
         if customer:
             data["customer"] = {
-                "id": serializer.data["customer"],
+                "id": serializer.validated_data["customer"].id,
                 "billingAddress": encode_address(customer.default_billing_address),
                 "shippingAddress": encode_address(customer.default_shipping_address),
             }
+
         joc = JsonOrderCreator()
         order = joc.create_order_from_state(data, creator=request.user)
         if not order:
@@ -246,6 +256,7 @@ class OrderViewSet(PermissionHelperMixin,
                     "code": err.code
                 } for err in joc.errors]
             }, status=400)
+
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 

@@ -40,10 +40,10 @@ class Setup(object):
         try:
             configure(setup)
         except:  # pragma: no cover
-            print("@" * 80)
+            print("@" * 80)  # noqa
             import traceback
             import sys
             traceback.print_exc()
-            print("@" * 80)
+            print("@" * 80)  # noqa
             sys.exit(1)
         return setup.values()

@@ -30,7 +30,8 @@ from shuup.core import taxing
 from shuup.core.excs import (
     InvalidRefundAmountException, NoPaymentToCreateException,
     NoProductsToShipException, NoRefundToCreateException,
-    NoShippingAddressException, RefundExceedsAmountException
+    NoShippingAddressException, RefundExceedsAmountException,
+    RefundExceedsQuantityException
 )
 from shuup.core.fields import (
     CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
@@ -332,6 +333,15 @@ class Order(MoneyPropped, models.Model):
     phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'))
     email = models.EmailField(max_length=128, blank=True, verbose_name=_('email address'))
 
+    # Customer related information that might change after order, but is important
+    # for accounting and or reports later.
+    account_manager = models.ForeignKey(
+        "PersonContact", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('account manager'))
+    customer_groups = models.ManyToManyField(
+        "ContactGroup", related_name="customer_group_orders", verbose_name=_('customer groups'), blank=True)
+    tax_group = models.ForeignKey(
+        "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group'))
+
     # Status
     creator = UnsavedForeignKey(
         settings.AUTH_USER_MODEL, related_name='orders_created', blank=True, null=True,
@@ -458,6 +468,18 @@ class Order(MoneyPropped, models.Model):
                     setattr(self, field, val)
                     break
 
+        if not self.id and self.customer:
+            # These fields is used for reporting and should not
+            # change after create even if empty on moment of ordering.
+            self.account_manager = getattr(self.customer, "account_manager", None)
+            self.tax_group = self.customer.tax_group
+
+    def _cache_contact_values_post_create(self):
+        if self.customer:
+            # These fields is used for reporting and should not
+            # change after create even if empty on moment of ordering.
+            self.customer_groups = self.customer.groups.all()
+
     def _cache_values(self):
         self._cache_contact_values()
 
@@ -508,6 +530,8 @@ class Order(MoneyPropped, models.Model):
         super(Order, self).save(*args, **kwargs)
         if first_save:  # Have to do a double save the first time around to be able to save identifiers
             self._save_identifiers()
+            self._cache_contact_values_post_create()
+
         for line in self.lines.exclude(product_id=None):
             line.supplier.module.update_stock(line.product_id)
 
@@ -722,7 +746,7 @@ class Order(MoneyPropped, models.Model):
             )
         return refund_line
 
-    @atomic
+    @atomic    # noqa (C901) FIXME: simply this
     def create_refund(self, refund_data, created_by=None):
         """
         Create a refund if passed a list of refund line data.
@@ -749,6 +773,7 @@ class Order(MoneyPropped, models.Model):
         total_refund_amount = zero
         order_total = self.taxful_total_price.amount
         product_summary = self.get_product_summary()
+
         for refund in refund_data:
             index += 1
             amount = refund.get("amount", zero)
@@ -773,6 +798,11 @@ class Order(MoneyPropped, models.Model):
 
                 # If restocking products, calculate quantity of products to restock
                 product = parent_line.product
+
+                # ensure max refundable quantity is respected for products
+                if product and quantity > parent_line.max_refundable_quantity:
+                    raise RefundExceedsQuantityException
+
                 if (restock_products and quantity and product and (product.stock_behavior == StockBehavior.STOCKED)):
                     from shuup.core.suppliers.enums import StockAdjustmentType
                     # restock from the unshipped quantity first

@@ -152,7 +152,7 @@
 {% endmacro %}
 
 {% macro render_admin_tools() %}
-    {% if request.user.is_superuser %}
+    {% if shuup.general.is_shop_admin() %}
     <nav class="navbar navbar-default navbar-admin-tools navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">

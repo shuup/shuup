@@ -96,9 +96,9 @@ def command(filenames, dirnames, fix):
     for filename in gather_files(dirnames, filenames):
         visitor = process_file(filename)
         if visitor.needs_fix():
-            print("%s: %s" % (filename, visitor.get_stats()))
+            print("%s: %s" % (filename, visitor.get_stats()))  # noqa
             if fix:
-                print("Fixing: %s" % filename)
+                print("Fixing: %s" % filename)  # noqa
                 fix_file(filename)
 
 

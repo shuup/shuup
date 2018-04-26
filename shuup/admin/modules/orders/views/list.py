@@ -7,9 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
     TextFilter
@@ -71,6 +73,14 @@ class OrderListView(PicotableListView):
         "shuup.admin.modules.orders.mass_actions:OrderDeliveryPdfAction",
     ]
 
+    def get_toolbar(self):
+        return Toolbar([
+            NewActionButton.for_model(
+                Order, url=reverse("shuup_admin:order.new")
+            ),
+            SettingsActionButton.for_model(Order, return_url="order")
+        ])
+
     def get_queryset(self):
         return super(OrderListView, self).get_queryset().exclude(deleted=True).filter(shop=self.request.shop)
 
@@ -82,6 +92,10 @@ class OrderListView(PicotableListView):
 
     def format_taxful_total_price(self, instance, *args, **kwargs):
         return escape(format_money(instance.taxful_total_price))
+
+    def label(self, instance, *args, **kwargs):
+        # format label to make it human readable
+        return instance.label.replace("_", " ").title()
 
     def get_object_abstract(self, instance, item):
         return [

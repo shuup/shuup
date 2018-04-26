@@ -63,19 +63,19 @@ def process_files(paths, adders, verbose, write):
     for path in sorted(paths):
         if os.stat(path).st_size == 0:
             if verbose:
-                print('[+]:%-*s: File is empty' % (width, path))
+                print('[+]:%-*s: File is empty' % (width, path))  # noqa
         elif not has_header(path):
             missing.add(path)
 
             if write:
                 adder = adders[os.path.splitext(path)[1]]
                 adder(path)
-                print('[!]:%-*s: Modified' % (width, path))
+                print('[!]:%-*s: Modified' % (width, path))  # noqa
             else:
-                print('[!]:%-*s: Requires license header' % (width, path))
+                print('[!]:%-*s: Requires license header' % (width, path))  # noqa
         else:
             if verbose:
-                print('[+]:%-*s: File has license header' % (width, path))
+                print('[+]:%-*s: File has license header' % (width, path))  # noqa
     return missing
 
 

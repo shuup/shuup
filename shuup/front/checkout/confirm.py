@@ -14,7 +14,6 @@ from django.views.generic import FormView
 
 from shuup.core.models import OrderStatus
 from shuup.front.basket import get_basket_order_creator
-from shuup.front.basket.objects import BaseBasket
 from shuup.front.checkout import CheckoutPhaseViewMixin
 
 
@@ -66,7 +65,6 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         context = super(ConfirmPhase, self).get_context_data(**kwargs)
         basket = self.basket
 
-        assert isinstance(basket, BaseBasket)
         basket.calculate_taxes()
         errors = list(basket.get_validation_errors())
         context["basket"] = basket
@@ -89,7 +87,6 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
 
     def create_order(self):
         basket = self.basket
-        assert isinstance(basket, BaseBasket)
         assert basket.shop == self.request.shop
         basket.orderer = self.request.person
         basket.customer = self.request.customer

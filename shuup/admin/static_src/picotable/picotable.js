@@ -153,6 +153,7 @@ const Picotable = (function(m, storage) {
         "RANGE_FROM": gettext("From"),
         "RANGE_TO": gettext("To"),
         "ITEMS_PER_PAGE": gettext("Items per page"),
+        "PAGE": gettext("Page"),
         "RESET_FILTERS": gettext("Reset filters"),
         "RESET": gettext("Reset"),
         "SORT_BY": gettext("Sort by"),
@@ -271,10 +272,10 @@ const Picotable = (function(m, storage) {
         };
         var attrs = {"type": col.filter.range.type || "text"};
         var useDatepicker = false;
-        if(attrs["type"] == "date") {
+        if(attrs.type === "date") {
             // use a normal text input since mixing a date input and the datepicker together works weird in chrome
             useDatepicker = true;
-            attrs["type"] = "text";
+            attrs.type = "text";
         }
         Util.map(["min", "max", "step"], function(key) {
             var val = col.filter.range[key];
@@ -360,10 +361,10 @@ const Picotable = (function(m, storage) {
         var columnSettings = {key: col.id, className: cx(classSet), onclick: columnOnClick};
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
         if (massActions.length) {
-            if (columnNumber == 0) {
+            if (columnNumber === 0) {
                 columnSettings.className += " hidden";
             }
-            if (columnNumber == 1) {
+            if (columnNumber === 1) {
                 columnSettings.colspan = 2;
             }
         }
@@ -378,10 +379,10 @@ const Picotable = (function(m, storage) {
         var columnSettings = {key: col.id, className: col.className || ""};
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
         if (massActions.length) {
-            if (columnNumber == 0) {
+            if (columnNumber === 0) {
                 columnSettings.className += " hidden";
             }
-            if (columnNumber == 1) {
+            if (columnNumber === 1) {
                 columnSettings.colspan = 2;
             }
         }
@@ -422,7 +423,7 @@ const Picotable = (function(m, storage) {
 
         // Build body
         var isPick = !!ctrl.vm.pickId();
-        var rows = Util.map(data.items, function(item, rowNumber) {
+        var rows = Util.map(data.items, function(item) {
             var rowSettings = {key: "item-" + item._id};
             if (massActions.length) {
                 rowSettings.onclick = (function() {
@@ -431,8 +432,9 @@ const Picotable = (function(m, storage) {
                 rowSettings.class = ctrl.isChecked(item) ? "active" : "";
             }
             return m("tr", rowSettings, Util.map(data.columns, function(col, idx) {
-                if (idx == 0 && massActions.length) {
-                    var content = m("input[type=checkbox]", {
+                var content;
+                if (idx === 0 && massActions.length) {
+                    content = m("input[type=checkbox]", {
                         value: item.type + "-" + item._id,
                         class: "row-selection",
                         onclick: Util.boundPartial(ctrl, ctrl.saveCheck, item),
@@ -440,9 +442,11 @@ const Picotable = (function(m, storage) {
                     });
                 }
                 else {
-                    var content = item[col.id] || "";
+                    content = item[col.id] || "";
                 }
-                if (col.raw) content = m.trust(content);
+                if (col.raw) {
+                    content = m.trust(content);
+                }
                 if (col.linked) {
                     if (isPick) {
                         content = m("a", {
@@ -457,8 +461,8 @@ const Picotable = (function(m, storage) {
             }));
         });
         var tbody = m("tbody", rows);
-        var mass_actions_class = massActions.length ? ".has-mass-actions" : "";
-        return m("table.table.table-striped.picotable-table" + mass_actions_class, [thead, tfoot, tbody]);
+        var massActionsClass = massActions.length ? ".has-mass-actions" : "";
+        return m("table.table.table-striped.picotable-table" + massActionsClass, [thead, tfoot, tbody]);
     }
 
     function preventSelect(event) {
@@ -606,7 +610,7 @@ const Picotable = (function(m, storage) {
     function renderMassActions(ctrl) {
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
         var isPick = !!ctrl.vm.pickId();
-        if (massActions == null || isPick) {
+        if (massActions === null || isPick) {
             return "";
         }
         var select2Config = function() {
@@ -657,7 +661,6 @@ const Picotable = (function(m, storage) {
         return m("div.picotable-header", [
             renderMassActions(ctrl),
             m("div.picotable-items-per-page-ctr", [
-                m("label", {"for": "pipps" + ctrl.id}, lang.ITEMS_PER_PAGE),
                 m("select.picotable-items-per-page-select.form-control",
                     {
                         id: "pipps" + ctrl.id,
@@ -668,7 +671,7 @@ const Picotable = (function(m, storage) {
                         })
                     },
                     Util.map(ctrl.vm.perPageChoices(), function(value) {
-                        return m("option", {value: value}, value);
+                        return m("option", { value: value }, `${value} / ${lang.PAGE}`);
                     })
                 )
             ]),
@@ -784,16 +787,16 @@ const Picotable = (function(m, storage) {
         ctrl.getMassActionResponse = function(xhr) {
             if (xhr.status === 200) {
                 var filename = "";
-                var disposition = xhr.getResponseHeader('Content-Disposition');
-                if (disposition && disposition.indexOf('attachment') !== -1) {
+                var disposition = xhr.getResponseHeader("Content-Disposition");
+                if (disposition && disposition.indexOf("attachment") !== -1) {
                     var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
                     var matches = filenameRegex.exec(disposition);
-                    if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                    if (matches !== null && matches[1]) filename = matches[1].replace(/['"]/g, "");
                 }
-                var type = xhr.getResponseHeader('Content-Type');
+                var type = xhr.getResponseHeader("Content-Type");
 
                 var blob = new Blob([xhr.response], { type: type });
-                if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                if (typeof window.navigator.msSaveBlob !== "undefined") {
                     // IE workaround for "HTML7007: One or more blob URLs
                     // were revoked by closing the blob for which they were
                     // created. These URLs will no longer resolve as the data
@@ -808,7 +811,7 @@ const Picotable = (function(m, storage) {
                         // use HTML5 a[download] attribute to specify filename
                         var a = document.createElement("a");
                         // safari doesn't support this yet
-                        if (typeof a.download === 'undefined') {
+                        if (typeof a.download === "undefined") {
                             window.location = downloadUrl;
                         } else {
                             a.href = downloadUrl;
@@ -855,11 +858,11 @@ const Picotable = (function(m, storage) {
 
             var originalValues = ctrl.vm.checkboxes();
             window.savedValue = value;
-            if (originalValues.length == 0) {
+            if (originalValues.length === 0) {
                 alert(gettext("You haven't selected anything"));
                 return;
             }
-            if(value == 0) {
+            if(value === 0) {
                 return;
             }
 
@@ -871,7 +874,7 @@ const Picotable = (function(m, storage) {
 
             var xhrConfig = function(xhr) {
                 xhr.setRequestHeader("X-CSRFToken", window.ShuupAdminConfig.csrf);
-                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.setRequestHeader("Content-type", "application/json");
                 xhr.responseType = "blob";
             };
             var payload = {
@@ -1000,7 +1003,9 @@ const Picotable = (function(m, storage) {
     return generator;
 }(window.m, window.localStorage));
 /* eslint-disable */
-if (typeof module !== "undefined" && module !== null && module.exports) module.exports = Picotable;
+if (typeof module !== "undefined" && module !== null && module.exports) {
+    module.exports = Picotable;
+}
 else if (typeof define === "function" && define.amd) define(function() {
     return Picotable;
 });

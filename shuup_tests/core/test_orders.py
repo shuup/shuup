@@ -15,7 +15,8 @@ from django.utils.timezone import now
 
 from shuup.core.excs import (
     InvalidRefundAmountException, NoPaymentToCreateException,
-    NoProductsToShipException, RefundExceedsAmountException
+    NoProductsToShipException, RefundExceedsAmountException,
+    RefundExceedsQuantityException
 )
 from shuup.core.models import (
     AnonymousContact, Order, OrderLine, OrderLineTax, OrderLineType,
@@ -626,6 +627,49 @@ def test_refunds_rounding_multiple_partial_refund():
     order.create_refund([{"line": line, "quantity": 1, "amount": Money("29.27", order.currency)}])
     assert line.max_refundable_amount == Money("0", order.currency)
     assert order.taxful_total_price == order.shop.create_price(0)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("restock", [True, False])
+def test_partial_refund_limits(restock):
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+    # Start out with a supplier with quantity of 10 of a product
+    supplier.adjust_stock(product.id, 10)
+    check_stock_counts(supplier, product, physical=10, logical=10)
+
+    quantity = 2
+    order = create_order_with_product(product, supplier, quantity, 200, shop=shop)
+    order.cache_prices()
+    check_stock_counts(supplier, product, physical=10, logical=8)
+
+    # try creating more partial refunds than possible
+    product_line = order.lines.first()
+
+    def create_refund():
+        order.create_refund([
+            {"line": product_line, "quantity": 1, "amount": Money(1, order.currency), "restock_products": restock}])
+
+    # create more refunds than available
+    for index in range(quantity + 1):
+        if index == quantity:
+            with pytest.raises(RefundExceedsQuantityException):
+                create_refund()
+        else:
+            create_refund()
+
+    if restock:
+        check_stock_counts(supplier, product, physical=10, logical=10)
+    else:
+        check_stock_counts(supplier, product, physical=10, logical=8)
+
+    assert product_line.refunded_quantity == 2
 
 
 @pytest.mark.django_db

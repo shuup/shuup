@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
         for i, entry in enumerate(filters):
             update_matching_catalog_filters(entry)
-            print("Recaching filter %d / %d..." % (i + 1, entry_count))
+            print("Recaching filter %d / %d..." % (i + 1, entry_count))  # noqa
 
     def resave_campaigns(self):
         campaigns = list(chain(
@@ -46,4 +46,4 @@ class Command(BaseCommand):
 
         for i, entry in enumerate(campaigns):
             entry.save()
-            print("Recaching campaign %d / %d..." % (i + 1, entry_count))
+            print("Recaching campaign %d / %d..." % (i + 1, entry_count))  # noqa

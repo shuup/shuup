@@ -23,7 +23,7 @@
                             {{ info_row(_("Order Number"), order.identifier) }}
                             {{ info_row(_("Order Date"), order.order_date|datetime) }}
                             {{ info_row(_("Reference"), order.reference_number) }}
-                            {{ info_row(_("Label"), order.label) }}
+                            {{ info_row(_("Label"), order.label.replace("_", " ").title()) }}
                             {{ contact_row(_("Customer"), order.customer) }}
                             {{ contact_row(_("Ordered by"), order.orderer) }}
                             {{ info_row(_("Creator"), order.creator, creator_url) }}

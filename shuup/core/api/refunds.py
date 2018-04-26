@@ -8,11 +8,15 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import serializers, status
+from rest_framework import exceptions, serializers, status
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from shuup.api.fields import FormattedDecimalField
+from shuup.core.excs import (
+    InvalidRefundAmountException, NoRefundToCreateException,
+    RefundExceedsAmountException, RefundExceedsQuantityException
+)
 from shuup.core.models import OrderLine, OrderLineType
 
 
@@ -57,7 +61,15 @@ class RefundMixin(object):
                 "restock_products": refund_line_data["restock_products"]
             })
 
-        order.create_refund(refund_data, created_by=request.user)
+        try:
+            order.create_refund(refund_data, created_by=request.user)
+        except InvalidRefundAmountException:
+            raise exceptions.ValidationError(_("Invalid refund amount."))
+        except RefundExceedsAmountException:
+            raise exceptions.ValidationError(_("Refund exceeds amount."))
+        except RefundExceedsQuantityException:
+            raise exceptions.ValidationError(_("Refund exceeds quantity."))
+
         return Response({'success': _("Refund created.")}, status=status.HTTP_201_CREATED)
 
     @detail_route(methods=['post'])
@@ -72,5 +84,10 @@ class RefundMixin(object):
         serializer.is_valid(raise_exception=True)
 
         data = serializer.validated_data
-        order.create_full_refund(restock_products=data["restock_products"], created_by=request.user)
+
+        try:
+            order.create_full_refund(restock_products=data["restock_products"], created_by=request.user)
+        except NoRefundToCreateException:
+            raise exceptions.ValidationError(_("It is not possible to create the refund."))
+
         return Response({"success": _("Refund created.")}, status=status.HTTP_201_CREATED)
