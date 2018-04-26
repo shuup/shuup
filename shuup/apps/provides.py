@@ -61,6 +61,10 @@ def _get_provide_specs_from_apps(category):
     :return: List of spec strings.
     :rtype: list[str]
     """
+    provides_black_list = getattr(settings, "SHUUP_PROVIDES_BACKLIST", {})
+    if not isinstance(provides_black_list, dict):
+        raise ImproperlyConfigured("The setting `SHUUP_PROVIDES_BACKLIST` MUST be a dictionary.")
+
     if category not in _provide_specs:  # (Re)load required?
         provide_list = []
         for app_config in apps.get_app_configs():
@@ -73,8 +77,10 @@ def _get_provide_specs_from_apps(category):
                 # Not to worry! We can fix it. We have the technology!
                 spec_list = (spec_list,)
 
+            blacklisted_provides = provides_black_list.get(category, [])
+
             for spec in spec_list:  # Insert in order without duplicates...
-                if spec not in provide_list:
+                if spec not in provide_list and spec not in blacklisted_provides:
                     provide_list.append(spec)
         _provide_specs[category] = provide_list
     return _provide_specs[category]

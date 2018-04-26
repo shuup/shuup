@@ -52,6 +52,29 @@ def test_provides():
     assert empty_iterable(get_identifier_to_spec_map(category))
 
 
+def test_blacklist_provides():
+    with override_settings(
+        INSTALLED_APPS=["shuup_tests.core"],
+        SHUUP_PROVIDES_BACKLIST={
+            "module_test_module": [
+                "shuup_tests.core.module_test_module:ModuleTestModule"
+            ]
+        }
+    ):
+        from shuup.apps.provides import clear_provides_cache
+        clear_provides_cache()
+        provides = [module.__name__ for module in list(get_provide_objects("module_test_module"))]
+        assert "AnotherModuleTestModule" in provides
+        assert "ModuleTestModule" not in provides
+
+    # invalid object
+    with override_settings(SHUUP_PROVIDES_BACKLIST=["invalid"]):
+        from shuup.apps.provides import clear_provides_cache
+        clear_provides_cache()
+        with pytest.raises(ImproperlyConfigured):
+            list(get_provide_objects("module_test_module"))
+
+
 def test_load_module():
     with override_settings(
         INSTALLED_APPS=["shuup_tests.core"],

@@ -39,6 +39,27 @@ the keys and lists of loading specs as values for new provides to be discovered.
           an ``identifier`` field. Refer to the implementation guides for particular
           functionalities for details.
 
+
+Blacklisting Provides
+---------------------
+
+Shuup also supports blacklisting unwanted provides. This is useful when one want to disable
+some features like shipping and payment methods provided by a single app. This way,
+it is easy to select which provides should be loaded by Shuup.
+To blacklist provides, you need to set a special Django setting named `SHUUP_PROVIDES_BACKLIST`:
+
+.. code-block:: python
+
+   SHUUP_PROVIDES_BACKLIST = {
+        'service_provider_admin_form': [
+            'pigeon.admin_forms:PigeonShippingAdminForm'
+        ]
+    }
+
+This will prevent the spec `pigeon.admin_forms:PigeonShippingAdminForm` from category
+`service_provider_admin_form` of being loaded.
+
+
 Using Provides
 --------------
 
