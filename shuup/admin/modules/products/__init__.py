@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from collections import Counter
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.db.models.signals import m2m_changed, post_save
@@ -168,6 +169,11 @@ class ProductModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         if isinstance(object, Product):
+            if not shop:
+                try:
+                    shop = object.shop_products.first().shop
+                except ObjectDoesNotExist:
+                    return None
             object = object.get_shop_instance(shop)
         return derive_model_url(ShopProduct, "shuup_admin:shop_product", object, kind)
 

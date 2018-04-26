@@ -25,18 +25,32 @@ class PackageChildForm(forms.Form):
     def __init__(self, **kwargs):
         initial = kwargs.get("initial", {})
         self.product = initial.get("child")
-        if self.product:
-            self.shop_products = []
+        self.shop_products = []
+        super(PackageChildForm, self).__init__(**kwargs)
+
+    def get_shop_products(self, user):
+        if not user or not self.product:
+            return ShopProduct.objects.none()
+        else:
+            shop_products = []
             shop_queryset = Shop.objects.all()
-            if getattr(self.request.user, "is_superuser", False):
-                shop_queryset = shop_queryset.filter(staff_members=self.request.user)
+            if not user.is_superuser:
+                shop_queryset = shop_queryset.filter(staff_members=user)
             for shop in shop_queryset:
                 try:
                     shop_product = self.product.get_shop_instance(shop)
                     self.shop_products.append(shop_product)
                 except ShopProduct.DoesNotExist:
                     continue
-        super(PackageChildForm, self).__init__(**kwargs)
+            return shop_products
+
+    def get_stock_statuses(self, user=None):
+        shop_products = self.get_shop_products(user)
+        return get_stock_statuses(self.product, shop_products)
+
+    def get_orderability_errors(self, user=None):
+        shop_products = self.get_shop_products(user)
+        return get_orderability_errors(self.product, shop_products)
 
     child = forms.ModelChoiceField(
         queryset=Product.objects.all(),
@@ -51,41 +65,43 @@ class PackageChildForm(forms.Form):
         required=True,
     )
 
-    def get_stock_statuses(self):
-        stocks = {}
-        if not self.product:
-            return stocks
-        sales_unit = self.product.sales_unit
-        sales_decimals = sales_unit.decimals if sales_unit else 0
-        sales_unit_symbol = sales_unit.symbol if sales_unit else ""
-        for shop_product in self.shop_products:
-            for supplier in shop_product.suppliers.all():
-                if supplier in stocks.keys():
-                    continue
-                stock_status = supplier.get_stock_status(product_id=self.product.id)
-                stocks[supplier] = (supplier, stock_status, sales_decimals, sales_unit_symbol)
-        return stocks
 
-    def get_orderability_errors(self):
-        orderability_errors = []
-        if not self.product:
-            return orderability_errors
-        for shop_product in self.shop_products:
-            orderability_errors.extend(
-                ["%s: %s" % (shop_product.shop.name, msg.message)
-                 for msg in shop_product.get_orderability_errors(
-                    supplier=None,
-                    quantity=shop_product.minimum_purchase_quantity,
-                    customer=None)]
-            )
-            for supplier in shop_product.suppliers.all():
-                orderability_errors.extend(
-                    ["%s: %s" % (supplier.name, msg.message)
-                     for msg in supplier.get_orderability_errors(
-                        shop_product=shop_product,
-                        quantity=shop_product.minimum_purchase_quantity,
-                        customer=None)])
+def get_stock_statuses(product, shop_products):
+    stocks = {}
+    if not product:
+        return stocks
+    sales_unit = product.sales_unit
+    sales_decimals = sales_unit.decimals if sales_unit else 0
+    sales_unit_symbol = sales_unit.symbol if sales_unit else ""
+    for shop_product in shop_products:
+        for supplier in shop_product.suppliers.all():
+            if supplier in stocks.keys():
+                continue
+            stock_status = supplier.get_stock_status(product_id=product.id)
+            stocks[supplier] = (supplier, stock_status, sales_decimals, sales_unit_symbol)
+    return stocks
+
+
+def get_orderability_errors(product, shop_products):
+    orderability_errors = []
+    if not product:
         return orderability_errors
+    for shop_product in shop_products:
+        orderability_errors.extend(
+            ["%s: %s" % (shop_product.shop.name, msg.message)
+             for msg in shop_product.get_orderability_errors(
+                supplier=None,
+                quantity=shop_product.minimum_purchase_quantity,
+                customer=None)]
+        )
+        for supplier in shop_product.suppliers.all():
+            orderability_errors.extend(
+                ["%s: %s" % (supplier.name, msg.message)
+                 for msg in supplier.get_orderability_errors(
+                    shop_product=shop_product,
+                    quantity=shop_product.minimum_purchase_quantity,
+                    customer=None)])
+    return orderability_errors
 
 
 class PackageChildFormSet(ProductChildBaseFormSet):
