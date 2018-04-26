@@ -111,43 +111,39 @@
 {% macro address_phase_extrajs() %}
     <script type="text/javascript">
         $(function(){
-            function activateCheckoutAddressCopy() {
-                var shouldCopyFields = false;
-
-                function toggleFieldDisability($field) {
-                    $field.toggleClass("disabled", shouldCopyFields);
-                }
-
-                function toggleCopyFields() {
-                    shouldCopyFields = $("#same_as_billing").is(":checked");
-                    $("#shipping :input").each(function() {
-                        $(this).attr("readonly", shouldCopyFields);
-                        toggleFieldDisability($(this));
-                    });
-
-                    $("#id_shipping-country").attr("readonly", shouldCopyFields);
-
-                    $target = $("#id_shipping-country");
-                    toggleFieldDisability($target);
-                    if(shouldCopyFields) {
-                        $("#billing :input").change();
-                    }
-                }
-
-                function copyFieldValue() {
-                    if(!shouldCopyFields)
-                        return;
+            function copyBillingFieldsValue() {
+                $("#billing :input").each(function() {
                     var targetName = $(this).attr("id").split("-")[1];
-                    var $target = $("#id_shipping-"+targetName);
+                    var $target = $("#id_shipping-" + targetName);
                     $target.val($(this).val());
-                }
-
-                $("#id_shipping-country").attr("readonly", true);
-                toggleCopyFields();
-                $(document).on("input change", "#billing :input", copyFieldValue);
-                $("#same_as_billing").on("change", toggleCopyFields);
+                    $target.trigger("change");
+                });
             }
-            activateCheckoutAddressCopy();
+
+            function toggleShippingFields(enabled) {
+                $("#shipping :input").each(function() {
+                    $(this).attr("readonly", !enabled);
+                    $(this).toggleClass("disabled", !enabled);
+                });
+            }
+
+            $("#same_as_billing").on("change", function() {
+                var shouldCopyFields = $("#same_as_billing").is(":checked");
+                if (shouldCopyFields) {
+                    copyBillingFieldsValue();
+                    toggleShippingFields(false);
+                } else {
+                    toggleShippingFields(true);
+                }
+            });
+
+            $(document).on("input change", "#billing :input", function() {
+                var shouldCopyFields = $("#same_as_billing").is(":checked");
+                if (shouldCopyFields) {
+                    copyBillingFieldsValue();
+                    toggleShippingFields(false);
+                }
+            });
 
             $("#id_saved_billing-addresses").on("change", function(){
                 var saved_addr_id = $(this).val();
