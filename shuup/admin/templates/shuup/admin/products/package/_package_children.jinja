@@ -20,7 +20,8 @@
                     {% if child_form.DELETE and child_form.initial.child %}{{ bs3.field(child_form.DELETE) }}{% endif %}
                 </div>
             </div>
-            {% for supplier, stock_status, sales_decimals, sales_unit in child_form.get_stock_statuses().values() %}
+            {% set stocks = child_form.get_stock_statuses(request.user) %}
+            {% for supplier, stock_status, sales_decimals, sales_unit in stocks.values() %}
                 <strong>{{ supplier.name }}:</strong>
                 <span>
                 {% trans logical_count=stock_status.logical_count|floatformat(sales_decimals), sales_unit=sales_unit -%}
@@ -33,7 +34,7 @@
                 {%- endtrans %}
                 </span>
             {% endfor %}
-            {% for error in child_form.get_orderability_errors() %}
+            {% for error in child_form.get_orderability_errors(request.user) %}
                 <p><small class="text-danger">{{ error }}</small></p>
             {% endfor %}
         </div>
