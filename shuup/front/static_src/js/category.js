@@ -69,6 +69,9 @@ function getFilterString(state) {
 function reloadProducts(filterString) {
     const $cont = $("#ajax_content");
     const $prods = $(".products-wrap");
+    if (!$prods.length) {
+        return;
+    }
     const $adminMenu = $("#admin-tools-menu");
     const adminMenuHeight = ($adminMenu.length > 0) ? $adminMenu.height() : 0;
     const top = ($prods.length > 0) ? $prods.offset().top : $cont.offset().top;
