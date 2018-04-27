@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Provides: add setting to blacklist undesired provides
 - Refund: check the max refundable items when doing partial refunds
 - Add customer related fields account manager, tax group and customer
   groups to order for sales reporting.
