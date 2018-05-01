@@ -58,6 +58,7 @@ def create_multilanguage_page(languages=("fi", "en", "ja", "de"), **kwargs):
         page.title = "%s, %s" % (base_title, get_language_name(lang))
         page.url = "%s-%s" % (base_url, lang)
         page.content = "Super interesting content in %s" % get_language_name(lang)
+        page.full_clean()
         page.save()
         assert page._parler_meta.root_model.objects.filter(
             master_id=page.pk, language_code=lang, url="%s-%s" % (base_url, lang)

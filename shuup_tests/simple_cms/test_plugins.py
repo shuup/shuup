@@ -8,7 +8,7 @@ import pytest
 
 from shuup.simple_cms.plugins import PageLinksPlugin
 from shuup_tests.front.fixtures import get_jinja_context
-
+from shuup.testing.factories import get_default_shop
 from .utils import create_page
 
 
@@ -20,8 +20,8 @@ def test_page_links_plugin_hide_expired(show_all_pages):
     configuration
     """
     context = get_jinja_context()
-    page = create_page(eternal=True, visible_in_menu=True)
-    another_page = create_page(eternal=True, visible_in_menu=True)
+    page = create_page(eternal=True, visible_in_menu=True, shop=get_default_shop())
+    another_page = create_page(eternal=True, visible_in_menu=True, shop=get_default_shop())
     plugin = PageLinksPlugin({"pages": [page.pk, another_page.pk], "show_all_pages": show_all_pages})
     assert page in plugin.get_context_data(context)["pages"]
 
@@ -42,7 +42,7 @@ def test_page_links_plugin_show_all():
     Test that show_all_pages forces plugin to return all visible pages
     """
     context = get_jinja_context()
-    page = create_page(eternal=True, visible_in_menu=True)
+    page = create_page(eternal=True, visible_in_menu=True, shop=get_default_shop())
     plugin = PageLinksPlugin({"show_all_pages": False})
     assert not plugin.get_context_data(context)["pages"]
 
@@ -56,7 +56,7 @@ def test_plugin_renders_absolute_links():
     Test that the plugin renders only absolute links.
     """
     context = get_jinja_context()
-    page = create_page(eternal=True, visible_in_menu=True)
+    page = create_page(eternal=True, visible_in_menu=True, shop=get_default_shop())
     absolute_link = "/%s" % page.url
     plugin = PageLinksPlugin({"show_all_pages": True})
     assert absolute_link in plugin.render(context)
