@@ -220,7 +220,10 @@ class ContentWizardForm(forms.Form):
         Returns a dict[str, simple_cms.models.Page] of all installed pages by this form
         """
         from shuup.simple_cms.models import Page
-        return {page.identifier: page for page in Page.objects.filter(identifier__in=content_data.CMS_PAGES.keys())}
+        return {
+            page.identifier: page
+            for page in Page.objects.for_shop(self.shop).filter(identifier__in=content_data.CMS_PAGES.keys())
+        }
 
     def save(self):
         """
@@ -262,6 +265,7 @@ class ContentWizardForm(forms.Form):
                 rendered_content = template_loader.render_to_string(template, context).strip()
 
                 Page.objects.create(
+                    shop=self.shop,
                     identifier=page_identifier,
                     title=content_data.CMS_PAGES[page_identifier]["name"],
                     content=rendered_content,

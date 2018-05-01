@@ -117,7 +117,8 @@ class EditorView(TemplateView):
             return
         kwargs = {
             "layout_cell": self.current_cell,
-            "theme": self.view_config.theme
+            "theme": self.view_config.theme,
+            "request": self.request
         }
         if self.request.method == "POST":
             kwargs["data"] = self.request.POST

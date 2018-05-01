@@ -11,6 +11,7 @@ from django.forms import DateTimeField
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.widgets import TextEditorWidget
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.simple_cms.models import Page
@@ -40,6 +41,7 @@ class PageForm(MultiLanguageModelForm):
         }
 
     def __init__(self, **kwargs):
+        self.request = kwargs.pop("request")
         kwargs.setdefault("required_languages", ())  # No required languages here
         super(PageForm, self).__init__(**kwargs)
 
@@ -94,6 +96,11 @@ class PageForm(MultiLanguageModelForm):
         else:
             return parent
 
+    def save(self, commit=True):
+        if not hasattr(self.instance, "shop") or not self.instance.shop:
+            self.instance.shop = get_shop(self.request)
+        return super(PageForm, self).save(commit)
+
     def is_url_valid(self, language_code, field_name, url):
         """
         Ensure URL given is unique.
@@ -109,7 +116,8 @@ class PageForm(MultiLanguageModelForm):
         * URL (other than owned by existing page) exists
         * URL exists in other languages of existing page
         """
-        qs = self._get_translation_model().objects.filter(url=url)
+        pages_ids = Page.objects.for_shop(get_shop(self.request)).values_list("id", flat=True)
+        qs = self._get_translation_model().objects.filter(url=url, master_id__in=pages_ids)
         if not self.instance.pk:
             if qs.exists():
                 return False
@@ -136,12 +144,20 @@ class PageEditView(CreateOrUpdateView):
     context_object_name = "page"
     add_form_errors_as_messages = True
 
+    def get_form_kwargs(self):
+        kwargs = super(PageEditView, self).get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
     def save_form(self, form):
         self.object = form.save()
         if not self.object.created_by:
             self.object.created_by = self.request.user
         self.object.modified_by = self.request.user
         self.object.save()
+
+    def get_queryset(self):
+        return super(PageEditView, self).get_queryset().for_shop(get_shop(self.request))
 
 
 class PageListView(PicotableListView):
@@ -164,3 +180,6 @@ class PageListView(PicotableListView):
             {"title": _(u"Available from"), "text": item.get("available_from")},
             {"title": _(u"Available to"), "text": item.get("available_to")} if instance.available_to else None
         ]
+
+    def get_queryset(self):
+        return super(PageListView, self).get_queryset().for_shop(get_shop(self.request))

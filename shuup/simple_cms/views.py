@@ -49,5 +49,5 @@ class PageView(DetailView):
     def get_queryset(self):
         if getattr(self.request.user, 'is_superuser', False):
             # Superusers may see all pages despite their visibility status
-            return self.model.objects.all()
-        return self.model.objects.visible()
+            return self.model.objects.for_shop(self.request.shop)
+        return self.model.objects.visible(self.request.shop)
