@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import force_text, python_2_unicode_compatible
@@ -20,7 +21,7 @@ from shuup.core.fields import InternalIdentifierField
 
 
 class PageQuerySet(TranslatableQuerySet):
-    def visible(self, dt=None):
+    def visible(self, shop, dt=None):
         """
         Get pages that should be publicly visible.
 
@@ -34,12 +35,16 @@ class PageQuerySet(TranslatableQuerySet):
         if not dt:
             dt = now()
         q = Q(available_from__lte=dt) & (Q(available_to__gte=dt) | Q(available_to__isnull=True))
-        qs = self.filter(q)
+        qs = self.for_shop(shop).filter(q)
         return qs
+
+    def for_shop(self, shop):
+        return self.filter(shop=shop)
 
 
 @python_2_unicode_compatible
 class Page(MPTTModel, TranslatableModel):
+    shop = models.ForeignKey("shuup.Shop", verbose_name=_('shop'))
     available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available from'), help_text=_(
         "Set an available from date to restrict the page to be available only after a certain date and time. "
         "This is useful for pages describing sales campaigns or other time-sensitive pages."
@@ -62,7 +67,7 @@ class Page(MPTTModel, TranslatableModel):
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_('modified on'))
 
     identifier = InternalIdentifierField(
-        unique=True,
+        unique=False,
         help_text=_('This identifier can be used in templates to create URLs'),
         editable=True
     )
@@ -84,7 +89,6 @@ class Page(MPTTModel, TranslatableModel):
         )),
         url=models.CharField(
             max_length=100, verbose_name=_('URL'),
-            unique=True,
             default=None,
             blank=True,
             null=True,
@@ -104,6 +108,18 @@ class Page(MPTTModel, TranslatableModel):
         ordering = ('-id',)
         verbose_name = _('page')
         verbose_name_plural = _('pages')
+        unique_together = ("shop", "identifier")
+
+    def clean(self):
+        url = getattr(self, "url", None)
+        if url:
+            page_translation = self._meta.model._parler_meta.root_model
+            shop_pages = Page.objects.for_shop(self.shop).values_list("id", flat=True)
+            url_checker = page_translation.objects.filter(url=url, master_id__in=shop_pages)
+            if self.pk:
+                url_checker = url_checker.exclude(master_id=self.pk)
+            if url_checker.exists():
+                raise ValidationError(_("URL already exists."), code="invalid_url")
 
     def is_visible(self, dt=None):
         if not dt:
