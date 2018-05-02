@@ -51,12 +51,12 @@ class ClassicGrayTheme(Theme):
         import shuup.front.themes.views as views
         return getattr(views, view_name, None)
 
-    def _format_cms_links(self, **query_kwargs):
+    def _format_cms_links(self, shop, **query_kwargs):
         if "shuup.simple_cms" not in django.conf.settings.INSTALLED_APPS:
             return
         from shuup.simple_cms.models import Page
-        for page in Page.objects.visible().filter(**query_kwargs):
+        for page in Page.objects.visible(shop).filter(**query_kwargs):
             yield {"url": "/%s" % page.url, "text": force_text(page)}
 
-    def get_cms_navigation_links(self):
-        return self._format_cms_links(visible_in_menu=True)
+    def get_cms_navigation_links(self, request):
+        return self._format_cms_links(shop=request.shop, visible_in_menu=True)

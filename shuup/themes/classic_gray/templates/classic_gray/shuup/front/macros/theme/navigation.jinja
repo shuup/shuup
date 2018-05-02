@@ -9,7 +9,7 @@
             {% set products_url = url('shuup:xtheme_extra_view', view='products') %}
             <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
             {% if shuup.simple_cms %}
-                {% for link in xtheme.get_cms_navigation_links() %}
+                {% for link in xtheme.get_cms_navigation_links(request) %}
                     <li{% if request.path == "%s/" % link.url %} class="current"{% endif %}><a href="{{ link.url }}">{{ link.text }}</a></li>
                 {% endfor %}
             {% endif %}

@@ -90,6 +90,11 @@ Notify
 
 - Add multi-shop support in notify scripts.
 
+Simple CMS
+~~~~~~~~~~
+
+- Add shop attribute in `Page` model to work in multishop environments
+
 Shuup 1.5.0
 -----------
 

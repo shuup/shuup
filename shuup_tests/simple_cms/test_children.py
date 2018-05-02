@@ -25,14 +25,15 @@ def check_children_content(request, page, children_content, children_visibility)
 
 @pytest.mark.django_db
 def test_visible_children(rf):
-    get_default_shop()
+    shop = get_default_shop()
     request = apply_request_middleware(rf.get("/"))
     assert request.user.is_anonymous()
 
     parent_content = "Parent content"
-    page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content)
+    page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content, shop=shop)
     children_content = "Children content"
-    create_page(available_from=datetime.date(2000, 1, 1), content=children_content, parent=page)  # Visible child
+    # Visible child
+    create_page(available_from=datetime.date(2000, 1, 1), content=children_content, parent=page, shop=shop)
 
     assert page.list_children_on_page == False
     check_children_content(request, page, children_content, False)
@@ -44,13 +45,13 @@ def test_visible_children(rf):
 
 @pytest.mark.django_db
 def test_invisible_children(rf):
-    get_default_shop()
+    shop = get_default_shop()
     request = apply_request_middleware(rf.get("/"))
 
     parent_content = "Parent content"
-    page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content)
+    page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content, shop=shop)
     children_content = "Children content"
-    create_page(content=children_content, parent=page)  # Create invisible children
+    create_page(content=children_content, parent=page, shop=shop)  # Create invisible children
 
     assert page.list_children_on_page == False
     check_children_content(request, page, children_content, False)

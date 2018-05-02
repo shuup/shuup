@@ -14,22 +14,23 @@ from shuup.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
 from shuup.xtheme.views.forms import (
     LayoutCellFormGroup, LayoutCellGeneralInfoForm
 )
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.xtheme.utils import plugin_override
 
 
 @pytest.mark.django_db
-def test_pluginless_lcfg():
+def test_pluginless_lcfg(rf):
     with plugin_override():
         with override_current_theme_class(None):
             theme = get_current_theme(get_default_shop())
             cell = LayoutCell(theme, None)
             assert not cell.instantiate_plugin()
-            lcfg = LayoutCellFormGroup(layout_cell=cell, theme=theme)
+            lcfg = LayoutCellFormGroup(layout_cell=cell, theme=theme, request=apply_request_middleware(rf.get("/")))
             assert "plugin" not in lcfg.forms
 
 
 @pytest.mark.django_db
-def test_formless_plugin_in_lcfg():
+def test_formless_plugin_in_lcfg(rf):
     two_thirds = int(LayoutCellGeneralInfoForm.CELL_FULL_WIDTH * 2 / 3)
     with plugin_override():
         with override_current_theme_class(None):
@@ -37,7 +38,15 @@ def test_formless_plugin_in_lcfg():
 
             cell = LayoutCell(theme, "inject")
             assert cell.instantiate_plugin()
-            lcfg = LayoutCellFormGroup(data={"general-cell_width": "%d" % two_thirds, "general-cell_align": "pull-right"}, layout_cell=cell, theme=theme)
+            lcfg = LayoutCellFormGroup(
+                data={
+                    "general-cell_width": "%d" % two_thirds,
+                    "general-cell_align": "pull-right"
+                },
+                layout_cell=cell,
+                theme=theme,
+                request=apply_request_middleware(rf.get("/"))
+            )
 
             assert "plugin" not in lcfg.forms
             assert lcfg.is_valid()
@@ -46,22 +55,27 @@ def test_formless_plugin_in_lcfg():
 
 
 @pytest.mark.django_db
-def test_lcfg():
+def test_lcfg(rf):
     two_thirds = int(LayoutCellGeneralInfoForm.CELL_FULL_WIDTH * 2 / 3)
     with plugin_override():
         with override_current_theme_class(None):
             theme = get_current_theme(get_default_shop())
 
             cell = LayoutCell(theme, "text", sizes={"md": two_thirds, "sm": two_thirds})
-            lcfg = LayoutCellFormGroup(layout_cell=cell, theme=theme)
+            lcfg = LayoutCellFormGroup(layout_cell=cell, theme=theme, request=apply_request_middleware(rf.get("/")))
             assert "general" in lcfg.forms
             assert "plugin" in lcfg.forms
             assert not lcfg.is_valid()  # Oh, we must've forgotten the text...
-            lcfg = LayoutCellFormGroup(data={
-                "general-cell_width": "%d" % two_thirds,
-                "general-cell_align": " ",
-                "plugin-text_*": "Hello, world!"
-            }, layout_cell=cell, theme=theme)
+            lcfg = LayoutCellFormGroup(
+                data={
+                    "general-cell_width": "%d" % two_thirds,
+                    "general-cell_align": " ",
+                    "plugin-text_*": "Hello, world!"
+                },
+                layout_cell=cell,
+                theme=theme,
+                request=apply_request_middleware(rf.get("/"))
+            )
             assert lcfg.is_valid()  # Let's see now!
             lcfg.save()
             assert cell.sizes["md"] == two_thirds

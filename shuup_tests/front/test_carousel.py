@@ -13,13 +13,17 @@ from filer.models import Image
 
 from shuup.front.apps.carousel.models import Carousel, LinkTargetType, Slide
 from shuup.front.apps.carousel.plugins import BannerBoxPlugin, CarouselPlugin
-from shuup.testing.factories import get_default_category, get_default_product
+from shuup.testing.factories import (
+    get_default_category, get_default_product, get_default_shop
+)
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_jinja_context
 from shuup_tests.simple_cms.utils import create_page
 
 
+
 @pytest.mark.django_db
-def test_carousel_plugin_form():
+def test_carousel_plugin_form(rf):
     test_carousel = Carousel.objects.create(name="test")
     plugin = CarouselPlugin(config={})
     form_class = plugin.get_editor_form_class()
@@ -44,7 +48,11 @@ def test_carousel_plugin_form():
     ]
 
     for data, expected in checks:
-        form = form_class(data=data, plugin=plugin)
+        form = form_class(
+            data=data,
+            plugin=plugin,
+            request=apply_request_middleware(rf.get("/"))
+        )
         assert form.is_valid()
         assert form.get_config() == expected
 
@@ -125,7 +133,7 @@ def test_slide_links():
     assert test_slide.get_link_url().startswith("/c/")  # Close enough...
 
     # Test CMS page url and link priorities
-    attrs = {"url": "test"}
+    attrs = {"url": "test", "shop": get_default_shop()}
     test_page = create_page(**attrs)
     test_slide.cms_page_link = test_page
     test_slide.save()

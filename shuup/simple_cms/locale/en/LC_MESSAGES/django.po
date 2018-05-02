@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08 00:27+0000\n"
+"POT-Creation-Date: 2018-05-01 20:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -66,6 +66,9 @@ msgid "Date created"
 msgstr ""
 
 msgid "Page"
+msgstr ""
+
+msgid "shop"
 msgstr ""
 
 msgid "available from"
@@ -180,4 +183,8 @@ msgid "Extras"
 msgstr ""
 
 msgid "Home"
+msgstr ""
+
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
 msgstr ""

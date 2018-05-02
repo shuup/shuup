@@ -22,6 +22,7 @@ class PluginForm(forms.Form):
 
     def __init__(self, **kwargs):
         self.plugin = kwargs.pop("plugin")
+        self.request = kwargs.pop("request")
         super(PluginForm, self).__init__(**kwargs)
         self.populate()
         self.set_defaults()

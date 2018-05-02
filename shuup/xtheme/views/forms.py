@@ -81,6 +81,7 @@ class LayoutCellFormGroup(FormGroup):
     def __init__(self, **kwargs):
         self.layout_cell = kwargs.pop("layout_cell")
         self.theme = kwargs.pop("theme")
+        self.request = kwargs.pop("request")
         assert isinstance(self.layout_cell, LayoutCell)
         super(LayoutCellFormGroup, self).__init__(**kwargs)
         self.add_form_def("general", LayoutCellGeneralInfoForm, kwargs={
@@ -91,7 +92,11 @@ class LayoutCellFormGroup(FormGroup):
         if plugin:
             form_class = plugin.get_editor_form_class()
             if form_class:
-                self.add_form_def("plugin", form_class, kwargs={"plugin": plugin})
+                kwargs = dict(
+                    plugin=plugin,
+                    request=self.request
+                )
+                self.add_form_def("plugin", form_class, kwargs=kwargs)
 
     def save(self):
         self.forms["general"].save()

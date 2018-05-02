@@ -11,14 +11,15 @@ from django.utils.timezone import now
 
 from shuup.simple_cms.models import Page
 from shuup_tests.simple_cms.utils import create_page
+from shuup.testing.factories import get_default_shop
 
 
 @pytest.mark.django_db
 def test_none_dates_page_not_visible():
     # create page that is not anymore visible
-    page = create_page()
+    page = create_page(shop=get_default_shop())
 
-    assert not Page.objects.visible().filter(pk=page.pk).exists()
+    assert not Page.objects.visible(get_default_shop()).filter(pk=page.pk).exists()
     assert not page.is_visible()
 
 
@@ -28,8 +29,9 @@ def test_past_page_not_visible():
     page = create_page(
         available_from=(today - datetime.timedelta(days=2)),
         available_to=(today - datetime.timedelta(days=1)),
+        shop=get_default_shop()
     )
-    assert not Page.objects.visible().filter(pk=page.pk).exists()
+    assert not Page.objects.visible(get_default_shop()).filter(pk=page.pk).exists()
     assert not page.is_visible()
 
 
@@ -39,24 +41,25 @@ def test_future_page_not_visible():
     page = create_page(
         available_from=(today + datetime.timedelta(days=1)),
         available_to=(today + datetime.timedelta(days=2)),
+        shop=get_default_shop()
     )
-    assert not Page.objects.visible().filter(pk=page.pk).exists()
+    assert not Page.objects.visible(get_default_shop()).filter(pk=page.pk).exists()
     assert not page.is_visible()
 
 
 @pytest.mark.django_db
 def test_current_page_is_visible():
     today = now()
-    page = create_page(available_from=today, available_to=today)
+    page = create_page(available_from=today, available_to=today, shop=get_default_shop())
 
-    assert Page.objects.visible(today).filter(pk=page.pk).exists()
+    assert Page.objects.visible(get_default_shop(), today).filter(pk=page.pk).exists()
     assert page.is_visible(today)
 
 
 @pytest.mark.django_db
 def test_page_without_visibility_end_is_visible():
     today = now()
-    page = create_page(available_from=today, available_to=None)
+    page = create_page(available_from=today, available_to=None, shop=get_default_shop())
 
-    assert Page.objects.visible(today).filter(pk=page.pk).exists()
+    assert Page.objects.visible(get_default_shop(), today).filter(pk=page.pk).exists()
     assert page.is_visible(today)

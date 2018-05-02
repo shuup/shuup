@@ -4,7 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.exceptions import ObjectDoesNotExist
+from jinja2.utils import contextfunction
 
 from shuup.simple_cms.models import Page
 
@@ -12,11 +12,10 @@ from shuup.simple_cms.models import Page
 class SimpleCMSTemplateHelpers(object):
     name = "simple_cms"
 
-    def get_page_by_identifier(self, identifier):
-        try:
-            return Page.objects.get(identifier=identifier)
-        except ObjectDoesNotExist:
-            return None
+    @contextfunction
+    def get_page_by_identifier(self, context, identifier):
+        return Page.objects.for_shop(context["request"].shop).filter(identifier=identifier).first()
 
-    def get_visible_pages(self):
-        return Page.objects.visible()
+    @contextfunction
+    def get_visible_pages(self, context):
+        return Page.objects.visible(context["request"].shop)
