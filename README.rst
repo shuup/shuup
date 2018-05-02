@@ -56,7 +56,7 @@ Contributing to Shuup
 ---------------------
 
 Interested in contributing to Shuup? Please see our `Contribution Guide
-<https://www.shuup.com/en/shuup/contribution-guide/>`__.
+<https://www.shuup.com/contributions/>`__.
 
 Documentation
 -------------
