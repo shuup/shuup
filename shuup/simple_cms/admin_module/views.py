@@ -44,6 +44,7 @@ class PageForm(MultiLanguageModelForm):
         self.request = kwargs.pop("request")
         kwargs.setdefault("required_languages", ())  # No required languages here
         super(PageForm, self).__init__(**kwargs)
+        self.fields["parent"].queryset = Page.objects.filter(shop=get_shop(self.request))
 
     def clean(self):
         """
