@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.core.exceptions import FieldDoesNotExist
+from django.db import models
 from django.db.models import Q
 from django.http import JsonResponse
 from django.utils.encoding import force_text
@@ -18,7 +19,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
 from shuup.core.models import (
-    Carrier, Contact, Product, ProductMode, ShopProduct
+    Carrier, Contact, Product, ProductMode, Shop, ShopProductVisibility
 )
 
 
@@ -104,10 +105,11 @@ class MultiselectAjaxView(TemplateView):
             ])
 
         if search_mode and search_mode == "sellable_mode_only" and issubclass(cls, Product):
-            qs = qs.exclude(mode__in=[
-                ProductMode.SIMPLE_VARIATION_PARENT,
-                ProductMode.VARIABLE_VARIATION_PARENT,
-            ])
+            qs = qs.exclude(
+                Q(mode__in=[ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT]) |
+                Q(deleted=True) |
+                Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)
+            ).filter(shop_products__purchasable=True)
 
         sales_units = request.GET.get("salesUnits")
         if sales_units and issubclass(cls, Product):
@@ -123,12 +125,18 @@ class MultiselectAjaxView(TemplateView):
             qs = cls.objects.get_for_user(self.request.user)
         if issubclass(cls, Product):
             qs = qs.filter(shop_products__shop=shop)
-        if issubclass(cls, ShopProduct):
-            qs = qs.filter(shop=shop)
-        if hasattr(cls.objects, "shop"):
-            qs = qs.filter(shop=shop)
-        if hasattr(cls.objects, "shops"):
-            qs = qs.filter(shops__in=[shop])
+
+        # Get all relation fields and check whether this models has
+        # relation to Shop mode, if so, filter by the current shop
+        related_fields = [models.OneToOneField, models.ForeignKey, models.ManyToManyField]
+        shop_related_fields = [
+            field
+            for field in cls._meta.get_fields()
+            if type(field) in related_fields and field.related_model == Shop
+        ]
+        for shop_field in shop_related_fields:
+            qs = qs.filter(**{shop_field.name: shop})
+
         return qs
 
     def get(self, request, *args, **kwargs):

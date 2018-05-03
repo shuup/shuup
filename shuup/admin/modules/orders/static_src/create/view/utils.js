@@ -122,7 +122,7 @@ export const Select2 = {
             if(typeof jQuery !== "undefined" && typeof jQuery.fn.select2 !== "undefined") {
                 const $el = $(element);
                 if (!isInitialized) {
-                    activateSelect($el, ctrl.model, ctrl.attrs).on("change", () => {
+                    activateSelect($el, ctrl.model, ctrl.searchMode, ctrl.attrs).on("change", () => {
                         // note: data is only populated when an element is actually clicked or enter is pressed
                         const data = $el.select2("data");
                         ctrl.onchange(data);

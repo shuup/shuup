@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import TextEditorWidget
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.forms import filter_form_field_choices
 from shuup.core.models import (
     Category, CategoryStatus, Product, ShopProduct, ShopProductVisibility
@@ -49,9 +50,10 @@ class CategoryBaseForm(ShuupAdminForm):
         filter_form_field_choices(self.fields["status"], (CategoryStatus.DELETED.value,), invert=True)
 
         # Exclude current category from parents, because it cannot be its own child anyways
+        category_queryset = Category.objects.filter(shops=get_shop(request)).exclude(status=CategoryStatus.DELETED)
+        self.fields["parent"].queryset = category_queryset
         self.fields["parent"].choices = [(None, "----")] + [
-            (shop.pk, shop.name) for shop in Category.objects.filter(
-                shops=request.shop).exclude(id=kwargs["instance"].pk)
+            (category.pk, category.name) for category in category_queryset.exclude(id=kwargs["instance"].pk)
         ]
 
     def clean_parent(self):

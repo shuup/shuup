@@ -10,16 +10,6 @@ import {compose, createStore, applyMiddleware} from "redux";
 import {autoRehydrate} from "redux-persist";
 import reducer from "./reducers";
 
-const logger = ({ getState }) => (next) => (action) => {
-    // h/t redux-logger :)
-    const console = window.console;
-    next(action);
-    if (console !== undefined) {
-        console.log("%c Action", "color: #995EEA", action);  // eslint-disable-line no-console
-        console.log("%c State", "color: #995EEA", getState());  // eslint-disable-line no-console
-    }
-};
-
 const thunk = function ({ dispatch, getState }) {
     // h/t redux-thunk :)
     return next => action =>
@@ -28,7 +18,7 @@ const thunk = function ({ dispatch, getState }) {
             next(action);
 };
 
-const createLoggedStore = compose(autoRehydrate(), applyMiddleware(thunk, logger))(createStore);
+const createLoggedStore = compose(autoRehydrate(), applyMiddleware(thunk))(createStore);
 const store = createLoggedStore(reducer);
 
 export default store;
