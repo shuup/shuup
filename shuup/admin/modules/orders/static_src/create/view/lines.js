@@ -221,6 +221,7 @@ var ProductQuickSelect = {
         return m.component(Select2, {
             name: "product-quick-select",
             model: "shuup.product",
+            searchMode: "sellable_mode_only",
             attrs: {
                 placeholder: gettext("Search product by name, SKU, or barcode"),
                 ajax: {
