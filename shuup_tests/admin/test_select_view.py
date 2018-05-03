@@ -14,11 +14,12 @@ from django.utils.translation import activate, get_language
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.core.models import (
     Category, CompanyContact, PersonContact, Product, ProductMode,
-    SalesUnit
+    SalesUnit, ShopProduct, ShopProductVisibility
 )
 from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
+
 
 
 def _get_search_results(rf, view, model_name, search_str, user, search_mode=None, sales_units=None):
@@ -151,6 +152,21 @@ def test_multi_select_with_sellable_only_products(rf, admin_user):
     assert len(results) == Product.objects.count() - 1  # Still only the parent is excluded
     assert Product.objects.count() == 4 * 3 + 2
 
+    # hide all shop products
+    ShopProduct.objects.all().update(visibility=ShopProductVisibility.NOT_VISIBLE)
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    assert len(results) == 0
+
+    # show them again
+    ShopProduct.objects.all().update(visibility=ShopProductVisibility.ALWAYS_VISIBLE)
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    assert len(results) == Product.objects.count() - 1
+
+    # delete all products
+    [product.soft_delete() for product in Product.objects.all()]
+    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    assert len(results) == 0
+
 
 @pytest.mark.django_db
 def test_multi_select_with_product_sales_unit(rf, admin_user):
@@ -195,7 +211,12 @@ def test_ajax_select_view_with_contacts(rf, contact_cls, admin_user):
     results = _get_search_results(rf, view, model_name, "some str", admin_user)
     assert len(results) == 0
 
+    # customer doesn't belong to shop
     customer = contact_cls.objects.create(name="Michael Jackson", email="michael@example.com")
+    results = _get_search_results(rf, view, model_name, "michael", admin_user)
+    assert len(results) == 0
+
+    customer.shops.add(shop)
     results = _get_search_results(rf, view, model_name, "michael", admin_user)
     assert len(results) == 1
     assert results[0].get("id") == customer.id
@@ -259,9 +280,14 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
 
     contact = PersonContact.objects.create(first_name="Joe", last_name="Somebody")
 
+    # contact not in shop
     results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
+    assert len(results) == 0
 
+    contact.shops.add(shop)
+    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
     assert len(results) == 1
+
     assert results[0].get("id") == contact.id
     assert results[0].get("name") == contact.name
 
