@@ -84,7 +84,7 @@ class CompanyEditView(DashboardViewMixin, FormView):
     template_name = "shuup/customer_information/edit_company.jinja"
 
     def dispatch(self, request, *args, **kwargs):
-        if not configuration.get(None, "allow_company_registration"):
+        if not configuration.get(request.shop, "allow_company_registration"):
             return HttpResponseNotFound()
         return super(CompanyEditView, self).dispatch(request, *args, **kwargs)
 
