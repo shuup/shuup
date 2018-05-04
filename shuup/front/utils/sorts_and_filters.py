@@ -12,6 +12,10 @@ import six
 from django import forms
 from django.conf import settings
 from django.db.models import Q
+from django.forms import (
+    ChoiceField, ModelChoiceField, ModelMultipleChoiceField,
+    MultipleChoiceField
+)
 
 from shuup import configuration
 from shuup.apps.provides import get_provide_objects
@@ -177,8 +181,16 @@ class ProductListForm(forms.Form):
         super(ProductListForm, self).__init__(*args, **kwargs)
         for extend_obj in _get_active_modifiers(shop, category):
             for field_key, field in extend_obj.get_fields(request, category) or []:
+                is_choice_field = isinstance(field, (
+                    ModelMultipleChoiceField, ModelChoiceField, ChoiceField, MultipleChoiceField
+                ))
+                has_choices = (is_choice_field and len(field.choices))
+
                 if field_key not in self.fields:
-                    self.fields[field_key] = field
+                    if is_choice_field and has_choices:
+                        self.fields[field_key] = field
+                    elif not is_choice_field:
+                        self.fields[field_key] = field
 
             for field_key, choices in extend_obj.get_choices_for_fields() or []:
                 if field_key in self.fields:
