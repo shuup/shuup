@@ -646,11 +646,17 @@ const Picotable = (function(m, storage) {
                     })
                 },
                 Util.map(massActions, function(obj) {
-                    return m("option", {
-                        value: obj.key,
-                        "data-redirects": obj.redirects,
-                        "data-redirect-url": obj.redirect_url
-                    }, obj.value);
+                    const defaultKeys = ["key", "value"];
+                    const data = {
+                        value: obj.key
+                    };
+                    Object.keys(obj).forEach((key) => {
+                        if (!defaultKeys.includes(defaultKeys)) {
+                            const dataKey = key.replace("_", "-");
+                            data["data-" + dataKey] = obj[key];
+                        }
+                    });
+                    return m("option", data, obj.value);
                 })
             ),
         ]);
@@ -881,13 +887,19 @@ const Picotable = (function(m, storage) {
                 "action": value,
                 "values": (ctrl.vm.allItemsSelected() ? "all" : originalValues)
             };
-            m.request({
-                method: "POST",
-                url: window.location.pathname,
-                data: payload,
-                extract:ctrl.getMassActionResponse,
-                config: xhrConfig
-            });
+
+            const callback = $("option[value="+value+"]").data("callback");
+            if (callback && window[callback]) {
+                window[callback](payload.values);
+            } else {
+                m.request({
+                    method: "POST",
+                    url: window.location.pathname,
+                    data: payload,
+                    extract:ctrl.getMassActionResponse,
+                    config: xhrConfig
+                });
+            }
         };
         ctrl.selectAllListedProducts = function() {
             ctrl.vm.allItemsSelected(false);

@@ -547,13 +547,17 @@ class PicotableViewMixin(object):
         actions = []
         for action in self.mass_actions:
             obj = load(action)()
-            redirects = isinstance(obj, PicotableRedirectMassAction)
-            actions.append({
+            action_data = {}
+            extra_data = obj.get_action_info(self.request)
+
+            if extra_data and isinstance(extra_data, dict):
+                action_data.update(extra_data)
+
+            action_data.update({
                 "key": obj.identifier,
-                "value": obj.label,
-                "redirects": redirects,
-                "redirect_url": obj.redirect_url if redirects else None
+                "value": obj.label
             })
+            actions.append(action_data)
         return actions
 
 
@@ -582,6 +586,15 @@ class PicotableMassAction(object):
         :return: None
         """
         pass
+
+    def get_action_info(self, request):
+        """
+        Returns a dict with additional action data to be rendered
+        in html action option element as data-xxx attribute.
+        :param request: `WSGIRequest`
+        :return dict: dictionary with extra info to be rendered in option element
+        """
+        return {}
 
 
 class PicotableFileMassAction(PicotableMassAction):
@@ -633,3 +646,30 @@ class PicotableRedirectMassAction(PicotableMassAction):
     def process(self, request, ids):
         request.session["mass_action_ids"] = ids
         return HttpResponse("ok")
+
+    def get_action_info(self, request):
+        if self.redirect_url:
+            return {
+                "redirects": True,
+                "redirect_url": self.redirect_url
+            }
+
+        return {}
+
+
+class PicotableJavascriptMassAction(PicotableMassAction):
+    """
+    Javascript Mass Action
+
+    This view saves invokes a pre-defined javascript function
+    with the list of object ids.
+
+    Set the function call in `callback`, e.g. `deleteProducts`.
+    The mass action will then invoce the callback as `deleteProducts(ids)`
+    """
+    callback = None
+
+    def get_action_info(self, request):
+        return {
+            "callback": self.callback
+        }
