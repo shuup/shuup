@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-12 23:34+0000\n"
+"POT-Creation-Date: 2018-05-09 00:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -609,13 +609,28 @@ msgstr ""
 msgid "%(file)s uploaded to %(folder)s"
 msgstr ""
 
+msgid "Can not rename shared folder."
+msgstr ""
+
 msgid "Folder renamed."
+msgstr ""
+
+msgid "Can not delete shared folder."
+msgstr ""
+
+msgid "Can not rename shared file."
 msgstr ""
 
 msgid "File renamed."
 msgstr ""
 
+msgid "Can not delete shared file."
+msgstr ""
+
 msgid "File deleted."
+msgstr ""
+
+msgid "Can not move shared file."
 msgstr ""
 
 #, python-format
