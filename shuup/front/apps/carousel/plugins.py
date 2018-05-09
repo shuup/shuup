@@ -37,11 +37,12 @@ class CarouselPlugin(TemplatedPlugin):
         :return: updated plugin context
         :rtype: dict
         """
+        request = context["request"]
         carousel_id = self.config.get("carousel")
         active = self.config.get("active")
         return {
-            "request": context["request"],
-            "carousel": Carousel.objects.filter(id=carousel_id).first() if carousel_id else None,
+            "request": request,
+            "carousel": Carousel.objects.filter(id=carousel_id, shops=request.shop).first() if carousel_id else None,
             "active": active,
             "type": "carousel"
         }

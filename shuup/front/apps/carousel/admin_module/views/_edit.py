@@ -13,6 +13,7 @@ from django.db.transaction import atomic
 from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 )
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.front.apps.carousel.admin_module.forms import (
@@ -39,6 +40,7 @@ class CarouselFormPart(FormPart):
 
     def form_valid(self, form):
         self.object = form[self.name].save()
+        self.object.shops.add(get_shop(self.request))
         return self.object
 
 

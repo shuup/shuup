@@ -107,6 +107,7 @@ def create_sample_carousel(carousel_data, business_segment, shop):
         image_width=carousel_data["width"],
         image_height=carousel_data["height"],
     )
+    carousel.shops = [shop]
 
     # available for 365 days
     available_from = datetime.now() - timedelta(days=1)

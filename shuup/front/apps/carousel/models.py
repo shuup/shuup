@@ -62,6 +62,9 @@ class SlideQuerySet(TranslatableQuerySet):
 
 @python_2_unicode_compatible
 class Carousel(ShuupModel):
+    shops = models.ManyToManyField("shuup.Shop", related_name="carousels", verbose_name=_('shops'), help_text=_(
+        "Select which shops you would like the carousel to be visible in."
+    ))
     name = models.CharField(
         max_length=50, verbose_name=_("name"), help_text=_("The carousel name use for carousel configuration.")
     )

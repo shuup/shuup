@@ -59,16 +59,22 @@ def test_carousel_plugin_form(rf):
 
 @pytest.mark.django_db
 def test_carousel_plugin_form_get_context():
+    shop = get_default_shop()
     context = get_jinja_context()
     test_carousel = Carousel.objects.create(name="test")
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
-    assert plugin.get_context_data(context).get("carousel") == test_carousel
+    assert plugin.get_context_data(context).get("carousel") == None
 
+    test_carousel.shops = [shop]
+    plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
+    assert plugin.get_context_data(context).get("carousel") == test_carousel
 
 @pytest.mark.django_db
 def test_banner_box_plugin():
+    shop = get_default_shop()
     context = get_jinja_context()
     test_carousel = Carousel.objects.create(name="test")
+    test_carousel.shops = [shop]
     plugin = BannerBoxPlugin(config={"carousel": test_carousel.pk, "title": "Test"})
     data = plugin.get_context_data(context)
     assert data.get("carousel") == test_carousel
