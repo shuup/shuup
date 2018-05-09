@@ -23,7 +23,7 @@ from shuup.utils.multilanguage_model_form import (
 class CarouselForm(ModelForm):
     class Meta:
         model = Carousel
-        exclude = ()
+        exclude = ("shops",)
 
 
 class SlideForm(MultiLanguageModelForm):

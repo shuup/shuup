@@ -8,6 +8,7 @@
 from django.forms import BooleanField
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
 from shuup.front.apps.carousel.models import Carousel
 from shuup.xtheme.plugins.forms import GenericPluginForm
 from shuup.xtheme.plugins.widgets import XThemeModelChoiceField
@@ -18,7 +19,7 @@ class CarouselConfigForm(GenericPluginForm):
         super(CarouselConfigForm, self).populate()
         self.fields["carousel"] = XThemeModelChoiceField(
             label=_("Carousel"),
-            queryset=Carousel.objects.all(),
+            queryset=Carousel.objects.filter(shops=get_shop(self.request)),
             required=False,
         )
         self.fields["active"] = BooleanField(

@@ -70,6 +70,7 @@ Admin
 Front
 ~~~~~
 
+- Add shops for carousels
 - Add util for checking whether current user is admin
 - Limit reqular user login access to own specified shop only
 
