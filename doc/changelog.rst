@@ -55,6 +55,7 @@ Core
 Admin
 ~~~~~
 
+- Add JavaScript Mass Action type
 - Add multi shop support for media browser
 - Improve admin order creator translations
 - Add option to filter variation parents for product select view
