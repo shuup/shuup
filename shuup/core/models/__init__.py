@@ -25,6 +25,7 @@ from ._contacts import (
 from ._counters import Counter, CounterType
 from ._currencies import Currency, get_currency_precision
 from ._manufacturers import Manufacturer
+from ._media import MediaFile, MediaFolder
 from ._order_lines import (
     AbstractOrderLine, OrderLine, OrderLineTax, OrderLineType
 )
@@ -102,6 +103,8 @@ __all__ = [
     "GroupAvailabilityBehaviorComponent",
     "ImmutableAddress",
     "Manufacturer",
+    "MediaFile",
+    "MediaFolder",
     "MutableAddress",
     "Order",
     "OrderLine",

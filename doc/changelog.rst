@@ -55,6 +55,7 @@ Core
 Admin
 ~~~~~
 
+- Add multi shop support for media browser
 - Improve admin order creator translations
 - Add option to filter variation parents for product select view
 - Fix home view help blocks filtering objects by the current shop
