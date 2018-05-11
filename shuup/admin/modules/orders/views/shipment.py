@@ -60,9 +60,11 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         default_field_keys = set()
         form = super(OrderCreateShipmentView, self).get_form()
         order = self.object
+
+        suppliers = Supplier.objects.filter(shops=order.shop)
         form.fields["supplier"] = forms.ModelChoiceField(
-            queryset=Supplier.objects.all(),
-            initial=Supplier.objects.first(),
+            queryset=suppliers,
+            initial=suppliers.first(),
             label=_("Supplier")
         )
         default_field_keys.add("supplier")
