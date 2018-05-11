@@ -21,6 +21,78 @@ CORE_BASKET_SETTINGS = dict(
     SHUUP_BASKET_CLASS_SPEC="shuup.core.basket.objects:Basket"
 )
 
+
+@pytest.mark.django_db
+def test_add_product(rf):
+    """
+    Add product to basket
+    """
+    with override_settings(**CORE_BASKET_SETTINGS):
+        shop = factories.get_default_shop()
+        user = factories.create_random_user()
+        product = factories.create_product("product", shop, factories.get_default_supplier(), 10)
+        request = apply_request_middleware(rf.get("/"), user=user)
+        basket = get_basket(request, "basket")
+        basket.customer = get_person_contact(user)
+        cmd_response = basket_commands.handle_add(request, basket, product.id, 1)
+        assert cmd_response["ok"]
+        assert cmd_response["line_id"]
+        assert cmd_response["added"] == 1
+        assert len(basket.get_lines()) == 1
+
+
+@pytest.mark.django_db
+def test_add_product_new_line(rf):
+    """
+    Add product to basket and force always new line
+    """
+    with override_settings(**CORE_BASKET_SETTINGS):
+        shop = factories.get_default_shop()
+        user = factories.create_random_user()
+        product = factories.create_product("product", shop, factories.get_default_supplier(), 10)
+        request = apply_request_middleware(rf.get("/"), user=user)
+        basket = get_basket(request, "basket")
+        basket.customer = get_person_contact(user)
+
+        for _ in range(3):
+            cmd_response = basket_commands.handle_add(request, basket, product.id, 1, force_new_line=True)
+            assert cmd_response["ok"]
+            assert cmd_response["line_id"]
+            assert cmd_response["added"] == 1
+
+        assert len(basket.get_lines()) == 3
+
+
+@pytest.mark.django_db
+def test_add_product_with_extra_parent_line(rf):
+    """
+    Add product to basket with extra info and parent line
+    """
+    with override_settings(**CORE_BASKET_SETTINGS):
+        shop = factories.get_default_shop()
+        user = factories.create_random_user()
+        product = factories.create_product("product", shop, factories.get_default_supplier(), 10)
+        request = apply_request_middleware(rf.get("/"), user=user)
+        basket = get_basket(request, "basket")
+        basket.customer = get_person_contact(user)
+
+        cmd_response = basket_commands.handle_add(request, basket, product.id, 1, extra={"more": "stuff"})
+        line_id1 = cmd_response["line_id"]
+        assert cmd_response["ok"]
+        line1 = basket.get_basket_line(line_id1)
+        assert line1._data["more"] == "stuff"
+
+        cmd_response = basket_commands.handle_add(
+            request, basket, product.id, 1, parent_line=line1, force_new_line=True)
+        line_id2 = cmd_response["line_id"]
+        assert cmd_response["ok"]
+        line2 = basket.get_basket_line(line_id2)
+        assert not line2._data
+
+        assert line_id1 != line_id2
+        assert line2.parent_line.line_id == line_id1
+
+
 @pytest.mark.django_db
 def test_set_from_customer_to_anonymous(rf):
     """
