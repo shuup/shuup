@@ -110,12 +110,15 @@ def handle_add(  # noqa (C901)
         "quantity": quantity,
         "supplier": supplier,
         "shop": request.shop,
+        "force_new_line": kwargs.get("force_new_line", False),
+        "extra": kwargs.get("extra"),
+        "parent_line": kwargs.get("parent_line")
     }
-
-    basket.add_product(**add_product_kwargs)
+    line = basket.add_product(**add_product_kwargs)
 
     return {
         'ok': basket.smart_product_count,
+        'line_id': line.line_id,
         'added': quantity
     }
 
@@ -140,7 +143,7 @@ def handle_add_var(
     # and hand it off to handle_add like we're used to
     return handle_add(
         request=request, basket=basket, product_id=var_product.pk,
-        quantity=quantity, unit_type=unit_type)
+        quantity=quantity, unit_type=unit_type, **kwargs)
 
 
 def handle_del(request, basket, line_id, **kwargs):

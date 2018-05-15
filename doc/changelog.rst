@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Make core basket command return the added line id
 - Provides: add setting to blacklist undesired provides
 - Refund: check the max refundable items when doing partial refunds
 - Add customer related fields account manager, tax group and customer

@@ -277,6 +277,34 @@ def test_order_source_parentage(rf, admin_user):
 
 
 @pytest.mark.django_db
+def test_order_source_extra_data(rf, admin_user):
+    source = seed_source(admin_user)
+    product = get_default_product()
+    line1 = source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=product,
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(10),
+        line_id="parent"
+    )
+    line2 = source.add_line(
+        type=OrderLineType.OTHER,
+        text="Child Line",
+        sku="KIDKIDKID",
+        quantity=1,
+        base_unit_price=source.create_price(5),
+        parent_line_id="parent"
+    )
+
+    creator = OrderCreator()
+    order = Order.objects.get(pk=creator.create_order(source).pk)
+    line_ids = [line.extra_data["source_line_id"] for line in order.lines.all()]
+    assert line1.line_id in line_ids
+    assert line2.line_id in line_ids
+
+
+@pytest.mark.django_db
 def test_order_creator_min_total(rf, admin_user):
     shop = get_default_shop()
     configuration.set(shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(20))

@@ -237,6 +237,7 @@ class BaseProductAddBasketSerializer(serializers.Serializer):
     supplier = serializers.IntegerField(required=False)
     quantity = FormattedDecimalField(required=False)
     description = serializers.CharField(max_length=128, required=False, allow_null=True)
+    force_new_line = serializers.BooleanField(required=False)
 
 
 class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
@@ -793,30 +794,31 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             serializer = ShopProductAddBasketSerializer(data=data, context={"shop": request.shop})
         else:
             serializer = ProductAddBasketSerializer(data=data, context={"shop": request.shop})
-        if serializer.is_valid():
-            cmd_kwargs = {
-                "request": request._request,
-                "basket": request._request.basket,
-                "shop_id": serializer.data.get("shop") or serializer.validated_data["shop"].pk,
-                "product_id": serializer.data.get("product") or serializer.validated_data["product"].pk,
-                "quantity": serializer.validated_data.get("quantity", 1),
-                "supplier_id": serializer.validated_data.get("supplier")
-            }
-            # we call `add` directly, assuming the user will handle variations
-            # as he can know all product variations easily through product API
-            try:
-                self._handle_cmd(request, "add", cmd_kwargs)
-                request.basket.save()
-            except ValidationError as exc:
-                return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
-            except ProductNotOrderableProblem as exc:
-                return Response({"error": "{}".format(exc)}, status=status.HTTP_400_BAD_REQUEST)
-            except Exception as exc:
-                return Response({"error": str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            else:
-                return Response(self.get_serializer(request.basket).data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(True)
+        cmd_kwargs = {
+            "request": request._request,
+            "basket": request._request.basket,
+            "shop_id": serializer.data.get("shop") or serializer.validated_data["shop"].pk,
+            "product_id": serializer.data.get("product") or serializer.validated_data["product"].pk,
+            "quantity": serializer.validated_data.get("quantity", 1),
+            "supplier_id": serializer.validated_data.get("supplier"),
+            "force_new_line": serializer.validated_data.get("force_new_line", False)
+        }
+        # we call `add` directly, assuming the user will handle variations
+        # as he can know all product variations easily through product API
+        try:
+            cmd_response = self._handle_cmd(request, "add", cmd_kwargs)
+            request.basket.save()
+            response_data = self.get_serializer(request.basket).data
+            # return also the added line id
+            response_data["add_line_id"] = cmd_response["line_id"]
+            return Response(response_data)
+        except ValidationError as exc:
+            return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
+        except ProductNotOrderableProblem as exc:
+            return Response({"error": "{}".format(exc)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as exc:
+            return Response({"error": str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @detail_route(methods=['get'])
     def taxes(self, request, *args, **kwargs):

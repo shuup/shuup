@@ -140,6 +140,7 @@ def test_add_product_to_basket(admin_user):
         assert response.status_code == status.HTTP_200_OK
 
         response_data = json.loads(response.content.decode("utf-8"))
+        assert response_data["add_line_id"]
         assert len(response_data["items"]) == 1
         assert response_data["items"][0]["shop_product"] == shop_product.pk
         assert not response_data["validation_errors"]
