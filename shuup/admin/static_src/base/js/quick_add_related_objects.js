@@ -30,8 +30,8 @@ window.closeQuickAddIFrame = function closeQuickAddIFrame(e) {
     $("#create-object-overlay").remove();
 };
 
-$(function() {
-    $(".quick-add-btn a.btn").on("click", function(e) {
+window.setupQuickAdd = function (element) {
+    $(element).on("click", function(e) {
         e.preventDefault();
         window.closeQuickAddIFrame();
         const url = $(this).data("url");
@@ -66,4 +66,8 @@ $(function() {
         contentPane.appendChild(iFrame);
         $(document.body).append(overlay);
     });
+};
+
+$(function() {
+    window.setupQuickAdd($(".quick-add-btn a.btn"));
 });
