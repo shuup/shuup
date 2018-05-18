@@ -619,10 +619,7 @@ class BaseBasket(OrderSource):
 
     orderable = property(_get_orderable)
 
-    def get_validation_errors(self):
-        for error in super(BaseBasket, self).get_validation_errors():
-            yield error
-
+    def get_methods_validation_errors(self):
         shipping_methods = self.get_available_shipping_methods()
         payment_methods = self.get_available_payment_methods()
 
@@ -637,6 +634,13 @@ class BaseBasket(OrderSource):
         if not payment_methods:
             msg = _("Products in basket have no common payment method. %s")
             yield ValidationError(msg % advice, code="no_common_payment")
+
+    def get_validation_errors(self):
+        for error in super(BaseBasket, self).get_validation_errors():
+            yield error
+
+        for error in self.get_methods_validation_errors():
+            yield error
 
     def get_product_ids_and_quantities(self):
         q_counter = Counter()
