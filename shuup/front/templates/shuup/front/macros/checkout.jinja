@@ -182,20 +182,24 @@
 {% endmacro %}
 
 {% macro method_phase_shipping_panel(form) %}
-    {{ method_phase_service_panel(_("Choose Shipping Method"), form.shipping_method) }}
+    {{ method_phase_service_panel(_("Choose Shipping Method"), form.shipping_method, form.fields["shipping_method"].choices|length) }}
 {% endmacro %}
 
 {% macro method_phase_payment_panel(form) %}
-    {{ method_phase_service_panel(_("Choose Payment Method"), form.payment_method) }}
+    {{ method_phase_service_panel(_("Choose Payment Method"), form.payment_method, form.fields["payment_method"].choices|length) }}
 {% endmacro %}
 
-{% macro method_phase_service_panel(panel_title, field) %}
+{% macro method_phase_service_panel(panel_title, field, has_options=true) %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2 class="panel-title">{{ panel_title }}</h2>
         </div>
         <div class="panel-body">
-            {{ field }}
+            {% if has_options %}
+                {{ field }}
+            {% else %}
+                <div class="text-center">{{ _("No method is available.") }}</div>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}

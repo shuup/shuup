@@ -9,7 +9,7 @@
         <h2>{% trans %}There are errors{% endtrans %}</h2>
         <ul>
         {% for error in errors %}
-            <li>{{ error }}</li>
+            <li class="text-danger">{{ error.message }}</li>
         {% endfor %}
         </ul>
     {% endif %}
