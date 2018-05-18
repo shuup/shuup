@@ -1,0 +1,7 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% set checkout_form = form["checkout_config"] %}
+
+{% call content_block(_("Checkout configuration"), icon="fa-th-list") %}
+    {{ render_monolingual_fields(checkout_form) }}
+{% endcall %}
