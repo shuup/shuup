@@ -1061,9 +1061,14 @@ class Order(MoneyPropped, models.Model):
 
         lines_to_ship = (
             self.lines.filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED)
-            .values_list("product_id", "quantity"))
-        for product_id, quantity in lines_to_ship:
+            .values_list("product_id", "quantity", "supplier__name"))
+
+        for product_id, quantity, supplier in lines_to_ship:
             products[product_id]['unshipped'] += quantity
+            if not products[product_id]['suppliers']:
+                products[product_id]['suppliers'] = [supplier]
+            else:
+                products[product_id]['suppliers'].append(supplier)
 
         from ._shipments import ShipmentProduct, ShipmentStatus
 

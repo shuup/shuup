@@ -58,6 +58,7 @@ Core
 Admin
 ~~~~~
 
+- Allow shipments only for suppliers assigned to order lines
 - Add JavaScript Mass Action type
 - Add multi shop support for media browser
 - Improve admin order creator translations

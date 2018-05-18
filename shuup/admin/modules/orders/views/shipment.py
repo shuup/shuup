@@ -21,7 +21,7 @@ from shuup.admin.utils.urls import get_model_url
 from shuup.core.excs import (
     NoProductsToShipException, NoShippingAddressException
 )
-from shuup.core.models import Order, Product, Shipment, Supplier
+from shuup.core.models import Order, Product, Shipment, ShippingMode, Supplier
 from shuup.utils.excs import Problem
 
 
@@ -61,12 +61,21 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         form = super(OrderCreateShipmentView, self).get_form()
         order = self.object
 
-        suppliers = Supplier.objects.filter(shops=order.shop)
+        # We only allow creating shipment for order line suppliers by default.
+        # This is what simple supplier expects. If we would create shipment
+        # for different supplier that is already selected for order line we
+        # end failing the stock calculations at the simple supplier.
+        suppliers = Supplier.objects.filter(
+            order_lines__product__shipping_mode=ShippingMode.SHIPPED,
+            order_lines__order=order
+        ).distinct()
         form.fields["supplier"] = forms.ModelChoiceField(
             queryset=suppliers,
             initial=suppliers.first(),
             label=_("Supplier")
         )
+        form.fields["supplier"].help_text = _(
+            "Select the shipment supplier. You can only ship the suppliers assigned to order lines.")
         default_field_keys.add("supplier")
         form.product_summary = order.get_product_summary()
         form.product_names = dict(
@@ -75,7 +84,11 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             in order.lines.exclude(product=None).values_list("product_id", "text")
         )
         for product_id, info in sorted(six.iteritems(form.product_summary)):
-            product_name = form.product_names.get(product_id, "Product %s" % product_id)
+            product_name = _("%(product_name)s (%(supplier)s)") % {
+                "product_name": form.product_names.get(product_id, "Product %s" % product_id),
+                "supplier": ", ".join(info["suppliers"])
+            }
+
             unshipped_count = info["unshipped"]
             attrs = {"data-max": unshipped_count, "class": "form-control text-right", }
             if unshipped_count == 0:

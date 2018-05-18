@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-09 00:35+0000\n"
+"POT-Creation-Date: 2018-05-18 19:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -919,6 +919,15 @@ msgid "Create Shipment -- %s"
 msgstr ""
 
 msgid "Supplier"
+msgstr ""
+
+msgid ""
+"Select the shipment supplier. You can only ship the suppliers assigned to "
+"order lines."
+msgstr ""
+
+#, python-format
+msgid "%(product_name)s (%(supplier)s)"
 msgstr ""
 
 msgid "No products to ship."
@@ -3148,6 +3157,9 @@ msgid "Refunded"
 msgstr ""
 
 msgid "Add Another Refund"
+msgstr ""
+
+msgid "Order Line"
 msgstr ""
 
 msgid "To Ship"
