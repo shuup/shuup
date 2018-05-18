@@ -116,14 +116,16 @@ def test_shipment_delete():
 
 
 @pytest.mark.django_db
-def test_shipment_with_insufficient_stock():
+@pytest.mark.parametrize("stock_managed", [True, False])
+def test_shipment_with_insufficient_stock(stock_managed):
     if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
         pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")
 
     from shuup_tests.simple_supplier.utils import get_simple_supplier
 
     shop = get_default_shop()
-    supplier = get_simple_supplier()
+    supplier = get_simple_supplier(stock_managed=stock_managed)
+
     order = _get_order(shop, supplier, stocked=True)
     product_line = order.lines.products().first()
     product = product_line.product
@@ -137,11 +139,17 @@ def test_shipment_with_insufficient_stock():
     assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
     assert order.shipments.all().count() == 1
 
-    with pytest.raises(Problem):
-        order.create_shipment({product: 10}, supplier=supplier)
+    if stock_managed:
+        # Stock error should be only raised for stock managed supplier
+        supplier.stock_managed = True
+        supplier.save()
 
-    # Should be fine after adding more stock
-    supplier.adjust_stock(product.pk, delta=5)
+        with pytest.raises(Problem):
+            order.create_shipment({product: 10}, supplier=supplier)
+
+        # Should be fine after adding more stock
+        supplier.adjust_stock(product.pk, delta=5)
+
     order.create_shipment({product: 10}, supplier=supplier)
 
 

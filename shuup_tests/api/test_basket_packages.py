@@ -15,7 +15,7 @@ from django.test import override_settings
 from rest_framework import status
 
 from shuup.core import cache
-from shuup.core.models import Order, OrderStatusManager, StockBehavior
+from shuup.core.models import Order, OrderStatusManager
 from shuup.simple_supplier.module import SimpleSupplierModule
 from shuup.testing import factories
 from shuup.testing.basket_helpers import get_client, REQUIRED_SETTINGS
@@ -39,7 +39,7 @@ def test_basket_with_package_product(admin_user):
         assert response.status_code == status.HTTP_201_CREATED
         basket_uuid = response.data["uuid"]
 
-        supplier = factories.get_supplier(SimpleSupplierModule.identifier, shop=shop)
+        supplier = factories.get_supplier(SimpleSupplierModule.identifier, shop=shop, stock_managed=True)
 
         # base product - 1kg of sand
         base_sand_product = factories.create_product(
@@ -47,8 +47,7 @@ def test_basket_with_package_product(admin_user):
             shop=shop,
             supplier=supplier,
             default_price="15.2",
-            net_weight=Decimal(1),
-            stock_behavior=StockBehavior.STOCKED
+            net_weight=Decimal(1)
         )
 
         # 10kg bag of sand - package made by 10kg of sand

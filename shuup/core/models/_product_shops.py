@@ -29,7 +29,7 @@ from shuup.utils.importing import cached_load
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 from ._product_media import ProductMediaKind
-from ._products import ProductMode, ProductVisibility, StockBehavior
+from ._products import ProductMode, ProductVisibility
 from ._units import DisplayUnit, PiecesSalesUnit, UnitInterface
 
 mark_safe_lazy = lazy(mark_safe, six.text_type)
@@ -361,8 +361,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                     break
             if not sellable:
                 yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
-
-        if self.product.is_package_parent():
+        elif self.product.is_package_parent():
             for child_product, child_quantity in six.iteritems(self.product.get_package_child_to_quantity_map()):
                 try:
                     child_shop_product = child_product.get_shop_instance(shop=self.shop, allow_cache=False)
@@ -379,7 +378,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                         code = getattr(error, "code", None)
                         yield ValidationError("%s: %s" % (child_product, message), code=code)
 
-        if supplier and self.product.stock_behavior == StockBehavior.STOCKED:
+        elif supplier:  # Test supplier orderability only for variation children and normal products
             for error in supplier.get_orderability_errors(self, quantity, customer=customer):
                 yield error
 
@@ -428,7 +427,8 @@ class ShopProduct(MoneyPropped, TranslatableModel):
     def is_orderable(self, supplier, customer, quantity, allow_cache=True):
         key, val = context_cache.get_cached_value(
             identifier="is_orderable", item=self, context={"customer": customer},
-            supplier=supplier, quantity=quantity, allow_cache=allow_cache)
+            supplier=supplier, stock_managed=bool(supplier and supplier.stock_managed),
+            quantity=quantity, allow_cache=allow_cache)
         if customer and val is not None:
             return val
 
