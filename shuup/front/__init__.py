@@ -22,7 +22,8 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.admin_module.CartAdminModule",
         ],
         "admin_shop_form_part": [
-            "shuup.front.admin_module.sorts_and_filters.form_parts.ConfigurationShopFormPart"
+            "shuup.front.admin_module.sorts_and_filters.form_parts.ConfigurationShopFormPart",
+            "shuup.front.admin_module.checkout.form_parts.CheckoutShopFormPart"
         ],
         "notify_event": [
             "shuup.front.notify_events:OrderReceived",

@@ -17,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from django.views.generic.edit import FormView
 
+from shuup import configuration
 from shuup.core.models import PaymentMethod, ShippingMethod
 from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.utils.iterables import first
@@ -24,6 +25,9 @@ from shuup.utils.iterables import first
 from ._services import get_checkout_phases_for_service
 
 LOG = logging.getLogger(__name__)
+
+SHIPPING_METHOD_REQUIRED_CONFIG_KEY = "checkout_required_method:shipping"
+PAYMENT_METHOD_REQUIRED_CONFIG_KEY = "checkout_required_method:payment"
 
 
 class MethodWidget(forms.Widget):
@@ -59,20 +63,24 @@ class MethodChoiceIterator(forms.models.ModelChoiceIterator):
 
 
 class MethodsForm(forms.Form):
-    shipping_method = forms.ModelChoiceField(
-        queryset=ShippingMethod.objects.all(), widget=MethodWidget(),
-        label=_('shipping method'), required=False
-    )
-    payment_method = forms.ModelChoiceField(
-        queryset=PaymentMethod.objects.all(), widget=MethodWidget(),
-        label=_('payment method'), required=False
-    )
-
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         self.basket = kwargs.pop("basket")
         self.shop = kwargs.pop("shop")
         super(MethodsForm, self).__init__(*args, **kwargs)
+
+        self.fields["shipping_method"] = forms.ModelChoiceField(
+            queryset=ShippingMethod.objects.all(),
+            widget=MethodWidget(),
+            label=_('shipping method'),
+            required=configuration.get(self.shop, SHIPPING_METHOD_REQUIRED_CONFIG_KEY, True)
+        )
+        self.fields["payment_method"] = forms.ModelChoiceField(
+            queryset=PaymentMethod.objects.all(),
+            widget=MethodWidget(),
+            label=_('payment method'),
+            required=configuration.get(self.shop, PAYMENT_METHOD_REQUIRED_CONFIG_KEY, True)
+        )
         self.limit_method_fields()
 
     def limit_method_fields(self):
@@ -99,6 +107,14 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
     form_class = MethodsForm
 
     def is_valid(self):
+        shipping_required = configuration.get(self.request.shop, SHIPPING_METHOD_REQUIRED_CONFIG_KEY, True)
+        payment_required = configuration.get(self.request.shop, PAYMENT_METHOD_REQUIRED_CONFIG_KEY, True)
+
+        if shipping_required and not self.storage.get("shipping_method_id"):
+            return False
+        elif payment_required and not self.storage.get("payment_method_id"):
+            return False
+
         return self.storage.has_any(["shipping_method_id", "payment_method_id"])
 
     def process(self):

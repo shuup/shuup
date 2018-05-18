@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 10:53+0000\n"
+"POT-Creation-Date: 2018-05-18 13:02+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -65,8 +65,31 @@ msgstr ""
 msgid "Ordered"
 msgstr ""
 
+msgid "Require shipping method"
+msgstr ""
+
+msgid "Whether to require the shipping method in checkout phases."
+msgstr ""
+
+msgid "Require payment method"
+msgstr ""
+
+msgid "Whether to require the payment method in checkout phases."
+msgstr ""
+
 #, python-format
 msgid "Basket loading failed: Incompatible basket (%s)"
+msgstr ""
+
+msgid "Try to remove some products from the basket and order them separately."
+msgstr ""
+
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr ""
+
+#, python-format
+msgid "Products in basket have no common payment method. %s"
 msgstr ""
 
 msgid "Tax number required for companies"
@@ -523,6 +546,9 @@ msgid ""
 "well as other informations like shipping method and payment method."
 msgstr ""
 
+msgid "Checkout configuration"
+msgstr ""
+
 msgid "Product list sorts and filters"
 msgstr ""
 
@@ -706,6 +732,9 @@ msgstr ""
 msgid "Choose Payment Method"
 msgstr ""
 
+msgid "No method is available."
+msgstr ""
+
 msgid "Delivery"
 msgstr ""
 
@@ -814,6 +843,9 @@ msgid "Products"
 msgstr ""
 
 msgid "Files"
+msgstr ""
+
+msgid "No method selected"
 msgstr ""
 
 msgid "Product"

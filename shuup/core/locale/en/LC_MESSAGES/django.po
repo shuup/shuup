@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-17 22:47+0000\n"
+"POT-Creation-Date: 2018-05-18 13:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -168,13 +168,16 @@ msgstr ""
 msgid "Invalid refund amount."
 msgstr ""
 
-msgid "It is not possible to create the refund."
-msgstr ""
-
 msgid "Refund exceeds amount."
 msgstr ""
 
+msgid "Refund exceeds quantity."
+msgstr ""
+
 msgid "Refund created."
+msgstr ""
+
+msgid "It is not possible to create the refund."
 msgstr ""
 
 msgid "Shipments"
@@ -899,6 +902,18 @@ msgstr ""
 msgid "manufacturers"
 msgstr ""
 
+msgid "file"
+msgstr ""
+
+msgid "Select which shops you would like the files to be visible in."
+msgstr ""
+
+msgid "folder"
+msgstr ""
+
+msgid "Select which shops you would like the folder to be visible in."
+msgstr ""
+
 msgid "product"
 msgstr ""
 
@@ -1197,9 +1212,6 @@ msgid "cache entry"
 msgstr ""
 
 msgid "cache entries"
-msgstr ""
-
-msgid "file"
 msgstr ""
 
 msgid "documentation"

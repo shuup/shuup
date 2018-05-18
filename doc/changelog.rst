@@ -73,6 +73,7 @@ Admin
 Front
 ~~~~~
 
+- Add shop option to require payment and shipping methods on checkout
 - Add shops for carousels
 - Add util for checking whether current user is admin
 - Limit reqular user login access to own specified shop only
