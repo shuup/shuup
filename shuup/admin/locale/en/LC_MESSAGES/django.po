@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 19:11+0000\n"
+"POT-Creation-Date: 2018-05-21 20:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1952,6 +1952,32 @@ msgstr ""
 msgid "Visit shop"
 msgstr ""
 
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr ""
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+msgid "Password Recovery"
+msgstr ""
+
+msgid "Reset Password"
+msgstr ""
+
+msgid "Send password recovery instructions"
+msgstr ""
+
 msgid "Quicklinks"
 msgstr ""
 
@@ -3680,6 +3706,17 @@ msgid "Let customers browse your store and make purchases"
 msgstr ""
 
 msgid "Publish shop"
+msgstr ""
+
+msgid ""
+"A reset password email was sent. Please, follow the instructions to set a "
+"new password."
+msgstr ""
+
+msgid "This recovery link is invalid."
+msgstr ""
+
+msgid "Password changed successfully!"
 msgstr ""
 
 #, python-format
