@@ -58,6 +58,7 @@ Core
 Admin
 ~~~~~
 
+- Add specific form to request and reset staff user password
 - Allow shipments only for suppliers assigned to order lines
 - Add JavaScript Mass Action type
 - Add multi shop support for media browser

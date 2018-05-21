@@ -92,7 +92,7 @@ class RecoverPasswordForm(forms.Form):
     username = forms.CharField(label=_("Username"), max_length=254, required=False)
     email = forms.EmailField(label=_("Email"), max_length=254, required=False)
     token_generator = default_token_generator
-    subject_template_name = "shuup/user/recover_password_mail_subject.jinja",
+    subject_template_name = "shuup/user/recover_password_mail_subject.jinja"
     email_template_name = "shuup/user/recover_password_mail_content.jinja"
     from_email = None
 

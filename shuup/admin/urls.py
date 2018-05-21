@@ -22,6 +22,7 @@ from shuup.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.home import HomeView
 from shuup.admin.views.menu import MenuView
+from shuup.admin.views.password import RequestPasswordView, ResetPasswordView
 from shuup.admin.views.search import SearchView
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.admin.views.tour import TourView
@@ -60,6 +61,18 @@ def get_urls():
             auth_views.logout,
             kwargs={"template_name": "shuup/admin/auth/logout.jinja"},
             name='logout',
+            require_authentication=False
+        ),
+        admin_url(
+            r'^recover-password/(?P<uidb64>.+)/(?P<token>.+)/$',
+            ResetPasswordView,
+            name='recover_password',
+            require_authentication=False
+        ),
+        admin_url(
+            r'^request-password/$',
+            RequestPasswordView,
+            name='request_password',
             require_authentication=False
         ),
         admin_url(
