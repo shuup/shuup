@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Base supplier: Only check stocks for stock managed suppliers when
+  creating shipments.
 - Make core basket command return the added line id
 - Provides: add setting to blacklist undesired provides
 - Refund: check the max refundable items when doing partial refunds
@@ -56,6 +58,7 @@ Core
 Admin
 ~~~~~
 
+- Allow shipments only for suppliers assigned to order lines
 - Add JavaScript Mass Action type
 - Add multi shop support for media browser
 - Improve admin order creator translations

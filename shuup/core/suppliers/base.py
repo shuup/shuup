@@ -9,7 +9,6 @@ from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import StockBehavior
 from shuup.core.stocks import ProductStockStatus
 from shuup.utils.excs import Problem
 
@@ -65,7 +64,8 @@ class BaseSupplierModule(object):
         backorder_maximum = shop_product.backorder_maximum
         if stock_status.error:
             yield ValidationError(stock_status.error, code="stock_error")
-        if shop_product.product.stock_behavior == StockBehavior.STOCKED:
+
+        if self.supplier.stock_managed:
             if backorder_maximum is not None and quantity > stock_status.logical_count + backorder_maximum:
                 yield ValidationError(stock_status.message or _(u"Insufficient stock"), code="stock_insufficient")
 
@@ -81,26 +81,33 @@ class BaseSupplierModule(object):
             self.update_stock(product_id)
 
     def ship_products(self, shipment, product_quantities):
-        insufficient_stocks = {}
-        for product, quantity in product_quantities.items():
-            if quantity > 0:
-                stock_status = self.get_stock_status(product.pk)
-                if (product.stock_behavior == StockBehavior.STOCKED) and (stock_status.physical_count < quantity):
-                    insufficient_stocks[product] = stock_status.physical_count
-                sp = shipment.products.create(product=product, quantity=quantity)
-                sp.cache_values()
-                sp.save()
+        if self.supplier.stock_managed:  # Check stocks for stock managed supplier
+            insufficient_stocks = {}
+            for product, quantity in product_quantities.items():
+                if quantity > 0:
+                    if self.supplier.stock_managed:  # Check stocks for stock managed supplier
+                        stock_status = self.get_stock_status(product.pk)
+                        if stock_status.physical_count < quantity:
+                            insufficient_stocks[product] = stock_status.physical_count
 
-        if insufficient_stocks:
-            formatted_counts = [_("%(name)s (physical stock: %(quantity)s)") % {
-                "name": force_text(name),
-                "quantity": force_text(quantity)
-            }
-                                for (name, quantity) in insufficient_stocks.items()]
-            raise Problem(
-                _("Insufficient physical stock count for following products: %(product_counts)s") % {
-                    "product_counts": ", ".join(formatted_counts)
-                })
+            if insufficient_stocks:
+                formatted_counts = [_("%(name)s (physical stock: %(quantity)s)") % {
+                    "name": force_text(name),
+                    "quantity": force_text(quantity)
+                }
+                                    for (name, quantity) in insufficient_stocks.items()]
+                raise Problem(
+                    _("Insufficient physical stock count for following products: %(product_counts)s") % {
+                        "product_counts": ", ".join(formatted_counts)
+                    })
+
+        for product, quantity in product_quantities.items():
+            if quantity == 0:
+                continue
+
+            sp = shipment.products.create(product=product, quantity=quantity)
+            sp.cache_values()
+            sp.save()
 
         shipment.cache_values()
         shipment.save()

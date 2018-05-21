@@ -355,19 +355,15 @@ def test_quantity_has_to_be_in_stock(admin_user):
     with override_settings(**REQUIRED_SETTINGS):
         set_configuration()
         from shuup_tests.simple_supplier.utils import get_simple_supplier
-        from shuup.core.models import StockBehavior
         shop = factories.get_default_shop()
         basket = factories.get_basket()
 
-        supplier = get_simple_supplier()
+        supplier = get_simple_supplier(stock_managed=True)
         product = factories.create_product("simple-test-product", shop, supplier)
         quantity = 256
         supplier.adjust_stock(product.pk, quantity)
-        product.stock_behavior = StockBehavior.STOCKED
-        product.save()
         shop_product = product.shop_products.first()
-        shop_product.suppliers.add(supplier)
-        shop_product.save()
+        shop_product.suppliers = [supplier]
 
         client = get_client(admin_user)
         payload = {

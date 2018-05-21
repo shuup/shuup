@@ -57,7 +57,7 @@ def test_simple_supplier(rf):
 
 @pytest.mark.django_db
 def test_supplier_with_stock_counts(rf):
-    supplier = get_simple_supplier()
+    supplier = get_simple_supplier(stock_managed=False)
     shop = get_default_shop()
     product = create_product("simple-test-product", shop, supplier)
     quantity = random.randint(100, 600)
@@ -66,8 +66,8 @@ def test_supplier_with_stock_counts(rf):
     # No orderability errors since product is not stocked
     assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity+1, customer=None))
 
-    product.stock_behavior = StockBehavior.STOCKED  # Make product stocked
-    product.save()
+    supplier.stock_managed = True
+    supplier.save()
 
     assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))
     # Now since product is stocked we get orderability error with quantity + 1

@@ -9,7 +9,7 @@
                 <table class="table table-condensed table-shuup table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>{% trans %}Product{% endtrans %}</th>
+                        <th>{% trans %}Order Line{% endtrans %}</th>
                         <th class="text-right">{% trans %}To Ship{% endtrans %}</th>
                         <th class="text-right hidden-xs">{% trans %}Ordered{% endtrans %}</th>
                         <th class="text-right hidden-xs">{% trans %}Shipped{% endtrans %}</th>
@@ -42,7 +42,7 @@
                     {% for product_id, info in form.product_summary.items() %}
                         {% set field = form["q_" ~ product_id] %}
                         <tr>
-                            <td>{{ form.product_names.get(product_id) }}</td>
+                            <td>{{ field.label }}</td>
                             <td class="text-right quantity-column">
                                 <div class="{% if field.errors %}has-error{% endif %}">
                                     {{ field }}
