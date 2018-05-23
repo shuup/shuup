@@ -1,0 +1,36 @@
+{% from "shuup/admin/macros/general.jinja" import multi_section_single_form, content_block with context %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+
+{% set cookie_categories_form = form[form_def.name] %}
+
+{% call content_block(_("Cookie Categories"), "fa-cubes") %}
+    {{ cookie_categories_form.management_form }}
+    {% for f in cookie_categories_form %}
+        {% for h in f.hidden_fields() %}
+            {{ h|safe }}
+        {% endfor %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                    {% if f.instance.pk %}
+                        <h3 class="panel-title">{{ f.instance.name }}</h3>
+                    {% else %}
+                        <h3 class="text-primary">{{ _("Add new cookie category") }}</h3>
+                        <p>{{ _("Use this form to create a new cookie category") }}</p>
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {{ bs3.field(f.always_active) }}
+                {% set tab_id = loop.index|safe + "-additional-language" %}
+                {% call(form, language, map) language_dependent_content_tabs(f, tab_id_prefix=tab_id) %}
+                    {{ bs3.field(f[map.name]) }}
+                    {{ bs3.field(f[map.how_is_used]) }}
+                {% endcall %}
+                {{ bs3.field(f.cookies) }}
+                {% if f.instance.pk %}
+                    {{ bs3.field(f.DELETE) }}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endcall %}

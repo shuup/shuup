@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add models to support General Data Protection Regulation (GDPR)
 - Enable creating basket with a custom shop
 - Base supplier: Only check stocks for stock managed suppliers when
   creating shipments.
@@ -59,6 +60,7 @@ Core
 Admin
 ~~~~~
 
+- Add admin module to configure settings for GDPR
 - Add specific form to request and reset staff user password
 - Allow shipments only for suppliers assigned to order lines
 - Add JavaScript Mass Action type

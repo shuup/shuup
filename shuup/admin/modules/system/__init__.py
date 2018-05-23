@@ -29,7 +29,7 @@ class SystemModule(AdminModule):
                 "shuup.admin.modules.system.views.telemetry.TelemetryView",
                 name="telemetry",
                 permissions=get_default_model_permissions(Shop)
-            ),
+            )
         ]
 
     def get_menu_entries(self, request):

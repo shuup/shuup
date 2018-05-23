@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'shuup.regions',
     'shuup.importer',
     'shuup.default_importer',
+    'shuup.gdpr',
     # external apps
     'bootstrap3',
     'django_countries',
