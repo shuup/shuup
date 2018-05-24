@@ -10,14 +10,26 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.text import slugify
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumIntegerField
 from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
+from shuup.utils.analog import define_log_model, LogEntryKind
+
+
+class PageType(Enum):
+    NORMAL = 0
+    GDPR_CONSENT_DOCUMENT = 1
+
+    class Labels:
+        NORMAL = _('normal')
+        GDPR_CONSENT_DOCUMENT = _('GDPR consent document')
 
 
 class PageQuerySet(TranslatableQuerySet):
@@ -34,7 +46,11 @@ class PageQuerySet(TranslatableQuerySet):
         """
         if not dt:
             dt = now()
-        q = Q(available_from__lte=dt) & (Q(available_to__gte=dt) | Q(available_to__isnull=True))
+        q = Q(
+            Q(deleted=False) &
+            Q(available_from__lte=dt) &
+            (Q(available_to__gte=dt) | Q(available_to__isnull=True))
+        )
         qs = self.for_shop(shop).filter(q)
         return qs
 
@@ -82,6 +98,8 @@ class Page(MPTTModel, TranslatableModel):
     list_children_on_page = models.BooleanField(verbose_name=_("list children on page"), default=False, help_text=_(
         "Check this if this page should list its children pages."
     ))
+    page_type = EnumIntegerField(PageType, default=PageType.NORMAL, db_index=True, verbose_name=_("page type"))
+    deleted = models.BooleanField(default=False, verbose_name=_("deleted"))
 
     translations = TranslatedFields(
         title=models.CharField(max_length=256, verbose_name=_('title'), help_text=_(
@@ -110,6 +128,24 @@ class Page(MPTTModel, TranslatableModel):
         verbose_name_plural = _('pages')
         unique_together = ("shop", "identifier")
 
+    def delete(self, using=None):
+        raise NotImplementedError("Not implemented: Use `soft_delete()`")
+
+    def soft_delete(self, user=None):
+        if not self.deleted:
+            self.deleted = True
+            self.add_log_entry("Deleted.", kind=LogEntryKind.DELETION, user=user)
+            # Bypassing local `save()` on purpose.
+            super(Page, self).save(update_fields=("deleted",))
+
+    def make_gdpr_old_version(self):
+        self.identifier = slugify("{}-{}".format(self.identifier, self.pk))
+        self.save(update_fields=["identifier"])
+        page_translation_model = self._meta.model._parler_meta.root_model
+        for page_translation in page_translation_model.objects.filter(master_id=self.pk):
+            page_translation.url = "{}-{}".format(page_translation.url, self.pk)
+            page_translation.save(update_fields=["url"])
+
     def clean(self):
         url = getattr(self, "url", None)
         if url:
@@ -120,6 +156,15 @@ class Page(MPTTModel, TranslatableModel):
                 url_checker = url_checker.exclude(master_id=self.pk)
             if url_checker.exists():
                 raise ValidationError(_("URL already exists."), code="invalid_url")
+
+        if self.pk:
+            original_page = Page.objects.get(id=self.pk)
+            if original_page.page_type == PageType.GDPR_CONSENT_DOCUMENT:
+                # prevent changing content when page type is GDPR_CONSENT_DOCUMENT
+                content = getattr(self, "content", None)
+                if original_page.content != content or original_page.page_type != self.page_type:
+                    msg = _("This page is protected against changes because it is a GDPR consent document.")
+                    raise ValidationError(msg, code="gdpr-protected")
 
     def is_visible(self, dt=None):
         if not dt:
@@ -135,3 +180,6 @@ class Page(MPTTModel, TranslatableModel):
 
     def __str__(self):
         return force_text(self.safe_translation_getter("title", any_language=True, default=_("Untitled")))
+
+
+PageLogEntry = define_log_model(Page)

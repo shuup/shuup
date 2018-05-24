@@ -105,6 +105,7 @@ Notify
 Simple CMS
 ~~~~~~~~~~
 
+- Add page type to support GDPR consent document
 - Add shop attribute in `Page` model to work in multishop environments
 
 Importer

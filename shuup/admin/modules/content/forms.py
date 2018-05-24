@@ -222,7 +222,10 @@ class ContentWizardForm(forms.Form):
         from shuup.simple_cms.models import Page
         return {
             page.identifier: page
-            for page in Page.objects.for_shop(self.shop).filter(identifier__in=content_data.CMS_PAGES.keys())
+            for page in Page.objects.for_shop(self.shop).filter(
+                deleted=False,
+                identifier__in=content_data.CMS_PAGES.keys()
+            )
         }
 
     def save(self):
