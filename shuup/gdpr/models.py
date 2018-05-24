@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -73,3 +74,47 @@ class GDPRCookieCategory(TranslatableModel):
 
     def __str__(self):
         return _("GDPR cookie category for {}").format(self.shop)
+
+
+@python_2_unicode_compatible
+class GDPRUserConsent(models.Model):
+    created_on = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+        verbose_name=_("created on")
+    )
+    shop = models.ForeignKey(
+        "shuup.Shop",
+        related_name="hdpr_consents",
+        editable=False
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='gdpr_consents',
+        on_delete=models.PROTECT,
+        editable=False
+    )
+    documents = models.ManyToManyField(
+        "shuup_simple_cms.Page",
+        verbose_name=_("consent documents"),
+        blank=True,
+        editable=False
+    )
+    cookies = models.TextField(
+        verbose_name=_("cookies"),
+        help_text=_("List of cookies consent"),
+        blank=True,
+        editable=False
+    )
+    cookie_categories = models.ManyToManyField(
+        GDPRCookieCategory,
+        verbose_name=_("cookie categories"),
+        editable=False
+    )
+
+    class Meta:
+        verbose_name = _('gdpr user consent')
+        verbose_name_plural = _('gdpr user consents')
+
+    def __str__(self):
+        return _("GDPR user consent in {} for user {} in shop {}").format(self.created_on, self.user, self.shop)

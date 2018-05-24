@@ -10,6 +10,7 @@ from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
+from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.utils.multilanguage_model_form import (
     MultiLanguageModelForm, to_language_codes
@@ -20,6 +21,10 @@ class GDPRSettingsForm(MultiLanguageModelForm):
     class Meta:
         exclude = ("shop",)
         model = GDPRSettings
+        widgets = {
+            "cookie_banner_content": TextEditorWidget(),
+            "cookie_privacy_excerpt": TextEditorWidget()
+        }
 
 
 class GDPRCookieCategoryForm(MultiLanguageModelForm):

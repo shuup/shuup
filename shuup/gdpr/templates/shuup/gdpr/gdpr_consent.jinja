@@ -1,0 +1,99 @@
+{% macro render_content_panel(panel_id, title, active = False) %}
+<div class="gdpr-consent-preference-panel {{ "active" if active else "" }}" id="consent_{{ panel_id }}">
+    <h4>{{ title }}</h4>
+    {{ caller() }}
+</div>
+{% endmacro %}
+
+<div class="gdpr-consent-warn-bar">
+    <div class="gdpr-consent-warn-content">
+        <p>{{ gdpr_settings.cookie_banner_content|safe }}</p>
+        <a href="#" id="privacy-preferences-btn">{{ _("Privacy Preferences") }}</a>
+        <button class="btn btn-info" id="agree-btn">
+            <i class="fa fa-check"></i>
+            {{ _("I Agree") }}
+        </button>
+    </div>
+</div>
+
+<div class="gdpr-consent-preferences">
+    <div class="gdpr-consent-content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div>{{ _("Privacy Preference Center") }}</div>
+                    <a href="#" class="btn-close">
+                        <i class="fa fa-remove fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form id="consent-form" action="{{ url("shuup:gdpr_consent") }}" method="POST">
+                    {% csrf_token %}
+                    <div class="consent-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item consent-option-item active" data-target="general">{{ _("General") }}</a>
+                            {% if gdpr_settings %}
+                                <a href="#" class="list-group-item consent-option-item" data-target="cookies">{{ _("Cookie Settings") }}</a>
+                            {% endif %}
+                        </div>
+                        <div class="consent-view">
+                            {% call render_content_panel("general", _("Consent Management"), True) %}
+                                <p>{{ gdpr_settings.cookie_privacy_excerpt|safe }}</p>
+                                {% if gdpr_documents %}
+                                <ul class="list-group">
+                                    {% for gdpr_document in gdpr_documents %}
+                                    <li class="list-group-item">
+                                        <div class="gdpr-document-item">
+                                            <div>
+                                                <strong>{{ gdpr_document.title }}</strong>
+                                                <div>
+                                                    <em>{{ _("You read and agreed to our {}").format(gdpr_document.title) }}</em>
+                                                </div>
+                                            </div>
+                                            <a class="btn btn-info" target="_blank" href="{{ url("shuup:cms_page", url=gdpr_document.url) }}">
+                                                {{ _("Read") }}
+                                            </a>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            {% endcall %}
+                            {% if gdpr_cookie_categories %}
+                            {% call render_content_panel("cookies", _("Cookie Settings")) %}
+                                <ul class="list-group">
+                                {% for gdpr_cookie in gdpr_cookie_categories %}
+                                    <li class="list-group-item" data-cookie-category="{{ gdpr_cookie.id }}">
+                                        {% if gdpr_cookie.always_active %}
+                                            <span class="badge">{{ _("Always active") }}</span>
+                                        {% else %}
+                                            <div class="gdpr-switch">
+                                                <label>
+                                                    <input type="checkbox" name="cookie_category_{{ gdpr_cookie.id }}" />
+                                                    <div class="switch-slider round"></div>
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        <div class="gdpr-cookie-item">
+                                            <p><strong>{{ gdpr_cookie.name }}</strong></p>
+                                            <p>{{ gdpr_cookie.how_is_used }}</p>
+                                            <p>{{ _("Cookies: ") }}<em>{{ gdpr_cookie.cookies }}</em></p>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            {% endcall %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <div class="consent-preferences text-center">
+                    <button class="btn btn-success" id="btn-save-preferences">{{ _("Save preferences") }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

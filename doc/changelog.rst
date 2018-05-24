@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- GDPR: add xtheme plugin to warn about data protection
 - Add models to support General Data Protection Regulation (GDPR)
 - Enable creating basket with a custom shop
 - Base supplier: Only check stocks for stock managed suppliers when

@@ -13,5 +13,11 @@ class AppConfig(shuup.apps.AppConfig):
     provides = {
         "admin_module": [
             "shuup.gdpr.admin_module.GDPRModule"
+        ],
+        "front_urls": [
+            "shuup.gdpr.urls:urlpatterns"
+        ],
+        "xtheme_resource_injection": [
+            "shuup.gdpr.resources:add_gdpr_consent_resources"
         ]
     }
