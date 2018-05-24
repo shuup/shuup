@@ -5,6 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import json
+from logging import getLogger
+
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -15,6 +18,9 @@ from django.views.generic import FormView
 from shuup.core.models import OrderStatus
 from shuup.front.basket import get_basket_order_creator
 from shuup.front.checkout import CheckoutPhaseViewMixin
+from shuup.utils.djangoenv import has_installed
+
+logger = getLogger(__name__)
 
 
 class ConfirmForm(forms.Form):
@@ -81,9 +87,52 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         self.checkout_process.complete()  # Inform the checkout process it's completed
 
         if order.require_verification:
-            return redirect("shuup:order_requires_verification", pk=order.pk, key=order.key)
+            response = redirect("shuup:order_requires_verification", pk=order.pk, key=order.key)
         else:
-            return redirect("shuup:order_process_payment", pk=order.pk, key=order.key)
+            response = redirect("shuup:order_process_payment", pk=order.pk, key=order.key)
+
+        self._handle_gdpr(form, order, response)
+        return response
+
+    def _handle_gdpr(self, form, order, response):
+        # create the consent for all documents and for all required cookies if user has accepted terms
+
+        if not form.cleaned_data.get("accept_terms") or not has_installed("shuup.gdpr"):
+            return
+
+        from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings, GDPRUserConsent
+        from shuup.gdpr.utils import add_consent_to_response_cookie, get_cookie_consent_data
+
+        if not GDPRSettings.get_for_shop(order.shop).enabled:
+            return
+
+        user = self.request.user
+        cookies = []
+        cookie_categories = []
+        consent_documents = []
+
+        # check whether there is already a consent in the request Cookie
+        if settings.SHUUP_GDPR_CONSENT_COOKIE_NAME in self.request.COOKIES:
+            try:
+                from shuup.gdpr.utils import get_consent_from_cookie
+                cookie_data = json.loads(self.request.COOKIES[settings.SHUUP_GDPR_CONSENT_COOKIE_NAME])
+                cookies, cookie_categories, consent_documents = get_consent_from_cookie(cookie_data)
+            except:
+                logger.exception("Failed to parse GDPR from cookie")
+
+        if not cookie_categories:
+            cookie_categories = list(GDPRCookieCategory.objects.filter(shop=order.shop, always_active=True))
+
+        if not consent_documents and has_installed("shuup.simple_cms"):
+            from shuup.simple_cms.models import Page, PageType
+            consent_documents = list(
+                Page.objects.visible(order.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT))
+
+        if user.is_authenticated():
+            GDPRUserConsent.create_for_user(user, order.shop, cookie_categories, consent_documents, cookies)
+
+        cookie_data = get_cookie_consent_data(cookie_categories, consent_documents, cookies)
+        add_consent_to_response_cookie(response, cookie_data)
 
     def create_order(self):
         basket = self.basket

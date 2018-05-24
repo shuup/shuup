@@ -81,6 +81,7 @@ Admin
 Front
 ~~~~~
 
+- Create GDPR consent when placing the order
 - Add shop option to require payment and shipping methods on checkout
 - Add shops for carousels
 - Add util for checking whether current user is admin

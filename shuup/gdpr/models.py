@@ -116,5 +116,16 @@ class GDPRUserConsent(models.Model):
         verbose_name = _('gdpr user consent')
         verbose_name_plural = _('gdpr user consents')
 
+    @classmethod
+    def create_for_user(cls, user, shop, consent_cookie_categories, consent_documents, consent_cookies=[]):
+        if not consent_cookies:
+            consent_cookies = [cookie_category.cookies for cookie_category in consent_cookie_categories]
+            consent_cookies = ",".join(list(set(",".join(consent_cookies).replace(" ", "").split(","))))
+
+        gdpr_user_consent = cls.objects.create(shop=shop, user=user, cookies=consent_cookies)
+        gdpr_user_consent.documents = consent_documents
+        gdpr_user_consent.cookie_categories = consent_cookie_categories
+        return gdpr_user_consent
+
     def __str__(self):
         return _("GDPR user consent in {} for user {} in shop {}").format(self.created_on, self.user, self.shop)

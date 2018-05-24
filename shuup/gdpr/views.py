@@ -7,10 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import json
 import re
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import View
@@ -18,7 +16,7 @@ from django.views.generic import View
 from shuup.gdpr.models import GDPRCookieCategory, GDPRUserConsent
 from shuup.utils.djangoenv import has_installed
 
-from .utils import get_cookie_consent_data
+from .utils import add_consent_to_response_cookie, get_cookie_consent_data
 
 COOKIE_CONSENT_RE = r"cookie_category_(\d+)"
 
@@ -40,23 +38,11 @@ class GDPRConsentView(View):
             from shuup.simple_cms.models import Page, PageType
             consent_documents = list(Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT))
 
-        cookie_data = get_cookie_consent_data(cookie_categories, consent_documents)
-
         # create the consent for the authenticated user
         if request.user.is_authenticated():
-            gdpr_user_consent = GDPRUserConsent.objects.create(
-                shop=shop,
-                user=request.user,
-                cookies=",".join(cookie_data["cookies"])
-            )
-            gdpr_user_consent.documents = consent_documents
-            gdpr_user_consent.cookie_categories = cookie_categories
+            GDPRUserConsent.create_for_user(request.user, shop, cookie_categories, consent_documents)
 
+        cookie_data = get_cookie_consent_data(cookie_categories, consent_documents)
         response = HttpResponseRedirect(reverse("shuup:index"))
-        response.set_cookie(
-            key=settings.SHUUP_GDPR_CONSENT_COOKIE_NAME,
-            value=json.dumps(cookie_data),
-            domain=settings.SESSION_COOKIE_DOMAIN,
-            secure=settings.SESSION_COOKIE_SECURE or None
-        )
+        add_consent_to_response_cookie(response, cookie_data)
         return response
