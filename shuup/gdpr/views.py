@@ -7,16 +7,24 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import json
 import re
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.views.generic import View
+from django.db.transaction import atomic
+from django.http import (
+    HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+)
+from django.views.generic import TemplateView, View
 
+from shuup.core.models import Order
+from shuup.gdpr.anonymizer import Anonymizer
 from shuup.gdpr.models import GDPRCookieCategory, GDPRUserConsent
+from shuup.gdpr.utils import (
+    add_consent_to_response_cookie, get_cookie_consent_data
+)
+from shuup.utils.analog import LogEntryKind
 from shuup.utils.djangoenv import has_installed
-
-from .utils import add_consent_to_response_cookie, get_cookie_consent_data
 
 COOKIE_CONSENT_RE = r"cookie_category_(\d+)"
 
@@ -46,3 +54,67 @@ class GDPRConsentView(View):
         response = HttpResponseRedirect(reverse("shuup:index"))
         add_consent_to_response_cookie(response, cookie_data)
         return response
+
+
+class GDPRCustomerDashboardView(TemplateView):
+    template_name = "shuup/gdpr/edit_customer_data.jinja"
+
+    def get_context_data(self, **kwargs):
+        context = super(GDPRCustomerDashboardView, self).get_context_data(**kwargs)
+        has_peding_orders = False
+
+        if Order.objects.incomplete().filter(customer=self.request.person).exists():
+            has_peding_orders = True
+        else:
+            for company in self.request.person.company_memberships.all():
+                if company.members.count() == 1:
+                    has_peding_orders = True
+
+        context["has_peding_orders"] = has_peding_orders
+        return context
+
+
+class GDPRDownloadDataView(View):
+    def post(self, request, *args, **kwargs):
+        if not self.request.person:
+            return HttpResponseNotFound()
+
+        self.request.person.add_log_entry(
+            "User personal data download requested", kind=LogEntryKind.NOTE, user=self.request.user)
+
+        from shuup.gdpr.utils import get_all_contact_data
+        data = json.dumps(get_all_contact_data(self.request.person))
+        response = HttpResponse(data, content_type="application/json")
+        response["Content-Disposition"] = "attachment; filename=user_data.json"
+        return response
+
+
+class GDPRAnonymizeView(View):
+    def post(self, request, *args, **kwargs):
+        if not self.request.person:
+            return HttpResponseNotFound()
+
+        self.request.person.add_log_entry(
+            "User anonymization requested", kind=LogEntryKind.NOTE, user=self.request.user)
+
+        with atomic():
+            anonymizer = Anonymizer()
+            anonymizer.anonymize_person(self.request.person)
+
+            # check if there is any company related to the person
+            # if so, anonymize it if he is the unique member
+            for company in self.request.person.company_memberships.all():
+                if company.members.count() == 1:
+                    anonymizer.anonymize_company(company)
+
+                    # cancel company orders
+                    for order in Order.objects.incomplete().filter(customer=company):
+                        order.set_canceled()
+
+            if hasattr(self.request.person, "user"):
+                anonymizer.anonymize_user(self.request.person.user)
+
+            for order in Order.objects.incomplete().filter(customer=self.request.person):
+                order.set_canceled()
+
+        return HttpResponseRedirect(reverse("shuup:index"))

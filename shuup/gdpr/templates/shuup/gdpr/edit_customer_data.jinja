@@ -1,0 +1,78 @@
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
+{% from "shuup/customer_information/macros/address.jinja" import render_address_forms, render_address_forms_js %}
+{% from "shuup/customer_information/macros/buttons.jinja" import change_password_button, company_account_button, save_changes_button %}
+{% from "shuup/customer_information/macros/contact.jinja" import render_person_contact_form %}
+
+{% block title %}{% trans %}Customer Data{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}My Data{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
+        {{ macros.render_breadcrumb_item(None, _("My data"), True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="user-data">
+        <div class="text-center">
+            <h3>{{ _("Download your data") }}</h3>
+            <form action="{{ url("shuup:gdpr_download_data") }}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-lg">
+                    <i class="fa fa-download"></i>
+                    {{ _("Download all my data") }}
+                </button>
+            </form>
+            <p class="help-block">
+                {% trans %}
+                This action will collect all your personal data and order history and will serialize it in a JSON file.
+                {% endtrans %}
+            </p>
+        </div>
+        <hr>
+        <div class="text-center">
+            <h3>{{ _("Anonymize your account") }}</h3>
+            {% if has_peding_orders %}
+                <p class="text-danger">
+                    <strong class="text-danger"><i class="fa fa-warning"></i> {{ _("You have pending orders!")}}</strong>
+                    {% trans %}
+                        If you anonymize your account now, all orders will be canceled.
+                    {% endtrans %}
+                </p>
+            {% endif %}
+            <form action="{{ url("shuup:gdpr_anonymize_account") }}" id="anonymize-form" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-lg" type="button" id="anonymize-btn">
+                    <i class="fa fa-user-times"></i>
+                    {{ _("Anonymize my account") }}
+                </button>
+            </form>
+            <p class="help-block">
+                {% trans %}
+                    This action will replace all your personal data with random values making it impossible to identify you.
+                    Your account will also be deactivated.
+                {% endtrans %}
+            </p>
+            <p class="text-warning">
+                <strong><i class="fa fa-warning"></i> {{ _("This action is irreversible!")}}</strong>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    (function () {
+        $("#anonymize-btn").click(function (e) {
+            if (confirm("{{ _("Are you sure? This cannot be undone.") }}")) {
+                $("#anonymize-form").submit();
+            } else {
+                e.preventDefault();
+                return false;
+            }
+        });
+    })();
+</script>
+{% endblock %}

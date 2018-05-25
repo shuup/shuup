@@ -17,6 +17,9 @@ class AppConfig(shuup.apps.AppConfig):
         "front_urls": [
             "shuup.gdpr.urls:urlpatterns"
         ],
+        "customer_dashboard_items": [
+            "shuup.gdpr.dashboard_items:GDPRDashboardItem"
+        ],
         "xtheme_resource_injection": [
             "shuup.gdpr.resources:add_gdpr_consent_resources"
         ]

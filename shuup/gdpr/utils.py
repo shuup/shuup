@@ -53,3 +53,13 @@ def get_cookie_consent_data(consent_cookie_categories, consent_documents, consen
             for consent_document in consent_documents
         ]
     }
+
+
+def get_all_contact_data(contact):
+    from shuup.core.models import CompanyContact
+    from shuup.gdpr.serializers import GDPRCompanyContactSerializer, GDPRPersonContactSerializer
+
+    if isinstance(contact, CompanyContact):
+        return GDPRCompanyContactSerializer(contact).data
+
+    return GDPRPersonContactSerializer(contact).data
