@@ -26,9 +26,7 @@
                 </button>
             </form>
             <p class="help-block">
-                {% trans %}
-                This action will collect all your personal data and order history and will serialize it in a JSON file.
-                {% endtrans %}
+                {% trans %}This action will collect all your personal data and order history and will serialize it in a JSON file.{% endtrans %}
             </p>
         </div>
         <hr>
@@ -37,9 +35,7 @@
             {% if has_peding_orders %}
                 <p class="text-danger">
                     <strong class="text-danger"><i class="fa fa-warning"></i> {{ _("You have pending orders!")}}</strong>
-                    {% trans %}
-                        If you anonymize your account now, all orders will be canceled.
-                    {% endtrans %}
+                    {% trans %}If you anonymize your account now, all orders will be canceled.{% endtrans %}
                 </p>
             {% endif %}
             <form action="{{ url("shuup:gdpr_anonymize_account") }}" id="anonymize-form" method="POST">
@@ -50,10 +46,7 @@
                 </button>
             </form>
             <p class="help-block">
-                {% trans %}
-                    This action will replace all your personal data with random values making it impossible to identify you.
-                    Your account will also be deactivated.
-                {% endtrans %}
+                {% trans %}This action will replace all your personal data with random values making it impossible to identify you. Your account will also be deactivated.{% endtrans %}
             </p>
             <p class="text-warning">
                 <strong><i class="fa fa-warning"></i> {{ _("This action is irreversible!")}}</strong>

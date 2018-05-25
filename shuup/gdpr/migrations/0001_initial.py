@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('always_active', models.BooleanField(default=False, verbose_name='always active')),
-                ('cookies', models.TextField(help_text='Comma separated list of cookies names, prefix or sufix that will be included in this category, e.g. _ga, mysession, user_c_', verbose_name='cookies used')),
+                ('cookies', models.TextField(help_text='Comma separated list of cookies names, prefix or suffix that will be included in this category, e.g. _ga, mysession, user_c_', verbose_name='cookies used')),
                 ('shop', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='gdpr_cookie_categories', to='shuup.Shop')),
             ],
             options={
@@ -68,8 +68,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('language_code', models.CharField(db_index=True, max_length=15, verbose_name='Language')),
-                ('cookie_banner_content', models.TextField(blank=True, help_text='The text to be present to users in cookie pop-up warning.', verbose_name='cookie banner content')),
-                ('cookie_privacy_excerpt', models.TextField(blank=True, help_text='The summary text to be present about cookie privacy.', verbose_name='cookie privacy excerpt')),
+                ('cookie_banner_content', models.TextField(blank=True, help_text='The text to be presented to users in a pop-up warning.', verbose_name='cookie banner content')),
+                ('cookie_privacy_excerpt', models.TextField(blank=True, help_text='The summary text to be presented about cookie privacy.', verbose_name='cookie privacy excerpt')),
                 ('master', models.ForeignKey(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='translations', to='shuup_gdpr.GDPRSettings')),
             ],
             options={

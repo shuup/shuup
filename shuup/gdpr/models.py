@@ -26,12 +26,12 @@ class GDPRSettings(TranslatableModel):
         cookie_banner_content=models.TextField(
             blank=True,
             verbose_name=_("cookie banner content"),
-            help_text=_("The text to be present to users in cookie pop-up warning.")
+            help_text=_("The text to be presented to users in a pop-up warning.")
         ),
         cookie_privacy_excerpt=models.TextField(
             blank=True,
             verbose_name=_("cookie privacy excerpt"),
-            help_text=_("The summary text to be present about cookie privacy.")
+            help_text=_("The summary text to be presented about cookie privacy.")
         )
     )
 
@@ -54,7 +54,7 @@ class GDPRCookieCategory(TranslatableModel):
     cookies = models.TextField(
         verbose_name=_("cookies used"),
         help_text=_(
-            "Comma separated list of cookies names, prefix or sufix "
+            "Comma separated list of cookies names, prefix or suffix "
             "that will be included in this category, "
             "e.g. _ga, mysession, user_c_"
         ),
