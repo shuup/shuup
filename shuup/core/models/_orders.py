@@ -406,7 +406,7 @@ class Order(MoneyPropped, models.Model):
     admin_comment = models.TextField(blank=True, verbose_name=_('admin comment/notes'))
     require_verification = models.BooleanField(default=False, verbose_name=_('requires verification'))
     all_verified = models.BooleanField(default=False, verbose_name=_('all lines verified'))
-    marketing_permission = models.BooleanField(default=True, verbose_name=_('marketing permission'))
+    marketing_permission = models.BooleanField(default=False, verbose_name=_('marketing permission'))
     _codes = JSONField(blank=True, null=True, verbose_name=_('codes'))
 
     common_select_related = ("billing_address",)
