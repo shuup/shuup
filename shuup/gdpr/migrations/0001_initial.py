@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('always_active', models.BooleanField(default=False, verbose_name='always active')),
                 ('cookies', models.TextField(help_text='Comma separated list of cookies names, prefix or sufix that will be included in this category, e.g. _ga, mysession, user_c_', verbose_name='cookies used')),
-                ('shop', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='hdpr_cookie_categories', to='shuup.Shop')),
+                ('shop', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='gdpr_cookie_categories', to='shuup.Shop')),
             ],
             options={
                 'verbose_name': 'gdpr cookie category',
@@ -43,11 +43,11 @@ class Migration(migrations.Migration):
                 ('master', models.ForeignKey(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='translations', to='shuup_gdpr.GDPRCookieCategory')),
             ],
             options={
-                'verbose_name': 'gdpr cookie category Translation',
-                'db_table': 'shuup_gdpr_gdprcookiecategory_translation',
-                'managed': True,
                 'db_tablespace': '',
                 'default_permissions': (),
+                'verbose_name': 'gdpr cookie category Translation',
+                'managed': True,
+                'db_table': 'shuup_gdpr_gdprcookiecategory_translation',
             },
         ),
         migrations.CreateModel(
@@ -73,22 +73,20 @@ class Migration(migrations.Migration):
                 ('master', models.ForeignKey(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='translations', to='shuup_gdpr.GDPRSettings')),
             ],
             options={
-                'verbose_name': 'gdpr settings Translation',
-                'db_table': 'shuup_gdpr_gdprsettings_translation',
-                'managed': True,
                 'db_tablespace': '',
                 'default_permissions': (),
+                'verbose_name': 'gdpr settings Translation',
+                'managed': True,
+                'db_table': 'shuup_gdpr_gdprsettings_translation',
             },
         ),
         migrations.CreateModel(
             name='GDPRUserConsent',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_on', models.DateTimeField(auto_now_add=True, verbose_name='created on')),
-                ('cookies', models.TextField(blank=True, editable=False, help_text='List of cookies consent', verbose_name='cookies')),
-                ('cookie_categories', models.ManyToManyField(editable=False, to='shuup_gdpr.GDPRCookieCategory', verbose_name='cookie categories')),
+                ('created_on', models.DateTimeField(auto_now_add=True, verbose_name='created on', db_index=True)),
                 ('documents', models.ManyToManyField(blank=True, editable=False, to='shuup_simple_cms.Page', verbose_name='consent documents')),
-                ('shop', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='hdpr_consents', to='shuup.Shop')),
+                ('shop', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='gdpr_consents', to='shuup.Shop')),
                 ('user', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.PROTECT, related_name='gdpr_consents', to=settings.AUTH_USER_MODEL)),
             ],
             options={

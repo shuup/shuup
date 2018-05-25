@@ -19,7 +19,7 @@ from django.views.generic import TemplateView, View
 
 from shuup.core.models import Order
 from shuup.gdpr.anonymizer import Anonymizer
-from shuup.gdpr.models import GDPRCookieCategory, GDPRUserConsent
+from shuup.gdpr.models import GDPRCookieCategory
 from shuup.gdpr.utils import (
     add_consent_to_response_cookie, get_cookie_consent_data
 )
@@ -44,14 +44,16 @@ class GDPRConsentView(View):
         consent_documents = []
         if has_installed("shuup.simple_cms"):
             from shuup.simple_cms.models import Page, PageType
-            consent_documents = list(Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT))
-
-        # create the consent for the authenticated user
-        if request.user.is_authenticated():
-            GDPRUserConsent.create_for_user(request.user, shop, cookie_categories, consent_documents)
+            consent_documents = Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT)
 
         cookie_data = get_cookie_consent_data(cookie_categories, consent_documents)
-        response = HttpResponseRedirect(reverse("shuup:index"))
+
+        if request.META.get("HTTP_REFERER"):
+            redirect_url = request.META["HTTP_REFERER"]
+        else:
+            redirect_url = reverse("shuup:index")
+
+        response = HttpResponseRedirect(redirect_url)
         add_consent_to_response_cookie(response, cookie_data)
         return response
 

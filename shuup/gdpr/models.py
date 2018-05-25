@@ -49,7 +49,7 @@ class GDPRSettings(TranslatableModel):
 
 @python_2_unicode_compatible
 class GDPRCookieCategory(TranslatableModel):
-    shop = models.ForeignKey("shuup.Shop", related_name="hdpr_cookie_categories")
+    shop = models.ForeignKey("shuup.Shop", related_name="gdpr_cookie_categories")
     always_active = models.BooleanField(default=False, verbose_name=_('always active'))
     cookies = models.TextField(
         verbose_name=_("cookies used"),
@@ -81,11 +81,12 @@ class GDPRUserConsent(models.Model):
     created_on = models.DateTimeField(
         auto_now_add=True,
         editable=False,
+        db_index=True,
         verbose_name=_("created on")
     )
     shop = models.ForeignKey(
         "shuup.Shop",
-        related_name="hdpr_consents",
+        related_name="gdpr_consents",
         editable=False
     )
     user = models.ForeignKey(
@@ -100,31 +101,15 @@ class GDPRUserConsent(models.Model):
         blank=True,
         editable=False
     )
-    cookies = models.TextField(
-        verbose_name=_("cookies"),
-        help_text=_("List of cookies consent"),
-        blank=True,
-        editable=False
-    )
-    cookie_categories = models.ManyToManyField(
-        GDPRCookieCategory,
-        verbose_name=_("cookie categories"),
-        editable=False
-    )
 
     class Meta:
         verbose_name = _('gdpr user consent')
         verbose_name_plural = _('gdpr user consents')
 
     @classmethod
-    def create_for_user(cls, user, shop, consent_cookie_categories, consent_documents, consent_cookies=[]):
-        if not consent_cookies:
-            consent_cookies = [cookie_category.cookies for cookie_category in consent_cookie_categories]
-            consent_cookies = ",".join(list(set(",".join(consent_cookies).replace(" ", "").split(","))))
-
-        gdpr_user_consent = cls.objects.create(shop=shop, user=user, cookies=consent_cookies)
+    def create_for_user(cls, user, shop, consent_documents):
+        gdpr_user_consent = cls.objects.create(shop=shop, user=user)
         gdpr_user_consent.documents = consent_documents
-        gdpr_user_consent.cookie_categories = consent_cookie_categories
         return gdpr_user_consent
 
     def __str__(self):

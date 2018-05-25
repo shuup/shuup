@@ -17,18 +17,15 @@ from shuup.utils.i18n import format_datetime
 
 def get_consent_from_cookie(cookie_data):
     """
-    Returns a tuple of (consent_cookies, consent_cookie_categories, consent_documents)
+    Returns a tuple of (consent_cookies, consent_cookie_categories)
     read from the cookie data (dictionary)
 
     :param cookie_data dict: the dictionary parsed from cookie
     """
     from shuup.gdpr.models import GDPRCookieCategory
-    from shuup.simple_cms.models import Page
     consent_cookies = cookie_data.get("cookies", [])
     consent_cookie_categories = GDPRCookieCategory.objects.filter(id__in=cookie_data.get("cookie_categories", []))
-    documents_ids = [doc["id"] for doc in cookie_data.get("consent_documents", [])]
-    consent_documents = Page.objects.filter(id__in=documents_ids)
-    return (consent_cookies, consent_cookie_categories, consent_documents)
+    return (consent_cookies, consent_cookie_categories)
 
 
 def add_consent_to_response_cookie(response, cookie_data):
@@ -40,22 +37,16 @@ def add_consent_to_response_cookie(response, cookie_data):
     )
 
 
-def get_cookie_consent_data(consent_cookie_categories, consent_documents, consent_cookies=[]):
+def get_cookie_consent_data(cookie_categories, consent_documents=[]):
     """
-    :param list[GDPRCookieCategory] consent_cookie_categories: list of cookie category
-    :param list[simple_cms.Page] consent_documents: list of documents to
-    :param list[str] consent_cookies: list of consent cookie names, if not set,
-        if will be generated from consent_cookie_categories
+    :param list[GDPRCookieCategory] cookie_categories: list of cookie category
     """
-    if not consent_cookies:
-        consent_cookies = [cookie_category.cookies for cookie_category in consent_cookie_categories]
-        consent_cookies = list(set(",".join(consent_cookies).replace(" ", "").split(",")))
+    consent_cookies = [cookie_category.cookies for cookie_category in cookie_categories]
     return {
-        "cookies": consent_cookies,
-        "cookie_categories": [cookie_category.id for cookie_category in consent_cookie_categories],
+        "cookies": list(set(",".join(consent_cookies).replace(" ", "").split(","))),
         "documents": [
-            dict(url=consent_document.url, id=consent_document.id)
-            for consent_document in consent_documents
+            dict(id=doc.id, url=doc.url)
+            for doc in consent_documents
         ]
     }
 
@@ -120,3 +111,15 @@ def create_initial_required_cookie_category(shop):
                 "chosen for you based on your region as well as the overall site functionality."
             )
         )
+
+
+def create_user_consent_for_all_documents(shop, user):
+    from shuup.utils.djangoenv import has_installed
+    from shuup.gdpr.models import GDPRUserConsent, GDPRSettings
+
+    if not GDPRSettings.get_for_shop(shop).enabled or not has_installed("shuup.simple_cms"):
+        return
+
+    from shuup.simple_cms.models import Page, PageType
+    consent_documents = Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT)
+    GDPRUserConsent.create_for_user(user, shop, consent_documents)
