@@ -44,6 +44,10 @@
 
                     {{ render_form(form.forms.user_account) }}
 
+                    {% if form.forms.agreement %}
+                        {{ render_form(form.forms.agreement) }}
+                    {% endif %}
+
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
                         <i class="fa fa-check"></i> {% trans %}Register as a Company{% endtrans %}
                     </button>

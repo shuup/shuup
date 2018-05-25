@@ -82,6 +82,7 @@ Admin
 Front
 ~~~~~
 
+- Breaking change: pass the request from registration views to forms to allow custom logics
 - Create GDPR consent when placing the order
 - Add shop option to require payment and shipping methods on checkout
 - Add shops for carousels

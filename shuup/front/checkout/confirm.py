@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import json
 from logging import getLogger
 
 from django import forms
@@ -95,44 +94,12 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         return response
 
     def _handle_gdpr(self, form, order, response):
-        # create the consent for all documents and for all required cookies if user has accepted terms
-
-        if not form.cleaned_data.get("accept_terms") or not has_installed("shuup.gdpr"):
-            return
-
-        from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings, GDPRUserConsent
-        from shuup.gdpr.utils import add_consent_to_response_cookie, get_cookie_consent_data
-
-        if not GDPRSettings.get_for_shop(order.shop).enabled:
-            return
-
+        # create the consent for all documents
         user = self.request.user
-        cookies = []
-        cookie_categories = []
-        consent_documents = []
-
-        # check whether there is already a consent in the request Cookie
-        if settings.SHUUP_GDPR_CONSENT_COOKIE_NAME in self.request.COOKIES:
-            try:
-                from shuup.gdpr.utils import get_consent_from_cookie
-                cookie_data = json.loads(self.request.COOKIES[settings.SHUUP_GDPR_CONSENT_COOKIE_NAME])
-                cookies, cookie_categories, consent_documents = get_consent_from_cookie(cookie_data)
-            except:
-                logger.exception("Failed to parse GDPR from cookie")
-
-        if not cookie_categories:
-            cookie_categories = list(GDPRCookieCategory.objects.filter(shop=order.shop, always_active=True))
-
-        if not consent_documents and has_installed("shuup.simple_cms"):
-            from shuup.simple_cms.models import Page, PageType
-            consent_documents = list(
-                Page.objects.visible(order.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT))
-
-        if user.is_authenticated():
-            GDPRUserConsent.create_for_user(user, order.shop, cookie_categories, consent_documents, cookies)
-
-        cookie_data = get_cookie_consent_data(cookie_categories, consent_documents, cookies)
-        add_consent_to_response_cookie(response, cookie_data)
+        if not form.cleaned_data.get("accept_terms") or not has_installed("shuup.gdpr") or not user.is_authenticated():
+            return
+        from shuup.gdpr.utils import create_user_consent_for_all_documents
+        create_user_consent_for_all_documents(order.shop, user)
 
     def create_order(self):
         basket = self.basket
