@@ -69,6 +69,14 @@
                         <label for="password">{% trans %}Password{% endtrans %}</label>
                         <input type="password" name="password" class="form-control">
                     </div>
+                    {% if gdpr and gdpr.is_enabled(request) %}
+                        <div class="checkbox">
+                            <label for="accept_terms">
+                                <input type="checkbox" name="accept_terms" id="accept_terms">
+                                {% trans %}I accept the terms and conditions{% endtrans %}
+                            </label>
+                        </div>
+                    {% endif %}
                     <button type="submit" class="btn btn-primary btn-block">
                         {% trans %}Log in{% endtrans %}
                     </button>

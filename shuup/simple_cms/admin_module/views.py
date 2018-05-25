@@ -63,7 +63,7 @@ class PageForm(MultiLanguageModelForm):
             # we also need to soft_delete the old version of the consent document
             last_consent = Page.objects.get(pk=self.instance.pk)
             last_consent.make_gdpr_old_version()
-            last_consent.soft_delete()
+            last_consent.soft_delete(self.request.user)
 
             # let's create a new version
             self.instance.pk = None

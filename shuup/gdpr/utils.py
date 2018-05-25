@@ -68,19 +68,21 @@ def create_initial_privacy_policy_page(shop):
         now_date = now()
         company_name = (shop.public_name or shop.name)
         address = shop.contact_address
-        full_address = ", ".join([item for item in [
-            company_name,
-            address.street,
-            address.city,
-            address.region_code,
-            address.postal_code,
-            address.country.code
-        ] if item])
+        full_address = ""
+        if address:
+            full_address = ", ".join([item for item in [
+                company_name,
+                address.street,
+                address.city,
+                address.region_code,
+                address.postal_code,
+                address.country.code
+            ] if item])
         context = {
             "last_updated": format_datetime(now(), "LLLL dd, YYYY").capitalize(),
             "company_name": company_name,
             "full_address": full_address,
-            "store_email": address.email
+            "store_email": address.email if address else ""
         }
         content = loader.render_to_string(
             template_name="shuup/admin/gdpr/privacy_policy_page.jinja",
@@ -113,11 +115,34 @@ def create_initial_required_cookie_category(shop):
         )
 
 
+def is_documents_consent_in_sync(shop, user):
+    """
+    Returns whether the user has consent to the lastest document versions
+    """
+    from shuup.gdpr.models import GDPRUserConsent
+    last_user_consent = GDPRUserConsent.objects.filter(user=user, shop=shop).order_by("-created_on").first()
+    if not last_user_consent:
+        return False
+
+    # get all documents user has consent
+    user_consent_documents = last_user_consent.documents.all()
+
+    from shuup.simple_cms.models import Page, PageType
+    # if any of the current consent documentis not consent by user, he are not in sync
+    for consent_document in Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT):
+        if consent_document not in user_consent_documents:
+            return False
+
+    return True
+
+
 def create_user_consent_for_all_documents(shop, user):
-    from shuup.utils.djangoenv import has_installed
+    """
+    Create user consent for all available GDPR documents
+    """
     from shuup.gdpr.models import GDPRUserConsent, GDPRSettings
 
-    if not GDPRSettings.get_for_shop(shop).enabled or not has_installed("shuup.simple_cms"):
+    if not GDPRSettings.get_for_shop(shop).enabled or is_documents_consent_in_sync(shop, user):
         return
 
     from shuup.simple_cms.models import Page, PageType

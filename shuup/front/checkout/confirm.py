@@ -90,16 +90,12 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         else:
             response = redirect("shuup:order_process_payment", pk=order.pk, key=order.key)
 
-        self._handle_gdpr(form, order, response)
-        return response
-
-    def _handle_gdpr(self, form, order, response):
-        # create the consent for all documents
         user = self.request.user
-        if not form.cleaned_data.get("accept_terms") or not has_installed("shuup.gdpr") or not user.is_authenticated():
-            return
-        from shuup.gdpr.utils import create_user_consent_for_all_documents
-        create_user_consent_for_all_documents(order.shop, user)
+        if has_installed("shuup.gdpr") and form.cleaned_data.get("accept_terms") and user.is_authenticated():
+            from shuup.gdpr.utils import create_user_consent_for_all_documents
+            create_user_consent_for_all_documents(order.shop, user)
+
+        return response
 
     def create_order(self):
         basket = self.basket

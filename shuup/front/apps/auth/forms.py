@@ -13,6 +13,7 @@ from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.utils.translation import ugettext as _
 
 from shuup.core.models import get_person_contact
+from shuup.utils.djangoenv import has_installed
 
 
 class EmailAuthenticationForm(AuthenticationForm):
@@ -27,6 +28,14 @@ class EmailAuthenticationForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(EmailAuthenticationForm, self).__init__(*args, **kwargs)
         self.fields['username'].label = _("Username or email address")
+
+        if has_installed("shuup.gdpr"):
+            from shuup.gdpr.models import GDPRSettings
+            if GDPRSettings.get_for_shop(self.request.shop).enabled:
+                self.fields["accept_terms"] = forms.BooleanField(
+                    label=_("I accept the terms and conditions"),
+                    error_messages=dict(required=_("You must accept the terms to authenticate."))
+                )
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -62,4 +71,10 @@ class EmailAuthenticationForm(AuthenticationForm):
                 shop = self.request.shop
                 if shop not in user.contact.shops.all():
                     raise forms.ValidationError(_("You are not allowed to login to this shop."))
+
         super(EmailAuthenticationForm, self).confirm_login_allowed(user)
+
+        # create GDPR consent
+        if has_installed("shuup.gdpr") and "accept_terms" in self.cleaned_data:
+            from shuup.gdpr.utils import create_user_consent_for_all_documents
+            create_user_consent_for_all_documents(self.request.shop, user)

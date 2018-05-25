@@ -37,6 +37,9 @@
                         {% for f in form.hidden_fields() %}{{ f }}{% endfor %}
                         {{ render_field(form.username) }}
                         {{ render_field(form.password) }}
+                        {% if form.accept_terms %}
+                            {{ render_field(form.accept_terms) }}
+                        {% endif %}
                         <button type="submit" class="btn btn-primary btn-block">
                             <i class="fa fa-sign-in"></i> {% trans %}Log in{% endtrans %}
                         </button>
