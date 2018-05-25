@@ -53,7 +53,7 @@ def test_anonymous_contact():
     assert a1.identifier is None
     assert a1.is_active, "AnonymousContact is active"
     assert a1.language == ''
-    assert a1.marketing_permission
+    assert a1.marketing_permission is False
     assert a1.phone == ''
     assert a1.www == ''
     assert a1.timezone is None

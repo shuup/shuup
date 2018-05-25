@@ -255,14 +255,14 @@ def test_content_wizard_pane(rf, admin_user, settings):
     assert SavedViewConfig.objects.count() == 1
     assert Script.objects.count() == 1
 
-    request = apply_request_middleware(rf.get("/"))
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     response = WizardView.as_view()(request)
     assert response.status_code == 302
     assert response["Location"] == reverse("shuup_admin:dashboard")
 
 
 @pytest.mark.django_db
-def test_content_wizard_pane(rf, admin_user, settings):
+def test_content_wizard_pane2(rf, admin_user, settings):
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
         "shuup.admin.modules.content.views.ContentWizardPane"
     ]
