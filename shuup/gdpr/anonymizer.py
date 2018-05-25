@@ -40,18 +40,6 @@ class Anonymizer(object):
         "username": "random_username"
     }
 
-    anonymizers = {
-        "PersonContact": "anonymize_contact",
-        "CompanyContact": "anonymize_company",
-        "User": "anonymize_user"
-    }
-
-    def anonymize(self, pk, cls):
-        cls_name = cls.__name__
-        if cls_name not in self.anonymizers:
-            raise ValueError("Cannot anonymize %s" % cls_name)
-        return getattr(self, self.anonymizers[cls_name])(pk)
-
     def random_string(self, len=8):
         return get_random_string(len)
 
@@ -80,7 +68,7 @@ class Anonymizer(object):
         return int(get_random_string(9, "123456789"))
 
     def random_username(self):
-        return get_random_string(32, "1234567890")
+        return get_random_string(20, "1234567890")
 
     def anonymize_contact(self, pk):
         contact = Contact.objects.get(pk=pk)
@@ -97,34 +85,54 @@ class Anonymizer(object):
         for order in contact.customer_orders.all():
             self.anonymize_order(order)
 
-        for order in contact.orderer_orders.all():
-            self.anonymize_order(order)
-
         # anonymize all Front baskets
         for basket in contact.customer_baskets.all():
-            self.anonymize_object(basket)
-        for basket in contact.orderer_baskets.all():
             self.anonymize_object(basket)
 
         # anonymize all Core baskets
         for basket in contact.customer_core_baskets.all():
-            self.anonymize_object(basket)
-        for basket in contact.orderer_core_baskets.all():
             self.anonymize_object(basket)
 
         self.anonymize_object(contact.default_shipping_address)
         self.anonymize_object(contact.default_billing_address)
         self.anonymize_object(contact)
 
+        for order in Order.objects.incomplete().filter(customer=contact):
+            order.set_canceled()
+
         contact.is_active = False
         contact.save()
 
     def anonymize_company(self, company):
+        if not company:
+            return
         assert isinstance(company, CompanyContact)
         self.anonymize_contact(company.id)
 
     def anonymize_person(self, person):
+        if not person:
+            return
         assert isinstance(person, PersonContact)
+
+        for order in person.orderer_orders.all():
+            self.anonymize_order(order)
+
+        for basket in person.orderer_baskets.all():
+            self.anonymize_object(basket)
+
+        for basket in person.orderer_core_baskets.all():
+            self.anonymize_object(basket)
+
+        # anonymize related user
+        if hasattr(person, "user") and person.user:
+            self.anonymize_user(person.user)
+
+        # check if there is any company related to the person
+        # if so, anonymize it if he is the unique member
+        for company in person.company_memberships.all():
+            if company.members.count() == 1:
+                self.anonymize_company(company)
+
         self.anonymize_contact(person.pk)
 
     def anonymize_order(self, order):
@@ -160,6 +168,8 @@ class Anonymizer(object):
             self.anonymize_object(qs_obj)
 
     def anonymize_user(self, user):
+        if not user:
+            return
         self.anonymize_object(user)
         user.is_active = False
         user.save()

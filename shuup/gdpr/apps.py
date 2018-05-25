@@ -20,6 +20,10 @@ class AppConfig(shuup.apps.AppConfig):
         "customer_dashboard_items": [
             "shuup.gdpr.dashboard_items:GDPRDashboardItem"
         ],
+        "admin_contact_toolbar_action_item": [
+            "shuup.gdpr.admin_module.toolbar:AnonymizeContactToolbarButton",
+            "shuup.gdpr.admin_module.toolbar:DownloadDataToolbarButton",
+        ],
         "xtheme_resource_injection": [
             "shuup.gdpr.resources:add_gdpr_consent_resources"
         ]
