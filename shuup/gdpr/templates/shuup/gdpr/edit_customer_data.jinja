@@ -57,6 +57,7 @@
 
 {% block extrajs %}
 <script>
+    {{ super() }}
     (function () {
         $("#anonymize-btn").click(function (e) {
             if (confirm("{{ _("Are you sure? This cannot be undone.") }}")) {

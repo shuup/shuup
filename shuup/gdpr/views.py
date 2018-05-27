@@ -18,6 +18,7 @@ from django.http import (
 from django.views.generic import TemplateView, View
 
 from shuup.core.models import Order
+from shuup.front.views.dashboard import DashboardViewMixin
 from shuup.gdpr.anonymizer import Anonymizer
 from shuup.gdpr.models import GDPRCookieCategory
 from shuup.gdpr.utils import (
@@ -58,7 +59,7 @@ class GDPRConsentView(View):
         return response
 
 
-class GDPRCustomerDashboardView(TemplateView):
+class GDPRCustomerDashboardView(DashboardViewMixin, TemplateView):
     template_name = "shuup/gdpr/edit_customer_data.jinja"
 
     def get_context_data(self, **kwargs):
@@ -102,21 +103,5 @@ class GDPRAnonymizeView(View):
         with atomic():
             anonymizer = Anonymizer()
             anonymizer.anonymize_person(self.request.person)
-
-            # check if there is any company related to the person
-            # if so, anonymize it if he is the unique member
-            for company in self.request.person.company_memberships.all():
-                if company.members.count() == 1:
-                    anonymizer.anonymize_company(company)
-
-                    # cancel company orders
-                    for order in Order.objects.incomplete().filter(customer=company):
-                        order.set_canceled()
-
-            if hasattr(self.request.person, "user"):
-                anonymizer.anonymize_user(self.request.person.user)
-
-            for order in Order.objects.incomplete().filter(customer=self.request.person):
-                order.set_canceled()
 
         return HttpResponseRedirect(reverse("shuup:index"))

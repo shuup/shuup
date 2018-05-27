@@ -7,21 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import CompanyContact
 from shuup.front.utils.dashboard import DashboardItem
 
 
 class GDPRDashboardItem(DashboardItem):
+    template_name = None
     title = _("My Data")
     icon = "fa fa-shield"
     _url = "shuup:gdpr_customer_dashboard"
+    description = _("Customer data")
 
     def show_on_dashboard(self):
         return False
-
-    def get_context(self):
-        context = super(GDPRDashboardItem, self).get_context()
-        customer = self.request.customer
-        context["customer"] = customer
-        context["is_company"] = isinstance(customer, CompanyContact)
-        return context
