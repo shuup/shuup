@@ -70,12 +70,17 @@
                         <input type="password" name="password" class="form-control">
                     </div>
                     {% if gdpr and gdpr.is_enabled(request) %}
-                        <div class="checkbox">
-                            <label for="accept_terms">
-                                <input type="checkbox" name="accept_terms" id="accept_terms">
-                                {% trans %}I accept the terms and conditions{% endtrans %}
-                            </label>
-                        </div>
+                        {% for page in gdpr.get_documents(request) %}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="{{ "accept_{}".format(page.id) }}">
+                                    {{ _("I have read and accept the <a href='{}' target='_blank'>{}</a>").format(
+                                        url("shuup:cms_page", url=page.url),
+                                        page.title
+                                    )|safe }}
+                                </label>
+                            </div>
+                        {% endfor %}
                     {% endif %}
                     <button type="submit" class="btn btn-primary btn-block">
                         {% trans %}Log in{% endtrans %}

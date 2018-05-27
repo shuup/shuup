@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from registration.forms import RegistrationForm
 
@@ -61,28 +62,42 @@ class PersonRegistrationForm(RegistrationForm):
         if has_installed("shuup.gdpr"):
             from shuup.gdpr.models import GDPRSettings
             if GDPRSettings.get_for_shop(self.request.shop).enabled:
-                self.fields["accept_terms"] = forms.BooleanField(
-                    label=_("I accept the terms and conditions"),
-                    error_messages=dict(required=_("You must accept the terms to register."))
-                )
+                from shuup.simple_cms.models import Page, PageType
+                for page in Page.objects.visible(self.request.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT):
+                    self.fields["accept_{}".format(page.id)] = forms.BooleanField(
+                        label=_("I have read and accept the {}").format(page.title),
+                        help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
+                            reverse("shuup:cms_page", kwargs=dict(url=page.url)),
+                            page.title
+                        ),
+                        error_messages=dict(required=_("You must accept to this to register."))
+                    )
 
     def save(self, *args, **kwargs):
         user = super(PersonRegistrationForm, self).save(*args, **kwargs)
         get_person_contact(user).shops.add(self.request.shop)
 
         if has_installed("shuup.gdpr"):
-            if self.cleaned_data["accept_terms"]:
-                from shuup.gdpr.utils import create_user_consent_for_all_documents
-                create_user_consent_for_all_documents(self.request.shop, user)
+            from shuup.gdpr.utils import create_user_consent_for_all_documents
+            create_user_consent_for_all_documents(self.request.shop, user)
 
         return user
 
 
 class CompanyAgreementForm(forms.Form):
-    accept_terms = forms.BooleanField(
-        label=_("I accept the terms and conditions"),
-        error_messages=dict(required=_("You must accept the terms to register."))
-    )
+    def __init__(self, *args, **kwargs):
+        self.shop = kwargs.pop("shop")
+        super(CompanyAgreementForm, self).__init__(*args, **kwargs)
+        from shuup.simple_cms.models import Page, PageType
+        for page in Page.objects.visible(self.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT):
+            self.fields["accept_{}".format(page.id)] = forms.BooleanField(
+                label=_("I have read and accept the {}").format(page.title),
+                help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
+                    reverse("shuup:cms_page", kwargs=dict(url=page.url)),
+                    page.title
+                ),
+                error_messages=dict(required=_("You must accept this to register."))
+            )
 
 
 class CompanyRegistrationForm(FormGroup):
@@ -98,7 +113,7 @@ class CompanyRegistrationForm(FormGroup):
         if has_installed("shuup.gdpr"):
             from shuup.gdpr.models import GDPRSettings
             if GDPRSettings.get_for_shop(self.request.shop).enabled:
-                self.add_form_def('agreement', CompanyAgreementForm)
+                self.add_form_def('agreement', CompanyAgreementForm, kwargs=dict(shop=self.request.shop))
 
     def instantiate_forms(self):
         super(CompanyRegistrationForm, self).instantiate_forms()

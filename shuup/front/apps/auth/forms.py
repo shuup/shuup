@@ -10,6 +10,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from shuup.core.models import get_person_contact
@@ -32,10 +33,16 @@ class EmailAuthenticationForm(AuthenticationForm):
         if has_installed("shuup.gdpr"):
             from shuup.gdpr.models import GDPRSettings
             if GDPRSettings.get_for_shop(self.request.shop).enabled:
-                self.fields["accept_terms"] = forms.BooleanField(
-                    label=_("I accept the terms and conditions"),
-                    error_messages=dict(required=_("You must accept the terms to authenticate."))
-                )
+                from shuup.simple_cms.models import Page, PageType
+                for page in Page.objects.visible(self.request.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT):
+                    self.fields["accept_{}".format(page.id)] = forms.BooleanField(
+                        label=_("I have read and accept the {}").format(page.title),
+                        help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
+                            reverse("shuup:cms_page", kwargs=dict(url=page.url)),
+                            page.title
+                        ),
+                        error_messages=dict(required=_("You must accept to this to authenticate."))
+                    )
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -75,6 +82,6 @@ class EmailAuthenticationForm(AuthenticationForm):
         super(EmailAuthenticationForm, self).confirm_login_allowed(user)
 
         # create GDPR consent
-        if has_installed("shuup.gdpr") and "accept_terms" in self.cleaned_data:
+        if has_installed("shuup.gdpr"):
             from shuup.gdpr.utils import create_user_consent_for_all_documents
             create_user_consent_for_all_documents(self.request.shop, user)
