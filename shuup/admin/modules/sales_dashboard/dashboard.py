@@ -299,5 +299,5 @@ def get_recent_orders_block(request, currency=None):
             "orders": orders
         }
     )
-    block.size = "small"
+    block.size = "medium"
     return block
