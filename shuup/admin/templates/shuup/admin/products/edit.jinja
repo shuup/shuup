@@ -51,63 +51,86 @@
                     scrollTop: $elem.offset().top - $("#top-header").height() - 50
                 }, 100);
             }
-
-            $.tour("setPageSteps", [
-                {
-                    title: "Add a new product",
-                    icon: "{{ static('shuup_admin/img/product.png') }}",
-                    helpPage: "products.html",
-                    text: [
-                        "{% trans %}You are adding a product.{% endtrans %}",
-                        "{% trans %}To make it stand out, give it an awesome description and picture. This is what will help your shoppers learn about your products. It will also help shoppers find them in the store and on the web.{% endtrans %}",
-                        "{% trans %}You can set its price or size and many other things in the option boxes for each product.{% endtrans %}"
-                    ]
-                },
-                {
+        })();
+        $(document).ready(function() {
+            var steps = [];
+            steps.push({
+                title: "{% trans %}Add a new product{% endtrans %}",
+                icon: "{{ static('shuup_admin/img/product.png') }}",
+                helpPage: "products.html",
+                text: [
+                    "{% trans %}You are adding a product.{% endtrans %}",
+                    "{% trans %}To make it stand out, give it an awesome description and picture. This is what will help your shoppers learn about your products. It will also help shoppers find them in the store and on the web.{% endtrans %}",
+                    "{% trans %}You can set its price or size and many other things in the option boxes for each product.{% endtrans %}"
+                ]
+            });
+            if ($("a[href='#basic-information-section']").length > 0) {
+                steps.push({
                     title: "{% trans %}Basic Information{% endtrans %}",
                     text: ["{% trans %}All the required product information.{% endtrans %}"],
                     attachTo: "a[href='#basic-information-section'] bottom",
                     scrollTo: false,
-                },
-                {
+                });
+            }
+            if ($("a[href='#additional-details-section']").length > 0) {
+                steps.push({
                     title: "{% trans %}Additional Details{% endtrans %}",
                     text: ["{% trans %}Product features such as size, weight and keywords are located here.{% endtrans %}"],
                     attachTo: "a[href='#additional-details-section'] bottom",
                     scrollTo: false,
-                },
-                {
+                });
+            }
+            if ($("a[href='#manufacturer-section']").length > 0) {
+                steps.push({
                     title: "{% trans %}Manufacturer{% endtrans %}",
                     text: ["{% trans %}If you know the product manufacturer, it can be set here.{% endtrans %}"],
                     attachTo: "a[href='#manufacturer-section'] bottom",
                     scrollTo: false,
-                },
-                {
+                });
+            }
+            if ($("a[href*='-additional-section']").length > 0) {
+                steps.push({
                     title: "{% trans %}Additional Information{% endtrans %}",
                     text: ["{% trans %}Strictly shop related information. For example set the minimum price applicable in this shop.{% endtrans %}"],
                     attachTo: "a[href*='-additional-section'] bottom",
                     scrollTo: false,
-                },
-                {
+                });
+            }
+            if ($("a[href='#contact-group-media-section']").length > 0) {
+                steps.push({
                     title: "{% trans %}Product Files{% endtrans %}",
                     text: ["{% trans %}You can attach files such as manual to the merchandise(s) here.{% endtrans %}"],
                     attachTo: "a[href='#product-media-section'] bottom",
                     scrollTo: false,
-                },
-                {
+                });
+            }
+            if ($("a[href='#contact-group-images-section']").length > 0) {
+                steps.push({
                     title: "{% trans %}Images{% endtrans %}",
                     text: ["{% trans %}Showcase your merchandise here.{% endtrans %}"],
                     attachTo: "a[href='#product-images-section'] bottom",
                     scrollTo: false,
-                },
-                {
+                });
+            }
+            if ($("a[href='#contact-group-pricing-section']").length > 0) {
+                steps.push({
                     title: "{% trans %}Contact Group Pricing{% endtrans %}",
                     text: ["{% trans %}Set specific prices for your customer segments such as loyalty, tier status or season here.{% endtrans %}"],
                     attachTo: "a[href='#contact-group-pricing-section'] bottom",
                     scrollTo: false,
-                }
-            ]);
-        })();
-
+                });
+            }
+            if ($("a[href='#contact-group-discount-section']").length > 0) {
+                steps.push({
+                    title: "{% trans %}Contact Group Discounts{% endtrans %}",
+                    text: ["{% trans %}Here you can set individual discount amounts for different contact groups. " +
+                    "The discount amount may be visible on storefront. These groups are defined in{% endtrans %}"],
+                    attachTo: "a[href='#contact-group-discount-section'] bottom",
+                    scrollTo: false,
+                });
+            }
+            $.tour("setPageSteps", steps);
+        });
     </script>
     {% for product_section in product_sections %}
         {% if product_section.extra_js %}
