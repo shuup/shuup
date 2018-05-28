@@ -16,33 +16,43 @@
             return [];
         }
         let steps = [];
-        steps = steps.concat([
-            {
+
+        if ($("li a[data-target-id='quicklinks']").length > 0) {
+            steps.push({
                 title: gettext("Quick Links"),
                 text: [
                     gettext("Quick Links to your most used features.")
                 ],
                 attachTo: "li a[data-target-id='quicklinks'] right"
-            }, {
+            });
+        }
+        if ($("li a[data-target-id='category-1']").length > 0) {
+            steps.push({
                 title: gettext("Orders"),
                 text: [
                     gettext("Track and filter your customers’ orders here."),
                 ],
                 attachTo: "li a[data-target-id='category-1'] right"
-            }, {
+            });
+        }
+        if ($("li a[data-target-id='category-2']").length > 0) {
+            steps.push({
                 title: gettext("Products"),
                 text: [
                     gettext("All your exciting products and features are located here.")
                 ],
                 attachTo: "li a[data-target-id='category-2'] right"
-            }, {
+            });
+        }
+        if ($("li a[data-target-id='category-3']").length > 0) {
+            steps.push({
                 title: gettext("Contacts"),
                 text: [
                     gettext("All your customer data is located here. Target and organize your clients details your way!")
                 ],
                 attachTo: "li a[data-target-id='category-3'] right"
-            }
-        ]);
+            });
+        }
 
         if ($("li a[data-target-id='category-5']").length > 0) {
             steps.push({
@@ -68,11 +78,13 @@
             });
         }
 
-        steps.push({
-            title: gettext("Shops"),
-            text: [gettext("Place for your Shop specific settings. You can customize taxes, currencies, customer groups, and many other things in this menu.")],
-            attachTo: "li a[data-target-id='category-6'] right"
-        });
+        if ($("li a[data-target-id='category-6']").length > 0) {
+            steps.push({
+                title: gettext("Shops"),
+                text: [gettext("Place for your Shop specific settings. You can customize taxes, currencies, customer groups, and many other things in this menu.")],
+                attachTo: "li a[data-target-id='category-6'] right"
+            });
+        }
 
         if ($("li a[data-target-id='category-7']").length > 0) {
             steps.push({
@@ -82,31 +94,41 @@
             });
         }
 
-        steps = steps.concat([{
-            title: gettext("Settings"),
-            text: [
-                gettext("The nuts and bolts of your store are found here. From individual country tax-regulations to your contact details.")
-            ],
-            attachTo: "li a[data-target-id='category-8'] right"
-        }, {
-            title: gettext("Search"),
-            text: [
-                gettext("Lost and cannot find your way? No worries, you can search contacts, settings, add-ons and more features from here.")
-            ],
-            attachTo: "#site-search bottom"
-        }, {
-            title: gettext("View your storefront"),
-            text: [
-                gettext("Preview your shop and all the cool features you have created!")
-            ],
-            attachTo: ".shop-btn.visit-store left"
-        }, {
+        if ($("li a[data-target-id='category-8']").length > 0) {
+            steps.push({
+                title: gettext("Settings"),
+                text: [
+                    gettext("The nuts and bolts of your store are found here. From individual country tax-regulations to your contact details.")
+                ],
+                attachTo: "li a[data-target-id='category-8'] right"
+            });
+        }
+        if ($("#site-search").length > 0 && $("#site-search").is(":visible")) {
+            steps.push({
+                title: gettext("Search"),
+                text: [
+                    gettext("Lost and cannot find your way? No worries, you can search contacts, settings, add-ons and more features from here.")
+                ],
+                attachTo: "#site-search bottom"
+            });
+        }
+        if ($(".shop-btn.visit-store").length > 0) {
+            steps.push({
+                title: gettext("View your storefront"),
+                text: [
+                    gettext("Preview your shop and all the cool features you have created!")
+                ],
+                attachTo: ".shop-btn.visit-store left"
+            });
+        }
+
+        steps.push({
             title: gettext("We're done!"),
             text: [
                 gettext("It was nice to show you around!"),
                 gettext("If you need to run it again, fire it up from the menu in the top right.")
             ]
-        }]);
+        });
         return steps;
     }
 
