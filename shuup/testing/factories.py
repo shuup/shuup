@@ -699,7 +699,7 @@ def create_random_address(fake=None, **values):
     return address
 
 
-def create_random_person(locale=None, minimum_name_comp_len=0):
+def create_random_person(locale=None, minimum_name_comp_len=0, shop=None):
     """
     Create a random PersonContact from the given locale (or a random one).
 
@@ -736,7 +736,7 @@ def create_random_person(locale=None, minimum_name_comp_len=0):
         phone=phone,
     )
 
-    return PersonContact.objects.create(
+    contact = PersonContact.objects.create(
         email=email,
         phone=phone,
         name=name,
@@ -749,6 +749,9 @@ def create_random_person(locale=None, minimum_name_comp_len=0):
         gender=random.choice("mfuo"),
         language=fake.language
     )
+    if shop:
+        contact.shops.add(shop)
+    return contact
 
 
 def create_random_contact_group():
@@ -764,7 +767,7 @@ def create_random_contact_group():
     )
 
 
-def create_random_company():
+def create_random_company(shop=None):
     fake = get_faker(["company", "person", "internet"])
     name = fake.company()
     email = get_random_email(fake)
@@ -772,7 +775,7 @@ def create_random_company():
     language = random.choice(["en", fake.locale_language])
     address = create_random_address(name=name, email=email, phone=phone)
 
-    return CompanyContact.objects.create(
+    contact = CompanyContact.objects.create(
         email=email,
         phone=phone,
         name=name,
@@ -780,6 +783,9 @@ def create_random_company():
         default_billing_address=address,
         language=language
     )
+    if shop:
+        contact.shops.add(shop)
+    return contact
 
 
 def create_random_order(customer=None, products=(), completion_probability=0, shop=None):

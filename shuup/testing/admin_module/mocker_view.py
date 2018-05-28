@@ -26,23 +26,26 @@ class Mockers(object):
     The docstrings for the callables are user-visible.
     """
 
-    def mock_order(self):
+    def mock_order(self, **kwargs):
         """ Create a random order """
-        return create_random_order(completion_probability=0.8)
+        shop = kwargs.pop("shop")
+        return create_random_order(completion_probability=0.8, shop=shop)
 
-    def mock_person(self):
+    def mock_person(self, **kwargs):
         """ Create a random person """
-        return create_random_person()
+        shop = kwargs.pop("shop")
+        return create_random_person(shop=shop)
 
-    def mock_company(self):
+    def mock_company(self, **kwargs):
         """ Create a random company """
-        return create_random_company()
+        shop = kwargs.pop("shop")
+        return create_random_company(shop=shop)
 
-    def mock_customer_group(self):
+    def mock_customer_group(self, **kwargs):
         """ Create a random contact group """
         return create_random_contact_group()
 
-    def mock_product_attribute(self):
+    def mock_product_attribute(self, **kwargs):
         """ Create a random product attribute """
         return create_random_product_attribute()
 
@@ -76,7 +79,7 @@ class MockerView(FormView):
         assert callable(mocker)
         for n in range(data["count"]):
             try:
-                value = mocker()
+                value = mocker(shop=self.request.shop)
                 if value:
                     messages.success(self.request, "Created: %s" % value)
             except Exception as e:
