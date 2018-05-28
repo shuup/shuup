@@ -232,7 +232,7 @@
                 });
             }
 
-            if(type == "last") {
+            if(type === "last") {
                 buttons.push({
                     text: "OK",
                     classes: "btn btn-primary",
@@ -251,7 +251,7 @@
 
         if(config.tourKey) {
             tour.on("cancel", () => {
-                $.post("/sa/tour/", {"csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, "tourKey": config.tourKey});
+                $.post(config.url, {"csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, "tourKey": config.tourKey});
             });
         }
         tour.start();
