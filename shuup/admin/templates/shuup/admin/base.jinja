@@ -81,9 +81,9 @@
         {% endif %}
         {% if tour_complete is defined and not tour_complete %}
         <script>
-            (function(){
-                $.tour({tourKey: "{{ tour_key }}"});
-            }());
+            $(document).ready(function() {
+                $.tour({tourKey: "{{ tour_key }}", url: ShuupAdminConfig.browserUrls.tour});
+            });
         </script>
         {% endif %}
     </body>

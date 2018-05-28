@@ -76,7 +76,8 @@ BROWSER_URL_NAMES = {
     "media": "shuup_admin:media.browse",
     "product": "shuup_admin:shop_product.list",
     "contact": "shuup_admin:contact.list",
-    "setLanguage": "shuup_admin:set-language"
+    "setLanguage": "shuup_admin:set-language",
+    "tour": "shuup_admin:tour"
 }
 
 
