@@ -29,6 +29,9 @@ class ImportForm(forms.Form):
     file = forms.FileField(label=_("File"))
 
     def __init__(self, **kwargs):
+        self.request = kwargs.pop("request")
         super(ImportForm, self).__init__(**kwargs)
-        self.fields["shop"].choices = [(shop.pk, shop.name) for shop in Shop.objects.all()]
+        self.fields["shop"].choices = [
+            (shop.pk, shop.name) for shop in Shop.objects.filter(staff_members=self.request.user)
+        ]
         self.fields["importer"].choices = get_importer_choices()

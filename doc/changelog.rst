@@ -104,6 +104,11 @@ Simple CMS
 
 - Add shop attribute in `Page` model to work in multishop environments
 
+Importer
+~~~~~~~~
+
+- Add multi shop support
+
 Shuup 1.5.0
 -----------
 
