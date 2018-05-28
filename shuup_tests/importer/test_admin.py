@@ -108,6 +108,7 @@ def test_admin(rf, admin_user):
     view = ImportView.as_view()
     activate("en")
     shop = get_default_shop()
+    shop.staff_members.add(admin_user)
     tax_class = get_default_tax_class()
     product_type = get_default_product_type()
 
@@ -139,6 +140,7 @@ def test_invalid_files(rf, admin_user):
 
     activate("en")
     shop = get_default_shop()
+    shop.staff_members.add(admin_user)
     client = SmartClient()
     client.login(username="admin", password="password")
     csv_content = str.encode("sku;name\n%s;%s" % (sku, name))
@@ -177,6 +179,7 @@ def test_invalid_file_type(rf, admin_user):
 
     activate("en")
     shop = get_default_shop()
+    shop.staff_members.add(admin_user)
     client = SmartClient()
     client.login(username="admin", password="password")
     csv_content = str.encode("sku;name\n%s;%s" % (sku, name))
@@ -245,6 +248,7 @@ def test_remap(rf, admin_user):
 
     activate("en")
     shop = get_default_shop()
+    shop.staff_members.add(admin_user)
     client = SmartClient()
     client.login(username="admin", password="password")
     csv_content = str.encode("sku;name;gtiin\n%s;%s;111" % (sku, name))

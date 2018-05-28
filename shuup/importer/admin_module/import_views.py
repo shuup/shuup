@@ -15,6 +15,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.core.models import Shop, Supplier
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
 from shuup.importer.transforms import transform_file
@@ -29,7 +30,7 @@ class ImportProcessView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         self.importer_cls = get_importer(request.GET.get("importer"))
         self.model_str = request.GET.get("importer")
-        self.shop = Shop.objects.get(pk=request.GET.get("shop"))
+        self.shop = Shop.objects.get(pk=request.GET.get("shop"), staff_members=request.user)
         self.lang = request.GET.get("lang")
         return super(ImportProcessView, self).dispatch(request, *args, **kwargs)
 
@@ -119,7 +120,13 @@ class ImportView(FormView):
         lang = request.POST.get("language")
         return redirect("%s?n=%s&importer=%s&shop=%s&lang=%s" % (next_url, import_name, importer, shop_id, lang))
 
+    def get_form_kwargs(self):
+        kwargs = super(ImportView, self).get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super(ImportView, self).get_context_data(**kwargs)
-        context["supplier"] = Supplier.objects.first()
+        shop = get_shop(self.request)
+        context["supplier"] = Supplier.objects.filter(shops=shop).first()
         return context
