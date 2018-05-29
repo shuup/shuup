@@ -10,6 +10,7 @@ from django.test.utils import override_settings
 
 from shuup.core.basket import get_basket
 from shuup.core.models import get_person_contact, OrderLineType
+from shuup.utils.importing import cached_load
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 
@@ -43,3 +44,22 @@ def test_set_customer_with_custom_basket_lines(rf):
         basket.refresh_lines()
         basket.save()
         assert basket.customer == get_person_contact(user)
+
+
+@pytest.mark.django_db
+def test_basket_with_custom_shop(rf):
+    """
+    Set a different shop for basket
+    """
+    with override_settings(**CORE_BASKET_SETTINGS):
+        shop1 = factories.get_default_shop()
+        shop2 = factories.get_shop(identifier="shop2")
+        user = factories.create_random_user()
+        request = apply_request_middleware(rf.get("/"), user=user, shop=shop1)
+        basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
+        basket = basket_class(request, "basket", shop=shop2)
+        assert basket.shop == shop2
+
+        product_shop2 = factories.create_product("product_shop2", shop2, factories.get_default_supplier(), 10)
+        line = basket.add_product(factories.get_default_supplier(), shop2, product_shop2, 1)
+        assert line.shop == shop2

@@ -20,8 +20,8 @@ from shuup.front.checkout.methods import (
 
 
 class BaseBasket(Basket):
-    def __init__(self, request, basket_name="basket"):
-        super(BaseBasket, self).__init__(request)
+    def __init__(self, request, basket_name="basket", shop=None, **kwargs):
+        super(BaseBasket, self).__init__(request, basket_name, shop)
         self.basket_name = basket_name
 
     def _load(self):
