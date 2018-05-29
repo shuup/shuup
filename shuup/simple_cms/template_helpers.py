@@ -14,7 +14,7 @@ class SimpleCMSTemplateHelpers(object):
 
     @contextfunction
     def get_page_by_identifier(self, context, identifier):
-        return Page.objects.for_shop(context["request"].shop).filter(identifier=identifier).first()
+        return Page.objects.for_shop(context["request"].shop).filter(identifier=identifier, deleted=False).first()
 
     @contextfunction
     def get_visible_pages(self, context):

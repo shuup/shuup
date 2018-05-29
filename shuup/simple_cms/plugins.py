@@ -86,7 +86,7 @@ class PageLinksPlugin(TemplatedPlugin):
         if not show_all_pages:
             pages_qs = pages_qs.filter(id__in=selected_pages)
 
-        pages_qs = pages_qs.for_shop(context["request"].shop)
+        pages_qs = pages_qs.for_shop(context["request"].shop).filter(deleted=False)
 
         return {
             "title": self.get_translated_value("title"),

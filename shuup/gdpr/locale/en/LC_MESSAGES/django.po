@@ -1,0 +1,221 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-28 11:49+0000\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "GDPR"
+msgstr ""
+
+msgid "Anonymize"
+msgstr ""
+
+msgid ""
+"This action will replace all contact personal data with random values making "
+"it impossible to be identified. The account will also be deactivated and any "
+"pending order(s) will be canceled. Are you sure?"
+msgstr ""
+
+msgid "Download data"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "General Data Protection Regulation"
+msgstr ""
+
+msgid "Contact anonymized!"
+msgstr ""
+
+msgid "My Data"
+msgstr ""
+
+msgid "Customer data"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "Define if the GDPR is active."
+msgstr ""
+
+msgid "cookie banner content"
+msgstr ""
+
+msgid "The text to be presented to users in a pop-up warning."
+msgstr ""
+
+msgid "cookie privacy excerpt"
+msgstr ""
+
+msgid "The summary text to be presented about cookie privacy."
+msgstr ""
+
+msgid "gdpr settings"
+msgstr ""
+
+msgid "GDPR for {}"
+msgstr ""
+
+msgid "always active"
+msgstr ""
+
+msgid "cookies used"
+msgstr ""
+
+msgid ""
+"Comma separated list of cookies names, prefix or suffix that will be "
+"included in this category, e.g. _ga, mysession, user_c_"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "how we use"
+msgstr ""
+
+msgid "Describe the purpose of this category of cookies and how it is used."
+msgstr ""
+
+msgid "gdpr cookie category"
+msgstr ""
+
+msgid "gdpr cookie categories"
+msgstr ""
+
+msgid "GDPR cookie category for {}"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "consent documents"
+msgstr ""
+
+msgid "gdpr user consent"
+msgstr ""
+
+msgid "gdpr user consents"
+msgstr ""
+
+msgid "GDPR user consent in {} for user {} in shop {}"
+msgstr ""
+
+msgid "General Settings"
+msgstr ""
+
+msgid "Cookie Categories"
+msgstr ""
+
+msgid "Add new cookie category"
+msgstr ""
+
+msgid "Use this form to create a new cookie category"
+msgstr ""
+
+msgid "Customer Data"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "My data"
+msgstr ""
+
+msgid "Download your data"
+msgstr ""
+
+msgid "Download all my data"
+msgstr ""
+
+msgid ""
+"This action will collect all your personal data and order history and will "
+"serialize it in a JSON file."
+msgstr ""
+
+msgid "Anonymize your account"
+msgstr ""
+
+msgid "You have pending orders!"
+msgstr ""
+
+msgid "If you anonymize your account now, all orders will be canceled."
+msgstr ""
+
+msgid "Anonymize my account"
+msgstr ""
+
+msgid ""
+"This action will replace all your personal data with random values making it "
+"impossible to identify you. Your account will also be deactivated."
+msgstr ""
+
+msgid "This action is irreversible!"
+msgstr ""
+
+msgid "Are you sure? This cannot be undone."
+msgstr ""
+
+msgid "Privacy Preferences"
+msgstr ""
+
+msgid "I Agree"
+msgstr ""
+
+msgid "Privacy Preference Center"
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Cookie Settings"
+msgstr ""
+
+msgid "Consent Management"
+msgstr ""
+
+msgid "You read and agreed to our {}"
+msgstr ""
+
+msgid "Read"
+msgstr ""
+
+msgid "Always active"
+msgstr ""
+
+msgid "Cookies: "
+msgstr ""
+
+msgid "Save preferences"
+msgstr ""
+
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "privacy-policy"
+msgstr ""
+
+msgid "Required"
+msgstr ""
+
+msgid ""
+"We use these cookies to ensure the correct language is being chosen for you "
+"based on your region as well as the overall site functionality."
+msgstr ""

@@ -5,9 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from logging import getLogger
+
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -15,6 +18,9 @@ from django.views.generic import FormView
 from shuup.core.models import OrderStatus
 from shuup.front.basket import get_basket_order_creator
 from shuup.front.checkout import CheckoutPhaseViewMixin
+from shuup.utils.djangoenv import has_installed
+
+logger = getLogger(__name__)
 
 
 class ConfirmForm(forms.Form):
@@ -24,8 +30,28 @@ class ConfirmForm(forms.Form):
     comment = forms.CharField(widget=forms.Textarea(), required=False, label=_(u"Comment"))
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
         self.current_product_ids = kwargs.pop("current_product_ids", "")
         super(ConfirmForm, self).__init__(*args, **kwargs)
+
+        if has_installed("shuup.gdpr"):
+            from shuup.gdpr.models import GDPRSettings
+            if GDPRSettings.get_for_shop(self.request.shop).enabled:
+                from shuup.simple_cms.models import Page, PageType
+                gdpr_documents = Page.objects.visible(self.request.shop).filter(
+                    page_type=PageType.GDPR_CONSENT_DOCUMENT
+                )
+                if gdpr_documents.exists():
+                    self.fields.pop("accept_terms")
+                    for page in gdpr_documents:
+                        self.fields["accept_{}".format(page.id)] = forms.BooleanField(
+                            label=_("I have read and accept the {}").format(page.title),
+                            help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
+                                reverse("shuup:cms_page", kwargs=dict(url=page.url)),
+                                page.title
+                            ),
+                            error_messages=dict(required=_("You must accept to this to confirm the order."))
+                        )
 
         field_properties = settings.SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES
         for field, properties in field_properties.items():
@@ -51,13 +77,18 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         self.basket.marketing_permission = self.storage.get("marketing")
 
     def is_valid(self):
-        return bool(self.storage.get("accept_terms"))
+        # check that all form keys starting with "accept_" must have a valid value
+        not_accepted_keys = [
+            key for key in self.storage.keys() if key.startswith("accept_") and not self.storage.get(key)
+        ]
+        return bool(len(not_accepted_keys) == 0)
 
     def _get_product_ids(self):
         return [str(product_id) for product_id in self.basket.get_product_ids_and_quantities().keys()]
 
     def get_form_kwargs(self):
         kwargs = super(ConfirmPhase, self).get_form_kwargs()
+        kwargs["request"] = self.request
         kwargs["current_product_ids"] = set(self._get_product_ids())
         return kwargs
 
@@ -81,9 +112,16 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         self.checkout_process.complete()  # Inform the checkout process it's completed
 
         if order.require_verification:
-            return redirect("shuup:order_requires_verification", pk=order.pk, key=order.key)
+            response = redirect("shuup:order_requires_verification", pk=order.pk, key=order.key)
         else:
-            return redirect("shuup:order_process_payment", pk=order.pk, key=order.key)
+            response = redirect("shuup:order_process_payment", pk=order.pk, key=order.key)
+
+        user = self.request.user
+        if has_installed("shuup.gdpr") and user.is_authenticated():
+            from shuup.gdpr.utils import create_user_consent_for_all_documents
+            create_user_consent_for_all_documents(order.shop, user)
+
+        return response
 
     def create_order(self):
         basket = self.basket

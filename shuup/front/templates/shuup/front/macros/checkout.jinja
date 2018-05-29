@@ -243,7 +243,12 @@
         <hr>
         <input type="hidden" name="product_ids" value="{{ product_ids }}" />
         {{ render_field(form.marketing) }}
-        {{ render_field(form.accept_terms) }}
+
+        {% for field in form %}
+            {% if field.name.startswith("accept_") %}
+                {{ render_field(field) }}
+            {% endif %}
+        {% endfor %}
         <hr>
         {{ place_order_button() }}
     </form>

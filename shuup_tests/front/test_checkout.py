@@ -72,9 +72,10 @@ def test_address_phase_anonymous_user(rf):
 
 
 @pytest.mark.django_db
-def test_confirm_form_field_overrides():
+def test_confirm_form_field_overrides(rf):
     with override_settings(SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES={}):
-        form = ConfirmForm()
+        request = apply_request_middleware(rf.get("/"), shop=get_default_shop())
+        form = ConfirmForm(request=request)
         assert type(form.fields["comment"].widget) != forms.HiddenInput
         assert form.fields["marketing"].initial is False
 
@@ -84,6 +85,6 @@ def test_confirm_form_field_overrides():
             "marketing": {"initial": True}
         }
     ):
-        form = ConfirmForm()
+        form = ConfirmForm(request=request)
         assert type(form.fields["comment"].widget) == forms.HiddenInput
         assert form.fields["marketing"].initial is True

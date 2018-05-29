@@ -46,6 +46,11 @@ class RegistrationViewMixin(object):
             return url
         return ('shuup:registration_complete', (), {})
 
+    def get_form_kwargs(self):
+        kwargs = super(RegistrationViewMixin, self).get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
     def register(self, form):
         user = super(RegistrationViewMixin, self).register(form)
 

@@ -125,7 +125,7 @@ class Contact(PolymorphicShuupModel):
     _language = LanguageField(verbose_name=_('language'), blank=True, help_text=_(
         "The primary language to be used in all communications with the contact."
     ))
-    marketing_permission = models.BooleanField(default=True, verbose_name=_('marketing permission'), help_text=_(
+    marketing_permission = models.BooleanField(default=False, verbose_name=_('marketing permission'), help_text=_(
         "Check this if the contact can receive marketing and promotional materials."
     ))
     phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'), help_text=_(

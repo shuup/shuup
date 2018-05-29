@@ -12,9 +12,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
-from shuup.simple_cms.models import Page
+from shuup.simple_cms.models import Page, PageType
+from shuup.utils.djangoenv import has_installed
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
@@ -34,7 +36,8 @@ class PageForm(MultiLanguageModelForm):
             'identifier',
             'visible_in_menu',
             'parent',
-            'list_children_on_page'
+            'list_children_on_page',
+            'page_type'
         ]
         widgets = {
             "content": TextEditorWidget()
@@ -46,6 +49,26 @@ class PageForm(MultiLanguageModelForm):
         super(PageForm, self).__init__(**kwargs)
         self.fields["parent"].queryset = Page.objects.filter(shop=get_shop(self.request))
 
+        if has_installed("shuup.gdpr"):
+            # remove page type field if GDPR is disabled or the page type is GDPR for existing object
+            from shuup.gdpr.models import GDPRSettings
+            if not GDPRSettings.get_for_shop(get_shop(self.request)).enabled:
+                self.fields.pop("page_type")
+            elif self.instance and self.instance.pk and self.instance.page_type == PageType.GDPR_CONSENT_DOCUMENT:
+                self.fields.pop("page_type")
+
+    def _clean_gdpr(self):
+        if self.instance.pk and self.instance.page_type == PageType.GDPR_CONSENT_DOCUMENT:
+            # to publish a new version, we have to clean the PK of this instance to create a new one
+            # we also need to soft_delete the old version of the consent document
+            last_consent = Page.objects.get(pk=self.instance.pk)
+            last_consent.make_gdpr_old_version()
+            last_consent.soft_delete(self.request.user)
+
+            # let's create a new version
+            self.instance.pk = None
+            self.instance.id = None
+
     def clean(self):
         """
         If title or content has been given on any language
@@ -56,9 +79,11 @@ class PageForm(MultiLanguageModelForm):
         required by default in model level.
         """
         data = super(PageForm, self).clean()
+        self._clean_gdpr()
 
         something_filled = False
         urls = []
+
         for language in self.languages:
             field_names = self.trans_name_map[language]
             if not any(data.get(field_name) for field_name in field_names.values()):
@@ -150,6 +175,24 @@ class PageEditView(CreateOrUpdateView):
         kwargs["request"] = self.request
         return kwargs
 
+    def get_toolbar(self):
+        if has_installed("shuup.gdpr"):
+            if self.object and self.object.pk and self.object.page_type == PageType.GDPR_CONSENT_DOCUMENT:
+                return Toolbar([
+                    PostActionButton(
+                        icon="fa fa-save",
+                        form_id=self.get_save_form_id(),
+                        text=_("Publish New Version"),
+                        extra_css_class="btn-success",
+                        confirm=_(
+                            "This action will publish a new version of this GDPR document. " +
+                            "All users should consent again to this new version. Are you sure?"
+                        )
+                    )
+                ])
+
+        return super(PageEditView, self).get_toolbar()
+
     def save_form(self, form):
         self.object = form.save()
         if not self.object.created_by:
@@ -158,7 +201,7 @@ class PageEditView(CreateOrUpdateView):
         self.object.save()
 
     def get_queryset(self):
-        return super(PageEditView, self).get_queryset().for_shop(get_shop(self.request))
+        return super(PageEditView, self).get_queryset().for_shop(get_shop(self.request)).filter(deleted=False)
 
 
 class PageListView(PicotableListView):
@@ -183,4 +226,4 @@ class PageListView(PicotableListView):
         ]
 
     def get_queryset(self):
-        return super(PageListView, self).get_queryset().for_shop(get_shop(self.request))
+        return super(PageListView, self).get_queryset().for_shop(get_shop(self.request)).filter(deleted=False)

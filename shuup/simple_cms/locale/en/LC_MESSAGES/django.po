@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-01 20:49+0000\n"
+"POT-Creation-Date: 2018-05-25 22:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -56,6 +56,14 @@ msgstr ""
 msgid "A page may not be made a child of itself."
 msgstr ""
 
+msgid "Publish New Version"
+msgstr ""
+
+msgid ""
+"This action will publish a new version of this GDPR document. All users "
+"should consent again to this new version. Are you sure?"
+msgstr ""
+
 msgid "Title"
 msgstr ""
 
@@ -66,6 +74,12 @@ msgid "Date created"
 msgstr ""
 
 msgid "Page"
+msgstr ""
+
+msgid "normal"
+msgstr ""
+
+msgid "GDPR consent document"
 msgstr ""
 
 msgid "shop"
@@ -126,6 +140,12 @@ msgstr ""
 msgid "Check this if this page should list its children pages."
 msgstr ""
 
+msgid "page type"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
 msgid "title"
 msgstr ""
 
@@ -153,6 +173,10 @@ msgid "page"
 msgstr ""
 
 msgid "pages"
+msgstr ""
+
+msgid ""
+"This page is protected against changes because it is a GDPR consent document."
 msgstr ""
 
 msgid "Untitled"
@@ -183,8 +207,4 @@ msgid "Extras"
 msgstr ""
 
 msgid "Home"
-msgstr ""
-
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
 msgstr ""

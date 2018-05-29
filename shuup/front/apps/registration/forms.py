@@ -7,10 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
+from registration.forms import RegistrationForm
 
 from shuup import configuration
-from shuup.core.models import CompanyContact, PersonContact
+from shuup.core.models import CompanyContact, get_person_contact, PersonContact
+from shuup.utils.djangoenv import has_installed
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
 
@@ -51,14 +54,66 @@ class ContactPersonForm(forms.ModelForm):
                 formfield.help_text = None
 
 
+class PersonRegistrationForm(RegistrationForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super(PersonRegistrationForm, self).__init__(*args, **kwargs)
+
+        if has_installed("shuup.gdpr"):
+            from shuup.gdpr.models import GDPRSettings
+            if GDPRSettings.get_for_shop(self.request.shop).enabled:
+                from shuup.simple_cms.models import Page, PageType
+                for page in Page.objects.visible(self.request.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT):
+                    self.fields["accept_{}".format(page.id)] = forms.BooleanField(
+                        label=_("I have read and accept the {}").format(page.title),
+                        help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
+                            reverse("shuup:cms_page", kwargs=dict(url=page.url)),
+                            page.title
+                        ),
+                        error_messages=dict(required=_("You must accept to this to register."))
+                    )
+
+    def save(self, *args, **kwargs):
+        user = super(PersonRegistrationForm, self).save(*args, **kwargs)
+        get_person_contact(user).shops.add(self.request.shop)
+
+        if has_installed("shuup.gdpr"):
+            from shuup.gdpr.utils import create_user_consent_for_all_documents
+            create_user_consent_for_all_documents(self.request.shop, user)
+
+        return user
+
+
+class CompanyAgreementForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.shop = kwargs.pop("shop")
+        super(CompanyAgreementForm, self).__init__(*args, **kwargs)
+        from shuup.simple_cms.models import Page, PageType
+        for page in Page.objects.visible(self.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT):
+            self.fields["accept_{}".format(page.id)] = forms.BooleanField(
+                label=_("I have read and accept the {}").format(page.title),
+                help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
+                    reverse("shuup:cms_page", kwargs=dict(url=page.url)),
+                    page.title
+                ),
+                error_messages=dict(required=_("You must accept this to register."))
+            )
+
+
 class CompanyRegistrationForm(FormGroup):
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
         super(CompanyRegistrationForm, self).__init__(*args, **kwargs)
         address_form_cls = cached_load('SHUUP_ADDRESS_MODEL_FORM')
         self.add_form_def('company', CompanyForm)
         self.add_form_def('billing', address_form_cls)
         self.add_form_def('contact_person', ContactPersonForm)
         self.add_form_def('user_account', UserCreationForm)
+
+        if has_installed("shuup.gdpr"):
+            from shuup.gdpr.models import GDPRSettings
+            if GDPRSettings.get_for_shop(self.request.shop).enabled:
+                self.add_form_def('agreement', CompanyAgreementForm, kwargs=dict(shop=self.request.shop))
 
     def instantiate_forms(self):
         super(CompanyRegistrationForm, self).instantiate_forms()
@@ -97,10 +152,16 @@ class CompanyRegistrationForm(FormGroup):
             user.save()
             person.user = user
             person.save()
+            person.shops.add(self.request.shop)
             billing_address.save()
             company.default_billing_address = billing_address
             company.default_shipping_address = billing_address
             company.save()
+            company.shops.add(self.request.shop)
             company.members.add(person)
+
+        if has_installed("shuup.gdpr"):
+            from shuup.gdpr.utils import create_user_consent_for_all_documents
+            create_user_consent_for_all_documents(self.request.shop, user)
 
         return user

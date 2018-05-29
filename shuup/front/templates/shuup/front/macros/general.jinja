@@ -43,6 +43,9 @@
                         {% endfor %}
                     </p>
                 {% endif %}
+                {% if field.help_text and show_help_text %}
+                    <p class="help-block">{{ field.help_text|safe }}</p>
+                {% endif %}
             </div>
         {% elif widget_name == "radio" %}
             <div class="custom-radio {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">

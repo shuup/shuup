@@ -12,6 +12,9 @@ Unrealeased
 Core
 ~~~~
 
+- GDPR: create option in customer dashboard to download personal data and anonymize account
+- GDPR: add xtheme plugin to warn about data protection
+- Add models to support General Data Protection Regulation (GDPR)
 - Enable creating basket with a custom shop
 - Base supplier: Only check stocks for stock managed suppliers when
   creating shipments.
@@ -59,6 +62,7 @@ Core
 Admin
 ~~~~~
 
+- Add admin module to configure settings for GDPR
 - Add specific form to request and reset staff user password
 - Allow shipments only for suppliers assigned to order lines
 - Add JavaScript Mass Action type
@@ -78,6 +82,9 @@ Admin
 Front
 ~~~~~
 
+- GDPR: require user consent on registration and on authentication
+- Breaking change: pass the request from registration views to forms to allow custom logics
+- Create GDPR consent when placing the order
 - Add shop option to require payment and shipping methods on checkout
 - Add shops for carousels
 - Add util for checking whether current user is admin
@@ -103,6 +110,7 @@ Notify
 Simple CMS
 ~~~~~~~~~~
 
+- Add page type to support GDPR consent document
 - Add shop attribute in `Page` model to work in multishop environments
 
 Importer
