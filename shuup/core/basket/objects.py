@@ -111,8 +111,8 @@ class _DataValueProperty(object):
 
 
 class BaseBasket(OrderSource):
-    def __init__(self, request, basket_name="basket"):
-        super(BaseBasket, self).__init__(request.shop)
+    def __init__(self, request, basket_name="basket", shop=None, **kwargs):
+        super(BaseBasket, self).__init__(shop or request.shop)
         self.request = request
         self.basket_name = basket_name
         self.key = basket_name

@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Enable creating basket with a custom shop
 - Base supplier: Only check stocks for stock managed suppliers when
   creating shipments.
 - Make core basket command return the added line id
