@@ -14,7 +14,7 @@
   "author": "Shuup Team <shuup@shuup.com>",
   "license": "OSL-3.0",
   "private": true,
-  "devDependencies": {
+  "dependencies": {
     "autoprefixer": "^8.5.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
@@ -28,6 +28,5 @@
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^3.8.1"
-  },
-  "dependencies": {}
+  }
 }
