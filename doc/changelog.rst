@@ -82,6 +82,7 @@ Admin
 Front
 ~~~~~
 
+- Add custom method to cache MPTT child nodes
 - GDPR: require user consent on registration and on authentication
 - Breaking change: pass the request from registration views to forms to allow custom logics
 - Create GDPR consent when placing the order
