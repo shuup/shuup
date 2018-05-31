@@ -10,6 +10,7 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
+from shuup.core.models import PersonContact
 from shuup.testing import factories
 from shuup_tests.utils import SmartClient
 
@@ -52,6 +53,17 @@ def test_serialize_data():
     assert response._headers["content-disposition"][0] == "Content-Disposition"
     assert response.status_code == 200
 
+    from shuup.tasks.models import Task, TaskType
+    from shuup.gdpr.models import GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER
     response = client.post(reverse("shuup:gdpr_anonymize_account"))
     assert response.status_code == 302
     assert response.url.endswith(reverse("shuup:index"))
+    task_type = TaskType.objects.get(identifier=GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER, shop=shop)
+    assert Task.objects.get(type=task_type, shop=shop)
+
+    user.refresh_from_db()
+    assert user.is_active is False
+
+    refreshed_customer = PersonContact.objects.get(id=customer.id)
+    assert refreshed_customer.is_active is False
+    assert refreshed_customer.name == customer.name     # nothing changed yet
