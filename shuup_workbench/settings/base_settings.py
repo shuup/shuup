@@ -64,6 +64,7 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.importer',
     'shuup.default_importer',
     'shuup.gdpr',
+    'shuup.tasks',
 
     # external apps
     'bootstrap3',

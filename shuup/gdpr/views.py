@@ -10,17 +10,20 @@ from __future__ import unicode_literals
 import json
 import re
 
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 from django.http import (
     HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 )
+from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView, View
 
-from shuup.core.models import Order
+from shuup.core.models import get_person_contact, Order
 from shuup.front.views.dashboard import DashboardViewMixin
-from shuup.gdpr.anonymizer import Anonymizer
-from shuup.gdpr.models import GDPRCookieCategory
+from shuup.gdpr.models import (
+    GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER, GDPRCookieCategory
+)
 from shuup.gdpr.utils import (
     add_consent_to_response_cookie, get_cookie_consent_data
 )
@@ -94,14 +97,33 @@ class GDPRDownloadDataView(View):
 
 class GDPRAnonymizeView(View):
     def post(self, request, *args, **kwargs):
-        if not self.request.person:
+        if not request.person:
             return HttpResponseNotFound()
 
         self.request.person.add_log_entry(
-            "User anonymization requested", kind=LogEntryKind.NOTE, user=self.request.user)
+            "User anonymization requested", kind=LogEntryKind.NOTE, user=request.user)
 
         with atomic():
-            anonymizer = Anonymizer()
-            anonymizer.anonymize_person(self.request.person)
+            from shuup.tasks.models import TaskType
+            from shuup.tasks.utils import create_task
+            task_type = TaskType.objects.get_or_create(
+                shop=request.shop,
+                identifier=GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER,
+                defaults=dict(name=_("GDPR: Anonymize"))
+            )[0]
+            contact = get_person_contact(request.user)
+            create_task(
+                request.shop,
+                contact,
+                task_type,
+                _("GDPR: Anonymize contact"),
+                _("Customer ID {customer_id} requested to be anonymized.").format(**dict(customer_id=contact.id))
+            )
+
+            contact.is_active = False
+            contact.save()
+            request.user.is_active = False
+            request.user.save()
+            messages.success(request, _("Anonymization requested."))
 
         return HttpResponseRedirect(reverse("shuup:index"))

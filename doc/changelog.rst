@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add Tasks app to manage contact tasks
 - GDPR: create option in customer dashboard to download personal data and anonymize account
 - GDPR: add xtheme plugin to warn about data protection
 - Add models to support General Data Protection Regulation (GDPR)

@@ -1,0 +1,27 @@
+<div class="color-block block-green">
+    <div class="block-header">
+        <div class="text-wrap">
+            <span>{% trans %}Last 10 pending tasks assigned for you{% endtrans %}</span>
+        </div>
+    </div>
+    <div class="block-content">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% trans %}Created on{% endtrans %}</th>
+                        <th>{% trans %}Task{% endtrans %}</th>
+                        <th>{% trans %}Status{% endtrans %}</th>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.created_on|datetime }}</td>
+                            <td><a href="{{ url("shuup_admin:task.edit", pk=task.id) }}">{{ task.name }}</a></td>
+                            <td>{{ task.status }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+</div>

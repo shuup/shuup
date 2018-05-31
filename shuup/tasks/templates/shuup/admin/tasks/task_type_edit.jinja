@@ -1,0 +1,11 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% block title %}{{ task_type.name or _("New Task Type") }}{% endblock %}
+{% block content %}
+    {% call single_section_form("task_type_form", form) %}
+        {{ language_dependent_content_tabs(form) }}
+        <div class="form-divider"></div>
+        {{ render_monolingual_fields(form) }}
+    {% endcall %}
+{% endblock %}

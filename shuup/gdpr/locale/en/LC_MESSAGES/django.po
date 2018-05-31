@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 11:49+0000\n"
+"POT-Creation-Date: 2018-05-31 13:05+0000\n"
 "PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,7 +159,7 @@ msgstr ""
 msgid "If you anonymize your account now, all orders will be canceled."
 msgstr ""
 
-msgid "Anonymize my account"
+msgid "Request Account Anonymization"
 msgstr ""
 
 msgid ""
@@ -218,4 +218,17 @@ msgstr ""
 msgid ""
 "We use these cookies to ensure the correct language is being chosen for you "
 "based on your region as well as the overall site functionality."
+msgstr ""
+
+msgid "GDPR: Anonymize"
+msgstr ""
+
+msgid "GDPR: Anonymize contact"
+msgstr ""
+
+#, python-brace-format
+msgid "Customer ID {customer_id} requested to be anonymized."
+msgstr ""
+
+msgid "Anonymization requested."
 msgstr ""

@@ -13,6 +13,8 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 
+GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER = "gdpr_anonymize"
+
 
 @python_2_unicode_compatible
 class GDPRSettings(TranslatableModel):
