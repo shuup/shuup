@@ -20,13 +20,13 @@ from django.utils.translation import ugettext_lazy
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from filer.models.imagemodels import Image
-from mptt.utils import get_cached_trees
 
 from shuup.admin.modules.media.utils import delete_folder
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import MediaFile, MediaFolder
 from shuup.utils.excs import Problem
 from shuup.utils.filer import filer_file_from_upload, filer_image_from_upload
+from shuup.utils.mptt import get_cached_trees
 
 
 def _filer_file_to_json_dict(file):

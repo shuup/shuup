@@ -12,7 +12,6 @@ from django.conf import settings
 from django.core.paginator import Paginator
 from django.utils.translation import get_language, get_language_info, ugettext
 from jinja2.utils import contextfunction
-from mptt.templatetags.mptt_tags import cache_tree_children
 
 from shuup.core.models import (
     Category, Manufacturer, Product, ShopProduct, Supplier
@@ -21,6 +20,7 @@ from shuup.core.utils import context_cache
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.user import is_admin_user
 from shuup.front.utils.views import cache_product_things
+from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree
 
 
@@ -235,7 +235,7 @@ def get_all_manufacturers(context):
 def get_root_categories(context):
     request = context["request"]
     language = get_language()
-    roots = cache_tree_children(
+    roots = get_cached_trees(
         Category.objects.all_visible(
             customer=request.customer, shop=request.shop, language=language))
     cache_translations_for_tree(roots, languages=[language])
