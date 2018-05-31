@@ -1,0 +1,74 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block with context %}
+{% block title %}{{ object.name or _("New Task") }}{% endblock %}
+
+{% macro render_field_value(id, label, value) %}
+<div class="form-group">
+    <label class="control-label" for="{{ id }}">{{ label }}</label>
+    <input class="form-control" id="{{ id }}" type="text" value="{{ value }}" readonly disabled>
+</div>
+{% endmacro %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="task_form"></div>
+            <div class="col-md-9">
+                <form method="post" id="task_form">
+                    {% csrf_token %}
+                    {% call content_block(_("General Information"), "fa-info-circle") %}
+                        {% for field in form["base"] %}
+                            {{ bs3.field(field) }}
+                        {% endfor %}
+                        {% if object.pk %}
+                            {{ render_field_value("id_status", _("Status"), object.status) }}
+                            {{ render_field_value("id_creaton", _("Creator"), "{} - {}".format(object.creator.id, object.creator)) }}
+                            {{ render_field_value("id_created_on", _("Created on"), object.created_on|datetime) }}
+                            {% if object.completed_on %}
+                                {{ render_field_value("id_completed_on", _("Completed on"), object.completed_on|datetime) }}
+                                {{ render_field_value("id_completed_by", _("Completed by"), object.completed_by) }}
+                            {% endif %}
+                        {% endif %}
+                    {% endcall %}
+                    {% if object.pk and form["comment"] %}
+                        {% call content_block(_("Comments"), "fa-comments-o") %}
+                            {% if comments|length %}
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ _("Created on") }}</th>
+                                            <th>{{ _("Author") }}</th>
+                                            <th>{{ _("Visibility") }}</th>
+                                            <th>{{ _("Comment") }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for comment in comments %}
+                                        <tr>
+                                            <td class="col-xs-2">{{ comment.created_on|datetime(format="short") }}</td>
+                                            <td class="col-xs-2">{{ comment.author }}</td>
+                                            <td class="col-xs-1">{{ comment.visibility }}</td>
+                                            <td class="col-xs-7">{{ comment.body }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <hr />
+                            {% endif %}
+
+                            <h3>{% trans %}Post a new comment{% endtrans %}</h3>
+                            {% for field in form["comment"] %}
+                                {{ bs3.field(field) }}
+                            {% endfor %}
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-comment"></i> {{ _("Comment") }}
+                                </button>
+                            </div>
+                        {% endcall %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
