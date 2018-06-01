@@ -13,7 +13,8 @@ from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
-from shuup.core.models import Contact, Shop
+from shuup.core.models import Contact
+from shuup.gdpr.models import GDPRSettings
 
 
 class GDPRModule(AdminModule):
@@ -25,7 +26,7 @@ class GDPRModule(AdminModule):
                 "^gdpr/$",
                 "shuup.gdpr.admin_module.views.GDPRView",
                 name="gdpr.settings",
-                permissions=get_default_model_permissions(Shop)
+                permissions=get_default_model_permissions(GDPRSettings)
             ),
             admin_url(
                 "^gdpr/contact/(?P<pk>\d+)/anonymize/$",
@@ -53,4 +54,4 @@ class GDPRModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_default_model_permissions(Shop)
+        return get_default_model_permissions(GDPRSettings)
