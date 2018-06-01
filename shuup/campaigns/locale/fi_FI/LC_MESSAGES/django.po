@@ -2,21 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-21 10:10+0000\n"
+"POT-Creation-Date: 2017-04-30 01:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2016\n"
-"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
-"teams/55306/fi_FI/)\n"
-"Language: fi_FI\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Campaigns"
@@ -155,7 +154,8 @@ msgid ""
 "Limit the campaign to match when basket has at least the product count "
 "entered here."
 msgstr ""
-"Rajoita kampanja täsmäämään kun korissa on vähintään annettu määrä tuotteita."
+"Rajoita kampanja täsmäämään kun korissa on vähintään annettu määrä "
+"tuotteita."
 
 msgid "Basket total value"
 msgstr "Korin kokonaisarvo"
@@ -169,16 +169,6 @@ msgid ""
 msgstr ""
 "Rajoita kampanja täsmäämään kun siinä on vähintään tässä annetun "
 "kokonaisarvon verran tuotteita."
-
-msgid "Undiscounted basket total value"
-msgstr "Korin kokonaisarvo laskettuna ei alennuksessa olevista tuotteista"
-
-msgid ""
-"Limit the campaign to match when it has at least the total value entered "
-"here worth of products which doesn't have already discounts."
-msgstr ""
-"Rajoita kampanja täsmäämään kun siinä on vähintään tässä annetun "
-"kokonaisarvon verran tuotteita, joilla ei ole vielä alennuksia."
 
 msgid "Basket maximum product count"
 msgstr "Korin maksimituotemäärä"
@@ -285,12 +275,6 @@ msgstr "Alennusprosentti"
 msgid "Give percentage discount."
 msgstr "Anna prosenttialennus."
 
-msgid "Discount amount percentage from undiscounted amount"
-msgstr "Alennusprosentti ei alennuksessa oleville tuotteille"
-
-msgid "Give percentage discount based on undiscounted product prices."
-msgstr "Anna prosenttialennus ei alennuksessa olevien tuotteiden arvosta laskettuna."
-
 msgid "Free Product(s)"
 msgstr "Ilmaiset tuotteet"
 
@@ -346,7 +330,8 @@ msgid ""
 "Check this if the campaign is currently active. Please also set a start and "
 "end date."
 msgstr ""
-"Valitse tämä, mikäli kampanja on aktiivinen. Aseta myös alku- ja loppupäivät."
+"Valitse tämä, mikäli kampanja on aktiivinen. Aseta myös alku- ja "
+"loppupäivät."
 
 msgid "start date and time"
 msgstr "alkupäivämäärä ja aika"
@@ -362,8 +347,8 @@ msgid "end date and time"
 msgstr "loppupäivämäärä ja aika"
 
 msgid ""
-"The date and time the campaign ends. This is only applicable if the campaign "
-"is marked as active."
+"The date and time the campaign ends. This is only applicable if the campaign"
+" is marked as active."
 msgstr ""
 "Kampanjan loppupäivä ja -aika. Tätä käytetään vain, jos kampanja on "
 "aktiivinen."
@@ -406,6 +391,9 @@ msgstr "julkinen nimi"
 msgid "Basket Campaign: %(name)s"
 msgstr "Korikampanja: %(name)s"
 
+msgid "Can not have multiple active campaigns with same code."
+msgstr "Kaksi samaa koodia eivät voi olla yhtä aikaa aktiivisia."
+
 msgid "usage limit per customer"
 msgstr "Käyttökertojen raja asiakasta kohden"
 
@@ -424,9 +412,6 @@ msgstr ""
 
 msgid "is active"
 msgstr "aktiivinen"
-
-msgid "Cannot have two same codes active at the same time."
-msgstr "Kaksi samaa koodia eivät voi olla yhtä aikaa aktiivisia."
 
 msgid "Base Catalog Filter"
 msgstr "Peruskatalogisuodin"

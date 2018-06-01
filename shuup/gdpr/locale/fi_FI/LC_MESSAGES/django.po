@@ -1,0 +1,246 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-31 13:05+0000\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "GDPR"
+msgstr "GDPR"
+
+msgid "Anonymize"
+msgstr "Anonymisoi"
+
+msgid ""
+"This action will replace all contact personal data with random values making"
+" it impossible to be identified. The account will also be deactivated and "
+"any pending order(s) will be canceled. Are you sure?"
+msgstr ""
+"Tämä toiminto korvaa kaikki asiakkaan henkilökohtaiset datat eikä asiakasta "
+"voida tämän jälkeen tunnistaa. Tämän jälkeen asiakastili deaktivoidaan ja "
+"keskeneräiset tilaukset perustaan. Oletko varma?"
+
+msgid "Download data"
+msgstr "Lataa tiedot"
+
+msgid "Save"
+msgstr "Tallenna"
+
+msgid "General Data Protection Regulation"
+msgstr "General Data Protection Regulation"
+
+msgid "Contact anonymized!"
+msgstr "Kontakti anonymisoitu!"
+
+msgid "My Data"
+msgstr "Omat tiedot"
+
+msgid "Customer data"
+msgstr "Asiakkaantiedot"
+
+msgid "enabled"
+msgstr "käytössä"
+
+msgid "Define if the GDPR is active."
+msgstr "Aktivoi GDPR."
+
+msgid "cookie banner content"
+msgstr "keksin sisältö"
+
+msgid "The text to be presented to users in a pop-up warning."
+msgstr "Asiakkaalle näytettävä ponnahdusikkuna-varoituksen teksti."
+
+msgid "cookie privacy excerpt"
+msgstr "keksin tietosuoja ote"
+
+msgid "The summary text to be presented about cookie privacy."
+msgstr "Yhteenveto-teksti keksin tietosuoja-osiosta."
+
+msgid "gdpr settings"
+msgstr "gdpr asetukset"
+
+msgid "GDPR for {}"
+msgstr "GDPR {}"
+
+msgid "always active"
+msgstr "aina aktiivinen"
+
+msgid "cookies used"
+msgstr "käytetyt keksit"
+
+msgid ""
+"Comma separated list of cookies names, prefix or suffix that will be "
+"included in this category, e.g. _ga, mysession, user_c_"
+msgstr ""
+"Pilkulla eroteltu lista keksin nimistä, etuliitteistä ja päätteistä, jotka "
+"on sisällätetty tähän kategoriaan, kuten _ga, mysession, user_c_."
+
+msgid "name"
+msgstr "nimi"
+
+msgid "how we use"
+msgstr "kuinka käytämme"
+
+msgid "Describe the purpose of this category of cookies and how it is used."
+msgstr "Kuvaile tämän keksi kategorian käyttötarkoitus."
+
+msgid "gdpr cookie category"
+msgstr "gdpr keksin kategoria"
+
+msgid "gdpr cookie categories"
+msgstr "gdpr keksin kategoriat"
+
+msgid "GDPR cookie category for {}"
+msgstr "GDPR keksin kategoria {}"
+
+msgid "created on"
+msgstr "luotu"
+
+msgid "consent documents"
+msgstr "suostumus dokumentit"
+
+msgid "gdpr user consent"
+msgstr "gdpr käyttäjänsuostumus"
+
+msgid "gdpr user consents"
+msgstr "gdpr käyttäjäsuostumukset"
+
+msgid "GDPR user consent in {} for user {} in shop {}"
+msgstr "GDPR käyttäjäsuostumus {} käyttäjälle {} kaupalle {}"
+
+msgid "General Settings"
+msgstr "Yleiset asetukset"
+
+msgid "Cookie Categories"
+msgstr "Keksin kategoria"
+
+msgid "Add new cookie category"
+msgstr "Lisää uusi keksin kategoria"
+
+msgid "Use this form to create a new cookie category"
+msgstr "Käytä tätä lomaketta luodaksesi uuden keksin kategorian"
+
+msgid "Customer Data"
+msgstr "Asiakkaan tiedot"
+
+msgid "Home"
+msgstr "Koti"
+
+msgid "Dashboard"
+msgstr "Kojelauta"
+
+msgid "My data"
+msgstr "Omat tiedot"
+
+msgid "Download your data"
+msgstr "Lataa datasi"
+
+msgid "Download all my data"
+msgstr "Lataa kaikki datani"
+
+msgid ""
+"This action will collect all your personal data and order history and will "
+"serialize it in a JSON file."
+msgstr ""
+"Tämä toiminto kerää kaikki henkilökohtaiset tietosi ja tilaus-historian ja "
+"muotoilee ne JSON tiedostoon."
+
+msgid "Anonymize your account"
+msgstr "Anonymisoi tilisi"
+
+msgid "You have pending orders!"
+msgstr "Sinulla on keskeneräisiä tilauksia!"
+
+msgid "If you anonymize your account now, all orders will be canceled."
+msgstr "Jos anonymisoit tilisi nyt kaikki keskeneräiset tilaukset perutaan."
+
+msgid "Request Account Anonymization"
+msgstr "Pyydä tilin anonymisointia"
+
+msgid ""
+"This action will replace all your personal data with random values making it"
+" impossible to identify you. Your account will also be deactivated."
+msgstr ""
+"Tämä toiminto korvaa kaikki henkilökohtaiset tietosi ja tekee tilisi "
+"tunnistamisen mahdottomaksi. Tilisi deaktivoidaan."
+
+msgid "This action is irreversible!"
+msgstr "Tämä toiminto on peruuttamaton."
+
+msgid "Are you sure? This cannot be undone."
+msgstr "Oletko varma? Tätä toimintoa ei voi peruuttaa."
+
+msgid "Privacy Preferences"
+msgstr "Tietosuoja asetukset"
+
+msgid "I Agree"
+msgstr "Hyväksyn"
+
+msgid "Privacy Preference Center"
+msgstr "Tietosuojakeskus"
+
+msgid "General"
+msgstr "Yleistä"
+
+msgid "Cookie Settings"
+msgstr "Keksin asetukset"
+
+msgid "Consent Management"
+msgstr "Suostumusten hallinta"
+
+msgid "You read and agreed to our {}"
+msgstr "Olet lukenut ja hyväksyt meidän {}"
+
+msgid "Read"
+msgstr "Lue"
+
+msgid "Always active"
+msgstr "Aina päällä"
+
+msgid "Cookies: "
+msgstr "Keksit:"
+
+msgid "Save preferences"
+msgstr "Tallenna asetukset"
+
+msgid "Privacy Policy"
+msgstr "Tietosuojakäytäntö"
+
+msgid "privacy-policy"
+msgstr "tietosuojakäytäntö"
+
+msgid "Required"
+msgstr "Vaadittu"
+
+msgid ""
+"We use these cookies to ensure the correct language is being chosen for you "
+"based on your region as well as the overall site functionality."
+msgstr ""
+"Näitä keksejä käytetään, jotta voimme valita oikean sivuston kielen ja "
+"sivuston perus toiminnallisuuden takaamiseksi."
+
+msgid "GDPR: Anonymize"
+msgstr "GDPR: Anonymisoi"
+
+msgid "GDPR: Anonymize contact"
+msgstr "GDPR: Anonymisoi kontakti"
+
+#, python-brace-format
+msgid "Customer ID {customer_id} requested to be anonymized."
+msgstr "Asiakas ID {customer_id} pyysi anonymisointia."
+
+msgid "Anonymization requested."
+msgstr "Anonymisointi pyyntö tehty."
