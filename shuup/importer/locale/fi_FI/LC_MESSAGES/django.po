@@ -2,21 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"POT-Creation-Date: 2016-11-22 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>, 2017\n"
-"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
-"teams/55306/fi_FI/)\n"
-"Language: fi_FI\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Data Import"
@@ -88,8 +87,8 @@ msgstr "Jos tuot tuotteita määrineen, varmista seuraava:"
 
 #, python-format
 msgid ""
-"You have atleast one <a href=\"%(url)s\">supplier</a> with \"Stock Managed\" "
-"<b>on</b>."
+"You have atleast one <a href=\"%(url)s\">supplier</a> with \"Stock Managed\""
+" <b>on</b>."
 msgstr ""
 "Sinulla on ainakin yksi <a href=\"%(url)s\">toimittaja</a>, jolla on "
 "\"varastonhallinta\" <b>päällä</b>."
@@ -118,7 +117,8 @@ msgid "The following fields were automatically mapped"
 msgstr "Seuraavien kenttien kohdekentät valittiin automaattisesti"
 
 msgid ""
-"The following fields in the file are being used a s possible connection keys:"
+"The following fields in the file are being used a s possible connection "
+"keys:"
 msgstr "Seuraavia tiedoston kenttiä käytetään mahdollisina liittämisavaimina"
 
 msgid "Not a single connection key was found, File cannot be imported."
@@ -171,8 +171,8 @@ msgid ""
 "File may not be imported because no connection keys were found. Connection "
 "keys are unique keys that are used to map results."
 msgstr ""
-"Tiedostoa ei voi tuoda, koska liittämisavaimia ei löytynyt. Liittämisavaimet "
-"ovat uniikkeja avaimia, joiden avulla tulokset kohdistetaan."
+"Tiedostoa ei voi tuoda, koska liittämisavaimia ei löytynyt. Liittämisavaimet"
+" ovat uniikkeja avaimia, joiden avulla tulokset kohdistetaan."
 
 msgid ""
 "Please consider adding some of the following fields to your import file:"
@@ -200,8 +200,8 @@ msgid "You can continue importing, but it might end up in error"
 msgstr "Voit jatkaa tuontia, mutta se voi päättyä virheeseen"
 
 msgid ""
-"If you are importing customers this might be a false alarm if you have email "
-"key set"
+"If you are importing customers this might be a false alarm if you have email"
+" key set"
 msgstr ""
 "Jos tuot asiakkaita, tämä voi olla virheellinen hälytys, jos sähköposti "
 "avain on asetettu"

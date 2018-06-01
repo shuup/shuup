@@ -1,26 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Janne Tammi <janne@shuup.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2016
 # Rauli L. <rauli.laine@iki.fi>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2016
+# Shuup Admin <admin@shuup.com>, 2016
 # Shuup Admin <admin@shuup.com>, 2016
 # Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
-"PO-Revision-Date: 2017-02-10 11:12+0000\n"
-"Last-Translator: Janne Tammi <janne@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2017-01-11 17:29+0000\n"
+"PO-Revision-Date: 2017-09-23 22:12+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Stock management"
@@ -51,17 +52,13 @@ msgstr "Muuta varastosaldoa"
 msgid ""
 "Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
 "(%(supplier_name)s)"
-msgstr ""
-"Lisättiin %(delta)s %(unit_symbol)s tuotteelle %(product_name)s varastoon "
-"(%(supplier_name)s)"
+msgstr "Lisättiin %(delta)s %(unit_symbol)s tuotteelle %(product_name)s varastoon (%(supplier_name)s)"
 
 #, python-format
 msgid ""
 "Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
 "(%(supplier_name)s)"
-msgstr ""
-"Poistettiin %(delta)s %(unit_symbol)s tuotteelta %(product_name)s varastosta "
-"(%(supplier_name)s)"
+msgstr "Poistettiin %(delta)s %(unit_symbol)s tuotteelta %(product_name)s varastosta (%(supplier_name)s)"
 
 #, python-format
 msgid "Alert limit for product %(product_name)s set to %(value)s."
@@ -130,10 +127,7 @@ msgid ""
 "This will be True if this event was already dispatched in the last 24 hours "
 "for the same product and supplier. This is useful to prevent sending "
 "identical notifications in a short period of time."
-msgstr ""
-"Tämän arvo on \"True\" mikäli tämä tapahtuma on käsitelty viimeisen 24 "
-"tunnin sisällä samalle tuotteelle ja toimittajalle. Tällä voit estää "
-"samanlaisten muistutusten lähettämisen lyhyen ajan sisällä."
+msgstr "Tämän arvo on \"True\" mikäli tämä tapahtuma on käsitelty viimeisen 24 tunnin sisällä samalle tuotteelle ja toimittajalle. Tällä voit estää samanlaisten muistutusten lähettämisen lyhyen ajan sisällä."
 
 msgid "Send to?"
 msgstr "Vastaanottaja?"
@@ -147,18 +141,14 @@ msgstr "Älä lähetä samaa sähköpostia toistamiseen 24 tunnin sisällä."
 msgid ""
 "If enabled, avoids sending the same email for the same product and supplier "
 "within 24 hours."
-msgstr ""
-"Mikäli päällä, estää samojen sähköpostien lähettämisen samalle tuotteelle ja "
-"valmistajalle 24 tunnin sisällä."
+msgstr "Mikäli päällä, estää samojen sähköpostien lähettämisen samalle tuotteelle ja valmistajalle 24 tunnin sisällä."
 
 msgid "Send Stock Limit Alert Email"
 msgstr "Lähetä varastosaldon hälytysrajan sähköposti"
 
 msgid ""
 "Send me an email when a product stock is lower than the configured limit."
-msgstr ""
-"Lähetä minulle sähköposti kun tuotteen varastosaldo menee alle määritetyn "
-"rajan."
+msgstr "Lähetä minulle sähköposti kun tuotteen varastosaldo menee alle määritetyn rajan."
 
 msgid ""
 "This script will send an email to the configured destination alerting about "
@@ -166,25 +156,15 @@ msgid ""
 "same email multiple times in a period of 24 hours. Every time a product's "
 "stock reach its configured limit, this notification will be fired and the "
 "email sent."
-msgstr ""
-"Tämä skripti lähettää sähköpostin määritettyyn osoitteeseen varoittaen "
-"tuotteen varastosaldosta tietyllä toimittajalla. Voit asettaa siten, että "
-"samaa sähköpostia ei lähetetä toistamiseen 24 tunnin sisällä. Joka kerta, "
-"kun tuotteen varastosaldo saavuttaa sille määritellyn hälytysrajan, tämä "
-"notifikaatio ajetaan ja sähköposti lähetetään."
+msgstr "Tämä skripti lähettää sähköpostin määritettyyn osoitteeseen varoittaen tuotteen varastosaldosta tietyllä toimittajalla. Voit asettaa siten, että samaa sähköpostia ei lähetetä toistamiseen 24 tunnin sisällä. Joka kerta, kun tuotteen varastosaldo saavuttaa sille määritellyn hälytysrajan, tämä notifikaatio ajetaan ja sähköposti lähetetään."
 
 msgid "Low stock of: {{ product }} from {{ supplier }}"
-msgstr ""
-"Alhainen varastosaldo tuotteelle {{ product }} toimittajalta {{ supplier }}"
+msgstr "Alhainen varastosaldo tuotteelle {{ product }} toimittajalta {{ supplier }}"
 
 msgid ""
 "Hi!\n"
-"You are receiving this message because the product {{ product}} from "
-"{{ supplier }} has a low stock."
-msgstr ""
-"Terve!\n"
-"Saat tämän sähköpostin, koska tuotteen {{ product }} varastosaldo on "
-"alhainen toimittajalla {{ supplier }}."
+"You are receiving this message because the product {{ product}} from {{ supplier }} has a low stock."
+msgstr "Terve!\nSaat tämän sähköpostin, koska tuotteen {{ product }} varastosaldo on alhainen toimittajalla {{ supplier }}."
 
 msgid "Add stock"
 msgstr "Lisää varastoa"
@@ -193,9 +173,7 @@ msgstr "Lisää varastoa"
 msgid ""
 "Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
 "scripts</a> are executed when product stock falls below set quantity."
-msgstr ""
-"Hälytysraja <a href=\"%(notify_url)s\" target=\"_blank\">ilmoitukset</a> "
-"suoritetaan kun tuotteen varastomäärä laskee alle asetetun rajan."
+msgstr "Hälytysraja <a href=\"%(notify_url)s\" target=\"_blank\">ilmoitukset</a> suoritetaan kun tuotteen varastomäärä laskee alle asetetun rajan."
 
 msgid "Change alert limit"
 msgstr "Vaihda hälytysrajaa"
@@ -204,9 +182,7 @@ msgstr "Vaihda hälytysrajaa"
 msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
 "does not have suppliers with %(module_name)s module."
-msgstr ""
-"Tuotteella <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</"
-"a> ei ole toimittajia modulissa %(module_name)s."
+msgstr "Tuotteella <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> ei ole toimittajia modulissa %(module_name)s."
 
 msgid "Please set suppliers at Purchasing section."
 msgstr "Ole hyvä ja määritä toimittajat osiossa Ostaminen."
@@ -215,9 +191,7 @@ msgstr "Ole hyvä ja määritä toimittajat osiossa Ostaminen."
 msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
 "is not stocked."
-msgstr ""
-"Tuote<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> ei "
-"ole varastoitu."
+msgstr "Tuote<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> ei ole varastoitu."
 
 msgid "Please set product stock behavior at Additional Details section."
 msgstr "Ole hyvä ja määritä varastokäyttäytyminen osiosssa Lisätietoja."
@@ -228,11 +202,9 @@ msgstr "Ei toimittajia saatavana modulille %(module_name)s."
 
 #, python-format
 msgid ""
-"Please set %(module_name)s module for at least one of the <a href="
-"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
-msgstr ""
-"Ole hyvä ja aseta %(module_name)s moduli ainakin yhdelle <a href="
-"\"%(supplier_url)s\" target=\"_blank\">toimittajalle</a>."
+"Please set %(module_name)s module for at least one of the <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr "Ole hyvä ja aseta %(module_name)s moduli ainakin yhdelle <a href=\"%(supplier_url)s\" target=\"_blank\">toimittajalle</a>."
 
 #, python-format
 msgid "Physical count: %(count)s %(sales_unit)s"

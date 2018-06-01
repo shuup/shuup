@@ -1,36 +1,38 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
-# Janne Tammi <janne@shuup.com>, 2017
+# Janne Tammi <janne@shuup.com>, 2015,2017
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015
+# Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016
+# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Rauli L. <rauli.laine@iki.fi>, 2015
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
+# Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
-# tomijarvi <tomi@jarvi.pro>, 2015
+# Tomi Järvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-15 12:11+0000\n"
-"PO-Revision-Date: 2017-02-10 11:15+0000\n"
-"Last-Translator: Janne Tammi <janne@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2017-05-15 12:12+0000\n"
+"PO-Revision-Date: 2018-06-01 16:15+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Name of the company"
@@ -46,10 +48,10 @@ msgid "Customer Email"
 msgstr "Asiakkaan sähköpostiosoite"
 
 msgid "Activation URL"
-msgstr "Aktivointi-URL"
+msgstr "Aktivointi URL"
 
 msgid "Is User Active"
-msgstr "Onko Käyttäjä Aktiivinen"
+msgstr "aktiivinen"
 
 msgid "Company Registration Received"
 msgstr "Yrityksen rekisteröityminen vastaanotettu"
@@ -69,9 +71,7 @@ msgstr "Lähetä sähköposti kun käyttäjä rekisteröityy."
 msgid ""
 "This script will send an email to the user or to any configured email right "
 "after a user get registered."
-msgstr ""
-"Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille "
-"sähköposteille välittömästi käyttäjän rekisteröitymisen jälkeen."
+msgstr "Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille sähköposteille välittömästi käyttäjän rekisteröitymisen jälkeen."
 
 msgid "{{ order.shop }} - Welcome!"
 msgstr "{{ order.shop }} - Tervetuloa!"
@@ -91,9 +91,7 @@ msgstr "Ilmoita yrityksen yhteyshenkilölle, että yritys on aktivoitu"
 msgid ""
 "This script will send an email to the user or to any configured email right "
 "after a company is activated."
-msgstr ""
-"Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille "
-"sähköposteille, kun yritystili aktivoidaan."
+msgstr "Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille sähköposteille, kun yritystili aktivoidaan."
 
 msgid "Account activation"
 msgstr "Tilin aktivointi"
@@ -114,7 +112,7 @@ msgid "Company billing information"
 msgstr "Yrityksen laskutustiedot"
 
 msgid "Contact person"
-msgstr "Yhteyshenkilö"
+msgstr "Henkilöasiakas"
 
 msgid "Contact information for primary company contact"
 msgstr "Yrityksen pääyhteyshenkilön yhteystiedot"
@@ -140,6 +138,4 @@ msgstr "Aktivointi onnistui!"
 msgid ""
 "Registration complete. Please follow the instructions sent to your email "
 "address."
-msgstr ""
-"Rekisteröinti valmis. Ole hyvä ja seuraa sähköpostiosoitteeseesi lähetettyjä "
-"ohjeita."
+msgstr "Rekisteröinti valmis. Ole hyvä ja seuraa sähköpostiosoitteeseesi lähetettyjä ohjeita."
