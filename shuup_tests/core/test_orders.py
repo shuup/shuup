@@ -70,7 +70,7 @@ def test_broken_order_lines():
         OrderLine(product=get_default_product(), type=OrderLineType.OTHER).save()
 
     with pytest.raises(ValidationError):
-        OrderLine(product=get_default_product(), type=OrderLineType.OTHER, tax_rate=3).save()
+        OrderLine(product=get_default_product(), type=OrderLineType.OTHER).save()
 
 
 @pytest.mark.django_db
