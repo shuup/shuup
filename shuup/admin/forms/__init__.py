@@ -10,5 +10,5 @@ from ._base import ShuupAdminForm
 
 __all__ = [
     "EmailAuthenticationForm",
-    "ShuupAdminForm",
+    "ShuupAdminForm"
 ]
