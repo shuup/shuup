@@ -43,5 +43,5 @@ def test_modelform_persistence():
         assert frm["barcode"].value() == test_product.barcode
         stock_behavior_field = Product._meta.get_field("stock_behavior")
         assert stock_behavior_field.to_python(frm["stock_behavior"].value()) is test_product.stock_behavior
-        assert 'value="1" selected="selected"' in six.text_type(frm["stock_behavior"].as_widget())
+        assert 'value="1" selected' in six.text_type(frm["stock_behavior"].as_widget())
         assert frm.initial["name"] == test_product.name

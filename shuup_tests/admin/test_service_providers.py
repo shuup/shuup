@@ -91,7 +91,7 @@ def test_invalid_service_provider_type(rf, admin_user):
     """
     Test ServiceProvideEditView with invalid type parameter.
 
-    Should just select the first type option then.
+    Should have nothing selected
     """
     get_default_shop()
     view = ServiceProviderEditView.as_view()
@@ -106,8 +106,7 @@ def test_invalid_service_provider_type(rf, admin_user):
             "selected": bool(option.get("selected")),
             "value": option["value"],
         })
-    assert options[0]["selected"] is True
-    assert [x["selected"] for x in options[1:]] == [False, False]
+    assert [x["selected"] for x in options] == [False, False, False]
 
 
 @pytest.mark.parametrize("type,extra_inputs", [

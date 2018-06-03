@@ -1,0 +1,17 @@
+<select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} {% if quick_add_model %}data-model="{{ quick_add_model }}"{% endif %}>
+    {% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
+    <optgroup label="{{ group_name }}">{% endif %}{% for widget in group_choices %}
+    {% include widget.template_name %}{% endfor %}{% if group_name %}
+    </optgroup>{% endif %}{% endfor %}
+  </select>
+  <span class="quick-add-btn">
+    <a
+        class="btn"
+        data-url="{{ quick_add_url }}"
+        data-toggle="popover"
+        data-placement="bottom"
+        data-trigger="manual"
+        data-content="{{ quick_add_btn_title }}">
+            <i class="fa fa-plus text-primary"></i>
+    </a>
+  </span>
