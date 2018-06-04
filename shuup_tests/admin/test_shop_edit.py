@@ -12,6 +12,7 @@ from django.utils.translation import activate
 from shuup import configuration
 from shuup.admin.modules.settings import consts
 from shuup.admin.modules.shops.views.edit import ShopBaseForm
+from django.test.utils import override_settings
 from shuup.core.models import ConfigurationItem, Shop, ShopStatus
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person, get_currency,
@@ -19,6 +20,7 @@ from shuup.testing.factories import (
 )
 from shuup_tests.utils import printable_gibberish, SmartClient
 from shuup_tests.utils.forms import get_form_data
+from shuup.testing.soup_utils import extract_form_fields
 
 
 @pytest.mark.django_db
@@ -62,6 +64,30 @@ def _test_cleanliness(shop_form):
     shop_form.full_clean()
     assert not shop_form.errors
     assert shop_form.cleaned_data
+
+
+@pytest.mark.django_db
+def test_new_shop(rf, admin_user):
+    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+        get_default_shop()
+        assert Shop.objects.count() == 1
+
+        client = SmartClient()
+        client.login(username="admin", password="password")
+        client.soup(reverse("shuup_admin:shop.new"))
+        payload = {
+            "base-public_name__en": "New Shop",
+            "base-name__en": "New Shop",
+            "base-status": "1",
+            "base-currency": "EUR",
+            "base-domain": "shop2"
+        }
+        response = client.post(reverse("shuup_admin:shop.new"), data=payload)
+        assert response.status_code == 302
+        assert Shop.objects.count() == 2
+        shop = Shop.objects.last()
+        assert shop.name == "New Shop"
+        assert shop.domain == "shop2"
 
 
 @pytest.mark.django_db

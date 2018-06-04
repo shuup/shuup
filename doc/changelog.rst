@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Admin
+~~~~~
+
+- Fixed shop checkout config to skip form when creating a new shop
+
 Shuup 1.6.0
 -----------
 
