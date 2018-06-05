@@ -44,9 +44,11 @@
                                     </thead>
                                     <tbody>
                                         {% for comment in comments %}
+                                        {% set url = shuup_admin.model_url(comment.author) %}
+                                        {% set author = comment.author.name if comment.author.name|length else comment.author.id %}
                                         <tr>
                                             <td class="col-xs-2">{{ comment.created_on|datetime(format="short") }}</td>
-                                            <td class="col-xs-2">{{ comment.author }}</td>
+                                            <td class="col-xs-2"><a href="{{ url }}">{{ author }}</a></td>
                                             <td class="col-xs-1">{{ comment.visibility }}</td>
                                             <td class="col-xs-7">{{ comment.body }}</td>
                                         </tr>
