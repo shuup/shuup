@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.transaction import atomic
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.timezone import now
+from django.utils.translation import activate, get_language
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from django.views.generic.detail import SingleObjectMixin
@@ -39,6 +40,18 @@ class GDPRView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     template_name = "shuup/admin/gdpr/edit.jinja"
     base_form_part_classes = [GDPRBaseFormPart, GDPRCookieCategoryFormPart]
     success_url = reverse_lazy("shuup_admin:gdpr.settings")
+
+    def dispatch(self, request, *args, **kwargs):
+        gdpr_setting = self.get_object()
+        language = get_language()
+        for code, name in settings.LANGUAGES:
+            activate(code)
+            gdpr_setting.set_current_language(code)
+            gdpr_setting.cookie_banner_content = settings.SHUUP_GDPR_DEFAULT_BANNER_STRING
+            gdpr_setting.cookie_privacy_excerpt = settings.SHUUP_GDPR_DEFAULT_EXCERPT_STRING
+            gdpr_setting.save()
+        activate(language)
+        return super(GDPRView, self).dispatch(request, *args, **kwargs)
 
     def get_toolbar(self):
         toobar = Toolbar([
