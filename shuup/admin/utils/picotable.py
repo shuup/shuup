@@ -99,9 +99,13 @@ class ChoicesFilter(Filter):
         ]
 
     def to_json(self, context):
+        choices = self._flatten_choices(context)
+        default_choice = self.default
+        if default_choice is None and choices:
+            default_choice = choices[0][0]
         return {
-            "choices": self._flatten_choices(context),
-            "defaultChoice": self.default
+            "choices": choices,
+            "defaultChoice": default_choice
         }
 
     def filter_queryset(self, queryset, column, value, context):

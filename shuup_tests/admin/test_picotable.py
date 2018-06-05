@@ -177,6 +177,13 @@ def test_choice_filter_with_default(rf, admin_user, regular_user):
 
     pico_no_defaults = get_pico(rf, columns=(columns + is_active))
     data = pico_no_defaults.get_data(query)
+
+    superuser_field = data["columns"][3]
+    assert superuser_field["id"] == "is_superuser"
+    assert len(superuser_field["filter"]["choices"]) == 3
+    assert superuser_field["filter"]["defaultChoice"] == "_all"
+    assert superuser_field["filter"]["choices"][0][0] == superuser_field["filter"]["defaultChoice"]
+
     user_data = data["items"][0]
     user = get_user_model().objects.get(id=user_data["id"])
     assert user.is_active
