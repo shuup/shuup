@@ -50,6 +50,8 @@ class CheckoutShopFormPart(FormPart):
         )
 
     def form_valid(self, form):
-        data = form[self.name].cleaned_data
+        if self.name not in form.forms:
+            return
+        data = form.forms[self.name].cleaned_data
         configuration.set(self.object, SHIPPING_METHOD_REQUIRED_CONFIG_KEY, data.get("shipping_method_required", False))
         configuration.set(self.object, PAYMENT_METHOD_REQUIRED_CONFIG_KEY, data.get("payment_method_required", False))
