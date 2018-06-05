@@ -38,6 +38,9 @@ def test_gdpr_admin_settings(client, admin_user):
     assert not GDPRSettings.objects.exists()
     response = client.soup(admin_settings_url)
     assert GDPRSettings.objects.exists()
+    s = GDPRSettings.objects.first()
+    assert s.cookie_banner_content == settings.SHUUP_GDPR_DEFAULT_BANNER_STRING
+    assert s.cookie_privacy_excerpt == settings.SHUUP_GDPR_DEFAULT_EXCERPT_STRING
     assert GDPRCookieCategory.objects.count() == 0
 
     # create the settings with only basic options

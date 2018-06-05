@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import activate, get_language
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 
@@ -44,9 +45,22 @@ class GDPRSettings(TranslatableModel):
     def __str__(self):
         return _("GDPR for {}").format(self.shop)
 
+    def set_default_content(self):
+        language = get_language()
+        for code, name in settings.LANGUAGES:
+            activate(code)
+            self.set_current_language(code)
+            self.cookie_banner_content = settings.SHUUP_GDPR_DEFAULT_BANNER_STRING
+            self.cookie_privacy_excerpt = settings.SHUUP_GDPR_DEFAULT_EXCERPT_STRING
+            self.save()
+        activate(language)
+
     @classmethod
     def get_for_shop(cls, shop):
-        return cls.objects.get_or_create(shop=shop)[0]
+        instance, created = cls.objects.get_or_create(shop=shop)
+        if created or not instance.cookie_banner_content:
+            instance.set_default_content()
+        return instance
 
 
 @python_2_unicode_compatible
