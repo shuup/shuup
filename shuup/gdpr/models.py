@@ -58,7 +58,7 @@ class GDPRSettings(TranslatableModel):
     @classmethod
     def get_for_shop(cls, shop):
         instance, created = cls.objects.get_or_create(shop=shop)
-        if created or not instance.cookie_banner_content:
+        if created or not instance.safe_translation_getter("cookie_banner_content"):
             instance.set_default_content()
         return instance
 
