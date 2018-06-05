@@ -31,19 +31,19 @@ class ClassicGrayTheme(Theme):
             "identifier": "default",
             "stylesheet": "shuup/front/css/style.css",
             "name": _("Default"),
-            "images": []
+            "images": ["shuup/front/img/no_image.png"]
         },
         {
             "identifier": "midnight_blue",
             "stylesheet": "shuup/classic_gray/blue/style.css",
             "name": _("Midnight Blue"),
-            "images": []
+            "images": ["shuup/front/img/no_image.png"]
         },
         {
             "identifier": "candy_pink",
             "stylesheet": "shuup/classic_gray/pink/style.css",
             "name": _("Candy Pink"),
-            "images": []
+            "images": ["shuup/front/img/no_image.png"]
         },
     ]
 
