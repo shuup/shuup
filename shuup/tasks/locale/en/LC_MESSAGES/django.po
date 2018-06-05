@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-31 12:47+0000\n"
+"POT-Creation-Date: 2018-06-05 20:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,9 +51,6 @@ msgstr ""
 msgid "Filter by name..."
 msgstr ""
 
-msgid "Priority"
-msgstr ""
-
 msgid "Creator"
 msgstr ""
 
@@ -61,6 +58,9 @@ msgid "Filter by creator..."
 msgstr ""
 
 msgid "Status"
+msgstr ""
+
+msgid "Priority"
 msgstr ""
 
 msgid "Comments"
