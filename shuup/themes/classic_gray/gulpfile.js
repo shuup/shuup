@@ -37,7 +37,7 @@ gulp.task("less", function() {
     return merge(tasks);
 });
 
-gulp.task("less:watch", ["less"], function() {
+gulp.task("less:watch", gulp.parallel(["less"]), function() {
     gulp.watch(["static_src/**/**/*.less"], ["less"]);
 });
 
@@ -50,4 +50,4 @@ gulp.task("owl-assets", function() {
     return merge(tasks);
 });
 
-gulp.task("default", ["less", "owl-assets"]);
+gulp.task("default", gulp.parallel(["less", "owl-assets"]));

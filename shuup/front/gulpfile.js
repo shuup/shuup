@@ -30,7 +30,7 @@ gulp.task("less", function() {
         .pipe(gulp.dest("static/shuup/front/css/"));
 });
 
-gulp.task("less:watch", ["less"], function() {
+gulp.task("less:watch", gulp.parallel(["less"]), function() {
     gulp.watch(["static_src/less/**/*.less"], ["less"]);
 });
 
@@ -62,7 +62,7 @@ gulp.task("js", function() {
         .pipe(gulp.dest("static/shuup/front/js/"));
 });
 
-gulp.task("js:watch", ["js"], function() {
+gulp.task("js:watch", gulp.parallel(["js"]), function() {
     gulp.watch(["static_src/js/**/*.js"], ["js"]);
 });
 
@@ -73,7 +73,7 @@ gulp.task("copy_fonts", function() {
     ]).pipe(gulp.dest("static/shuup/front/fonts/"));
 });
 
-gulp.task("default", ["js", "less", "owl-assets", "copy_fonts"]);
+gulp.task("default", gulp.parallel(["js", "less", "owl-assets", "copy_fonts"]));
 
-gulp.task("watch", ["js:watch", "less:watch"], function() {
+gulp.task("watch", gulp.parallel(["js:watch", "less:watch"]), function() {
 });

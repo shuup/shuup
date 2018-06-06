@@ -88,10 +88,14 @@ function webpackTasks(name, config) {
 
 function registerWatchTask(directDeps, fn) {
     var deps = [].concat(directDeps || []);
-    Object.keys(gulp.tasks).filter(function(n) {return n.indexOf("watch:") === 0;}).forEach(function(n) {
-        deps.push(n);
-    });
-    gulp.task("watch", deps, fn || gutil.noop);
+    if (gulp.registry().tasks()) {
+        Object.keys(gulp.registry().tasks()).filter(function(n) {
+            return n.indexOf("watch:") === 0;
+        }).forEach(function(n) {
+            deps.push(n);
+        });
+    }
+    gulp.task("watch", gulp.parallel(deps), fn || gutil.noop);
 }
 
 module.exports.buildWebpackConfig = buildWebpackConfig;
