@@ -3563,11 +3563,6 @@
           "resolved": "https://registry.npmjs.org/deprecated/-/deprecated-0.0.1.tgz",
           "integrity": "sha1-+cmvVGSvoeepcUWKi97yqpTVuxk="
         },
-        "interpret": {
-          "version": "0.6.6",
-          "resolved": "https://registry.npmjs.org/interpret/-/interpret-0.6.6.tgz",
-          "integrity": "sha1-/s16GOfOXKar+5U+H4YhOknxYls="
-        },
         "liftoff": {
           "version": "2.2.0",
           "resolved": "https://registry.npmjs.org/liftoff/-/liftoff-2.2.0.tgz",
@@ -6395,6 +6390,11 @@
         "strip-ansi": "^3.0.0",
         "through": "^2.3.6"
       }
+    },
+    "interpret": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/interpret/-/interpret-1.1.0.tgz",
+      "integrity": "sha1-ftGxQQxqDg94z5XTuEQMY/eLhhQ="
     },
     "is-buffer": {
       "version": "1.1.6",
