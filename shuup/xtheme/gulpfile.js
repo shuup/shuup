@@ -60,4 +60,4 @@ gtools.webpackTasks("admin-js", gtools.buildWebpackConfig(
     "admin/admin.js"
 ));
 
-gulp.task("default", ["editor-style", "injection", "editor-js", "admin-style", "admin-js"]);
+gulp.task("default", gulp.parallel(["editor-style", "injection", "editor-js", "admin-style", "admin-js"]));
