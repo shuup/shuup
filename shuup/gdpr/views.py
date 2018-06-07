@@ -16,6 +16,7 @@ from django.db.transaction import atomic
 from django.http import (
     HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 )
+from django.utils.text import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView, View
 
@@ -55,7 +56,7 @@ class GDPRConsentView(View):
         if request.META.get("HTTP_REFERER"):
             redirect_url = request.META["HTTP_REFERER"]
         else:
-            redirect_url = reverse("shuup:index")
+            redirect_url = force_text(reverse("shuup:index"))
 
         response = HttpResponseRedirect(redirect_url)
         add_consent_to_response_cookie(response, cookie_data)
