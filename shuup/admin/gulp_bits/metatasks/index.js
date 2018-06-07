@@ -25,9 +25,9 @@ function installTasks() {
         return p.split(":")[0];
     }).value();
     _.each(tasksByPrefix, function(tasks, prefix) {
-        gulp.task(prefix, tasks);
+        gulp.task(prefix, gulp.parallel(tasks));
     });
-    gulp.task("build", _.keys(tasksByPrefix));
+    gulp.task("build", gulp.parallel(_.keys(tasksByPrefix)));
 }
 
 module.exports.installTasks = installTasks;

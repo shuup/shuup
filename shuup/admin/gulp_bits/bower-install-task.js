@@ -14,7 +14,7 @@ var _ = require("lodash");
 var path = require("path");
 var fs = require("fs");
 
-gulp.task("bower", [], function(complete) {
+gulp.task("bower", gulp.parallel([], function(complete) {
     glob("{modules,static_src}/**/bower.json", {
         ignore: ["**/node_modules/**", "**/bower_components/**"]
     }, function(er, files) {
@@ -42,4 +42,4 @@ gulp.task("bower", [], function(complete) {
             });
         });
     });
-});
+}));

@@ -29,7 +29,7 @@ function normalJsBundle(spec, name) {
     var transpiler = gutil.noop();
     if (spec.es6) {
         // Don't transpile Bower components.
-        transpiler = gulpif(function(file) { return /bower_components/.test(file.path); }, gutil.noop(), babel());
+        transpiler = gulpif(function(file) { return /bower_components/.test(file.path); }, gutil.noop(), babel({ presets: ['env'] }));
     }
     gulp.task(taskName, function () {
         if (settings.WATCH && !watcher) {

@@ -28,10 +28,6 @@ module.exports = {
             "less/**/*.less"
         ]
     },
-    "datatables": {
-        "base": "./static_src/datatables",
-        "entrypoint": "dataTables.bootstrap.less"
-    },
     "media-browser": {
         "base": "./modules/media/static_src/media/browser",
         "entrypoint": "media-browser.less"

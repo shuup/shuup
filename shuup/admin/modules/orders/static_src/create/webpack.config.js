@@ -22,9 +22,10 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js(x?)$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: "babel-loader?loose=all"
+                test: /\.js(x?)$/,
+                loader: "babel",
+                query: { presets: ["env"] }
             },
             {
                 test: /\.less/,
