@@ -27,12 +27,10 @@ function buildWebpackConfig(entry, outputFilename) {
         module: {
             loaders: [
                 {
+                    exclude: /(node_modules|bower_components)/,
                     test: /\.js$/,
                     loader: "babel",
-                    query: {
-                        compact: false,
-                        loose: "es6.destructuring,es6.modules"
-                    }
+                    query: { presets: ["env"] }
                 },
                 {
                     test: /\.png$/,
