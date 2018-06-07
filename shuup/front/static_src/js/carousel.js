@@ -28,7 +28,7 @@ $(function() {
         });
     });
 
-    slideCountToResponsiveData = {
+    var slideCountToResponsiveData = {
         2: {0: {items: 1}, 640: {items: 2}, 992: {items: 2}},
         3: {0: {items: 2}, 640: {items: 2}, 992: {items: 3}},
     };
