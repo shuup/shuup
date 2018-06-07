@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 /* eslint-disable no-shadow,eqeqeq */
-const _ = require("lodash");
+import _ from "lodash";
 
 export default function(rootFolder, folderId) {
     var pathToFolder = null;

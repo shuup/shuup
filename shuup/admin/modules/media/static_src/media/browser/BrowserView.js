@@ -8,14 +8,14 @@
  */
 /* eslint-disable no-bitwise */
 
-const m = require("mithril");
-const _ = require("lodash");
+import m from "mithril";
+import  _  from "lodash";
 
-const folderTree = require("./components/folderTree");
-const folderBreadcrumbs = require("./components/folderBreadcrumbs");
-const folderView = require("./components/folderView");
-const findPathToFolder = require("./util/findPathToFolder");
-const remote = require("./util/remote");
+import folderTree from "./components/folderTree";
+import folderBreadcrumbs from "./components/folderBreadcrumbs";
+import folderView from "./components/folderView";
+import findPathToFolder from "./util/findPathToFolder";
+import * as remote from "./util/remote";
 
 export function view(ctrl) {
     return m("div.container-fluid", [

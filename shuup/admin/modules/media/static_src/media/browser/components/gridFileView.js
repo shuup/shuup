@@ -6,14 +6,14 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const m = require("mithril");
-const _ = require("lodash");
-const wrapFileLink = require("./wrapFileLink");
-const folderLink = require("./folderLink");
-const {dropzoneConfig} = require("../util/dragDrop");
-const images = require("./images");
-const menuManager = require("../util/menuManager");
-const fileContextMenu = require("../menus/fileContextMenu");
+import m from "mithril";
+import _ from "lodash";
+import wrapFileLink from "./wrapFileLink";
+import folderLink from "./folderLink";
+import { dropzoneConfig } from "../util/dragDrop";
+import * as images from "./images";
+import * as menuManager from "../util/menuManager";
+import fileContextMenu from "../menus/fileContextMenu";
 
 export default function(ctrl, folders, files) {
     const folderItems = _.map(folders, function(folder) {

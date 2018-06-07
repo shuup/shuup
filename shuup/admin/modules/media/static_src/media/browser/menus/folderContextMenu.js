@@ -7,8 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 /* eslint-disable no-bitwise */
-const folderActions = require("../actions/folderActions");
-const menuItem = require("./menuItem");
+import menuItem from "./menuItem";
+import * as folderActions from "../actions/folderActions";
 
 export default function(controller) {
     return function() {

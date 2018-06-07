@@ -6,13 +6,13 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const _ = require("lodash");
-const m = require("mithril");
-const moment = require("moment");
-const wrapFileLink = require("./wrapFileLink");
-const folderLink = require("./folderLink");
-const menuManager = require("../util/menuManager");
-const fileContextMenu = require("../menus/fileContextMenu");
+import _ from "lodash";
+import m from "mithril";
+import moment from "moment";
+import wrapFileLink from "./wrapFileLink";
+import folderLink from "./folderLink";
+import fileContextMenu from "../menus/fileContextMenu";
+import * as menuManager from "../util/menuManager";
 
 export default function(ctrl, folders, files) {
     const folderItems = _.map(folders, function(folder) {

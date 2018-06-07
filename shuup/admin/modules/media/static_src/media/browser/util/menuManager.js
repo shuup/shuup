@@ -6,9 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const m = require("mithril");
-const _ = require("lodash");
-const offset = require("./offset");
+import m from "mithril";
+import _ from "lodash";
+import offset from "./offset";
 
 var currentMenuParent = null;
 var currentMenuComponent = null;

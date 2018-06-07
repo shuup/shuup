@@ -6,15 +6,15 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const m = require("mithril");
-const button = require("./button");
-const _ = require("lodash");
-const emptyFolderView = require("./emptyFolderView");
-const gridFileView = require("./gridFileView");
-const listFileView = require("./listFileView");
-const responsiveUploadHint = require("./responsiveUploadHint");
-const {dropzoneConfig} = require("../util/dragDrop");
-const images = require("./images");
+import m from "mithril";
+import button from "./button";
+import _ from "lodash";
+import emptyFolderView from "./emptyFolderView";
+import gridFileView from "./gridFileView";
+import listFileView from "./listFileView";
+import responsiveUploadHint from "./responsiveUploadHint";
+import { dropzoneConfig } from "../util/dragDrop";
+import * as images from "./images";
 
 function sortBySpec(data, sortString) {
     sortString = /^([+-])(.+)$/.exec(sortString || "+name");

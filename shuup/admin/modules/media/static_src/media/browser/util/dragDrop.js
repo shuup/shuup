@@ -6,9 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const m = require("mithril");
-const FileUpload = require("../FileUpload");
-const fileActions = require("../actions/fileActions");
+import m from "mithril";
+import * as FileUpload from "../FileUpload";
+import * as fileActions from "../actions/fileActions";
 
 export const supportsDnD = (window.File && window.FileList && window.FormData);
 
