@@ -63,7 +63,7 @@ export function renderOrderLines(store, shop, lines) {
                                 store.dispatch(setLineProperty(line.id, "product", obj));
                                 store.dispatch(retrieveProductData({
                                     id: obj.id,
-                                    orLine: line.id,
+                                    forLine: line.id,
                                     quantity: line.quantity
                                 }));
                             }

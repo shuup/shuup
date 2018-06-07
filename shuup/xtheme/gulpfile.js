@@ -26,7 +26,7 @@ gtools.webpackTasks("injection", gtools.buildWebpackConfig(
 gtools.webpackTasks("editor-js", gtools.buildWebpackConfig(
     [
         "./editor/index.js",
-        "../../admin/static_src/base/js/browse-widget.js",
+        "../../admin/static_src/base/js/browse-widget.js"
     ],
     "editor.js"
 ));
@@ -55,7 +55,7 @@ gulp.task("admin-style", function() {
 
 gtools.webpackTasks("admin-js", gtools.buildWebpackConfig(
     [
-        "./admin/js/script.js",
+        "./admin/js/script.js"
     ],
     "admin/admin.js"
 ));

@@ -7,17 +7,17 @@
     "build": "npm i && webpack",
     "watch": "npm i && webpack --watch"
   },
-  "author": "Shuup Team <shuup@shuup.com>",
+  "author": "Shuup Team <support@shuup.com>",
   "license": "OSL-3.0",
   "private": true,
   "dependencies": {
-    "autoprefixer-loader": "^2.0.0",
-    "classnames": "^2.1.2",
-    "css-loader": "^0.15.1",
-    "less": "^2.5.1",
-    "less-loader": "^2.2.0",
-    "node-libs-browser": "^0.5.2",
-    "style-loader": "^0.12.3",
-    "webpack": "^1.9.12"
+    "autoprefixer-loader": "^3.2.0",
+    "classnames": "^2.2.5",
+    "css-loader": "^0.28.11",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "node-libs-browser": "^2.1.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^1.14.0"
   }
 }

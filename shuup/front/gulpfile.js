@@ -13,6 +13,7 @@ var uglify = require("gulp-uglify");
 var plumber = require("gulp-plumber");
 var minifycss = require("gulp-cssnano");
 var gutil = require("gulp-util");
+var babel = require('gulp-babel');
 var PRODUCTION = gutil.env.production || process.env.NODE_ENV == "production";
 
 gulp.task("less", function() {
@@ -58,6 +59,7 @@ gulp.task("js", function() {
     ])
         .pipe(plumber({}))
         .pipe(concat("scripts.js"))
+        .pipe(babel({ presets: ['env'] }))
         .pipe((PRODUCTION ? uglify() : gutil.noop()))
         .pipe(gulp.dest("static/shuup/front/js/"));
 });

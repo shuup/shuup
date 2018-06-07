@@ -6,10 +6,10 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const domready = require("../lib/domready");
-const qs = require("../lib/qs");
-const el = require("../lib/el");
-const $ = require("../lib/miniq");
+import domready from "../lib/domready";
+import { mutate } from "../lib/qs";
+import el from "../lib/el";
+import $ from "../lib/miniq";
 
 
 function post(args) {
@@ -38,7 +38,7 @@ function updateModelChoiceWidgetURL(select) {
 domready(() => {
     $(".layout-cell").on("click", function() {
         const {x, y} = this.dataset;
-        const newQs = qs.mutate({x, y});
+        const newQs = mutate({x, y});
         location.href = "?" + newQs;
     });
     $(".layout-add-cell-btn").on("click", function() {
