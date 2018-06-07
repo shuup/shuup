@@ -38,7 +38,9 @@ def test_product_detail(browser, admin_user, live_server, settings):
     browser.execute_script("window.scrollTo(0,0)")
     click_element(browser, "button[form='product_form']")
 
-    wait_until_condition(browser, condition=lambda x: x.is_text_present("Product edited"))
+    # Here saving the product seems to take some time occasionally so it
+    # should be worth to wait until the save goes through
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Product edited"), timeout=50)
 
     product.refresh_from_db()
     check_product_name(browser, product, new_sku)

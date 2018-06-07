@@ -130,8 +130,7 @@ def navigate_to_checkout(browser, product):
 
 def guest_ordering_test(browser, live_server):
     browser.fill("login-username", "test-username")
-    click_element(browser, "button[name='login']")
-    wait_until_appeared(browser, "div.form-group.passwordinput.required.has-error")
+    click_element(browser, "button[name='login']")  # Shouldn't submit
     browser.fill("login-password", "test-password")
     click_element(browser, "button[name='login']")
     wait_until_condition(browser, lambda x: x.is_text_present("Please enter a correct username and password."))
@@ -218,9 +217,7 @@ def login_and_finish_up_the_checkout(browser, live_server, test_username, test_e
     wait_until_appeared(browser, "select[name='billing-region_code']")
     browser.select("billing-region_code", customer_region)
 
-    click_element(browser, "#addresses button[type='submit']")
-
-    wait_until_condition(browser, lambda x: x.is_text_present("This field is required."))
+    click_element(browser, "#addresses button[type='submit']")  # Shouldn't submit since required fields
 
     browser.fill("shipping-name", customer_name)
     browser.fill("shipping-street", customer_street)

@@ -84,11 +84,9 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
     wait_until_appeared(browser, "select[name='billing-region_code']")
     browser.select("billing-region_code", customer_region)
 
-    click_element(browser, "#addresses button[type='submit']")
+    click_element(browser, "#addresses button[type='submit']")  # This shouldn't submit since missing required fields
 
-    wait_until_condition(browser, lambda x: x.is_text_present("There were errors on submitted form fields. Please check them and try again."))
-
-    # Fill the errors
+    # Fill rest of the fields
     browser.fill("shipping-name", customer_name)
     browser.fill("shipping-street", customer_street)
     browser.fill("shipping-city", customer_city)
@@ -177,9 +175,9 @@ def test_browser_checkout_vertical(browser, live_server, settings):
 
         click_element(browser, "#addresses button[type='submit']")
 
-        wait_until_condition(browser, lambda x: x.is_text_present("This field is required."))
+        click_element(browser, "#addresses button[type='submit']")  # This shouldn't submit since missing required fields
 
-        # Fill the errors
+        # Fill rest of the fields
         browser.fill("shipping-name", customer_name)
         browser.fill("shipping-street", customer_street)
         browser.fill("shipping-city", customer_city)
