@@ -6,11 +6,11 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-require("!style!css!autoprefixer!less!./style.less");
-const domready = require("../lib/domready");
-const qs = require("../lib/qs");
-const el = require("../lib/el");
-const ajax = require("../lib/ajax");
+import "!style!css!autoprefixer!less!./style.less";
+import domready from "../lib/domready";
+import { stringify, mutateURL } from "../lib/qs";
+import el from "../lib/el";
+import ajax from "../lib/ajax";
 
 var _sidebarDiv = null;
 var _sidebarIframe = null;
@@ -64,7 +64,7 @@ function openPlaceholderEditor(domElement) {
         // TODO: Hopefully we won't get any problems with too-long query strings (2048 is the maximum for IE):
         "default_config": defaultConfigJSON
     };
-    getSidebarIframe().src = window.XthemeEditorConfig.editUrl + "?" + qs.stringify(urlParams);
+    getSidebarIframe().src = window.XthemeEditorConfig.editUrl + "?" + stringify(urlParams);
     setTimeout(() => {
         setSidebarVisibility(true);
     }, 1); // Defer slide-out, because otherwise browsers coalesce the addClass (as it's done in the same JS "tick")
@@ -110,7 +110,7 @@ function handleMessage(event) {
         return;   // Not sure where to put output anyway
     }
     ajax({
-        url: qs.mutateURL(location.href, {"_uncache_": +new Date()}),
+        url: mutateURL(location.href, {"_uncache_": +new Date()}),
         success: (text) => {
             const newDoc = document.implementation.createHTMLDocument();
             newDoc.body.innerHTML = text;
