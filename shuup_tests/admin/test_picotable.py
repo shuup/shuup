@@ -91,6 +91,18 @@ def test_picotable_display(rf, admin_user, regular_user):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
+def test_picotable_default_sort(rf, admin_user, regular_user):
+    pico = get_pico(rf)
+    data = pico.get_data({"perPage": 100, "page": 1})
+    id = None
+    for item in data["items"]:
+        if id is not None:
+            assert item["id"] <= id, "sorting does not work"
+        id = item["id"]
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
 def test_picotable_sort(rf, admin_user, regular_user):
     pico = get_pico(rf)
     data = pico.get_data({"perPage": 100, "page": 1, "sort": "-id"})

@@ -405,7 +405,7 @@ class Picotable(object):
         return filters
 
     def process_queryset(self, query):
-        queryset = self.queryset
+        queryset = self.queryset.order_by("-id")
 
         filters = (query.get("filters") or self._get_default_filters())
         for column, value in six.iteritems(filters):
