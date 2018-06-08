@@ -11,7 +11,13 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import PersonContact
+from shuup.gdpr.models import GDPRCookieCategory
+from shuup.gdpr.utils import create_initial_privacy_policy_page, get_cookie_consent_data, \
+    create_initial_required_cookie_category
+from shuup.gdpr.views import GDPRConsentView
+from shuup.simple_cms.models import Page, PageType
 from shuup.testing import factories
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
 
 
@@ -67,3 +73,16 @@ def test_serialize_data():
     refreshed_customer = PersonContact.objects.get(id=customer.id)
     assert refreshed_customer.is_active is False
     assert refreshed_customer.name == customer.name     # nothing changed yet
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("language", ["fi", "en"])
+def test_consent_view(rf, language):
+    activate(language)
+    shop = factories.get_default_shop()
+    create_initial_privacy_policy_page(shop)
+    create_initial_required_cookie_category(shop)
+    view = GDPRConsentView.as_view()
+    request = apply_request_middleware(rf.post("/"), shop=shop)
+    response = view(request, pk=None)
+    assert response.status_code == 302
