@@ -25,7 +25,7 @@ from shuup.simple_supplier.notify_script_template import (
     StockLimitEmailScriptTemplate
 )
 from shuup.testing.browser_utils import (
-    click_element, wait_until_condition
+    click_element, move_to_element, wait_until_condition
 )
 from shuup.testing.notify_script_templates import DummyScriptTemplate
 from shuup.testing.utils import initialize_admin_browser_test
@@ -185,6 +185,8 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
         });
     """)
     browser.find_by_id("id_en-subject").fill("changed subject!")
+
+    move_to_element(browser, "#id_base-send_to")
     browser.select('base-send_to', 'customer')
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
