@@ -5,16 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import json
 
 import pytest
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.test.utils import override_settings
-from django.utils.timezone import now
 from django.utils.translation import activate
 
-from shuup.core.models import ShopStatus, PersonContact
+from shuup.core.models import PersonContact
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.simple_cms.models import Page, PageType
 from shuup.testing import factories

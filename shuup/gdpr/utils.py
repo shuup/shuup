@@ -9,7 +9,9 @@ import json
 
 from django.conf import settings
 from django.template import loader
+from django.utils.encoding import force_text
 from django.utils.timezone import now
+from django.utils.translation import activate, get_language
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.utils.i18n import format_datetime
@@ -93,9 +95,19 @@ def create_initial_privacy_policy_page(shop):
             page_type=PageType.GDPR_CONSENT_DOCUMENT,
             content=content,
             available_from=now_date,
-            title=_("Privacy Policy"),
-            url=_("privacy-policy")
+            title=force_text(_("Privacy Policy")),
+            url=force_text(_("privacy-policy"))
         )
+        current_language = get_language()
+        for code, language in settings.LANGUAGES:
+            if code == current_language:
+                continue
+            activate(code)
+            gdpr_document.set_current_language(code)
+            gdpr_document.title = force_text(_("Privacy Policy"))
+            gdpr_document.url = force_text(_("privacy-policy"))
+            gdpr_document.save()
+        activate(current_language)
 
     return gdpr_document
 
@@ -103,7 +115,7 @@ def create_initial_privacy_policy_page(shop):
 def create_initial_required_cookie_category(shop):
     from shuup.gdpr.models import GDPRCookieCategory
     if not GDPRCookieCategory.objects.filter(shop=shop).exists():
-        GDPRCookieCategory.objects.create(
+        cookie_category = GDPRCookieCategory.objects.create(
             shop=shop,
             always_active=True,
             cookies="sessionid,csrftoken,shuup_gdpr_consent,rvp",
@@ -113,6 +125,19 @@ def create_initial_required_cookie_category(shop):
                 "chosen for you based on your region as well as the overall site functionality."
             )
         )
+        current_language = get_language()
+        for code, language in settings.LANGUAGES:
+            if code == current_language:
+                continue
+            activate(code)
+            cookie_category.set_current_language(code)
+            cookie_category.name = _("Required")
+            cookie_category.how_is_used = _(
+                "We use these cookies to ensure the correct language is being "
+                "chosen for you based on your region as well as the overall site functionality."
+            )
+            cookie_category.save()
+        activate(current_language)
 
 
 def is_documents_consent_in_sync(shop, user):
