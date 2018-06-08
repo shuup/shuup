@@ -29,8 +29,8 @@ def validate(tax_number):
     try:
         # Check if the tax number is a VAT code
         #
-        verify_vat(tax_number)
-        return "vat"
+        prefix, code_parts = verify_vat(tax_number)
+        return "vat" if prefix and code_parts else "unknown"
     except VatCannotIdentifyValidationError:
         # Was not a VAT code, maybe it's some other tax number
         #
@@ -38,4 +38,5 @@ def validate(tax_number):
         # which we intentionally don't catch here, since then it was a
         # VAT, but invalid.
         pass
+
     return "unknown"

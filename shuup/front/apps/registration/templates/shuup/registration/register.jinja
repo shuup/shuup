@@ -18,7 +18,7 @@
                     {% csrf_token %}
                     {% for field in form.hidden_fields() %}{{ field|safe }}{% endfor %}
                     {% for field in form.visible_fields() %}{{ render_field(field) }}{% endfor %}
-                    {% if get_shop_configuration("allow_company_registration") %}
+                    {% if shuup.general.is_company_registration_allowed() %}
                     <p>
                         <a href="{{ url("shuup:registration_register_company") }}">
                             {% trans %}Register as a company.{% endtrans %}

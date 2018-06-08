@@ -25,7 +25,7 @@
 
 {% macro company_account_button(request) %}
     <div class="btn-group" role="group">
-        {% if get_global_configuration("allow_company_registration") %}
+        {% if shuup.general.is_company_registration_allowed(request) %}
             <a class="btn btn-primary" href="{{ url("shuup:company_edit") }}">
                 {% if request.is_company_member %}
                     <i class="fa fa-users"></i> {% trans %}Edit company information{% endtrans %}

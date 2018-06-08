@@ -252,8 +252,8 @@ def test_company_registration(django_user_model, client, allow_company_registrat
 
     shop = get_default_shop()
 
-    configuration.set(None, "allow_company_registration", allow_company_registration)
-    configuration.set(None, "company_registration_requires_approval", company_registration_requires_approval)
+    configuration.set(shop, "allow_company_registration", allow_company_registration)
+    configuration.set(shop, "company_registration_requires_approval", company_registration_requires_approval)
 
     url = reverse("shuup:registration_register_company")
     Script.objects.create(
@@ -361,9 +361,10 @@ def test_company_registration(django_user_model, client, allow_company_registrat
         assert django_user_model.objects.count() == 2  # admin_user + registered user
         assert PersonContact.objects.count() == 1
         assert CompanyContact.objects.count() == 1
-        # and they are innactive
+
         if company_registration_requires_approval:
             assert PersonContact.objects.filter(is_active=False).count() == 1
+            assert PersonContact.objects.filter(user__is_active=False).count() == 1
             assert CompanyContact.objects.filter(is_active=False).count() == 1
             assert mail.outbox[0].subject == "Generic welcome message"
             assert mail.outbox[1].subject == "New company registered"
@@ -382,7 +383,14 @@ def test_company_registration(django_user_model, client, allow_company_registrat
             assert user.is_active is True
         else:
             assert PersonContact.objects.filter(is_active=True).count() == 1
+
+            # Since we don't support company registration without the activation
+            # the user here is still False. Then it is up to merchant to customize
+            # the activation notification so that the activation email is sent to
+            # the newly created user. This is tested in the previous unit test.
+            assert PersonContact.objects.filter(user__is_active=False).count() == 1
             assert CompanyContact.objects.filter(is_active=True).count() == 1
+            assert mail.outbox[0].subject == "Generic welcome message"
 
 
 @pytest.mark.django_db

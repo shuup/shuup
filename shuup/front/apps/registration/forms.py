@@ -11,14 +11,16 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from registration.forms import RegistrationForm
 
-from shuup import configuration
 from shuup.core.models import CompanyContact, get_person_contact, PersonContact
+from shuup.front.utils.companies import (
+    company_registration_requires_approval, TaxNumberCleanMixin
+)
 from shuup.utils.djangoenv import has_installed
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
 
 
-class CompanyForm(forms.ModelForm):
+class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
     class Meta:
         model = CompanyContact
         fields = ['name', 'name_ext', 'tax_number', 'email', 'phone', 'www']
@@ -28,6 +30,7 @@ class CompanyForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
         super(CompanyForm, self).__init__(*args, **kwargs)
         self.fields['name'].required = True
         self.fields['tax_number'].required = True
@@ -105,7 +108,7 @@ class CompanyRegistrationForm(FormGroup):
         self.request = kwargs.pop("request")
         super(CompanyRegistrationForm, self).__init__(*args, **kwargs)
         address_form_cls = cached_load('SHUUP_ADDRESS_MODEL_FORM')
-        self.add_form_def('company', CompanyForm)
+        self.add_form_def('company', CompanyForm, kwargs={"request": self.request})
         self.add_form_def('billing', address_form_cls)
         self.add_form_def('contact_person', ContactPersonForm)
         self.add_form_def('user_account', UserCreationForm)
@@ -144,7 +147,7 @@ class CompanyRegistrationForm(FormGroup):
 
         # If company registration requires approval,
         # company and person contacts will be created as inactive
-        if configuration.get(None, "company_registration_requires_approval"):
+        if company_registration_requires_approval(self.request.shop):
             company.is_active = False
             person.is_active = False
 

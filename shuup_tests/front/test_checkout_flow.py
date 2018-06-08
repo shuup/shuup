@@ -115,6 +115,10 @@ def test_basic_order_flow(with_company):
     response = c.post(addresses_path, data=inputs)
     assert response.status_code == 302  # Should redirect forth
 
+    # Make sure the address is initialized from storage
+    # Go back to addresses right before back to methods
+    c.soup(addresses_path)
+
     methods_path = reverse("shuup:checkout", kwargs={"phase": "methods"})
     methods_soup = c.soup(methods_path)
     assert c.post(methods_path, data=extract_form_fields(methods_soup)).status_code == 302  # Should redirect forth

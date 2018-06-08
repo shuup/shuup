@@ -9,6 +9,7 @@ import pytest
 from django import forms
 from django.test import override_settings
 
+from shuup import configuration
 from shuup.core.models import get_person_contact
 from shuup.core.utils.forms import MutableAddressForm
 from shuup.front.checkout.addresses import AddressesPhase
@@ -49,7 +50,7 @@ def test_required_address_fields():
 
 
 class AddressesOnlyCheckoutView(BaseCheckoutView):
-        phase_specs = ['shuup.front.checkout.addresses:AddressesPhase']
+    phase_specs = ['shuup.front.checkout.addresses:AddressesPhase']
 
 
 @pytest.mark.django_db
@@ -64,11 +65,14 @@ def test_address_phase_authorized_user(rf, admin_user):
 
 
 @pytest.mark.django_db
-def test_address_phase_anonymous_user(rf):
-    request = apply_request_middleware(rf.get("/"), shop=get_default_shop())
+@pytest.mark.parametrize("allow_company_registration", [True, False])
+def test_address_phase_anonymous_user(rf, allow_company_registration):
+    shop = get_default_shop()
+    configuration.set(shop, "allow_company_registration", allow_company_registration)
+    request = apply_request_middleware(rf.get("/"), shop=shop)
     view_func = AddressesOnlyCheckoutView.as_view()
     resp = view_func(request, phase='addresses')
-    assert 'company' in resp.context_data['form'].form_defs
+    assert bool('company' in resp.context_data['form'].form_defs) == allow_company_registration
 
 
 @pytest.mark.django_db

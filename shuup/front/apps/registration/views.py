@@ -16,10 +16,10 @@ from django.views.generic import View
 from registration.backends.default import views as default_views
 from registration.backends.simple import views as simple_views
 
-from shuup import configuration
 from shuup.core.models import get_company_contact, get_person_contact
 from shuup.front.apps.registration.forms import CompanyRegistrationForm
 from shuup.front.template_helpers import urls
+from shuup.front.utils.companies import allow_company_registration
 
 
 def activation_complete(request):
@@ -85,7 +85,7 @@ class CompanyRegistrationView(RegistrationViewMixin, default_views.RegistrationV
     SEND_ACTIVATION_EMAIL = False
 
     def dispatch(self, request, *args, **kwargs):
-        if not configuration.get(None, "allow_company_registration"):
+        if not allow_company_registration(request.shop):
             return HttpResponseNotFound()
         return super(CompanyRegistrationView, self).dispatch(request, *args, **kwargs)
 

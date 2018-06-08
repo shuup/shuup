@@ -14,6 +14,13 @@ Admin
 
 - Fixed shop checkout config to skip form when creating a new shop
 
+Front
+~~~~~
+
+- Make company registration per shop
+- Add option to enable company tax number validation for EU
+
+
 Shuup 1.6.0
 -----------
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 20:02+0000\n"
+"POT-Creation-Date: 2018-06-08 20:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1561,24 +1561,6 @@ msgid ""
 "number is running system wide, regardless of the amount of shops."
 "<br><br><b>Shop Running</b><br>Every shop has its own running numbers for "
 "reference."
-msgstr ""
-
-msgid "Registration Settings"
-msgstr ""
-
-msgid "Allow company registration"
-msgstr ""
-
-msgid "If you select this, companies can register into your store."
-msgstr ""
-
-msgid "Company registration requires approval"
-msgstr ""
-
-msgid ""
-"Registered companies must be manually approved by admin if this is checked. "
-"This option has no effect if company registration is not allowed on your "
-"site."
 msgstr ""
 
 msgid "Settings saved"
@@ -3316,6 +3298,9 @@ msgstr ""
 msgid "This product is currently not orderable."
 msgstr ""
 
+msgid "Add a new product"
+msgstr ""
+
 msgid "You are adding a product."
 msgstr ""
 
@@ -3345,6 +3330,16 @@ msgstr ""
 msgid ""
 "Set specific prices for your customer segments such as loyalty, tier status "
 "or season here."
+msgstr ""
+
+msgid "Contact Group Discounts"
+msgstr ""
+
+msgid ""
+"Here you can set individual discount amounts for different contact groups. "
+"\" +\n"
+"                    \"The discount amount may be visible on storefront. "
+"These groups are defined in"
 msgstr ""
 
 msgid "Cross-sells"

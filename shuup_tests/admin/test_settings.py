@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
+from django.contrib import messages
+
 from shuup import configuration
 from shuup.admin.modules.settings import consts
 from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
@@ -36,6 +38,7 @@ def set_reference_method(rf, admin_user, reference_method, shop=None):
 def assert_config_value(rf, admin_user, form_id, key, value, expected_value, shop=None):
     if not shop:
         shop = get_default_shop()
+
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view_func = SystemSettingsView.as_view()
     response = view_func(request)
@@ -49,14 +52,22 @@ def assert_config_value(rf, admin_user, form_id, key, value, expected_value, sho
     if expected_value == "unset":
         expected_value = value
     assert configuration.get(None, key) == expected_value
+
+    assert len(messages.get_messages(request)) == 1
+
+    # Double save the form and the configuration should still be unchanged
+    response = view_func(request)
+    assert response.status_code == 302
+    assert configuration.get(None, key) == expected_value
+
+    assert len(messages.get_messages(request)) == 2
+
     return shop
 
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("form_id,field,value,expected_value,shop", [
     ("order_settings", consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.UNIQUE.value, "unset", None),
-    ("registration_settings", consts.ALLOW_COMPANY_REGISTRATION, True, "unset", None),
-    ("registration_settings", consts.ALLOW_COMPANY_REGISTRATION, "", False, None)
 ])
 def test_system_settings(rf, admin_user, form_id, field, value, expected_value, shop):
     assert_config_value(rf, admin_user, form_id, field, value, expected_value, shop)
