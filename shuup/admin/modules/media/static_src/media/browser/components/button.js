@@ -6,8 +6,8 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const m = require("mithril");
-const _ = require("lodash");
+import m from "mithril";
+import _ from "lodash";
 
 export default function(prop, value, label, title) {
     const active = (prop() == value);  // eslint-disable-line eqeqeq
@@ -17,4 +17,3 @@ export default function(prop, value, label, title) {
         title: title
     }, label);
 }
-

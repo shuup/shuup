@@ -6,9 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const m = require("mithril");
-const _ = require("lodash");
-const folderClick = require("./folderClick");
+import m from "mithril";
+import _ from "lodash";
+import folderClick from "./folderClick";
 
 export default function(ctrl) {
     const items = [];

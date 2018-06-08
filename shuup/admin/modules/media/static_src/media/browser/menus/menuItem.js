@@ -6,9 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const _ = require("lodash");
-const m = require("mithril");
-const menuManager = require("../util/menuManager");
+import _ from "lodash";
+import m from "mithril";
+import * as menuManager from "../util/menuManager";
 
 export default function item(label, action, attrs = {}) {
     const tagBits = ["li"];

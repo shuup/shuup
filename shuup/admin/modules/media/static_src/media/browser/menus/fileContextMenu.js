@@ -6,8 +6,8 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const fileActions = require("../actions/fileActions");
-const menuItem = require("./menuItem");
+import menuItem from "./menuItem";
+import * as fileActions from "../actions/fileActions";
 
 export default function(controller, file) {
     return function() {

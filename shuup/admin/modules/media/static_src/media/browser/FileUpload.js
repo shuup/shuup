@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const m = require("mithril");
-const _ = require("lodash");
-const remote = require("./util/remote");
+import m from "mithril";
+import _ from "lodash";
+import { handleResponseMessages } from "./util/remote";
 
 const queue = [];
 const queueCompleteCallbacks = [];
@@ -80,7 +80,7 @@ function handleFileXhrComplete(xhr, file, error) {
             error: (error ? gettext("Error:") + " " + file.name + ": " + messageText : null),
             message: (!error ? messageText || gettext("Uploaded:") + " " + file.name : null)
         };
-        remote.handleResponseMessages(response);
+        handleResponseMessages(response);
     }
 }
 

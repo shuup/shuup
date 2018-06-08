@@ -6,8 +6,8 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const m = require("mithril");
-const getPickId = require("../util/getPickId");
+import m from "mithril";
+import getPickId from "../util/getPickId";
 
 export default function(file, tag = "a", content = file.name) {
     const attrs = {href: file.url, target: "_blank"};

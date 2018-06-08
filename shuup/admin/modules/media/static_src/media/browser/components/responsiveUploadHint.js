@@ -6,8 +6,8 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const m = require("mithril");
-const {supportsDnD} = require("../util/dragDrop");
+import m from "mithril";
+import { supportsDnD } from "../util/dragDrop";
 
 const NO_DND_UPLOAD_HINT = gettext("Click the <strong>Upload</strong> button to upload files.");
 const DND_UPLOAD_HINT = (

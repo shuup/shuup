@@ -6,14 +6,13 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
-const _ = require("lodash");
-const m = require("mithril");
-const BrowserView = require("./BrowserView");
-const dragDrop = require("./util/dragDrop");
-const FileUpload = require("./FileUpload");
-const menuManager = require("./util/menuManager");
-const folderContextMenu = require("./menus/folderContextMenu");
+import _ from "lodash";
+import m from "mithril";
+import * as BrowserView from "./BrowserView";
+import * as dragDrop from "./util/dragDrop";
+import * as FileUpload from "./FileUpload";
+import * as menuManager from "./util/menuManager";
+import folderContextMenu from "./menus/folderContextMenu";
 
 var controller = null;
 
