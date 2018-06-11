@@ -29,6 +29,7 @@ Released on 2018-06-04 10:15am -0800.
 Core
 ~~~~
 
+- Drop support for Django 1.8 and 1.9 and add support for 1.11
 - Add Tasks app to manage contact tasks
 - GDPR: create option in customer dashboard to download personal data and anonymize account
 - GDPR: add xtheme plugin to warn about data protection

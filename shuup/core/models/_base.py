@@ -91,7 +91,7 @@ class PolyTransModelBase(PolymorphicModelBase):
 class PolymorphicTranslatableShuupModel(six.with_metaclass(
         PolyTransModelBase,
         PolymorphicShuupModel, TranslatableShuupModel)):
-    _default_manager = _PolyTransManager()
+    objects = _PolyTransManager()
 
     class Meta:
         abstract = True

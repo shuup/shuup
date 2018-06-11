@@ -456,6 +456,6 @@ class ServiceBehaviorComponent(PolymorphicShuupModel):
 
 class TranslatableServiceBehaviorComponent(six.with_metaclass(
         PolyTransModelBase,
-        ServiceBehaviorComponent, TranslatableShuupModel)):
+        ServiceBehaviorComponent, PolymorphicTranslatableShuupModel)):
     class Meta:
         abstract = True

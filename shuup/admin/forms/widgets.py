@@ -71,7 +71,7 @@ class BasePopupChoiceWidget(Widget):
     def get_object(self, value):
         raise NotImplementedError("Not implemented")
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if value:
             obj = self.get_object(value)
         else:
@@ -124,7 +124,7 @@ class FileDnDUploaderWidget(Widget):
         }
         return ["data-%s='%s'" % (key, val) for key, val in six.iteritems(data) if val is not None]
 
-    def render(self, name, value, attrs={}):
+    def render(self, name, value, attrs={}, renderer=None):
         pk_input = HiddenInput().render(name, value, attrs)
         file_attrs = [
             "data-upload_path='%s'" % self.upload_path,
@@ -147,7 +147,7 @@ class FileDnDUploaderWidget(Widget):
 
 
 class TextEditorWidget(Textarea):
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         attrs_for_textarea = attrs.copy()
         attrs_for_textarea['class'] = 'hidden'
         attrs_for_textarea['id'] += '-textarea'
@@ -212,63 +212,26 @@ class PackageProductChoiceWidget(ProductChoiceWidget):
 class QuickAddRelatedObjectSelect(Select):
     url = ""
     model = ""
+    template_name = "shuup/admin/forms/widgets/quick_add_select.jinja"
 
-    def render(self, name, value, attrs=None, choices=()):
-        if value is None:
-            value = ''
-        final_attrs = self.build_attrs(attrs, name=name)
-        if self.model:
-            final_attrs['data-model'] = self.model
-            choices = []
-        output = [format_html('<select{}>', flatatt(final_attrs))]
-        options = self.render_options(choices, [value])
-        if options:
-            output.append(options)
-        output.append('</select>')
-        quick_add_button = """
-            <span class="quick-add-btn">
-                <a
-                    class="btn"
-                    data-url="%s?mode=iframe&quick_add_target=%s"
-                    data-toggle="popover"
-                    data-placement="bottom"
-                    data-trigger="manual"
-                    data-content="%s">
-                        <i class="fa fa-plus text-primary"></i>
-                </a>
-            </span>
-        """.strip()
-        output.append(quick_add_button % (self.url, name, _("Create New")))
-        return mark_safe('\n'.join(output))
+    def get_context(self, name, value, attrs):
+        context = super(QuickAddRelatedObjectSelect, self).get_context(name, value, attrs)
+        context["quick_add_model"] = self.model
+        context["quick_add_url"] = "{}?mode=iframe&quick_add_target={}".format(self.url, name)
+        context["quick_add_btn_title"] = _("Create New")
+        return context
 
 
 class QuickAddRelatedObjectMultiSelect(SelectMultiple):
     url = ""
+    template_name = "shuup/admin/forms/widgets/quick_add_select.jinja"
 
-    def render(self, name, value, attrs=None, choices=()):
-        if value is None:
-            value = []
-        final_attrs = self.build_attrs(attrs, name=name)
-        output = [format_html('<select multiple="multiple"{}>', flatatt(final_attrs))]
-        options = self.render_options(choices, value)
-        if options:
-            output.append(options)
-        output.append('</select>')
-        quick_add_button = """
-            <span class="quick-add-btn">
-                <a
-                    class="btn"
-                    data-url="%s?mode=iframe&quick_add_target=%s"
-                    data-toggle="popover"
-                    data-placement="bottom"
-                    data-trigger="hover"
-                    data-content="%s">
-                        <i class="fa fa-plus text-primary"></i>
-                </a>
-            </span>
-        """.strip()
-        output.append(quick_add_button % (self.url, name, _("Create New")))
-        return mark_safe('\n'.join(output))
+    def get_context(self, name, value, attrs):
+        attrs["multiple"] = True
+        context = super(QuickAddRelatedObjectMultiSelect, self).get_context(name, value, attrs)
+        context["url"] = "{}?mode=iframe&quick_add_target={}".format(self.url, name)
+        context["quick_add_btn_title"] = _("Create New")
+        return context
 
 
 class QuickAddCategoryMultiSelect(QuickAddRelatedObjectMultiSelect):

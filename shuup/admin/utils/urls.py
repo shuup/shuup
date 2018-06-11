@@ -105,6 +105,10 @@ class AdminRegexURLPattern(RegexURLPattern):
         self._callback = self.wrap_with_permissions(callback)
         return self._callback
 
+    @callback.setter
+    def callback(self, value):
+        self._callback = value
+
 
 def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentication=True, permissions=()):
     if isinstance(view, six.string_types):
@@ -112,6 +116,9 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
             raise ImproperlyConfigured('Empty URL pattern view name not permitted (for pattern %r)' % regex)
         if prefix:
             view = prefix + '.' + view
+        from shuup.utils.importing import load
+        view = load(view)
+
     return AdminRegexURLPattern(
         regex, view, kwargs, name,
         require_authentication=require_authentication,
