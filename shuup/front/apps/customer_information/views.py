@@ -15,10 +15,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
 from registration.signals import user_registered
 
-from shuup import configuration
 from shuup.core.models import (
     CompanyContact, get_company_contact, get_person_contact, MutableAddress,
     SavedAddress
+)
+from shuup.front.utils.companies import (
+    allow_company_registration, company_registration_requires_approval
 )
 from shuup.front.views.dashboard import DashboardViewMixin
 from shuup.utils.form_group import FormGroup
@@ -84,7 +86,7 @@ class CompanyEditView(DashboardViewMixin, FormView):
     template_name = "shuup/customer_information/edit_company.jinja"
 
     def dispatch(self, request, *args, **kwargs):
-        if not configuration.get(request.shop, "allow_company_registration"):
+        if not allow_company_registration(request.shop):
             return HttpResponseNotFound()
         return super(CompanyEditView, self).dispatch(request, *args, **kwargs)
 
@@ -128,7 +130,7 @@ class CompanyEditView(DashboardViewMixin, FormView):
         message = _("Company information saved successfully.")
         # If company registration requires activation,
         # company will be created as inactive.
-        if is_new and configuration.get(None, "company_registration_requires_approval"):
+        if is_new and company_registration_requires_approval(self.request.shop):
             company.is_active = False
             message = _("Company information saved successfully. "
                         "Please follow the instructions sent to your email address.")

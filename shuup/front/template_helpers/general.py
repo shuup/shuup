@@ -17,6 +17,7 @@ from shuup.core.models import (
     Category, Manufacturer, Product, ShopProduct, Supplier
 )
 from shuup.core.utils import context_cache
+from shuup.front.utils.companies import allow_company_registration
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.user import is_admin_user
 from shuup.front.utils.views import cache_product_things
@@ -318,3 +319,9 @@ def get_shop_language_choices(context):
 @contextfunction
 def is_shop_admin(context):
     return is_admin_user(context["request"])
+
+
+@contextfunction
+def is_company_registration_allowed(context, request=None):
+    current_request = request or context["request"]  # From macros it doesn't seem to always pass context correctly
+    return allow_company_registration(current_request.shop)

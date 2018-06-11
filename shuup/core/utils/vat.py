@@ -13,7 +13,7 @@ import six
 from django.core.exceptions import ValidationError
 
 # Patterns from
-# http://www.vero.fi/fi-FI/Syventavat_veroohjeet/Arvonlisaverotus/Kansainvalinen_kauppa/EUmaiden_arvonlisaverotunnisteet(14426)
+# https://www.vero.fi/en/detailed-guidance/guidance/48689/vat_numbers_in_eu_member_state/
 PATTERNS = {
     "AT": {
         "country": "Austria",

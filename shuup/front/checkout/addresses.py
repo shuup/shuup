@@ -18,18 +18,34 @@ from shuup.core.models import (
     CompanyContact, SavedAddress, SavedAddressRole, SavedAddressStatus
 )
 from shuup.front.checkout import CheckoutPhaseViewMixin
+from shuup.front.utils.companies import (
+    allow_company_registration, TaxNumberCleanMixin
+)
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
 
-from ._mixins import TaxNumberCleanMixin
-
 
 class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
-    company_name_field = "name"
-
     class Meta:
         model = CompanyContact
         fields = ("name", "tax_number",)
+
+    def __init__(self, **kwargs):
+        self.request = kwargs.pop("request")
+        super(CompanyForm, self).__init__(**kwargs)
+        self.fields["name"].required = False
+        self.fields["tax_number"].required = False
+
+    def clean(self):
+        data = super(CompanyForm, self).clean()
+
+        if data.get("name") and not data.get("tax_number"):
+            self.add_error("tax_number", _("Tax number is required with the company name."))
+
+        if data.get("tax_number") and not data.get("name"):
+            self.add_error("name", _("Company name is required with the tax number."))
+
+        return data
 
 
 class SavedAddressForm(forms.Form):
@@ -70,8 +86,10 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
                             form_class=SavedAddressForm,
                             required=False,
                             kwargs={"kind": kind, "owner": self.basket.customer})
-        if self.company_form_class and not self.request.customer:
-            fg.add_form_def("company", self.company_form_class, required=False)
+
+        if self.company_form_class and allow_company_registration(self.request.shop) and not self.request.customer:
+            fg.add_form_def("company", self.company_form_class, required=False, kwargs={"request": self.request})
+
         return fg
 
     def get_initial(self):

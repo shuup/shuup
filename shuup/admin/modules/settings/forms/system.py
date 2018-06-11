@@ -71,22 +71,6 @@ class OrderSettingsForm(BaseSettingsForm):
         required=False)
 
 
-class RegistrationSettingsForm(BaseSettingsForm):
-    title = _("Registration Settings")
-    allow_company_registration = forms.BooleanField(
-        label=_("Allow company registration"),
-        help_text=_("If you select this, companies can register into your store."), required=False)
-    company_registration_requires_approval = forms.BooleanField(
-        label=_("Company registration requires approval"),
-        help_text=_("Registered companies must be manually approved by admin if this is checked. "
-                    "This option has no effect if company registration is not allowed on your site."), required=False)
-
-
 class OrderSettingsFormPart(BaseSettingsFormPart):
     form = OrderSettingsForm
     name = "order_settings"
-
-
-class RegistrationSettingsFormPart(BaseSettingsFormPart):
-    form = RegistrationSettingsForm
-    name = "registration_settings"
