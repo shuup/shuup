@@ -354,7 +354,7 @@ class Column(object):
 
         if isinstance(value, Manager):
             value = ", ".join("%s" % x for x in value.all())
-
+            return value
         if isinstance(value, datetime.datetime):
             return get_locally_formatted_datetime(value)
 
