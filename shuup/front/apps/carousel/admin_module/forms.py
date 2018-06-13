@@ -14,7 +14,10 @@ from django.utils.timezone import now
 from shuup.admin.forms.widgets import (
     FileDnDUploaderWidget, ProductChoiceWidget
 )
+from shuup.admin.shop_provider import get_shop
+from shuup.core.models import Category
 from shuup.front.apps.carousel.models import Carousel, Slide
+from shuup.simple_cms.models import Page
 from shuup.utils.multilanguage_model_form import (
     MultiLanguageModelForm, to_language_codes
 )
@@ -33,9 +36,13 @@ class SlideForm(MultiLanguageModelForm):
 
     def __init__(self, **kwargs):
         self.carousel = kwargs.pop("carousel")
+        self.request = kwargs.pop("request")
         super(SlideForm, self).__init__(**kwargs)
 
         self.empty_permitted = False
+        shop = get_shop(self.request)
+        self.fields["category_link"].queryset = Category.objects.filter(shops=shop)
+        self.fields["cms_page_link"].queryset = Page.objects.filter(shop=shop)
         self.fields["product_link"].widget = ProductChoiceWidget(clearable=True)
         for lang in self.languages:
             image_field = "image__%s" % lang
@@ -72,6 +79,7 @@ class SlideFormSet(BaseModelFormSet):
             "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
         self.carousel = kwargs.pop("carousel")
         self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
+        self.request = kwargs.pop("request")
         kwargs.pop("empty_permitted")
         super(SlideFormSet, self).__init__(*args, **kwargs)
 
@@ -82,4 +90,5 @@ class SlideFormSet(BaseModelFormSet):
         kwargs.setdefault("carousel", self.carousel)
         kwargs.setdefault("languages", self.languages)
         kwargs.setdefault("default_language", settings.PARLER_DEFAULT_LANGUAGE_CODE)
+        kwargs.setdefault("request", self.request)
         return self.form_class(**kwargs)

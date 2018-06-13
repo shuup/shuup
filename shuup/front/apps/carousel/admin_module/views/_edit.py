@@ -55,7 +55,7 @@ class SlideFormPart(FormPart):
             self.formset,
             template_name="shuup/carousel/admin/_edit_slide_form.jinja",
             required=False,
-            kwargs={"carousel": self.object, "languages": settings.LANGUAGES}
+            kwargs={"carousel": self.object, "languages": settings.LANGUAGES, "request": self.request}
         )
 
     def form_valid(self, form):
