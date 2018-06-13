@@ -530,5 +530,17 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         }
         return supplier_strategy().get_supplier(**kwargs)
 
+    def get_name(self):
+        return self._safe_get_string("name")
+
+    def get_description(self):
+        return self._safe_get_string("description")
+
+    def get_short_description(self):
+        return self._safe_get_string("short_description")
+
+    def _safe_get_string(self, key):
+        return self.safe_translation_getter(key) or self.product.safe_translation_getter(key)
+
 
 ShopProductLogEntry = define_log_model(ShopProduct)
