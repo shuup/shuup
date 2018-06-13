@@ -11,6 +11,8 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import override_settings
+from django.utils.translation import activate
+from parler.models import TranslationDoesNotExist
 
 from shuup import configuration
 from shuup.core.excs import (
@@ -320,3 +322,31 @@ def test_product_categories(settings):
 
         assert shop_product.primary_category == category_one
         assert category_one not in shop_product.categories.all()
+
+
+@pytest.mark.parametrize("key", ["name", "description", "short_description"])
+@pytest.mark.django_db
+def test_get_safe_strings(key):
+    activate("en")
+    shop_product = get_default_shop_product()
+    setattr(shop_product.product, key, "test")
+    shop_product.product.save()
+    shop_product.refresh_from_db()
+
+    assert getattr(shop_product.product, key)
+    if key == "name":
+        with pytest.raises(TranslationDoesNotExist):
+            assert not getattr(shop_product, key)
+    else:
+        assert not getattr(shop_product, key)
+
+    func = getattr(shop_product, "get_" + key)
+    assert getattr(shop_product.product, key) == func()  # returns value from product
+
+    # set value to shop_product
+    new_value = "testing"
+    setattr(shop_product, key, new_value)
+    shop_product.save()
+    shop_product.refresh_from_db()
+
+    assert func() == new_value  # returns value from shop product
