@@ -8,18 +8,21 @@
 from datetime import datetime, timedelta
 
 import pytest
+from bs4 import BeautifulSoup
+from django.conf import settings
 from django.utils import translation
 from filer.models import Image
 
+from shuup.front.apps.carousel.admin_module.forms import SlideForm
 from shuup.front.apps.carousel.models import Carousel, LinkTargetType, Slide
 from shuup.front.apps.carousel.plugins import BannerBoxPlugin, CarouselPlugin
 from shuup.testing.factories import (
-    get_default_category, get_default_product, get_default_shop
+    get_default_category, get_default_product, get_default_shop,
+    get_shop
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_jinja_context
 from shuup_tests.simple_cms.utils import create_page
-
 
 
 @pytest.mark.django_db
@@ -225,3 +228,47 @@ def test_get_link_target(target_type, expected_target):
     test_image = Image.objects.create(original_filename="slide.jpg")
     test_slide = Slide.objects.create(carousel=test_carousel, name="test", image=test_image, target=target_type)
     assert test_slide.get_link_target() == expected_target
+
+
+def test_slide_admin_form(rf, admin_user):
+    translation.activate("en")
+    shop = get_default_shop()
+    category = get_default_category()
+    assert category.shops.first() == shop
+    page = create_page(**{"url": "test", "shop": shop})
+    assert page.shop == shop
+
+    test_carousel = Carousel.objects.create(name="test")
+    request = apply_request_middleware(rf.get("/"))
+    request.user = admin_user
+    request.shop = shop
+    slide_form = SlideForm(
+        carousel=test_carousel,
+        languages=settings.LANGUAGES,
+        default_language=settings.PARLER_DEFAULT_LANGUAGE_CODE,
+        request=request)
+
+    soup = BeautifulSoup(slide_form.as_table())
+    options = soup.find(id="id_category_link").find_all("option")
+    assert len(options) == 2
+    assert options[0]["value"] == ""
+    assert options[1]["value"] == "%s" % category.pk
+
+    options = soup.find(id="id_cms_page_link").find_all("option")
+    assert len(options) == 2
+    assert options[0]["value"] == ""
+    assert options[1]["value"] == "%s" % page.pk
+
+    new_shop = get_shop(identifier="second-shop")
+    category.shops = [new_shop]
+    page.shop = new_shop
+    page.save()
+
+    soup = BeautifulSoup(slide_form.as_table())
+    options = soup.find(id="id_category_link").find_all("option")
+    assert len(options) == 1
+    assert options[0]["value"] == ""
+
+    options = soup.find(id="id_cms_page_link").find_all("option")
+    assert len(options) == 1
+    assert options[0]["value"] == ""
