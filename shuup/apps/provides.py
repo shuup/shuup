@@ -61,9 +61,9 @@ def _get_provide_specs_from_apps(category):
     :return: List of spec strings.
     :rtype: list[str]
     """
-    provides_black_list = getattr(settings, "SHUUP_PROVIDES_BACKLIST", {})
+    provides_black_list = getattr(settings, "SHUUP_PROVIDES_BLACKLIST", {})
     if not isinstance(provides_black_list, dict):
-        raise ImproperlyConfigured("The setting `SHUUP_PROVIDES_BACKLIST` MUST be a dictionary.")
+        raise ImproperlyConfigured("The setting `SHUUP_PROVIDES_BLACKLIST` MUST be a dictionary.")
 
     if category not in _provide_specs:  # (Re)load required?
         provide_list = []

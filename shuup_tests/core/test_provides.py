@@ -55,7 +55,7 @@ def test_provides():
 def test_blacklist_provides():
     with override_settings(
         INSTALLED_APPS=["shuup_tests.core"],
-        SHUUP_PROVIDES_BACKLIST={
+        SHUUP_PROVIDES_BLACKLIST={
             "module_test_module": [
                 "shuup_tests.core.module_test_module:ModuleTestModule"
             ]
@@ -68,7 +68,7 @@ def test_blacklist_provides():
         assert "ModuleTestModule" not in provides
 
     # invalid object
-    with override_settings(SHUUP_PROVIDES_BACKLIST=["invalid"]):
+    with override_settings(SHUUP_PROVIDES_BLACKLIST=["invalid"]):
         from shuup.apps.provides import clear_provides_cache
         clear_provides_cache()
         with pytest.raises(ImproperlyConfigured):
