@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Core
+~~~~
+
+- Fixed typo on `SHUUP_PROVIDES_BLACKLIST` setting name
+
 Admin
 ~~~~~
 
