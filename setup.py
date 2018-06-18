@@ -98,6 +98,7 @@ REQUIRES = [
     'django-parler-rest>=1.3a1,<2',
     'django-polymorphic>=0.8.0,<0.10',
     'django-registration-redux>=1.2,<1.5',
+    'django-reversion==2.0.13',
     'django-timezone-field>=1.2,<2',
     'djangorestframework>=3.5,<3.6',
     'djangorestframework-jwt>=1.9,<2',

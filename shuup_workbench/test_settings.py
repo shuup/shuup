@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'django_countries',
     'django_jinja',
     'filer',
+    'reversion',
     'registration',
     'rest_framework',
     'rest_framework_swagger'

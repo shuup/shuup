@@ -13,6 +13,7 @@ from django.utils.encoding import force_text
 from django.utils.timezone import now
 from django.utils.translation import activate, get_language
 from django.utils.translation import ugettext_lazy as _
+from reversion import create_revision
 
 from shuup.utils.i18n import format_datetime
 
@@ -39,7 +40,7 @@ def add_consent_to_response_cookie(response, cookie_data):
     )
 
 
-def get_cookie_consent_data(cookie_categories, consent_documents=[]):
+def get_cookie_consent_data(cookie_categories, consent_documents):
     """
     :param list[GDPRCookieCategory] cookie_categories: list of cookie category
     """
@@ -90,24 +91,36 @@ def ensure_gdpr_privacy_policy(shop, force_update=False):
             template_name="shuup/admin/gdpr/privacy_policy_page.jinja",
             context=context
         )
-        gdpr_document = Page.objects.create(
-            shop=shop,
-            page_type=PageType.GDPR_CONSENT_DOCUMENT,
-            content=content,
-            available_from=now_date,
-            title=force_text(_("Privacy Policy")),
-            url=force_text(_("privacy-policy"))
-        )
-        current_language = get_language()
-        for code, language in settings.LANGUAGES:
-            if code == current_language:
-                continue
-            activate(code)
-            gdpr_document.set_current_language(code)
-            gdpr_document.title = force_text(_("Privacy Policy"))
-            gdpr_document.url = force_text(_("privacy-policy"))
-            gdpr_document.save()
-        activate(current_language)
+        created = False
+        if not gdpr_document:
+            with create_revision():
+                gdpr_document = Page.objects.create(
+                    shop=shop,
+                    page_type=PageType.REVISIONED,
+                    content=content,
+                    available_from=now_date,
+                    title=force_text(_("Privacy Policy")),
+                    url=force_text(_("privacy-policy"))
+                )
+                created = True
+
+        # update only if it was created
+        if created or force_update:
+            current_language = get_language()
+            for code, language in settings.LANGUAGES:
+                if code == current_language:
+                    continue
+                activate(code)
+                content = loader.render_to_string(
+                    template_name="shuup/admin/gdpr/privacy_policy_page.jinja",
+                    context=context
+                )
+                gdpr_document.set_current_language(code)
+                gdpr_document.title = force_text(_("Privacy Policy"))
+                gdpr_document.url = force_text(_("privacy-policy"))
+                gdpr_document.content = content
+                gdpr_document.save()
+            activate(current_language)
 
     return gdpr_document
 
@@ -149,16 +162,7 @@ def is_documents_consent_in_sync(shop, user):
     if not last_user_consent:
         return False
 
-    # get all documents user has consent
-    user_consent_documents = last_user_consent.documents.all()
-
-    from shuup.simple_cms.models import Page, PageType
-    # if any of the current consent documentis not consent by user, he are not in sync
-    for consent_document in Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT):
-        if consent_document not in user_consent_documents:
-            return False
-
-    return True
+    return last_user_consent.should_reconsent()
 
 
 def create_user_consent_for_all_documents(shop, user):

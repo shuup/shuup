@@ -13,6 +13,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import activate, get_language
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
+from reversion.models import Version
 
 GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER = "gdpr_anonymize"
 
@@ -39,8 +40,8 @@ class GDPRSettings(TranslatableModel):
     )
 
     class Meta:
-        verbose_name = _('gdpr settings')
-        verbose_name_plural = _('gdpr settings')
+        verbose_name = _('GDPR settings')
+        verbose_name_plural = _('GDPR settings')
 
     def __str__(self):
         return _("GDPR for {}").format(self.shop)
@@ -85,8 +86,8 @@ class GDPRCookieCategory(TranslatableModel):
     )
 
     class Meta:
-        verbose_name = _('gdpr cookie category')
-        verbose_name_plural = _('gdpr cookie categories')
+        verbose_name = _('GDPR cookie category')
+        verbose_name_plural = _('GDPR cookie categories')
 
     def __str__(self):
         return _("GDPR cookie category for {}").format(self.shop)
@@ -112,21 +113,45 @@ class GDPRUserConsent(models.Model):
         editable=False
     )
     documents = models.ManyToManyField(
-        "shuup_simple_cms.Page",
+        "GDPRUserConsentDocument",
         verbose_name=_("consent documents"),
         blank=True,
         editable=False
     )
 
     class Meta:
-        verbose_name = _('gdpr user consent')
-        verbose_name_plural = _('gdpr user consents')
+        verbose_name = _('GDPR user consent')
+        verbose_name_plural = _('GDPR user consents')
 
     @classmethod
     def create_for_user(cls, user, shop, consent_documents):
         gdpr_user_consent = cls.objects.create(shop=shop, user=user)
-        gdpr_user_consent.documents = consent_documents
+        documents = []
+        for document in consent_documents:
+            version = Version.objects.get_for_object(document).first()
+            consent_document = GDPRUserConsentDocument.objects.create(
+                page=document,
+                version=version
+            )
+            documents.append(consent_document)
+        gdpr_user_consent.documents = documents
         return gdpr_user_consent
+
+    def should_reconsent(self):
+        for consent_document in self.documents.all():
+            version = Version.objects.get_for_object(consent_document.page).first()
+            if consent_document.version != version:
+                return False
+        return True
 
     def __str__(self):
         return _("GDPR user consent in {} for user {} in shop {}").format(self.created_on, self.user, self.shop)
+
+
+@python_2_unicode_compatible
+class GDPRUserConsentDocument(models.Model):
+    page = models.ForeignKey("shuup_simple_cms.Page")
+    version = models.ForeignKey(Version)
+
+    def __str__(self):
+        return _("GDPR user consent document for {} (Version: {})").format(self.page, self.version)
