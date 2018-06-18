@@ -25,11 +25,11 @@ from shuup.utils.analog import define_log_model, LogEntryKind
 
 class PageType(Enum):
     NORMAL = 0
-    GDPR_CONSENT_DOCUMENT = 1
+    REVISIONED = 1
 
     class Labels:
         NORMAL = _('normal')
-        GDPR_CONSENT_DOCUMENT = _('GDPR consent document')
+        REVISIONED = _('revisioned')
 
 
 class PageQuerySet(TranslatableQuerySet):
@@ -159,8 +159,8 @@ class Page(MPTTModel, TranslatableModel):
 
         if self.pk:
             original_page = Page.objects.get(id=self.pk)
-            if original_page.page_type == PageType.GDPR_CONSENT_DOCUMENT:
-                # prevent changing content when page type is GDPR_CONSENT_DOCUMENT
+            if original_page.page_type == PageType.REVISIONED:
+                # prevent changing content when page type is REVISIONED
                 content = getattr(self, "content", None)
                 if original_page.content != content or original_page.page_type != self.page_type:
                     msg = _("This page is protected against changes because it is a GDPR consent document.")

@@ -56,7 +56,7 @@ def test_gdpr_admin_settings(client, admin_user):
     assert response.status_code == 302
 
     assert GDPRCookieCategory.objects.count() == 1
-    assert Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT).exists()
+    assert Page.objects.visible(shop).filter(page_type=PageType.REVISIONED).exists()
 
     # add one more cookie category
     payload.update({

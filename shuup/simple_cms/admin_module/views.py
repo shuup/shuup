@@ -54,7 +54,7 @@ class PageForm(MultiLanguageModelForm):
             from shuup.gdpr.models import GDPRSettings
             if not GDPRSettings.get_for_shop(get_shop(self.request)).enabled:
                 self.fields.pop("page_type")
-            elif self.instance and self.instance.pk and self.instance.page_type == PageType.GDPR_CONSENT_DOCUMENT:
+            elif self.instance and self.instance.pk and self.instance.page_type == PageType.REVISIONED:
                 self.fields.pop("page_type")
 
     def _clean_gdpr(self):
@@ -110,8 +110,11 @@ class PageForm(MultiLanguageModelForm):
                 )
 
         if not something_filled:
-            titlefield = "title__%s" % self.default_language
-            self.add_error(titlefield, _("Please fill at least one language fully."))
+            title_field = "title__%s" % self.default_language
+            self.add_error(title_field, _("Please fill at least one language fully."))
+
+        if self.instance and self.instance.pk and "page_type" not in self.cleaned_data:
+            data["page_type"] = self.instance.page_type  # ensure page type is always available
 
         return data
 
@@ -144,9 +147,8 @@ class PageForm(MultiLanguageModelForm):
         """
         pages_ids = Page.objects.for_shop(get_shop(self.request)).values_list("id", flat=True)
         qs = self._get_translation_model().objects.filter(url=url, master_id__in=pages_ids)
-        if not self.instance.pk:
-            if qs.exists():
-                return False
+        if not self.instance.pk and qs.exists():
+            return False
         other_qs = qs.exclude(master=self.instance)
         if other_qs.exists():
             return False

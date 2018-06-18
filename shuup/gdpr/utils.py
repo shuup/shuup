@@ -62,11 +62,11 @@ def get_all_contact_data(contact):
     return GDPRPersonContactSerializer(contact).data
 
 
-def create_initial_privacy_policy_page(shop):
+def ensure_gdpr_privacy_policy(shop, force_update=False):
     from shuup.simple_cms.models import Page, PageType
-    gdpr_document = Page.objects.filter(shop=shop, page_type=PageType.GDPR_CONSENT_DOCUMENT).first()
+    gdpr_document = Page.objects.filter(shop=shop, page_type=PageType.REVISIONED).first()
 
-    if not gdpr_document:
+    if force_update or not gdpr_document:
         now_date = now()
         company_name = (shop.public_name or shop.name)
         address = shop.contact_address
@@ -171,5 +171,5 @@ def create_user_consent_for_all_documents(shop, user):
         return
 
     from shuup.simple_cms.models import Page, PageType
-    consent_documents = Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT)
+    consent_documents = Page.objects.visible(shop).filter(page_type=PageType.REVISIONED)
     GDPRUserConsent.create_for_user(user, shop, consent_documents)

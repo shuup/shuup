@@ -39,7 +39,7 @@ class ConfirmForm(forms.Form):
             if GDPRSettings.get_for_shop(self.request.shop).enabled:
                 from shuup.simple_cms.models import Page, PageType
                 gdpr_documents = Page.objects.visible(self.request.shop).filter(
-                    page_type=PageType.GDPR_CONSENT_DOCUMENT
+                    page_type=PageType.REVISIONED
                 )
                 if gdpr_documents.exists():
                     self.fields.pop("accept_terms")

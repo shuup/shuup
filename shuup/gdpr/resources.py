@@ -36,7 +36,7 @@ def add_gdpr_consent_resources(context, content):
     gdpr_documents = []
     if has_installed("shuup.simple_cms"):
         from shuup.simple_cms.models import Page, PageType
-        gdpr_documents = Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT)
+        gdpr_documents = Page.objects.visible(shop).filter(page_type=PageType.REVISIONED)
 
     render_context = {
         "request": context["request"],
