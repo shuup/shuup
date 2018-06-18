@@ -15,10 +15,25 @@ from shuup.utils.djangoenv import has_installed
 from shuup.xtheme.resources import add_resource, InlineMarkupResource
 
 
-def add_gdpr_consent_resources(context, content):
-    # TODO: should we ignore admin urls?
+def valid_view(context):
     view_class = getattr(context["view"], "__class__", None) if context.get("view") else None
     if not view_class or not context.get("request"):
+        return False
+
+    request = context.get("request")
+    if request:
+        match = request.resolver_match
+        if match and match.app_name == "shuup_admin":
+            return False
+
+    view_name = getattr(view_class, "__name__", "")
+    if view_name == "EditorView":
+        return False
+    return True
+
+
+def add_gdpr_consent_resources(context, content):
+    if not valid_view(context):
         return
 
     shop = get_shop(context["request"])
