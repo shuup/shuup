@@ -28,8 +28,7 @@ from shuup.gdpr.admin_module.forms import (
 from shuup.gdpr.anonymizer import Anonymizer
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.gdpr.utils import (
-    ensure_gdpr_privacy_policy,
-    create_initial_required_cookie_category
+    create_initial_required_cookie_category, ensure_gdpr_privacy_policy
 )
 from shuup.utils.analog import LogEntryKind
 

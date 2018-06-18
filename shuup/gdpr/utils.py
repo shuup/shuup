@@ -11,8 +11,8 @@ from django.conf import settings
 from django.template import loader
 from django.utils.encoding import force_text
 from django.utils.timezone import now
-from django.utils.translation import activate, get_language
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate, get_language
 from reversion import create_revision
 
 from shuup.utils.i18n import format_datetime
