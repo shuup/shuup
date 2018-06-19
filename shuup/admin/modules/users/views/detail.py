@@ -23,6 +23,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.detail import DetailView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, DropdownItem,
     get_default_edit_toolbar, PostActionButton, Toolbar
@@ -259,10 +260,13 @@ class UserDetailView(CreateOrUpdateView):
         self.object = form.save()
         contact = self._get_bind_contact()
 
-        if getattr(self.object, "is_staff", False):
-            self.request.shop.staff_members.add(self.object)
-        else:
-            self.request.shop.staff_members.remove(self.object)
+        # only touch in shop staff member if the user is not a superuser
+        if not getattr(self.object, "is_superuser", False):
+            shop = get_shop(self.request)
+            if getattr(self.object, "is_staff", False):
+                shop.staff_members.add(self.object)
+            else:
+                shop.staff_members.remove(self.object)
 
         if contact and not contact.user:
             contact.user = self.object

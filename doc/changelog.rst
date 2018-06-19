@@ -17,6 +17,7 @@ Core
 Admin
 ~~~~~
 
+- Do not add or remove superusers from shop staff members
 - Fixed shop checkout config to skip form when creating a new shop
 
 Front

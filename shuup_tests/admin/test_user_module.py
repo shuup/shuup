@@ -118,6 +118,40 @@ def test_user_create(rf, admin_user):
     last_user = get_user_model().objects.last()
     assert last_user in shop.staff_members.all()
 
+    # create a superuser
+    view_func = UserDetailView.as_view()
+    response = view_func(apply_request_middleware(rf.post("/", {
+        "username": "test4",
+        "email": "test4@test.com",
+        "first_name": "test",
+        "last_name": "test",
+        "password": "test",
+        "is_staff": True,
+        "is_superuser": True,
+        "send_confirmation": False
+    }), user=admin_user))
+    assert response.status_code == 302
+    assert get_user_model().objects.count() == before_count + 4
+    last_user = get_user_model().objects.last()
+    # superuser shouldn't be added to staff members
+    assert last_user not in shop.staff_members.all()
+
+    # change the superuser
+    response = view_func(apply_request_middleware(rf.post("/", {
+        "username": "test487",
+        "email": "test4@test.com",
+        "first_name": "test2",
+        "last_name": "test",
+        "password": "test",
+        "is_staff": True,
+        "is_superuser": True,
+    }), user=admin_user), pk=last_user.pk)
+    assert response.status_code == 302
+    assert get_user_model().objects.count() == before_count + 4
+    last_user = get_user_model().objects.last()
+    # superuser shouldn't be added to staff members
+    assert last_user not in shop.staff_members.all()
+
 
 @pytest.mark.django_db
 def test_user_detail_contact_seed(rf, admin_user):
