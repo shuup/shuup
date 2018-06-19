@@ -1,5 +1,8 @@
 <div id="layout">
     <h3>{% trans %}Edit Placeholder{% endtrans %}: {{ layout.placeholder_name }}</h3>
+    <p>
+        {% trans -%}Edit plugins inside this placeholder. By saving the individual plugin, the changes are saved as a draft, and only you are able to see the changes. To make your changes Public, Click the Publish Changes button.{%- endtrans %}
+    </p>
     <div class="layout-rows">
         {% for row in layout.rows %}
             {% set y = loop.index0 %}
