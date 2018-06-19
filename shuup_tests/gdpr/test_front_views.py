@@ -12,9 +12,9 @@ from django.utils.translation import activate
 
 from shuup.core.models import PersonContact
 from shuup.gdpr.models import GDPRCookieCategory
-from shuup.gdpr.utils import create_initial_privacy_policy_page, get_cookie_consent_data, \
-    create_initial_required_cookie_category
-from shuup.gdpr.views import GDPRConsentView
+from shuup.gdpr.utils import ensure_gdpr_privacy_policy, get_cookie_consent_data, \
+    create_initial_required_cookie_category, is_documents_consent_in_sync
+from shuup.gdpr.views import GDPRCookieConsentView
 from shuup.simple_cms.models import Page, PageType
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -77,12 +77,21 @@ def test_serialize_data():
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("language", ["fi", "en"])
-def test_consent_view(rf, language):
+def test_cookie_consent_view(rf, language):
     activate(language)
     shop = factories.get_default_shop()
-    create_initial_privacy_policy_page(shop)
+    page = ensure_gdpr_privacy_policy(shop)
+    user = factories.create_random_user("en")
+
     create_initial_required_cookie_category(shop)
-    view = GDPRConsentView.as_view()
-    request = apply_request_middleware(rf.post("/"), shop=shop)
+    view = GDPRCookieConsentView.as_view()
+    request = apply_request_middleware(rf.post("/"), shop=shop, user=user)
     response = view(request, pk=None)
     assert response.status_code == 302
+
+    modified = page.modified_on
+    new_page = ensure_gdpr_privacy_policy(shop)
+    assert modified == new_page.modified_on  # no update done.
+
+    new_page = ensure_gdpr_privacy_policy(shop, force_update=True)
+    assert modified < new_page.modified_on  # no update done.

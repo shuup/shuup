@@ -29,5 +29,10 @@ class AppConfig(shuup.apps.AppConfig):
         ],
     }
 
+    def ready(self):
+        from shuup.simple_cms.models import Page
+        import reversion
+        reversion.register(Page._parler_meta.root_model)
+
 
 default_app_config = __name__ + ".AppConfig"

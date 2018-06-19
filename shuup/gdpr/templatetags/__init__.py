@@ -15,7 +15,7 @@ class GDPRNamespace(object):
 
     def get_documents(self, request, **kwargs):
         from shuup.simple_cms.models import Page, PageType
-        return Page.objects.visible(shop=request.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT)
+        return Page.objects.visible(shop=request.shop).filter(page_type=PageType.REVISIONED)
 
 
 library.global_function(name="gdpr", fn=GDPRNamespace())

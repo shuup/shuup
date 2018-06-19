@@ -72,6 +72,7 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'django_jinja',
     'django_filters',
     'filer',
+    'reversion',
     'registration',
     'rest_framework',
     'rest_framework_swagger'

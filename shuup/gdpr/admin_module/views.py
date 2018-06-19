@@ -28,8 +28,7 @@ from shuup.gdpr.admin_module.forms import (
 from shuup.gdpr.anonymizer import Anonymizer
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.gdpr.utils import (
-    create_initial_privacy_policy_page,
-    create_initial_required_cookie_category
+    create_initial_required_cookie_category, ensure_gdpr_privacy_policy
 )
 from shuup.utils.analog import LogEntryKind
 
@@ -68,7 +67,7 @@ class GDPRView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
 
         gdpr_settings = self.get_object()
         if gdpr_settings.enabled:
-            create_initial_privacy_policy_page(self.object.shop)
+            ensure_gdpr_privacy_policy(self.object.shop)
             if not GDPRCookieCategory.objects.filter(shop=gdpr_settings.shop).exists():
                 create_initial_required_cookie_category(self.object.shop)
         return result

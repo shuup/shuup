@@ -106,7 +106,7 @@ def test_consent_cookies(client):
         shop=shop,
         title="Privacy policy",
         url="privacy-policy",
-        page_type=PageType.GDPR_CONSENT_DOCUMENT,
+        page_type=PageType.REVISIONED,
         content="you just agree",
         available_from=now()
     )

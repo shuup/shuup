@@ -34,7 +34,7 @@ class EmailAuthenticationForm(AuthenticationForm):
             from shuup.gdpr.models import GDPRSettings
             if GDPRSettings.get_for_shop(self.request.shop).enabled:
                 from shuup.simple_cms.models import Page, PageType
-                for page in Page.objects.visible(self.request.shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT):
+                for page in Page.objects.visible(self.request.shop).filter(page_type=PageType.REVISIONED):
                     self.fields["accept_{}".format(page.id)] = forms.BooleanField(
                         label=_("I have read and accept the {}").format(page.title),
                         help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(

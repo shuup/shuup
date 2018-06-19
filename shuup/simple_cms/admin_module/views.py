@@ -12,7 +12,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.simple_cms.models import Page, PageType
@@ -54,20 +53,8 @@ class PageForm(MultiLanguageModelForm):
             from shuup.gdpr.models import GDPRSettings
             if not GDPRSettings.get_for_shop(get_shop(self.request)).enabled:
                 self.fields.pop("page_type")
-            elif self.instance and self.instance.pk and self.instance.page_type == PageType.GDPR_CONSENT_DOCUMENT:
+            elif self.instance and self.instance.pk and self.instance.page_type == PageType.REVISIONED:
                 self.fields.pop("page_type")
-
-    def _clean_gdpr(self):
-        if self.instance.pk and self.instance.page_type == PageType.GDPR_CONSENT_DOCUMENT:
-            # to publish a new version, we have to clean the PK of this instance to create a new one
-            # we also need to soft_delete the old version of the consent document
-            last_consent = Page.objects.get(pk=self.instance.pk)
-            last_consent.make_gdpr_old_version()
-            last_consent.soft_delete(self.request.user)
-
-            # let's create a new version
-            self.instance.pk = None
-            self.instance.id = None
 
     def clean(self):
         """
@@ -79,11 +66,8 @@ class PageForm(MultiLanguageModelForm):
         required by default in model level.
         """
         data = super(PageForm, self).clean()
-        self._clean_gdpr()
-
         something_filled = False
         urls = []
-
         for language in self.languages:
             field_names = self.trans_name_map[language]
             if not any(data.get(field_name) for field_name in field_names.values()):
@@ -110,8 +94,11 @@ class PageForm(MultiLanguageModelForm):
                 )
 
         if not something_filled:
-            titlefield = "title__%s" % self.default_language
-            self.add_error(titlefield, _("Please fill at least one language fully."))
+            title_field = "title__%s" % self.default_language
+            self.add_error(title_field, _("Please fill at least one language fully."))
+
+        if self.instance and self.instance.pk and "page_type" not in self.cleaned_data:
+            data["page_type"] = self.instance.page_type  # ensure page type is always available
 
         return data
 
@@ -144,9 +131,8 @@ class PageForm(MultiLanguageModelForm):
         """
         pages_ids = Page.objects.for_shop(get_shop(self.request)).values_list("id", flat=True)
         qs = self._get_translation_model().objects.filter(url=url, master_id__in=pages_ids)
-        if not self.instance.pk:
-            if qs.exists():
-                return False
+        if not self.instance.pk and qs.exists():
+            return False
         other_qs = qs.exclude(master=self.instance)
         if other_qs.exists():
             return False
@@ -174,24 +160,6 @@ class PageEditView(CreateOrUpdateView):
         kwargs = super(PageEditView, self).get_form_kwargs()
         kwargs["request"] = self.request
         return kwargs
-
-    def get_toolbar(self):
-        if has_installed("shuup.gdpr"):
-            if self.object and self.object.pk and self.object.page_type == PageType.GDPR_CONSENT_DOCUMENT:
-                return Toolbar([
-                    PostActionButton(
-                        icon="fa fa-save",
-                        form_id=self.get_save_form_id(),
-                        text=_("Publish New Version"),
-                        extra_css_class="btn-success",
-                        confirm=_(
-                            "This action will publish a new version of this GDPR document. " +
-                            "All users should consent again to this new version. Are you sure?"
-                        )
-                    )
-                ])
-
-        return super(PageEditView, self).get_toolbar()
 
     def save_form(self, form):
         self.object = form.save()

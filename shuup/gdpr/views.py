@@ -34,7 +34,7 @@ from shuup.utils.djangoenv import has_installed
 COOKIE_CONSENT_RE = r"cookie_category_(\d+)"
 
 
-class GDPRConsentView(View):
+class GDPRCookieConsentView(View):
     def post(self, request, *args, **kwargs):
         shop = request.shop
         cookie_categories = list(GDPRCookieCategory.objects.filter(shop=shop, always_active=True))
@@ -49,7 +49,7 @@ class GDPRConsentView(View):
         consent_documents = []
         if has_installed("shuup.simple_cms"):
             from shuup.simple_cms.models import Page, PageType
-            consent_documents = Page.objects.visible(shop).filter(page_type=PageType.GDPR_CONSENT_DOCUMENT)
+            consent_documents = Page.objects.visible(shop).filter(page_type=PageType.REVISIONED)
 
         cookie_data = get_cookie_consent_data(cookie_categories, consent_documents)
 

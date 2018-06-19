@@ -5,12 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import reversion
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import force_text, python_2_unicode_compatible
-from django.utils.text import slugify
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
@@ -25,11 +25,11 @@ from shuup.utils.analog import define_log_model, LogEntryKind
 
 class PageType(Enum):
     NORMAL = 0
-    GDPR_CONSENT_DOCUMENT = 1
+    REVISIONED = 1
 
     class Labels:
         NORMAL = _('normal')
-        GDPR_CONSENT_DOCUMENT = _('GDPR consent document')
+        REVISIONED = _('revisioned')
 
 
 class PageQuerySet(TranslatableQuerySet):
@@ -58,6 +58,7 @@ class PageQuerySet(TranslatableQuerySet):
         return self.filter(shop=shop)
 
 
+@reversion.register(follow=["translations"])
 @python_2_unicode_compatible
 class Page(MPTTModel, TranslatableModel):
     shop = models.ForeignKey("shuup.Shop", verbose_name=_('shop'))
@@ -138,14 +139,6 @@ class Page(MPTTModel, TranslatableModel):
             # Bypassing local `save()` on purpose.
             super(Page, self).save(update_fields=("deleted",))
 
-    def make_gdpr_old_version(self):
-        self.identifier = slugify("{}-{}".format(self.identifier, self.pk))
-        self.save(update_fields=["identifier"])
-        page_translation_model = self._meta.model._parler_meta.root_model
-        for page_translation in page_translation_model.objects.filter(master_id=self.pk):
-            page_translation.url = "{}-{}".format(page_translation.url, self.pk)
-            page_translation.save(update_fields=["url"])
-
     def clean(self):
         url = getattr(self, "url", None)
         if url:
@@ -159,8 +152,8 @@ class Page(MPTTModel, TranslatableModel):
 
         if self.pk:
             original_page = Page.objects.get(id=self.pk)
-            if original_page.page_type == PageType.GDPR_CONSENT_DOCUMENT:
-                # prevent changing content when page type is GDPR_CONSENT_DOCUMENT
+            if original_page.page_type == PageType.REVISIONED:
+                # prevent changing content when page type is REVISIONED
                 content = getattr(self, "content", None)
                 if original_page.content != content or original_page.page_type != self.page_type:
                     msg = _("This page is protected against changes because it is a GDPR consent document.")
@@ -174,6 +167,12 @@ class Page(MPTTModel, TranslatableModel):
             (self.available_from and self.available_from <= dt) and
             (self.available_to is None or self.available_to >= dt)
         )
+
+    def save(self, *args, **kwargs):
+        if self.pk and self.page_type == PageType.REVISIONED:
+            with reversion.create_revision():
+                super(Page, self).save(*args, **kwargs)
+        super(Page, self).save(*args, **kwargs)
 
     def get_html(self):
         return self.content
