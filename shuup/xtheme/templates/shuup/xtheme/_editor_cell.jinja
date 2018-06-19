@@ -67,5 +67,10 @@
         {% endif %}
         <hr>
         <button class="submit-form-btn" type="submit"><i class="fa fa-save"></i> {% trans %}Save Plugin{% endtrans %}</button>
+        <p class="text-warning">
+            {% trans -%}
+                Remember to publish your changes for this placeholder when you are done, by clicking the Publish Changes button at the top.
+            {%- endtrans %}
+        </p>
     </form>
 {% endif %}
