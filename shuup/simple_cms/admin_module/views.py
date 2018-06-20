@@ -36,6 +36,7 @@ class PageForm(MultiLanguageModelForm):
             'visible_in_menu',
             'parent',
             'list_children_on_page',
+            'show_child_timestamps',
             'page_type'
         ]
         widgets = {

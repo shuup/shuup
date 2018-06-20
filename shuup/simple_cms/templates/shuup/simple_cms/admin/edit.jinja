@@ -26,6 +26,7 @@
             {% call content_block(_("Extras"), "fa-plus-circle") %}
                 {{ bs3.field(form.parent) }}
                 {{ bs3.field(form.list_children_on_page) }}
+                {{ bs3.field(form.show_child_timestamps) }}
                 {{ bs3.field(form.identifier) }}
             {% endcall %}
         </form>

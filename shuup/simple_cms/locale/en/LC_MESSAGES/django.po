@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 22:28+0000\n"
+"POT-Creation-Date: 2018-06-20 18:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -56,14 +56,6 @@ msgstr ""
 msgid "A page may not be made a child of itself."
 msgstr ""
 
-msgid "Publish New Version"
-msgstr ""
-
-msgid ""
-"This action will publish a new version of this GDPR document. All users "
-"should consent again to this new version. Are you sure?"
-msgstr ""
-
 msgid "Title"
 msgstr ""
 
@@ -79,7 +71,7 @@ msgstr ""
 msgid "normal"
 msgstr ""
 
-msgid "GDPR consent document"
+msgid "revisioned"
 msgstr ""
 
 msgid "shop"
@@ -138,6 +130,14 @@ msgid "list children on page"
 msgstr ""
 
 msgid "Check this if this page should list its children pages."
+msgstr ""
+
+msgid "show child page timestamps"
+msgstr ""
+
+msgid ""
+"Check this if you want to show timestamps on the child pages. Please note, "
+"that this requires the children to be listed on the page as well."
 msgstr ""
 
 msgid "page type"
