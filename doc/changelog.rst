@@ -1,13 +1,15 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.6.2
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-06-20 9:30am -0800.
+
+Xtheme
+~~~~~
+
+- Fix Finnish translations.
 
 
 Shuup 1.6.1
