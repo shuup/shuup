@@ -17,6 +17,8 @@ from shuup_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD
 
 regular_user = regular_user  # noqa
 
+pytestmark = pytest.mark.skipif("shuup.front.apps.auth" not in settings.INSTALLED_APPS,
+                                reason="Need shuup.front.apps.auth in INSTALLED_APPS")
 
 def prepare_user(user):
     user.is_active = True
@@ -27,9 +29,6 @@ def prepare_user(user):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
 def test_login_logs_the_user_in(client, regular_user, rf):
-    if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
-        pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
-
     get_default_shop()
     prepare_user(regular_user)
     redirect_target = "/redirect-success/"
@@ -50,8 +49,6 @@ def test_login_logs_the_user_in(client, regular_user, rf):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
 def test_login_fails_without_valid_password(client, regular_user, rf):
-    if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
-        pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
     prepare_user(regular_user)
     get_default_shop()
     client.post(reverse("shuup:login"), data={
@@ -66,9 +63,6 @@ def test_login_fails_without_valid_password(client, regular_user, rf):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
 def test_login_with_email_1(client, regular_user, rf):
-    if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
-        pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
-
     get_default_shop()
     prepare_user(regular_user)
     redirect_target = "/redirect-success/"
@@ -89,9 +83,6 @@ def test_login_with_email_1(client, regular_user, rf):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
 def test_login_with_email_2(client, regular_user, rf):
-    if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
-        pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
-
     # Create user with same email as regular user to fail login
     get_user_model().objects.create_user(
         username="el_person",
@@ -141,9 +132,6 @@ def test_login_with_email_2(client, regular_user, rf):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
 def test_login_with_email_3(client, regular_user, rf):
-    if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
-        pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
-
     new_user_password = "123123"
     new_user = get_user_model().objects.create_user(
         username=regular_user.email,
@@ -173,9 +161,6 @@ def test_login_with_email_3(client, regular_user, rf):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
 def test_login_inactive_user_fails(client, regular_user, rf):
-    if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
-        pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
-
     get_default_shop()
     prepare_user(regular_user)
 
@@ -210,9 +195,6 @@ def test_login_inactive_user_fails(client, regular_user, rf):
 
 @pytest.mark.django_db
 def test_recover_password_form_with_invalid_email():
-    if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
-        pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
-
     from shuup.core.utils.forms import RecoverPasswordForm
 
     form = RecoverPasswordForm({"username": "fake_username", "email": "invalid_email"})
