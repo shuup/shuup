@@ -4,7 +4,26 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
+from django.utils.timezone import now
 
+
+def forwards_func(apps, schema_editor):
+    """
+    Convert pages to GDPRUserConsentDocument
+    """
+    GDPRUserConsentDocument = apps.get_model("shuup_gdpr", "GDPRUserConsentDocument")
+    GDPRUserConsent = apps.get_model("shuup_gdpr", "GDPRUserConsent")
+    Version = apps.get_model("reversion", "Version")
+
+    for consent in GDPRUserConsent.objects.all():
+        consents = []
+        for page in consent.documents.all():
+            version = Version.objects.filter(object_id=page.pk).first()
+            if version:
+                doc = GDPRUserConsentDocument.objects.create(page=page, version=version)
+                consents.append(doc)
+        consent.consents = consents
+        consent.documents = []
 
 class Migration(migrations.Migration):
 
@@ -43,9 +62,14 @@ class Migration(migrations.Migration):
             name='gdpruserconsent',
             options={'verbose_name': 'GDPR user consent', 'verbose_name_plural': 'GDPR user consents'},
         ),
-        migrations.AlterField(
+        # Add temporary field
+        migrations.AddField(
             model_name='gdpruserconsent',
-            name='documents',
-            field=models.ManyToManyField(blank=True, editable=False, to='shuup_gdpr.GDPRUserConsentDocument', verbose_name='consent documents'),
+            name='consents',
+            field=models.ManyToManyField(blank=True, editable=False, to='shuup_gdpr.GDPRUserConsentDocument',
+                                         verbose_name='consent documents'),
         ),
+        # convert data
+        migrations.RunPython(forwards_func),
+
     ]
