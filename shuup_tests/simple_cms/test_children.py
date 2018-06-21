@@ -7,6 +7,7 @@
 import datetime
 
 import pytest
+from django.utils.encoding import force_text
 
 from shuup.simple_cms.views import PageView
 from shuup.testing.factories import get_default_shop
@@ -30,7 +31,7 @@ def test_visible_children(rf):
     assert request.user.is_anonymous()
 
     parent_content = "Parent content"
-    page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content, shop=shop)
+    page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content, shop=shop, url="test")
     children_content = "Children content"
     # Visible child
     create_page(available_from=datetime.date(2000, 1, 1), content=children_content, parent=page, shop=shop)
@@ -41,6 +42,28 @@ def test_visible_children(rf):
     page.list_children_on_page = True
     page.save()
     check_children_content(request, page, children_content, True)
+
+    # check timestamps
+    page.show_child_timestamps = True
+    page.save()
+    page.refresh_from_db()
+
+    view = PageView.as_view()
+    response = view(request=request, pk=page.pk, url="test")
+    response.render()
+    content = force_text(response.content)
+    assert "Children content" in content
+    assert "Jan 1, 2000, 12:00:00 AM" in content
+
+    page.show_child_timestamps = False
+    page.save()
+    page.refresh_from_db()
+    view = PageView.as_view()
+    response = view(request=request, pk=page.pk, url="test")
+    response.render()
+    content = force_text(response.content)
+    assert "Children content" in content
+    assert "Jan 1, 2000, 12:00:00 AM" not in content
 
 
 @pytest.mark.django_db

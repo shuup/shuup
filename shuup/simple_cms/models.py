@@ -99,6 +99,10 @@ class Page(MPTTModel, TranslatableModel):
     list_children_on_page = models.BooleanField(verbose_name=_("list children on page"), default=False, help_text=_(
         "Check this if this page should list its children pages."
     ))
+    show_child_timestamps = models.BooleanField(verbose_name=_("show child page timestamps"), default=True, help_text=_(
+        "Check this if you want to show timestamps on the child pages. Please note, that this "
+        "requires the children to be listed on the page as well."
+    ))
     page_type = EnumIntegerField(PageType, default=PageType.NORMAL, db_index=True, verbose_name=_("page type"))
     deleted = models.BooleanField(default=False, verbose_name=_("deleted"))
 
