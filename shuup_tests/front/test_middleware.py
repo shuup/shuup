@@ -114,12 +114,14 @@ def test_timezone_setting(regular_user):
     person = get_person_contact(regular_user)
     person.timezone = some_tz
     person.save()
+    original_tz = timezone.get_current_timezone_name()
 
     assert timezone.get_current_timezone_name() != some_tz
 
     mw.process_request(request)
 
     assert timezone.get_current_timezone_name() == some_tz
+    timezone.activate(original_tz)
 
 
 @pytest.mark.django_db
