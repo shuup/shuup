@@ -11,9 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
-from shuup.core.models import Shop
 
 
 class ImportAdminModule(AdminModule):
@@ -26,13 +24,13 @@ class ImportAdminModule(AdminModule):
                 "^importer/import$",
                 "shuup.importer.admin_module.import_views.ImportView",
                 name="importer.import",
-                permissions=get_default_model_permissions(Shop)
+                permissions=["shuup.change_shop"]
             ),
             admin_url(
                 "^importer/import/process$",
                 "shuup.importer.admin_module.import_views.ImportProcessView",
                 name="importer.import_process",
-                permissions=get_default_model_permissions(Shop)
+                permissions=["shuup.change_shop"]
             ),
         ]
 
