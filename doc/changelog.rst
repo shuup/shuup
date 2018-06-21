@@ -9,10 +9,16 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Importer
+--------
+
+- Require only shop change permission to execute data imports
+
 Simple CMS
 ~~~~~~~~~~
 
 - Add support for choosing whether the timestamps are shown if the `list_children_on_page` has been set to `True`.
+
 
 Shuup 1.6.2
 -----------
