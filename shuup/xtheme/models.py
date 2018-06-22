@@ -102,6 +102,7 @@ class SavedViewConfig(models.Model):
         if not self.draft:
             raise ValueError("Unable to publish a non-draft view configuration")
         self.__class__.objects.filter(
+            shop=self.shop,
             theme_identifier=self.theme_identifier,
             view_name=self.view_name
         ).update(status=SavedViewConfigStatus.OLD_VERSION)
