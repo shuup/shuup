@@ -162,7 +162,7 @@
 {% endmacro %}
 
 {% macro render_basket_partial(basket, id=None) %}
-    {% if show_prices() %}
+    {% if show_prices() and not (xtheme.get("hide_prices") or xtheme.get("catalog_mode")) %}
         {% set lines = request.basket.get_lines() %}
         <li class="dropdown cart"{% if id %} id="{{ id }}"{% endif %}>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -202,7 +202,7 @@
                                             {{ line.text }}
                                         {% endif %}
                                     </td>
-                                    {% if show_prices() %}
+                                    {% if show_prices() and not xtheme.get("hide_prices") %}
                                         <td class="text-right">{{ line|price }}</td>
                                     {% endif %}
                                 </tr>

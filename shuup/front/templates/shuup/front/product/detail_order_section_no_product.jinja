@@ -5,7 +5,7 @@
 {% endif %}
 <div class="price text-right product-price-div" id="product-price-div-{{ product_id }}">
     <h2 id="no-price-{{ product_id }}">
-        {% if show_prices() %}
+        {% if show_prices() and not xtheme.get("hide_prices") %}
         <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
         <span class="product-price"><strong>--</strong></span>
         {% endif %}

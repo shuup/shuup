@@ -22,6 +22,8 @@ class ClassicGrayTheme(Theme):
 
     fields = [
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
+        ("hide_prices", forms.BooleanField(required=False, initial=False, label=_("Hide prices"))),
+        ("catalog_mode", forms.BooleanField(required=False, initial=False, label=_("Set shop in catalog mode"))),
     ]
 
     guide_template = "classic_gray/admin/guide.jinja"

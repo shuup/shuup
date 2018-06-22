@@ -77,7 +77,7 @@
                 {% endif %}
             </div>
         </div>
-        {% if show_prices() %}
+        {% if show_prices() and not xtheme.get("hide_prices") %}
             <div class="product-sum">
                 <h4 class="price text-right">
                     <small>{% trans %}Total{% endtrans %}: </small>{{ line|price(allow_cache=False) }}
@@ -125,7 +125,7 @@
 
 {% macro render_basket_summary(basket) %}
     <div class="basket-summary">
-        {% if show_prices() %}
+        {% if show_prices() and not xtheme.get("hide_prices") %}
             <div class="row">
                 <div class="col-xs-12 col-sm-6 pull-right">
                     <div class="row">

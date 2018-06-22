@@ -32,7 +32,7 @@ Inheritance order for product macors:
                 {% if show_description and product.short_description %}
                     <p class="description">{{ product.short_description|safe }}</p>
                 {% endif %}
-                {% if show_prices() %}
+                {% if show_prices() and not xtheme.get("hide_prices") %}
                     <div class="price">
                         {{ render_product_price(product, show_units=False) }}
                     </div>
@@ -50,7 +50,7 @@ Inheritance order for product macors:
 {% endmacro %}
 
 {% macro render_product_price(product, show_units=True) %}
-    {% if show_prices() %}
+    {% if show_prices() and not xtheme.get("hide_prices") %}
         {%- set unit = product.get_shop_instance(request.shop).unit -%}
         {%- set (per_qty, per_text) = unit.get_per_values(show_units) -%}
         <div class="price-line">
