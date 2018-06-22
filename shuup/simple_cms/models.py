@@ -159,6 +159,13 @@ class Page(MPTTModel, TranslatableModel):
     def get_html(self):
         return self.content
 
+    @classmethod
+    def create_initial_revision(cls, page):
+        from reversion.models import Version
+        if not Version.objects.get_for_object(page).exists():
+            with reversion.create_revision():
+                page.save()
+
     def __str__(self):
         return force_text(self.safe_translation_getter("title", any_language=True, default=_("Untitled")))
 
