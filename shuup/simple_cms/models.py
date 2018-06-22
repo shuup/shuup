@@ -13,7 +13,6 @@ from django.db.models import Q
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-from enumfields import Enum, EnumIntegerField
 from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
 from parler.managers import TranslatableQuerySet
@@ -21,15 +20,6 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.utils.analog import define_log_model, LogEntryKind
-
-
-class PageType(Enum):
-    NORMAL = 0
-    REVISIONED = 1
-
-    class Labels:
-        NORMAL = _('normal')
-        REVISIONED = _('revisioned')
 
 
 class PageQuerySet(TranslatableQuerySet):
@@ -103,7 +93,6 @@ class Page(MPTTModel, TranslatableModel):
         "Check this if you want to show timestamps on the child pages. Please note, that this "
         "requires the children to be listed on the page as well."
     ))
-    page_type = EnumIntegerField(PageType, default=PageType.NORMAL, db_index=True, verbose_name=_("page type"))
     deleted = models.BooleanField(default=False, verbose_name=_("deleted"))
 
     translations = TranslatedFields(
@@ -154,15 +143,6 @@ class Page(MPTTModel, TranslatableModel):
             if url_checker.exists():
                 raise ValidationError(_("URL already exists."), code="invalid_url")
 
-        if self.pk:
-            original_page = Page.objects.get(id=self.pk)
-            if original_page.page_type == PageType.REVISIONED:
-                # prevent changing content when page type is REVISIONED
-                content = getattr(self, "content", None)
-                if original_page.content != content or original_page.page_type != self.page_type:
-                    msg = _("This page is protected against changes because it is a GDPR consent document.")
-                    raise ValidationError(msg, code="gdpr-protected")
-
     def is_visible(self, dt=None):
         if not dt:
             dt = now()
@@ -173,10 +153,8 @@ class Page(MPTTModel, TranslatableModel):
         )
 
     def save(self, *args, **kwargs):
-        if self.pk and self.page_type == PageType.REVISIONED:
-            with reversion.create_revision():
-                super(Page, self).save(*args, **kwargs)
-        super(Page, self).save(*args, **kwargs)
+        with reversion.create_revision():
+            super(Page, self).save(*args, **kwargs)
 
     def get_html(self):
         return self.content

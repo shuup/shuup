@@ -13,7 +13,10 @@ import pytest
 from django.core.urlresolvers import reverse
 
 from shuup.front.themes.views._product_price import ProductPriceView
-from shuup.testing.factories import create_product, get_default_product, get_default_shop, get_default_supplier
+from shuup.testing.factories import (
+    create_product, get_default_product, get_default_shop,
+    get_default_supplier
+)
 
 
 @pytest.mark.django_db

@@ -10,15 +10,15 @@ from logging import getLogger
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import OrderStatus
 from shuup.front.basket import get_basket_order_creator
 from shuup.front.checkout import CheckoutPhaseViewMixin
-from shuup.utils.djangoenv import has_installed
+from shuup.front.signals import checkout_complete
 
 logger = getLogger(__name__)
 
@@ -34,24 +34,10 @@ class ConfirmForm(forms.Form):
         self.current_product_ids = kwargs.pop("current_product_ids", "")
         super(ConfirmForm, self).__init__(*args, **kwargs)
 
-        if has_installed("shuup.gdpr"):
-            from shuup.gdpr.models import GDPRSettings
-            if GDPRSettings.get_for_shop(self.request.shop).enabled:
-                from shuup.simple_cms.models import Page, PageType
-                gdpr_documents = Page.objects.visible(self.request.shop).filter(
-                    page_type=PageType.REVISIONED
-                )
-                if gdpr_documents.exists():
-                    self.fields.pop("accept_terms")
-                    for page in gdpr_documents:
-                        self.fields["accept_{}".format(page.id)] = forms.BooleanField(
-                            label=_("I have read and accept the {}").format(page.title),
-                            help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
-                                reverse("shuup:cms_page", kwargs=dict(url=page.url)),
-                                page.title
-                            ),
-                            error_messages=dict(required=_("You must accept to this to confirm the order."))
-                        )
+        for provider_cls in get_provide_objects("checkout_confirm_form_field_provider"):
+            provider = provider_cls()
+            for definition in provider.get_fields(request=self.request):
+                self.fields[definition.name] = definition.field
 
         field_properties = settings.SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES
         for field, properties in field_properties.items():
@@ -116,10 +102,7 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         else:
             response = redirect("shuup:order_process_payment", pk=order.pk, key=order.key)
 
-        user = self.request.user
-        if has_installed("shuup.gdpr") and user.is_authenticated():
-            from shuup.gdpr.utils import create_user_consent_for_all_documents
-            create_user_consent_for_all_documents(order.shop, user)
+        checkout_complete.send(sender=type(self), request=self.request, user=self.request.user, order=order)
 
         return response
 

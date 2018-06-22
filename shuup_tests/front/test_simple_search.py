@@ -10,11 +10,12 @@ import pytest
 from django.utils import translation
 
 from shuup.core import cache
-from shuup.core.models import ShopProductVisibility, ProductVisibility
+from shuup.core.models import ProductVisibility, ShopProductVisibility
 from shuup.front.apps.simple_search.forms import get_search_product_ids
 from shuup.front.apps.simple_search.views import SearchView
 from shuup.testing.factories import (
-    create_random_person, create_product, get_default_product, get_default_shop
+    create_product, create_random_person, get_default_product,
+    get_default_shop
 )
 from shuup.testing.utils import apply_request_middleware
 

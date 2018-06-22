@@ -5,12 +5,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
+
 from shuup import configuration
 from shuup.core.models import get_person_contact
 from shuup.front.views.index import IndexView
-from shuup.testing.factories import get_default_shop, get_all_seeing_key
+from shuup.testing.factories import get_all_seeing_key, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
 

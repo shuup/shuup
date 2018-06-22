@@ -10,11 +10,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import get_person_contact
-from shuup.utils.djangoenv import has_installed
+from shuup.front.signals import login_allowed
 
 
 class EmailAuthenticationForm(AuthenticationForm):
@@ -29,20 +29,10 @@ class EmailAuthenticationForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(EmailAuthenticationForm, self).__init__(*args, **kwargs)
         self.fields['username'].label = _("Username or email address")
-
-        if has_installed("shuup.gdpr"):
-            from shuup.gdpr.models import GDPRSettings
-            if GDPRSettings.get_for_shop(self.request.shop).enabled:
-                from shuup.simple_cms.models import Page, PageType
-                for page in Page.objects.visible(self.request.shop).filter(page_type=PageType.REVISIONED):
-                    self.fields["accept_{}".format(page.id)] = forms.BooleanField(
-                        label=_("I have read and accept the {}").format(page.title),
-                        help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
-                            reverse("shuup:cms_page", kwargs=dict(url=page.url)),
-                            page.title
-                        ),
-                        error_messages=dict(required=_("You must accept to this to authenticate."))
-                    )
+        for provider_cls in get_provide_objects("front_auth_form_field_provider"):
+            provider = provider_cls()
+            for definition in provider.get_fields(request=self.request):
+                self.fields[definition.name] = definition.field
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -81,7 +71,4 @@ class EmailAuthenticationForm(AuthenticationForm):
 
         super(EmailAuthenticationForm, self).confirm_login_allowed(user)
 
-        # create GDPR consent
-        if has_installed("shuup.gdpr"):
-            from shuup.gdpr.utils import create_user_consent_for_all_documents
-            create_user_consent_for_all_documents(self.request.shop, user)
+        login_allowed.send(sender=type(self), request=self.request, user=user)

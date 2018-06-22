@@ -9,9 +9,9 @@ import pytest
 from django.core.urlresolvers import reverse
 
 from shuup.apps.provides import override_provides
+from shuup.core.models import ProductMode
 from shuup.front.utils.product import ProductContextExtra
 from shuup.front.views.product import ProductDetailView
-from shuup.core.models import ProductMode
 from shuup.testing.factories import (
     create_product, get_default_product, get_default_shop
 )
