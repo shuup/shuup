@@ -30,3 +30,13 @@ SHUUP_GDPR_DEFAULT_EXCERPT_STRING = _("<p>When you visit any website, it may sto
                                       "types of cookies. Click on the different category headings to find out more "
                                       "and change our default settings. However, blocking some types of cookies may "
                                       "impact your experience of the site and the services we are able to offer.</p>")
+
+GDPR_PRIVACY_POLICY_PAGE_URLS = {
+    "en": "privacy-policy",
+    "fi": "tietosuojakäytäntö",
+    "it": "politica-di-riservatezza",
+    "ja": "個人情報保護方針",
+    "pt-br": "política-de-privacidade",
+    "sv": "integritetspolicy",
+    "zh-hans": "隐私政策"
+}

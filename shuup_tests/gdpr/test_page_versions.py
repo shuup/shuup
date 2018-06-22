@@ -1,13 +1,22 @@
+# -*- coding: utf-8 -*-
+# This file is part of Shuup.
+#
+# Copyright (c) 2012-2018, Shuup Inc. All rights reserved.
+#
+# This source code is licensed under the OSL-3.0 license found in the
+# LICENSE file in the root directory of this source tree.
 import pytest
 from django.test import override_settings
 from django.utils.translation import activate
 from reversion.models import Version
 
-from shuup.gdpr.models import GDPRSettings, GDPRUserConsentDocument
-from shuup.gdpr.utils import ensure_gdpr_privacy_policy, create_user_consent_for_all_documents, \
+from shuup.gdpr.models import GDPRSettings, GDPRUserConsentDocument, GDPRUserConsent
+from shuup.gdpr.utils import (
+    create_user_consent_for_all_documents, ensure_gdpr_privacy_policy,
     is_documents_consent_in_sync
+)
 from shuup.simple_cms.admin_module.views import PageEditView
-from shuup.simple_cms.models import PageType, Page
+from shuup.simple_cms.models import Page
 from shuup.testing import factories
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
@@ -28,7 +37,19 @@ def test_page_form(rf, admin_user):
 
         # consent to this with user
         user = factories.create_random_user("en")
-        create_user_consent_for_all_documents(shop, user)
+        assert not GDPRUserConsent.objects.filter(shop=shop, user=user).exists()
+        original_consent = create_user_consent_for_all_documents(shop, user)
+
+        assert GDPRUserConsent.objects.filter(shop=shop, user=user).count() == 1
+
+        # create one outside the usual flow
+        GDPRUserConsent.objects.create(user=user, shop=shop)
+        assert GDPRUserConsent.objects.filter(shop=shop, user=user).count() == 2
+
+        # consent again
+        new_consent = create_user_consent_for_all_documents(shop, user)
+        assert GDPRUserConsent.objects.filter(shop=shop, user=user).count() == 1
+        assert original_consent.pk == new_consent.pk
 
         version = versions[0]
         assert GDPRUserConsentDocument.objects.filter(page=original_gdpr_page, version=version).exists()
@@ -51,7 +72,6 @@ def test_page_form(rf, admin_user):
             "url__en": "test",
             "title__en": "defa",
             "available_to": "",
-            "page_type": PageType.REVISIONED.value
         }
         request = apply_request_middleware(rf.post("/", post_data), user=admin_user)
         response = view(request, pk=original_gdpr_page.pk)

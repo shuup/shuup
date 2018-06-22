@@ -10,13 +10,14 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import override_settings
-from django.utils.timezone import now
 from django.utils.translation import activate
 
 from shuup.gdpr.models import GDPRSettings
-from shuup.gdpr.utils import ensure_gdpr_privacy_policy, is_documents_consent_in_sync
+from shuup.gdpr.utils import (
+    ensure_gdpr_privacy_policy, is_documents_consent_in_sync
+)
 from shuup.simple_cms.admin_module.views import PageForm
-from shuup.simple_cms.models import Page, PageType
+from shuup.simple_cms.models import Page
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
@@ -48,7 +49,7 @@ def test_authenticate_form(client):
         REDIRECT_FIELD_NAME: redirect_target
     })
     assert response.status_code == 200
-    assert "You must accept to this to authenticate" in response.content.decode("utf-8")
+    assert "You must accept to this to authenticate." in response.content.decode("utf-8")
 
     response = client.post(reverse("shuup:login"), data={
         "username": user.email,
@@ -85,7 +86,7 @@ def test_register_form(client):
         REDIRECT_FIELD_NAME: redirect_target
     })
     assert response.status_code == 200
-    assert "You must accept to this to register" in response.content.decode("utf-8")
+    assert "You must accept to this to register." in response.content.decode("utf-8")
 
     response = client.post(reverse("shuup:registration_register"), data={
         "username": "user",
@@ -125,7 +126,7 @@ def test_pageform_urls(rf, admin_user):
         assert form.is_url_valid("fi", "url__fi", fi_url)
 
         # create a page
-        p = Page.objects.create(shop=shop, content="test", url=en_url, title="test")
+        Page.objects.create(shop=shop, content="test", url=en_url, title="test")
         form = PageForm(request=request, data={
             "title__en": "test",
             "content__en": "test",

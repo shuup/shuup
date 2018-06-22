@@ -11,6 +11,7 @@ from django.templatetags.static import static
 
 from shuup.core.shop_provider import get_shop
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
+from shuup.gdpr.utils import get_active_consent_pages
 from shuup.utils.djangoenv import has_installed
 from shuup.xtheme.resources import add_resource, InlineMarkupResource
 
@@ -50,8 +51,7 @@ def add_gdpr_consent_resources(context, content):
 
     gdpr_documents = []
     if has_installed("shuup.simple_cms"):
-        from shuup.simple_cms.models import Page, PageType
-        gdpr_documents = Page.objects.visible(shop).filter(page_type=PageType.REVISIONED)
+        gdpr_documents = get_active_consent_pages(shop)
 
     render_context = {
         "request": context["request"],

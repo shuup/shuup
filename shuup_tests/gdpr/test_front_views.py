@@ -5,17 +5,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
 import pytest
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import PersonContact
-from shuup.gdpr.models import GDPRCookieCategory
-from shuup.gdpr.utils import ensure_gdpr_privacy_policy, get_cookie_consent_data, \
-    create_initial_required_cookie_category, is_documents_consent_in_sync
+from shuup.gdpr.models import GDPRSettings
+from shuup.gdpr.utils import (
+    create_initial_required_cookie_category, ensure_gdpr_privacy_policy
+)
 from shuup.gdpr.views import GDPRCookieConsentView
-from shuup.simple_cms.models import Page, PageType
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
@@ -83,6 +82,10 @@ def test_cookie_consent_view(rf, language):
     page = ensure_gdpr_privacy_policy(shop)
     user = factories.create_random_user("en")
 
+    gdpr_settings = GDPRSettings.get_for_shop(shop)
+    gdpr_settings.enabled = True
+    gdpr_settings.save()
+
     create_initial_required_cookie_category(shop)
     view = GDPRCookieConsentView.as_view()
     request = apply_request_middleware(rf.post("/"), shop=shop, user=user)
@@ -91,6 +94,7 @@ def test_cookie_consent_view(rf, language):
 
     modified = page.modified_on
     new_page = ensure_gdpr_privacy_policy(shop)
+    assert new_page.pk == page.pk
     assert modified == new_page.modified_on  # no update done.
 
     new_page = ensure_gdpr_privacy_policy(shop, force_update=True)
