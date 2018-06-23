@@ -8,13 +8,6 @@
 from shuup.apps import AppConfig
 
 
-def activate_sqlite_fk_constraint(sender, connection, **kwargs):
-    """Enable integrity constraint with SQLite."""
-    if connection.vendor == 'sqlite':
-        cursor = connection.cursor()
-        cursor.execute('PRAGMA foreign_keys = ON;')
-
-
 class ShuupTestingAppConfig(AppConfig):
     name = "shuup.testing"
     verbose_name = "Shuup Testing & Demo Utilities"
@@ -52,10 +45,6 @@ class ShuupTestingAppConfig(AppConfig):
             __name__ + ".themes:ShuupTestingThemeWithCustomBase",
         ],
     }
-
-    def ready(self):
-        from django.db.backends.signals import connection_created
-        connection_created.connect(activate_sqlite_fk_constraint)
 
 
 default_app_config = "shuup.testing.ShuupTestingAppConfig"
