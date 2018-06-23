@@ -150,10 +150,10 @@ For OSX with Homebrew:
     # If your current version is below 0.19.1 (for Firefox)
     brew upgrade geckodriver
 
-    # Make sure the selenium is up to date (tested with 3.8.0)
+    # Make sure the selenium is up to date (tested with 3.12.0)
     pip install selenium -U
 
-    # Make sure splinter is up to date (tested with 0.7.6)
+    # Make sure splinter is up to date (tested with 0.8.0)
     pip install splinter -U
 
 For other OS and browsers check package documentation directly:
