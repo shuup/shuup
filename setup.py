@@ -109,6 +109,7 @@ REQUIRES = [
     'jsonfield>=1.0,<2',
     'keyring==10.2',
     'keyrings.alt==2.0',
+    'lxml>=4,<4.2.2',
     'Markdown>=2.6,<3',
     'openpyxl==2.3.5',
     'python-dateutil==2.6.0',
