@@ -14,7 +14,7 @@ env:
 matrix:
   include:
     - python: 3.5
-      env: TOXENV=py35-django19-nomigrations-nocoverage-browser-admin
+      env: TOXENV=py35-django19-nomigrations-nocoverage-browser-travis-admin
       before_install:
         - wget https://github.com/mozilla/geckodriver/releases/download/v0.20.1/geckodriver-v0.20.1-linux64.tar.gz
         - mkdir geckodriver
@@ -29,7 +29,7 @@ matrix:
         - "selenium-standalone start &"
         - "npm install -g bower"
     - python: 3.5
-      env: TOXENV=py35-django19-nomigrations-nocoverage-browser-front
+      env: TOXENV=py35-django19-nomigrations-nocoverage-browser-travis-front
       before_install:
         - wget https://github.com/mozilla/geckodriver/releases/download/v0.20.1/geckodriver-v0.20.1-linux64.tar.gz
         - mkdir geckodriver

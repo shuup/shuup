@@ -31,6 +31,7 @@ OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_order_creator_view_1(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     get_default_payment_method()
@@ -54,6 +55,7 @@ def test_order_creator_view_1(browser, admin_user, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_order_creator_view_2(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     pm = get_default_payment_method()
