@@ -17,7 +17,7 @@ def fill_shop_scripts(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup_notify', '0002_shop_scripts')
+        ('shuup_notify', '0004_shop_scripts')
     ]
 
     operations = [

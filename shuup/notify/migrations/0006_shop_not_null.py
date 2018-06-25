@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup_notify', '0004_shop_fill'),
+        ('shuup_notify', '0005_shop_fill'),
     ]
 
     operations = [
