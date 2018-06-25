@@ -21,6 +21,12 @@ Importer
 
 - Require only shop change permission to execute data imports
 
+Notify
+~~~~~~
+
+- Fix migrations. This requires old projects to fake migrations until
+  `notify.0006_shop_not_null`.
+
 Simple CMS
 ~~~~~~~~~~
 
