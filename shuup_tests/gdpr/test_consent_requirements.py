@@ -13,7 +13,7 @@ from shuup.gdpr.models import GDPRSettings, GDPRUserConsent
 from shuup.gdpr.utils import (
     create_user_consent_for_all_documents, ensure_gdpr_privacy_policy,
     get_active_consent_pages, get_possible_consent_pages,
-    get_privacy_policy_page, has_privacy_policy_consent,
+    get_privacy_policy_page, should_reconsent_privacy_policy,
     is_documents_consent_in_sync
 )
 from shuup.simple_cms.models import Page
@@ -31,7 +31,7 @@ def test_consent_required(rf):
     assert not gdpr_settings.enabled
     assert gdpr_settings.privacy_policy_page == page
 
-    assert not has_privacy_policy_consent(shop, user)
+    assert not should_reconsent_privacy_policy(shop, user)
     assert is_documents_consent_in_sync(shop, user)  # settings not enabled
 
     assert page in get_possible_consent_pages(shop)

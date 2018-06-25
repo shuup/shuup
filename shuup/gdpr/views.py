@@ -26,9 +26,11 @@ from shuup.gdpr.models import (
     GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER, GDPRCookieCategory
 )
 from shuup.gdpr.utils import (
-    add_consent_to_response_cookie, get_active_consent_pages,
-    get_cookie_consent_data
+    add_consent_to_response_cookie, create_user_consent_for_all_documents,
+    get_active_consent_pages, get_cookie_consent_data,
+    is_documents_consent_in_sync
 )
+from shuup.simple_cms.models import Page
 from shuup.utils.analog import LogEntryKind
 from shuup.utils.djangoenv import has_installed
 
@@ -61,6 +63,24 @@ class GDPRCookieConsentView(View):
         response = HttpResponseRedirect(redirect_url)
         add_consent_to_response_cookie(response, cookie_data)
         return response
+
+
+class GDPRPolicyConsentView(View):
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if request.user.is_anonymous():
+            return HttpResponseNotFound()
+
+        shop = request.shop
+        page = Page.objects.filter(pk=kwargs["page_id"], shop=shop).first()
+        if not page:
+            return HttpResponseNotFound()
+        document = create_user_consent_for_all_documents(shop, user)
+        if document:
+            if not is_documents_consent_in_sync(shop, user):
+                return HttpResponseNotFound()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', "/"))
+        return HttpResponseNotFound()
 
 
 class GDPRCustomerDashboardView(DashboardViewMixin, TemplateView):

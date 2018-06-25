@@ -8,16 +8,27 @@
 import json
 
 import pytest
+import reversion
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
-from django.utils.translation import activate, get_language
+from django.utils.translation import activate
 
 from shuup.core.models import ShopStatus
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
-from shuup.gdpr.utils import ensure_gdpr_privacy_policy
+from shuup.gdpr.utils import ensure_gdpr_privacy_policy, create_user_consent_for_all_documents, \
+    is_documents_consent_in_sync
 from shuup.testing import factories
 from shuup_tests.utils import SmartClient
+
+
+def assert_update(client, url, expected):
+    response = client.get(url)
+    response_content = response.content.decode("utf-8")
+    if expected:
+        assert "privacy-policy-update" in response_content
+    else:
+        assert "privacy-policy-update" not in response_content
 
 
 @pytest.mark.django_db
@@ -50,7 +61,7 @@ def test_resource_injection(client):
     cookie_category = GDPRCookieCategory.objects.create(
         shop=shop,
         always_active=True,
-        cookies="cookie1,cookir2,_cookie3",
+        cookies="cookie1,cookie2,_cookie3",
         name="RequiredCookies",
         how_is_used="to make the site work"
     )
@@ -70,7 +81,44 @@ def test_resource_injection(client):
 
 
 @pytest.mark.django_db
-def test_consent_cookies(client):
+def test_update_injection():
+    shop = factories.get_default_shop()
+    client = SmartClient()
+    index_url = reverse("shuup:index")
+
+    page = ensure_gdpr_privacy_policy(shop)
+    shop_gdpr = GDPRSettings.get_for_shop(shop)
+    shop_gdpr.enabled = True
+    shop_gdpr.privacy_policy = page
+    shop_gdpr.save()
+
+    assert_update(client, index_url, False)  # nothing consented in past, should not show
+
+    user = factories.create_random_user("en")
+    password = "test"
+    user.set_password(password)
+    user.save()
+
+    client.login(username=user.username, password=password)
+    assert_update(client, index_url, False)  # no consent given, should not be visible
+
+    create_user_consent_for_all_documents(shop, user)
+    assert_update(client, index_url, False)
+
+    with reversion.create_revision():
+        page.save()
+
+    assert not is_documents_consent_in_sync(shop, user)
+    assert_update(client, index_url, True)
+
+    # consent
+    client.get(reverse("shuup:gdpr_policy_consent", kwargs=dict(page_id=page.pk)))
+    assert is_documents_consent_in_sync(shop, user)
+    assert_update(client, index_url, False)
+
+
+@pytest.mark.django_db
+def test_consent_cookies():
     """
     Test that the GDPR consent is generated and saved into a cooki
     """

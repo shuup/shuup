@@ -6,15 +6,17 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
-from shuup.core.models import PersonContact
+from shuup.core.models import PersonContact, Shop
 from shuup.gdpr.models import GDPRSettings
-from shuup.gdpr.utils import (
-    create_initial_required_cookie_category, ensure_gdpr_privacy_policy
-)
-from shuup.gdpr.views import GDPRCookieConsentView
+from shuup.gdpr.utils import ensure_gdpr_privacy_policy, \
+    create_initial_required_cookie_category, is_documents_consent_in_sync
+from shuup.gdpr.views import GDPRCookieConsentView, GDPRPolicyConsentView
+from shuup.simple_cms.models import Page
+
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
@@ -99,3 +101,49 @@ def test_cookie_consent_view(rf, language):
 
     new_page = ensure_gdpr_privacy_policy(shop, force_update=True)
     assert modified < new_page.modified_on  # no update done.
+
+
+@pytest.mark.django_db()
+@pytest.mark.parametrize("language", ["fi", "en"])
+def test_policy_consent_view(rf, language):
+    activate(language)
+    shop = factories.get_default_shop()
+    user = factories.create_random_user("en")
+
+    page = ensure_gdpr_privacy_policy(shop)
+
+    view = GDPRPolicyConsentView.as_view()
+
+    # try without user
+    request = apply_request_middleware(rf.post("/"), shop=shop)
+    response = view(request, page_id=page.id)
+    assert response.status_code == 404
+
+    # try with anonymous user
+    anonymous_user = AnonymousUser()
+    request = apply_request_middleware(rf.post("/"), shop=shop, user=anonymous_user)
+    response = view(request, page_id=page.id)
+    assert response.status_code == 404
+
+    # try without correct page
+    incorrect_shop = Shop.objects.create(name="testing", public_name="testing..")
+    incorrect_page = Page.objects.create(shop=incorrect_shop)
+    request = apply_request_middleware(rf.post("/"), shop=shop, user=user)
+    response = view(request, page_id=incorrect_page.id)
+    assert response.status_code == 404
+
+    assert is_documents_consent_in_sync(shop, user)  # returns true because no settings set
+    request = apply_request_middleware(rf.post("/"), shop=shop, user=user)
+    response = view(request, page_id=page.id)
+    assert response.status_code == 404  # gdpr settings not enabled
+
+    gdpr_settings = GDPRSettings.get_for_shop(shop)
+    gdpr_settings.enabled = True
+    gdpr_settings.privacy_policy = page
+    gdpr_settings.save()
+
+    request = apply_request_middleware(rf.post("/"), shop=shop, user=user)
+    response = view(request, page_id=page.id)
+    assert response.status_code == 302  # all good!
+
+    assert is_documents_consent_in_sync(shop, user)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 21:27+0000\n"
+"POT-Creation-Date: 2018-06-25 20:47+0000\n"
 "PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,13 @@ msgstr ""
 msgid "Read the <a href='{}' target='_blank'>{}</a>."
 msgstr ""
 
-msgid "You must accept to this to register or authenticate."
+msgid "You must accept to this to register."
+msgstr ""
+
+msgid "You must accept to this to order."
+msgstr ""
+
+msgid "You must accept to this to authenticate."
 msgstr ""
 
 msgid ""
@@ -793,6 +799,13 @@ msgid "Cookies: "
 msgstr ""
 
 msgid "Save preferences"
+msgstr ""
+
+#, python-format
+msgid ""
+"Our privacy policy has been updated since your last consent. Please read the "
+"updated version <a href=\"%(url)s\">here</a>. <a class=\"btn btn-primary\" "
+"href=\"%(accept_url)s\">Accept changes</a>"
 msgstr ""
 
 msgid "Required"
