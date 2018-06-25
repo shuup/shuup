@@ -19,14 +19,18 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_menu(browser, admin_user, live_server, settings):
-    shop = get_default_shop()
-
+    get_default_shop()
     initialize_admin_browser_test(browser, live_server, settings)
 
     browser.find_by_css(".menu-list li").first.click()
     wait_until_condition(browser, lambda x: x.is_text_present("New product"))
 
-    # Make sure that the menu is clickable in small devices
+@pytest.mark.browser
+@pytest.mark.djangodb
+def test_menu_small_device(browser, admin_user, live_server, settings):
+    get_default_shop()
+    initialize_admin_browser_test(browser, live_server, settings)
+
     browser.driver.set_window_size(480, 960)
     browser.find_by_css("#menu-button").first.click()
     browser.find_by_css(".menu-list li").first.click()

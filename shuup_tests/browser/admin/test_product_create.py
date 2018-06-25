@@ -87,7 +87,6 @@ def _add_primary_category(browser, shop):
     wait_until_condition(browser, condition=lambda x: not x.is_element_present_by_id("create-object-overlay"))
     check_category_count(browser, 1)
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option" % select_id)) == 2)
-    wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='selected']" % select_id)) == 1)
 
 
 def _add_additional_category(browser, shop):

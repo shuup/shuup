@@ -5,6 +5,7 @@ addons:
 cache:
   directories:
     - "$HOME/.cache/pip"
+    - "$HOME/.npm"
     - "$HOME/.cache/shuup/build_resources"
 env:
   - TOXENV=sanity
@@ -12,6 +13,36 @@ env:
   - TOXENV=license_headers
 matrix:
   include:
+    - python: 3.5
+      env: TOXENV=py35-django19-nomigrations-nocoverage-browser-travis-admin
+      before_install:
+        - wget https://github.com/mozilla/geckodriver/releases/download/v0.20.1/geckodriver-v0.20.1-linux64.tar.gz
+        - mkdir geckodriver
+        - tar -xzf geckodriver*.tar.gz -C geckodriver
+        - export PATH=$PATH:$PWD/geckodriver
+        - "nvm install 7"
+        - "nvm use 7"
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+        - "npm install -g selenium-standalone@6.15.1"
+        - "selenium-standalone install"
+        - "selenium-standalone start &"
+        - "npm install -g bower"
+    - python: 3.5
+      env: TOXENV=py35-django19-nomigrations-nocoverage-browser-travis-front
+      before_install:
+        - wget https://github.com/mozilla/geckodriver/releases/download/v0.20.1/geckodriver-v0.20.1-linux64.tar.gz
+        - mkdir geckodriver
+        - tar -xzf geckodriver*.tar.gz -C geckodriver
+        - export PATH=$PATH:$PWD/geckodriver
+        - "nvm install 8"
+        - "nvm use 8"
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+        - "npm install -g selenium-standalone@6.15.1"
+        - "selenium-standalone install"
+        - "selenium-standalone start &"
+        - "npm install -g bower"
     - {python: 2.7, env: TOXENV=py27-django18-nomigrations}
     - {python: 3.4, env: TOXENV=py34-django18-nomigrations}
     #- {python: 3.4, env: TOXENV=py34-django18}
@@ -19,25 +50,11 @@ matrix:
     - {python: 3.5, env: TOXENV=py35-django19-nomigrations}
     - {python: 3.5, env: TOXENV=py35-django19}
     - {python: 3.6, env: TOXENV=py36-django19-nomigrations}
-    #- {python: 3.5, env: TOXENV=py35-nomigrations-nocoverage-browser-admin}
-    #- {python: 3.5, env: TOXENV=py35-nomigrations-nocoverage-browser-front}
 install:
   - pip install -U pip
   - pip install tox
   - pip install coveralls
   - pip install codecov
-before_install:
-  #- wget https://github.com/mozilla/geckodriver/releases/download/v0.19.1/geckodriver-v0.19.1-linux64.tar.gz
-  #- mkdir geckodriver
-  #- tar -xzf geckodriver*.tar.gz -C geckodriver
-  #- export PATH=$PATH:$PWD/geckodriver
-  #- "nvm install 6"
-  #- "nvm use 6"
-  #- "export DISPLAY=:99.0"
-  #- "sh -e /etc/init.d/xvfb start"
-  #- "npm install -g selenium-standalone@4.5.3"
-  #- "selenium-standalone install"
-  #- "selenium-standalone start &"
 script:
   - tox
 after_success:

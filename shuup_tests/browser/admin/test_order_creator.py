@@ -15,7 +15,8 @@ from splinter.exceptions import ElementDoesNotExist
 from shuup.admin.signals import object_created
 from shuup.core.models import Order
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition
+    click_element, move_to_element, wait_until_appeared,
+    wait_until_condition
 )
 from shuup.testing.factories import (
     create_product, create_random_person, get_default_payment_method,
@@ -30,6 +31,7 @@ OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_order_creator_view_1(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     get_default_payment_method()
@@ -37,6 +39,8 @@ def test_order_creator_view_1(browser, admin_user, live_server, settings):
     get_initial_order_status()
     supplier = get_default_supplier()
     person = create_random_person()
+    person.shops.add(shop)
+
     create_product("test-sku0", shop=shop, default_price=10, supplier=supplier)
     create_product("test-sku1", shop=shop, default_price=10, supplier=supplier)
     object_created.connect(_add_custom_order_created_message, sender=Order, dispatch_uid="object_created_signal_test")
@@ -51,6 +55,7 @@ def test_order_creator_view_1(browser, admin_user, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_order_creator_view_2(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     pm = get_default_payment_method()
@@ -58,6 +63,8 @@ def test_order_creator_view_2(browser, admin_user, live_server, settings):
     get_initial_order_status()
     supplier = get_default_supplier()
     person = create_random_person()
+    person.shops.add(shop)
+
     create_product("test-sku0", shop=shop, default_price=10, supplier=supplier)
     create_product("test-sku1", shop=shop, default_price=10, supplier=supplier)
     object_created.connect(_add_custom_order_created_message, sender=Order, dispatch_uid="object_created_signal_test")
@@ -117,6 +124,8 @@ def _test_regions(browser, person):
     with pytest.raises(ElementDoesNotExist):
         browser.find_by_css("input[name='billing-region_code']").first
     assert browser.find_by_css("input[name='billing-region']").first
+    move_to_element(browser, "input[name='billing-region']")  # To ensure all inputs required test is available
+
     browser.select("billing-country", "US")
     wait_until_appeared(browser, "select[name='billing-region_code']")
     with pytest.raises(ElementDoesNotExist):
@@ -232,7 +241,7 @@ def _test_add_lines(browser):
     wait_until_condition(browser, lambda x: browser.windows.current.name == original_window_name, timeout=30)
 
     wait_until_condition(
-        browser, lambda x: x.find_by_css('#lines .list-group-item:last-child input[name="total"]').first.value == "10")
+        browser, lambda x: x.find_by_css('#lines .list-group-item:last-child input[name="total"]').first.value == "10", timeout=100)
     last_line_item = browser.find_by_css("#lines .list-group-item:last-child")
     assert last_line_item.find_by_css('input[name="quantity"]').first.value == "1", "1 piece added"
     assert last_line_item.find_by_css('input[name="total"]').first.value == "10", "line item total is 10"

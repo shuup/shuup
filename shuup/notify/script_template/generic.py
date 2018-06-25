@@ -40,6 +40,7 @@ class GenericScriptTemplateEmailForm(forms.Form):
     send_to = forms.ChoiceField(label=_("Send to?"),
                                 initial="customer",
                                 choices=SEND_TO_CHOICES,
+                                widget=forms.Select(attrs={'class': 'no-select2'}),
                                 help_text=_("You can send this email to the customer or to "
                                             "other email of your choice."))
     recipient = forms.EmailField(label=_("Destination"),
