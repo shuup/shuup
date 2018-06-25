@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 17:09+0000\n"
+"POT-Creation-Date: 2018-06-22 21:27+0000\n"
 "PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,6 +51,22 @@ msgid "enabled"
 msgstr ""
 
 msgid "Define if the GDPR is active."
+msgstr ""
+
+msgid "privacy policy page"
+msgstr ""
+
+msgid ""
+"Choose your privacy policy page here. If this page changes, customers will "
+"be prompted for new consent."
+msgstr ""
+
+msgid "consent pages"
+msgstr ""
+
+msgid ""
+"Choose pages here which are being monitored for customer consent. If any of "
+"these pages change, the customer is being prompted for a new consent."
 msgstr ""
 
 msgid "cookie banner content"
@@ -113,6 +129,18 @@ msgid "GDPR user consents"
 msgstr ""
 
 msgid "GDPR user consent in {} for user {} in shop {}"
+msgstr ""
+
+msgid "GDPR user consent document for {} (Version: {})"
+msgstr ""
+
+msgid "I have read and accept the {}"
+msgstr ""
+
+msgid "Read the <a href='{}' target='_blank'>{}</a>."
+msgstr ""
+
+msgid "You must accept to this to register or authenticate."
 msgstr ""
 
 msgid ""
@@ -765,9 +793,6 @@ msgid "Cookies: "
 msgstr ""
 
 msgid "Save preferences"
-msgstr ""
-
-msgid "privacy-policy"
 msgstr ""
 
 msgid "Required"

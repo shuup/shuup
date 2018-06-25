@@ -15,6 +15,9 @@ from django.utils.translation import activate, get_language
 from parler.models import TranslatableModel, TranslatedFields
 from reversion.models import Version
 
+from shuup.gdpr.utils import get_active_consent_pages
+from shuup.simple_cms.models import Page
+
 GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER = "gdpr_anonymize"
 
 
@@ -26,6 +29,18 @@ class GDPRSettings(TranslatableModel):
         verbose_name=_('enabled'),
         help_text=_("Define if the GDPR is active.")
     )
+    privacy_policy_page = models.ForeignKey(
+        "shuup_simple_cms.Page",
+        null=True,
+        verbose_name=_("privacy policy page"),
+        help_text=_("Choose your privacy policy page here. If this page changes, customers will be "
+                    "prompted for new consent."))
+    consent_pages = models.ManyToManyField(
+        "shuup_simple_cms.Page",
+        verbose_name=_("consent pages"),
+        related_name="consent_settings",
+        help_text=_("Choose pages here which are being monitored for customer consent. If any of these pages change"
+                    ", the customer is being prompted for a new consent."))
     translations = TranslatedFields(
         cookie_banner_content=models.TextField(
             blank=True,
@@ -124,25 +139,48 @@ class GDPRUserConsent(models.Model):
         verbose_name_plural = _('GDPR user consents')
 
     @classmethod
-    def create_for_user(cls, user, shop, consent_documents):
-        gdpr_user_consent = cls.objects.create(shop=shop, user=user)
+    def ensure_for_user(cls, user, shop, consent_documents):
         documents = []
-        for document in consent_documents:
-            version = Version.objects.get_for_object(document).first()
+        for page in consent_documents:
+            Page.create_initial_revision(page)
+            version = Version.objects.get_for_object(page).first()
             consent_document = GDPRUserConsentDocument.objects.create(
-                page=document,
+                page=page,
                 version=version
             )
             documents.append(consent_document)
-        gdpr_user_consent.documents = documents
-        return gdpr_user_consent
 
-    def should_reconsent(self):
+        # ensure only one consent exists for this user in this shop
+        consent = cls.objects.filter(shop=shop, user=user).first()
+        if consent:
+            consents = cls.objects.filter(shop=shop, user=user).order_by("-created_on")
+            if consents.count() > 1:
+                # There are multiple consents, remove excess
+                ids = [c.id for c in consents.all() if c.id != consent.id]
+                cls.objects.filter(pk__in=ids).delete()
+        else:
+            consent = cls.objects.create(shop=shop, user=user)
+
+        consent.documents = documents
+        return consent
+
+    def should_reconsent(self, shop, user):
+        consent_pages_ids = set([page.id for page in get_active_consent_pages(shop)])
+        page_ids = set([doc.page.id for doc in self.documents.all()])
+        if consent_pages_ids != page_ids:
+            return True
+
+        # all matches, check versions
         for consent_document in self.documents.all():
             version = Version.objects.get_for_object(consent_document.page).first()
             if consent_document.version != version:
-                return False
-        return True
+                return True
+
+        return False
+
+    def should_reconsent_to_page(self, page):
+        version = Version.objects.get_for_object(page).first()
+        return not self.documents.filter(page=page, version=version).exists()
 
     def __str__(self):
         return _("GDPR user consent in {} for user {} in shop {}").format(self.created_on, self.user, self.shop)

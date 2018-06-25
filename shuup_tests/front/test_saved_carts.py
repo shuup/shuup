@@ -20,8 +20,8 @@ from shuup.testing.factories import (
     get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.utils.fixtures import regular_user
 from shuup_tests.utils import printable_gibberish
+from shuup_tests.utils.fixtures import regular_user
 
 
 def _add_products_to_basket(basket):

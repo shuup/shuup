@@ -17,8 +17,7 @@ from shuup.front.apps.carousel.admin_module.forms import SlideForm
 from shuup.front.apps.carousel.models import Carousel, LinkTargetType, Slide
 from shuup.front.apps.carousel.plugins import BannerBoxPlugin, CarouselPlugin
 from shuup.testing.factories import (
-    get_default_category, get_default_product, get_default_shop,
-    get_shop
+    get_default_category, get_default_product, get_default_shop, get_shop
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_jinja_context

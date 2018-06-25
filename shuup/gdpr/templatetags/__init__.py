@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from django_jinja import library
 
+from shuup.gdpr.utils import get_active_consent_pages
+
 
 class GDPRNamespace(object):
     def is_enabled(self, request, **kwargs):
@@ -14,8 +16,7 @@ class GDPRNamespace(object):
         return GDPRSettings.get_for_shop(request.shop).enabled
 
     def get_documents(self, request, **kwargs):
-        from shuup.simple_cms.models import Page, PageType
-        return Page.objects.visible(shop=request.shop).filter(page_type=PageType.REVISIONED)
+        return get_active_consent_pages(request.shop)
 
 
 library.global_function(name="gdpr", fn=GDPRNamespace())

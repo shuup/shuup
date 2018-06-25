@@ -265,12 +265,13 @@ class ContentWizardForm(forms.Form):
             # we must create the page because it is not created yet
             if create_page and page_identifier not in pages:
                 template = content_data.CMS_PAGES[page_identifier]["template"]
-                rendered_content = template_loader.render_to_string(template, context).strip()
+                rendered_content = force_text(template_loader.render_to_string(template, context).strip())
+                title = force_text(content_data.CMS_PAGES[page_identifier]["name"])
 
                 Page.objects.create(
                     shop=self.shop,
                     identifier=page_identifier,
-                    title=content_data.CMS_PAGES[page_identifier]["name"],
+                    title=title,
                     content=rendered_content,
                     visible_in_menu=False,
                     url=page_identifier,

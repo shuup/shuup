@@ -14,8 +14,7 @@ from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
-from shuup.simple_cms.models import Page, PageType
-from shuup.utils.djangoenv import has_installed
+from shuup.simple_cms.models import Page
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
@@ -37,7 +36,6 @@ class PageForm(MultiLanguageModelForm):
             'parent',
             'list_children_on_page',
             'show_child_timestamps',
-            'page_type'
         ]
         widgets = {
             "content": TextEditorWidget()
@@ -48,14 +46,6 @@ class PageForm(MultiLanguageModelForm):
         kwargs.setdefault("required_languages", ())  # No required languages here
         super(PageForm, self).__init__(**kwargs)
         self.fields["parent"].queryset = Page.objects.filter(shop=get_shop(self.request))
-
-        if has_installed("shuup.gdpr"):
-            # remove page type field if GDPR is disabled or the page type is GDPR for existing object
-            from shuup.gdpr.models import GDPRSettings
-            if not GDPRSettings.get_for_shop(get_shop(self.request)).enabled:
-                self.fields.pop("page_type")
-            elif self.instance and self.instance.pk and self.instance.page_type == PageType.REVISIONED:
-                self.fields.pop("page_type")
 
     def clean(self):
         """
@@ -97,9 +87,6 @@ class PageForm(MultiLanguageModelForm):
         if not something_filled:
             title_field = "title__%s" % self.default_language
             self.add_error(title_field, _("Please fill at least one language fully."))
-
-        if self.instance and self.instance.pk and "page_type" not in self.cleaned_data:
-            data["page_type"] = self.instance.page_type  # ensure page type is always available
 
         return data
 

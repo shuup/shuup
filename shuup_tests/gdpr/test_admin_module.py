@@ -9,11 +9,12 @@
 import pytest
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.utils.timezone import now
 from django.utils.translation import activate
 
 from shuup.core.models import PersonContact
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
-from shuup.simple_cms.models import Page, PageType
+from shuup.simple_cms.models import Page
 from shuup.testing import factories
 from shuup.testing.soup_utils import extract_form_fields
 from shuup_tests.utils import SmartClient
@@ -40,10 +41,14 @@ def test_gdpr_admin_settings(client, admin_user):
     assert s.cookie_privacy_excerpt == settings.SHUUP_GDPR_DEFAULT_EXCERPT_STRING
     assert GDPRCookieCategory.objects.count() == 0
 
+    page = Page.objects.create(shop=shop, available_from=now())
+    page.title = "test"
+    page.save()
     # create the settings with only basic options
     payload = extract_form_fields(response)
     payload.update({
         "base-enabled": True,
+        "base-privacy_policy_page": page.pk,
         "base-cookie_banner_content__en": "Banner content",
         "base-cookie_privacy_excerpt__en": "Cookie excerpt",
         "cookie_categories-0-id": "",
@@ -56,7 +61,6 @@ def test_gdpr_admin_settings(client, admin_user):
     assert response.status_code == 302
 
     assert GDPRCookieCategory.objects.count() == 1
-    assert Page.objects.visible(shop).filter(page_type=PageType.REVISIONED).exists()
 
     # add one more cookie category
     payload.update({

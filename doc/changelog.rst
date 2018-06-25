@@ -9,16 +9,28 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
-Campaigns
-~~~~~~~~~
+Core
+~~~~
 
-- Fix migrations. This would require old projects to fake moved
-  `campaigns.0012_basket_campaign_undiscounted` migration.
+- Add new provider `front_registration_field_provider`.
+- Add new provider `front_company_registration_form_provider`.
+- Add new provider `checkout_confirm_form_field_provider`
+- Add new provider `front_auth_form_field_provider`
 
 Front
 ~~~~~
 
 - Add option to hide prices and set catalog mode with xtheme settings
+- Add new signal `checkout_complete`. Fires when the checkout process is complete.
+- Add new signal `login_allowed`. Fires when login allowed is being checked.
+- Add new signal `person_registration_save`. Fires when a person registers.
+- Add new signal `company_registration_save`. Fires when a company registers.
+
+Campaigns
+~~~~~~~~~
+
+- Fix migrations. This would require old projects to fake moved
+  `campaigns.0012_basket_campaign_undiscounted` migration.
 
 Importer
 ~~~~~~~~
@@ -29,7 +41,6 @@ Simple CMS
 ~~~~~~~~~~
 
 - Add support for choosing whether the timestamps are shown if the `list_children_on_page` has been set to `True`.
-
 
 Shuup 1.6.2
 -----------

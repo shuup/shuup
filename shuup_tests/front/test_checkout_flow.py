@@ -12,16 +12,18 @@ from django.core.urlresolvers import reverse
 
 from shuup.core import cache
 from shuup.core.models import Order, PaymentStatus, Product
+from shuup.front.signals import checkout_complete
 from shuup.testing.factories import (
-    create_default_order_statuses, get_address, get_default_payment_method,
-    get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_default_tax_class, create_product
+    create_default_order_statuses, create_product, get_address,
+    get_default_payment_method, get_default_shipping_method, get_default_shop,
+    get_default_supplier, get_default_tax_class
 )
 from shuup.testing.mock_population import populate_if_required
 from shuup.testing.models import (
     CarrierWithCheckoutPhase, PaymentWithCheckoutPhase
 )
 from shuup.testing.soup_utils import extract_form_fields
+from shuup_tests.front.utils import checkout_complete_signal
 from shuup_tests.utils import SmartClient
 
 
@@ -100,8 +102,13 @@ def _get_shipping_method_with_phase():
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("with_company", [False, True])
-def test_basic_order_flow(with_company):
+@pytest.mark.parametrize("with_company, with_signal", [
+    (False, True),
+    (True, True),
+    (False, False),
+    (True, False)
+])
+def test_basic_order_flow(with_company, with_signal):
     cache.clear()
     create_default_order_statuses()
     n_orders_pre = Order.objects.count()
@@ -123,6 +130,9 @@ def test_basic_order_flow(with_company):
     methods_soup = c.soup(methods_path)
     assert c.post(methods_path, data=extract_form_fields(methods_soup)).status_code == 302  # Should redirect forth
 
+    if with_signal:
+        checkout_complete.connect(checkout_complete_signal, dispatch_uid="checkout_complete_signal")
+
     confirm_path = reverse("shuup:checkout", kwargs={"phase": "confirm"})
     confirm_soup = c.soup(confirm_path)
     Product.objects.get(pk=product_ids[0]).soft_delete()
@@ -133,6 +143,13 @@ def test_basic_order_flow(with_company):
 
     n_orders_post = Order.objects.count()
     assert n_orders_post > n_orders_pre, "order was created"
+
+    order = Order.objects.first()
+    expected_ip = "127.0.0.2" if with_signal else "127.0.0.1"
+    assert order.ip_address == expected_ip
+
+    if with_signal:
+        checkout_complete.disconnect(dispatch_uid="checkout_complete_signal")
 
 
 @pytest.mark.django_db

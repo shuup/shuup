@@ -10,15 +10,22 @@ from django.conf import settings
 from django.contrib.auth import (
     get_user, get_user_model, logout, REDIRECT_FIELD_NAME
 )
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 
+from shuup.apps.provides import override_provides
+from shuup.front.apps.auth.forms import EmailAuthenticationForm
+from shuup.front.signals import login_allowed
 from shuup.testing.factories import get_default_shop
+from shuup.testing.utils import apply_request_middleware
+from shuup_tests.front.utils import FieldTestProvider, login_allowed_signal
 from shuup_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD
 
 regular_user = regular_user  # noqa
 
 pytestmark = pytest.mark.skipif("shuup.front.apps.auth" not in settings.INSTALLED_APPS,
                                 reason="Need shuup.front.apps.auth in INSTALLED_APPS")
+
 
 def prepare_user(user):
     user.is_active = True
@@ -164,7 +171,7 @@ def test_login_inactive_user_fails(client, regular_user, rf):
     get_default_shop()
     prepare_user(regular_user)
 
-    response = client.post(reverse("shuup:login"), data={
+    client.post(reverse("shuup:login"), data={
         "username": regular_user.username,
         "password": REGULAR_USER_PASSWORD,
     })
@@ -200,3 +207,32 @@ def test_recover_password_form_with_invalid_email():
     form = RecoverPasswordForm({"username": "fake_username", "email": "invalid_email"})
 
     assert (len(form.errors) == 1) and form.errors["email"]
+
+
+@pytest.mark.django_db
+def test_email_auth_form(rf, regular_user):
+    shop = get_default_shop()
+    prepare_user(regular_user)
+    payload = {
+        "username": regular_user.username,
+        "password": REGULAR_USER_PASSWORD,
+    }
+    request = apply_request_middleware(rf.get("/"), shop=shop)
+    with override_provides("front_auth_form_field_provider", ["shuup_tests.front.utils.FieldTestProvider"]):
+
+        form = EmailAuthenticationForm(request=request, data=payload)
+        assert FieldTestProvider.key in form.fields
+        assert not form.is_valid()
+        assert form.errors[FieldTestProvider.key][0] == FieldTestProvider.error_msg
+
+        # accept terms
+        payload.update({FieldTestProvider.key: True})
+        form = EmailAuthenticationForm(request=request, data=payload)
+        assert FieldTestProvider.key in form.fields
+        assert form.is_valid()
+
+        login_allowed.connect(login_allowed_signal, dispatch_uid="test_login_allowed")
+        with pytest.raises(ValidationError):
+            form.confirm_login_allowed(regular_user)
+        login_allowed.disconnect(dispatch_uid="test_login_allowed")
+        form.confirm_login_allowed(regular_user)

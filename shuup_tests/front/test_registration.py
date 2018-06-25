@@ -11,18 +11,30 @@ import uuid
 import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
 from shuup import configuration
 from shuup.admin.modules.contacts.views import ContactDetailView
-from shuup.core.models import CompanyContact
-from shuup.core.models import PersonContact
+from shuup.apps.provides import override_provides
+from shuup.core.models import CompanyContact, PersonContact
 from shuup.front.apps.customer_information.views import CompanyEditView
+from shuup.front.apps.registration.forms import (
+    CompanyRegistrationForm, PersonRegistrationForm
+)
+from shuup.front.signals import (
+    company_registration_save, person_registration_save
+)
 from shuup.notify.models import Script
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.importing import cached_load
+from shuup_tests.front.utils import (
+    change_company_signal, change_username_signal, FieldTestProvider,
+    FormDefTestProvider
+)
 
 username = "u-%d" % uuid.uuid4().time
 email = "%s@shuup.local" % username
@@ -519,3 +531,106 @@ def test_create_company_from_customer_dashboard(allow_company_registration, comp
         else:
             assert CompanyContact.objects.filter(is_active=True).count() == 1
             assert PersonContact.objects.filter(is_active=True).count() == 1
+
+
+
+@pytest.mark.django_db
+def test_provider_provides_fields(rf, admin_user):
+    if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
+        pytest.skip("shuup.front.apps.registration required in installed apps")
+
+    shop = get_default_shop()
+
+    with override_provides("front_registration_field_provider", [
+        "shuup_tests.front.utils.FieldTestProvider",
+    ]):
+        current_username = "test"
+        request = apply_request_middleware(rf.post("/"), shop=shop)
+        payload = {
+            "username": current_username,
+            "password1": "asdf",
+            "password2": "asdf",
+            "email": "test@example.com"
+        }
+        form = PersonRegistrationForm(request=request, data=payload)
+
+        assert FieldTestProvider.key in form.fields
+        assert not form.is_valid()
+        assert form.errors[FieldTestProvider.key][0] == FieldTestProvider.error_msg
+
+        # accept terms
+        payload.update({FieldTestProvider.key: True})
+        form = PersonRegistrationForm(request=request, data=payload)
+        assert FieldTestProvider.key in form.fields
+        assert form.is_valid()
+
+        # test signal fires
+        person_registration_save.connect(change_username_signal, dispatch_uid="test_registration_change_username")
+        user = form.save()
+        assert user.username != current_username
+        assert user.username == "changed_username"
+        person_registration_save.disconnect(dispatch_uid="test_registration_change_username")
+
+
+@pytest.mark.django_db
+def test_provider_provides_definitions(rf, admin_user):
+    if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
+        pytest.skip("shuup.front.apps.registration required in installed apps")
+
+    shop = get_default_shop()
+
+    with override_provides("front_company_registration_form_provider", ["shuup_tests.front.utils.FormDefTestProvider"]):
+        with override_provides("front_registration_field_provider", ["shuup_tests.front.utils.FieldTestProvider"]):
+            request = apply_request_middleware(rf.post("/"), shop=shop)
+            current_username = "test"
+            current_name = "123"
+            payload = {
+                'company-tax_number':"123",
+                'company-name': current_name,
+                'billing-country': "US",
+                'billing-city': "city",
+                'billing-street': "street",
+                'contact_person-last_name': "last",
+                'contact_person-first_name': "first",
+                'contact_person-email': "test@example.com",
+                'user_account-password1': "asdf123",
+                'user_account-password2': "asdf123",
+                'user_account-username': current_username
+            }
+            form_group = CompanyRegistrationForm(request=request, data=payload)
+
+            assert FormDefTestProvider.test_name in form_group.form_defs
+
+            # test CompanyRegistrationForm itself
+            assert "company" in form_group.form_defs
+            assert "billing" in form_group.form_defs
+            assert "contact_person" in form_group.form_defs
+            assert "user_account" in form_group.form_defs
+
+            assert form_group.form_defs["billing"].form_class == cached_load('SHUUP_ADDRESS_MODEL_FORM')
+
+            assert not form_group.is_valid()
+            assert FormDefTestProvider.test_name in form_group.errors
+            assert FieldTestProvider.key in form_group.errors[FormDefTestProvider.test_name]
+            assert len(form_group.errors) == 1  # no other errors
+
+            key = "%s-%s" % (FormDefTestProvider.test_name, FieldTestProvider.key)
+            payload.update({key: 1})
+
+            form_group = CompanyRegistrationForm(request=request, data=payload)
+
+            assert FormDefTestProvider.test_name in form_group.form_defs
+            assert form_group.is_valid()
+            assert FormDefTestProvider.test_name not in form_group.errors
+            assert not len(form_group.errors)  # no errors
+
+            # test signal fires
+            company_registration_save.connect(
+                change_company_signal, dispatch_uid="test_registration_change_company_signal")
+            form_group.save(commit=True)
+            assert not User.objects.filter(username=username).exists()
+            assert not CompanyContact.objects.filter(name=current_name).exists()
+
+            assert User.objects.filter(username="changed_username").exists()
+            assert CompanyContact.objects.filter(name="changed_name").exists()
+            company_registration_save.disconnect(dispatch_uid="test_registration_change_company_signal")

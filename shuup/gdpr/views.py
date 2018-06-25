@@ -26,7 +26,8 @@ from shuup.gdpr.models import (
     GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER, GDPRCookieCategory
 )
 from shuup.gdpr.utils import (
-    add_consent_to_response_cookie, get_cookie_consent_data
+    add_consent_to_response_cookie, get_active_consent_pages,
+    get_cookie_consent_data
 )
 from shuup.utils.analog import LogEntryKind
 from shuup.utils.djangoenv import has_installed
@@ -48,8 +49,7 @@ class GDPRCookieConsentView(View):
 
         consent_documents = []
         if has_installed("shuup.simple_cms"):
-            from shuup.simple_cms.models import Page, PageType
-            consent_documents = Page.objects.visible(shop).filter(page_type=PageType.REVISIONED)
+            consent_documents = get_active_consent_pages(shop)
 
         cookie_data = get_cookie_consent_data(cookie_categories, consent_documents)
 

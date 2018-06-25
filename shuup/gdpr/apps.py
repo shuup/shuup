@@ -26,5 +26,21 @@ class AppConfig(shuup.apps.AppConfig):
         ],
         "xtheme_resource_injection": [
             "shuup.gdpr.resources:add_gdpr_consent_resources"
+        ],
+        "front_registration_field_provider": [
+            "shuup.gdpr.providers:GDPRRegistrationFieldProvider"
+        ],
+        "front_auth_form_field_provider": [
+            "shuup.gdpr.providers:GDPRAuthFieldProvider"
+        ],
+        "checkout_confirm_form_field_provider": [
+            "shuup.gdpr.providers:GDPRCheckoutFieldProvider"
+        ],
+        "front_company_registration_form_provider": [
+            "shuup.gdpr.providers:GDPRFormDefProvider"
         ]
     }
+
+    def ready(self):
+        # connect receivers
+        import shuup.gdpr.receivers  # noqa: F401

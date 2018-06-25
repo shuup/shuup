@@ -7,8 +7,14 @@ from django.db import migrations, models
 import django.db.models.deletion
 import enumfields.fields
 import jsonfield.fields
+from enumfields import Enum
+
 import shuup.simple_cms.models
 import shuup.utils.analog
+
+
+class NullEnum(Enum):
+    NULL = 0
 
 
 class Migration(migrations.Migration):
@@ -41,7 +47,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='page',
             name='page_type',
-            field=enumfields.fields.EnumIntegerField(db_index=True, default=0, enum=shuup.simple_cms.models.PageType, verbose_name='page type'),
+            field=enumfields.fields.EnumIntegerField(db_index=True, default=0, enum=NullEnum, verbose_name='page type'),
         ),
         migrations.AddField(
             model_name='pagelogentry',

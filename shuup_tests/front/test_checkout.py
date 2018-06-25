@@ -10,6 +10,7 @@ from django import forms
 from django.test import override_settings
 
 from shuup import configuration
+from shuup.apps.provides import override_provides
 from shuup.core.models import get_person_contact
 from shuup.core.utils.forms import MutableAddressForm
 from shuup.front.checkout.addresses import AddressesPhase
@@ -17,6 +18,7 @@ from shuup.front.checkout.confirm import ConfirmForm
 from shuup.front.views.checkout import BaseCheckoutView
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.front.utils import FieldTestProvider
 
 
 def test_checkout_addresses_has_no_default_country():
@@ -92,3 +94,14 @@ def test_confirm_form_field_overrides(rf):
         form = ConfirmForm(request=request)
         assert type(form.fields["comment"].widget) == forms.HiddenInput
         assert form.fields["marketing"].initial is True
+
+
+@pytest.mark.django_db
+def test_confirm_form_field_provides(rf):
+    with override_provides("checkout_confirm_form_field_provider", ["shuup_tests.front.utils.FieldTestProvider"]):
+        request = apply_request_middleware(rf.post("/"), shop=get_default_shop())
+        payload = {}  # make form invalid
+        form = ConfirmForm(request=request, data=payload)
+        assert FieldTestProvider.key in form.fields
+        assert not form.is_valid()
+        assert form.errors[FieldTestProvider.key][0] == FieldTestProvider.error_msg

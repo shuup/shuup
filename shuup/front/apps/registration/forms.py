@@ -7,15 +7,17 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from registration.forms import RegistrationForm
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, get_person_contact, PersonContact
+from shuup.front.signals import (
+    company_registration_save, person_registration_save
+)
 from shuup.front.utils.companies import (
     company_registration_requires_approval, TaxNumberCleanMixin
 )
-from shuup.utils.djangoenv import has_installed
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
 
@@ -62,45 +64,16 @@ class PersonRegistrationForm(RegistrationForm):
         self.request = kwargs.pop("request")
         super(PersonRegistrationForm, self).__init__(*args, **kwargs)
 
-        if has_installed("shuup.gdpr"):
-            from shuup.gdpr.models import GDPRSettings
-            if GDPRSettings.get_for_shop(self.request.shop).enabled:
-                from shuup.simple_cms.models import Page, PageType
-                for page in Page.objects.visible(self.request.shop).filter(page_type=PageType.REVISIONED):
-                    self.fields["accept_{}".format(page.id)] = forms.BooleanField(
-                        label=_("I have read and accept the {}").format(page.title),
-                        help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
-                            reverse("shuup:cms_page", kwargs=dict(url=page.url)),
-                            page.title
-                        ),
-                        error_messages=dict(required=_("You must accept to this to register."))
-                    )
+        for provider_cls in get_provide_objects("front_registration_field_provider"):
+            provider = provider_cls()
+            for definition in provider.get_fields(request=self.request):
+                self.fields[definition.name] = definition.field
 
     def save(self, *args, **kwargs):
         user = super(PersonRegistrationForm, self).save(*args, **kwargs)
-        get_person_contact(user).shops.add(self.request.shop)
-
-        if has_installed("shuup.gdpr"):
-            from shuup.gdpr.utils import create_user_consent_for_all_documents
-            create_user_consent_for_all_documents(self.request.shop, user)
-
+        contact = get_person_contact(user).shops.add(self.request.shop)
+        person_registration_save.send(sender=type(self), request=self.request, user=user, contact=contact)
         return user
-
-
-class CompanyAgreementForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        self.shop = kwargs.pop("shop")
-        super(CompanyAgreementForm, self).__init__(*args, **kwargs)
-        from shuup.simple_cms.models import Page, PageType
-        for page in Page.objects.visible(self.shop).filter(page_type=PageType.REVISIONED):
-            self.fields["accept_{}".format(page.id)] = forms.BooleanField(
-                label=_("I have read and accept the {}").format(page.title),
-                help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
-                    reverse("shuup:cms_page", kwargs=dict(url=page.url)),
-                    page.title
-                ),
-                error_messages=dict(required=_("You must accept this to register."))
-            )
 
 
 class CompanyRegistrationForm(FormGroup):
@@ -113,10 +86,14 @@ class CompanyRegistrationForm(FormGroup):
         self.add_form_def('contact_person', ContactPersonForm)
         self.add_form_def('user_account', UserCreationForm)
 
-        if has_installed("shuup.gdpr"):
-            from shuup.gdpr.models import GDPRSettings
-            if GDPRSettings.get_for_shop(self.request.shop).enabled:
-                self.add_form_def('agreement', CompanyAgreementForm, kwargs=dict(shop=self.request.shop))
+        for provider_cls in get_provide_objects("front_company_registration_form_provider"):
+            provider = provider_cls(self, self.request)
+            for definition in provider.get_definitions():
+                self.add_form_def(
+                    name=definition.form_name,
+                    form_class=definition.form_class,
+                    required=definition.required,
+                    kwargs=dict(shop=self.request.shop, request=self.request))
 
     def instantiate_forms(self):
         super(CompanyRegistrationForm, self).instantiate_forms()
@@ -163,8 +140,5 @@ class CompanyRegistrationForm(FormGroup):
             company.shops.add(self.request.shop)
             company.members.add(person)
 
-        if has_installed("shuup.gdpr"):
-            from shuup.gdpr.utils import create_user_consent_for_all_documents
-            create_user_consent_for_all_documents(self.request.shop, user)
-
+        company_registration_save.send(sender=type(self), request=self.request, user=user, company=company)
         return user

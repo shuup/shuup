@@ -166,6 +166,22 @@ Core
     List of order forms which are subclasses of ``ProductOrderForm``. These forms
     are shown on product detail page in front as well as previews etc.
 
+``front_registration_field_provider``
+    List of ``FormFieldProvider`` classes. These classes provide ``FormFieldDefinition``
+    objects which extend registration forms accross the Shuup front.
+
+``checkout_confirm_form_field_provider``
+    List of ``FormFieldProvider`` classes. These classes provide ``FormFieldDefinition``
+    objects which extend checkout confirm form.
+
+``front_auth_form_field_provider``
+    List of ``FormFieldProvider`` classes. These classes provide ``FormFieldDefinition``
+    objects which extend authentication forms accross the Shuup front.
+
+``front_company_registration_form_provider``
+    List of ``FormDefProvider`` classes. These classes provide ``FormDefinition``
+    objects which extend the ``CompanyRegistrationForm`` with ``form_defs``.
+
 ``front_urls``
     Lists of frontend URLs to be appended to the usual frontend URLs.
 

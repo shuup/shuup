@@ -15,6 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language
 from reversion import create_revision
 
+from shuup.simple_cms.models import Page
 from shuup.utils.i18n import format_datetime
 
 
@@ -64,8 +65,10 @@ def get_all_contact_data(contact):
 
 
 def ensure_gdpr_privacy_policy(shop, force_update=False):
-    from shuup.simple_cms.models import Page, PageType
-    gdpr_document = Page.objects.filter(shop=shop, page_type=PageType.REVISIONED).first()
+    from shuup.gdpr.models import GDPRSettings
+    from shuup.simple_cms.models import Page
+    gdpr_document = get_privacy_policy_page(shop)
+    current_language = get_language()
 
     if force_update or not gdpr_document:
         now_date = now()
@@ -96,20 +99,25 @@ def ensure_gdpr_privacy_policy(shop, force_update=False):
             with create_revision():
                 gdpr_document = Page.objects.create(
                     shop=shop,
-                    page_type=PageType.REVISIONED,
                     content=content,
                     available_from=now_date,
                     title=force_text(_("Privacy Policy")),
-                    url=force_text(_("privacy-policy"))
+                    url=settings.GDPR_PRIVACY_POLICY_PAGE_URLS.get(current_language, "privacy-policy")
                 )
                 created = True
+            gdpr_settings = GDPRSettings.get_for_shop(shop)
+            gdpr_settings.privacy_policy_page = gdpr_document
+            gdpr_settings.save()
 
         # update only if it was created
         if created or force_update:
-            current_language = get_language()
             for code, language in settings.LANGUAGES:
                 if code == current_language:
                     continue
+                url = settings.GDPR_PRIVACY_POLICY_PAGE_URLS.get(code)
+                if not url:
+                    continue
+
                 activate(code)
                 content = loader.render_to_string(
                     template_name="shuup/admin/gdpr/privacy_policy_page.jinja",
@@ -117,11 +125,13 @@ def ensure_gdpr_privacy_policy(shop, force_update=False):
                 )
                 gdpr_document.set_current_language(code)
                 gdpr_document.title = force_text(_("Privacy Policy"))
-                gdpr_document.url = force_text(_("privacy-policy"))
+                gdpr_document.url = url
                 gdpr_document.content = content
                 gdpr_document.save()
-            activate(current_language)
 
+    # return to old language
+    activate(current_language)
+    gdpr_document.set_current_language(current_language)
     return gdpr_document
 
 
@@ -151,18 +161,35 @@ def create_initial_required_cookie_category(shop):
             )
             cookie_category.save()
         activate(current_language)
+        cookie_category.set_current_language(current_language)
+
+
+def has_privacy_policy_consent(shop, user):
+    from shuup.gdpr.models import GDPRUserConsent
+    consent = GDPRUserConsent.objects.filter(shop=shop, user=user).first()
+    if not consent:
+        return False
+    privacy_policy = get_privacy_policy_page(shop)
+    if not privacy_policy:
+        return False
+    return consent.should_reconsent_to_page(privacy_policy)
 
 
 def is_documents_consent_in_sync(shop, user):
     """
     Returns whether the user has consent to the lastest document versions
     """
+
+    from shuup.gdpr.models import GDPRSettings
+    gdpr_settings = GDPRSettings.get_for_shop(shop)
+    if not gdpr_settings.enabled:
+        return True  # nothing to do.
+
     from shuup.gdpr.models import GDPRUserConsent
     last_user_consent = GDPRUserConsent.objects.filter(user=user, shop=shop).order_by("-created_on").first()
     if not last_user_consent:
         return False
-
-    return last_user_consent.should_reconsent()
+    return not last_user_consent.should_reconsent(shop, user)
 
 
 def create_user_consent_for_all_documents(shop, user):
@@ -171,9 +198,32 @@ def create_user_consent_for_all_documents(shop, user):
     """
     from shuup.gdpr.models import GDPRUserConsent, GDPRSettings
 
-    if not GDPRSettings.get_for_shop(shop).enabled or is_documents_consent_in_sync(shop, user):
+    gdpr_settings = GDPRSettings.get_for_shop(shop)
+    if not gdpr_settings.enabled or is_documents_consent_in_sync(shop, user):
         return
 
-    from shuup.simple_cms.models import Page, PageType
-    consent_documents = Page.objects.visible(shop).filter(page_type=PageType.REVISIONED)
-    GDPRUserConsent.create_for_user(user, shop, consent_documents)
+    consent_documents = get_active_consent_pages(shop)
+    return GDPRUserConsent.ensure_for_user(user, shop, consent_documents)
+
+
+def get_possible_consent_pages(shop):
+    return Page.objects.filter(shop=shop, deleted=False)
+
+
+def get_active_consent_pages(shop):
+    from shuup.gdpr.models import GDPRSettings
+    gdpr_settings = GDPRSettings.get_for_shop(shop)
+    if not gdpr_settings.enabled:
+        return False  # nothing to do.
+    ids = [page.id for page in gdpr_settings.consent_pages.all()]
+    if gdpr_settings.privacy_policy_page:
+        ids.append(gdpr_settings.privacy_policy_page.pk)
+    return Page.objects.filter(pk__in=set(ids))
+
+
+def get_privacy_policy_page(shop):
+    from shuup.gdpr.models import GDPRSettings
+    gdpr_settings = GDPRSettings.get_for_shop(shop)
+    if not gdpr_settings.enabled:
+        return None
+    return gdpr_settings.privacy_policy_page

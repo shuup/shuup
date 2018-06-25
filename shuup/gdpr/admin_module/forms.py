@@ -11,7 +11,9 @@ from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.forms.widgets import TextEditorWidget
+from shuup.admin.shop_provider import get_shop
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
+from shuup.gdpr.utils import get_possible_consent_pages
 from shuup.utils.multilanguage_model_form import (
     MultiLanguageModelForm, to_language_codes
 )
@@ -25,6 +27,15 @@ class GDPRSettingsForm(MultiLanguageModelForm):
             "cookie_banner_content": TextEditorWidget(),
             "cookie_privacy_excerpt": TextEditorWidget()
         }
+
+    def __init__(self, **kwargs):
+        self.request = kwargs.pop("request")
+        super(GDPRSettingsForm, self).__init__(**kwargs)
+        shop = get_shop(self.request)
+        choices = [(p.id, p.title) for p in get_possible_consent_pages(shop)]
+        self.fields["privacy_policy_page"].choices = choices
+        self.fields["consent_pages"].required = False
+        self.fields["consent_pages"].choices = choices
 
 
 class GDPRCookieCategoryForm(MultiLanguageModelForm):
@@ -44,7 +55,8 @@ class GDPRBaseFormPart(FormPart):
             required=True,
             kwargs={
                 "instance": self.object,
-                "languages": settings.LANGUAGES
+                "languages": settings.LANGUAGES,
+                "request": self.request
             }
         )
 
