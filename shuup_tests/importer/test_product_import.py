@@ -51,7 +51,6 @@ def test_sample_import_all_match(filename):
     for product in products:
         shop_product = product.get_shop_instance(shop)
         assert shop_product.pk
-        assert shop_product.pk == product.pk
         assert shop_product.default_price_value == 150
         assert shop_product.default_price == shop.create_price(150)
         assert product.type == product_type  # product type comes from importer defaults
@@ -97,7 +96,6 @@ def test_sample_import_no_match(stock_managed):
         assert product.gtin == "1280x720"
         shop_product = product.get_shop_instance(shop)
         assert shop_product.pk
-        assert shop_product.pk == product.pk  # new shop product created for all products
         assert shop_product.default_price_value == 150
         assert shop_product.default_price == shop.create_price(150)
         assert product.type == product_type  # product type comes from importer defaults

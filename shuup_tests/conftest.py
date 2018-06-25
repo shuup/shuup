@@ -52,6 +52,15 @@ def enable_db_access(db):
     pass
 
 
+# always make ShopProduct id different from Product id
+@pytest.fixture(autouse=True)
+def break_shop_product_id_sequence(db):
+    from shuup.core.models import ShopProduct
+    from django.db import connection
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO SQLITE_SEQUENCE (name, seq) values ('%s', 1500)" % ShopProduct._meta.db_table)
+
+
 @pytest.fixture()
 def staff_user():
     from django.contrib.auth import get_user_model

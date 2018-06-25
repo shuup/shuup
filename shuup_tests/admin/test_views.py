@@ -64,7 +64,13 @@ def test_detail_view(rf, admin_user, model_and_class):
     model = model_func()
     view = load(class_spec).as_view()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    response = view(request, pk=model.pk)
+
+    if model_func == get_default_product:
+        pk = model.shop_products.first().pk
+    else:
+        pk = model.pk
+
+    response = view(request, pk=pk)
     if hasattr(response, "render"):
         response.render()
     assert 200 <= response.status_code < 300
@@ -72,11 +78,12 @@ def test_detail_view(rf, admin_user, model_and_class):
 
 @pytest.mark.django_db
 def test_edit_view_adding_messages_to_form_group(rf, admin_user):
-    get_default_shop()  # obvious prerequisite
+    shop = get_default_shop()  # obvious prerequisite
     product = get_default_product()
+    shop_product = product.get_shop_instance(shop)
     view = ProductEditView.as_view()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    response = view(request, pk=product.pk)
+    response = view(request, pk=shop_product.pk)
     response.render()
     assert 200 <= response.status_code < 300
 
@@ -90,7 +97,7 @@ def test_edit_view_adding_messages_to_form_group(rf, admin_user):
     }
     post.update(post_data)
     request = apply_request_middleware(rf.post("/", post), user=admin_user)
-    response = view(request, pk=product.pk)
+    response = view(request, pk=shop_product.pk)
 
     errors = response.context_data["form"].errors
 
@@ -111,7 +118,7 @@ def test_product_edit_view(rf, admin_user, settings):
 
     view = ProductEditView.as_view()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    response = view(request, pk=product.pk)
+    response = view(request, pk=shop_product.pk)
     response.render()
 
     content = force_text(response.content)
@@ -135,7 +142,7 @@ def test_product_edit_view(rf, admin_user, settings):
     }
     post.update(post_data)
     request = apply_request_middleware(rf.post("/", post), user=admin_user)
-    response = view(request, pk=product.pk)
+    response = view(request, pk=shop_product.pk)
 
     shop_product.refresh_from_db()
     assert not shop_product.categories.exists()
@@ -156,7 +163,7 @@ def test_product_edit_view(rf, admin_user, settings):
         usable_post[k] = v
 
     request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
-    response = view(request, pk=product.pk)
+    response = view(request, pk=shop_product.pk)
 
     shop_product = ShopProduct.objects.first()
     assert shop_product.primary_category
@@ -176,7 +183,7 @@ def test_product_edit_view(rf, admin_user, settings):
     usable_post.update(post_data)
 
     request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
-    response = view(request, pk=product.pk)
+    response = view(request, pk=shop_product.pk)
 
     # empty again
     shop_product = ShopProduct.objects.first()
@@ -190,7 +197,7 @@ def test_product_edit_view(rf, admin_user, settings):
     usable_post.update(post_data)
 
     request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
-    response = view(request, pk=product.pk)
+    response = view(request, pk=shop_product.pk)
 
     shop_product = ShopProduct.objects.first()
     assert shop_product.categories.count() == 1
@@ -209,7 +216,7 @@ def test_product_edit_view(rf, admin_user, settings):
     usable_post.update(post_data)
 
     request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
-    response = view(request, pk=product.pk)
+    response = view(request, pk=shop_product.pk)
 
     shop_product = ShopProduct.objects.first()
     assert shop_product.categories.count() == 2

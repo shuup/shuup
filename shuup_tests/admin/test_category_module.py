@@ -196,7 +196,7 @@ def test_products_form_remove():
     assert (shop_product.categories.first() == category)
 
     data = {
-        "remove_products": ["%s" % shop_product.id]
+        "remove_products": ["%s" % product.id]
     }
     form = CategoryProductForm(shop=shop, category=category, data=data)
     form.full_clean()
@@ -237,7 +237,7 @@ def test_products_form_remove_with_parent():
     assert (category.shop_products.count() == 2)
 
     data = {
-        "remove_products": ["%s" % shop_product.id]
+        "remove_products": ["%s" % product.id]
     }
     form = CategoryProductForm(shop=shop, category=category, data=data)
     form.full_clean()
