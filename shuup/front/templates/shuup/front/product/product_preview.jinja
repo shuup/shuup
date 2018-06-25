@@ -36,7 +36,7 @@
                                 {{ product.short_description|safe }}
                             </p>
                         {% endif %}
-                        {% if show_prices() %}
+                        {% if show_prices() and not xtheme.get("hide_prices") %}
                             <div class="product-price">
                                 {{ render_product_price(product) }}
                             </div>

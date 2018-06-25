@@ -6,12 +6,12 @@
     {% if product.short_description %}
         <p class="product-short-description">{{ product.short_description|safe }}</p>
     {% endif %}
-    {% if show_prices() %}
+    {% if show_prices() and not xtheme.get("hide_prices") %}
         <div class="product-price">
             {{ render_product_price(product) }}
         </div>
+        <hr>
     {% endif %}
-    <hr>
 {% endmacro %}
 
 {% macro render_product_information(product) %}

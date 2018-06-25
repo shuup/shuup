@@ -25,7 +25,7 @@
                 <span class="label-text">
                     <span class="title">
                         <span class="name">{{ service.name }}</span>
-                        {% if show_prices() %}
+                        {% if show_prices() and not xtheme.get("hide_prices") %}
                             <span class="price">{{ service|price(allow_cache=False) }}</span>
                         {% endif %}
                     </span>

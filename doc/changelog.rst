@@ -15,6 +15,10 @@ Campaigns
 - Fix migrations. This would require old projects to fake moved
   `campaigns.0012_basket_campaign_undiscounted` migration.
 
+Front
+~~~~~
+
+- Add option to hide prices and set catalog mode with xtheme settings
 
 Importer
 ~~~~~~~~

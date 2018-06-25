@@ -1,5 +1,6 @@
 {% extends "shuup/front/macros/theme/product.jinja" %}
 
+
 {% macro render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children) %}
     {%- set shop_product = product.get_shop_instance(request.shop, allow_cache=False) -%}
     {% if not quantity %}
@@ -96,14 +97,14 @@
 {% endmacro %}
 
 {% macro product_order_section(shop_product, quantity, is_orderable, show_quantity=True, show_price=True, button_text=None) %}
-    {% if show_prices() %}
+    {% if show_prices() and not xtheme.get("hide_prices") %}
         {% if (show_price or show_quantity) %}
         <div class="row">
-            {% if show_quantity %}
             <div class="col-sm-6">
+            {% if show_quantity and not xtheme.get("catalog_mode") %}
                 {{ quantity_box(shop_product, quantity) }}
-            </div>
             {% endif %}
+            </div>
             {% if show_price %}
             <div class="col-sm-6">
                 {{ product_price_div(shop_product, quantity) }}
@@ -111,7 +112,9 @@
             {% endif %}
         </div>
         {% endif %}
-        {{ add_to_cart_btn(shop_product, is_orderable, button_text=button_text) }}
+        {% if not xtheme.get("catalog_mode") %}
+            {{ add_to_cart_btn(shop_product, is_orderable, button_text=button_text) }}
+        {% endif %}
     {% endif %}
 {% endmacro %}
 
@@ -167,7 +170,7 @@
 {% endmacro %}
 
 {% macro add_to_cart_btn(shop_product, is_orderable, button_text=None) %}
-    {%- set orderable = (is_orderable and show_prices()) %}
+    {%- set orderable = (is_orderable and show_prices() and not xtheme.get("hide_prices")) %}
     {% if not button_text %}
         {%- set button_text = _("Add to cart") -%}
     {% endif %}
