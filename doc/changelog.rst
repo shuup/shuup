@@ -9,8 +9,15 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Campaigns
+~~~~~~~~~
+
+- Fix migrations. This would require old projects to fake moved
+  `campaigns.0012_basket_campaign_undiscounted` migration.
+
+
 Importer
---------
+~~~~~~~~
 
 - Require only shop change permission to execute data imports
 

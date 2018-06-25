@@ -11,7 +11,7 @@ import shuup.utils.properties
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('campaigns', '0008_freeproductline_quantity_to_quantityfield'),
+        ('campaigns', '0011_alter_names'),
     ]
 
     operations = [
