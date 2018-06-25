@@ -368,7 +368,7 @@ def test_quantity_has_to_be_in_stock(admin_user):
         client = get_client(admin_user)
         payload = {
             'shop': shop.id,
-            'product': shop_product.id,
+            'product': product.id,
             'quantity': 493020
         }
         response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
@@ -449,7 +449,7 @@ def test_basket_can_be_cleared(admin_user):
         client = get_client(admin_user)
         payload = {
             'shop': shop.id,
-            'product': shop_product.id,
+            'product': shop_product.product.id,
         }
         response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.id, basket.key), payload)
         assert response.status_code == status.HTTP_200_OK

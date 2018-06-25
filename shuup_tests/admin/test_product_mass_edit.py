@@ -38,7 +38,7 @@ def test_mass_edit_products(rf, admin_user):
     assert shop_product2.primary_category is None
 
     request = apply_request_middleware(rf.post("/", data={"primary_category": category.pk}), user=admin_user)
-    request.session["mass_action_ids"] = [product1.pk, product2.pk]
+    request.session["mass_action_ids"] = [shop_product1.pk, shop_product2.pk]
 
     view = ProductMassEditView.as_view()
     response = view(request=request)
