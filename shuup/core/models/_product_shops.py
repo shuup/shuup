@@ -540,7 +540,10 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         return self._safe_get_string("short_description")
 
     def _safe_get_string(self, key):
-        return self.safe_translation_getter(key) or self.product.safe_translation_getter(key)
+        return (
+            self.safe_translation_getter(key, any_language=True) or
+            self.product.safe_translation_getter(key, any_language=True)
+        )
 
 
 ShopProductLogEntry = define_log_model(ShopProduct)
