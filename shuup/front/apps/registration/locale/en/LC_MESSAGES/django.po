@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 11:50+0000\n"
+"POT-Creation-Date: 2018-06-26 18:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -20,18 +20,6 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 
 msgid "Name of the company"
-msgstr ""
-
-msgid "I have read and accept the {}"
-msgstr ""
-
-msgid "Read the <a href='{}' target='_blank'>{}</a>."
-msgstr ""
-
-msgid "You must accept to this to register."
-msgstr ""
-
-msgid "You must accept this to register."
 msgstr ""
 
 msgid "Registration Received"

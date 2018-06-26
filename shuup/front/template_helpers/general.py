@@ -10,7 +10,7 @@ from collections import defaultdict
 import six
 from django.conf import settings
 from django.core.paginator import Paginator
-from django.utils.translation import get_language, get_language_info, ugettext
+from django.utils.translation import get_language
 from jinja2.utils import contextfunction
 
 from shuup.core.models import (
@@ -19,6 +19,7 @@ from shuup.core.models import (
 from shuup.core.utils import context_cache
 from shuup.front.utils.companies import allow_company_registration
 from shuup.front.utils.product_statistics import get_best_selling_product_info
+from shuup.front.utils.translation import get_language_choices
 from shuup.front.utils.user import is_admin_user
 from shuup.front.utils.views import cache_product_things
 from shuup.utils.mptt import get_cached_trees
@@ -307,13 +308,8 @@ def _get_page_range(current_page, num_pages, range_gap=5):
 
 @contextfunction
 def get_shop_language_choices(context):
-    languages = []
-    for code, name in settings.LANGUAGES:
-        lang_info = get_language_info(code)
-        name_in_current_lang = ugettext(name)
-        local_name = lang_info["name_local"]
-        languages.append((code, name_in_current_lang, local_name))
-    return languages
+    request = context["request"]
+    return get_language_choices(request.shop)
 
 
 @contextfunction

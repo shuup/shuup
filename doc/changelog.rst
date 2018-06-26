@@ -25,6 +25,7 @@ Core
 Front
 ~~~~~
 
+- Add shop option to limit storefront language options
 - Add option to hide prices and set catalog mode with xtheme settings
 - Add new signal `checkout_complete`. Fires when the checkout process is complete.
 - Add new signal `login_allowed`. Fires when login allowed is being checked.

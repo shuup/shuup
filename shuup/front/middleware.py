@@ -12,7 +12,8 @@ from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.http import HttpResponse
 from django.template import loader
-from django.utils import timezone
+from django.utils import timezone, translation
+from django.utils.lru_cache import lru_cache
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.middleware import ExceptionMiddleware
@@ -138,10 +139,30 @@ class ShuupFrontMiddleware(object):
         finally:
             request.user = current_user
 
+    @lru_cache()
+    def _get_front_urlpatterns_callbacks(self):
+        from shuup.front.urls import urlpatterns
+        return [urlpattern.callback for urlpattern in urlpatterns]
+
     def process_view(self, request, view_func, *view_args, **view_kwargs):
         maintenance_response = self._get_maintenance_response(request, view_func)
         if maintenance_response:
             return maintenance_response
+
+        # only force settings language when in Front urls
+        if view_func in self._get_front_urlpatterns_callbacks():
+            self._set_language(request)
+
+    def _set_language(self, request):
+        """
+        Set the language according to the shop preferences
+        If the current language is not in the available ones, change it to the first available
+        """
+        from shuup.front.utils.translation import get_language_choices
+        current_language = translation.get_language()
+        available_languages = [code for (code, name, local_name) in get_language_choices(request.shop)]
+        if current_language not in available_languages:
+            translation.activate(available_languages[0])
 
     def _get_maintenance_response(self, request, view_func):
         if settings.DEBUG:

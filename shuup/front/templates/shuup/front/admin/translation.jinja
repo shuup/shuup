@@ -1,0 +1,7 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% set translation_form = form["translation_config"] %}
+
+{% call content_block(_("Storefront Languages"), icon="fa-language") %}
+    {{ render_monolingual_fields(translation_form) }}
+{% endcall %}

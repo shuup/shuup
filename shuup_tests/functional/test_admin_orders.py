@@ -12,7 +12,6 @@ import json
 
 import pytest
 from django.core import serializers
-from django.utils import translation
 from django.utils.translation import activate
 
 from shuup.core.models import (
@@ -33,12 +32,13 @@ def encode_address(address):
     return json.loads(serializers.serialize("json", [address]))[0].get("fields")
 
 
+@pytest.mark.django_db
 def get_frontend_order_state(contact, payment_method, product_price, valid_lines=True):
     """
     Get a dict structure mirroring what the frontend JavaScript would submit.
     :type contact: Contact|None
     """
-    translation.activate("en")
+    activate("en")
     shop = get_default_shop()
     tax = Tax.objects.create(code="test_code", rate=decimal.Decimal("0.20"), name="Default")
     tax_class = TaxClass.objects.create(identifier="test_tax_class", name="Default")
@@ -118,7 +118,6 @@ def test_admin_cash_order(rf, admin_user, price, target, mode):
     get_initial_order_status()  # Needed for the API
     shop = get_default_shop()
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
-
 
     processor = CustomPaymentProcessor.objects.create(rounding_mode=mode)
     cash_method = PaymentMethod.objects.create(
