@@ -164,6 +164,10 @@ class GDPRUserConsent(models.Model):
         consent.documents = documents
         return consent
 
+    @classmethod
+    def get_for_user(cls, user, shop):
+        return cls.objects.filter(user=user, shop=shop).order_by("-created_on").first()
+
     def should_reconsent(self, shop, user):
         consent_pages_ids = set([page.id for page in get_active_consent_pages(shop)])
         page_ids = set([doc.page.id for doc in self.documents.all()])

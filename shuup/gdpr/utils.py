@@ -19,19 +19,6 @@ from shuup.simple_cms.models import Page
 from shuup.utils.i18n import format_datetime
 
 
-def get_consent_from_cookie(cookie_data):
-    """
-    Returns a tuple of (consent_cookies, consent_cookie_categories)
-    read from the cookie data (dictionary)
-
-    :param cookie_data dict: the dictionary parsed from cookie
-    """
-    from shuup.gdpr.models import GDPRCookieCategory
-    consent_cookies = cookie_data.get("cookies", [])
-    consent_cookie_categories = GDPRCookieCategory.objects.filter(id__in=cookie_data.get("cookie_categories", []))
-    return (consent_cookies, consent_cookie_categories)
-
-
 def add_consent_to_response_cookie(response, cookie_data):
     response.set_cookie(
         key=settings.SHUUP_GDPR_CONSENT_COOKIE_NAME,
@@ -164,7 +151,7 @@ def create_initial_required_cookie_category(shop):
         cookie_category.set_current_language(current_language)
 
 
-def has_privacy_policy_consent(shop, user):
+def should_reconsent_privacy_policy(shop, user):
     from shuup.gdpr.models import GDPRUserConsent
     consent = GDPRUserConsent.objects.filter(shop=shop, user=user).first()
     if not consent:
@@ -179,14 +166,13 @@ def is_documents_consent_in_sync(shop, user):
     """
     Returns whether the user has consent to the lastest document versions
     """
-
     from shuup.gdpr.models import GDPRSettings
     gdpr_settings = GDPRSettings.get_for_shop(shop)
     if not gdpr_settings.enabled:
         return True  # nothing to do.
 
     from shuup.gdpr.models import GDPRUserConsent
-    last_user_consent = GDPRUserConsent.objects.filter(user=user, shop=shop).order_by("-created_on").first()
+    last_user_consent = GDPRUserConsent.get_for_user(user, shop)
     if not last_user_consent:
         return False
     return not last_user_consent.should_reconsent(shop, user)

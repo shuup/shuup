@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 21:27+0000\n"
+"POT-Creation-Date: 2018-06-25 20:48+0000\n"
 "PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
@@ -138,10 +138,10 @@ msgid "GDPR user consents"
 msgstr "GDPR käyttäjäsuostumukset"
 
 msgid "GDPR user consent in {} for user {} in shop {}"
-msgstr "GDPR käyttäjäsuostumus {} käyttäjälle {} kaupalle {}"
+msgstr "GDPR-käyttäjäsuostumus {} käyttäjälle {} kaupassa {}"
 
 msgid "GDPR user consent document for {} (Version: {})"
-msgstr "GDPR-käyttäjäsuostumus {} (Versio: {})"
+msgstr "GDPR-käyttäjäsuostumus dokumentille {} (Versio: {})"
 
 msgid "I have read and accept the {}"
 msgstr "Olen lukenut, ja hyväksyn {}"
@@ -149,8 +149,14 @@ msgstr "Olen lukenut, ja hyväksyn {}"
 msgid "Read the <a href='{}' target='_blank'>{}</a>."
 msgstr "Lue <a href='{}' target='_blank'>{}</a>."
 
-msgid "You must accept to this to register or authenticate."
-msgstr "Sinun pitää hyväksyä tämä, jotta voit rekisteröityä tai kirjautua."
+msgid "You must accept to this to register."
+msgstr "Sinun pitää hyväksyä tämä, jotta voit rekisteröityä."
+
+msgid "You must accept to this to order."
+msgstr "Sinun pitää hyväksyä tämä, jotta voit tilata."
+
+msgid "You must accept to this to authenticate."
+msgstr "Sinun pitää hyväksyä tämä, jotta voit kirjautua."
 
 msgid ""
 "<p>This website stores cookies on your computer. These cookies are used to "
@@ -1070,6 +1076,16 @@ msgstr "Evästeet:"
 
 msgid "Save preferences"
 msgstr "Tallenna asetukset"
+
+#, python-format
+msgid ""
+"Our privacy policy has been updated since your last consent. Please read the "
+"updated version <a href=\"%(url)s\">here</a>. <a class=\"btn btn-primary\" "
+"href=\"%(accept_url)s\">Accept changes</a>"
+msgstr ""
+"Tietosuojakäytäntömme on päivittynyt viimeisen hyväksymisesi jälkeen. Ole "
+"hyvä, ja lue päivitetty versio <a href=\"%(url)s\">täältä</a>. <a class="
+"\"btn btn-primary\" href=\"%(accept_url)s\">Hyväksyn muutokset</a>"
 
 msgid "Required"
 msgstr "Vaadittu"
