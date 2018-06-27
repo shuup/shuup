@@ -10,8 +10,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Category, ProductCrossSell, ProductCrossSellType
 from shuup.front.template_helpers.general import (
-    get_best_selling_products, get_newest_products, get_products_for_category,
-    get_random_products
+    get_best_selling_products, get_newest_products,
+    get_products_for_categories, get_random_products
 )
 from shuup.front.template_helpers.product import map_relation_type
 from shuup.xtheme import TemplatedPlugin
@@ -138,7 +138,7 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         count = self.config.get("count")
         category = Category.objects.filter(id=category_id).first() if category_id else None
         if category:
-            products = get_products_for_category(context, [category], n_products=count)
+            products = get_products_for_categories(context, [category], n_products=count)
         return {
             "request": context["request"],
             "title": self.get_translated_value("title"),

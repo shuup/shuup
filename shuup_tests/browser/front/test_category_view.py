@@ -395,6 +395,7 @@ def second_category_sort_test(browser, live_server, shop, category):
         sp.visibility = ShopProductVisibility.NOT_VISIBLE
         sp.save()
 
+    cache.clear()
     browser.reload()
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 10)
 
@@ -402,6 +403,7 @@ def second_category_sort_test(browser, live_server, shop, category):
         sp.visibility = ShopProductVisibility.ALWAYS_VISIBLE
         sp.save()
 
+    cache.clear()
     browser.reload()
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13, timeout=30)
 
