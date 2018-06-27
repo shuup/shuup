@@ -9,6 +9,9 @@ from __future__ import unicode_literals
 from django.core.exceptions import ValidationError
 from django.forms import DateTimeField
 from django.utils.translation import ugettext_lazy as _
+from django.db.transaction import atomic
+from django.conf import settings
+from django.contrib import messages
 
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
@@ -17,6 +20,10 @@ from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.simple_cms.models import Page
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
+from shuup.admin.toolbar import get_default_edit_toolbar
+from shuup.admin.form_part import (
+    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+)
 
 
 class PageForm(MultiLanguageModelForm):
@@ -136,18 +143,33 @@ class PageForm(MultiLanguageModelForm):
             return
         translation.save()
 
+class PageBaseFormPart(FormPart):
+    priority = 1
 
-class PageEditView(CreateOrUpdateView):
+    def get_form_defs(self):
+        yield TemplatedFormDef(
+            "base",
+            PageForm,
+            template_name="shuup/simple_cms/admin/_edit_base_page_form.jinja",
+            required=True,
+            kwargs={
+                "instance": self.object,
+                "languages": settings.LANGUAGES,
+                "request": self.request
+            }
+        )
+
+    def form_valid(self, form):
+        self.object = form["base"].save()
+
+
+class PageEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     model = Page
     template_name = "shuup/simple_cms/admin/edit.jinja"
-    form_class = PageForm
+    base_form_part_classes = [PageBaseFormPart,]
     context_object_name = "page"
+    form_part_class_provide_key = "admin_page_form_part"
     add_form_errors_as_messages = True
-
-    def get_form_kwargs(self):
-        kwargs = super(PageEditView, self).get_form_kwargs()
-        kwargs["request"] = self.request
-        return kwargs
 
     def save_form(self, form):
         self.object = form.save()
@@ -158,6 +180,15 @@ class PageEditView(CreateOrUpdateView):
 
     def get_queryset(self):
         return super(PageEditView, self).get_queryset().for_shop(get_shop(self.request)).filter(deleted=False)
+
+    def get_toolbar(self):
+        save_form_id = self.get_save_form_id()
+        if save_form_id:
+            return get_default_edit_toolbar(self, save_form_id)
+
+    @atomic
+    def form_valid(self, form):
+        return self.save_form_parts(form)
 
 
 class PageListView(PicotableListView):
