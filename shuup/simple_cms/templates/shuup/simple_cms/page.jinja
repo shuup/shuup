@@ -16,7 +16,6 @@
 {% endblock %}
 {% block content %}
     {{ page.get_html()|safe }}
-    {{seo_meta.meta_title}}
     {% if page.list_children_on_page %}
         {# TODO: add pagination for children list #}
         {% for child in page.children.visible(request.shop).order_by("-available_from") %}

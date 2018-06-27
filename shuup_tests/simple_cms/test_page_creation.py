@@ -5,10 +5,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import transaction
 
-from shuup.simple_cms.admin_module.views import PageEditView
+from shuup.simple_cms.admin_module.views import PageEditView, PageForm
 from shuup.testing.factories import get_default_shop
 from shuup_tests.simple_cms.utils import create_multilanguage_page, create_page
 from shuup_tests.utils.forms import get_form_data
@@ -33,8 +34,8 @@ def test_page_form(rf, admin_user):
     request.user = admin_user
     request.shop = shop
     view = PageEditView(request=request)
-    form_class = view.get_form_class()
-    form = form_class(**view.get_form_kwargs())
+    form_class = PageForm
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES))
     assert not form.is_bound
 
     data = get_form_data(form)
@@ -53,11 +54,11 @@ def test_page_form(rf, admin_user):
         "url__ja": "",
     })
 
-    form = form_class(**dict(view.get_form_kwargs(), data=data))
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data))
     form.full_clean()
     assert "title__fi" in form.errors  # We get an error because all of a given language's fields must be filled if any are
     data["title__fi"] = "suomi"
-    form = form_class(**dict(view.get_form_kwargs(), data=data))
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data))
     form.full_clean()
     assert not form.errors
     page = form.save()
@@ -65,7 +66,7 @@ def test_page_form(rf, admin_user):
     # Let's edit that page
     original_url = "errrnglish"
     data.update({"title__en": "englaish", "url__en": original_url, "content__en": "ennnn ennnn ennnnnnn-nn-n-n"})
-    form = form_class(**dict(view.get_form_kwargs(), data=data, instance=page))
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data, instance=page))
     form.full_clean()
     assert not form.errors
     page = form.save()
@@ -73,7 +74,7 @@ def test_page_form(rf, admin_user):
 
     # Try to make page a child of itself
     data.update({"parent": page.pk})
-    form = form_class(**dict(view.get_form_kwargs(), data=data, instance=page))
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data, instance=page))
     form.full_clean()
     assert form.errors
     del data["parent"]
@@ -83,7 +84,7 @@ def test_page_form(rf, admin_user):
 
     # edit page again and try to set duplicate url
     data.update({"title__en": "englaish", "url__en": "test", "content__en": "ennnn ennnn ennnnnnn-nn-n-n"})
-    form = form_class(**dict(view.get_form_kwargs(), data=data, instance=page))
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data, instance=page))
     form.full_clean()
 
     assert len(form.errors) == 1
@@ -92,7 +93,7 @@ def test_page_form(rf, admin_user):
 
     # it should be possible to change back to the original url
     data.update({"title__en": "englaish", "url__en": original_url, "content__en": "ennnn ennnn ennnnnnn-nn-n-n"})
-    form = form_class(**dict(view.get_form_kwargs(), data=data, instance=page))
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data, instance=page))
     form.full_clean()
     assert not form.errors
     page = form.save()
@@ -102,7 +103,7 @@ def test_page_form(rf, admin_user):
 
     assert data["url__fi"] == data["url__en"] # both urls are same, should raise two errors
 
-    form = form_class(**dict(view.get_form_kwargs(), data=data, instance=page))
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data, instance=page))
     form.full_clean()
     assert len(form.errors) == 1
     assert "url__fi" in form.errors

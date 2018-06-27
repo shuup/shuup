@@ -294,3 +294,9 @@ Reports Provide Categories
 ``report_writer_populator``
     List of functions to populate report writers. This allows the creation of custom output formats.
     Should follow the signature of `~shuup.reports.writer.populate_default_writers`.
+
+Simple CMS Provide Categories
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``admin_page_form_part``
+    Additional ``FormPart`` classes for Page editing. See :doc:`example <../howto/new_tab>`.
