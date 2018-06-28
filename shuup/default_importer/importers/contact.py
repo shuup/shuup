@@ -9,7 +9,9 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import (
     CompanyContact, Contact, MutableAddress, PersonContact
 )
-from shuup.importer.importing import DataImporter, ImportMetaBase
+from shuup.importer.importing import (
+    DataImporter, ImporterExampleFile, ImportMetaBase
+)
 
 
 class AddressHandlerMeta(ImportMetaBase):
@@ -53,11 +55,23 @@ class PersonContactImporter(DataImporter):
     meta_base_class = AddressHandlerMeta
     model = Contact
 
+    example_files = [
+        ImporterExampleFile(
+            "person_contact_sample.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+    ]
+
     def get_related_models(self):
         return [Contact, PersonContact]
 
     def get_row_model(self, row):
         return PersonContact
+
+    @classmethod
+    def get_example_file_content(cls, example_file, request):
+        from shuup.default_importer.samples import get_sample_file_content
+        return get_sample_file_content(example_file.file_name)
 
 
 class CompanyContactImporter(DataImporter):
@@ -67,8 +81,20 @@ class CompanyContactImporter(DataImporter):
     meta_base_class = AddressHandlerMeta
     model = Contact
 
+    example_files = [
+        ImporterExampleFile(
+            "company_contact_sample.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+    ]
+
     def get_related_models(self):
         return [Contact, CompanyContact]
 
     def get_row_model(self, row):
         return CompanyContact
+
+    @classmethod
+    def get_example_file_content(cls, example_file, request):
+        from shuup.default_importer.samples import get_sample_file_content
+        return get_sample_file_content(example_file.file_name)

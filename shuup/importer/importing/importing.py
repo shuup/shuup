@@ -29,6 +29,17 @@ from shuup.importer.utils import copy_update, fold_mapping_name
 from shuup.importer.utils.importer import ImportMode
 
 
+class ImporterExampleFile(object):
+    file_name = ""
+    template_name = ""
+    content_type = ""
+
+    def __init__(self, file_name, content_type, template_name=None):
+        self.file_name = file_name
+        self.content_type = content_type
+        self.template_name = template_name
+
+
 class DataImporter(object):
     meta_class_getter_name = "get_import_meta"
     meta_base_class = ImportMetaBase
@@ -37,6 +48,8 @@ class DataImporter(object):
     unique_fields = {}
     unmatched_fields = set()
     relation_map_cache = {}
+
+    example_files = []      # list[ImporterExampleFile]
 
     model = None
 
@@ -462,3 +475,38 @@ class DataImporter(object):
             if multi:
                 return mapper.map_multi_value(value)
             return mapper.map_single_value(value)
+
+    @classmethod
+    def has_example_file(cls):
+        return len(cls.example_files)
+
+    @classmethod
+    def get_example_file(cls, file_name):
+        """
+        :param file_name str
+        :rtype ImporterExampleFile
+        """
+        for example_file in cls.example_files:
+            if example_file.file_name == file_name:
+                return example_file
+
+    @classmethod
+    def get_example_file_content(cls, example_file, request):
+        """
+        Returns a binary file that will be served through the request
+        This base implementation just renders a template and returns the result as BytesIO or StringIO
+        Override this method to return a custom file content
+
+        :param request HttpRequest
+        :rtype StringIO|BytesIO
+        """
+        if example_file.template_name:
+            from django.template import loader
+            from six import StringIO
+            file_content = StringIO()
+            file_content.write(loader.render_to_string(
+                template_name=example_file.template_name,
+                context={},
+                request=request)
+            )
+            return file_content

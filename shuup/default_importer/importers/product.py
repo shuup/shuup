@@ -13,7 +13,9 @@ from shuup.core.models import (
     Product, ProductType, ShopProduct, Supplier, TaxClass
 )
 from shuup.importer.exceptions import ImporterError
-from shuup.importer.importing import DataImporter, ImportMetaBase
+from shuup.importer.importing import (
+    DataImporter, ImporterExampleFile, ImportMetaBase
+)
 from shuup.importer.utils import fold_mapping_name
 from shuup.simple_supplier.models import StockAdjustment
 from shuup.utils.properties import PriceProperty
@@ -167,3 +169,27 @@ class ProductImporter(DataImporter):
 
     def get_related_models(self):
         return [Product, ShopProduct]
+
+    example_files = [
+        ImporterExampleFile(
+            "product_sample_import.xls",
+            ("application/vnd.ms-excel", "application/excel")
+        ),
+        ImporterExampleFile(
+            "product_sample_import.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ),
+        ImporterExampleFile(
+            "product_sample_complex_import.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ),
+        ImporterExampleFile(
+            "product_sample_import.csv",
+            "text/csv"
+        )
+    ]
+
+    @classmethod
+    def get_example_file_content(cls, example_file, request):
+        from shuup.default_importer.samples import get_sample_file_content
+        return get_sample_file_content(example_file.file_name)
