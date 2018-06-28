@@ -194,22 +194,13 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
         return NormalShopProductSerializer
 
     def get_name(self, shop_product):
-        return (
-            shop_product.safe_translation_getter("name") or
-            shop_product.product.safe_translation_getter("name")
-        )
+        return shop_product.get_name()
 
     def get_description(self, shop_product):
-        return (
-            shop_product.safe_translation_getter("description") or
-            shop_product.product.safe_translation_getter("description")
-        )
+        return shop_product.get_description()
 
     def get_short_description(self, shop_product):
-        return (
-            shop_product.safe_translation_getter("short_description") or
-            shop_product.product.safe_translation_getter("short_description")
-        )
+        return shop_product.get_short_description()
 
     def _get_pricing_context(self, request, shop):
         return PricingContext(shop=shop, customer=self.context["customer"])

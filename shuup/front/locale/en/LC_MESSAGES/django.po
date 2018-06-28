@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 18:31+0000\n"
+"POT-Creation-Date: 2018-06-26 18:06+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -101,6 +101,14 @@ msgstr ""
 msgid "Company tax number format is validated for European countries."
 msgstr ""
 
+msgid "Available languages in storefront"
+msgstr ""
+
+msgid ""
+"Select all the languages that should be available in storefront. Blank means "
+"that all languages should be available."
+msgstr ""
+
 #, python-format
 msgid "Basket loading failed: Incompatible basket (%s)"
 msgstr ""
@@ -147,15 +155,6 @@ msgid "I want to receive marketing material"
 msgstr ""
 
 msgid "Comment"
-msgstr ""
-
-msgid "I have read and accept the {}"
-msgstr ""
-
-msgid "Read the <a href='{}' target='_blank'>{}</a>."
-msgstr ""
-
-msgid "You must accept to this to confirm the order."
 msgstr ""
 
 msgid ""
@@ -585,6 +584,9 @@ msgstr ""
 msgid "Product list sorts and filters"
 msgstr ""
 
+msgid "Storefront Languages"
+msgstr ""
+
 msgid "Shopping cart"
 msgstr ""
 
@@ -857,9 +859,6 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-msgid "I have read and accept the <a href='{}' target='_blank'>{}</a>"
-msgstr ""
-
 msgid "New user? Register here!"
 msgstr ""
 
@@ -1039,6 +1038,10 @@ msgid "Tax number is not valid."
 msgstr ""
 
 msgid "Edit"
+msgstr ""
+
+#, python-brace-format
+msgid "{language_code} is an invalid language code"
 msgstr ""
 
 msgid "This product is not available in this shop."
