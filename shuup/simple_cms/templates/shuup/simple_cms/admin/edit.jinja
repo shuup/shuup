@@ -8,27 +8,9 @@
     {% call content_with_sidebar(content_id="page_form") %}
         <form method="post" id="page_form">
             {% csrf_token %}
-            {% call content_block(_("General Information"), "fa-info-circle") %}
-                {% call(form, language, map) language_dependent_content_tabs(form, tab_id_prefix="additional-language") %}
-                    {{ bs3.field(form[map.title], widget_class="autoupdate-slug") }}
-                    {{ bs3.field(form[map.url], widget_class="slugfield") }}
-                    {{ bs3.field(form[map.content]) }}
-                {% endcall %}
-                {{ bs3.field(form.page_type) }}
-            {% endcall %}
-
-            {% call content_block(_("Availability"), "fa-clock-o") %}
-                {{ bs3.field(form.visible_in_menu) }}
-                {{ bs3.field(form.available_from) }}
-                {{ bs3.field(form.available_to) }}
-            {% endcall %}
-
-            {% call content_block(_("Extras"), "fa-plus-circle") %}
-                {{ bs3.field(form.parent) }}
-                {{ bs3.field(form.list_children_on_page) }}
-                {{ bs3.field(form.show_child_timestamps) }}
-                {{ bs3.field(form.identifier) }}
-            {% endcall %}
+            {% for form_def in form.form_defs.values() %}
+                {% include form_def.template_name with context %}
+            {% endfor %}
         </form>
     {% endcall %}
 {% endblock %}

@@ -51,7 +51,10 @@ Notify
 Simple CMS
 ~~~~~~~~~~
 
-- Add support for choosing whether the timestamps are shown if the `list_children_on_page` has been set to `True`.
+- Add option to provide form parts to admin edit view
+- Add support for choosing whether the timestamps are shown if the
+  `list_children_on_page` has been set to `True`.
+
 
 Shuup 1.6.2
 -----------

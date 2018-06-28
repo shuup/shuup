@@ -6,10 +6,14 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms import DateTimeField
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.form_part import (
+    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+)
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import Column, TextFilter
@@ -137,27 +141,44 @@ class PageForm(MultiLanguageModelForm):
         translation.save()
 
 
-class PageEditView(CreateOrUpdateView):
-    model = Page
-    template_name = "shuup/simple_cms/admin/edit.jinja"
-    form_class = PageForm
-    context_object_name = "page"
-    add_form_errors_as_messages = True
+class PageBaseFormPart(FormPart):
+    priority = 1
+    name = "base"
 
-    def get_form_kwargs(self):
-        kwargs = super(PageEditView, self).get_form_kwargs()
-        kwargs["request"] = self.request
-        return kwargs
+    def get_form_defs(self):
+        yield TemplatedFormDef(
+            self.name,
+            PageForm,
+            template_name="shuup/simple_cms/admin/_edit_base_page_form.jinja",
+            required=True,
+            kwargs={
+                "instance": self.object,
+                "languages": settings.LANGUAGES,
+                "request": self.request
+            }
+        )
 
-    def save_form(self, form):
-        self.object = form.save()
+    def form_valid(self, form):
+        self.object = form[self.name].save()
         if not self.object.created_by:
             self.object.created_by = self.request.user
         self.object.modified_by = self.request.user
         self.object.save()
 
+
+class PageEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
+    model = Page
+    template_name = "shuup/simple_cms/admin/edit.jinja"
+    base_form_part_classes = [PageBaseFormPart, ]
+    context_object_name = "page"
+    form_part_class_provide_key = "admin_page_form_part"
+    add_form_errors_as_messages = True
+
     def get_queryset(self):
         return super(PageEditView, self).get_queryset().for_shop(get_shop(self.request)).filter(deleted=False)
+
+    def form_valid(self, form):
+        return self.save_form_parts(form)
 
 
 class PageListView(PicotableListView):
