@@ -12,16 +12,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.services.base_form_part module
---------------------------------------------------
+shuup.admin.modules.services.base\_form\_part module
+----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.services.base_form_part
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.services.behavior_form_part module
-------------------------------------------------------
+shuup.admin.modules.services.behavior\_form\_part module
+--------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.services.behavior_form_part
     :members:

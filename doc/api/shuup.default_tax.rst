@@ -1,5 +1,5 @@
-shuup.default_tax package
-=========================
+shuup.default\_tax package
+==========================
 
 Subpackages
 -----------
@@ -11,16 +11,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.default_tax.models module
--------------------------------
+shuup.default\_tax.models module
+--------------------------------
 
 .. automodule:: shuup.default_tax.models
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.default_tax.module module
--------------------------------
+shuup.default\_tax.module module
+--------------------------------
 
 .. automodule:: shuup.default_tax.module
     :members:

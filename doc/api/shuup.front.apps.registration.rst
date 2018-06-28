@@ -12,8 +12,8 @@ shuup.front.apps.registration.forms module
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.registration.notify_events module
---------------------------------------------------
+shuup.front.apps.registration.notify\_events module
+---------------------------------------------------
 
 .. automodule:: shuup.front.apps.registration.notify_events
     :members:

@@ -1,5 +1,5 @@
-shuup.campaigns.admin_module.forms package
-==========================================
+shuup.campaigns.admin\_module.forms package
+===========================================
 
 Module contents
 ---------------

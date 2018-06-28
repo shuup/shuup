@@ -1,5 +1,5 @@
-shuup.front.apps.carousel.admin_module.views package
-====================================================
+shuup.front.apps.carousel.admin\_module.views package
+=====================================================
 
 Module contents
 ---------------

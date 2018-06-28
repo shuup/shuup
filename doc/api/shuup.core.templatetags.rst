@@ -12,8 +12,8 @@ shuup.core.templatetags.prices module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.templatetags.shuup_common module
--------------------------------------------
+shuup.core.templatetags.shuup\_common module
+--------------------------------------------
 
 .. automodule:: shuup.core.templatetags.shuup_common
     :members:

@@ -17,6 +17,7 @@ Subpackages
     shuup.default_reports
     shuup.default_tax
     shuup.front
+    shuup.gdpr
     shuup.guide
     shuup.importer
     shuup.notify
@@ -25,6 +26,7 @@ Subpackages
     shuup.reports
     shuup.simple_cms
     shuup.simple_supplier
+    shuup.tasks
     shuup.testing
     shuup.themes
     shuup.utils

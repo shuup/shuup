@@ -11,8 +11,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.contacts.form_parts module
-----------------------------------------------
+shuup.admin.modules.contacts.form\_parts module
+-----------------------------------------------
 
 .. automodule:: shuup.admin.modules.contacts.form_parts
     :members:
@@ -27,8 +27,8 @@ shuup.admin.modules.contacts.forms module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.contacts.mass_actions module
-------------------------------------------------
+shuup.admin.modules.contacts.mass\_actions module
+-------------------------------------------------
 
 .. automodule:: shuup.admin.modules.contacts.mass_actions
     :members:

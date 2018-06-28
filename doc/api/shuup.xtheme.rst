@@ -94,8 +94,8 @@ shuup.xtheme.resources module
     :undoc-members:
     :show-inheritance:
 
-shuup.xtheme.template_ns module
--------------------------------
+shuup.xtheme.template\_ns module
+--------------------------------
 
 .. automodule:: shuup.xtheme.template_ns
     :members:
@@ -126,8 +126,8 @@ shuup.xtheme.utils module
     :undoc-members:
     :show-inheritance:
 
-shuup.xtheme.view_config module
--------------------------------
+shuup.xtheme.view\_config module
+--------------------------------
 
 .. automodule:: shuup.xtheme.view_config
     :members:

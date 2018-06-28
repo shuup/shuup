@@ -4,8 +4,8 @@ shuup.core.utils package
 Submodules
 ----------
 
-shuup.core.utils.context_cache module
--------------------------------------
+shuup.core.utils.context\_cache module
+--------------------------------------
 
 .. automodule:: shuup.core.utils.context_cache
     :members:
@@ -20,8 +20,8 @@ shuup.core.utils.db module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.form_mixins module
------------------------------------
+shuup.core.utils.form\_mixins module
+------------------------------------
 
 .. automodule:: shuup.core.utils.form_mixins
     :members:
@@ -44,8 +44,8 @@ shuup.core.utils.forms module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.line_unit_mixin module
----------------------------------------
+shuup.core.utils.line\_unit\_mixin module
+-----------------------------------------
 
 .. automodule:: shuup.core.utils.line_unit_mixin
     :members:
@@ -68,24 +68,24 @@ shuup.core.utils.menu module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.model_caching_descriptor module
-------------------------------------------------
+shuup.core.utils.model\_caching\_descriptor module
+--------------------------------------------------
 
 .. automodule:: shuup.core.utils.model_caching_descriptor
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.name_mixin module
-----------------------------------
+shuup.core.utils.name\_mixin module
+-----------------------------------
 
 .. automodule:: shuup.core.utils.name_mixin
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.price_display module
--------------------------------------
+shuup.core.utils.price\_display module
+--------------------------------------
 
 .. automodule:: shuup.core.utils.price_display
     :members:
@@ -100,24 +100,24 @@ shuup.core.utils.prices module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.product_bought_with_relations module
------------------------------------------------------
+shuup.core.utils.product\_bought\_with\_relations module
+--------------------------------------------------------
 
 .. automodule:: shuup.core.utils.product_bought_with_relations
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.product_caching_object module
-----------------------------------------------
+shuup.core.utils.product\_caching\_object module
+------------------------------------------------
 
 .. automodule:: shuup.core.utils.product_caching_object
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.product_statistics module
-------------------------------------------
+shuup.core.utils.product\_statistics module
+-------------------------------------------
 
 .. automodule:: shuup.core.utils.product_statistics
     :members:
@@ -148,8 +148,8 @@ shuup.core.utils.slugs module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.utils.tax_numbers module
------------------------------------
+shuup.core.utils.tax\_numbers module
+------------------------------------
 
 .. automodule:: shuup.core.utils.tax_numbers
     :members:

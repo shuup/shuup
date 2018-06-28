@@ -11,8 +11,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.categories.form_parts module
-------------------------------------------------
+shuup.admin.modules.categories.form\_parts module
+-------------------------------------------------
 
 .. automodule:: shuup.admin.modules.categories.form_parts
     :members:

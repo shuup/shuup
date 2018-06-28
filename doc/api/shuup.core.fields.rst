@@ -4,8 +4,8 @@ shuup.core.fields package
 Submodules
 ----------
 
-shuup.core.fields.tagged_json module
-------------------------------------
+shuup.core.fields.tagged\_json module
+-------------------------------------
 
 .. automodule:: shuup.core.fields.tagged_json
     :members:

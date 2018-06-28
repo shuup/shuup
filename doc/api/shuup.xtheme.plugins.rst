@@ -4,8 +4,8 @@ shuup.xtheme.plugins package
 Submodules
 ----------
 
-shuup.xtheme.plugins.category_links module
-------------------------------------------
+shuup.xtheme.plugins.category\_links module
+-------------------------------------------
 
 .. automodule:: shuup.xtheme.plugins.category_links
     :members:
@@ -52,8 +52,8 @@ shuup.xtheme.plugins.snippets module
     :undoc-members:
     :show-inheritance:
 
-shuup.xtheme.plugins.social_media_links module
-----------------------------------------------
+shuup.xtheme.plugins.social\_media\_links module
+------------------------------------------------
 
 .. automodule:: shuup.xtheme.plugins.social_media_links
     :members:

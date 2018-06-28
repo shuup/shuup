@@ -1,11 +1,11 @@
-shuup.xtheme.admin_module package
-=================================
+shuup.xtheme.admin\_module package
+==================================
 
 Submodules
 ----------
 
-shuup.xtheme.admin_module.views module
---------------------------------------
+shuup.xtheme.admin\_module.views module
+---------------------------------------
 
 .. automodule:: shuup.xtheme.admin_module.views
     :members:

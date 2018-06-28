@@ -26,8 +26,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.core.error_handling module
---------------------------------
+shuup.core.error\_handling module
+---------------------------------
 
 .. automodule:: shuup.core.error_handling
     :members:
@@ -58,16 +58,16 @@ shuup.core.settings module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.settings_provider module
------------------------------------
+shuup.core.settings\_provider module
+------------------------------------
 
 .. automodule:: shuup.core.settings_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.shop_provider module
--------------------------------
+shuup.core.shop\_provider module
+--------------------------------
 
 .. automodule:: shuup.core.shop_provider
     :members:

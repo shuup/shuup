@@ -4,6 +4,14 @@ shuup.front.utils package
 Submodules
 ----------
 
+shuup.front.utils.companies module
+----------------------------------
+
+.. automodule:: shuup.front.utils.companies
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.utils.dashboard module
 ----------------------------------
 
@@ -20,18 +28,34 @@ shuup.front.utils.product module
     :undoc-members:
     :show-inheritance:
 
-shuup.front.utils.product_statistics module
--------------------------------------------
+shuup.front.utils.product\_statistics module
+--------------------------------------------
 
 .. automodule:: shuup.front.utils.product_statistics
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.utils.sorts_and_filters module
-------------------------------------------
+shuup.front.utils.sorts\_and\_filters module
+--------------------------------------------
 
 .. automodule:: shuup.front.utils.sorts_and_filters
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.front.utils.translation module
+------------------------------------
+
+.. automodule:: shuup.front.utils.translation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.front.utils.user module
+-----------------------------
+
+.. automodule:: shuup.front.utils.user
     :members:
     :undoc-members:
     :show-inheritance:

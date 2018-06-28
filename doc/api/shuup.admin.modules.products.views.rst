@@ -20,40 +20,40 @@ shuup.admin.modules.products.views.edit module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.views.edit_cross_sell module
----------------------------------------------------------
+shuup.admin.modules.products.views.edit\_cross\_sell module
+-----------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.views.edit_cross_sell
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.views.edit_media module
-----------------------------------------------------
+shuup.admin.modules.products.views.edit\_media module
+-----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.views.edit_media
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.views.edit_package module
-------------------------------------------------------
+shuup.admin.modules.products.views.edit\_package module
+-------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.views.edit_package
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.views.edit_parent module
------------------------------------------------------
+shuup.admin.modules.products.views.edit\_parent module
+------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.views.edit_parent
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.views.edit_variation module
---------------------------------------------------------
+shuup.admin.modules.products.views.edit\_variation module
+---------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.views.edit_variation
     :members:
@@ -68,8 +68,8 @@ shuup.admin.modules.products.views.list module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.views.mass_edit module
----------------------------------------------------
+shuup.admin.modules.products.views.mass\_edit module
+----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.views.mass_edit
     :members:

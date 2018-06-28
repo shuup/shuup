@@ -1,5 +1,5 @@
-shuup.admin.modules.contact_groups package
-==========================================
+shuup.admin.modules.contact\_groups package
+===========================================
 
 Subpackages
 -----------

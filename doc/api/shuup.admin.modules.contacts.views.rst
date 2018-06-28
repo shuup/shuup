@@ -28,8 +28,8 @@ shuup.admin.modules.contacts.views.list module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.contacts.views.mass_edit module
----------------------------------------------------
+shuup.admin.modules.contacts.views.mass\_edit module
+----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.contacts.views.mass_edit
     :members:

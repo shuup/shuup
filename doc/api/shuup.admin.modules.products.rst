@@ -12,8 +12,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.products.mass_actions module
-------------------------------------------------
+shuup.admin.modules.products.mass\_actions module
+-------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.mass_actions
     :members:
@@ -28,8 +28,8 @@ shuup.admin.modules.products.sections module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.signal_handlers module
----------------------------------------------------
+shuup.admin.modules.products.signal\_handlers module
+----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.signal_handlers
     :members:

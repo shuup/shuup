@@ -1,5 +1,5 @@
-shuup.order_printouts package
-=============================
+shuup.order\_printouts package
+==============================
 
 Subpackages
 -----------
@@ -11,16 +11,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.order_printouts.apps module
----------------------------------
+shuup.order\_printouts.apps module
+----------------------------------
 
 .. automodule:: shuup.order_printouts.apps
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.order_printouts.utils module
-----------------------------------
+shuup.order\_printouts.utils module
+-----------------------------------
 
 .. automodule:: shuup.order_printouts.utils
     :members:

@@ -1,5 +1,5 @@
-shuup.api.admin_module package
-==============================
+shuup.api.admin\_module package
+===============================
 
 Subpackages
 -----------
@@ -11,8 +11,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.api.admin_module.forms module
------------------------------------
+shuup.api.admin\_module.forms module
+------------------------------------
 
 .. automodule:: shuup.api.admin_module.forms
     :members:

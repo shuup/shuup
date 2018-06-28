@@ -1,5 +1,5 @@
-shuup.admin.modules.permission_groups package
-=============================================
+shuup.admin.modules.permission\_groups package
+==============================================
 
 Subpackages
 -----------

@@ -29,8 +29,8 @@ shuup.admin.modules.settings.enums module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.settings.view_settings module
--------------------------------------------------
+shuup.admin.modules.settings.view\_settings module
+--------------------------------------------------
 
 .. automodule:: shuup.admin.modules.settings.view_settings
     :members:

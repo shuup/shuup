@@ -1,5 +1,5 @@
-shuup.front.apps.simple_order_notification package
-==================================================
+shuup.front.apps.simple\_order\_notification package
+====================================================
 
 Subpackages
 -----------
@@ -11,16 +11,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.front.apps.simple_order_notification.signal_handler module
-----------------------------------------------------------------
+shuup.front.apps.simple\_order\_notification.signal\_handler module
+-------------------------------------------------------------------
 
 .. automodule:: shuup.front.apps.simple_order_notification.signal_handler
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.simple_order_notification.templates module
------------------------------------------------------------
+shuup.front.apps.simple\_order\_notification.templates module
+-------------------------------------------------------------
 
 .. automodule:: shuup.front.apps.simple_order_notification.templates
     :members:

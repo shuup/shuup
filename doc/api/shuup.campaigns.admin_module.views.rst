@@ -1,5 +1,5 @@
-shuup.campaigns.admin_module.views package
-==========================================
+shuup.campaigns.admin\_module.views package
+===========================================
 
 Module contents
 ---------------

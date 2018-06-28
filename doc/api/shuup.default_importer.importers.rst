@@ -1,19 +1,19 @@
-shuup.default_importer.importers package
-========================================
+shuup.default\_importer.importers package
+=========================================
 
 Submodules
 ----------
 
-shuup.default_importer.importers.contact module
------------------------------------------------
+shuup.default\_importer.importers.contact module
+------------------------------------------------
 
 .. automodule:: shuup.default_importer.importers.contact
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.default_importer.importers.product module
------------------------------------------------
+shuup.default\_importer.importers.product module
+------------------------------------------------
 
 .. automodule:: shuup.default_importer.importers.product
     :members:

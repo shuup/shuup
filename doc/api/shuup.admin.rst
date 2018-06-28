@@ -34,24 +34,24 @@ shuup.admin.currencybound module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.error_handlers module
----------------------------------
+shuup.admin.error\_handlers module
+----------------------------------
 
 .. automodule:: shuup.admin.error_handlers
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.form_modifier module
---------------------------------
+shuup.admin.form\_modifier module
+---------------------------------
 
 .. automodule:: shuup.admin.form_modifier
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.form_part module
-----------------------------
+shuup.admin.form\_part module
+-----------------------------
 
 .. automodule:: shuup.admin.form_part
     :members:
@@ -74,8 +74,8 @@ shuup.admin.middleware module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.module_registry module
-----------------------------------
+shuup.admin.module\_registry module
+-----------------------------------
 
 .. automodule:: shuup.admin.module_registry
     :members:
@@ -90,8 +90,8 @@ shuup.admin.settings module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.shop_provider module
---------------------------------
+shuup.admin.shop\_provider module
+---------------------------------
 
 .. automodule:: shuup.admin.shop_provider
     :members:

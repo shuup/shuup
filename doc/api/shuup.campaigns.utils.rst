@@ -20,16 +20,16 @@ shuup.campaigns.utils.matcher module
     :undoc-members:
     :show-inheritance:
 
-shuup.campaigns.utils.sales_range module
-----------------------------------------
+shuup.campaigns.utils.sales\_range module
+-----------------------------------------
 
 .. automodule:: shuup.campaigns.utils.sales_range
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.campaigns.utils.time_range module
----------------------------------------
+shuup.campaigns.utils.time\_range module
+----------------------------------------
 
 .. automodule:: shuup.campaigns.utils.time_range
     :members:

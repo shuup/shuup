@@ -1,5 +1,5 @@
-shuup.default_importer package
-==============================
+shuup.default\_importer package
+===============================
 
 Subpackages
 -----------
@@ -7,12 +7,13 @@ Subpackages
 .. toctree::
 
     shuup.default_importer.importers
+    shuup.default_importer.samples
 
 Submodules
 ----------
 
-shuup.default_importer.apps module
-----------------------------------
+shuup.default\_importer.apps module
+-----------------------------------
 
 .. automodule:: shuup.default_importer.apps
     :members:
