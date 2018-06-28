@@ -8,11 +8,11 @@
 import pytest
 
 from shuup.core import cache
-from shuup.core.models import Product, ShopProductVisibility, StockBehavior
+from shuup.core.models import Product, ShopProduct, ShopProductVisibility, StockBehavior
 from shuup.front.template_helpers import general
 from shuup.testing.factories import (
     create_order_with_product, create_product, get_default_product,
-    get_default_shop, get_default_supplier
+    get_default_shop, get_default_supplier, get_default_category
 )
 from shuup.testing.mock_population import populate_if_required
 from shuup_tests.front.fixtures import get_jinja_context
@@ -85,23 +85,37 @@ def test_get_listed_products_filter():
 @pytest.mark.django_db
 def test_get_best_selling_products():
     context = get_jinja_context()
-    cache.clear()
+
     # No products sold
-    assert len(list(general.get_best_selling_products(context, n_products=2))) == 0
+    cache.clear()
+    assert len(list(general.get_best_selling_products(context, n_products=3))) == 0
 
     supplier = get_default_supplier()
     shop = get_default_shop()
-    product = get_default_product()
-    create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=10, shop=shop)
+    product1 = create_product("product1", shop, supplier, 10)
+    product2 = create_product("product2", shop, supplier, 20)
+    create_order_with_product(product1, supplier, quantity=1, taxless_base_unit_price=10, shop=shop)
+    create_order_with_product(product2, supplier, quantity=2, taxless_base_unit_price=20, shop=shop)
+
+    # Two products sold
     cache.clear()
-    # One product sold
-    assert len(list(general.get_best_selling_products(context, n_products=2))) == 1
+    for time in range(2):
+        best_selling_products = list(general.get_best_selling_products(context, n_products=3))
+        assert len(best_selling_products) == 2
+        assert product1 in best_selling_products
+        assert product2 in best_selling_products
 
     # Make order unorderable
-    shop_product = product.get_shop_instance(shop)
+    shop_product = product1.get_shop_instance(shop)
     shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
     shop_product.save()
-    assert len(list(general.get_best_selling_products(context, n_products=2))) == 0
+
+    cache.clear()
+    for time in range(2):
+        best_selling_products = list(general.get_best_selling_products(context, n_products=3))
+        assert len(best_selling_products) == 1
+        assert product1 not in best_selling_products
+        assert product2 in best_selling_products
 
 
 @pytest.mark.django_db
@@ -148,28 +162,77 @@ def test_get_newest_products():
     shop = get_default_shop()
     products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
     children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+
     for child in children:
         child.link_to_parent(products[0])
+
     context = get_jinja_context()
-    # only 2 parent products exist
-    assert len(list(general.get_newest_products(context, n_products=10))) == 2
+
+    cache.clear()
+    for time in range(2):
+        newest_products = list(general.get_newest_products(context, n_products=10))
+        # only 2 products exist
+        assert len(newest_products) == 2
+        assert products[0] in newest_products
+        assert products[1] in newest_products
 
     # Delete one product
+    cache.clear()
     products[0].soft_delete()
-    assert len(list(general.get_newest_products(context, n_products=10))) == 1
+    for time in range(2):
+        newest_products = list(general.get_newest_products(context, n_products=10))
+        # only 2 products exist
+        assert len(newest_products) == 1
+        assert products[0] not in newest_products
+        assert products[1] in newest_products
 
 
 @pytest.mark.django_db
 def test_get_random_products():
     supplier = get_default_supplier()
-    shop = get_default_shop()    
+    shop = get_default_shop()
+
     products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
     children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+
     for child in children:
         child.link_to_parent(products[0])
+
     context = get_jinja_context()
-    # only 2 parent products exist
-    assert len(list(general.get_random_products(context, n_products=10))) == 2
+
+    cache.clear()
+    for time in range(2):
+        random_products = list(general.get_random_products(context, n_products=10))
+        assert len(random_products) == 2
+        # only 2 parent products exist
+        assert products[0] in random_products
+        assert products[1] in random_products
+
+
+@pytest.mark.django_db
+def test_products_for_category():
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+
+    category = get_default_category()
+    products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    category.shops.add(shop)
+
+    for child in children:
+        child.link_to_parent(products[0])
+
+    context = get_jinja_context()
+
+    for product in products:
+        product.get_shop_instance(shop).categories.add(category)
+
+    cache.clear()
+    for time in range(2):
+        category_products = list(general.get_products_for_categories(context, [category]))
+        assert len(category_products) == 2
+        assert products[0] in category_products
+        assert products[1] in category_products
 
 
 @pytest.mark.django_db

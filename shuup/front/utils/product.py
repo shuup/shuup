@@ -13,7 +13,8 @@ from django.utils.translation import get_language
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
-    AttributeVisibility, ProductMode, ProductVariationResult, ShopProduct
+    AttributeVisibility, ProductMode, ProductVariationResult,
+    ProductVariationVariable, ProductVariationVariableValue, ShopProduct
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils.views import cache_product_things
@@ -88,23 +89,48 @@ def _get_order_form(request, context, product, language):
     return None
 
 
+def _pack_orderable_variation_children_to_cache(orderable_variation_children, orderable):
+    orderable_variation_children_ids = OrderedDict()
+
+    for variable, values in orderable_variation_children.items():
+        orderable_variation_children_ids[variable.id] = tuple(value.id for value in values)
+
+    return (orderable_variation_children_ids, orderable)
+
+
+def _unpack_orderable_variation_children_from_cache(cached_value):
+    orderable_variation_children_ids, orderable = cached_value
+    orderable_variation_children = OrderedDict()
+
+    # transform IDs into objects
+    for variable_id, values_ids in orderable_variation_children_ids.items():
+        variable = ProductVariationVariable.objects.get(id=variable_id)
+        values = tuple(ProductVariationVariableValue.objects.filter(id__in=values_ids))
+        orderable_variation_children[variable] = values
+
+    return (orderable_variation_children, orderable)
+
+
 def get_orderable_variation_children(product, request, variation_variables):    # noqa (C901)
     if not variation_variables:
         variation_variables = product.variation_variables.all().prefetch_related("values")
 
     key, val = context_cache.get_cached_value(
-        identifier="orderable_variation_children", item=product, context=request,
-        variation_variables=variation_variables)
+        identifier="orderable_variation_children",
+        item=product, context=request,
+        variation_variables=variation_variables
+    )
     if val is not None:
-        return val
+        return _unpack_orderable_variation_children_from_cache(val)
 
     orderable_variation_children = OrderedDict()
     orderable = 0
+
     for combo_data in product.get_all_available_combinations():
         combo = combo_data["variable_to_value"]
-        for k, v in six.iteritems(combo):
-            if k not in orderable_variation_children:
-                orderable_variation_children[k] = []
+        for variable, values in six.iteritems(combo):
+            if variable not in orderable_variation_children:
+                orderable_variation_children[variable] = []
 
         res = ProductVariationResult.resolve(product, combo)
         try:
@@ -112,19 +138,16 @@ def get_orderable_variation_children(product, request, variation_variables):    
         except ShopProduct.DoesNotExist:
             continue
 
-        if res and shop_product.is_orderable(
-                supplier=None,
-                customer=request.customer,
-                quantity=1
-        ):
+        if res and shop_product.is_orderable(supplier=None, customer=request.customer, quantity=1):
             orderable += 1
 
-            for k, v in six.iteritems(combo):
-                if v not in orderable_variation_children[k]:
-                    orderable_variation_children[k].append(v)
+            for variable, value in six.iteritems(combo):
+                if value not in orderable_variation_children[variable]:
+                    orderable_variation_children[variable].append(value)
 
-    values = (orderable_variation_children, orderable != 0)
-    context_cache.set_cached_value(key, values)
+    orderable = (orderable > 0)
+    values = (orderable_variation_children, orderable)
+    context_cache.set_cached_value(key, _pack_orderable_variation_children_to_cache(*values))
     return values
 
 

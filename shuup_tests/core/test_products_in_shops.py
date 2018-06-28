@@ -350,3 +350,14 @@ def test_get_safe_strings(key):
     shop_product.refresh_from_db()
 
     assert func() == new_value  # returns value from shop product
+
+
+@pytest.mark.django_db
+def test_shop_instance_cache():
+    from shuup.core import cache
+    cache.clear()
+
+    shop = get_default_shop()
+    product = create_product("product", shop)
+    shop_product = product.get_shop_instance(shop)
+    assert shop_product == product.get_shop_instance(shop)

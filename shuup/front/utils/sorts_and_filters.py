@@ -20,6 +20,7 @@ from django.forms import (
 from shuup import configuration
 from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
+from shuup.core.models import Product
 from shuup.core.utils import context_cache
 from shuup.xtheme import get_theme_cache_key
 
@@ -257,16 +258,19 @@ def get_product_queryset(queryset, request, category, data):
     else:
         identifier = "product_queryset"
 
-    key, val = context_cache.get_cached_value(
-        identifier=identifier, item=category, allow_cache=True, context=request, data=key_data)
-    if val is not None:
-        return val
+    key, product_ids = context_cache.get_cached_value(
+        identifier=identifier, item=category, allow_cache=True, context=request, data=key_data
+    )
+    if product_ids is not None:
+        return Product.objects.filter(id__in=product_ids)
 
     for extend_obj in _get_active_modifiers(request.shop, category):
         new_queryset = extend_obj.get_queryset(queryset, data)
         if new_queryset is not None:
             queryset = new_queryset
-    context_cache.set_cached_value(key, queryset)
+
+    product_ids = list(queryset.values_list("id", flat=True))
+    context_cache.set_cached_value(key, product_ids)
     return queryset
 
 

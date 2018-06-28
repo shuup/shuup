@@ -21,7 +21,6 @@ from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.fields import InternalIdentifierField, MeasurementField
 from shuup.core.signals import post_clean, pre_clean
 from shuup.core.taxing import TaxableItem
-from shuup.core.utils import context_cache
 from shuup.core.utils.slugs import generate_multilanguage_slugs
 from shuup.utils.analog import define_log_model, LogEntryKind
 
@@ -381,12 +380,18 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         :type shop: shuup.core.models.Shop
         :rtype: shuup.core.models.ShopProduct
         """
-        key, val = context_cache.get_cached_value(
-            identifier="shop_product", item=self, context={"shop": shop}, allow_cache=allow_cache)
-        if val is not None:
-            return val
+
+        # FIXME: Temporary removed the cache to prevent parler issues
+        # Uncomment this as soon as https://github.com/shuup/shuup/issues/1323 is fixed
+        # and Django Parler version is bumped with the fix
+
+        # from shuup.core.utils import context_cache
+        # key, val = context_cache.get_cached_value(
+        #     identifier="shop_product", item=self, context={"shop": shop}, allow_cache=allow_cache)
+        # if val is not None:
+        #     return val
         shop_inst = self.shop_products.get(shop_id=shop.id)
-        context_cache.set_cached_value(key, shop_inst)
+        # context_cache.set_cached_value(key, shop_inst)
         return shop_inst
 
     def get_priced_children(self, context, quantity=1):
