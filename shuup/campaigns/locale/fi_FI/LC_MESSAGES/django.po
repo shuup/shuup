@@ -1,6 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 #, fuzzy
@@ -8,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-30 01:08+0000\n"
+"POT-Creation-Date: 2017-12-06 23:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2016\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
@@ -74,6 +73,10 @@ msgstr "alennusprosentti"
 
 msgid "The discount percentage for this campaign."
 msgstr "Alennusprosentti tälle kampanjalle."
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr "Tuote %(product)sei ole saatavilla tässä kaupassa %(shop)s ."
 
 msgid "Only amount or percentage can be set."
 msgstr "Vain määrä tai prosentti voidaan asettaa."
@@ -170,6 +173,14 @@ msgstr ""
 "Rajoita kampanja täsmäämään kun siinä on vähintään tässä annetun "
 "kokonaisarvon verran tuotteita."
 
+msgid "Undiscounted basket total value"
+msgstr "Alentamaton korin kokonaissumma"
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products which doesn't have already discounts."
+msgstr "Rajaa kampanja tilauksen alentamattomien tuotteiden kokonaissummalle."
+
 msgid "Basket maximum product count"
 msgstr "Korin maksimituotemäärä"
 
@@ -254,6 +265,29 @@ msgstr ""
 msgid "Limit the campaign to match the products from selected categories."
 msgstr "Rajaa kampanja täsmäämään valittujen tuoteryhmien tuotteille."
 
+msgid "Day and hour"
+msgstr "Päivä ja tunti"
+
+msgid "start time"
+msgstr "Alkamisaika"
+
+msgid "12pm is considered noon and 12am as midnight."
+msgstr "12pm on keskipäivä ja 12 am keskiyö."
+
+msgid "end time"
+msgstr "Loppumisaika"
+
+msgid ""
+"12pm is considered noon and 12am as midnight. End time is not considered "
+"match."
+msgstr "12pm on keskipäivä ja 12 am keskiyö. Loppumisaikaa ei lasketa mukaan."
+
+msgid "days"
+msgstr "päivät"
+
+msgid "Limit the campaign to selected days."
+msgstr "Rajaa kampanja valituille päiville."
+
 msgid "campaign"
 msgstr "kampanja"
 
@@ -274,6 +308,12 @@ msgstr "Alennusprosentti"
 
 msgid "Give percentage discount."
 msgstr "Anna prosenttialennus."
+
+msgid "Discount amount percentage from undiscounted amount"
+msgstr "Alennusprosentti alentamattomista hinnoista"
+
+msgid "Give percentage discount based on undiscounted product prices."
+msgstr "Anna alennusprosentti alentamattomille tuotehinnoille."
 
 msgid "Free Product(s)"
 msgstr "Ilmaiset tuotteet"

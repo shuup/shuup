@@ -14,7 +14,7 @@
 # Juha Kujala, 2017
 # Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016
+# Panu Tulimäki <panu@shuup.com>, 2016,2018
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015-2016
@@ -27,9 +27,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 10:53+0000\n"
-"PO-Revision-Date: 2017-09-23 22:00+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2018-06-26 18:06+0000\n"
+"PO-Revision-Date: 2018-06-28 21:17+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,15 +85,70 @@ msgstr "Yhteensä"
 msgid "Ordered"
 msgstr "Tilattu"
 
+msgid "Require shipping method"
+msgstr "Vaadi toimitustapa"
+
+msgid "Whether to require the shipping method in checkout phases."
+msgstr "Vaadi toimitustapa kassalla."
+
+msgid "Require payment method"
+msgstr "Vaadi maksutapa"
+
+msgid "Whether to require the payment method in checkout phases."
+msgstr "Vaadi maksutapa kassalla."
+
+msgid "Registration Settings"
+msgstr "Rekisteröinti asetukset"
+
+msgid "Allow company registration"
+msgstr "Salli yrityksen rekisteröityminen"
+
+msgid "If you select this, companies can register into your store."
+msgstr "Valitsemalla tämän yritykset voivat rekisteröityä kauppaasi."
+
+msgid "Company registration requires approval"
+msgstr "Yrityksen rekisteröinti vaatii hyväksynnän"
+
+msgid ""
+"Registered companies must be manually approved by admin if this is checked. "
+"This option has no effect if company registration is not allowed on your "
+"site."
+msgstr "Jos tämä on valittu, rekisteröityneet yritykset täytyy hyväksyä käsin ylläpitäjän toimesta. Tällä valinnalla ei ole vaikutusta jos yrityksen rekisteröinti ei ole aktivoiitu."
+
+msgid "Company tax number validation"
+msgstr "Yrityksen veronumeron validointi"
+
+msgid "Company tax number format is validated for European countries."
+msgstr "Yrityksen veronumerot validoidaan Euroopan maille."
+
+msgid "Available languages in storefront"
+msgstr "Saatavilla olevat kielet"
+
+msgid ""
+"Select all the languages that should be available in storefront. Blank means"
+" that all languages should be available."
+msgstr "Valitse kielet jotka haluat olevan saatavilla asiakkaillesi. Tyhjä valinta tarkoittaa, että kaikki saatavilla olevat kielet on aktivoituna."
+
 #, python-format
 msgid "Basket loading failed: Incompatible basket (%s)"
 msgstr "Korin lataaminen epäonnistui: epäyhteensopiva kori (%s)"
 
-msgid "Tax number required for companies"
-msgstr "Veronumero vaaditaan yrityksille"
+msgid "Try to remove some products from the basket and order them separately."
+msgstr "Yritä poistaa tuotteita korista ja tilaa ne erikseen."
 
-msgid "Cannot use tax number without company name"
-msgstr "Ei voi käyttää veronumeroa ilman yrityksen nimeä"
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr "Korin tuotteita ei voida toimittaa yhdessä. %s"
+
+#, python-format
+msgid "Products in basket have no common payment method. %s"
+msgstr "Korin tuotteilla ei ole yhteistä maksutapaa. %s"
+
+msgid "Tax number is required with the company name."
+msgstr "Veronumero on pakollinen yrityksen nimen kanssa."
+
+msgid "Company name is required with the tax number."
+msgstr "Yrityksen nimi on pakollinen veronumeron kanssa."
 
 msgid "Use a saved address"
 msgstr "Käytä tallennettua osoitetta"
@@ -543,8 +598,14 @@ msgid ""
 "well as other informations like shipping method and payment method."
 msgstr "Tämä skripti lähettää asiakkaalle tai märitellyille sähköpostiosoitteille sähköpostin kun tilaus on luotu. Tilauksen sisältöä, sekä toimitus- ja maksutapoja, voidaan käyttää sähköpostin sisältönä."
 
+msgid "Checkout configuration"
+msgstr "Kassan asetukset"
+
 msgid "Product list sorts and filters"
 msgstr "Tuotelistojen järjestäminen ja suodatus"
+
+msgid "Storefront Languages"
+msgstr "Kaupan kielet"
 
 msgid "Shopping cart"
 msgstr "Ostoskori"
@@ -726,6 +787,9 @@ msgstr "Valitse toimitustapa"
 msgid "Choose Payment Method"
 msgstr "Valitse maksutapa"
 
+msgid "No method is available."
+msgstr "Palvelu ei ole saatavilla."
+
 msgid "Delivery"
 msgstr "Toimitus"
 
@@ -835,6 +899,9 @@ msgstr "Tuotteet"
 
 msgid "Files"
 msgstr "Tiedostot"
+
+msgid "No method selected"
+msgstr "Palvelua ei ole valittu"
 
 msgid "Product"
 msgstr "Tuote"
@@ -987,8 +1054,15 @@ msgstr "Avaa tuotesivu"
 msgid "Newest products"
 msgstr "Uusimmat tuotteet"
 
+msgid "Tax number is not valid."
+msgstr "Veronumero ei ole validi."
+
 msgid "Edit"
 msgstr "Muokkaa"
+
+#, python-brace-format
+msgid "{language_code} is an invalid language code"
+msgstr "{language_code} on virheellinen tälle kielelle"
 
 msgid "This product is not available in this shop."
 msgstr "Tuote ei ole saatavilla tässä kaupassa."
