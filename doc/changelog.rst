@@ -40,6 +40,7 @@ Campaigns
 Importer
 ~~~~~~~~
 
+- Enable importer modules to provide example files
 - Require only shop change permission to execute data imports
 
 Notify

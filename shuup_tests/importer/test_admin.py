@@ -306,3 +306,46 @@ def test_remap(rf, admin_user):
     assert Product.objects.count() == 1
     product = Product.objects.first()
     assert product.gtin == "111"
+
+
+@pytest.mark.django_db
+def test_download_examples(rf, admin_user):
+    shop = get_default_shop()
+    import_url = reverse("shuup_admin:importer.import")
+
+    shop.staff_members.add(admin_user)
+    client = SmartClient()
+    client.login(username="admin", password="password")
+
+    # test downloading all default importers
+    from shuup.importer.utils import get_importer, get_importer_choices
+
+    assert len(get_importer_choices())
+    for importer, name in get_importer_choices():
+        importer_cls = get_importer(importer)
+
+        if importer_cls.has_example_file():
+            import_response = client.get("{}?importer={}".format(import_url, importer_cls.identifier))
+            assert import_response.status_code == 200
+            assert "This importer provides example files" in import_response.content.decode("utf-8")
+
+            for example_file in importer_cls.example_files:
+                assert example_file.file_name in import_response.content.decode("utf-8")
+
+                # download file
+                download_url = "{}?importer={}&file_name={}".format(
+                    reverse("shuup_admin:importer.download_example"),
+                    importer_cls.identifier,
+                    example_file.file_name
+                )
+                response = client.get(download_url)
+                assert response.status_code == 200
+                assert response._headers["content-type"] == ("Content-Type", str(example_file.content_type))
+                assert response._headers["content-disposition"] == ("Content-Disposition", 'attachment; filename=%s' % example_file.file_name)
+
+                if example_file.template_name:
+                    from django.template.loader import get_template
+                    template_file = get_template(example_file.template_name).template.filename
+                    assert open(template_file, "r").read().strip() == response.content.decode("utf-8").strip()
+                else:
+                    assert response.content

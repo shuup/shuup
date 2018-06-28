@@ -32,6 +32,12 @@ class ImportAdminModule(AdminModule):
                 name="importer.import_process",
                 permissions=["shuup.change_shop"]
             ),
+            admin_url(
+                "^importer/example$",
+                "shuup.importer.admin_module.import_views.ExampleFileDownloadView",
+                name="importer.download_example",
+                permissions=["shuup.change_shop"]
+            ),
         ]
 
     def get_menu_entries(self, request):

@@ -12,6 +12,20 @@
             {{ bs3.field(form.file) }}
 
             <div class="col-md-6 col-md-offset-3">
+                {% if importer and importer.has_example_file() %}
+                <h2>{% trans %}Example files{% endtrans %}</h2>
+                <p>{% trans %}This importer provides example files. Click below to download them:{% endtrans %}</p>
+                <ul>
+                    {% for example_file in importer.example_files %}
+                    <li>
+                        <a href="{{ url("shuup_admin:importer.download_example") }}?importer={{ importer.identifier }}&file_name={{ example_file.file_name }}" target="_blank">
+                            {{ example_file.file_name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
                 <h2>{% trans %}Note{% endtrans %}</h2>
                 <p>{% trans %}If you are importing products with quantities, ensure the following:{% endtrans %}</p>
                 <ul>
@@ -28,4 +42,15 @@
             <input type="submit" value="{% trans %}Continue{% endtrans %}" id="basic-form-save" class="btn btn-primary btn-block">
         </form>
     {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+    {{ super() }}
+    <script>
+        $(function () {
+            $("#{{ form.importer.id_for_label }}").on("change", function() {
+                location.href = "{{ url('shuup_admin:importer.import') }}?importer=" + $(this).val();
+            });
+        });
+    </script>
 {% endblock %}

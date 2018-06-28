@@ -11,15 +11,18 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, TemplateView, View
 
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import Shop, Supplier
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
 from shuup.importer.transforms import transform_file
-from shuup.importer.utils import get_import_file_path, get_importer
+from shuup.importer.utils import (
+    get_import_file_path, get_importer, get_importer_choices
+)
 from shuup.utils.excs import Problem
 
 
@@ -122,11 +125,55 @@ class ImportView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super(ImportView, self).get_form_kwargs()
-        kwargs.update({'request': self.request})
+        initial = kwargs.get("initial", {})
+        initial["importer"] = self.request.GET.get("importer", initial.get("initial"))
+        kwargs.update({
+            "request": self.request,
+            "initial": initial
+        })
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(ImportView, self).get_context_data(**kwargs)
         shop = get_shop(self.request)
+
         context["supplier"] = Supplier.objects.filter(shops=shop).first()
+
+        # check whether the importer has a example file template
+        # if so, we also add a url to download the example file
+        importer = self.request.GET.get("importer")
+
+        # no importer passed, get the first choice available
+        if not importer:
+            importers = list(get_importer_choices())
+            if importers:
+                importer = importers[0][0]
+
+        if importer:
+            context["importer"] = get_importer(importer)
+
         return context
+
+
+class ExampleFileDownloadView(View):
+    def get(self, request, *args, **kwargs):
+        importer = request.GET.get("importer")
+        file_name = request.GET.get("file_name")
+        if not importer or not file_name:
+            return HttpResponseBadRequest(_("Invalid parameters"))
+
+        importer_cls = get_importer(importer)
+        if not importer_cls or not importer_cls.has_example_file():
+            raise Http404(_("Invalid importer"))
+
+        example_file = importer_cls.get_example_file(file_name)
+        if not example_file:
+            raise Http404(_("Invalid file name"))
+
+        response = HttpResponse(content_type=example_file.content_type)
+        response['Content-Disposition'] = 'attachment; filename=%s' % example_file.file_name
+
+        data = importer_cls.get_example_file_content(example_file, request)
+        data.seek(0)
+        response.write(data.getvalue())
+        return response

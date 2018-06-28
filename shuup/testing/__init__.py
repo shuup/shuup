@@ -48,6 +48,9 @@ class ShuupTestingAppConfig(AppConfig):
         "admin_contact_section": [
             "shuup.testing.admin_module.sections:MockContactSection",
         ],
+        "importers": [
+            "shuup.testing.importers.DummyImporter"
+        ],
         "xtheme": [
             __name__ + ".themes:ShuupTestingTheme",
             __name__ + ".themes:ShuupTestingThemeWithCustomBase",
