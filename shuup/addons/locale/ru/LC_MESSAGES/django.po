@@ -1,0 +1,164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# George Voronin <sonictorment@gmail.com>, 2017
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-23 11:18+0000\n"
+"PO-Revision-Date: 2017-09-22 18:23+0000\n"
+"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Addons"
+msgstr "Дополнения"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Активировать  %s"
+
+#, python-format
+msgid "%d new addons enabled."
+msgstr "%d новые дополнения включены."
+
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr "%d старые дополнения отключены."
+
+msgid "No changes were made."
+msgstr "Никаких изменений"
+
+msgid "Save addon changes"
+msgstr "Сохранить изменения в дополнении"
+
+msgid "Upload new addon"
+msgstr "Загрузить новое дополнения"
+
+msgid "Reload application"
+msgstr "Перезагрузить приложение"
+
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr "Нет доступных безопасных способов перезагрузки. Пожалуйста, обратитесь к системному администратору."
+
+msgid "Reload Method"
+msgstr "Обновить метод"
+
+msgid "Reloading."
+msgstr "Перезагрузка."
+
+msgid "Addon file (ZIP)"
+msgstr "файл дополнения (ZIP)"
+
+msgid "Only upload addon files you trust."
+msgstr "Загружайте только те файлы дополнений, которые вызывают доверие"
+
+msgid "Only wheel files are supported"
+msgstr "Поддерживаются только .whl файлы"
+
+msgid "Upload"
+msgstr "Загрузить"
+
+msgid "Install Addon"
+msgstr "Установить дополнение"
+
+msgid "Installed addons"
+msgstr "Установленные дополнения"
+
+msgid "Addon name"
+msgstr "Название дополнения"
+
+msgid "Is enabled"
+msgstr "Включено"
+
+msgid "You don't have any installed addons"
+msgstr "У вас нет установленных модулей"
+
+msgid "Reload Application Server"
+msgstr "Перезагрузить сервер приложения"
+
+msgid ""
+"When you reload the application server, it may take some time for the new "
+"instance of your application to properly initialize."
+msgstr "При перезагрузке сервера приложений может потребоваться некоторое время для правильной инициализации нового экземпляра приложения."
+
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem "
+"yourself (or have a system administrator handy)."
+msgstr "Кроме того, всегда есть шанс, что сервер не будет правильно инициализирован, и в этом случае вам может понадобиться самостоятельно устранить проблему (или с помощью системного администратора)."
+
+msgid "Reload steps"
+msgstr "Перезагрузить шаги"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr "Закончить установку новых дополнений (перейти и собрать статические ресурсы)"
+
+msgid "Reload application server"
+msgstr "Перезагрузить сервер приложения"
+
+msgid "Reload initiated."
+msgstr "Перезагрузка началась."
+
+msgid "Error while reloading application."
+msgstr "При перезагрузки приложения произошла ошибка."
+
+msgid "Finalizing installations."
+msgstr "Установка заканчивается."
+
+msgid "Your Shuup seems to be back up!"
+msgstr "Ваш Shuup настроен!"
+
+msgid "Your Shuup is not up yet. Trying again soon."
+msgstr "Ваш Shuup ещё не настроен. Поробуйте снова в ближайшее время."
+
+msgid "Select file"
+msgstr "Выбрать файл"
+
+msgid "Installation Finished"
+msgstr "Установка завершена"
+
+msgid "Installation Failed"
+msgstr "Установка не могла быть завершена"
+
+msgid "Success"
+msgstr "Успешно"
+
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
+" the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
+" class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr "Следующие дополнения, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>включить в установленные дополнения</strong></a> и <a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>, после перезагрузите ваш сервер</strong></a>."
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "Installer Log"
+msgstr "Журнал установки"
+
+msgid "Upload Addon - Install"
+msgstr "Загрузить дополнение - установить"
+
+msgid "Package Information"
+msgstr "Информация о сборке"
+
+msgid "No package information could be extracted."
+msgstr "Информация о сборке не могла быть извлечена."
+
+msgid "File List"
+msgstr "Список файлов"

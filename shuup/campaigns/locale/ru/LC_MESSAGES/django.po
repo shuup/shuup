@@ -1,0 +1,583 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-06 23:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Translator HIO.E <translater@hiqe.ru>, 2017\n"
+"Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Campaigns"
+msgstr "Акции"
+
+msgid "Catalog Campaigns"
+msgstr "Акции для каталога"
+
+msgid "Show Catalog Campaigns"
+msgstr "Показать акции для каталога"
+
+msgid "Basket Campaigns"
+msgstr "Акции для корзины"
+
+msgid "Show Basket Campaigns"
+msgstr "Показать акции для корзины"
+
+msgid "Coupons"
+msgstr "Купоны"
+
+msgid "Show Coupons"
+msgstr "Показать купоны"
+
+msgid "Set up a sales campaign"
+msgstr "Настроить акцию для продаж"
+
+msgid "New basket campaign"
+msgstr "Новая акция для корзины"
+
+msgid "New catalog campaign"
+msgstr "Новая акция для каталога"
+
+msgid "New coupon"
+msgstr "Новый купон"
+
+msgid "Minimum value"
+msgstr "Минимальное значение"
+
+msgid "Maximum value"
+msgstr "Максимальное значение"
+
+msgid "Leave empty for no maximum"
+msgstr "Оставьте поле незаполненным, чтобы не устанавливать максимум"
+
+msgid "Campaign end date can't be before start date."
+msgstr "Дата конца акции не может быть до даты её начала."
+
+msgid "Define the required coupon for this campaign."
+msgstr "Определите необходимый купон для этой акции."
+
+msgid "Coupon"
+msgstr "Купон"
+
+msgid "discount percentage"
+msgstr "Процент скидки"
+
+msgid "The discount percentage for this campaign."
+msgstr "Процент скидки для этой акции."
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr ""
+
+msgid "Only amount or percentage can be set."
+msgstr "Только количество или процент могут быть установлены."
+
+msgid "Autogenerate code"
+msgstr "Сгенерировать код"
+
+msgid "Discount Code already in use."
+msgstr "Скидочный код уже используется."
+
+msgid "Active Campaigns"
+msgstr "Активные акции"
+
+msgid "Catalog Campaign"
+msgstr "Акция для каталога"
+
+msgid "Basket Campaign"
+msgstr "Акция для корзины"
+
+msgid "Title"
+msgstr "Заглавие"
+
+msgid "Starts"
+msgstr "Начинается"
+
+msgid "Ends"
+msgstr "Заканчивается"
+
+msgid "Active"
+msgstr "Активно"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "CatalogCampaign"
+msgstr "Акция для каталога"
+
+msgid "Create new Catalog Campaign"
+msgstr "Создать новую акцию для каталога"
+
+msgid "Create new Basket Campaign"
+msgstr "Создать новую акцию для корзины"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Usages"
+msgstr "Использования"
+
+msgid "Usages Limit per contact"
+msgstr "Лимит использований на один контакт"
+
+msgid "Usage Limit"
+msgstr "Лимит использования"
+
+msgid "Created by"
+msgstr "Создано"
+
+msgid "Date created"
+msgstr "Дата создания"
+
+msgid "Create new Coupon"
+msgstr "Создать новый купон"
+
+msgid "Basket condition"
+msgstr "Состояние корзины"
+
+msgid "Basket product count"
+msgstr "Количество товаров корзины"
+
+msgid "product count in basket"
+msgstr "Количество товаров в корзине"
+
+msgid ""
+"Limit the campaign to match when basket has at least the product count "
+"entered here."
+msgstr ""
+"Ограничьте кампанию для соответствия, если в корзине указан хотя бы номер "
+"товара."
+
+msgid "Basket total value"
+msgstr "Общий итог корзины."
+
+msgid "basket total amount"
+msgstr "Количество товаров в корзине"
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products."
+msgstr ""
+"Ограничьте кампанию для соответствия, когда она имеет хотя бы общее "
+"значение, введенное здесь, равное сумме продуктов."
+
+msgid "Undiscounted basket total value"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products which doesn't have already discounts."
+msgstr ""
+
+msgid "Basket maximum product count"
+msgstr "Максимальное количество товаров корзины"
+
+msgid "maximum product count in basket"
+msgstr "Максимальное количество товаров в корзине"
+
+msgid ""
+"Limit the campaign to match when basket has at maximum the product count "
+"entered here."
+msgstr ""
+"Ограничьте кампанию, чтобы она соответствовала тому показателю, когда "
+"корзина имеет максимальное количество товаров, указанное здесь."
+
+msgid "Basket maximum total value"
+msgstr "Максимальное суммарное значение корзины"
+
+msgid "maximum basket total amount"
+msgstr "Максимальная стоимость товаров в корзине"
+
+msgid ""
+"Limit the campaign to match when it has at maximum the total value entered "
+"here worth of products."
+msgstr ""
+"Ограничьте кампанию так, чтобы она соответствовала максимальному суммарному "
+"значению, указанному здесь."
+
+msgid "Exactly"
+msgstr "В точности"
+
+msgid "Greater than or equal to"
+msgstr "Больше или равно"
+
+msgid "Products in basket"
+msgstr "Товары в корзине"
+
+msgid "operator"
+msgstr "оператор"
+
+msgid "quantity"
+msgstr "количество"
+
+msgid "products"
+msgstr "товары"
+
+msgid "Limit the campaign to have the selected products in basket."
+msgstr "Ограничьте кампанию, чтобы выбранные продукты были в корзине."
+
+msgid "Contact Group"
+msgstr "Группа контактов"
+
+msgid "contact groups"
+msgstr "группы контактов"
+
+msgid "Limit the campaign to members of the selected contact groups."
+msgstr "Ограничьте кампанию членов выбранных групп контактов."
+
+msgid "Contact"
+msgstr "Контакт"
+
+msgid "contacts"
+msgstr "контакты"
+
+msgid "Limit the campaign to selected contacts."
+msgstr "Ограничить кампанию для выбранных контактов."
+
+msgid "Category products in basket"
+msgstr "Продукты категории в корзине"
+
+msgid "categories"
+msgstr "категории"
+
+msgid "excluded categories"
+msgstr "исключённые категории"
+
+msgid ""
+"If the customer has even a single product in the basket from these "
+"categories this rule won't match thus the campaign cannot be applied to the "
+"basket."
+msgstr ""
+"Если у клиента есть хотя бы один продукт в корзине из представленных "
+"категорий, это правило не будет соответствовать, поэтому кампанию нельзя "
+"применить к корзине."
+
+msgid "Limit the campaign to match the products from selected categories."
+msgstr ""
+"Ограничьте кампанию, чтобы она соответствовала продуктам из выбранных "
+"категорий."
+
+msgid "Day and hour"
+msgstr ""
+
+msgid "start time"
+msgstr ""
+
+msgid "12pm is considered noon and 12am as midnight."
+msgstr ""
+
+msgid "end time"
+msgstr ""
+
+msgid ""
+"12pm is considered noon and 12am as midnight. End time is not considered "
+"match."
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "Limit the campaign to selected days."
+msgstr ""
+
+msgid "campaign"
+msgstr "Кампания"
+
+msgid "Discount amount value"
+msgstr "Сумма скидки"
+
+msgid "discount amount"
+msgstr "Размер скидки"
+
+msgid "Flat amount of discount."
+msgstr "Фиксированная сумма скидки."
+
+msgid "Give discount amount."
+msgstr "Указать сумму скидки."
+
+msgid "Discount amount percentage"
+msgstr "Процент скидки"
+
+msgid "Give percentage discount."
+msgstr "Дать процентную скидку."
+
+msgid "Discount amount percentage from undiscounted amount"
+msgstr ""
+
+msgid "Give percentage discount based on undiscounted product prices."
+msgstr ""
+
+msgid "Free Product(s)"
+msgstr "Бесплатный товар(ы)"
+
+msgid "product"
+msgstr "товар"
+
+msgid "Select product(s) to give free."
+msgstr "Выбрать товар(ы) для бесплатного распространения"
+
+msgid "Discount from Product"
+msgstr "Вычесть из товара"
+
+msgid "per line discount"
+msgstr "Скидка на позицию"
+
+msgid "Uncheck this if you want to give discount for each matched product."
+msgstr ""
+"Снимите этот флажок, если хотите предоставить скидку для каждого выбранного "
+"продукта."
+
+msgid "Select discount amount and products."
+msgstr "Выбрать размер скидки и товары."
+
+msgid "Discount from Category products"
+msgstr "Вычесть из товаров данной категории"
+
+msgid "category"
+msgstr "категория"
+
+msgid ""
+"Select discount amount and category. Please note that the discount will be "
+"given to all matching products in basket."
+msgstr ""
+"Выберите размер скидки и категорию. Обратите внимание, что скидка будет "
+"предоставлена ​​всем соответствующим продуктам в корзине."
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "The shop where the campaign is active."
+msgstr "Магазин, в котором активна акция."
+
+msgid "name"
+msgstr "имя"
+
+msgid "The name for this campaign."
+msgstr "Название для данной акции."
+
+msgid "active"
+msgstr "активно"
+
+msgid ""
+"Check this if the campaign is currently active. Please also set a start and "
+"end date."
+msgstr ""
+"Проверьте, активна ли кампания в данный момент. Укажите также дату начала и "
+"окончания."
+
+msgid "start date and time"
+msgstr "Дата и время начала"
+
+msgid ""
+"The date and time the campaign starts. This is only applicable if the "
+"campaign is marked as active."
+msgstr ""
+
+msgid "end date and time"
+msgstr "Дата и время завершения"
+
+msgid ""
+"The date and time the campaign ends. This is only applicable if the campaign"
+" is marked as active."
+msgstr ""
+
+msgid "created by"
+msgstr "Создано"
+
+msgid "modified by"
+msgstr "Изменено"
+
+msgid "created on"
+msgstr "создано"
+
+msgid "modified on"
+msgstr "изменено"
+
+msgid "Campaign"
+msgstr "Акция"
+
+msgid "The campaign name to show in the store front."
+msgstr "Название акции для изображения на витрине."
+
+#, python-format
+msgid "Catalog Campaign: %(name)s"
+msgstr ""
+
+msgid "basket line text"
+msgstr "Текст корзины"
+
+msgid "This text will be shown in basket."
+msgstr "Этот текст будет отображаться в корзине."
+
+msgid "coupon"
+msgstr "Купон"
+
+msgid "public name"
+msgstr "публичное имя"
+
+#, python-format
+msgid "Basket Campaign: %(name)s"
+msgstr ""
+
+msgid "Can not have multiple active campaigns with same code."
+msgstr ""
+
+msgid "usage limit per customer"
+msgstr "Лимит использования на одного клиента"
+
+msgid "Limit the amount of usages per a single customer."
+msgstr "Ограничьте количество применений для одного клиента."
+
+msgid "usage limit"
+msgstr "лимит использования"
+
+msgid ""
+"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
+"coupon cannot be used."
+msgstr ""
+"Установите абсолютный предел использования для этого купона. Если лимит "
+"равен нулю (0), купон нельзя использовать."
+
+msgid "is active"
+msgstr "активно"
+
+msgid "Base Catalog Filter"
+msgstr "Фильтр базового каталога"
+
+msgid "Product type"
+msgstr "тип товара"
+
+msgid "product Types"
+msgstr "типы товаров"
+
+msgid "Limit the campaign to selected product types."
+msgstr "Ограничить кампанию для выбранных типов товаров."
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "Limit the campaign to selected products."
+msgstr "Ограничить кампанию для выбранных товаров."
+
+msgid "Product Category"
+msgstr "Категория товаров"
+
+msgid "Limit the campaign to products in selected categories."
+msgstr "Ограничьте кампанию до товаров из выбранных категорий."
+
+msgid "group"
+msgstr "Группа"
+
+msgid "min amount"
+msgstr "Минимальное количество"
+
+msgid "max amount"
+msgstr "Максимальное количество"
+
+msgid "Can not add sales limits for default contact groups"
+msgstr "Нельзя добавить лимиты продаж для групп контактов по умолчанию"
+
+msgid "Context Condition"
+msgstr "Состояние контекста"
+
+msgid "Campaign Basket Discounts"
+msgstr "Скидочные акции на корзину"
+
+msgid "Coupon Code:"
+msgstr "Код купона:"
+
+msgid "Filter report results by coupon."
+msgstr "Фильтровать отчет по купону."
+
+msgid "Coupons Usage"
+msgstr "Использование купонов"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Coupon code"
+msgstr "Код купона"
+
+msgid "Order"
+msgstr "Заказ"
+
+msgid "Taxful total"
+msgstr "Итого с учётом налогов"
+
+msgid "Taxful subtotal"
+msgstr "Подитог с учётом налогов"
+
+msgid "Total discount"
+msgstr "Полная скидка"
+
+msgid "General Information"
+msgstr "Общая информация"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Not set"
+msgstr "Не выбрано"
+
+msgid "No campaigns found"
+msgstr "Акции не анйдены"
+
+msgid "This section shows all the <b>active</b> campaigns this product is in."
+msgstr ""
+
+#, python-format
+msgid "Active campaings for shop: %(shop)s"
+msgstr ""
+
+msgid "Rules"
+msgstr "Правила"
+
+msgid "Rule type"
+msgstr "Тип правила"
+
+msgid "The criteria used to determine whether this campaign is applied."
+msgstr "Критерии, используемые для определения, применяется ли эта акция."
+
+msgid "Add rule"
+msgstr "Добавить правило"
+
+msgid "Effects"
+msgstr "Эффекты"
+
+msgid "Effect type"
+msgstr "Тип эффекта"
+
+msgid "Add effect"
+msgstr "Добавить эффект"
+
+msgid "New Discount Code"
+msgstr "Новый код скидки"
+
+msgid "General information"
+msgstr "Общая информация"
+
+msgid "Generate"
+msgstr "Сгенерировать"
+
+#, python-format
+msgid "%(coupons)s used"
+msgstr ""
+
+msgid "Sales Ranges"
+msgstr "Диапазоны продаж"
+
+msgid "Customers within this sales range are assigned to this contact group."
+msgstr ""
+"Клиенты данного списка продаж закрепляются за данной группой контактов."

@@ -1,0 +1,772 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# George Voronin <sonictorment@gmail.com>, 2017
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-23 23:26+0000\n"
+"PO-Revision-Date: 2018-06-26 05:37+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Unexpected error while uploading files."
+msgstr "Неожиданная ошибка при загрузке файлов."
+
+msgid "Error:"
+msgstr "Ошибка:"
+
+msgid "Uploaded:"
+msgstr "Загружено:"
+
+msgid "New file name?"
+msgstr "Новое имя файла?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr "Вы действительно хотите удалить файл %s?"
+
+msgid "New folder name?"
+msgstr "Новое название папки?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr "Вы действительно хотите удалить папку %s?"
+
+msgid "New folder"
+msgstr "Новая папка"
+
+msgid "current"
+msgstr "Настоящий"
+
+msgid "Oldest first"
+msgstr "Сначало старое"
+
+msgid "Newest first"
+msgstr "Сначала новое"
+
+msgid "Smallest first"
+msgstr "Сначала наименьшие"
+
+msgid "Largest first"
+msgstr "Сначала наибольшие"
+
+msgid "Drop your files here"
+msgstr "Загрузите ваши файлы здесь"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Size"
+msgstr "Размер"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr ""
+
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr ""
+
+msgid "Rename file"
+msgstr "Переименовать файл"
+
+msgid "Delete file"
+msgstr "Удалить файл"
+
+msgid "Rename folder"
+msgstr "Переименовать папку"
+
+msgid "Delete folder"
+msgstr "Удалить папку"
+
+#, javascript-format
+msgid "Order %s created."
+msgstr ""
+
+msgid "An unspecified error occurred.\n"
+msgstr ""
+
+msgid "SKU"
+msgstr "Артикул"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "Unit Price"
+msgstr "Цена за единицу"
+
+msgid "Discounted Unit Price"
+msgstr "Цена за единицу по скидке"
+
+msgid "Discount amount"
+msgstr "Сумма скидки"
+
+msgid "Discount percent"
+msgstr "Процент скидки"
+
+msgid "Total (excluding taxes)"
+msgstr "Итого (без учёта налогов)"
+
+msgid "Tax percent"
+msgstr "Процент налога"
+
+msgid "Total"
+msgstr "Итого"
+
+msgid "Billing address"
+msgstr "Платежный адрес"
+
+msgid "Shipping address"
+msgstr "Адрес доставки"
+
+#, javascript-format
+msgid "Customer with same %s already exists."
+msgstr ""
+
+#, javascript-format
+msgid "Click to select user %s."
+msgstr ""
+
+msgid "Save customer details while creating order"
+msgstr "Сохранить информацию клиента при оформлении заказа"
+
+msgid ""
+"Checking this box will save entered customer data to your contacts list."
+msgstr "Поставленная галочка в этом поле сохранит введенные данные клиента в списке контактов."
+
+msgid "Ship to billing address"
+msgstr "Отправить по платёжному адресу"
+
+msgid ""
+"Checking this will make the shipping address the same as the billing "
+"address."
+msgstr "Поставленная галочка в этом поле сделает ваш платёжный адрес адресом для доставки."
+
+msgid "Order for company"
+msgstr "Заказ для компании"
+
+msgid "Check this if the order is for a company or business with a tax ID."
+msgstr "Поставьте галочку, если заказ оформляется для компании или бизнеса с налоговым идентификатором."
+
+msgid "Billing Address"
+msgstr "Расчётный адрес"
+
+msgid "Shipping Address"
+msgstr "Адрес доставки"
+
+msgid "Full Name"
+msgstr "Полное имя"
+
+msgid "Phone"
+msgstr "Номер телефона"
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Tax Number"
+msgstr "Налоговый номер"
+
+msgid "Groups"
+msgstr "Группы"
+
+msgid "Companies"
+msgstr "Компании"
+
+msgid "Merchant Notes"
+msgstr "Торговые замечания"
+
+msgid "Year"
+msgstr "Год"
+
+msgid "Total Sales"
+msgstr "Все продажи"
+
+msgid "Shipment Status"
+msgstr "Статус почтового отправления"
+
+msgid "Payment Status"
+msgstr "Статус оплаты"
+
+msgid "Order Status"
+msgstr "Статус заказа"
+
+msgid "Search by name or email"
+msgstr "Искать по имени или электронному адресу"
+
+msgid "Customer Search"
+msgstr "Поиск клиента"
+
+msgid ""
+"Search for existing customers by searching by name or email or click the "
+"magnifying glass for more fine-grained filtering. Clear the search filter to"
+" create an order for a new customer."
+msgstr "Найдите существующих клиентов, выполнив поиск по имени или электронной почте или щелкнув увеличительное стекло для более тонкой фильтрации. Очистите фильтр поиска, чтобы создать заказ для нового клиента."
+
+msgid "Customer"
+msgstr "Клиент"
+
+msgid "View Details"
+msgstr "Показать подробности"
+
+msgid "A new customer will be created based on billing address."
+msgstr "Новый клиент будет зарегистрирован на основе платёжного адреса."
+
+msgid "Customer Information"
+msgstr "Информация о клиенте"
+
+msgid "Order Summary"
+msgstr "Описание заказа"
+
+msgid "Recent Orders"
+msgstr "Последние заказы"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Warning: No customer account is currently associated with this order."
+msgstr "Внимание. С этим заказом не связана ни одна учетная запись клиента."
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Confirm"
+msgstr "Подтвердить"
+
+msgid "Select Shop"
+msgstr "Выбрать магазин"
+
+msgid "Discard Changes"
+msgstr "Отменить изменения"
+
+msgid "Customer Details"
+msgstr "Сведения о клиенте"
+
+msgid "Order Contents"
+msgstr "Содержание заказа"
+
+msgid "Shipping Method"
+msgstr "Способ доставки"
+
+msgid "Payment Method"
+msgstr "Способ оплаты"
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr "Правила процедуры, налоги и возможные дополнительные скидки рассчитываются после обработки."
+
+msgid "Proceed"
+msgstr "Обработать"
+
+msgid "Logical Count"
+msgstr "Логический подсчёт"
+
+msgid "Physical Count"
+msgstr "Физический подсчёт"
+
+msgid "Select product"
+msgstr "Выбрать продукт"
+
+msgid "Text/Comment"
+msgstr "Текст / комментарий"
+
+msgid ""
+"Enter a comment or text note about the order. This could be anything from "
+"special order requests to special shipping needs."
+msgstr "Введите комментарий или текстовое примечание о заказе. Это может быть что угодно - от специальных заказов до специальных потребностей доставки."
+
+msgid "Qty"
+msgstr "Кол-во"
+
+msgid "Enter the number of units of the product ordered."
+msgstr "Введите количество единиц заказанного продукта."
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings. Total price will be automatically calculated."
+msgstr "Введите стандартную базовую цену для одной единицы продукта. Если выбран существующий продукт, цена уже определена в настройках продукта. Общая стоимость рассчитывается автоматически."
+
+msgid "Total Price"
+msgstr "Итого"
+
+msgid ""
+"Enter the total amount for the line item. Unit price will be automatically "
+"calculated."
+msgstr "Введите общую сумму для наименования. Цена за единицу будет автоматически рассчитана."
+
+msgid "Base Unit Price"
+msgstr "Базовая цена за единицу"
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings."
+msgstr "Введите стандартную базовую цену для одной единицы продукта. Если выбран существующий продукт, цена уже определена в настройках продукта. "
+
+msgid ""
+"Enter the total discounted price for a single product unit in the order. "
+"Discount percent, Total Discount Amount, and Line Total will be "
+"automatically calculated."
+msgstr "Введите цену со скидкой для одной единицы продукта в заказе. Процент скидки, общая сумма скидки и итоговая сумма будут вычислены автоматически."
+
+msgid "Discount Percent"
+msgstr "Процент скидки"
+
+msgid ""
+"Enter the discount percentage (%) for the line item. Discounted Unit Price, "
+"Total Discount Amount, and Line Total will be automatically."
+msgstr ""
+
+msgid "Total Discount Amount"
+msgstr "Итоговая сумма скидки"
+
+msgid ""
+"Enter the total discount amount for the line item. Discounted Unit Price, "
+"Discount percent, and Line Total will be automatically calculated."
+msgstr "Введите общую сумму скидки для позиции. Цена со скидкой за единицу, процент скидки и итоговая сумма будут рассчитываться автоматически."
+
+msgid "Line Total"
+msgstr "Итого за единицу"
+
+msgid ""
+"Enter the total amount for the line item. Discounted Unit Price, Discount "
+"percent, and Total Discount Amount will be automatically calculated."
+msgstr "Введите общую сумму для позиции. Цена со скидкой за единицу, процент скидки и величина скидки будут рассчитываться автоматически."
+
+msgid "Orderline type"
+msgstr "Тип строки заказа"
+
+msgid "Search product by name, SKU, or barcode"
+msgstr "Искать товар по названию, артикулу или штрих-коду"
+
+msgid ""
+"If your product prices vary based on customer, you might want to select "
+"customer first."
+msgstr "Если цены на ваш продукт варьируются в зависимости от клиента, вы можете сначала выбрать клиента."
+
+#, javascript-format
+msgid "All prices are in %s and include taxes."
+msgstr ""
+
+#, javascript-format
+msgid "All prices are in %s. Taxes not included"
+msgstr ""
+
+msgid "Product Quick Adder"
+msgstr "Быстро добавить товар"
+
+msgid ""
+"Search for products to add to the order by searching by name, SKU, or "
+"barcode or click the magnifying glass for more fine-grained filtering."
+msgstr "Поиск товаров для добавки к заказу осуществляется по названию, артикулу, штрих-коду или нажатию увеличительного стекла для более тонкой фильтрации"
+
+msgid "Automatically add selected product"
+msgstr "Автоматически добавьте выбранные товары"
+
+msgid "Add new line"
+msgstr "Добавить новую строку"
+
+msgid "No shipping method"
+msgstr "Нет способа доставки"
+
+msgid ""
+"Select a shipping method for the order. These methods are defined in "
+"shipping settings."
+msgstr "Выберите способ доставки для заказа. Данные способы указаны в настройках доставки."
+
+msgid "No payment method"
+msgstr "Нет способа оплаты"
+
+msgid ""
+"Select a payment method for the order. These methods are defined in payment "
+"settings."
+msgstr "Выберите способ оплаты для заказа. Данные способы указаны в настройках оплаты."
+
+msgid "Shop"
+msgstr "Магазин"
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "Other"
+msgstr "Другое"
+
+msgid "billing"
+msgstr "Выставление счёта"
+
+msgid "shipping"
+msgstr "доставка"
+
+#, javascript-format
+msgid "Enter the name for the %s address."
+msgstr ""
+
+msgid "Tax number"
+msgstr "Налоговый номер"
+
+msgid "Enter the company tax (ID) number."
+msgstr "Введите налоговый (идентификационный) номер компании."
+
+#, javascript-format
+msgid "Enter the best %s contact phone number."
+msgstr ""
+
+#, javascript-format
+msgid ""
+"Enter the %s email address for transaction receipts and communications."
+msgstr ""
+
+msgid "Street"
+msgstr "Улица"
+
+#, javascript-format
+msgid "Enter the %s street address."
+msgstr ""
+
+msgid "Street (2)"
+msgstr "Улица (2)"
+
+#, javascript-format
+msgid "Enter the %s street address (2)."
+msgstr ""
+
+msgid "ZIP / Postal code"
+msgstr "Почтовый индекс"
+
+#, javascript-format
+msgid "Enter the zip or postal code of the %s address."
+msgstr ""
+
+msgid "City"
+msgstr "Город"
+
+#, javascript-format
+msgid "Enter the city of the %s address."
+msgstr ""
+
+msgid "Region"
+msgstr "Регион"
+
+#, javascript-format
+msgid "Enter the region, state, or province of the %s address."
+msgstr ""
+
+msgid "Country"
+msgstr "Страна"
+
+#, javascript-format
+msgid "Enter the country of the %s address."
+msgstr ""
+
+msgid "No records found."
+msgstr "Записи не найдены."
+
+msgid "Missing JavaScript dependencies detected"
+msgstr "Отсутствующие зависимые элементы JavaScript найдены"
+
+msgid "Identifier"
+msgstr "Идентификатор"
+
+#, javascript-format
+msgid "Value %s Name"
+msgstr ""
+
+msgid "Delete value"
+msgstr "Удалить значение"
+
+msgid "Are you sure?"
+msgstr "Вы уверены?"
+
+msgid "Delete Variable"
+msgstr "Удалить переменную"
+
+msgid "Add new value"
+msgstr "Добавить новое значение"
+
+msgid "Variable Name"
+msgstr "Название переменной"
+
+msgid "Variable"
+msgstr "Переменная"
+
+msgid "Identifer"
+msgstr "Идентификатор"
+
+msgid "Show identifier fields (for advanced users)"
+msgstr "Показать поля идентификатора (для продвинутых пользователей)"
+
+msgid "There are no variables defined."
+msgstr "Нет указанных переменных"
+
+msgid "Add new variable"
+msgstr "Добавить новую переменную"
+
+msgid "No browser URL for kind:"
+msgstr "Нет URL-адреса браузера для вида:"
+
+msgid "Clear"
+msgstr "Очистить"
+
+msgid "Drop files here or click to browse."
+msgstr "Перетащите файлы сюда или нажмите для посика."
+
+msgid "only images can be uploaded!"
+msgstr "Только изображения могут быть загружены!"
+
+msgid "No results."
+msgstr "Нет результатов."
+
+msgid "The results could not be loaded"
+msgstr "Не удалось загрузить результаты"
+
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr ""
+
+msgid "Loading more results..."
+msgstr "Загрузка результатов..."
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+msgid "No results found"
+msgstr "Результатов не найдено"
+
+msgid "Searching..."
+msgstr "Поиск..."
+
+msgid "Quick Links"
+msgstr "Быстрые ссылки"
+
+msgid "Quick Links to your most used features."
+msgstr "Быстрые ссылки на ваши наиболее часто используемые функции."
+
+msgid "Orders"
+msgstr "Заказы"
+
+msgid "Track and filter your customers’ orders here."
+msgstr "Отследить и отфильтровать заказы ваших клиентов здесь."
+
+msgid "Products"
+msgstr "Товары"
+
+msgid "All your exciting products and features are located here."
+msgstr "Все ваши существующие товары и функции расположены здесь."
+
+msgid "Contacts"
+msgstr "Контакты"
+
+msgid ""
+"All your customer data is located here. Target and organize your clients "
+"details your way!"
+msgstr "Здесь находятся все ваши данные о клиентах. Настраивайте и упорядочивайте информацию о своих клиентах!"
+
+msgid "Campaigns"
+msgstr "Акции"
+
+msgid ""
+"Great loyalty tool for creating marketing, campaigns, special offers and "
+"coupons to entice your shoppers!"
+msgstr "Отличный вспомогательный инструмент для маркетинговых кампаний, специальных предложений и купонов, чтобы заинтересовать ваших покупателей!"
+
+msgid ""
+"Set offers based on their previous purchase behavior to up- and cross sale "
+"your inventory."
+msgstr "Настраивайте предложения, основываясь на их предыдущем поведении, чтобы продать или перепродать ваши товары."
+
+msgid "Content"
+msgstr "Контент"
+
+msgid ""
+"The make-over tool to customize you site themes, add pages and product "
+"carousels. Incorporate any media to make your store pop!"
+msgstr "Инструмент «Перепрофилирование» позволяет настраивать темы сайта, добавлять страницы и карусели продуктов. Добавьте любые медиа данные, чтобы ваш магазин выделялся."
+
+msgid "Reports"
+msgstr "Отчёты"
+
+msgid ""
+"Your reporting tool to build and analyze your consumer behavior information "
+"that can assist with your business decisions."
+msgstr "Ваш инструмент для создания и анализа информации о поведении потребителей, которая может помочь в принятии деловых решений."
+
+msgid "Shops"
+msgstr "Магазины"
+
+msgid ""
+"Place for your Shop specific settings. You can customize taxes, currencies, "
+"customer groups, and many other things in this menu."
+msgstr "Место для настроек вашего магазина. Вы можете настраивать налоги, валюты, группы клиентов и многое другое в этом меню."
+
+msgid "Addons"
+msgstr "Дополнения"
+
+msgid ""
+"This is your connection interface. Addons and other systems you use can be "
+"attached to your store through powerful data connections."
+msgstr "Это ваш интерфейс подключения. Дополнения и другие системы, которые вы используете, могут быть подключены к вашему магазину через мощные соединения для передачи данных."
+
+msgid ""
+"Supercharge your site and gather crazy amounts of data with integrations to "
+"CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of."
+msgstr "Прокачивайте свой сайт и собирайте сумасшедшие объемы данных с помощью интеграции с CRM и ERP, POS и PIM или любым другим акронимом, который вы можете придумать."
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid ""
+"The nuts and bolts of your store are found here. From individual country "
+"tax-regulations to your contact details."
+msgstr "Гайки и болты вашего магазина можно найти здесь. От налогового законодательства отдельной страны до ваших контактных данных."
+
+msgid "Search"
+msgstr "Искать"
+
+msgid ""
+"Lost and cannot find your way? No worries, you can search contacts, "
+"settings, add-ons and more features from here."
+msgstr "Потерялись и не можете разобраться? Не беспокойтесь, здесь вы можете найти контакты, настройки, надстройки и другие функции."
+
+msgid "View your storefront"
+msgstr "Показать вашу витрину"
+
+msgid "Preview your shop and all the cool features you have created!"
+msgstr "Предварительно просмотрите ваш магазин и все интересные функции, которые вы создали!"
+
+msgid "We're done!"
+msgstr "Мы готовы!"
+
+msgid "It was nice to show you around!"
+msgstr "Было приятно провести экскурсию для вас!"
+
+msgid ""
+"If you need to run it again, fire it up from the menu in the top right."
+msgstr "Если вам нужно запустить его снова, включите его в меню наверху справа."
+
+msgid "Learn more at the Shuup Help Center"
+msgstr "Узнать больше в справочном центре Shuup"
+
+msgid "Mass actions"
+msgstr "Массовые действия"
+
+msgid "From"
+msgstr "От кого"
+
+msgid "To"
+msgstr "Кому"
+
+msgid "Items per page"
+msgstr "Количество наименований на страницу"
+
+msgid "Page"
+msgstr ""
+
+msgid "Reset filters"
+msgstr "Сбросить фильтры"
+
+msgid "Reset"
+msgstr "Сброс"
+
+msgid "Sort by"
+msgstr "Сортировать"
+
+msgid "ascending"
+msgstr " По возрастанию"
+
+msgid "descending"
+msgstr "По убыванию"
+
+msgid "Default sorting"
+msgstr "Сортировка по умолчанию"
+
+msgid "Previous"
+msgstr "Предыдущее"
+
+msgid "Next"
+msgstr "Следующее"
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr ""
+
+msgid "Filters"
+msgstr "Фильтры."
+
+msgid "Select Action"
+msgstr "Выберите действие"
+
+msgid "Clear Selections"
+msgstr "Очистить Выбор"
+
+msgid "Select All"
+msgstr "Выбрать Все"
+
+#, javascript-format
+msgid "Select All %s Items"
+msgstr ""
+
+#, javascript-format
+msgid "All %s Items Selected"
+msgstr ""
+
+msgid "Mass Action complete."
+msgstr "Массовое действие завершено."
+
+msgid "Something went wrong."
+msgstr "Что-то пошло не так."
+
+msgid "You haven't selected anything"
+msgstr "Вы ничего не выбрали"
+
+msgid "Confirm action by clicking OK!"
+msgstr "Подтвердите действие, кликнув OK!"
+
+msgid "Are you sure you want to delete this media?"
+msgstr "Вы уверены, что хотите удалить эти медиа-данные?"
+
+msgid "Set as primary image"
+msgstr "Выбрать изображение основным"
+
+msgid "Primary image"
+msgstr "Основное изображение"
+
+msgid "Finish"
+msgstr "Закончить"
+
+msgid "Skip"
+msgstr "Пропустить"

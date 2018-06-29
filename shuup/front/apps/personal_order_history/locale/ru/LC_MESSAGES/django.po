@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-01 15:33+0000\n"
+"PO-Revision-Date: 2017-09-22 18:24+0000\n"
+"Last-Translator: Translator HIO.E <translater@hiqe.ru>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Shuup Frontend - Personal Order History"
+msgstr "Внешний интерфейс Shuup - История личных заказов"
+
+msgid "Order history"
+msgstr "История заказов"
+
+msgid "Show all"
+msgstr "Показать всё"
+
+msgid "Identifier"
+msgstr "Идентификатор"
+
+msgid "Order date"
+msgstr "Дата заказа"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Total price"
+msgstr "Полная стоимость"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "You haven't made any orders yet."
+msgstr "Вы ещё не совершили ни один заказ."
+
+msgid "Add all products to cart"
+msgstr "Добавить все товары в корзину."
+
+msgid "Basic Information"
+msgstr "Основная информация"
+
+msgid "Order Number"
+msgstr "Номер заказа"
+
+msgid "Order Date"
+msgstr "Дата заказа"
+
+msgid "Reference"
+msgstr "Справка"
+
+msgid "Label"
+msgstr "Ярлык"
+
+msgid "Customer"
+msgstr "Клиент"
+
+msgid "Ordered by"
+msgstr "Заказано"
+
+msgid "Creator"
+msgstr "Создатель"
+
+msgid "Phone"
+msgstr "Номер телефона"
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Tax Number"
+msgstr "Налоговый номер"
+
+msgid "Total Price"
+msgstr "Полная стоимость"
+
+msgid "Total Price (taxless)"
+msgstr "Полная стоимость (без учёта налогов)"
+
+msgid "Tracking codes"
+msgstr "Коды для отслеживания доставки"
+
+msgid "Order Status"
+msgstr "Статус заказа"
+
+msgid "Payment Status"
+msgstr "Статус оплаты"
+
+msgid "Shipping Status"
+msgstr "Статус отправления"
+
+msgid "Shipping Address"
+msgstr "Адрес доставки"
+
+msgid "Billing Address"
+msgstr "Расчётный адрес"
+
+msgid "Order Contents"
+msgstr "Содержание заказа"
+
+#, python-format
+msgid "Order %(identifier)s"
+msgstr ""
+
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr ""
+
+msgid "Home"
+msgstr "На главную"
+
+msgid "Dashboard"
+msgstr "Панель информации"
+
+msgid "Order History"
+msgstr "История заказов"

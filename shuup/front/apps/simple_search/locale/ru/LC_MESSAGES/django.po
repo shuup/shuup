@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-05 21:13+0000\n"
+"PO-Revision-Date: 2017-09-22 18:24+0000\n"
+"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Search for products"
+msgstr "Искать товары"
+
+#, python-format
+msgid "No results found for \"<strong>%(query)s</strong>\"."
+msgstr "Не найдено \"<strong>%(query)s</strong>\"."
+
+msgid ""
+"Limiting results to first 150 products. Refine search terms for better "
+"results."
+msgstr "Показать первые 150 товаров. Изменить настройки поиска для лучшего результата."
+
+#, python-format
+msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
+msgstr "%(n)s результатов найдено для \"<strong>%(query)s</strong>\"."

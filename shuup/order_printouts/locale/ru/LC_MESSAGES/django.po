@@ -1,0 +1,161 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-09 23:57+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>, 2017\n"
+"Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "To"
+msgstr "Кому"
+
+msgid "Email Subject"
+msgstr "Тема электронного письма"
+
+msgid "Email Body"
+msgstr "Текст электронного письма"
+
+#, python-format
+msgid ""
+"Important information regarding your order, see attachment.\n"
+"\n"
+"Best Regards,\n"
+"%(shop)s"
+msgstr ""
+"Важная информация о вашем заказе, смотрите вложение.\n"
+"\n"
+"С наилучшими пожеланиями,\n"
+"%(shop)s"
+
+msgid "Printouts"
+msgstr "Распечатки"
+
+#, python-format
+msgid "%(shop)s: Order %(pk)s"
+msgstr "%(shop)s: Заказ %(pk)s"
+
+msgid "Not allowed"
+msgstr "Не допускается"
+
+msgid "Delivery slip"
+msgstr "Поставка"
+
+msgid "Order"
+msgstr "Заказ"
+
+msgid "Order confirmation"
+msgstr "Подтверждение заказа"
+
+msgid "Order printouts"
+msgstr "Заказать распечатки"
+
+msgid "Shipped products"
+msgstr "Отправленные товары"
+
+msgid "Payment and shipping methods"
+msgstr "Способы оплаты и доставки"
+
+msgid "Order number"
+msgstr "Номер заказа"
+
+msgid "Total price"
+msgstr "Полная стоимость"
+
+msgid "Payment status"
+msgstr "Статус оплаты"
+
+msgid "Shipping status"
+msgstr "Статус отправления"
+
+msgid "Order date"
+msgstr "Дата заказа"
+
+msgid "Comment"
+msgstr "Комментарий"
+
+msgid "Identifier"
+msgstr "Идентификатор"
+
+msgid "Shipment date"
+msgstr "Дата отправки"
+
+msgid "SKU"
+msgstr "Артикул"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "Tax"
+msgstr "Налог"
+
+msgid "Taxful total"
+msgstr "Итого с учётом налогов"
+
+msgid "Taxless total"
+msgstr "Итого без учёта налогов"
+
+msgid "Tax percentage"
+msgstr "Процент налога"
+
+msgid "Based on amount"
+msgstr "Основано на количестве"
+
+msgid "Amount of tax"
+msgstr "Размер налога"
+
+msgid "Total including tax"
+msgstr "Общий итог с учётом налогов"
+
+msgid "Billing address"
+msgstr "Платежный адрес"
+
+msgid "Confirmation"
+msgstr "Подтверждение"
+
+msgid "Get Order Confirmation PDF"
+msgstr "Получит PDF файл с подтверждением заказа"
+
+msgid "Get Order Confirmation HTML"
+msgstr "Получить HTML файл с подтверждением заказа"
+
+msgid "Shipments"
+msgstr "Почтовые отправления"
+
+#, python-format
+msgid "Get Delivery Slip PDF (Shipment %(id)s)"
+msgstr ""
+
+#, python-format
+msgid "Get Delivery Slip HTML (Shipment %(id)s)"
+msgstr ""
+
+msgid "Send Email"
+msgstr "Выслать электронное письмо"
+
+msgid "Send Order Confirmation"
+msgstr "Выслать подтверждение заказа"
+
+#, python-format
+msgid "Send Delivery Slip (Shipment %(id)s)"
+msgstr ""
+
+msgid "Email sent successfully!"
+msgstr "Электронное письмо было успешно отправлено!"
+
+msgid "Could not sent the email, please try again."
+msgstr "Электронное письмо не было отправлено, пожалуйста, попробуйте снова."

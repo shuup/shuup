@@ -143,6 +143,7 @@ LANGUAGES = [
     ('it', 'Italian'),
     ('ja', 'Japanese'),
     ('pt-br', 'Brazilian Portuguese'),
+    ('ru', 'Russian'),
     ('sv', 'Swedish'),
     ('zh-hans', 'Simplified Chinese'),
 ]

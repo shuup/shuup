@@ -1,0 +1,3734 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# George Voronin <sonictorment@gmail.com>, 2017
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+# Иван Набойченко <migmus@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-08 20:19+0000\n"
+"PO-Revision-Date: 2018-06-26 05:52+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Home"
+msgstr "Домашняя страница"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr "Пожалуйста, введите правильное %(username)s и пароль. Следует заметить, что в обоих полях учитывается регистр. В случае использования нескольких аккаунтов, зарегистрированных на один адрес электронной почты, только имя пользователя может быть использовано для входа на сайт."
+
+msgid "This account is inactive."
+msgstr "Этот аккаунт не активен"
+
+msgid "Username or email address"
+msgstr "Имя пользователя или адрес электронной почты"
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Browse"
+msgstr "Найти"
+
+msgid "Clear"
+msgstr "Очистить"
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Create New"
+msgstr "Создать новый"
+
+msgid "Orders"
+msgstr "Заказы"
+
+msgid "Products"
+msgstr "Товары"
+
+msgid "Contacts"
+msgstr "Контакты"
+
+msgid "Campaigns"
+msgstr "Акции"
+
+msgid "Content"
+msgstr "Контент"
+
+msgid "Elements"
+msgstr "Элементы"
+
+msgid "Design"
+msgstr "Дизайн"
+
+msgid "Other"
+msgstr "Другое"
+
+msgid "Reports"
+msgstr "Отчёты"
+
+msgid "Shops"
+msgstr "Магазины"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Payment & Shipping"
+msgstr "Оплата и доставка"
+
+msgid "Currency"
+msgstr "Валюта"
+
+msgid "Attributes"
+msgstr "Параметры"
+
+msgid "Other settings"
+msgstr "Другие настройки"
+
+msgid "Addons"
+msgstr "Модули"
+
+msgid "Data Transfer"
+msgstr "Передача данных"
+
+msgid "Taxes"
+msgstr "Налоги"
+
+msgid "Permissions"
+msgstr "Доступ"
+
+msgid "Other Settings"
+msgstr "Другие настройки"
+
+msgid "Identifier"
+msgstr "Идентификатор"
+
+msgid "Filter by identifier..."
+msgstr "Сортировать по идентификатору"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Filter by name..."
+msgstr "Сортировать по имени..."
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Visibility Mode"
+msgstr "Режим видимости"
+
+msgid "Searchable"
+msgstr "Доступно для поиска"
+
+msgid "Used in # Product Types"
+msgstr "Используется в # Типах товаров"
+
+msgid "Categories"
+msgstr "Категории"
+
+msgid "Add a product category to organize your products"
+msgstr "Добавьте категорию товара"
+
+msgid "New category"
+msgstr "Новая категория"
+
+msgid "Can not use this category as parent for this shop."
+msgstr ""
+
+msgid "Primary Category"
+msgstr "Основная категория"
+
+msgid "Set this category as a primary for selected products."
+msgstr "Сделать категорию основной для выбранных товаров"
+
+msgid "Additional Category"
+msgstr "Дополнительная категория"
+
+msgid "Add selected products to this category"
+msgstr "Добавить выбранные товары к этой категории"
+
+msgid "Remove Products"
+msgstr "Удалить товары"
+
+msgid "Remove selected products from this category"
+msgstr "Удалить выбранные товары из данной категории"
+
+msgid "Invalid category"
+msgstr "Неверная категория"
+
+#, python-format
+msgid "Visibility settings copied to %d product(s)"
+msgstr "Видимые настройки отображения  скопировать для  %d товара(ов)"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s удален "
+
+msgid "Image"
+msgstr "Изображение"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Visibility"
+msgstr "Отображаемость"
+
+msgid "Contact Groups"
+msgstr "Группы контактов"
+
+msgid "Price display mode"
+msgstr "Режим отображения цен"
+
+msgid "Set how prices are displayed to contacts in this group."
+msgstr "Настройте отображение стоимостей для контактов данной группы"
+
+msgid "unspecified"
+msgstr "Не определено"
+
+msgid "show prices with taxes included"
+msgstr "Показать стоимость с учётом налогов"
+
+msgid "show pre-tax prices"
+msgstr "Показать стоимость без учёта налогов"
+
+msgid "hide prices"
+msgstr "Скрыть стоимость"
+
+msgid "member"
+msgstr "Представитель"
+
+msgid "Remove"
+msgstr "Удалить"
+
+#, python-format
+msgid "%(count)s member added"
+msgid_plural "%(count)s members added"
+msgstr[0] "%(count)s запись добавлена"
+msgstr[1] "%(count)s записей добавлено"
+msgstr[2] "%(count)s записей добавлено"
+msgstr[3] "%(count)s записей добавлено"
+
+#, python-format
+msgid "%(count)s member removed"
+msgid_plural "%(count)s members removed"
+msgstr[0] "%(count)s запись удалена"
+msgstr[1] "%(count)s записей удалено"
+msgstr[2] "%(count)s записей удалено"
+msgstr[3] "%(count)s записей удалено"
+
+msgid "Number of Members"
+msgstr "Количество представителей"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr "Пользователь %(bind_user)s имеет контакты"
+
+msgid ""
+"The contact groups this contact belongs to. Contact groups are defined in "
+"Contacts - Contact Groups and are used to configure sales, campaigns, and "
+"product pricing tailored for a set of users."
+msgstr "Контакт принадлежит данным группам контактов. Группы контактов отображены в разделе Контакты. Группы контактов используются для операций с продажами, акциями и определением стоимости товаров в пределах группы пользователей."
+
+msgid "The shops this contact belongs to"
+msgstr ""
+
+msgid "Language"
+msgstr "Язык"
+
+msgid ""
+"The primary language to be used in all communications with the contact."
+msgstr "Основной язык для использования во всех коммуникациях с контактом"
+
+msgid "The company name."
+msgstr "Название организации"
+
+msgid "The contacts that are members of this company."
+msgstr "Контакты, являющиеся представителями компании"
+
+msgid "Gender"
+msgstr "Пол"
+
+msgid "Merchant Notes"
+msgstr "Торговые замечания"
+
+msgid "Website URL"
+msgstr "Веб адрес"
+
+msgid "Account Manager"
+msgstr "Управляющий аккаунтом"
+
+msgid "Company: Tax Number"
+msgstr "Компания: налоговый номер"
+
+msgid "Company: Members"
+msgstr "Компания: представители"
+
+msgid "Select Language"
+msgstr "Выбрать язык"
+
+msgid "Contact Group"
+msgstr "Группы контактов"
+
+msgid "Edit Contacts"
+msgstr "Редактировать контакты"
+
+msgid "Set Contact Groups"
+msgstr "Настроить группы контактов"
+
+msgid "Basic Information"
+msgstr "Основная информация"
+
+msgid "Addresses"
+msgstr "Адреса"
+
+msgid "Members"
+msgstr "Участники"
+
+msgid "The Shuup frontend is not enabled."
+msgstr "Внешний интерфейс Shuup не включён"
+
+msgid "Contact has no associated user."
+msgstr "Данный контакт не зарегистрирован в системе пользователей"
+
+msgid "User has no associated email."
+msgstr "У пользователя нет связанного электронного ящика."
+
+msgid "Reset password"
+msgstr "Изменить пароль"
+
+msgid "Send a password renewal email."
+msgstr "Выслать письмо обновления пароля"
+
+#, python-format
+msgid "Are you sure you wish to send a password recovery email to %s?"
+msgstr "Вы действительно хотите отправить письмо для восстановления пароля на адрес %s?"
+
+msgid "New User"
+msgstr "Новый пользователь"
+
+msgid "Create a user for the contact."
+msgstr "Создать пользователя для данного контакта"
+
+msgid "New Order"
+msgstr "Новый заказ"
+
+msgid "Create an order for the contact."
+msgstr "Сделать заказ для контакта."
+
+msgid "Deactivate Contact"
+msgstr "Деактивировать контакт"
+
+msgid "Activate Contact"
+msgstr "Активировать контакт"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Edit..."
+msgstr "Редактировать"
+
+msgid "You can not deactivate a superuser."
+msgstr "Вы не можете деактивировать супер пользователя"
+
+msgid "You can not deactivate yourself."
+msgstr "Вы не можете деактивировать себя"
+
+#, python-format
+msgid "%(contact)s is now %(state)s."
+msgstr "%(contact)s теперь %(state)s."
+
+msgid "active"
+msgstr "активно"
+
+msgid "inactive"
+msgstr "Неактивно"
+
+msgid "New Company"
+msgstr "Новая компания"
+
+msgid "New Contact"
+msgstr "Новый контакт"
+
+msgid "Person"
+msgstr "Персона"
+
+msgid "Company"
+msgstr "Компания"
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Phone"
+msgstr "Номер телефона"
+
+msgid "Active"
+msgstr "Активно"
+
+msgid "no"
+msgstr "Нет"
+
+msgid "yes"
+msgstr "Да"
+
+msgid "# Orders"
+msgstr "# Заказы"
+
+msgid "Groups"
+msgstr "Группы"
+
+msgid "Contact"
+msgstr "Контакт"
+
+msgid "No group"
+msgstr ""
+
+msgid "No shop"
+msgstr ""
+
+msgid "Inactive"
+msgstr "Неактивно"
+
+#, python-format
+msgid "Email: %s"
+msgstr "Электронная почта: %s"
+
+#, python-format
+msgid "Phone: %s"
+msgstr "Телефон: %s"
+
+#, python-format
+msgid "%d orders"
+msgstr "%d заказы"
+
+msgid "Mass Edit: Contacts"
+msgstr "Массовое редактирование: контакты"
+
+msgid "Contacts changed successfully"
+msgstr "Контакты изменены успешно"
+
+msgid "Mass Edit: Contact Groups"
+msgstr "Массовое редактирование: группы контактов"
+
+msgid "Contacts Groups changed successfully"
+msgstr "Группы контактов изменены успешно"
+
+msgid "The contact does not have an associated user."
+msgstr "Данный контакт не зарегистрирован в системе пользователей"
+
+msgid "About Us"
+msgstr "О нас"
+
+msgid "Privacy Policy"
+msgstr "Политика конфиденциальности"
+
+msgid "Terms and Conditions"
+msgstr "Положения и условия"
+
+msgid "Refund Policy"
+msgstr "Правила возврата денежных средств"
+
+msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
+msgstr "{{ order.shop }} - заказ {{ order.identifier }} получен"
+
+msgid "Send customer order confirmation email"
+msgstr "Выслать пользователю электронное письмо с подтверждением заказа"
+
+msgid ""
+"We will configure a notification to send the customer an email after a "
+"placed order. You can disable this option later or even change the layout of"
+" the email."
+msgstr "Мы настроим уведомления для того, чтобы  выслать клиенту электронное письмо после оформления заказа. Вы можете отключить данную опцию позже, а также изменить само оформление электронного письма."
+
+msgid "Create About Us page"
+msgstr "Создать страницу \"О нас\""
+
+msgid ""
+"We have already created an 'About Us' template for you based on your shop "
+"information. You must review the page and change it accordingly."
+msgstr "Мы уже создали шаблон секции \"О нас\", основанный с учётом информации вашего магазина. Вам нужно проверить страницу и внести коррективы при необходимости."
+
+msgid ""
+"We will create an 'About Us' template for you. We will base content of the "
+"page on your shop information. After we are done, you must review the page "
+"and change it accordingly."
+msgstr "Мы создадим для вас шаблон секции \"О нас\", а также организуем контент страницы с учётом информации, предоставленной вашим магазином. После того, как мы завершим работу, вы должны проверить страницу и внести соответствующие коррективы при необходимости."
+
+msgid "Create Privacy Policy page"
+msgstr "Создать страницу \"Политика конфиденциальности\""
+
+msgid ""
+"We have already created a 'Privacy Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr "Мы уже создали для вас шаблон секции \"Политика конфиденциальности\" с учётом предоставленной информации о вашем магазине. Вам нужно проверить страницу и внести коррективы при необходимости."
+
+msgid ""
+"We will create a 'Privacy Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr "Мы создадим для вас шаблон секции \"Политика конфиденциальности\", а также организуем контент страницы с учётом информации, предоставленной вашим магазином. После того, как мы завершим работу, вы должны проверить страницу и внести соответствующие коррективы при необходимости."
+
+msgid "Create Terms and Conditions page"
+msgstr "Создать страницу \"Положения и условия\""
+
+msgid ""
+"We have already created a 'Terms & Conditions' template for you based on "
+"your shop information. You must review the page and change it accordingly."
+msgstr "Мы уже создали шаблон секции \"Положения и условия\", основанный с учётом информации вашего магазина. Вам нужно проверить страницу и внести коррективы при необходимости."
+
+msgid ""
+"We will create an 'Terms & Conditions' template for you. We will base "
+"content of the page on your shop information. After we are done, you must "
+"review the page and change it accordingly."
+msgstr "Мы создадим для вас шаблон секции \"Положения и условия\", а также организуем контент страницы с учётом информации, предоставленной вашим магазином. После того, как мы завершим работу, вы должны проверить страницу и внести соответствующие коррективы при необходимости."
+
+msgid "Create Refund Policy page"
+msgstr "Создать страницу \"Правила возврата денежных средств\""
+
+msgid ""
+"We have already created a 'Refund Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr "Мы уже создали для вас шаблон секции \"Правила возврата денежных средств\" с учётом предоставленной информации о вашем магазине. Вам нужно проверить страницу и внести коррективы при необходимости."
+
+msgid ""
+"We will create an 'Refund Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr "Мы создадим для вас шаблон секции \"Правила возврата денежных средств\", а также организуем контент страницы с учётом информации, предоставленной вашим магазином. После того, как мы завершим работу, вы должны проверить страницу и внести соответствующие коррективы при необходимости."
+
+msgid "Configure the footer"
+msgstr "Настроить нижний колонтитул"
+
+msgid ""
+"We will now configure your shop footer and fill it with some of your shop's "
+"information. Don't worry, you can change this at any time."
+msgstr "Мы настроим нижний колонтитул для вашего магазина и наполним его информацией, предоставленной вашим магазином. Не переживайте, т.к. изменения можно внести в любое время."
+
+msgid "Content & Behavior"
+msgstr "Контент и поведение"
+
+msgid ""
+"Add the initial content and configure the customer notifications for your "
+"shop"
+msgstr "Добавить изначальный контент и настроить уведомления клиентов для вашего магазина."
+
+msgid "Configure notifications for your shop"
+msgstr "Настроить уведомления для вашего магазина"
+
+msgid "Add the initial content"
+msgstr "Добавить изначальный контент"
+
+msgid "Configure the initial content pages"
+msgstr "Настроить страницы с исходным контентом"
+
+msgid "Configure some notifications"
+msgstr "Настроить уведомления"
+
+msgid "Currencies"
+msgstr "Валюты"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Filter by code"
+msgstr "Сортировать по коду"
+
+msgid "Decimal places"
+msgstr "Десятичные знаки"
+
+msgid "Customers Dashboard"
+msgstr "Информационная панель клиентов"
+
+msgid "Active customers"
+msgstr "Активные клиенты"
+
+msgid "Based on orders within 30 days"
+msgstr "Основано на заказах за последние 30 дней"
+
+msgid "Demo"
+msgstr "Демо"
+
+msgid "Manufacturers"
+msgstr "Производители"
+
+msgid ""
+"Select shops for this manufacturer. Keep it blank to share with all shops."
+msgstr ""
+
+msgid "You have no permission to change a shared Manufacturer."
+msgstr ""
+
+msgid "Media"
+msgstr "Медиа"
+
+msgid "Media browser"
+msgstr "Медиа браузер"
+
+msgid "Root"
+msgstr "Корневая папка"
+
+#, python-brace-format
+msgid "{num} subfolders moved to {folder}."
+msgstr "{num} вложенные папки перемещены в {folder}."
+
+#, python-brace-format
+msgid "{num} files moved to {folder}."
+msgstr "{num} файлы перемещены в {folder}."
+
+#, python-format
+msgid "Folder %s deleted."
+msgstr "Папка %s удалена."
+
+msgid "Browse Media"
+msgstr "Просмотреть медиафайлы"
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr "%(file)s загружены в %(folder)s"
+
+msgid "Can not rename shared folder."
+msgstr ""
+
+msgid "Folder renamed."
+msgstr "Папка переименована."
+
+msgid "Can not delete shared folder."
+msgstr ""
+
+msgid "Can not rename shared file."
+msgstr ""
+
+msgid "File renamed."
+msgstr "Файл переименован."
+
+msgid "Can not delete shared file."
+msgstr ""
+
+msgid "File deleted."
+msgstr "Файл удалён."
+
+msgid "Can not move shared file."
+msgstr ""
+
+#, python-format
+msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr "%(file)s перемещены из %(old)s в %(new)s."
+
+msgid "Show orders"
+msgstr "Показать заказы."
+
+msgid "Order Status"
+msgstr "Статус заказа"
+
+msgid "List Statuses"
+msgstr "Показать статусы"
+
+msgid "Outstanding Orders"
+msgstr "Предварительные заказы"
+
+#, python-format
+msgid "%d outstanding orders"
+msgstr "%d невыполненных заказов"
+
+msgid "New order"
+msgstr "Новый заказ"
+
+#, python-format
+msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "Недопустимое количество '%(quantity)s' (для строки %(text)s) с ошибкой (%(error)s)"
+
+#, python-format
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "Цена '%(price)s' (для строки %(text)s) с ошибкой (%(error)s)"
+
+#, python-format
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
+msgstr "Скидка  '%(discount)s' (для строки %(text)s с ошибкой (%(error)s)"
+
+msgid "Product line does not have a product set."
+msgstr "Линия продуктов не включает в себя выбранный продукт"
+
+#, python-format
+msgid "Product %s does not exist."
+msgstr "Продукт %s не существует."
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr "Продукт  %(product)s не доступен в магазине  %(shop)s."
+
+msgid "Please add lines to the order."
+msgstr "Пожалуйста, добавьте строки к заказу."
+
+msgid "Tax number is not set for company."
+msgstr "Налоговый номер не указан для данной компании."
+
+msgid "Please choose a valid shop."
+msgstr "Пожалуйста, выберите действующий магазин."
+
+msgid "Please select shipping method."
+msgstr "Пожалуйста, выберите способ отправки."
+
+msgid "Please select payment method."
+msgstr "Пожалуйста, выберите способ оплаты."
+
+msgid "Cancel"
+msgstr "Отменить"
+
+msgid "Print Confirmation PDF(s)"
+msgstr "Распечатать PDF файл(ы) с подтверждением."
+
+msgid "Selecting all is not supported."
+msgstr "Выбрать все категории, которые не поддерживаются."
+
+msgid "Print Delivery PDF(s)"
+msgstr "Распечатать PDF файл(ы) с информацией о доставке"
+
+msgid "Payments"
+msgstr "Платежи"
+
+msgid "Shipments"
+msgstr "Почтовые отправления"
+
+msgid "Log Entries"
+msgstr "Записи журнала"
+
+msgid "Admin comment/notes"
+msgstr "Комментарии/заметки администратора"
+
+msgid "Set Status"
+msgstr "Установить статус"
+
+msgid "Set Complete"
+msgstr "Завершить"
+
+msgid "This order can not be set as complete at this point"
+msgstr "Данный заказ не может быть завершён в настоящий момент"
+
+msgid "Cancel Order"
+msgstr "Отменить заказ"
+
+msgid "Paid, shipped, or canceled orders cannot be canceled"
+msgstr "Оплаченные, высланные или отменённые заказы не могут быть отменены."
+
+msgid "Edit order"
+msgstr "Редактировать заказ"
+
+msgid "This order cannot modified at this point"
+msgstr "Заказ не может быть изменён на данный момент"
+
+msgid "Create Payment"
+msgstr "Создать платёж"
+
+msgid "Set Paid"
+msgstr "Оплатить"
+
+msgid "Create Shipment"
+msgstr "Осуществить отправление"
+
+msgid "Create Refund"
+msgstr "Осуществить возврат средств"
+
+msgid "Edit Addresses"
+msgstr "Редактировать адреса"
+
+msgid "Billing Address"
+msgstr "Расчётный адрес"
+
+msgid "Shipping Address"
+msgstr "Адрес доставки"
+
+#, python-format
+msgid "%(field)s updated from: %(old_address)s"
+msgstr "%(field)s поля обновлены для: %(old_address)s"
+
+#, python-format
+msgid "%(field)s saved successfully."
+msgstr "%(field)s поля сохранены успешно."
+
+#, python-format
+msgid "Edit Addresses -- %s"
+msgstr "Редактировать адреса -- %s"
+
+msgid "Unable to set order as completed at this point"
+msgstr "Невозможно завершить заказ в данный момент"
+
+#, python-brace-format
+msgid "Order status changed: {old_status} to {new_status}"
+msgstr "Изменён статус заказа: с {old_status} на {new_status}"
+
+msgid "Create Order"
+msgstr "Совершить заказ"
+
+#, python-format
+msgid "Contact %s does not exist."
+msgstr "Контакт %s не существует."
+
+#, python-format
+msgid "Order %(identifier)s updated."
+msgstr "Заказ %(identifier)s обновлён."
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr "Заказ %(identifier)s создан."
+
+msgid "Could not proceed with order:"
+msgstr "Невозможно продолжить заказ"
+
+msgid "Could not finalize order:"
+msgstr "Невозможно завершить заказ"
+
+msgid "Order"
+msgstr "Заказ"
+
+msgid "Order Date"
+msgstr "Дата заказа"
+
+msgid "Customer"
+msgstr "Клиент"
+
+msgid "Payment Status"
+msgstr "Статус оплаты"
+
+msgid "Shipping Status"
+msgstr "Статус отправления"
+
+msgid "Total"
+msgstr "Итог"
+
+#, python-format
+msgid "Create Payment -- %s"
+msgstr "Создать платёж -- %s"
+
+msgid "Payment amount"
+msgstr "Объём платежа"
+
+msgid "Payment amount cannot be 0"
+msgstr "Объём платежа не может быть \"0\""
+
+#, python-format
+msgid "Payment %s created."
+msgstr "Платёж %s создан."
+
+msgid "Order has already been paid"
+msgstr "Заказ уже был оплачен"
+
+msgid "Only orders which are not paid or deferred can be set as paid."
+msgstr "Только неоплаченые и отсроченный заказы могут быть доступны для оплаты."
+
+msgid "Only zero price orders can be set as paid without creating a payment."
+msgstr "Только бесплатные заказы могут считаться оплаченными без проведения платежа."
+
+msgid "Zero amount payment"
+msgstr "Нулевой платёж"
+
+msgid "Order marked as paid."
+msgstr "Заказ отмечен, как оплаченный"
+
+msgid "Line"
+msgstr "Строка"
+
+msgid ""
+"The line to refund. To refund an amount not associated with any line, select"
+" 'Refund arbitrary amount'."
+msgstr "Строка возмещения денежных средств. Для возврата средств, не связанных с данными строками, выберите \"Выплатить произвольную сумму\""
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "The number of units to refund."
+msgstr "Количество единиц для возврата средств."
+
+msgid "Line Text/Comment"
+msgstr "Строка Текст/Комментарии"
+
+msgid ""
+"The text describing the nature of the refund and/or the reason for the "
+"refund."
+msgstr "Текст, объясняющий сущность возврата / причину возмещения денежных средств."
+
+msgid "Amount"
+msgstr "Стоимость"
+
+msgid "The amount including tax to refund."
+msgstr "Стоимость, включая налог для возврата."
+
+msgid "Restock products"
+msgstr "Пополнить запас товаров"
+
+msgid ""
+"If checked, the quantity is adding back into the sellable product inventory."
+msgstr "Если установлен флажок, количество возвращается в перечень продаваемой продукции."
+
+#, python-format
+msgid "Create Refund -- %s"
+msgstr "Осуществить возврат средств -- %s"
+
+msgid "Refund Entire Order"
+msgstr "Возместить заказ полностью"
+
+msgid "This order already has existing refunds"
+msgstr "У заказа уже имеется история возвратов."
+
+msgid "Refund arbitrary amount"
+msgstr "Возместить произвольную сумму"
+
+msgid "Refund amount exceeds order amount."
+msgstr "Объём возмещения средств превышает стоимость заказа."
+
+msgid "Refund amounts should match sign on parent line."
+msgstr "Суммы возврата денежных средств должны совпадать с указанием в главной категории."
+
+msgid "Refund created."
+msgstr "Возрат средств создан."
+
+#, python-format
+msgid "Create Full Refund -- %s"
+msgstr "Осуществить полный возврат средств -- %s"
+
+msgid "Could not create full refund."
+msgstr "Невозможно осуществить полный возврат средств."
+
+msgid "Full refund created."
+msgstr "Полный возрат средств осуществлён."
+
+#, python-format
+msgid "Create Shipment -- %s"
+msgstr "Осуществить отправление -- %s"
+
+msgid "Supplier"
+msgstr "Поставщик"
+
+msgid ""
+"Select the shipment supplier. You can only ship the suppliers assigned to "
+"order lines."
+msgstr ""
+
+#, python-format
+msgid "%(product_name)s (%(supplier)s)"
+msgstr ""
+
+msgid "No products to ship."
+msgstr "Нет товаров для отправки."
+
+msgid "Shipping address is not set."
+msgstr "Адрес доставки не выбран."
+
+#, python-format
+msgid "Shipment %s created."
+msgstr "Доставка %s оформлена."
+
+#, python-format
+msgid "Shipment %s has been deleted."
+msgstr "Отправление %s будет удалено."
+
+msgid "Identifier already exists"
+msgstr "Идентификатор уже существует."
+
+msgid "Order Statuses"
+msgstr "Статусы заказов"
+
+msgid "Public Name"
+msgstr "Публичное имя"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "Default"
+msgstr "Стандартное"
+
+msgid "Permission Groups"
+msgstr "Группы доступа"
+
+msgid "The permission group name."
+msgstr "Название группы доступа"
+
+msgid "Module Permissions"
+msgstr "Разрешения модуля"
+
+msgid ""
+"Select the modules that should be accessible by this permission group. "
+"Modules with the same permissions as selected modules will be added "
+"automatically."
+msgstr "Выберите модули, которые будут доступны данной группой доступа. Модули с одними и теми же разрешениями, как у выбранных модулей, добавятся автоматически."
+
+msgid "Set the users that belong to this permission group."
+msgstr "Выбрать пользователей, которые принадлежат к данной группе доступа."
+
+msgid "Create new Permission Group"
+msgstr "Создать новую группу доступа."
+
+msgid "Product Types"
+msgstr "Типы товаров"
+
+msgid "Product types"
+msgstr "Типы товаров"
+
+msgid ""
+"Select attributes that go with your product type. These are defined in "
+"Products Settings - Attributes."
+msgstr "Выберите свойства, подходящие для вашего товара. Вы можете найти их в разделе \"Настройки товаров - Свойства\""
+
+msgid "Number of Attributes"
+msgstr "Количество параметров"
+
+#, python-format
+msgid "Create Product Called \"%s\""
+msgstr "Создать продукт \"%s\""
+
+#, python-format
+msgid "Create Product with SKU \"%s\""
+msgstr ""
+
+msgid "New product"
+msgstr "Новый товар"
+
+msgid "Import"
+msgstr "Импортировать"
+
+msgid "Add a product to see it in your store"
+msgstr "Добавить товар для отображения в вашем магазине."
+
+msgid "Primary Product Image"
+msgstr "Основное изображение товара."
+
+msgid ""
+"The main product image. You can add additional images on the Product Images "
+"tab."
+msgstr "Главное изображение товара. Вы можете добавить дополнительные изображения в разделе \"Изображения товара\""
+
+msgid "Given value is already in use, please use unique SKU and try again."
+msgstr "Данное значение уже используется, пожалуйста, используйте уникальный артикул и повторите попытку."
+
+msgid ""
+"Number of units that can be purchased after the product is out of stock. Set"
+" to blank for product to be purchasable without limits"
+msgstr "Количество товаров, доступных для продажи после того, как товар распродан. Оставьте пробел, если хотите, чтобы товар продавался без ограничений."
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr "Минимальное количество покупок должно быть больше 0."
+
+msgid "Backorder maximum must be greater than or equal to 0."
+msgstr ""
+
+#, python-format
+msgid "Thumbnail generation of %(media)s failed: %(error)s"
+msgstr ""
+
+msgid "Use only URL or file, not both"
+msgstr "Используйте только URL или файл, но не вместе."
+
+msgid "Is primary"
+msgstr "Основное"
+
+msgid "Only images allowed in this field"
+msgstr "Только изображения доступны для данного поля."
+
+#, python-format
+msgid "Unable to make package %(product)s: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "New: %d"
+msgstr ""
+
+#, python-format
+msgid "Removed: %d"
+msgstr ""
+
+#, python-format
+msgid "Couldn't add product %s to own package"
+msgstr ""
+
+msgid "child"
+msgstr "Дочерний элемент"
+
+msgid "Unlink"
+msgstr "Разъединить"
+
+#, python-format
+msgid "Unable to link %(product)s: %(error)s"
+msgstr ""
+
+msgid "variable combination"
+msgstr "Изменяемая комбинация"
+
+msgid "Set visible"
+msgstr "Сделать видимым"
+
+msgid "Set invisible"
+msgstr "Сделать невидимым"
+
+msgid "Export CSV"
+msgstr "Загрузить CSV данные"
+
+msgid "Edit products"
+msgstr "Редактировать продукты"
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
+msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
+msgstr "Минимальное количество для покупки было округлено, чтобы соответствовать торговому подразделению."
+
+#, python-format
+msgid "Changes to shop instance for %s saved"
+msgstr ""
+
+msgid "Product is not available."
+msgstr "Товар недоступен"
+
+msgid "Product"
+msgstr "Товар"
+
+#, python-format
+msgid "Edit Cross-Sell: %s"
+msgstr ""
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Changes saved."
+msgstr "Изменения сохранены."
+
+#, python-format
+msgid "Edit Media: %s"
+msgstr ""
+
+msgid "Files added to product."
+msgstr "Файлы добавлены к товарам."
+
+msgid "Clear package"
+msgstr "Очистить набор"
+
+msgid "Are you sure? This will remove all products from package."
+msgstr "Вы уверены. Данное действие уберёт все товары из набора."
+
+#, python-format
+msgid "Edit Package: %s"
+msgstr ""
+
+msgid "Package cleared."
+msgstr "Набор очищен."
+
+msgid ""
+"Are you sure? This will unlink all children and remove all variation "
+"variables."
+msgstr "Вы уверены? Данное действие выключит все дочерние и вариационные переменные."
+
+msgid "Clear variation"
+msgstr "Очистить вариацию"
+
+msgid ""
+"Are you sure? This will remove all variation variables, converting children "
+"to direct links."
+msgstr "Вы уверены? Это удалит все вариационные переменные и переведёт дочерние элементы в прямые ссылки."
+
+msgid "Convert to simple variation"
+msgstr "Преобразовать в простой вариант"
+
+#, python-format
+msgid "Edit Variation: %s"
+msgstr ""
+
+msgid "Variation cleared."
+msgstr "Вариант очищен."
+
+msgid "Variation simplified."
+msgstr "Вариант упрощён."
+
+msgid "Primary Image"
+msgstr "Основное изображение"
+
+msgid "Shop"
+msgstr "Магазин"
+
+msgid "SKU"
+msgstr "Артикул"
+
+msgid "Barcode"
+msgstr "Штрих-код"
+
+msgid "Filter by barcode..."
+msgstr "Сортировать по штрих-коду..."
+
+msgid "Mode"
+msgstr "Режим"
+
+msgid "Additional Categories"
+msgstr "Дополнительные категории"
+
+msgid "Purchasable"
+msgstr "Доступно для покупки"
+
+msgid "Mass Edit: Products"
+msgstr "Массовое редактирование: Товары"
+
+msgid "Products changed successfully"
+msgstr "Товары изменены успешно."
+
+msgid "Save as a copy"
+msgstr "Сохранить, как копию"
+
+msgid "Manage Cross-Selling"
+msgstr "Управлять кросс-продажей"
+
+msgid "Cross-Selling"
+msgstr "Кросс-продажа"
+
+#, python-format
+msgid "Child: %s"
+msgstr ""
+
+#, python-format
+msgid "Parent: %s"
+msgstr ""
+
+#, python-format
+msgid "Sibling: %s"
+msgstr ""
+
+msgid "Variations"
+msgstr "Вариации"
+
+msgid "Manage Variations"
+msgstr "Управлять вариациями"
+
+msgid "Packages"
+msgstr "Наборы"
+
+msgid "Manage Package"
+msgstr "Управлять наборами"
+
+msgid "Convert to Package Parent"
+msgstr ""
+
+msgid "Convert to Variation Parent"
+msgstr ""
+
+msgid "Sales Dashboard"
+msgstr "Информационная панель продаж"
+
+msgid "Sales per Month (past 12 months)"
+msgstr "Продаж в месяц (последние 12 месяцев)"
+
+msgid "Average Sales"
+msgstr "Средний объём продаж"
+
+msgid "Sales"
+msgstr "Продажи"
+
+msgid "Cumulative Total Sales"
+msgstr "Общий итог продаж."
+
+#, python-format
+msgid "Based on %d orders"
+msgstr ""
+
+msgid "Today's Sales"
+msgstr "Сегодняшние продажи"
+
+msgid "Lifetime Sales"
+msgstr "Все продажи"
+
+msgid "Average Purchase"
+msgstr "Средняя покупка"
+
+msgid "Open Orders Value"
+msgstr "Открыть стоимость заказов"
+
+msgid "Sales Units"
+msgstr "Наименования для продажи"
+
+msgid "Display Units"
+msgstr ""
+
+msgid "Symbol"
+msgstr ""
+
+msgid "Allowed decimals"
+msgstr "Допустимые десятичные значения"
+
+msgid ""
+"There is sample data installed. Access \"Settings > Sample Data\" for more "
+"information."
+msgstr "Примеры данных добавлены. Перейдите в \"Настройки > Примеры данных\" для получения большей информации."
+
+msgid ""
+"There is sample data installed. Click here to consolidate or delete them."
+msgstr "Примеры данных добавлены. Нажмите здесь для их объединения или удаления."
+
+msgid "Sample Data"
+msgstr "Примеры данных"
+
+msgid "Cosmetics and perfumes"
+msgstr "Косметика и парфюмерия"
+
+msgid "USpicy Makeup Brushes"
+msgstr "Кисти для макияжа USpicy"
+
+msgid ""
+"Professional 10 pieces makeup brush set with soft oval toothbrush design"
+msgstr "Профессиональный набор кистей для макияжа из 10 единиц с мягкими овальными щёточками"
+
+msgid "Precision Eyelash Curler"
+msgstr "Щипчики для завивки ресниц"
+
+msgid ""
+"Precision Eyelash Curler is the professional choice of makeup artists "
+"everywhere."
+msgstr "Щипчики для завивки ресниц - профессиональный выбор визажистов во всём мире."
+
+msgid "PureMoist Lipstick"
+msgstr "Губная помада PureMoist"
+
+msgid ""
+"PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
+"and protect lips."
+msgstr "Губная помада PureMoist обладает увлажняющей формулой, созданой для смягчения, комфорта и защиты губ."
+
+msgid "Clinique Happy"
+msgstr "Парфюм Clinique Happy "
+
+msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
+msgstr "Нотки цитруса. Богатство цветочных оттенков. Обилие эмоций."
+
+msgid "Tommy Girld by Tommy Hilfiger Perfume"
+msgstr "Парфюм Tommy Girld от Tommy Hilfiger"
+
+msgid ""
+"A refreshing and energetic floral - with low notes of sandalwood and "
+"heather."
+msgstr "Освежающий и энергичный, с мягкими нотками вереска, сандалового дерева и цветов."
+
+msgid "Bvlgari Omnia Crystalline Eau de Toilette"
+msgstr "Туалетная вода Bvlgari Omnia Crystalline Eau de Toilette"
+
+msgid ""
+"Give yourself over to this fragrance as intoxicating and pure as a woman's "
+"soul is fragile."
+msgstr "Предайтесь этому аромату, такому же пленительному и чистому, как хрупкая женская душа."
+
+msgid "Still Jennifer Lopez Perfume"
+msgstr "Парфюм Still Jennifer Lopez"
+
+msgid ""
+"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still"
+" fragrance."
+msgstr "Наполнитесь живостью и уверенностью, когда с вами аромат Still от Jennifer Lopez"
+
+msgid "La Vie Est Belle"
+msgstr "Парфюм La Vie Est Belle от Lancôme"
+
+msgid "A captivating new scent joins the La vie est belle path to happiness."
+msgstr "Пленительный новый аромат La Vie est belle окутает вас на пути к счастью."
+
+msgid "Smooth Viking Beard Brush"
+msgstr "Расчёска для бороды Smooth Viking"
+
+msgid "Just a beard brush."
+msgstr "Просто расчёска для бороды"
+
+msgid "Beard & Stash Oil"
+msgstr "Масло для усов и бороды"
+
+msgid "This oil is natural, and is made with the perfect combination of oils."
+msgstr "Данное косметическое масло является полностью натуральным и состоит из отличного сочетания природных масел."
+
+msgid "Sample Carousel"
+msgstr "Карусель образцов"
+
+msgid "Business Segment"
+msgstr "Бизнес-сегмент"
+
+msgid "Select your business segment to install categories."
+msgstr "Выберите ваш бизнес-сегмент для того, чтобы добавить категорию."
+
+msgid "Install Categories"
+msgstr "Добавить категории"
+
+msgid "Check this to install sample categories."
+msgstr "Ознакомтесь с данной информацией для установки категорий образцов"
+
+msgid "Install Products"
+msgstr "Добавить товары"
+
+msgid "Check this to install sample products."
+msgstr "Ознакомтесь с данной информацией для установки товарных образцов"
+
+msgid "Install Carousel"
+msgstr "Добавить карусель"
+
+msgid "Check this to install a sample carousel."
+msgstr "Ознакомтесь с данной информацией для установки карусели образцов"
+
+msgid "Uninstall Categories"
+msgstr "Удалить категории"
+
+msgid "Uninstall Products"
+msgstr "Удалить товары"
+
+msgid "Uninstall Carousel"
+msgstr "Удалить карусель"
+
+msgid "Sample data were consolidated"
+msgstr "Примеры данных были объединены."
+
+msgid ""
+"To start shopping right now, please install some sample data into your shop"
+msgstr "Для того, чтобы позволить начать осуществлять покупки прямо сейчас, пожалуйста, добавьте примеры данных в ваш магазин."
+
+msgid "Service Providers"
+msgstr "Поставщики услуг"
+
+msgid "Payment and Shipping"
+msgstr "Оплата и доставка"
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr ""
+
+msgid ""
+"The service provider type. This can be any of the shipping carriers or "
+"payment processors configured for your shop."
+msgstr "Тип поставщика. Ими могут являться любые службы доставки или платёжные системы, настроенные для вашего магазина."
+
+#, python-brace-format
+msgid "Create {service_name}"
+msgstr ""
+
+msgid "Provider"
+msgstr "Поставщик"
+
+#, python-format
+msgid "Please activate at least one %s."
+msgstr ""
+
+msgid "Carrier"
+msgstr "Служба доставки"
+
+msgid ""
+"To start shipping products right away, please add shipping methods for your "
+"shop"
+msgstr "Для того, чтобы начать отправку товаров прямо сейчас, пожалуйста, добавьте способы доставки для вашего магазина."
+
+msgid "shipping method"
+msgstr "способ доставки"
+
+msgid "Payment Provider"
+msgstr "Платёжная система"
+
+msgid ""
+"To start accepting payments right away, please add payment methods for your "
+"shop"
+msgstr "Для того, чтобы начать принимать платежи прямо сейчас, пожалуйста добавьте платёжную систему для вашего магазина."
+
+msgid "payment method"
+msgstr "способ оплаты"
+
+msgid "Service name"
+msgstr "Название службы"
+
+msgid "The name shown in the shop checkout process."
+msgstr "Имя, указанное при оформлении заказа."
+
+msgid "Instructions"
+msgstr "Инструкции"
+
+msgid "Additional instructions shown in the shop checkout process."
+msgstr "Дополнительные инструкции представлены в процессе оформления заказа."
+
+msgid "Shipping Methods"
+msgstr "Способы доставки"
+
+msgid "Payment Methods"
+msgstr "Способы оплаты"
+
+msgid "Service"
+msgstr "Услуги"
+
+msgid "Select a service to use for this service provider."
+msgstr "Выберите услуги для данного поставщика услуг."
+
+msgid ""
+"The carrier to use for this shipping method. Select a carrier before filling"
+" other fields."
+msgstr "Служба доставки для данного способа доставки. Выберите поставщика услуг до заполнения всех полей."
+
+msgid ""
+"The payment processor to use for this payment method. Select a payment "
+"processor before filling out the other fields."
+msgstr "Платёжная система для данного способа оплаты. Выберите поставщика услуг до заполнения всех полей."
+
+msgid "Price"
+msgstr "Стоимость"
+
+msgid "Waive limit"
+msgstr "Предел отклонения"
+
+msgid "Available in countries"
+msgstr "Доступно в странах"
+
+msgid "Unavailable in countries"
+msgstr "Недоступно в странах"
+
+msgid "Select accepted countries for this service."
+msgstr "Выбрать одобренные страны для данного сервиса."
+
+msgid "Select this to accept all countries in EU."
+msgstr "Нажмите здесь, чтобы принять все страны Евросоюза"
+
+msgid "Select restricted countries for this service."
+msgstr "Выбрать страны, которые запрещены для осуществления данного заказа."
+
+msgid "Select this to restrict this service for countries in EU"
+msgstr "Нажмите здесь, чтобы сделать данную услугу недоступной для стран Евросоюза."
+
+msgid "Service choice"
+msgstr "Выбор услуг"
+
+msgid "Enabled"
+msgstr "Включено"
+
+msgid "Payment Processor"
+msgstr "Платёжная система"
+
+msgid "Weight-based pricing range"
+msgstr "Диапазон цен, основанный на весе товара"
+
+msgid "System Settings"
+msgstr "Системные настройки"
+
+msgid "unique"
+msgstr "уникальный"
+
+msgid "running"
+msgstr "работающий"
+
+msgid "shop running"
+msgstr "управление магазином"
+
+msgid "Reference number length"
+msgstr "Длина идентификационного номера"
+
+msgid ""
+"Length of the order reference number not including the checksum number. This"
+" can vary based on the country your shop is in. If you set the length to 19,"
+" the actual length is going to be 20 because the checksum is being added."
+msgstr "Длина идентификационного номера заказа, не включающая в себя контрольный номер. Она может зависеть от страны, в которой зарегистрирован ваш магазин. Если вы установите длину в 19 знаков, действительной длиной будут 20 знаков из-за контрольного номера."
+
+msgid "Reference number prefix"
+msgstr "Префикс идентификационного номера"
+
+msgid "Order minimum total"
+msgstr "Минимальная сумма заказа"
+
+msgid "The minimum sum that an order needs to reach to be created."
+msgstr "Минимальная сумма для осуществления заказа"
+
+msgid "Order Settings"
+msgstr ""
+
+msgid "Order Reference number method"
+msgstr "Метод кодового номера заказа"
+
+msgid ""
+"This option defines how the reference numbers for orders are built. The "
+"options are:<br><br><b>Unique</b><br>Order reference number is unique system"
+" wide, regardless of the amount of shops.<br><br><b>Running</b><br>Order "
+"number is running system wide, regardless of the amount of "
+"shops.<br><br><b>Shop Running</b><br>Every shop has its own running numbers "
+"for reference."
+msgstr ""
+
+msgid "Settings saved"
+msgstr "Настройки сохранены"
+
+msgid "Reset Defaults"
+msgstr "Сбросить на изначальные"
+
+msgid "Changes saved successfully"
+msgstr ""
+
+msgid "No changes detected"
+msgstr ""
+
+msgid "Save system settings"
+msgstr "Сохранить системные настройки"
+
+msgid "Add a logo to make your store stand out"
+msgstr "Добавьте логотип для того, чтобы ваш магазин выделялся"
+
+msgid "Add logo"
+msgstr "Добавить логотип"
+
+msgid "Set \"{}\" as the active shop"
+msgstr ""
+
+msgid "Available Shops [currently active: {}]"
+msgstr ""
+
+msgid ""
+"This field cannot be changed since there are existing orders for this shop."
+msgstr "Изменения не могут быть внесены в данное поле, т.к. у магазина есть существующие заказы."
+
+msgid ""
+"The primary shop currency. This is the currency used when selling your "
+"products."
+msgstr "Основная валюта магазина. Эта валюта используется при продаже ваших товаров."
+
+msgid "Staff"
+msgstr "Персонал"
+
+msgid "Select staff members for this shop."
+msgstr "Выбраные сотрудники для данного магазина."
+
+msgid "Domain is unique. Please enter a unique value."
+msgstr ""
+
+msgid "Shop name"
+msgstr "Название магазина"
+
+msgid "First name"
+msgstr "Имя"
+
+msgid "Your first name."
+msgstr "Ваше имя"
+
+msgid "Last name"
+msgstr "Фамилия"
+
+msgid "Your last name."
+msgstr "Ваша фамилия"
+
+msgid "Zip/Postal code"
+msgstr "Почтовый индекс"
+
+msgid "State/Province"
+msgstr "Регион"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Address (2)"
+msgstr "Адрес (2)"
+
+msgid ""
+"The shop street address. This may be used to provide estimated shipping "
+"costs."
+msgstr "Физический адрес магазина. Данная информация может использоваться для вычисления стоимости отправки."
+
+msgid "The shop zip/postal code."
+msgstr "Почтовый индекс магазина"
+
+msgid "The city in which your shop is located."
+msgstr "Город, в котором находится ваш магазин"
+
+msgid "The country in which your shop is located."
+msgstr "Страна, в коротой находится ваш магазин"
+
+msgid "There are still some pending actions to complete!"
+msgstr "У вас есть незавершённые действия"
+
+msgid "Your store is now live!"
+msgstr "Ваш магазин активирован"
+
+msgid "Shop {} is now active!"
+msgstr ""
+
+msgid "Logo"
+msgstr ""
+
+msgid "Domain"
+msgstr "Домен"
+
+msgid "Shop Details"
+msgstr "Информация о магазине"
+
+msgid "Add an address so you can get paid"
+msgstr "Добавьте адрес, чтобы вы смогли получать платежи"
+
+msgid "Default Tax Class"
+msgstr "Налоговый класс по умолчанию"
+
+msgid "Suppliers"
+msgstr "Поставщики"
+
+#, python-format
+msgid "No %s module"
+msgstr ""
+
+msgid "Module"
+msgstr "Модуль"
+
+msgid "Shuup Support"
+msgstr "Поддержка Shuup"
+
+msgid "System"
+msgstr "Система"
+
+msgid "Telemetry"
+msgstr "Телеметрия"
+
+msgid ""
+"Statistics will be periodically sent to Shuup.com after 24 hours. Click here"
+" for more information."
+msgstr "Статистика будет периодически высылаться в Shuup.com каждые 24 часа. Нажмите здесь для большей информации."
+
+msgid "Customer Tax Groups"
+msgstr "Группы налогов клиентов"
+
+msgid "Tax Classes"
+msgstr "Налоговые классы"
+
+msgid "Rate"
+msgstr "Ставка"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "Add some users to help manage your shop"
+msgstr "Добавьте пользователей для управления вашим магазином"
+
+msgid "New user"
+msgstr "Новый пользователь"
+
+#, python-format
+msgid ""
+"\n"
+"    Welcome %(first_name)s!\n"
+"\n"
+"    You've been added as an administrator to %(shop_url)s. Here are some details:\n"
+"        Shop url: %(shop_url)s\n"
+"        Login url: %(admin_url)s\n"
+"        Your username: %(username)s\n"
+"        Your password: Please contact your admin.\n"
+msgstr ""
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "The user password."
+msgstr "Пароль пользователя."
+
+msgid "See the permissions view to change these."
+msgstr "Откройте режим доступа для внесения изменений."
+
+msgid "See Contacts - Permission Groups to change these."
+msgstr "Откройте \"контакты - группы доступа\" для внесения изменений."
+
+msgid "The user email address. Used for password resets."
+msgstr "Электронный адрес пользователя. Используется для изменения пароля."
+
+msgid "The first name of the user."
+msgstr "Имя пользователя."
+
+msgid "The last name of the user."
+msgstr "Фамилия пользователя."
+
+msgid "staff"
+msgstr "Персонал"
+
+msgid "superuser"
+msgstr "Суперпользователь"
+
+msgid "No special permissions"
+msgstr "Нет специального доступа"
+
+msgid "No permission groups"
+msgstr "Нет групп доступа"
+
+msgid "Send email confirmation"
+msgstr "Выслать электронное письмо для подтверждения"
+
+msgid ""
+"Send an email to the user to let them know they've been added as a shop "
+"user. Applicable only for users with staff status."
+msgstr "Выслать пользователю электронное письмо с уведомлением о добавлении пользователя магазина. Доступно только для пользователей со статусом персонала."
+
+msgid "Please enter an email to send a confirmation"
+msgstr "Пожалуйста, введите электронный адрес для отправки подтверждения."
+
+msgid "Change Password"
+msgstr "Изменить пароль."
+
+msgid "User has no email address"
+msgstr "У пользователя нет зарегистрированного электронного адреса."
+
+msgid "Send Password Reset Email"
+msgstr "Выслать письмо изменения пароля"
+
+msgid "Edit Permissions"
+msgstr "Редактировать настройки доступа"
+
+msgid "Contact Details"
+msgstr "Контактная информация"
+
+msgid "Create a new contact and associate it with this user"
+msgstr "Создать новый контакт и связать его с пользователем"
+
+msgid "Activate User"
+msgstr "Активировать пользователя"
+
+msgid "Deactivate User"
+msgstr "Деактивировать пользователя"
+
+msgid "Login as User"
+msgstr "Войти как пользователь"
+
+#, python-format
+msgid "User bound to contact %(contact)s."
+msgstr ""
+
+#, python-format
+msgid "You've been added as an admin user to %s"
+msgstr ""
+
+msgid "User"
+msgstr "Пользователь"
+
+#, python-format
+msgid "%(user)s is now %(state)s."
+msgstr ""
+
+msgid "No shop configured."
+msgstr "Магазин не настроен"
+
+msgid "You are already logged in."
+msgstr "Вы уже вошли на сайт."
+
+msgid "This user is not active."
+msgstr "Данный пользователь не активен."
+
+#, python-brace-format
+msgid "You're now logged in as {username}"
+msgstr ""
+
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "First Name"
+msgstr "Имя"
+
+msgid "Last Name"
+msgstr "Фамилия"
+
+msgid "Superuser"
+msgstr "Суперпользователь"
+
+#, python-format
+msgid "First Name: %s"
+msgstr ""
+
+#, python-format
+msgid "Last Name: %s"
+msgstr ""
+
+msgid "The two password fields didn't match."
+msgstr "Поля пароля не совпадают"
+
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr "Ваш старый пароль был введён неверно. Пожалуйста, введите его снова"
+
+msgid "Your Password"
+msgstr "Ваш пароль"
+
+msgid "For security purposes, we need your current password."
+msgstr "В целях соблюдения безопасности, нам нужен ваш настоящий пароль."
+
+msgid "New Password"
+msgstr "Новый пароль"
+
+msgid "New Password (again)"
+msgstr "Новый пароль (снова)"
+
+msgid "You can not change the password of a superuser."
+msgstr "Вы не можете изменить пароль суперпользователя"
+
+msgid "Change User Password"
+msgstr "Изменить пароль пользователя"
+
+#, python-format
+msgid "Password changed for %s."
+msgstr ""
+
+msgid "Reset User Password"
+msgstr "Сбросить пароль пользователя"
+
+msgid ""
+"The `shuup.front.apps.auth` app needs to be enabled for password reset."
+msgstr "Приложение `shuup.front.apps.auth` должно быть активно для изменения пароля."
+
+#, python-format
+msgid "Password recovery email sent to %(email)s"
+msgstr ""
+
+msgid "Sending the password recovery email failed."
+msgstr "Не удалось выслать письмо восстановления пароля."
+
+msgid ""
+"The permission groups that this user belongs to. Permission groups are "
+"configured through Contacts - Permission Groups."
+msgstr "Группы доступа, которым принадлежит этот пользователь. Группы доступа можно настроить в \"Контакты - Группы доступа\""
+
+msgid "You can't unset this status for yourself."
+msgstr "Вы не можете изменить этот статус для себя."
+
+msgid "Change User Permissions"
+msgstr "Изменить настройки доступа для пользователя"
+
+#, python-format
+msgid "Change Permissions: %s"
+msgstr ""
+
+#, python-format
+msgid "Permissions changed for %s."
+msgstr ""
+
+msgid "You must be a staff user"
+msgstr ""
+
+msgid "You are not a staff member of this shop"
+msgstr ""
+
+msgid "New Attribute"
+msgstr "Новое свойство"
+
+msgid "Login"
+msgstr "Логин"
+
+msgid "Forgot your password?"
+msgstr "Забыли ваш пароль?"
+
+msgid "Logged out"
+msgstr "Вы вышли с сайта"
+
+msgid "You have been securely logged out. Hope to see you soon!"
+msgstr "Вы успешно вышли с сайта. Надеемся скоро вас увидеть!"
+
+msgid "Log in again"
+msgstr "Зайти снова"
+
+msgid "Visit shop"
+msgstr "Перейти в магазин"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr ""
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+msgid "Password Recovery"
+msgstr ""
+
+msgid "Reset Password"
+msgstr ""
+
+msgid "Send password recovery instructions"
+msgstr ""
+
+msgid "Quicklinks"
+msgstr "Быстрые ссылки"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Dashboard"
+msgstr "Панель информации"
+
+msgid "Go home"
+msgstr "На главную страницу"
+
+msgid "Search for"
+msgstr "Поиск"
+
+msgid "Support ID: "
+msgstr "Идентификатор поддержки:"
+
+msgid "Hello"
+msgstr "Привет"
+
+msgid "Show Tour"
+msgstr "Тур по сайту"
+
+msgid "Log out"
+msgstr "Выйти"
+
+msgid "General Information"
+msgstr "Общая информация"
+
+msgid "Copy visibility settings to products"
+msgstr "Скопировать настройки отображения для товаров"
+
+msgid "Category Image"
+msgstr "Изображение категории"
+
+msgid "* Products that has this category as a primary category."
+msgstr "*Товары с данной категорией в качестве главной"
+
+msgid "Add a new product category"
+msgstr "Добавить новую категорию товаров"
+
+msgid ""
+"You are adding a new product category. When people search your store, they "
+"can find your product under the category you choose for it, like the aisle "
+"signs at the supermarket."
+msgstr ""
+
+msgid ""
+"You can add a name, description, picture or anything you want to make it "
+"stand out."
+msgstr ""
+
+msgid "General information"
+msgstr "Общая информация"
+
+msgid "Add Members"
+msgstr "Добавить участников"
+
+msgid "Add more"
+msgstr "Добавить больше"
+
+msgid "Billing address"
+msgstr "Платежный адрес"
+
+msgid "No billing address defined."
+msgstr "Платёжный адрес не указан"
+
+msgid "Shipping address"
+msgstr "Адрес доставки"
+
+msgid "No shipping address defined."
+msgstr "Адрес доставки не указан"
+
+msgid "Full Name"
+msgstr "Полное имя"
+
+msgid "No groups"
+msgstr "Нет групп"
+
+msgid "Bound User"
+msgstr "Связанный пользователь"
+
+msgid "No shops"
+msgstr ""
+
+msgid "Companies"
+msgstr "Компании"
+
+msgid "No members."
+msgstr "Нет участников."
+
+msgid "Use billing address as shipping address"
+msgstr "Использовать платёжный адрес, как адрес доставки"
+
+msgid "Basic details"
+msgstr "Базовая информация"
+
+msgid "COMPANY NAME"
+msgstr "НАЗВАНИЕ КОМПАНИИ"
+
+#, python-format
+msgid ""
+"You can enter here the information about <strong>%(public_name)s</strong>."
+msgstr ""
+
+msgid ""
+"Your order has been received and will be processed as soon as possible."
+msgstr "Ваш заказ был получен и будет обработан в ближайшее время."
+
+msgid "For reference, here's a list of your order's contents."
+msgstr "Для справки, вот список содержимого вашего заказа"
+
+msgid "Please note that no record of your order being paid currently exists."
+msgstr "Пожалуйста, заметьте, что в данный момент нет подтверждения оплаты вашего заказа."
+
+msgid "Thank you for shopping with us!"
+msgstr "Спасибо за то, что пользуетесь услугами нашего магазина!"
+
+msgid "YOUR E-MAIL HERE"
+msgstr "ВАШ ЭЛЕКТРОННЫЙ АДРЕС ЗДЕСЬ"
+
+msgid "YOUR ADDRESS HERE"
+msgstr "ВАШ АДРЕС ЗДЕСЬ"
+
+msgid "SECTION 1 - WHAT DO WE DO WITH YOUR INFORMATION?"
+msgstr "Пункт 1 - ЧТО МЫ ДЕЛАЕМ С ВАШЕЙ ИНФОРМАЦИЕЙ?"
+
+msgid ""
+"When you purchase something from our store, as part of the buying and "
+"selling process, we collect the personal information you give us such as "
+"your name, address and email address."
+msgstr "Когда вы что-то покупаете в нашем магазине, в процессе купли-продажи мы собираем вашу личную информацию, такую как имя, адрес и электронный адрес."
+
+msgid ""
+"When you browse our store, we also automatically receive your computer’s "
+"internet protocol (IP) address in order to provide us with information that "
+"helps us learn about your browser and operating system."
+msgstr "Когда вы просматриваете наш магазин, у нас также автоматически отображается ваш (IP) адрес для того чтобы мы получили информацию о вашем браузере или операционной системе."
+
+msgid ""
+"Email marketing (if applicable): With your permission, we may send you "
+"emails about our store, new products and other updates."
+msgstr "Почтовая рассылка (если необходимо): С вашего разрешения, мы можем вам выслать электронные письма о нашем магазине, новых продуктах и других обновлениях."
+
+msgid "SECTION 2 - CONSENT"
+msgstr "Пункт 2 - Соглашение"
+
+msgid "How do you get my consent?"
+msgstr "Как вы получите моё согласие?"
+
+msgid ""
+"When you provide us with personal information to complete a transaction, "
+"verify your credit card, place an order, arrange for a delivery or return a "
+"purchase, we imply that you consent to our collecting it and using it for "
+"that specific reason only."
+msgstr "Когда вы предоставляете нам личную информацию для совершения транзакции, подтверждаете свою кредитную карту, размещаете заказ, организуете доставку или возвращаете покупку, мы подразумеваем, что вы соглашаетесь на ее сбор и использование только по этой конкретной причине."
+
+msgid ""
+"If we ask for your personal information for a secondary reason, like "
+"marketing, we will either ask you directly for your expressed consent, or "
+"provide you with an opportunity to say no."
+msgstr "Если мы попросим вашу личную информацию по второстепенной причине, например, по вопросам маркетинга, мы либо попросим ваше личное согласие, либо предоставим вам возможность отказаться."
+
+msgid "How do I withdraw my consent?"
+msgstr "Как я могу отказаться?"
+
+#, python-format
+msgid ""
+"If after you opt-in, you change your mind, you may withdraw your consent for"
+" us to contact you, for the continued collection, use or disclosure of your "
+"information, at anytime, by contacting us at <strong>%(shop_email)s</strong>"
+" or mailing us at: <strong>%(shop_address)s</strong>"
+msgstr ""
+
+msgid "SECTION 3 - DISCLOSURE"
+msgstr "Пункт 3 - Огласка"
+
+msgid ""
+"We may disclose your personal information if we are required by law to do so"
+" or if you violate our Terms of Service."
+msgstr "Мы можем огласить ваши персональные данные, если того требует закон или вы нарушили пользовательское соглашение."
+
+msgid "SECTION 4 - SHUUP"
+msgstr "Пункт 4 - SHUUP"
+
+msgid ""
+"Our store is hosted on Shuup. They provide us with the online e-commerce "
+"platform that allows us to sell our products and services to you."
+msgstr "Наш магазин создан на базе Shupp. Данный ресурс предоставляет нам платформу для электронной коммерции, которая позволяет нам продавать вам наши товары и услуги."
+
+msgid ""
+"Your data is stored through Shuup’s data storage, databases and the general "
+"Shuup application. They store your data on a secure server behind a "
+"firewall."
+msgstr "Ваши данные сохраняются в базе данных Shuup, и основных приложениях сервиса. Данные хранятся на защищённом сервере с поддержкой firewall."
+
+msgid "Payment"
+msgstr "Платёж"
+
+msgid ""
+"If you choose a direct payment gateway to complete your purchase, then Shuup"
+" stores your credit card data. It is encrypted through the Payment Card "
+"Industry Data Security Standard (PCI-DSS). Your purchase transaction data is"
+" stored only as long as is necessary to complete your purchase transaction. "
+"After that is complete, your purchase transaction information is deleted."
+msgstr "Если вы выбираете доступ для прямых платежей при завершении покупки, Shuup сохраняет данные вашей кредитной карты. Они зашифровывается с использованием стандарта защиты данных в индустрии платежных карт (PCI-DSS). Данные вашей транзакции хранятся только до тех пор, пока это необходимо для завершения транзакции покупки. После этого информация о транзакции покупки будет удалена."
+
+msgid ""
+"All direct payment gateways adhere to the standards set by PCI-DSS as "
+"managed by the PCI Security Standards Council, which is a joint effort of "
+"brands like Visa, MasterCard, American Express and Discover."
+msgstr "Все типы прямых платежей соответствуют стандартам, установленным PCI-DSS, которые управляются Советом стандартов безопасности PCI, являющимся совместным продуктом таких брендов, как Visa, MasterCard, American Express и Discover."
+
+msgid ""
+"PCI-DSS requirements help ensure the secure handling of credit card "
+"information by our store and its service providers."
+msgstr "Требования PCI-DSS помогают обеспечить безопасную обработку информации о кредитных картах нашим магазином и его поставщиками услуг."
+
+msgid ""
+"For more insight, you may also want to read Shuup’s Terms of Service here or"
+" Privacy Statement here."
+msgstr "Для получения дополнительной информации вы также можете ознакомиться с Условиями обслуживания Shuup здесь или Политикой конфиденциальности здесь."
+
+msgid "SECTION 5 - THIRD-PARTY SERVICES"
+msgstr "Пункт 5 - Сторонние сервисы"
+
+msgid ""
+"In general, the third-party providers used by us will only collect, use and "
+"disclose your information to the extent necessary to allow them to perform "
+"the services they provide to us."
+msgstr "В общем случае, сторонние поставщики, с которыми мы сотрудничаем, будут собирать, использовать и раскрывать информацию в необходимой степени для обеспечения услуг при работе с нами."
+
+msgid ""
+"However, certain third-party service providers, such as payment gateways and"
+" other payment transaction processors, have their own privacy policies in "
+"respect to the information we are required to provide to them for your "
+"purchase-related transactions."
+msgstr "Однако некоторые сторонние поставщики услуг, такие как платежные шлюзы и другие обработчики платежных транзакций, имеют свою собственную политику конфиденциальности в отношении информации, которую мы обязаны предоставлять им для ваших транзакций, связанных с покупкой."
+
+msgid ""
+"For these providers, we recommend that you read their privacy policies so "
+"you can understand the manner in which your personal information will be "
+"handled by these providers."
+msgstr "Для работы с этими поставщиками мы рекомендуем вам ознакомиться с их политикой конфиденциальности, чтобы вы могли понять, каким образом ваша персональная информация будет обрабатываться."
+
+msgid ""
+"In particular, remember that certain providers may be located in or have "
+"facilities that are located in a different jurisdiction than either you or "
+"us. So if you elect to proceed with a transaction that involves the services"
+" of a third-party service provider, then your information may become subject"
+" to the laws of the jurisdiction(s) in which that service provider or its "
+"facilities are located."
+msgstr "В частности, помните, что некоторые поставщики могут располагаться или иметь учреждения, которые расположены в другой юрисдикции, нежели чем вы или мы. Таким образом, если вы решите продолжить транзакцию, которая включает в себя услуги стороннего поставщика услуг, ваша информация может стать объектом законов юрисдикции(ий), в которой находится этот поставщик услуг или его учреждение. "
+
+msgid ""
+"As an example, if you are located in Canada and your transaction is "
+"processed by a payment gateway located in the United States, then your "
+"personal information used in completing that transaction may be subject to "
+"disclosure under United States legislation, including the Patriot Act."
+msgstr "Например, если вы находитесь в Канаде и ваша транзакция обрабатывается платежным шлюзом, расположенным в Соединенных Штатах, ваша личная информация, используемая при завершении этой транзакции, может быть раскрыта в соответствии с законодательством Соединенных Штатов, включая Закон о патриотизме."
+
+msgid ""
+"Once you leave our store’s website or are redirected to a third-party "
+"website or application, you are no longer governed by this Privacy Policy or"
+" our website’s Terms of Service."
+msgstr "Когда вы покидаете веб-сайт нашего магазина или перенаправляетесь на сторонний веб-сайт или приложение, вы больше не подпадаете под действие данной политики конфиденциальности или условий обслуживания нашего веб-сайта."
+
+msgid "Links"
+msgstr "Ссылки"
+
+msgid ""
+"When you click on links on our store, they may direct you away from our "
+"site. We are not responsible for the privacy practices of other sites and "
+"encourage you to read their privacy statements."
+msgstr "Когда вы нажимаете на ссылки в нашем магазине, они могут вывести вас с нашего сайта. Мы не несем ответственности за политику конфиденциальности других сайтов и рекомендуем вам читать их заявления о конфиденциальности."
+
+msgid "SECTION 6 - SECURITY"
+msgstr "Пункт 6 - Безопасность"
+
+msgid ""
+"To protect your personal information, we take reasonable precautions and "
+"follow industry best practices to make sure it is not inappropriately lost, "
+"misused, accessed, disclosed, altered or destroyed."
+msgstr "Чтобы защитить вашу личную информацию, мы принимаем целесообразные меры предосторожности и следим за лучшими отраслевыми практиками, чтобы удостовериться, что ваша информация не была утеряна, использована во вредоносных целях, раскрыты, изменена или уничтожена."
+
+#, python-format
+msgid ""
+"If you provide us with your credit card information, the information is "
+"encrypted using secure socket layer technology (SSL) and stored with a "
+"AES-256 encryption.  Although no method of transmission over the Internet or"
+" electronic storage is 100%% secure, we follow all PCI-DSS requirements and "
+"implement additional generally accepted industry standards."
+msgstr "Если вы предоставите нам информацию о своей кредитной карте, информация будет шифроваться с использованием технологии защищенных сокетов (SSL) и храниться с шифрованием AES-256. Хотя ни один способ передачи через Интернет или электронное хранилище не защищен на 100 %%, мы соблюдаем все требования PCI-DSS и реализуем дополнительные общепринятые отраслевые стандарты."
+
+msgid "COOKIES"
+msgstr "КУКИС"
+
+msgid ""
+"Here is a list of cookies that we use. We’ve listed them here so you can "
+"choose if you want to opt-out of cookies or not."
+msgstr "Здесь представлен лист кукис, которые мы используем. Мы указали их здесь, чтобы вы могли решить, хотите вы от них отказаться или нет."
+
+msgid ""
+"unique token, sessional, Allows Shuup to store information about your "
+"session (referrer, landing page, etc)."
+msgstr "Уникальный сессионный символ позволяет Shuup хранить информацию о вашей сессии (реферер, целевую страницу и т. д.)."
+
+msgid "SECTION 7 - AGE OF CONSENT"
+msgstr "Пункт 7 - Брачный возраст"
+
+msgid ""
+"By using this site, you represent that you are at least the age of majority "
+"in your state or province of residence, or that you are the age of majority "
+"in your state or province of residence and you have given us your consent to"
+" allow any of your minor dependents to use this site."
+msgstr "Используя этот сайт, вы заявляете, что вы по крайней мере достигли совершеннолетия в своем штате или провинции проживания и дали нам свое согласие разрешить любому из ваших иждевенцев использовать этот сайт."
+
+msgid "SECTION 8 - CHANGES TO THIS PRIVACY POLICY"
+msgstr "Пункт 8 - Изменение политики конфиденциальности"
+
+msgid ""
+"We reserve the right to modify this privacy policy at any time, so please "
+"review it frequently. Changes and clarifications will take effect "
+"immediately upon their posting on the website. If we make material changes "
+"to this policy, we will notify you here that it has been updated, so that "
+"you are aware of what information we collect, how we use it, and under what "
+"circumstances, if any, we use and/or disclose it."
+msgstr "Мы оставляем за собой право изменять эту политику конфиденциальности в любое время, поэтому, пожалуйста, просматривайте ее часто. Изменения и разъяснения вступают в силу сразу же после их публикации на веб-сайте. Если мы внесем существенные изменения в эту политику, мы уведомим вас здесь, что она была обновлена, чтобы вы знали, какую информацию мы собираем, как ее используем и при каких обстоятельствах, если таковые имеются, мы используем и / или раскрываем её."
+
+msgid ""
+"If our store is acquired or merged with another company, your information "
+"may be transferred to the new owners so that we may continue to sell "
+"products to you."
+msgstr "Если наш магазин приобретен или объединен с другой компанией, ваша информация может быть передана новым владельцам, чтобы мы могли продолжать продавать вам товары."
+
+msgid "QUESTIONS AND CONTACT INFORMATION"
+msgstr "ВОПРОСЫ И КОНТАКТНАЯ ИНФОРМАЦИЯ"
+
+#, python-format
+msgid ""
+"If you would like to: access, correct, amend or delete any personal "
+"information we have about you, register a complaint, or simply want more "
+"information contact our Privacy Compliance Officer at "
+"<strong>%(shop_email)s</strong> or by mail at "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+
+msgid "YOUR COMPANY NAME HERE"
+msgstr "НАЗВАНИЕ ВАШЕЙ КОМПАНИИ ЗДЕСЬ"
+
+msgid ""
+"Our policy lasts 30 days. If 30 days have gone by since your purchase, "
+"unfortunately we can’t offer you a refund or exchange."
+msgstr "Наша политика рассчитана на 30 дней. Если со времени покупки прошло больше 30 дней, мы не можем предложить вам возмещение средств или обмен."
+
+msgid ""
+"To be eligible for a return, your item must be unused and in the same "
+"condition that you received it. It must also be in the original packaging."
+msgstr "Чтобы иметь право на возврат, ваш товар должен быть не использован и находиться в том же состоянии, в котором вы его получили. Он также должен быть в оригинальной упаковке."
+
+msgid ""
+"Several types of goods are exempt from being returned. Perishable goods such"
+" as food, flowers, newspapers or magazines cannot be returned. We also do "
+"not accept products that are intimate or sanitary goods, hazardous "
+"materials, or flammable liquids or gases."
+msgstr "Некоторые виды товаров не подлежат возврату. Скоропортящиеся товары, такие как еда, цветы, газеты или журналы, не могут быть возвращены. Мы также не принимаем товары личного пользования и сантехнические изделия, опасные материалы или легковоспламеняющиеся жидкости или газы."
+
+msgid "Additional non-returnable items:"
+msgstr "Дополнительный список товаров не подлежащих возврату:"
+
+msgid "Gift cards"
+msgstr "Подарочные карты"
+
+msgid "Downloadable software products"
+msgstr "Программные продукты, доступные для загрузки"
+
+msgid "Some health and personal care items"
+msgstr "Некоторые товары для здоровья и личной гигиены"
+
+msgid "To complete your return, we require a receipt or proof of purchase."
+msgstr "Для осуществления возврата вы должны предоставить чек или подтверждение покупки."
+
+msgid "Please do not send your purchase back to the manufacturer."
+msgstr "Пожалуйста, не высылайте вашу покупку обратно производителю."
+
+msgid ""
+"There are certain situations where only partial refunds are granted: (if "
+"applicable)"
+msgstr "Существуют определенные ситуации, при которых предоставляются только частичные возмещения средств: (если применимо)"
+
+msgid "Book with obvious signs of use"
+msgstr "Книга с явными признаками использования"
+
+msgid ""
+"CD, DVD, VHS tape, software, video game, cassette tape, or vinyl record that"
+" has been opened."
+msgstr "CD, DVD, кассета VHS, программное обеспечение, видеоигра, аудио кассета или виниловая пластинка, которая была открыта."
+
+msgid ""
+"Any item not in its original condition, is damaged or missing parts for "
+"reasons not due to our error."
+msgstr "Любой предмет не в его первоначальном состоянии, поврежденный или с отсутствующими деталями по причинам, не связанным с нашей ошибкой."
+
+msgid "Any item that is returned more than 30 days after delivery"
+msgstr "Любое наименование, которое возвращено более чем через 30 дней после доставки."
+
+msgid "Refunds (if applicable)"
+msgstr "Возврат средств (если применимо)"
+
+msgid ""
+"Once your return is received and inspected, we will send you an email to "
+"notify you that we have received your returned item. We will also notify you"
+" of the approval or rejection of your refund."
+msgstr "Как только ваш возвращённый товар будет получен и проверен, мы отправим вам по электронной почте уведомление о том, что мы получили ваш возвращенный товар. Мы также уведомим вас об утверждении или отклонении вашего финансового возмещения."
+
+msgid ""
+"If you are approved, then your refund will be processed, and a credit will "
+"automatically be applied to your credit card or original method of payment, "
+"within a certain amount of days."
+msgstr "Если вы подтверждены на сайте, то ваш возврат будет обработан, и финансовые средства будут автоматически переведены на вашу кредитную карту или будут подлежать другому способу перевода платежа в течение определенного количества дней."
+
+msgid "Late or missing refunds (if applicable)"
+msgstr "Просроченные или недостающие финансовые возмещения (если применимо)"
+
+msgid ""
+"If you haven’t received a refund yet, first check your bank account again."
+msgstr "Если вы еще не получили финансовое возмещение, сначала проверьте свой банковский счет еще раз."
+
+msgid ""
+"Then contact your credit card company, it may take some time before your "
+"refund is officially posted."
+msgstr "Затем обратитесь в компанию, выпустившую кредитную карту, это может занять некоторое время, прежде чем ваше официальное возмещение будет официально опубликовано."
+
+msgid ""
+"Next contact your bank. There is often some processing time before a refund "
+"is posted."
+msgstr "Затем обратитесь в свой банк. Зачастую у банков существует время для обработки, перед тем, как возмещение опубликовано."
+
+#, python-format
+msgid ""
+"If you’ve done all of this and you still have not received your refund yet, "
+"please contact us at <strong>%(shop_email)s</strong>."
+msgstr ""
+
+msgid "Sale items (if applicable)"
+msgstr "Наименования на продажу (если применимо)"
+
+msgid ""
+"Only regular priced items may be refunded, unfortunately sale items cannot "
+"be refunded."
+msgstr "Финансовые возмещения могут быть только за товары с обычной ценой. К сожалению, товары на распродаже не входят в данную категорию."
+
+msgid "Exchanges (if applicable)"
+msgstr "Обмен (если применимо)"
+
+#, python-format
+msgid ""
+"We only replace items if they are defective or damaged.  If you need to "
+"exchange it for the same item, send us an email at "
+"<strong>%(shop_email)s</strong> and send your item to: "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+
+msgid "Gifts"
+msgstr "Подарки"
+
+msgid ""
+"If the item was marked as a gift when purchased and shipped directly to you,"
+" you’ll receive a gift credit for the value of your return. Once the "
+"returned item is received, a gift certificate will be mailed to you."
+msgstr "Если товар был отмечен как подарок, когда он был приобретен и отправлен вам напрямую, вы получите подарочный бонус на стоимость вашего возврата. Как только возвращенный товар будет получен, подарочный сертификат будет отправлен вам по почте."
+
+msgid ""
+"If the item wasn’t marked as a gift when purchased, or the gift giver had "
+"the order shipped to themselves to give to you later, we will send a refund "
+"to the gift giver and he will find out about your return."
+msgstr "Если товар не был отмечен как подарок при покупке или человек, отправивший подарок, выслал его себе, чтобы передать вам позже, мы отправим возмещение дарителю, и он узнает о вашем возврате."
+
+msgid "Shipping"
+msgstr "Доставка"
+
+#, python-format
+msgid ""
+"To return your product, you should mail your product to: "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+
+msgid ""
+"You will be responsible for paying for your own shipping costs for returning"
+" your item. Shipping costs are non-refundable. If you receive a refund, the "
+"cost of return shipping will be deducted from your refund."
+msgstr "Вы будете ответственны за оплату собственных почтовых отправлений при отправке товара для возврата. Почтовые издержки не возмещаются. Если вы получите возмещение, стоимость обратной доставки будет вычтена из вашего возврата."
+
+msgid ""
+"Depending on where you live, the time it may take for your exchanged product"
+" to reach you, may vary."
+msgstr "В зависимости от того, где вы живете, время, которое может потребоваться для обмена вашего товара, может варьироваться."
+
+msgid ""
+"If you are shipping an item over $75, you should consider using a trackable "
+"shipping service or purchasing shipping insurance. We don’t guarantee that "
+"we will receive your returned item."
+msgstr "Если вы отправляете товар на сумму свыше 75 долларов США, вам следует рассмотреть возможность использования отслеживаемого сервиса доставки или страхования покупки. Мы не гарантируем что мы получим ваш возвращенный товар."
+
+msgid "OVERVIEW"
+msgstr "ОБЗОР"
+
+#, python-format
+msgid ""
+"This website is operated by <strong>%(public_name)s</strong>. Throughout the"
+" site, the terms “we”, “us” and “our” refer to "
+"<strong>%(public_name)s</strong>. <strong>%(public_name)s</strong> offers "
+"this website, including all information, tools and services available from "
+"this site to you, the user, conditioned upon your acceptance of all terms, "
+"conditions, policies and notices stated here."
+msgstr ""
+
+msgid ""
+"By visiting our site and/ or purchasing something from us, you engage in our"
+" “Service” and agree to be bound by the following terms and conditions "
+"(“Terms of Service”, “Terms”), including those additional terms and "
+"conditions and policies referenced herein and/or available by hyperlink. "
+"These Terms of Service apply  to all users of the site, including without "
+"limitation users who are browsers, vendors, customers, merchants, and/ or "
+"contributors of content."
+msgstr "Посещая наш сайт и / или приобретая у нас что-либо, вы принимаете участие в нашем «Сервисе» и соглашаетесь соблюдать следующие положения и условия («Условия обслуживания», «Условия»), включая дополнительные условия, правила и политики, приведенные здесь и / или доступные по гиперссылке. Эти Условия обслуживания распространяются на всех пользователей сайта, включая, без ограничений, всех пользователей, которые просматривают сайт, являются поставщиками, клиентами, продавцами и / или создателями контента."
+
+msgid ""
+"Please read these Terms of Service carefully before accessing or using our "
+"website. By accessing or using any part of the site, you agree to be bound "
+"by these Terms of Service. If you do not agree to all the terms and "
+"conditions of this agreement, then you may not access the website or use any"
+" services. If these Terms of Service are considered an offer, acceptance is "
+"expressly limited to these Terms of Service."
+msgstr "Пожалуйста, внимательно ознакомьтесь с настоящими Условиями обслуживания перед доступом или использованием нашего веб-сайта. Получая доступ или используя любую часть сайта, вы соглашаетесь соблюдать настоящие Условия обслуживания. Если вы не согласны со всеми условиями этого соглашения, то вы не можете получить доступ к веб-сайту или использовать какие-либо услуги. Если эти Условия обслуживания рассматриваются как оферта, их принятие прямо ограничено данными Условиями обслуживания."
+
+msgid ""
+"Any new features or tools which are added to the current store shall also be"
+" subject to the Terms of Service. You can review the most current version of"
+" the Terms of Service at any time on this page. We reserve the right to "
+"update, change or replace any part of these Terms of Service by posting "
+"updates and/or changes to our website. It is your responsibility to check "
+"this page periodically for changes. Your continued use of or access to the "
+"website following the posting of any changes constitutes acceptance of those"
+" changes."
+msgstr "Любые новые функции или инструменты, которые добавляются в текущий магазин, также подпадают под действие Условий обслуживания. Вы можете просмотреть самую последнюю версию Условий обслуживания в любое время на этой странице. Мы оставляем за собой право обновлять, изменять или заменять любую часть настоящих Условий обслуживания путем публикации обновлений и / или изменений на нашем веб-сайте. Вы несете ответственность за периодическую проверку этой страницы на наличие изменений. Ваше дальнейшее использование или доступ к веб-сайту после публикации любых изменений означает принятие этих изменений."
+
+msgid "SECTION 1 - ONLINE STORE TERMS"
+msgstr "Пункт 1 - Условия онлайн-магазина"
+
+msgid ""
+"By agreeing to these Terms of Service, you represent that you are at least "
+"the age of majority in your state or province of residence, or that you are "
+"the age of majority in your state or province of residence and you have "
+"given us your consent to allow any of your minor dependents to use this "
+"site."
+msgstr "Используя этот сайт, вы заявляете, что вы по крайней мере достигли совершеннолетия в своем штате или провинции проживания и дали нам свое согласие разрешить любому из ваших иждевенцев использовать этот сайт."
+
+msgid ""
+"You may not use our products for any illegal or unauthorized purpose nor may"
+" you, in the use of the Service, violate any laws in your jurisdiction "
+"(including but not limited to copyright laws)."
+msgstr "Вы не можете использовать наши товары в каких-либо незаконных или несанкционированных целях и не можете нарушать какие-либо законы вашей юрисдикции (в том числе законы об авторском праве)."
+
+msgid ""
+"You must not transmit any worms or viruses or any code of a destructive "
+"nature."
+msgstr "Вы не имеете права передавать никакие черви или вирусы или любой код деструктивного характера."
+
+msgid ""
+"A breach or violation of any of the Terms will result in an immediate "
+"termination of your Services."
+msgstr "Невыполнение или нарушение любого из условий приведет к немедленному прекращению осуществления услуг для вас."
+
+msgid "SECTION 2 - GENERAL CONDITIONS"
+msgstr "Пункт 2 - Общие условия"
+
+msgid ""
+"We reserve the right to refuse service to anyone for any reason at any time."
+msgstr "Мы оставляем за собой право отказать в обслуживании кому-либо по любой причине и в любое время."
+
+msgid ""
+"You understand that your content (not including credit card information), "
+"may be transferred unencrypted and involve (a) transmissions over various "
+"networks; and (b) changes to conform and adapt to technical requirements of "
+"connecting networks or devices. Credit card information is always encrypted "
+"during transfer over networks."
+msgstr "Вы понимаете, что ваш контент (не включая информацию о кредитной карте) может быть передан в незашифрованном виде и включать (а) передачи по различным сетям; И (б) изменения в целях соответствия и адаптации к техническим требованиям соединительных сетей или устройств. Информация кредитной карты всегда зашифровывается во время передачи по сетям."
+
+msgid ""
+"You agree not to reproduce, duplicate, copy, sell, resell or exploit any "
+"portion of the Service, use of the Service, or access to the Service or any "
+"contact on the website through which the service is provided, without "
+"express written permission by us."
+msgstr "Вы соглашаетесь не воспроизводить, не дублировать, не копировать, не продавать, не перепродавать или использовать в корыстных целях, какую-либо часть услуг. Использование услуг или доступ к ним, а также любому контакту на веб-сайте, через который предоставляется услуга, невозможно без специального письменного разрешения от нас ."
+
+msgid ""
+"The headings used in this agreement are included for convenience only and "
+"will not limit or otherwise affect these Terms."
+msgstr "Заголовки, используемые в этом соглашении, включены только для удобства и не будут ограничивать или иным образом влиять на данные условия."
+
+msgid "SECTION 3 - ACCURACY, COMPLETENESS AND TIMELINESS OF INFORMATION"
+msgstr "Пункт 3 - Точность, полнота и своевременность информации"
+
+msgid ""
+"We are not responsible if information made available on this site is not "
+"accurate, complete or current. The material on this site is provided for "
+"general information only and should not be relied upon or used as the sole "
+"basis for making decisions without consulting primary, more accurate, more "
+"complete or more timely sources of information. Any reliance on the material"
+" on this site is at your own risk."
+msgstr "Мы не несем ответственности, если информация, представленная на этом сайте, не является точной, полной или актуальной. Материал на этом сайте предоставляется только для общей информации и не должен использоваться или служить в качестве единственной основы для принятия решений без консультации с первичными, более точными, более полными или более своевременными источниками информации. Всякая опора на материалы данного сайта лежит на вашей ответственности."
+
+msgid ""
+"This site may contain certain historical information. Historical "
+"information, necessarily, is not current and is provided for your reference "
+"only. We reserve the right to modify the contents of this site at any time, "
+"but we have no obligation to update any information on our site. You agree "
+"that it is your responsibility to monitor changes to our site."
+msgstr "Данный сайт может содержать определенную историческую информацию. Историческая информация, не обязательно актуальная, предоставляется вам только для справки. Мы оставляем за собой право изменять содержимое этого сайта в любое время, но мы не обязаны обновлять какую-либо информацию. Вы соглашаетесь с тем, что вы несете ответственность за отслеживание изменений на нашем сайте."
+
+msgid "SECTION 4 - MODIFICATIONS TO THE SERVICE AND PRICES"
+msgstr "Пункт 4 - Изменения в услугах и стоимостях"
+
+msgid "Prices for our products are subject to change without notice."
+msgstr "Цены на наши товары могут быть изменены без предварительного уведомления."
+
+msgid ""
+"We reserve the right at any time to modify or discontinue the Service (or "
+"any part or content thereof) without notice at any time."
+msgstr "Мы оставляем за собой право в любой момент изменить или прекратить обслуживание (или любую его часть / содержимое) без предварительного уведомления в любое время."
+
+msgid ""
+"We shall not be liable to you or to any third-party for any modification, "
+"price change, suspension or discontinuance of the Service."
+msgstr "Мы не несем ответственности перед вами или любым третьим лицом за любые обновления, такие как изменение цены, приостановление или прекращение Сервиса."
+
+msgid "SECTION 5 - PRODUCTS OR SERVICES (if applicable)"
+msgstr "Пункт 5 - Товары или услуги (если применимо)"
+
+msgid ""
+"Certain products or services may be available exclusively online through the"
+" website. These products or services may have limited quantities and are "
+"subject to return or exchange only according to our Return Policy."
+msgstr "Некоторые продукты или услуги могут быть доступны исключительно на веб-сайте. Такие продукты или услуги могут иметь ограниченное количество, а также могут быть возвращены или обменены только в соответствии с нашей Политикой возврата."
+
+msgid ""
+"We have made every effort to display as accurately as possible the colors "
+"and images of our products that appear at the store. We cannot guarantee "
+"that your computer monitor's display of any color will be accurate."
+msgstr "Мы приложили все усилия, чтобы как можно точнее отображать цвета и изображения наших продуктов, которые появляются в магазине. Однако мы не можем гарантировать, что дисплей вашего компьютера точно передаст цвета."
+
+msgid ""
+"We reserve the right, but are not obligated, to limit the sales of our "
+"products or Services to any person, geographic region or jurisdiction. We "
+"may exercise this right on a case-by-case basis. We reserve the right to "
+"limit the quantities of any products or services that we offer. All "
+"descriptions of products or product pricing are subject to change at anytime"
+" without notice, at the sole discretion of us. We reserve the right to "
+"discontinue any product at any time. Any offer for any product or service "
+"made on this site is void where prohibited."
+msgstr "Мы сохраняем за собой право, которое не обязательно для исполнения, а именно ограничивать продажи наших продуктов или услуг любому лицу, географическому региону или юрисдикции. Мы можем использовать это право в каждом конкретном случае. Мы оставляем за собой право ограничить количество любых товаров или услуг, которые мы предлагаем. Все описания продуктов или цены на продукт могут быть изменены в любое время без предварительного уведомления по нашему усмотрению. Мы оставляем за собой право прекратить продавать любой товар в любое время. Любое предложение на любой товар или услугу, сделанные на этом сайте, является недействительным в тех случаях, когда это запрещено."
+
+msgid ""
+"We do not warrant that the quality of any products, services, information, "
+"or other material purchased or obtained by you will meet your expectations, "
+"or that any errors in the Service will be corrected."
+msgstr "Мы не гарантируем, что качество любых продуктов, услуг, информации или других материалов, приобретенных или полученных вами, оправдает ваши ожидания, или что любые ошибки в сервисе будут исправлены."
+
+msgid "SECTION 6 - ACCURACY OF BILLING AND ACCOUNT INFORMATION"
+msgstr "Пункт 6 - Точность платёжной информации и информации аккаунта"
+
+msgid ""
+"We reserve the right to refuse any order you place with us. We may, in our "
+"sole discretion, limit or cancel quantities purchased per person, per "
+"household or per order. These restrictions may include orders placed by or "
+"under the same customer account, the same credit card, and/or orders that "
+"use the same billing and/or shipping address. In the event that we make a "
+"change to or cancel an order, we may attempt to notify you by contacting the"
+" e-mail and/or billing address/phone number provided at the time the order "
+"was made. We reserve the right to limit or prohibit orders that, in our sole"
+" judgment, appear to be placed by dealers, resellers or distributors."
+msgstr "Мы оставляем за собой право отказать в любом заказе, который вы размещаете у нас. Мы можем, по нашему собственному усмотрению, ограничить или отменить фиксированое количество покупок на одного человека, на дом или на один заказ. Эти ограничения могут включать в себя заказы, размещенные одной и той же учетной записью клиента, с одной и той же кредитной картой и / или заказом, использующим один и тот же адрес для выставления счетов и / или доставки. В случае изменения или отмены заказа мы можем попытаться уведомить вас, связавшись по адресу электронной почты и / или платежному адресу / номеру телефона, указанным во время заказа. Мы оставляем за собой право ограничивать или запрещать заказы, которые, по нашему собственному мнению, должны размещаться дилерами, реселлерами или дистрибьюторами."
+
+msgid ""
+"You agree to provide current, complete and accurate purchase and account "
+"information for all purchases made at our store. You agree to promptly "
+"update your account and other information, including your email address and "
+"credit card numbers and expiration dates, so that we can complete your "
+"transactions and contact you as needed."
+msgstr "Вы соглашаетесь предоставлять текущую, полную и точную информацию о покупке и счете для всех покупок, сделанных в нашем магазине. Вы соглашаетесь незамедлительно обновлять свою учетную запись и другую информацию, включая адрес электронной почты и номера кредитных карт и срок действия, чтобы мы могли завершить ваши транзакции и связаться с вами по мере необходимости."
+
+msgid "For more detail, please review our Returns Policy."
+msgstr "Для более подробной информации, пожалуйста, ознакомьтесь с нашей \"Политикой возврата\"."
+
+msgid "SECTION 7 - OPTIONAL TOOLS"
+msgstr "Пункт 7 - Дополнительные инструменты"
+
+msgid ""
+"We may provide you with access to third-party tools over which we neither "
+"monitor nor have any control nor input."
+msgstr "Мы можем предоставить вам доступ к сторонним инструментам, за которыми мы не следим, которые мы не контролируем или к которым мы не причастны."
+
+msgid ""
+"You acknowledge and agree that we provide access to such tools ”as is” and "
+"“as available” without any warranties, representations or conditions of any "
+"kind and without any endorsement. We shall have no liability whatsoever "
+"arising from or relating to your use of optional third-party tools."
+msgstr "Вы признаете и соглашаетесь с тем, что мы предоставляем доступ к таким инструментам «как есть» и «как доступно» без каких-либо гарантий, представлений или условий любого рода и без какого-либо одобрения их использования. Мы не несем никакой ответственности в связи с использованием вами дополнительных инструментов сторонних производителей."
+
+msgid ""
+"Any use by you of optional tools offered through the site is entirely at "
+"your own risk and discretion and you should ensure that you are familiar "
+"with and approve of the terms on which tools are provided by the relevant "
+"third-party provider(s)."
+msgstr "Любое использование вами дополнительных инструментов, предлагаемых через сайт, совершается только по вашему усмотрению и под вашу ответственность, вы должны быть уверены, что вы знакомы с условиями предоставления инструментов сторонним поставщиком(ами) и согласны с ними."
+
+msgid ""
+"We may also, in the future, offer new services and/or features through the "
+"website (including, the release of new tools and resources). Such new "
+"features and/or services shall also be subject to these Terms of Service."
+msgstr "В будущем мы также можем в предлагать новые услуги и / или функции через веб-сайт (включая выпуск новых инструментов и ресурсов). Такие новые функции и / или услуги также должны подпадать под действие настоящих условий обслуживания."
+
+msgid "SECTION 8 - THIRD-PARTY LINKS"
+msgstr "Пункт 8 - Сторонние ссылки"
+
+msgid ""
+"Certain content, products and services available via our Service may include"
+" materials from third-parties."
+msgstr "Определенный контент, продукты и услуги, доступные через наш сервис, могут включать материалы третьих сторон."
+
+msgid ""
+"Third-party links on this site may direct you to third-party websites that "
+"are not affiliated with us. We are not responsible for examining or "
+"evaluating the content or accuracy and we do not warrant and will not have "
+"any liability or responsibility for any third-party materials or websites, "
+"or for any other materials, products, or services of third-parties."
+msgstr "Сторонние ссылки на этом сайте могут направить вас на сторонние веб-сайты, которые не связаны с нами. Мы не несем ответственности за проверку или оценку содержания и точности, и мы не гарантируем, что будем нести ответственность за любые сторонние материалы или веб-сайты, а также за любые другие материалы, продукты или услуги третьих сторон."
+
+msgid ""
+"We are not liable for any harm or damages related to the purchase or use of "
+"goods, services, resources, content, or any other transactions made in "
+"connection with any third-party websites. Please review carefully the third-"
+"party's policies and practices and make sure you understand them before you "
+"engage in any transaction. Complaints, claims, concerns, or questions "
+"regarding third-party products should be directed to the third-party."
+msgstr "Мы не несем ответственности за какой-либо ущерб или убытки, связанные с приобретением или использованием товаров, услуг, ресурсов, контента или любых других транзакций, совершенных в связи с любыми сторонними веб-сайтами. Внимательно ознакомьтесь с условиями сторонних производителей и убедитесь, что вы их понимаете, прежде чем участвовать в каких-либо транзакциях. Жалобы, претензии, проблемы или вопросы, касающиеся продуктов третьих сторон, должны быть направлены третьему лицу."
+
+msgid "SECTION 9 - USER COMMENTS, FEEDBACK AND OTHER SUBMISSIONS"
+msgstr "Пункт 9 - Комментарии пользователя, обратная связь и другая добавляемая информация"
+
+msgid ""
+"If, at our request, you send certain specific submissions (for example "
+"contest entries) or without a request from us you send creative ideas, "
+"suggestions, proposals, plans, or other materials, whether online, by email,"
+" by postal mail, or otherwise (collectively, 'comments'), you agree that we "
+"may, at any time, without restriction, edit, copy, publish, distribute, "
+"translate and otherwise use in any medium any comments that you forward to "
+"us. We are and shall be under no obligation (1) to maintain any comments in "
+"confidence; (2) to pay compensation for any comments; or (3) to respond to "
+"any comments."
+msgstr "Если по нашей просьбе вы отправляете определенные заявки (например, конкурсные заявки) или без запроса от нас, вы отправляете творческие идеи, предложения, предложения, планы или другие материалы, будь то онлайн, по электронной почте, по почте или иным образом (В совокупности «комментарии»), вы соглашаетесь с тем, что мы можем в любое время без ограничений редактировать, копировать, публиковать, распространять, переводить и иным образом использовать любые комментарии, которые вы нам пересылаете. Мы не обязаны и не будем обязаны (1) поддерживать любые комментарии в конфиденциальном порядке; (2) выплатить компенсацию за любые комментарии; Или (3) отвечать на любые комментарии."
+
+msgid ""
+"We may, but have no obligation to, monitor, edit or remove content that we "
+"determine in our sole discretion are unlawful, offensive, threatening, "
+"libelous, defamatory, pornographic, obscene or otherwise objectionable or "
+"violates any party’s intellectual property or these Terms of Service."
+msgstr "Мы можем, но не обязуемся, контролировать, редактировать или удалять контент, который по нашему собственному усмотрению мы определяем незаконным, оскорбительным, угрожающим, клеветническим, дискредитирующим, порнографическим, непристойным, или иным образом, спорным, а также тот контент, который нарушает интеллектуальную собственность какой-либо стороны согласно настоящим условиям обслуживания."
+
+msgid ""
+"You agree that your comments will not violate any right of any third-party, "
+"including copyright, trademark, privacy, personality or other personal or "
+"proprietary right. You further agree that your comments will not contain "
+"libelous or otherwise unlawful, abusive or obscene material, or contain any "
+"computer virus or other malware that could in any way affect the operation "
+"of the Service or any related website. You may not use a false e-mail "
+"address, pretend to be someone other than yourself, or otherwise mislead us "
+"or third-parties as to the origin of any comments. You are solely "
+"responsible for any comments you make and their accuracy. We take no "
+"responsibility and assume no liability for any comments posted by you or any"
+" third-party."
+msgstr "Вы соглашаетесь с тем, что ваши комментарии не будут нарушать каких-либо прав третьих лиц, включая авторское право, товарный знак, конфиденциальность, личность или иное личное или имущественное право. Вы также соглашаетесь с тем, что ваши комментарии не будут содержать клеветнических или иных незаконных, оскорбительных или непристойных материалов или содержать какой-либо компьютерный вирус или другое вредоносное ПО, которое может каким-либо образом повлиять на работу Сервиса или любого связанного с ним веб-сайта. Вы не можете использовать ложный адрес электронной почты, выдавая себя за кого-то, кроме вас, или иным образом вводить в заблуждение нас или третьих лиц относительно происхождения любых комментариев. Вы несете исключительную ответственность за любые замечания и точность своих комментариев. Мы не несем никакой ответственности за какие-либо комментарии, отправленные вами или третьими лицами."
+
+msgid "SECTION 10 - PERSONAL INFORMATION"
+msgstr "Пункт 10 - Личная информация"
+
+msgid ""
+"Your submission of personal information through the store is governed by our"
+" Privacy Policy. To view our Privacy Policy."
+msgstr "Ваше использование личной информации через магазин регулируется нашей Политикой конфиденциальности. Просмотреть нашу Политику конфиденциальности."
+
+msgid "SECTION 11 - ERRORS, INACCURACIES AND OMISSIONS"
+msgstr "Пункт 11 - Ошибки, неточности и упущения"
+
+msgid ""
+"Occasionally there may be information on our site or in the Service that "
+"contains typographical errors, inaccuracies or omissions that may relate to "
+"product descriptions, pricing, promotions, offers, product shipping charges,"
+" transit times and availability. We reserve the right to correct any errors,"
+" inaccuracies or omissions, and to change or update information or cancel "
+"orders if any information in the Service or on any related website is "
+"inaccurate at any time without prior notice (including after you have "
+"submitted your order)."
+msgstr "Иногда на нашем сайте или в его сервисах может содержаться информация с типографическими ошибками, неточностями или упущениями, которые могут относиться к описаниям товаров, ценообразованию, акциям, предложениям, стоимости доставки продукции, времени транзита и доступности. Мы оставляем за собой право исправлять любые ошибки, неточности или упущения, а также изменять, обновлять информацию или отменять заказы, если какая-либо информация в услугах или на любом связанном с ними веб-сайте является неточной, в любое время без предварительного уведомления (в том числе после того, как вы совершили свой заказ) "
+
+msgid ""
+"We undertake no obligation to update, amend or clarify information in the "
+"Service or on any related website, including without limitation, pricing "
+"information, except as required by law. No specified update or refresh date "
+"applied in the Service or on any related website, should be taken to "
+"indicate that all information in the Service or on any related website has "
+"been modified or updated."
+msgstr "Мы не берем на себя никаких обязательств по обновлению, изменению или уточнению информации в наших сервисах или на любом связанном с ним веб-сайте, включая, помимо прочего, информацию о ценах, за исключением случаев, предусмотренных законом. Никакое специальное уточнение или обновление, которое было применено в наших сервисах или на любом связанном с ним веб-сайте, не должно быть создано, чтобы обозначить, что вся информация нашего сервиса или любого связанного с ним веб-сайта была изменена или обновлена."
+
+msgid "SECTION 12 - PROHIBITED USES"
+msgstr "Пункт 12 - Запрещённое использование"
+
+msgid ""
+"In addition to other prohibitions as set forth in the Terms of Service, you "
+"are prohibited from using the site or its content: (a) for any unlawful "
+"purpose; (b) to solicit others to perform or participate in any unlawful "
+"acts; (c) to violate any international, federal, provincial or state "
+"regulations, rules, laws, or local ordinances; (d) to infringe upon or "
+"violate our intellectual property rights or the intellectual property rights"
+" of others; (e) to harass, abuse, insult, harm, defame, slander, disparage, "
+"intimidate, or discriminate based on gender, sexual orientation, religion, "
+"ethnicity, race, age, national origin, or disability; (f) to submit false or"
+" misleading information; (g) to upload or transmit viruses or any other type"
+" of malicious code that will or may be used in any way that will affect the "
+"functionality or operation of the Service or of any related website, other "
+"websites, or the Internet; (h) to collect or track the personal information "
+"of others; (i) to spam, phish, pharm, pretext, spider, crawl, or scrape; (j)"
+" for any obscene or immoral purpose; or (k) to interfere with or circumvent "
+"the security features of the Service or any related website, other websites,"
+" or the Internet. We reserve the right to terminate your use of the Service "
+"or any related website for violating any of the prohibited uses."
+msgstr "В дополнение к другим запретам, изложенным в Условиях обслуживания, вам запрещено: (1) использовать сайт или его содержимое для какой-либо незаконной цели; (2) требовать от других совершать противоправные действия или участвовать в них; (3) нарушать любые международные, федеральные, провинциальные или государственные установки, правила, законы или местные постановления; (4) нарушать наши права интеллектуальной собственности или права на интеллектуальную собственность других лиц; (5) преследовать, причинять вред, оскорблять, наносить вред, клеветать,  унижать, запугивать или дискриминировать по половому признаку, сексуальной ориентации, религии, этническому происхождению, расе, возрасту, национальному происхождению или инвалидности; (6) представлять ложную или вводящую в заблуждение информацию; (7) загружать или передавать вирусы или любой другой тип вредоносного кода, который будет использоваться или может использоваться любым способом, который повлияет на функциональность или работу наших сервисов или любого связанного с ними веб-сайта, других веб-сайтов или Интернета; (8) собирать или отслеживать личную информацию других лиц; (9) Рассылать спам, заниматься мошенничеством, использовать поисковых роботов или ботов: (10) для любой непристойной или аморальной цели; (11) вмешиваться или обходить систему безопасности наших сервисов или любого связанного с ними веб-сайта, других веб-сайтов или Интернета. Мы оставляем за собой право прекратить ваш доступ к использованию наших сервисов или любого связанного с ними сайта за нарушение любого запрета на использование."
+
+msgid "SECTION 13 - DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY"
+msgstr "Пункт 13 - Отказ от гарантий. Ограничение ответственности."
+
+msgid ""
+"We do not guarantee, represent or warrant that your use of our service will "
+"be uninterrupted, timely, secure or error-free."
+msgstr "Мы не гарантируем, не заявляем и не утверждаем, что использование нашего сервиса вами будет бесперебойным, своевременным, безопасным или безошибочным."
+
+msgid ""
+"We do not warrant that the results that may be obtained from the use of the "
+"service will be accurate or reliable."
+msgstr "Мы не гарантируем, что результаты, которые могут быть получены при использовании услуг, будут точными или надежными."
+
+msgid ""
+"You agree that from time to time we may remove the service for indefinite "
+"periods of time or cancel the service at any time, without notice to you."
+msgstr "Вы соглашаетесь с тем, что время от времени мы можем удалить услугу на неопределенный срок или отменить ее в любое время без вашего уведомления."
+
+msgid ""
+"You expressly agree that your use of, or inability to use, the service is at"
+" your sole risk. The service and all products and services delivered to you "
+"through the service are (except as expressly stated by us) provided 'as is' "
+"and 'as available' for your use, without any representation, warranties or "
+"conditions of any kind, either express or implied, including all implied "
+"warranties or conditions of merchantability, merchantable quality, fitness "
+"for a particular purpose, durability, title, and non-infringement."
+msgstr "Вы однозначно соглашаетесь с тем, что использование или невозможность использования услуги вами оставляется под вашу ответственность. Все продукты и услуги, предоставляемые вам через наши сервисы, осуществляются или поставляются (за исключением случаев, прямо указанных нами)  на условиях «как есть» и «как доступно», без каких-либо примечаний, гарантий или условий любого рода, быстро меняющихся или продуманных, включая все подразумеваемые гарантии или условия коммерческого использования, коммерческое качество, пригодность для определенной цели, долговечность, название и ненарушение прав."
+
+#, python-format
+msgid ""
+"In no case shall <strong>%(public_name)s</strong>, our directors, officers, "
+"employees, affiliates, agents, contractors, interns, suppliers, service "
+"providers or licensors be liable for any injury, loss, claim, or any direct,"
+" indirect, incidental, punitive, special, or consequential damages of any "
+"kind, including, without limitation lost profits, lost revenue, lost "
+"savings, loss of data, replacement costs, or any similar damages, whether "
+"based in contract, tort (including negligence), strict liability or "
+"otherwise, arising from your use of any of the service or any products "
+"procured using the service, or for any other claim related in any way to "
+"your use of the service or any product, including, but not limited to, any "
+"errors or omissions in any content, or any loss or damage of any kind "
+"incurred as a result of the use of the service or any content (or product) "
+"posted, transmitted, or otherwise made available via the service, even if "
+"advised of their possibility. Because some states or jurisdictions do not "
+"allow the exclusion or the limitation of liability for consequential or "
+"incidental damages, in such states or jurisdictions, our liability shall be "
+"limited to the maximum extent permitted by law."
+msgstr ""
+
+msgid "SECTION 14 - INDEMNIFICATION"
+msgstr "Пункт 14 - Возмещение ущерба."
+
+#, python-format
+msgid ""
+"You agree to indemnify, defend and hold harmless "
+"<strong>%(public_name)s</strong> and our parent, subsidiaries, affiliates, "
+"partners, officers, directors, agents, contractors, licensors, service "
+"providers, subcontractors, suppliers, interns and employees, harmless from "
+"any claim or demand, including reasonable attorneys’ fees, made by any "
+"third-party due to or arising out of your breach of these Terms of Service "
+"or the documents they incorporate by reference, or your violation of any law"
+" or the rights of a third-party."
+msgstr ""
+
+msgid "SECTION 15 - SEVERABILITY"
+msgstr "Пункт 15 - Делимость"
+
+msgid ""
+"In the event that any provision of these Terms of Service is determined to "
+"be unlawful, void or unenforceable, such provision shall nonetheless be "
+"enforceable to the fullest extent permitted by applicable law, and the "
+"unenforceable portion shall be deemed to be severed from these Terms of "
+"Service, such determination shall not affect the validity and enforceability"
+" of any other remaining provisions."
+msgstr "В случае, если какое-либо из положений настоящих условий обслуживания будет признано незаконным, недействительным или неисполнимым, такое положение, тем не менее, может быть осуществлено в максимально возможной степени в соответствии с применимым законодательством, а неисполнимая часть не будет считаться частью настоящих условий обслуживания. Такое определение не должно влиять на действительность и исковую силу любых других оставшихся положений."
+
+msgid "SECTION 16 - TERMINATION"
+msgstr "Пункт 16 - Расторжение договора"
+
+msgid ""
+"The obligations and liabilities of the parties incurred prior to the "
+"termination date shall survive the termination of this agreement for all "
+"purposes."
+msgstr "Обязательства и ответственность сторон, принятые до даты расторжения соглашения, остаются в силе после прекращения действия настоящего соглашения для всех целей."
+
+msgid ""
+"These Terms of Service are effective unless and until terminated by either "
+"you or us. You may terminate these Terms of Service at any time by notifying"
+" us that you no longer wish to use our Services, or when you cease using our"
+" site."
+msgstr "Настоящие условия обслуживания действительны до тех пор, пока они не будут прекращены вами или нами. Вы можете в любое время прекратить действие настоящих условий обслуживания, уведомив нас о том, что вы больше не хотите использовать наши сервисы или когда вы прекратите пользоваться нашим сайтом."
+
+msgid ""
+"If in our sole judgment you fail, or we suspect that you have failed, to "
+"comply with any term or provision of these Terms of Service, we also may "
+"terminate this agreement at any time without notice and you will remain "
+"liable for all amounts due up to and including the date of termination; "
+"and/or accordingly may deny you access to our Services (or any part "
+"thereof)."
+msgstr "Если по нашему собственному мнению вы не справились, или мы подозреваем, что вы не справились с соблюдением какого-либо пункта данных условий, мы также можем в любое время прекратить действие настоящего соглашения без уведомления, и вы будете нести ответственность за все суммы выплат до и включая дату расторжения; И / или соответственно можем лишить вас доступа к нашим услугам (или любой их части)."
+
+msgid "SECTION 17 - ENTIRE AGREEMENT"
+msgstr "Пункт 17 - Полное согласие"
+
+msgid ""
+"The failure of us to exercise or enforce any right or provision of these "
+"Terms of Service shall not constitute a waiver of such right or provision."
+msgstr "Невыполнение нами каких-либо прав или положений настоящих Условий обслуживания не является отказом от такого права или положения."
+
+msgid ""
+"These Terms of Service and any policies or operating rules posted by us on "
+"this site or in respect to The Service constitutes the entire agreement and "
+"understanding between you and us and govern your use of the Service, "
+"superseding any prior or contemporaneous agreements, communications and "
+"proposals, whether oral or written, between you and us (including, but not "
+"limited to, any prior versions of the Terms of Service)."
+msgstr "Настоящие Условия обслуживания и любые политики или рабочие правила, опубликованные нами на этом сайте или в отношении наших сервисов, обозначают полное согласие и понимание между вами и нами и регулируют ваше использование наших сервисов, заменяя любые предыдущие или текущие соглашения, сообщения и предложения в устной или письменной форме между вами и нами (включая, но не ограничиваясь, любыми предыдущими версиями условий обслуживания)."
+
+msgid ""
+"Any ambiguities in the interpretation of these Terms of Service shall not be"
+" construed against the drafting party."
+msgstr "Любые неясности в толковании настоящих Условий обслуживания не должны толковаться в против редакционной стороны."
+
+msgid "SECTION 18 - GOVERNING LAW"
+msgstr "Пункт 18 - Действующее право"
+
+#, python-format
+msgid ""
+"These Terms of Service and any separate agreements whereby we provide you "
+"Services shall be governed by and construed in accordance with the laws of "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+
+msgid "SECTION 19 - CHANGES TO TERMS OF SERVICE"
+msgstr ""
+
+msgid ""
+"You can review the most current version of the Terms of Service at any time "
+"at this page."
+msgstr ""
+
+msgid ""
+"We reserve the right, at our sole discretion, to update, change or replace "
+"any part of these Terms of Service by posting updates and changes to our "
+"website. It is your responsibility to check our website periodically for "
+"changes. Your continued use of or access to our website or the Service "
+"following the posting of any changes to these Terms of Service constitutes "
+"acceptance of those changes."
+msgstr ""
+
+msgid "SECTION 20 - CONTACT INFORMATION"
+msgstr "Пункт 20 - Контактная информация."
+
+#, python-format
+msgid ""
+"Questions about the Terms of Service should be sent to us at "
+"<strong>%(shop_email)s</strong>."
+msgstr ""
+
+msgid "Remove block"
+msgstr "Удалить блок"
+
+msgid "Resize block"
+msgstr "Изменить размеры блока"
+
+msgid "Welcome!"
+msgstr "Добро пожаловать!"
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "Mark as read"
+msgstr "Отметить, как прочитанное"
+
+msgid "Activity Feed"
+msgstr "История активности"
+
+#, python-format
+msgid "Shuup %(version)s"
+msgstr ""
+
+msgid ""
+"This is the dashboard for your store. It’s like the flight deck for your "
+"ecommerce spaceship. You can control everything from here."
+msgstr ""
+
+msgid ""
+"Check out your shoppers’ info, add more products or categories, setup "
+"marketing campaigns, see orders and sales stats, and track the money you’ve "
+"made."
+msgstr ""
+
+msgid "Every setting you could possibly need is in here."
+msgstr ""
+
+msgid "Table Columns"
+msgstr "Колонки таблицы"
+
+msgid "Active headers"
+msgstr "Выбранные заголовки"
+
+msgid "Selectable headers"
+msgstr "Имеющиеся заголовки"
+
+msgid "Add"
+msgstr "Добавить"
+
+msgid "Bad Request"
+msgstr "Неверный запрос"
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr "К сожалению, ваш запрос не мог быть обработан на сервере."
+
+msgid "Permission Denied"
+msgstr "Отказано в доступе"
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr "К сожалению, у вас нет разрешения просматривать данную страницу."
+
+msgid "Internal Server Error"
+msgstr "Внутренняя ошибка сервера"
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr "К сожалению, произошла внутренняя ошибка сервера. Попробуйте перезагрузить страницу или вернуться к ней позже."
+
+msgid "Welcome to Shuup!"
+msgstr "Добро пожаловать в Shuup!"
+
+msgid ""
+"You're almost done! Complete the following steps to sell your products "
+"online"
+msgstr "Вы почти готовы! Пройдите следующие шаги для того, чтобы продавать товары онлайн"
+
+msgid "Hi, new shop owner!"
+msgstr "Здравствуйте, новый владелец магазина!"
+
+msgid "Welcome to your store admin!"
+msgstr "Администратор, добро пожаловать в ваш магазин!"
+
+msgid ""
+"Let’s go through some of the things you can do here. Click next to begin."
+msgstr "Давайте рассмотрим некоторые из вещей, которые вы можете здесь сделать. Нажмите «Далее», чтобы начать."
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Save and Exit"
+msgstr "Сохранить и выйти"
+
+msgid "This action effects on all products."
+msgstr "Данное действие может повлиять на все товары."
+
+#, python-format
+msgid "This action effects %(item_count)s products."
+msgstr ""
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Upload"
+msgstr "Загрузить"
+
+msgid "Comment"
+msgstr "Комментировать"
+
+msgid "Save comment"
+msgstr "Сохранить комментарий"
+
+msgid "Comment saved."
+msgstr "Комментарий сохранён."
+
+msgid "There was an error updating the admin comment."
+msgstr "При обновлении комментария администратора произошла ошибка."
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "No payments have been created yet."
+msgstr "Ни один платёж ещё не создан."
+
+msgid "Order Contents"
+msgstr "Содержание заказа"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Taxless Unit Price"
+msgstr "Стоимость единицы без учёта налогов."
+
+msgid "Taxless Discount"
+msgstr "Скидка без учёта налогов"
+
+msgid "Taxless Discount Percentage"
+msgstr "Процент скидки без учёта налогов"
+
+msgid "Tax"
+msgstr "Налог"
+
+msgid "Taxless Total"
+msgstr "Итог без учёта налогов"
+
+msgid "Total incl. Tax"
+msgstr "Общий итог с учётом налогов"
+
+msgid "Discount"
+msgstr "Скидка"
+
+msgid "Taxless"
+msgstr "Не облагаемый налогом"
+
+msgid "Message"
+msgstr "Сообщение"
+
+msgid "No log entries have been added yet."
+msgstr "Ни одна запись журнала ещё не была зафиксирована."
+
+msgid "Use the input below to add new log entries."
+msgstr "Используйте поле ниже для того, чтобы добавить запись в журнал."
+
+msgid "Add to Log"
+msgstr "Добавить в журнал"
+
+msgid "Log entry added."
+msgstr "Запись журнала добавлена"
+
+msgid "There was an error adding the log entry."
+msgstr "Произошла ошибка при добавлении записи журнала."
+
+msgid "Tracking Code"
+msgstr "Код для отслеживания доставки"
+
+msgid "Created"
+msgstr "Создан"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "No shipments have been created yet."
+msgstr "Ни одна доставка ещё не была организована."
+
+msgid ""
+"Shipped shipments should not be deleted. Deletion will affect products "
+"physical stock count. Delete anyway?"
+msgstr "Отправленные посылки не стоит удалять. Удаление будет влиять на подсчёт количества товаров на складе. Удалить в любом случае?"
+
+msgid "Line #"
+msgstr "Строка #"
+
+msgid "Refunded Quantity"
+msgstr "Возвращенное количество"
+
+msgid "Refund Amount"
+msgstr "Возвращённая сумма"
+
+msgid "Are you sure you want to create a full refund?"
+msgstr "Вы уверены, что хотите создать полное возмещение финансовых средств?"
+
+msgid "Confirm Refund"
+msgstr "Подтвердить возмещение"
+
+msgid "Paid"
+msgstr "Оплачено"
+
+msgid "Remaining"
+msgstr "Остаётся"
+
+msgid "Refunded"
+msgstr "Возмещено"
+
+msgid "Add Another Refund"
+msgstr "Добавить другое возмещение"
+
+msgid "Order Line"
+msgstr ""
+
+msgid "To Ship"
+msgstr "Отправить"
+
+msgid "Ordered"
+msgstr "Заказано"
+
+msgid "Shipped"
+msgstr "Отправлено"
+
+msgid "Unshipped"
+msgstr "Не отправлено"
+
+msgid "Set All Products To Ship"
+msgstr "Выбрать все товары для отправки"
+
+msgid "Ship All"
+msgstr "Отправить всё"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "Order Number"
+msgstr "Номер заказа"
+
+msgid "Reference"
+msgstr "Справка"
+
+msgid "Label"
+msgstr "Ярлык"
+
+msgid "Ordered by"
+msgstr "Заказано"
+
+msgid "Creator"
+msgstr "Создатель"
+
+msgid "Tax number"
+msgstr "Налоговый номер"
+
+msgid "Total Price (taxless)"
+msgstr "Полная стоимость (без учёта налогов)"
+
+msgid "Total Price"
+msgstr "Полная стоимость"
+
+msgid "Customer Comment"
+msgstr "Комментарий клиента"
+
+msgid "Payment Method"
+msgstr "Способ оплаты"
+
+msgid "Shipping Method"
+msgstr "Способ доставки"
+
+msgid "Tracking codes"
+msgstr "Коды для отслеживания доставки"
+
+msgid "Address Information"
+msgstr "Адрес"
+
+msgid "Error!"
+msgstr "Ошибка!"
+
+msgid "All the required product information."
+msgstr "Вся необходимая информация о товаре."
+
+msgid "Additional Details"
+msgstr "Дополнительные подробности."
+
+msgid "Product features such as size, weight and keywords are located here."
+msgstr "Здесь размещены параметры товаров, такие как размер, вес и ключевые слова."
+
+msgid "Manufacturer"
+msgstr "Производитель"
+
+msgid "If you know the manufacturer of the product select it here."
+msgstr "Если вы знаете производителя товаров, выберите его здесь."
+
+msgid "Additional"
+msgstr "Дополнительно"
+
+msgid ""
+"Strictly shop related information. For example set the minimum price "
+"applicable in this shop."
+msgstr "Информация, строго касающаяся магазина. Например: установите минимальную стоимость, применимую в данном магазине."
+
+#, python-format
+msgid "These settings apply only for shop: <b>%(shop_name)s</b>."
+msgstr ""
+
+#, python-format
+msgid "Product image %(index)s"
+msgstr ""
+
+#, python-format
+msgid "Product media %(index)s"
+msgstr ""
+
+msgid "Primary image"
+msgstr "Основное изображение"
+
+msgid "Set as primary image"
+msgstr "Выбрать изображение основным"
+
+msgid "Advanced options"
+msgstr "Расширенные опции"
+
+msgid "Product Images"
+msgstr "Изображения товаров"
+
+msgid "Product Files"
+msgstr "Файлы, связанные с товаром"
+
+msgid "You can attach files such as manual to the merchandise(s) here."
+msgstr "Здесь вы можете прикреплять к товару(ам) такие файлы, как руководство пользователя."
+
+msgid "Showcase your merchandise here."
+msgstr "Выставьте свой товар здесь."
+
+msgid "All the orders that have this product."
+msgstr "Все заказы с данным товаром."
+
+msgid "No orders found"
+msgstr "Заказы не найдены"
+
+msgid "This product is currently not orderable."
+msgstr "Данный товар не доступен для заказа в настоящий момент."
+
+msgid "Add a new product"
+msgstr ""
+
+msgid "You are adding a product."
+msgstr "Вы добавляете товар."
+
+msgid ""
+"To make it stand out, give it an awesome description and picture. This is "
+"what will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr "Чтобы этотовару выделиться, дайте ему потрясающее описание и картину. Именно это поможет вашим покупателям узнать о ваших продуктах. Это также поможет покупателям найти их в магазине и в Интернете."
+
+msgid ""
+"You can set its price or size and many other things in the option boxes for "
+"each product."
+msgstr "Вы можете установить его цену или размер и многое другое в списках опций для каждого продукта."
+
+msgid "If you know the product manufacturer, it can be set here."
+msgstr "Если вы знаете производителя продукта, его можно указать здесь."
+
+msgid "Additional Information"
+msgstr "Дополнительная информация"
+
+msgid "Images"
+msgstr "Изображения"
+
+msgid "Contact Group Pricing"
+msgstr "Цена для группы контактов"
+
+msgid ""
+"Set specific prices for your customer segments such as loyalty, tier status "
+"or season here."
+msgstr "Задайте конкретные цены для сегментов ваших клиентов, таких как лояльные клиенты, привилегированные клиенты или сезонные клиенты."
+
+msgid "Contact Group Discounts"
+msgstr ""
+
+msgid ""
+"Here you can set individual discount amounts for different contact groups. \" +\n"
+"                    \"The discount amount may be visible on storefront. These groups are defined in"
+msgstr ""
+
+msgid "Cross-sells"
+msgstr "Кросс-продажи"
+
+msgid "Cross-sell"
+msgstr "Осуществить кросс-продажу"
+
+msgid "File "
+msgstr "Файл"
+
+#, python-format
+msgid "Logical count: %(logical_count)s %(sales_unit)s"
+msgstr ""
+
+#, python-format
+msgid "Physical count: %(physical_count)s %(sales_unit)s"
+msgstr ""
+
+msgid "This product is not yet a package."
+msgstr ""
+
+msgid "To create a package, choose products below."
+msgstr ""
+
+msgid "Package Products"
+msgstr ""
+
+msgid "Simple Variation Children"
+msgstr ""
+
+msgid "Variable Children"
+msgstr ""
+
+msgid "Combination"
+msgstr "Комбинация"
+
+msgid "Variables"
+msgstr "Переменные"
+
+msgid "This product is not yet a variation."
+msgstr "Этот товар ещё не является вариацией."
+
+msgid "To create a simple variation, choose products below."
+msgstr "Создайте простую вариацию, выберите товары ниже."
+
+msgid ""
+"To create a variation with multiple variables, create the variables on the "
+"Variables tab and then link them to products here."
+msgstr "Чтобы создать вариацию с несколькими переменными, создайте переменные во вкладке «Переменные», а затем привяжите их к продуктам здесь."
+
+msgid "Recent Orders"
+msgstr "Последние заказы"
+
+msgid "Store Overview"
+msgstr "Обзор магазина"
+
+msgid "Customers"
+msgstr "Клиенты"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "MTD"
+msgstr "С начала месяца на сегодняшний день"
+
+msgid "YTD"
+msgstr "C начала года на сегодняшний день"
+
+msgid "Totals"
+msgstr "Всего"
+
+msgid ""
+"Your shop currently has some sample data installed. Select below which "
+"objects you want to uninstall."
+msgstr "В настоящий момент в вашем магазине установлены примеры данных. Выберите ниже те объекты, которые вы хотели бы удалить."
+
+msgid ""
+"After the consolidation, preserved objects will lose their status of Sample "
+"Object and it will be no longer possible to distinguish them from the "
+"others."
+msgstr "После объединения, сохранённые объекты потеряют свой статус образцов и их будет невозможно отличить от остальных товаров."
+
+msgid "Caution: this action cannot be undone."
+msgstr "Осторожно: данное действие не может быть отменено."
+
+msgid "Consolidate"
+msgstr "Объединить"
+
+msgid "Your shop has no sample data installed!"
+msgstr "У вашего магазина нет примера данных."
+
+msgid "Select the objects you want to install"
+msgstr "Выбрать объекты, которые вы хотите установить"
+
+msgid "Manually process payments"
+msgstr "Провести платёж вручную"
+
+msgid "Manage payments outside of Shuup"
+msgstr "Управлять оплатой за пределами Shuup"
+
+msgid "Manual"
+msgstr "Вручную"
+
+msgid "Manual process shipping"
+msgstr "Доставка своими силами"
+
+msgid "Handle shipping outside of Shuup"
+msgstr "Организовать доставку за пределами Shuup"
+
+msgid "Deactivate"
+msgstr "Деактивировать"
+
+msgid "Activate"
+msgstr "Активировать"
+
+msgid ""
+"Define price based basket weight range. Range minimum is counted in range "
+"only as zero."
+msgstr "Определить ценовой диапазон корзины. Минимальный диапазон учитывается как ноль."
+
+msgid "Behavior"
+msgstr ""
+
+msgid "Behavior component type"
+msgstr ""
+
+msgid ""
+"The behaviors for this service. These behaviors can be used to add costs to "
+"the order or can be used to restrict availability of the service."
+msgstr "Особенности данного сервиса. Данные особенности могут быть использованы для добавления стоимости к заказу или для установки ограничений доступа сервиса."
+
+msgid "Add component"
+msgstr "Добавить компонент"
+
+msgid "Order Configuration"
+msgstr "Конфигурации заказа"
+
+#, python-format
+msgid ""
+"The field \"Reference number prefix\" is disabled because the order "
+"reference number generation method doesn't support a prefix. You can edit "
+"this setting from <a href=\"%(url)s\">system settings</a>."
+msgstr ""
+
+msgid "Shop Images"
+msgstr "Изображения магазина"
+
+msgid "Maintenance Mode"
+msgstr "Режим поддержки"
+
+msgid "Contact Address"
+msgstr "Контактный адрес"
+
+msgid "News &amp; Updates"
+msgstr ""
+
+msgid "Support"
+msgstr "Поддержка"
+
+msgid "Community Links"
+msgstr "Ссылки сообщества"
+
+msgid "Community Forums"
+msgstr "Форумы сообщества"
+
+msgid "Shuup Blog"
+msgstr "Блог Shuup"
+
+msgid "Contact Us"
+msgstr "Связаться с нами"
+
+msgid "About Shuup Telemetry"
+msgstr "О телеметрии в сервисе Shuup"
+
+msgid "Shuup will occasionally send telemetry data to a Shuup.com server."
+msgstr "Shuup время от времени будет высылать телеметрические данные на сервер Shuup.com"
+
+#, python-format
+msgid ""
+"The data contains an unique installation key, as well as the hostname of the"
+" installation (as sent by the visiting browser; currently "
+"<code>%(host)s</code>)."
+msgstr ""
+
+msgid ""
+"No business data or other customer information is ever sent. Shuup.com only "
+"uses the telemetry data for statistical purposes and for insights about the "
+"software's installation base."
+msgstr "Никакие бизнес-данные и другая информация о клиентах никогда не отправляется. Shuup.com использует только телеметрические данные для статистических целей и для ознакомления с базой установки программного обеспечения."
+
+msgid "Opt-in / opt-out"
+msgstr "Принять участие / не принимать участия"
+
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shuup.com."
+msgstr ""
+
+msgid "Thank you for your valuable contribution."
+msgstr "Спасибо за ваш ценный вклад."
+
+msgid "Opt out"
+msgstr "Не принимать участия"
+
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shuup telemetry."
+msgstr ""
+
+msgid "Opt in"
+msgstr "Принять участие"
+
+msgid "Last Telemetry"
+msgstr "Последняя телеметрия"
+
+msgid ""
+"Telemetry submission is currently suspended; data will only be sent 24 hours"
+" after installation if still opted in at that point."
+msgstr "Загрузка телеметрии в настоящий момент приостановлена; Данные будут отправлены только через 24 часа после установки, если это ещё будет акутально."
+
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
+msgstr ""
+
+msgid "See the data that was submitted."
+msgstr "Смотреть отправленную информацию"
+
+msgid "Telemetry data has not yet been submitted."
+msgstr "Данные телеметрии ещё не были загружены."
+
+msgid "Telemetry Data"
+msgstr "Данные телеметрии"
+
+msgid "Here is an example of the data that would be submitted right now."
+msgstr "Здесь пример информации, которая будет подтверждена прямо сейчас."
+
+msgid "User Information"
+msgstr "Информация пользователя"
+
+#, python-format
+msgid "Send a password reset email to %(email)s?"
+msgstr ""
+
+msgid "Send Reset Email"
+msgstr "Выслать письмо для повторной установки"
+
+msgid ""
+"Please fill out the following information to get your store up and running"
+msgstr "Пожалуйста, заполните следующую информацию для того, чтобы начать работу вашего магазина"
+
+msgid "All information entered here can be edited later."
+msgstr "Вся введённая здесь информация может быть отредактирована позже."
+
+msgid "Click here for help"
+msgstr "Нажмите здесь для помощи"
+
+msgid "Create new"
+msgstr "Создать новый"
+
+#, python-format
+msgid "New %(model)s"
+msgstr ""
+
+msgid "Discard Changes"
+msgstr "Отменить изменения"
+
+msgid "Save and Create New"
+msgstr "Сохранить и создать новый"
+
+#, python-format
+msgid "Are you sure you wish to delete %s?"
+msgstr ""
+
+#, python-format
+msgid "Required. %s"
+msgstr ""
+
+#, python-format
+msgid "Optional. %s"
+msgstr ""
+
+#, python-format
+msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
+msgstr "Показаны %(per_page)s из  %(n_items)s %(verbose_name_plural)s"
+
+msgid "objects"
+msgstr "Объекты"
+
+msgid "Unknown error"
+msgstr "Неизвестный пользователь"
+
+msgid "Mass Action"
+msgstr "Массовое действие"
+
+#, python-format
+msgid "Can't view this page. %(reason)s"
+msgstr ""
+
+msgid "Log in with different credentials..."
+msgstr "Войти с другими учётными данными..."
+
+msgid "You must be logged in."
+msgstr "Вы должны войти на сайт."
+
+msgid "You must be a staff member."
+msgstr "Вы должны быть сотрудником."
+
+#, python-format
+msgid "You do not have the required permissions: %s"
+msgstr ""
+
+msgid "Unnamed"
+msgstr "Без названия"
+
+msgid "Item"
+msgstr ""
+
+#, python-format
+msgid "New %s created."
+msgstr ""
+
+#, python-format
+msgid "%s edited."
+msgstr ""
+
+#, python-format
+msgid "New %s"
+msgstr ""
+
+#, python-format
+msgid "Unnamed %s"
+msgstr ""
+
+#, python-format
+msgid "Only one %(model)s permitted."
+msgstr ""
+
+msgid "Mass Edit"
+msgstr "Массовое редактирование"
+
+msgid "Storefront"
+msgstr "Витрина"
+
+msgid "General"
+msgstr "Общее"
+
+msgid "Complete wizard"
+msgstr "Закончите установку"
+
+msgid "Complete the setup wizard"
+msgstr "Завершитер работу мастера установки"
+
+msgid "Publish your store"
+msgstr "Опубликовать ваш магазин"
+
+msgid "Let customers browse your store and make purchases"
+msgstr "Позволить клиентам просматривать ваш магазин и совершать покупки"
+
+msgid "Publish shop"
+msgstr "Опубликовать магазин"
+
+msgid ""
+"A reset password email was sent. Please, follow the instructions to set a "
+"new password."
+msgstr ""
+
+msgid "This recovery link is invalid."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr ""
+
+#, python-format
+msgid "Couldn't get selections for %s."
+msgstr ""

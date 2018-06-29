@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-15 13:42+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>, 2017\n"
+"Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Shuup Customer Group Pricing"
+msgstr "Цена для группы контактов Shuup"
+
+#, python-format
+msgid "Price (%(shop)s/%(group)s)"
+msgstr "Цена (%(shop)s/%(group)s)"
+
+#, python-format
+msgid "Discount (%(shop)s/%(group)s)"
+msgstr ""
+
+msgid "Customer Group Price"
+msgstr "Цена для группы контактов"
+
+msgid ""
+"Customer group prices can be listed, fetched, created, updated and deleted."
+msgstr ""
+"Цены для группы клиентов могут быть указаны, получены, созданы, обновлены и "
+"удалены."
+
+msgid "product"
+msgstr "Товар"
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "contact group"
+msgstr "группа контактов"
+
+msgid "price"
+msgstr "стоимость"
+
+msgid "product price"
+msgstr "стоимость товара"
+
+msgid "product prices"
+msgstr "стоимости товаров"
+
+msgid "discount amount"
+msgstr ""
+
+msgid "product discount"
+msgstr ""
+
+msgid "product discounts"
+msgstr ""
+
+msgid "Customer Group Pricing"
+msgstr "Цена для группы клиентов"
+
+msgid "Customer Group Discount"
+msgstr ""
+
+msgid "Contact Group Discount"
+msgstr ""
+
+msgid ""
+"Here you can set individual discount amounts for different contact groups. "
+"The discount amount may be visible on storefront. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr ""
+
+msgid "Contact Group Pricing"
+msgstr "Цена для группы контактов"
+
+msgid ""
+"Here you can set individual pricing for different contact groups. This can "
+"be useful for special discounts or for B2B orders. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr ""
+"Здесь вы можете установить индивидуальную цену для разных контактных групп. "
+"Это может быть полезно для специальных скидок или B2B заказов. Эти группы "
+"определены в разделе «Настройки контактов - группы контактов»."
