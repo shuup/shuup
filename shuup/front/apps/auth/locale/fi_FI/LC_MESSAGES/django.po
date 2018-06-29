@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
@@ -11,26 +11,25 @@
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016
+# Panu Tulimäki <panu@shuup.com>, 2016,2018
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
-# tomijarvi <tomi@jarvi.pro>, 2015
+# Tomi Järvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-28 14:02+0000\n"
-"PO-Revision-Date: 2017-02-10 07:38+0000\n"
-"Last-Translator: Janne Tammi <janne@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2018-06-26 18:06+0000\n"
+"PO-Revision-Date: 2018-06-28 20:11+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
@@ -38,10 +37,7 @@ msgid ""
 "Please enter a correct %(username)s and password. Note that both fields may "
 "be case-sensitive. In case of multiple accounts with same email only "
 "username can be used to login."
-msgstr ""
-"Syötä oikea %(username)s ja salasana. Huomaathan, että molemmissa kentissä "
-"voi olla isoja ja pieniä kirjaimia. Jos teillä on useita tilejä samalla "
-"sähköpostilla niin vain käyttäjätunnusta voidaan käyttää kirjautumiseen."
+msgstr "Syötä oikea %(username)s ja salasana. Huomaathan, että molemmissa kentissä voi olla isoja ja pieniä kirjaimia. Jos teillä on useita tilejä samalla sähköpostilla niin vain käyttäjätunnusta voidaan käyttää kirjautumiseen."
 
 msgid "This account is inactive."
 msgstr "Tämä tili ei ole aktiivinen"
@@ -50,15 +46,14 @@ msgid "Username or email address"
 msgstr "Käyttäjänimi tai sähköpostiosoite"
 
 msgid "You are not allowed to login to this shop."
-msgstr "Sinulla ei ole oikeutta kirjautua sisään tähän kauppaan."
+msgstr "Sinulla ei ole lupaa kirjautua tähän kauppaan."
 
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
 #, python-format
 msgid "You have already logged in as <strong>%(username)s</strong>"
-msgstr ""
-"Olet jo kirjautunut sisään käyttäjätunnuksella <strong>%(username)s</strong>"
+msgstr "Olet jo kirjautunut sisään käyttäjätunnuksella <strong>%(username)s</strong>"
 
 msgid "Go to Homepage"
 msgstr "Etusivulle"
@@ -79,8 +74,7 @@ msgid "Recover your password"
 msgstr "Palauta salasanasi"
 
 msgid "You can recover your password with either username or email."
-msgstr ""
-"Voit palauttaa salasanasi joko käyttäjätunnuksella tai sähköpostiosoitteella."
+msgstr "Voit palauttaa salasanasi joko käyttäjätunnuksella tai sähköpostiosoitteella."
 
 msgid "Send password recovery instructions"
 msgstr "Lähetä salasanan palautusohjeet"
@@ -109,19 +103,15 @@ msgstr "Mikäli olet unohtanut, käyttäjätunnuksesi on %(username)s"
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
-msgstr ""
-"Sait tämän sähköpostin koska pyysit salasananpalautusta sivustolla "
-"%(site_name)s."
+msgstr "Sait tämän sähköpostin koska pyysit salasananpalautusta sivustolla %(site_name)s."
 
 msgid "Please go to the following page and choose a new password:"
 msgstr "Siirry oheiselle sivulle ja valitse uusi salasana:"
 
 msgid ""
-"If a user account is associated with the information you entered, you should "
-"receive instructions on how to reset your password shortly."
-msgstr ""
-"Mikäli käyttäjätili on liitetty antamiisi tietoihin, saat pian salasanan "
-"resetointiohjeet sähköpostiisi."
+"If a user account is associated with the information you entered, you should"
+" receive instructions on how to reset your password shortly."
+msgstr "Mikäli käyttäjätili on liitetty antamiisi tietoihin, saat pian salasanan resetointiohjeet sähköpostiisi."
 
 msgid "This recovery link is invalid."
 msgstr "Tämä palautuslinkki on virheellinen."

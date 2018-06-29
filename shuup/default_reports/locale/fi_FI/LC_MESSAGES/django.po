@@ -1,24 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Janne Tammi <janne@shuup.com>, 2017
-# Panu Tulimäki <panu@shuup.com>, 2016
+# Panu Tulimäki <panu@shuup.com>, 2016,2018
 # Shuup Admin <admin@shuup.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-29 07:50+0000\n"
-"PO-Revision-Date: 2017-11-29 10:08+0200\n"
-"Last-Translator: Janne Tammi <janne@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"PO-Revision-Date: 2018-06-28 19:59+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Customer"
@@ -160,7 +159,7 @@ msgid "Rate (%)"
 msgstr "Määrä (%)"
 
 msgid "Pre-tax Total"
-msgstr "Veroton kokonaishinta"
+msgstr "Veroton yhteensä"
 
 msgid "Total Tax Amount"
 msgstr "Veron määrä yhteensä"

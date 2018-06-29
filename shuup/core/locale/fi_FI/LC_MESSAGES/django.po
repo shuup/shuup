@@ -27,8 +27,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:48+0000\n"
-"PO-Revision-Date: 2018-06-01 16:15+0000\n"
+"POT-Creation-Date: 2018-05-18 13:03+0000\n"
+"PO-Revision-Date: 2018-06-28 21:32+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,9 @@ msgstr "Attribuutit"
 
 msgid "Attributes can be listed, fetched, created, updated and deleted."
 msgstr "Attribuutteja voi listata, noutaa, luoda, päivittää ja poistaa."
+
+msgid "Product does not exist."
+msgstr "Tuote ei ole olemassa."
 
 msgid "Basket"
 msgstr "Kori"
@@ -118,6 +121,12 @@ msgstr "Tilaukset"
 msgid "Orders can be listed, fetched, created, updated and canceled."
 msgstr "Tilauksia voi listata, noutaa, luoda, päivittää ja peruuttaa."
 
+msgid "Order is already fully paid"
+msgstr "Tilaus on maksettu"
+
+msgid "Payment created"
+msgstr "Maksu luotu"
+
 msgid "Product Media"
 msgstr "Tuotemedia"
 
@@ -170,6 +179,27 @@ msgstr "Tuotteen pakettilinkki"
 msgid "Products package links can be fetched, updated and deleted."
 msgstr "Tuotepakettilinkit voidaan hakea, päivittää ja poistaa."
 
+msgid "Order can not be refunded at the moment."
+msgstr "Tilausta ei voi hyvittä tällä hetkellä."
+
+msgid "Can not refund line."
+msgstr "Riviä ei voi hyvittää."
+
+msgid "Invalid refund amount."
+msgstr "Virheellinen hyvityksen summa."
+
+msgid "Refund exceeds amount."
+msgstr "Hyvityksen summa ylittää rajan."
+
+msgid "Refund exceeds quantity."
+msgstr "Hyvitys ylittää määrän."
+
+msgid "Refund created."
+msgstr "Hyvitys luotu."
+
+msgid "It is not possible to create the refund."
+msgstr "Hyvityksen luonti ei ole mahdollista."
+
 msgid "Shipments"
 msgstr "Lähetykset"
 
@@ -185,8 +215,16 @@ msgstr "Kaupat voidaan listata, hakea, luoda, päivittää ja poistaa."
 msgid "Suppliers"
 msgstr "Toimittajat"
 
-msgid "Suppliers can be listed and fetched and stock can be updated."
-msgstr "Toimittajat voidaan listata hakea ja varastot voidaan päivittää."
+msgid ""
+"Suppliers can be listed, fetched, created, updated and deleted. Stocks can "
+"be updated."
+msgstr "Toimittajan voidaan listata, hakea, luoda, päivittää ja poistaa. Varastosaldoja voi päivittää."
+
+msgid "Tax"
+msgstr "Vero"
+
+msgid "Taxes can be listed, fetched, created, updated and deleted."
+msgstr "Verot voidaan listata, hakea, luoda, päivittää ja poistaa."
 
 msgid "Tax Class"
 msgstr "Veroluokka"
@@ -221,6 +259,31 @@ msgstr "Määrä %s ei kelpaa."
 msgid "This variation is not available."
 msgstr "Variaatio ei ole saatavilla."
 
+msgid "Customer is not active."
+msgstr "Asiakas ei ole aktiivinen."
+
+msgid "Shop does not have permission for this customer."
+msgstr "Kaupalle ei ole oikeuksia käsitellä tätä asiakasta."
+
+msgid "You don't have the required permission to assign this customer."
+msgstr "Sinulla ei ole riittäviä oikeuksia lisätä tätä käyttäjää tilaukselle."
+
+msgid "You must specify the order when customer is a company."
+msgstr "Sinun tulee tarkentaa tilausta kun asiakas on yritys."
+
+msgid "Invalid customer."
+msgstr "Virheellinen asiakas."
+
+msgid "Orderer is not member of the company."
+msgstr "Tilaaja ei ole yrityksen jäsen."
+
+msgid "You are not member of the company."
+msgstr "Sinä et ole tämän yrityksen jäsen."
+
+#, python-format
+msgid "Basket loading failed: Incompatible basket (%s)"
+msgstr "Korin lataus epäonnistui: Virheellinen kori (%s)"
+
 msgid "Try to remove some products from the basket and order them separately."
 msgstr "Voit koittaa poistaa tuotteita ostoskorista ja tilata ne erikseen."
 
@@ -240,6 +303,9 @@ msgstr "Älä muuta tätä arvoa, ellet ole täysin varma mitä olet tekemässä
 
 msgid "Error"
 msgstr "Virhe"
+
+msgid "No shop!"
+msgstr "Ei kauppaa!"
 
 msgid "shipping address"
 msgstr "toimitusosoite"
@@ -652,11 +718,17 @@ msgstr "kontaktiryhmät"
 msgid "Can't delete. This object is protected."
 msgstr "Ei voi poistaa"
 
+msgid "modified on"
+msgstr "muutettu"
+
 msgid "active"
 msgstr "aktiivinen"
 
 msgid "Check this if the contact is an active customer."
 msgstr "Valitse tämä, mikäli kontakti on aktiivinen asiakas."
+
+msgid "Inform which shops have access to this contact."
+msgstr "Valitse kaupat joilla on pääsy tähän kontaktiin."
 
 msgid "default shipping method"
 msgstr "oletustoimitustapa"
@@ -851,6 +923,18 @@ msgstr "valmistaja"
 msgid "manufacturers"
 msgstr "valmistajat"
 
+msgid "file"
+msgstr "tiedosto"
+
+msgid "Select which shops you would like the files to be visible in."
+msgstr "Valitse kaupat joille haluat että tiedostot on saatavilla."
+
+msgid "folder"
+msgstr "kansio"
+
+msgid "Select which shops you would like the folder to be visible in."
+msgstr "Valitse kaupat joille haluat että kansio on saatavilla."
+
 msgid "product"
 msgstr "tuote"
 
@@ -959,14 +1043,14 @@ msgstr "ei mitään"
 msgid "Initial"
 msgstr "Alustava"
 
-msgid "Processing"
-msgstr "Käsittelyssä"
-
 msgid "Complete"
 msgstr "Valmis"
 
 msgid "Canceled"
 msgstr "Peruutettu"
+
+msgid "Processing"
+msgstr "Käsittelyssä"
 
 msgid "Received"
 msgstr "Vastaanotettu"
@@ -1012,9 +1096,6 @@ msgstr "tilauksen tila"
 msgid "order statuses"
 msgstr "tilausten tilat"
 
-msgid "modified on"
-msgstr "muutettu"
-
 msgid "order identifier"
 msgstr "tilaustunniste"
 
@@ -1026,6 +1107,9 @@ msgstr "viitenumero"
 
 msgid "email address"
 msgstr "sähköpostiosoite"
+
+msgid "customer groups"
+msgstr "asiakasryhmät"
 
 msgid "creating user"
 msgstr "luojakäyttäjä"
@@ -1150,9 +1234,6 @@ msgstr "välimuistimerkintä"
 
 msgid "cache entries"
 msgstr "välimuistimerkinnät"
-
-msgid "file"
-msgstr "tiedosto"
 
 msgid "documentation"
 msgstr "dokumentaatio"
@@ -1363,6 +1444,26 @@ msgid "Unit for displaying quantities of this product"
 msgstr "Yksikkö, jossa tämän tuotteen määrät näytetään"
 
 msgid ""
+"Enter a descriptive name for your product. This will be its title in your "
+"store."
+msgstr "Syötä kuvaava nimi tuotteelle. Tästä tulee tuotteen otsikko kaupassa."
+
+msgid ""
+"To make your product stand out, give it an awesome description. This is what"
+" will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr "Auttaaksesi tuotteitasi nousemaan esiin, lisää niille mahtava kuvaus. Tämä auttaa asiakkaitasi oppimaan tuotteistasi, se myös auttaa hakukoneita löytämään kauppasi ja tuotteesi."
+
+msgid "short description"
+msgstr "lyhyt kuvaus"
+
+msgid ""
+"Enter a short description for your product. The short description will be "
+"used to get the attention of your customer with a small but precise "
+"description of your product."
+msgstr "Lisää lyhyt kuvaus tuotteestasi. Lyhyt kuvaus on kätevä tapa saad aasiakkaan huomio."
+
+msgid ""
 "Invalid display unit: Internal unit of the selected display unit does not "
 "match with the sales unit of the product"
 msgstr "Näyttöyksikkö ei kelpaa: Valitun näyttöyksikön sisäinen yksikkö ei vastaa tuotteen myyntiyksikköä"
@@ -1471,8 +1572,11 @@ msgstr "laskettu"
 msgid "bought with"
 msgstr "ostettu samalla"
 
-msgid "shipped"
-msgstr "lähetetty"
+msgid "not shipped (non-deliverable)"
+msgstr "ei toimitettava"
+
+msgid "shipped (deliverable)"
+msgstr "toimitettava"
 
 msgid "no verification required"
 msgstr "ei vaadi vahvistusta"
@@ -1624,26 +1728,6 @@ msgid ""
 "Select a manufacturer for your product. These are defined in Products "
 "Settings - Manufacturers"
 msgstr "Valitse tuotteen valmistaja. Nämä määritellään Tuotteet - Valmistajat"
-
-msgid ""
-"Enter a descriptive name for your product. This will be its title in your "
-"store."
-msgstr "Syötä kuvaava nimi tuotteelle. Tästä tulee tuotteen otsikko kaupassa."
-
-msgid ""
-"To make your product stand out, give it an awesome description. This is what"
-" will help your shoppers learn about your products. It will also help "
-"shoppers find them in the store and on the web."
-msgstr "Auttaaksesi tuotteitasi nousemaan esiin, lisää niille mahtava kuvaus. Tämä auttaa asiakkaitasi oppimaan tuotteistasi, se myös auttaa hakukoneita löytämään kauppasi ja tuotteesi."
-
-msgid "short description"
-msgstr "lyhyt kuvaus"
-
-msgid ""
-"Enter a short description for your product. The short description will be "
-"used to get the attention of your customer with a small but precise "
-"description of your product."
-msgstr "Lisää lyhyt kuvaus tuotteestasi. Lyhyt kuvaus on kätevä tapa saad aasiakkaan huomio."
 
 msgid ""
 "Enter a URL Slug for your product. This is what your product page URL will "
@@ -2137,6 +2221,9 @@ msgstr "Valitse moduuli toimittajalle. Toimittajamoduulit määrittelevät varas
 msgid "module data"
 msgstr "moduulin data"
 
+msgid "You can select which shops the supplier is available to."
+msgstr "Voit valita mille kaupoille toimittaja on saatavilla."
+
 msgid "Cannot change business critical fields of Tax that is in use"
 msgstr "Käytössäolevan veron liiketoimintakriittisiä kenttiä ei voi muokata"
 
@@ -2342,6 +2429,18 @@ msgstr "Tätä kenttää ei voi muuttaa, koska se on suojattu."
 
 msgid "Region"
 msgstr "Alue"
+
+msgid "Username"
+msgstr "Käyttäjänimi"
+
+msgid "Email"
+msgstr "Sähköposti"
+
+msgid "Please provide either username or email, not both."
+msgstr "Ole hyvä ja anna käyttäjätunnus tai sähköposti, ei molempia."
+
+msgid "Please provide either username or email."
+msgstr "Ole hyvä ja anna käyttäjätunnus tai sähköposti."
 
 msgid "First Last"
 msgstr "Ensimmäinen Viimeinen"

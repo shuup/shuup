@@ -5,14 +5,15 @@
 # Translators:
 # Aarni Koskela, 2015
 # Juha Kujala, 2015-2016
+# Panu Tulimäki <panu@shuup.com>, 2018
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2017-09-23 22:00+0000\n"
-"Last-Translator: Janne Tammi <janne@shuup.com>\n"
+"PO-Revision-Date: 2018-06-28 19:51+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,9 +63,11 @@ msgstr "Poista"
 msgid "Are you sure you wish to delete this step?"
 msgstr "Oletko varma että haluat poistaa tämän vaiheen?"
 
-#, javascript-format
-msgid "If %s of these conditions hold..."
-msgstr "Jos %s näistä ehdoista pitää..."
+msgid "If"
+msgstr "Jos"
+
+msgid "of these conditions hold..."
+msgstr "nämä ehdot täyttyvät..."
 
 msgid "then execute these actions..."
 msgstr "jonka jälkeen suorita nämä toimet..."
