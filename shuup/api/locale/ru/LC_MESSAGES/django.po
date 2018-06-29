@@ -1,0 +1,107 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-15 19:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>, 2017\n"
+"Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "API"
+msgstr "Программный интерфейс приложения - API"
+
+msgid "Disabled"
+msgstr "Отключено"
+
+msgid "Admin Users"
+msgstr "Администратор"
+
+msgid "Authenticated Users - Read/Write"
+msgstr "Аутентифицированные пользователи - чтение / запись"
+
+msgid "Authenticated Users - Read only"
+msgstr "Аутентифицированные пользователи - только чтение"
+
+msgid "Public Users - Read/Write"
+msgstr "Публичные пользователи - чтение / запись"
+
+msgid "Public Users - Read only"
+msgstr "Публичные пользователи - только чтение"
+
+msgid "API permissions saved"
+msgstr "Разрешения API сохранены"
+
+msgid "API Permissions"
+msgstr "Разрешения API"
+
+msgid "Configure API permissions"
+msgstr "Установите настройки доступа для API"
+
+msgid ""
+"Please, configure the API permission level for each service by selecting the"
+" level below."
+msgstr ""
+"Пожалуйста, настройте  уровни разрешений для программного интерфейса "
+"приложения для каждой службы, выбрав уровень ниже."
+
+msgid "Note:"
+msgstr "Примечание:"
+
+msgid "No one can make requests."
+msgstr "Никто не может делать запросы."
+
+msgid "Admin users"
+msgstr "Администратор"
+
+msgid ""
+"Only administrators can make requests to the API to fetch, save, delete or "
+"update data."
+msgstr ""
+"Только администраторы могут отправлять запросы в API для извлечения, "
+"сохранения, удаления или обновления данных."
+
+msgid "Authenticated users - Read/Write"
+msgstr "Аутентифицированные пользователи смогут читать и записывать"
+
+msgid "Any authenticated user can fetch, save, delete or update data."
+msgstr ""
+"Любой аутентифицированный пользователь может извлекать, сохранять, удалять "
+"или обновлять данные."
+
+msgid "Authenticated users - Read"
+msgstr "Аутентефицированные пользователи смогут читать"
+
+msgid "Any authenticated user can only fetch data."
+msgstr "Любой аутентифицированный пользователь может только получать данные."
+
+msgid "Public users - Read/Write"
+msgstr "Любой пользователь сможет читать и записывать"
+
+msgid ""
+"Any user (authenticated or not) can fetch, save, delete or update data."
+msgstr ""
+"Любой пользователь (аутентифицированный и нет) может извлекать, сохранять, "
+"удалять или обновлять данные."
+
+msgid "Use this with caution."
+msgstr "Используйте это с осторожностью."
+
+msgid "Public users - Read"
+msgstr "Любой пользователь сможет читать"
+
+msgid "Any user (authenticated or not) can only fetch data."
+msgstr ""
+"Любой пользователь (аутентифицированный и нет) может только получать данные."
+
+msgid "Save"
+msgstr "Сохранить"

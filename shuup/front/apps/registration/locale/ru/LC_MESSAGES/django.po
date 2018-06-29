@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Дмитрий Черный <bl0x61ck@gmail.com>, 2016
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-26 18:06+0000\n"
+"PO-Revision-Date: 2018-06-28 17:30+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Name of the company"
+msgstr "Название компании"
+
+msgid "Registration Received"
+msgstr "Регистрация прошла успешно"
+
+msgid "Customer"
+msgstr "Клиент"
+
+msgid "Customer Email"
+msgstr "Электронный адрес клиента"
+
+msgid "Activation URL"
+msgstr "Адрес активации"
+
+msgid "Is User Active"
+msgstr "Активен ли пользователь"
+
+msgid "Company Registration Received"
+msgstr "Регистрация компании прошла успешно"
+
+msgid "Company Approved"
+msgstr "Компания одобрена"
+
+msgid "Company has been activated."
+msgstr "Компания должна быть активирована."
+
+msgid "Send Registration Received Email"
+msgstr "Выслать электронное письмо о данных регистрации"
+
+msgid "Send email when a user registers."
+msgstr "Высылать электронное письмо при регистрации клиента."
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a user get registered."
+msgstr "Этот скрипт отправит электронное сообщение пользователю или на любой настроенный электронный адрес сразу после регистрации пользователя."
+
+msgid "{{ order.shop }} - Welcome!"
+msgstr "Добро пожаловать {{ order.shop }}!"
+
+msgid "Send Company Registration Received Email"
+msgstr "Выслать электронное письмо о данных регистрации"
+
+msgid "Send email when a user registers as a company."
+msgstr "Отправлять электронную почту, когда пользователь регистрируется как компания."
+
+msgid "Send Company Activated Email"
+msgstr "Отправить компании активационное электронное письмо"
+
+msgid "Notify company's contact person that company account is activated"
+msgstr "Сообщите сотруднику компании, что учетная запись компании активирована"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr "Этот скрипт отправит электронное письмо пользователю или получателю, электронное письмо сконфигурировано и отправиться сразу после активации компании."
+
+msgid "Account activation"
+msgstr "Активация аккаунта"
+
+msgid "Account activation failed."
+msgstr "Ошибка активации аккаунта!"
+
+msgid "Register as a Company"
+msgstr "Зарегистрироваться как компания"
+
+msgid "Company Registration"
+msgstr "Регистрация компании"
+
+msgid "Company information"
+msgstr "Информация о компании"
+
+msgid "Company billing information"
+msgstr "Платежная информация компании"
+
+msgid "Contact person"
+msgstr "Контактное лицо"
+
+msgid "Contact information for primary company contact"
+msgstr "Контактная информация для контакта с основной компанией"
+
+msgid "Login information"
+msgstr "Данные для входа"
+
+msgid "The information you will log in with."
+msgstr "Информация для входа."
+
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+msgid "Registration"
+msgstr "Регистрация"
+
+msgid "Register as a company."
+msgstr "Зарегистрироваться как компания"
+
+msgid "Activation successful!"
+msgstr "Активация завершена успешно!"
+
+msgid ""
+"Registration complete. Please follow the instructions sent to your email "
+"address."
+msgstr "Регистрация завершена. Пожалуйста следуйте инструкции, отправленной вам на электронный адрес."

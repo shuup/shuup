@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-22 08:36+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: George Voronin <sonictorment@gmail.com>, 2017\n"
+"Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Reports"
+msgstr "Отчёты"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Select the type of report to run."
+msgstr "Выберите тип отчёта для его формирования."
+
+msgid "Custom"
+msgstr "Настраиваемый"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "Running Week (last 7 days)"
+msgstr "Неделя (последние 7 дней)"
+
+msgid "Running Month (last 30 days)"
+msgstr "Месяц (последние 30 дней)"
+
+msgid "This Week"
+msgstr ""
+
+msgid "This Month"
+msgstr "Этот Месяц"
+
+msgid "This Year"
+msgstr "Этот Год"
+
+msgid "All Time"
+msgstr "За всё время"
+
+msgid "Shop"
+msgstr "Магазин"
+
+msgid "Filter report results by shop."
+msgstr "Фильтровать отчет по магазину."
+
+msgid "Date Range"
+msgstr "Временной интервал"
+
+msgid "Filter report results by a date range."
+msgstr "Фильтровать отчёт по временному интервалу."
+
+msgid "Start Date"
+msgstr "Начало Интервала"
+
+msgid "For a custom date range."
+msgstr "Если выбран настраиваемый временной интервал."
+
+msgid "End Date"
+msgstr "Конец Интервала"
+
+msgid "Output Format"
+msgstr "Формат"
+
+msgid "The format to show the report results."
+msgstr "Формат отображения результатов отчёта."
+
+msgid "Download"
+msgstr "Загрузить результат"
+
+msgid "Check this to download the report."
+msgstr "Выберите этот пункт для загрузки результата отчёта."
+
+msgid "Toggle Filters"
+msgstr ""
+
+msgid "Get Report"
+msgstr "Сформировать Отчёт"
+
+msgid "No reports available"
+msgstr ""

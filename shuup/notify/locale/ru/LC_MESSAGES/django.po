@@ -1,0 +1,338 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Translator HIO.E <translater@hiqe.ru>, 2017
+# Иван Набойченко <migmus@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-22 08:36+0000\n"
+"PO-Revision-Date: 2018-06-25 20:59+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Plain text"
+msgstr "Простой текст"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Subject"
+msgstr "Тема"
+
+msgid "Email Body"
+msgstr "Текст электронного письма"
+
+msgid "Content type"
+msgstr "Тип контента"
+
+msgid "Recipient"
+msgstr "Получатель"
+
+msgid "Reply-To"
+msgstr ""
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Fallback language"
+msgstr "Резервный язык"
+
+msgid "Send Identifier"
+msgstr "Выслать идентификатор"
+
+msgid ""
+"If set, this identifier will be logged into the event's log target. If the "
+"identifier has already been logged, the e-mail won't be sent again."
+msgstr "Если установлено, этот идентификатор будет записан в журнал событий. Если идентификатор уже был записан, электронное письмо не будет отправлено заново."
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "Show notification scripts"
+msgstr "Показать сценарий уведомлений"
+
+msgid "Event"
+msgstr "Событие"
+
+msgid "Choose which event to bind this script to."
+msgstr "Выберите, к какому событию привязать данный сценарий"
+
+msgid "Script Name"
+msgstr "Название сценария"
+
+msgid "Type in a descriptive name for your new script."
+msgstr "Введите описательное имя для вашего нового сценария"
+
+msgid "Enable Script"
+msgstr "Активировать сценарий"
+
+msgid "Choose whether this script should be activated when its event fires."
+msgstr "Выберите, должен ли этот сценарий активироваться при срабатывании его события."
+
+msgid ""
+"Warning: Changing the event for an existing script may have unexpected "
+"effects."
+msgstr "Предупреждение. Изменение события для существующего сценария может иметь неожиданные последствия."
+
+msgid "Template"
+msgstr "Шаблон"
+
+msgid "Bind to Variable"
+msgstr "Привязать к переменной."
+
+msgid "Edit Script Contents..."
+msgstr "Редактировать содержимое сценария..."
+
+msgid "Edit Script (advanced)"
+msgstr "Редактировать сценарий (подробно)"
+
+msgid "Edit Template"
+msgstr "Редактировать шаблон"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Enabled"
+msgstr "Включено"
+
+msgid "New Script"
+msgstr "Новый сценарий"
+
+msgid "New From Template"
+msgstr "Новый шаблон \"от\""
+
+msgid "Script created from template!"
+msgstr "Сценарий создан из данного шаблона!"
+
+msgid "Template Script not found!"
+msgstr "Шаблон сценария не найден!"
+
+msgid "Templated script not found!"
+msgstr "Шаблонный сценарий не найден!"
+
+msgid "Script updated!"
+msgstr "Сценарий обновлён!"
+
+msgid ""
+"Check whether the bound value `value` exists and is non-empty and non-zero."
+msgstr "Убедитесь, что связанное \"значение\" существует, что оно не отсутствует и не равно нулю"
+
+msgid "Non-Empty"
+msgstr "Не отсутствует"
+
+msgid "Check whether the bound value `value` is empty or zero."
+msgstr "Убедитесь, что связанное \"значение\" отсутствует или равно нулю."
+
+msgid "Empty"
+msgstr "Пустой"
+
+msgid "none"
+msgstr "ничего"
+
+msgid "unilingual"
+msgstr "неязыковой"
+
+msgid "multilingual"
+msgstr "многоязычный"
+
+msgid "variable only"
+msgstr "Только переменная"
+
+msgid "constant only"
+msgstr "только константа"
+
+msgid "variable or constant"
+msgstr "переменная или константа"
+
+msgid "continue to the next step"
+msgstr "перейти к следующему шагу"
+
+msgid "stop processing"
+msgstr "остановить обработку"
+
+msgid "all"
+msgstr "все"
+
+msgid "any"
+msgstr "любые"
+
+msgid "any shop administrator"
+msgstr "любой администратор магазина"
+
+msgid "a specific user"
+msgstr "определённый пользователь"
+
+msgid "low"
+msgstr "низкий"
+
+msgid "normal"
+msgstr "нормальный"
+
+msgid "high"
+msgstr "высокий"
+
+msgid "critical"
+msgstr "критический"
+
+msgid "shop"
+msgstr ""
+
+msgid "recipient type"
+msgstr "тип получателя"
+
+msgid "recipient"
+msgstr "получатель"
+
+msgid "created on"
+msgstr "создано"
+
+msgid "message"
+msgstr "сообщение"
+
+msgid "priority"
+msgstr "приоритет"
+
+msgid "marked read"
+msgstr "отмеченное, как прочитанное"
+
+msgid "marked read by"
+msgstr "отмеченное, как прочитанное:"
+
+msgid "marked read on"
+msgstr "отмеченное, как прочитанное"
+
+msgid "event identifier"
+msgstr "идентификатор события"
+
+msgid "name"
+msgstr "имя"
+
+msgid "enabled"
+msgstr "включено"
+
+msgid "template identifier"
+msgstr "идентификатор шаблона"
+
+msgid "the template identifier used to create this script"
+msgstr "идентификатор шаблона был использован для создания данного сценария"
+
+msgid "The subject of the email"
+msgstr "Тема письма"
+
+msgid "Email content"
+msgstr "Содержание электронного письма"
+
+msgid "The content of the email."
+msgstr "Содержание электронного письма."
+
+msgid "Customer"
+msgstr "Клиент"
+
+msgid "Other destination"
+msgstr "Другой адресат"
+
+msgid "Send to?"
+msgstr "Отправить:"
+
+msgid ""
+"You can send this email to the customer or to other email of your choice."
+msgstr "Вы можете отправить данное электронное письмо клиенту или на другой адрес по вашему выбору"
+
+msgid "Destination"
+msgstr "Адресат"
+
+msgid "Fill with the destination email address."
+msgstr "Заполнить адрес получателя"
+
+msgid ""
+"Recipient is a required field when you don't want to send the email to "
+"customer."
+msgstr "Получатель является обязательным полем, если вы не хотите отправлять электронное письмо клиенту."
+
+msgid "Edit Script Information"
+msgstr "Редактировать информацию сценария"
+
+msgid "Create a new script"
+msgstr "Создать новый сценарий"
+
+msgid "Script Details"
+msgstr "Подробности сценария"
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "Show available variables"
+msgstr "Показать доступные переменные"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Select the script template to be created"
+msgstr "Выбрать шаблон сценария для его создания"
+
+msgid "Cancel"
+msgstr "Отменить"
+
+msgid "Edit Script"
+msgstr "Редактировать сценарий"
+
+msgid "Edit Step"
+msgstr "Редактировать шаг"
+
+msgid "Done"
+msgstr "Готово"
+
+msgid "Please correct the errors below."
+msgstr "Пожалуйста, исправьте ошибки ниже"
+
+msgid "Variables"
+msgstr "Переменные"
+
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+msgid "Script Template: {}"
+msgstr "Шаблон сценария: {}"
+
+msgid "Configure the Script Template"
+msgstr "Настроить шаблон сценария"
+
+msgid "Modify Script"
+msgstr "Изменить сценарий"
+
+msgid "Create Script"
+msgstr "Создать сценарий"
+
+msgid "Create"
+msgstr "Создать"
+
+msgid "Boolean"
+msgstr "Логическое значение"
+
+msgid "Integer Number"
+msgstr "Целое число"
+
+msgid "Decimal Number"
+msgstr "Десятичное число"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Email Address"
+msgstr "Адрес электронной почты"
+
+msgid "URL Address"
+msgstr "URL-адрес"
+
+msgid "Phone Number"
+msgstr "Номер телефона"

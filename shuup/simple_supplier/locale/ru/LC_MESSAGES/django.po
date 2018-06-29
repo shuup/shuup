@@ -1,0 +1,225 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-11 17:29+0000\n"
+"PO-Revision-Date: 2017-09-22 19:46+0000\n"
+"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Stock management"
+msgstr "Управление стоком"
+
+msgid "SKU"
+msgstr "Артикул"
+
+msgid "Filter by SKU..."
+msgstr "Фильтровать по артиклю..."
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Filter by name..."
+msgstr "Фильтровать по имени..."
+
+msgid "Supplier"
+msgstr "Поставщик"
+
+msgid "Stock information"
+msgstr "Информация о запасах"
+
+msgid "Adjust stock"
+msgstr "Корректировка запасов"
+
+#, python-format
+msgid ""
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr "Добавить %(delta)s %(unit_symbol)s для продукта %(product_name)s акции (%(supplier_name)s)"
+
+#, python-format
+msgid ""
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr "Удалить %(delta)s %(unit_symbol)s для продукта %(product_name)s акции (%(supplier_name)s)"
+
+#, python-format
+msgid "Alert limit for product %(product_name)s set to %(value)s."
+msgstr "Предел предупреждений для продукта %(product_name)s установить равным %(value)s."
+
+msgid "Not allowed"
+msgstr "Не допускается"
+
+msgid "Error, please check submitted values and try again."
+msgstr "Ошибка, пожалуйста проверьте введённые значения и попробуйте снова."
+
+#, python-format
+msgid "Error, please check submitted values and try again (%(error)s)."
+msgstr "Ошибка. Проверьте правильность введенных значений и повторите попытку (%(error)s)."
+
+#, python-format
+msgid "Purchase price per unit (%(currency_name)s)"
+msgstr "Цена покупки за единицу (%(currency_name)s)"
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "Only non-zero values can be added to stock."
+msgstr "Только значения не равные нулю могут быть добавлены в запас."
+
+msgid "Alert limit"
+msgstr "Лимит предупреждений."
+
+msgid "product"
+msgstr "товар"
+
+msgid "supplier"
+msgstr "поставщик"
+
+msgid "created on"
+msgstr "создано"
+
+msgid "created by"
+msgstr "создано"
+
+msgid "delta"
+msgstr "дельта"
+
+msgid "type"
+msgstr "тип"
+
+msgid "alert limit"
+msgstr "лимит предупреждений."
+
+msgid "logical count"
+msgstr "логический подсчёт"
+
+msgid "physical count"
+msgstr "физический подсчёт"
+
+msgid "Alert Limit Reached"
+msgstr "Лимит предупреждений достигнут."
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "Fired in the last 24 hours?"
+msgstr "Выслан в последние 24 часа?"
+
+msgid ""
+"This will be True if this event was already dispatched in the last 24 hours "
+"for the same product and supplier. This is useful to prevent sending "
+"identical notifications in a short period of time."
+msgstr "Это будет Верно, если это событие уже было осуществлено за прошедшие 24 часа для того же самого продукта и поставщика. Это полезно для того, чтобы предотвратить отправку идентичных уведомлений за короткий период времени."
+
+msgid "Send to?"
+msgstr "Отправить?"
+
+msgid "Send email to whom?"
+msgstr "Выслать электронное письмо?"
+
+msgid "Do not send the same email within 24 hours."
+msgstr "Не высылать одно и то же электронное письмо, если не прошло 24 часа."
+
+msgid ""
+"If enabled, avoids sending the same email for the same product and supplier "
+"within 24 hours."
+msgstr "Если включено, избегается рассылка того же самого электронного письма для того же самого продукта и поставщика в течение 24 часов."
+
+msgid "Send Stock Limit Alert Email"
+msgstr "Выслать электронное письмо с предупреждением о количестве оставшегося товара на складе."
+
+msgid ""
+"Send me an email when a product stock is lower than the configured limit."
+msgstr "Выслать мне электронное письмо когда количество товара на складе меньше установленного лимита."
+
+msgid ""
+"This script will send an email to the configured destination alerting about "
+"the a product's low stock of a supplier. You can configure to not send the "
+"same email multiple times in a period of 24 hours. Every time a product's "
+"stock reach its configured limit, this notification will be fired and the "
+"email sent."
+msgstr "Данный скрипт вышлет электронное письмо на указанный адрес с предупреждением о том, что на складе осталось небольшое количество товара. Вы можете ввести настройки, чтобы одно и то же письмо не высылалось несколько раз в течение 24 часов. Каждый раз, когда запас продуктов достигает установленного предела, данное предупреждение будет активировано и письмо отправлено."
+
+msgid "Low stock of: {{ product }} from {{ supplier }}"
+msgstr "Низкий запас: {{ product }} от поставщика {{ supplier }}"
+
+msgid ""
+"Hi!\n"
+"You are receiving this message because the product {{ product}} from {{ supplier }} has a low stock."
+msgstr "Внимание! \nВы получили это сообщение, потому что продукт {{product}} от поставщика {{supplier}} имеет низкий запас на складе."
+
+msgid "Add stock"
+msgstr "Добавить запас"
+
+#, python-format
+msgid ""
+"Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
+"scripts</a> are executed when product stock falls below set quantity."
+msgstr "Предел предупреждения согласно <a href=\"%(notify_url)s\" target=\"_blank\"> сценарию уведомлений </a> выполняются, когда запас продукта падает ниже установленного количества."
+
+msgid "Change alert limit"
+msgstr "Изменить количество для предупреждения"
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"does not have suppliers with %(module_name)s module."
+msgstr "Продукт <a href=\"%(product_url)s\" target=\"_blank\"> %(product_name)s </a> не имеет поставщиков с модулем %(module_name)s."
+
+msgid "Please set suppliers at Purchasing section."
+msgstr "Пожалуйста, выберите поставщиков в пункте покупок."
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"is not stocked."
+msgstr "Продукта <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> нет в наличии."
+
+msgid "Please set product stock behavior at Additional Details section."
+msgstr "Пожалуйста, задайте действия для складирования товара в разделе «Дополнительные сведения»."
+
+#, python-format
+msgid "No suppliers with %(module_name)s available."
+msgstr "Поставщики %(module_name)s отсутствуют."
+
+#, python-format
+msgid ""
+"Please set %(module_name)s module for at least one of the <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr "Пожалуйста, установите модуль%(module_name)s хотя бы для одного из <a href=\"%(supplier_url)s\" target=\"_blank\"> поставщиков </a>."
+
+#, python-format
+msgid "Physical count: %(count)s %(sales_unit)s"
+msgstr "Физическое количество: %(count)s %(sales_unit)s"
+
+#, python-format
+msgid "Logical count: %(count)s %(sales_unit)s"
+msgstr "Логический количество: %(count)s %(sales_unit)s"
+
+#, python-format
+msgid "Value per unit: %(value)s"
+msgstr "Стоимость единицы: %(value)s"
+
+#, python-format
+msgid "Total value: %(value)s"
+msgstr "Общая стоимость: %(value)s"
+
+#, python-format
+msgid "Alert limit: %(limit)s"
+msgstr "Предел количества, для вывода предупреждения: %(limit)s"
+
+msgid "No stock information available."
+msgstr "Информация о запасах недоступна"

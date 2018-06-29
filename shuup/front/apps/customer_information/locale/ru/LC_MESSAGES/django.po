@@ -1,0 +1,219 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-19 05:25+0000\n"
+"PO-Revision-Date: 2018-06-26 05:13+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Shuup Frontend - Customer Information Editing"
+msgstr "Внешний интерфейс Shuup - редактирование информации о клиентах"
+
+msgid "Customer Information"
+msgstr "Информация о клиенте"
+
+msgid "Company Information"
+msgstr "Информация о компании"
+
+msgid "Edit Company Information."
+msgstr "Редактировать информацию о компании."
+
+msgid "Address Book"
+msgstr "Адресная книга"
+
+msgid "Language"
+msgstr "язык"
+
+msgid "Will become default user email when linked"
+msgstr "При подключении по умолчанию будет использоваться электронная почта пользователя."
+
+msgid "Given Tax Number already exists. Please contact support."
+msgstr "Данный налоговый номер уже зарегистрирован. Пожалуйста, свяжитесь со службой поддержки."
+
+msgid "Address Title"
+msgstr "Заголовок адреса"
+
+msgid "Address Type"
+msgstr "Тип адреса"
+
+msgid "Address Status"
+msgstr "Статус адреса"
+
+msgid "Home"
+msgstr "На главную"
+
+msgid "Dashboard"
+msgstr "Панель информации"
+
+msgid "General Information"
+msgstr "Общая информация"
+
+msgid "Contact Information"
+msgstr "Контактная информация"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Default Addresses"
+msgstr "Адреса по умолчанию"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Default Billing Address"
+msgstr "Расчётный адрес по умолчанию"
+
+msgid "No Default Billing Address set."
+msgstr "Расчётный адрес по умолчанию не выбран."
+
+msgid "Default Shipping Address"
+msgstr "Адрес доставки по умолчанию"
+
+msgid "No Default Shipping Address set."
+msgstr "Адрес доставки по умолчанию не выбран."
+
+msgid "Additional Addresses"
+msgstr "Дополнительные адреса"
+
+msgid "Create new"
+msgstr "Создать новый"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "You don't have any additional addresses"
+msgstr "У вас нет дополнительных адресов"
+
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+msgid "Change password"
+msgstr "Изменить пароль"
+
+msgid "Basic Information"
+msgstr "Основная информация"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Phone"
+msgstr "Номер телефона"
+
+msgid "Tax Number"
+msgstr "Налоговый номер"
+
+msgid "Birth Date"
+msgstr "Дата рождения"
+
+msgid "Gender"
+msgstr "Пол"
+
+msgid "Marketing Permission"
+msgstr "Маркетинговое разрешение"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Company account information"
+msgstr "Информация об аккаунте компании"
+
+msgid ""
+"You have already linked your account to a company and it is pending "
+"approval."
+msgstr ""
+
+msgid "User account information"
+msgstr "Информация об аккаунте пользователя"
+
+msgid "Not specified"
+msgstr "Не указано"
+
+msgid "Street"
+msgstr "Улица"
+
+msgid "Postal code"
+msgstr "Почтовый индекс"
+
+msgid "City"
+msgstr "Город"
+
+msgid "Country"
+msgstr "Страна"
+
+msgid "Billing information"
+msgstr "Расчётная информация"
+
+msgid "Copy to shipping information"
+msgstr "Скопировать в информацию о доставке"
+
+msgid "Shipping information"
+msgstr "Информация о доставке"
+
+msgid "Copy to billing information"
+msgstr "Скопировать в расчётную информацию"
+
+msgid "Edit user account information"
+msgstr "Редактировать пользовательскую информацию аккаунта"
+
+msgid "Save password"
+msgstr "Сохранить пароль"
+
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+msgid "Edit company information"
+msgstr "Редактировать информацию о компании"
+
+msgid "Link account to company"
+msgstr "Привязать аккаунт к компании"
+
+msgid "Company information"
+msgstr "Информация о компании"
+
+msgid "User information"
+msgstr "Информация пользователя"
+
+msgid "Password successfully changed."
+msgstr "Пароль успешно изменён."
+
+msgid "Account information saved successfully."
+msgstr "Информация об аккаунте сохранена успешно."
+
+msgid "Company information saved successfully."
+msgstr "Информация о компании успешно сохранена."
+
+msgid ""
+"Company information saved successfully. Please follow the instructions sent "
+"to your email address."
+msgstr ""
+
+msgid "Address information saved successfully."
+msgstr "Адресная информация успешно сохранена."
+
+msgid "Cannot remove address"
+msgstr "Нельзя убрать адрес"

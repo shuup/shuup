@@ -1,0 +1,37 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-12 00:45+0000\n"
+"PO-Revision-Date: 2017-09-23 04:20+0000\n"
+"Last-Translator: Translator HIO.E <translater@hiqe.ru>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Contact Importer"
+msgstr "Импортер контактов"
+
+msgid "Company Contact Importer"
+msgstr "Импортер контактов компании"
+
+msgid "Please add supplier to row before importing stock quantities."
+msgstr "Пожалуйста, добавьте поставщика в строку до импорта количества на складе."
+
+msgid "No supplier found, please check the supplier exists."
+msgstr "Поставщик не был найден, пожалуйста, уточните его наличие."
+
+msgid "This supplier doesn't handle stocks, please set Stock Managed on."
+msgstr "Данный поставщик не занимается хранением товара, пожалуйста, настройте управление хранением."
+
+msgid "Product Importer"
+msgstr "Импортер товара"

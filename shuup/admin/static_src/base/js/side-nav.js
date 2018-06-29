@@ -14,6 +14,20 @@ $(function() {
     function getSectionNavigatorModule($navigateeForm) {
         const $sections = $navigateeForm.find(".content-block");
 
+        const hashCode = function(s) {
+            var h = 0, l = s.length, i = 0;
+            if ( l > 0 ) {
+                while (i < l) {
+                    h = (h << 5) - h + s.charCodeAt(i++) | 0;
+                }       
+            }
+
+            if ( h < 0 ) {
+                h = 0 - h;
+            }
+            return h;
+        };
+
         const navigationListItems = _.compact(_.map($sections, function(section) {
             const $section = $(section);
             const $blockTitle = $section.find(".block-title");
@@ -22,7 +36,11 @@ $(function() {
                 return;
             }
             if (!section.id) {
-                section.id = _.kebabCase(titleText) + "-section";
+                let section_name = _.kebabCase(titleText);
+                if (section_name == "") {
+                    let section_name = hashCode(titleText);
+                }
+                section.id = section_name + "-section";
             }
 
             return {

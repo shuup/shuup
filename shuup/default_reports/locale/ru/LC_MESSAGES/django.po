@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-29 07:50+0000\n"
+"PO-Revision-Date: 2018-06-25 21:58+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Customer"
+msgstr "Клиент"
+
+msgid "Filter report results by customer."
+msgstr "Фильтровать отчет по клиенту."
+
+msgid "Orderer"
+msgstr "Заказчик"
+
+msgid "Filter report results by the person that made the order."
+msgstr "Фильтровать результаты отчётов по человеку, осуществившему заказ."
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "Taxless Total"
+msgstr "Итого без учёта налогов"
+
+msgid "Taxful Total"
+msgstr "Итого с учётом налогов"
+
+msgid "Sort order"
+msgstr "Сортировать заказ"
+
+msgid "Year"
+msgstr "Год"
+
+msgid "Year/Month"
+msgstr "Год/месяц"
+
+msgid "Year/Month/Day"
+msgstr "Год/месяц/день"
+
+msgid "Group by"
+msgstr "Группировать по"
+
+msgid "Order Count"
+msgstr "Количество заказов"
+
+msgid "Average Sales"
+msgstr "Средние продажи"
+
+msgid "Tax"
+msgstr "Налог"
+
+msgid "Filter report results by tax."
+msgstr "Фильтровать данные отчёта по налогу."
+
+msgid "Tax Class"
+msgstr "Налоговый класс"
+
+msgid "Filter report results by tax class."
+msgstr "Фильтровать данные отчёта по налоговому классу."
+
+msgid "Shipping Method"
+msgstr "Способ доставки"
+
+msgid "Filter report results by shipping method."
+msgstr "Фильтровать данные отчета по способу доставки."
+
+msgid "Carrier"
+msgstr "Служба доставки"
+
+msgid "Filter report results by carrier."
+msgstr "Фильтровать данные отчёта по службе доставки."
+
+msgid "Customer Sales"
+msgstr "Продажи клиентов"
+
+msgid "Orders"
+msgstr "Заказы"
+
+msgid "New Customers"
+msgstr "Новые клиенты"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Persons"
+msgstr "Персоны"
+
+msgid "Companies"
+msgstr "Компании"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "Product Total Sales"
+msgstr "Объём продаж товара."
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "SKU"
+msgstr "Артикул"
+
+msgid "Refunded Sales"
+msgstr "Возвращенные продажи"
+
+msgid "Refunded Orders"
+msgstr "Возвращенные заказы"
+
+msgid "Total Refunded"
+msgstr "Всего возмещено"
+
+msgid "Sales Report"
+msgstr "Отчёт по продажам"
+
+msgid "Products"
+msgstr "Товары"
+
+msgid "Sales Per Hour"
+msgstr "Продажи за час"
+
+msgid "Hour"
+msgstr "Час"
+
+msgid "Order Amount"
+msgstr "Количество заказов"
+
+msgid "Total Sales"
+msgstr "Все продажи"
+
+msgid "Shipping"
+msgstr "Доставка"
+
+msgid "Shipping method"
+msgstr "Способ доставки"
+
+msgid "Total Charged"
+msgstr "Всего списано"
+
+msgid "Taxes"
+msgstr "Налоги"
+
+msgid "Rate (%)"
+msgstr ""
+
+msgid "Pre-tax Total"
+msgstr ""
+
+msgid "Total Tax Amount"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Shop Name"
+msgstr "Название магазина"
+
+msgid "Currency"
+msgstr "Валюта"
+
+msgid "Customers"
+msgstr "Клиенты"
+
+msgid "Customer Average Sale"
+msgstr "Средняя продажа клиента"

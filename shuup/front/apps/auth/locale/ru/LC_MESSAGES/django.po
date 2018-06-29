@@ -1,0 +1,105 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-26 18:06+0000\n"
+"PO-Revision-Date: 2018-06-28 20:11+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr "Пожалуйста введите корректно %(username)s и пароль. Учтите что оба поля могут быть чувствительны к регистру. В случае нескольких учетных записей с одинаковым адресом электронной почты для входа в систему может использоваться только имя пользователя."
+
+msgid "This account is inactive."
+msgstr "Этот аккаунт не активен"
+
+msgid "Username or email address"
+msgstr "Имя пользователя или адрес электронной почты"
+
+msgid "You are not allowed to login to this shop."
+msgstr ""
+
+msgid "Log in"
+msgstr "Войти на сайт"
+
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr ""
+
+msgid "Go to Homepage"
+msgstr "На главную"
+
+msgid "Forgot your password?"
+msgstr "Забыли ваш пароль?"
+
+msgid "New user? Register here!"
+msgstr "Новый пользователь? Зарегистрируйтесь здесь!"
+
+msgid "Logged out"
+msgstr "Вы вышли с сайта"
+
+msgid "You have been logged out. Thank you for visiting!"
+msgstr "Вы успешно вышли с сайта. Надеемся скоро вас увидеть!"
+
+msgid "Recover your password"
+msgstr "Восстановить ваш пароль"
+
+msgid "You can recover your password with either username or email."
+msgstr "Вы можете восстановить ваш пароль с помощью имени пользователя или адреса электронной почты."
+
+msgid "Send password recovery instructions"
+msgstr "Выслать инструкции по восстановлению пароля"
+
+msgid "Password Changed"
+msgstr "Пароль изменён"
+
+msgid "Your password has been changed and you have been logged in."
+msgstr "Ваш пароль был успешно изменён и вы были авторизованы."
+
+msgid "Password Recovery"
+msgstr "Восстановление пароля"
+
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr ""
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "Перейдите на данную страницу и выберите новый пароль:"
+
+msgid ""
+"If a user account is associated with the information you entered, you should"
+" receive instructions on how to reset your password shortly."
+msgstr "Если учетная запись пользователя связана с введенной вами информацией, вы должны получить инструкции о том, как быстро восстановить пароль."
+
+msgid "This recovery link is invalid."
+msgstr "Данная ссылка для восстановления недействительна."

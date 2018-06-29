@@ -1,0 +1,53 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Eugene MechanisM <eugene@mechanism.pro>, 2016
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-25 05:02+0000\n"
+"PO-Revision-Date: 2017-09-22 18:24+0000\n"
+"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#, javascript-format
+msgid "Edit %s"
+msgstr "Редактировать %s"
+
+#, javascript-format
+msgid "Error: Cannot add more than %s cells to one row."
+msgstr "Ошибка: Не могу добавить больше чем %s ячеек в одном ряду."
+
+msgid "Are you sure you wish to delete this row?"
+msgstr "Вы уверены, что хотите удалить этот ряд?"
+
+msgid "Are you sure you wish to delete this cell?"
+msgstr "Вы уверены, что хотите удалить эту ячейку?"
+
+msgid "Are you sure you wish to publish changes made to this view?"
+msgstr "Вы уверены, что хотите опубликовать все правки сделанные тут?"
+
+msgid ""
+"Are you sure you wish to revert all changes made since the last published "
+"version?"
+msgstr "Вы уверены, что хотите отменить все правки сделанные после опубликованной версии?"
+
+msgid ""
+"Changing plugins will cause other changes made on this form to be lost."
+msgstr "Изменение плагинов приведет к утрате остальных правок в этой форме."
+
+msgid "Exit Edit"
+msgstr "Закончить Правку"
+
+msgid "Edit Page"
+msgstr "Править Страницу"

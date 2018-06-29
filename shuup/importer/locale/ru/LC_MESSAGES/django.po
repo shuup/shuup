@@ -1,0 +1,267 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-28 17:04+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>, 2017\n"
+"Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Data Import"
+msgstr "Импорт данных"
+
+msgid "Import mode"
+msgstr "Режим импорта"
+
+msgid "Importing language"
+msgstr "Импортирование языка"
+
+msgid "The language of the data you would like to import."
+msgstr "Язык данных, которые вы хотели бы импортировать."
+
+msgid "Shop"
+msgstr "Магазин"
+
+msgid "Select a shop you want import into"
+msgstr "Выберите магазин, в который вы хотите совершить импорт"
+
+msgid "Importer"
+msgstr "Импортёр"
+
+msgid "Select a importer type matching the data you would like to import"
+msgstr ""
+"Выберите тип импортёра, совпадающий с данными, которые вы хотите "
+"импортировать"
+
+msgid "File"
+msgstr "Файл"
+
+#, python-format
+msgid "%s is not a file"
+msgstr ""
+
+msgid "File missing."
+msgstr "Файл не найден."
+
+msgid "Invalid parameters"
+msgstr ""
+
+msgid "Invalid importer"
+msgstr ""
+
+msgid "Invalid file name"
+msgstr ""
+
+msgid "Import"
+msgstr "Импортировать."
+
+msgid "Row ignored (no existing item and creating new is not allowed)."
+msgstr ""
+"Строка игнорируется (элемент не существует, создание нового элемента не "
+"допускается)."
+
+#, python-format
+msgid ""
+"Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
+msgstr ""
+
+#, python-format
+msgid "Error setting value for field %(field_name)s. (%(exception)s)"
+msgstr "Настройка значения ошибки для поля %(field_name)s.(%(exception)s)"
+
+#, python-format
+msgid "Couldn't set value %(original_value)s for field %(field_name)s."
+msgstr ""
+
+#, python-format
+msgid "Row import failed (%s)."
+msgstr ""
+
+msgid "Example files"
+msgstr ""
+
+msgid "This importer provides example files. Click below to download them:"
+msgstr ""
+
+msgid "Note"
+msgstr "Примечание"
+
+msgid "If you are importing products with quantities, ensure the following:"
+msgstr ""
+"Если вы импортируете товары с указанием количества, убедитесь в следующем:"
+
+#, python-format
+msgid ""
+"You have atleast one <a href=\"%(url)s\">supplier</a> with \"Stock Managed\""
+" <b>on</b>."
+msgstr ""
+
+#, python-format
+msgid ""
+"your <a href=\"%(url)s\">supplier</a> has \"Stock Managed\" <b>on</b>. "
+"(Currently <b>off</b>)"
+msgstr ""
+
+msgid "your import file has <b>supplier</b> field"
+msgstr ""
+
+msgid "Continue"
+msgstr "Продолжить"
+
+msgid "Import Data - process"
+msgstr "Импортировать данные - в процессе"
+
+msgid "Amount if items being imported"
+msgstr "Количество, если наименования были импортированы"
+
+msgid "The following fields were automatically mapped"
+msgstr "Следующие поля были автоматически сопоставлены"
+
+msgid ""
+"The following fields in the file are being used a s possible connection "
+"keys:"
+msgstr "Следующие поля файла используются как возможные ключи соединения:"
+
+msgid "Not a single connection key was found, File cannot be imported."
+msgstr ""
+"Ни один ключ подключения не был найден, файл не может быть импортирован."
+
+msgid "Connection Keys"
+msgstr "Ключи соединения"
+
+msgid "Read only fields"
+msgstr "Поля, доступные только для чтения"
+
+msgid ""
+"The following fields are Read Only and changes for those fields will be "
+"ignored."
+msgstr ""
+"Следующие поля доступны только для чтения и изменения в данных полях будут "
+"игнорированы."
+
+msgid "Import method"
+msgstr "Способ импорта"
+
+msgid "Automatically mapped"
+msgstr "Автоматически - сопоставленные"
+
+msgid "Original field"
+msgstr "Оригинальное поле"
+
+msgid "Shuup field"
+msgstr "Поле Shuup"
+
+msgid "Sample values"
+msgstr "Примеры значений"
+
+msgid "The following fields must be manually tied"
+msgstr "Следующие поля должны быть связаны вручную."
+
+msgid "Don't import"
+msgstr "Не импортировать"
+
+msgid "Field name"
+msgstr "Имя поля"
+
+msgid "Target field"
+msgstr "Целевое поле"
+
+msgid "We may not be able to import the file."
+msgstr "Возможно, мы не сможем импортировать файл."
+
+msgid ""
+"File may not be imported because no connection keys were found. Connection "
+"keys are unique keys that are used to map results."
+msgstr ""
+"Файл не может быть импортирован, поскольку ключи соединения не найдены. "
+"Ключи соединения - это уникальные ключи, которые используются для "
+"сопоставления результатов."
+
+msgid ""
+"Please consider adding some of the following fields to your import file:"
+msgstr "Пожалуйста, добавьте некоторые из следующих полей в файл импорта:"
+
+msgid "Products"
+msgstr "Товары"
+
+msgid "SKU"
+msgstr "Артикул"
+
+msgid "Customers"
+msgstr "Клиенты"
+
+msgid "email"
+msgstr "Электронная почта"
+
+msgid "Importer type"
+msgstr "Тип импортёра"
+
+msgid "Field(s) to add"
+msgstr "Добавить поле(я)"
+
+msgid "You can continue importing, but it might end up in error"
+msgstr "Вы можете продолжить импорт, но это может закончиться ошибкой"
+
+msgid ""
+"If you are importing customers this might be a false alarm if you have email"
+" key set"
+msgstr ""
+"Если вы импортируете клиентов, это может быть ложным сигналом тревоги, при "
+"условии если у вас установлен ключ электронной почты"
+
+msgid "Start Import"
+msgstr "Начать импорт"
+
+msgid "Import Data - Complete"
+msgstr "Импорт данных - завершено"
+
+msgid "Import Complete!"
+msgstr "Импорт завершён!"
+
+msgid "New items"
+msgstr "Новые наименования"
+
+msgid "The following items were imported as new:"
+msgstr "Данные наименования были импортированы как новые:"
+
+msgid "Zero new items were created."
+msgstr "Новые наименования не были созданы."
+
+msgid "Updated items"
+msgstr "Обновлённые наименования"
+
+msgid "The following items were updated:"
+msgstr "Данные наименования были обновлены:"
+
+msgid "Zero items were updated."
+msgstr "Новые наименования не были обновлены."
+
+msgid "Import log"
+msgstr "Журнал импорта"
+
+msgid "Other messages"
+msgstr "Другие сообщения"
+
+#, python-format
+msgid "Cannot import more than %s rows from one file."
+msgstr ""
+
+msgid "Allow create and update"
+msgstr "Разрешить создание и обновление"
+
+msgid "Only create (no updates)"
+msgstr "Только создать (без обновлений)"
+
+msgid "Only update existing (no new ones are created)"
+msgstr "Только обновлять существующее (без создания новых)"

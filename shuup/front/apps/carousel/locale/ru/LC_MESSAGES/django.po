@@ -1,0 +1,226 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-18 13:02+0000\n"
+"PO-Revision-Date: 2018-06-25 20:53+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Carousels"
+msgstr "Карусели"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s был удалён."
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Filter by name..."
+msgstr "Фильтровать по имени..."
+
+msgid "Carousel"
+msgstr "Карусель"
+
+msgid "Active"
+msgstr "Активно"
+
+msgid "Slide"
+msgstr "Слайд"
+
+msgid "Fade"
+msgstr "переход"
+
+msgid "Current"
+msgstr "Настоящий"
+
+msgid "New"
+msgstr "Новый"
+
+msgid "shops"
+msgstr ""
+
+msgid "Select which shops you would like the carousel to be visible in."
+msgstr ""
+
+msgid "name"
+msgstr "имя"
+
+msgid "The carousel name use for carousel configuration."
+msgstr "Название карусели, используемое для её настройки."
+
+msgid "animation"
+msgstr "анимация"
+
+msgid "Animation type for cycling slides."
+msgstr "Тип анимации для цикличных слайдов"
+
+msgid "interval"
+msgstr "Интервал"
+
+msgid "Slide interval in seconds."
+msgstr "Интервалы слайдов в секундах."
+
+msgid "pause on hover"
+msgstr "пауза при наведении"
+
+msgid "When checked, the carousel cycling pauses on mouse over."
+msgstr "Когда этот флажок установлен, карусель циклически останавливается при наведении указателя мыши."
+
+msgid "show navigation arrows"
+msgstr "Показать стрелки навигации"
+
+msgid ""
+"When checked, navigational arrows are shown on the carousel allowing for "
+"customers to go back and forward."
+msgstr "Когда флажок установлен, навигационные стрелки отображаются на карусели, позволяя клиентам вернуться назад и вперед."
+
+msgid "show navigation dots"
+msgstr "Показать навигационные точки"
+
+msgid "When checked, navigational indicator dots are shown."
+msgstr "Когда флажок установлен, отображаются точки навигационного индикатора."
+
+msgid "image width"
+msgstr "Ширина изображения"
+
+msgid "Slide images will be cropped to this width."
+msgstr "Изображения слайда будут обрезаны до данной ширины."
+
+msgid "image height"
+msgstr "Высота изображения"
+
+msgid "Slide images will be cropped to this height."
+msgstr "Изображения слайда будут обрезаны до данной высоты."
+
+msgid "Name is only used to configure slides."
+msgstr "Имя используется только для настройки слайдов."
+
+msgid "product link"
+msgstr "Ссылка на товар"
+
+msgid ""
+"Set the product detail page that should be shown when this slide is clicked,"
+" if any."
+msgstr "Установите страницу сведений о продукте, которая должна отображаться при щелчке на этот слайд, если таковая имеется."
+
+msgid "category link"
+msgstr "Ссылка категории"
+
+msgid ""
+"Set the product category page that should be shown when this slide is "
+"clicked, if any."
+msgstr "Установите страницу категории продукта, которая должна отображаться при щелчке на этот слайд, если таковая имеется."
+
+msgid "cms page link"
+msgstr "Ссылка на страницу менеджмента контента"
+
+msgid ""
+"Set the web page that should be shown when the slide is clicked, if any."
+msgstr "Установите веб-страницу, которая должна отображаться при щелчке на этот слайд, если таковая имеется."
+
+msgid "ordering"
+msgstr "Заказ"
+
+msgid ""
+"Set the numeric order in which this slide should appear relative to other "
+"slides in this carousel."
+msgstr "Установите числовой порядок, в котором этот слайд должен отображаться относительно других слайдов в этой карусели."
+
+msgid "link target"
+msgstr "Целевая ссылка"
+
+msgid ""
+"Set this to current if clicking on this slide should open a new browser tab."
+msgstr "Установите это значение как текущее, если на этом слайде должна открыться новая вкладка браузера."
+
+msgid "available from"
+msgstr "доступно с"
+
+msgid ""
+"Set the date and time from which this slide should be visible in the "
+"carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr "Установите дату и время, с которых данный слайд должен быть показан в карусели. Это полезно для рекламных кампаний или другого чувствительного к времени маркетинга."
+
+msgid "available to"
+msgstr "доступно до"
+
+msgid "caption"
+msgstr "Описание"
+
+msgid "Text that describes the image. Used for search engine purposes."
+msgstr "Текст, который описывает изображение. Используется для целей поисковой системы."
+
+msgid "caption text"
+msgstr "текст описания"
+
+msgid "When displayed in banner box mode, caption text is shown as a tooltip"
+msgstr "При отображении в режиме баннера, текст заголовка отображается в виде всплывающей подсказки"
+
+msgid "external link"
+msgstr "Внешняя ссылка"
+
+msgid ""
+"Set the external site that should be shown when this slide is clicked, if "
+"any."
+msgstr "Установите внешний сайт, который должен отображаться при щелчке на этот слайд, если таковой имеется."
+
+msgid "image"
+msgstr "изображение"
+
+msgid "The slide image to show."
+msgstr "Изображение слайда для показа."
+
+msgid "Slides"
+msgstr "Слайды"
+
+msgid "Carousel Plugin"
+msgstr "Плагин карусели"
+
+msgid "Banner Box"
+msgstr "Место для баннера"
+
+msgid "Title"
+msgstr "Заглавие"
+
+msgid "Slides can be added after saving the Carousel."
+msgstr "Слайды могут быть добавлены после сохранения карусели."
+
+msgid ""
+"This form is also used to define banner boxes. Marked fields only apply to "
+"banner boxes."
+msgstr "Эта форма также используется для определения мест баннеров. Отмеченные поля применяются только к местам для баннеров."
+
+msgid "Basic details"
+msgstr "Базовая информация"
+
+msgid "Advanced options"
+msgstr "Расширенные опции"
+
+msgid "Only image for default language is required."
+msgstr "Требуется только изображение для языка по умолчанию."
+
+msgid ""
+"If external link is not set link will fallback to product link, category "
+"link or cms page link in this order."
+msgstr "Если внешняя ссылка не установлена, ссылка будет возвращена к ссылке на продукт, ссылку категории или ссылку на страницу контент менеджмента в данном порядке."
+
+msgid "Add new slide"
+msgstr "Добавить новый слайд"
+
+msgid "New Carousel"
+msgstr "Новая карусель"

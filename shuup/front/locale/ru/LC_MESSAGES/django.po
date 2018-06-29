@@ -1,0 +1,1051 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Eugene MechanisM <eugene@mechanism.pro>, 2016
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# Translator HIO.E <translater@hiqe.ru>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-26 18:06+0000\n"
+"PO-Revision-Date: 2018-06-28 17:56+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Poedit 1.8.8\n"
+
+msgid "Abandoned Cart Value"
+msgstr "Стоимость оставленной корзины"
+
+#, python-brace-format
+msgid "Based on {b} carts over the last {d} days"
+msgstr "На основе {b} заказов за {d} последних дней"
+
+msgid "Carts"
+msgstr "Корзины"
+
+msgid "Show carts"
+msgstr "Показать корзины"
+
+msgid "Created on"
+msgstr "создано"
+
+msgid "Last updated on"
+msgstr "Обновлено"
+
+msgid "Abandoned"
+msgstr "Оставлено"
+
+msgid "yes"
+msgstr "Да"
+
+msgid "no"
+msgstr "Нет"
+
+msgid "Shop"
+msgstr "Магазин"
+
+msgid "Product count"
+msgstr "Количество товаров"
+
+msgid "Customer"
+msgstr "Клиент"
+
+msgid "Orderer"
+msgstr "Заказчик"
+
+msgid "Total"
+msgstr "Итого"
+
+msgid "Ordered"
+msgstr "Заказано"
+
+msgid "Require shipping method"
+msgstr ""
+
+msgid "Whether to require the shipping method in checkout phases."
+msgstr ""
+
+msgid "Require payment method"
+msgstr ""
+
+msgid "Whether to require the payment method in checkout phases."
+msgstr ""
+
+msgid "Registration Settings"
+msgstr ""
+
+msgid "Allow company registration"
+msgstr ""
+
+msgid "If you select this, companies can register into your store."
+msgstr ""
+
+msgid "Company registration requires approval"
+msgstr ""
+
+msgid ""
+"Registered companies must be manually approved by admin if this is checked. "
+"This option has no effect if company registration is not allowed on your "
+"site."
+msgstr ""
+
+msgid "Company tax number validation"
+msgstr ""
+
+msgid "Company tax number format is validated for European countries."
+msgstr ""
+
+msgid "Available languages in storefront"
+msgstr ""
+
+msgid ""
+"Select all the languages that should be available in storefront. Blank means"
+" that all languages should be available."
+msgstr ""
+
+#, python-format
+msgid "Basket loading failed: Incompatible basket (%s)"
+msgstr ""
+
+msgid "Try to remove some products from the basket and order them separately."
+msgstr ""
+
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr ""
+
+#, python-format
+msgid "Products in basket have no common payment method. %s"
+msgstr ""
+
+msgid "Tax number is required with the company name."
+msgstr ""
+
+msgid "Company name is required with the tax number."
+msgstr ""
+
+msgid "Use a saved address"
+msgstr "Использовать сохранённый адрес"
+
+msgid "Addresses"
+msgstr "Адреса"
+
+msgid "Checkout as Guest"
+msgstr "Перейти к оплате, как гость"
+
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+msgid "Register with us for future convenience"
+msgstr "Для дальнейшего удобства, зарегистрируйтесь в системе."
+
+msgid "Checkout Method Choice"
+msgstr "Выбор способа совершения покупки"
+
+msgid "I accept the terms and conditions"
+msgstr "Я принимаю условия и положения"
+
+msgid "I want to receive marketing material"
+msgstr "Я хочу получать маркетинговые материалы "
+
+msgid "Comment"
+msgstr "Комментарий"
+
+msgid ""
+"There has been a change in product availability. Please review your cart and"
+" reconfirm your order."
+msgstr "Произошло изменение в доступности продукта. Проверьте свою корзину и подтвердите свой заказ заново."
+
+msgid "Confirmation"
+msgstr "Подтверждение"
+
+msgid "Empty Basket"
+msgstr "Пустая Корзина"
+
+msgid "shipping method"
+msgstr "способ доставки"
+
+msgid "payment method"
+msgstr "способ оплаты"
+
+msgid "Shipping & Payment"
+msgstr "Доставка и Оплата"
+
+msgid "Sort products by name"
+msgstr "Сортировать товары по имени"
+
+msgid "Ordering for sort by name"
+msgstr "Упорядочить при сортировки по имени"
+
+msgid "Sort"
+msgstr "Сортировать"
+
+msgid "Name - A-Z"
+msgstr "Имя А-Я"
+
+msgid "Name - Z-A"
+msgstr "Имя Я-А"
+
+msgid "Check this to allow products to be sortable by product name."
+msgstr "Поставьте галочку, чтобы разрешить сортировку товаров по названию."
+
+msgid ""
+"Use a numeric value to set the order in which the the filter will appear on "
+"the product listing page."
+msgstr "Используйте числовое значение для установки порядка, в котором фильтр будет отображаться на странице со списком товаров."
+
+msgid "Sort products by price"
+msgstr "Сортировать товары по цене"
+
+msgid "Ordering for sort by price"
+msgstr "Упорядочить при сортировки по цене"
+
+msgid "Price - Low to High"
+msgstr "Цена - по возрастанию"
+
+msgid "Price - High to Low"
+msgstr "Цена - по убыванию"
+
+msgid ""
+"Check this to allow products to be sortable by price (from low to high and "
+"high to low)."
+msgstr "Поставьте галочку, чтобы разрешить сортировку товаров по цене (от низкой до высокой и высокой к низкой)"
+
+msgid "Sort products by date created"
+msgstr "Сортировать товары по дате создания"
+
+msgid "Ordering for sort by date created"
+msgstr "Упорядочить при сортировки по дате создания"
+
+msgid "Date created"
+msgstr "Дата создания"
+
+msgid ""
+"Check this to allow products to be sortable from newest to oldest products."
+msgstr "Поставьте галочку, чтобы разрешить сортировку товаров от самых старых до новейших продуктов."
+
+msgid ""
+"Use a numeric value to set the order in which the filter will appear on the "
+"product listing page."
+msgstr "Используйте числовое значение для установки порядка, в котором фильтр будет отображаться на странице со списком товаров."
+
+msgid "Sort products by date created - oldest first"
+msgstr "Сортировать товары по дате создания - сначала старые"
+
+msgid "Ordering for sort by date created - oldest first"
+msgstr "Упорядочить при сортировки по дате создания - сначала старые"
+
+msgid "Date created - oldest first"
+msgstr "Дата создания - сначала старые"
+
+msgid ""
+"Check this to allow products to be sortable from oldest to newest products."
+msgstr "Поставьте галочку, чтобы разрешить сортировку товаров от самых старых до новейших продуктов."
+
+msgid "Filter products by manufacturer"
+msgstr "Фильтровать товары по производителю"
+
+msgid "Ordering for filter by manufacturer"
+msgstr "Упорядочить для фильтра по производителю"
+
+msgid "Manufacturers"
+msgstr "Производители"
+
+msgid ""
+"Check this to allow products to be filterable by manufacturer for this "
+"category."
+msgstr "Поставьте галочку, чтобы разрешить сортировку товаров по производителю для данной категории."
+
+msgid ""
+"Use a numeric value to set the order in which the manufacturer filters will "
+"appear on the product listing page."
+msgstr "Используйте числовое значение для установки порядка, в котором фильтр производителя будет отображаться на странице со списком товаров."
+
+msgid "Filter products by category"
+msgstr "Фильтровать товары по категории"
+
+msgid "Ordering for filter by category"
+msgstr "Упорядочить для фильтра по категории"
+
+msgid "Categories"
+msgstr "Категории"
+
+msgid ""
+"Check this to allow products to be filterable by any visible product "
+"category. "
+msgstr "Поставьте галочку, чтобы разрешить сортировку товаров по любой существующей категории."
+
+msgid ""
+"Use a numeric value to set the order in which the category list filters will"
+" appear on the product listing page."
+msgstr "Используйте числовое значение для установки порядка, в котором фильтр категории будет отображаться на странице со списком товаров."
+
+msgid "Limit page size"
+msgstr "Ограничить размер страницы"
+
+msgid "Ordering for limit page size"
+msgstr "Упорядочивание для ограничения размера страницы"
+
+msgid "Products per page"
+msgstr "Количество наименований на страницу"
+
+msgid ""
+"Check this to allow the customer to be able to select the number of products"
+" to display."
+msgstr "Поставьте галочку, чтобы разрешить клиенту выбирать количество товаров для показа."
+
+msgid ""
+"Use a numeric value to set the order in which the page size filter will "
+"appear on the product listing page."
+msgstr "Используйте числовое значение для установки порядка, в котором фильтр размера страницы будет отображаться на странице со списком товаров."
+
+msgid "Filter products by variation"
+msgstr "Фильтровать товары по вариациям"
+
+msgid "Ordering for filter by variation"
+msgstr "Упорядочить для фильтра по вариации"
+
+msgid ""
+"Check this to allow products to be filterable by their different variations."
+" For example, size or color."
+msgstr "Поставьте галочку, чтобы разрешить фильтрацию товара по его различным вариациям. Например в размере и цвете."
+
+msgid ""
+"Use a numeric value to set the order in which the variation filters will "
+"appear on the product listing page."
+msgstr "Используйте числовое значение для установки порядка, в котором вариационный фильтр будет отображаться на странице со списком товаров."
+
+msgid "Filter products by price"
+msgstr "Фильтровать товары по цене"
+
+msgid "Ordering for filter by price"
+msgstr "Упорядочить для фильтра по имени"
+
+msgid "Price"
+msgstr "Стоимость"
+
+msgid ""
+"Check this to allow products to be filtered by price. Prices will be listed "
+"in groups from the price range minimum to price range maximum in increments "
+"of the configured price range step."
+msgstr "Поставьте галочку, чтобы продукты можно было фильтровать по цене. Цены будут перечислены в группах от минимального диапазона цен до максимального с учётом шага повшения цены."
+
+msgid ""
+"Use a numeric value to set the order in which the price range filters will "
+"appear on the product listing page."
+msgstr "Используйте числовое значение для установки порядка, в котором ценовой фильтр будет отображаться на странице со списком товаров."
+
+msgid "Price range minimum"
+msgstr "Минимальная цена в диапазоне"
+
+msgid ""
+"Set the minimum price for the filter. The first range will be from zero to "
+"this value."
+msgstr "Установите минимальную цену для фильтра. Первый диапазон будет от нуля до данного значения."
+
+msgid "Price range maximum"
+msgstr "Максимальная цена в диапазоне"
+
+msgid ""
+"Set the maximum price for the filter. The last range will include this value"
+" and above."
+msgstr "Задайте максимальную цену для фильтра. Последний диапазон будет включать данное значение и значения выше выше."
+
+msgid "Price range step"
+msgstr "Шаг повышения цены"
+
+msgid ""
+"Set the price step for each range. Each range will increment by this value."
+msgstr "Задайте шаг цены для каждого диапазона. Каждый диапазон будет увеличиваться на это значение."
+
+#, python-format
+msgid "Under %(min_limit)s"
+msgstr ""
+
+#, python-format
+msgid "%(max_limit)s & Above"
+msgstr ""
+
+msgid "Logged out since this account is inactive."
+msgstr "Вы вышли из системы, поскольку эта учетная запись неактивна."
+
+msgid "key"
+msgstr "ключ"
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "customer"
+msgstr "покупатель"
+
+msgid "orderer"
+msgstr "заказчик"
+
+msgid "creator"
+msgstr "создатель"
+
+msgid "created on"
+msgstr "создано"
+
+msgid "updated on"
+msgstr "изменено"
+
+msgid "persistent"
+msgstr "постоянный"
+
+msgid "deleted"
+msgstr "удаленный"
+
+msgid "finished"
+msgstr "завершенный"
+
+msgid "title"
+msgstr "заголовок"
+
+msgid "data"
+msgstr "дата"
+
+msgid "taxless total price"
+msgstr "итог без учёта налогов"
+
+msgid "taxful total price"
+msgstr "Итого с учётом налогов"
+
+msgid "currency"
+msgstr "валюта"
+
+msgid "prices include tax"
+msgstr "цены включают в себя налог"
+
+msgid "product_count"
+msgstr "подсчёт товаров"
+
+msgid "products"
+msgstr "товары"
+
+msgid "stored basket"
+msgstr "сохранённая корзина"
+
+msgid "stored baskets"
+msgstr "сохранённые корзины"
+
+msgid "Order Received"
+msgstr "Заказ получен"
+
+msgid "Order"
+msgstr "Заказ"
+
+msgid "Customer Email"
+msgstr "Электронный адрес клиента"
+
+msgid "Customer Phone"
+msgstr "Телефонный номер клиента"
+
+msgid "Shop Email"
+msgstr ""
+
+msgid "Shop Phone"
+msgstr ""
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Shipment Created"
+msgstr "Доставка оформлена"
+
+msgid "Shipment"
+msgstr "Доставка"
+
+msgid "Order Shipping Status"
+msgstr "Статус отправления заказа"
+
+msgid "Shipment Status"
+msgstr "Статус доставки"
+
+msgid "Shipment Deleted"
+msgstr "Отправление удалено"
+
+msgid "Payment Created"
+msgstr "Платёж создан"
+
+msgid "Order Payment Status"
+msgstr "Статус оплаты заказа"
+
+msgid "Payment"
+msgstr "Платёж"
+
+msgid "Refund Created"
+msgstr "Возрат средств создан."
+
+msgid ""
+"<p>Dear {{ order.customer }},</p>\n"
+"<p>A shipment has been created for your order and here are the details:</p>\n"
+"\n"
+"{% if shipment.tracking_code %}\n"
+"<p>Tracking code: {{ shipment.tracking_code }}</p>\n"
+"{% endif %}\n"
+"\n"
+"<p>Contents:</p>\n"
+"<table>\n"
+"    <thead>\n"
+"        <tr>\n"
+"            <th>Product</th>\n"
+"            <th>Quantity</th>\n"
+"        </tr>\n"
+"    </thead>\n"
+"    <tbody>\n"
+"{% for shipment_product in shipments.total_products %}\n"
+"        <tr>\n"
+"            <td>{{ shipment_product.product }}</td>\n"
+"            <td>{{ shipment_product.quantity }}</td>\n"
+"        </tr>\n"
+"{% endif %}\n"
+"    </tbody>\n"
+"</table>\n"
+msgstr ""
+
+msgid "Send Shipment Created Email"
+msgstr "Выслать письмо с подтверждением оформления доставки"
+
+msgid "Send an email to customer when a shipment is created."
+msgstr "Отправить электронное письмо клиенту, когда доставка для его заказа будет оформлена"
+
+msgid ""
+"This script will send an email to customer when a shipment of his order has "
+"been created."
+msgstr "Этот скрипт отправит электронное письмо клиенту, когда доставка для его заказа будет оформлена"
+
+msgid "{{ order.shop }} - Shipment created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Shipment Deleted Email"
+msgstr "Выслать письмо с подтверждением удаления отправления"
+
+msgid "Send email when a shipment is deleted."
+msgstr "Высылать электронное письмо когда отправление удалено."
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a shipment gets deleted."
+msgstr "Этот скрипт отправит электронное письмо клиенту или на любой назначенный электронный адрес сразу после удаления отправления."
+
+msgid "{{ order.shop }} - Shipment deleted for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Payment Created Email"
+msgstr "Выслать письмо с подтверждением платежа"
+
+msgid "Send email to customer when a payment is created."
+msgstr "Высылать электронное письмо при осуществлении платежа."
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a payment gets created."
+msgstr "Этот скрипт отправит электронное письмо клиенту или на любой назначенный электронный адрес сразу после создания платежа."
+
+msgid "{{ order.shop }} - Payment created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Refund Created Email"
+msgstr "Выслать письмо с подтверждением создания возврата"
+
+msgid "Send email when a refund is created."
+msgstr "Высылать электронное письмо при создании возврата."
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a refund gets created."
+msgstr "Этот скрипт отправит электронное письмо клиенту или на любой назначенный электронный адрес сразу после создания возврата."
+
+msgid "{{ order.shop }} - Refund created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Order Confirmation Email"
+msgstr "Выслать электронное письмо с подтверждением заказа"
+
+msgid "Send a confirmation email when the order is created."
+msgstr "Выслать электронное письмо как только заказ будет сделан"
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after an order is created. The order contents can be put on email body as "
+"well as other informations like shipping method and payment method."
+msgstr "Этот скрипт отправит электронное сообщение клиенту или любому настроенному электронному письму сразу после создания заказа. Содержимое заказа может быть размещено в основной части письма, а также в других частях, таких как способ доставки и способ оплаты."
+
+msgid "Checkout configuration"
+msgstr ""
+
+msgid "Product list sorts and filters"
+msgstr "Параметры сортировки и фильтры товара"
+
+msgid "Storefront Languages"
+msgstr ""
+
+msgid "Shopping cart"
+msgstr "Корзина"
+
+msgid "Your shopping cart is empty."
+msgstr "Ваша корзина пуста"
+
+msgid "There were errors on following items"
+msgstr "Произошли ошибки в следующих элементах"
+
+msgid "You are unable to proceed to checkout!"
+msgstr "Вы не можете вывести товар на оплату"
+
+msgid "Checkout"
+msgstr "Оплата"
+
+msgid "Log in"
+msgstr "Войти на сайт"
+
+msgid "Forgot your password?"
+msgstr "Забыли ваш пароль?"
+
+msgid "There are errors"
+msgstr "Произошли ошибки"
+
+msgid "My Dashboard"
+msgstr "Моя панель информации"
+
+msgid "Dashboard"
+msgstr "Панель информации"
+
+msgid "Home"
+msgstr "На главную"
+
+msgid "Bad Request"
+msgstr "Неверный запрос"
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr "К сожалению, ваш запрос не мог быть обработан на сервере."
+
+msgid "Back to Homepage"
+msgstr "Назад на главную"
+
+msgid "Permission Denied"
+msgstr "Отказано в доступе"
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr "К сожалению, у вас нет разрешения просматривать данную страницу."
+
+msgid "Page Not Found"
+msgstr "Страница не найдена"
+
+msgid "Unfortunately the page you were looking for does not exist."
+msgstr "К сожалению, страница, которую вы ищете, не существует."
+
+msgid "Go Back"
+msgstr "Назад"
+
+msgid "Internal Server Error"
+msgstr "Внутренняя Ошибка Сервера"
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr "К сожалению, произошла внутренняя ошибка сервера. Попробуйте перезагрузить страницу или вернуться к ней позже."
+
+msgid "Welcome to Shuup!"
+msgstr "Добро пожаловать в Shuup!"
+
+#, python-format
+msgid "Welcome to %(name)s!"
+msgstr ""
+
+msgid "your shop"
+msgstr "Ваш магазин"
+
+msgid ""
+"You are seeing this page because there is no theme selected for the default "
+"frontend."
+msgstr "Вы видите эту страницу, потому что для интерфейса по умолчанию не выбрана тема."
+
+msgid "Log in to the administration interface"
+msgstr "Войти в интерфейс администратора"
+
+msgid "to choose a theme and set up your shop."
+msgstr "для того, чтобы выбрать тему и настроить ваш магазин."
+
+msgid ""
+"The administration interface does not seem to be available. Use other means "
+"to choose a theme."
+msgstr "Интерфейс администратора не доступен. Используйте другие средства для выбора темы."
+
+msgid "You are not an administrator"
+msgstr "Вы не администратор"
+
+msgid "ask an administrator to select a theme."
+msgstr "обратиться к администратору для выбора темы"
+
+msgid "Product added to cart"
+msgstr "Товар добавлен в корзину"
+
+msgid "There was an error adding the product to the basket"
+msgstr "Произошла ошибка при добавлении товара в корзину"
+
+msgid "Remove product from basket"
+msgstr "Удалить товары из корзины."
+
+msgid ""
+"The following items are not currently available (or are not available in the"
+" desired quantity) and cannot be included in your order."
+msgstr "Следующие позиции в настоящее время недоступны (или не доступны в необходимом количестве) и не могут быть включены в ваш заказ."
+
+msgid "Continue Shopping"
+msgstr "Продолжить покупки"
+
+msgid "Proceed to checkout"
+msgstr "Вывести на оплату"
+
+msgid "Have a coupon code? Enter it here"
+msgstr "Есть купон с кодом? Введите код сюда"
+
+msgid "Coupon Code"
+msgstr "Код купона"
+
+msgid "Submit Code"
+msgstr "Ввести код"
+
+msgid "Save cart"
+msgstr "Сохранить корзину"
+
+msgid "Cart Title"
+msgstr "Заголовок корзины"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Back to Products"
+msgstr "Вернуться к товарам"
+
+msgid "Coupon is not available."
+msgstr "Купон недоступен."
+
+msgid "Error when adding coupon."
+msgstr "Ошибка при добавлении купона."
+
+msgid "Cart saved!"
+msgstr "Корзина сохрванена!"
+
+msgid "Filter Products"
+msgstr "Фильтровать товары"
+
+msgid "Show Grid/List"
+msgstr "Показать сетку / список"
+
+msgid "Grid/list view"
+msgstr "Сетка / список"
+
+msgid "Continue"
+msgstr "Продолжить"
+
+msgid "Billing address"
+msgstr "Платежный адрес"
+
+msgid "Ordering for a company?"
+msgstr "Совершаете заказ для компании?"
+
+msgid "Please fill out these fields if you are ordering for a company."
+msgstr "Пожалуйста, заполните эти поля, если вы совершаете заказ для компании."
+
+msgid "Shipping address"
+msgstr "Адрес доставки"
+
+msgid "Ship to my billing address"
+msgstr "Отправить по моему платёжному адресу"
+
+msgid "Choose Shipping Method"
+msgstr "Выберите способ доставки"
+
+msgid "Choose Payment Method"
+msgstr "Выберите способ оплаты"
+
+msgid "No method is available."
+msgstr ""
+
+msgid "Delivery"
+msgstr "Доставка"
+
+msgid "Delivery method"
+msgstr "Способ доставки"
+
+msgid "Billing"
+msgstr "Выставление счёта"
+
+msgid "Payment method"
+msgstr "Способ оплаты"
+
+msgid "Add comment"
+msgstr "Добавить комментарий"
+
+msgid "Other information"
+msgstr "Другая информация"
+
+msgid "Place Order"
+msgstr "Совершить заказ"
+
+msgid "Previous"
+msgstr "Предыдущее"
+
+msgid "Next"
+msgstr "Следующее"
+
+#, python-format
+msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
+msgstr ""
+
+msgid "Toggle navigation"
+msgstr "Включить навигацию"
+
+msgid "Administration Tools"
+msgstr ""
+
+msgid "Maintenance mode"
+msgstr "Режим обслуживания"
+
+msgid "ON"
+msgstr "Включено"
+
+msgid "OFF"
+msgstr "Выключено"
+
+msgid "Shop Administration"
+msgstr ""
+
+msgid "Tools"
+msgstr "Инструменты"
+
+msgid "Show only visible products and categories"
+msgstr "Показать только видимые товары и категории"
+
+msgid "Show all products and categories"
+msgstr "Показать все товары и категории"
+
+msgid ""
+"There were errors on submitted form fields. Please check them and try again."
+msgstr "В представленных полях формы были ошибки. Проверьте их и повторите попытку."
+
+msgid "Edit account details"
+msgstr "Редактировать данные аккаунта"
+
+msgid "Edit company details"
+msgstr "Редактировать информацию о компании"
+
+msgid "My orders"
+msgstr "Мои заказы"
+
+msgid "My saved carts"
+msgstr "Мои сохранённые корзины"
+
+msgid "My wishlists"
+msgstr "Мои списки желаний"
+
+msgid "Admin panel"
+msgstr "Панель администратора"
+
+msgid "Log out"
+msgstr "Выйти"
+
+msgid "Username or email address"
+msgstr "Имя пользователя или адрес электронной почты"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "New user? Register here!"
+msgstr "Новый пользователь? Зарегистрируйтесь здесь!"
+
+msgid "Cart"
+msgstr "Корзина"
+
+msgid "Items"
+msgstr "Наименования"
+
+msgid "View cart"
+msgstr "Показать корзину"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Products"
+msgstr "Товары"
+
+msgid "Files"
+msgstr "Файлы"
+
+msgid "No method selected"
+msgstr ""
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "Unit Price"
+msgstr "Цена за единицу"
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "excl. tax"
+msgstr "Исключая налог"
+
+msgid "Products ordered"
+msgstr "Заказанные товары"
+
+msgid "Tax breakdown"
+msgstr "Налоговая разбивка"
+
+msgid "Tax"
+msgstr "Налог"
+
+msgid "Tax percentage"
+msgstr "Процент налога"
+
+msgid "Based on amount"
+msgstr "Основано на количестве"
+
+msgid "Amount of tax"
+msgstr "Размер налога"
+
+msgid "Total including tax"
+msgstr "Общий итог с учётом налогов"
+
+msgid "Company"
+msgstr "Компания"
+
+msgid "Tax number"
+msgstr "Налоговый номер"
+
+msgid "Preview"
+msgstr "Предпросмотр"
+
+msgid "Also available in"
+msgstr "Также доступен в"
+
+#, python-format
+msgid "Save %(discount_percent)s"
+msgstr ""
+
+msgid "Product Information"
+msgstr "Информация о товаре"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "Attributes"
+msgstr "Параметры"
+
+msgid "Includes these products"
+msgstr "Включает в себя данные товары"
+
+msgid "No product description available"
+msgstr "Описание товара недоступно"
+
+msgid "SKU"
+msgstr "Артикул"
+
+msgid "Barcode"
+msgstr "Штрих-код"
+
+msgid "Manufacturer"
+msgstr "Производитель"
+
+msgid "Package Size"
+msgstr "Размер посылки"
+
+msgid "Width"
+msgstr "Ширина"
+
+msgid "Height"
+msgstr "Высота"
+
+msgid "Depth"
+msgstr "Глубина"
+
+msgid "Net Weight"
+msgstr "Масса нетто"
+
+msgid "Gross Weight"
+msgstr "Масса брутто"
+
+msgid "External link"
+msgstr "Внешняя ссылка"
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Select product"
+msgstr "Выбрать товар"
+
+msgid "Add to cart"
+msgstr "Добавить в корзину"
+
+msgid "Product is not orderable."
+msgstr "Товар недоступен"
+
+msgid "Shop is currently down for maintenance."
+msgstr "В данный момент магазин находится на обслуживании."
+
+msgid "Thank you for your order!"
+msgstr "Спасибо за заказ!"
+
+msgid ""
+"Your order has been received. You can see the details of your order below."
+msgstr "Ваш заказ был получен. Вы можете ознакомиться с информацией о вашем заказе ниже."
+
+msgid "User account activation"
+msgstr "Активация пользовательского аккаунта"
+
+msgid ""
+"If you want to be able to see your order history, please create a password "
+"for your account: "
+msgstr "Если вы хотите просмотреть историю заказов, создайте пароль для своей учетной записи:"
+
+msgid "Send"
+msgstr "Отправить"
+
+msgid "Payment canceled"
+msgstr "Платёж отменён"
+
+msgid "You have canceled payment"
+msgstr "Вы отменили платёж"
+
+msgid "Retry payment"
+msgstr "Попробовать совершить платёж снова"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "Combination not available"
+msgstr "Комбинация недоступна"
+
+msgid "Open product page"
+msgstr "Открыть страницу товара"
+
+msgid "Newest products"
+msgstr "Новейшие товары"
+
+msgid "Tax number is not valid."
+msgstr ""
+
+msgid "Edit"
+msgstr "Редактировать"
+
+#, python-brace-format
+msgid "{language_code} is an invalid language code"
+msgstr ""
+
+msgid "This product is not available in this shop."
+msgstr "Данный товар недоступен в этом магазине"
