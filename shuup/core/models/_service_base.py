@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import functools
 import random
 
+import django
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -454,8 +455,13 @@ class ServiceBehaviorComponent(PolymorphicShuupModel):
         return None
 
 
+_translatable_model = (
+    PolymorphicTranslatableShuupModel if django.VERSION >= (1, 11)
+    else TranslatableShuupModel)
+
+
 class TranslatableServiceBehaviorComponent(six.with_metaclass(
-        PolyTransModelBase,
-        ServiceBehaviorComponent, TranslatableShuupModel)):
+        PolyTransModelBase, ServiceBehaviorComponent, _translatable_model)):
+
     class Meta:
         abstract = True

@@ -168,7 +168,7 @@ class TaskEditView(BaseTaskViewMixin, CreateOrUpdateView):
                 )
         return toolbar
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         kwargs = self.get_form_kwargs()
         instance = kwargs.pop("instance", None)
         form_group = FormGroup(**kwargs)

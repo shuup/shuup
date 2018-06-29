@@ -7,15 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import django
 import json
 
 import six
 from django.core.urlresolvers import reverse_lazy
 from django.forms import TimeInput as DjangoTimeInput
-from django.forms import HiddenInput, Select, SelectMultiple, Textarea, Widget
-from django.forms.utils import flatatt
+from django.forms import HiddenInput, Textarea, Widget
 from django.utils.encoding import force_text
-from django.utils.html import escape, format_html
+from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File
@@ -25,6 +25,16 @@ from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.core.models import (
     Contact, PersonContact, Product, ProductMode, ShopProduct
 )
+
+if django.VERSION < (1, 11):
+    from ._quick_select import (
+        QuickAddRelatedObjectMultiSelectWithoutTemplate as QuickAddRelatedObjectMultiSelect,
+        QuickAddRelatedObjectSelectWithoutTemplate as QuickAddRelatedObjectSelect
+    )
+else:
+    from ._quick_select import (
+        QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect
+    )
 
 
 class BasePopupChoiceWidget(Widget):
@@ -71,7 +81,7 @@ class BasePopupChoiceWidget(Widget):
     def get_object(self, value):
         raise NotImplementedError("Not implemented")
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if value:
             obj = self.get_object(value)
         else:
@@ -124,7 +134,7 @@ class FileDnDUploaderWidget(Widget):
         }
         return ["data-%s='%s'" % (key, val) for key, val in six.iteritems(data) if val is not None]
 
-    def render(self, name, value, attrs={}):
+    def render(self, name, value, attrs={}, renderer=None):
         pk_input = HiddenInput().render(name, value, attrs)
         file_attrs = [
             "data-upload_path='%s'" % self.upload_path,
@@ -147,7 +157,7 @@ class FileDnDUploaderWidget(Widget):
 
 
 class TextEditorWidget(Textarea):
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         attrs_for_textarea = attrs.copy()
         attrs_for_textarea['class'] = 'hidden'
         attrs_for_textarea['id'] += '-textarea'
@@ -207,68 +217,6 @@ class PersonContactChoiceWidget(ContactChoiceWidget):
 
 class PackageProductChoiceWidget(ProductChoiceWidget):
     filter = json.dumps({"modes": [ProductMode.NORMAL.value, ProductMode.VARIATION_CHILD.value]})
-
-
-class QuickAddRelatedObjectSelect(Select):
-    url = ""
-    model = ""
-
-    def render(self, name, value, attrs=None, choices=()):
-        if value is None:
-            value = ''
-        final_attrs = self.build_attrs(attrs, name=name)
-        if self.model:
-            final_attrs['data-model'] = self.model
-            choices = []
-        output = [format_html('<select{}>', flatatt(final_attrs))]
-        options = self.render_options(choices, [value])
-        if options:
-            output.append(options)
-        output.append('</select>')
-        quick_add_button = """
-            <span class="quick-add-btn">
-                <a
-                    class="btn"
-                    data-url="%s?mode=iframe&quick_add_target=%s"
-                    data-toggle="popover"
-                    data-placement="bottom"
-                    data-trigger="manual"
-                    data-content="%s">
-                        <i class="fa fa-plus text-primary"></i>
-                </a>
-            </span>
-        """.strip()
-        output.append(quick_add_button % (self.url, name, _("Create New")))
-        return mark_safe('\n'.join(output))
-
-
-class QuickAddRelatedObjectMultiSelect(SelectMultiple):
-    url = ""
-
-    def render(self, name, value, attrs=None, choices=()):
-        if value is None:
-            value = []
-        final_attrs = self.build_attrs(attrs, name=name)
-        output = [format_html('<select multiple="multiple"{}>', flatatt(final_attrs))]
-        options = self.render_options(choices, value)
-        if options:
-            output.append(options)
-        output.append('</select>')
-        quick_add_button = """
-            <span class="quick-add-btn">
-                <a
-                    class="btn"
-                    data-url="%s?mode=iframe&quick_add_target=%s"
-                    data-toggle="popover"
-                    data-placement="bottom"
-                    data-trigger="hover"
-                    data-content="%s">
-                        <i class="fa fa-plus text-primary"></i>
-                </a>
-            </span>
-        """.strip()
-        output.append(quick_add_button % (self.url, name, _("Create New")))
-        return mark_safe('\n'.join(output))
 
 
 class QuickAddCategoryMultiSelect(QuickAddRelatedObjectMultiSelect):

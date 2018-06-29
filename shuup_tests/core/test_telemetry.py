@@ -169,7 +169,7 @@ def test_telemetry_is_sent_on_login(rf, admin_user):
 
 
 def _create_order_for_day(shop, day):
-    order = create_empty_order(shop)
+    order = create_empty_order(shop=shop)
     order.order_date = day
     order.save()
 

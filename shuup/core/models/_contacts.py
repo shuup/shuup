@@ -330,6 +330,15 @@ class PersonContact(Contact):
     def name(self, value):
         (self.first_name, self.last_name) = _split_name(value)
 
+    def get_deferred_fields(self):
+        # Workaround
+        # Refs:
+        #   https://code.djangoproject.com/ticket/27419
+        #   https://github.com/jpwatts/django-positions/issues/49
+        #
+        deferred_set = super(PersonContact, self).get_deferred_fields()
+        return {f for f in deferred_set if f != "name"}
+
     def save(self, *args, **kwargs):
         if self.user_id and not self.pk:  # Copy things
             user = self.user

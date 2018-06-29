@@ -77,7 +77,7 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
     company_form_class = CompanyForm
     saved_address_form_class = SavedAddressForm
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         fg = FormGroup(**self.get_form_kwargs())
         default_address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
         for kind in self.address_kinds:

@@ -218,7 +218,7 @@ class UserDetailView(CreateOrUpdateView):
     @property
     def fields(self):
         # check whether these fields exists in the model or it has the attribute
-        model_fields = self.model._meta.get_all_field_names()
+        model_fields = [f.name for f in self.model._meta.get_fields()]
         fields = [field for field in self._fields if field in model_fields or hasattr(self.model, field)]
         if not self.object.pk and getattr(self.request.user, "is_superuser", False):
             fields.append("is_staff")

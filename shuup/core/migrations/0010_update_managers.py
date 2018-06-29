@@ -3,7 +3,8 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import django.db.models.manager
+
+import shuup.utils.migrations
 
 
 class Migration(migrations.Migration):
@@ -15,32 +16,22 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelManagers(
             name='carrier',
-            managers=[
-                ('_default_manager', django.db.models.manager.Manager()),
-            ],
+            managers=(shuup.utils.migrations.get_managers_for_migration()),
         ),
         migrations.AlterModelManagers(
             name='customcarrier',
-            managers=[
-                ('_default_manager', django.db.models.manager.Manager()),
-            ],
+            managers=(shuup.utils.migrations.get_managers_for_migration()),
         ),
         migrations.AlterModelManagers(
             name='custompaymentprocessor',
-            managers=[
-                ('_default_manager', django.db.models.manager.Manager()),
-            ],
+            managers=(shuup.utils.migrations.get_managers_for_migration()),
         ),
         migrations.AlterModelManagers(
             name='paymentprocessor',
-            managers=[
-                ('_default_manager', django.db.models.manager.Manager()),
-            ],
+            managers=(shuup.utils.migrations.get_managers_for_migration()),
         ),
         migrations.AlterModelManagers(
             name='serviceprovider',
-            managers=[
-                ('_default_manager', django.db.models.manager.Manager()),
-            ],
+            managers=(shuup.utils.migrations.get_managers_for_migration()),
         ),
     ]

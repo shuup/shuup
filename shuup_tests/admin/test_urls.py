@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from collections import Counter
+from mock import patch
 
 import pytest
 from django.core.exceptions import ImproperlyConfigured
@@ -57,5 +58,11 @@ def test_invalid_admin_url():
         admin_url("", "")
 
 
-def test_admin_url_prefix():
-    assert admin_url("", "foo", prefix="bar")._callback_str == "bar.foo"
+class TestMagic(object):
+    pass
+
+
+@patch("shuup.utils.importing.load", autospec=TestMagic)
+def test_admin_url_prefix(conf_get_mock):
+    admin_url("", "foo", prefix="bar")
+    conf_get_mock.assert_called_once_with("bar.foo")

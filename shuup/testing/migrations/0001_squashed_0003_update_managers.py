@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import django
 from django.db import migrations, models
-from django.utils import version
+
+import shuup.utils.migrations
 
 
 class Migration(migrations.Migration):
@@ -33,9 +33,7 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('shuup.customcarrier', ),
-            managers = (
-                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
-            )
+            managers = (shuup.utils.migrations.get_managers_for_migration())
         ),
         migrations.CreateModel(
             name='ExpensiveSwedenBehaviorComponent',
@@ -65,9 +63,7 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('shuup.custompaymentprocessor', ),
-            managers=(
-                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
-            )
+            managers=(shuup.utils.migrations.get_managers_for_migration())
         ),
         migrations.CreateModel(
             name='PseudoPaymentProcessor',
@@ -93,9 +89,7 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('shuup.paymentprocessor', ),
-            managers=(
-                [] if version.get_docs_version() == "1.8" else [('_default_manager', django.db.models.manager.Manager())]
-            )
+            managers=(shuup.utils.migrations.get_managers_for_migration())
         ),
         migrations.CreateModel(
             name='UltraFilter',

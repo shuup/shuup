@@ -52,7 +52,7 @@ class PasswordChangeView(DashboardViewMixin, TemplateView):
 class CustomerEditView(DashboardViewMixin, FormView):
     template_name = "shuup/customer_information/edit_customer.jinja"
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         contact = get_person_contact(self.request.user)
         form_group = FormGroup(**self.get_form_kwargs())
         address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
@@ -90,7 +90,7 @@ class CompanyEditView(DashboardViewMixin, FormView):
             return HttpResponseNotFound()
         return super(CompanyEditView, self).dispatch(request, *args, **kwargs)
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         user = self.request.user
         company = get_company_contact(user)
         person = get_person_contact(user)
@@ -174,7 +174,7 @@ class AddressBookEditView(DashboardViewMixin, FormView):
             self.instance = None
         return super(AddressBookEditView, self).dispatch(request, *args, **kwargs)
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         form_group = FormGroup(**self.get_form_kwargs())
         address_kwargs = {}
         saved_address_kwargs = {}

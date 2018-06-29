@@ -10,7 +10,7 @@ BASE_DIR = os.getenv("SHUUP_WORKBENCH_BASE_DIR") or (
     os.path.dirname(os.path.dirname(__file__)))
 SECRET_KEY = "Shhhhh"
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "var", "media")
 STATIC_ROOT = os.path.join(BASE_DIR, "var", "static")
@@ -146,12 +146,12 @@ PARLER_LANGUAGES = {
 
 _TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.request",
-    "django.core.context_processors.tz",
+    "django.template.context_processors.debug",
+    "django.template.context_processors.i18n",
+    "django.template.context_processors.media",
+    "django.template.context_processors.static",
+    "django.template.context_processors.request",
+    "django.template.context_processors.tz",
     "django.contrib.messages.context_processors.messages"
 ]
 
@@ -230,8 +230,8 @@ SHUUP_SIMPLE_SEARCH_LIMIT = 150
 
 
 if os.environ.get("SHUUP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
-    from shuup_workbench.settings.utils import DisableMigrations
-    MIGRATION_MODULES = DisableMigrations()
+    from .settings.utils import get_disabled_migrations
+    MIGRATION_MODULES = get_disabled_migrations()
 
 
 def configure(setup):
