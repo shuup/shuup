@@ -9,6 +9,12 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+General
+~~~~~~
+
+- Changed the way regions script is inject into templates.
+   Now it is a static source script that can be cached by browser.
+
 Xtheme
 ~~~~~~
 

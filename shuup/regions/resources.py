@@ -5,103 +5,23 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import json
+from django.templatetags.static import static
 
 from shuup.xtheme.resources import add_resource, InlineScriptResource
 
-from .data import regions_data
-
-
-REGIONS = """
-window.REGIONS = %(regions)s;
+INITIALIZE_FIELDS_FUNCTION = """
+window.initializeRegionFields('%(country_code_field)s', '%(region_code_field)s', '%(region_field)s');
 """
 
 
-REGION_CHANGER_JS = """
-window.handleRegionFields = function handleRegionFields(regionSelector, regionCodeSelector, regionsData) {
-    var $regionField = $(regionSelector);
-    var $regionCodeField = $(regionCodeSelector);
-    if (regionsData) {
-        $regionField.closest(".form-group").hide();
-        $regionCodeField.closest(".form-group").show();
-        var regionValue = $regionCodeField.val();
-        $newRegionField = $("<select/>", {
-            id: $regionCodeField.attr("id"),
-            name: $regionCodeField.attr("name"),
-            class: "form-control"
-        });
-        $regionCodeField.replaceWith($newRegionField);
-        $option = $("<option/>", {
-            value: "",
-            text: "---------"
-        });
-        $newRegionField.append($option);
-        $.each(regionsData, function(idx, region) {
-            $option = $("<option/>", {
-                value: region.code,
-                text: region.name,
-                selected: (regionValue == region.code ? true : false)
-            });
-            $newRegionField.append($option);
-        });
-        $newRegionField.on("change", function() {
-            $(regionSelector).val($(this).val());
-        });
-    } else {
-        $regionField.closest("div.form-group").show();
-        $regionCodeField.val("");
-        $regionField.val("");
-        $regionCodeField.closest("div.form-group").hide();
-    }
-};
-
-window.updateRegion = function updateRegion(field) {
-    var countryField = field + "-country";
-    var regionField = field + "-region";
-    var regionCode = field + "-region_code";
-    if (field == "") {
-        countryField = "#id_country";
-        regionField = "#id_region";
-        regionCode = "#id_region_code";
-    }
-    var country = $(countryField).val();
-    var regionsData = window.REGIONS[country];
-    window.handleRegionFields(regionField, regionCode, regionsData);
-};
-"""
-
-
-CHANGER_FUNCTIONS = """
-window.%(initialize_function)s = function %(initialize_function)s() {
-    window.updateRegion("%(region_field_prefix)s");
-    if("%(region_field_prefix)s" != "") {
-        $("%(region_field_prefix)s-country").on("change", function() {
-            window.updateRegion("%(region_field_prefix)s");
-        });
-    }
-    else {
-        $("#id_country").on("change", function() {
-            window.updateRegion("");
-        });
-    }
-};
-
-$(function(){
-    window.%(initialize_function)s();
-});
-"""
-
-
-def add_resources(context, placement="body_end", fields=None):
-    add_resource(context, placement, InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))
-    add_resource(context, placement, InlineScriptResource(REGION_CHANGER_JS))
-    for function_name, field in fields or []:
-        add_resource(
-            context,
-            placement,
-            InlineScriptResource(
-                CHANGER_FUNCTIONS % {"initialize_function": function_name, "region_field_prefix": field})
-        )
+def add_init_fields_resource(context, country_code_field, region_code_field, region_field=None, placement="body_end"):
+    add_resource(context, placement, InlineScriptResource(
+        INITIALIZE_FIELDS_FUNCTION % {
+            "country_code_field": country_code_field,
+            "region_code_field": region_code_field,
+            "region_field": region_field if region_field else ""
+        })
+    )
 
 
 def add_front_resources(context, content):
@@ -110,27 +30,61 @@ def add_front_resources(context, content):
         return
 
     view_name = getattr(view_class, "__name__", "")
-    if view_name in [
-            "AddressesPhase", "CheckoutMethodPhase", "CompanyRegistrationView",
-            "CustomerEditView", "CompanyEditView"]:  # For front
-        add_resources(
+
+    # For front
+    if view_name in ["CheckoutMethodPhase", "CompanyRegistrationView", "CustomerEditView", "CompanyEditView"]:
+        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+        add_init_fields_resource(context, "#id_billing-country", "#id_billing-region_code", "#id_billing-region")
+        add_init_fields_resource(context, "#id_shipping-country", "#id_shipping-region_code", "#id_shipping-region")
+
+    elif view_name in ["AddressesPhase"]:
+        # the address phase can be requested through ajax
+        # when ajax request, we should append the scripts at the end of the content
+        # and not at the body end, as there is no body element in the ajax response
+        placement = "body_end"
+        request = context.get("request")
+        if request and request.is_ajax():
+            placement = "content_end"
+
+        add_resource(context, placement, static("shuup_regions/shuup_regions.js"))
+        add_init_fields_resource(
             context,
-            fields=[
-                ("initializeBillingRegion", "#id_billing"),
-                ("initializeShippingRegion", "#id_shipping")
-            ]
+            "#id_billing-country",
+            "#id_billing-region_code",
+            "#id_billing-region",
+            placement
         )
-    elif view_name in ["ContactEditView", "OrderAddressEditView"]:  # For admin views
-        add_resources(
+        add_init_fields_resource(
             context,
-            fields=[
-                ("initializeBillingRegion", "#id_billing_address"),
-                ("initializeShippingRegion", "#id_shipping_address")
-            ]
+            "#id_shipping-country",
+            "#id_shipping-region_code",
+            "#id_shipping-region",
+            placement
         )
-    elif view_name == "OrderEditView":  # For admin order editor only regions is enough
-        add_resource(context, "body_end", InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))
+
+    # For admin views
+    elif view_name in ["ContactEditView", "OrderAddressEditView"]:
+        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+        add_init_fields_resource(
+            context,
+            "#id_billing_address-country",
+            "#id_billing_address-region_code",
+            "#id_billing_address-region"
+        )
+        add_init_fields_resource(
+            context,
+            "#id_shipping_address-country",
+            "#id_shipping_address-region_code",
+            "#id_shipping_address-region"
+        )
+
+    # For admin order editor only regions is enough
+    elif view_name == "OrderEditView":
+        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+
     elif view_name in ["AddressBookEditView"]:
-        add_resources(context, fields=[("initializeRegion", "#id_address")])
+        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+        add_init_fields_resource(context, "#id_address-country", "#id_address-region_code", "#id_address-region")
+
     elif view_name in ["WizardView"]:
-        add_resource(context, "body_end", InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))
+        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
