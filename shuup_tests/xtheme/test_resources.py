@@ -33,6 +33,8 @@ class ResourceInjectorPlugin(Plugin):
         add_resource(context, "head_end", InlineMarkupResource(self.meta_markup))
         add_resource(context, "head_end", InlineMarkupResource(self.meta_markup))  # Test duplicates
         add_resource(context, "head_end", "")  # Test the no-op branch
+        add_resource(context, "content_start", InlineMarkupResource("START"))
+        add_resource(context, "content_end", InlineMarkupResource("END"))
         return self.message
 
 
@@ -51,6 +53,8 @@ def test_resources():
             assert 'src="://example.com/js.js"' in body  # the js
             assert head.count(ResourceInjectorPlugin.meta_markup) == 1  # the duplicate meta
             assert ResourceInjectorPlugin.message in output  # the actual message
+            assert output[:5] == "START"
+            assert output[-3:] == "END"
 
 
 def test_injecting_into_weird_places():

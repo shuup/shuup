@@ -22,6 +22,8 @@ LOCATION_INFO = {
     "head_end": (re.compile(r"</head>", re.I), "pre"),
     "body_end": (re.compile(r"</body>", re.I), "pre"),
     "body_start": (re.compile(r"<body[^>]*>", re.I), "post"),
+    "content_start": (re.compile(r"^.*", re.I), "pre"),
+    "content_end": (re.compile(r".*$", re.I), "post")
 }
 
 KNOWN_LOCATIONS = set(LOCATION_INFO.keys())

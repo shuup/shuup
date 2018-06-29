@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Xtheme
+~~~~~~
+
+- Add new resource locations: `content_start` and `content_end`
+
 Shuup 1.6.3
 -----------
 
