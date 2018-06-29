@@ -49,12 +49,20 @@
 
 {% macro render_address_forms_js() %}
     <script>
-        function copyAddress(from, to) {
-            $("[id^=id_" + from + "]").each(function() {
+        function copyFields(from_fields, to_fields) {
+            $("[id^=id_" + from_fields + "]").each(function() {
                 var targetName = $(this).attr("id").split("-")[1];
-                var $target = $("#id_" + to + "-" + targetName);
+                var $target = $("#id_" + to_fields + "-" + targetName);
                 $target.val($(this).val());
             });
+        }
+        function copyAddress(from_fields, to_fields) {
+            // copy values
+            copyFields(from_fields, to_fields);
+            // trigger field change event so country and regions can be populated when regions app is enabled
+            $("[id^=id_" + to_fields + "]").trigger("change");
+            // copy values again as regions select can be changed after the first copy
+            copyFields(from_fields, to_fields);
         }
     </script>
 {% endmacro %}
