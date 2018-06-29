@@ -4,8 +4,8 @@ shuup.core.defaults package
 Submodules
 ----------
 
-shuup.core.defaults.order_statuses module
------------------------------------------
+shuup.core.defaults.order\_statuses module
+------------------------------------------
 
 .. automodule:: shuup.core.defaults.order_statuses
     :members:

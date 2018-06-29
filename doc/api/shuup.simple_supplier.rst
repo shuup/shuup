@@ -1,5 +1,5 @@
-shuup.simple_supplier package
-=============================
+shuup.simple\_supplier package
+==============================
 
 Subpackages
 -----------
@@ -11,48 +11,48 @@ Subpackages
 Submodules
 ----------
 
-shuup.simple_supplier.forms module
-----------------------------------
+shuup.simple\_supplier.forms module
+-----------------------------------
 
 .. automodule:: shuup.simple_supplier.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple_supplier.models module
------------------------------------
+shuup.simple\_supplier.models module
+------------------------------------
 
 .. automodule:: shuup.simple_supplier.models
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple_supplier.module module
------------------------------------
+shuup.simple\_supplier.module module
+------------------------------------
 
 .. automodule:: shuup.simple_supplier.module
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple_supplier.notify_events module
-------------------------------------------
+shuup.simple\_supplier.notify\_events module
+--------------------------------------------
 
 .. automodule:: shuup.simple_supplier.notify_events
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple_supplier.notify_script_template module
----------------------------------------------------
+shuup.simple\_supplier.notify\_script\_template module
+------------------------------------------------------
 
 .. automodule:: shuup.simple_supplier.notify_script_template
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple_supplier.utils module
-----------------------------------
+shuup.simple\_supplier.utils module
+-----------------------------------
 
 .. automodule:: shuup.simple_supplier.utils
     :members:

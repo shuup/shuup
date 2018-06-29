@@ -1,5 +1,5 @@
-shuup.admin.modules.product_types package
-=========================================
+shuup.admin.modules.product\_types package
+==========================================
 
 Subpackages
 -----------

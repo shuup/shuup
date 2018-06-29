@@ -1,11 +1,11 @@
-shuup.admin.modules.sales_dashboard package
-===========================================
+shuup.admin.modules.sales\_dashboard package
+============================================
 
 Submodules
 ----------
 
-shuup.admin.modules.sales_dashboard.dashboard module
-----------------------------------------------------
+shuup.admin.modules.sales\_dashboard.dashboard module
+-----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.sales_dashboard.dashboard
     :members:

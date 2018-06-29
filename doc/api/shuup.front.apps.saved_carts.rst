@@ -1,27 +1,27 @@
-shuup.front.apps.saved_carts package
-====================================
+shuup.front.apps.saved\_carts package
+=====================================
 
 Submodules
 ----------
 
-shuup.front.apps.saved_carts.dashboard_items module
----------------------------------------------------
+shuup.front.apps.saved\_carts.dashboard\_items module
+-----------------------------------------------------
 
 .. automodule:: shuup.front.apps.saved_carts.dashboard_items
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.saved_carts.urls module
-----------------------------------------
+shuup.front.apps.saved\_carts.urls module
+-----------------------------------------
 
 .. automodule:: shuup.front.apps.saved_carts.urls
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.saved_carts.views module
------------------------------------------
+shuup.front.apps.saved\_carts.views module
+------------------------------------------
 
 .. automodule:: shuup.front.apps.saved_carts.views
     :members:

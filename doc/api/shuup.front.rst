@@ -13,6 +13,7 @@ Subpackages
     shuup.front.forms
     shuup.front.models
     shuup.front.notify_script_templates
+    shuup.front.providers
     shuup.front.template_helpers
     shuup.front.templatetags
     shuup.front.themes
@@ -22,8 +23,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.front.error_handlers module
----------------------------------
+shuup.front.error\_handlers module
+----------------------------------
 
 .. automodule:: shuup.front.error_handlers
     :members:
@@ -38,8 +39,8 @@ shuup.front.middleware module
     :undoc-members:
     :show-inheritance:
 
-shuup.front.notify_events module
---------------------------------
+shuup.front.notify\_events module
+---------------------------------
 
 .. automodule:: shuup.front.notify_events
     :members:

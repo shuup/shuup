@@ -44,32 +44,32 @@ shuup.core.api.contacts module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.api.front_orders module
-----------------------------------
+shuup.core.api.front\_orders module
+-----------------------------------
 
 .. automodule:: shuup.core.api.front_orders
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.api.front_passwords module
--------------------------------------
+shuup.core.api.front\_passwords module
+--------------------------------------
 
 .. automodule:: shuup.core.api.front_passwords
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.api.front_products module
-------------------------------------
+shuup.core.api.front\_products module
+-------------------------------------
 
 .. automodule:: shuup.core.api.front_products
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.api.front_users module
----------------------------------
+shuup.core.api.front\_users module
+----------------------------------
 
 .. automodule:: shuup.core.api.front_users
     :members:
@@ -100,16 +100,16 @@ shuup.core.api.orders module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.api.product_media module
------------------------------------
+shuup.core.api.product\_media module
+------------------------------------
 
 .. automodule:: shuup.core.api.product_media
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.api.product_variation module
----------------------------------------
+shuup.core.api.product\_variation module
+----------------------------------------
 
 .. automodule:: shuup.core.api.product_variation
     :members:
@@ -120,6 +120,14 @@ shuup.core.api.products module
 ------------------------------
 
 .. automodule:: shuup.core.api.products
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.api.refunds module
+-----------------------------
+
+.. automodule:: shuup.core.api.refunds
     :members:
     :undoc-members:
     :show-inheritance:
@@ -164,8 +172,8 @@ shuup.core.api.tax module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.api.tax_class module
--------------------------------
+shuup.core.api.tax\_class module
+--------------------------------
 
 .. automodule:: shuup.core.api.tax_class
     :members:

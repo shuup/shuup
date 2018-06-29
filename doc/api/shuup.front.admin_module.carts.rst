@@ -1,5 +1,5 @@
-shuup.front.admin_module.carts package
-======================================
+shuup.front.admin\_module.carts package
+=======================================
 
 Subpackages
 -----------

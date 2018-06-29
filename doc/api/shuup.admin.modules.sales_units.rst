@@ -1,5 +1,5 @@
-shuup.admin.modules.sales_units package
-=======================================
+shuup.admin.modules.sales\_units package
+========================================
 
 Subpackages
 -----------

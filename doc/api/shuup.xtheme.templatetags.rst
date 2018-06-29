@@ -4,8 +4,8 @@ shuup.xtheme.templatetags package
 Submodules
 ----------
 
-shuup.xtheme.templatetags.xtheme_tags module
---------------------------------------------
+shuup.xtheme.templatetags.xtheme\_tags module
+---------------------------------------------
 
 .. automodule:: shuup.xtheme.templatetags.xtheme_tags
     :members:

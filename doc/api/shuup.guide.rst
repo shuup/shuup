@@ -4,8 +4,8 @@ shuup.guide package
 Submodules
 ----------
 
-shuup.guide.admin_module module
--------------------------------
+shuup.guide.admin\_module module
+--------------------------------
 
 .. automodule:: shuup.guide.admin_module
     :members:

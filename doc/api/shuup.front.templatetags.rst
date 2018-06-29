@@ -4,8 +4,8 @@ shuup.front.templatetags package
 Submodules
 ----------
 
-shuup.front.templatetags.shuup_front module
--------------------------------------------
+shuup.front.templatetags.shuup\_front module
+--------------------------------------------
 
 .. automodule:: shuup.front.templatetags.shuup_front
     :members:

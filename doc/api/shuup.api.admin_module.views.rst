@@ -1,11 +1,11 @@
-shuup.api.admin_module.views package
-====================================
+shuup.api.admin\_module.views package
+=====================================
 
 Submodules
 ----------
 
-shuup.api.admin_module.views.permissions module
------------------------------------------------
+shuup.api.admin\_module.views.permissions module
+------------------------------------------------
 
 .. automodule:: shuup.api.admin_module.views.permissions
     :members:

@@ -48,8 +48,8 @@ shuup.campaigns.reports module
     :undoc-members:
     :show-inheritance:
 
-shuup.campaigns.signal_handlers module
---------------------------------------
+shuup.campaigns.signal\_handlers module
+---------------------------------------
 
 .. automodule:: shuup.campaigns.signal_handlers
     :members:

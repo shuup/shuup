@@ -12,8 +12,8 @@ shuup.utils.analog module
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.babel_precision_provider module
--------------------------------------------
+shuup.utils.babel\_precision\_provider module
+---------------------------------------------
 
 .. automodule:: shuup.utils.babel_precision_provider
     :members:
@@ -76,8 +76,8 @@ shuup.utils.filer module
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.form_group module
------------------------------
+shuup.utils.form\_group module
+------------------------------
 
 .. automodule:: shuup.utils.form_group
     :members:
@@ -140,8 +140,16 @@ shuup.utils.money module
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.multilanguage_model_form module
--------------------------------------------
+shuup.utils.mptt module
+-----------------------
+
+.. automodule:: shuup.utils.mptt
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.utils.multilanguage\_model\_form module
+---------------------------------------------
 
 .. automodule:: shuup.utils.multilanguage_model_form
     :members:
@@ -196,8 +204,8 @@ shuup.utils.serialization module
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.settings_doc module
--------------------------------
+shuup.utils.settings\_doc module
+--------------------------------
 
 .. automodule:: shuup.utils.settings_doc
     :members:

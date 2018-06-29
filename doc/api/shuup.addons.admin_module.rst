@@ -1,5 +1,5 @@
-shuup.addons.admin_module package
-=================================
+shuup.addons.admin\_module package
+==================================
 
 Subpackages
 -----------

@@ -28,6 +28,14 @@ shuup.admin.views.menu module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.views.password module
+---------------------------------
+
+.. automodule:: shuup.admin.views.password
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.views.search module
 -------------------------------
 

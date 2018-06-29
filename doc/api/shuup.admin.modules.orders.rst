@@ -11,16 +11,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.orders.json_order_creator module
-----------------------------------------------------
+shuup.admin.modules.orders.json\_order\_creator module
+------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.orders.json_order_creator
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.orders.mass_actions module
-----------------------------------------------
+shuup.admin.modules.orders.mass\_actions module
+-----------------------------------------------
 
 .. automodule:: shuup.admin.modules.orders.mass_actions
     :members:

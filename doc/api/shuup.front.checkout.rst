@@ -12,8 +12,8 @@ shuup.front.checkout.addresses module
     :undoc-members:
     :show-inheritance:
 
-shuup.front.checkout.checkout_method module
--------------------------------------------
+shuup.front.checkout.checkout\_method module
+--------------------------------------------
 
 .. automodule:: shuup.front.checkout.checkout_method
     :members:

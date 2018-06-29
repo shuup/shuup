@@ -4,8 +4,8 @@ shuup.front.basket package
 Submodules
 ----------
 
-shuup.front.basket.command_dispatcher module
---------------------------------------------
+shuup.front.basket.command\_dispatcher module
+---------------------------------------------
 
 .. automodule:: shuup.front.basket.command_dispatcher
     :members:
@@ -28,8 +28,8 @@ shuup.front.basket.objects module
     :undoc-members:
     :show-inheritance:
 
-shuup.front.basket.order_creator module
----------------------------------------
+shuup.front.basket.order\_creator module
+----------------------------------------
 
 .. automodule:: shuup.front.basket.order_creator
     :members:
@@ -44,8 +44,8 @@ shuup.front.basket.storage module
     :undoc-members:
     :show-inheritance:
 
-shuup.front.basket.update_methods module
-----------------------------------------
+shuup.front.basket.update\_methods module
+-----------------------------------------
 
 .. automodule:: shuup.front.basket.update_methods
     :members:

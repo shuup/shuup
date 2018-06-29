@@ -1,19 +1,19 @@
-shuup.importer.admin_module package
-===================================
+shuup.importer.admin\_module package
+====================================
 
 Submodules
 ----------
 
-shuup.importer.admin_module.forms module
-----------------------------------------
+shuup.importer.admin\_module.forms module
+-----------------------------------------
 
 .. automodule:: shuup.importer.admin_module.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.importer.admin_module.import_views module
------------------------------------------------
+shuup.importer.admin\_module.import\_views module
+-------------------------------------------------
 
 .. automodule:: shuup.importer.admin_module.import_views
     :members:

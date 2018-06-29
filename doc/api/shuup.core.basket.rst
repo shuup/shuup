@@ -4,8 +4,8 @@ shuup.core.basket package
 Submodules
 ----------
 
-shuup.core.basket.command_dispatcher module
--------------------------------------------
+shuup.core.basket.command\_dispatcher module
+--------------------------------------------
 
 .. automodule:: shuup.core.basket.command_dispatcher
     :members:
@@ -28,8 +28,8 @@ shuup.core.basket.objects module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.basket.order_creator module
---------------------------------------
+shuup.core.basket.order\_creator module
+---------------------------------------
 
 .. automodule:: shuup.core.basket.order_creator
     :members:
@@ -44,8 +44,8 @@ shuup.core.basket.storage module
     :undoc-members:
     :show-inheritance:
 
-shuup.core.basket.update_methods module
----------------------------------------
+shuup.core.basket.update\_methods module
+----------------------------------------
 
 .. automodule:: shuup.core.basket.update_methods
     :members:

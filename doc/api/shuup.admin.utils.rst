@@ -4,8 +4,8 @@ shuup.admin.utils package
 Submodules
 ----------
 
-shuup.admin.utils.bs3_renderers module
---------------------------------------
+shuup.admin.utils.bs3\_renderers module
+---------------------------------------
 
 .. automodule:: shuup.admin.utils.bs3_renderers
     :members:
@@ -44,8 +44,8 @@ shuup.admin.utils.search module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.utils.str_utils module
-----------------------------------
+shuup.admin.utils.str\_utils module
+-----------------------------------
 
 .. automodule:: shuup.admin.utils.str_utils
     :members:

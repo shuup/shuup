@@ -1,37 +1,45 @@
-shuup.customer_group_pricing package
-====================================
+shuup.customer\_group\_pricing package
+======================================
 
 Submodules
 ----------
 
-shuup.customer_group_pricing.admin_form_part module
----------------------------------------------------
+shuup.customer\_group\_pricing.admin\_form\_part module
+-------------------------------------------------------
 
 .. automodule:: shuup.customer_group_pricing.admin_form_part
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.customer_group_pricing.api module
----------------------------------------
+shuup.customer\_group\_pricing.api module
+-----------------------------------------
 
 .. automodule:: shuup.customer_group_pricing.api
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.customer_group_pricing.models module
-------------------------------------------
+shuup.customer\_group\_pricing.models module
+--------------------------------------------
 
 .. automodule:: shuup.customer_group_pricing.models
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.customer_group_pricing.module module
-------------------------------------------
+shuup.customer\_group\_pricing.module module
+--------------------------------------------
 
 .. automodule:: shuup.customer_group_pricing.module
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.customer\_group\_pricing.utils module
+-------------------------------------------
+
+.. automodule:: shuup.customer_group_pricing.utils
     :members:
     :undoc-members:
     :show-inheritance:
