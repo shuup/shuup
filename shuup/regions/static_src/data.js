@@ -1,12 +1,13 @@
-# -*- coding: utf-8 -*-
-# This file is part of Shuup.
-#
-# Copyright (c) 2012-2018, Shuup Inc. All rights reserved.
-#
-# This source code is licensed under the OSL-3.0 license found in the
-# LICENSE file in the root directory of this source tree.
+/**
+ * This file is part of Shuup.
+ *
+ * Copyright (c) 2012-2018, Shuup Inc. All rights reserved.
+ *
+ * This source code is licensed under the OSL-3.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-regions_data = {
+const RegionsMap = {
     "AT": [
         {"code": "BL", "name": "Burgenland"},
         {"code": "KN", "name": "Kärnten"},
@@ -544,4 +545,6 @@ regions_data = {
         {"code": "WV", "name": "West Virginia"},
         {"code": "WY", "name": "Wyoming"},
     ],
-}
+};
+
+export default RegionsMap;
