@@ -51,7 +51,7 @@ def add_gdpr_consent_resources(context, content):
         return
 
     # always add styles
-    add_resource(context, "head_end", static("shuup_gdpr/shuup_gdpr_styles.css"))
+    add_resource(context, "head_end", static("shuup-gdpr.css"))
 
     user = request.user
     if not user.is_anonymous() and should_reconsent_privacy_policy(shop, user):
@@ -86,4 +86,4 @@ def add_gdpr_consent_resources(context, content):
         loader.render_to_string("shuup/gdpr/gdpr_consent.jinja", context=render_context)
     )
     add_resource(context, "body_end", html_resource)
-    add_resource(context, "body_end", static("shuup_gdpr/shuup_gdpr.js"))
+    add_resource(context, "body_end", static("shuup-gdpr.js"))
