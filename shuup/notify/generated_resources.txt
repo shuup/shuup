@@ -1,1 +1,1 @@
-static/notify/admin/script-editor-bundle.js
+static/notify/admin/script-editor.js

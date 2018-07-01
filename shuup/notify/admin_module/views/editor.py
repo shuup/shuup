@@ -120,7 +120,7 @@ class EditScriptContentView(DetailView):
         context["toolbar"] = Toolbar([
             JavaScriptActionButton(
                 text="Save", icon="fa fa-save", extra_css_class="btn-success",
-                onclick="ScriptEditor.save();return false"
+                onclick="window.ScriptEditor.save();return false"
             ),
             get_discard_button(get_model_url(self.object, "edit"))
         ])

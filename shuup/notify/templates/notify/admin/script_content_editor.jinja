@@ -12,7 +12,7 @@
         <div class="shuup-modal-container">
             <div class="shuup-modal-header">
                 <h2 class="pull-left">{% trans %}Edit Step{% endtrans %}</h2>
-                <button class="btn btn-success pull-right" onclick="ScriptEditor.hideEditModal()" type="button">
+                <button class="btn btn-success pull-right" onclick="window.ScriptEditor.hideEditModal()" type="button">
                     <i class="fa fa-check"></i>
                     {% trans %}Done{% endtrans %}
                 </button>
@@ -21,10 +21,15 @@
         </div>
     </div>
 {% endblock %}
+
+{% block extra_css %}
+<link href="{{ static("notify/admin/script-editor.css") }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block extra_js %}
-<script src="{{ static("notify/admin/script-editor-bundle.js") }}"></script>
+<script src="{{ static("notify/admin/script-editor.js") }}"></script>
 <script>
-ScriptEditor.init({
+window.ScriptEditor.init({
     eventIdentifier: {{ script.event_class.identifier|json }},
     apiUrl: {{ request.path|json }},
     itemEditorUrl: {{ url("shuup_admin:notify.script-item-editor")|json }},
