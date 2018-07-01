@@ -33,7 +33,7 @@ def add_front_resources(context, content):
 
     # For front
     if view_name in ["CheckoutMethodPhase", "CompanyRegistrationView", "CustomerEditView", "CompanyEditView"]:
-        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+        add_resource(context, "body_end", static("shuup-regions.js"))
         add_init_fields_resource(context, "#id_billing-country", "#id_billing-region_code", "#id_billing-region")
         add_init_fields_resource(context, "#id_shipping-country", "#id_shipping-region_code", "#id_shipping-region")
 
@@ -46,7 +46,7 @@ def add_front_resources(context, content):
         if request and request.is_ajax():
             placement = "content_end"
 
-        add_resource(context, placement, static("shuup_regions/shuup_regions.js"))
+        add_resource(context, placement, static("shuup-regions.js"))
         add_init_fields_resource(
             context,
             "#id_billing-country",
@@ -64,7 +64,7 @@ def add_front_resources(context, content):
 
     # For admin views
     elif view_name in ["ContactEditView", "OrderAddressEditView"]:
-        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+        add_resource(context, "body_end", static("shuup-regions.js"))
         add_init_fields_resource(
             context,
             "#id_billing_address-country",
@@ -80,11 +80,11 @@ def add_front_resources(context, content):
 
     # For admin order editor only regions is enough
     elif view_name == "OrderEditView":
-        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+        add_resource(context, "body_end", static("shuup-regions.js"))
 
     elif view_name in ["AddressBookEditView"]:
-        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+        add_resource(context, "body_end", static("shuup-regions.js"))
         add_init_fields_resource(context, "#id_address-country", "#id_address-region_code", "#id_address-region")
 
     elif view_name in ["WizardView"]:
-        add_resource(context, "body_end", static("shuup_regions/shuup_regions.js"))
+        add_resource(context, "body_end", static("shuup-regions.js"))

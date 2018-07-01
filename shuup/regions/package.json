@@ -4,18 +4,14 @@
   "description": "Auto load regions for Country when select input changes",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "npm i && webpack --env.dist",
-    "watch": "webpack --watch --env.dev --colors --progress"
+    "watch": "parcel watch --no-hmr -d static/ -o shuup-regions static_src/index.js",
+    "build": "npm i && parcel build -d static/ -o shuup-regions static_src/index.js"
   },
   "author": "Shuup Team <shuup@shuup.com>",
   "license": "OSL-3.0",
   "private": true,
   "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
-    "browserslist": "^3.2.8",
-    "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^3.8.1"
+    "parcel-bundler": "^1.9.3"
   }
 }
