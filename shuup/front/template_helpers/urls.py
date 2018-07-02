@@ -7,24 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.core.urlresolvers import NoReverseMatch, reverse
 from jinja2 import contextfunction
 
 from shuup.core.models import Category, Product
-from shuup.utils.importing import cached_load
 
 
 @contextfunction
 def model_url(context, model, absolute=False):
     uri = None
-
-    model_url_method = cached_load('SHUUP_MODEL_URL_RESOLVER_SPEC')
-    if callable(model_url_method):
-        uri = model_url_method(context, model, absolute)
-        if uri is not None:
-            return uri
-
     if isinstance(model, Product):
         uri = reverse("shuup:product", kwargs=dict(pk=model.pk, slug=model.slug))
 
