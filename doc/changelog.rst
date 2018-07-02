@@ -9,6 +9,10 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Front
+-----
+- Added front models urls in settings for override product and category urls
+
 Shuup 1.6.4
 -----------
 

@@ -93,3 +93,13 @@ SHUUP_PERSON_CONTACT_FIELD_PROPERTIES = {}
 #: It should be noted, however, that overriding some settings (such as making a
 #: required field non-required) could create other validation issues.
 SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES = {}
+#: Method for override front models urls for product and category. 
+#: For example: default product url: www.domain.com/p/pk-slug
+#: can be changed to: www.domain.com/product/slug.
+#: arguments: context,
+#:            model,
+#:            absolute (bool)
+#: return: url
+#: Const SHUUP_MODEL_URL_RESOLVER_SPEC takes string as path to your method: 
+#: app.urls.method_name
+SHUUP_MODEL_URL_RESOLVER_SPEC = 'shuup.front.utils.urls.model_url'

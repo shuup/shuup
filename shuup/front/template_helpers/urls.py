@@ -10,30 +10,18 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import NoReverseMatch, reverse
 from jinja2 import contextfunction
 
-from shuup.core.models import Category, Product
+from shuup.utils.importing import cached_load
 
 
 @contextfunction
 def model_url(context, model, absolute=False):
     uri = None
-    if isinstance(model, Product):
-        uri = reverse("shuup:product", kwargs=dict(pk=model.pk, slug=model.slug))
 
-    if isinstance(model, Category):
-        uri = reverse("shuup:category", kwargs=dict(pk=model.pk, slug=model.slug))
-
-    if hasattr(model, "pk") and model.pk and hasattr(model, "url"):
-        uri = "/%s" % model.url
-
-    if not uri:  # pragma: no cover
-        raise ValueError("Unable to figure out `model_url` for %r" % model)
-
-    if absolute:
-        request = context.get("request")
-        if not request:  # pragma: no cover
-            raise ValueError("Unable to use `absolute=True` when request does not exist")
-        uri = request.build_absolute_uri(uri)
-    return uri
+    model_url_method = cached_load('SHUUP_MODEL_URL_RESOLVER_SPEC')
+    if callable(model_url_method):
+        uri = model_url_method(context, model, absolute)
+        if uri is not None:
+            return uri
 
 
 def get_url(url, *args, **kwargs):
