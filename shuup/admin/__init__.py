@@ -90,6 +90,9 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.orders.toolbar:CreateShipmentAction",
             "shuup.admin.modules.orders.toolbar:CreateRefundAction",
             "shuup.admin.modules.orders.toolbar:EditAddresses",
+        ],
+        "admin_model_url_resolver": [
+            "shuup.admin.utils.urls.get_model_url"
         ]
     }
 

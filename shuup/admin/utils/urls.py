@@ -174,7 +174,7 @@ class NoModelUrl(ValueError):
     pass
 
 
-def get_model_url(object, kind="detail", user=None, required_permissions=None, shop=None):
+def get_model_url(object, kind="detail", user=None, required_permissions=None, shop=None, **kwargs):
     """
     Get a an admin object URL for the given object or object class by
     interrogating each admin module.

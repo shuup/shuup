@@ -10,30 +10,17 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import NoReverseMatch, reverse
 from jinja2 import contextfunction
 
-from shuup.core.models import Category, Product
+from shuup.apps.provides import get_provide_objects
 
 
 @contextfunction
-def model_url(context, model, absolute=False):
-    uri = None
-    if isinstance(model, Product):
-        uri = reverse("shuup:product", kwargs=dict(pk=model.pk, slug=model.slug))
+def model_url(context, model, absolute=False, **kwargs):
+    front_model_url_resolvers = get_provide_objects("front_model_url_resolver")
 
-    if isinstance(model, Category):
-        uri = reverse("shuup:category", kwargs=dict(pk=model.pk, slug=model.slug))
-
-    if hasattr(model, "pk") and model.pk and hasattr(model, "url"):
-        uri = "/%s" % model.url
-
-    if not uri:  # pragma: no cover
-        raise ValueError("Unable to figure out `model_url` for %r" % model)
-
-    if absolute:
-        request = context.get("request")
-        if not request:  # pragma: no cover
-            raise ValueError("Unable to use `absolute=True` when request does not exist")
-        uri = request.build_absolute_uri(uri)
-    return uri
+    for resolver in front_model_url_resolvers:
+        url = resolver(context, model, absolute, **kwargs)
+        if url:
+            return url
 
 
 def get_url(url, *args, **kwargs):

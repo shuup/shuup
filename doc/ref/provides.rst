@@ -158,6 +158,14 @@ Core
 ``admin_order_section``
     Additional ``Section`` subclasses for Order detail sections.
 
+``front_model_url_resolver``
+    List of functions that resolve a model instance into an object URL.
+    The first valid url returned by a provide will be used by the called.
+
+``admin_model_url_resolver``
+    List of functions that resolve a model instance into an object URL.
+    The first valid url returned by a provide will be used by the called.
+
 ``front_menu_extender``
     Additional menu items provided by addons. These should be subclassed from
     `~shuup.xtheme.extenders.FrontMenuExtender`.

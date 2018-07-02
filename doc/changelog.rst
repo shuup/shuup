@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+General
+~~~~~~~
+
+- Add `front_model_url_resolver` and `admin_model_url_resolver` provides key to resolve models URLs
+
 Shuup 1.6.5
 -----------
 
@@ -21,7 +26,7 @@ Shuup 1.6.4
 -----------
 
 General
-~~~~~~
+~~~~~~~
 
 - Changed the way regions script is inject into templates.
    Now it is a static source script that can be cached by browser.

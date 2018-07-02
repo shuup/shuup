@@ -20,9 +20,8 @@ from jinja2.utils import contextfunction
 from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
-from shuup.admin.utils.urls import (
-    get_model_url, manipulate_query_string, NoModelUrl
-)
+from shuup.admin.utils.urls import manipulate_query_string, NoModelUrl
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
 from shuup.core.telemetry import is_telemetry_enabled
 
@@ -117,7 +116,7 @@ def get_breadcrumbs(context):
 
 
 @contextfunction
-def model_url(context, model, kind="detail", default=None):
+def model_url(context, model, kind="detail", default=None, **kwargs):
     """
     Get a model URL of the given kind for a model (instance or class).
 
@@ -136,7 +135,13 @@ def model_url(context, model, kind="detail", default=None):
     try:
         request = context.get("request")
         shop = request.shop if request else None
-        return get_model_url(model, kind=kind, user=user, shop=shop)
+        admin_model_url_resolvers = get_provide_objects("admin_model_url_resolver")
+
+        for resolver in admin_model_url_resolvers:
+            url = resolver(model, kind=kind, user=user, shop=shop, **kwargs)
+            if url:
+                return url
+
     except NoModelUrl:
         return default
 

@@ -57,6 +57,9 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.forms.order_forms:SimpleVariationProductOrderForm",
             "shuup.front.forms.order_forms:SimpleProductOrderForm",
         ],
+        "front_model_url_resolver": [
+            "shuup.front.utils.urls.model_url"
+        ]
     }
 
     def ready(self):
