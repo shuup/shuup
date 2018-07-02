@@ -32,3 +32,8 @@ SHUUP_GET_ADMIN_MODULES_SPEC = ("shuup.admin.module_registry.get_admin_modules")
 #: the active shop in admin module
 #:
 SHUUP_ADMIN_SHOP_PROVIDER_SPEC = ("shuup.admin.shop_provider.AdminShopProvider")
+
+#: URL address to Shuup Merchant Documentation and Guide.
+#: The URL must end with a slash.
+#:
+SHUUP_ADMIN_MERCHANT_DOCS_PAGE = "https://shuup-guide.readthedocs.io/en/latest/"

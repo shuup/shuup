@@ -22,7 +22,7 @@
                 var $source = $("#placeholder-panel");
                 // Remove activated select2 spans from placeholder
                 $source.find("span.select2.select2-container").remove();
-                $source.find("select.select2-hidden-accessible").removeClass("select2-hidden-accessible");                
+                $source.find("select.select2-hidden-accessible").removeClass("select2-hidden-accessible");
                 var $html = $($source.html().replace(/__prefix__/g, panelCount - 1));
                 $html.find('.panel-title .title').text('{{ _('Slide') }}' + ' ' + panelCount);
                 $html.insertAfter($source);
@@ -36,7 +36,7 @@
                     todayHighlight: true,
                     fontAwesome: true
                 });
-                activateSelects();                
+                activateSelects();
                 $("[data-toggle='popover']").popover();
                 activateDropzones();
             });

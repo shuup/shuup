@@ -103,8 +103,23 @@ def get_config(context):
         "searchUrl": manipulate_query_string(reverse("shuup_admin:search"), **qs),
         "menuUrl": manipulate_query_string(reverse("shuup_admin:menu"), **qs),
         "browserUrls": get_browser_urls(),
-        "csrf": get_token(request)
+        "csrf": get_token(request),
+        "docsPage": settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE
     }
+
+
+@contextfunction
+def get_docs_help_url(context, page=""):
+    """
+    Returns the merchant documentation page.
+
+    :param str|None page: the specific page to return.
+        If nothing is passed, the root page will be returned.
+    """
+    if page:
+        from six.moves.urllib.parse import urljoin
+        return urljoin(settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE, page)
+    return settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE
 
 
 @contextfunction
