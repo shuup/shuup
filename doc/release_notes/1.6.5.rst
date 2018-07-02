@@ -1,0 +1,9 @@
+Shuup 1.6.5 Release Notes
+=========================
+
+Released on 2018-07-02 1:15am -0800.
+
+Allow django-mptt<0.9 for Django 1.8 and 1.9.
+
+List of changes see `Git commit log
+<https://github.com/shuup/shuup/commits/v1.6.5>`__.

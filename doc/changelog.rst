@@ -1,13 +1,13 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.6.5
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+General
+~~~~~~
+
+- Allow django-mptt<0.9 for Django 1.8 and 1.9.
 
 Shuup 1.6.4
 -----------
