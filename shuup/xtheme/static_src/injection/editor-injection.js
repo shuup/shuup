@@ -6,7 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import "!style!css!autoprefixer!less!./style.less";
+// import styles
+import "./editor-injection.less";
+
 import domready from "../lib/domready";
 import { stringify, mutateURL } from "../lib/qs";
 import el from "../lib/el";

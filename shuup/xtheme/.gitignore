@@ -1,6 +1,7 @@
-static/xtheme/admin/*js*
+static/xtheme/admin/*js
 static/xtheme/admin/*css
-static/xtheme/*js*
+static/xtheme/admin/*map
+static/xtheme/*js
 static/xtheme/*css
+static/xtheme/*map
 !static_src/lib
-bower_components

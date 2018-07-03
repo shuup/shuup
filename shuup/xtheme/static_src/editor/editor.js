@@ -6,6 +6,7 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import "../../../admin/static_src/base/js/browse-widget.js"
 import domready from "../lib/domready";
 import { mutate } from "../lib/qs";
 import el from "../lib/el";
@@ -100,7 +101,6 @@ domready(() => {
             updateModelChoiceWidgetURL(document.getElementById(this.id));
         });
     });
-
 
     new Sortable(document.querySelector(".layout-rows"), {
         handle: ".layout-move-row-btn",

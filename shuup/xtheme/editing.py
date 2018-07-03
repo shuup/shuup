@@ -103,4 +103,5 @@ def add_edit_resources(context):
         "edit": is_edit_mode(request),
         "csrfToken": get_token(request),
     }))
+    add_resource(context, "head_end", staticfiles_storage.url("xtheme/editor-injection.css"))
     add_resource(context, "body_end", staticfiles_storage.url("xtheme/editor-injection.js"))
