@@ -17,9 +17,7 @@ from shuup.admin.utils.picotable import (
     TextFilter
 )
 from shuup.admin.utils.views import PicotableListView
-from shuup.core.models import (
-    Order, OrderStatus, OrderStatusRole, PaymentStatus, ShippingStatus
-)
+from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
 
@@ -35,7 +33,7 @@ class OrderStatusChoicesFilter(ChoicesFilter):
     """
     @property
     def default(self):
-        return getattr(OrderStatus.objects.filter(role=OrderStatusRole.INITIAL).first(), "pk", None)
+        return None
 
     @default.setter
     def default(self, value):
