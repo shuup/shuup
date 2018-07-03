@@ -12,7 +12,7 @@ from django.forms import BaseModelFormSet, ModelForm
 from django.utils.timezone import now
 
 from shuup.admin.forms.widgets import (
-    FileDnDUploaderWidget, ProductChoiceWidget
+    FileDnDUploaderWidget, HexColorWidget, ProductChoiceWidget
 )
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import Category
@@ -27,12 +27,19 @@ class CarouselForm(ModelForm):
     class Meta:
         model = Carousel
         exclude = ("shops",)
+        widgets = {
+            "arrows_color": HexColorWidget()
+        }
 
 
 class SlideForm(MultiLanguageModelForm):
     class Meta:
         model = Slide
         exclude = ("carousel",)
+        widgets = {
+            "active_dot_color": HexColorWidget(),
+            "inactive_dot_color": HexColorWidget()
+        }
 
     def __init__(self, **kwargs):
         self.carousel = kwargs.pop("carousel")

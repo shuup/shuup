@@ -21,6 +21,7 @@ from shuup.testing.factories import (
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_jinja_context
+from django.test.client import Client
 from shuup_tests.simple_cms.utils import create_page
 
 
@@ -70,6 +71,7 @@ def test_carousel_plugin_form_get_context():
     test_carousel.shops = [shop]
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
     assert plugin.get_context_data(context).get("carousel") == test_carousel
+
 
 @pytest.mark.django_db
 def test_banner_box_plugin():
@@ -271,3 +273,71 @@ def test_slide_admin_form(rf, admin_user):
     options = soup.find(id="id_cms_page_link").find_all("option")
     assert len(options) == 1
     assert options[0]["value"] == ""
+
+
+@pytest.mark.django_db
+def test_carousel_custom_colors(rf):
+    from shuup.front.apps.carousel.plugins import CarouselPlugin
+    from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
+    from shuup.xtheme.layout import Layout
+    from shuup.xtheme._theme import get_current_theme
+    from django.core.urlresolvers import reverse
+
+    shop = get_default_shop()
+    shop.maintenance_mode = False
+    shop.save()
+
+    carousel = Carousel.objects.create(name="test")
+    carousel.shops.add(shop)
+    test_image = Image.objects.create(original_filename="slide.jpg")
+    test_slide = Slide.objects.create(
+        carousel=carousel, name="test",
+        available_from=(datetime.now() - timedelta(days=1)),
+        image=test_image, target=LinkTargetType.CURRENT
+    )
+
+    theme = get_current_theme(shop)
+
+    # adds the carousel to the front page
+    layout = Layout(theme, "front_content")
+    layout.begin_row()
+    layout.begin_column({"md": 12})
+    layout.add_plugin(CarouselPlugin.identifier, {"carousel": carousel.pk})
+    svc = SavedViewConfig(
+        theme_identifier=theme.identifier,
+        shop=shop,
+        view_name="IndexView",
+        status=SavedViewConfigStatus.CURRENT_DRAFT
+    )
+    svc.set_layout_data(layout.placeholder_name, layout)
+    svc.save()
+    svc.publish()
+
+    client = Client()
+
+    # no customized color
+    response = client.get(reverse("shuup:index"))
+    content = response.content.decode("utf-8")
+    assert "owl-carousel" in content
+    assert ".owl-nav .owl-prev" not in content
+    assert ".owl-nav .owl-next" not in content
+    assert ".owl-dot:nth-child(" not in content
+
+    # put colors in arrows
+    carousel.arrows_color = "#ffaabb"
+    carousel.save()
+    response = client.get(reverse("shuup:index"))
+    content = response.content.decode("utf-8")
+    assert ".owl-nav .owl-prev" in content
+    assert ".owl-nav .owl-next" in content
+    assert "color: #ffaabb !important;" in content
+
+    # put custom color in dots
+    test_slide.inactive_dot_color = "#a1b2c3"
+    test_slide.active_dot_color = "#d4e4f6"
+    test_slide.save()
+    response = client.get(reverse("shuup:index"))
+    content = response.content.decode("utf-8")
+    assert ".owl-dot:nth-child(1)" in content
+    assert "border-color: #a1b2c3 !important" in content
+    assert "background-color: #d4e4f6 !important;" in content

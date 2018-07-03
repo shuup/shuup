@@ -19,6 +19,11 @@ General
 
 - Add `front_model_url_resolver` and `admin_model_url_resolver` provides key to resolve models URLs
 
+Carousel
+~~~~~~~~
+
+- Add option to customize arrows and slide dot colors
+
 Shuup 1.6.5
 -----------
 
