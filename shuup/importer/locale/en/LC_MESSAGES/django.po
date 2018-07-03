@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-28 17:04+0000\n"
+"POT-Creation-Date: 2018-07-03 23:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,6 +58,9 @@ msgid "Invalid importer"
 msgstr ""
 
 msgid "Invalid file name"
+msgstr ""
+
+msgid "File not found"
 msgstr ""
 
 msgid "Import"

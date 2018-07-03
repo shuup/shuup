@@ -24,3 +24,23 @@ class DummyImporter(DataImporter):
 
     def get_row_model(self, row):
         return PersonContact
+
+
+class DummyFileImporter(DataImporter):
+    identifier = "dummy_file_importer"
+    name = _("Dummy File Importer")
+    model = Contact
+
+    example_files = [
+        ImporterExampleFile("doesn_exit.csv", "text/csv")
+    ]
+
+    def get_related_models(self):
+        return [Contact, PersonContact]
+
+    def get_row_model(self, row):
+        return PersonContact
+
+    @classmethod
+    def get_example_file_content(cls, example_file, request):
+        return None
