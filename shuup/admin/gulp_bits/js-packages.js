@@ -8,9 +8,13 @@
  */
 var bowerFiles = require("./bower-files");
 var root = require("path").resolve(__dirname + "/..");
+
+
 module.exports = {
     "vendor": {
-        "files": bowerFiles("./static_src/vendor")
+        "files": bowerFiles("./static_src/vendor").concat([
+            "./node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"
+        ])
     },
     "base": {
         "base": "./static_src/base",
@@ -37,7 +41,8 @@ module.exports = {
             "js/slugify.js",
             "js/dropzone.js",
             "js/quick_add_related_objects.js",
-            "js/editor.js"
+            "js/editor.js",
+            "js/color-picker.js"
         ]
     },
     "contact-group": {

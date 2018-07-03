@@ -204,3 +204,13 @@ class TaggedJSONField(JSONField):
         load_kwargs = kwargs.setdefault("load_kwargs", {})
         load_kwargs.setdefault("object_hook", tag_registry.decode)
         super(TaggedJSONField, self).__init__(*args, **kwargs)
+
+
+class HexColorField(models.CharField):
+    """
+    Supports hexadecimal color values: #ABC, #AABBCC, #001122AA
+    """
+    def __init__(self, **kwargs):
+        kwargs["max_length"] = 9
+        super(HexColorField, self).__init__(**kwargs)
+        self.validators.append(RegexValidator("^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$", _("Invalid color")))
