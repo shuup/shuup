@@ -160,7 +160,7 @@ class Category(MPTTModel, TranslatableModel):
         order_insertion_by = ["ordering"]
 
     def __str__(self):
-        return self.safe_translation_getter("name", any_language=True)
+        return self.safe_translation_getter("name", any_language=True) or self.identifier
 
     def is_visible(self, customer):
         if customer and customer.is_all_seeing:
