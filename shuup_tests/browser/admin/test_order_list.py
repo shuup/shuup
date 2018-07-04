@@ -24,7 +24,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 @pytest.mark.djangodb
 def test_orders_list_view(browser, admin_user, live_server, settings):
     shop = get_default_shop()
-    for i in range(0, 10):
+    for i in range(0, 9):
         order = create_empty_order(shop=shop)
         order.save()
 
@@ -45,7 +45,7 @@ def _visit_orders_list_view(browser, live_server):
 
 def _test_status_filter(browser):
     # Check initial row count where the cancelled order should be excluded
-    _check_row_count(browser, Order.objects.count() - 1)
+    _check_row_count(browser, Order.objects.count())
 
     # Take three last valid orders and set those cancelled
     orders = Order.objects.valid()[:3]
@@ -84,4 +84,5 @@ def _check_row_count(browser, expected_row_count):
 def _change_status_filter(browser, to_value):
     picotable = browser.find_by_id("picotable")
     click_element(browser, "#picotable div.choice-filter")
-    click_element(browser, "#picotable div.choice-filter option[value='%s']" % to_value)
+    target = "#picotable div.choice-filter option[value='%s']" % to_value
+    click_element(browser, target)
