@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 13:03+0000\n"
+"POT-Creation-Date: 2018-07-03 17:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -279,6 +279,9 @@ msgid "internal identifier"
 msgstr ""
 
 msgid "Do not change this value if you are not sure what you are doing."
+msgstr ""
+
+msgid "Invalid color"
 msgstr ""
 
 msgid "Error"

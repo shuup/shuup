@@ -18,6 +18,7 @@ from filer.fields.image import FilerImageField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 
+from shuup.core.fields import HexColorField
 from shuup.core.models import Category, Product
 from shuup.core.models._base import ShuupModel, TranslatableShuupModel
 from shuup.simple_cms.models import Page
@@ -37,8 +38,8 @@ class LinkTargetType(Enum):
     NEW = 1
 
     class Labels:
-        CURRENT = _("Current")
-        FADE = _("New")
+        CURRENT = _("Current page")
+        NEW = _("New page")
 
 
 class SlideQuerySet(TranslatableQuerySet):
@@ -93,6 +94,11 @@ class Carousel(ShuupModel):
         default=600, verbose_name=_("image height"),
         help_text=_("Slide images will be cropped to this height.")
     )
+    arrows_color = HexColorField(
+        verbose_name=_("Arrows color"),
+        blank=True, null=True,
+        help_text=_("Set the custom color for the arrows."),
+    )
 
     def __str__(self):
         return self.name
@@ -141,6 +147,16 @@ class Slide(TranslatableShuupModel):
         "Set the date and time from which this slide should be visible in the carousel. "
         "This is useful to advertise sales campaigns or other time-sensitive marketing."
     ))
+    inactive_dot_color = HexColorField(
+        verbose_name=_("Inactive dot border color"),
+        blank=True, null=True,
+        help_text=_("Customize the dot border color when slide is not active."),
+    )
+    active_dot_color = HexColorField(
+        verbose_name=_("Active dot color"),
+        blank=True, null=True,
+        help_text=_("Customize the dot color when slide is active."),
+    )
 
     translations = TranslatedFields(
         caption=models.CharField(

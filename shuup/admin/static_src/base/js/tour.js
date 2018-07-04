@@ -211,7 +211,7 @@
         function getHelpButton(page) {
             let content = "";
             if(page) {
-                let helpUrl = "http://shuup-guide.readthedocs.io/en/latest/" + page;
+                const helpUrl = window.ShuupAdminConfig.docsPage + page;
                 content += "<br>";
                 content += "<p class='text-center'>";
                 content += "<a href='" + helpUrl + "' class='btn btn-inverse btn-default', target='_blank'>";

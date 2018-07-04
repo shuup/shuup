@@ -8,6 +8,7 @@ static/shuup_admin/css/media-browser.css
 static/shuup_admin/css/media-browser.css.map
 static/shuup_admin/css/select2.css
 static/shuup_admin/css/select2.css.map
+static/shuup_admin/css/vendor.css
 static/shuup_admin/css/wizard.css
 static/shuup_admin/css/wizard.css.map
 static/shuup_admin/js/base.js

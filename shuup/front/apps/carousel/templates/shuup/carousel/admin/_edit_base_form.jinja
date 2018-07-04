@@ -14,6 +14,24 @@
     {% endif %}
 {% endmacro %}
 
+{% macro configure_casousel_warning(carousel) %}
+    {% if carousel.pk %}
+        <div class="container-fluid">
+            <h3><i class="fa fa-info-circle text-info"></i> {{ _("Adding the carousel to your site") }}</h3>
+            <p>
+                {{
+                    _("To add a carousel to your site, you must edit the page using the placeholder editor. "
+                    "To do this, go to your site and click the 'Edit page' on the page you want to add the carousel banner to. "
+                    "Then, select the placeholder to change and add a new plugin row and from the plugin dropdown and select 'Carousel Plugin'. "
+                    "From 'Carousel' dropdown options choose the carousel you want to display. "
+                    "As a final step, save the plugin and publish changes.")
+                }}
+                <a href="{{ shuup_admin.get_docs_help_url("using-themes.html#editing-a-page") }}" target="_blank">{{ _("Learn more.") }}</a>
+            </p>
+        </div>
+    {% endif %}
+{% endmacro %}
+
 {% set basic_fields = ["name", "interval"]%}
 {% set base_form = form["base"] %}
 {% set carousel = base_form.instance %}
@@ -21,6 +39,7 @@
 {% call content_block(_("Basic details"), "fa-info-circle") %}
     {{ save_warning(carousel) }}
     {{ render_monolingual_fields(base_form, field_names=basic_fields) }}
+    {{ configure_casousel_warning(carousel) }}
 {% endcall %}
 
 {% call content_block(_("Advanced options"), "fa-cog") %}

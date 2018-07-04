@@ -4,6 +4,28 @@
     {% set slides = [] %}
 {% endif %}
 
+{# check for custom colors #}
+<style>
+    {% if carousel.arrows_color %}
+    .owl-nav .owl-prev, .owl-nav .owl-next {
+        color: {{ carousel.arrows_color }} !important;
+    }
+    {% endif %}
+{% for slide in slides %}
+    {% if slide.inactive_dot_color %}
+    .owl-dot:nth-child({{ loop.index }}) {
+        border-color: {{ slide.inactive_dot_color }} !important;
+    }
+    {% endif %}
+    {% if slide.active_dot_color %}
+    .owl-dot:nth-child({{ loop.index }}).active {
+        border-width: 0px !important;
+        background-color: {{ slide.active_dot_color }} !important;
+    }
+    {% endif %}
+{% endfor %}
+</style>
+
 {% if slides|length %}
 <section{% if type == "banner_box" %} class="carousel-banner-section"{% endif %}>
     {% if type == "carousel" %}

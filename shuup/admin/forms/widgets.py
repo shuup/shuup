@@ -7,13 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import django
 import json
 
+import django
 import six
 from django.core.urlresolvers import reverse_lazy
 from django.forms import TimeInput as DjangoTimeInput
-from django.forms import HiddenInput, Textarea, Widget
+from django.forms import HiddenInput, Textarea, TextInput, Widget
 from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
@@ -206,6 +206,13 @@ class ContactChoiceWidget(BasePopupChoiceWidget):
             "icon": icon,
             "text": _("Select")
         }
+
+
+class HexColorWidget(TextInput):
+    def render(self, name, value, attrs=None, renderer=None):
+        field_attrs = attrs.copy()
+        field_attrs["class"] = field_attrs.get("class", "") + " hex-color-picker"
+        return super(HexColorWidget, self).render(name, value, field_attrs)
 
 
 class PersonContactChoiceWidget(ContactChoiceWidget):

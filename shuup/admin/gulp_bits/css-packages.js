@@ -7,6 +7,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 module.exports = {
+    "vendor": {
+        "entrypoint": "./node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css",
+        "watches": []
+    },
     "base": {
         "base": "./static_src/base",
         "entrypoint": "less/style.less",
