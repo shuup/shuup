@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum
 
 from shuup.core.models import Category, ProductCrossSell, ProductCrossSellType
 from shuup.front.template_helpers.general import (
@@ -19,33 +20,57 @@ from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
 from shuup.xtheme.plugins.widgets import XThemeModelChoiceField
 
 
+class HighlightType(Enum):
+    NEWEST = "newest"
+    BEST_SELLING = "best_selling"
+    RANDOM = "random"
+
+    class Labels:
+        NEWEST = _("Newest")
+        BEST_SELLING = _("Best Selling")
+        RANDOM = _("Random")
+
+
 class ProductHighlightPlugin(TemplatedPlugin):
     identifier = "product_highlight"
     name = _("Product Highlights")
     template_name = "shuup/xtheme/plugins/highlight_plugin.jinja"
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
-        ("type", forms.ChoiceField(label=_("Type"), choices=[
-            ("newest", "Newest"),
-            ("best_selling", "Best Selling"),
-            ("random", "Random"),
-        ], initial="newest")),
+        ("type", forms.ChoiceField(
+            label=_("Type"),
+            choices=HighlightType.choices(),
+            initial=HighlightType.NEWEST.value
+        )),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
-        ("orderable_only", forms.BooleanField(label=_("Only show in-stock and orderable items"),
-                                              initial=True,
-                                              required=False))
+        ("sale_items_only", forms.BooleanField(
+            label=_("Only show sale items"),
+            initial=False, required=False,
+            help_text=_("Show only products that have discounts")
+        )),
+        ("orderable_only", forms.BooleanField(
+            label=_("Only show in-stock and orderable items"),
+            initial=True, required=False
+        ))
     ]
 
     def get_context_data(self, context):
-        type = self.config.get("type", "newest")
+        highlight_type = self.config.get("type", HighlightType.NEWEST.value)
         count = self.config.get("count", 4)
         orderable_only = self.config.get("orderable_only", True)
-        if type == "newest":
-            products = get_newest_products(context, count, orderable_only)
-        elif type == "best_selling":
-            products = get_best_selling_products(context, count, orderable_only=orderable_only)
-        elif type == "random":
-            products = get_random_products(context, count, orderable_only)
+        sale_items_only = self.config.get("sale_items_only", False)
+
+        if highlight_type == HighlightType.NEWEST.value:
+            products = get_newest_products(context, count, orderable_only, sale_items_only)
+        elif highlight_type == HighlightType.BEST_SELLING.value:
+            products = get_best_selling_products(
+                context,
+                count,
+                orderable_only=orderable_only,
+                sale_items_only=sale_items_only
+            )
+        elif highlight_type == HighlightType.RANDOM.value:
+            products = get_random_products(context, count, orderable_only, sale_items_only)
         else:
             products = []
 

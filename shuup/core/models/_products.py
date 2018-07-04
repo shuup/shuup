@@ -130,22 +130,18 @@ class ProductType(TranslatableModel):
 
 
 class ProductQuerySet(TranslatableQuerySet):
-
-    def _get_invisible_modes(self):
-        return [ProductMode.VARIATION_CHILD]
+    _invisible_modes = [ProductMode.VARIATION_CHILD]
 
     def _visible(self, shop, customer, language=None):
         root = (self.language(language) if language else self)
+        qs = root.all().filter(shop_products__shop=shop)
 
         if customer and customer.is_all_seeing:
-            qs = root.all().exclude(mode=ProductMode.VARIATION_CHILD).filter(shop_products__shop=shop)
+            qs = qs.exclude(mode=ProductMode.VARIATION_CHILD)
         else:
             from ._product_shops import ShopProductVisibility
-            qs = root.all().exclude(Q(
-                        shop_products__shop=shop,
-                        shop_products__visibility=ShopProductVisibility.NOT_VISIBLE
-                    )).exclude(
-                mode__in=self._get_invisible_modes()
+            qs = qs.exclude(
+                Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE) | Q(mode__in=self._invisible_modes)
             )
             if customer and not customer.is_anonymous:
                 visible_to_logged_in_q = Q(shop_products__visibility_limit__in=(

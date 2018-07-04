@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-19 17:40+0000\n"
+"POT-Creation-Date: 2018-07-04 18:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -140,6 +140,15 @@ msgstr ""
 msgid "Height (px)"
 msgstr ""
 
+msgid "Newest"
+msgstr ""
+
+msgid "Best Selling"
+msgstr ""
+
+msgid "Random"
+msgstr ""
+
 msgid "Product Highlights"
 msgstr ""
 
@@ -147,6 +156,12 @@ msgid "Type"
 msgstr ""
 
 msgid "Count"
+msgstr ""
+
+msgid "Only show sale items"
+msgstr ""
+
+msgid "Show only products that have discounts"
 msgstr ""
 
 msgid "Only show in-stock and orderable items"
