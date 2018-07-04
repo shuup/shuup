@@ -9,6 +9,8 @@ recursive-include shuup \
     *.ico *.png *.svg *.jpg \
     *.woff *.woff2 *.eot *.otf *.ttf *.po *.mo
 
+recursive-include shuup/default_importer *.xls *.xlsx *.csv
+
 recursive-include shuup_tests *.jinja
 
 # No extra extensions to include from shuup_workbench, but it will be

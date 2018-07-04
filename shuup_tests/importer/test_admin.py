@@ -339,13 +339,17 @@ def test_download_examples(rf, admin_user):
                     example_file.file_name
                 )
                 response = client.get(download_url)
-                assert response.status_code == 200
-                assert response._headers["content-type"] == ("Content-Type", str(example_file.content_type))
-                assert response._headers["content-disposition"] == ("Content-Disposition", 'attachment; filename=%s' % example_file.file_name)
 
-                if example_file.template_name:
-                    from django.template.loader import get_template
-                    template_file = get_template(example_file.template_name).template.filename
-                    assert open(template_file, "r").read().strip() == response.content.decode("utf-8").strip()
+                if importer_cls.identifier == "dummy_file_importer":
+                    assert response.status_code == 404
                 else:
-                    assert response.content
+                    assert response.status_code == 200
+                    assert response._headers["content-type"] == ("Content-Type", str(example_file.content_type))
+                    assert response._headers["content-disposition"] == ("Content-Disposition", 'attachment; filename=%s' % example_file.file_name)
+
+                    if example_file.template_name:
+                        from django.template.loader import get_template
+                        template_file = get_template(example_file.template_name).template.filename
+                        assert open(template_file, "r").read().strip() == response.content.decode("utf-8").strip()
+                    else:
+                        assert response.content

@@ -174,6 +174,10 @@ class ExampleFileDownloadView(View):
         response['Content-Disposition'] = 'attachment; filename=%s' % example_file.file_name
 
         data = importer_cls.get_example_file_content(example_file, request)
+
+        if not data:
+            raise Http404(_("File not found"))
+
         data.seek(0)
         response.write(data.getvalue())
         return response
