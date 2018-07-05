@@ -110,8 +110,10 @@ def initialize_front_browser_test(browser, live_server):
     return browser
 
 
-def initialize_admin_browser_test(browser, live_server, settings, username="admin", password="password"):
-    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
+def initialize_admin_browser_test(
+        browser, live_server, settings, username="admin", password="password", onboarding=False):
+    if not onboarding:
+        settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
     activate("en")
     get_default_shop()
     configuration.set(None, "shuup_dashboard_tour_complete", True)
@@ -120,8 +122,10 @@ def initialize_admin_browser_test(browser, live_server, settings, username="admi
     browser.fill('username', username)
     browser.fill('password', password)
     browser.find_by_css(".btn.btn-primary.btn-lg.btn-block").first.click()
-    # set shop language to eng
-    browser.find_by_id("dropdownMenu").click()
-    browser.find_by_xpath('//a[@data-value="en"]').first.click()
+
+    if not onboarding:
+        # set shop language to eng
+        browser.find_by_id("dropdownMenu").click()
+        browser.find_by_xpath('//a[@data-value="en"]').first.click()
 
     return browser

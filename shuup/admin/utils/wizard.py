@@ -87,7 +87,10 @@ def setup_blocks_complete(request):
     :rtype: Boolean
     """
     for module in get_modules():
-        if len([block for block in module.get_help_blocks(request=request, kind="setup") if not block.done]) > 0:
+        if len([
+            block for block in module.get_help_blocks(request=request, kind="setup")
+                if block.required and not block.done
+        ]) > 0:
             return False
     return True
 

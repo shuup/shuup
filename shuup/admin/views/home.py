@@ -11,6 +11,7 @@ from django.views.generic.base import TemplateView
 from enumfields import Enum
 
 from shuup.admin.module_registry import get_modules
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.wizard import (
@@ -55,6 +56,7 @@ class SimpleHelpBlock(object):
         self.priority = kwargs.pop("priority", 1)
         self.css_class = kwargs.pop("css_class", "")
         self.done = kwargs.pop("done", False)
+        self.required = kwargs.pop("required", True)
         self.category = kwargs.pop("category", HelpBlockCategory.GENERAL)
 
 
@@ -65,7 +67,7 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context["blocks"] = blocks = []
         context["tour_key"] = "home"
-        context["tour_complete"] = is_tour_complete("home")
+        context["tour_complete"] = is_tour_complete(get_shop(self.request), "home")
         wizard_complete = setup_wizard_complete(self.request)
 
         wizard_url = reverse("shuup_admin:wizard")
