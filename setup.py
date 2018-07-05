@@ -83,7 +83,6 @@ utils.add_exclude_patters([
 ])
 
 REQUIRES = [
-    'pillow==5.2',
     'Babel==2.5.3',
     'cryptography==1.7.1',
     'Django>=1.8,<2',
