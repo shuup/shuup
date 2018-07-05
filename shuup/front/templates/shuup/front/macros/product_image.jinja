@@ -81,49 +81,9 @@
     // Enable lightbox for products with multiple images. Uses arrows to
     // navigate through images.
     var selector_multiple = "a[data-imagelightbox='image-multiple']";
-    var instance_multiple = $(selector_multiple).imageLightbox({
-        "onStart": function() {
-            overlayOn();
-            closeButtonOn(instance_multiple);
-            arrowsOn(instance_multiple, selector_multiple);
-        },
-        "onEnd": function() {
-            overlayOff();
-            closeButtonOff();
-            arrowsOff();
-            captionOff();
-        },
-        "onLoadStart": function() {
-            activityIndicatorOn();
-            captionOff();
-        },
-        "onLoadEnd": function() {
-            $(".imagelightbox-arrow").css("display", "block");
-            activityIndicatorOff();
-            captionOn();
-        }
-    });
+    var instance_multiple = $(selector_multiple).simpleLightbox();
 
     // Enable lightbox for products with only one image.
     var selector = "a[data-imagelightbox='image']";
-    var instance = $(selector).imageLightbox({
-        "onStart": function() {
-            overlayOn();
-            closeButtonOn(instance);
-        },
-        "onEnd": function() {
-            overlayOff();
-            closeButtonOff();
-            captionOff();
-        },
-        "onLoadStart": function() {
-            activityIndicatorOn();
-            captionOff();
-        },
-        "onLoadEnd": function() {
-            $(".imagelightbox-arrow").css("display", "block");
-            activityIndicatorOff();
-            captionOn();
-        }
-    });
+    var instance = $(selector).simpleLightbox();
 {% endmacro %}
