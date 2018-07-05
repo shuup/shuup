@@ -12,8 +12,9 @@ import json
 import django
 import six
 from django.core.urlresolvers import reverse_lazy
+from django.forms import HiddenInput, Textarea, TextInput
 from django.forms import TimeInput as DjangoTimeInput
-from django.forms import HiddenInput, Textarea, TextInput, Widget
+from django.forms import Widget
 from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
@@ -236,6 +237,23 @@ class QuickAddCategorySelect(QuickAddRelatedObjectSelect):
 
 class QuickAddProductTypeSelect(QuickAddRelatedObjectSelect):
     url = reverse_lazy("shuup_admin:product_type.new")
+
+
+class QuickAddTaxGroupSelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:customer_tax_group.new")
+    model = "shuup.CustomerTaxGroup"
+
+
+class QuickAddTaxClassSelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:tax_class.new")
+
+
+class QuickAddSalesUnitSelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:sales_unit.new")
+
+
+class QuickAddDisplayUnitSelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:display_unit.new")
 
 
 class QuickAddManufacturerSelect(QuickAddRelatedObjectSelect):

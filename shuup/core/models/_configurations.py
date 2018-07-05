@@ -32,9 +32,9 @@ class ConfigurationItem(ShuupModel):
 
     def __str__(self):
         if self.shop:
-            return _("%(key)s for shop %(shop)s") % vars(self)
+            return _("%(key)s for shop %(shop)s") % dict(key=self.key, shop=self.shop)
         else:
-            return _("%(key)s (global)") % vars(self)
+            return _("%(key)s (global)") % dict(key=self.key)
 
     def __repr__(self):
         return '<%s "%s" for %r>' % (type(self).__name__, self.key, self.shop)

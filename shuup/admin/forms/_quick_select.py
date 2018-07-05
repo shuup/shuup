@@ -5,14 +5,29 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.core.urlresolvers import NoReverseMatch
 from django.forms import Select, SelectMultiple
 from django.forms.utils import flatatt
+from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
-class QuickAddRelatedObjectSelect(Select):
+class QuickAddRelatedObjectSelectBase(Select):
+    def __init__(self, attrs=None, choices=(), editable_model=None):
+        self.editable_model = editable_model
+        if editable_model:
+            edit_model_attr = {"data-edit-model": editable_model}
+
+            if attrs:
+                attrs.update(edit_model_attr)
+            else:
+                attrs = edit_model_attr
+        super(QuickAddRelatedObjectSelectBase, self).__init__(attrs, choices)
+
+
+class QuickAddRelatedObjectSelect(QuickAddRelatedObjectSelectBase):
     url = ""
     model = ""
     template_name = "shuup/admin/forms/widgets/quick_add_select.jinja"
@@ -20,7 +35,10 @@ class QuickAddRelatedObjectSelect(Select):
     def get_context(self, name, value, attrs):
         context = super(QuickAddRelatedObjectSelect, self).get_context(name, value, attrs)
         context["quick_add_model"] = self.model
-        context["quick_add_url"] = "{}?mode=iframe&quick_add_target={}".format(self.url, name)
+        try:
+            context["quick_add_url"] = "{}?mode=iframe&quick_add_target={}".format(force_text(self.url), name)
+        except NoReverseMatch:
+            pass
         context["quick_add_btn_title"] = _("Create New")
         return context
 
@@ -32,12 +50,17 @@ class QuickAddRelatedObjectMultiSelect(SelectMultiple):
     def get_context(self, name, value, attrs):
         attrs["multiple"] = True
         context = super(QuickAddRelatedObjectMultiSelect, self).get_context(name, value, attrs)
-        context["quick_add_url"] = "{}?mode=iframe&quick_add_target={}".format(self.url, name)
+
+        try:
+            context["quick_add_url"] = "{}?mode=iframe&quick_add_target={}".format(force_text(self.url), name)
+        except NoReverseMatch:
+            pass
+
         context["quick_add_btn_title"] = _("Create New")
         return context
 
 
-class QuickAddRelatedObjectSelectWithoutTemplate(Select):
+class QuickAddRelatedObjectSelectWithoutTemplate(QuickAddRelatedObjectSelectBase):
     """
     Old implementation for Django 1.9 and 1.8 where the select
     still has the render.
@@ -46,6 +69,15 @@ class QuickAddRelatedObjectSelectWithoutTemplate(Select):
     model = ""
 
     def render(self, name, value, attrs=None, choices=()):
+        # make sure the url exists
+        try:
+            url = force_text(self.url)
+        except NoReverseMatch:
+            url = None
+
+        if not url:
+            return ""
+
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
@@ -82,6 +114,15 @@ class QuickAddRelatedObjectMultiSelectWithoutTemplate(SelectMultiple):
     url = ""
 
     def render(self, name, value, attrs=None, choices=()):
+        # make sure the url exists
+        try:
+            url = force_text(self.url)
+        except NoReverseMatch:
+            url = None
+
+        if not url:
+            return ""
+
         if value is None:
             value = []
         final_attrs = self.build_attrs(attrs, name=name)

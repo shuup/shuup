@@ -106,17 +106,11 @@
             }
         }
 
-        .quick-add-btn + .help-popover-btn {
+        .quick-add-btn + .help-popover-btn,
+        .edit-object-btn + .help-popover-btn,
+        .quick-add-btn + .edit-object-btn {
             @media (min-width: @screen-lg-min) {
-                margin-left: -15px;
-            }
-
-            @media (max-width: @screen-md-max) {
-                .btn {
-                    position: absolute;
-                    top: 0px;
-                    right: -15px;
-                }
+                margin-left: -10px;
             }
         }
 
