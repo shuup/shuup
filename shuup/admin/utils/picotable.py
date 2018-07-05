@@ -93,7 +93,7 @@ class ChoicesFilter(Filter):
         if isinstance(choices, QuerySet):
             choices = [(c.pk, c) for c in choices]
         return [("_all", "---------")] + [
-            (force_text(value, strings_only=True), force_text(display))
+            (force_text(value, strings_only=True), force_text(display).title())
             for (value, display)
             in choices
         ]
