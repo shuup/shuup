@@ -117,8 +117,9 @@ generators = [
 
 
 def generate_image(width, height, palette=None, seed=None, supersample=2):
-    image = Image.new("RGB", (width * supersample, height * supersample))
-    image.paste((255, 255, 255))
+    w, h = width * supersample, height * supersample
+    image = Image.new("RGB", (w, h))
+    image.paste((255, 255, 255), (0, 0, w, h))
     palette = palette or random.choice(PALATABLE_PALETTES)
     seed = seed or random.randint(0, 1 << 63)
     ig_class = generators[seed % len(generators)]
