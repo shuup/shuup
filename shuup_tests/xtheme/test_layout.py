@@ -14,7 +14,7 @@ from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.xtheme.utils import (
     close_enough, FauxTheme, get_jinja2_engine, get_request,
-    get_test_template_bits, plugin_override
+    get_test_template_bits, layout_override, plugin_override
 )
 
 
@@ -43,17 +43,18 @@ def test_layout_rendering(rf):
     request = get_request(edit=False)
     with override_current_theme_class(None):
         with plugin_override():
-            (template, layout, gibberish, ctx) = get_test_template_bits(request)
+            with layout_override():
+                (template, layout, gibberish, ctx) = get_test_template_bits(request)
+                result = six.text_type(render_placeholder(ctx, "test", layout, "test"))
+                expect = """
+                <div class="xt-ph" id="xt-ph-test">
+                <div class="row xt-ph-row">
+                <div class="col-md-12 hidden-xs xt-ph-cell"><p>%s</p></div>
+                </div>
+                </div>
+                """ % gibberish
 
-            result = six.text_type(render_placeholder(ctx, "test", layout, "test"))
-            expect = """
-            <div class="xt-ph" id="xt-ph-test">
-            <div class="row xt-ph-row">
-            <div class="col-md-12 hidden-xs xt-ph-cell"><p>%s</p></div>
-            </div>
-            </div>
-            """ % gibberish
-            assert close_enough(result, expect)
+                assert close_enough(result, expect)
 
 
 def test_layout_rendering_with_global_type(rf):

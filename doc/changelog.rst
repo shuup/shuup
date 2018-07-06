@@ -30,6 +30,7 @@ Xtheme
 ~~~~~~
 
 - Add option to render extra templates in theme configuration.
+- Add option for per object placeholders
 
 Shuup 1.6.6
 -----------

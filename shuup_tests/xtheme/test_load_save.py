@@ -9,6 +9,7 @@ import pytest
 
 from shuup.testing.factories import get_default_shop
 from shuup.xtheme import Theme, XTHEME_GLOBAL_VIEW_NAME
+from shuup.xtheme.layout import Layout
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.view_config import ViewConfig
 from shuup_tests.utils import printable_gibberish
@@ -47,6 +48,7 @@ def test_load_save_publish():
     placeholder_name = "test_ph"
     data = {"dummy": True}
     vc.save_placeholder_layout(placeholder_name, data)
+    assert not ViewConfig(theme=theme, shop=shop, view_name=view_name, draft=False).save_default_placeholder_layout(placeholder_name, data)
     assert not ViewConfig(theme=theme, shop=shop, view_name=view_name, draft=False).saved_view_config.get_layout_data(placeholder_name)
     vc.publish()
     with pytest.raises(ValueError):  # Republishment is bad
@@ -100,7 +102,7 @@ def test_unthemebound_view_config_cant_do_much():
         vc.revert()
     with pytest.raises(ValueError):
         vc.save_placeholder_layout("hurr", {"foo": True})
-    l = vc.get_placeholder_layout("hurr")  # loading should work, but . . .
+    l = vc.get_placeholder_layout(Layout, "hurr")  # loading should work, but . . .
     assert not len(l.rows)  # . . . there shouldn't be much in there
 
 

@@ -9,6 +9,7 @@ from django.utils.encoding import force_text
 
 from shuup.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shuup.xtheme.layout import Layout
+from shuup.xtheme.layout.utils import get_layout_data_key, get_provided_layouts
 from shuup.xtheme.models import SavedViewConfig
 
 
@@ -64,27 +65,65 @@ class ViewConfig(object):
             self.draft = self._saved_view_config.draft
         return self._saved_view_config
 
-    def get_placeholder_layout(self, placeholder_name, default_layout=None):
+    def get_placeholder_layouts(self, context, placeholder_name, default_layout={}):
         """
-        Get a Layout object for the given placeholder.
+        Get a layout objects for the given placeholder and context.
 
+        :param context: Rendering context
+        :type context: jinja2.runtime.Context
         :param placeholder_name: The name of the placeholder to load.
         :type placeholder_name: str
         :param default_layout: Default layout configuration (either a dict or an actual Layout)
         :type default_layout: dict|Layout
+        :return: List of layouts available for current placeholder and context
+        :rtype: list
+        """
+        layouts = [
+            self.get_placeholder_layout(
+                Layout, placeholder_name, default_layout=default_layout, context=context)]
+
+        for layout_cls in get_provided_layouts():
+            layout = self.get_placeholder_layout(layout_cls, placeholder_name, context=context)
+            if layout is not None:
+                layouts.append(layout)
+
+        return layouts
+
+    def get_placeholder_layout(
+            self, layout_cls, placeholder_name, default_layout={}, context=None, layout_data_key=None):
+        """
+        Get a layout object for the given placeholder.
+
+        :param layout_cls:
+        :type layout_cls:
+        :param placeholder_name: The name of the placeholder to load.
+        :type placeholder_name: str
+        :param default_layout: Default layout configuration (either a dict or an actual Layout)
+        :type default_layout: dict|Layout
+        :param context: Rendering context
+        :type context: jinja2.runtime.Context
+        :param layout_data_key: layout data key used for saving the layout data.
+        :type layout_data_key: str
         :return: Layout
         :rtype: Layout
         """
         svc = self.saved_view_config
-        layout = Layout(self.theme, placeholder_name=placeholder_name)
+        layout = layout_cls(self.theme, placeholder_name=placeholder_name)
+        if not layout_data_key:
+            if not layout.is_valid_context(context or {}):
+                return
+            layout_data_key = get_layout_data_key(placeholder_name, layout, context)
+
         if svc:
-            placeholder_data = svc.get_layout_data(placeholder_name)
+            placeholder_data = svc.get_layout_data(layout_data_key)
             if placeholder_data:
                 return layout.unserialize(self.theme, placeholder_data, placeholder_name=placeholder_name)
+
         if default_layout:
             if isinstance(default_layout, Layout):
                 return default_layout
             return layout.unserialize(self.theme, default_layout)
+
         return layout
 
     def save_default_placeholder_layout(self, placeholder_name, layout):
@@ -102,7 +141,7 @@ class ViewConfig(object):
         if not self.draft:
             return False
         if self.saved_view_config and self.saved_view_config.get_layout_data(placeholder_name) is None:
-            self.save_placeholder_layout(placeholder_name, layout)
+            self.save_placeholder_layout(get_layout_data_key(placeholder_name, layout, {}), layout)
             return True
         return False
 
@@ -135,7 +174,7 @@ class ViewConfig(object):
         self._saved_view_config = None
         return True
 
-    def save_placeholder_layout(self, placeholder_name, layout):
+    def save_placeholder_layout(self, layout_data_key, layout):
         """
         Save the given layout as the layout for the given placeholder.
 
@@ -147,5 +186,5 @@ class ViewConfig(object):
         svc = self.saved_view_config
         if not svc:
             raise ValueError("Unable to retrieve view config; unable to save data. Is a theme set?")
-        svc.set_layout_data(placeholder_name, layout)
+        svc.set_layout_data(layout_data_key, layout)
         svc.save()
