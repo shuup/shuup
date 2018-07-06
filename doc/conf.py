@@ -48,7 +48,7 @@ patch_for_introspection()
 # -- General configuration ------------------------------------------------
 
 project = 'Shuup'
-copyright = '2017, Shuup Inc.'
+copyright = '2018, Shuup Inc.'
 
 extensions = [
     'djangodocs',
