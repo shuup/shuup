@@ -193,49 +193,57 @@ def test_alert_limit_view(rf, admin_user):
 
 
 def test_alert_limit_notification(rf, admin_user):
-    supplier = get_simple_supplier()
-    shop = get_default_shop()
-    product = create_product("simple-test-product", shop, supplier)
-    product.stock_behavior = StockBehavior.STOCKED
-    product.save()
+    with override_settings(CACHES={
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'test_configuration_cache',
+        }
+    }):
+        cache.init_cache()
 
-    sc = StockCount.objects.get(supplier=supplier, product=product)
-    sc.alert_limit = 10
-    sc.save()
+        supplier = get_simple_supplier()
+        shop = get_default_shop()
+        product = create_product("simple-test-product", shop, supplier)
+        product.stock_behavior = StockBehavior.STOCKED
+        product.save()
 
-    # nothing in cache
-    cache_key = AlertLimitReached.cache_key_fmt % (supplier.pk, product.pk)
-    assert cache.get(cache_key) is None
+        sc = StockCount.objects.get(supplier=supplier, product=product)
+        sc.alert_limit = 10
+        sc.save()
 
-    # put 11 units in stock
-    supplier.adjust_stock(product.pk, +11)
+        # nothing in cache
+        cache_key = AlertLimitReached.cache_key_fmt % (supplier.pk, product.pk)
+        assert cache.get(cache_key) is None
 
-    # still nothing in cache
-    cache_key = AlertLimitReached.cache_key_fmt % (supplier.pk, product.pk)
-    assert cache.get(cache_key) is None
+        # put 11 units in stock
+        supplier.adjust_stock(product.pk, +11)
 
-    event = AlertLimitReached(product=product, supplier=supplier)
-    assert event.variable_values["dispatched_last_24hs"] is False
+        # still nothing in cache
+        cache_key = AlertLimitReached.cache_key_fmt % (supplier.pk, product.pk)
+        assert cache.get(cache_key) is None
 
-    # stock should be 6, lower then the alert limit
-    supplier.adjust_stock(product.pk, -5)
-    last_run = cache.get(cache_key)
-    assert last_run is not None
+        event = AlertLimitReached(product=product, supplier=supplier)
+        assert event.variable_values["dispatched_last_24hs"] is False
 
-    event = AlertLimitReached(product=product, supplier=supplier)
-    assert event.variable_values["dispatched_last_24hs"] is True
+        # stock should be 6, lower then the alert limit
+        supplier.adjust_stock(product.pk, -5)
+        last_run = cache.get(cache_key)
+        assert last_run is not None
 
-    # stock should be 1, lower then the alert limit
-    supplier.adjust_stock(product.pk, -5)
+        event = AlertLimitReached(product=product, supplier=supplier)
+        assert event.variable_values["dispatched_last_24hs"] is True
 
-    # last run should be updated
-    assert cache.get(cache_key) != last_run
+        # stock should be 1, lower then the alert limit
+        supplier.adjust_stock(product.pk, -5)
 
-    event = AlertLimitReached(product=product, supplier=supplier)
-    assert event.variable_values["dispatched_last_24hs"] is True
+        # last run should be updated
+        assert cache.get(cache_key) != last_run
 
-    # fake we have a cache with more than 24hrs
-    cache.set(cache_key, time() - (24 * 60 * 60 * 2))
+        event = AlertLimitReached(product=product, supplier=supplier)
+        assert event.variable_values["dispatched_last_24hs"] is True
 
-    event = AlertLimitReached(product=product, supplier=supplier)
-    assert event.variable_values["dispatched_last_24hs"] is False
+        # fake we have a cache with more than 24hrs
+        cache.set(cache_key, time() - (24 * 60 * 60 * 2))
+
+        event = AlertLimitReached(product=product, supplier=supplier)
+        assert event.variable_values["dispatched_last_24hs"] is False

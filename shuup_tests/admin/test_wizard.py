@@ -9,7 +9,9 @@
 import pytest
 from bs4 import BeautifulSoup
 from django.core.urlresolvers import reverse
+from django.test.utils import override_settings
 
+from shuup.core import cache
 from shuup.admin.views.wizard import WizardView
 from shuup.apps.provides import override_provides
 from shuup.core.models import (
@@ -130,16 +132,23 @@ def test_payment_method_wizard_pane(rf, admin_user, settings):
 
 
 @pytest.mark.django_db
-def test_xtheme_wizard_pane(rf, admin_user, settings):
-    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.xtheme.admin_module.views.ThemeWizardPane"
-    ]
-    shop = get_default_shop()
-    with override_current_theme_class():
-        with override_provides("xtheme", [
-            "shuup_tests.xtheme.utils:FauxTheme"
-        ]):
-            assert get_current_theme(shop)
+def test_xtheme_wizard_pane(rf, admin_user):
+    with override_settings(
+        SHUUP_SETUP_WIZARD_PANE_SPEC = [
+            "shuup.xtheme.admin_module.views.ThemeWizardPane"
+        ],
+        CACHES={
+            'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'test_simple_set_and_get_with_shop',
+            }
+        }
+    ):
+        cache.init_cache()
+        shop = get_default_shop()
+        with override_provides("xtheme", ["shuup_tests.xtheme.utils:FauxTheme"]):
+            from shuup_tests.xtheme.utils import FauxTheme
+            assert get_current_theme(shop) is None
             fields = _extract_fields(rf, admin_user)
             fields["theme-activate"] = FauxTheme.identifier
             request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)

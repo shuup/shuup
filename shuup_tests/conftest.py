@@ -48,10 +48,14 @@ def splinter_make_screenshot_on_failure():
 
 # use django_db on every test
 # activate the EN language by default
+# initialize a new cache
 @pytest.fixture(autouse=True)
 def enable_db_access(db):
     from django.utils.translation import activate
     activate("en")
+
+    from shuup.core import cache
+    cache.init_cache()
 
 
 # always make ShopProduct id different from Product id

@@ -52,6 +52,7 @@ def test_register_api():
 @pytest.mark.django_db
 def test_register_email_api():
     get_default_shop()
+    configuration.set(None, "api_permission_FrontUserViewSet", PermissionLevel.PUBLIC_WRITE)
     client = _get_client()
     register_data = {
         "email": "myemail@email.com",
@@ -94,6 +95,7 @@ def test_register_email_api():
 @pytest.mark.django_db
 def test_register_bad_data():
     get_default_shop()
+    configuration.set(None, "api_permission_FrontUserViewSet", PermissionLevel.PUBLIC_WRITE)
     client = _get_client()
     # no username or email
     register_data = {

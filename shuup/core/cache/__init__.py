@@ -31,8 +31,20 @@ __all__ = [
     "VersionedCache",
 ]
 
-_default_cache = VersionedCache(using="default")
-get = _default_cache.get
-set = _default_cache.set
-bump_version = _default_cache.bump_version
-clear = _default_cache.clear
+_default_cache = None
+get = None
+set = None
+bump_version = None
+clear = None
+
+
+def init_cache():
+    global _default_cache, get, set, bump_version, clear
+    _default_cache = VersionedCache(using="default")
+    get = _default_cache.get
+    set = _default_cache.set
+    bump_version = _default_cache.bump_version
+    clear = _default_cache.clear
+
+
+init_cache()
