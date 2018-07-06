@@ -10,7 +10,7 @@ from parler.models import TranslatedFieldsModel
 
 
 def setup(app):
-    models.get_models()  # Load models
+    apps.get_models()  # Load models
     app.connect('autodoc-process-docstring', process_docstring)
 
 

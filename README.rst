@@ -71,7 +71,7 @@ Issue the following commands to build the documentation:
 
 .. code:: sh
 
-    pip install Sphinx  # to install Sphinx
+    pip install -r requirements-doc.txt
     cd doc && make html
 
 To update the API documentation rst files, e.g. after adding new
