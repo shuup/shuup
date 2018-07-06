@@ -8,7 +8,7 @@
 from shuup import configuration
 
 
-def is_tour_complete(tour_key):
+def is_tour_complete(shop, tour_key):
     """
     Check if the tour is complete
 
@@ -17,4 +17,4 @@ def is_tour_complete(tour_key):
     :return: whether tour is complete
     :rtype: Boolean
     """
-    return configuration.get(None, "shuup_%s_tour_complete" % tour_key, False)
+    return configuration.get(shop, "shuup_%s_tour_complete" % tour_key, False)

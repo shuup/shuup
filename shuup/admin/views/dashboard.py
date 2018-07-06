@@ -12,6 +12,7 @@ from django.views.generic.base import TemplateView
 import shuup
 from shuup.admin.dashboard import get_activity
 from shuup.admin.module_registry import get_modules
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.wizard import setup_wizard_complete
@@ -32,7 +33,7 @@ class DashboardView(TemplateView):
                 blocks.extend(module.get_dashboard_blocks(request=self.request))
         context["activity"] = get_activity(request=self.request)
         context["tour_key"] = "dashboard"
-        context["tour_complete"] = is_tour_complete("dashboard")
+        context["tour_complete"] = is_tour_complete(get_shop(self.request), "dashboard")
         return context
 
     def get(self, request, *args, **kwargs):

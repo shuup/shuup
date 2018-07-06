@@ -114,7 +114,8 @@ class UserModule(AdminModule):
             priority=3,
             category=HelpBlockCategory.CONTACTS,
             icon_url="shuup_admin/img/users.png",
-            done=request.shop.staff_members.exclude(id=request.user.id).exists() if kind == "setup" else False
+            done=request.shop.staff_members.exclude(id=request.user.id).exists() if kind == "setup" else False,
+            required=False
         )
 
     def get_required_permissions(self):

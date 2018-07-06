@@ -11,6 +11,7 @@ from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.modules.categories.form_parts import (
     CategoryBaseFormPart, CategoryProductFormPart
 )
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
@@ -33,11 +34,11 @@ class CategoryEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
     def get_context_data(self, **kwargs):
         context = super(CategoryEditView, self).get_context_data(**kwargs)
         context["tour_key"] = "category"
-        context["tour_complete"] = is_tour_complete("category")
+        context["tour_complete"] = is_tour_complete(get_shop(self.request), "category")
         return context
 
     def form_valid(self, form):
         return self.save_form_parts(form)
 
     def get_queryset(self):
-        return Category.objects.all_except_deleted(shop=self.request.shop)
+        return Category.objects.all_except_deleted(shop=get_shop(self.request))

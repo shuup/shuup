@@ -30,11 +30,13 @@ def schema(model, identifier, **info):
 
 class Initializer(object):
     schemata = [
-        schema(Shop, "default", name="Default Shop", status=ShopStatus.ENABLED, maintenance_mode=True),
+        schema(
+            Shop, "default", name="Default Shop", public_name="Default Shop",
+            status=ShopStatus.ENABLED, maintenance_mode=True),
         schema(ProductType, "default", name="Standard Product"),
         schema(ProductType, "digital", name="Digital Product"),
         schema(Supplier, "default", name="Default Supplier"),
-        schema(SalesUnit, "pcs", name="Pieces"),
+        schema(SalesUnit, "pcs", name="Pieces", symbol="pcs"),
         schema(CustomerTaxGroup, "default_person_customers", name="Retail Customers"),
         schema(CustomerTaxGroup, "default_company_customers", name="Company Customers"),
         schema(Currency, "USD", decimal_places=2),
@@ -65,6 +67,10 @@ class Initializer(object):
         obj.full_clean()
         obj.save()
         print_(obj)
+        if isinstance(obj, Supplier):
+            print_("Adding shop for supplier...")
+            obj.shops.add(Shop.objects.first())
+
         return obj
 
     def run(self):

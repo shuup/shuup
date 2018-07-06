@@ -69,7 +69,8 @@ class ShopModule(AdminModule):
                     "hash": "#shop-images-section"
                 }],
                 icon_url="shuup_admin/img/logo-icon.svg",
-                done=shop.logo
+                done=shop.logo,
+                required=False
             )
 
     def get_required_permissions(self):
