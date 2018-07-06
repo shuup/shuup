@@ -26,6 +26,16 @@ Front
   check is done purely based on filename instead of checking the file
   content.
 
+Classic Gray Theme
+~~~~~~~~~~~~~~~~~~
+
+- Add option to configure shop logo size styles
+
+Simple CMS
+~~~~~~~~~~
+
+- Introduce Xtheme per object layout for pages
+
 Xtheme
 ~~~~~~
 

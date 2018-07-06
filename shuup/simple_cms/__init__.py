@@ -24,6 +24,9 @@ class AppConfig(shuup.apps.AppConfig):
         "front_template_helper_namespace": [
             "shuup.simple_cms.template_helpers:SimpleCMSTemplateHelpers"
         ],
+        "xtheme_layout": [
+            "shuup.simple_cms.layout:PageLayout",
+        ],
         "xtheme_plugin": [
             "shuup.simple_cms.plugins:PageLinksPlugin"
         ],
