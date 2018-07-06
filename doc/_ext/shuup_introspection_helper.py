@@ -44,13 +44,6 @@ def country_descriptor_get(original, self, instance=None, owner=None):
     return original(self, instance, owner)
 
 
-@PatchFor(django.db.models.manager.AbstractManagerDescriptor, '__get__')
-def abstract_manager_descriptor_get(original, self, instance=None, type=None):
-    if instance is None:
-        return self
-    return original(self, instance, type)
-
-
 @PatchFor(jsonfield.subclassing.Creator, '__get__')
 def jsonfield_creator_get(original, self, obj, type=None):
     if obj is None:
