@@ -1,13 +1,10 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.6.6
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-07-06 1:15pm -0800.
 
 Core
 ~~~~
@@ -41,6 +38,8 @@ Carousel
 
 Shuup 1.6.5
 -----------
+
+Released on 2018-07-02 1:15am -0800.
 
 General
 ~~~~~~
