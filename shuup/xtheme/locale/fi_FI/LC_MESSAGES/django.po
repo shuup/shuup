@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-19 17:40+0000\n"
-"PO-Revision-Date: 2018-06-19 19:53+0000\n"
+"POT-Creation-Date: 2018-07-04 18:50+0000\n"
+"PO-Revision-Date: 2018-07-06 18:39+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -157,6 +157,15 @@ msgstr "Jätä tyhjäksi oletusleveydelle"
 msgid "Height (px)"
 msgstr "Korkeus (pikseliä)"
 
+msgid "Newest"
+msgstr "Uusin"
+
+msgid "Best Selling"
+msgstr "Suosituin"
+
+msgid "Random"
+msgstr "Satunnainen"
+
 msgid "Product Highlights"
 msgstr "Tuotenostot"
 
@@ -165,6 +174,12 @@ msgstr "Tyyppi"
 
 msgid "Count"
 msgstr "Lukumäärä"
+
+msgid "Only show sale items"
+msgstr "Näytä vain myynnissä olevat tuotteet"
+
+msgid "Show only products that have discounts"
+msgstr "Näytä vain alennuksessa olevat tuotteet"
 
 msgid "Only show in-stock and orderable items"
 msgstr "Näytä vain varastossa olevat sekä tilattavat tuotteet"
