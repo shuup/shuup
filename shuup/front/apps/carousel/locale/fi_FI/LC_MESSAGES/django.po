@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 13:02+0000\n"
-"PO-Revision-Date: 2018-06-28 19:55+0000\n"
+"POT-Creation-Date: 2018-07-03 16:09+0000\n"
+"PO-Revision-Date: 2018-07-06 19:21+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -44,11 +44,11 @@ msgstr "Kuva"
 msgid "Fade"
 msgstr "Häivytys"
 
-msgid "Current"
-msgstr "Nykyinen"
+msgid "Current page"
+msgstr "Nykyinen sivu"
 
-msgid "New"
-msgstr "Uusi"
+msgid "New page"
+msgstr "Uusi sivu"
 
 msgid "shops"
 msgstr "kaupat"
@@ -106,6 +106,12 @@ msgstr "kuvan korkeus"
 msgid "Slide images will be cropped to this height."
 msgstr "Kuvat rajataan tähän korkeuteen."
 
+msgid "Arrows color"
+msgstr "Nuolien väri"
+
+msgid "Set the custom color for the arrows."
+msgstr "Aseta nuolien väri."
+
 msgid "Name is only used to configure slides."
 msgstr "Nimeä käytetään vain kuvien konfigurointiin."
 
@@ -159,6 +165,18 @@ msgstr "Aseta päivä ja aika, milloin tämän karusellikohteen pitäisi olla n�
 msgid "available to"
 msgstr "saatavilla asti"
 
+msgid "Inactive dot border color"
+msgstr "Reunan väri passiiviselle pisteelle"
+
+msgid "Customize the dot border color when slide is not active."
+msgstr "Aseta pisteen reunan väri kun kuva ei ole aktiivinen."
+
+msgid "Active dot color"
+msgstr "Aktiivisen pisteen väri"
+
+msgid "Customize the dot color when slide is active."
+msgstr "Aseta pisteen reunan väri kun kuva on aktiivinen."
+
 msgid "caption"
 msgstr "kuvateksti"
 
@@ -204,6 +222,21 @@ msgid ""
 "This form is also used to define banner boxes. Marked fields only apply to "
 "banner boxes."
 msgstr "Tätä lomaketta käytetään myös bannerilaatikoiden määrittelyyn. Merkatut kentät vaikuttavat vain bannerilaatikoihin."
+
+msgid "Adding the carousel to your site"
+msgstr "Karusellin lisääminen sivustollesi"
+
+msgid ""
+"To add a carousel to your site, you must edit the page using the placeholder"
+" editor. To do this, go to your site and click the 'Edit page' on the page "
+"you want to add the carousel banner to. Then, select the placeholder to "
+"change and add a new plugin row and from the plugin dropdown and select "
+"'Carousel Plugin'. From 'Carousel' dropdown options choose the carousel you "
+"want to display. As a final step, save the plugin and publish changes."
+msgstr "Lisätäksesi karusellin sivustollesi, tulee sinun muokata halutun sivun sisältöaluetta seuraavasti; mene kaupassa sivulle, jolle haluat lisätä karusellin ja klikkaa 'Muokkaa Sivua'. Valitse tämän jälkeen sisältöalue sekä lisää lisäosa. Valitse lisäosien listasta 'Karuselli lisäosa'. Valitse 'Karuselli'-valinnasta karuselli, jonka haluat näyttää sisältöalueessa. Tallenna lopuksi liitännäinen ja julkaise muutokset."
+
+msgid "Learn more."
+msgstr "Lue lisää."
 
 msgid "Basic details"
 msgstr "Perustiedot"
