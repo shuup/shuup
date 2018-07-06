@@ -46,12 +46,17 @@ We have a Gitter chat room for Shuup.  Come chat with us!  |Join chat|
 .. |Join chat| image:: https://badges.gitter.im/Join%20Chat.svg
    :target: https://gitter.im/shuup/shuup
 
+Install Shuup
+-------------
+
+See `Getting Started
+<http://shuup.readthedocs.io/en/latest/howto/getting_started.html>`__.
+
 Getting Started with Shuup development
 --------------------------------------
 
 See `Getting Started with Shuup Development
 <http://shuup.readthedocs.io/en/latest/howto/getting_started_dev.html>`__.
-
 
 Contributing to Shuup
 ---------------------
@@ -80,3 +85,14 @@ modules, use command:
 .. code:: sh
 
     ./generate_apidoc.py
+
+Roadmap
+-------
+
+* Per object placeholders. Option to add content per contact group, category, product and CMS page. `#1220 <https://github.com/shuup/shuup/issues/1220>`__.
+* Pricing cache. To improve the performance issues with complex catalog campaigns. `#1163 <https://github.com/shuup/shuup/issues/1163>`__.
+* Option for 'centrally' or 'separately' managed products. `#1275 <https://github.com/shuup/shuup/issues/1275>`__.
+* Improved unit tests for the multishop feature. `#1160 <https://github.com/shuup/shuup/issues/1160>`__.
+* Initiial support for Django 2.0. `#1289 <https://github.com/shuup/shuup/issues/1289>`__.
+* OS Admin design/UX overhaul.
+* Various smaller issues from the issues-list.
