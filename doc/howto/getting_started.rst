@@ -66,6 +66,27 @@ including ``pip`` and ``virtualenv``.
       python manage.py migrate
       python manage.py shuup_init
 
+
+.. note::
+    Some extra steps is required for **Windows**
+
+    If you want to install all requirements just with pip, you have to install MS
+    Visual C++ Build Tools as explained in `Python’s wiki
+    <https://wiki.python.org/moin/WindowsCompilers>`__. This way
+    everything will be build automatically on your Windows machine, alternatively
+    you may install failed to build packages from https://www.lfd.uci.edu/~gohlke/pythonlibs/.
+
+    If you have OSError: dlopen() failed to load a library: cairo / cairo-2 error,
+    please carefully follow these `instructions
+    <https://weasyprint.readthedocs.io/en/latest/install.html#windows>`__.
+
+    If you still have the same error, be sure that your installed python and GTK run
+    time has the same 32 or 64 bit. It's important.
+
+    Error is still there? Try to edit Windows environment PATH, and move GTK Runtime
+    location to the top of the list.
+
+
 Shuup Packages
 --------------
 
