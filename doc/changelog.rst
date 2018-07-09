@@ -22,6 +22,7 @@ Bug fixes
 Front
 ~~~~~
 
+- Add option to edit front as anonymous, person or company contact.
 - Change the way SVG files are detected in thumnailer. From now on the SVG
   check is done purely based on filename instead of checking the file
   content.

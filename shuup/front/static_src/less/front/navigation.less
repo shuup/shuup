@@ -303,15 +303,19 @@
 .navbar-admin-tools {
     .navbar-brand {
         padding-top: 5px;
-        small {
-            font-size: 60%;
+        .admin-tools-info {
+            font-size: 80%;
         }
-        .maintenance-on {
+        .maintenance-on, .visibility-limit-on {
             color: green;
             font-weight: bold;
         }
-        .maintenance-off {
+        .maintenance-off, .visibility-limit-off {
             color: red;
+            font-weight: bold;
+        }
+        .anonymous-contact-mode, .company-contact-mode, .person-contact-mode {
+            color: green;
             font-weight: bold;
         }
     }

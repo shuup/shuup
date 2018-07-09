@@ -20,7 +20,8 @@ from ._categories import Category, CategoryStatus, CategoryVisibility
 from ._configurations import ConfigurationItem
 from ._contacts import (
     AnonymousContact, CompanyContact, Contact, ContactGroup, Gender,
-    get_company_contact, get_person_contact, PersonContact
+    get_company_contact, get_company_contact_for_shop_staff,
+    get_person_contact, PersonContact
 )
 from ._counters import Counter, CounterType
 from ._currencies import Currency, get_currency_precision
@@ -97,6 +98,7 @@ __all__ = [
     "DisplayUnit",
     "FixedCostBehaviorComponent",
     "get_company_contact",
+    "get_company_contact_for_shop_staff",
     "get_currency_precision",
     "get_person_contact",
     "Gender",

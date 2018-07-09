@@ -33,11 +33,11 @@ def do_request_and_asserts(rf, contact, maintenance=False, expect_all_seeing=Fal
         texts.append(elem.text.strip())
 
     if contact.user.is_superuser:
-        text = "Show only visible products and categories" if expect_all_seeing else "Show all products and categories"
-        assert text in texts
+        text = "show only visible products and categories" if expect_all_seeing else "show all products and categories"
+        assert_text_in_texts(texts, text, True)
     else:
-        assert "Show only visible products and categories" not in texts
-        assert "Show all products and categories" not in texts
+        assert_text_in_texts(texts, "show only visible products and categories", False)
+        assert_text_in_texts(texts, "show all products and categories", False)
 
 
 @pytest.mark.django_db
@@ -74,3 +74,7 @@ def test_regular_user_is_blind(rf, regular_user):
 
     # Contact might be all-seeing in database but toolbar requires superuser
     do_request_and_asserts(rf, contact, maintenance=False, expect_all_seeing=False, expect_toolbar=False)
+
+
+def assert_text_in_texts(texts, expected_text, expected_outcome):
+    return any([text for text in texts if expected_text in text]) == expected_outcome
