@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 18:32+0000\n"
+"POT-Creation-Date: 2018-07-09 21:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,19 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "Calculate the best logo size"
+msgstr ""
+
+msgid "Reset shop logo values"
+msgstr ""
+
+msgid "Shop logo preview"
+msgstr ""
+
+#, python-brace-format
+msgid "Original image size: {width} x {height}"
+msgstr ""
 
 msgid "Classic Gray"
 msgstr ""
@@ -36,6 +49,15 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
+msgid "Left"
+msgstr ""
+
+msgid "Right"
+msgstr ""
+
+msgid "Center"
+msgstr ""
+
 msgid "Show Frontpage Welcome Text"
 msgstr ""
 
@@ -43,6 +65,27 @@ msgid "Hide prices"
 msgstr ""
 
 msgid "Set shop in catalog mode"
+msgstr ""
+
+msgid "Shop logo width"
+msgstr ""
+
+msgid "This is the width of the image, in pixels."
+msgstr ""
+
+msgid "Shop logo height"
+msgstr ""
+
+msgid "This is the height of the image, in pixels."
+msgstr ""
+
+msgid "Shop logo alignment"
+msgstr ""
+
+msgid "Keep logo aspect ratio"
+msgstr ""
+
+msgid "Check this to keep the aspect ratio of the image."
 msgstr ""
 
 msgid "Default"

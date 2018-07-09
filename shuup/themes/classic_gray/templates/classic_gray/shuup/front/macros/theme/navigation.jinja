@@ -1,3 +1,28 @@
+{% macro render_logo() %}
+    {% if request.shop.logo %}
+        {% set height_css = "height: {}px;".format(xtheme.get("shop_logo_height")) if xtheme.get("shop_logo_height") else "" %}
+        {% set width_css = "width: {}px;".format(xtheme.get("shop_logo_width")) if xtheme.get("shop_logo_width") else "" %}
+        {% if xtheme.get("shop_logo_height") and xtheme.get("shop_logo_width") %}
+            {% set cropped_logo = request.shop.logo|thumbnail(size=(xtheme.get("shop_logo_width"), xtheme.get("shop_logo_height"))) %}
+        {% else %}
+            {% set cropped_logo = request.shop.logo|thumbnail(size=(500, 500)) %}
+        {% endif %}
+    {% endif %}
+    <div
+        class="logo {% if not cropped_logo %}no-image{% endif %}"
+        style="{% if cropped_logo %}{{ height_css }}{{ width_css }}{% endif %}"
+    >
+        {% if cropped_logo %}
+            <a
+                href="/" class="image {% if cropped_logo %}{{ xtheme.get("shop_logo_alignment", "left") }}{% endif %}"
+                style="background-image:url('{{ cropped_logo }}');"
+            ></a>
+        {% else %}
+            <a href="/" class="text"><h4>{{ request.shop.public_name }}</h4></a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {% macro render_menu_items() %}
     <button class="toggle-mobile-nav">
         <span class="sr-only">{% trans %}Menu{% endtrans %}</span>

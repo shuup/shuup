@@ -10,8 +10,20 @@ import django.conf
 from django import forms
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum
 
 from shuup.xtheme import Theme
+
+
+class ShopLogoAlignment(Enum):
+    LEFT = "left"
+    RIGHT = "right"
+    CENTER = "center"
+
+    class Labels:
+        LEFT = _("Left")
+        RIGHT = _("Right")
+        CENTER = _("Center")
 
 
 class ClassicGrayTheme(Theme):
@@ -24,9 +36,33 @@ class ClassicGrayTheme(Theme):
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
         ("hide_prices", forms.BooleanField(required=False, initial=False, label=_("Hide prices"))),
         ("catalog_mode", forms.BooleanField(required=False, initial=False, label=_("Set shop in catalog mode"))),
+        ("shop_logo_width", forms.IntegerField(
+            initial=200, max_value=960,
+            label=_("Shop logo width"),
+            help_text=_("This is the width of the image, in pixels.")
+        )),
+        ("shop_logo_height", forms.IntegerField(
+            initial=80, max_value=500,
+            label=_("Shop logo height"),
+            help_text=_("This is the height of the image, in pixels.")
+        )),
+        ("shop_logo_alignment", forms.ChoiceField(
+            required=False,
+            choices=ShopLogoAlignment.choices(),
+            initial=ShopLogoAlignment.LEFT.value,
+            label=_("Shop logo alignment")
+        )),
+        ("shop_logo_aspect_ratio", forms.BooleanField(
+            required=False, initial=True,
+            label=_("Keep logo aspect ratio"),
+            help_text=_("Check this to keep the aspect ratio of the image.")
+        ))
     ]
 
     guide_template = "classic_gray/admin/guide.jinja"
+    extra_config_template = "classic_gray/admin/extra_config.jinja"
+    extra_config_extra_js = "classic_gray/admin/extra_config_js.jinja"
+    extra_config_extra_css = "classic_gray/admin/extra_config_css.jinja"
 
     stylesheets = [
         {
