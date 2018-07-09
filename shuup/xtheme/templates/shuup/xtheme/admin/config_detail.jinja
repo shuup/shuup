@@ -8,7 +8,7 @@
         <form method="post" id="theme_settings_form">
             {% csrf_token %}
             {% call content_block(_("Theme Configuration"), "fa-cog") %}
-                {% if form.fields %}
+                {% if form.fields or theme.extra_config_template %}
                     {% for field in form %}
                         {% if field.name == "stylesheet" and has_images %}
                             <div class="form-group required-field">
@@ -24,6 +24,9 @@
                             {{ bs3.field(field) }}
                         {% endif %}
                     {% endfor %}
+                    {% if theme.extra_config_template %}
+                        {% include theme.extra_config_template with context %}
+                    {% endif %}
                 {% else %}
                     <div class="alert alert-info">
                         {% trans %}There's nothing to configure in this theme.{% endtrans %}
@@ -64,7 +67,13 @@
 {% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{{ static("xtheme/admin/xtheme_admin.css") }}">
+    {% if theme.extra_config_extra_css %}
+        {% include theme.extra_config_extra_css %}
+    {% endif %}
 {% endblock %}
 {% block extra_js %}
     <script src="{{ static("xtheme/admin/admin.js") }}"></script>
+    {% if theme.extra_config_extra_js %}
+        {% include theme.extra_config_extra_js %}
+    {% endif %}
 {% endblock %}

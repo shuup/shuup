@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.apps.provides import get_provide_objects
@@ -92,7 +93,7 @@ class ThemeWizardPane(WizardPane):
         }
         theme_settings, created = ThemeSettings.objects.get_or_create(
             theme_identifier=identifier,
-            shop=self.request.shop
+            shop=get_shop(self.request)
         )
         if created:
             theme_settings.data = data
@@ -101,7 +102,7 @@ class ThemeWizardPane(WizardPane):
             theme_settings.update_settings(data["settings"])
 
         set_current_theme(identifier, self.object)
-        cache.bump_version(get_theme_cache_key(self.request.shop))
+        cache.bump_version(get_theme_cache_key(get_shop(self.request)))
 
 
 class ThemeConfigView(FormView):
@@ -113,12 +114,13 @@ class ThemeConfigView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigView, self).get_context_data(**kwargs)
-        context.update(get_theme_context(self.request.shop))
+        shop = get_shop(self.request)
+        context.update(get_theme_context(shop))
         return context
 
     def form_valid(self, form):
         identifier = form.cleaned_data["activate"]
-        set_current_theme(identifier, self.request.shop)
+        set_current_theme(identifier, get_shop(self.request))
         messages.success(self.request, _("Theme activated."))
         return HttpResponseRedirect(self.request.path)
 
@@ -136,7 +138,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
     def get_object(self, queryset=None):
         return ThemeSettings.objects.get_or_create(
             theme_identifier=self.kwargs["theme_identifier"],
-            shop=self.request.shop
+            shop=get_shop(self.request)
         )[0]
 
     def get_theme(self):
@@ -148,13 +150,15 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         """
         return get_theme_by_identifier(
             identifier=self.kwargs["theme_identifier"],
-            shop=self.request.shop
+            shop=get_shop(self.request)
         )
 
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigDetailView, self).get_context_data(**kwargs)
+        shop = get_shop(self.request)
         context["theme"] = self.get_theme()
         context["active_stylesheet"] = self.object.data.get("settings", {}).get("stylesheet", None)
+        context["shop"] = shop
         return context
 
     def get_form(self, form_class=None):
@@ -167,13 +171,13 @@ class ThemeConfigDetailView(CreateOrUpdateView):
 
     def save_form(self, form):
         super(ThemeConfigDetailView, self).save_form(form)
-        cache.bump_version(get_theme_cache_key(self.request.shop))
+        cache.bump_version(get_theme_cache_key(get_shop(self.request)))
 
 
 class ThemeGuideTemplateView(TemplateView):
     template_name = None
 
     def dispatch(self, request, *args, **kwargs):
-        theme = get_theme_by_identifier(kwargs["theme_identifier"], shop=self.request.shop)
+        theme = get_theme_by_identifier(kwargs["theme_identifier"], shop=get_shop(self.request))
         self.template_name = theme.guide_template
         return super(ThemeGuideTemplateView, self).dispatch(request, *args, **kwargs)
