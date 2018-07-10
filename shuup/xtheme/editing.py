@@ -11,6 +11,8 @@ from django.middleware.csrf import get_token
 from shuup.front.utils.user import is_admin_user
 from shuup.xtheme.resources import add_resource, InlineScriptResource
 
+from ._theme import get_current_theme
+
 EDIT_FLAG_NAME = "shuup_xtheme_edit"
 
 
@@ -70,6 +72,14 @@ def may_inject(context):
     return bool(view) and bool(getattr(view, "xtheme_injection", True))
 
 
+def can_edit(context):
+    request = context.get("request")
+    if not (request and could_edit(request) and may_inject(context)):
+        return False
+
+    return bool(get_current_theme(request.shop))
+
+
 def add_edit_resources(context):
     """
     Possibly inject Xtheme editor injection resources into the given
@@ -79,14 +89,12 @@ def add_edit_resources(context):
     :type context: jinja2.runtime.Context
     """
     request = context.get("request")
-    if not (request and could_edit(request) and may_inject(context)):
+    if not can_edit(context):
         return
-    from ._theme import get_current_theme
+
     from .rendering import get_view_config  # avoid circular import
     view_config = get_view_config(context)
     theme = get_current_theme(request.shop)
-    if not theme:
-        return
     add_resource(context, "body_end", InlineScriptResource.from_vars("XthemeEditorConfig", {
         "commandUrl": "/xtheme/",  # TODO: Use reverse("shuup:xtheme")?
         "editUrl": "/xtheme/editor/",  # TODO: Use reverse("shuup:xtheme")?

@@ -13,7 +13,7 @@ from markupsafe import Markup
 
 from shuup.core.fields.tagged_json import TaggedJSONEncoder
 from shuup.xtheme._theme import get_current_theme
-from shuup.xtheme.editing import is_edit_mode
+from shuup.xtheme.editing import is_edit_mode, may_inject
 from shuup.xtheme.layout.utils import get_layout_data_key
 from shuup.xtheme.utils import get_html_attrs
 from shuup.xtheme.view_config import ViewConfig
@@ -117,6 +117,9 @@ class PlaceholderRenderer(object):
         :return: Rendered markup.
         :rtype: markupsafe.Markup
         """
+        if not may_inject(self.context):
+            return ""
+
         full_content = ""
         for layout in self.layouts:
             wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs(layout))

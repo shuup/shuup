@@ -42,6 +42,7 @@ Xtheme
 - Add option to render extra templates in theme configuration.
 - Add option for per object placeholders
 - Fix bug deleting last row from placeholder
+- Do not render placeholders that can't be edited
 
 Shuup 1.6.6
 -----------
