@@ -108,6 +108,8 @@ def test_browser_checkout_addresses_horizontal(browser, live_server, settings):
     wait_until_condition(browser, lambda x: x.find_by_name("shipping-country").has_class("disabled"))
     billing_country = browser.find_by_name("billing-country").first
     shipping_country = browser.find_by_name("shipping-country").first
+    wait_until_appeared(browser, "select[name='billing-region_code']")
+    wait_until_appeared(browser, "select[name='shipping-region_code']")
     billing_region_code = browser.find_by_name("billing-region_code").first
     shipping_region_code = browser.find_by_name("shipping-region_code").first
     assert billing_country.value == shipping_country.value
@@ -135,8 +137,10 @@ def test_browser_checkout_addresses_horizontal(browser, live_server, settings):
 
     # all values must be there with correct saved values
     billing_country = browser.find_by_name("billing-country").first
+    wait_until_appeared(browser, "select[name='billing-region_code']")
     billing_region_code = browser.find_by_name("billing-region_code").first
     shipping_country = browser.find_by_name("shipping-country").first
+    wait_until_appeared(browser, "select[name='shipping-region_code']")
     shipping_region_code = browser.find_by_name("shipping-region_code").first
     assert billing_country.value == customer_country1
     assert billing_region_code.value == customer_region1
@@ -261,8 +265,10 @@ def test_browser_checkout_addresses_vertical(browser, live_server, settings):
 
         # all values must be there with correct saved values
         billing_country = browser.find_by_name("billing-country").first
+        wait_until_appeared(browser, "select[name='billing-region_code']")
         billing_region_code = browser.find_by_name("billing-region_code").first
         shipping_country = browser.find_by_name("shipping-country").first
+        wait_until_appeared(browser, "select[name='shipping-region_code']")
         shipping_region_code = browser.find_by_name("shipping-region_code").first
         assert billing_country.value == customer_country1
         assert billing_region_code.value == customer_region1
