@@ -9,6 +9,16 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Classic Gray Theme
+~~~~~~~~~~~~~~~~~~
+
+- Add option to configure shop logo size styles
+
+Xtheme
+~~~~~~
+
+- Add option to render extra templates in theme configuration.
+
 Shuup 1.6.6
 -----------
 

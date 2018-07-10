@@ -110,6 +110,11 @@ class Theme(object):
     # Guide template location
     guide_template = None
 
+    # Extra configuration themes - it will be included after the configuration form
+    extra_config_template = None
+    extra_config_extra_css = None
+    extra_config_extra_js = None
+
     def __init__(self, theme_settings=None, shop=None):
         """
         Initialize this theme, with an optional `ThemeSettings` or `Shop` object. One should be passed.
