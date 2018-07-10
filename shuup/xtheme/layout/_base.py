@@ -409,7 +409,15 @@ class Layout(object):
         y = int(y)
         if not (0 <= y < len(self.rows)):
             return False
+
         self.rows.pop(y)
+
+        if len(self.rows) == 0:
+            # In case is deleting last row we don't want the
+            # placeholder defaults to kick in. Instead let's add
+            # empty row here to prevent that.
+            self.rows.append(LayoutRow(self.theme))
+
         return True
 
     def move_row_to_index(self, from_y, to_y):
