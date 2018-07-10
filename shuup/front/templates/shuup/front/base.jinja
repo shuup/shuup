@@ -36,7 +36,9 @@
 <body {% if shuup.general.is_shop_admin() %} class="admin-tools-visible" {% endif %}>
     {{ macros.render_admin_tools() }}
     <nav class="main-nav">
+    {% block navigation %}
         {{ render_navigation() }}
+    {% endblock %}
     </nav>
     <main class="main-container" role="main">
         <div class="container">
@@ -63,6 +65,6 @@
     {# Include all Extra JavaScript #}
     {% block extrajs %}{% endblock %}
     {# Enable adding products to basket with ajax #}
-    {{add_product_to_cart() }}
+    {{ add_product_to_cart() }}
 </body>
 </html>

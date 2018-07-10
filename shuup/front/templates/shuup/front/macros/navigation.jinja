@@ -1,11 +1,12 @@
 {% extends "shuup/front/macros/theme/navigation.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_field with context %}
 
-{% macro render_navigation() %}
+{% macro render_navigation(show_quick_login=True) %}
     <div class="top-nav">
         <div class="container">
             <ul class="pull-left">
                 {{ render_search() }}
-                {{ render_info_dropdown() }}
+                {{ render_info_dropdown(show_quick_login) }}
                 {{ render_language_changer() }}
             </ul>
             <ul class="pull-right" id="navigation-basket-partial">
@@ -31,7 +32,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_info_dropdown() %}
+{% macro render_info_dropdown(show_quick_login=True) %}
     {% if user.is_authenticated() %}
         {% call _render_info_for_authenticated_users() %}
             {{ _render_dropdown_item(url("shuup:customer_edit"), "fa fa-user fa-fw", _("Edit account details")) }}
@@ -54,26 +55,23 @@
                 {{ _render_dropdown_item(url("shuup:logout"), "fa fa-sign-out fa-fw", _("Log out"), True) }}
             {% endif %}
         {% endcall %}
-    {% else %}
+    {% elif show_quick_login %} {# Checking if the login dropdown should be shown #}
         {% call _render_info_for_anonymous_users() %}
             <li>
                 <form role="form" method="post" action="{{ url("shuup:login") }}">
                     {% csrf_token %}
                     {% if request.resolver_match.url_name == "logout" %}{% set next="/" %}{% endif %}
                     <input type="hidden" name="next" value="{{ next or request.path }}">
-                    <div class="form-group">
-                        <label for="username">{% trans %}Username or email address{% endtrans %}</label>
-                        <input type="text" name="username" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">{% trans %}Password{% endtrans %}</label>
-                        <input type="password" name="password" class="form-control">
-                    </div>
+                    {% set form = shuup.general.get_login_form(request) %}
+                    {% for f in form.hidden_fields() %}{{ f }}{% endfor %}
+                    {% for f in form.visible_fields() %}{{ render_field(f, show_help_text=False) }}{% endfor %}
+                    
                     <button type="submit" class="btn btn-primary btn-block">
                         {% trans %}Log in{% endtrans %}
                     </button>
                 </form>
             </li>
+        
             <li class="divider"></li>
             {% if shuup.urls.has_url("shuup:recover_password") %}
                 <li>
@@ -89,6 +87,7 @@
                     </a>
                 </li>
             {% endif %}
+        
         {% endcall %}
     {% endif %}
 {% endmacro %}

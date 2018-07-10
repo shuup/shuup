@@ -5,6 +5,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
+
+#: This is used to get the login form for the login dropdown in navigation.jinja
+SHUUP_LOGIN_VIEW = (
+    "shuup.front.apps.auth.views:LoginView")
+
 #: Spec string for the class used for creating Order from a Basket.
 #:
 #: This is the easiest way to customize the order creation process

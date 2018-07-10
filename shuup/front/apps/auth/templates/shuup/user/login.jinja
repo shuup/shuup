@@ -5,6 +5,12 @@
 
 {% block content_title %}{% endblock %}
 
+{# Removing the login dropdown from navigation #}
+{% block navigation %}
+    {{ render_navigation(show_quick_login=False) }}
+{% endblock %}
+
+
 {% block content %}
     {% if user.is_authenticated() %}
         <h1 class="page-header">

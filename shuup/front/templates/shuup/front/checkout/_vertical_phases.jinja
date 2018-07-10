@@ -4,6 +4,10 @@
 {% else %}
     {% extends "shuup/front/base.jinja" %}
 
+    {% block navigation %}
+        {{ render_navigation(show_quick_login=False) }}
+    {% endblock %}
+    
     {% block title %}{% trans %}Checkout{% endtrans %}{% endblock %}
     {% block content_title %}{% trans %}Checkout{% endtrans %}{% endblock %}
 

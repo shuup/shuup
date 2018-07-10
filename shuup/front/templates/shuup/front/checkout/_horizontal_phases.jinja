@@ -3,6 +3,10 @@
 {% block title %}{{ view.title }}{% endblock %}
 {% block content_title %}{% trans %}Checkout{% endtrans %}: {{ view.title }}{% endblock %}
 
+{% block navigation %}
+    {{ render_navigation(show_quick_login=False) }}
+{% endblock %}
+
 {% block before_content_title %}
     {% block checkout_phase_bar %}
         {% if view and view.phases %}
