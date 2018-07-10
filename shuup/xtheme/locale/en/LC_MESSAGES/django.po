@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 18:50+0000\n"
+"POT-Creation-Date: 2018-07-10 18:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -285,6 +285,9 @@ msgstr ""
 msgid "Select theme"
 msgstr ""
 
+msgid "Active"
+msgstr ""
+
 msgid "Guide"
 msgstr ""
 
@@ -303,16 +306,19 @@ msgstr ""
 msgid "No guide"
 msgstr ""
 
-msgid "Currently active"
+msgid "Activate"
 msgstr ""
 
-msgid "Activate"
+msgid "Click here to configure the theme"
 msgstr ""
 
 msgid "Configure"
 msgstr ""
 
 msgid "Theme Name"
+msgstr ""
+
+msgid "Currently active"
 msgstr ""
 
 msgid "Revert Changes"
