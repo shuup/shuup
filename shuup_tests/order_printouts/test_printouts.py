@@ -49,6 +49,35 @@ def test_printouts(rf):
 
 
 @pytest.mark.django_db
+def test_printouts_no_addresses(rf):
+    try:
+        import weasyprint
+    except ImportError:
+        pytest.skip()
+
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product("simple-test-product", shop)
+    order = create_order_with_product(product, supplier, 6, 6, shop=shop)
+
+    order.billing_address = None
+    order.save()
+    shipment = order.create_shipment_of_all_products(supplier)
+    request = rf.get("/")
+    response = get_delivery_pdf(request, shipment.id)
+    assert response.status_code == 200
+    response = get_confirmation_pdf(request, order.id)
+    assert response.status_code == 200
+
+    order.shipping_address = None
+    order.save()
+    response = get_delivery_pdf(request, shipment.id)
+    assert response.status_code == 200
+    response = get_confirmation_pdf(request, order.id)
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
 def test_adding_extra_fields_to_the_delivery(rf):
     try:
         import weasyprint

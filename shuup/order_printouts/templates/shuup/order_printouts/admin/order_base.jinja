@@ -40,8 +40,10 @@
     <tbody>
         <tr>
             <td width="45">
-                {{ macros.print_address(order.shipping_address) }}
-                {% if order.shipping_address_id != order.billing_address_id %}
+                {% if order.shipping_address %}
+                    {{ macros.print_address(order.shipping_address) }}
+                {% endif %}
+                {% if order.billing_address and order.shipping_address_id != order.billing_address_id %}
                     <h3>{% trans %}Billing address{% endtrans %}</h3>
                     {{ macros.print_address(order.billing_address) }}
                 {% endif %}
