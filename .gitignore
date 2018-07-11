@@ -32,6 +32,7 @@ lib/
 lib64/
 local_settings.py
 nosetests.xml
+testresults.xml
 parts/
 pip-delete-this-directory.txt
 pip-log.txt

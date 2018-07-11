@@ -89,8 +89,15 @@ install:
   - pip install tox
   - pip install coveralls
   - pip install codecov
+  - mkdir -p $HOME/bin
+  - curl -fsSL https://testspace-client.s3.amazonaws.com/testspace-linux.tgz | tar -zxvf- -C $HOME/bin
+  - testspace config url $TS_ORG.testspace.com
 script:
   - tox
+after_script:
+  - if [[ "${TOXENV}" =~ ^py ]] ; then
+      testspace [${TOXENV/-/\/}]testresults.xml{.} --link=coveralls;
+    fi
 after_success:
   - coveralls
   - codecov
