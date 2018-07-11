@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-10 18:00+0000\n"
+"POT-Creation-Date: 2018-07-11 03:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -65,6 +65,30 @@ msgid "Stylesheets"
 msgstr ""
 
 msgid "The fonts, colors, and styles to use with your theme."
+msgstr ""
+
+msgid "Content in this placeholder is shown without limitations."
+msgstr ""
+
+#, python-format
+msgid ""
+"Content in this placeholder is shown for %(category_name)s category only."
+msgstr ""
+
+msgid "Content in this placeholder is shown for guests."
+msgstr ""
+
+msgid "Content in this placeholder is shown for company contacts."
+msgstr ""
+
+msgid "Content in this placeholder is shown for all logged in contacts."
+msgstr ""
+
+msgid "Content in this placeholder is shown for person contacts."
+msgstr ""
+
+#, python-format
+msgid "Content in this placeholder is shown for %(product_name)s only."
 msgstr ""
 
 msgid "Shop '{}' has no active theme"
@@ -229,6 +253,11 @@ msgstr ""
 
 #, python-format
 msgid "Click to edit placeholder: %s"
+msgstr ""
+
+msgid ""
+"This placeholder is global and content of this placeholder is shown on all "
+"pages."
 msgstr ""
 
 msgid "Delete This Cell"

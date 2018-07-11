@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 18:02+0000\n"
+"POT-Creation-Date: 2018-07-11 03:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -68,10 +68,11 @@ msgstr ""
 msgid "Page"
 msgstr ""
 
-msgid "normal"
+msgid "Content in this placeholder is shown for this page only."
 msgstr ""
 
-msgid "revisioned"
+#, python-format
+msgid "Content in this placeholder is shown for %(title)s only."
 msgstr ""
 
 msgid "shop"
@@ -140,9 +141,6 @@ msgid ""
 "that this requires the children to be listed on the page as well."
 msgstr ""
 
-msgid "page type"
-msgstr ""
-
 msgid "deleted"
 msgstr ""
 
@@ -175,10 +173,6 @@ msgstr ""
 msgid "pages"
 msgstr ""
 
-msgid ""
-"This page is protected against changes because it is a GDPR consent document."
-msgstr ""
-
 msgid "Untitled"
 msgstr ""
 
@@ -195,15 +189,6 @@ msgid "Hide expired pages"
 msgstr ""
 
 msgid "New Page"
-msgstr ""
-
-msgid "General Information"
-msgstr ""
-
-msgid "Availability"
-msgstr ""
-
-msgid "Extras"
 msgstr ""
 
 msgid "Home"
