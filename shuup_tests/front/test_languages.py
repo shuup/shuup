@@ -5,31 +5,16 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from django.conf import settings
-from django.contrib.auth import logout
-from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
-from django.utils import timezone
-from django.utils.translation import get_language, activate
+from django.utils.translation import activate, get_language
 
-import shuup.core.models
-from shuup.admin.urls import login
-from shuup.admin.views.home import HomeView as AdminHomeView
 from shuup.core import cache
-from shuup.core.models import (
-    AnonymousContact, CompanyContact, Contact, get_company_contact,
-    get_person_contact, PersonContact, Shop
-)
-from shuup.front.middleware import ShuupFrontMiddleware
 from shuup.front.utils.translation import (
     get_shop_available_languages, set_shop_available_languages
 )
-from shuup.front.views.index import IndexView
 from shuup.testing import factories
-from shuup.testing.soup_utils import extract_form_fields
 from shuup_tests.utils import SmartClient
-from shuup_tests.utils.fixtures import regular_user
 
 
 def setup_function(fn):
@@ -53,7 +38,7 @@ def test_shop_available_languages(admin_user):
         PARLER_DEFAULT_LANGUAGE_CODE = "it"
     ):
         # there is no language set for the shop, the first one will be used
-        client.get(reverse("shuup:index"))
+        response = client.get(reverse("shuup:index"))
         assert get_language() == "it"
 
         # set an invalid language code
@@ -64,7 +49,7 @@ def test_shop_available_languages(admin_user):
         set_shop_available_languages(shop, ["fi", "pt"])
 
         # the middleware will automatically set the language to "fi" as that is the first one available for the shop
-        client.get(reverse("shuup:index"))
+        response = client.get(reverse("shuup:index"))
         assert get_language() == "fi"
 
         # the same won't happen for any other url - the middleware will only affect front urls
@@ -80,6 +65,43 @@ def test_shop_available_languages(admin_user):
         assert get_language() == "it"
 
     activate(original_language)
+
+
+@pytest.mark.django_db
+def test_shop_remove_available_languages(admin_user):
+    shop = factories.get_default_shop()
+    client = SmartClient()
+
+    with override_settings(
+        LANGUAGES=[
+            ("en", "English"),
+            ("fi", "Finnish"),
+        ],
+        LANGUAGE_CODE="en",
+        PARLER_DEFAULT_LANGUAGE_CODE = "en"
+    ):
+        # there is no language set for the shop, the first one will be used
+        response = client.get(reverse("shuup:index"))
+        assert get_language() == "en"
+
+        # request js catalog file
+        response = client.get(reverse("shuup:js-catalog"))
+        assert get_language() == "en"
+
+        # when requesting admin js catalog, the language should be any of the available
+        client.get("shuup_admin:js-catalog")
+        assert get_language() == "en"
+
+        set_shop_available_languages(shop, ["fi"])
+
+        response = client.get(reverse("shuup:index"))
+        assert get_language() == "fi"
+
+        response = client.get(reverse("shuup:js-catalog"))
+        assert get_language() == "fi"
+
+        client.get("shuup_admin:js-catalog")
+        assert get_language() == "en"
 
 
 @pytest.mark.django_db

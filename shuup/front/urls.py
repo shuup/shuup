@@ -16,7 +16,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.i18n import set_language
 
 from shuup.apps.provides import get_provide_objects
-from shuup.utils.i18n import javascript_catalog_all
 
 from .views.basket import BasketView
 from .views.category import CategoryView
@@ -38,12 +37,19 @@ def _not_here_yet(request, *args, **kwargs):
         status=410)
 
 
+# Use a different js catalog function in front urlpatterns to prevent forcing
+# the shop language settings in admin js catalog.
+def front_javascript_catalog_all(request, domain='djangojs'):
+    from shuup.utils.i18n import javascript_catalog_all
+    return javascript_catalog_all(request, domain)
+
+
 checkout_view = get_checkout_view()
 
 
 urlpatterns = [
     url(r'^set-language/$', csrf_exempt(set_language), name="set-language"),
-    url(r'^i18n.js$', javascript_catalog_all, name='js-catalog'),
+    url(r'^i18n.js$', front_javascript_catalog_all, name='js-catalog'),
     url(r'^checkout/$', checkout_view, name='checkout'),
     url(r'^checkout/(?P<phase>.+)/$', checkout_view, name='checkout'),
     url(r'^basket/$', csrf_exempt(BasketView.as_view()), name='basket'),
