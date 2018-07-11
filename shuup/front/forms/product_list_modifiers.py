@@ -235,21 +235,31 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
     def get_fields(self, request, category=None):
         if not Manufacturer.objects.exists():
             return
+
+        shop_products_qs = ShopProduct.objects.filter(
+            shop=request.shop
+        ).exclude(visibility=ShopProductVisibility.NOT_VISIBLE)
+
         if category:
-            manufacturer_ids = set(
-                ShopProduct.objects.filter(
-                    categories__in=[category]).values_list("product__manufacturer__pk", flat=True).distinct()
-            )
-            if manufacturer_ids == set([None]):
-                return
-            queryset = Manufacturer.objects.filter(pk__in=manufacturer_ids)
-        else:
-            queryset = Manufacturer.objects.all()
+            shop_products_qs = shop_products_qs.filter(categories=category)
+
+        queryset = Manufacturer.objects.filter(
+            Q(product__shop_products__in=shop_products_qs),
+            Q(shops=request.shop) | Q(shops__isnull=True)
+        ).distinct()
+
+        if not queryset.exists():
+            return
+
         return [
             (
                 "manufacturers",
                 forms.ModelMultipleChoiceField(
-                    queryset=queryset, required=False, label=_('Manufacturers'), widget=FilterWidget())
+                    queryset=queryset,
+                    required=False,
+                    label=_('Manufacturers'),
+                    widget=FilterWidget()
+                )
             ),
         ]
 

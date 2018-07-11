@@ -133,6 +133,59 @@ def test_category_product_filters_3(browser, live_server, settings):
     categories_filter_test(browser, first_cat, second_cat, third_cat)
 
 
+@pytest.mark.browser
+@pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+def test_category_product_filters_4(browser, live_server, settings):
+    """
+    Do not show manufacturer option if there is any product
+    """
+    cache.clear()  # Avoid cache from past tests
+    shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
+
+    # remove manufacturers from all products
+    Product.objects.all().update(manufacturer=None)
+    # show manufacturer filter
+    set_configuration(
+        category=first_cat,
+        data={
+            "sort_products_by_name": True,
+            "sort_products_by_name_ordering": 1,
+            "sort_products_by_price": True,
+            "sort_products_by_price_ordering": 2,
+            "filter_products_by_manufacturer": True
+        }
+    )
+
+    # initialize test and go to front page
+    browser = initialize_front_browser_test(browser, live_server)
+
+    # check that front page actually loaded
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
+
+    url = reverse("shuup:category", kwargs={"pk": first_cat.pk, "slug": first_cat.slug})
+    browser.visit("%s%s" % (live_server, url))
+    wait_until_condition(browser, lambda x: x.is_text_present("First Category"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Sort"))
+    assert not browser.is_text_present("Manufacturers")  # Since there is no product with manufacturer
+
+    # add the manufacturer to the last product so the manufacturer filter is show
+    last_product = Product.objects.last()
+    last_product.manufacturer = first_manufacturer
+    last_product.save()
+    browser.visit("%s%s" % (live_server, url))
+    assert browser.is_text_present("Manufacturers")
+
+    # set the shop product hidden
+    shop_product = last_product.get_shop_instance(shop)
+    shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
+    shop_product.save()
+
+    # the manufacturer filter is removed
+    browser.visit("%s%s" % (live_server, url))
+    assert not browser.is_text_present("Manufacturers")
+
+
 def initialize_db():
     activate("en")
     # initialize
