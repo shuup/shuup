@@ -39,8 +39,10 @@
             <dl class="dl-horizontal">
                 <dt>{{ method_title }}</dt>
                 <dd>{% if method %}{{ method.name }}{% else %}{{ _("No method selected") }}{% endif %}</dd>
-                <dt>{{ address_title }}:</dt>
-                <dd>{{ format_address(address) }}</dd>
+                {% if address %}
+                    <dt>{{ address_title }}:</dt>
+                    <dd>{{ format_address(address) }}</dd>
+                {% endif %}
             </dl>
         </div>
     </div>
