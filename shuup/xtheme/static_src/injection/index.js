@@ -25,7 +25,7 @@ function getSidebarDiv() {
                     }
                 }
             }, [el("i.fa"), "Toggle Editor"]),
-            (_sidebarIframe = el("iframe"))
+            (_sidebarIframe = el("iframe", {id: "xt-edit-sidebar-iframe"}))
         ]);
         document.body.appendChild(_sidebarDiv);
     }
