@@ -20,8 +20,10 @@ from filer.models import Image
 
 from shuup.admin.forms.widgets import (
     FileDnDUploaderWidget, QuickAddCategoryMultiSelect, QuickAddCategorySelect,
-    QuickAddManufacturerSelect, QuickAddPaymentMethodsSelect,
-    QuickAddProductTypeSelect, QuickAddShippingMethodsSelect, TextEditorWidget
+    QuickAddDisplayUnitSelect, QuickAddManufacturerSelect,
+    QuickAddPaymentMethodsSelect, QuickAddProductTypeSelect,
+    QuickAddSalesUnitSelect, QuickAddShippingMethodsSelect,
+    QuickAddTaxClassSelect, TextEditorWidget
 )
 from shuup.admin.signals import form_post_clean, form_pre_clean
 from shuup.core.models import (
@@ -73,8 +75,10 @@ class ProductBaseForm(MultiLanguageModelForm):
         )
         widgets = {
             "keywords": forms.TextInput(),
-            "type": QuickAddProductTypeSelect(),
-            "manufacturer": QuickAddManufacturerSelect(),
+            "sales_unit": QuickAddSalesUnitSelect(editable_model="shuup.SalesUnit"),
+            "tax_class": QuickAddTaxClassSelect(editable_model="shuup.TaxClass"),
+            "type": QuickAddProductTypeSelect(editable_model="shuup.ProductType"),
+            "manufacturer": QuickAddManufacturerSelect(editable_model="shuup.Manufacturer"),
             "description": TextEditorWidget(),
             "short_description": forms.TextInput(),
         }
@@ -149,7 +153,8 @@ class ShopProductForm(forms.ModelForm):
                                    "Set to blank for product to be purchasable without limits")
         }
         widgets = {
-            "primary_category": QuickAddCategorySelect(),
+            "display_unit": QuickAddDisplayUnitSelect(editable_model="shuup.DisplayUnit"),
+            "primary_category": QuickAddCategorySelect(editable_model="shuup.Category"),
             "categories": QuickAddCategoryMultiSelect(),
             "payment_methods": QuickAddPaymentMethodsSelect(),
             "shipping_methods": QuickAddShippingMethodsSelect(),

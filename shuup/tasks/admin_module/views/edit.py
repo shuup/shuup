@@ -52,7 +52,7 @@ class TaskForm(ModelForm):
         model = Task
         exclude = ("shop", "created_on", "modified_on", "status", "completed_on", "completed_by", "creator")
         widgets = {
-            "type": QuickAddTaskTypeSelect()
+            "type": QuickAddTaskTypeSelect(editable_model="shuup_tasks.TaskType")
         }
 
     def __init__(self, *args, **kwargs):
@@ -63,6 +63,7 @@ class TaskForm(ModelForm):
         self.fields["assigned_to"].queryset = Contact.objects.filter(
             Q(shops=shop) | Q(id__in=shop.staff_members.values_list("id"))
         ).distinct()
+        self.fields["assigned_to"].widget.editable_model = "shuup.Contact"
 
     def save(self, **kwargs):
         is_new = (not self.instance.pk)

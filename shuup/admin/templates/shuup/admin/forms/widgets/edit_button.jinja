@@ -1,0 +1,17 @@
+{% set editable_model = (field.widget.editable_model or field.widget.attrs.get("data-edit-model")) %}
+{% if editable_model %}
+<span class="edit-object-btn">
+    <a
+        class="btn"
+        data-toggle="popover"
+        data-placement="bottom"
+        data-trigger="manual"
+        data-content="{{ _("Edit the selected object") }}"
+        data-edit-model="{{ editable_model }}"
+        data-edit-url="{{ url("shuup_admin:edit") }}"
+        data-target="{{ field.field.html_name }}"
+    >
+        <i class="fa fa-pencil text-primary"></i>
+    </a>
+</span>
+{% endif %}

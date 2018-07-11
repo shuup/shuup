@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from bootstrap3.renderers import FieldRenderer
 from bootstrap3.utils import add_css_class
 from django.forms import DateField, DateTimeField, ModelMultipleChoiceField
-from django.utils.translation import ugettext_lazy as _
 
 
 class AdminFieldRenderer(FieldRenderer):
@@ -61,22 +60,7 @@ class AdminFieldRenderer(FieldRenderer):
             self.field_help = ''
 
     def append_to_field(self, html):
-        if self.field_help:
-            if self.field.field.required:
-                self.field_help = _("Required. %s" % self.field_help)
-            else:
-                self.field_help = _("Optional. %s" % self.field_help)
-            html += "<span class='help-popover-btn'>"
-            # tabindex is required for popover to function but we don't actually want to be able to tab to it
-            # so set a large tabindex
-            html += "<a class=\"btn\" data-toggle=\"popover\" data-placement=\"bottom\" "
-            html += "role=\"button\" tabindex=\"50000\" "
-            html += "data-html=\"true\" data-trigger=\"focus\" title=\"{title}\" data-content=\"{help}\">".format(
-                title=self.field.label, help=self.field_help)
-            html += "<i class='fa fa-question-circle'></i>"
-            html += "</a>"
-            html += "</span>"
-        if self.field_errors:
-            errors = "<br>".join(self.field_errors)
-            html += '<div class="help-block error-block">{error}</div>'.format(error=errors)
-        return html
+        from django.template import loader as template_loader
+        edit_button = template_loader.render_to_string("shuup/admin/forms/widgets/edit_button.jinja", {"field": self})
+        help_text = template_loader.render_to_string("shuup/admin/forms/widgets/help_text.jinja", {"field": self})
+        return "".join([html, edit_button.strip(), help_text.strip()])

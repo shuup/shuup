@@ -13,7 +13,9 @@ from django_countries.fields import LazyTypedChoiceField
 from enumfields import EnumField
 
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.forms.widgets import PersonContactChoiceWidget
+from shuup.admin.forms.widgets import (
+    PersonContactChoiceWidget, QuickAddTaxGroupSelect
+)
 from shuup.core.fields import LanguageFormField
 from shuup.core.models import (
     CompanyContact, Contact, ContactGroup, Gender, PersonContact, Shop
@@ -58,6 +60,13 @@ class ContactBaseFormMixin(object):
             shops_qs = Shop.objects.all()
         else:
             shops_qs = Shop.objects.filter(staff_members__in=[self.request.user])
+
+        if "tax_group" in self.fields:
+            self.fields["tax_group"].widget = QuickAddTaxGroupSelect(editable_model="shuup.CustomerTaxGroup")
+            if self.instance:
+                self.fields["tax_group"].widget.choices = [
+                    (self.instance.tax_group.id, self.instance.tax_group.name)
+                ]
 
         self.fields["shops"] = forms.ModelMultipleChoiceField(
             queryset=shops_qs,

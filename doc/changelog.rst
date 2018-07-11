@@ -43,6 +43,7 @@ Admin
 ~~~~~
 
 - Add `HexColorWidget` to pick hexadecimal colors on input fields
+- Add button to edit selected instances on select inputs
 
 General
 ~~~~~~~

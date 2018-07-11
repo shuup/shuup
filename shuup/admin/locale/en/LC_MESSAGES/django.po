@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-02 18:17+0000\n"
+"POT-Creation-Date: 2018-07-05 20:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -3021,6 +3021,9 @@ msgid ""
 "try again later."
 msgstr ""
 
+msgid "Edit the selected object"
+msgstr ""
+
 msgid "Welcome to Shuup!"
 msgstr ""
 
@@ -3616,14 +3619,6 @@ msgid "Are you sure you wish to delete %s?"
 msgstr ""
 
 #, python-format
-msgid "Required. %s"
-msgstr ""
-
-#, python-format
-msgid "Optional. %s"
-msgstr ""
-
-#, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
 msgstr ""
 
@@ -3680,6 +3675,15 @@ msgid "Only one %(model)s permitted."
 msgstr ""
 
 msgid "Mass Edit"
+msgstr ""
+
+msgid "Invalid object."
+msgstr ""
+
+msgid "Invalid model."
+msgstr ""
+
+msgid "Object not found"
 msgstr ""
 
 msgid "Storefront"

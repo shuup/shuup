@@ -6,11 +6,15 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
+from django.core.urlresolvers import reverse_lazy
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.forms.widgets import TextEditorWidget
+from shuup.admin.forms.widgets import (
+    QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect,
+    TextEditorWidget
+)
 from shuup.admin.shop_provider import get_shop
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.gdpr.utils import get_possible_consent_pages
@@ -19,13 +23,23 @@ from shuup.utils.multilanguage_model_form import (
 )
 
 
+class QuickAddPageSelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:simple_cms.page.new")
+
+
+class QuickAddPageMultiSelect(QuickAddRelatedObjectMultiSelect):
+    url = reverse_lazy("shuup_admin:simple_cms.page.new")
+
+
 class GDPRSettingsForm(MultiLanguageModelForm):
     class Meta:
         exclude = ("shop",)
         model = GDPRSettings
         widgets = {
             "cookie_banner_content": TextEditorWidget(),
-            "cookie_privacy_excerpt": TextEditorWidget()
+            "cookie_privacy_excerpt": TextEditorWidget(),
+            "privacy_policy_page": QuickAddPageSelect(editable_model="shuup_simple_cms.Page"),
+            "consent_pages": QuickAddPageMultiSelect()
         }
 
     def __init__(self, **kwargs):
