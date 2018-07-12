@@ -35,6 +35,7 @@ def create_orderable_product(name, sku, price):
     return product
 
 
+
 @override_settings(SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False)
 @pytest.mark.urls('shuup.testing.checkout_with_login_and_register_urls')
 @pytest.mark.browser
@@ -188,6 +189,10 @@ def register_test(browser, live_server, test_username, test_email, test_password
 
 
 def login_and_finish_up_the_checkout(browser, live_server, test_username, test_email, test_password):
+    fields = browser.driver.find_elements_by_name("login-username")
+    # there should be only a single username field
+    assert len(fields) == 1
+
     browser.fill("login-username", test_email)
     browser.fill("login-password", test_password)
     click_element(browser, "button[name='login']")

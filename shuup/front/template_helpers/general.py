@@ -24,6 +24,13 @@ from shuup.front.utils.user import is_admin_user
 from shuup.front.utils.views import cache_product_things
 from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree
+from shuup.utils.importing import cached_load
+
+
+def get_login_form(request):
+    # Getting the form from the Login view
+    form = cached_load("SHUUP_LOGIN_VIEW")(request=request).get_form()
+    return form
 
 
 def _group_list_items(group_list, number):
