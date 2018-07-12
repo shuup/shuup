@@ -64,7 +64,12 @@ def test_thumbnailing_nonseekable_svg_file():
 
     source = Thumbnailer(file=DummyFile(TEST_SVG), name='test.svg')
     source.url = '/media/test.svg'
-    assert thumbnail(source) is None
+
+    # Well if the merchant tries his luck with non seekable file
+    # and decides to name it as svg then he might not have working
+    # front. Also not worth thumbnail these anyways so might as well
+    # return the source url.
+    assert thumbnail(source) == source.url
 
 
 def do_thumbnailing(content, name, *args, **kwargs):

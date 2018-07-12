@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import os
+
 import six
 from django.conf import settings
 from django_jinja import library
@@ -39,7 +41,7 @@ def thumbnail(source, alias=None, generate=True, **kwargs):
     if not thumbnailer:
         return None
 
-    if _is_svg(thumbnailer.file):
+    if _is_svg(thumbnailer):
         return source.url if hasattr(source, 'url') else None
 
     if alias:
@@ -55,29 +57,11 @@ def thumbnail(source, alias=None, generate=True, **kwargs):
         return None
 
 
-def _is_svg(fileobj):
-    """
-    Detect if file object contains SVG data.
-
-    >>> from io import BytesIO as B
-    >>> assert _is_svg(B(b'<?xml><svg></svg>')) is True
-    >>> assert _is_svg(B(b'something else')) is False
-    >>> assert _is_svg(b'not a file') is None
-    """
-    try:
-        return _is_svg_inner(fileobj)
-    except (AttributeError, IOError):
-        return None
-
-
-def _is_svg_inner(fileobj):
-    pos = fileobj.tell()
-    try:
-        fileobj.seek(0)
-        content = fileobj.read(1024)
-    finally:
-        fileobj.seek(pos)
-    return (b'<svg' in content and b'>' in content)
+def _is_svg(thumbnailer):
+    file_name = getattr(thumbnailer, "name", None)
+    if not file_name:
+        return False
+    return bool(os.path.splitext(file_name)[1].lower() == ".svg")
 
 
 @library.filter
