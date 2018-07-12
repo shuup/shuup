@@ -73,7 +73,7 @@ class ContactAddressForm(forms.ModelForm):
             "street", "street2", "street3",
             "postal_code", "city",
             "region_code", "region",
-            "country"
+            "country", "tax_number"
         )
 
 
