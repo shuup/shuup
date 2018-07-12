@@ -287,7 +287,7 @@ class BaseBasket(OrderSource):
             self.shipping_method_id = self._get_value_from_data("shipping_method_id")
 
         if self.shipping_method_id:
-            return ShippingMethod.objects.get(pk=self.shipping_method_id)
+            return ShippingMethod.objects.filter(pk=self.shipping_method_id).first()
 
     @shipping_method.setter
     def shipping_method(self, shipping_method):
@@ -300,7 +300,7 @@ class BaseBasket(OrderSource):
             self.payment_method_id = self._get_value_from_data("payment_method_id")
 
         if self.payment_method_id:
-            return PaymentMethod.objects.get(pk=self.payment_method_id)
+            return PaymentMethod.objects.filter(pk=self.payment_method_id).first()
 
     @payment_method.setter
     def payment_method(self, payment_method):
