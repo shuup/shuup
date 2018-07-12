@@ -29,6 +29,7 @@
     (function(){
         $(".summernote-editor").summernote({
             height: 300,
+            disableDragAndDrop: true, // to ensure server works tomorrow too
             callbacks: {
                 onBlur: function() {
                     $(this).parent().find("textarea.hidden").val($(this).summernote('code'));

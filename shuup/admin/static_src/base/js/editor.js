@@ -10,6 +10,7 @@
 function activateEditor($editor, attrs={}) {
     return $editor.summernote($.extend(true, {
         height: 200,
+        disableDragAndDrop: true, // to ensure server works tomorrow too
         callbacks: {
             onBlur: function() {
                 $editor.parent().find("textarea.hidden").val($(this).summernote('code'));
