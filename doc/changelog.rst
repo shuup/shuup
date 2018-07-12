@@ -17,6 +17,13 @@ Bug fixes
   before calling methods.
 - Fix front manufacturer modified filter to consider only visible shop products
 
+Front
+~~~~~
+
+- Change the way SVG files are detected in thumnailer. From now on the SVG
+  check is done purely based on filename instead of checking the file
+  content.
+
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
