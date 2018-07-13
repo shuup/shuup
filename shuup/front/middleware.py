@@ -162,7 +162,11 @@ class ShuupFrontMiddleware(object):
         current_language = translation.get_language()
         available_languages = [code for (code, name, local_name) in get_language_choices(request.shop)]
         if current_language not in available_languages:
-            translation.activate(available_languages[0])
+            if available_languages:
+                translation.activate(available_languages[0])
+            else:
+                # fallback to LANGUAGE_CODE
+                translation.activate(settings.LANGUAGE_CODE)
             request.LANGUAGE_CODE = translation.get_language()
 
     def _get_maintenance_response(self, request, view_func):

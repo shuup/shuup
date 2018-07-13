@@ -13,6 +13,7 @@ Unrealeased
 Bug fixes
 ~~~~~~~~~
 
+- Fix to fallback to settings.LANGUAGE when no available language is found
 - Fix order printouts template by checking whether the addresses are valid
   before calling methods.
 - Fix front manufacturer modified filter to consider only visible shop products
@@ -23,11 +24,6 @@ Front
 - Change the way SVG files are detected in thumnailer. From now on the SVG
   check is done purely based on filename instead of checking the file
   content.
-
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-- Add option to configure shop logo size styles
 
 Xtheme
 ~~~~~~
