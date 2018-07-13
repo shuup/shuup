@@ -16,8 +16,10 @@
     </div>
     <div class="bottom-nav">
         <div class="container">
-            {{ render_logo() }}
-            {{ render_menu_items() }}
+            <div class="nav-content">
+                {{ render_logo() }}
+                {{ render_menu_items() }}
+            </div>
         </div>
     </div>
 {% endmacro %}
@@ -65,13 +67,13 @@
                     {% set form = shuup.general.get_login_form(request) %}
                     {% for f in form.hidden_fields() %}{{ f }}{% endfor %}
                     {% for f in form.visible_fields() %}{{ render_field(f, show_help_text=False) }}{% endfor %}
-                    
+
                     <button type="submit" class="btn btn-primary btn-block">
                         {% trans %}Log in{% endtrans %}
                     </button>
                 </form>
             </li>
-        
+
             <li class="divider"></li>
             {% if shuup.urls.has_url("shuup:recover_password") %}
                 <li>
@@ -87,7 +89,7 @@
                     </a>
                 </li>
             {% endif %}
-        
+
         {% endcall %}
     {% endif %}
 {% endmacro %}
@@ -210,10 +212,27 @@
 {% endmacro %}
 
 {% macro render_logo() %}
-    {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
-    <div class="logo {% if not cropped_logo %}no-image{% endif %}">
+    {% if request.shop.logo %}
+        {% set best_height = 55 %}
+
+        {% set original_height = request.shop.logo.height %}
+        {% set original_width = request.shop.logo.width %}
+
+        {% set logo_width = original_width %}
+        {% set logo_height = original_height %}
+
+        {% if original_height > best_height %}
+            {% set logo_height = best_height %}
+            {% set logo_width = ((original_width / original_height) * logo_height)|int %}
+        {% endif %}
+
+        {% set cropped_logo = request.shop.logo|thumbnail(size=(logo_width, logo_height)) %}
+    {% endif %}
+    <div class="logo{% if not cropped_logo %} no-image{% endif %}">
         {% if cropped_logo %}
-            <a href="/" class="image" style="background-image:url('{{ cropped_logo }}')"></a>
+            <a href="/" data-toggle="tooltip" data-placement="bottom" title="{{ request.shop }} {% trans %}Home{% endtrans %}" class="image">
+                <img src="{{ cropped_logo }}" alt="{{ request.shop }}">
+            </a>
         {% else %}
             <a href="/" class="text"><h4>{{ request.shop.public_name }}</h4></a>
         {% endif %}
@@ -221,16 +240,18 @@
 {% endmacro %}
 
 {% macro render_menu_items() %}
-    <button class="toggle-mobile-nav">
-        <span class="sr-only">{% trans %}Menu{% endtrans %}</span>
-        <span class="hamburger"></span>
-    </button>
-    <div class="pages">
-        <ul class="nav-collapse">
-            <li{% if request.path == "/" %} class="current"{% endif %}><a href="/">{% trans %}Home{% endtrans %}</a></li>
-            {% set products_url = url('shuup:xtheme_extra_view', view='products') %}
-            <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
-            {# See Classic Gray navigation.jinja for a example to rendering navigation links here #}
-        </ul>
+    <div>
+        <button class="toggle-mobile-nav">
+            <span class="sr-only">{% trans %}Menu{% endtrans %}</span>
+            <span class="hamburger"></span>
+        </button>
+        <div class="pages">
+            <ul class="nav-collapse">
+                <li{% if request.path == "/" %} class="current"{% endif %}><a href="/">{% trans %}Home{% endtrans %}</a></li>
+                {% set products_url = url('shuup:xtheme_extra_view', view='products') %}
+                <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
+                {# See Classic Gray navigation.jinja for a example to rendering navigation links here #}
+            </ul>
+        </div>
     </div>
 {% endmacro %}
