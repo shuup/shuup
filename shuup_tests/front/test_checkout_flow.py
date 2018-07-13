@@ -168,7 +168,6 @@ def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_
     # Create methods
     shipping_method = get_shipping_method()
     payment_method = get_payment_method()
-
     # Resolve paths
     addresses_path = reverse("shuup:checkout", kwargs={"phase": "addresses"})
     methods_path = reverse("shuup:checkout", kwargs={"phase": "methods"})

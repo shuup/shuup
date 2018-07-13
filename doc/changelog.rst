@@ -13,6 +13,7 @@ Unrealeased
 Bug fixes
 ~~~~~~~~~
 
+- Fix basket to check whether the payment or shipping method exists before returning it.
 - Fix order printouts template by checking whether the addresses are valid
   before calling methods.
 - Fix front manufacturer modified filter to consider only visible shop products
