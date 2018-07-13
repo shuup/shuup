@@ -44,9 +44,24 @@
 @import "@{bs-path}/responsive-utilities.less";
 
 // Vendor styles
-@import "@{fa-path}/less/font-awesome.less";
-@import "fira.less";
-@import "@{scroll-path}/jquery.scrollbar.less";
+// Font Awesome
+@import "@{fa-path}/variables.less";
+// override fonts location
+@fa-font-path: "../../../node_modules/font-awesome/fonts";
+@import "@{fa-path}/mixins.less";
+@import "@{fa-path}/path.less";
+@import "@{fa-path}/core.less";
+@import "@{fa-path}/larger.less";
+@import "@{fa-path}/fixed-width.less";
+@import "@{fa-path}/list.less";
+@import "@{fa-path}/bordered-pulled.less";
+@import "@{fa-path}/animated.less";
+@import "@{fa-path}/rotated-flipped.less";
+@import "@{fa-path}/stacked.less";
+@import "@{fa-path}/icons.less";
+@import "@{fa-path}/screen-reader.less";
+// @import "fira.less";
+@import (inline) "@{scroll-path}/jquery.scrollbar.css";
 @import "@{datetimepicker-path}/datetimepicker.less";
 @import "@{select2-path}/select2-bootstrap.less";
 @import (inline) "@{summernote-path}/summernote.css";

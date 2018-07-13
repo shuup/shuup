@@ -12,7 +12,7 @@ import responsiveUploadHint from "./responsiveUploadHint";
 export default function(ctrl, folder) {  // eslint-disable-line no-unused-vars
     return m("div.empty-folder", [
         m("div.empty-image",
-            m("img", {src: require("!url!./file-icons.svg")})
+            m("img", {src: require("./file-icons.svg")})
         ),
         m("div.empty-text", responsiveUploadHint)
     ]);

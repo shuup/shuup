@@ -1,2 +1,4 @@
 node_modules
-bower_components
+*.map
+static/shuup_admin/css/*
+static/shuup_admin/js/*

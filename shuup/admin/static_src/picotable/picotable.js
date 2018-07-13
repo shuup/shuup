@@ -9,6 +9,7 @@
 /* eslint-disable no-plusplus, prefer-const, curly, no-bitwise */
 /* exported Picotable */
 /* global alert, require */
+
 const Picotable = (function(m, storage) {
     "use strict";
     m = m || require("mithril");
@@ -702,7 +703,7 @@ const Picotable = (function(m, storage) {
         ]);
     }
 
-    function PicotableController() {
+    function PicotableController(ctrl) {
         var ctrl = this;
         ctrl.id = "" + 0 | (Math.random() * 0x7FFFFFF);
         ctrl.vm = {
