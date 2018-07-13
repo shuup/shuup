@@ -13,6 +13,7 @@ Unrealeased
 Bug fixes
 ~~~~~~~~~
 
+- Fix to fallback to settings.LANGUAGE when no available language is found
 - Fix basket to check whether the payment or shipping method exists before returning it.
 - Fix order printouts template by checking whether the addresses are valid
   before calling methods.
