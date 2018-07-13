@@ -4,9 +4,6 @@
 {% block title -%}
     {% trans %}Welcome!{% endtrans %}
 {%- endblock %}
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ static("shuup_admin/css/home.css") }}">
-{% endblock %}
 
 {% block support_content %}
     {% if shuup_admin.is_multishop_enabled() %}
