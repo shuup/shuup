@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-05 20:19+0000\n"
+"POT-Creation-Date: 2018-07-13 19:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -3024,6 +3024,14 @@ msgstr ""
 msgid "Edit the selected object"
 msgstr ""
 
+#, python-brace-format
+msgid "Required. {field_help}"
+msgstr ""
+
+#, python-brace-format
+msgid "Optional. {field_help}"
+msgstr ""
+
 msgid "Welcome to Shuup!"
 msgstr ""
 
@@ -3681,6 +3689,13 @@ msgid "Invalid object."
 msgstr ""
 
 msgid "Invalid model."
+msgstr ""
+
+#, python-format
+msgid "You do not have the required permission(s): %s"
+msgstr ""
+
+msgid "Unauthorized"
 msgstr ""
 
 msgid "Object not found"
