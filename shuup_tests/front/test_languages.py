@@ -64,6 +64,12 @@ def test_shop_available_languages(admin_user):
         client.get("shuup_admin:index")
         assert get_language() == "it"
 
+        # remote all available languages
+        set_shop_available_languages(shop, [])
+        # this should fallback to settings.LAGUAGE_CODE
+        response = client.get(reverse("shuup:index"))
+        assert get_language() == "it"
+
     activate(original_language)
 
 
