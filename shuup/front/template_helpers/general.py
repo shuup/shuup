@@ -22,9 +22,9 @@ from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.translation import get_language_choices
 from shuup.front.utils.user import is_admin_user
 from shuup.front.utils.views import cache_product_things
+from shuup.utils.importing import cached_load
 from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree
-from shuup.utils.importing import cached_load
 
 
 def get_login_form(request):
@@ -248,7 +248,8 @@ def get_random_products(context, n_products=6, orderable_only=True, sale_items_o
     request = context["request"]
     key, product_ids = context_cache.get_cached_value(
         identifier="random_products", item=None, context=request,
-        n_products=n_products, orderable_only=orderable_only
+        n_products=n_products, orderable_only=orderable_only,
+        sale_items_only=sale_items_only
     )
     if product_ids is not None and _can_use_cache(product_ids, request.shop, request.customer):
         return Product.objects.filter(id__in=product_ids)

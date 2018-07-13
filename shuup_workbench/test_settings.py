@@ -228,13 +228,6 @@ SHUUP_ERROR_PAGE_HANDLERS_SPEC = [
 
 SHUUP_SIMPLE_SEARCH_LIMIT = 150
 
-# Disable caches for tests
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    }
-}
-
 
 if os.environ.get("SHUUP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
     from .settings.utils import get_disabled_migrations
