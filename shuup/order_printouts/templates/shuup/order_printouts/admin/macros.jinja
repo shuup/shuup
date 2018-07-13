@@ -7,6 +7,7 @@
 {% endmacro %}
 
 {% macro order_information_table(order) %}
+    {% set tracking_codes = order.get_tracking_codes() %}
     <table>
         <tr>
             <td>{% trans %}Order number{% endtrans %}</td>
@@ -24,6 +25,12 @@
             <td>{% trans %}Shipping status{% endtrans %}</td>
             <td>{{ order.get_shipping_status_display() }}</td>
         </tr>
+        {% if tracking_codes %}
+            <tr>
+                <td>{% trans %}Tracking codes{% endtrans %}</td>
+                <td>{{ tracking_codes|join(', ') }}</td>
+            </tr>
+        {% endif %}
         <tr>
             <td>{% trans %}Order date{% endtrans %}</td>
             <td>{{ order.order_date|localtime|date("j.n.Y H:i") }}</td>
@@ -49,6 +56,12 @@
             <td>{% trans %}Order date{% endtrans %}</td>
             <td>{{ order.order_date|localtime|date("j.n.Y H:i") }}</td>
         </tr>
+        {% if shipment.tracking_code %}
+            <tr>
+                <td>{% trans %}Tracking code{% endtrans %}</td>
+                <td>{{ shipment.tracking_code }}</td>
+            </tr>
+        {% endif %}
         {% if extra_fields %}
             {% for field_name, field_value in extra_fields.items() %}
                 <tr>
