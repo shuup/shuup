@@ -10,7 +10,7 @@ import {get} from "../api";
 import {clearExistingCustomer, retrieveCustomerData, setAddressProperty,
     setAddressSavingOption, setShipToBillingAddress, setIsCompany, showCustomerModal, retrieveCustomerDetails} from "../actions";
 import {ADDRESS_FIELDS, selectBox, contentBlock, infoRow, table, modal, Select2, HelpPopover} from "./utils";
-import BrowseAPI from "BrowseAPI";
+const BrowseAPI = window.BrowseAPI;
 
 function removeWarningBlocks(parentElement){
     var previousWarnings = parentElement.getElementsByClassName("duplicate-warning");

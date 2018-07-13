@@ -14,6 +14,8 @@ import * as FileUpload from "./FileUpload";
 import * as menuManager from "./util/menuManager";
 import folderContextMenu from "./menus/folderContextMenu";
 
+window.m = m;
+
 var controller = null;
 
 export function init(config={}) {
