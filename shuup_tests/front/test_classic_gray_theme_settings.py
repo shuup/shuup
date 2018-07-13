@@ -50,11 +50,7 @@ def test_classic_gray_theme_settings(admin_user):
             assert theme.get_setting("shop_logo_aspect_ratio") is None
 
             settings = {
-                "stylesheet": "shuup/classic_gray/blue/style.css",
-                "shop_logo_width": 800,
-                "shop_logo_height": 400,
-                "shop_logo_alignment": "right",
-                "shop_logo_aspect_ratio": True
+                "stylesheet": "shuup/classic_gray/blue/style.css"
             }
             response = client.post(theme_config_url, data=settings)
             assert response.status_code == 302

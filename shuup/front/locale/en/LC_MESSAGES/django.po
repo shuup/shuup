@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 18:06+0000\n"
+"POT-Creation-Date: 2018-07-13 17:48+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -851,12 +851,6 @@ msgid "Admin panel"
 msgstr ""
 
 msgid "Log out"
-msgstr ""
-
-msgid "Username or email address"
-msgstr ""
-
-msgid "Password"
 msgstr ""
 
 msgid "New user? Register here!"
