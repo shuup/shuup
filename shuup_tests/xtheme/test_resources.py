@@ -38,25 +38,6 @@ class ResourceInjectorPlugin(Plugin):
         return self.message
 
 
-def test_resources():
-    request = get_request(edit=False)
-    with override_current_theme_class(None):
-        with plugin_override():
-            jeng = get_jinja2_engine()
-            template = jeng.get_template("resinject.jinja")
-            output = template.render(request=request)
-            head, body = output.split("</head>", 1)
-            assert "alert('xss')" in body  # the inline script
-            assert '"bars": [1, 2, 3]' in head  # the script vars
-            assert '(unknown resource type:' in body  # the png
-            assert 'href="://example.com/css.css"' in head  # the css
-            assert 'src="://example.com/js.js"' in body  # the js
-            assert head.count(ResourceInjectorPlugin.meta_markup) == 1  # the duplicate meta
-            assert ResourceInjectorPlugin.message in output  # the actual message
-            assert output[:5] == "START"
-            assert output[-3:] == "END"
-
-
 def test_injecting_into_weird_places():
     request = get_request()
     (template, layout, gibberish, ctx) = get_test_template_bits(request, **{

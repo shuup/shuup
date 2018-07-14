@@ -22,14 +22,28 @@ Bug fixes
 Front
 ~~~~~
 
+- Add option to edit front as anonymous, person or company contact.
 - Change the way SVG files are detected in thumnailer. From now on the SVG
   check is done purely based on filename instead of checking the file
   content.
+
+Classic Gray Theme
+~~~~~~~~~~~~~~~~~~
+
+- Add option to configure shop logo size styles
+
+Simple CMS
+~~~~~~~~~~
+
+- Introduce Xtheme per object layout for pages
 
 Xtheme
 ~~~~~~
 
 - Add option to render extra templates in theme configuration.
+- Add option for per object placeholders
+- Fix bug deleting last row from placeholder
+- Do not render placeholders that can't be edited
 
 Shuup 1.6.6
 -----------

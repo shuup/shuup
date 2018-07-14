@@ -115,7 +115,7 @@ class SavedViewConfig(models.Model):
         if self.pk:
             self.delete()
 
-    def set_layout_data(self, placeholder_name, layout):
+    def set_layout_data(self, layout_data_key, layout):
         if not layout:  # pragma: no cover
             return None
         if not self.draft:
@@ -123,10 +123,10 @@ class SavedViewConfig(models.Model):
         if hasattr(layout, "serialize"):
             layout = layout.serialize()
         assert isinstance(layout, dict)
-        self._data.setdefault("layouts", {})[placeholder_name] = layout
+        self._data.setdefault("layouts", {})[layout_data_key] = layout
 
-    def get_layout_data(self, placeholder_name):
-        return self._data.get("layouts", {}).get(placeholder_name)
+    def get_layout_data(self, layout_data_key):
+        return self._data.get("layouts", {}).get(layout_data_key)
 
     def clear_layout_data(self, placeholder_name):
         if not self.draft:

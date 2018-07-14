@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-13 17:48+0000\n"
+"POT-Creation-Date: 2018-07-11 03:36+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -801,6 +801,27 @@ msgstr ""
 msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
 msgstr ""
 
+msgid "Change visibility limit to"
+msgstr ""
+
+msgid "show only visible products and categories"
+msgstr ""
+
+msgid "show all products and categories"
+msgstr ""
+
+msgid "Change customer to person contact mode"
+msgstr ""
+
+msgid "Change customer to company contact mode"
+msgstr ""
+
+msgid "Change customer mode to guest"
+msgstr ""
+
+msgid "Change customer to person contact mode "
+msgstr ""
+
 msgid "Toggle navigation"
 msgstr ""
 
@@ -816,16 +837,25 @@ msgstr ""
 msgid "OFF"
 msgstr ""
 
+msgid "Visibility limit"
+msgstr ""
+
+msgid "Customer mode"
+msgstr ""
+
+msgid "GUEST"
+msgstr ""
+
+msgid "COMPANY CONTACT"
+msgstr ""
+
+msgid "PERSON CONTACT"
+msgstr ""
+
 msgid "Shop Administration"
 msgstr ""
 
 msgid "Tools"
-msgstr ""
-
-msgid "Show only visible products and categories"
-msgstr ""
-
-msgid "Show all products and categories"
 msgstr ""
 
 msgid ""

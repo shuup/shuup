@@ -154,8 +154,65 @@
     {{ render_admin_tools() }}
 {% endmacro %}
 
+{% macro render_toggle_all_seeing_list_item(is_all_seeing) %}
+    <li>
+        <a href="{{ url("shuup:toggle-all-seeing") }}">
+            {% trans %}Change visibility limit to{% endtrans %}&nbsp;
+            {% if is_all_seeing %}
+                {% trans %}show only visible products and categories{% endtrans %}
+            {% else %}
+                {% trans %}show all products and categories{% endtrans %}
+            {% endif %}
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro render_customer_mode_change_from_anonymous() %}
+    <li>
+        <a href="{{ url("shuup:force-person-contact") }}">
+            {% trans %}Change customer to person contact mode{% endtrans %}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url("shuup:force-company-contact") }}">
+            {% trans %}Change customer to company contact mode{% endtrans %}
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro render_customer_mode_change_from_company() %}
+    <li>
+        <a href="{{ url("shuup:force-anonymous-contact") }}">
+            {% trans %}Change customer mode to guest{% endtrans %}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url("shuup:force-person-contact") }}">
+            {% trans %}Change customer to person contact mode {% endtrans %}
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro render_customer_mode_change_from_person() %}
+    <li>
+        <a href="{{ url("shuup:force-anonymous-contact") }}">
+            {% trans %}Change customer mode to guest{% endtrans %}
+        </a>
+    </li>
+    <li>
+        <a href="{{ url("shuup:force-company-contact") }}">
+            {% trans %}Change customer to company contact mode{% endtrans %}
+        </a>
+    </li>
+{% endmacro %}
+
 {% macro render_admin_tools() %}
     {% if shuup.general.is_shop_admin() %}
+    {%- set is_maintenance_mode = request.shop.maintenance_mode -%}
+    {%- set can_toggle_all_seeing = shuup.general.can_toggle_all_seeing() %}
+    {%- set is_all_seeing = request.customer.is_all_seeing -%}
+    {%- set is_anonymous = request.person.is_anonymous -%}
+    {%- set is_company = request.is_company_member -%}
     <nav class="navbar navbar-default navbar-admin-tools navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -170,18 +227,38 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    {% trans %}Administration Tools{% endtrans %}
+                    <strong>{% trans %}Administration Tools{% endtrans %}</strong>
                     <br>
-                    <small>{% trans %}Maintenance mode{% endtrans %}:
-                        {% if request.shop.maintenance_mode %}
-                            <span class="maintenance-on">{% trans %}ON{% endtrans %}</span>
+                    <span class="admin-tools-info">
+                    {% trans %}Maintenance mode{% endtrans %}:
+                    {% if is_maintenance_mode %}
+                        <span class="maintenance-on">{% trans %}ON{% endtrans %}</span>
+                    {% else %}
+                        <span class="maintenance-off">{% trans %}OFF{% endtrans %}</span>
+                    {% endif %}
+                    </span>
+                    {% if can_toggle_all_seeing %}
+                        <span class="admin-tools-info">
+                        {% trans %}Visibility limit{% endtrans %}:
+                        {% if is_all_seeing %}
+                            <span class="visibility-limit-off">{% trans %}OFF{% endtrans %}</span>
                         {% else %}
-                            <span class="maintenance-off">{% trans %}OFF{% endtrans %}</span>
+                            <span class="visibility-limit-on">{% trans %}ON{% endtrans %}</span>
                         {% endif %}
-                    </small>
+                        </span>
+                    {% endif %}
+                    <span class="admin-tools-info">
+                    {% trans %}Customer mode{% endtrans %}:
+                    {% if is_anonymous %}
+                        <span class="anonymous-contact-mode">{% trans %}GUEST{% endtrans %}</span>
+                    {% elif is_company %}
+                        <span class="company-contact-mode">{% trans %}COMPANY CONTACT{% endtrans %}</span>
+                    {% else %}
+                        <span class="person-contact-mode">{% trans %}PERSON CONTACT{% endtrans %}</span>
+                    {% endif %}
+                    </span>
                 </a>
             </div>
-            {%- set allseeing = request.customer.is_all_seeing -%}
             <div class="collapse navbar-collapse" id="admin-tools-menu">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -194,15 +271,16 @@
                            aria-haspopup="true"
                            aria-expanded="false">{% trans %}Tools{% endtrans %} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ url("shuup:toggle-all-seeing") }}">
-                                {% if allseeing %}
-                                {% trans %}Show only visible products and categories{% endtrans %}
-                                {% else %}
-                                {% trans %}Show all products and categories{% endtrans %}
-                                {% endif %}
-                                </a>
-                            </li>
+                            {% if can_toggle_all_seeing %}
+                                {{ render_toggle_all_seeing_list_item(is_all_seeing) }}
+                            {% endif %}
+                            {% if is_anonymous %}
+                                {{ render_customer_mode_change_from_anonymous() }}
+                            {% elif is_company %}
+                                {{ render_customer_mode_change_from_company() }}
+                            {% else %}
+                                {{ render_customer_mode_change_from_person() }}
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>

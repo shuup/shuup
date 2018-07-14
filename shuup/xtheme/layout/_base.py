@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.xtheme.plugins._base import Plugin
 
@@ -197,7 +198,7 @@ class Layout(object):
     """
     The layout (row, cell and plugin configuration) for a single placeholder.
     """
-
+    identifier = "xtheme-default-layout"
     row_class = "row"
     cell_class_template = "col-%(breakpoint)s-%(width)s"
     hide_cell_class_template = "hidden-%(breakpoint)s"
@@ -214,6 +215,41 @@ class Layout(object):
         self.rows = []
         if rows:
             self.rows.extend(rows)
+
+    def get_help_text(self, context):
+        """
+        Help text for this placeholder shown at the top of the
+        editable layout.
+
+        :param context: Jinja2 rendering context
+        :type context: jinja2.runtime.Context
+        :return: Help text for this layout
+        :rtype: str
+        """
+        return _("Content in this placeholder is shown without limitations.")
+
+    def is_valid_context(self, context):
+        """
+        :param context: Jinja2 rendering context
+        :type context: jinja2.runtime.Context
+        :return: Whether the current context is valid for this layout
+        :rtype: bool
+        """
+        return True
+
+    def get_layout_data_suffix(self, context):
+        """
+        Layout data suffix which is used to save layout data to view config
+
+        With layout data suffix you can define data keys that is only available
+        for certain contexts. Make sure that you validate the context for
+        variables that is used to form this suffix.
+
+        :param context: Jinja2 rendering context
+        :type context: jinja2.runtime.Context
+        :rtype: str
+        """
+        return ""
 
     @classmethod
     def unserialize(cls, theme, data, placeholder_name=None):
@@ -373,7 +409,15 @@ class Layout(object):
         y = int(y)
         if not (0 <= y < len(self.rows)):
             return False
+
         self.rows.pop(y)
+
+        if len(self.rows) == 0:
+            # In case is deleting last row we don't want the
+            # placeholder defaults to kick in. Instead let's add
+            # empty row here to prevent that.
+            self.rows.append(LayoutRow(self.theme))
+
         return True
 
     def move_row_to_index(self, from_y, to_y):

@@ -32,12 +32,16 @@ def test_rendering(edit, injectable, theme_class, global_type):
             output = template.render(context={
                 "view": view,
             }, request=request)
-            assert "wider column" in output
-            assert "less wide column" in output
+
+            # From now on we render placholders in views that
+            # actually can be edited.
+            if injectable and theme_class:
+                assert "wider column" in output
+                assert "less wide column" in output
+
             if edit and injectable and theme_class:
                 assert "xt-ph-edit" in output
                 assert "data-xt-placeholder-name" in output
                 assert "data-xt-row" in output
                 assert "data-xt-cell" in output
                 assert "XthemeEditorConfig" in output
-            # TODO: Should this test be better? No one knows.

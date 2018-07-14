@@ -13,7 +13,8 @@ from markupsafe import Markup
 
 from shuup.core.fields.tagged_json import TaggedJSONEncoder
 from shuup.xtheme._theme import get_current_theme
-from shuup.xtheme.editing import is_edit_mode
+from shuup.xtheme.editing import is_edit_mode, may_inject
+from shuup.xtheme.layout.utils import get_layout_data_key
 from shuup.xtheme.utils import get_html_attrs
 from shuup.xtheme.view_config import ViewConfig
 
@@ -97,7 +98,8 @@ class PlaceholderRenderer(object):
         self.placeholder_name = placeholder_name
         self.template_name = ("_xtheme_global_template_name" if global_type else template_name)
         self.default_layout = default_layout
-        self.layout = self.view_config.get_placeholder_layout(placeholder_name, self.default_layout)
+        # Fetch all layouts for this placeholder context combination
+        self.layouts = self.view_config.get_placeholder_layouts(context, placeholder_name, self.default_layout)
         self.global_type = global_type
         # For non-global placeholders, editing is only available for placeholders in the "base" template, i.e.
         # one that is not an `extend` parent.  Declaring placeholders in `include`d templates is fine,
@@ -115,35 +117,61 @@ class PlaceholderRenderer(object):
         :return: Rendered markup.
         :rtype: markupsafe.Markup
         """
-        wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs())
-        buffer = []
-        write = buffer.append
-        self._render_layout(write)
-        content = "".join(buffer)
-        return Markup("%(wrapper_start)s%(content)s%(wrapper_end)s" % {
-            "wrapper_start": wrapper_start,
-            "content": content,
-            "wrapper_end": "</div>",
-        })
+        if not may_inject(self.context):
+            return ""
 
-    def _get_wrapper_attrs(self):
+        full_content = ""
+        for layout in self.layouts:
+            wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs(layout))
+            buffer = []
+            write = buffer.append
+            self._render_layout(write, layout)
+            content = "".join(buffer)
+            full_content += (
+                "%(wrapper_start)s%(content)s%(wrapper_end)s" % {
+                    "wrapper_start": wrapper_start,
+                    "content": content,
+                    "wrapper_end": "</div>",
+                })
+
+        return Markup(full_content)
+
+    def _get_wrapper_attrs(self, layout):
+        layout_data_key = get_layout_data_key(self.placeholder_name, layout, self.context)
         attrs = {
             "class": ["xt-ph", "xt-ph-edit" if self.edit else None, "xt-global-ph" if self.global_type else None],
-            "id": "xt-ph-%s" % self.placeholder_name
+            "id": "xt-ph-%s" % layout_data_key
         }
         if self.edit:
+            # Pass layout editor to editor so we can fetch
+            # correct layout for editing.
+            attrs["data-xt-layout-identifier"] = layout.identifier
+
+            # We need to pass layout data key here since this is the last
+            # place whe have the context available before editor.
+            attrs["data-xt-layout-data-key"] = layout_data_key
             attrs["data-xt-placeholder-name"] = self.placeholder_name
             attrs["data-xt-global-type"] = "global" if self.global_type else None
             attrs["title"] = _("Click to edit placeholder: %s") % self.placeholder_name.title()
         return attrs
 
-    def _render_layout(self, write):
+    def _render_layout(self, write, layout):
+        if self.edit:
+            help_text = layout.get_help_text(self.context)
+            if self.global_type:
+                glopal_help_text = _(
+                    "This placeholder is global and content of this placeholder is shown on all pages.")
+                help_text += " " + force_text(glopal_help_text)
+
+            write("<p>%s</p>" % help_text)
+
         if self.edit and self.default_layout:
             self._render_default_layout_script_tag(write)
-        for y, row in enumerate(self.layout):
-            self._render_row(write, y, row)
 
-    def _render_row(self, write, y, row):
+        for y, row in enumerate(layout):
+            self._render_row(write, layout, y, row)
+
+    def _render_row(self, write, layout, y, row):
         """
         Render a layout row into HTML.
 
@@ -155,16 +183,16 @@ class PlaceholderRenderer(object):
         :type row: shuup.xtheme.view_config.LayoutRow
         """
         row_attrs = {
-            "class": [self.layout.row_class, "xt-ph-row"]
+            "class": [layout.row_class, "xt-ph-row"]
         }
         if self.edit:
             row_attrs["data-xt-row"] = str(y)
         write("<div%s>" % get_html_attrs(row_attrs))
         for x, cell in enumerate(row):
-            self._render_cell(write, x, cell)
+            self._render_cell(write, layout, x, cell)
         write("</div>\n")
 
-    def _render_cell(self, write, x, cell):
+    def _render_cell(self, write, layout, x, cell):
         """
         Render a layout cell into HTML.
 
@@ -180,9 +208,9 @@ class PlaceholderRenderer(object):
             if width is None:
                 continue
             if width <= 0:
-                classes.append(self.layout.hide_cell_class_template % {"breakpoint": breakpoint, "width": width})
+                classes.append(layout.hide_cell_class_template % {"breakpoint": breakpoint, "width": width})
             else:
-                classes.append(self.layout.cell_class_template % {"breakpoint": breakpoint, "width": width})
+                classes.append(layout.cell_class_template % {"breakpoint": breakpoint, "width": width})
 
         classes.append(cell.align)
 

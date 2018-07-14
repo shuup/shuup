@@ -47,6 +47,14 @@ class XThemeAppConfig(AppConfig):
             "shuup.xtheme.plugins.social_media_links:SocialMediaLinksPlugin",
             "shuup.xtheme.plugins.text:TextPlugin",
         ],
+        "xtheme_layout": [
+            "shuup.xtheme.layout.ProductLayout",
+            "shuup.xtheme.layout.CategoryLayout",
+            "shuup.xtheme.layout.AnonymousContactLayout",
+            "shuup.xtheme.layout.ContactLayout",
+            "shuup.xtheme.layout.PersonContactLayout",
+            "shuup.xtheme.layout.CompanyContactLayout",
+        ],
         "admin_module": [
             "shuup.xtheme.admin_module:XthemeAdminModule"
         ]

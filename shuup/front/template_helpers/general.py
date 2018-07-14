@@ -398,3 +398,14 @@ def is_shop_admin(context):
 def is_company_registration_allowed(context, request=None):
     current_request = request or context["request"]  # From macros it doesn't seem to always pass context correctly
     return allow_company_registration(current_request.shop)
+
+
+@contextfunction
+def can_toggle_all_seeing(context):
+    request = context["request"]
+    if request.customer.is_anonymous or request.is_company_member:
+        # Looks like the user is currently forcing anonymous or company
+        # mode which means that the visibility limit can't be used since
+        # 'is all seeing' is purely person contact feature.
+        return False
+    return getattr(request.user, "is_superuser", False)

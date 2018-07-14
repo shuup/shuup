@@ -260,8 +260,11 @@ Core
 ``xtheme``
     XTheme themes (full theme sets).
 
+``xtheme_layout``
+    XTheme layouts (to split placeholders different types of layouts with different visibilities).
+
 ``xtheme_plugin``
-    XTheme plugins (that are placed into placeholders within themes).
+    XTheme plugins (that are placed into layouts within themes).
 
 ``xtheme_resource_injection``
     XTheme resources injection function that takes current context and content as parameters.

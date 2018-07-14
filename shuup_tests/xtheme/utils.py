@@ -117,3 +117,7 @@ def plugin_override():
         "shuup.xtheme.plugins.text:TextPlugin",
         "shuup_tests.xtheme.test_resources:ResourceInjectorPlugin"
     ])
+
+
+def layout_override():
+    return override_provides("xtheme_layout", [])

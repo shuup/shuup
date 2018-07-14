@@ -25,7 +25,7 @@ function getSidebarDiv() {
                     }
                 }
             }, [el("i.fa"), "Toggle Editor"]),
-            (_sidebarIframe = el("iframe"))
+            (_sidebarIframe = el("iframe", {id: "xt-edit-sidebar-iframe"}))
         ]);
         document.body.appendChild(_sidebarDiv);
     }
@@ -47,8 +47,11 @@ function setSidebarVisibility(visible) {
 }
 
 function openPlaceholderEditor(domElement) {
+    const layoutIdentifier = domElement.dataset.xtLayoutIdentifier;
+    const layoutDataKey = domElement.dataset.xtLayoutDataKey;
     const placeholderName = domElement.dataset.xtPlaceholderName;
     const globalType = domElement.dataset.xtGlobalType;
+    const contentTypeId = domElement.dataset.xtContentTypeId;
     if (!placeholderName) {
         return;
     }
@@ -60,7 +63,8 @@ function openPlaceholderEditor(domElement) {
         theme: window.XthemeEditorConfig.themeIdentifier,
         ph: placeholderName,
         "global_type": globalType,
-
+        "layout_identifier": layoutIdentifier,
+        "layout_data_key": layoutDataKey,
         // TODO: Hopefully we won't get any problems with too-long query strings (2048 is the maximum for IE):
         "default_config": defaultConfigJSON
     };

@@ -17,6 +17,8 @@ from shuup.utils.excs import Problem
 from shuup.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shuup.xtheme._theme import get_theme_by_identifier
 from shuup.xtheme.editing import could_edit
+from shuup.xtheme.layout import Layout
+from shuup.xtheme.layout.utils import get_provided_layouts
 from shuup.xtheme.view_config import ViewConfig
 from shuup.xtheme.views.forms import LayoutCellFormGroup
 
@@ -98,11 +100,24 @@ class EditorView(TemplateView):
             global_type=global_type,
         )
 
+        # Let's store the layout data key for save here
+        self.layout_data_key = self.request.GET.get("layout_data_key", None)
+
+        # Let's use the layout identifier passed by the view to
+        # fetch correct layout
+        layout_identifier = self.request.GET.get("layout_identifier", None)
+        layout_cls = Layout
+        for provided_layout in get_provided_layouts():
+            if provided_layout.identifier == layout_identifier:
+                layout_cls = provided_layout
+
         self.placeholder_name = self.request.GET["ph"]
         self.default_layout = self._get_default_layout()
         self.layout = self.view_config.get_placeholder_layout(
+            layout_cls=layout_cls,
             placeholder_name=self.placeholder_name,
-            default_layout=self.default_layout
+            default_layout=self.default_layout,
+            layout_data_key=self.layout_data_key
         )
         (x, y) = self.current_cell_coords = (
             int(self.request.GET.get("x", -1)),
@@ -127,7 +142,7 @@ class EditorView(TemplateView):
 
     def save_layout(self, layout=None):
         self.view_config.save_placeholder_layout(
-            placeholder_name=self.placeholder_name,
+            layout_data_key=self.layout_data_key,
             layout=(layout or self.layout)
         )
         self.changed = True
