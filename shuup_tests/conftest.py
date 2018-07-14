@@ -12,7 +12,6 @@ from django.core.signals import setting_changed
 from shuup.apps.provides import clear_provides_cache
 from shuup.testing.factories import get_default_shop
 from shuup.utils.importing import clear_load_cache
-from shuup.xtheme import set_current_theme
 from shuup.xtheme.testing import override_current_theme_class
 
 
@@ -53,6 +52,11 @@ def splinter_make_screenshot_on_failure():
 def enable_db_access(db):
     from django.utils.translation import activate
     activate("en")
+
+    # make sure the default cache is also cleared
+    # it is used by third party apps like parler
+    from django.core.cache import cache
+    cache.clear()
 
     from shuup.core import cache
     cache.init_cache()
