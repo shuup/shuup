@@ -1,0 +1,412 @@
+#picotable {
+    .has-mass-actions {
+        tbody {
+            td:first-child {
+                width: 0px;
+                padding: 0;
+            }
+        }
+    }
+
+    thead {
+        .headers {
+            color: #fff;
+
+            th {
+                border-bottom: 0;
+                background: $primary;
+                padding: 4px;
+                border: 0;
+                border-right: 1px solid rgba(255,255,255,0.5);
+                user-select: none;
+                font-size: 1.4rem;
+                line-height: 25px;
+
+                @include media-breakpoint-up(xl) {
+                    white-space: nowrap;
+                }
+
+                &:first-child { 
+                    border-left: 1px solid #ddd; 
+                }
+
+                &:last-child { 
+                    border-color: #ddd; 
+                }
+
+                &.sortable {
+                    cursor: pointer;
+                }
+
+                &.sorted-asc, 
+                &.sorted-desc {
+                    background: darken($primary, 10%);
+                }
+            }
+        }
+
+        .filters {
+            th {
+                padding: 8px;
+                background: #D9D9D9;
+                border: 0;
+                border-right: 1px solid rgba(255,255,255,0.5);
+
+                &:first-child { 
+                    border-left: 1px solid #ddd; 
+                }
+
+                &:last-child { 
+                    border-color: #ddd; 
+                }
+
+                @include media-breakpoint-down(sm)  {
+                    white-space: normal;
+                }
+            }
+
+            .form-control {
+                border: 0;
+                background: #fff;
+                height: 32px;
+                min-width: 80px;
+            }
+        }
+
+        .range-filter {
+            min-width: 170px;
+
+            .input-wrapper {
+                display: inline-block;
+                vertical-align: bottom;
+
+                &.max, &.min {
+                    margin: 0px 2px;
+                }
+            }
+
+            input[type="date"] {
+                width: 100%;
+            }
+
+            input[type="number"] {
+                width: 80px;
+            }
+
+            .input-wrapper + .input-wrapper {
+                input[type="date"] {
+                    margin-top: 2px;
+                }
+            }
+        }
+
+        .select2 {
+            width: 100% !important;
+            outline: none;
+
+            .select2-selection {
+                border: 0;
+                background-color: #fff;
+                min-height: 32px;
+                padding: 0;
+                outline: none;
+
+                .select2-selection__rendered {
+                    line-height: 32px;
+                }
+
+                &.select2-selection--single {
+                    border-radius: 0;
+                }
+
+                &.select2-selection--multiple {
+                    border-radius: 0;
+                }
+
+                .select2-selection__arrow {
+                    height: 32px;
+                }
+
+                .select2-selection__choice {
+                    border-radius: 0;
+                }
+            }
+        }
+
+        .select2-dropdown {
+            z-index: 2000 !important;
+        }
+    }
+
+    tbody {
+        tr:hover {
+            td {
+                background-color: $block-light-blue;
+                color: #fff;
+
+                a {
+                    color:#fff;
+                }
+            }
+        }
+
+        th, 
+        td {
+            padding: 5px;
+            font-size: 1.3rem;
+            line-height: 34px;
+            vertical-align: middle;
+            input[type=checkbox] {
+                display:none;
+            }
+        }
+
+        tr {
+            &.active {
+                td {
+                    background-color: $block-light-blue;
+                    color: #fff;
+
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+            cursor:pointer;
+        }
+    }
+
+    tfoot {
+        background-color: #444;
+        height: 40px;
+
+        th, td {
+            padding: 0px;
+        }
+
+        nav {
+            text-align: center;
+
+            .pagination {
+                margin: 0;
+                padding: 0.5em;
+            }
+        }
+    }
+
+    .picotable-header {
+
+        @include media-breakpoint-down(md) {
+            @include make-row();
+            @include clearfix();
+            margin-bottom: 15px;
+        }
+        
+        @include media-breakpoint-up(lg) {
+            display: flex;
+        }
+
+        .picotable-mass-actions {
+            @include media-breakpoint-down(sm) {
+                text-align: center;
+                float: left;
+            }
+
+            @include media-breakpoint-down(md) {
+                @include make-col-ready();
+                @include make-col($md, 6);
+            }
+
+            @include media-breakpoint-up(lg) {
+                display: block;
+                flex: 1;
+                width: 240px !important;
+            }
+
+            .picotable-items-per-page-select, 
+            .select2.select2-container {
+                margin-bottom: 5px;
+                margin-left: 0px;
+                max-width: 240px;
+                display: inline-block;
+
+                @include media-breakpoint-up(md) {
+                    width: 240px !important;
+                }
+            }
+        }
+
+        .picotable-items-per-page-ctr {
+            @include media-breakpoint-down(sm) {
+                text-align: left;
+            }
+
+            @include media-breakpoint-down(md)  {
+                @include make-col-ready();
+                @include make-col($md, 6);
+                text-align: right;
+            }
+
+            @include media-breakpoint-up(lg) {
+                display: block;
+                flex: 1;
+            }
+
+            .picotable-items-per-page-select, 
+            .select2.select2-container {
+                margin-left: 20px;
+                max-width: 100px;
+                display: inline-block;
+                float: none;
+            }
+        }
+
+        .picotable-item-info {
+            margin-top: 10px;
+
+            @include media-breakpoint-down(sm) {
+                text-align: center;
+            }
+
+            @include media-breakpoint-between(md, lg) {
+                @include make-col-ready();
+                @include make-col($sm, 6);
+                text-align: right;
+            }
+
+            @include media-breakpoint-up(lg) {
+                flex: 1;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+        }
+
+        .picotable-reset-filters-ctr {
+            display: none;
+
+            @include media-breakpoint-up(lg) {
+                display: block;
+                flex: 1;
+
+                button {
+                    float: right;
+                }
+            }
+        }
+    }
+
+    .mobile-header {
+        .toggle-btn {
+            @include media-breakpoint-down(sm) {
+                margin-bottom: 15px;
+            }
+
+            i { 
+                margin-right: 7px; 
+            }
+        }
+    }
+
+    .mobile-filters {
+        &-content {
+            padding: 15px;
+
+            .single-filter {
+                border-bottom: 1px solid $border-color;
+                padding-bottom: 15px;
+
+                &:last-child {
+                    border: none;
+                }
+            }
+
+            .range-filter div + div {
+                margin-top: 5px;
+            }
+        }
+    }
+
+    .mobile {
+        nav {
+            text-align: center;
+        }
+    }
+
+    .mobile-items {
+        margin-top: 30px;
+        @include make-row();
+
+        .list-element {
+            @include make-col-ready();
+            margin-bottom: 15px;
+            display: block;
+
+            @include media-breakpoint-up(sm) {
+                @include make-col($sm, 12);
+            }
+
+            @include media-breakpoint-up(sm) {
+                @include make-col($md, 6);
+            }
+
+            @include media-breakpoint-between(md, lg) {
+                &:nth-child(2n+1) {
+                    clear: both;
+                }
+            }
+
+            .inner {
+                padding: 0px 15px;
+                width: 100%;
+                display: block;
+                border: 1px solid $border-color;
+            }
+
+            .inner-row {
+                @include make-row();
+                font-weight: normal;
+
+                .column {
+                    @include make-col-ready();
+                    padding: 6px 0px;
+                    color: $text-color;
+                    word-wrap: break-word;
+                    
+                    @include media-breakpoint-up(sm) {
+                        @include make-col($sm, 12);
+                    }
+                }
+
+                &.with-title {
+                    .column {
+                        @include make-col-ready();
+                        
+                        @include media-breakpoint-up(sm) {
+                            @include make-col($sm, 6);
+                        }
+
+                        &:last-child {
+                            text-align: right;
+                        }
+                    }
+                }
+
+                &.header:first-child {
+                    font-size: 1.3rem;
+
+                    .column {
+                        color: $primary;
+                        border-bottom: 1px solid $border-color;
+                        background: $gray-bg;
+                        border-top-left-radius: 4px;
+                        border-top-right-radius: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

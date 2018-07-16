@@ -1,0 +1,23 @@
+.btn {
+    border-radius: 0px;
+    border-width: 1px !important;
+    
+    &.btn-red {
+      background-color: $block-red;
+      color:#fff;
+    }
+}
+
+.btn-default {
+  border-color: $gray-lighter;
+  color: $gray; 
+}
+
+.btn-inverse {
+  border-color: $gray-lighter;
+
+  &:hover {
+    background-color: rgba($gray, 0.12);
+    color: $gray;
+  }
+}

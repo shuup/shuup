@@ -1,0 +1,105 @@
+.order-create {
+    .inline-checkbox {
+        position: relative;
+
+        @include media-breakpoint-down(sm) {
+            label {
+                display: block;
+                float: none !important;
+                text-align: left;
+            }
+
+            .help-popover-btn {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+        }
+    }
+
+    .cells {
+        @include media-breakpoint-up(sm) {
+            display: flex;
+        }
+    }
+
+    .line-cell {
+        padding: 5px 0px;
+        display: inline-block;
+        width: 100%;
+        position: relative;
+
+        @include media-breakpoint-up(sm) {
+            padding: 0px 8px;
+            flex: 1 auto;
+            align-self: flex-end;
+
+            &.line-type-select {
+                width: 160px;
+                min-width: 160px;
+            }
+
+            &.delete, &.edit {
+                flex: 0 auto;
+                width: auto;
+                padding: 0;
+            }
+
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+
+        label {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 3px;
+        }
+        a {
+            display: block;
+            line-height: 1.2;
+            font-weight: 400;
+        }
+
+        .help-popover-btn {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+        }
+    }
+
+    #order-tool-container {
+        padding-bottom: 50px;
+    }
+
+    .order-footer {
+        z-index: 10;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        line-height: 50px;
+        background: #fff;
+        border-top: 1px solid $border-color;
+        text-align: right;
+
+        .text {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 25px;
+
+            h2 {
+                margin: 0;
+            }
+        }
+        
+        .proceed-button {
+            vertical-align: middle;
+            display: inline-block;
+        }
+    }
+}

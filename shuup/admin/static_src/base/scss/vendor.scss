@@ -1,0 +1,49 @@
+// Core variables and mixins
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import "variables";
+@import "~bootstrap/scss/_mixins";
+// Reset
+@import "~bootstrap/scss/_reboot";
+@import "~bootstrap/scss/_print";
+// Core CSS
+@import "~bootstrap/scss/_type";
+@import "~bootstrap/scss/_code";
+@import "~bootstrap/scss/_grid";
+@import "~bootstrap/scss/_tables";
+@import "~bootstrap/scss/_forms";
+@import "~bootstrap/scss/_buttons";
+// Components
+@import "~bootstrap/scss/_dropdown";
+@import "~bootstrap/scss/_button-group";
+@import "~bootstrap/scss/_input-group";
+@import "~bootstrap/scss/_nav";
+@import "~bootstrap/scss/_pagination";
+@import "~bootstrap/scss/_badge";
+@import "~bootstrap/scss/_alert";
+@import "~bootstrap/scss/_list-group";
+@import "~bootstrap/scss/_close";
+// Components w/ JavaScript
+@import "~bootstrap/scss/_modal";
+@import "~bootstrap/scss/_tooltip";
+@import "~bootstrap/scss/_popover";
+// Utility classes
+@import "~bootstrap/scss/_utilities";
+
+// Vendor styles
+// Font Awesome
+@import "~font-awesome/scss/_variables";
+// // override fonts location
+$fa-font-path: "../../../node_modules/font-awesome/fonts";
+@import "~font-awesome/scss/_mixins";
+@import "~font-awesome/scss/_path";
+@import "~font-awesome/scss/_core";
+@import "~font-awesome/scss/_larger";
+@import "~font-awesome/scss/_fixed-width";
+@import "~font-awesome/scss/_list";
+@import "~font-awesome/scss/_bordered-pulled";
+@import "~font-awesome/scss/_animated";
+@import "~font-awesome/scss/_rotated-flipped";
+@import "~font-awesome/scss/_stacked";
+@import "~font-awesome/scss/_icons";
+@import "~font-awesome/scss/_screen-reader";

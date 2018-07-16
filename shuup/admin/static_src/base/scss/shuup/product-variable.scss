@@ -1,0 +1,45 @@
+#variables-section {
+    .product-variable {
+        margin-bottom: 20px;
+        background: #f8f8f8;
+        border-radius: 4px;
+        border: 1px solid $border-color;
+        padding: 15px;
+
+        h3 {
+            margin: 0;
+        }
+
+        .variable-body {
+            margin: 0px -16px;
+        }
+
+        .variable-heading {
+            margin-bottom: 12px;
+        }
+
+        .new-row {
+            padding: 0px 15px;
+        }
+        
+        table {
+            margin-bottom: 10px;
+            background: #fff;
+            font-size: 1.4rem;
+        }
+    }
+}
+
+#variable-children-section {
+    .product-browse-widget {
+        .btn + .btn {
+            margin: 0px 5px;
+        }
+    }
+}
+
+#simple-variation-children-section {
+    .form-group {
+        margin: 0;
+    }
+}

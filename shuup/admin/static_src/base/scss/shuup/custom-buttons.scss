@@ -1,0 +1,136 @@
+@mixin btn-active-state($color, $darken) {
+    @include box-shadow(inset 0 4px 5px darken($color, $darken));
+    border-top-color: darken($color, $darken);
+    border-left-color: darken($color, $darken);
+    border-right-color: darken($color, $darken);
+}
+
+@mixin btn-hover-state($color, $darken) {
+    border-color: darken($color, $darken);
+    background: darken($color, $darken);
+}
+
+@mixin btn-override-mixin($color, $hover-darken, $active-darken, $dropdown-darken) {
+    border-color: $color;
+    background-color: $color;
+
+    &:hover, &:focus {
+        @include btn-hover-state($color, $hover-darken);
+        color: #fff;
+    }
+
+    &:active {
+        @include btn-active-state($color, $active-darken);
+    }
+
+    &.disabled, &[disabled] {
+        border-color: $color;
+        background-color: $color;
+    }
+
+    &.btn-inverse {
+        border-color: $color;
+        background: transparent;
+        color: $color;
+        &:hover, &:focus {
+            color: #fff;
+            background: $color;
+        }
+        &:active {
+            @include btn-active-state($color, $active-darken);
+        }
+    }
+
+    .btn + .dropdown-toggle {
+        border-left-color: darken($color, $dropdown-darken);
+        &:active {
+            @include btn-active-state($color, $dropdown-darken);
+        }
+    }
+
+    .open > .dropdown-toggle {
+        background: darken($color, $dropdown-darken);
+        border-color: darken($color, $dropdown-darken);
+    }
+
+    .open > .btn + .dropdown-toggle {
+        background: darken($color, $dropdown-darken);
+        border-color: transparent;
+        border-left-color: darken($color, $dropdown-darken);
+    }
+}
+
+
+// Overwrite some of the bootstraps default button styles
+.btn {
+    background: none;
+    padding: 7px 15px;
+    border-width: 2px;
+    outline: 0 !important;
+    font-size: 1.4rem;
+    @include transition(all 0.2s);
+
+    &-xs {
+        font-size: 1.2rem;
+        padding: 2px 8px;
+        line-height: 1.5;
+    }
+    &-sm {
+        font-size: 1.2rem;
+        padding: 6px 12px;
+        line-height: 1.5;
+    }
+    &-lg {
+        padding: 10px 20px;
+        font-size: 1.8rem;
+        line-height: 1.33333;
+    }
+}
+
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] .btn {
+    opacity: 0.45;
+}
+
+.btn-default {
+    background: #fff;
+}
+
+.btn-primary {
+    @include btn-override-mixin($primary, 7%, 12%, 11%);
+}
+
+.btn-success {
+    @include btn-override-mixin($success, 7%, 12%, 11%);
+}
+
+.btn-info {
+    @include btn-override-mixin($info, 7%, 12%, 11%);
+}
+
+.btn-warning {
+    @include btn-override-mixin($warning, 6%, 12%, 10%);
+}
+
+.btn-danger {
+    @include btn-override-mixin($danger, 10%, 17%, 13%);
+}
+
+.btn-gray {
+    color: #fff;
+    @include btn-override-mixin($gray-light, 10%, 15%, 11%);
+}
+
+.btn-group {
+    .btn-default {
+        border-width: 1px;
+
+        &:active, &.active {
+            color: #fff;
+            background-color: $primary;
+            border-color: $primary;
+            @include box-shadow(none);
+        }
+    }
+}
