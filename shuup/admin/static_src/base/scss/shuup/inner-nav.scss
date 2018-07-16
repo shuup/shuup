@@ -1,0 +1,37 @@
+.section-navigation {
+    margin-top: 4px;
+
+    @include media-breakpoint-down(sm) {
+        display: none;
+    }
+
+    .sidebar-list {
+        &-item {
+            border: solid $border-color;
+            border-width: 1px 0px;
+            display: block;
+            font-size: 1.4rem;
+            padding: 5px 0px;
+            margin-bottom: -1px;
+            color: $text-color;
+            position: relative;
+            &:hover, &:focus {
+                color: $primary;
+                text-decoration: none;
+                background: rgba(0,0,0,0.03);
+            }
+            &.active {
+                background: #fff;
+                color: $primary;
+                font-weight: normal;
+            }
+            &.errors {
+                padding-right: 35px;
+            }
+            i {
+                width: 30px;
+                text-align: center;
+            }
+        }
+    }
+}

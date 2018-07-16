@@ -1,0 +1,333 @@
+@import '~bootstrap/scss/_functions';
+@import '~bootstrap/scss/_variables';
+@import "../../../../../static_src/base/scss/variables";
+@import '~bootstrap/scss/mixins/_breakpoints';
+
+.folder-icon {
+    color: $icon-folder-color;
+}
+
+.folder-tree {
+    @include media-breakpoint-down(sm) {
+        display: none;
+    }
+
+    ul, li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul ul {
+        padding-left: 2.5rem;
+    }
+
+    li a {
+        font-size: 1.6rem;
+        padding: 5px 10px;
+        display: block;
+        text-decoration: none;
+        color: $text-color;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @include media-breakpoint-up(lg) {
+            font-size: 1.8rem;
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    li.in-path > a .name {
+        color: $text-color;
+    }
+
+    li.current > a .name {
+        color: $primary;
+        font-weight: 500;
+    }
+
+    ul li.new-folder-item a {
+        font-size: 1.4rem;
+        color: $gray-light;
+    }
+
+    i {
+        margin-right: 6px;
+    }
+
+}
+
+.title {
+    border-bottom: 3px solid $primary;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+
+    i, a {
+        margin-right: 7px;
+        font-size: 1.8rem;
+    }
+    a.current {
+        font-size: 3rem;
+        color: $text-color;
+    }
+}
+
+.folder-view {
+
+    .btn-toolbar {
+        margin: 0;
+        margin-bottom: 50px;
+
+        .btn-group {
+            margin-left: 0;
+            margin-right: 15px;
+
+            @include media-breakpoint-down(xs) {
+                margin-bottom: 10px;
+            }
+
+            &.icons {
+                button { 
+                    padding: 6px 10px 4px 10px; 
+                }
+
+                i { 
+                    font-size: 1.4rem; 
+                }
+            }
+        }
+    }
+
+    .folder-contents {
+        min-height: 350px;
+
+        .grid-folder, 
+        .grid-file {
+            margin-bottom: 60px;
+
+            @include media-breakpoint-down(sm) {
+                &:nth-child(2n+1) {
+                    clear: both;
+                }
+            }
+
+            @include media-breakpoint-between(sm, md) {
+                &:nth-child(3n+1) {
+                    clear: both;
+                }
+            }
+
+            @include media-breakpoint-up(lg) {
+                &:nth-child(4n+1) {
+                    clear: both;
+                }
+            }
+
+            a.file-preview {
+                display: block;
+                background: #fff;
+                text-align: center;
+                padding: 15px;
+                border: 1px solid $border-color;
+                margin-bottom: 10px;
+                transition: border-color 0.1s;
+
+                &:hover, 
+                &:focus {
+                    border-color: $primary;
+                }
+
+                img {
+                    margin: auto;
+                }
+            }
+
+            .file-name {
+                text-align: center;
+            }
+        }
+
+        .grid-folder {
+            .file-preview { 
+                padding: 30px 15px; 
+            }
+
+            i { 
+                font-size: 60px; 
+            }
+        }
+
+        .upload-hint {
+            padding-top: 60px;
+            color: $gray-light;
+            text-align: center;
+            transition: opacity 0.2s;
+        }
+
+        .empty-folder {
+            text-align: center;
+            padding: 50px 0px;
+            border: 3px dashed #eee;
+            color: #999;
+            transition: all 0.2s;
+
+            .empty-image {
+                margin-bottom: 25px;
+
+                img { 
+                    max-width: 300px; 
+                }
+            }
+
+            .empty-text {
+                font-size: 18px;
+
+                span {
+                    font-size: 26px;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .upload-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+            background: rgba($info, 0.15);
+            color: #fff;
+            text-align: center;
+            padding: 53px 0px;
+
+            .image {
+                margin-bottom: 50px;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .text {
+                font-size: 2.5rem;
+                font-weight: 500;
+            }
+        }
+    }
+
+}
+
+
+.fd-zone {
+    position: relative;
+    transition: background 0.5s;
+
+    .empty-folder, 
+    .upload-hint {
+        transition: border-color, color 0.5s;
+    }
+
+    &.over {
+        &.grid-folder {
+            background: rgba($info, 85%);
+        }
+
+        .empty-folder {
+            visibility: hidden;
+            color: #fff;
+        }
+
+        .upload-hint {
+            opacity: 0;
+        }
+
+        .upload-indicator {
+            z-index: 10;
+            opacity: 1;
+            visibility: visible;
+
+            @keyframes uploadIndicator {
+                0% {
+                    transform: scale(1)
+                }
+                40% {
+                    transform: scale(0.9)
+                }
+                100% {
+                    transform: scale(1)
+                }
+            }
+
+            .image {
+                animation: uploadIndicator 1.5s infinite;
+            }
+        }
+    }
+}
+
+.queue-view {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40px;
+    background: #eee;
+    padding: 5px;
+    box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.16), 0 -2px 10px 0 rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: transform 0.4s;
+
+    &.done {
+        transform: translateY(100%)
+    }
+
+    .queue-file {
+        border: 2px solid #aaa;
+        background: #fff;
+        transition: background 0.5s;
+
+        &.uploading {
+            background: rgba($primary, 0.2);
+        }
+
+        &.error {
+            background: rgba($danger, 0.2);
+        }
+
+        &.done {
+            background: rgba($success, 0.2);
+
+            .qf-progress {
+                opacity: 0
+            }
+        }
+
+        border-radius: 4px;
+        float: left;
+        margin-right: 4px;
+
+        .qf-name {
+            padding: 3px;
+        }
+
+        .qf-progress {
+            height: 5px;
+            background: $primary;
+            border-radius: 2px;
+            transition: width 0.1s, opacity 1s;
+        }
+    }
+}
+
+.file-cog-btn {
+    padding: 0;
+    position: absolute;
+    right: 25px;
+    top: 10px;
+    width: 20px;
+}

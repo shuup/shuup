@@ -1,0 +1,231 @@
+.support-nav-wrap {
+    position: fixed;
+    background-color: #fff;
+    z-index: 2;
+    width: 100%;
+    padding-left: 107px;
+    border-bottom: 1px solid #ddd;
+
+    @include media-breakpoint-down(sm) {
+        position: inherit;
+    }
+}
+body {
+    &.popup {
+        .support-nav-wrap {
+            padding-top: 10px;
+            top: 0;
+        }
+    }
+
+    &.auth {
+        .support-nav-wrap {
+            display:none;
+        }
+    }
+}
+
+.support-nav {
+    @include clearfix();
+    padding: 20px 0px;
+
+    @include media-breakpoint-down(sm) {
+        padding: 20px 0px 15px 0px;
+    }
+
+    .breadcrumbs {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+        width: 100%;
+        font-weight: normal;
+        color: #999;
+
+        @include media-breakpoint-up(md) {
+            margin-top: -10px;
+        }
+
+        > li {
+            display: inline-block;
+            vertical-align: middle;
+
+            &:after {
+                content: "\2f"; // "slash"
+                padding: 0 5px;
+            }
+
+            &:last-child {
+                max-width: 16rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                vertical-align: middle;
+
+                &:after { 
+                    display: none; 
+                }
+            }
+        }
+        a {
+            color: #999;
+
+            &:hover, 
+            &:focus {
+                color: $primary;
+            }
+        }
+    }
+
+    .flex-wrapper {
+        @include media-breakpoint-up(lg) {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    .main-header {
+        margin: 0;
+
+        @include media-breakpoint-up(md) {
+            flex: 0 1 auto;
+            margin-top: 4px;
+        }
+
+        small {
+            color: lighten($text-color, 20%);
+            font-weight: 300;
+        }
+    }
+
+    .page-actions {
+        border-top: 1px solid $border-color;
+        padding-top: 10px;
+        margin-top: 10px;
+
+        &:empty {
+            display: none;
+        }
+
+        @include media-breakpoint-up(lg) {
+            border: 0;
+            margin-top: 0;
+            padding-top: 0;
+            padding-left: 40px;
+            flex: 1 0 auto;
+        }
+
+        .btn-toolbar {
+            display: block;
+            margin: 0;
+
+            > .btn,
+            > .btn-group {
+                float: none;
+
+                @include media-breakpoint-up(md) {
+                    float: right;
+                }
+            }
+        }
+
+        .btn {
+            margin: 10px 10px 0px 0px;
+            
+            i { 
+                margin-right: 5px; 
+            }
+
+            @include media-breakpoint-up(md) {
+                margin: 0px 0px 0px 10px;
+            }
+        }
+
+        .btn-group {
+            margin: 10px 10px 0px 0px;
+
+            @include media-breakpoint-up(md) {
+                margin: 0px 0px 0px 10px;
+            }
+
+            .btn {
+                margin: 0;
+
+                &.dropdown-toggle i {
+                    &:last-child {
+                        margin-right: 0;
+                        margin-left: 5px;
+                    }
+
+                    &.fa-chevron-down {
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+
+            .btn + .dropdown-toggle i {
+                margin: 0;
+                font-size: 1.2rem;
+                padding: 0px 1px;
+
+                &:last-child {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .dropdown-menu {
+            @include media-breakpoint-up(md) {
+                left: auto;
+                right: 0;
+            }
+
+            a,
+            button {
+                color: $text-color;
+                transition: all 0.1s;
+                text-overflow: ellipsis;
+                overflow: hidden;
+
+                &:hover, &:focus {
+                    color: $text-color;
+
+                    i {
+                        color: $primary;
+                    }
+                }
+
+                &:active {
+                    color: $text-color;
+                    background-color: #E6E6E6;
+                    border-color: #ADADAD;
+                }
+
+                @include media-breakpoint-down(xs)  {
+                    text-overflow: clip;
+                    overflow: visible;
+                    white-space: normal;
+                    max-width: 300px;
+                }
+            }
+
+            button {
+                width: 100%;
+                padding: 3px 20px;
+                text-align: left;
+                font-weight: normal;
+                border: 0;
+
+                &:hover, &:focus {
+                    background-color: $dropdown-link-hover-bg;
+                }
+            }
+            
+            i {
+                margin-right: 6px;
+                width: 1.5rem;
+                text-align: center;
+            }
+        }
+    }
+}

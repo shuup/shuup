@@ -1,0 +1,193 @@
+.content-block {
+    margin-bottom: 15px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    border: solid #ededed;
+    border-width: 1px;
+
+    @include media-breakpoint-down(md)  {
+        display: block !important;
+    }
+
+    @include media-breakpoint-up(xl) {
+        padding: 15px;
+        margin-bottom: 30px;
+    }
+
+    .title {
+        position: relative;
+
+        &.open {
+            .block-title, .block-subtitle {
+
+                @include media-breakpoint-up(md)  {
+                    border-color: $primary;
+                    padding-bottom: 15px;
+                }
+            }
+
+            .toggle-contents i { 
+                transform: rotate(90deg); 
+            }
+        }
+
+        .block-title, .block-subtitle {
+            border-bottom: 3px solid $primary;
+            padding-bottom: 15px;
+            margin-bottom: 0px;
+            margin-top: 0;
+            padding-right: 40px;
+            transition: all 0.2s;
+
+            @include media-breakpoint-down(md)  {
+                border-color: #fff;
+                padding-bottom: 0;
+            }
+
+            @include media-breakpoint-up(lg) {
+                padding-right: 0;
+            }
+
+            i {
+                color: $primary;
+                margin-right: 5px;
+            }
+        }
+
+        .toggle-contents {
+            position: absolute;
+            right: 0;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            text-align: right;
+
+            @include media-breakpoint-up(lg) {
+                display: none;
+            }
+
+            i {
+                padding: 7px;
+                font-size: 1.4rem;
+                transition: all 0.2s;
+            }
+        }
+    }
+
+    .content-wrap {
+        @include media-breakpoint-up(lg) {
+            display: block;
+            visibility: visible;
+        }
+
+        .content {
+            margin-top: 15px;
+        }
+    }
+
+    .nav-tabs {
+        margin-top: 30px;
+    }
+    .tab-content {
+        margin-top: 10px;
+    }
+    .language-tabs {
+        margin-top: 0px;
+        a {
+            font-size: 1.3rem;
+        }
+        .col-sm-8 {
+             @include media-breakpoint-up(lg) {
+                padding-left: 8px;
+            }
+
+            @include media-breakpoint-up(md) {
+                padding-left: 5px;
+            }
+        }
+    }
+
+    .contact-addresses {
+        .billing-address, 
+        .shipping-address {
+            margin-bottom: 50px;
+
+            h4.underline {
+                margin-top: 0;
+                border-bottom: 1px solid $border-color;
+                margin-bottom: 30px;
+                padding-bottom: 10px;
+
+                i { 
+                    margin-right: 5px; 
+                }
+            }
+        }
+    }
+
+    .sub-title {
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+
+    hr {
+        border-color: $border-color;
+        margin: 30px 0px;
+    }
+
+    .text-muted {
+        color: #999;
+    }
+
+    .dl-horizontal {
+        dd { 
+            margin-bottom: 5px; 
+        }
+        
+        @include media-breakpoint-up(md) {
+            dd { margin-left: 220px; }
+            dt { width: 200px; }
+        }
+    }
+
+    &.collapsed {
+        .title {
+            &.open {
+                .block-title, .block-subtitle {
+                    border-color: $primary;
+                    padding-bottom: 15px;
+                }
+            }
+
+            .block-title, .block-subtitle {
+                border-color: #fff;
+                padding-bottom: 0;
+            }
+        }
+
+        .toggle-contents {
+            display: block;
+        }
+        
+        .collapse {
+            display: none;
+        }
+
+        .collapse.in {
+            display: block;
+        }
+    }
+}
+
+.modal-body .content-block {
+    padding: 5px;
+    margin-bottom: 10px;
+
+    .content-wrap {
+        .content {
+            margin-top: 15px;
+        }
+    }
+}
