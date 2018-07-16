@@ -27,8 +27,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 18:06+0000\n"
-"PO-Revision-Date: 2018-06-28 21:17+0000\n"
+"POT-Creation-Date: 2018-07-11 03:36+0000\n"
+"PO-Revision-Date: 2018-07-16 21:00+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -821,6 +821,27 @@ msgstr "Seuraava"
 msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
 msgstr "Tuotteet %(start_index)d - %(end_index)d Yhteensä %(count)d"
 
+msgid "Change visibility limit to"
+msgstr "Vaihda näkyvyysrajoitteeksi"
+
+msgid "show only visible products and categories"
+msgstr "näytä vain näkyvät tuotteet ja kategoriat"
+
+msgid "show all products and categories"
+msgstr "näytä kaikki tuotteet ja kategoriat"
+
+msgid "Change customer to person contact mode"
+msgstr "Aseta asiakkuus henkilöasiakastilaan"
+
+msgid "Change customer to company contact mode"
+msgstr "Aseta asiakkuus yritysasiakastilaan"
+
+msgid "Change customer mode to guest"
+msgstr "Aseta asiakkuus vierastilaan"
+
+msgid "Change customer to person contact mode "
+msgstr "Aseta henkilöasiakas tila"
+
 msgid "Toggle navigation"
 msgstr "Näytä / piilota navigaatio"
 
@@ -836,17 +857,26 @@ msgstr "PÄÄLLÄ"
 msgid "OFF"
 msgstr "POIS PÄÄLTÄ"
 
+msgid "Visibility limit"
+msgstr "Näkyvyysrajoitus"
+
+msgid "Customer mode"
+msgstr "Asiakastila"
+
+msgid "GUEST"
+msgstr "VIERAS"
+
+msgid "COMPANY CONTACT"
+msgstr "YRITYS"
+
+msgid "PERSON CONTACT"
+msgstr "HENKILÖASIAKAS"
+
 msgid "Shop Administration"
 msgstr "Kaupan hallinta"
 
 msgid "Tools"
 msgstr "Työkalut"
-
-msgid "Show only visible products and categories"
-msgstr "Näytä vain näkyvät tuotteet ja tuoteryhmät"
-
-msgid "Show all products and categories"
-msgstr "Näytä kaikki tuotteet ja tuoteryhmät"
 
 msgid ""
 "There were errors on submitted form fields. Please check them and try again."
@@ -872,12 +902,6 @@ msgstr "Hallintapaneeli"
 
 msgid "Log out"
 msgstr "Kirjaudu ulos"
-
-msgid "Username or email address"
-msgstr "Käyttäjänimi tai sähköpostiosoite"
-
-msgid "Password"
-msgstr "Salasana"
 
 msgid "New user? Register here!"
 msgstr "Uusi käyttäjä? Rekisteröidy täältä!"

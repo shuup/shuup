@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -11,12 +11,11 @@ msgstr ""
 "POT-Creation-Date: 2018-06-05 20:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
-"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
-"teams/55306/fi_FI/)\n"
-"Language: fi_FI\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Tasks"
@@ -56,10 +55,10 @@ msgid "Filter by name..."
 msgstr "Rajaa nimen mukaan..."
 
 msgid "Creator"
-msgstr "Luoja"
+msgstr "Laatija"
 
 msgid "Filter by creator..."
-msgstr "Rajaa luojan mukaan..."
+msgstr "Rajaa laatijan mukaan..."
 
 msgid "Status"
 msgstr "Tila"
@@ -86,10 +85,10 @@ msgid "Public"
 msgstr "Julkinen"
 
 msgid "Staff Only"
-msgstr "Vain henkilökunnalle"
+msgstr "Vain henkilökunta"
 
 msgid "Admins Only"
-msgstr "Vain pääkäyttäjille"
+msgstr "Vain pääkäyttäjä"
 
 msgid "shop"
 msgstr "kauppa"
@@ -107,7 +106,7 @@ msgid "status"
 msgstr "tila"
 
 msgid "priority"
-msgstr "tärkeysjärjestys"
+msgstr "prioriteetti"
 
 msgid "creator"
 msgstr "laatija"
@@ -122,7 +121,7 @@ msgid "completed on"
 msgstr "suoritettu"
 
 msgid "created on"
-msgstr "luotu"
+msgstr "laadittu"
 
 msgid "modified on"
 msgstr "muokattu"
@@ -137,10 +136,10 @@ msgid "visibility"
 msgstr "näkyvyys"
 
 msgid "body"
-msgstr "teksti"
+msgstr "runko"
 
 msgid "New Task"
-msgstr "Uusi Tehtävä"
+msgstr "Uusi tehtävä"
 
 msgid "General Information"
 msgstr "Yleiset tiedot"
@@ -164,13 +163,13 @@ msgid "Comment"
 msgstr "Kommentti"
 
 msgid "Post a new comment"
-msgstr ""
+msgstr "Lähetä uusi kommentti"
 
 msgid "New Task Type"
-msgstr "Uusi tehtävätyyppi"
+msgstr "Uusi tehtävän tyyppi"
 
 msgid "Last 10 pending tasks assigned for you"
-msgstr "10 viimeisintä sinulle ohjattua tehtävää"
+msgstr "10 viimeistä tehtävääsi"
 
 msgid "Task"
 msgstr "Tehtävä"

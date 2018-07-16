@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 18:02+0000\n"
-"PO-Revision-Date: 2018-06-28 20:45+0000\n"
+"POT-Creation-Date: 2018-07-11 03:36+0000\n"
+"PO-Revision-Date: 2018-07-16 16:37+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -83,11 +83,12 @@ msgstr "Luontipvm"
 msgid "Page"
 msgstr "Sivu"
 
-msgid "normal"
-msgstr "normaali"
+msgid "Content in this placeholder is shown for this page only."
+msgstr "Tämän sisältöalueen sisältö näytetään vain tällä sivulla."
 
-msgid "revisioned"
-msgstr "revisioitu"
+#, python-format
+msgid "Content in this placeholder is shown for %(title)s only."
+msgstr "Tämä sisältöalue näytetään vain sivulle %(title)s."
 
 msgid "shop"
 msgstr "kauppa"
@@ -155,9 +156,6 @@ msgid ""
 "that this requires the children to be listed on the page as well."
 msgstr "Valitse tämä jos haluat näyttää aikaleimat alasivuilla. Huomioi, että tämä vaatii että listaa alasivut sivulla täytyy olla myös valittuna."
 
-msgid "page type"
-msgstr "sivun tyyppi"
-
 msgid "deleted"
 msgstr "poistettu"
 
@@ -190,11 +188,6 @@ msgstr "sivu"
 msgid "pages"
 msgstr "sivut"
 
-msgid ""
-"This page is protected against changes because it is a GDPR consent "
-"document."
-msgstr "Tämä sivu on suojattu muutoksilta koska se on GDPR suostumus dokumentti."
-
 msgid "Untitled"
 msgstr "Nimetön"
 
@@ -212,15 +205,6 @@ msgstr "Piilota vanhentuneet sivut"
 
 msgid "New Page"
 msgstr "Uusi sivu"
-
-msgid "General Information"
-msgstr "Yleiset tiedot"
-
-msgid "Availability"
-msgstr "Saatavuus"
-
-msgid "Extras"
-msgstr "Extrat"
 
 msgid "Home"
 msgstr "Etusivu"

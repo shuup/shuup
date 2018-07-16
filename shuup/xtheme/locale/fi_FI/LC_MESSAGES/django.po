@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 18:50+0000\n"
-"PO-Revision-Date: 2018-07-06 18:39+0000\n"
+"POT-Creation-Date: 2018-07-11 03:36+0000\n"
+"PO-Revision-Date: 2018-07-16 21:58+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -83,6 +83,30 @@ msgstr "Tyylit"
 
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Teemasi käyttämät fontit, värit ja tyylit."
+
+msgid "Content in this placeholder is shown without limitations."
+msgstr "Tämä sisältöalue näytetään ilman rajoituksia."
+
+#, python-format
+msgid ""
+"Content in this placeholder is shown for %(category_name)s category only."
+msgstr "Tämä sisältöalue näytetään vain kategorialle %(category_name)s."
+
+msgid "Content in this placeholder is shown for guests."
+msgstr "Tämä sisältöalue näytetään vain vieraille."
+
+msgid "Content in this placeholder is shown for company contacts."
+msgstr "Tämä sisältöalue näytetään vain yrityksille."
+
+msgid "Content in this placeholder is shown for all logged in contacts."
+msgstr "Sisältöalue näytetään vain kirjautuneille kontakteille."
+
+msgid "Content in this placeholder is shown for person contacts."
+msgstr "Sisältöalue näytetään vain henkilöasiakkaille."
+
+#, python-format
+msgid "Content in this placeholder is shown for %(product_name)s only."
+msgstr "Tämä sisältöalue näytetään vain tuotteelle %(product_name)s."
 
 msgid "Shop '{}' has no active theme"
 msgstr "Kaupalla '{}' ei ole aktiivista teemaa"
@@ -248,6 +272,11 @@ msgstr "teksti"
 msgid "Click to edit placeholder: %s"
 msgstr "Napsauta muokataksesi aluetta %s"
 
+msgid ""
+"This placeholder is global and content of this placeholder is shown on all "
+"pages."
+msgstr "Sisältöalue on globaali ja sen sisältö näytetään kaikilla näkymillä."
+
 msgid "Delete This Cell"
 msgstr "Poista tämä solu"
 
@@ -302,6 +331,9 @@ msgstr "Teemalla ei ole asetuksia."
 msgid "Select theme"
 msgstr "Valitse teema"
 
+msgid "Active"
+msgstr "Aktiivinen"
+
 msgid "Guide"
 msgstr "Opas"
 
@@ -320,17 +352,20 @@ msgstr "Aktivoi teema nähdäksesi ohjeistuksen"
 msgid "No guide"
 msgstr "Ei ohjeistusta"
 
-msgid "Currently active"
-msgstr "Aktiivinen"
-
 msgid "Activate"
 msgstr "Aktivoi"
+
+msgid "Click here to configure the theme"
+msgstr "Klikkaa tähän asentaaksesi teeman"
 
 msgid "Configure"
 msgstr "Muokkaa"
 
 msgid "Theme Name"
 msgstr "Teeman nimi"
+
+msgid "Currently active"
+msgstr "Aktiivinen tällä hetkellä"
 
 msgid "Revert Changes"
 msgstr "Palauta muutokset"
