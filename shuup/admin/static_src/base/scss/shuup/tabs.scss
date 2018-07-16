@@ -1,0 +1,24 @@
+.nav-tabs {
+    > li > a {
+        border-radius: 0;
+        background: $gray-bg;
+        border: 0;
+        border-top: 3px solid transparent;
+        padding: 5px;
+        font-size: 1.5rem;
+        color: $text-color;
+
+        &:hover, 
+        &:focus {
+            color: $primary;
+        }
+    }
+
+    > li.active > a,
+    > li.active > a:hover,
+    > li.active > a:focus {
+        border-width: 3px 1px 1px 1px;
+        border-style: solid;
+        border-color: $primary #DDD transparent #DDD;
+    }
+}

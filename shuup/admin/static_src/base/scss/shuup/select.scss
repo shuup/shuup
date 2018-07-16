@@ -1,0 +1,98 @@
+span.select2.select2-container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    width: 100% !important;
+    float: left;
+
+    span {
+        border-color: #D9D9D9;
+    }
+
+    &.select2-container--open, 
+    &.select2-container--focus {
+        span {
+            box-shadow: none;
+            border-color: $primary !important;
+        }
+    }
+
+    span.selection span.select2-selection {
+        border-width: 1px;
+        background: #F3F3F3;
+        font-weight: normal;
+        font-size: 1.3rem;
+        min-height: 38px;
+
+        &.select2-selection--single {
+            padding: 5px 0 5px 0;
+            border-radius: 0;
+        }
+
+        &.select2-selection--multiple {
+            padding: 2px 0 2px 0;
+            border-radius: 0;
+        }
+
+        span.select2-selection__rendered {
+            color: #555555;
+        }
+
+        .select2-selection__choice {
+            border-radius: 0;
+        }
+
+        span.select2-selection__arrow {
+            height: 38px;
+        }
+    }
+}
+
+.form-lg {
+    span.select2.select2-container {
+        span.selection span.select2-selection {
+            min-height: 46px;
+            font-size: 1.6rem;
+            line-height: 1.333333;
+            padding: 10px 0 10px 0;
+
+            &.select2-selection--multiple {
+                padding: 5px 0 5px 0;
+            }
+
+            span.select2-selection__arrow {
+                height: 46px;
+                top: -1px;
+                right: 10px;
+            }
+
+            .select2-selection__rendered {
+                padding-left: 12px;
+                line-height: 1.33333;
+            }
+        }
+    }
+}
+
+span.select2-dropdown {
+    z-index: 2000;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+    span.select2.select2-container {
+      width: 58.33333333% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    span.select2.select2-container {
+        width: 41.66666667% !important;
+    }
+}
+
+.selector-td span.select2.select2-container {
+    width:100% !important;
+}
+
+.full-width span.select2.select2-container {
+    width: 100% !important;
+}
