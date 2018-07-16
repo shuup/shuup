@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 03:36+0000\n"
+"POT-Creation-Date: 2018-07-16 20:39+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -817,9 +817,6 @@ msgid "Change customer to company contact mode"
 msgstr ""
 
 msgid "Change customer mode to guest"
-msgstr ""
-
-msgid "Change customer to person contact mode "
 msgstr ""
 
 msgid "Toggle navigation"

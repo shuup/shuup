@@ -1,11 +1,12 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015-2016
@@ -13,23 +14,22 @@
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
-# tomijarvi <tomi@jarvi.pro>, 2015
+# Tomi Järvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
 # Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
-"PO-Revision-Date: 2017-03-01 13:50+0000\n"
+"POT-Creation-Date: 2017-02-23 11:18+0000\n"
+"PO-Revision-Date: 2017-09-23 22:00+0000\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Addons"
@@ -62,9 +62,7 @@ msgstr "Lataa sovellus uudelleen"
 msgid ""
 "There are no viable reload methods available. Please contact your system "
 "administrator."
-msgstr ""
-"Järjestelmän käynnistäminen uudelleen ei ole mahdollista. Ole hyvä ja ota "
-"yhteys järjestelmän ylläpitäjään."
+msgstr "Järjestelmän käynnistäminen uudelleen ei ole mahdollista. Ole hyvä ja ota yhteys järjestelmän ylläpitäjään."
 
 msgid "Reload Method"
 msgstr "Lataa menetelmä uudelleen"
@@ -111,10 +109,7 @@ msgid ""
 "In addition, there is always a chance for the server to not properly "
 "initialize at all, in which case you may need to troubleshoot the problem "
 "yourself (or have a system administrator handy)."
-msgstr ""
-"On aina mahdollisuus, että sovelluspalvelin ei uudelleenkäynnisty, jolloin "
-"joudut tutkimaan ongelmaa itse (tai ottamaan yhteyttä "
-"järjestelmäylläpitäjään)."
+msgstr "On aina mahdollisuus, että sovelluspalvelin ei uudelleenkäynnisty, jolloin joudut tutkimaan ongelmaa itse (tai ottamaan yhteyttä järjestelmäylläpitäjään)."
 
 msgid "Reload steps"
 msgstr "Lataa askeleet uudelleen"
@@ -156,14 +151,10 @@ msgstr "Onnistui"
 
 #, python-format
 msgid ""
-"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
-"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
-"class=\"text-success\"><strong>reload your application server</strong></a>."
-msgstr ""
-"Seuraavaksi: <a href=\"%(addon_list_url)s\" class=\"text-success"
-"\"><strong>aktivoi asennettu laajennus</strong></a> ja<a href="
-"\"%(addon_reload_url)s\" class=\"text-success\"><strong>käynnistä "
-"järjestelmä uudelleen</strong></a>."
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
+" the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
+" class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr "Seuraavaksi: <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>aktivoi asennettu laajennus</strong></a> ja<a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>käynnistä järjestelmä uudelleen</strong></a>."
 
 msgid "Error"
 msgstr "Virhe"

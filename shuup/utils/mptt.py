@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.utils.translation import ugettext_lazy as _
-
 
 def get_cached_trees(queryset):
     """
@@ -61,7 +59,7 @@ def get_cached_trees(queryset):
                 # ``queryset`` was a list or other iterable (unable to order),
                 # and was provided in an order other than depth-first
                 raise ValueError(
-                    _('Node %s not in depth-first order') % (type(queryset),)
+                    'Node %s not in depth-first order' % (type(queryset),)
                 )
 
             # Set up the attribute on the node that will store cached children,

@@ -17,9 +17,15 @@ import os
 from io import BytesIO
 
 import babel.messages.extract
+import django
 from django.core.management.commands import makemessages
 from django.utils.six import StringIO
-from django.utils.translation import trans_real
+
+if django.VERSION < (1, 11):
+    from django.utils.translation import trans_real
+else:
+    from django.utils.translation import template as trans_real
+
 
 KEYWORDS = dict(babel.messages.extract.DEFAULT_KEYWORDS, **{
     '_L': None,
@@ -137,7 +143,7 @@ def _update_pot_creation_date(po_contents):
     return b''.join(lines)
 
 
-def jinja_messages_to_python(src, origin=None):
+def jinja_messages_to_python(src, origin=None, **kwargs):
     """
     Convert Jinja2 file to Python preserving only messages.
     """

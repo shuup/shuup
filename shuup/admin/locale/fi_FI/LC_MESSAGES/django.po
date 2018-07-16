@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-08 20:19+0000\n"
-"PO-Revision-Date: 2018-06-28 20:36+0000\n"
+"POT-Creation-Date: 2018-07-13 19:33+0000\n"
+"PO-Revision-Date: 2018-07-16 16:20+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -52,6 +52,9 @@ msgstr "Tämä tili ei ole aktiivinen"
 
 msgid "Username or email address"
 msgstr "Käyttäjänimi tai sähköpostiosoite"
+
+msgid "Create New"
+msgstr "Luo Uusi"
 
 msgid "Monday"
 msgstr "Maanantai"
@@ -82,9 +85,6 @@ msgstr "Tyhjennä"
 
 msgid "Select"
 msgstr "Valitse"
-
-msgid "Create New"
-msgstr "Luo Uusi"
 
 msgid "Orders"
 msgstr "Tilaukset"
@@ -3047,6 +3047,17 @@ msgid ""
 "try again later."
 msgstr "Sisäinen palvelinvirhe. Koita päivittää sivu tai yritä myöhemmin uudelleen."
 
+msgid "Edit the selected object"
+msgstr "Muokkaa valittua objektia"
+
+#, python-brace-format
+msgid "Required. {field_help}"
+msgstr "Pakollinen. {field_help}"
+
+#, python-brace-format
+msgid "Optional. {field_help}"
+msgstr "Valinnainen. {field_help}"
+
 msgid "Welcome to Shuup!"
 msgstr "Tervetuloa Shuuppiin!"
 
@@ -3642,14 +3653,6 @@ msgid "Are you sure you wish to delete %s?"
 msgstr "Haluatko poistaa %s?"
 
 #, python-format
-msgid "Required. %s"
-msgstr "Vaadittu. %s"
-
-#, python-format
-msgid "Optional. %s"
-msgstr "Valinnainen. %s"
-
-#, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
 msgstr "Näytetään %(per_page)s/%(n_items)s %(verbose_name_plural)s-kohdetta"
 
@@ -3707,6 +3710,22 @@ msgstr "Vain yksi %(model)s sallittu"
 
 msgid "Mass Edit"
 msgstr "Massamuokkaus"
+
+msgid "Invalid object."
+msgstr "Virheellinen objekti."
+
+msgid "Invalid model."
+msgstr "Virheellinen malli."
+
+#, python-format
+msgid "You do not have the required permission(s): %s"
+msgstr "Sinulta puuttuu vaaditut oikeudet: %s"
+
+msgid "Unauthorized"
+msgstr "Luvaton"
+
+msgid "Object not found"
+msgstr "Objektia ei löytynyt"
 
 msgid "Storefront"
 msgstr "Kaupan näkymä"

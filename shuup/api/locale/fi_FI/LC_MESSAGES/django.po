@@ -1,21 +1,20 @@
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 17:17+0000\n"
+"POT-Creation-Date: 2016-12-15 19:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>, 2017\n"
-"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
-"teams/55306/fi_FI/)\n"
-"Language: fi_FI\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "API"
@@ -49,8 +48,8 @@ msgid "Configure API permissions"
 msgstr "Muokkaa API-oikeuksia"
 
 msgid ""
-"Please, configure the API permission level for each service by selecting the "
-"level below."
+"Please, configure the API permission level for each service by selecting the"
+" level below."
 msgstr "Asettele API-oikeustaso kullekin palvelulle valitsemalla taso alta."
 
 msgid "Note:"
@@ -86,7 +85,8 @@ msgstr "Kuka tahansa tunnistautunut käyttäjä voi noutaa tietoja."
 msgid "Public users - Read/Write"
 msgstr "Julkiset käyttäjät - Luku/kirjoitus"
 
-msgid "Any user (authenticated or not) can fetch, save, delete or update data."
+msgid ""
+"Any user (authenticated or not) can fetch, save, delete or update data."
 msgstr ""
 "Kuka tahansa (tunnistautunut tai ei) voi noutaa, tallentaa, poistaa tai "
 "päivittää tietoja."

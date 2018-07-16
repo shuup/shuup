@@ -4,7 +4,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Contact, PersonContact
 from shuup.importer.importing import DataImporter, ImporterExampleFile
@@ -12,7 +11,7 @@ from shuup.importer.importing import DataImporter, ImporterExampleFile
 
 class DummyImporter(DataImporter):
     identifier = "dummy_importer"
-    name = _("Dummy Importer")
+    name = "Dummy Importer"
     model = Contact
 
     example_files = [
@@ -28,7 +27,7 @@ class DummyImporter(DataImporter):
 
 class DummyFileImporter(DataImporter):
     identifier = "dummy_file_importer"
-    name = _("Dummy File Importer")
+    name = "Dummy File Importer"
     model = Contact
 
     example_files = [
