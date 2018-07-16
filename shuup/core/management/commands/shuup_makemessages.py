@@ -52,6 +52,6 @@ class Command(makemessages.Command):
         self.stdout.write("Doing makemessages for django domain")
         super(Command, self).handle(*args, domain="django", **options)
 
-        options.pop("extensions", None)
+        options["extensions"] = []
         self.stdout.write("Doing makemessages for djangojs domain")
         super(Command, self).handle(*args, domain="djangojs", **options)
