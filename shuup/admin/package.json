@@ -28,6 +28,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.2",
+    "bootstrap-datetime-picker": "^2.4.4",
     "chart.js": "^2.7.2",
     "desandro-matches-selector": "^2.0.2",
     "dropzone": "^5.5.1",
