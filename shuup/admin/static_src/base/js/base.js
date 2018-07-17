@@ -19,4 +19,4 @@ import './side-nav.js';
 import './slugify.js';
 import './timesince.js';
 import './tooltip.js';
-// import './tour.js';
+import './tour.js';

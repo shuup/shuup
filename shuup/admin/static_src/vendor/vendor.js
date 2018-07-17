@@ -30,8 +30,8 @@ require('outlayer');
 require('select2');
 require('sortablejs');
 require('summernote');
-// require('tether');
+require('tether');
 
-// window.Shephard = require('shepherd.js');
+window.Shepherd = require('tether-shepherd');
 
 require('./datepicker/js/bootstrap-datetimepicker.js');

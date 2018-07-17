@@ -63,7 +63,7 @@ $icon-folder-color: #E1AE46;
 $nav-bg: #444;
 $nav-bg-hover: #333;
 
-// -- Pagination
+// Pagination
 $pagination-bg: $nav-bg;
 $pagination-color: #fff;
 $pagination-border: #000;
@@ -82,6 +82,27 @@ $pagination-active-color: $pagination-hover-color;
 
 $border-radius-base: 0;
 
+// Select2 bootstrap css vars
+$input-border: $input-border-color;
+$input-border-focus: $input-focus-border-color;
+$input-bg-disabled: $input-disabled-bg;
+$input-height-base: $input-height;
+$input-height-small: $input-height-sm;
+$input-height-large: $input-height-lg;
+$line-height-small: $line-height-sm;
+$line-height-large: $line-height-lg;
+$border-radius-small: $border-radius-sm;
+$border-radius-large: $border-radius-lg;
+$padding-base-vertical: $input-padding-y;
+$padding-base-horizontal: $input-padding-x;
+$padding-small-vertical: $input-padding-y-sm;
+$padding-small-horizontal: $input-padding-x-sm;
+$padding-large-vertical: $input-padding-y-lg;
+$padding-large-horizontal: $input-padding-x-lg;
+$btn-default-bg: $primary;
+$btn-default-color: #fff;
+$btn-default-border: $primary;
+
 /// Remove the unit of a length
 /// @param {Number} $number - Number to remove unit from
 /// @return {Number} - Unitless number
@@ -91,6 +112,10 @@ $border-radius-base: 0;
     }
 
     @return $number;
+}
+
+@mixin reset-filter() {
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
 
 $xs: strip-unit(map-get($grid-breakpoints, "xs"));
