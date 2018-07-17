@@ -5,7 +5,7 @@
     {% if orderability_errors %}
         <div class="container-fluid">
             {# TODO: FIX THIS FOR MOBILE SCREEN SIZES #}
-            <p class="pull-right"
+            <p class="float-right"
                data-toggle="tooltip"
                data-title="{% for error in orderability_errors %}{{ error }} {% endfor %}"
                data-placement="bottom">

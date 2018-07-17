@@ -1,5 +1,5 @@
 <div class="row contact-addresses">
-    <div class="col-md-6 billing-address">
+    <div class="col-lg-6 billing-address">
         <h4 class="underline"><i class="fa fa-file-text"></i> {% trans %}Billing address{% endtrans %}</h4>
         {% for line in contact.default_billing_address or [] %}
             <p>{{ line }}</p>
@@ -7,7 +7,7 @@
             <i class="fa fa-warning text-warning"></i> {% trans %}No billing address defined.{% endtrans %}
         {% endfor %}
     </div>
-    <div class="col-md-6 shipping-address">
+    <div class="col-lg-6 shipping-address">
         <h4 class="underline"><i class="fa fa-truck"></i> {% trans %}Shipping address{% endtrans %}</h4>
         {% for line in contact.default_shipping_address or [] %}
             <p>{{ line }}</p>

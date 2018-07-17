@@ -1,14 +1,14 @@
 {% macro link_block(b, redirect="") %}
     <div class="row content-block link-block clearfix {{ b.css_class }} ">
         {% if b.icon_url %}
-            <div class="pull-left">
+            <div class="float-left">
                 <div class="icon">
                     <img src="{{ static(b.icon_url) }}">
                 </div>
             </div>
         {% endif %}
         {% if b.done %}
-            <div class="pull-right done-icon">
+            <div class="float-right done-icon">
                 <i class="fa fa-check-circle"></i>
             </div>
         {% endif %}
