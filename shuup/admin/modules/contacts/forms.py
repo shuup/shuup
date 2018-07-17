@@ -63,7 +63,7 @@ class ContactBaseFormMixin(object):
 
         if "tax_group" in self.fields:
             self.fields["tax_group"].widget = QuickAddTaxGroupSelect(editable_model="shuup.CustomerTaxGroup")
-            if self.instance:
+            if self.instance and self.instance.tax_group:
                 self.fields["tax_group"].widget.choices = [
                     (self.instance.tax_group.id, self.instance.tax_group.name)
                 ]
