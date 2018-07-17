@@ -1,4 +1,4 @@
-<div class="hidden-xs">
+<div class="d-sm-none d-md-block">
     <table class="table table-striped {% if not payments %} hidden {% endif %}">
         <thead>
         <tr>
@@ -32,17 +32,17 @@
         </tbody>
     </table>
 </div>
-<div class="visible-xs mobile-list-group {% if not payments %} hidden {% endif %}">
+<div class="d-none d-sm-block d-md-none mobile-list-group {% if not payments %} hidden {% endif %}">
     <ul class="list-group">
         {% for payment in payments %}
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-xs-7">
+                    <div class="col-sm-8">
                         {{ payment.created_on|datetime }}<br>
                         {{ payment.description }}<br>
                         {% trans %}Identifier{% endtrans %}: {{ payment.payment_identifier }}
                     </div>
-                    <div class="col-xs-4 text-right">
+                    <div class="col-sm-4 text-right">
                         <strong>{{ payment.amount|money }}</strong>
                     </div>
                     <div class="col-xs-1 text-center">

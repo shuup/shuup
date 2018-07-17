@@ -11,31 +11,31 @@
                     <tr>
                         <th>{% trans %}Order Line{% endtrans %}</th>
                         <th class="text-right">{% trans %}To Ship{% endtrans %}</th>
-                        <th class="text-right hidden-xs">{% trans %}Ordered{% endtrans %}</th>
-                        <th class="text-right hidden-xs">{% trans %}Shipped{% endtrans %}</th>
-                        <th class="text-right hidden-xs">{% trans %}Refunded{% endtrans %}</th>
-                        <th class="text-right hidden-xs">{% trans %}Unshipped{% endtrans %}</th>
-                        <th class="text-right visible-xs">{% trans %}Ordered{% endtrans %}/&#x200b;{% trans %}Shipped{% endtrans %}/&#x200b;{% trans %}Unshipped{% endtrans %}</th>
+                        <th class="text-right d-sm-none d-md-block">{% trans %}Ordered{% endtrans %}</th>
+                        <th class="text-right d-sm-none d-md-block">{% trans %}Shipped{% endtrans %}</th>
+                        <th class="text-right d-sm-none d-md-block">{% trans %}Refunded{% endtrans %}</th>
+                        <th class="text-right d-sm-none d-md-block">{% trans %}Unshipped{% endtrans %}</th>
+                        <th class="text-right d-none d-sm-block d-md-none">{% trans %}Ordered{% endtrans %}/&#x200b;{% trans %}Shipped{% endtrans %}/&#x200b;{% trans %}Unshipped{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
                         <th>
-                            <button class="btn btn-sm btn-info pull-right" type="button" onclick="setAllProducts()">
-                                <span class="hidden-xs">{% trans %}Set All Products To Ship{% endtrans %}</span>
-                                <span class="visible-xs">{% trans %}Ship All{% endtrans %}</span>
+                            <button class="btn btn-sm btn-info float-right" type="button" onclick="setAllProducts()">
+                                <span class="d-sm-none d-md-block">{% trans %}Set All Products To Ship{% endtrans %}</span>
+                                <span class="d-none d-sm-block d-md-none">{% trans %}Ship All{% endtrans %}</span>
                             </button>
                         </th>
                         {% set ordered_total=form.product_summary.values()|sum("ordered")|number %}
                         {% set shipped_total=form.product_summary.values()|sum("shipped")|number %}
                         {% set refunded_total=form.product_summary.values()|sum("refunded")|number %}
                         {% set unshipped_total=form.product_summary.values()|sum("unshipped")|number %}
-                        <th class="text-right hidden-xs">{{ ordered_total }}</th>
-                        <th class="text-right hidden-xs">{{ shipped_total }}</th>
-                        <th class="text-right hidden-xs">{{ refunded_total }}</th>
-                        <th class="text-right hidden-xs">{{ unshipped_total }}</th>
-                        <th class="text-right visible-xs">{{ ordered_total }}/{{ shipped_total }}/{{ unshipped_total }}</th>
+                        <th class="text-right d-sm-none d-md-block">{{ ordered_total }}</th>
+                        <th class="text-right d-sm-none d-md-block">{{ shipped_total }}</th>
+                        <th class="text-right d-sm-none d-md-block">{{ refunded_total }}</th>
+                        <th class="text-right d-sm-none d-md-block">{{ unshipped_total }}</th>
+                        <th class="text-right d-none d-sm-block d-md-none">{{ ordered_total }}/{{ shipped_total }}/{{ unshipped_total }}</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -55,11 +55,11 @@
                                     {% endif %}
                                 </div>
                             </td>
-                            <td class="text-right hidden-xs">{{ info.ordered|number }}</td>
-                            <td class="text-right hidden-xs">{{ info.shipped|number }}</td>
-                            <td class="text-right hidden-xs">{{ info.refunded|number }}</td>
-                            <td class="text-right hidden-xs">{{ info.unshipped|number }}</td>
-                            <td class="text-right visible-xs">{{ info.ordered|number }}/{{ info.shipped|number }}/{{ info.unshipped|number }}</td>
+                            <td class="text-right d-sm-none d-md-block">{{ info.ordered|number }}</td>
+                            <td class="text-right d-sm-none d-md-block">{{ info.shipped|number }}</td>
+                            <td class="text-right d-sm-none d-md-block">{{ info.refunded|number }}</td>
+                            <td class="text-right d-sm-none d-md-block">{{ info.unshipped|number }}</td>
+                            <td class="text-right d-none d-sm-block d-md-none">{{ info.ordered|number }}/{{ info.shipped|number }}/{{ info.unshipped|number }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

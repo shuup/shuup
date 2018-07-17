@@ -9,7 +9,7 @@
     {%- set is_primary = f.is_primary.value() if is_image_form else None %}
     <div class="panel{% if is_primary %} panel-selected{% else %} panel-default{% endif %}" data-prefix="{{ f.prefix }}">
         <div class="panel-heading clearfix">
-          <h2 class="panel-title pull-left">
+          <h2 class="panel-title float-left">
               {%- if is_image_form -%}
                 {{- _("Product image %(index)s", index=idx) -}}
               {%- else -%}
@@ -17,7 +17,7 @@
               {%- endif -%}
             </h2>
             {% if is_image_form %}
-                <div class="primary-action pull-right">
+                <div class="primary-action float-right">
                     {% if f.is_primary.value() %}
                         <span class="is-primary-image">{% trans %}Primary image{% endtrans %}</span>
                     {% else %}
