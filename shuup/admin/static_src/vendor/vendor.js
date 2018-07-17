@@ -14,8 +14,8 @@ window.$ = window.jQuery = jquery;
 const _ = require('lodash');
 window._ = _;
 
-const dropzone = require('dropzone');
-window.Dropzone = dropzone;
+window.Dropzone = require('dropzone');
+Dropzone.autoDiscover = false;
 
 require('bootstrap');
 require('chart.js');
@@ -25,13 +25,19 @@ require('desandro-matches-selector');
 require('ev-emitter');
 require('fizzy-ui-utils');
 require('jquery.easing');
+require('jquery.scrollbar');
 require('moment');
 require('outlayer');
 require('select2');
+require('popper.js');
 require('sortablejs');
 require('summernote');
 require('tether');
+require('./datepicker/js/bootstrap-datetimepicker.js');
 
 window.Shepherd = require('tether-shepherd');
 
-require('./datepicker/js/bootstrap-datetimepicker.js');
+const m = require('mithril');
+window.m = m;
+
+
