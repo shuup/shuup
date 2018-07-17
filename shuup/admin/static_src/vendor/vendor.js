@@ -33,7 +33,8 @@ require('popper.js');
 require('sortablejs');
 require('summernote');
 require('tether');
-require('./datepicker/js/bootstrap-datetimepicker.js');
+// require('./datepicker/js/bootstrap-datetimepicker.js');
+require('bootstrap-datetime-picker');
 
 window.Shepherd = require('tether-shepherd');
 
