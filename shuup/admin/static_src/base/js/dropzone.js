@@ -100,6 +100,5 @@ function activateDropzones() {
 }
 
 $(function(){
-    Dropzone.autoDiscover = false;
     activateDropzones();
 });
