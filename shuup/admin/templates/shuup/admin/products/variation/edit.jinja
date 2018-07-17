@@ -10,8 +10,8 @@
         <hr class="separator-line dark">
         {% endif %}
         <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="product_form"></div>
-            <div class="col-md-9">
+            <div class="col-lg-3 section-navigation" data-navigatee="product_form"></div>
+            <div class="col-lg-9">
                 <form method="post" id="product_form">
                     {% csrf_token %}
                     {% for form_def in form.form_defs.values() %}

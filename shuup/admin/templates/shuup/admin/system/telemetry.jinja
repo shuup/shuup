@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="content-block">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <h2>{% trans %}About Shuup Telemetry{% endtrans %}</h2>
                     <p>{% trans %}Shuup will occasionally send telemetry data to a Shuup.com server.{% endtrans %}</p>
                     <p>{% trans host=request.get_host() %}The data contains an unique installation key, as well as the hostname of the installation (as sent by the visiting browser; currently <code>{{ host }}</code>).{% endtrans %}</p>
@@ -32,7 +32,7 @@
                     {% endif %}
                     <hr>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <h2>{% trans %}Telemetry Data{% endtrans %}</h2>
                     <p>{% trans %}Here is an example of the data that would be submitted right now.{% endtrans %}</p>
                     <pre><code>{{ submission_data }}</code></pre>

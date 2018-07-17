@@ -16,10 +16,10 @@
 <a class="nav-btn shop-btn" href="{{ url("shuup_admin:home") }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Go home{% endtrans %}"><i class="fa fa-home"></i></a>
 
 <div id="site-search" class="site-search">
-    <div class="desktop d-none d-sm-block">
+    <div class="desktop d-sm-none d-md-block">
         <input type="search" accesskey="s" id="site-search-input" class="form-control site-search-input" placeholder="{% trans %}Search for{% endtrans %}..."><i class="input-icon fa fa-search"></i>
     </div>
-    <div class="mobile text-right d-block d-sm-none">
+    <div class="mobile text-right d-sm-none d-md-block">
         <button class="dropdown-toggle" id="dropdownSearch" type="button" data-toggle="dropdown" aria-expanded="true">
             <i class="fa fa-search"></i>
         </button>
@@ -32,7 +32,7 @@
 </div>
 
 {% set support_id=shuup_admin.get_support_id() %}
-{% if support_id %}<p class="nav-text d-none d-sm-block">{% trans %}Support ID: {% endtrans %}{{ support_id }}</p>{% endif %}
+{% if support_id %}<p class="nav-text d-sm-none d-md-block">{% trans %}Support ID: {% endtrans %}{{ support_id }}</p>{% endif %}
 
 {% set front_url=shuup_admin.get_front_url() %}
 {% if front_url %}<a class="nav-btn shop-btn visit-store" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-eye"></i></a>{% endif %}

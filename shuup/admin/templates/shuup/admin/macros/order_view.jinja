@@ -1,5 +1,5 @@
 {% macro order_view(orders) %}
-    <div class="hidden-xs">
+    <div class="d-sm-none d-md-block">
         <table class="table table-condensed table-striped">
             <thead>
             <tr>
@@ -28,7 +28,7 @@
             </tbody>
         </table>
     </div>
-    <div class="visible-xs mobile-list-group">
+    <div class="d-none d-sm-block d-md-none mobile-list-group">
         <ul class="list-group">
             {% for order in orders %}
                 {% set url = shuup_admin.model_url(order) %}

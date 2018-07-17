@@ -1,16 +1,16 @@
 {% macro service_provider_section(identifier, header, description, is_active=False, allowed_countries="") %}
     <div class="form-def" data-name="{{ identifier }}" {% if allowed_countries != "" %}data-allowed-countries="{{ allowed_countries }}"{% endif %} data-is-active="{{ is_active }}">
         <div class="row">
-            <div class="service-provider-form col-sm-6 col-sm-offset-3">
+            <div class="service-provider-form col-md-6 offset-md-3">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-left">
                         <p class="lead">{{ header }}</p>
                         <p>{{ description|safe }}</p>
                     </div>
                     {% if is_active %}
-                        <button type="button" name="activate" class="btn btn-danger pull-right">{% trans %}Deactivate{% endtrans %}</button>
+                        <button type="button" name="activate" class="btn btn-danger float-right">{% trans %}Deactivate{% endtrans %}</button>
                     {% else %}
-                        <button type="button" name="activate" class="btn btn-primary pull-right">{% trans %}Activate{% endtrans %}</button>
+                        <button type="button" name="activate" class="btn btn-primary float-right">{% trans %}Activate{% endtrans %}</button>
                     {% endif %}
                 </div>
                 <div class="service-detail-form{% if not is_active %} hidden{% endif %}">
