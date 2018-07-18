@@ -14,6 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "owl.carousel": "2.0.0-beta.3"
+    "owl.carousel": "2.3.4"
   }
 }
