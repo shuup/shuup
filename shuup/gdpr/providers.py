@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.front.providers import (
     FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
