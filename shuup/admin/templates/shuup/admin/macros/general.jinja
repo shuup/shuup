@@ -86,7 +86,7 @@
         <div class="row">
             <div class="col-md-3 section-navigation" data-navigatee="{{ form_id }}"></div>
             <div class="col-md-9">
-                <form method="post" id="{{ form_id }}">
+                <form method="post" id="{{ form_id }}" novalidate>
                     {% csrf_token %}
                     {% set ss_caller = caller %}
                     {% call content_block(section_title or _("General Information"), "fa-info-circle") %}

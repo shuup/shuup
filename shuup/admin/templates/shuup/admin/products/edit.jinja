@@ -14,7 +14,7 @@
         </div>
     {% endif %}
     {% call content_with_sidebar(content_id="product_form") %}
-        <form method="post" id="product_form">
+        <form method="post" id="product_form" novalidate>
             {% csrf_token %}
             {% call content_block(_("Basic Information"), "fa-info-circle", id="basic-information-section") %}
                 {% for form_def in form.form_defs.values() %}

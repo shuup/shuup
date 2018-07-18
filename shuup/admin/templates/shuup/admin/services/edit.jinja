@@ -4,7 +4,7 @@
 
 {% block content %}
     {% call content_with_sidebar(content_id="service_form") %}
-        <form method="post" id="service_form">
+        <form method="post" id="service_form" novalidate>
             {% csrf_token %}
             {% set form_defs = form.form_defs %}
             {% include form_defs["base"].template_name with context %}
