@@ -12,9 +12,8 @@ import json
 import django
 import six
 from django.core.urlresolvers import reverse_lazy
-from django.forms import HiddenInput, Textarea, TextInput
 from django.forms import TimeInput as DjangoTimeInput
-from django.forms import Widget
+from django.forms import HiddenInput, Textarea, TextInput, Widget
 from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe

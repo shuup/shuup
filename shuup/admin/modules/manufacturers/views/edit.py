@@ -31,17 +31,13 @@ class ManufacturerForm(ModelForm):
 
         # add shops field when superuser only
         if getattr(self.request.user, "is_superuser", False):
-            initial_shops = []
-            if self.instance.pk:
-                initial_shops = self.instance.shops.all()
-
             self.fields["shops"] = Select2MultipleField(
                 label=_("Shops"),
                 help_text=_("Select shops for this manufacturer. Keep it blank to share with all shops."),
                 model=Shop,
-                initial=initial_shops,
                 required=False,
             )
+            initial_shops = (self.instance.shops.all() if self.instance.pk else [])
             self.fields["shops"].widget.choices = [(shop.pk, force_text(shop)) for shop in initial_shops]
         else:
             # drop shops fields

@@ -44,10 +44,8 @@ class PermissionChangeFormBase(forms.ModelForm):
             # Only require old password when editing
             self.fields.pop("old_password")
 
-        initial_groups = self._get_initial_groups()
         permission_groups_field = Select2MultipleField(
             model=PermissionGroup,
-            initial=[group.pk for group in initial_groups],
             required=False,
             label=_("Permission Groups"),
             help_text=_(
@@ -55,6 +53,7 @@ class PermissionChangeFormBase(forms.ModelForm):
                 "Permission groups are configured through Contacts - Permission Groups."
             )
         )
+        initial_groups = self._get_initial_groups()
         permission_groups_field.widget.choices = [(group.pk, force_text(group)) for group in initial_groups]
         self.fields["permission_groups"] = permission_groups_field
 

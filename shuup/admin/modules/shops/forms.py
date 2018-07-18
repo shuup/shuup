@@ -41,15 +41,15 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
             label=_("Currency"),
             help_text=_("The primary shop currency. This is the currency used when selling your products.")
         )
-        initial_members = self.instance.staff_members.all() if self.instance.pk else []
+
         staff_members = Select2MultipleField(
             label=_("Staff"),
             help_text=_("Select staff members for this shop."),
             model=get_user_model(),
-            initial=initial_members,
-            required=False)
-
+            required=False
+        )
         staff_members.widget = QuickAddUserMultiSelect(attrs={"data-model": "auth.User"})
+        initial_members = (self.instance.staff_members.all() if self.instance.pk else [])
         staff_members.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
         self.fields["staff_members"] = staff_members
         self.fields["domain"].required = ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS")
