@@ -4,45 +4,43 @@
 
 {% block content %}
     {% call content_block(_("Import Data - Complete"), "fa-info-circle") %}
-        <div class="row">
-            <div class="span12 normal-element no-left-margin">
-                <h2>{% trans %}Import Complete!{% endtrans %}</h2>
-                <h3>{% trans %}New items{% endtrans %}</h3>
-                {% if importer.new_objects %}
-                    {% trans %}The following items were imported as new:{% endtrans %}
-                    <ul>
-                        {% for obj in importer.new_objects %}
-                        {% set url = shuup_admin.model_url(obj, "detail") %}
+        <div class="span12 normal-element no-left-margin">
+            <h2>{% trans %}Import Complete!{% endtrans %}</h2>
+            <h3>{% trans %}New items{% endtrans %}</h3>
+            {% if importer.new_objects %}
+                {% trans %}The following items were imported as new:{% endtrans %}
+                <ul>
+                    {% for obj in importer.new_objects %}
+                    {% set url = shuup_admin.model_url(obj, "detail") %}
+                    <li><a href="{{ url }}">{{ obj }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>{% trans %}Zero new items were created.{% endtrans %}</p>
+            {% endif %}
+
+            <h3>{% trans %}Updated items{% endtrans %}</h3>
+            {% if importer.updated_objects %}
+                {% trans %}The following items were updated:{% endtrans %}
+                <ul>
+                    {% for obj in importer.updated_objects %}
+                    {% set url = shuup_admin.model_url(obj, "detail") %}
                         <li><a href="{{ url }}">{{ obj }}</a></li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>{% trans %}Zero new items were created.{% endtrans %}</p>
-                {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>{% trans %}Zero items were updated.{% endtrans %}</p>
+            {% endif %}
 
-                <h3>{% trans %}Updated items{% endtrans %}</h3>
-                {% if importer.updated_objects %}
-                    {% trans %}The following items were updated:{% endtrans %}
-                    <ul>
-                        {% for obj in importer.updated_objects %}
-                        {% set url = shuup_admin.model_url(obj, "detail") %}
-                            <li><a href="{{ url }}">{{ obj }}</a></li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>{% trans %}Zero items were updated.{% endtrans %}</p>
+            {% if importer.log_messages %}
+            <h3>{% trans %}Import log{% endtrans %}</h3>
+            {% for ili in importer.log_messages %}
+                {% if ili.messages %}
+                    <h4>{% if ili.instance %}{{ ili.instance }}{% else %}{% trans %}Other messages{% endtrans %}{% endif %}</h4>
+                    <ul>{% for msg in ili.messages %}<li>{{ msg }}</li>{% endfor %}</ul>
                 {% endif %}
-
-                {% if importer.log_messages %}
-                <h3>{% trans %}Import log{% endtrans %}</h3>
-                {% for ili in importer.log_messages %}
-                    {% if ili.messages %}
-                        <h4>{% if ili.instance %}{{ ili.instance }}{% else %}{% trans %}Other messages{% endtrans %}{% endif %}</h4>
-                        <ul>{% for msg in ili.messages %}<li>{{ msg }}</li>{% endfor %}</ul>
-                    {% endif %}
-                {% endfor %}
-                {% endif %}
-            </div>
+            {% endfor %}
+            {% endif %}
         </div>
     {% endcall %}
 {% endblock %}
