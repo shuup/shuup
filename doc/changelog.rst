@@ -45,6 +45,7 @@ Simple CMS
 Xtheme
 ~~~~~~
 
+- Make the Parler default language be the first language in plugin multi-language form
 - Add option to render extra templates in theme configuration.
 - Add option for per object placeholders
 - Fix bug deleting last row from placeholder
