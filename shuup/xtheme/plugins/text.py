@@ -28,5 +28,5 @@ class TextPlugin(Plugin):
     ]
 
     def render(self, context):  # doccov: ignore
-        text = self.get_translated_value("text")
+        text = self.get_translated_value("text", default="")
         return mark_safe(text)

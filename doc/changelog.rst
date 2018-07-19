@@ -22,6 +22,7 @@ Bug fixes
 - Fix order printouts template by checking whether the addresses are valid
   before calling methods.
 - Fix front manufacturer modified filter to consider only visible shop products
+- Make Xtheme TextPlugin fallback to empty string when there is no translation for the current language.
 
 Front
 ~~~~~
