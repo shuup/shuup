@@ -20,7 +20,7 @@
 </div>
 {% include "shuup/xtheme/_editor_layout.jinja" %}
 {% if current_cell %}
-    {% include "shuup/xtheme/_editor_cell.jinja" %}
+    {% include "shuup/xtheme/_editor_cell.jinja" with context %}
 {% endif %}
 {% if changed %}
     <script>refreshPlaceholderInParent({{ layout.placeholder_name|json }});</script>
