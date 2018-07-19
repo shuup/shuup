@@ -25,7 +25,7 @@ def do_request_and_asserts(rf, contact, maintenance=False, expect_all_seeing=Fal
         assert toolbar
 
     if maintenance:
-        maintenance_class = "maintenance-on" if maintenance else "maintenance-off"
+        maintenance_class = "badge-success" if maintenance else "badge-warning"
         assert soup.find("span", {"class": maintenance_class})
 
     texts = []

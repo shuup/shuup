@@ -302,21 +302,36 @@
 
 .navbar-admin-tools {
     .navbar-brand {
-        padding-top: 5px;
+        width: 100%;
+        position: absolute;
+
+        h2 {
+            font-size: 1.2em;
+            float: left;
+            padding: 0;
+            margin: 0 10px 0 0;
+        }
         .admin-tools-info {
-            font-size: 80%;
-        }
-        .maintenance-on, .visibility-limit-on {
-            color: green;
-            font-weight: bold;
-        }
-        .maintenance-off, .visibility-limit-off {
-            color: red;
-            font-weight: bold;
-        }
-        .anonymous-contact-mode, .company-contact-mode, .person-contact-mode {
-            color: green;
-            font-weight: bold;
+            float: left;
+            position: relative;
+
+            .badge {
+                font-size: 1rem;
+
+                &.badge-warning {
+                    background-color: @brand-danger;
+                }
+            }
+
+            i {
+                margin-left: 10px;
+            }
+            .fa-eye-slash {
+                color: @brand-danger;
+            }
+            .fa-eye {
+                color: @brand-success;
+            }
         }
     }
 }
