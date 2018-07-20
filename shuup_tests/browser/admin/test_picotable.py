@@ -46,8 +46,8 @@ list_view_settings = {
     },
     "shop_product": {
         "page_header": "Shop Products",
-        "default_column_count": 6,
-        "addable_fields": [(13, "Gtin"), (6, "Default Price")],
+        "default_column_count": 7,
+        "addable_fields": [(12, "Gtin"), (5, "Default Price")],
         "creator": create_products,
         "test_pagination": False
     },

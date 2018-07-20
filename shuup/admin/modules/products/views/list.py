@@ -33,42 +33,60 @@ class ProductListView(PicotableListView):
     picotable_class = ProductPicotable
 
     default_columns = [
-        Column("primary_image",
-               _(u"Primary Image"),
-               display="get_primary_image",
-               class_name="text-center",
-               raw=True,
-               ordering=1,
-               sortable=False),
-        Column("name",
-               _(u"Name"),
-               sort_field="product__translations__name",
-               display="product__name",
-               filter_config=TextFilter(filter_field="product__translations__name",
-                                        placeholder=_("Filter by name...")),
-               ordering=2),
-        Column("shop",
-               _("Shop"),
-               ordering=2),
-        Column("sku",
-               _(u"SKU"),
-               display="product__sku",
-               filter_config=RangeFilter(filter_field="product__sku"),
-               ordering=3),
-        Column("barcode",
-               _(u"Barcode"),
-               display="product__barcode",
-               filter_config=TextFilter(placeholder=_("Filter by barcode...")),
-               ordering=4),
-        Column("type",
-               _(u"Type"),
-               display="product__type",
-               ordering=5),
-        Column("mode",
-               _(u"Mode"),
-               display="product__mode",
-               filter_config=ChoicesFilter(ProductMode.choices),
-               ordering=6),
+        Column(
+            "primary_image",
+            _(u"Primary Image"),
+            display="get_primary_image",
+            class_name="text-center",
+            raw=True,
+            ordering=1,
+            sortable=False),
+        Column(
+            "name",
+            _(u"Name"),
+            sort_field="product__translations__name",
+            display="product__name",
+            filter_config=TextFilter(
+                filter_field="product__translations__name",
+                placeholder=_("Filter by name...")
+            ),
+            ordering=2),
+        Column(
+            "sku",
+            _(u"SKU"),
+            display="product__sku",
+            filter_config=RangeFilter(filter_field="product__sku"),
+            ordering=3),
+        Column(
+            "barcode",
+            _(u"Barcode"),
+            display="product__barcode",
+            filter_config=TextFilter(placeholder=_("Filter by barcode...")),
+            ordering=4),
+        Column(
+            "mode",
+            _(u"Mode"),
+            display="product__mode",
+            filter_config=ChoicesFilter(ProductMode.choices),
+            ordering=5),
+        Column(
+            "primary_category",
+            _("Primary Category"),
+            display="primary_category",
+            filter_config=TextFilter(
+                filter_field="primary_category__translations__name",
+                placeholder=_("Filter by category name...")
+            ),
+            ordering=6),
+        Column(
+            "categories",
+            _("Categories"),
+            display="categories",
+            filter_config=TextFilter(
+                filter_field="categories__translations__name",
+                placeholder=_("Filter by category name...")
+            ),
+            ordering=7)
     ]
 
     related_objects = [
