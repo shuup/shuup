@@ -11,7 +11,7 @@
     <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}"></script>
     <script src="{{ static("xtheme/editor.js") }}"></script>
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote.css" rel="stylesheet">
 </head>
 <body>
 <div id="global-toolbar">
@@ -27,15 +27,67 @@
 {% endif %}
 <script>
     (function(){
-        $(".summernote-editor").summernote({
-            height: 300,
-            disableDragAndDrop: true, // to ensure server works tomorrow too
-            callbacks: {
-                onBlur: function() {
-                    $(this).parent().find("textarea.hidden").val($(this).summernote('code'));
-                }
+        function getMediaButton($editor) {
+            return function (context) {
+                return $.summernote.ui.button({
+                    contents: $.summernote.ui.icon($.summernote.options.icons.picture),
+                    tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
+                    click: function(e) {
+                        window.BrowseAPI.openBrowseWindow({
+                            kind: "media",
+                            clearable: true,
+                            onSelect: function (obj) {
+                                return $editor.summernote("insertImage", obj.url);
+                            }
+                        });
+                    }
+                }).render();
             }
-        });
+        };
+
+        function cancelEvent(event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }
+
+        $(".summernote-editor").each(function (index, element) {
+            var $editor = $(element);
+            $editor.summernote({
+                height: 300,
+                popatmouse: false,
+                disableDragAndDrop: true,
+                toolbar: $.summernote.options.toolbar.filter(function (option) {
+                    return option[0] !== "insert";
+                }).concat([
+                    ["insert", ["link", "media"]]
+                ]),
+                buttons: {
+                    media: getMediaButton($editor)
+                },
+                callbacks: {
+                    onBlur: function() {
+                        $(this).parent().find("textarea.hidden").val($(this).summernote('code'));
+                    },
+                    onPaste: function(event) {
+                        // prevent pasting files
+                        var clipboardData = event.originalEvent.clipboardData;
+                        if (clipboardData) {
+                            for (var x = 0; x < clipboardData.items.length; x += 1) {
+                                if (clipboardData.items[x].kind === "file") {
+                                    cancelEvent(event);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            // prevent drop events
+            $editor.parent().find(".note-editable").off("drop");
+            $editor.parent().find(".note-editable").on("drop", function (event) {
+                cancelEvent(event);
+            });
+        })
     })();
 </script>
 </body>

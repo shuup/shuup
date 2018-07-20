@@ -38,7 +38,7 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     person_contact_text_content = "This text is shown for person contacts only!"
     _edit_layout(
         browser, "front_content", "#xt-ph-front_content-xtheme-person-contact-layout", person_contact_text_content)
-    
+
     browser.find_by_css("#admin-tools-menu li.dropdown").click()
     browser.find_by_css("a[href='/force-anonymous-contact/']").first.click()
 
@@ -54,7 +54,7 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     company_contact_text_content = "This text is shown for company contacts only!"
     _edit_layout(
         browser, "front_content", "#xt-ph-front_content-xtheme-company-contact-layout", company_contact_text_content)
-    
+
     # Close edit
     click_element(browser, ".xt-edit-toggle button[type='submit']")
 
@@ -136,7 +136,7 @@ def test_xtheme_edit_product(admin_user, browser, live_server, settings):
         first_product_text_content
     )
 
-    # Visit second product and edit the layout with custom text 
+    # Visit second product and edit the layout with custom text
     second_product = products.pop()
     second_product_url = "%s%s" % (
         live_server, reverse("shuup:product", kwargs={"pk": second_product.pk, "slug": second_product.slug})
@@ -174,7 +174,7 @@ def test_xtheme_edit_product(admin_user, browser, live_server, settings):
     wait_until_condition(browser, lambda x: x.is_text_present(common_text_content))
     wait_until_condition(browser, lambda x: x.is_text_present(first_product_text_content))
     wait_until_condition(browser, lambda x: not x.is_text_present(second_product_text_content))
-    
+
     browser.visit(second_product_url)
     wait_until_condition(browser, lambda x: x.is_text_present(common_text_content))
     wait_until_condition(browser, lambda x: not x.is_text_present(first_product_text_content))

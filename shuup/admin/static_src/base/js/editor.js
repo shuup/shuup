@@ -7,27 +7,75 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-function activateEditor($editor, attrs={}) {
-    return $editor.summernote($.extend(true, {
+
+
+const getMediaButton = ($editor) => context => (
+    $.summernote.ui.button({
+        contents: $.summernote.ui.icon($.summernote.options.icons.picture),
+        tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
+        click() {
+            window.BrowseAPI.openBrowseWindow({
+                kind: "media",
+                clearable: true,
+                onSelect: (obj) => {
+                    $editor.summernote("insertImage", obj.url);
+                }
+            });
+        }
+    }).render()
+);
+
+function activateEditor($editor, attrs = {}) {
+    function cancelEvent(event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+    const $summernote = $editor.summernote($.extend(true, {
         height: 200,
-        disableDragAndDrop: true, // to ensure server works tomorrow too
+        popatmouse: false,
+        disableDragAndDrop: true,
         callbacks: {
-            onBlur: function() {
-                $editor.parent().find("textarea.hidden").val($(this).summernote('code'));
+            onBlur: function () {
+                $editor.parent().find("textarea.hidden").val($(this).summernote("code"));
+            },
+            onPaste(event) {
+                // prevent pasting files
+                const clipboardData = event.originalEvent.clipboardData;
+                if (clipboardData) {
+                    for (let x = 0; x < clipboardData.items.length; x += 1) {
+                        if (clipboardData.items[x].kind === "file") {
+                            cancelEvent(event);
+                            return;
+                        }
+                    }
+                }
             }
+        },
+        toolbar: $.summernote.options.toolbar.filter((option => option[0] !== "insert")).concat([
+            ["insert", ["link", "media"]]
+        ]),
+        buttons: {
+            media: getMediaButton($editor)
         }
     }, attrs));
+
+    // prevent drop events
+    $editor.parent().find(".note-editable").off("drop");
+    $editor.parent().find(".note-editable").on("drop", (event) => {
+        cancelEvent(event);
+    });
+    return $summernote;
 }
 
 function activateEditors() {
-    $(".summernote-editor").each(function(idx, object) {
+    $(".summernote-editor").each(function (idx, object) {
         const $editor = $(object);
-        if($editor.parent().find(".note-editor").length === 0){
+        if ($editor.parent().find(".note-editor").length === 0) {
             activateEditor($editor);
         }
     });
 }
 
-$(function(){
+$(function () {
     activateEditors();
 });
