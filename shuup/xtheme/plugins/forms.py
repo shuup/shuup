@@ -101,7 +101,13 @@ class PluginForm(forms.Form):
         return config
 
     def get_languages(self):
-        return [l[0] for l in settings.LANGUAGES] + [FALLBACK_LANGUAGE_CODE]
+        default_language = settings.PARLER_DEFAULT_LANGUAGE_CODE
+        languages = [l[0] for l in settings.LANGUAGES]
+
+        if default_language in languages:
+            languages.remove(default_language)
+
+        return [default_language] + languages + [FALLBACK_LANGUAGE_CODE]
 
 
 class GenericPluginForm(PluginForm):

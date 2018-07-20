@@ -1,6 +1,8 @@
-<button class="del-cell-btn"
-        data-x="{{ current_cell_coords[0] }}"
-        data-y="{{ current_cell_coords[1] }}">
+<button
+    class="del-cell-btn"
+    data-x="{{ current_cell_coords[0] }}"
+    data-y="{{ current_cell_coords[1] }}"
+>
     <i class="fa fa-trash"></i> {% trans %}Delete This Cell{% endtrans %}
 </button>
 
@@ -19,7 +21,7 @@
                 <div>
                     <ul class="editor-tabs nav nav-tabs">
                         {% for language_code in form.plugin.get_languages() %}
-                        <li role="presentation" {% if loop.first %}class="active"{% endif %}>
+                        <li role="presentation" {% if language_code == LANGUAGE_CODE %}class="active"{% endif %}>
                             {% if language_code == "*" %}
                                 <a href="#untranslated" data-toggle="tab">{% trans %}Untranslated{% endtrans %}</a>
                             {% else %}
@@ -30,7 +32,7 @@
                     </ul>
                     <div class="tab-content">
                         {% for language_code in form.plugin.get_languages() %}
-                            <div role="tabpanel" class="tab-pane {% if loop.first %}active{% endif %}"
+                            <div role="tabpanel" class="tab-pane {% if language_code == LANGUAGE_CODE %}active{% endif %}"
                                 {% if language_code == "*" %}
                                     id="untranslated"
                                 {% else %}

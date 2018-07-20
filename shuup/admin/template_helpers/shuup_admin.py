@@ -181,3 +181,9 @@ def get_admin_shop(context):
 @contextfunction
 def is_multishop_enabled(context):
     return settings.SHUUP_ENABLE_MULTIPLE_SHOPS is True
+
+
+@contextfunction
+def get_current_language(context):
+    from django.utils.translation import get_language
+    return get_language()

@@ -121,3 +121,14 @@ def click_element(browser, css_selector, timeout=10, frequency=1.0, header_heigh
         timeout=timeout,
         frequency=frequency)
     browser.find_by_css(css_selector).click()
+
+
+def page_has_loaded(browser):
+    """
+    Returns whether the page has loaded
+
+    :param browser:
+    :type browser: splinter.browser.Browser
+    :rtype bool
+    """
+    return browser.evaluate_script("document.readyState") == "complete"

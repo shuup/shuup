@@ -15,7 +15,7 @@ When using multiple language_dependent_content_tabs in a single page, do remembe
         <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
             <ul class="nav nav-tabs">
                 {% for language in form.languages %}
-                <li role="presentation" {% if loop.first %}class="active"{% endif %} data-lang="{{ language }}">
+                <li role="presentation" {% if language == shuup_admin.get_current_language() %}class="active"{% endif %} data-lang="{{ language }}">
                     <a href="#{{ tab_id_prefix }}-{{ language }}" role="tab" data-toggle="tab">{{ form.language_names[language] }}</a>
                 </li>
                 {% endfor %}
@@ -25,7 +25,7 @@ When using multiple language_dependent_content_tabs in a single page, do remembe
     {% endif %}
     <div class="tab-content">
         {% for language in form.languages %}
-            <div class="tab-pane fade {% if loop.first %}in active{% endif %}" id="{{ tab_id_prefix }}-{{ language }}" data-lang="{{ language }}">
+            <div class="tab-pane fade {% if language == shuup_admin.get_current_language() %}in active{% endif %}" id="{{ tab_id_prefix }}-{{ language }}" data-lang="{{ language }}">
                 {% set map = form.trans_name_map[language] %}
                 {% if caller %}
                     {{ caller(form, language, map) }}

@@ -111,7 +111,7 @@ def initialize_front_browser_test(browser, live_server):
 
 
 def initialize_admin_browser_test(
-        browser, live_server, settings, username="admin", password="password", onboarding=False):
+        browser, live_server, settings, username="admin", password="password", onboarding=False, language="en"):
     if not onboarding:
         settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
     activate("en")
@@ -126,6 +126,6 @@ def initialize_admin_browser_test(
     if not onboarding:
         # set shop language to eng
         browser.find_by_id("dropdownMenu").click()
-        browser.find_by_xpath('//a[@data-value="en"]').first.click()
+        browser.find_by_xpath('//a[@data-value="%s"]' % language).first.click()
 
     return browser
