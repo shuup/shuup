@@ -226,43 +226,39 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">
-                    <strong>{% trans %}Administration Tools{% endtrans %}</strong>
-                    <br>
-                    <span class="admin-tools-info">
-                    {% trans %}Maintenance mode{% endtrans %}:
+                <div class="navbar-brand">
+                    <h2>{% trans %}Tools{% endtrans %}</h2>
+                    <div class="admin-tools-info">
                     {% if is_maintenance_mode %}
-                        <span class="maintenance-on">{% trans %}ON{% endtrans %}</span>
+                        <span class="badge badge-success">{% trans %}Live{% endtrans %}</span>
                     {% else %}
-                        <span class="maintenance-off">{% trans %}OFF{% endtrans %}</span>
+                        <span class="badge badge-warning">{% trans %}Maintenance{% endtrans %}</span>
                     {% endif %}
-                    </span>
-                    {% if can_toggle_all_seeing %}
-                        <span class="admin-tools-info">
-                        {% trans %}Visibility limit{% endtrans %}:
-                        {% if is_all_seeing %}
-                            <span class="visibility-limit-off">{% trans %}OFF{% endtrans %}</span>
-                        {% else %}
-                            <span class="visibility-limit-on">{% trans %}ON{% endtrans %}</span>
-                        {% endif %}
-                        </span>
-                    {% endif %}
-                    <span class="admin-tools-info">
-                    {% trans %}Customer mode{% endtrans %}:
+                    </div>
+                    <div class="admin-tools-info">
                     {% if is_anonymous %}
-                        <span class="anonymous-contact-mode">{% trans %}GUEST{% endtrans %}</span>
+                        <i class="fa fa-user-secret" title="{% trans %}Customer mode{% endtrans %}: {% trans %}GUEST{% endtrans %}"></i>
                     {% elif is_company %}
-                        <span class="company-contact-mode">{% trans %}COMPANY CONTACT{% endtrans %}</span>
+                        <i class="fa fa-globe" title="{% trans %}Customer mode{% endtrans %}: {% trans %}COMPANY CONTACT{% endtrans %}"></i>
                     {% else %}
-                        <span class="person-contact-mode">{% trans %}PERSON CONTACT{% endtrans %}</span>
+                        <i class="fa fa-users" title="{% trans %}Customer mode{% endtrans %}: {% trans %}PERSON CONTACT{% endtrans %}"></i>
                     {% endif %}
-                    </span>
-                </a>
+                    </div>
+                    {% if can_toggle_all_seeing %}
+                        <div class="admin-tools-info">
+                        {% if is_all_seeing %}
+                            <i class="fa fa-eye" title="{% trans %}show all products and categories{% endtrans %}"></i>
+                        {% else %}
+                            <i class="fa fa-eye-slash" title="{% trans %}show only visible products and categories{% endtrans %}"></i>
+                        {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
             </div>
             <div class="collapse navbar-collapse" id="admin-tools-menu">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="{{ url("shuup_admin:dashboard") }}">{% trans %}Shop Administration{% endtrans %}</a>
+                        <a href="{{ url("shuup_admin:dashboard") }}" target="_blank">{% trans %}Shop Administration{% endtrans %}</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle"
