@@ -10,7 +10,7 @@ def add_shop_for_carousels(apps, schema_editor):
     Carousel = apps.get_model("carousel", "Carousel")
     shop = Shop.objects.first()
     for carousel in Carousel.objects.all():
-        carousel.shops.set([shop])
+        carousel.shops = [shop]
 
 
 class Migration(migrations.Migration):
