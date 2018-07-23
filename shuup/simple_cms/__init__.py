@@ -13,7 +13,7 @@ import shuup.apps
 
 class AppConfig(shuup.apps.AppConfig):
     name = __name__
-    verbose_name = _("Simple CMS")
+    verbose_name = _("Content Pages")
     label = "shuup_simple_cms"
 
     provides = {

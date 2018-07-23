@@ -42,7 +42,7 @@ class PageForm(MultiLanguageModelForm):
             'show_child_timestamps',
         ]
         widgets = {
-            "content": TextEditorWidget()
+            "content": TextEditorWidget(attrs={"data-height": 500, "data-noresize": "true"})
         }
 
     def __init__(self, **kwargs):

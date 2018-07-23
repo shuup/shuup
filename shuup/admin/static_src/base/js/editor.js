@@ -71,7 +71,18 @@ function activateEditors() {
     $(".summernote-editor").each(function (idx, object) {
         const $editor = $(object);
         if ($editor.parent().find(".note-editor").length === 0) {
-            activateEditor($editor);
+            const textarea = $editor.parent().find("textarea");
+            const params = textarea.data() || {};
+            const attrs = {};
+            const paramKeys = Object.keys(params);
+
+            if (paramKeys.includes("height")) {
+                attrs.height = params.height;
+            }
+            activateEditor($editor, attrs);
+            if (paramKeys.includes("noresize")) {
+                $editor.parent().find(".note-statusbar").hide();
+            }
         }
     });
 }

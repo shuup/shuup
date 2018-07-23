@@ -18,7 +18,7 @@ from shuup.simple_cms.models import Page
 
 
 class SimpleCMSAdminModule(AdminModule):
-    name = _(u"Simple CMS")
+    name = _(u"Content Pages")
     breadcrumbs_menu_entry = MenuEntry(name, "shuup_admin:simple_cms.page.list")
 
     def get_urls(self):
