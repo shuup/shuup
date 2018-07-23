@@ -4,7 +4,7 @@
 
 {% block content %}
     {% call content_with_sidebar(content_id="product_type_form") %}
-        <form method="post" id="product_type_form">
+        <form method="post" id="product_type_form" novalidate>
             {% csrf_token %}
             {% call content_block(_("General information"), "fa-info-circle") %}
                 {% call(form, language, map) language_dependent_content_tabs(form) %}

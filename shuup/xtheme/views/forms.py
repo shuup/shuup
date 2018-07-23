@@ -43,13 +43,14 @@ class LayoutCellGeneralInfoForm(forms.Form):
         Populate the form with fields for size and plugin selection.
         """
 
-        initial_cell_width = self.layout_cell.sizes.get("sm") or self.CELL_FULL_WIDTH
+        if self.layout_cell.plugin_identifier:
+            initial_cell_width = self.layout_cell.sizes.get("sm") or self.CELL_FULL_WIDTH
+            self.fields["cell_width"] = forms.ChoiceField(
+                label=_("Cell width"), choices=self.CELL_WIDTH_CHOICES, initial=initial_cell_width)
 
-        self.fields["cell_width"] = forms.ChoiceField(
-            label=_("Cell width"), choices=self.CELL_WIDTH_CHOICES, initial=initial_cell_width)
-
-        self.fields["cell_align"] = forms.ChoiceField(
-            label=_("Cell align"), choices=self.CELL_ALIGN_CHOICES, initial=" ")
+            initial_cell_align = self.layout_cell.align or self.CELL_ALIGN_CHOICES[0][0]
+            self.fields["cell_align"] = forms.ChoiceField(
+                label=_("Cell align"), choices=self.CELL_ALIGN_CHOICES, initial=initial_cell_align)
 
         if self.theme:
             plugin_choices = self.theme.get_all_plugin_choices(empty_label=_("No Plugin"))

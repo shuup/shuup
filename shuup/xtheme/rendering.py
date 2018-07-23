@@ -163,7 +163,7 @@ class PlaceholderRenderer(object):
                     "This placeholder is global and content of this placeholder is shown on all pages.")
                 help_text += " " + force_text(glopal_help_text)
 
-            write("<p>%s</p>" % help_text)
+            write('<p class="placeholder-help-text">%s</p>' % help_text)
 
         if self.edit and self.default_layout:
             self._render_default_layout_script_tag(write)

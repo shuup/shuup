@@ -45,6 +45,9 @@ class Select2MultipleField(Field):
         self.model = model
         super(Select2MultipleField, self).__init__(*args, **kwargs)
 
+    def prepare_value(self, value):
+        return [getattr(v, "pk", v) for v in value or []]
+
     def to_python(self, value):
         value = super(Select2MultipleField, self).to_python(value)
         # Here we have sometimes None which will cause errors when
