@@ -1,6 +1,10 @@
 {% extends "shuup/front/base.jinja" %}
 {% from "shuup/front/macros/general.jinja" import render_field %}
 
+{% block navigation %}
+    {{ render_navigation(show_quick_login=False) }}
+{% endblock %}
+
 {% block title %}{% trans %}Register{% endtrans %}{% endblock %}
 
 {% block content %}
