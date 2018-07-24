@@ -84,7 +84,6 @@ utils.add_exclude_patters([
 
 REQUIRES = [
     'Babel==2.5.3',
-    'cryptography==1.7.1',
     'Django>=1.8,<2',
     'django-bootstrap3>=6.1,<10',
     'django-countries>=3.3,<5.3',
