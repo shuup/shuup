@@ -24,6 +24,12 @@ Bug fixes
 - Fix front manufacturer modified filter to consider only visible shop products
 - Make Xtheme TextPlugin fallback to empty string when there is no translation for the current language.
 
+Admin
+~~~~~
+
+- Make Summernote editor use Shuup media browser when adding pictures.
+  Drag/drop and copy/paste were disabled in favor of media browser feature.
+
 Front
 ~~~~~
 

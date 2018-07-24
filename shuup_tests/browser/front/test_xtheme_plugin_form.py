@@ -6,15 +6,15 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import time
+
 import pytest
 from django.test.utils import override_settings
+from django.utils.translation import activate, get_language
 
-from django.utils.translation import get_language, activate
+from shuup.testing import factories
 from shuup.testing.browser_utils import (
-    click_element, page_has_loaded, wait_until_appeared,
-    wait_until_condition
+    click_element, page_has_loaded, wait_until_appeared, wait_until_condition
 )
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -130,3 +130,68 @@ def test_xtheme_plugin_form_selected_language_pane(admin_user, browser, live_ser
 
         # check the active language
         assert language == iframe.find_by_css("ul.editor-tabs li.active a").first.text
+
+
+@pytest.mark.browser
+@pytest.mark.djangodb
+def test_xtheme_editor_form_picture(admin_user, browser, live_server, settings):
+    """
+    Test that is is possible to add image fron media browser
+    """
+    browser = initialize_admin_browser_test(browser, live_server, settings)
+    browser.visit(live_server + "/")
+
+    wait_until_condition(browser, lambda x: page_has_loaded(x), timeout=20)
+    wait_until_appeared(browser, ".xt-edit-toggle button[type='submit']")
+    click_element(browser, ".xt-edit-toggle button[type='submit']")
+
+    placeholder_selector = "#xt-ph-front_content-xtheme-person-contact-layout"
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(placeholder_selector))
+    click_element(browser, placeholder_selector)
+
+    with browser.get_iframe("xt-edit-sidebar-iframe") as iframe:
+        # make sure all scripts are loaded
+        wait_until_condition(iframe, lambda x: page_has_loaded(x), timeout=20)
+
+        wait_until_condition(iframe, lambda x: x.is_text_present("front_content"))
+        wait_until_appeared(iframe, "button.layout-add-row-btn")
+        time.sleep(1)
+        wait_until_condition(iframe, lambda x: page_has_loaded(x), timeout=20)
+
+        # click to add a new row
+        click_element(iframe, "button.layout-add-row-btn")
+        time.sleep(1)
+        wait_until_condition(iframe, lambda x: page_has_loaded(x), timeout=20)
+
+        # select the last row (the added one)
+        click_element(iframe, "button.layout-add-row-btn")
+        iframe.find_by_css("div.layout-cell").last.click()
+        time.sleep(1)
+        wait_until_condition(iframe, lambda x: page_has_loaded(x), timeout=20)
+
+        # select the TextPlugin
+        wait_until_appeared(iframe, "select[name='general-plugin']")
+        iframe.select("general-plugin", "text")
+        time.sleep(1)
+        wait_until_condition(iframe, lambda x: page_has_loaded(x), timeout=20)
+        wait_until_appeared(iframe, "ul.editor-tabs")
+
+        filer_image = factories.get_random_filer_image()
+
+        wait_until_appeared(browser, "#id_plugin-text_en-editor-wrap button[aria-label='Picture']")
+        click_element(browser, "#id_plugin-text_en-editor-wrap button[aria-label='Picture']")
+        wait_until_condition(browser, lambda b: len(b.windows) == 2, timeout=20)
+
+        # change to the media browser window
+        browser.windows.current = browser.windows[1]
+
+        # click to select the picture
+        wait_until_appeared(browser, "a.file-preview")
+        browser.find_by_css("a.file-preview").first.click()
+
+        # back to the main window
+        wait_until_condition(browser, lambda b: len(b.windows) == 1)
+        browser.windows.current = browser.windows[0]
+
+        # make sure the image was added to the editor
+        wait_until_appeared(browser, "#id_plugin-text_en-editor-wrap .note-editable img[src='%s']" % filer_image.url, timeout=20)

@@ -33,7 +33,7 @@
     "masonry": "4.1.1",
     "sortablejs": "1.4.2",
     "dropzone": "4.3.0",
-    "summernote": "^0.8.2"
+    "summernote": "0.8.10"
   },
   "overrides": {
     "sortablejs": {
