@@ -35,7 +35,7 @@ class ContactGroupCondition(ContextCondition):
 
     def matches(self, context):
         customer = (context.customer if context.customer is not None else AnonymousContact())
-        customers_groups = customer.groups.all()
+        customers_groups = customer.get_contact_groups(context.shop)
         return self.contact_groups.filter(pk__in=customers_groups).exists()
 
     @property

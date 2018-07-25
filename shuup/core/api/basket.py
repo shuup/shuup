@@ -365,7 +365,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         user = self.request.user
         request.shop = shop or self.get_basket_shop()
         request.person = get_person_contact(user)
-        company = get_company_contact(user)
+        company = get_company_contact(user, request.shop)
         request.customer = (company or request.person)
         if with_basket:
             request.basket = self.get_object()

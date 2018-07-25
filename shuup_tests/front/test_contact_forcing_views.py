@@ -45,7 +45,7 @@ def test_force_contact_views(rf):
     _call_force_view(request, force_company_contact)
 
     request = apply_request_middleware(rf.get("/"), user=user)
-    assert get_company_contact(user) == request.customer
+    assert get_company_contact(user, shop) == request.customer
     assert person_contact in request.customer.members.all()
     assert request.person == person_contact
     assert_all_good_with_random_user()
@@ -59,7 +59,7 @@ def test_force_contact_views(rf):
     request = apply_request_middleware(rf.get("/"), user=user)
     assert request.customer == person_contact
     assert get_person_contact(user) == person_contact
-    assert get_company_contact(user) is None
+    assert get_company_contact(user, shop) is None
     assert_all_good_with_random_user()
 
 
@@ -91,7 +91,7 @@ def test_force_views_only_for_staff(rf):
     request = apply_request_middleware(rf.get("/"), user=user)
     assert request.customer == person_contact
 
-    assert get_company_contact(user) is None
+    assert get_company_contact(user, shop) is None
 
 
 def _call_force_view(request, view):

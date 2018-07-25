@@ -41,18 +41,19 @@ PROTECTED_CONTACT_GROUP_IDENTIFIERS = [
 
 
 class ContactGroupQuerySet(TranslatableQuerySet):
-    def with_price_display_options(self):
-        return self.filter(
+    def with_price_display_options(self, shop):
+        return self.filter(shop=shop).filter(
             models.Q(show_prices_including_taxes__isnull=False) |
             models.Q(hide_prices__isnull=False))
 
-    def all_except_defaults(self):
-        return self.exclude(identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS)
+    def all_except_defaults(self, shop):
+        return self.filter(shop=shop).exclude(identifier__in=get_default_identifiers_for_shop(shop))
 
 
 class ContactGroup(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
+    shop = models.ForeignKey("Shop", related_name="contact_groups", verbose_name=_("shop"))
     show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
     show_prices_including_taxes = models.NullBooleanField(
         default=None, null=True, blank=True,
@@ -83,7 +84,7 @@ class ContactGroup(TranslatableShuupModel):
     def can_delete(self):
         return bool(
             self.pk and
-            self.identifier not in PROTECTED_CONTACT_GROUP_IDENTIFIERS and
+            not is_protected_group(self) and
             not self.customer_group_orders.count()
         )
 
@@ -108,9 +109,7 @@ class Contact(PolymorphicShuupModel):
     is_active = models.BooleanField(default=True, db_index=True, verbose_name=_('active'), help_text=_(
         "Check this if the contact is an active customer."
     ))
-    shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_('shops'), help_text=_(
-        "Inform which shops have access to this contact."
-    ))
+
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(
         "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('shipping address'),
@@ -195,7 +194,7 @@ class Contact(PolymorphicShuupModel):
     def language(self, value):
         self._language = value
 
-    def get_price_display_options(self):
+    def get_price_display_options(self, shop):
         """
         Get price display options of the contact.
 
@@ -215,9 +214,16 @@ class Contact(PolymorphicShuupModel):
 
         :rtype: PriceDisplayOptions
         """
-        groups_with_options = self.groups.with_price_display_options()
+        if self.is_anonymous:
+            group = self.get_default_group(shop)
+            if group:
+                groups_with_options = ContactGroup.objects.filter(pk=group.pk).with_price_display_options(shop)
+            else:
+                groups_with_options = None
+        else:
+            groups_with_options = self.groups.with_price_display_options(shop)
         if groups_with_options:
-            default_group = self.get_default_group()
+            default_group = self.get_default_group(shop)
             if groups_with_options.filter(pk=default_group.pk).exists():
                 group_with_options = default_group
             else:
@@ -226,14 +232,8 @@ class Contact(PolymorphicShuupModel):
             return group_with_options.get_price_display_options()
         return PriceDisplayOptions()
 
-    def save(self, *args, **kwargs):
-        add_to_default_group = bool(self.pk is None and self.default_contact_group_identifier)
-        super(Contact, self).save(*args, **kwargs)
-        if add_to_default_group:
-            self.groups.add(self.get_default_group())
-
     @classmethod
-    def get_default_group(cls):
+    def get_default_group(cls, shop):
         """
         Get or create default contact group for the class.
 
@@ -246,12 +246,26 @@ class Contact(PolymorphicShuupModel):
         :rtype: core.models.ContactGroup
         """
         obj, created = ContactGroup.objects.get_or_create(
-            identifier=cls.default_contact_group_identifier,
+            identifier="%s-%s" % (shop.pk, cls.default_contact_group_identifier),
+            shop=shop,
             defaults={
                 "name": cls.default_contact_group_name
             }
         )
         return obj
+
+    def get_contact_groups(self, shop):
+        if self.is_anonymous:
+            self.get_default_group(shop)  # Make sure group exists
+            return ContactGroup.objects.filter(identifier="%s-%s" % (shop.pk, self.default_contact_group_identifier))
+        return self.groups.all()
+
+    def get_shops(self):
+        from shuup.core.models import Shop
+        if not self.is_anonymous:
+            ids = self.groups.values_list("shop_id", flat=True)
+            return Shop.objects.filter(pk__in=ids)
+        return Shop.objects.none()
 
 
 class CompanyContact(Contact):
@@ -387,34 +401,13 @@ class AnonymousContact(Contact):
     def delete(self, *args, **kwargs):
         raise NotImplementedError("Not implemented: AnonymousContacts don't exist in the database, silly")
 
-    @property
-    def groups(self):
-        """
-        Contact groups accessor for anonymous contact.
-
-        The base class already has a `groups` property via `ContactGroup`
-        related_name, but this overrides it for `AnonymousContact` so that
-        it will return a queryset containing just the anonymous contact
-        group rather than returning the original related manager, which
-        cannot work since `AnonymousContact` is not in the database.
-
-        This allows to use statements like this for all kinds of contacts,
-        even `AnonymousContact`::
-
-            some_contact.groups.all()
-
-        :rtype: django.db.QuerySet
-        """
-        self.get_default_group()  # Make sure group exists
-        return ContactGroup.objects.filter(identifier=self.default_contact_group_identifier)
-
 
 def _split_name(full_name):
     names = full_name.rsplit(" ", 1)
     return (names if len(names) == 2 else [full_name, ""])
 
 
-def get_person_contact(user):
+def get_person_contact(user, shop=None):
     """
     Get PersonContact of given user.
 
@@ -443,10 +436,17 @@ def get_person_contact(user):
         'last_name': getattr(user, 'last_name', ''),
         'email': getattr(user, 'email', ''),
     }
-    return PersonContact.objects.get_or_create(user=user, defaults=defaults)[0]
+    contact, created = PersonContact.objects.get_or_create(user=user, defaults=defaults)
+    if created and contact.default_contact_group_identifier:
+        if not shop:
+            from shuup.core.models import Shop
+            shop = Shop.objects.first()  # fix this
+        # always ensure this user has a group
+        contact.groups.add(contact.get_default_group(shop))
+    return contact
 
 
-def get_company_contact(user):
+def get_company_contact(user, shop=None):
     """
     Get preferred CompanyContact of given user.
 
@@ -459,10 +459,13 @@ def get_company_contact(user):
       CompanyContact (or none) of which user's PersonContact is a member
     :rtype: CompanyContact|None
     """
-    if should_force_person_contact(user):
+    if should_force_person_contact(user):  # Todo: pass shop here...
         return None
 
-    contact = get_person_contact(user)
+    if not shop:
+        from shuup.core.models import Shop
+        shop = Shop.objects.first()  # fix this
+    contact = get_person_contact(user, shop)
     if not contact:
         return None
     return contact.company_memberships.filter(is_active=True).first()
@@ -472,7 +475,7 @@ def get_company_contact_for_shop(shop):
     company = CompanyContact.objects.get_or_create(
         identifier="shop-contact-%s" % shop.pk, defaults={"name": shop.public_name}
     )[0]
-    company.shops.add(shop)
+    company.get_default_group(shop)
     return company
 
 
@@ -484,6 +487,18 @@ def get_company_contact_for_shop_staff(shop, user):
     contact = get_company_contact_for_shop(shop)
     contact.members.add(get_person_contact(user))
     return contact
+
+
+def get_default_identifiers_for_shop(shop):
+    return ["%s-%s" % (shop.pk, identifier) for identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS]
+
+
+def is_protected_group(group):
+    return is_protected_identifier(group.identifier)
+
+
+def is_protected_identifier(identifier):
+    return bool([k for k in PROTECTED_CONTACT_GROUP_IDENTIFIERS if identifier.endswith(k)])
 
 
 CompanyContactLogEntry = define_log_model(CompanyContact)

@@ -20,7 +20,7 @@ from shuup_tests.simple_supplier.utils import get_simple_supplier
 def seed_source(user, shop):
     source = BasketishOrderSource(shop)
     source.status = get_initial_order_status()
-    source.customer = get_person_contact(user)
+    source.customer = get_person_contact(user, shop)
     source.payment_method = get_default_payment_method()
     source.shipping_method = get_default_shipping_method()
     return source

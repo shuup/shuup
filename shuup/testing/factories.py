@@ -402,10 +402,12 @@ def _get_service(
     return service
 
 
-def get_default_customer_group():
+def get_default_customer_group(shop=None):
+    if not shop:
+        shop = get_default_shop()
     group = default_by_identifier(ContactGroup)
     if not group:
-        group = ContactGroup.objects.create(name=DEFAULT_NAME, identifier=DEFAULT_IDENTIFIER)
+        group = ContactGroup.objects.create(name=DEFAULT_NAME, identifier=DEFAULT_IDENTIFIER, shop=shop)
         assert str(group) == DEFAULT_NAME
     return group
 
@@ -749,17 +751,25 @@ def create_random_person(locale=None, minimum_name_comp_len=0, shop=None):
         gender=random.choice("mfuo"),
         language=fake.language
     )
-    if shop:
-        contact.shops.add(shop)
+    if not shop:
+        shop = Shop.objects.first()
+
+    assert shop, "A contact requires a shop before creation."
+    # ensure default group
+    group = contact.get_default_group(shop)
+    contact.groups.add(group)
     return contact
 
 
-def create_random_contact_group():
+def create_random_contact_group(shop=None):
     fake = get_faker(["job"])
     name = fake.job()
     identifier = "%s-%s" % (ContactGroup.objects.count() + 1, name.lower().replace(" ", "-"))
+    if not shop:
+        shop = get_default_shop()
     return ContactGroup.objects.create(
         identifier=identifier,
+        shop=shop,
         name=name,
         show_pricing=random.choice([True, False]),
         show_prices_including_taxes=random.choice([True, False]),
@@ -783,8 +793,10 @@ def create_random_company(shop=None):
         default_billing_address=address,
         language=language
     )
-    if shop:
-        contact.shops.add(shop)
+    if not shop:
+        shop = Shop.objects.first()
+    group = contact.get_default_group(shop)
+    contact.groups.add(group)
     return contact
 
 

@@ -38,7 +38,7 @@ class CustomerGroupPricingModule(PricingModule):
         filter = Q(
             product=product_id, shop=shop,
             price_value__gt=0,
-            group__in=context.customer.groups.all())
+            group__in=context.customer.get_contact_groups(shop))
         result = (
             CgpPrice.objects.filter(filter)
             .order_by("price_value")[:1]
@@ -73,7 +73,7 @@ class CustomerGroupDiscountModule(DiscountModule):
         cgp_discount = CgpDiscount.objects.filter(
             shop_id=shop.id,
             product_id=product_id,
-            group__in=context.customer.groups.all(),
+            group__in=context.customer.get_contact_groups(shop),
             discount_amount_value__gt=0,
         ).order_by("-discount_amount_value").first()
 

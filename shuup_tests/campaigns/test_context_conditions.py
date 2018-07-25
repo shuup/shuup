@@ -13,8 +13,8 @@ from shuup.campaigns.models.context_conditions import (
 from shuup.campaigns.models.product_effects import ProductDiscountAmount
 from shuup.core.models import AnonymousContact
 from shuup.testing.factories import (
-    create_product, create_random_person, get_default_customer_group, get_shop
-)
+    create_product, create_random_person, get_default_customer_group, get_shop,
+    get_default_shop)
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -65,11 +65,12 @@ def test_context_contact_group_condition(rf):
 
 @pytest.mark.django_db
 def test_group_condition_with_anonymous_contact(rf):
+    shop = get_default_shop()
     original_price_value, discount_value = 6, 4
     request = get_request_for_contact_tests(rf)
     assert isinstance(request.customer, AnonymousContact)
     condition = ContactGroupCondition.objects.create()
-    condition.contact_groups.add(request.customer.groups.first())
+    condition.contact_groups.add(request.customer.get_contact_groups(shop).first())
     product = create_random_product_and_campaign(request.shop, [condition], original_price_value, discount_value)
 
     discounted_value = original_price_value - discount_value

@@ -17,6 +17,7 @@ from shuup.admin.modules.contacts.forms import (
 from shuup.admin.modules.contacts.views import (
     ContactDetailView, ContactEditView, ContactListView
 )
+from shuup.admin.shop_provider import SHOP_SESSION_KEY
 from shuup.core.models import (
     CompanyContact, Gender, get_person_contact, PersonContact
 )
@@ -109,10 +110,8 @@ def test_contact_edit_multishop(rf):
         shop1.staff_members.add(staff_user)
         shop2.staff_members.add(staff_user)
 
-        contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
         # only available in shop2
-        contact.shops.add(shop2)
-
+        contact = create_random_person(locale="en_US", minimum_name_comp_len=5, shop=shop2)
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         view = ContactDetailView.as_view()
 
@@ -137,12 +136,10 @@ def test_contact_company_edit_multishop(rf):
         shop2.staff_members.add(staff_user)
 
         # only available in shop2
-        contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
-        contact.shops.add(shop2)
+        contact = create_random_person(locale="en_US", minimum_name_comp_len=5, shop=shop2)
 
         # only available in shop1
-        company = create_random_company()
-        company.shops.add(shop1)
+        company = create_random_company(shop1)
 
         view = ContactEditView.as_view()
 
@@ -176,9 +173,7 @@ def test_contact_detail_multishop(rf):
         shop1.staff_members.add(staff_user)
         shop2.staff_members.add(staff_user)
 
-        contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
-        # only available in shop2
-        contact.shops.add(shop2)
+        contact = create_random_person(locale="en_US", minimum_name_comp_len=5, shop=shop2)
 
         view = ContactDetailView.as_view()
 
@@ -203,14 +198,17 @@ def test_company_contact_detail_multishop(rf):
         shop1.staff_members.add(staff_user)
         shop2.staff_members.add(staff_user)
 
-        company = create_random_company()
-        # only available in shop1
-        company.shops.add(shop1)
+        company = create_random_company(shop1)
+        assert company.groups.count() == 1
 
         view = ContactDetailView.as_view()
 
         # company not found for this shop
+        assert company.groups.filter(shop=shop1).exists()
+        assert not company.groups.filter(shop=shop2).exists()
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
+        assert company.groups.filter(shop=shop1).exists()
+        assert not company.groups.filter(shop=shop2).exists()
         with pytest.raises(PermissionDenied):
             response = view(request, pk=company.id)
 
@@ -231,12 +229,10 @@ def test_contact_company_list_multishop(rf):
         shop2.staff_members.add(staff_user)
 
         # only available in shop2
-        contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
-        contact.shops.add(shop2)
+        contact = create_random_person(locale="en_US", minimum_name_comp_len=5, shop=shop2)
 
         # only available in shop1
-        company = create_random_company()
-        company.shops.add(shop1)
+        company = create_random_company(shop1)
 
         view = ContactListView()
 

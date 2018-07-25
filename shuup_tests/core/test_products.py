@@ -87,7 +87,7 @@ def test_product_query_with_group_visibility(regular_user):
     regular_contact.groups.add(default_group)
     assert Product.objects.listed(shop=shop, customer=regular_contact).filter(pk=product.pk).count() == 1
 
-    shop_product.visibility_groups.add(regular_contact.get_default_group())
+    shop_product.visibility_groups.add(regular_contact.get_default_group(shop))
     # Multiple visibility groups for shop product shouldn't cause duplicate matches
     assert Product.objects.listed(shop=shop, customer=regular_contact).filter(pk=product.pk).count() == 1
 

@@ -11,7 +11,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 
 from shuup.admin.base import Section
-from shuup.core.models import PersonContact
+from shuup.core.models import PersonContact, Shop
 
 
 class BasicInfoContactSection(Section):
@@ -34,10 +34,11 @@ class BasicInfoContactSection(Section):
             key=(lambda x: force_text(x))
         )
 
-        context['shops'] = sorted(
-            contact.shops.all(),
-            key=(lambda x: force_text(x))
-        )
+        context["shops"] = []
+        if contact.groups.exists():
+            ids = contact.groups.values_list("shop_id", flat=True)
+            shops = Shop.objects.filter(id__in=ids)
+            context['shops'] = sorted(shops, key=(lambda x: force_text(x)))
 
         context["companies"] = []
         if isinstance(contact, PersonContact):

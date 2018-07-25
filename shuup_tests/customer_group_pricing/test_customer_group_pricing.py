@@ -13,8 +13,8 @@ from shuup.core.pricing import get_pricing_module
 from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 from shuup.customer_group_pricing.module import CustomerGroupPricingModule
 from shuup.testing.factories import (
-    create_product, create_random_person, get_shop
-)
+    create_product, create_random_person, get_shop,
+    get_default_shop)
 from shuup.testing.utils import apply_request_middleware
 
 pytestmark = pytest.mark.skipif("shuup.customer_group_pricing" not in settings.INSTALLED_APPS,
@@ -31,10 +31,10 @@ def teardown_module(module):
     settings.SHUUP_PRICING_MODULE = original_pricing_module
 
 
-def create_customer():
-    customer = create_random_person()
-    customer.groups.add(customer.get_default_group())
-    customer.save()
+def create_customer(shop=None):
+    if not shop:
+        shop = get_default_shop()
+    customer = create_random_person(shop=shop)
     return customer
 
 
@@ -44,10 +44,12 @@ def initialize_test(rf, include_tax=False, customer=create_customer):
     if callable(customer):
         customer = customer()
 
-    request = apply_request_middleware(rf.get("/"))
-    request.shop = shop
+    group = customer.get_default_group(shop)
+    if not customer.is_anonymous:
+        customer.groups.add(group)
+    request = apply_request_middleware(rf.get("/"), shop=shop)
     request.customer = customer
-    return request, shop, customer.groups.first()
+    return request, shop, group
 
 
 def test_module_is_active():
@@ -196,7 +198,7 @@ def test_anonymous_customers_default_group(rf):
     request.customer = AnonymousContact()
     CgpPrice.objects.create(
         product=product,
-        group=request.customer.get_default_group(),
+        group=request.customer.get_default_group(shop),
         shop=shop,
         price_value=discount_value)
     price_info = product.get_price_info(request)
@@ -247,11 +249,12 @@ def test_discount_for_multi_group_using_customer(rf, admin_user, price, discount
     anonymous = AnonymousContact()
 
     request, shop, _ = initialize_test(rf, True, customer)
+    customer.get_default_group(shop)
 
     product = create_product("product", shop=shop, default_price=price)
 
     CgpDiscount.objects.create(product=product, group=customer.groups.first(), shop=shop, discount_amount_value=discount)
-    CgpDiscount.objects.create(product=product, group=anonymous.get_default_group(), shop=shop, discount_amount_value=anonymous_discount)
+    CgpDiscount.objects.create(product=product, group=anonymous.get_default_group(shop), shop=shop, discount_amount_value=anonymous_discount)
 
     # discount for customer
     request, shop, _ = initialize_test(rf, True, customer)

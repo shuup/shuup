@@ -61,7 +61,7 @@ class TaskForm(ModelForm):
 
         shop = get_shop(self.request)
         self.fields["assigned_to"].queryset = Contact.objects.filter(
-            Q(shops=shop) | Q(id__in=shop.staff_members.values_list("id"))
+            Q(groups__shop=shop) | Q(id__in=shop.staff_members.values_list("id"))
         ).distinct()
         self.fields["assigned_to"].widget.editable_model = "shuup.Contact"
 

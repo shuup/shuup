@@ -16,9 +16,10 @@ from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import (
     PersonContactChoiceWidget, QuickAddTaxGroupSelect
 )
+from shuup.admin.shop_provider import get_shop
 from shuup.core.fields import LanguageFormField
 from shuup.core.models import (
-    CompanyContact, Contact, ContactGroup, Gender, PersonContact, Shop
+    CompanyContact, Contact, ContactGroup, Gender, PersonContact
 )
 
 FIELDS_BY_MODEL_NAME = {
@@ -42,9 +43,10 @@ class ContactBaseFormMixin(object):
         self.init_fields()
 
     def init_fields(self):
+        shop = get_shop(self.request)
         self.fields["groups"] = forms.ModelMultipleChoiceField(
-            queryset=ContactGroup.objects.all_except_defaults(),
-            initial=(self.instance.groups.all_except_defaults() if self.instance.pk else ()),
+            queryset=ContactGroup.objects.all_except_defaults(shop),
+            initial=(self.instance.groups.all_except_defaults(shop) if self.instance.pk else ()),
             required=False,
             widget=forms.SelectMultiple(),
             label=_("Contact Groups"),
@@ -54,12 +56,7 @@ class ContactBaseFormMixin(object):
             )
         )
         if "account_manager" in self.fields:
-            self.fields["account_manager"].widget = PersonContactChoiceWidget(clearable=True)
-
-        if not self.request or (self.request and self.request.user.is_superuser):
-            shops_qs = Shop.objects.all()
-        else:
-            shops_qs = Shop.objects.filter(staff_members__in=[self.request.user])
+            self.fields["account_manager"].widget = PersonContactChoiceWidget(shop, clearable=True)
 
         if "tax_group" in self.fields:
             self.fields["tax_group"].widget = QuickAddTaxGroupSelect(editable_model="shuup.CustomerTaxGroup")
@@ -68,21 +65,12 @@ class ContactBaseFormMixin(object):
                     (self.instance.tax_group.id, self.instance.tax_group.name)
                 ]
 
-        self.fields["shops"] = forms.ModelMultipleChoiceField(
-            queryset=shops_qs,
-            initial=(self.instance.shops.all() if self.instance.pk else ()),
-            required=False,
-            widget=forms.SelectMultiple(),
-            label=_("Shops"),
-            help_text=_("The shops this contact belongs to")
-        )
-
     def save(self, commit=True):
+        shop = get_shop(self.request)
         if not self.instance.pk:
             self.instance.is_active = True
         obj = super(ContactBaseFormMixin, self).save(commit)
-        obj.groups = [obj.get_default_group()] + list(self.cleaned_data["groups"])
-        obj.shops = [self.request.shop] + list(self.cleaned_data["shops"])
+        obj.groups = [obj.get_default_group(shop)] + list(self.cleaned_data["groups"])
         return obj
 
 

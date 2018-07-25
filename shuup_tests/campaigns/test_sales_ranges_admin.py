@@ -14,6 +14,7 @@ from shuup.admin.modules.contact_groups.views.forms import \
     ContactGroupBaseFormPart
 from shuup.campaigns.models import ContactGroupSalesRange
 from shuup.core.models import Shop, ShopStatus
+from shuup.core.models._contacts import is_protected_identifier, is_protected_group
 from shuup.testing.factories import (
     create_random_company, get_default_customer_group, get_default_shop,
     get_shop
@@ -35,13 +36,15 @@ def test_form_part_for_new_group(rf, admin_user):
 
 @pytest.mark.django_db
 def test_form_part_for_default_group(rf, admin_user):
-    get_default_shop()
-    company = create_random_company()
-    group = company.get_default_group()
-    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    shop = get_default_shop()
+    company = create_random_company(shop)
+    group = company.get_default_group(shop)
+    assert is_protected_group(group)
+    request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)
     initialized_view = ContactGroupEditView(request=request, kwargs={"pk": group.pk})
     initialized_view.object = initialized_view.get_object()  # Just for test
-    form_def_values = initialized_view.get_form().form_defs.values()
+    form = initialized_view.get_form()
+    form_def_values = form.form_defs.values()
     assert [form_def for form_def in form_def_values if form_def.name == "base"]
     # contact_group_sales_ranges should not be in form defs
     assert not [form_def for form_def in form_def_values if "contact_group_sales_ranges" in form_def.name]

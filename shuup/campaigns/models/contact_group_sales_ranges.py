@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.campaigns.utils.sales_range import get_contacts_in_sales_range
 from shuup.core.fields import MoneyValueField
 from shuup.core.models import ContactGroup, Shop
-from shuup.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
+from shuup.core.models._contacts import is_protected_group
 
 
 class SalesRangeQuerySet(models.QuerySet):
@@ -47,7 +47,7 @@ class ContactGroupSalesRange(models.Model):
 
     def clean(self):
         super(ContactGroupSalesRange, self).clean()
-        if self.group.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS:
+        if is_protected_group(self.group):
             raise ValidationError(_("Can not add sales limits for default contact groups"))
 
     def is_active(self):

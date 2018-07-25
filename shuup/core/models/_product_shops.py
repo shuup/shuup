@@ -426,7 +426,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     def is_orderable(self, supplier, customer, quantity, allow_cache=True):
         key, val = context_cache.get_cached_value(
-            identifier="is_orderable", item=self, context={"customer": customer},
+            identifier="is_orderable", item=self, context={"customer": customer, "shop": self.shop},
             supplier=supplier, stock_managed=bool(supplier and supplier.stock_managed),
             quantity=quantity, allow_cache=allow_cache)
         if customer and val is not None:

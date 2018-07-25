@@ -77,7 +77,7 @@ def seed_source(user, shop=None):
     source.status = get_initial_order_status()
     source.billing_address = billing_address
     source.shipping_address = shipping_address
-    source.customer = get_person_contact(user)
+    source.customer = get_person_contact(user, shop)
     source.payment_method = get_payment_method(shop)
     source.shipping_method = get_shipping_method(shop)
     assert source.payment_method_id == get_payment_method(shop).id
@@ -332,11 +332,11 @@ def test_order_creator_min_total(rf, admin_user):
 @pytest.mark.django_db
 def test_order_creator_contact_multishop():
     with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+        shop = get_shop(identifier="random-shop", enabled=True)
         user = create_random_user()
-        customer = create_random_person("en")
+        customer = create_random_person("en", shop=shop)
         customer.user = user
         customer.save()
-        shop = get_shop(identifier="random-shop", enabled=True)
 
         source = seed_source(user, shop)
         source.add_line(
@@ -349,14 +349,14 @@ def test_order_creator_contact_multishop():
         creator = OrderCreator()
         creator.create_order(source)
         customer.refresh_from_db()
-        assert shop in customer.shops.all()
+        assert customer.groups.filter(shop=shop).exists()
 
 
 @pytest.mark.django_db
 def test_order_creator_company_multishop():
     with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
-        company = create_random_company()
         shop = get_shop(identifier="random-shop", enabled=True)
+        company = create_random_company(shop)
 
         source = seed_source(create_random_user(), shop)
         source.customer = company
@@ -370,16 +370,17 @@ def test_order_creator_company_multishop():
         creator = OrderCreator()
         creator.create_order(source)
         company.refresh_from_db()
-        assert shop in company.shops.all()
+        assert company.groups.filter(shop=shop).exists()
 
 
 @pytest.mark.django_db
 def test_order_customer_groups(rf, admin_user):
-    customer = create_random_person()
+    shop = get_default_shop()
+    customer = create_random_person(shop=shop)
     default_group = get_default_customer_group()
     default_group.members.add(customer)
     source = seed_source(admin_user)
-    source.customer=customer
+    source.customer = customer
 
     source.add_line(
         type=OrderLineType.PRODUCT,

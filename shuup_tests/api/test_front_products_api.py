@@ -682,7 +682,7 @@ def test_product_price_info(admin_user, prices_include_tax, product_price, disco
     shop.save()
 
     customer = create_random_person()
-    group = customer.get_default_group()
+    group = customer.get_default_group(shop)
     customer.user = admin_user
     customer.groups.add(group)
     customer.save()

@@ -19,8 +19,8 @@ from shuup.testing.utils import apply_request_middleware
 
 @pytest.mark.django_db
 def test_contact_edit_has_custom_toolbar_button(rf, admin_user):
-    get_default_shop()
-    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    shop = get_default_shop()
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5, shop=shop)
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view_func = ContactEditView.as_view()
@@ -31,8 +31,8 @@ def test_contact_edit_has_custom_toolbar_button(rf, admin_user):
 
 @pytest.mark.django_db
 def test_contact_detail_has_custom_toolbar_button(rf, admin_user):
-    get_default_shop()
-    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    shop = get_default_shop()
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5, shop=shop)
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view_func = ContactDetailView.as_view()
@@ -43,8 +43,8 @@ def test_contact_detail_has_custom_toolbar_button(rf, admin_user):
 
 @pytest.mark.django_db
 def test_contact_detail_has_custom_section(rf, admin_user):
-    get_default_shop()
-    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    shop = get_default_shop()
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5, shop=shop)
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view_func = ContactDetailView.as_view()
@@ -58,8 +58,8 @@ def test_contact_detail_has_custom_section(rf, admin_user):
 
 @pytest.mark.django_db
 def test_contact_detail_has_mocked_toolbar_action_items(rf, admin_user):
-    get_default_shop()
-    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    shop = get_default_shop()
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5, shop=shop)
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view_func = ContactDetailView.as_view()

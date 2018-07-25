@@ -22,23 +22,23 @@ from shuup.testing.utils import apply_request_middleware
 
 @pytest.mark.django_db
 def test_contact_details_view_with_many_groups(rf, admin_user):
-    get_default_shop()
+    shop = get_default_shop()
     person = create_random_person()
     person.groups.add(
-        ContactGroup.objects.create(name="Czz Group"),
-        ContactGroup.objects.create(name="Azz Group"),
-        ContactGroup.objects.create(name="Bzz Group"),
-        ContactGroup.objects.language('fi').create(name="Dzz ryhmä"),
+        ContactGroup.objects.create(name="Czz Group", shop=shop),
+        ContactGroup.objects.create(name="Azz Group", shop=shop),
+        ContactGroup.objects.create(name="Bzz Group", shop=shop),
+        ContactGroup.objects.language('fi').create(name="Dzz ryhmä", shop=shop),
     )
 
     # Group with name in two languages
-    grp_e = ContactGroup.objects.language('en').create(name="Ezz Group")
+    grp_e = ContactGroup.objects.language('en').create(name="Ezz Group", shop=shop)
     grp_e.set_current_language('fi')
     grp_e.name = "Ezz ryhmä"
     grp_e.save()
     person.groups.add(grp_e)
 
-    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)
     with translation.override('en'):
         view_func = ContactDetailView.as_view()
         response = view_func(request, pk=person.pk)

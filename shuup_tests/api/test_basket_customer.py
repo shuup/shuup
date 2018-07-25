@@ -108,6 +108,7 @@ def test_create_new_basket(admin_user):
         shop = factories.get_default_shop()
         shop2 = create_shop("foobar")
         client = _get_client(admin_user)
+        get_person_contact(admin_user, shop2)
         response = client.post("/api/shuup/basket/new/", {
             "shop": shop2.pk
         })
@@ -242,7 +243,7 @@ def test_basket_with_staff_user():
         staff_user = User.objects.create(username="staff", is_staff=True)
 
         client = _get_client(staff_user)
-        person = factories.create_random_person()
+        person = factories.create_random_person(shop=shop)
         response = client.post("/api/shuup/basket/new/", data={"shop": shop.pk, "customer": person.pk})
         # Only stuff linked to shop can create baskets for someone else
         assert response.status_code == status.HTTP_403_FORBIDDEN
