@@ -6,9 +6,9 @@ html {
 body {
     background: $gray-bg;
     color: $text-color;
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.6rem;
-    font-weight: 300;
+    font-weight: 400;
     padding-top: 60px;  
     min-height: 100%;
 
@@ -63,7 +63,8 @@ img {
 #main-content {
     margin-top: 100px;
     padding-top: 15px;
-    margin-left: 88px;
+    margin-left: $main-menu-width;
+    padding: 1.2em;
 
     @include media-breakpoint-down(sm) {
         margin-left: 0;
@@ -72,8 +73,6 @@ img {
     @include media-breakpoint-down(xs) {
         margin-top: 0 !important;
     }
-
-    &.dashboard { padding: 30px 15px; }
 
     body.popup & {
         padding: 5px;
