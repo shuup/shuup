@@ -183,13 +183,23 @@ def _get_cache_key_for_context(identifier, item, context, **kwargs):
     return "%s:%s_%s" % (namespace, identifier, hash(frozenset(items.items())))
 
 
+def _get_customer_groups_from_context(context):
+    if isinstance(context, WSGIRequest):
+        customer = context.customer
+        shop = context.shop
+    else:
+        customer = context["customer"]
+        shop = context["shop"]
+    return customer.get_contact_groups(shop)
+
+
 def _get_items_from_context(context):
     items = {}
     if hasattr(context, "items"):
         for k, v in six.iteritems(context):
             if k in HASHABLE_KEYS:
-                if k == "customer" and hasattr(v, "groups"):
-                    v = v.groups.all()
+                if k == "customer":
+                    v = _get_customer_groups_from_context(context)
                     k = "customer_groups"
                 items[k] = _get_val(v)
     else:
@@ -197,8 +207,8 @@ def _get_items_from_context(context):
             val = None
             if hasattr(context, key):
                 if key == "customer":
-                    # some context only has customer, transfer this to customer groups
-                    val = "|".join(list(map(str, getattr(context, key).groups.all().values_list("pk", flat=True))))
+                    groups = _get_customer_groups_from_context(context)
+                    val = "|".join(list(map(str, groups.values_list("pk", flat=True))))
                     key = "customer_groups"
                 else:
                     val = _get_val(getattr(context, key))

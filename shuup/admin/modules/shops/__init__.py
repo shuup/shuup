@@ -83,8 +83,7 @@ class ShopModule(AdminModule):
         if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
             return
 
-        minimum_query_length = 3
-        if len(query) >= minimum_query_length:
+        if len(query) >= self.minimum_search_length:
             shops = Shop.objects.get_for_user(request.user).filter(translations__name__icontains=query)
             for i, shop in enumerate(shops[:10]):
                 relevance = 100 - i

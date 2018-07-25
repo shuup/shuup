@@ -1129,7 +1129,7 @@ def test_basket_taxes(admin_user, prices_include_tax, tax_rate, product_price, e
     ("LYD", 3)
 ])
 @pytest.mark.django_db
-def test_basket_taxes(admin_user, currency, currency_decimals):
+def test_basket_taxes_2(admin_user, currency, currency_decimals):
     with override_settings(**REQUIRED_SETTINGS):
         set_configuration()
         shop = factories.get_shop(enabled=True, currency=currency)

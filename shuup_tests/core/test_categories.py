@@ -15,8 +15,8 @@ from shuup.core.models import (
 )
 from shuup.testing.factories import (
     DEFAULT_NAME, get_all_seeing_key, get_default_category,
-    get_default_shop_product
-)
+    get_default_shop_product,
+    get_default_shop)
 from shuup_tests.utils.fixtures import regular_user
 
 
@@ -68,9 +68,10 @@ def test_category_visibility(admin_user, regular_user):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
 def test_category_group_visibilities(regular_user):
+    shop = get_default_shop()
     regular_contact = get_person_contact(regular_user)
-    silver_group = ContactGroup.objects.create(identifier="silver")
-    diamond_group = ContactGroup.objects.create(identifier="gold")
+    silver_group = ContactGroup.objects.create(identifier="silver", shop=shop)
+    diamond_group = ContactGroup.objects.create(identifier="gold", shop=shop)
     regular_contact.groups.add(silver_group)
 
 
@@ -79,7 +80,7 @@ def test_category_group_visibilities(regular_user):
         visibility=CategoryVisibility.VISIBLE_TO_GROUPS,
         identifier="silver_groups",
         name="Silvers")
-    silvers.visibility_groups.add(regular_contact.get_default_group(), silver_group)
+    silvers.visibility_groups.add(regular_contact.get_default_group(shop), silver_group)
 
     diamonds = Category.objects.create(
         status=CategoryStatus.VISIBLE,

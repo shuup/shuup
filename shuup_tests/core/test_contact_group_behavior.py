@@ -13,8 +13,8 @@ from shuup.core.models import (
 )
 from shuup.testing.factories import (
     create_product, create_random_person, get_default_customer_group,
-    get_default_payment_method, get_default_supplier
-)
+    get_default_payment_method, get_default_supplier,
+    get_default_shop)
 
 from .test_order_creator import seed_source
 
@@ -53,10 +53,11 @@ def test_without_groups(admin_user):
 
 @pytest.mark.django_db
 def test_with_multiple_groups(admin_user):
+    shop = get_default_shop()
     payment_method = get_default_payment_method()
     group = get_default_customer_group()
-    person = create_random_person()
-    groups = [group, person.get_default_group()]
+    person = create_random_person(shop=shop)
+    groups = [group, person.get_default_group(shop)]
     _assign_component_for_service(payment_method, groups)
 
     person.user = admin_user
@@ -69,8 +70,9 @@ def test_with_multiple_groups(admin_user):
 
 @pytest.mark.django_db
 def test_unsaved_contact(admin_user):
+    shop = get_default_shop()
     payment_method = get_default_payment_method()
-    _assign_component_for_service(payment_method, [PersonContact.get_default_group()])
+    _assign_component_for_service(payment_method, [PersonContact.get_default_group(shop)])
     person = PersonContact(name="Kalle")
     source = _get_source_for_contact(admin_user, payment_method)
     source.customer = person

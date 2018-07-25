@@ -56,13 +56,13 @@ def check_for_delete(request, contact_group, can_delete):
 ])
 @pytest.mark.django_db
 def test_protected_contact_groups(rf, admin_user, contact):
-    get_default_shop()
+    shop= get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    check_for_delete(request, contact().get_default_group(), False)
+    check_for_delete(request, contact().get_default_group(shop), False)
 
 
 @pytest.mark.django_db
 def test_contact_group_delete_button(rf, admin_user):
-    get_default_shop()
+    shop = get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     check_for_delete(request, get_default_customer_group(), True)

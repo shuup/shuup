@@ -9,6 +9,7 @@
 import json
 
 import pytest
+from django.test import override_settings
 from django.utils.translation import activate, get_language
 
 from shuup.admin.views.select import MultiselectAjaxView
@@ -22,7 +23,7 @@ from shuup_tests.utils.fixtures import regular_user
 
 
 
-def _get_search_results(rf, view, model_name, search_str, user, search_mode=None, sales_units=None):
+def _get_search_results(rf, view, model_name, search_str, shop, user, search_mode=None, sales_units=None):
     data = {
         "model": model_name,
         "search": search_str
@@ -33,7 +34,7 @@ def _get_search_results(rf, view, model_name, search_str, user, search_mode=None
     if sales_units:
         data.update({"salesUnits": sales_units})
 
-    request = apply_request_middleware(rf.get("sa/search", data), user=user)
+    request = apply_request_middleware(rf.get("sa/search", data), user=user, shop=shop)
     response = view(request)
     assert response.status_code == 200
     return json.loads(response.content.decode("utf-8")).get("results")
@@ -46,7 +47,7 @@ def test_ajax_select_view_with_products(rf, admin_user):
     view = MultiselectAjaxView.as_view()
 
     # No products, no results
-    results = _get_search_results(rf, view, "shuup.Product", "some str", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "some str", shop, admin_user)
     assert len(results) == 0
 
     product_name_en = "The Product"
@@ -60,31 +61,31 @@ def test_ajax_select_view_with_products(rf, admin_user):
 
     view = MultiselectAjaxView.as_view()
 
-    results = _get_search_results(rf, view, "shuup.Product", "some str", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "some str", shop, admin_user)
     assert len(results) == 0
 
-    results = _get_search_results(rf, view, "shuup.Product", None, admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", None, shop, admin_user)
     assert len(results) == 0
 
-    results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "product", shop, admin_user)
     assert len(results) == 1
     assert results[0].get("id") == product.id
     assert results[0].get("name") == product_name_en
 
     activate("fi")
-    results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "product", shop, admin_user)
     assert get_language() == 'fi'
     assert len(results) == 1
     assert results[0].get("id") == product.id
     assert results[0].get("name") == product_name_fi
 
-    results = _get_search_results(rf, view, "shuup.Product", "  product  ", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "  product  ", shop, admin_user)
     assert len(results) == 1
     assert results[0].get("id") == product.id
     assert results[0].get("name") == product_name_fi
 
     product.soft_delete()
-    results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "product", shop, admin_user)
     assert len(results) == 0
 
 
@@ -107,18 +108,18 @@ def test_multi_select_with_main_products(rf, admin_user):
     assert parent.variation_children.count() == 4 * 3
     assert Product.objects.count() == 4*3 + 1
 
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user)
     assert len(results) == Product.objects.count()
 
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "main")
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user, "main")
     assert len(results) == 1
 
     create_product("test1", shop=shop, **{"name": "test 123"})
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "main")
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user, "main")
     assert len(results) == 2
 
     create_product("2", shop=shop, **{"name": "something that doesn not match with the search term"})
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "main")
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user, "main")
     assert len(results) == 2
 
 
@@ -141,30 +142,30 @@ def test_multi_select_with_sellable_only_products(rf, admin_user):
     assert parent.variation_children.count() == 4 * 3
     assert Product.objects.count() == 4 * 3 + 1
 
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user)
     assert len(results) == Product.objects.count()
 
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user, "sellable_mode_only")
     assert len(results) ==  Product.objects.count() - 1
 
     create_product("test1", shop=shop, **{"name": "test 123"})
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user, "sellable_mode_only")
     assert len(results) == Product.objects.count() - 1  # Still only the parent is excluded
     assert Product.objects.count() == 4 * 3 + 2
 
     # hide all shop products
     ShopProduct.objects.all().update(visibility=ShopProductVisibility.NOT_VISIBLE)
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user, "sellable_mode_only")
     assert len(results) == 0
 
     # show them again
     ShopProduct.objects.all().update(visibility=ShopProductVisibility.ALWAYS_VISIBLE)
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user, "sellable_mode_only")
     assert len(results) == Product.objects.count() - 1
 
     # delete all products
     [product.soft_delete() for product in Product.objects.all()]
-    results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
+    results = _get_search_results(rf, view, "shuup.Product", "test", shop, admin_user, "sellable_mode_only")
     assert len(results) == 0
 
 
@@ -187,17 +188,17 @@ def test_multi_select_with_product_sales_unit(rf, admin_user):
 
     view = MultiselectAjaxView.as_view()
 
-    results = _get_search_results(rf, view, "shuup.Product", "Product", admin_user)
+    results = _get_search_results(rf, view, "shuup.Product", "Product", shop, admin_user)
     assert len(results) == 4
 
-    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="g")) == 1
-    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="pcs")) == 1
-    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="kg")) == 1
-    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="oz")) == 1
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", shop, admin_user, sales_units="g")) == 1
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", shop, admin_user, sales_units="pcs")) == 1
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", shop, admin_user, sales_units="kg")) == 1
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", shop, admin_user, sales_units="oz")) == 1
 
-    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="g,oz")) == 2
-    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="g,kg,pcs")) == 3
-    assert len(_get_search_results(rf, view, "shuup.Product", "Product", admin_user, sales_units="oz,pcs,g,kg")) == 4
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", shop, admin_user, sales_units="g,oz")) == 2
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", shop, admin_user, sales_units="g,kg,pcs")) == 3
+    assert len(_get_search_results(rf, view, "shuup.Product", "Product", shop, admin_user, sales_units="oz,pcs,g,kg")) == 4
 
 
 @pytest.mark.django_db
@@ -208,31 +209,31 @@ def test_ajax_select_view_with_contacts(rf, contact_cls, admin_user):
     shop = get_default_shop()
     view = MultiselectAjaxView.as_view()
     model_name = "shuup.%s" % contact_cls._meta.model_name
-    results = _get_search_results(rf, view, model_name, "some str", admin_user)
+    results = _get_search_results(rf, view, model_name, "some str", shop, admin_user)
     assert len(results) == 0
 
     # customer doesn't belong to shop
     customer = contact_cls.objects.create(name="Michael Jackson", email="michael@example.com")
-    results = _get_search_results(rf, view, model_name, "michael", admin_user)
-    assert len(results) == 0
+    results = _get_search_results(rf, view, model_name, "michael", shop, admin_user)
+    assert len(results) == 1
+    customer.get_default_group(shop)
 
-    customer.shops.add(shop)
-    results = _get_search_results(rf, view, model_name, "michael", admin_user)
+    results = _get_search_results(rf, view, model_name, "michael", shop, admin_user)
     assert len(results) == 1
     assert results[0].get("id") == customer.id
     assert results[0].get("name") == customer.name
 
-    results = _get_search_results(rf, view, model_name, "jacks", admin_user)
+    results = _get_search_results(rf, view, model_name, "jacks", shop, admin_user)
     assert len(results) == 1
     assert results[0].get("id") == customer.id
     assert results[0].get("name") == customer.name
 
-    results = _get_search_results(rf, view, model_name, "el@ex", admin_user)
+    results = _get_search_results(rf, view, model_name, "el@ex", shop, admin_user)
     assert len(results) == 1
     assert results[0].get("id") == customer.id
     assert results[0].get("name") == customer.name
 
-    results = _get_search_results(rf, view, model_name, "random", admin_user)  # Shouldn't find anything with this
+    results = _get_search_results(rf, view, model_name, "random", shop, admin_user)  # Shouldn't find anything with this
     assert len(results) == 0
 
 
@@ -243,7 +244,7 @@ def test_ajax_select_view_with_categories(rf, admin_user):
     view = MultiselectAjaxView.as_view()
 
     # No categories, no results
-    results = _get_search_results(rf, view, "shuup.Category", "some str", admin_user)
+    results = _get_search_results(rf, view, "shuup.Category", "some str", shop, admin_user)
     assert len(results) == 0
 
     category = Category.objects.create(
@@ -253,14 +254,14 @@ def test_ajax_select_view_with_categories(rf, admin_user):
     )
     category.shops.add(shop)
 
-    results = _get_search_results(rf, view, "shuup.Category", "some str", admin_user)
+    results = _get_search_results(rf, view, "shuup.Category", "some str", shop, admin_user)
     assert len(results) == 0
 
-    results = _get_search_results(rf, view, "shuup.Category", category.name, admin_user)
+    results = _get_search_results(rf, view, "shuup.Category", category.name, shop, admin_user)
     assert len(results) == 1
 
     category.soft_delete()
-    results = _get_search_results(rf, view, "shuup.Category", category.name, admin_user)
+    results = _get_search_results(rf, view, "shuup.Category", category.name, shop, admin_user)
     assert len(results) == 0
 
 
@@ -269,11 +270,12 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
     """
     Make sure inactive users and contacts are filtered from search results.
     """
+    # with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
     shop = get_default_shop()
     view = MultiselectAjaxView.as_view()
     assert "joe" in regular_user.username
 
-    results = _get_search_results(rf, view, "auth.User", "joe", admin_user)
+    results = _get_search_results(rf, view, "auth.User", "joe", shop, admin_user)
     assert len(results) == 1
     assert results[0].get("id") == regular_user.id
     assert results[0].get("name") == regular_user.username
@@ -281,11 +283,13 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
     contact = PersonContact.objects.create(first_name="Joe", last_name="Somebody")
 
     # contact not in shop
-    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
-    assert len(results) == 0
+    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", shop, admin_user)
+    assert len(results) == 1  # contact needs no shop
 
-    contact.shops.add(shop)
-    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
+    # ensure contact belongs to a shop
+    contact.get_default_group(shop)
+
+    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", shop, admin_user)
     assert len(results) == 1
 
     assert results[0].get("id") == contact.id
@@ -294,6 +298,47 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
     contact.is_active = False
     contact.save()
 
-    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
+    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", shop, admin_user)
 
     assert len(results) == 0
+
+
+@pytest.mark.django_db
+def test_multiselect_inactive_users_and_contacts_2(rf, regular_user, admin_user):
+    """
+    Make sure inactive users and contacts are filtered from search results.
+
+    multishop version
+    """
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+        shop = get_default_shop()
+        view = MultiselectAjaxView.as_view()
+        assert "joe" in regular_user.username
+
+        results = _get_search_results(rf, view, "auth.User", "joe", shop, admin_user)
+        assert len(results) == 1
+        assert results[0].get("id") == regular_user.id
+        assert results[0].get("name") == regular_user.username
+
+        contact = PersonContact.objects.create(first_name="Joe", last_name="Somebody")
+
+        # contact not in shop
+        results = _get_search_results(rf, view, "shuup.PersonContact", "joe", shop, admin_user)
+        assert not len(results)  # contact needs a shop now
+
+        # ensure contact belongs to a shop
+        group = contact.get_default_group(shop)
+        contact.groups.add(group)
+
+        results = _get_search_results(rf, view, "shuup.PersonContact", "joe", shop, admin_user)
+        assert len(results) == 1
+
+        assert results[0].get("id") == contact.id
+        assert results[0].get("name") == contact.name
+
+        contact.is_active = False
+        contact.save()
+
+        results = _get_search_results(rf, view, "shuup.PersonContact", "joe", shop, admin_user)
+
+        assert len(results) == 0

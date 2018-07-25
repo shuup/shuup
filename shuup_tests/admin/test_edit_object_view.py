@@ -26,7 +26,6 @@ def _get_edit_object_view(rf, view, model_name, object_id, user, shop, mode=None
     if mode:
         data["mode"] = mode
     request = apply_request_middleware(rf.get(reverse("shuup_admin:edit"), data), user=user, shop=shop)
-    request.session = {SHOP_SESSION_KEY: shop.id}
     return view(request)
 
 

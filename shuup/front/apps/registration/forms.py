@@ -71,8 +71,7 @@ class PersonRegistrationForm(RegistrationForm):
 
     def save(self, *args, **kwargs):
         user = super(PersonRegistrationForm, self).save(*args, **kwargs)
-        contact = get_person_contact(user)
-        contact.shops.add(self.request.shop)
+        contact = get_person_contact(user, self.request.shop)
         person_registration_save.send(sender=type(self), request=self.request, user=user, contact=contact)
         return user
 

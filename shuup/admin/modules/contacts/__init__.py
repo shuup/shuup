@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shuup.core.models import CompanyContact, Contact, PersonContact
@@ -89,13 +90,13 @@ class ContactModule(AdminModule):
         )
 
     def get_search_results(self, request, query):
-        minimum_query_length = 3
-        if len(query) >= minimum_query_length:
+        if len(query) >= self.minimum_search_length:
             filters = Q(Q(name__icontains=query) | Q(email=query))
 
             # show only contacts which the shop has access
             if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
-                filters &= Q(shops=request.shop)
+                shop = get_shop(request)
+                filters &= Q(groups__shop=shop)
 
             contacts = Contact.objects.filter(filters)
             for i, contact in enumerate(contacts[:10]):

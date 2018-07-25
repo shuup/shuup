@@ -32,8 +32,7 @@ def test_task_admin(admin_user):
 
     admin_user.set_password(ADMIN_PWD)
     admin_user.save()
-    admin_contact = get_person_contact(admin_user)
-    admin_contact.shops.add(shop)
+    admin_contact = get_person_contact(admin_user, shop)
 
     client = SmartClient()
     client.login(username=admin_user.username, password=ADMIN_PWD)
@@ -151,8 +150,7 @@ def test_task_type_admin(admin_user):
 
     admin_user.set_password(ADMIN_PWD)
     admin_user.save()
-    admin_contact = get_person_contact(admin_user)
-    admin_contact.shops.add(shop)
+    admin_contact = get_person_contact(admin_user, shop)
 
     client = SmartClient()
     client.login(username=admin_user.username, password=ADMIN_PWD)

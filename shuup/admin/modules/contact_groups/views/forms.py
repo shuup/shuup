@@ -99,9 +99,16 @@ class ContactGroupBaseFormPart(FormPart):
 class ContactGroupMembersForm(forms.Form):
     member = forms.ModelChoiceField(
         queryset=Contact.objects.all(),
-        widget=ContactChoiceWidget(empty_text=""),
         label=_('member')
     )
+
+    def __init__(self, **kwargs):
+        shop = kwargs.pop("shop", None)
+        if not shop:
+            from shuup.core.models import Shop
+            shop = Shop.objects.first()
+        super(ContactGroupMembersForm, self).__init__(**kwargs)
+        self.fields["member"].widget = ContactChoiceWidget(shop, empty_text="")
 
 
 class ContactGroupMembersFormSet(BaseFormSet):

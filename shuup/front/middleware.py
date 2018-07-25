@@ -78,7 +78,7 @@ class ShuupFrontMiddleware(object):
         request.shop = get_shop(request)
 
     def _set_person(self, request):
-        request.person = get_person_contact(request.user)
+        request.person = get_person_contact(request.user, request.shop)
         if not request.person.is_active:
             messages.add_message(request, messages.INFO, _("Logged out since this account is inactive."))
             logout(request)
@@ -88,10 +88,10 @@ class ShuupFrontMiddleware(object):
             request.person = get_person_contact(None)
 
     def _set_customer(self, request):
-        company = get_company_contact(request.user)
+        company = get_company_contact(request.user, request.shop)
         request.customer = (company or request.person)
         request.is_company_member = bool(company)
-        request.customer_groups = (company or request.person).groups.all()
+        request.customer_groups = request.customer.get_contact_groups(request.shop)
 
     def _set_basket(self, request):
         request.basket = get_basket(request)
@@ -104,7 +104,7 @@ class ShuupFrontMiddleware(object):
     def _set_price_display_options(self, request):
         customer = request.customer
         assert isinstance(customer, Contact)
-        customer.get_price_display_options().set_for_request(request)
+        customer.get_price_display_options(request.shop).set_for_request(request)
 
     def process_response(self, request, response):
         if hasattr(request, "basket") and request.basket.dirty:

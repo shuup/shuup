@@ -28,7 +28,7 @@ from shuup.testing.factories import (
 ])
 def test_sales_ranges_for_default_groups(get_contact):
     shop = get_default_shop()
-    group = get_contact().get_default_group()
+    group = get_contact().get_default_group(shop)
 
     with pytest.raises(ValidationError):
         ContactGroupSalesRange.objects.create(group=group, shop=shop, min_value=1, max_value=100)
@@ -45,7 +45,7 @@ def create_fully_paid_order(shop, customer, supplier, product_sku, price_value):
 
 
 def create_sales_range(group, shop, minimum, maximum):
-    contact_group, _ = ContactGroup.objects.get_or_create(identifier=group)
+    contact_group, _ = ContactGroup.objects.get_or_create(identifier=group, shop=shop)
     return ContactGroupSalesRange.objects.create(
         group=contact_group, shop=shop, min_value=minimum, max_value=maximum)
 

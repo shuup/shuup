@@ -13,8 +13,8 @@ from shuup.core.models import (
 )
 from shuup.testing.factories import (
     create_random_company, create_random_person, DEFAULT_IDENTIFIER,
-    DEFAULT_NAME, get_default_customer_group
-)
+    DEFAULT_NAME, get_default_customer_group,
+    get_default_shop)
 
 @pytest.mark.django_db
 def test_customers(django_user_model):
@@ -69,17 +69,19 @@ def test_customer_tax_group3(rf, admin_user):
     (CompanyContact, create_random_company)
 ])
 def test_default_groups(contact_cls, create_contact):
+    shop = get_default_shop()
     new_contact = create_contact()
-    assert new_contact.groups.count() == 1
-    default_group = new_contact.groups.first()
+    groups = new_contact.get_contact_groups(shop)
+    assert groups.count() == 1
+    default_group = groups.first()
     assert type(CustomerTaxGroup.get_default_company_group().__str__()) == str
-    assert default_group == new_contact.get_default_group()
-    assert default_group.identifier == contact_cls.default_contact_group_identifier
+    assert default_group == new_contact.get_default_group(shop)
+    assert default_group.identifier == "%s-%s" % (shop.pk, contact_cls.default_contact_group_identifier)
 
     some_other_contact = create_contact()
-    assert some_other_contact.groups.count() == 1
 
     if contact_cls != AnonymousContact:
+        assert some_other_contact.groups.count() == 1
         some_other_contact.groups.clear()
         some_other_contact.save()
         assert some_other_contact.groups.count() == 0  # Default group is only added while saving new contact

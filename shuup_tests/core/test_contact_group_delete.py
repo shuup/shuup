@@ -12,8 +12,8 @@ from django.db.models import ProtectedError
 from shuup.core.models import AnonymousContact, ContactGroup
 from shuup.testing.factories import (
     create_random_company, create_random_person,
-    get_default_customer_group
-)
+    get_default_customer_group,
+    get_default_shop)
 
 
 @pytest.mark.django_db
@@ -23,7 +23,8 @@ from shuup.testing.factories import (
     create_random_person
 ])
 def test_protected_default_groups(contact):
-    protected_group = contact().get_default_group()
+    shop = get_default_shop()
+    protected_group = contact().get_default_group(shop)
     assert not protected_group.can_delete()
     with pytest.raises(ProtectedError):
         protected_group.delete()

@@ -19,8 +19,8 @@ from shuup.testing.utils import apply_request_middleware
 @pytest.mark.django_db
 def test_mass_edit_contacts(rf, admin_user):
     shop = get_default_shop()
-    contact1 = create_random_person()
-    contact2 = create_random_person()
+    contact1 = create_random_person(shop=shop)
+    contact2 = create_random_person(shop=shop)
     contact1.gender = Gender.FEMALE
     contact1.save()
     contact2.gender = Gender.FEMALE
@@ -40,9 +40,9 @@ def test_mass_edit_contacts(rf, admin_user):
 def test_mass_edit_contacts2(rf, admin_user):
     activate("en")
     shop = get_default_shop()
-    contact1 = create_random_person()
-    contact2 = create_random_person()
-    contact_group = ContactGroup.objects.create(name="test")
+    contact1 = create_random_person(shop=shop)
+    contact2 = create_random_person(shop=shop)
+    contact_group = ContactGroup.objects.create(name="test", shop=shop)
     data = {
         "contact_group": contact_group.pk
     }

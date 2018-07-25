@@ -13,6 +13,7 @@ from shuup.core.basket import commands as basket_commands
 from shuup.core.basket import get_basket
 from shuup.core.models import AnonymousContact, get_person_contact
 from shuup.testing import factories
+from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 
 CORE_BASKET_SETTINGS = dict(
@@ -191,21 +192,19 @@ def test_set_non_shop_member_customer(rf):
     """
     Set some customer to the basket that is not member of the shop
     """
-    with override_settings(**CORE_BASKET_SETTINGS):
+    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True, **CORE_BASKET_SETTINGS):
         shop = factories.get_shop(False)
         assert shop != factories.get_default_shop()
 
         user = factories.create_random_user()
         request = apply_request_middleware(rf.get("/"), user=user)
         basket = get_basket(request, "basket")
-        basket.customer = get_person_contact(user)
+        basket.customer = get_person_contact(user, shop)
         assert basket.shop == factories.get_default_shop()
 
-        person = factories.create_random_person()
-        person.shops.add(shop)
+        person = factories.create_random_person(shop=shop)
 
-        company = factories.create_random_company()
-        company.shops.add(shop)
+        company = factories.create_random_company(shop)
 
         for customer in [person, company]:
             with pytest.raises(ValidationError) as exc:
@@ -220,10 +219,12 @@ def test_set_different_customer(rf):
     Set some customer to the basket that is not the request one
     """
     with override_settings(**CORE_BASKET_SETTINGS):
+        shop = get_default_shop()
         user = factories.create_random_user()
         request = apply_request_middleware(rf.get("/"), user=user)
         basket = get_basket(request, "basket")
         basket.customer = get_person_contact(user)
+        assert basket.shop == shop
         person1 = factories.create_random_person()
 
         with pytest.raises(ValidationError) as exc:
@@ -265,10 +266,12 @@ def test_set_company_customer(rf):
     Set a company as the basket customer
     """
     with override_settings(**CORE_BASKET_SETTINGS):
+        shop = get_default_shop()
         user = factories.create_random_user()
         request = apply_request_middleware(rf.get("/"), user=user)
         basket = get_basket(request, "basket")
         basket.customer = get_person_contact(user)
+        assert basket.shop == shop
 
         person = factories.create_random_person()
         company = factories.create_random_company()
@@ -313,13 +316,17 @@ def test_anonymous_set_company_customer(rf):
     Set a company as the basket customer
     """
     with override_settings(**CORE_BASKET_SETTINGS):
+        shop = get_default_shop()
         user = factories.create_random_user()
         request = apply_request_middleware(rf.get("/"), user=user)
         basket = get_basket(request, "basket")
         basket.customer = AnonymousContact()
+        assert basket.shop == shop
 
         person = factories.create_random_person()
+        assert person.groups.count()
         company = factories.create_random_company()
+        assert company.groups.count()
         company.members.add(person)
 
         with pytest.raises(ValidationError) as exc:

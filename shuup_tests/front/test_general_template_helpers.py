@@ -100,7 +100,7 @@ def test_get_listed_products_sale_only():
     CgpDiscount.objects.create(
         shop=shop,
         product=product,
-        group=AnonymousContact.get_default_group(),
+        group=AnonymousContact.get_default_group(shop),
         discount_amount_value=5
     )
     for cache_test in range(2):
@@ -120,7 +120,7 @@ def test_get_listed_products_sale_only():
     CgpDiscount.objects.create(
         shop=shop,
         product=package_product,
-        group=AnonymousContact.get_default_group(),
+        group=AnonymousContact.get_default_group(shop),
         discount_amount_value=3
     )
     for cache_test in range(2):
@@ -143,7 +143,7 @@ def test_get_listed_products_sale_only():
     CgpDiscount.objects.create(
         shop=shop,
         product=var_children[0],
-        group=AnonymousContact.get_default_group(),
+        group=AnonymousContact.get_default_group(shop),
         discount_amount_value=0.1
     )
 
@@ -228,7 +228,7 @@ def test_get_best_selling_products():
     CgpDiscount.objects.create(
         shop=shop,
         product=product3,
-        group=AnonymousContact.get_default_group(),
+        group=AnonymousContact.get_default_group(shop),
         discount_amount_value=5
     )
     cache.clear()
@@ -294,7 +294,7 @@ def test_best_selling_products_with_multiple_orders():
     CgpDiscount.objects.create(
         shop=shop,
         product=product_4,
-        group=AnonymousContact.get_default_group(),
+        group=AnonymousContact.get_default_group(shop),
         discount_amount_value=(price * 0.1)
     )
     cache.clear()

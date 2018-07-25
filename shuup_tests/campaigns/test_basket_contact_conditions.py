@@ -16,8 +16,8 @@ from shuup.core.models import AnonymousContact, Shop
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
     create_product, create_random_person, get_default_customer_group,
-    get_default_supplier, get_payment_method, get_shipping_method, get_shop
-)
+    get_default_supplier, get_payment_method, get_shipping_method, get_shop,
+    get_default_shop)
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -91,11 +91,14 @@ def test_basket_contact_group_condition(rf):
 
 @pytest.mark.django_db
 def test_group_basket_condition_with_anonymous_contact(rf):
+    shop = get_default_shop()
     product_price_value, campaign_discount_value = 6, 4
     request = get_request_for_contact_tests(rf)
     assert isinstance(request.customer, AnonymousContact)
     condition = ContactGroupBasketCondition.objects.create()
-    condition.contact_groups.add(request.customer.groups.first())
+    customer = request.customer
+
+    condition.contact_groups.add(customer.get_contact_groups(shop).first())
 
     basket, original_line_count, original_price = create_basket_and_campaign(
         request, [condition], product_price_value, campaign_discount_value)

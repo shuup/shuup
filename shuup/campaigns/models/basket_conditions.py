@@ -209,7 +209,8 @@ class ContactGroupBasketCondition(BasketCondition):
     contact_groups = models.ManyToManyField(ContactGroup, verbose_name=_("contact groups"))
 
     def matches(self, basket, lines=[]):
-        contact_group_ids = basket.customer.groups.values_list("pk", flat=True)
+        customers_groups = basket.customer.get_contact_groups(basket.shop)
+        contact_group_ids = customers_groups.values_list("pk", flat=True)
         return self.contact_groups.filter(pk__in=contact_group_ids).exists()
 
     @property

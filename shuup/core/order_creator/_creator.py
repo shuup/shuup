@@ -263,9 +263,10 @@ class OrderProcessor(object):
         if changed_fields:
             order.customer.save()
 
-        # add shop to the customer shop list if needed
+        # add shop for the customer if needed
         if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
-            order.customer.shops.add(order.shop)
+            group = order.customer.get_default_group(order.shop)
+            order.customer.groups.add(group)
 
     def _assign_code_usages(self, order_source, order):
         order.codes = order_source.codes

@@ -226,7 +226,9 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def _get_cached_product_price_info(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="shop_product_price_info",
                                                   item=shop_product,
-                                                  context={"customer": self.context["customer"]},
+                                                  context={
+                                                      "customer": self.context["customer"], "shop": shop_product.shop
+                                                  },
                                                   allow_cache=True)
         if val is not None:
             return val
@@ -293,7 +295,9 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_cross_sell(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="cross_sell",
                                                   item=shop_product,
-                                                  context={"customer": self.context["customer"]},
+                                                  context={
+                                                      "customer": self.context["customer"], "shop": shop_product.shop
+                                                  },
                                                   allow_cache=True)
         if val is not None:
             return val
@@ -334,7 +338,9 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_variations(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="variations",
                                                   item=shop_product,
-                                                  context={"customer": self.context["customer"]},
+                                                  context={
+                                                      "customer": self.context["customer"], "shop": shop_product.shop
+                                                  },
                                                   allow_cache=True)
         if val is not None:
             return val
@@ -361,7 +367,9 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_package_content(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="package_contents",
                                                   item=shop_product,
-                                                  context={"customer": self.context["customer"]},
+                                                  context={
+                                                      "customer": self.context["customer"], "shop": shop_product.shop
+                                                  },
                                                   allow_cache=True)
         if val is not None:
             return val

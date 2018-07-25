@@ -181,7 +181,7 @@ def test_filter_parameter_contact_groups():
     anonymous_price = 14.6
 
     def get_price_info_mock(context, product, quantity=1):
-        if context.customer.get_default_group() == AnonymousContact().get_default_group():
+        if context.customer.get_default_group(context.shop) == AnonymousContact().get_default_group(context.shop):
             price = context.shop.create_price(anonymous_price)
         else:
             price = context.shop.create_price(customer_price)

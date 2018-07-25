@@ -7,12 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.modules.contacts.utils import request_limited
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, Select2Filter, TextFilter
@@ -80,11 +81,8 @@ class ContactListView(PicotableListView):
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
 
-        limited = (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
-                   not self.request.user.is_superuser)
-        if limited:
-            shop = self.request.shop
-            qs = qs.filter(shops=shop)
+        if request_limited(self.request):
+            qs = qs.filter(groups__shop=get_shop(self.request))
 
         return (
             qs
@@ -102,13 +100,16 @@ class ContactListView(PicotableListView):
             return _(u"Contact")
 
     def get_groups_display(self, instance):
-        if instance.groups.count():
-            return ", ".join(instance.groups.values_list("translations__name", flat=True))
+        shop = get_shop(self.request)
+        groups = instance.get_contact_groups(shop)
+        if groups.count():
+            return ", ".join(groups.values_list("translations__name", flat=True))
         return _("No group")
 
     def get_shop_display(self, instance):
-        if instance.shops.count():
-            return ", ".join(instance.shops.values_list("translations__name", flat=True))
+        shops = instance.get_shops()
+        if shops.count():
+            return ", ".join(shops.values_list("translations__name", flat=True))
         return _("No shop")
 
     def get_object_abstract(self, instance, item):

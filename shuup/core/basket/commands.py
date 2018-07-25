@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import decimal
 
 import six
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
@@ -192,13 +193,13 @@ def handle_set_customer(request, basket, customer, orderer=None):   # noqa (C901
         if not customer.is_active:
             raise ValidationError(_("Customer is not active."), code="invalid_customer")
 
-        if customer.pk:
-            customer_shops = customer.shops.all()
-            if customer_shops and basket.shop not in customer_shops:
-                raise ValidationError(
-                    _("Shop does not have permission for this customer."),
-                    code="invalid_customer_shop"
-                )
+        is_multishop = settings.SHUUP_MANAGE_CONTACTS_PER_SHOP
+        if customer.pk and is_multishop and not customer.groups.filter(shop=basket.shop).exists():
+            # check if customer is in proper customer group
+            raise ValidationError(
+                _("Shop does not have permission for this customer."),
+                code="invalid_customer_shop"
+            )
 
         if request.user.is_authenticated():
             request_contact = PersonContact.objects.filter(user=request.user).first() or AnonymousContact()

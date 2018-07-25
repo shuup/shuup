@@ -90,7 +90,7 @@ def create_sample_product(name, description, business_segment, image_file, shop)
             product=product,
             price_value=random.randint(15, 340),
             shop=shop,
-            group=PersonContact.get_default_group()
+            group=PersonContact.get_default_group(shop)
         )
 
     return product

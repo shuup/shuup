@@ -9,6 +9,7 @@
 from __future__ import unicode_literals
 
 from django.apps import apps
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
@@ -18,6 +19,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.core.models import (
     Carrier, Contact, Product, ProductMode, Shop, ShopProductVisibility
 )
@@ -79,7 +81,7 @@ class MultiselectAjaxView(TemplateView):
 
         cls = apps.get_model(model_name)
         qs = cls.objects.all()
-        shop = self.request.shop
+        shop = get_shop(self.request)
         qs = self._filter_query(cls, qs, shop)
         self.init_search_fields(cls)
         if not self.search_fields:
@@ -91,8 +93,13 @@ class MultiselectAjaxView(TemplateView):
             for field in self.search_fields:
                 query |= Q(**{"%s__icontains" % field: keyword})
 
-            if issubclass(cls, Contact) or issubclass(cls, get_user_model()):
+            is_contact = issubclass(cls, Contact)
+            if is_contact or issubclass(cls, get_user_model()):
                 query &= Q(is_active=True)
+
+                # show only contacts which the shop has access
+                if is_contact and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+                    query &= Q(groups__shop=shop)
 
             qs = qs.filter(query)
 

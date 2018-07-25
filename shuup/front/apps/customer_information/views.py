@@ -92,8 +92,8 @@ class CompanyEditView(DashboardViewMixin, FormView):
 
     def get_form(self, form_class=None):
         user = self.request.user
-        company = get_company_contact(user)
-        person = get_person_contact(user)
+        company = get_company_contact(user, self.request.shop)
+        person = get_person_contact(user, self.request.shop)
         form_group = FormGroup(**self.get_form_kwargs())
         address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
         form_group.add_form_def(

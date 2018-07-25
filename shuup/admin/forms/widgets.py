@@ -197,6 +197,10 @@ class ShopProductChoiceWidget(BasePopupChoiceWidget):
 class ContactChoiceWidget(BasePopupChoiceWidget):
     browse_kind = "contact"
 
+    def __init__(self, shop, attrs=None, clearable=False, empty_text=u"\u2014"):
+        self.shop = shop
+        super(ContactChoiceWidget, self).__init__(attrs, clearable=clearable, empty_text=empty_text)
+
     def get_object(self, value):
         return Contact.objects.get(pk=value)
 
@@ -219,7 +223,7 @@ class PersonContactChoiceWidget(ContactChoiceWidget):
 
     @property
     def filter(self):
-        return json.dumps({"groups": [PersonContact.get_default_group().pk]})
+        return json.dumps({"groups": [PersonContact.get_default_group(self.shop).pk]})
 
 
 class PackageProductChoiceWidget(ProductChoiceWidget):
