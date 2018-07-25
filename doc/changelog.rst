@@ -9,6 +9,21 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Bug fixes
+~~~~~~~~~
+
+- Fix product importer to import stocks correctly
+- Fix base importer resolve objects method by checking fields existence before querying them
+
+Importer
+~~~~~~~~
+
+- Add hook to import images im product importer
+- Avoid error 500 when importer goes wrong
+- Add special column `ignore` that flags rows to be ignored
+- Add option to provide a helper template for every importer.
+  The template is rendered in admin when selecting the importer.
+
 Core
 ~~~~
 

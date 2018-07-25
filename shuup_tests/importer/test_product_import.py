@@ -8,31 +8,56 @@ import os
 from decimal import Decimal
 
 import pytest
+from django.conf import settings
 from django.utils.encoding import force_text
 from django.utils.translation import activate
+from six import BytesIO
 
-from shuup.core.models import Category, Manufacturer, Product, ShopProduct
+from shuup.core.models import (
+    Category, Manufacturer, MediaFile, Product, ShopProduct
+)
 from shuup.default_importer.importers import ProductImporter
 from shuup.importer.transforms import transform_file
 from shuup.importer.utils.importer import ImportMode
 from shuup.simple_supplier.models import StockAdjustment
 from shuup.testing.factories import (
-    get_default_product_type, get_default_shop, get_default_supplier,
-    get_default_tax_class
+    get_default_product_type, get_default_sales_unit, get_default_shop,
+    get_default_supplier, get_default_tax_class
 )
+from shuup.testing.image_generator import generate_image
+from shuup.utils.filer import filer_image_from_data
 
 bom_file = "sample_import_bom.csv"
+images_file = "sample_import_images.csv"
+
+
+def _create_random_media_file(shop, file_path):
+    path, name = os.path.split(file_path)
+    pil_image = generate_image(2, 2)
+    sio = BytesIO()
+    pil_image.save(sio, "JPEG", quality=45)
+    filer_file = filer_image_from_data(
+        request=None,
+        path=path,
+        file_name=name,
+        file_data=sio.getvalue()
+    )
+    media_file = MediaFile.objects.create(file=filer_file)
+    media_file.shops.add(shop)
+    return media_file
+
 
 @pytest.mark.parametrize("filename", ["sample_import.xlsx", "sample_import.csv",
                                       "sample_import2.csv", "sample_import3.csv",
                                       "sample_import4.csv", "sample_import5.csv",
-                                      "sample_import.xls", bom_file])
+                                      "sample_import.xls", images_file, bom_file])
 @pytest.mark.django_db
 def test_sample_import_all_match(filename):
     activate("en")
     shop = get_default_shop()
     tax_class = get_default_tax_class()
     product_type = get_default_product_type()
+    sales_unit = get_default_sales_unit()
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     if filename == bom_file:
@@ -44,40 +69,113 @@ def test_sample_import_all_match(filename):
     transformed_data = transform_file(filename.split(".")[1], path)
     importer = ProductImporter(transformed_data, shop, "en")
     importer.process_data()
-    assert len(importer.unmatched_fields) == 0
+
+    if filename == images_file:
+        assert len(importer.unmatched_fields) == 2
+        _create_random_media_file(shop, "image1.jpeg")
+        _create_random_media_file(shop, "products/images/image2.jpeg")
+        _create_random_media_file(shop, "products/images/image3.jpeg")
+        _create_random_media_file(shop, "image4.jpeg")
+        _create_random_media_file(shop, "products2/images/image5.jpeg")
+        _create_random_media_file(shop, "product1.jpeg")
+        _create_random_media_file(shop, "products/images/product2.jpeg")
+        _create_random_media_file(shop, "products/images2/product2.jpeg")
+    else:
+        assert len(importer.unmatched_fields) == 0
+
     importer.do_import(ImportMode.CREATE_UPDATE)
     products = importer.new_objects
-    assert len(products) == 2
+
+    if filename == images_file:
+        assert len(products) == 3
+    else:
+        assert len(products) == 2
+
     for product in products:
         shop_product = product.get_shop_instance(shop)
         assert shop_product.pk
         assert shop_product.default_price_value == 150
         assert shop_product.default_price == shop.create_price(150)
         assert product.type == product_type  # product type comes from importer defaults
+        assert product.sales_unit == sales_unit
+
         if product.pk == 1:
             assert product.tax_class.pk == 2  # new was created
             assert product.name == "Product English"
             assert product.description == "Description English"
-        else:
+
+            if filename == images_file:
+                assert product.media.count() == 3
+        elif product.pk == 2:
             assert product.tax_class.pk == tax_class.pk  # old was found as should
             assert product.name == "Product 2 English"
             assert product.description == "Description English 2"
+
+            if filename == images_file:
+                assert product.media.count() == 2
+        elif product.pk == 3 and filename == images_file:
+            assert product.media.count() == 3
+
         assert shop_product.primary_category.pk == 1
         assert [c.pk for c in shop_product.categories.all()] == [1,2]
+
+
+@pytest.mark.django_db
+def test_sample_import_images_errors():
+    activate("en")
+    shop = get_default_shop()
+    get_default_tax_class()
+    get_default_product_type()
+    get_default_sales_unit()
+
+    path = os.path.join(os.path.dirname(__file__), "data", "product", "sample_import_images_error.csv")
+    transformed_data = transform_file("csv", path)
+    importer = ProductImporter(transformed_data, shop, "en")
+    importer.process_data()
+
+    assert len(importer.unmatched_fields) == 2
+    importer.do_import(ImportMode.CREATE_UPDATE)
+    products = importer.new_objects
+    assert len(products) == 2
+    for product in products:
+        assert not product.media.exists()
+
+
+@pytest.mark.django_db
+def test_sample_ignore_column():
+    activate("en")
+    shop = get_default_shop()
+    get_default_tax_class()
+    get_default_product_type()
+    get_default_sales_unit()
+
+    path = os.path.join(os.path.dirname(__file__), "data", "product", "sample_import_ignore.csv")
+    transformed_data = transform_file("csv", path)
+    importer = ProductImporter(transformed_data, shop, "en")
+    importer.process_data()
+
+    assert len(importer.unmatched_fields) == 0
+    importer.do_import(ImportMode.CREATE_UPDATE)
+    products = importer.new_objects
+    assert len(products) == 2
+
 
 @pytest.mark.parametrize("stock_managed", [True, False])
 @pytest.mark.django_db
 def test_sample_import_no_match(stock_managed):
     filename = "sample_import_nomatch.xlsx"
+    if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")
+    from shuup_tests.simple_supplier.utils import get_simple_supplier
+
     activate("en")
     shop = get_default_shop()
     tax_class = get_default_tax_class()
     product_type = get_default_product_type()
-    supplier = get_default_supplier()
-    supplier.stock_managed = stock_managed
-    supplier.save()
+    supplier = get_simple_supplier(stock_managed)
+    sales_unit = get_default_sales_unit()
 
-    manufacturer = Manufacturer.objects.create(name="manufctr")
+    Manufacturer.objects.create(name="manufctr")
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
 
@@ -99,6 +197,7 @@ def test_sample_import_no_match(stock_managed):
         assert shop_product.default_price_value == 150
         assert shop_product.default_price == shop.create_price(150)
         assert product.type == product_type  # product type comes from importer defaults
+        assert product.sales_unit == sales_unit
         if product.pk == 1:
             assert product.tax_class.pk == 2  # new was created
             assert product.name == "Product English"
@@ -130,6 +229,7 @@ def import_categoryfile(filename, expected_category_count, map_from=None, map_to
     get_default_tax_class()
     get_default_product_type()
     get_default_supplier()
+    get_default_sales_unit()
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
@@ -246,6 +346,7 @@ def test_complex_import():
     get_default_tax_class()
     get_default_product_type()
     get_default_supplier()
+    get_default_sales_unit()
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)

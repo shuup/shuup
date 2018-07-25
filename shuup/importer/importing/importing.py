@@ -50,6 +50,7 @@ class DataImporter(object):
     relation_map_cache = {}
 
     example_files = []      # list[ImporterExampleFile]
+    help_template = None
 
     model = None
 
@@ -115,6 +116,9 @@ class DataImporter(object):
 
         data_map = {}
         for field_name in sorted(self.data_keys):
+            if field_name.lower() == "ignore":
+                continue
+
             mfname = fold_mapping_name(field_name)
             mapped_value = model_mapping.get(mfname)
             if not mapped_value:
@@ -128,6 +132,7 @@ class DataImporter(object):
                 data_map[field_name] = mapped_value
                 if mapped_value.get("keyable"):
                     self.unique_fields[field_name] = mapped_value
+
             elif not mapped_value and not self._meta.has_post_save_handler(field_name):
                 self.unmatched_fields.add(field_name)
 
@@ -179,12 +184,22 @@ class DataImporter(object):
             return cls.objects.get(pk=value)
         except:
             name_fields = ["name", "title"]
-            q = Q()
-            for f in name_fields:
-                if hasattr(cls, "_parler_meta"):
-                    f = "translations__%s" % f
-                q |= Q(**{f: value})
-            return cls.objects.get(q)
+            query = Q()
+
+            for field in name_fields:
+                if hasattr(cls, "_parler_meta") and field in cls._parler_meta.get_translated_fields():
+                    field = "%s__%s" % (cls._parler_meta.root_rel_name, field)
+                else:
+                    from django.core.exceptions import FieldDoesNotExist
+                    try:
+                        cls._meta.get_field(field)
+                    except FieldDoesNotExist:
+                        continue
+
+                query |= Q(**{field: value})
+
+            if query:
+                return cls.objects.get(query)
 
     def _resolve_obj(self, row):
         obj = self._find_matching_object(row, self.shop)
@@ -219,9 +234,14 @@ class DataImporter(object):
             return False
         return True
 
-    @atomic
+    @atomic  # noqa (C901)
     def process_row(self, row):
         if all((not val) for val in row.values()):  # Empty row, skip it
+            return
+
+        # ignore the row if there is a column 'ignore" with a valid value
+        row_lower = {key.lower(): val for key, val in row.items()}
+        if row_lower.get("ignore"):
             return
 
         obj, new = self._resolve_obj(row)
@@ -475,6 +495,13 @@ class DataImporter(object):
             if multi:
                 return mapper.map_multi_value(value)
             return mapper.map_single_value(value)
+
+    @classmethod
+    def get_help_context_data(cls, request):
+        """
+        Returns the context data that should be used for help texts in admin
+        """
+        return {}
 
     @classmethod
     def has_example_file(cls):
