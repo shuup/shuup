@@ -88,7 +88,7 @@ class TaskAdminModule(AdminModule):
     def get_search_results(self, request, query):
         shop = get_shop(request)
 
-        if len(query) >= 3:
+        if len(query) >= self.minimum_search_length:
             contact = get_person_contact(request.user)
             tasks = (
                 Task.objects

@@ -161,8 +161,7 @@ class OrderModule(AdminModule):
         )
 
     def get_search_results(self, request, query):
-        minimum_query_length = 3
-        if len(query) >= minimum_query_length:
+        if len(query) >= self.minimum_search_length:
             orders = Order.objects.filter(
                 Q(identifier__istartswith=query) |
                 Q(reference_number__istartswith=query) |

@@ -20,6 +20,9 @@ class AdminModule(object):
     # A menu entry to represent this module in breadcrumbs
     breadcrumbs_menu_entry = None
 
+    # Letter limit when searching results from module
+    minimum_search_length = 3
+
     def get_urls(self):
         """
         :rtype: list[django.core.urlresolvers.RegexURLPattern]

@@ -55,8 +55,7 @@ class CategoryModule(AdminModule):
         ]
 
     def get_search_results(self, request, query):
-        minimum_query_length = 3
-        if len(query) >= minimum_query_length:
+        if len(query) >= self.minimum_search_length:
             categories = Category.objects.filter(
                 Q(translations__name__icontains=query) |
                 Q(identifier__icontains=query)

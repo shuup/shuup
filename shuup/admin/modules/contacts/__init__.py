@@ -89,8 +89,7 @@ class ContactModule(AdminModule):
         )
 
     def get_search_results(self, request, query):
-        minimum_query_length = 3
-        if len(query) >= minimum_query_length:
+        if len(query) >= self.minimum_search_length:
             filters = Q(Q(name__icontains=query) | Q(email=query))
 
             # show only contacts which the shop has access

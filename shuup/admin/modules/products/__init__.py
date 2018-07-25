@@ -99,13 +99,12 @@ class ProductModule(AdminModule):
 
     def get_search_results(self, request, query):
         shop = request.shop
-        minimum_query_length = 3
         skus_seen = set()
-        if len(query) >= minimum_query_length:
+        if len(query) >= self.minimum_search_length:
             pk_counter = Counter()
             pk_counter.update(Product.objects.filter(sku__startswith=query).values_list("pk", flat=True))
             name_q = Q()
-            for part in split_query(query, minimum_query_length):
+            for part in split_query(query, self.minimum_search_length):
                 name_q &= Q(name__icontains=part)
             pk_counter.update(
                 Product._parler_meta.root_model.objects.filter(name_q).values_list("master_id", flat=True)
@@ -122,7 +121,6 @@ class ProductModule(AdminModule):
                     relevance=relevance
                 )
 
-        if len(query) >= minimum_query_length:
             url = reverse("shuup_admin:shop_product.new")
             if " " in query:
                 yield SearchResult(
