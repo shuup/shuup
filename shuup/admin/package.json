@@ -44,6 +44,7 @@
     "masonry-layout": "^4.2.2",
     "mithril": "^0.2.0",
     "node-sass": "^4.9.2",
+    "npm-font-open-sans": "^1.1.0",
     "outlayer": "^2.1.1",
     "popper": "^1.0.1",
     "redux": "^3.0.4",
