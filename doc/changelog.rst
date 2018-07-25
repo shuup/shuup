@@ -12,6 +12,8 @@ Unrealeased
 Bug fixes
 ~~~~~~~~~
 
+- Fix SampleData admin by adding a `MediaFile` for the shop when creating products sample data
+- Fix SimpleSupplier by checking whether the product has sales unit
 - Fix product importer to import stocks correctly
 - Fix base importer resolve objects method by checking fields existence before querying them
 
