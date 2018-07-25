@@ -7,6 +7,9 @@
     "build": "npm i && gulp bower && gulp build",
     "watch": "npm i && gulp build --watch"
   },
+  "shuup": {
+    "static_build": true
+  },
   "author": "Shuup Team <support@shuup.com>",
   "license": "OSL-3.0",
   "private": true,

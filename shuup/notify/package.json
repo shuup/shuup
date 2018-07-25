@@ -5,7 +5,11 @@
   "main": "",
   "scripts": {
     "watch": "parcel watch --no-hmr --no-source-maps -d static/notify/admin/ -o script-editor static_src/index.js",
-    "build": "npm i && parcel build -d static/notify/admin/ -o script-editor static_src/index.js"
+    "clean": "rm generated_resources.txt || true",
+    "build": "npm i && npm run clean && parcel build -d static/notify/admin/ -o script-editor static_src/index.js"
+  },
+  "shuup": {
+    "static_build": true
   },
   "author": "Shuup Team <shuup@shuup.com>",
   "license": "OSL-3.0",
@@ -14,7 +18,8 @@
     "autoprefixer": "^8.6.4",
     "babel-preset-env": "^1.7.0",
     "less": "^3.0.4",
-    "parcel-bundler": "^1.9.3",
+    "parcel-bundler": "^1.9.7",
+    "parcel-plugin-shuup-maninfest": "file:../../shuup_setup_utils/parcel_plugin_shuup_maninfest",
     "postcss-modules": "^1.1.0"
   }
 }

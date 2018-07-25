@@ -11,7 +11,11 @@
     "build:vendorjs": "parcel build -d static/shuup/front/js static_src/js/vendor.js",
     "build:scripts": "parcel build -d static/shuup/front/js -o scripts static_src/js/index.js",
     "build:styles": "parcel build -d static/shuup/front/css static_src/less/style.js",
-    "build": "npm i && concurrently --kill-others-on-fail npm:build:*"
+    "clean": "rm generated_resources.txt || true",
+    "build": "npm i && npm run clean && concurrently --kill-others-on-fail npm:build:*"
+  },
+  "shuup": {
+    "static_build": true
   },
   "author": "Shuup Team <shuup@shuup.com>",
   "private": true,
@@ -28,7 +32,8 @@
     "less": "^3.0.4",
     "node-sass": "^4.9.2",
     "owl.carousel": "^2.3.4",
-    "parcel-bundler": "^1.9.3",
+    "parcel-bundler": "^1.9.7",
+    "parcel-plugin-shuup-maninfest": "file:../../shuup_setup_utils/parcel_plugin_shuup_maninfest",
     "postcss-modules": "^1.1.0",
     "simplelightbox": "^1.13.0"
   }

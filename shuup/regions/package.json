@@ -5,13 +5,18 @@
   "main": "webpack.config.js",
   "scripts": {
     "watch": "parcel watch --no-hmr -d static/ -o shuup-regions static_src/index.js",
-    "build": "npm i && parcel build -d static/ -o shuup-regions static_src/index.js"
+    "clean": "rm generated_resources.txt || true",
+    "build": "npm i && npm run clean && parcel build -d static/ -o shuup-regions static_src/index.js"
+  },
+  "shuup": {
+    "static_build": true
   },
   "author": "Shuup Team <shuup@shuup.com>",
   "license": "OSL-3.0",
   "private": true,
   "dependencies": {
     "babel-preset-env": "^1.7.0",
-    "parcel-bundler": "^1.9.3"
+    "parcel-bundler": "^1.9.7",
+    "parcel-plugin-shuup-maninfest": "file:../../shuup_setup_utils/parcel_plugin_shuup_maninfest"
   }
 }

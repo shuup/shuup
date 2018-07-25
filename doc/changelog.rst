@@ -9,6 +9,12 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+General
+~~~~~~~
+
+- Changed the way static resources are built.
+  Parcel is used to build all apps and `generated_resources.txt` is auto-generated.
+
 Shuup 1.6.9
 -----------
 

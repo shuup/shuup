@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import json
 import hashlib
 import os
 import shutil
@@ -72,6 +73,10 @@ class Builder(object):
             if 'package.json' in filenames:
                 if 'generated_resources.txt' in filenames:
                     yield dirpath
+                else:
+                    package = json.load(open(os.path.join(dirpath, "package.json")))
+                    if package.get("shuup", {}).get("static_build"):
+                        yield dirpath
 
     def build_dirs(self, directories):
         for (i, dir) in enumerate(directories, 1):
@@ -153,12 +158,13 @@ class Builder(object):
         if result_files is None:
             result_files = []
             list_file_path = os.path.join(dir, 'generated_resources.txt')
-            with open(list_file_path, 'rt') as fp:
-                for line in fp:
-                    stripped_line = line.strip()
-                    if stripped_line and not stripped_line.startswith('#'):
-                        file_path = stripped_line.replace('/', os.path.sep)
-                        result_files.append(file_path)
+            if os.path.exists(list_file_path):
+                with open(list_file_path, 'rt') as fp:
+                    for line in fp:
+                        stripped_line = line.strip()
+                        if stripped_line and not stripped_line.startswith('#'):
+                            file_path = stripped_line.replace('/', os.path.sep)
+                            result_files.append(file_path)
             self._result_files[dir] = result_files
         return result_files
 

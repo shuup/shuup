@@ -15,8 +15,12 @@
     "build:editor:scripts": "parcel build -d static/xtheme static_src/editor/editor.js",
     "build:admin:scripts": "parcel build -d static/xtheme/admin static_src/admin/script.js",
     "build:editor-injection": "parcel build -d static/xtheme static_src/injection/editor-injection.js",
-    "build": "npm i && concurrently --kill-others-on-fail npm:build:*",
+    "clean": "rm generated_resources.txt || true",
+    "build": "npm i && npm run clean && concurrently --kill-others-on-fail npm:build:*",
     "lint": "eslint static_src"
+  },
+  "shuup": {
+    "static_build": true
   },
   "author": "Shuup Team <shuup@shuup.com>",
   "private": true,
@@ -27,7 +31,8 @@
     "bootstrap": "^3.3.7",
     "concurrently": "^3.6.0",
     "less": "^3.0.4",
-    "parcel-bundler": "^1.9.3",
+    "parcel-bundler": "^1.9.7",
+    "parcel-plugin-shuup-maninfest": "file:../../shuup_setup_utils/parcel_plugin_shuup_maninfest",
     "postcss-modules": "^1.1.0"
   },
   "devDependencies": {

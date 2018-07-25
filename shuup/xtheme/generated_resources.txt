@@ -1,5 +1,0 @@
-static/xtheme/admin/xtheme_admin.css
-static/xtheme/admin/script.js
-static/xtheme/editor.css
-static/xtheme/editor.js
-static/xtheme/editor-injection.js
