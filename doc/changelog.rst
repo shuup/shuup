@@ -1,13 +1,39 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.6.8
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-07-26 10:30am -0800.
+
+Admin
+~~~~~
+
+- Make text editor use Shuup media browser when addin pictures
+
+Front
+~~~~~
+
+- Fix registration signal to send the person contact
+- Make admin toolbar better
+- Update Owl Carousel dependency to 2.3.4
+
+General
+~~~~~~~
+
+- Unpin Cryptography dependency
+- Improve around Django 1.11 support
+
+Simple CMS
+~~~~~~~~~~
+
+- Make textarea bigger and resizable
+
+Xtheme
+~~~~~~
+
+- Make text plugin to fallback to empty string instead of "None".
+
 
 Shuup 1.6.7
 -----------
