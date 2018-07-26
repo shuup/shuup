@@ -24,6 +24,12 @@
         justify-content: space-between;
         align-items: center;
 
+        &.windows-phone {
+            display: block;
+        }
+        div.consent-content {
+            flex: 1;
+        }
         #privacy-preferences-btn {
             white-space: nowrap;
             color: white !important;
@@ -31,7 +37,6 @@
         #agree-btn {
             padding: 0.5em 1em;
         }
-
         @media (max-width: 768px) {
             flex-direction: column;
 
@@ -97,7 +102,7 @@
             }
 
             .consent-view {
-                width: 100%;
+                width: 80%;
                 display: flex;
                 flex-direction: column;
                 max-height: 300px;

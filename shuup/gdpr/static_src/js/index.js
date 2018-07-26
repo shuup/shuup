@@ -8,6 +8,14 @@
  */
 
 (() => {
+
+    $(document).ready(function() {
+        if(navigator.userAgent.match(/Windows Phone/i)){
+            $(".gdpr-consent-warn-content").addClass("windows-phone");
+        }
+
+    });
+
     $("#privacy-preferences-btn").click(() => {
         $(".gdpr-consent-preferences").addClass("visible");
         $("body").addClass("body-noscroll");
