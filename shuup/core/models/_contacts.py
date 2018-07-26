@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
@@ -52,6 +53,7 @@ class ContactGroupQuerySet(TranslatableQuerySet):
 
 class ContactGroup(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
+    shop = models.ForeignKey("Shop", related_name="contact_groups", verbose_name=_("shop"), null=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
     show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
     show_prices_including_taxes = models.NullBooleanField(
@@ -73,6 +75,19 @@ class ContactGroup(TranslatableShuupModel):
     class Meta:
         verbose_name = _('contact group')
         verbose_name_plural = _('contact groups')
+
+    def clean(self):
+        super(ContactGroup, self).clean()
+        shop = getattr(self, "shop", None)
+        is_default = (self.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS)
+        if is_default and shop:
+            raise ValidationError(_("Cannot set shop for default Contact Group."), code="contact_group_default_shop")
+        elif not is_default and not shop:
+            raise ValidationError(_("Contact Group requires a shop."), code="contact_group_no_shop")
+
+    def save(self, **kwargs):
+        self.clean()
+        return super(ContactGroup, self).save(**kwargs)
 
     def get_price_display_options(self):
         return PriceDisplayOptions(

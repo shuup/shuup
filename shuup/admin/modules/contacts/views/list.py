@@ -51,7 +51,7 @@ class ContactListView(PicotableListView):
         ),
         Column("n_orders", _(u"# Orders"), class_name="text-right", filter_config=RangeFilter(step=1)),
         Column("groups", _("Groups"),
-               filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"),
+               filter_config=ChoicesFilter(ContactGroup.objects.all_except_defaults(), "groups"),
                display="get_groups_display"),
 
         # TODO: Fix these filters, Shop.objects.all() is wrong...
@@ -104,14 +104,12 @@ class ContactListView(PicotableListView):
             return _(u"Contact")
 
     def get_groups_display(self, instance):
-        if instance.groups.count():
-            return ", ".join(instance.groups.values_list("translations__name", flat=True))
-        return _("No group")
+        groups = instance.groups.all_except_defaults().values_list("translations__name", flat=True)
+        return ", ".join(groups) if groups else _("No group")
 
     def get_shop_display(self, instance):
-        if instance.shops.count():
-            return ", ".join(instance.shops.values_list("translations__name", flat=True))
-        return _("No shop")
+        shops = instance.shops.values_list("translations__name", flat=True)
+        return ", ".join(shops) if shops else _("No shop")
 
     def get_object_abstract(self, instance, item):
         """

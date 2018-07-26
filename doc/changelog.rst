@@ -13,6 +13,7 @@ Core
 ~~~~
 
 - Add ``registration_shop`` for ``Contact``.
+- Add shop value to ``ContactGroup``.
 
 Shuup 1.6.8
 -----------

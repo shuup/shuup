@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import pytest
 from django.contrib.auth.models import AnonymousUser
+from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from shuup import configuration
 
@@ -209,11 +210,12 @@ def test_default_person_contact_group_repr_and_str():
 
 @pytest.mark.django_db
 def test_contact_group_price_display_options_filtering():
-    cg0 = ContactGroup.objects.create()
-    cg1 = ContactGroup.objects.create(hide_prices=True)
-    cg2 = ContactGroup.objects.create(hide_prices=False)
-    cg3 = ContactGroup.objects.create(show_prices_including_taxes=True)
-    cg4 = ContactGroup.objects.create(show_prices_including_taxes=False)
+    shop = get_default_shop()
+    cg0 = ContactGroup.objects.create(shop=shop)
+    cg1 = ContactGroup.objects.create(hide_prices=True, shop=shop)
+    cg2 = ContactGroup.objects.create(hide_prices=False, shop=shop)
+    cg3 = ContactGroup.objects.create(show_prices_including_taxes=True, shop=shop)
+    cg4 = ContactGroup.objects.create(show_prices_including_taxes=False, shop=shop)
     groups_qs = ContactGroup.objects.with_price_display_options()
     assert isinstance(groups_qs, QuerySet)
     groups = list(groups_qs)
@@ -246,7 +248,8 @@ def test_contact_group_price_display_options_defined(taxes, hide_prices):
 
 @pytest.mark.django_db
 def test_contact_group_price_display_for_contact(regular_user):
-    group = ContactGroup.objects.create(hide_prices=True)
+    shop = get_default_shop()
+    group = ContactGroup.objects.create(hide_prices=True, shop=shop)
     person = get_person_contact(regular_user)
     person.groups.add(group)
 
@@ -342,3 +345,24 @@ def test_contact_in_shops(regular_user):
     assert contact.in_shop(shop2)
     assert contact.in_shop(shop3)
     assert contact.shops.filter(pk__in=all_shop_ids).count() == len(all_shop_ids)
+
+
+@pytest.mark.django_db
+def test_cannot_add_shop(regular_user):
+    shop = get_default_shop()
+    contact = get_person_contact(regular_user)
+    group = contact.get_default_group()
+
+    assert not group.shop
+
+    group.shop = shop
+    with pytest.raises(ValidationError):
+        group.save()
+
+
+@pytest.mark.django_db
+def test_cannot_add_without_shop(regular_user):
+    shop = get_default_shop()
+    with pytest.raises(ValidationError):
+        ContactGroup.objects.create(identifier="adsf")
+    ContactGroup.objects.create(identifier="adsf", shop=shop)
