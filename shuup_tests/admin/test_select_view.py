@@ -216,7 +216,7 @@ def test_ajax_select_view_with_contacts(rf, contact_cls, admin_user):
     results = _get_search_results(rf, view, model_name, "michael", admin_user)
     assert len(results) == 0
 
-    customer.shops.add(shop)
+    customer.add_to_shop(shop)
     results = _get_search_results(rf, view, model_name, "michael", admin_user)
     assert len(results) == 1
     assert results[0].get("id") == customer.id
@@ -284,7 +284,7 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
     results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
     assert len(results) == 0
 
-    contact.shops.add(shop)
+    contact.add_to_shop(shop)
     results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
     assert len(results) == 1
 

@@ -7,12 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.modules.contacts.utils import request_limited
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, Select2Filter, TextFilter
@@ -52,7 +53,10 @@ class ContactListView(PicotableListView):
         Column("groups", _("Groups"),
                filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"),
                display="get_groups_display"),
-        Column("shops", _("Shops"), filter_config=Select2Filter(Shop.objects.all()), display="get_shop_display")
+
+        # TODO: Fix these filters, Shop.objects.all() is wrong...
+        Column("shops", _("Shops"), filter_config=Select2Filter(Shop.objects.all()), display="get_shop_display"),
+        Column("registration_shop", _("Registered in"), filter_config=Select2Filter(Shop.objects.all()))
     ]
 
     mass_actions = [
@@ -80,10 +84,8 @@ class ContactListView(PicotableListView):
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
 
-        limited = (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
-                   not self.request.user.is_superuser)
-        if limited:
-            shop = self.request.shop
+        if request_limited(self.request):
+            shop = get_shop(self.request)
             qs = qs.filter(shops=shop)
 
         return (

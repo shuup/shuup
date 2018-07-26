@@ -72,7 +72,7 @@ class PersonRegistrationForm(RegistrationForm):
     def save(self, *args, **kwargs):
         user = super(PersonRegistrationForm, self).save(*args, **kwargs)
         contact = get_person_contact(user)
-        contact.shops.add(self.request.shop)
+        contact.add_to_shop(self.request.shop)
         person_registration_save.send(sender=type(self), request=self.request, user=user, contact=contact)
         return user
 
@@ -138,7 +138,7 @@ class CompanyRegistrationForm(FormGroup):
             company.default_billing_address = billing_address
             company.default_shipping_address = billing_address
             company.save()
-            company.shops.add(self.request.shop)
+            company.add_to_shop(self.request.shop)
             company.members.add(person)
 
         company_registration_save.send(sender=type(self), request=self.request, user=user, company=company)

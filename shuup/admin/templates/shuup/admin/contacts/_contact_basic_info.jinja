@@ -9,6 +9,7 @@
     {{ info_row(_("Groups"), groups|default(_("No groups"), True)) }}
     {{ info_row(_("Bound User"), contact.user, shuup_admin.model_url(contact.user) if contact.user else None) }}
     {{ info_row(_("Shops"), shops|default(_("No shops"), True)) }}
+    {{ info_row(_("Registered in"), contact.registration_shop, shuup_admin.model_url(contact.registration_shop)) }}
     {% if contact_basic_info.companies %}
         {% set rendered_companies = render_objects(contact_basic_info.companies) %}
         {{ info_row(_("Companies"), rendered_companies) }}

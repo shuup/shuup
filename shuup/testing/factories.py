@@ -750,7 +750,7 @@ def create_random_person(locale=None, minimum_name_comp_len=0, shop=None):
         language=fake.language
     )
     if shop:
-        contact.shops.add(shop)
+        contact.add_to_shop(shop)
     return contact
 
 
@@ -784,7 +784,7 @@ def create_random_company(shop=None):
         language=language
     )
     if shop:
-        contact.shops.add(shop)
+        contact.add_to_shop(shop)
     return contact
 
 

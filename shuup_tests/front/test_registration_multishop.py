@@ -21,7 +21,7 @@ def test_registration_person_multiple_shops(django_user_model, client):
     if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.registration required in installed apps")
 
-    Shop.objects.create(identifier="shop1", status=ShopStatus.ENABLED, domain="shop1.shuup.com")
+    shop1 = Shop.objects.create(identifier="shop1", status=ShopStatus.ENABLED, domain="shop1.shuup.com")
     shop2 = Shop.objects.create(identifier="shop2", status=ShopStatus.ENABLED, domain="shop2.shuup.com")
 
     with override_settings(
@@ -41,7 +41,10 @@ def test_registration_person_multiple_shops(django_user_model, client):
 
         user = django_user_model.objects.get(username=username)
         contact = PersonContact.objects.get(user=user)
-        assert shop2 in contact.shops.all()
+        assert contact.in_shop(shop2)
+        assert contact.registered_in(shop2)
+        assert not contact.in_shop(shop1)
+        assert not contact.registered_in(shop1)
 
 
 @pytest.mark.django_db
@@ -53,7 +56,7 @@ def test_registration_company_multiple_shops(django_user_model, client):
     configuration.set(None, "company_registration_requires_approval", False)
 
     shop1 = Shop.objects.create(identifier="shop1", status=ShopStatus.ENABLED, domain="shop1.shuup.com")
-    Shop.objects.create(identifier="shop2", status=ShopStatus.ENABLED, domain="shop2.shuup.com")
+    shop2 = Shop.objects.create(identifier="shop2", status=ShopStatus.ENABLED, domain="shop2.shuup.com")
     username = "u-%d" % uuid.uuid4().time
     email = "%s@shuup.local" % username
 
@@ -88,5 +91,17 @@ def test_registration_company_multiple_shops(django_user_model, client):
         user = django_user_model.objects.get(username=username)
         contact = PersonContact.objects.get(user=user)
         company = CompanyContact.objects.get(members__in=[contact])
-        assert shop1 in contact.shops.all()
-        assert shop1 in company.shops.all()
+
+        assert contact.in_shop(shop1)
+        assert company.in_shop(shop1)
+        assert contact.in_shop(shop1, only_registration=True)
+        assert company.in_shop(shop1, only_registration=True)
+        assert contact.registered_in(shop1)
+        assert company.registered_in(shop1)
+
+        assert not contact.in_shop(shop2)
+        assert not company.in_shop(shop2)
+        assert not contact.in_shop(shop2, only_registration=True)
+        assert not company.in_shop(shop2, only_registration=True)
+        assert not contact.registered_in(shop2)
+        assert not company.registered_in(shop2)

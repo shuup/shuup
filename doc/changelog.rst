@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Core
+~~~~
+
+- Add ``registration_shop`` for ``Contact``.
+
 Shuup 1.6.8
 -----------
 
@@ -41,7 +46,6 @@ Xtheme
 ~~~~~~
 
 - Make text plugin to fallback to empty string instead of "None".
-
 
 Shuup 1.6.7
 -----------

@@ -17,7 +17,7 @@ from shuup.core.models import (
     get_person_contact, PersonContact
 )
 from shuup.core.pricing import PriceDisplayOptions
-from shuup.testing.factories import create_random_company, get_all_seeing_key
+from shuup.testing.factories import create_random_company, get_all_seeing_key, get_default_shop, get_shop
 from shuup_tests.utils.fixtures import regular_user
 
 
@@ -273,3 +273,72 @@ def test_get_company_contact(regular_user):
     company_contact = create_random_company()
     company_contact.members.add(person_contact)
     assert get_company_contact(regular_user) == company_contact
+
+
+@pytest.mark.django_db
+def test_contact_in_shop(regular_user):
+    shop = get_default_shop()
+    contact = get_person_contact(regular_user)
+
+    assert not contact.in_shop(shop)
+    assert not contact.shops.exists()
+
+    contact.add_to_shop(shop)
+    assert contact.shops.count() == 1
+    assert contact.in_shop(shop)
+    assert contact.in_shop(shop, only_registration=True)
+
+    shop2 = get_shop()
+
+    assert shop.pk != shop2.pk
+    assert not contact.in_shop(shop2)
+    assert not contact.in_shop(shop2, only_registration=True)
+
+    contact.add_to_shop(shop2)
+    assert contact.shops.count() == 2
+    assert contact.in_shop(shop)
+    assert contact.in_shop(shop, only_registration=True)
+    assert contact.in_shop(shop2)
+    assert not contact.in_shop(shop2, only_registration=True)
+
+
+@pytest.mark.django_db
+def test_contact_in_shops(regular_user):
+    shop1 = get_default_shop()
+    shop2 = get_shop(identifier="shop-2")
+    shop3 = get_shop(identifier="shop-3")
+    contact = get_person_contact(regular_user)
+
+    all_shop_ids = [shop1.pk, shop2.pk, shop3.pk]
+
+    contact.add_to_shops(shop1, [shop2, shop3])
+
+    assert contact.registered_in(shop1)
+    assert not contact.registered_in(shop2)
+    assert not contact.registered_in(shop3)
+    assert contact.in_shop(shop1)
+    assert contact.in_shop(shop2)
+    assert contact.in_shop(shop3)
+    assert contact.shops.filter(pk__in=all_shop_ids).count() == len(all_shop_ids)
+
+    contact.add_to_shops(shop2, [shop1, shop3])
+    assert contact.registered_in(shop1)
+    assert not contact.registered_in(shop2)
+    assert not contact.registered_in(shop3)
+    assert contact.in_shop(shop1)
+    assert contact.in_shop(shop2)
+    assert contact.in_shop(shop3)
+    assert contact.shops.filter(pk__in=all_shop_ids).count() == len(all_shop_ids)
+
+    contact.registration_shop = None
+    contact.shops.clear()
+    contact.save()
+
+    contact.add_to_shops(shop2, [shop1, shop3])
+    assert not contact.registered_in(shop1)
+    assert contact.registered_in(shop2)
+    assert not contact.registered_in(shop3)
+    assert contact.in_shop(shop1)
+    assert contact.in_shop(shop2)
+    assert contact.in_shop(shop3)
+    assert contact.shops.filter(pk__in=all_shop_ids).count() == len(all_shop_ids)

@@ -111,6 +111,10 @@ class Contact(PolymorphicShuupModel):
     shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_('shops'), help_text=_(
         "Inform which shops have access to this contact."
     ))
+
+    registration_shop = models.ForeignKey(
+        "Shop", related_name="registrations", verbose_name=_("registration shop"), null=True)
+
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(
         "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('shipping address'),
@@ -252,6 +256,37 @@ class Contact(PolymorphicShuupModel):
             }
         )
         return obj
+
+    def add_to_shops(self, registration_shop, shops):
+        """
+        Add contact to multiple shops
+
+        :param registration_shop: Shop where contact registers
+        :type registration_shop: core.models.Shop
+        :param shops: A list of shops
+        :type shops: list
+        :return:
+        """
+        # set `registration_shop` first to ensure it's being
+        # used if not already set
+        for shop in [registration_shop] + shops:
+            self.add_to_shop(shop)
+
+    def add_to_shop(self, shop):
+        self.shops.add(shop)
+        if not self.registration_shop:
+            self.registration_shop = shop
+            self.save()
+
+    def registered_in(self, shop):
+        return (self.registration_shop == shop)
+
+    def in_shop(self, shop, only_registration=False):
+        if only_registration:
+            return self.registered_in(shop)
+        if self.shops.filter(pk=shop.pk).exists():
+            return True
+        return self.registered_in(shop)
 
 
 class CompanyContact(Contact):
@@ -472,7 +507,7 @@ def get_company_contact_for_shop(shop):
     company = CompanyContact.objects.get_or_create(
         identifier="shop-contact-%s" % shop.pk, defaults={"name": shop.public_name}
     )[0]
-    company.shops.add(shop)
+    company.add_to_shop(shop)
     return company
 
 

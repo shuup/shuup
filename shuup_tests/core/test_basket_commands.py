@@ -205,7 +205,7 @@ def test_set_non_shop_member_customer(rf):
         person.shops.add(shop)
 
         company = factories.create_random_company()
-        company.shops.add(shop)
+        company.add_to_shop(shop)
 
         for customer in [person, company]:
             with pytest.raises(ValidationError) as exc:

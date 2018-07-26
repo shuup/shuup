@@ -118,8 +118,11 @@ class CompanyEditView(DashboardViewMixin, FormView):
         is_new = not bool(company.pk)
         company.save()
         user = self.request.user
+        # TODO: Should this check if contact will be created? Or should we expect create always?
         person = get_person_contact(user)
+        person.add_to_shop(self.request.shop)
         company.members.add(person)
+        company.add_to_shop(self.request.shop)
         billing_address = form["billing"].save()
         shipping_address = form["shipping"].save()
         if billing_address.pk != company.default_billing_address_id:  # Identity changed due to immutability
