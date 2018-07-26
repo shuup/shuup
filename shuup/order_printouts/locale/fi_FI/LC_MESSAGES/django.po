@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 23:57+0000\n"
+"POT-Creation-Date: 2018-07-16 20:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2016\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
@@ -79,6 +79,9 @@ msgstr "Maksun tila"
 msgid "Shipping status"
 msgstr "Toimituksen tila"
 
+msgid "Tracking codes"
+msgstr "Seurantakoodit"
+
 msgid "Order date"
 msgstr "Tilauspäivämäärä"
 
@@ -90,6 +93,9 @@ msgstr "Tunniste"
 
 msgid "Shipment date"
 msgstr "Toimituspäivämäärä"
+
+msgid "Tracking code"
+msgstr "Seurantakoodi"
 
 msgid "SKU"
 msgstr "Tuotekoodi"
