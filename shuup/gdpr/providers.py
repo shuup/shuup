@@ -7,7 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext
+from django.utils.safestring import mark_safe
 
 from shuup.front.providers import (
     FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
@@ -44,12 +45,10 @@ class GDPRFieldProvider(FormFieldProvider):
         for page in get_active_consent_pages(request.shop):
             key = "accept_{}".format(page.id)
             field = forms.BooleanField(
-                label=_("I have read and accept the {}").format(page.title),
+                label=mark_safe(ugettext(
+                    "I have read and accept the <a href='{}' target='_blank' class='gdpr_consent_doc_check'>{}</a>"
+                ).format(reverse("shuup:cms_page", kwargs=dict(url=page.url)), page.title)),
                 required=True,
-                help_text=_("Read the <a href='{}' target='_blank'>{}</a>.").format(
-                    reverse("shuup:cms_page", kwargs=dict(url=page.url)),
-                    page.title
-                ),
                 error_messages=dict(required=self.error_message)
             )
             definition = FormFieldDefinition(name=key, field=field)
