@@ -7,7 +7,7 @@
 
 <div class="gdpr-consent-warn-bar">
     <div class="gdpr-consent-warn-content">
-        <p>{{ gdpr_settings.cookie_banner_content|safe }}</p>
+        <div class="consent-content">{{ gdpr_settings.cookie_banner_content|safe }}</div>
         <a href="#" id="privacy-preferences-btn">{{ _("Privacy Preferences") }}</a>
         <button class="btn btn-info" id="agree-btn">
             <i class="fa fa-check"></i>
