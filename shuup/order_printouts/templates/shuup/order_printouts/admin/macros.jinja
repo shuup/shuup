@@ -26,10 +26,13 @@
             <td>{{ order.get_shipping_status_display() }}</td>
         </tr>
         {% if tracking_codes %}
+            {% for tracking_code in tracking_codes %}
             <tr>
-                <td>{% trans %}Tracking codes{% endtrans %}</td>
-                <td>{{ tracking_codes|join(', ') }}</td>
+                {% set index = loop.index %}
+                <td>{% trans index=index %}Tracking code #{{ index }}{% endtrans %}:</td>
+                <td>{{ tracking_code }}</td>
             </tr>
+            {% endfor %}
         {% endif %}
         <tr>
             <td>{% trans %}Order date{% endtrans %}</td>
