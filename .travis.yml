@@ -27,7 +27,6 @@ matrix:
         - "npm install -g selenium-standalone@6.15.1"
         - "selenium-standalone install"
         - "selenium-standalone start &"
-        - "npm install -g bower"
     - python: 3.5
       env: TOXENV=py35-django19-nomigrations-nocoverage-browser-travis-front
       before_install:
@@ -42,7 +41,6 @@ matrix:
         - "npm install -g selenium-standalone@6.15.1"
         - "selenium-standalone install"
         - "selenium-standalone start &"
-        - "npm install -g bower"
     - {python: 2.7, env: TOXENV=py27-django18-nomigrations}
     - {python: 3.4, env: TOXENV=py34-django18-nomigrations}
     # - {python: 3.4, env: TOXENV=py34-django18}
@@ -68,7 +66,6 @@ matrix:
         - "npm install -g selenium-standalone@6.15.1"
         - "selenium-standalone install"
         - "selenium-standalone start &"
-        - "npm install -g bower"
     - python: 3.6
       env: TOXENV=py36-django111-nomigrations-nocoverage-browser-travis-front
       before_install:
@@ -83,7 +80,6 @@ matrix:
         - "npm install -g selenium-standalone@6.15.1"
         - "selenium-standalone install"
         - "selenium-standalone start &"
-        - "npm install -g bower"
 install:
   - pip install -U pip
   - pip install tox

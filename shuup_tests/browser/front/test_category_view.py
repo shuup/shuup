@@ -286,6 +286,7 @@ def show_sorts_for_the_category_only(browser, category):
 def sort_category_products_test(browser, category):
     # Lowest price first
     click_element(browser, "button[data-id='id_sort']")
+    # WARNING: data-original-index was removed after bootstrap-select 1.6.3
     click_element(browser, "li[data-original-index='2'] a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="test-sku-3").first().id
     wait_until_condition(

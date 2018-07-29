@@ -10,7 +10,7 @@ const $ = require("jquery");
 window.$ = window.jQuery = $;
 
 require("bootstrap");
-require("bootstrap-select");
+require("bootstrap-select/dist/js/bootstrap-select.js");
 require("jquery.easing");
 require("owl.carousel");
 require("simplelightbox");

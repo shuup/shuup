@@ -23,8 +23,8 @@
   "dependencies": {
     "autoprefixer": "^8.6.4",
     "babel-preset-env": "^1.7.0",
-    "bootstrap": "^3.3.7",
-    "bootstrap-select": "^1.13.1",
+    "bootstrap": "^3.3.6",
+    "bootstrap-select": "1.6.3",
     "concurrently": "^3.6.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
