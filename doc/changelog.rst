@@ -14,6 +14,13 @@ Bug fixes
 
 - Fix filter fields in order status, simple cms and tasks type admin modules
 
+Discounts
+~~~~~~~~~
+
+- Introduce new product discounts with more options, improved discounts admin and
+  more efficient performance. You can optionally use `import_catalog_campaigns`
+  management command to import old `CatalogCampaign`s.
+
 Core
 ~~~~
 
@@ -75,6 +82,12 @@ Tests
 
 - Tests being run from admin now sets the shop properly to the session. If you
   do not want this, add ``skip_session=True`` parameter for ``apply_request_middleware``.
+
+Campaigns
+~~~~~~~~~
+
+- Replace catalog campaigns discount module with `discounts.modules.ProductDiscountModule`
+
 
 Shuup 1.6.8
 -----------
