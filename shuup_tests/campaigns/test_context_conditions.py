@@ -6,6 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
+from django.test import override_settings
+from django.test.client import RequestFactory
+
 from shuup.campaigns.models.campaigns import CatalogCampaign
 from shuup.campaigns.models.context_conditions import (
     ContactCondition, ContactGroupCondition
@@ -44,7 +47,9 @@ def assert_product_price_value_with_customer(request, customer, product, price_v
 
 
 @pytest.mark.django_db
-def test_context_contact_group_condition(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_context_contact_group_condition():
+    rf = RequestFactory()
     original_price_value, discount_value = 123, 15
     request = get_request_for_contact_tests(rf)
     customer = create_random_person()
@@ -64,7 +69,9 @@ def test_context_contact_group_condition(rf):
 
 
 @pytest.mark.django_db
-def test_group_condition_with_anonymous_contact(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_group_condition_with_anonymous_contact():
+    rf = RequestFactory()
     original_price_value, discount_value = 6, 4
     request = get_request_for_contact_tests(rf)
     assert isinstance(request.customer, AnonymousContact)
@@ -77,7 +84,9 @@ def test_group_condition_with_anonymous_contact(rf):
 
 
 @pytest.mark.django_db
-def test_context_contact_condition(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_context_contact_condition():
+    rf = RequestFactory()
     original_price_value, discount_value = 2, 1
     request = get_request_for_contact_tests(rf)
     random_person = create_random_person()

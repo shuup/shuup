@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 import json
 
-import django
 import six
 from django.core.urlresolvers import reverse_lazy
 from django.forms import TimeInput as DjangoTimeInput
@@ -20,21 +19,14 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
+from shuup.admin.forms.quick_select import (
+    QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect
+)
 from shuup.admin.utils.forms import flatatt_filter
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.core.models import (
     Contact, PersonContact, Product, ProductMode, ShopProduct
 )
-
-if django.VERSION < (1, 11):
-    from ._quick_select import (
-        QuickAddRelatedObjectMultiSelectWithoutTemplate as QuickAddRelatedObjectMultiSelect,
-        QuickAddRelatedObjectSelectWithoutTemplate as QuickAddRelatedObjectSelect
-    )
-else:
-    from ._quick_select import (
-        QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect
-    )
 
 
 class BasePopupChoiceWidget(Widget):

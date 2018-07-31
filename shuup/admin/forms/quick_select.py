@@ -7,9 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import django
 
-from ._auth import EmailAuthenticationForm
-from ._base import ShuupAdminForm
-
 if django.VERSION < (1, 11):
     from ._quick_select import (
         QuickAddRelatedObjectMultiSelectWithoutTemplate as QuickAddRelatedObjectMultiSelect,
@@ -22,8 +19,6 @@ else:
 
 
 __all__ = [
-    "EmailAuthenticationForm",
-    "ShuupAdminForm",
     "QuickAddRelatedObjectMultiSelect",
     "QuickAddRelatedObjectSelect"
 ]

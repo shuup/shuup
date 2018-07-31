@@ -6,6 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
+from django.test import override_settings
+
 from shuup.core import cache
 from shuup.core.models import AnonymousContact, Product, ShopProductVisibility, StockBehavior
 from shuup.testing.factories import (
@@ -337,6 +340,7 @@ def test_get_newest_products():
 
 
 @pytest.mark.django_db
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
 def test_get_newest_products_sale_only():
     from shuup.front.template_helpers import general
 
@@ -389,6 +393,7 @@ def test_get_random_products():
 
 
 @pytest.mark.django_db
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
 def test_get_random_products_sale_only():
     from shuup.front.template_helpers import general
 

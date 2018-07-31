@@ -12,22 +12,16 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
-from shuup.campaigns.models import BasketCampaign, CatalogCampaign, Coupon
+from shuup.campaigns.models import BasketCampaign, Coupon
 from shuup.campaigns.models.basket_conditions import (
     CategoryProductsBasketCondition
 )
 from shuup.campaigns.models.basket_effects import (
     BasketDiscountPercentage
 )
-from shuup.campaigns.models.catalog_filters import (
-    CategoryFilter
-)
-from shuup.campaigns.models.product_effects import (
-    ProductDiscountAmount
-)
-
 from shuup.core import cache
 from shuup.core.models import Category, CategoryStatus, Product
+from shuup.discounts.models import Discount
 from shuup.testing.browser_utils import (
     click_element, wait_until_appeared, wait_until_condition, wait_until_disappeared
 )
@@ -108,7 +102,7 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
     shop_product.save()
 
     discount_amount = 5
-    _create_catalog_category_campaign(first_category, shop, discount_amount)
+    _create_category_product_discount(first_category, shop, discount_amount)
 
     browser.reload()
     wait_until_condition(
@@ -131,7 +125,7 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
     shop_product.save()
 
     new_discount_amount = 10
-    _create_catalog_category_campaign(first_category, shop, new_discount_amount)
+    _create_category_product_discount(first_category, shop, new_discount_amount)
 
     browser.reload()
     wait_until_condition(
@@ -149,16 +143,9 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
     wait_until_condition(browser, lambda x: x.is_text_present(product.name))  # product is in basket
 
 
-def _create_catalog_category_campaign(category, shop, discount_amount):
-    category_filter = CategoryFilter.objects.create()
-    category_filter.categories.add(category)
-
-    campaign = CatalogCampaign.objects.create(
-        shop=shop, public_name="test", name="test", active=True
-    )
-    campaign.filters.add(category_filter)
-
-    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount)
+def _create_category_product_discount(category, shop, discount_amount):
+    discount = Discount.objects.create(category=category, discount_amount_value=discount_amount)
+    discount.shops = [shop]
 
 
 def _activate_basket_campaign_through_coupon(browser, category, shop):
