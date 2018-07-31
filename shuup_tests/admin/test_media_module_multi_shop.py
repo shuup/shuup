@@ -38,7 +38,6 @@ def test_media_view_images(rf):
         assert MediaFolder.objects.count() == 0
         path = "/%s" % folder.name
 
-
         File.objects.create(name="normalfile", folder=folder)  # Shared between shops
 
         # Let's create 4 images for shop 1
@@ -68,7 +67,7 @@ def test_media_view_images(rf):
         # Now let's make sure that each staff can view the folder
         # and all the files she should see.
         _check_that_staff_can_see_folder(rf, shop1, shop1_staff1, folder, 5)
-        _check_that_staff_can_see_folder(rf, shop1, shop1_staff1, folder, 5)
+        _check_that_staff_can_see_folder(rf, shop1, shop1_staff2, folder, 5)
         _check_that_staff_can_see_folder(rf, shop2, shop2_staff, folder, 4)
 
 
@@ -200,11 +199,7 @@ def _create_random_staff(shop):
 
 
 def _check_that_staff_can_see_folder(rf, shop, user, folder, expected_files_count):
-    request = apply_request_middleware(rf.get("/", {"action": "folder", "id": folder.id}))
-    request.user = user
-    request.session = {}
-    set_shop(request, shop)
-
+    request = apply_request_middleware(rf.get("/", {"action": "folder", "id": folder.id}), user=user, shop=shop)
     view_func = MediaBrowserView.as_view()
     response = view_func(request)
     assert isinstance(response, JsonResponse)

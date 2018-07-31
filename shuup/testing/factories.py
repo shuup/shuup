@@ -766,6 +766,7 @@ def create_random_contact_group(shop=None):
         identifier=identifier,
         shop=shop,
         name=name,
+    ).set_price_display_options(
         show_pricing=random.choice([True, False]),
         show_prices_including_taxes=random.choice([True, False]),
         hide_prices=random.choice([True, False]),

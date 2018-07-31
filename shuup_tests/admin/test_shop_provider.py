@@ -28,18 +28,21 @@ def test_get_shop(rf, get_shop_fn):
         normal_user = factories.create_random_user()
         staff_user = factories.create_random_user(is_staff=True)
 
-        request = apply_request_middleware(rf.post("/"), user=normal_user)
+        request = apply_request_middleware(rf.post("/"), user=normal_user, skip_session=True)
         # user not staff
         assert get_shop_fn(request) is None
 
         # staff user now
-        request = apply_request_middleware(rf.post("/"), user=staff_user)
+        with pytest.raises(PermissionDenied) as exc:
+            request = apply_request_middleware(rf.post("/"), user=staff_user)
+            assert exc.value == "You are not a staff member of this shop"
 
         # no shop set
         assert get_shop_fn(request) is None
 
         # adds the user to a shop
         shop1.staff_members.add(staff_user)
+        request = apply_request_middleware(rf.post("/"), user=staff_user, skip_session=True)
         assert get_shop_fn(request) == shop1
 
         # adds the user to another shop
@@ -47,6 +50,10 @@ def test_get_shop(rf, get_shop_fn):
 
         # still the first shop as we do not set any
         assert get_shop_fn(request) == shop1
+
+        for shop in [shop1, shop2]:
+            request = apply_request_middleware(rf.post("/"), user=staff_user, shop=shop)
+            assert get_shop_fn(request) == shop
 
 
 @pytest.mark.django_db
@@ -64,13 +71,16 @@ def test_set_shop(rf, set_shop_fn, get_shop_fn):
         normal_user = factories.create_random_user()
         staff_user = factories.create_random_user(is_staff=True)
 
-        request = apply_request_middleware(rf.post("/"), user=normal_user)
+        request = apply_request_middleware(rf.post("/"), user=normal_user, skip_session=True)
         # user not staff
-        with pytest.raises(PermissionDenied):
+        with pytest.raises(PermissionDenied) as exc:
             set_shop_fn(request, shop1)
+            assert exc.value == "You must be a staff user"
 
         # staff user now
-        request = apply_request_middleware(rf.post("/"), user=staff_user)
+        with pytest.raises(PermissionDenied) as exc:
+            request = apply_request_middleware(rf.post("/"), user=staff_user)
+            assert exc.value == "You are not a staff member of this shop"
 
         # the user is not member of the shop staff
         with pytest.raises(PermissionDenied):
@@ -80,7 +90,7 @@ def test_set_shop(rf, set_shop_fn, get_shop_fn):
 
         # user is member of the shop staff
         shop1.staff_members.add(staff_user)
-
+        request = apply_request_middleware(rf.post("/"), user=staff_user, skip_session=True)
         set_shop_fn(request, shop1)
         assert get_shop_fn(request) == shop1
 
@@ -112,7 +122,7 @@ def test_unset_shop(rf, set_shop_fn, get_shop_fn, unset_shop_fn):
     shop1.staff_members.add(staff_user)
     shop2.staff_members.add(staff_user)
 
-    request = apply_request_middleware(rf.post("/"), user=staff_user)
+    request = apply_request_middleware(rf.post("/"), user=staff_user, skip_session=True)
 
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         set_shop_fn(request, shop2)

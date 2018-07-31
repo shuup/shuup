@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import QuerySet
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
@@ -41,11 +42,49 @@ PROTECTED_CONTACT_GROUP_IDENTIFIERS = [
 ]
 
 
+class ContactGroupPriceDisplayQueryset(QuerySet):
+    def for_group_and_shop(self, group, shop):
+        obj = self.filter(group=group, shop=shop).first()
+        if not obj:
+            obj = ContactGroupPriceDisplay.objects.create(shop=shop, group=group)
+        return obj
+
+
+class ContactGroupPriceDisplay(models.Model):
+    shop = models.ForeignKey("Shop", related_name="price_display_options", null=True)
+    group = models.ForeignKey("ContactGroup", related_name="price_display_options")
+    show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
+    show_prices_including_taxes = models.NullBooleanField(
+        default=None, null=True, blank=True,
+        verbose_name=_("show prices including taxes"))
+    hide_prices = models.NullBooleanField(
+        default=None, null=True, blank=True,
+        verbose_name=_("hide prices"))
+
+    objects = ContactGroupPriceDisplayQueryset.as_manager()
+
+    def __str__(self):
+        group_name = self.group.name or _("Unknown")
+        return _("Price Display Options for Contact Group %s") % group_name
+
+    class Meta:
+        verbose_name = _('contact group price display')
+        verbose_name_plural = _('contact group price displays')
+        unique_together = ("shop", "group",)
+
+    def to_price_display(self):
+        return PriceDisplayOptions(
+            include_taxes=self.show_prices_including_taxes,
+            show_prices=(not self.hide_prices),
+        )
+
+
 class ContactGroupQuerySet(TranslatableQuerySet):
-    def with_price_display_options(self):
+    def with_price_display_options(self, shop):
         return self.filter(
-            models.Q(show_prices_including_taxes__isnull=False) |
-            models.Q(hide_prices__isnull=False))
+            models.Q(price_display_options__show_prices_including_taxes__isnull=False) |
+            models.Q(price_display_options__hide_prices__isnull=False)
+        ).filter(price_display_options__shop=shop)
 
     def all_except_defaults(self):
         return self.exclude(identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS)
@@ -55,13 +94,6 @@ class ContactGroup(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
     shop = models.ForeignKey("Shop", related_name="contact_groups", verbose_name=_("shop"), null=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
-    show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
-    show_prices_including_taxes = models.NullBooleanField(
-        default=None, null=True, blank=True,
-        verbose_name=_("show prices including taxes"))
-    hide_prices = models.NullBooleanField(
-        default=None, null=True, blank=True,
-        verbose_name=_("hide prices"))
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64, verbose_name=_('name'), help_text=_(
@@ -87,13 +119,25 @@ class ContactGroup(TranslatableShuupModel):
 
     def save(self, **kwargs):
         self.clean()
-        return super(ContactGroup, self).save(**kwargs)
+        super(ContactGroup, self).save(**kwargs)
+        self.price_display_options.for_group_and_shop(self, self.shop)
+
+    def set_price_display_options(self, **kwargs):
+        shop = kwargs.get("shop", self.shop)
+        ContactGroupPriceDisplay.objects.update_or_create(
+            shop=shop, group=self, defaults=dict(
+                show_prices_including_taxes=kwargs.get("show_prices_including_taxes", None),
+                show_pricing=kwargs.get("show_pricing", True),
+                hide_prices=kwargs.get("hide_prices", None)
+            ))
+        return self
 
     def get_price_display_options(self):
-        return PriceDisplayOptions(
-            include_taxes=self.show_prices_including_taxes,
-            show_prices=(not self.hide_prices),
-        )
+        if self.pk:
+            options = self.price_display_options.for_group_and_shop(self, shop=self.shop)
+            if options:
+                return options.to_price_display()
+        return PriceDisplayOptions()
 
     def can_delete(self):
         return bool(
@@ -106,6 +150,23 @@ class ContactGroup(TranslatableShuupModel):
         if not self.can_delete():
             raise models.ProtectedError(_("Can't delete. This object is protected."), [self])
         super(ContactGroup, self).delete(*args, **kwargs)
+
+    @property
+    def is_protected(self):
+        return (self.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS)
+
+    # TOOD: Remove these backwards compatibilities of sorts
+    @property
+    def show_pricing(self):
+        return self.price_display_options.for_group_and_shop(self, shop=self.shop).show_pricing
+
+    @property
+    def show_prices_including_taxes(self):
+        return self.price_display_options.for_group_and_shop(self, shop=self.shop).show_prices_including_taxes
+
+    @property
+    def hide_prices(self):
+        return self.price_display_options.for_group_and_shop(self, shop=self.shop).hide_prices
 
 
 @python_2_unicode_compatible
@@ -214,7 +275,13 @@ class Contact(PolymorphicShuupModel):
     def language(self, value):
         self._language = value
 
-    def get_price_display_options(self):
+    def save(self, *args, **kwargs):
+        add_to_default_group = bool(self.pk is None and self.default_contact_group_identifier)
+        super(Contact, self).save(*args, **kwargs)
+        if add_to_default_group:
+            self.groups.add(self.get_default_group())
+
+    def get_price_display_options(self, **kwargs):
         """
         Get price display options of the contact.
 
@@ -234,22 +301,22 @@ class Contact(PolymorphicShuupModel):
 
         :rtype: PriceDisplayOptions
         """
-        groups_with_options = self.groups.with_price_display_options()
-        if groups_with_options:
-            default_group = self.get_default_group()
-            if groups_with_options.filter(pk=default_group.pk).exists():
-                group_with_options = default_group
-            else:
-                # Contact was removed from the default group.
-                group_with_options = groups_with_options.first()
-            return group_with_options.get_price_display_options()
-        return PriceDisplayOptions()
+        group = kwargs.get("group", None)
+        shop = kwargs.get("shop", None)
+        if not group:
+            groups_with_options = self.groups.with_price_display_options(shop)
+            if groups_with_options:
+                default_group = self.get_default_group()
+                if groups_with_options.filter(pk=default_group.pk).exists():
+                    group = default_group
+                else:
+                    # Contact was removed from the default group.
+                    group = groups_with_options.first()
 
-    def save(self, *args, **kwargs):
-        add_to_default_group = bool(self.pk is None and self.default_contact_group_identifier)
-        super(Contact, self).save(*args, **kwargs)
-        if add_to_default_group:
-            self.groups.add(self.get_default_group())
+        if not group:
+            group = self.get_default_group()
+
+        return get_price_display_options_for_group_and_shop(group, shop)
 
     @classmethod
     def get_default_group(cls):
@@ -534,6 +601,46 @@ def get_company_contact_for_shop_staff(shop, user):
     contact = get_company_contact_for_shop(shop)
     contact.members.add(get_person_contact(user))
     return contact
+
+
+def get_price_display_for_group_and_shop(group, shop, create_if_missing=False):
+    if not create_if_missing:
+        return ContactGroupPriceDisplay.objects.filter(shop=shop, group=group).first()
+    return ContactGroupPriceDisplay.objects.get_or_create(shop=shop, group=group)[0]
+
+
+def get_price_display_options_for_group_and_shop(group, shop=None, create_if_missing=True):
+    price_display = get_price_display_for_group_and_shop(group, shop, create_if_missing=create_if_missing)
+    return price_display.to_price_display()
+
+
+def get_price_displays_for_shop(shop):
+    for_shop = ContactGroupPriceDisplay.objects.filter(shop=shop)
+    ids = [i.id for i in for_shop.all()]
+    identifiers = [i.group.identifier for i in for_shop.all()]
+    defaults = ContactGroupPriceDisplay.objects.filter(
+        shop__isnull=True, group__identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS
+    ).exclude(group__identifier__in=identifiers).exclude(pk__in=ids).values_list("id", flat=True)
+    return ContactGroupPriceDisplay.objects.filter(pk__in=list(ids)+list(defaults))
+
+
+def get_groups_for_price_display_create(shop):
+    default_groups = ContactGroup.objects.filter(
+        shop__isnull=True, identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS
+    )
+    used_in_shop = ContactGroupPriceDisplay.objects.filter(shop=shop)
+
+    if not used_in_shop.exists():
+        return default_groups
+
+    used_groups = [pd.group for pd in used_in_shop]
+    used_ids = [g.id for g in used_groups]
+    used_identifiers = [g.identifier for g in used_groups]
+
+    available = ContactGroup.objects.filter(shop=shop).exclude(id__in=used_ids).values_list("id", flat=True)
+    defaults = default_groups.exclude(
+        identifier__in=used_identifiers).exclude(pk__in=used_ids).values_list("id", flat=True)
+    return ContactGroup.objects.filter(pk__in=list(available)+list(defaults))
 
 
 CompanyContactLogEntry = define_log_model(CompanyContact)

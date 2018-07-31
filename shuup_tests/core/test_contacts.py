@@ -11,14 +11,18 @@ import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
-from shuup import configuration
 
+from shuup import configuration
 from shuup.core.models import (
-    AnonymousContact, CompanyContact, ContactGroup, get_company_contact,
-    get_person_contact, PersonContact
+    AnonymousContact, CompanyContact, ContactGroup, ContactGroupPriceDisplay,
+    get_company_contact, get_person_contact,
+    get_price_display_for_group_and_shop,
+    get_price_display_options_for_group_and_shop, PersonContact
 )
 from shuup.core.pricing import PriceDisplayOptions
-from shuup.testing.factories import create_random_company, get_all_seeing_key, get_default_shop, get_shop
+from shuup.testing.factories import (
+    create_random_company, get_all_seeing_key, get_default_shop, get_shop
+)
 from shuup_tests.utils.fixtures import regular_user
 
 
@@ -212,11 +216,11 @@ def test_default_person_contact_group_repr_and_str():
 def test_contact_group_price_display_options_filtering():
     shop = get_default_shop()
     cg0 = ContactGroup.objects.create(shop=shop)
-    cg1 = ContactGroup.objects.create(hide_prices=True, shop=shop)
-    cg2 = ContactGroup.objects.create(hide_prices=False, shop=shop)
-    cg3 = ContactGroup.objects.create(show_prices_including_taxes=True, shop=shop)
-    cg4 = ContactGroup.objects.create(show_prices_including_taxes=False, shop=shop)
-    groups_qs = ContactGroup.objects.with_price_display_options()
+    cg1 = ContactGroup.objects.create(shop=shop).set_price_display_options(hide_prices=True)
+    cg2 = ContactGroup.objects.create(shop=shop).set_price_display_options(hide_prices=False)
+    cg3 = ContactGroup.objects.create(shop=shop).set_price_display_options(show_prices_including_taxes=True)
+    cg4 = ContactGroup.objects.create(shop=shop).set_price_display_options(show_prices_including_taxes=False)
+    groups_qs = ContactGroup.objects.with_price_display_options(shop)
     assert isinstance(groups_qs, QuerySet)
     groups = list(groups_qs)
     assert cg0 not in groups
@@ -236,9 +240,12 @@ def test_contact_group_price_display_options_defaults():
 @pytest.mark.parametrize("taxes", [True, False, None])
 @pytest.mark.parametrize("hide_prices", [True, False, None])
 def test_contact_group_price_display_options_defined(taxes, hide_prices):
-    options = ContactGroup(
+    shop = get_default_shop()
+    options = ContactGroup.objects.create(
+        shop=shop
+    ).set_price_display_options(
         show_prices_including_taxes=taxes,
-        hide_prices=hide_prices,
+        hide_prices=hide_prices
     ).get_price_display_options()
     assert isinstance(options, PriceDisplayOptions)
     assert options.include_taxes is taxes
@@ -249,22 +256,66 @@ def test_contact_group_price_display_options_defined(taxes, hide_prices):
 @pytest.mark.django_db
 def test_contact_group_price_display_for_contact(regular_user):
     shop = get_default_shop()
-    group = ContactGroup.objects.create(hide_prices=True, shop=shop)
+    group = ContactGroup.objects.create(shop=shop).set_price_display_options(hide_prices=True)
     person = get_person_contact(regular_user)
     person.groups.add(group)
 
-    options = person.get_price_display_options()
-    assert options.hide_prices
+    assert not person.in_shop(shop)
+
+
+    # price options for non shop
+    options = person.get_price_display_options(group=group)
+    assert options
+    assert options.show_prices is True  # True by default
+    assert options.include_taxes is None  # again, a default
+
+    # price options for the shop
+    options = person.get_price_display_options(group=group, shop=shop)
+    assert options
+    assert options.show_prices is False
     assert options.include_taxes is None
 
-    default_group_for_person = person.get_default_group()
-    default_group_for_person.show_prices_including_taxes = True
-    default_group_for_person.save()
+    default_group = person.get_default_group()
+    assert default_group.pk != group.pk
+    assert default_group.price_display_options.exists()
+
+    options = person.get_price_display_options(group=default_group)
+    assert options
+    assert options.show_prices is True  # True by default
+    assert options.include_taxes is None
+
+    options = person.get_price_display_options(group=default_group, shop=shop)
+    assert options
+    assert options.show_prices is True  # True by default
+    assert options.include_taxes is None
+
+    options = get_price_display_options_for_group_and_shop(group, None)
+    assert options
+    assert options.show_prices is True
+    assert options.include_taxes is None
+
+    options = get_price_display_options_for_group_and_shop(group, shop)
+    assert options
+    assert options.show_prices is False
+    assert options.include_taxes is None
+
+    # this will create options as well
+    options = default_group.price_display_options.for_group_and_shop(default_group, shop)
+    assert options
+    options.show_prices_including_taxes = True
+    options.save()
 
     # Now since default group has pricing options set these should be returned
     default_options = person.get_price_display_options()
-    assert default_options.include_taxes
+    assert not default_options.include_taxes
     assert not default_options.hide_prices
+
+    # change default group
+    default_group.set_price_display_options(hide_prices=True)
+    options = person.get_price_display_options(group=default_group)
+    assert options
+    assert options.show_prices is False  # True by default
+    assert options.include_taxes is None
 
 
 @pytest.mark.django_db
@@ -366,3 +417,32 @@ def test_cannot_add_without_shop(regular_user):
     with pytest.raises(ValidationError):
         ContactGroup.objects.create(identifier="adsf")
     ContactGroup.objects.create(identifier="adsf", shop=shop)
+
+
+@pytest.mark.django_db
+def test_price_displays(regular_user):
+    shop = get_default_shop()
+    cg = ContactGroup.objects.create(shop=shop).set_price_display_options(hide_prices=True)
+    assert isinstance(cg, ContactGroup)
+
+    assert ContactGroupPriceDisplay.objects.count() == 1
+    kk = ContactGroupPriceDisplay.objects.first()
+
+    obj = cg.price_display_options.for_group_and_shop(cg, shop)
+    assert kk == obj
+    assert obj.show_prices_including_taxes is None
+    assert obj.hide_prices is True
+    assert obj.show_pricing is True
+
+    obj2 = get_price_display_for_group_and_shop(cg, shop)
+    assert obj2 == obj
+
+    options = cg.get_price_display_options()
+
+    assert not options.show_prices
+
+    obj = cg.price_display_options.for_group_and_shop(cg, shop)
+    obj.hide_prices = False
+    obj.save()
+    options = cg.get_price_display_options()
+    assert options.show_prices

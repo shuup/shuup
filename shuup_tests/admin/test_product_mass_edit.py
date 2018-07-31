@@ -8,12 +8,12 @@
 import json
 
 import pytest
-from shuup.admin.modules.products.mass_actions import InvisibleMassAction
-from shuup.admin.modules.products.views import ProductListView
 
-from shuup.admin.modules.products.views import ProductMassEditView
-from shuup.core.models import Product
-from shuup.core.models import ShopProductVisibility
+from shuup.admin.modules.products.mass_actions import InvisibleMassAction
+from shuup.admin.modules.products.views import (
+    ProductListView, ProductMassEditView
+)
+from shuup.core.models import Product, ShopProductVisibility
 from shuup.testing.factories import (
     create_product, get_default_category, get_default_shop,
     get_default_supplier
@@ -64,10 +64,7 @@ def test_mass_edit_products2(rf, admin_user):
         "action": InvisibleMassAction().identifier,
         "values": [product1.pk, product2.pk]
     }
-    request = apply_request_middleware(rf.post(
-        "/",
-        user=admin_user,
-    ))
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
     request._body = json.dumps(payload).encode("UTF-8")
     view = ProductListView.as_view()
     response = view(request=request)

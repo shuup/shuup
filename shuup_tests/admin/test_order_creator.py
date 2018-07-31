@@ -109,7 +109,7 @@ def get_frontend_request_for_command(state, command, user):
         data=json_data,
         content_type="application/json; charset=UTF-8",
         QUERY_STRING="command=%s" % command
-    ), user=user)
+    ), user=user, skip_session=True)
 
 
 def get_order_from_state(state, admin_user):

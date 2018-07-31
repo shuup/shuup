@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-13 19:33+0000\n"
+"POT-Creation-Date: 2018-07-30 22:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -202,13 +202,7 @@ msgstr ""
 msgid "Visibility"
 msgstr ""
 
-msgid "Contact Groups"
-msgstr ""
-
-msgid "Price display mode"
-msgstr ""
-
-msgid "Set how prices are displayed to contacts in this group."
+msgid "Contact Group Pricing Display"
 msgstr ""
 
 msgid "unspecified"
@@ -221,6 +215,27 @@ msgid "show pre-tax prices"
 msgstr ""
 
 msgid "hide prices"
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "Price display mode"
+msgstr ""
+
+msgid "Set how prices are displayed to contacts in this group."
+msgstr ""
+
+msgid "Group"
+msgstr ""
+
+msgid "Display Mode"
+msgstr ""
+
+msgid "Unspecified"
+msgstr ""
+
+msgid "Contact Groups"
 msgstr ""
 
 msgid "member"
@@ -398,6 +413,9 @@ msgid "# Orders"
 msgstr ""
 
 msgid "Groups"
+msgstr ""
+
+msgid "Registered in"
 msgstr ""
 
 msgid "Contact"
@@ -1163,9 +1181,6 @@ msgstr ""
 msgid "Primary Image"
 msgstr ""
 
-msgid "Shop"
-msgstr ""
-
 msgid "SKU"
 msgstr ""
 
@@ -1176,6 +1191,9 @@ msgid "Filter by barcode..."
 msgstr ""
 
 msgid "Mode"
+msgstr ""
+
+msgid "Filter by category name..."
 msgstr ""
 
 msgid "Additional Categories"
@@ -1512,6 +1530,9 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
+msgid "Shop"
+msgstr ""
+
 msgid "Payment Processor"
 msgstr ""
 
@@ -1674,6 +1695,9 @@ msgid "Default Tax Class"
 msgstr ""
 
 msgid "Suppliers"
+msgstr ""
+
+msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr ""
 
 #, python-format

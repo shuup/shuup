@@ -6,15 +6,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.contrib import messages
 
 from shuup import configuration
 from shuup.admin.modules.settings import consts
 from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
-from shuup.testing.factories import get_default_shop
-
 from shuup.admin.modules.settings.views import SystemSettingsView
+from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -29,7 +27,7 @@ def set_reference_method(rf, admin_user, reference_method, shop=None):
     data = {
         "order_settings-order_reference_number_method": reference_method.value
     }
-    request = apply_request_middleware(rf.post("/", data=data))
+    request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
     view_func(request)
     assert configuration.get(None, consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD) == reference_method.value
     return shop
@@ -46,7 +44,7 @@ def assert_config_value(rf, admin_user, form_id, key, value, expected_value, sho
 
     form_field = "%s-%s" % (form_id, key)
     data = {form_field: value}
-    request = apply_request_middleware(rf.post("/", data=data))
+    request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
     response = view_func(request)
     assert response.status_code == 302
     if expected_value == "unset":

@@ -54,7 +54,7 @@ class TaskAdminModule(AdminModule):
                 icon="fa fa-file-text",
                 url="shuup_admin:task.list",
                 category=CONTACTS_MENU_CATEGORY,
-                ordering=3,
+                ordering=4,
                 aliases=[_("Show Tasks")]
             )
         ]
@@ -127,7 +127,7 @@ class TaskTypeAdminModule(AdminModule):
                 icon="fa fa-file-text",
                 url="shuup_admin:task_type.list",
                 category=CONTACTS_MENU_CATEGORY,
-                ordering=4,
+                ordering=5,
                 aliases=[_("Show Task Types")]
             )
         ]

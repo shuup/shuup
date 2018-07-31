@@ -28,7 +28,7 @@ def test_media_view_images(rf, admin_user, is_public, expected_file_count):
     File.objects.create(name="normalfile", folder=folder)
     img = Image.objects.create(name="imagefile", folder=folder, is_public=is_public)
 
-    request = apply_request_middleware(rf.get("/", {"filter": "images", "action": "folder", "id": folder.id}))
+    request = apply_request_middleware(rf.get("/", {"filter": "images", "action": "folder", "id": folder.id}), user=admin_user)
     request.user = admin_user
     view_func = MediaBrowserView.as_view()
     response = view_func(request)

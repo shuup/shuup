@@ -30,7 +30,7 @@ class CustomerGroupPricingForm(forms.Form):
 
     def _build_fields(self):
         self.groups = list(ContactGroup.objects.filter(
-            Q(show_pricing=True) |
+            Q(price_display_options__show_pricing=True) |
             Q(
                 id__in=CgpPrice.objects.filter(product=self.product)
                 .values_list("group_id", flat=True).distinct()
@@ -111,7 +111,7 @@ class CustomerGroupDiscountForm(forms.Form):
 
     def _build_fields(self):
         self.groups = list(ContactGroup.objects.filter(
-            Q(show_pricing=True) |
+            Q(price_display_options__show_pricing=True) |
             Q(
                 id__in=CgpDiscount.objects.filter(product=self.product)
                 .values_list("group_id", flat=True).distinct()

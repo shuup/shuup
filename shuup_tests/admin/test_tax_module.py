@@ -18,7 +18,7 @@ from shuup_tests.admin.utils import admin_only_urls
 @pytest.mark.django_db
 def test_tax_edit_view_works_at_all(rf, admin_user):
     get_default_shop()  # We need a shop to exists
-    request = apply_request_middleware(rf.get("/"))
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     request.user = admin_user
 
     default_tax_class = get_default_tax_class()
