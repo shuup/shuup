@@ -34,9 +34,12 @@ class ProductDiscountModule(DiscountModule):
 
             if discounted_price_value:  # Applies the new product price per item
                 discounted_prices.append(
-                    max(
-                        shop.create_price(discounted_price_value) * price_info.quantity,
-                        shop.create_price(0)
+                    min(
+                        price_info.price,
+                        max(
+                            shop.create_price(discounted_price_value) * price_info.quantity,
+                            shop.create_price(0)
+                        )
                     )
                 )
 
@@ -57,14 +60,17 @@ class ProductDiscountModule(DiscountModule):
                 )
 
         if len(discounted_prices):
-            try:
-                shop_product = product.get_shop_instance(shop)
-            except ShopProduct.DoesNotExist:
+            minimum_price_values = list(ShopProduct.objects.filter(
+                product_id=product.pk, shop=shop).values_list("minimum_price_value", flat=True))
+
+            if len(minimum_price_values) == 0:
                 return price_info
+            else:
+                minimum_price_value = minimum_price_values[0] or 0
 
             price_info.price = max(
                 min(discounted_prices),
-                shop_product.minimum_price or shop.create_price(0)
+                shop.create_price(minimum_price_value) or shop.create_price(0)
             )
 
         return price_info
@@ -78,6 +84,7 @@ class CouponCodeModule(OrderSourceModifierModule):
         active_discount = get_active_discount_for_code(order_source, code)
         if not active_discount:
             return False
+
         return active_discount.coupon_code.can_use_code(order_source.shop, order_source.customer)
 
     def use_code(self, order, code):

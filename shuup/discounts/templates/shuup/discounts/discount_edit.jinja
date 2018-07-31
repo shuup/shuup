@@ -1,0 +1,26 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
+
+{% block content %}
+    {% call single_section_form("discounts_form", form) %}
+        {{ bs3.field(form.name) }}
+        <div class="form-divider"></div>
+        <h2>{% trans %}Availability{% endtrans %}</h2>
+        {{ bs3.field(form.active) }}
+        {{ bs3.field(form.start_datetime) }}
+        {{ bs3.field(form.end_datetime) }}
+        {{ bs3.field(form.happy_hours) }}
+        {{ bs3.field(form.availability_exceptions) }}
+        <div class="form-divider"></div>
+        <h2>{% trans %}Condition{% endtrans %}</h2>
+        {{ bs3.field(form.product) }}
+        {{ bs3.field(form.category) }}
+        {{ bs3.field(form.contact) }}
+        {{ bs3.field(form.contact_group) }}
+        <div class="form-divider"></div>
+        <h2>{% trans %}Effect{% endtrans %}</h2>
+        {{ bs3.field(form.discount_amount_value) }}
+        {{ bs3.field(form.discounted_price_value) }}
+        {{ bs3.field(form.discount_percentage) }}
+    {% endcall %}
+{% endblock %}
