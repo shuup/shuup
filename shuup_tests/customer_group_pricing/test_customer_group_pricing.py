@@ -39,14 +39,17 @@ def create_customer():
 
 
 def initialize_test(rf, include_tax=False, customer=create_customer):
-    shop = get_shop(prices_include_tax=include_tax)
+    domain = "shop-domain"
+    shop = get_shop(prices_include_tax=include_tax, domain=domain)
 
     if callable(customer):
         customer = customer()
 
-    request = apply_request_middleware(rf.get("/"))
-    request.shop = shop
-    request.customer = customer
+    request = apply_request_middleware(
+        rf.get("/"), shop=shop, customer=customer, META={"HTTP_HOST": "%s" % domain})
+    assert request.shop == shop
+    assert request.customer == customer
+    assert request.basket.shop == shop
     return request, shop, customer.groups.first()
 
 
