@@ -10,18 +10,25 @@ from __future__ import unicode_literals
 from django import forms
 from django.forms import HiddenInput
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum
 
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import (
     ContactGroupPriceDisplay, get_groups_for_price_display_create, Shop
 )
 
-PRICE_DISPLAY_MODE_CHOICES = [
-    ('none', _("unspecified")),
-    ('with_taxes', _("show prices with taxes included")),
-    ('without_taxes', _("show pre-tax prices")),
-    ('hide', _("hide prices")),
-]
+
+class PriceDisplayChoices(Enum):
+    NONE = 'none'
+    WITH_TAXES = 'with_taxes'
+    WITHOUT_TAXES = 'without_taxes'
+    HIDE = 'hide'
+
+    class Labels:
+        NONE = _("unspecified")
+        WITH_TAXES = _("show prices with taxes included")
+        WITHOUT_TAXES = _("show pre-tax prices")
+        HIDE = _("hide prices")
 
 
 class ContactGroupPriceDisplayForm(forms.ModelForm):
@@ -48,7 +55,7 @@ class ContactGroupPriceDisplayForm(forms.ModelForm):
             required=False)
 
         self.fields['price_display_mode'] = forms.ChoiceField(
-            choices=PRICE_DISPLAY_MODE_CHOICES,
+            choices=PriceDisplayChoices.choices(),
             label=_("Price display mode"),
             initial=get_price_display_mode(self.request, self.instance),
             help_text=_("Set how prices are displayed to contacts in this group."))
@@ -65,24 +72,24 @@ class ContactGroupPriceDisplayForm(forms.ModelForm):
 def get_price_display_mode(request, contact_group_price_display):
     shop = get_shop(request)
     if not contact_group_price_display.pk:
-        return 'none'
+        return PriceDisplayChoices.NONE.value
 
     contact_group = contact_group_price_display.group
     if not contact_group.pk:
-        return 'none'
+        return PriceDisplayChoices.NONE.value
     if contact_group.shop:
         assert contact_group.shop == shop
     price_display = contact_group.price_display_options.for_group_and_shop(contact_group, shop)
     taxes = price_display.show_prices_including_taxes
     hide = price_display.hide_prices
     if hide is None and taxes is None:
-        return 'none'
+        return PriceDisplayChoices.NONE.value
     elif hide:
-        return 'hide'
+        return PriceDisplayChoices.HIDE.value
     elif taxes:
-        return 'with_taxes'
+        return PriceDisplayChoices.WITH_TAXES.value
     else:
-        return 'without_taxes'
+        return PriceDisplayChoices.WITHOUT_TAXES.value
 
 
 def _set_price_display_mode(request, contact_group, price_display_mode):
@@ -90,18 +97,19 @@ def _set_price_display_mode(request, contact_group, price_display_mode):
     options = {}
     if contact_group.shop:
         assert contact_group.shop == shop
-    if price_display_mode == 'hide':
+
+    if price_display_mode == PriceDisplayChoices.HIDE.value:
         options = {
             "hide_prices": True
         }
-    elif price_display_mode == 'with_taxes':
+    elif price_display_mode == PriceDisplayChoices.WITH_TAXES.value:
         options = {
             "show_prices_including_taxes": True,
         }
-    elif price_display_mode == 'without_taxes':
+    elif price_display_mode == PriceDisplayChoices.WITHOUT_TAXES.value:
         options = {
             "show_prices_including_taxes": False,
         }
-    if options or price_display_mode == 'none':
+    if options or price_display_mode == PriceDisplayChoices.NONE.value:
         options.update(dict(shop=shop))
         contact_group.set_price_display_options(**options)

@@ -12,6 +12,7 @@ from django.utils.encoding import force_text
 
 from shuup.admin.modules.contact_group_price_display.views import \
     ContactGroupPriceDisplayEditView
+from shuup.admin.modules.contact_group_price_display.views.forms import PriceDisplayChoices
 from shuup.core.models import (
     AnonymousContact, CompanyContact, ContactGroup, ContactGroupPriceDisplay,
     get_groups_for_price_display_create, get_person_contact,
@@ -93,7 +94,7 @@ def test_admin_edit(rf, admin_user):
     data = extract_form_fields(BeautifulSoup(content))
 
     data.update({
-        "price_display_mode": ["hide"],
+        "price_display_mode": [PriceDisplayChoices.HIDE.value],
         "group": group.id,
     })
 
@@ -109,7 +110,7 @@ def test_admin_edit(rf, admin_user):
 
     # none, with_taxes, without_taxes, hide
     k = "price_display_mode"
-    data.update({k: ["none"]})
+    data.update({k: [PriceDisplayChoices.NONE.value]})
     request = apply_request_middleware(rf.post("/", data), user=admin_user, shop=shop)
     response = view(request, pk=cgpd.pk)
     assert response.status_code == 302  # save successful
@@ -118,7 +119,7 @@ def test_admin_edit(rf, admin_user):
     assert options.show_prices is True  # default
     assert options.include_taxes is None
 
-    data.update({k: ["with_taxes"]})
+    data.update({k: [PriceDisplayChoices.WITH_TAXES.value]})
     request = apply_request_middleware(rf.post("/", data), user=admin_user, shop=shop)
     response = view(request, pk=cgpd.pk)
     assert response.status_code == 302  # save successful
@@ -126,7 +127,7 @@ def test_admin_edit(rf, admin_user):
     assert options.show_prices is True  # default
     assert options.include_taxes is True
 
-    data.update({k: ["without_taxes"]})
+    data.update({k: [PriceDisplayChoices.WITHOUT_TAXES.value]})
     request = apply_request_middleware(rf.post("/", data), user=admin_user, shop=shop)
     response = view(request, pk=cgpd.pk)
     assert response.status_code == 302  # save successful

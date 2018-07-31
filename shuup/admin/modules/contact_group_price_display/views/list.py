@@ -11,7 +11,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.modules.contact_group_price_display.views.forms import (
-    get_price_display_mode, PRICE_DISPLAY_MODE_CHOICES
+    get_price_display_mode, PriceDisplayChoices
 )
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
@@ -38,7 +38,7 @@ class ContactGroupPriceDisplayListView(PicotableListView):
 
     def show_display_mode(self, instance):
         display_mode = get_price_display_mode(self.request, instance)
-        for k, v in PRICE_DISPLAY_MODE_CHOICES:
+        for k, v in PriceDisplayChoices.choices():
             if k == display_mode:
                 return force_text(v).title()
         return _("Unspecified")
