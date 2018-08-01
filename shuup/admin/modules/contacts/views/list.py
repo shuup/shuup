@@ -53,16 +53,17 @@ class ContactListView(PicotableListView):
         Column("groups", _("Groups"),
                filter_config=ChoicesFilter(ContactGroup.objects.all_except_defaults(), "groups"),
                display="get_groups_display"),
-
-        # TODO: Fix these filters, Shop.objects.all() is wrong...
-        Column("shops", _("Shops"), filter_config=Select2Filter(Shop.objects.all()), display="get_shop_display"),
-        Column("registration_shop", _("Registered in"), filter_config=Select2Filter(Shop.objects.all()))
+        Column("shops", _("Shops"), filter_config=Select2Filter("get_shops"), display="get_shops_display"),
+        Column("registration_shop", _("Registered in"), filter_config=Select2Filter("get_shops"))
     ]
 
     mass_actions = [
         "shuup.admin.modules.contacts.mass_actions:EditContactsAction",
         "shuup.admin.modules.contacts.mass_actions:EditContactGroupsAction",
     ]
+
+    def get_shops(self):
+        return Shop.objects.get_for_user(self.request.user)
 
     def get_toolbar(self):
         if self.request.user.is_superuser:
@@ -107,9 +108,10 @@ class ContactListView(PicotableListView):
         groups = instance.groups.all_except_defaults().values_list("translations__name", flat=True)
         return ", ".join(groups) if groups else _("No group")
 
-    def get_shop_display(self, instance):
-        shops = instance.shops.values_list("translations__name", flat=True)
-        return ", ".join(shops) if shops else _("No shop")
+    def get_shops_display(self, instance):
+        user = self.request.user
+        shops = instance.shops.get_for_user(user=user).values_list("translations__name", flat=True)
+        return ", ".join(shops) if shops else _("No shops")
 
     def get_object_abstract(self, instance, item):
         """

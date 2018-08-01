@@ -32,7 +32,7 @@ def _get_default_currency():
 class ShopManager(TranslatableManager):
     def get_for_user(self, user):
         qs = self.get_queryset()
-        if user.is_superuser:
+        if getattr(user, "is_superuser", False):
             return qs.all()
         return qs.filter(staff_members=user)
 
