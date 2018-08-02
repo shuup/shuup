@@ -12,13 +12,13 @@ import warnings
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
+from shuup.admin.modules.contacts.utils import check_contact_permission
 from shuup.admin.toolbar import (
     DropdownActionButton, PostActionButton, Toolbar, URLActionButton
 )
@@ -134,16 +134,9 @@ class ContactDetailView(DetailView):
     context_object_name = "contact"
 
     def get_object(self, *args, **kwargs):
-        obj = super(ContactDetailView, self).get_object(*args, **kwargs)
-
-        limited = (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
-                   not self.request.user.is_superuser)
-        if limited:
-            shop = self.request.shop
-            if shop not in obj.shops.all():
-                raise PermissionDenied()
-
-        return obj
+        contact = super(ContactDetailView, self).get_object(*args, **kwargs)
+        check_contact_permission(self.request, contact)
+        return contact
 
     def get_context_data(self, **kwargs):
         context = super(ContactDetailView, self).get_context_data(**kwargs)

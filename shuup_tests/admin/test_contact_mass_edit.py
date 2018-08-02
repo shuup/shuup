@@ -42,7 +42,7 @@ def test_mass_edit_contacts2(rf, admin_user):
     shop = get_default_shop()
     contact1 = create_random_person()
     contact2 = create_random_person()
-    contact_group = ContactGroup.objects.create(name="test")
+    contact_group = ContactGroup.objects.create(name="test", shop=shop)
     data = {
         "contact_group": contact_group.pk
     }

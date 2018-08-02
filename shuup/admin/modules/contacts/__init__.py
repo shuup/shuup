@@ -76,7 +76,8 @@ class ContactModule(AdminModule):
         return [
             MenuEntry(
                 text=_("Contacts"), icon="fa fa-users",
-                url="shuup_admin:contact.list", category=CONTACTS_MENU_CATEGORY,
+                url="shuup_admin:contact.list",
+                category=CONTACTS_MENU_CATEGORY,
                 ordering=1
             )
         ]

@@ -9,6 +9,24 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Core
+~~~~
+
+- Add ``registration_shop`` for ``Contact``.
+- Add shop value to ``ContactGroup``.
+- Move Price display options to separate object called ``ContactGroupPriceDisplay``.
+
+Admin
+~~~~~
+
+- Move Contact Groups menu item under Contacts where it belongs.
+
+Tests
+~~~~~
+
+- Tests being run from admin now sets the shop properly to the session. If you
+  do not want this, add ``skip_session=True`` parameter for ``apply_request_middleware``.
+
 Shuup 1.6.8
 -----------
 
@@ -41,7 +59,6 @@ Xtheme
 ~~~~~~
 
 - Make text plugin to fallback to empty string instead of "None".
-
 
 Shuup 1.6.7
 -----------

@@ -7,12 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.modules.contacts.utils import request_limited
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, Select2Filter, TextFilter
@@ -50,15 +51,19 @@ class ContactListView(PicotableListView):
         ),
         Column("n_orders", _(u"# Orders"), class_name="text-right", filter_config=RangeFilter(step=1)),
         Column("groups", _("Groups"),
-               filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"),
+               filter_config=ChoicesFilter(ContactGroup.objects.all_except_defaults(), "groups"),
                display="get_groups_display"),
-        Column("shops", _("Shops"), filter_config=Select2Filter(Shop.objects.all()), display="get_shop_display")
+        Column("shops", _("Shops"), filter_config=Select2Filter("get_shops"), display="get_shops_display"),
+        Column("registration_shop", _("Registered in"), filter_config=Select2Filter("get_shops"))
     ]
 
     mass_actions = [
         "shuup.admin.modules.contacts.mass_actions:EditContactsAction",
         "shuup.admin.modules.contacts.mass_actions:EditContactGroupsAction",
     ]
+
+    def get_shops(self):
+        return Shop.objects.get_for_user(self.request.user)
 
     def get_toolbar(self):
         if self.request.user.is_superuser:
@@ -80,10 +85,8 @@ class ContactListView(PicotableListView):
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
 
-        limited = (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
-                   not self.request.user.is_superuser)
-        if limited:
-            shop = self.request.shop
+        if request_limited(self.request):
+            shop = get_shop(self.request)
             qs = qs.filter(shops=shop)
 
         return (
@@ -102,14 +105,13 @@ class ContactListView(PicotableListView):
             return _(u"Contact")
 
     def get_groups_display(self, instance):
-        if instance.groups.count():
-            return ", ".join(instance.groups.values_list("translations__name", flat=True))
-        return _("No group")
+        groups = instance.groups.all_except_defaults().values_list("translations__name", flat=True)
+        return ", ".join(groups) if groups else _("No group")
 
-    def get_shop_display(self, instance):
-        if instance.shops.count():
-            return ", ".join(instance.shops.values_list("translations__name", flat=True))
-        return _("No shop")
+    def get_shops_display(self, instance):
+        user = self.request.user
+        shops = instance.shops.get_for_user(user=user).values_list("translations__name", flat=True)
+        return ", ".join(shops) if shops else _("No shops")
 
     def get_object_abstract(self, instance, item):
         """

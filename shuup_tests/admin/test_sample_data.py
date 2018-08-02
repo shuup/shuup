@@ -161,11 +161,11 @@ def test_admin(rf, admin_user):
 
 
 @pytest.mark.django_db
-def test_consolidate_objects(rf):
+def test_consolidate_objects(rf, admin_user):
     shop = get_default_shop()
 
     # just visit to make sure GET is ok
-    request = apply_request_middleware(rf.get("/"))
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     response = ConsolidateSampleObjectsView.as_view()(request)
     assert response.status_code == 200
 
@@ -190,7 +190,7 @@ def test_consolidate_objects(rf):
         "products": False,
         "carousel": False
     }
-    request = apply_request_middleware(rf.post("/", data=data))
+    request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
     response = ConsolidateSampleObjectsView.as_view()(request)
     assert response.status_code == 302
     assert response["Location"] == reverse("shuup_admin:dashboard")
@@ -210,7 +210,7 @@ def test_consolidate_objects(rf):
         "categories": True,
         "carousel": True
     }
-    request = apply_request_middleware(rf.post("/", data=data))
+    request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
     response = ConsolidateSampleObjectsView.as_view()(request)
     assert response.status_code == 302
     assert response["Location"] == reverse("shuup_admin:dashboard")
@@ -230,7 +230,7 @@ def test_consolidate_objects(rf):
         "categories": False,
         "carousel": True
     }
-    request = apply_request_middleware(rf.post("/", data=data))
+    request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
     response = ConsolidateSampleObjectsView.as_view()(request)
     assert response.status_code == 302
     assert response["Location"] == reverse("shuup_admin:dashboard")

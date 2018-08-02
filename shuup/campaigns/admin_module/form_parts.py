@@ -16,7 +16,6 @@ from shuup.campaigns.admin_module.forms import (
 )
 from shuup.campaigns.models import ContactGroupSalesRange
 from shuup.core.models import Shop, ShopStatus
-from shuup.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
 
 from .form_sets import (
     BasketConditionsFormSet, BasketDiscountEffectsFormSet,
@@ -54,7 +53,7 @@ class SalesRangesFormPart(FormPart):
         return "%d-%s" % (shop.pk, self.name)
 
     def get_form_defs(self):
-        if not self.object.pk or self.object.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS:
+        if not self.object.pk or self.object.is_protected:
             return
 
         for shop in self.shops:

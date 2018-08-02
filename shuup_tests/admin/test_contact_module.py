@@ -60,7 +60,7 @@ def test_contact_module_search_multishop(rf):
 
         cm = ContactModule()
         contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
-        contact.shops.add(shop2)
+        contact.add_to_shop(shop2)
 
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
 

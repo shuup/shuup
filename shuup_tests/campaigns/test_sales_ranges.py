@@ -12,7 +12,7 @@ from django.core.exceptions import ValidationError
 from shuup.campaigns.models import ContactGroupSalesRange
 from shuup.campaigns.signal_handlers import update_customers_groups
 from shuup.campaigns.utils.sales_range import assign_to_group_based_on_sales, get_total_sales
-from shuup.core.models import AnonymousContact, ContactGroup, Payment
+from shuup.core.models import AnonymousContact, ContactGroup, Payment, PersonContact
 from shuup.testing.factories import (
     create_order_with_product, create_product, create_random_company,
     create_random_person, get_default_customer_group, get_default_shop,
@@ -45,7 +45,7 @@ def create_fully_paid_order(shop, customer, supplier, product_sku, price_value):
 
 
 def create_sales_range(group, shop, minimum, maximum):
-    contact_group, _ = ContactGroup.objects.get_or_create(identifier=group)
+    contact_group, _ = ContactGroup.objects.get_or_create(identifier=group, shop=shop)
     return ContactGroupSalesRange.objects.create(
         group=contact_group, shop=shop, min_value=minimum, max_value=maximum)
 
@@ -207,10 +207,15 @@ def test_active_ranges():
         ("silver", 0, 0),
         ("gold", None, 23),
         ("diamond", None, 0),
-        ("active", 0, None)
+        ("active", 0, None),
+        (PersonContact.default_contact_group_identifier, 0, 1)  # should cause error when creating range.
     ]
     for identifier, min, max in sales_ranges:
-        create_sales_range(identifier, shop, min, max)
+        if identifier == PersonContact.default_contact_group_identifier:
+            with pytest.raises(ValidationError):
+                create_sales_range(identifier, shop, min, max)
+        else:
+            create_sales_range(identifier, shop, min, max)
 
     assert ContactGroupSalesRange.objects.active(shop).count() == 1
     assert ContactGroupSalesRange.objects.active(shop).first().group.identifier == "active"

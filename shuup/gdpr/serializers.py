@@ -11,12 +11,10 @@ from rest_framework import serializers
 
 from shuup.api.fields import EnumField
 from shuup.core.models import (
-    Basket, CompanyContact, Contact, Gender, MutableAddress, Order, OrderLine,
-    OrderLineType, PaymentStatus, PersonContact, SavedAddress,
-    SavedAddressRole, SavedAddressStatus, ShippingStatus
-)
-from shuup.core.models._contacts import (
-    CompanyContactLogEntry, ContactGroupLogEntry, PersonContactLogEntry
+    Basket, CompanyContact, CompanyContactLogEntry, Contact,
+    ContactGroupLogEntry, Gender, MutableAddress, Order, OrderLine,
+    OrderLineType, PaymentStatus, PersonContact, PersonContactLogEntry,
+    SavedAddress, SavedAddressRole, SavedAddressStatus, ShippingStatus
 )
 from shuup.front.models import StoredBasket
 from shuup.gdpr.models import GDPRCookieCategory, GDPRUserConsent

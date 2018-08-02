@@ -46,7 +46,7 @@ def test_registration(django_user_model, client, requiring_activation):
     if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.registration required in installed apps")
 
-    get_default_shop()
+    shop = get_default_shop()
 
     with override_settings(
         SHUUP_REGISTRATION_REQUIRES_ACTIVATION=requiring_activation,
@@ -63,13 +63,18 @@ def test_registration(django_user_model, client, requiring_activation):
         else:
             assert user.is_active
 
+        assert PersonContact.objects.count() == 1
+        contact = PersonContact.objects.first()
+        assert contact.in_shop(shop)
+        assert contact.in_shop(shop, only_registration=True)  # registered here
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("requiring_activation", (False, True))
 def test_registration_2(django_user_model, client, requiring_activation):
     if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.registration required in installed apps")
 
-    get_default_shop()
+    shop = get_default_shop()
 
     with override_settings(
         SHUUP_REGISTRATION_REQUIRES_ACTIVATION=requiring_activation,
@@ -84,6 +89,10 @@ def test_registration_2(django_user_model, client, requiring_activation):
         user = django_user_model.objects.get(username=username)
         assert response.status_code == 302 #redirect
         assert response.url.endswith(reverse('shuup:checkout'))
+        assert PersonContact.objects.count() == 1
+        contact = PersonContact.objects.first()
+        assert contact.in_shop(shop)
+        assert contact.in_shop(shop, only_registration=True)  # registered here
 
 
 def test_settings_has_account_activation_days():
@@ -404,6 +413,14 @@ def test_company_registration(django_user_model, client, allow_company_registrat
             assert CompanyContact.objects.filter(is_active=True).count() == 1
             assert mail.outbox[0].subject == "Generic welcome message"
 
+        contact = PersonContact.objects.first()
+        assert contact.in_shop(shop)
+        assert contact.in_shop(shop, only_registration=True)  # registered here
+
+        company = CompanyContact.objects.first()
+        assert company.in_shop(shop)
+        assert company.in_shop(shop, only_registration=True)  # registered here
+
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("allow_company_registration", (False, True))
@@ -532,6 +549,13 @@ def test_create_company_from_customer_dashboard(allow_company_registration, comp
             assert CompanyContact.objects.filter(is_active=True).count() == 1
             assert PersonContact.objects.filter(is_active=True).count() == 1
 
+        contact = PersonContact.objects.first()
+        assert contact.in_shop(shop)
+        assert contact.in_shop(shop, only_registration=True)  # registered here
+
+        company = CompanyContact.objects.first()
+        assert company.in_shop(shop)
+        assert company.in_shop(shop, only_registration=True)  # registered here
 
 
 @pytest.mark.django_db

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 17:09+0000\n"
+"POT-Creation-Date: 2018-07-30 22:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -675,9 +675,6 @@ msgstr ""
 msgid "%(key)s (global)"
 msgstr ""
 
-msgid "members"
-msgstr ""
-
 msgid "show as pricing option"
 msgstr ""
 
@@ -685,6 +682,22 @@ msgid "show prices including taxes"
 msgstr ""
 
 msgid "hide prices"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, python-format
+msgid "Price Display Options for Contact Group %s"
+msgstr ""
+
+msgid "contact group price display"
+msgstr ""
+
+msgid "contact group price displays"
+msgstr ""
+
+msgid "members"
 msgstr ""
 
 msgid ""
@@ -696,6 +709,12 @@ msgid "contact group"
 msgstr ""
 
 msgid "contact groups"
+msgstr ""
+
+msgid "Cannot set shop for default Contact Group."
+msgstr ""
+
+msgid "Contact Group requires a shop."
 msgstr ""
 
 msgid "Can't delete. This object is protected."
@@ -711,6 +730,9 @@ msgid "Check this if the contact is an active customer."
 msgstr ""
 
 msgid "Inform which shops have access to this contact."
+msgstr ""
+
+msgid "registration shop"
 msgstr ""
 
 msgid "default shipping method"

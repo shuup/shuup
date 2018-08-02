@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import inspect
+
 from django.conf import settings
 from django.core import urlresolvers
 from django.core.exceptions import MiddlewareNotUsed
@@ -12,6 +14,7 @@ from django.utils.module_loading import import_string
 from django.utils.translation import activate, get_language
 
 from shuup import configuration
+from shuup.admin.shop_provider import set_shop
 from shuup.testing.factories import get_default_shop
 
 
@@ -45,6 +48,13 @@ def apply_request_middleware(request, **attrs):
         activate(current_language)
 
     assert request.shop
+
+    if not attrs.get("skip_session", False):
+        frm = inspect.stack()[1]
+        mod = inspect.getmodule(frm[0])
+        if mod.__name__.startswith("shuup_tests.admin"):
+            set_shop(request, request.shop)
+
     return request
 
 

@@ -11,6 +11,7 @@ from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.db.transaction import atomic
+from django.forms import HiddenInput
 from django.forms.formsets import (
     BaseFormSet, DELETION_FIELD_NAME, formset_factory
 )
@@ -19,63 +20,29 @@ from django.utils.translation import ungettext
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.forms.widgets import ContactChoiceWidget
-from shuup.core.models import Contact, ContactGroup
+from shuup.admin.shop_provider import get_shop
+from shuup.core.models import Contact, ContactGroup, Shop
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 class ContactGroupBaseForm(MultiLanguageModelForm):
     class Meta:
         model = ContactGroup
-        fields = ("name",)
+        fields = ("name", "shop",)
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
         super(ContactGroupBaseForm, self).__init__(*args, **kwargs)
-        self.fields['price_display_mode'] = forms.ChoiceField(
-            choices=_PRICE_DISPLAY_MODE_CHOICES,
-            label=_("Price display mode"),
-            initial=_get_price_display_mode(self.instance),
-            help_text=_("Set how prices are displayed to contacts in this group."))
+        shop = get_shop(self.request)
+        self.fields["shop"] = forms.ModelChoiceField(
+            queryset=Shop.objects.filter(pk=shop.id),
+            initial=shop,
+            widget=HiddenInput(),
+            label=_('shop'),
+            required=False)
 
-    def save(self, commit=True):
-        price_display_mode = self.cleaned_data['price_display_mode']
-        _set_price_display_mode(self.instance, price_display_mode)
-        super(ContactGroupBaseForm, self).save(commit=commit)
-
-
-_PRICE_DISPLAY_MODE_CHOICES = [
-    ('none', _("unspecified")),
-    ('with_taxes', _("show prices with taxes included")),
-    ('without_taxes', _("show pre-tax prices")),
-    ('hide', _("hide prices")),
-]
-
-
-def _get_price_display_mode(contact_group):
-    taxes = contact_group.show_prices_including_taxes
-    hide = contact_group.hide_prices
-    if hide is None and taxes is None:
-        return 'none'
-    elif hide:
-        return 'hide'
-    elif taxes:
-        return 'with_taxes'
-    else:
-        return 'without_taxes'
-
-
-def _set_price_display_mode(contact_group, price_display_mode):
-    if price_display_mode == 'none':
-        contact_group.show_prices_including_taxes = None
-        contact_group.hide_prices = None
-    elif price_display_mode == 'hide':
-        contact_group.show_prices_including_taxes = None
-        contact_group.hide_prices = True
-    elif price_display_mode == 'with_taxes':
-        contact_group.show_prices_including_taxes = True
-        contact_group.hide_prices = None
-    elif price_display_mode == 'without_taxes':
-        contact_group.show_prices_including_taxes = False
-        contact_group.hide_prices = None
+    def clean_shop(self):
+        return get_shop(self.request)
 
 
 class ContactGroupBaseFormPart(FormPart):
@@ -89,7 +56,7 @@ class ContactGroupBaseFormPart(FormPart):
             ContactGroupBaseForm,
             template_name="shuup/admin/contact_groups/_edit_base_contact_group_form.jinja",
             required=True,
-            kwargs={"instance": contact_group, "languages": settings.LANGUAGES}
+            kwargs={"instance": contact_group, "languages": settings.LANGUAGES, "request": self.request}
         )
 
     def form_valid(self, form):

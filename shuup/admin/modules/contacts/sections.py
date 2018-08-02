@@ -30,7 +30,7 @@ class BasicInfoContactSection(Section):
         context = {}
 
         context['groups'] = sorted(
-            contact.groups.all(),
+            contact.groups.all_except_defaults(),
             key=(lambda x: force_text(x))
         )
 

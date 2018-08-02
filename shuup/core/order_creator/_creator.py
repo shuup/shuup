@@ -265,7 +265,7 @@ class OrderProcessor(object):
 
         # add shop to the customer shop list if needed
         if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
-            order.customer.shops.add(order.shop)
+            order.customer.add_to_shop(order.shop)
 
     def _assign_code_usages(self, order_source, order):
         order.codes = order_source.codes

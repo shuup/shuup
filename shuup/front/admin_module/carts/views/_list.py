@@ -32,7 +32,7 @@ class CartListView(PicotableListView):
             display="format_abandoned_status",
             filter_config=ChoicesFilter([(False, _("yes")), (True, _("no"))])
         ),
-        Column("shop", _("Shop"), filter_config=ChoicesFilter(choices=Shop.objects.all())),
+        Column("shop", _("Shop"), filter_config=ChoicesFilter("get_shops")),
         Column("product_count", _("Product count"), filter_config=RangeFilter()),
         Column(
             "customer", _(u"Customer"),
@@ -48,6 +48,9 @@ class CartListView(PicotableListView):
             filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
         ),
     ]
+
+    def get_shops(self):
+        return Shop.objects.get_for_user(self.request.user)
 
     def get_queryset(self):
         """

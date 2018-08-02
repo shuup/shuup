@@ -16,6 +16,7 @@ from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import (
     PersonContactChoiceWidget, QuickAddTaxGroupSelect
 )
+from shuup.admin.shop_provider import get_shop
 from shuup.core.fields import LanguageFormField
 from shuup.core.models import (
     CompanyContact, Contact, ContactGroup, Gender, PersonContact, Shop
@@ -81,8 +82,9 @@ class ContactBaseFormMixin(object):
         if not self.instance.pk:
             self.instance.is_active = True
         obj = super(ContactBaseFormMixin, self).save(commit)
+        shop = get_shop(self.request)
         obj.groups = [obj.get_default_group()] + list(self.cleaned_data["groups"])
-        obj.shops = [self.request.shop] + list(self.cleaned_data["shops"])
+        obj.add_to_shops(shop, list(self.cleaned_data["shops"]))
         return obj
 
 

@@ -286,7 +286,7 @@ def test_content_wizard_pane2(rf, admin_user, settings):
         'behaviors-order_confirm_notification': True
     }
 
-    request = apply_request_middleware(rf.get("/"))
+    request = apply_request_middleware(rf.get("/"), skip_session=True)
     response = WizardView.as_view()(request)
     assert response.status_code == 302
     assert response["Location"].startswith(reverse("shuup:login"))

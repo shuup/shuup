@@ -27,7 +27,7 @@ class ContactGroupListView(PicotableListView):
     ]
 
     def get_queryset(self):
-        return ContactGroup.objects.all().annotate(n_members=Count("members"))
+        return ContactGroup.objects.all_except_defaults().annotate(n_members=Count("members"))
 
     def get_context_data(self, **kwargs):
         context = super(ContactGroupListView, self).get_context_data(**kwargs)

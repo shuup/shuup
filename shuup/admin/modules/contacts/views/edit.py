@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
-from django.core.exceptions import PermissionDenied
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,6 +15,8 @@ from shuup.admin.modules.contacts.form_parts import (
     CompanyContactBaseFormPart, ContactAddressesFormPart,
     PersonContactBaseFormPart
 )
+from shuup.admin.modules.contacts.utils import check_contact_permission
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
@@ -33,16 +33,8 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     def get_object(self, queryset=None):
         if not self.kwargs.get(self.pk_url_kwarg):
             return self.model()
-
         contact = super(CreateOrUpdateView, self).get_object(queryset)
-
-        limited = (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
-                   not self.request.user.is_superuser)
-        if limited:
-            shop = self.request.shop
-            if shop not in contact.shops.all():
-                raise PermissionDenied()
-
+        check_contact_permission(self.request, contact)
         return contact
 
     def get_contact_type(self):
@@ -69,8 +61,7 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     @atomic
     def form_valid(self, form):
         response = self.save_form_parts(form)
-        if settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
-            self.object.shops.add(self.request.shop)
+        self.object.add_to_shop(get_shop(self.request))
         return response
 
     def get_toolbar(self):

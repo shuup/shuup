@@ -18,9 +18,8 @@ from django.utils.encoding import force_text
 from shuup.admin.modules.users.views import (
     LoginAsUserView, UserChangePermissionsView, UserDetailView
 )
-from shuup.admin.modules.users.views.permissions import (
+from shuup.admin.modules.users.views.permissions import \
     PermissionChangeFormBase
-)
 from shuup.core.models import Contact, get_person_contact
 from shuup.testing.factories import (
     create_random_person, get_default_shop, UserFactory
@@ -94,7 +93,7 @@ def test_user_create(rf, admin_user):
         is_staff=True,
         is_superuser=False
     )
-    response = view_func(apply_request_middleware(rf.get("/", user=user)))
+    response = view_func(apply_request_middleware(rf.get("/"), user=user, skip_session=True))
     assert response.status_code == 200
     response.render()
     assert "Staff status" not in force_text(response.content)
@@ -219,7 +218,7 @@ def test_user_permission_form_changes_group(rf, admin_user, regular_user):
 def test_login_as_user_errors(rf, admin_user, regular_user):
     get_default_shop()
     view_func = LoginAsUserView.as_view()
-    request = apply_request_middleware(rf.post("/"), user=regular_user)
+    request = apply_request_middleware(rf.post("/"), user=regular_user, skip_session=True)
 
     # log in as self
     with pytest.raises(Problem):

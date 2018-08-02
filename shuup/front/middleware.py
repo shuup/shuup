@@ -104,7 +104,7 @@ class ShuupFrontMiddleware(object):
     def _set_price_display_options(self, request):
         customer = request.customer
         assert isinstance(customer, Contact)
-        customer.get_price_display_options().set_for_request(request)
+        customer.get_price_display_options(shop=request.shop).set_for_request(request)
 
     def process_response(self, request, response):
         if hasattr(request, "basket") and request.basket.dirty:

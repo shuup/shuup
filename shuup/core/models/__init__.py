@@ -19,9 +19,13 @@ from ._basket import Basket
 from ._categories import Category, CategoryStatus, CategoryVisibility
 from ._configurations import ConfigurationItem
 from ._contacts import (
-    AnonymousContact, CompanyContact, Contact, ContactGroup, Gender,
+    AnonymousContact, CompanyContact, CompanyContactLogEntry, Contact,
+    ContactGroup, ContactGroupLogEntry, ContactGroupPriceDisplay, Gender,
     get_company_contact, get_company_contact_for_shop_staff,
-    get_person_contact, PersonContact
+    get_groups_for_price_display_create, get_person_contact,
+    get_price_display_for_group_and_shop,
+    get_price_display_options_for_group_and_shop, get_price_displays_for_shop,
+    PersonContact, PersonContactLogEntry
 )
 from ._counters import Counter, CounterType
 from ._currencies import Currency, get_currency_precision
@@ -84,9 +88,12 @@ __all__ = [
     "CategoryStatus",
     "CategoryVisibility",
     "CompanyContact",
+    "CompanyContactLogEntry",
     "ConfigurationItem",
     "Contact",
     "ContactGroup",
+    "ContactGroupLogEntry",
+    "ContactGroupPriceDisplay",
     "Counter",
     "CounterType",
     "CountryLimitBehaviorComponent",
@@ -100,7 +107,11 @@ __all__ = [
     "get_company_contact",
     "get_company_contact_for_shop_staff",
     "get_currency_precision",
+    "get_groups_for_price_display_create",
     "get_person_contact",
+    "get_price_displays_for_shop",
+    "get_price_display_for_group_and_shop",
+    "get_price_display_options_for_group_and_shop",
     "Gender",
     "GroupAvailabilityBehaviorComponent",
     "ImmutableAddress",
@@ -124,6 +135,7 @@ __all__ = [
     "PaymentUrls",
     "PersistentCacheEntry",
     "PersonContact",
+    "PersonContactLogEntry",
     "PiecesSalesUnit",
     "PolymorphicShuupModel",
     "PolymorphicTranslatableShuupModel",

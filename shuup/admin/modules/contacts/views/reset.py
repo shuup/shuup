@@ -5,10 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.conf import settings
-from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.modules.contacts.utils import check_contact_permission
 from shuup.admin.modules.users.views.password import UserResetPasswordView
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.models import Contact
@@ -18,12 +17,7 @@ from shuup.utils.excs import Problem
 class ContactResetPasswordView(UserResetPasswordView):
     def get_contact(self):
         contact = Contact.objects.get(pk=self.kwargs[self.pk_url_kwarg])
-        limited = (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
-                   not self.request.user.is_superuser)
-        if limited:
-            shop = self.request.shop
-            if shop not in contact.shops.all():
-                raise PermissionDenied()
+        check_contact_permission(self.request, contact)
         return contact
 
     def get_object(self, queryset=None):

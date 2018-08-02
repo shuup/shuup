@@ -23,9 +23,9 @@ from shuup.core.order_creator import OrderCreator
 from shuup.default_tax.models import TaxRule
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
-    create_product, create_random_person, get_default_supplier,
-    get_initial_order_status, get_payment_method, get_shipping_method,
-    UserFactory
+    create_product, create_random_person, create_random_user,
+    get_default_supplier, get_initial_order_status, get_payment_method,
+    get_shipping_method, UserFactory
 )
 from shuup_tests.admin.test_order_creator import \
     get_frontend_request_for_command
@@ -39,13 +39,14 @@ def test_order_edit_with_coupon(rf):
     request, shop, group = initialize_test(rf, include_tax=False)
     order = _get_order_with_coupon(request, initial_status)
 
-    modifier = UserFactory()
+    staff_user = create_random_user(is_staff=True)
+
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
     assert order.customer != contact
     state = _get_frontend_order_state(shop, contact)
     assert order.shop.id == state["shop"]["selected"]["id"]
 
-    request = get_frontend_request_for_command(state, "finalize", modifier)
+    request = get_frontend_request_for_command(state, "finalize", staff_user)
     response = OrderEditView.as_view()(request, pk=order.pk)
     assert_contains(response, "orderIdentifier")
     data = json.loads(response.content.decode("utf8"))

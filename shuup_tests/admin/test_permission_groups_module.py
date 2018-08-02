@@ -29,7 +29,7 @@ def test_permission_group_edit_view(rf, admin_user):
     get_default_shop()
     group = get_default_permission_group()
     view_func = PermissionGroupEditView.as_view()
-    response = view_func(apply_request_middleware(rf.get("/", user=admin_user), pk=group.pk))
+    response = view_func(apply_request_middleware(rf.get("/"), pk=group.pk, user=admin_user))
     assert response.status_code == 200
 
 

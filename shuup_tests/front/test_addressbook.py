@@ -8,8 +8,7 @@ import pytest
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from shuup.core.models import get_person_contact, SavedAddress
-from shuup.core.models._contacts import get_company_contact
+from shuup.core.models import get_company_contact, get_person_contact, SavedAddress
 from shuup.testing.factories import get_address, get_default_shop
 from shuup_tests.utils import SmartClient
 from shuup_tests.utils.fixtures import (

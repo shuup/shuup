@@ -402,10 +402,12 @@ def _get_service(
     return service
 
 
-def get_default_customer_group():
+def get_default_customer_group(shop=None):
     group = default_by_identifier(ContactGroup)
+    if not shop:
+        shop = get_default_shop()
     if not group:
-        group = ContactGroup.objects.create(name=DEFAULT_NAME, identifier=DEFAULT_IDENTIFIER)
+        group = ContactGroup.objects.create(name=DEFAULT_NAME, identifier=DEFAULT_IDENTIFIER, shop=shop)
         assert str(group) == DEFAULT_NAME
     return group
 
@@ -750,17 +752,21 @@ def create_random_person(locale=None, minimum_name_comp_len=0, shop=None):
         language=fake.language
     )
     if shop:
-        contact.shops.add(shop)
+        contact.add_to_shop(shop)
     return contact
 
 
-def create_random_contact_group():
+def create_random_contact_group(shop=None):
     fake = get_faker(["job"])
     name = fake.job()
     identifier = "%s-%s" % (ContactGroup.objects.count() + 1, name.lower().replace(" ", "-"))
+    if not shop:
+        shop = get_default_shop()
     return ContactGroup.objects.create(
         identifier=identifier,
+        shop=shop,
         name=name,
+    ).set_price_display_options(
         show_pricing=random.choice([True, False]),
         show_prices_including_taxes=random.choice([True, False]),
         hide_prices=random.choice([True, False]),
@@ -784,7 +790,7 @@ def create_random_company(shop=None):
         language=language
     )
     if shop:
-        contact.shops.add(shop)
+        contact.add_to_shop(shop)
     return contact
 
 
