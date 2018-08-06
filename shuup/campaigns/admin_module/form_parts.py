@@ -11,11 +11,11 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
+from shuup.admin.shop_provider import get_shop
 from shuup.campaigns.admin_module.forms import (
     BasketCampaignForm, CatalogCampaignForm
 )
 from shuup.campaigns.models import ContactGroupSalesRange
-from shuup.core.models import Shop, ShopStatus
 
 from .form_sets import (
     BasketConditionsFormSet, BasketDiscountEffectsFormSet,
@@ -47,7 +47,7 @@ class SalesRangesFormPart(FormPart):
 
     def __init__(self, request, object=None):
         super(SalesRangesFormPart, self).__init__(request, object)
-        self.shops = Shop.objects.filter(status=ShopStatus.ENABLED)
+        self.shops = [get_shop(request)]
 
     def _get_form_name(self, shop):
         return "%d-%s" % (shop.pk, self.name)
