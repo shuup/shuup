@@ -95,7 +95,7 @@ def test_editing_sales_ranges(rf, admin_user):
 
 @pytest.mark.django_db
 def test_editing_sales_ranges_multi_shop(rf, admin_user):
-    get_default_shop()
+    default_shop = get_default_shop()
     another_shop = get_shop(prices_include_tax=True)
     another_shop.status = ShopStatus.ENABLED
     another_shop.save()
@@ -115,8 +115,10 @@ def test_editing_sales_ranges_multi_shop(rf, admin_user):
             response.render()
         assert response.status_code in [200, 302]
 
-    assert ContactGroupSalesRange.objects.count() == 2
-    for shop in Shop.objects.all():
-        sales_range = ContactGroupSalesRange.objects.filter(group=group, shop=shop).first()
-        assert sales_range.min_value == 0
-        assert sales_range.max_value == 50
+    # Even if the data is for both shops only the current shop takes
+    # effect. From admin sales ranges can be only defined for the current
+    # shop.
+    assert ContactGroupSalesRange.objects.count() == 1
+    sales_range = ContactGroupSalesRange.objects.filter(group=group, shop=default_shop).first()
+    assert sales_range.min_value == 0
+    assert sales_range.max_value == 50
