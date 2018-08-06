@@ -1,3 +1,4 @@
-SKU,Name,Description,Price,Tax Class,Primary Category,Categories,Primary image
-test-product,Product English,Description English,150,Default Tax Class,Test Category,"Test Category, Test Category 2",1280x720
-test-product-2,Product 2 English,Description English 2,150,1,1,"1,2",1280x720
+Ignore,SKU,Name,Description,Price,"Tax Class","Primary Category",Categories
+True,"The unique identifier of the item","The name of the item","The description of the item","The default price of the item","The name or ID of the tax class","The name or ID of the primary category","Comma separated list of category names or ids"
+,test-product,"Product English","Description English",150,"Default Tax Class","Test Category","Test Category, Test Category 2"
+,test-product-2,"Product 2 English","Description English 2",150,1,1,"1,2"

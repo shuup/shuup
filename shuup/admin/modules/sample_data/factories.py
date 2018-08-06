@@ -19,8 +19,8 @@ from six import BytesIO
 
 from shuup.admin.modules.sample_data import SAMPLE_IMAGES_BASE_DIR
 from shuup.core.models import (
-    Category, CategoryStatus, PersonContact, Product, ProductMedia,
-    ProductMediaKind, SalesUnit, Shop, ShopProduct, ShopProductVisibility
+    Category, CategoryStatus, MediaFile, PersonContact, Product, ProductMedia,
+    ProductMediaKind, SalesUnit, ShopProduct, ShopProductVisibility
 )
 from shuup.testing.factories import (
     get_default_product_type, get_default_supplier, get_default_tax_class
@@ -59,13 +59,16 @@ def create_sample_product(name, description, business_segment, image_file, shop)
     path = "ProductImages/Samples/%s" % business_segment.capitalize()
     filer_image = _filer_image_from_file_path(image_file_path, path)
 
+    media_file = MediaFile.objects.create(file=filer_image)
+    media_file.shops.add(shop)
+
     media = ProductMedia.objects.create(
         product=product,
         kind=ProductMediaKind.IMAGE,
         file=filer_image
     )
-    media.shops = Shop.objects.all()
     media.save()
+    media.shops.add(shop)
     product.primary_image = media
     product.save()
 

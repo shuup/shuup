@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-12 00:45+0000\n"
+"POT-Creation-Date: 2018-07-25 10:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,10 @@ msgstr ""
 msgid "Company Contact Importer"
 msgstr ""
 
+#, python-format
+msgid "Image '%s' not found, please check whether the image exists."
+msgstr ""
+
 msgid "Please add supplier to row before importing stock quantities."
 msgstr ""
 
@@ -33,4 +37,64 @@ msgid "This supplier doesn't handle stocks, please set Stock Managed on."
 msgstr ""
 
 msgid "Product Importer"
+msgstr ""
+
+msgid "Quantities"
+msgstr ""
+
+msgid "If you are importing products with quantities, ensure the following:"
+msgstr ""
+
+#, python-format
+msgid ""
+"You have atleast one <a href=\"%(supplier_url)s\">supplier</a> with \"Stock "
+"Managed\" <strong>on</strong>."
+msgstr ""
+
+#, python-format
+msgid ""
+"your <a href=\"%(supplier_url)s\">supplier</a> has \"Stock Managed\" "
+"<strong>on</strong>. (Currently <strong>off</strong>)"
+msgstr ""
+
+msgid "your import file has <strong>supplier</strong> field"
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "If you are importing products with images, ensure the following:"
+msgstr ""
+
+#, python-format
+msgid ""
+"Upload all product images using the <a href=\"%(media_browser_url)s\" target="
+"\"_blank\">Media Browser</a>."
+msgstr ""
+
+msgid ""
+"Use the image file name on <strong>image</strong> and/or <strong>images</"
+"strong> column(s)."
+msgstr ""
+
+msgid ""
+"<strong>images</strong> column can receive a comma-separated list of image "
+"names."
+msgstr ""
+
+msgid ""
+"Image names can be the file name (e.g.: <em>product_001.png</em>) or the "
+"path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).\n"
+"        Using the full path will ensure that the correct image will be used "
+"when there is more than one image with the same name."
+msgstr ""
+
+msgid "Related objects"
+msgstr ""
+
+msgid ""
+"Columns that are relations to other objects (like Category and Supplier) "
+"accept both the object ID number\n"
+"    and the object name. Make sure that when using the name, there should be "
+"only a single object for that given name."
 msgstr ""

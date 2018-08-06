@@ -1,0 +1,4 @@
+ignore;SKU;Name;Description;Price;Tax Class
+true;;;Just testing;This shouldn't be validated;
+;test-product;Product English;Description English;150;Default Tax Class
+;test-product-2;Product 2 English;Description English 2;150;1

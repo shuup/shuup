@@ -158,7 +158,7 @@ class ShopProductFactory(DjangoModelFactory):
 
 
 def _generate_product_image(product):
-    image = generate_image(512, 512)
+    image = generate_image(32, 32)
     sio = BytesIO()
     image.save(sio, format="JPEG", quality=75)
     filer_file = filer_image_from_data(
@@ -650,7 +650,7 @@ def create_order_with_product(
 
 
 def get_random_filer_image():
-    pil_image = generate_image(256, 256)
+    pil_image = generate_image(32, 32)
     io = six.BytesIO()
     pil_image.save(io, "JPEG", quality=45)
     jpeg_data = io.getvalue()

@@ -25,19 +25,9 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
-
-                <h2>{% trans %}Note{% endtrans %}</h2>
-                <p>{% trans %}If you are importing products with quantities, ensure the following:{% endtrans %}</p>
-                <ul>
-                    {% if not supplier %}
-                        {% set url = shuup_admin.model_url(supplier, "list") %}
-                        <li>{% trans url=url %}You have atleast one <a href="{{ url }}">supplier</a> with "Stock Managed" <b>on</b>.{% endtrans %}</li>
-                    {% elif not supplier.stock_managed  %}
-                        {% set url = shuup_admin.model_url(supplier, "detail") %}
-                        <li>{% trans url=url %}your <a href="{{ url }}">supplier</a> has "Stock Managed" <b>on</b>. (Currently <b>off</b>){% endtrans %}</li>
-                    {% endif %}
-                    <li>{% trans %}your import file has <b>supplier</b> field{% endtrans %}</li>
-                </ul>
+                {% if importer and importer.help_template %}
+                    {% include importer.help_template with context %}
+                {% endif %}
             </div>
             <input type="submit" value="{% trans %}Continue{% endtrans %}" id="basic-form-save" class="btn btn-primary btn-block">
         </form>

@@ -6,24 +6,27 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import hashlib
+import logging
 import os
 from datetime import datetime
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.db.transaction import atomic
 from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView, View
 
-from shuup.admin.shop_provider import get_shop
-from shuup.core.models import Shop, Supplier
+from shuup.core.models import Shop
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
 from shuup.importer.transforms import transform_file
 from shuup.importer.utils import (
     get_import_file_path, get_importer, get_importer_choices
 )
 from shuup.utils.excs import Problem
+
+logger = logging.getLogger(__name__)
 
 
 class ImportProcessView(TemplateView):
@@ -80,7 +83,14 @@ class ImportProcessView(TemplateView):
         prepared = self.prepare()
         if not prepared:
             return redirect(reverse("shuup_admin:importer.import"))
-        self.importer.do_import(self.settings_form.cleaned_data["import_mode"])
+        try:
+            with atomic():
+                self.importer.do_import(self.settings_form.cleaned_data["import_mode"])
+        except Exception:
+            logger.exception("Failed to import data")
+            messages.error(request, _("Failed to import the file."))
+            return redirect(reverse("shuup_admin:importer.import"))
+
         self.template_name = "shuup/importer/admin/import_process_complete.jinja"
         return self.render_to_response(self.get_context_data(**kwargs))
 
@@ -135,9 +145,6 @@ class ImportView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(ImportView, self).get_context_data(**kwargs)
-        shop = get_shop(self.request)
-
-        context["supplier"] = Supplier.objects.filter(shops=shop).first()
 
         # check whether the importer has a example file template
         # if so, we also add a url to download the example file
@@ -150,7 +157,9 @@ class ImportView(FormView):
                 importer = importers[0][0]
 
         if importer:
-            context["importer"] = get_importer(importer)
+            importer_cls = get_importer(importer)
+            context.update(importer_cls.get_help_context_data(self.request))
+            context["importer"] = importer_cls
 
         return context
 

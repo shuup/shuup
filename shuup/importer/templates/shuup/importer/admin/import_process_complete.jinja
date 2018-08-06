@@ -41,6 +41,15 @@
                 {% endif %}
             {% endfor %}
             {% endif %}
+
+            {% if importer.other_log_messages %}
+            <h3>{% trans %}Import errors{% endtrans %}</h3>
+            <ul>
+                {% for log_message in importer.other_log_messages %}
+                    <li>{{ log_message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         </div>
     {% endcall %}
 {% endblock %}

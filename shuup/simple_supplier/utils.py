@@ -121,7 +121,7 @@ def get_stock_adjustment_div(request, supplier, product):
     context = {
         "product": product,
         "supplier": supplier,
-        "delta_step": pow(0.1, product.sales_unit.decimals),
+        "delta_step": pow(0.1, product.sales_unit.decimals) if product.sales_unit.decimals else 0,
         "adjustment_form": StockAdjustmentForm(initial={"purchase_price": purchase_price, "delta": None}),
     }
     if "shuup.notify" in settings.INSTALLED_APPS:

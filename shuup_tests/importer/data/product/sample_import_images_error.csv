@@ -1,0 +1,3 @@
+SKU;Name;Description;Price;Tax Class;Primary Category;Categories;Image;Images
+test-product;Product English;Description English;150;Default Tax Class;Test Category;Test Category, Test Category 2;image_err1.jpeg;products/images/image2.jpeg,products2/images/image5.jpeg
+test-product-2;Product 2 English;Description English 2;150;1;1;1,2;image3.jpeg;image3.jpeg,products/images/image3.jpeg,image4.jpeg

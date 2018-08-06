@@ -4,20 +4,24 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
+import os
+
 import six
-from django.db.models import ForeignKey
+from django.db.models import ForeignKey, Q
 from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import (
-    Product, ProductType, ShopProduct, Supplier, TaxClass
+    MediaFile, Product, ProductMedia, ProductMediaKind, ProductType, SalesUnit,
+    ShopProduct, Supplier, TaxClass
 )
 from shuup.importer.exceptions import ImporterError
 from shuup.importer.importing import (
     DataImporter, ImporterExampleFile, ImportMetaBase
 )
 from shuup.importer.utils import fold_mapping_name
-from shuup.simple_supplier.models import StockAdjustment
 from shuup.utils.properties import PriceProperty
 
 
@@ -27,18 +31,101 @@ class ProductMetaBase(ImportMetaBase):
         "tax_class": ["tax_class_name"],
         "name": ["title"],
         "keywords": ["tags"],
-        "qty": ["quantity", "stock_amount", "stock_qty", "stock_quantity"],
+        "qty": ["quantity", "stock_amount", "stock_qty", "stock_quantity", "qty"],
         "suppliers": ["supplier"],
         "primary_category": ["category", "main_category"],
         "categories": ["extra_categories"],
+        "media": ["media", "images"],
+        "image": ["image", "main_image"],
         "manufacturer": ["mfgr"]
     }
 
-    fields_to_skip = ["shop_primary_image", "primary_image"]
+    fields_to_skip = ["ignore", "shop_primary_image", "primary_image"]
 
     post_save_handlers = {
         "handle_stocks": ["qty"],
+        "handle_images": ["image", "media"]
     }
+
+    def _handle_image(self, shop, product, image_source, is_primary=False):
+        product_media = None
+        img_path, img_name = os.path.split(image_source)
+
+        # fetch all images that are candidates using the file name
+        images_candidate = list(MediaFile.objects.filter(
+            Q(shops=shop),
+            Q(file__original_filename__iexact=img_name) | Q(file__name__iexact=img_name)
+        ).distinct())
+
+        image = None
+
+        if not images_candidate:
+            return None
+
+        if img_path:
+            for image_candidate in images_candidate:
+                # if there is any path in the image_source string,
+                # we should compare that with the Filer file logical path
+                # this enable users to use the 'folder1/folder2/image.jpeg' as image source
+                folder_paths = image_candidate.file.logical_path
+                logical_path = os.path.join(*[f.name for f in folder_paths]).lower()
+                if logical_path.endswith(img_path.lower()):
+                    image = image_candidate
+                    break
+        else:
+            # just use the first one
+            image = images_candidate[0]
+
+        if image:
+            product_media = ProductMedia.objects.filter(product=product, file=image.file, shops=shop).first()
+            if not product_media:
+                product_media = ProductMedia(
+                    product=product,
+                    kind=ProductMediaKind.IMAGE,
+                    enabled=True,
+                    public=True,
+                    file=image.file
+                )
+
+        if product_media:
+            product_media.full_clean()
+            product_media.save()
+            product_media.shops.add(shop)
+
+            if is_primary:
+                product.primary_image = product_media
+                product.save(update_fields=["primary_image"])
+
+        return product_media
+
+    def handle_images(self, fields, sess):
+        """
+        Handle images for product
+        """
+        # convert all keys to lowercase
+        row = {k.lower(): v for k, v in sess.row.items()}
+        product = sess.instance
+
+        for image_field in self.aliases["image"]:
+            image = row.get(image_field)
+            if image and not self._handle_image(sess.shop, product, row[image_field], is_primary=True):
+                msg = _("Image '%s' not found, please check whether the image exists.") % row[image_field]
+                sess.log_messages.append(msg)
+
+        for image_field in self.aliases["media"]:
+            images = row.get(image_field)
+            if images:
+                for image_source in images.split(","):
+                    if not self._handle_image(sess.shop, product, image_source):
+                        msg = _("Image '%s' not found, please check whether the image exists.") % image_source
+                        sess.log_messages.append(msg)
+
+        # check whether the product has media but doesn't have a primary image
+        # set the first available media as primary
+        product_medias = ProductMedia.objects.filter(product=product, shops=sess.shop)
+        if not product.primary_image and product_medias.exists():
+            product.primary_image = product_medias.first()
+            product.save()
 
     def handle_stocks(self, fields, sess):
         """
@@ -46,7 +133,8 @@ class ProductMetaBase(ImportMetaBase):
 
         If stock qty has been given, expect that a supplier with stock management must be available.
         """
-        row = sess.row
+        # convert all keys to lowercase
+        row = {k.lower(): v for k, v in sess.row.items()}
 
         # check if row even has these fields we are requiring
         field_found = False
@@ -58,20 +146,21 @@ class ProductMetaBase(ImportMetaBase):
         if not field_found:  # no need to process this as qty was not available
             return
 
-        supplier = row.get("supplier")
-        if not supplier:
+        supplier_id = row.get("supplier")
+        if not supplier_id:
             raise ImporterError(_("Please add supplier to row before importing stock quantities."))
         # shuup only has 1 supplier support now so get first
-        obj = sess.importer.resolve_object(Supplier, supplier)
-        if not obj:
+        supplier = sess.importer.resolve_object(Supplier, supplier_id)
+        if not supplier:
             raise ImporterError(_("No supplier found, please check the supplier exists."))
-        if not obj.stock_managed:
+        if not supplier.stock_managed:
             raise ImporterError(_("This supplier doesn't handle stocks, please set Stock Managed on."))
 
         for qty_field in self.aliases["qty"]:
+            qty_field = qty_field.lower()
             val = row.get(qty_field, None)
             if val is not None:
-                StockAdjustment(product=sess.instance, delta=val)
+                supplier.adjust_stock(sess.instance.pk, val)
                 break
 
     def presave_hook(self, sess):
@@ -154,8 +243,9 @@ class ProductMetaBase(ImportMetaBase):
         Get default values for import time
         """
         data = {
-            "type_id": ProductType.objects.first().id,
-            "tax_class_id": TaxClass.objects.first().id,
+            "type_id": ProductType.objects.first().pk,
+            "tax_class_id": TaxClass.objects.first().pk,
+            "sales_unit_id": SalesUnit.objects.first().pk
         }
         return data
 
@@ -166,6 +256,7 @@ class ProductImporter(DataImporter):
     meta_base_class = ProductMetaBase
     model = Product
     relation_field = "product"
+    help_template = "shuup/default_importers/product_help.jinja"
 
     def get_related_models(self):
         return [Product, ShopProduct]
@@ -184,6 +275,10 @@ class ProductImporter(DataImporter):
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         ),
         ImporterExampleFile(
+            "product_sample_import_with_images.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ),
+        ImporterExampleFile(
             "product_sample_import.csv",
             "text/csv"
         )
@@ -193,3 +288,10 @@ class ProductImporter(DataImporter):
     def get_example_file_content(cls, example_file, request):
         from shuup.default_importer.samples import get_sample_file_content
         return get_sample_file_content(example_file.file_name)
+
+    @classmethod
+    def get_help_context_data(cls, request):
+        from shuup.admin.shop_provider import get_shop
+        return {
+            "supplier": Supplier.objects.filter(shops=get_shop(request)).first()
+        }
