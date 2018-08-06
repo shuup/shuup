@@ -3,9 +3,9 @@
         <div class="checkout-service-provider">
             {% if service_provider.logo %}
                 {% set service_provider_logo = service_provider.logo|thumbnail(size=(0,100)) %}
-                <img class="image" src="{{ service_provider_logo }}" alt="{{ service_provider.name }}">
+                <img class="image" src="{{ service_provider_logo }}" alt="{{ service_provider.safe_translation_getter("name", "") }}">
             {% else %}
-                <h3>{{ service_provider.name }}</h3>
+                <h3>{{ service_provider.safe_translation_getter("name", "") }}</h3>
             {% endif %}
         </div>
         {% for service in services %}
@@ -19,7 +19,7 @@
                 {% if service.logo %}
                     <div class="logo">
                         {% set service_logo = service.logo|thumbnail(size=(0,80)) %}
-                        <img src="{{ service_logo }}" alt="{{ service.name }}">
+                        <img src="{{ service_logo }}" alt="{{ service.safe_translation_getter("name", "") }}">
                     </div>
                 {% endif %}
                 <span class="label-text">
