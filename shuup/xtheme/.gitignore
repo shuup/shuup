@@ -5,3 +5,4 @@ static/xtheme/*js
 static/xtheme/*css
 static/xtheme/*map
 !static_src/lib
+generated_resources.txt
