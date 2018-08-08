@@ -18,7 +18,9 @@ from shuup.admin.utils.picotable import (
 )
 from shuup.apps.provides import override_provides
 from shuup.core.models import Category, Product, ShopProduct
-from shuup.testing.factories import get_default_shop
+from shuup.testing.factories import (
+    create_random_user, get_default_shop
+)
 from shuup.testing.mock_population import populate_if_required
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import empty_iterable
@@ -279,3 +281,40 @@ def test_provide_columns():
         view_settings = ViewSettings(ShopProduct, ProductListView.default_columns, ProductListView)
         column_ids = [col.id for col in view_settings.inactive_columns]  # provided column is not set active yet
         assert "custom_product_info" in column_ids
+
+
+@pytest.mark.django_db
+def test_picotable_queryset_default_ordering(rf, admin_user):
+    shop = get_default_shop()
+    columns = [
+        Column("username", "Username", filter_config=Filter())
+    ]
+    some_users = []
+    for x in range(5):
+        some_users.append(create_random_user())
+
+    admin_user.is_staff = True
+    admin_user.save()
+    shop.staff_members.add(admin_user)
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    pico = Picotable(
+        request=request,
+        columns=columns,
+        mass_actions=[],
+        queryset=get_user_model().objects.exclude(is_superuser=True).order_by("-username"),
+        context=PicoContext(request)
+    )
+    users = pico.get_data({"perPage": 100, "page": 1})
+
+    # Should return users sorted by username
+    some_users.sort(key=lambda x: x.username, reverse=True)
+    assert len(users["items"]) == len(some_users)
+    assert len(users["items"]) == 5
+    assert [item["username"] for item in users["items"]] == [user.username for user in some_users]
+
+    # Let's still double check that the regular sort works
+    users = pico.get_data({"perPage": 100, "page": 1, "sort": "+username"})
+    some_users.sort(key=lambda x: x.username)
+    assert len(users["items"]) == len(some_users)
+    assert len(users["items"]) == 5
+    assert [item["username"] for item in users["items"]] == [user.username for user in some_users]
