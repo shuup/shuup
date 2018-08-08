@@ -20,6 +20,7 @@ from jinja2.utils import contextfunction
 from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import manipulate_query_string, NoModelUrl
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
@@ -150,7 +151,7 @@ def model_url(context, model, kind="detail", default=None, **kwargs):
     user = context.get("user")
     try:
         request = context.get("request")
-        shop = request.shop if request else None
+        shop = get_shop(request) if request else None
         admin_model_url_resolvers = get_provide_objects("admin_model_url_resolver")
 
         for resolver in admin_model_url_resolvers:

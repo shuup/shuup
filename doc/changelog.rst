@@ -15,6 +15,11 @@ General
 - Changed the way static resources are built.
   Parcel is used to build all apps and `generated_resources.txt` is auto-generated.
 
+Importer
+~~~~~~~~
+
+- Removed shop field from importer form and using the current admin shop
+
 Shuup 1.6.9
 -----------
 
