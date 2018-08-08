@@ -984,13 +984,9 @@ const Picotable = (function(m, storage) {
                     return;
                 }
 
-                $(el).datetimepicker({
+                $(el).datepicker({
                     format: "yyyy-mm-dd",
-                    autoclose: true,
-                    todayBtn: true,
-                    todayHighlight: true,
-                    fontAwesome: true,
-                    minView: 2
+                    autoHide: true
                 });
             }
         };
