@@ -6,7 +6,7 @@
   "scripts": {
     "watch:styles:base": "parcel watch --no-hmr -d static/shuup_admin/css static_src/base/scss/style.scss -o base",
     "watch:styles:dashboard": "parcel watch --no-hmr -d static/shuup_admin/css static_src/dashboard/scss/dashboard.scss",
-    "watch:styles:wizard": "parcel watch --no-hmr -d static/shuup_admin/css static_src/wizard/less/wizard.scss",
+    "watch:styles:wizard": "parcel watch --no-hmr -d static/shuup_admin/css static_src/wizard/scss/wizard.scss",
     "watch:styles:media": "parcel watch --no-hmr -d static/shuup_admin/css modules/media/static_src/media/browser/media-browser.scss",
     "watch:scripts:base": "parcel watch --no-hmr -d static/shuup_admin/js static_src/base/js/base.js",
     "watch:scripts:contact_group": "parcel watch --no-hmr -d static/shuup_admin/js static_src/contact_group/edit-members.js -o contact-group",
@@ -27,6 +27,7 @@
   "license": "OSL-3.0",
   "private": true,
   "dependencies": {
+    "@chenfengyuan/datepicker": "^1.0.0",
     "bootstrap": "^4.1.2",
     "bootstrap-datetime-picker": "^2.4.4",
     "chart.js": "^2.7.2",
