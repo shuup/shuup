@@ -61,6 +61,7 @@
     {{ render_footer() }}
 
     {# Include JavaScript libraries #}
+    <script src="{{ static("shuup/front/js/vendor.js") }}"></script>
     <script src="{{ static("shuup/front/js/scripts.js") }}"></script>
     {# Include all Extra JavaScript #}
     {% block extrajs %}{% endblock %}

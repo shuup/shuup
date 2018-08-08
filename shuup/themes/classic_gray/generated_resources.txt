@@ -1,4 +1,0 @@
-static/shuup/classic_gray/blue/owl.video.play.png
-static/shuup/classic_gray/blue/style.css
-static/shuup/classic_gray/pink/owl.video.play.png
-static/shuup/classic_gray/pink/style.css

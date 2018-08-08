@@ -98,6 +98,7 @@ def check_default_ordering(browser):
 def basic_sorting_test(browser):
     # Sort from Z to A
     click_element(browser, "button[data-id='id_sort']")
+    # WARNING: data-original-index was removed after bootstrap-select 1.6.3
     click_element(browser, "li[data-original-index='1'] a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-3").first().id
     wait_until_condition(

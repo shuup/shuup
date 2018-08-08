@@ -6,8 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const style = require("style!css!autoprefixer!less!./script-editor.less");  // eslint-disable-line no-unused-vars
-const cx = require("classnames");
+
+// IMPORTANT: This script assumes that lodash and mithriljs@0.2.0
+// are available in global scope, installed from Shuup Admin static source
 const Messages = window.Messages;
 
 var settings = {};
@@ -228,7 +229,7 @@ function stepTableRows(ctrl) {
         }, optionLists.stepNexts);
 
         return m("div", {
-            className: cx("step", {disabled: !step.enabled}),
+            className: "step" + (step.enabled ? "" : " disabled"),
             key: step.id
         }, [
             m("div.step-buttons", [
@@ -347,13 +348,15 @@ function save() {
     controller.saveState();
 }
 
-module.exports.init = init;
-module.exports.save = save;
-module.exports.hideEditModal = function() {
-    if (controller) {
-        m.startComputation();
-        controller.setStepItemEditorState(false);
-        controller.activateStepItem(null);  // Deactivate the modal once data is received
-        m.endComputation();
+window.ScriptEditor = {
+    init,
+    save,
+    hideEditModal() {
+        if (controller) {
+            m.startComputation();
+            controller.setStepItemEditorState(false);
+            controller.activateStepItem(null);  // Deactivate the modal once data is received
+            m.endComputation();
+        }
     }
 };

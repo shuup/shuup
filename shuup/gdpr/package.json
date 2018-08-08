@@ -2,31 +2,24 @@
   "name": "shuup.gdpr",
   "version": "1.0.0",
   "description": "Enables General Data Protection Regulation (GDPR) in Shuup",
-  "main": "webpack.config.js",
+  "main": "",
   "scripts": {
-    "build": "npm i && webpack --env.dist",
-    "watch": "webpack --watch --env.dev --colors --progress"
+    "watch": "parcel watch --no-hmr --no-source-maps -d static/ -o shuup-gdpr static_src/index.js",
+    "clean": "rm generated_resources.txt || true",
+    "build": "npm i && npm run clean && parcel build -d static/ -o shuup-gdpr static_src/index.js"
   },
-  "browserslist": [
-    "> 5%",
-    "last 5 versions"
-  ],
+  "shuup": {
+    "static_build": true
+  },
   "author": "Shuup Team <shuup@shuup.com>",
   "license": "OSL-3.0",
   "private": true,
   "dependencies": {
-    "autoprefixer": "^8.5.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
+    "autoprefixer": "^8.6.4",
     "babel-preset-env": "^1.7.0",
-    "browserslist": "^3.2.8",
-    "css-loader": "^0.28.11",
-    "extract-text-webpack-plugin": "^3.0.2",
     "less": "^3.0.4",
-    "less-loader": "^4.1.0",
-    "postcss-loader": "^2.1.5",
-    "style-loader": "^0.21.0",
-    "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^3.8.1"
+    "parcel-bundler": "^1.9.7",
+    "parcel-plugin-shuup-maninfest": "file:../../shuup_setup_utils/parcel_plugin_shuup_maninfest",
+    "postcss-modules": "^1.1.0"
   }
 }

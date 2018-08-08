@@ -1,25 +1,40 @@
 {
   "name": "shuup_front",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Shuup Front",
+  "main": "",
   "scripts": {
-    "build": "npm i && bower install --config.interactive=false && gulp"
+    "watch:vendorjs": "parcel watch --no-hmr -d static/shuup/front/js static_src/js/vendor.js",
+    "watch:scripts": "parcel watch --no-hmr -d static/shuup/front/js -o scripts static_src/js/index.js",
+    "watch:styles": "parcel watch --no-hmr -d static/shuup/front/css static_src/less/style.js",
+    "watch": "concurrently --kill-others-on-fail npm:watch:*",
+    "build:vendorjs": "parcel build -d static/shuup/front/js static_src/js/vendor.js",
+    "build:scripts": "parcel build -d static/shuup/front/js -o scripts static_src/js/index.js",
+    "build:styles": "parcel build -d static/shuup/front/css static_src/less/style.js",
+    "clean": "rm generated_resources.txt || true",
+    "build": "npm i && npm run clean && concurrently --kill-others-on-fail npm:build:*"
   },
-  "author": "",
+  "shuup": {
+    "static_build": true
+  },
+  "author": "Shuup Team <shuup@shuup.com>",
+  "private": true,
   "license": "OSL-3.0",
   "dependencies": {
-    "babel-core": "^6.26.3",
+    "autoprefixer": "^8.6.4",
     "babel-preset-env": "^1.7.0",
-    "bower": "^1.8.4",
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-babel": "^7.0.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-cssnano": "^2.1.3",
-    "gulp-less": "^4.0.0",
-    "gulp-plumber": "^1.2.0",
-    "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8"
+    "bootstrap": "^3.3.6",
+    "bootstrap-select": "1.6.3",
+    "concurrently": "^3.6.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "jquery.easing": "^1.4.1",
+    "less": "^3.0.4",
+    "node-sass": "^4.9.2",
+    "owl.carousel": "^2.3.4",
+    "parcel-bundler": "^1.9.7",
+    "parcel-plugin-shuup-maninfest": "file:../../shuup_setup_utils/parcel_plugin_shuup_maninfest",
+    "postcss-modules": "^1.1.0",
+    "simplelightbox": "^1.13.0"
   }
 }

@@ -138,6 +138,7 @@ def guest_ordering_test(browser, live_server):
     wait_until_appeared(browser, "div.alert.alert-danger")
 
     click_element(browser, "button[data-id='id_checkout_method_choice-register']")
+    # WARNING: data-original-index was removed after bootstrap-select 1.6.3
     click_element(browser, "li[data-original-index='0'] a")
     click_element(browser, "div.clearfix button.btn.btn-primary.btn-lg.pull-right")
     wait_until_condition(browser, lambda x: x.is_text_present("Checkout: Addresses"))
