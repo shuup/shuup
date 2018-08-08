@@ -1,0 +1,7 @@
+Shuup 1.6.9 Release Notes
+=========================
+
+Released on 2018-08-07 8:15pm -0800.
+
+List of changes see `Git commit log
+<https://github.com/shuup/shuup/commits/v1.6.9>`__.
