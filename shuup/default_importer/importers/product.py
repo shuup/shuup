@@ -171,15 +171,7 @@ class ProductMetaBase(ImportMetaBase):
 
     def postsave_hook(self, sess):
         # get all the special values
-
-        try:
-            shop_product = ShopProduct.objects.get(product=sess.instance)
-        except:
-            shop_product = ShopProduct()
-
-        shop_product.shop = sess.shop
-        shop_product.product = sess.instance
-        shop_product.save()
+        shop_product = ShopProduct.objects.get_or_create(product=sess.instance, shop=sess.shop)[0]
 
         matched_fields = []
         for k, v in six.iteritems(sess.importer.extra_matches):
