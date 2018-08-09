@@ -18,7 +18,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView, View
 
-from shuup.core.models import Shop
+from shuup.admin.shop_provider import get_shop
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
 from shuup.importer.transforms import transform_file
 from shuup.importer.utils import (
@@ -36,7 +36,6 @@ class ImportProcessView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         self.importer_cls = get_importer(request.GET.get("importer"))
         self.model_str = request.GET.get("importer")
-        self.shop = Shop.objects.get(pk=request.GET.get("shop"), staff_members=request.user)
         self.lang = request.GET.get("lang")
         return super(ImportProcessView, self).dispatch(request, *args, **kwargs)
 
@@ -62,7 +61,7 @@ class ImportProcessView(TemplateView):
         if self.data is None:
             return False
 
-        self.importer = self.importer_cls(self.data, self.shop, self.lang)
+        self.importer = self.importer_cls(self.data, get_shop(self.request), self.lang)
         self.importer.process_data()
 
         if self.request.method == "POST":
@@ -129,9 +128,8 @@ class ImportView(FormView):
 
         next_url = request.POST.get("next")
         importer = request.POST.get("importer")
-        shop_id = request.POST.get("shop")
         lang = request.POST.get("language")
-        return redirect("%s?n=%s&importer=%s&shop=%s&lang=%s" % (next_url, import_name, importer, shop_id, lang))
+        return redirect("%s?n=%s&importer=%s&lang=%s" % (next_url, import_name, importer, lang))
 
     def get_form_kwargs(self):
         kwargs = super(ImportView, self).get_form_kwargs()

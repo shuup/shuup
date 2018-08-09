@@ -22,7 +22,7 @@ from shuup.importer.utils.importer import ImportMode
 from shuup.simple_supplier.models import StockAdjustment
 from shuup.testing.factories import (
     get_default_product_type, get_default_sales_unit, get_default_shop,
-    get_default_supplier, get_default_tax_class
+    get_default_supplier, get_default_tax_class, get_shop
 )
 from shuup.testing.image_generator import generate_image
 from shuup.utils.filer import filer_image_from_data
@@ -118,6 +118,54 @@ def test_sample_import_all_match(filename):
 
         assert shop_product.primary_category.pk == 1
         assert [c.pk for c in shop_product.categories.all()] == [1,2]
+
+
+@pytest.mark.parametrize("filename", ["sample_import.xlsx", "sample_import.csv",
+                                      "sample_import2.csv", "sample_import3.csv",
+                                      "sample_import4.csv", "sample_import5.csv",
+                                      "sample_import.xls"])
+@pytest.mark.django_db
+def test_sample_import_all_match_all_shops(filename):
+    activate("en")
+    shop1 = get_shop(identifier="shop1", domain="shop1")
+    shop2 = get_shop(identifier="shop2", domain="shop2")
+    Product.objects.all().delete()
+
+    tax_class = get_default_tax_class()
+    product_type = get_default_product_type()
+    sales_unit = get_default_sales_unit()
+    path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
+    transformed_data = transform_file(filename.split(".")[1], path)
+
+    for shop in [shop1, shop2]:
+        importer = ProductImporter(transformed_data, shop, "en")
+        importer.process_data()
+
+        assert len(importer.unmatched_fields) == 0
+        importer.do_import(ImportMode.CREATE_UPDATE)
+        products = importer.new_objects
+
+        if shop == shop1:
+            # products created
+            assert len(products) == 2
+        else:
+            # products already exist
+            assert len(products) == 0
+
+        assert Product.objects.count() == 2
+
+        for product in Product.objects.all():
+            shop_product = product.get_shop_instance(shop)
+            assert shop_product.pk
+            assert shop_product.default_price_value == 150
+            assert shop_product.default_price == shop.create_price(150)
+            assert product.type == product_type  # product type comes from importer defaults
+            assert product.sales_unit == sales_unit
+
+            assert shop_product.primary_category.pk == 1
+            assert [c.pk for c in shop_product.categories.all()] == [1, 2]
+
+    assert ShopProduct.objects.count() == 4
 
 
 @pytest.mark.django_db
