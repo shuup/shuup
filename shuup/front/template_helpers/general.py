@@ -25,6 +25,7 @@ from shuup.front.utils.views import cache_product_things
 from shuup.utils.importing import cached_load
 from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree
+from shuup.front.utils import cache as cache_utils
 
 
 def get_login_form(request):
@@ -142,7 +143,9 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
     request = context["request"]
 
     key, product_ids = context_cache.get_cached_value(
-        identifier="best_selling_products", item=None, context=request,
+        identifier="best_selling_products",
+        item=cache_utils.get_best_selling_products_cache_item(request.shop),
+        context=request,
         n_products=n_products, cutoff_days=cutoff_days,
         orderable_only=orderable_only, sale_items_only=sale_items_only
     )
@@ -221,7 +224,9 @@ def get_newest_products(context, n_products=6, orderable_only=True, sale_items_o
     request = context["request"]
 
     key, product_ids = context_cache.get_cached_value(
-        identifier="newest_products", item=None, context=request,
+        identifier="newest_products",
+        item=cache_utils.get_newest_products_cache_item(request.shop),
+        context=request,
         n_products=n_products, orderable_only=orderable_only, sale_items_only=sale_items_only
     )
     if product_ids is not None and _can_use_cache(product_ids, request.shop, request.customer):
@@ -247,7 +252,9 @@ def get_newest_products(context, n_products=6, orderable_only=True, sale_items_o
 def get_random_products(context, n_products=6, orderable_only=True, sale_items_only=False):
     request = context["request"]
     key, product_ids = context_cache.get_cached_value(
-        identifier="random_products", item=None, context=request,
+        identifier="random_products",
+        item=cache_utils.get_random_products_cache_item(request.shop),
+        context=request,
         n_products=n_products, orderable_only=orderable_only,
         sale_items_only=sale_items_only
     )
@@ -274,7 +281,9 @@ def get_random_products(context, n_products=6, orderable_only=True, sale_items_o
 def get_products_for_categories(context, categories, n_products=6, orderable_only=True):
     request = context["request"]
     key, product_ids = context_cache.get_cached_value(
-        identifier="products_for_category", item=None, context=request,
+        identifier="products_for_category",
+        item=cache_utils.get_products_for_category_cache_item(request.shop),
+        context=request,
         n_products=n_products, categories=categories, orderable_only=orderable_only
     )
     if product_ids is not None and _can_use_cache(product_ids, request.shop, request.customer):
@@ -300,7 +309,10 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
 def get_all_manufacturers(context):
     request = context["request"]
     key, manufacturers = context_cache.get_cached_value(
-        identifier="all_manufacturers", item=None, context=request)
+        identifier="all_manufacturers",
+        item=cache_utils.get_all_manufacturers_cache_item(request.shop),
+        context=request
+    )
     if manufacturers is not None:
         return manufacturers
 

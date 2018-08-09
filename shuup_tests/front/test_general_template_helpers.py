@@ -5,18 +5,24 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import mock
 import pytest
+
 from shuup.core import cache
-from shuup.core.models import AnonymousContact, Product, ShopProductVisibility, StockBehavior
+from shuup.core.models import (
+    AnonymousContact, Manufacturer, Product, ShopProduct,
+    ShopProductVisibility, StockBehavior
+)
+from shuup.core.utils import context_cache
+from shuup.front.apps.auth.forms import EmailAuthenticationForm
 from shuup.testing.factories import (
-    create_order_with_product, create_product, get_default_shop,
-    get_default_supplier, get_default_category
+    create_order_with_product, create_product, get_default_category,
+    get_default_shop, get_default_supplier, get_shop
 )
 from shuup.testing.mock_population import populate_if_required
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_jinja_context
 from shuup_tests.simple_supplier.utils import get_simple_supplier
-from shuup.front.apps.auth.forms import EmailAuthenticationForm
-from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
@@ -239,6 +245,49 @@ def test_get_best_selling_products():
 
 
 @pytest.mark.django_db
+def test_get_best_selling_products_cache_bump():
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    shop2 = get_shop(identifier="shop2")
+    product1 = create_product("product1", shop, supplier, 10)
+    product2 = create_product("product2", shop, supplier, 20)
+    product3 = create_product("product3", shop2, supplier, 20)
+    shop1_product1 = product1.get_shop_instance(shop)
+    shop2_product3 = product3.get_shop_instance(shop2)
+
+    create_order_with_product(product1, supplier, quantity=1, taxless_base_unit_price=10, shop=shop)
+    create_order_with_product(product2, supplier, quantity=2, taxless_base_unit_price=20, shop=shop)
+    create_order_with_product(product3, supplier, quantity=2, taxless_base_unit_price=30, shop=shop2)
+
+    cache.clear()
+    from shuup.front.template_helpers import general
+    context = get_jinja_context()
+    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+        assert set_cached_value_mock.call_count == 0
+
+        assert general.get_best_selling_products(context, 2, orderable_only=False)
+        assert set_cached_value_mock.call_count == 1
+
+        # call again, the cache should be returned instead and the set_cached_value shouldn't be called again
+        assert general.get_best_selling_products(context, 2, orderable_only=False)
+        assert set_cached_value_mock.call_count == 1
+
+        # save the shop2 product and see whether the cache is bumped
+        shop2_product3.save()
+
+        # neve SHOULD be changed and things should be cached
+        assert general.get_best_selling_products(context, 2, orderable_only=False)
+        assert set_cached_value_mock.call_count == 1
+
+        # now change shop1 product, it should bump the cache
+        shop1_product1.save()
+        assert general.get_best_selling_products(context, 2, orderable_only=False)
+        assert set_cached_value_mock.call_count == 2
+
+
+@pytest.mark.django_db
 def test_best_selling_products_with_multiple_orders():
     from shuup.front.template_helpers import general
 
@@ -367,6 +416,37 @@ def test_get_newest_products_sale_only():
 
 
 @pytest.mark.django_db
+def test_get_newest_products_cache_bump():
+    from shuup.front.template_helpers import general
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+
+    for child in children:
+        child.link_to_parent(products[0])
+
+    context = get_jinja_context()
+    cache.clear()
+    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+        assert set_cached_value_mock.call_count == 0
+
+        assert general.get_newest_products(context, 2, orderable_only=False)
+        assert set_cached_value_mock.call_count == 1
+
+        # call again, the cache should be returned instead and the set_cached_value shouldn't be called again
+        assert general.get_newest_products(context, 2, orderable_only=False)
+        assert set_cached_value_mock.call_count == 1
+
+        # change a shop product, the cache should be bumped
+        ShopProduct.objects.filter(shop=shop).first().save()
+        assert general.get_newest_products(context, 2, orderable_only=False)
+        assert set_cached_value_mock.call_count == 2
+
+
+@pytest.mark.django_db
 def test_get_random_products():
     from shuup.front.template_helpers import general
 
@@ -419,6 +499,39 @@ def test_get_random_products_sale_only():
 
 
 @pytest.mark.django_db
+def test_get_random_products_cache_bump():
+    from shuup.front.template_helpers import general
+
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+
+    products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+
+    for child in children:
+        child.link_to_parent(products[0])
+
+    context = get_jinja_context()
+    cache.clear()
+    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+        assert set_cached_value_mock.call_count == 0
+
+        assert general.get_random_products(context, n_products=10)
+        assert set_cached_value_mock.call_count == 1
+
+        # call again, the cache should be returned instead and the set_cached_value shouldn't be called again
+        assert general.get_random_products(context, n_products=10)
+        assert set_cached_value_mock.call_count == 1
+
+        # change a shop product, the cache should be bumped
+        ShopProduct.objects.filter(shop=shop).first().save()
+        assert general.get_random_products(context, n_products=10)
+        assert set_cached_value_mock.call_count == 2
+
+
+@pytest.mark.django_db
 def test_products_for_category():
     from shuup.front.template_helpers import general
 
@@ -445,12 +558,82 @@ def test_products_for_category():
 
 
 @pytest.mark.django_db
+def test_products_for_category_cache_bump():
+    from shuup.front.template_helpers import general
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    category = get_default_category()
+    products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    category.shops.add(shop)
+
+    for child in children:
+        child.link_to_parent(products[0])
+
+    context = get_jinja_context()
+
+    for product in products:
+        product.get_shop_instance(shop).categories.add(category)
+
+    cache.clear()
+    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+        assert set_cached_value_mock.call_count == 0
+
+        assert general.get_products_for_categories(context, [category])
+        assert set_cached_value_mock.call_count == 1
+
+        # call again, the cache should be returned instead and the set_cached_value shouldn't be called again
+        assert general.get_products_for_categories(context, [category])
+        assert set_cached_value_mock.call_count == 1
+
+        # change a shop product, the cache should be bumped
+        ShopProduct.objects.filter(shop=shop).first().save()
+        assert general.get_products_for_categories(context, [category])
+        assert set_cached_value_mock.call_count == 2
+
+
+@pytest.mark.django_db
 def test_get_all_manufacturers():
     from shuup.front.template_helpers import general
-    populate_if_required()
     context = get_jinja_context()
-    # TODO: This is not a good test
-    assert len(general.get_all_manufacturers(context)) == 0
+
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    manuf1 = Manufacturer.objects.create(name="M1")
+    manuf2 = Manufacturer.objects.create(name="M2")
+    manuf3 = Manufacturer.objects.create(name="M2")
+    manuf1.shops.add(shop)
+    manuf2.shops.add(shop)
+
+    products = [
+        create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(3)
+    ]
+    products[0].manufacturer = manuf1; products[0].save()
+    products[1].manufacturer = manuf2; products[1].save()
+    products[2].manufacturer = manuf3; products[2].save()
+
+    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+        assert set_cached_value_mock.call_count == 0
+
+        # manufacturers are cached
+        assert len(general.get_all_manufacturers(context)) == 3
+        assert set_cached_value_mock.call_count == 1
+
+        # call again, cache is used
+        assert len(general.get_all_manufacturers(context)) == 3
+        assert set_cached_value_mock.call_count == 1
+
+        # change manufacturer, the cache is bumped
+        manuf1.save()
+        assert len(general.get_all_manufacturers(context)) == 3
+        assert set_cached_value_mock.call_count == 2
+
+        # change a manufacturer with no shop, cache bumped
+        manuf3.save()
+        assert len(general.get_all_manufacturers(context)) == 3
+        assert set_cached_value_mock.call_count == 3
 
 
 @pytest.mark.django_db

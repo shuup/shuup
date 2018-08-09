@@ -14,6 +14,11 @@ Core
 
 - Enable context cache to accept string as the item argument
 
+Front
+~~~~~
+
+- Bump template helpers caches when shop products and manufacturers are saved
+
 General
 ~~~~~~~
 
