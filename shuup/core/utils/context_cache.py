@@ -11,12 +11,12 @@ from django.db.models import Q, QuerySet
 from parler.managers import TranslatableQuerySet
 
 from shuup.core import cache
+from shuup.core.signals import context_cache_item_bumped
 
 try:
     from urllib.parse import urlparse, parse_qs
 except ImportError:  # Py2 fallback
     from urlparse import urlparse, parse_qs
-
 
 HASHABLE_KEYS = ["customer_groups", "customer", "shop"]
 
@@ -127,6 +127,7 @@ def bump_cache_for_item(item):
     :param item: Cached object
     """
     cache.bump_version(_get_namespace_for_item(item))
+    context_cache_item_bumped.send(getattr(item, "__class__", item), item=item)
 
 
 def bump_cache_for_pk(cls, pk):
@@ -235,7 +236,9 @@ def _get_item_id(item):
 
     item_id = 0
     if item:
-        if hasattr(item, "pk"):
+        if isinstance(item, six.string_types):
+            item_id = item
+        elif hasattr(item, "pk"):
             item_id = item.pk or 0
         else:
             item_id = item.__class__.lower() if callable(item) else 0
