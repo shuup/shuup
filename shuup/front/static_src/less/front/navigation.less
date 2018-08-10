@@ -334,4 +334,26 @@
             }
         }
     }
+
+    #admin-tools-menu {
+        li.nav-button {
+            padding: .9rem 1rem;
+
+            a {
+                display: inline-block;
+                appearance: none;
+                border: 0;
+                background: @brand-primary !important;
+                color: #fff !important;
+                font-size: 14px !important;
+                padding: 6px 12px;
+                border-radius: 4px;
+                font-weight: bold;
+                transition: background 0.1s;
+                &:hover, &:focus {
+                    background: darken(@brand-primary, 5%) !important;
+                }
+            }
+        }
+    }
 }

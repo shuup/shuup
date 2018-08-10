@@ -422,3 +422,14 @@ def can_toggle_all_seeing(context):
         # 'is all seeing' is purely person contact feature.
         return False
     return getattr(request.user, "is_superuser", False)
+
+
+@contextfunction
+def get_admin_edit_url(context, intance_or_model):
+    from shuup.admin.template_helpers.shuup_admin import model_url
+    url = model_url(context, intance_or_model)
+    if url:
+        return dict(
+            url=url,
+            name=intance_or_model._meta.verbose_name.title(),
+        )
