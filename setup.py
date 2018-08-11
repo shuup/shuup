@@ -121,9 +121,7 @@ REQUIRES = [
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [
-    # enum34 1.1 or newer does not currently work. See
-    # https://github.com/hzdg/django-enumfields/pull/44
-    'enum34>=1.0,<1.1',
+    'pillow>=3.4.2,<4'
 ]
 
 EXTRAS_REQUIRE = {
