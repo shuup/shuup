@@ -10,6 +10,9 @@ import json
 from decimal import Decimal
 
 import pytest
+
+from django.test import override_settings
+from django.test.client import RequestFactory
 from django.utils.timezone import now
 from django.utils.translation import activate
 
@@ -35,7 +38,9 @@ from shuup_tests.campaigns import initialize_test
 
 
 @pytest.mark.django_db
-def test_campaign_creation(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_campaign_creation():
+    rf = RequestFactory()
     activate("en")
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
@@ -69,7 +74,9 @@ def test_campaign_creation(rf):
 
 
 @pytest.mark.django_db
-def test_condition_doesnt_match(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_condition_doesnt_match():
+    rf = RequestFactory()
     activate("en")
     request, shop, group = initialize_test(rf, False)
     condition = ContactGroupCondition.objects.create()
@@ -82,7 +89,9 @@ def test_condition_doesnt_match(rf):
 
 
 @pytest.mark.django_db
-def test_condition_affects_price(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_condition_affects_price():
+    rf = RequestFactory()
     activate("en")
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
@@ -103,7 +112,9 @@ def test_condition_affects_price(rf):
 
 
 @pytest.mark.django_db
-def test_filter_affects_price(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_filter_affects_price():
+    rf = RequestFactory()
     activate("en")
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
@@ -127,7 +138,9 @@ def test_filter_affects_price(rf):
 
 
 @pytest.mark.django_db
-def test_campaign_all_rules_must_match1(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_campaign_all_rules_must_match1():
+    rf = RequestFactory()
     activate("en")
     discount_amount = "20.53"
     original_price = "199.20"
@@ -163,7 +176,9 @@ def test_campaign_all_rules_must_match1(rf):
 
 
 @pytest.mark.django_db
-def test_percentage_campaigns(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_percentage_campaigns():
+    rf = RequestFactory()
     activate("en")
     discount_percentage = "0.14"
     original_price = "123.47"
@@ -199,7 +214,9 @@ def test_percentage_campaigns(rf):
 
 
 @pytest.mark.django_db
-def test_only_best_price_affects(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_only_best_price_affects():
+    rf = RequestFactory()
     activate("en")
     discount_amount = "20.53"
     original_price = "199.20"
@@ -240,7 +257,9 @@ def test_only_best_price_affects(rf):
 
 
 @pytest.mark.django_db
-def test_minimum_price_is_forced(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_minimum_price_is_forced():
+    rf = RequestFactory()
     activate("en")
     discount_amount = "20.53"
     original_price = "199.20"
@@ -273,8 +292,9 @@ def test_minimum_price_is_forced(rf):
 
 
 @pytest.mark.django_db
-def test_price_cannot_be_under_zero(rf):
-
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_price_cannot_be_under_zero():
+    rf = RequestFactory()
     activate("en")
     discount_amount = "200"
     original_price = "199.20"
@@ -311,7 +331,9 @@ def create_condition_and_filter(cat, request):
 
 
 @pytest.mark.django_db
-def test_start_end_dates(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_start_end_dates():
+    rf = RequestFactory()
     activate("en")
     original_price = "180"
     discounted_price = "160"
@@ -368,7 +390,9 @@ def test_start_end_dates(rf):
 
 
 @pytest.mark.django_db
-def test_availability(rf):
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+def test_availability():
+    rf = RequestFactory()
     activate("en")
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
@@ -385,31 +409,33 @@ def test_availability(rf):
 
 @pytest.mark.django_db
 def test_admin_order_with_campaign(rf, admin_user):
-    request, shop, group = initialize_test(rf, False)
-    customer = request.customer
-    cat = Category.objects.create(name="test")
-    rule1, rule2 = create_condition_and_filter(cat, request)
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
-    campaign.conditions.add(rule1)
+    with override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"]):
+        request, shop, group = initialize_test(rf, False)
+        customer = request.customer
+        cat = Category.objects.create(name="test")
+        rule1, rule2 = create_condition_and_filter(cat, request)
+        campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
+        campaign.conditions.add(rule1)
 
-    ProductDiscountAmount.objects.create(campaign=campaign,  discount_amount="10")
-    product = create_product("Just-A-Product-Too", shop, default_price=20)
-    shop_product = product.get_shop_instance(shop)
-    shop_product.categories.add(cat)
+        ProductDiscountAmount.objects.create(campaign=campaign,  discount_amount="10")
+        product = create_product("Just-A-Product-Too", shop, default_price=20)
+        shop_product = product.get_shop_instance(shop)
+        shop_product.categories.add(cat)
 
-    request = apply_request_middleware(rf.get("/", {
-        "command": "product_data",
-        "shop_id": shop.id,
-        "customer_id": customer.id,
-        "id": product.id,
-        "quantity": 1
-    }), user=admin_user, HTTP_HOST=shop.domain, shop=shop)
-    response = OrderEditView.as_view()(request)
-    data = json.loads(response.content.decode("utf8"))
-    assert decimal.Decimal(data['unitPrice']['value']) == shop.create_price(10).value
+        request = apply_request_middleware(rf.get("/", {
+            "command": "product_data",
+            "shop_id": shop.id,
+            "customer_id": customer.id,
+            "id": product.id,
+            "quantity": 1
+        }), user=admin_user, HTTP_HOST=shop.domain, shop=shop)
+        response = OrderEditView.as_view()(request)
+        data = json.loads(response.content.decode("utf8"))
+        assert decimal.Decimal(data['unitPrice']['value']) == shop.create_price(10).value
 
 
 @pytest.mark.django_db
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
 def test_product_catalog_campaigns():
     shop = get_default_shop()
 
@@ -488,6 +514,7 @@ def test_product_catalog_campaigns():
 
 
 @pytest.mark.django_db
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
 def test_product_catalog_campaigns2():
     shop = get_default_shop()
     product = create_product("test", shop, default_price=20)
@@ -514,6 +541,7 @@ def test_product_catalog_campaigns2():
 
 
 @pytest.mark.django_db
+@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
 def test_product_catalog_campaigns3():
     shop = get_default_shop()
     product = create_product("test", shop, default_price=20)
