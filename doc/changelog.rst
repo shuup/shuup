@@ -9,6 +9,16 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Core
+~~~~
+
+- Enable context cache to accept string as the item argument
+
+Front
+~~~~~
+
+- Bump template helpers caches when shop products and manufacturers are saved
+
 General
 ~~~~~~~
 

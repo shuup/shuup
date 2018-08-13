@@ -65,7 +65,7 @@ class ShuupFrontAppConfig(AppConfig):
     def ready(self):
         # connect signals
         import shuup.front.notify_events  # noqa: F401
-
+        import shuup.front.signal_handlers  # noqa: F401
         validate_templates_configuration()
 
 
