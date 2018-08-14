@@ -6,6 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+import { activateDropzone } from '../base/js/dropzone';
+
 $(function() {
     $(".product-media-delete").on("click", function(e) {
         e.preventDefault();
