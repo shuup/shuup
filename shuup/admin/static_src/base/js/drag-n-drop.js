@@ -9,6 +9,8 @@
 window.targetElement = null;
 window.sourceElement = null;
 
+const Sortable = require('sortablejs');
+
 function updateOrdering(e) {
     var items = ""
     window.targetElement.find("input[type=checkbox]").each(function(idx, elem) {
