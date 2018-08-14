@@ -15,7 +15,7 @@ import folderClick from "./folderClick";
 export default function(ctrl) {
     const currentFolderId = ctrl.currentFolderId();
     const folderPath = ctrl.currentFolderPath();
-    const idsToCurrent = _.pluck(folderPath, "id");
+    const idsToCurrent = _.map(folderPath, "id");
 
     function walk(folder) {
         if (folder.id === undefined) {
