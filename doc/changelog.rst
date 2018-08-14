@@ -17,6 +17,7 @@ Core
 Front
 ~~~~~
 
+- Tune product card and product list styles for better alignment
 - Bump template helpers caches when shop products and manufacturers are saved
 
 General

@@ -9,7 +9,7 @@ Inheritance order for product macors:
 #}
 {% extends "shuup/front/macros/product_image.jinja" %}
 
-{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500)) %}
+{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(300, 300)) %}
     {% set u = url("shuup:product", pk=product.pk, slug=product.slug) %}
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
         <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
@@ -27,17 +27,17 @@ Inheritance order for product macors:
                     <div class="image" style="background-image:url('{{ image_url }}')"></div>
                 </div>
             {% endif %}
-            <div class="detail-wrap">
-                <div class="name">{{ product.name }}</div>
+            <div class="detail-wrap {% if show_description %}with-description{% endif %}">
+                <div class="name">{{ product.name|truncate(60, True) }}</div>
                 {% if show_description and product.short_description %}
-                    <p class="description">{{ product.short_description|safe }}</p>
-                {% endif %}
-                {% if show_prices() and not xtheme.get("hide_prices") %}
-                    <div class="price">
-                        {{ render_product_price(product, show_units=False) }}
-                    </div>
+                    <p class="description">{{ product.short_description|safe|truncate(45, True) }}</p>
                 {% endif %}
             </div>
+            {% if show_prices() and not xtheme.get("hide_prices") %}
+                <div class="price">
+                    {{ render_product_price(product, show_units=False) }}
+                </div>
+            {% endif %}
         </a>
         <div class="actions clearfix">
             <button type="button"
