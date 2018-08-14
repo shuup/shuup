@@ -102,3 +102,5 @@ function activateDropzones() {
 $(function(){
     activateDropzones();
 });
+
+module.exports = { activateDropzone }
