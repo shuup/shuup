@@ -30,7 +30,7 @@ require('moment');
 require('outlayer');
 require('select2');
 require('popper.js');
-require('sortablejs');
+
 require('summernote');
 require('tether');
 require('@chenfengyuan/datepicker');
