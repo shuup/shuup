@@ -110,7 +110,7 @@ class SettingsActionButton(URLActionButton):
     def __init__(self, url, **kwargs):
         kwargs.setdefault("icon", "fa fa-cog")
         kwargs.setdefault("text", _("Settings"))
-        kwargs.setdefault("extra_css_class", "btn-default btn-inverse")
+        kwargs.setdefault("extra_css_class", "btn-inverse")
         kwargs.pop("return_url")
         super(SettingsActionButton, self).__init__(url, **kwargs)
 
@@ -144,7 +144,7 @@ class NewActionButton(URLActionButton):
     def __init__(self, url, **kwargs):
         kwargs.setdefault("icon", "fa fa-plus")
         kwargs.setdefault("text", _("Create new"))
-        kwargs.setdefault("extra_css_class", "btn-success")
+        kwargs.setdefault("extra_css_class", "btn-primary")
         super(NewActionButton, self).__init__(url, **kwargs)
 
     @classmethod
@@ -231,11 +231,11 @@ class DropdownActionButton(BaseActionButton):
         super(DropdownActionButton, self).__init__(**kwargs)
 
     def render_dropdown(self, request):
-        yield '<ul class="dropdown-menu" role="menu">'
+        yield '<div class="dropdown-menu">'
         for item in self.items:
             for bit in item.render(request):
                 yield bit
-        yield '</ul>'
+        yield '</div>'
 
     def render(self, request):
         if not get_missing_permissions(request.user, self.required_permissions):
@@ -258,7 +258,6 @@ class DropdownActionButton(BaseActionButton):
                 yield self.render_label()
                 yield " "
 
-            yield '<i class="fa fa-chevron-down"></i>'
             yield '</button>'
             for bit in self.render_dropdown(request):
                 yield bit
@@ -278,9 +277,8 @@ class DropdownItem(BaseActionButton):
 
     def render(self, request):
         if not get_missing_permissions(request.user, self.required_permissions):
-            yield '<li>'
             attrs = {
-                "class": self.get_computed_class(),
+                "class": "dropdown-item",
                 "title": self.tooltip,
                 "href": self.url,
                 "onclick": (mark_safe(self.onclick) if self.onclick else None)
@@ -288,7 +286,6 @@ class DropdownItem(BaseActionButton):
             yield '<a %s>' % flatatt_filter(attrs)
             yield self.render_label()
             yield '</a>'
-            yield '</li>'
 
     @staticmethod
     def visible_for_object(object):
@@ -347,7 +344,7 @@ class DropdownHeader(BaseActionButton):
 
     def render(self, request):
         if not get_missing_permissions(request.user, self.required_permissions):
-            yield '<li class="dropdown-header">%s</li>' % self.text
+            yield '<h6 class="dropdown-header">%s</h6>' % self.text
 
 
 # -----------
