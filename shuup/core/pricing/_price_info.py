@@ -20,6 +20,7 @@ class PriceInfo(Priceful):
     price = None
     base_price = None
     quantity = None
+    expires_on = None
 
     def __init__(self, price, base_price, quantity, expires_on=None):
         """
@@ -41,7 +42,7 @@ class PriceInfo(Priceful):
           Note: Quantity could be non-integral (i.e. decimal).
         :type expires_on: numbers.Number|None
         :param expires_on:
-          Timestamp, comparable to values returned by :func:`time.time`,
+          Unix timestamp, comparable to values returned by :func:`time.time`,
           determining the point in time when the prices are no longer
           valid, or None if no expire time is set (which could mean
           indefinitely, but in reality, it just means undefined).

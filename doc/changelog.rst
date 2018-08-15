@@ -25,6 +25,7 @@ Core
 ~~~~
 
 - Enable context cache to accept string as the item argument
+- Add price info cache feature.
 
 Front
 ~~~~~

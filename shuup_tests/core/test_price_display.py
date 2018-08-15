@@ -15,6 +15,8 @@ import django_jinja.backend
 import pytest
 from django.conf import settings
 from django.test.client import RequestFactory
+from django.test.utils import override_settings
+from mock import patch
 
 from shuup.apps.provides import override_provides
 from shuup.core.models import (
@@ -27,11 +29,10 @@ from shuup.core.pricing import (
 )
 from shuup.front.basket.objects import BaseBasket
 from shuup.testing.factories import (
-    create_default_tax_rule, get_default_tax, get_default_tax_class,
-    get_default_shop, create_product, create_random_person
+    create_default_tax_rule, create_product, create_random_person,
+    get_default_shop, get_default_supplier, get_default_tax,
+    get_default_tax_class
 )
-
-from mock import patch
 
 PRICING_MODULE_SPEC = __name__ + ':DummyPricingModule'
 
@@ -104,6 +105,8 @@ TEST_DATA = [
     ('prod|discount_percent', '75%'),
     ('prod|discount_rate', '0.75'),
 
+    ('var_prod|price_range|safe', "('$4.50', '$12.00')"),
+
     ('prod|price(quantity=2)', '$12.15'),
     ('prod|price(quantity=2, include_taxes=False)', '$12.15'),
     ('prod|price(quantity=2, include_taxes=True)', '$18.22'),
@@ -155,7 +158,7 @@ TEST_DATA = [
 @pytest.mark.parametrize("expr,expected_result", TEST_DATA)
 @pytest.mark.django_db
 def test_filter(expr, expected_result):
-    (engine, context) = _get_template_engine_and_context()
+    (engine, context) = _get_template_engine_and_context(create_var_product=True)
     template = engine.from_string('{{ ' + expr + '  }}')
     try:
         result = template.render(context)
@@ -163,6 +166,29 @@ def test_filter(expr, expected_result):
         assert type(error) == expected_result
     else:
         assert result == expected_result
+
+
+@pytest.mark.parametrize("expr,expected_result", TEST_DATA)
+@pytest.mark.django_db
+def test_filter_cache(expr, expected_result):
+    with override_settings(
+        CACHES={
+            'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'test_filter_cache',
+            }
+        }
+    ):
+        (engine, context) = _get_template_engine_and_context(create_var_product=True)
+        template = engine.from_string('{{ ' + expr + '  }}')
+        # run 2 times, the first call should cache and the second read from the cache
+        for cache_test in range(2):
+            try:
+                result = template.render(context)
+            except AttributeError as error:
+                assert type(error) == expected_result
+            else:
+                assert result == expected_result
 
 
 @pytest.mark.django_db
@@ -204,7 +230,7 @@ def test_filter_parameter_contact_groups():
         assert result.render(context) == "$%0.2f" % (customer_price * 2)
 
 
-def _get_template_engine_and_context(product_sku='6.0745'):
+def _get_template_engine_and_context(product_sku='6.0745', create_var_product=False):
     engine = django.template.engines['jinja2']
     assert isinstance(engine, django_jinja.backend.Jinja2)
 
@@ -225,9 +251,17 @@ def _get_template_engine_and_context(product_sku='6.0745'):
 
     product = create_product(sku=product_sku, shop=shop, tax_class=tax_class)
 
+    if create_var_product:
+        var_product = create_product(sku="32.9", shop=shop, tax_class=tax_class)
+        child_product_1 = create_product(sku="4.50", shop=shop, tax_class=tax_class, supplier=get_default_supplier())
+        child_product_2 = create_product(sku="12.00", shop=shop, tax_class=tax_class, supplier=get_default_supplier())
+        child_product_1.link_to_parent(var_product, variables={"color": "red"})
+        child_product_2.link_to_parent(var_product, variables={"color": "blue"})
+
     context = {
         'request': request,
         'prod': product,
+        'var_prod': var_product if create_var_product else None,
         # TODO: Test also with variant products
         'sline': _get_source_line(request),
         'bline': _get_basket_line(request),

@@ -43,7 +43,7 @@ def get_cached_value(identifier, item, context, **kwargs):
     allow_cache = True
     if "allow_cache" in kwargs:
         allow_cache = kwargs.pop("allow_cache")
-    key = _get_cache_key_for_context(identifier, item, context, **kwargs)
+    key = get_cache_key_for_context(identifier, item, context, **kwargs)
     if not allow_cache:
         return key, None
     return key, cache.get(key)
@@ -168,7 +168,7 @@ def bump_shop_product_signal_handler(sender, instance, **kwargs):
     bump_cache_for_shop_product(instance)
 
 
-def _get_cache_key_for_context(identifier, item, context, **kwargs):
+def get_cache_key_for_context(identifier, item, context, **kwargs):
     namespace = _get_namespace_for_item(item)
 
     items = _get_items_from_context(context)
