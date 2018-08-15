@@ -13,6 +13,7 @@ from decimal import Decimal
 import django.template
 import django_jinja.backend
 import pytest
+import six
 from django.conf import settings
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
@@ -105,7 +106,7 @@ TEST_DATA = [
     ('prod|discount_percent', '75%'),
     ('prod|discount_rate', '0.75'),
 
-    ('var_prod|price_range|safe', "('$4.50', '$12.00')"),
+    ('var_prod|price_range|safe', "(u'$4.50', u'$12.00')" if six.PY2 else "('$4.50', '$12.00')"),
 
     ('prod|price(quantity=2)', '$12.15'),
     ('prod|price(quantity=2, include_taxes=False)', '$12.15'),

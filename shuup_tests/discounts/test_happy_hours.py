@@ -10,12 +10,17 @@ import datetime
 import pytest
 import pytz
 from django.core.exceptions import ValidationError
+from django.template import engines
 from django.test import override_settings
 from django.utils import timezone
 from mock import patch
 
+from shuup.utils.dates import to_timestamp
 from shuup.discounts.models import Discount, HappyHour, TimeRange
 from shuup.testing import factories
+from shuup.core.utils.price_cache import get_cached_price_info
+from shuup.testing.utils import apply_request_middleware
+from shuup.utils.i18n import format_money
 
 
 def init_test():
@@ -40,7 +45,11 @@ def set_valid_times_condition(happy_hour, hour_start, hour_end, matching_days):
             matching_day = int(matching_day)
             tomorrow = (matching_day + 1 if matching_day < 6 else 0)
             parent = TimeRange.objects.create(
-                happy_hour=happy_hour, from_hour=hour_start, to_hour=datetime.time(hour=23), weekday=matching_day)
+                happy_hour=happy_hour,
+                from_hour=hour_start,
+                to_hour=datetime.time(hour=23, minute=59),
+                weekday=matching_day
+            )
             TimeRange.objects.create(
                 happy_hour=happy_hour, parent=parent, from_hour=datetime.time(hour=0),
                 to_hour=hour_end, weekday=tomorrow)
@@ -269,3 +278,102 @@ def test_hour_conditions_end_before_start():
     with patch("django.utils.timezone.now", side_effect=invalid_date_3):
         assert Discount.objects.available().count() == 0
         assert Discount.objects.available(shop).count() == 0
+
+
+@pytest.mark.django_db
+def test_happy_hour_prices_expiration(rf):
+    with override_settings(
+        CACHES={
+            'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'test_happy_hour_prices_bump',
+            }
+        }
+    ):
+        happy_hour = init_test()
+
+        # it is now: 2018-01-01 09:00 AM
+        before_happy_hour = datetime.datetime(2018, 1, 1, 9, 0, tzinfo=pytz.UTC)    # 09:00 AM
+        inside_happy_hour = datetime.datetime(2018, 1, 1, 10, 30, tzinfo=pytz.UTC)  # 10:30 AM
+        after_happy_hours = datetime.datetime(2018, 1, 1, 11, 20, tzinfo=pytz.UTC)  # 11:30 AM
+
+        # Create condition from 10am to 11am
+        hour_start = datetime.datetime(2018, 1, 1, 10, 0, tzinfo=pytz.UTC).time()  # 10:00 AM
+        hour_end = datetime.datetime(2018, 1, 1, 11, 0, tzinfo=pytz.UTC).time()  # 11:00 AM
+        set_valid_times_condition(happy_hour, hour_start, hour_end, str(before_happy_hour.weekday()))
+
+        shop = happy_hour.shops.first()
+        discount = happy_hour.discounts.first()
+        product = discount.product
+        shop_product = product.get_shop_instance(shop)
+        assert shop_product.default_price_value == 10
+        assert discount.discounted_price_value == 6
+
+        def get_request():
+            return apply_request_middleware(rf.get("/"))
+
+        price_template = engines["jinja2"].from_string("{{ product|price }}")
+        is_discounted_template = engines["jinja2"].from_string("{{ product|is_discounted }}")
+        discount_percent_template = engines["jinja2"].from_string("{{ product|discount_percent }}")
+
+        # we start with time being before happy hour
+        with patch("django.utils.timezone.now", new=lambda: before_happy_hour):
+            # mock also time.time so the cache timeout will be calculated correctly
+            with patch("time.time", new=lambda: to_timestamp(before_happy_hour)):
+                # check that product price is still the orignal (€10.00)
+                # run twice to make sure caches are being used
+                for cache_test in range(2):
+                    context = dict(product=product, request=get_request())
+                    assert price_template.render(context) == format_money(shop_product.default_price)
+                    assert is_discounted_template.render(context) == "False"
+                    assert discount_percent_template.render(context) == "0%"
+
+                    if cache_test == 1:
+                        assert get_cached_price_info(get_request(), product, 1)
+
+        # now we are inside happy hour range
+        with patch("django.utils.timezone.now", new=lambda: inside_happy_hour):
+            # mock also time.time so the cache timeout will be calculated correctly
+            with patch("time.time", new=lambda: to_timestamp(inside_happy_hour)):
+                # check that product price is the discounted one (€6.00)
+                # run twice to make sure caches are being used
+                for cache_test in range(2):
+                    context = dict(product=product, request=get_request())
+                    assert price_template.render(context) == format_money(
+                        shop.create_price(discount.discounted_price_value)
+                    )
+                    assert is_discounted_template.render(context) == "True"
+                    assert discount_percent_template.render(context) == "40%"
+
+                    if cache_test == 1:
+                        assert get_cached_price_info(get_request(), product, 1)
+
+                # we change the discounted price from $6 to $7
+                # cached should be bumped
+                discount.discounted_price_value = 7
+                discount.save()
+                for cache_test in range(2):
+                    context = dict(product=product, request=get_request())
+                    assert price_template.render(context) == format_money(
+                        shop.create_price(discount.discounted_price_value)
+                    )
+                    assert is_discounted_template.render(context) == "True"
+                    assert discount_percent_template.render(context) == "30%"
+
+                    if cache_test == 1:
+                        assert get_cached_price_info(get_request(), product, 1)
+
+        # now we are inside happy hour range
+        with patch("django.utils.timezone.now", new=lambda: after_happy_hours):
+            # mock also time.time so the cache timeout will be calculated correctly
+            with patch("time.time", new=lambda: to_timestamp(after_happy_hours)):
+                # check that product price is the orignal (€10.00)
+                # run twice to make sure caches are being used
+                for cache_test in range(2):
+                    context = dict(product=product, request=get_request())
+                    assert price_template.render(context) == format_money(shop_product.default_price)
+                    assert is_discounted_template.render(context) == "False"
+                    assert discount_percent_template.render(context) == "0%"
+
+                    if cache_test == 1:
+                        assert get_cached_price_info(get_request(), product, 1)

@@ -117,8 +117,43 @@ def test_happy_hours_admin_edit_view_over_midnight(rf, staff_user, admin_user):
     assert happy_hour.shops.first() == shop
     assert happy_hour.time_ranges.count() == 2  # Since happy hour starts and ends on different day
     assert happy_hour.time_ranges.filter(weekday=1).exists()
-    assert happy_hour.time_ranges.filter(weekday=1, from_hour=from_hour, to_hour=datetime.time(23)).exists()
+    assert happy_hour.time_ranges.filter(weekday=1, from_hour=from_hour, to_hour=datetime.time(23, 59)).exists()
     assert happy_hour.time_ranges.filter(weekday=2, from_hour=datetime.time(0), to_hour=to_hour).exists()
+    _assert_view_get(rf, happy_hour, shop, staff_user)  # Viewing the edit should also still work
+
+
+@pytest.mark.django_db
+def test_happy_hours_admin_edit_view_just_before_midnight(rf, staff_user, admin_user):
+    shop = factories.get_default_shop()
+    shop.staff_members.add(staff_user)
+    factories.get_shop(identifier="shop2")
+    assert Shop.objects.count() == 2
+
+    # Staff user gets shop automatically
+    from_hour = datetime.time(hour=21, minute=0)
+    to_hour = datetime.time(hour=23, minute=58)
+    data = {
+        "name": "Happiest Hour Before Twilight",
+        "weekdays": [1],  # Tue
+        "from_hour": from_hour,
+        "to_hour": to_hour
+    }
+    request = apply_request_middleware(rf.post("/", data=data), user=staff_user, shop=shop)
+    set_shop(request, shop)
+    assert request.shop == shop
+    view_func = HappyHourEditView.as_view()
+    response = view_func(request)
+    if hasattr(response, "render"):
+        response.render()
+
+    assert response.status_code == 302
+
+    happy_hour = HappyHour.objects.first()
+    assert happy_hour is not None
+    assert happy_hour.shops.first() == shop
+    assert happy_hour.time_ranges.count() == 1
+    assert happy_hour.time_ranges.filter(weekday=1).exists()
+    assert happy_hour.time_ranges.filter(weekday=1, from_hour=from_hour, to_hour=datetime.time(23, 58)).exists()
     _assert_view_get(rf, happy_hour, shop, staff_user)  # Viewing the edit should also still work
 
 

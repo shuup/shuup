@@ -10,10 +10,10 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import ShopProduct
 from shuup.core.order_creator import OrderSourceModifierModule
 from shuup.core.pricing import DiscountModule
-
-from .models import CouponCode, CouponUsage
-from .utils import (
-    get_active_discount_for_code, get_potential_discounts_for_product
+from shuup.discounts.models import CouponCode, CouponUsage
+from shuup.discounts.utils import (
+    get_active_discount_for_code, get_potential_discounts_for_product,
+    get_price_expiration
 )
 
 
@@ -24,7 +24,10 @@ class ProductDiscountModule(DiscountModule):
     def discount_price(self, context, product, price_info):
         shop = context.shop
         basket = getattr(context, "basket", None)
-        potential_discounts = get_potential_discounts_for_product(context, product)
+        potential_discounts = get_potential_discounts_for_product(context, product).values_list(
+            "discounted_price_value", "discount_amount_value", "discount_percentage", "coupon_code__code"
+        )
+
         discounted_prices = []
         for discounted_price_value, discount_amount_value, discount_percentage, coupon_code in potential_discounts:
             if basket and coupon_code and not CouponCode.is_usable(shop, coupon_code, customer=basket.customer):
@@ -59,19 +62,20 @@ class ProductDiscountModule(DiscountModule):
                     )
                 )
 
-        if len(discounted_prices):
+        if discounted_prices:
             minimum_price_values = list(ShopProduct.objects.filter(
                 product_id=product.pk, shop=shop).values_list("minimum_price_value", flat=True))
 
-            if len(minimum_price_values) == 0:
-                return price_info
-            else:
-                minimum_price_value = minimum_price_values[0] or 0
+            minimum_price_value = minimum_price_values[0] if minimum_price_values else 0
 
             price_info.price = max(
                 min(discounted_prices),
-                shop.create_price(minimum_price_value) or shop.create_price(0)
+                shop.create_price(minimum_price_value or 0) or shop.create_price(0)
             )
+
+        price_expiration = get_price_expiration(context, product)
+        if price_expiration and (not price_info.expires_on or price_expiration < price_info.expires_on):
+            price_info.expires_on = price_expiration
 
         return price_info
 
