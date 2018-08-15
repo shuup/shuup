@@ -11,6 +11,7 @@ from six import string_types
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import PicotableMassAction
+from shuup.core.utils.price_cache import bump_all_price_caches
 from shuup.discounts.models import Discount
 
 
@@ -23,7 +24,9 @@ class ArchiveMassAction(PicotableMassAction):
     identifier = "archive_discounts"
 
     def process(self, request, ids):
-        Discount.objects.active(get_shop(request)).filter(_get_query(ids)).update(active=False)
+        shop = get_shop(request)
+        Discount.objects.active(shop).filter(_get_query(ids)).update(active=False)
+        bump_all_price_caches([shop.pk])
 
 
 class UnarchiveMassAction(PicotableMassAction):
@@ -31,7 +34,9 @@ class UnarchiveMassAction(PicotableMassAction):
     identifier = "unarchive_discounts"
 
     def process(self, request, ids):
-        Discount.objects.archived(get_shop(request)).filter(_get_query(ids)).update(active=True)
+        shop = get_shop(request)
+        Discount.objects.archived(shop).filter(_get_query(ids)).update(active=True)
+        bump_all_price_caches([shop.pk])
 
 
 class DeleteMassAction(PicotableMassAction):
@@ -39,4 +44,6 @@ class DeleteMassAction(PicotableMassAction):
     identifier = "delete_discounts"
 
     def process(self, request, ids):
-        Discount.objects.archived(get_shop(request)).filter(_get_query(ids)).delete()
+        shop = get_shop(request)
+        Discount.objects.archived(shop).filter(_get_query(ids)).delete()
+        bump_all_price_caches([shop.pk])

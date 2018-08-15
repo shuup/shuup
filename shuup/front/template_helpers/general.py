@@ -17,6 +17,7 @@ from shuup.core.models import (
     Category, Manufacturer, Product, ShopProduct, Supplier
 )
 from shuup.core.utils import context_cache
+from shuup.front.utils import cache as cache_utils
 from shuup.front.utils.companies import allow_company_registration
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.translation import get_language_choices
@@ -25,7 +26,6 @@ from shuup.front.utils.views import cache_product_things
 from shuup.utils.importing import cached_load
 from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree
-from shuup.front.utils import cache as cache_utils
 
 
 def get_login_form(request):

@@ -20,3 +20,6 @@ class AppConfig(shuup.apps.AppConfig):
         "discount_module": ["shuup.discounts.modules:ProductDiscountModule"],
         "order_source_modifier_module": ["shuup.discounts.modules:CouponCodeModule"],
     }
+
+    def ready(self):
+        import shuup.discounts.signal_handers   # noqa F401
