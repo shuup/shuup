@@ -31,5 +31,9 @@ class CustomerGroupPricingAppConfig(shuup.apps.AppConfig):
         ]
     }
 
+    def ready(self):
+        # connect signals
+        import shuup.customer_group_pricing.signal_handers    # noqa F401
+
 
 default_app_config = __name__ + ".CustomerGroupPricingAppConfig"
