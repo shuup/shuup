@@ -19,8 +19,8 @@ Copyright
 Copyright (C) 2012-2018 by Shuup Inc. <support@shuup.com>
 
 Shuup is International Registered Trademark & Property of Shuup Inc.,
-Business Address: 1013 Centre Road, Suite 403-B,
-Wilmington, Delaware 19805,
+Business Address: 200 Continental Drive, Suite 401,
+Newark, DE 19713,
 United States Of America
 
 CLA
@@ -101,3 +101,22 @@ Roadmap
 * Initial support for Django 2.0. `#1289 <https://github.com/shuup/shuup/issues/1289>`__.
 * OS Admin design/UX overhaul.
 * Various smaller issues from the issues-list.
+
+OS Addons
+---------
+
+* `Shuup Stripe <https://github.com/shuup/shuup-stripe>`__. Stripe Payment Processor Addon for Shuup.
+* `Shuup Wishlist <https://github.com/shuup/shuup-wishlist>`__. Shuup Wishlist Addon.
+* `Shuup Checkoutfi <https://github.com/shuup/shuup-checkoutfi>`__. Checkout.fi integration for Shuup.
+* `Shuup Yaml <https://github.com/shuup/shuup-yaml>`__. Import categories, manufacturers and products to Shuup.
+* `Shuup Mailchimp <https://github.com/shuup/shuup-mailchimp>`__. Mailchimp integration for Shuup.
+
+Purpose of these addons is to demonstrate how to build simple
+addons to extend Shuup. For more here are some useful links to
+learn more about how to extend Shuup.
+
+* `Provides system <https://shuup.readthedocs.io/en/latest/ref/provides.html>`__.
+* `Core settings <https://shuup.readthedocs.io/en/latest/api/shuup.core.html#module-shuup.core.settings>`__.
+* `Front settings <https://shuup.readthedocs.io/en/latest/api/shuup.front.html#module-shuup.front.settings>`__.
+* `Admin settings <https://shuup.readthedocs.io/en/latest/api/shuup.admin.html#module-shuup.admin.settings>`__.
+* `Extending Shuup <https://shuup.readthedocs.io/en/latest/#extending-shuup>`__.
