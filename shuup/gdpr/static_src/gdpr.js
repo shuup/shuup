@@ -35,7 +35,17 @@
     });
 
     function saveConsent() {
-        $("#consent-form").submit();
+        data = $("#consent-form").serialize();
+        var request = $.ajax({
+            url: $("#consent-form").attr("action"),
+            type: 'POST',
+            data: data,
+            success: function() {
+                $(".gdpr-consent-warn-bar").remove();
+                $(".gdpr-consent-preferences").remove(); // Remove GDPR divs and their content upon successful completion
+                $("body").removeClass("body-noscroll");
+            }
+        });
     }
 
     $("#btn-save-preferences").click(() => {

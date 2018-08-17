@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <form id="consent-form" action="{{ url("shuup:gdpr_consent") }}" method="POST">
+                <form id="consent-form" action="{{ url("shuup:gdpr_consent") }}">
                     {% csrf_token %}
                     <div class="consent-body">
                         <div class="list-group">
