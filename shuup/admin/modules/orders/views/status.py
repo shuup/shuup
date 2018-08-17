@@ -66,8 +66,24 @@ class OrderStatusListView(PicotableListView):
     model = OrderStatus
     default_columns = [
         Column("identifier", _("Identifier"), linked=True, filter_config=TextFilter(operator="startswith")),
-        Column("name", _("Name"), linked=True, filter_config=TextFilter(operator="startswith")),
-        Column("public_name", _("Public Name"), linked=False, filter_config=TextFilter(operator="startswith")),
+        Column(
+            "name",
+            _("Name"),
+            linked=True,
+            filter_config=TextFilter(
+                operator="startswith",
+                filter_field="translations__name"
+            )
+        ),
+        Column(
+            "public_name",
+            _("Public Name"),
+            linked=False,
+            filter_config=TextFilter(
+                operator="startswith",
+                filter_field="translations__name"
+            )
+        ),
         Column("role", _("Role"), linked=False, filter_config=ChoicesFilter(choices=OrderStatusRole.choices)),
         Column(
             "default", _("Default"), linked=False, filter_config=ChoicesFilter([(False, _("yes")), (True, _("no"))])),

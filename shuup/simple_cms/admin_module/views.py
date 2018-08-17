@@ -186,8 +186,15 @@ class PageListView(PicotableListView):
     model = Page
     default_columns = [
         Column(
-            "title", _(u"Title"), sort_field="translations__title", display="title", linked=True,
-            filter_config=TextFilter(operator="startswith")
+            "title",
+            _(u"Title"),
+            sort_field="translations__title",
+            display="title",
+            linked=True,
+            filter_config=TextFilter(
+                operator="startswith",
+                filter_field="translations__title"
+            )
         ),
         Column("available_from", _(u"Available from")),
         Column("available_to", _(u"Available to")),
