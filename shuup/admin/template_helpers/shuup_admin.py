@@ -158,7 +158,6 @@ def model_url(context, model, kind="detail", default=None, **kwargs):
             url = resolver(model, kind=kind, user=user, shop=shop, **kwargs)
             if url:
                 return url
-
     except NoModelUrl:
         return default
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 20:39+0000\n"
+"POT-Creation-Date: 2018-08-16 22:09+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -819,9 +819,6 @@ msgstr ""
 msgid "Change customer mode to guest"
 msgstr ""
 
-msgid "Toggle navigation"
-msgstr ""
-
 msgid "Tools"
 msgstr ""
 
@@ -841,6 +838,17 @@ msgid "COMPANY CONTACT"
 msgstr ""
 
 msgid "PERSON CONTACT"
+msgstr ""
+
+msgid "Toggle navigation"
+msgstr ""
+
+#, python-brace-format
+msgid "Edit '{object_title}' in administration page"
+msgstr ""
+
+#, python-brace-format
+msgid "Edit {object_name} in Admin"
 msgstr ""
 
 msgid "Shop Administration"

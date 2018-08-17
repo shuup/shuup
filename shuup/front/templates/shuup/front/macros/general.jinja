@@ -216,16 +216,6 @@
     <nav class="navbar navbar-default navbar-admin-tools navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button"
-                        class="navbar-toggle collapsed"
-                        data-toggle="collapse"
-                        data-target="#admin-tools-menu"
-                        aria-expanded="false">
-                    <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div class="navbar-brand">
                     <h2>{% trans %}Tools{% endtrans %}</h2>
                     <div class="admin-tools-info">
@@ -254,9 +244,33 @@
                         </div>
                     {% endif %}
                 </div>
+                <button type="button"
+                    class="navbar-toggle collapsed"
+                    data-toggle="collapse"
+                    data-target="#admin-tools-menu"
+                    aria-expanded="false">
+                <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             </div>
             <div class="collapse navbar-collapse" id="admin-tools-menu">
                 <ul class="nav navbar-nav navbar-right">
+                {% if object %}
+                    {% set edit_object_url = shuup.general.get_admin_edit_url(object) %}
+                    {% if edit_object_url %}
+                        <li class="nav-button">
+                            <a
+                                href="{{ edit_object_url.url }}"
+                                target="_blank"
+                                title="{{ _("Edit '{object_title}' in administration page").format(object_title=object) }}"
+                            >
+                                {{ _("Edit {object_name} in Admin").format(object_name=edit_object_url.name) }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
                     <li>
                         <a href="{{ url("shuup_admin:dashboard") }}" target="_blank">{% trans %}Shop Administration{% endtrans %}</a>
                     </li>
