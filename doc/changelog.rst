@@ -19,6 +19,11 @@ Core
 
 - Enable context cache to accept string as the item argument
 
+Classic Gray
+~~~~~~~~~~~~
+
+- Improve products card styles to make them align nicely and add carousel for xtheme plugins
+
 Front
 ~~~~~
 

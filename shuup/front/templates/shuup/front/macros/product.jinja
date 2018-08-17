@@ -29,13 +29,15 @@ Inheritance order for product macors:
             {% endif %}
             <div class="detail-wrap">
                 <div class="name">{{ product.name }}</div>
-                {% if show_description and product.short_description %}
-                    <p class="description">{{ product.short_description|safe }}</p>
-                {% endif %}
-                {% if show_prices() and not xtheme.get("hide_prices") %}
+                <div class="actions-wrap">
+                    {% if show_prices() and not xtheme.get("hide_prices") %}
                     <div class="price">
                         {{ render_product_price(product, show_units=False) }}
                     </div>
+                    {% endif %}
+                </div>
+                {% if show_description and product.short_description %}
+                    <p class="description">{{ product.short_description|safe }}</p>
                 {% endif %}
             </div>
         </a>

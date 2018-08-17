@@ -190,7 +190,6 @@
 }
 
 .product-list-view {
-
     .single-product {
         .make-sm-column(6);
         .make-md-column(4);
@@ -247,9 +246,6 @@
             .detail-wrap {
                 .make-sm-column(8);
                 .make-lg-column(9);
-                display: flex;
-                flex-flow: column wrap;
-                justify-content: center;
                 height: 100%;
                 padding: 15px;
             }
@@ -264,11 +260,21 @@
                         height: 100%;
                         padding-bottom: 0;
                     }
+                    .actions-wrap {
+                        width: 25%;
+                        float: left;
+                        border-left: 1px dotted @table-border-color;
+                        height: 100%;
+                        padding: 0 15px;
+                    }
                     .name {
                         font-size: 1.8rem;
+                        width: 75%;
+                        float: left;
                     }
                     .description {
                         display: block;
+                        clear: both;
                     }
                     .actions .btn {
                         padding: 10px 0;

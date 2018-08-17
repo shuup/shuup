@@ -48,4 +48,29 @@ $(function() {
             responsive: (responsiveConfigure ? responsiveConfigure : {0: {items: 2}, 640: {items: 2}, 992: {items: 4}})
         });
     });
+
+    // Set up owl carousel for product list with 5 items
+    $(".owl-carousel.five").owlCarousel({
+        margin: 20,
+        nav: true,
+        navText: [
+            "<i class='fa fa-angle-left'></i>",
+            "<i class='fa fa-angle-right'></i>"
+        ],
+        responsiveClass: true,
+        responsive: {
+            0: { // breakpoint from 0 up
+                items : 2,
+                slideBy: 2
+            },
+            640: { // breakpoint from 640 up
+                items : 4,
+                slideBy: 2
+            },
+            1200: { // breakpoint from 992 up
+                items : 5,
+                slideBy: 3
+            }
+        }
+    });
 });
