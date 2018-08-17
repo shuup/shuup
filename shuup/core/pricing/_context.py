@@ -41,13 +41,14 @@ class PricingContext(PricingContextable):
     """
     Context for pricing.
     """
-    def __init__(self, shop, customer, time=None):
+    def __init__(self, shop, customer, time=None, basket=None):
         """
         Initialize pricing context for shop and customer.
 
         :type shop: shuup.core.models.Shop
         :type customer: shuup.core.models.Contact
         :type time: datetime.datetime|None
+        :type basket: shuup.core.models.Basket|None
         """
         assert shop is not None, "shop is required"
         assert customer is not None, (
@@ -55,4 +56,8 @@ class PricingContext(PricingContextable):
 
         self.shop = shop
         self.customer = customer
+        self.basket = basket
+        if basket:
+            assert basket.shop == shop, "shop must match with the basket"
+            assert basket.customer == customer, "customer must match with the basket"
         self.time = (time if time is not None else now())

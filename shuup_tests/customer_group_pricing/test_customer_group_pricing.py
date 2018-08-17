@@ -8,14 +8,16 @@
 import pytest
 from django.conf import settings
 
-from shuup.core.models import AnonymousContact
+from shuup.core.models import AnonymousContact, ContactGroup
 from shuup.core.pricing import get_pricing_module
+from shuup.core.utils.price_cache import get_cached_price_info, cache_price_info
 from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 from shuup.customer_group_pricing.module import CustomerGroupPricingModule
 from shuup.testing.factories import (
     create_product, create_random_person, get_shop
 )
 from shuup.testing.utils import apply_request_middleware
+
 
 pytestmark = pytest.mark.skipif("shuup.customer_group_pricing" not in settings.INSTALLED_APPS,
                                 reason="customer_group_pricing not installed")
@@ -39,14 +41,17 @@ def create_customer():
 
 
 def initialize_test(rf, include_tax=False, customer=create_customer):
-    shop = get_shop(prices_include_tax=include_tax)
+    domain = "shop-domain"
+    shop = get_shop(prices_include_tax=include_tax, domain=domain)
 
     if callable(customer):
         customer = customer()
 
-    request = apply_request_middleware(rf.get("/"))
-    request.shop = shop
-    request.customer = customer
+    request = apply_request_middleware(
+        rf.get("/"), shop=shop, customer=customer, META={"HTTP_HOST": "%s" % domain})
+    assert request.shop == shop
+    assert request.customer == customer
+    assert request.basket.shop == shop
     return request, shop, customer.groups.first()
 
 
@@ -278,3 +283,40 @@ def test_discount_quantities(rf, admin_user, price, discount, quantity):
     assert price_info.price == shop.create_price((price * quantity) - discount_amount)
     assert price_info.base_unit_price == shop.create_price(price)
     assert price_info.discount_amount == shop.create_price(discount * quantity)
+
+
+@pytest.mark.django_db
+def test_price_info_cache_bump(rf):
+    request, shop, group = initialize_test(rf, True)
+
+    product_one = create_product("Product_1", shop, default_price=150)
+    product_two = create_product("Product_2", shop, default_price=250)
+
+    contact = create_customer()
+    group2 = ContactGroup.objects.create(name="Group 2", shop=shop)
+
+    cgp_price = CgpPrice.objects.create(product=product_one, shop=shop, group=group, price_value=100)
+    cgp_discount = CgpDiscount.objects.create(product=product_two, shop=shop, group=group, discount_amount_value=200)
+
+    spm = get_pricing_module()
+    assert isinstance(spm, CustomerGroupPricingModule)
+    pricing_context = spm.get_context_from_request(request)
+
+    for function in [
+        lambda: cgp_price.save(),
+        lambda: cgp_discount.save(),
+        lambda: group2.members.add(contact),
+        lambda: cgp_price.delete(),
+        lambda: cgp_discount.delete()
+    ]:
+        cache_price_info(pricing_context, product_one, 1, product_one.get_price_info(pricing_context))
+        cache_price_info(pricing_context, product_two, 1, product_two.get_price_info(pricing_context))
+
+        # prices are cached
+        assert get_cached_price_info(pricing_context, product_one)
+        assert get_cached_price_info(pricing_context, product_two)
+
+        # caches should be bumped
+        function()
+        assert get_cached_price_info(pricing_context, product_one) is None
+        assert get_cached_price_info(pricing_context, product_two) is None

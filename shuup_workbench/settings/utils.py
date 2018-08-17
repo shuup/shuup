@@ -35,6 +35,7 @@ def get_disabled_migrations():
         'shuup_testing': None,
         'shuup_gdpr': None,
         'shuup_tasks': None,
+        'discounts': None,
 
         'django_countries': None,
         'filer': None,

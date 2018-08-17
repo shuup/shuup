@@ -401,13 +401,13 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         """
         from shuup.core.models import ShopProduct
         priced_children = []
-        for child in self.variation_children.all():
-            try:
-                shop_product = child.get_shop_instance(context.shop)
-            except ShopProduct.DoesNotExist:
-                continue
-
+        shop_product_query = Q(
+            shop=context.shop,
+            product_id__in=self.variation_children.all().values_list("id", flat=True)
+        )
+        for shop_product in ShopProduct.objects.filter(shop_product_query):
             if shop_product.is_orderable(supplier=None, customer=context.customer, quantity=1):
+                child = shop_product.product
                 priced_children.append((child, child.get_price_info(context, quantity=quantity)))
 
         return sorted(priced_children, key=(lambda x: x[1].price))

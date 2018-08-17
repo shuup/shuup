@@ -22,9 +22,11 @@ import jinja2
 
 from shuup.core.pricing import PriceDisplayOptions, Priceful
 from shuup.core.templatetags.shuup_common import money, percent
-from shuup.core.utils import context_cache
-
-from .prices import convert_taxness
+from shuup.core.utils.price_cache import (
+    cache_many_price_info, cache_price_info, get_cached_price_info,
+    get_many_cached_price_info
+)
+from shuup.core.utils.prices import convert_taxness
 
 PRICED_CHILDREN_CACHE_KEY = "%s-%s_priced_children"
 
@@ -75,66 +77,64 @@ class _ContextFunction(_ContextObject):
 
 class PriceDisplayFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, include_taxes=None, allow_cache=True):
-        key, val = context_cache.get_cached_value(
-            identifier=self.cache_identifier, item=item, context=context.get('request', context),
-            quantity=quantity, include_taxes=include_taxes, name=self.name, allow_cache=allow_cache)
-        if val is not None:
-            return val
-
         options = PriceDisplayOptions.from_context(context)
         if options.hide_prices:
-            context_cache.set_cached_value(key, "")
             return ""
 
         if include_taxes is None:
             include_taxes = options.include_taxes
 
         request = context.get('request')
-        orig_priceful = _get_priceful(request, item, quantity)
-        if not orig_priceful:
-            context_cache.set_cached_value(key, "")
-            return ""
-        priceful = convert_taxness(request, item, orig_priceful, include_taxes)
-        price_value = getattr(priceful, self.property_name)
-        val = money(price_value)
-        context_cache.set_cached_value(key, val)
-        return val
+        price_info = get_cached_price_info(
+            request,
+            item,
+            quantity,
+            include_taxes=include_taxes
+        ) if allow_cache else None
+
+        if not price_info:
+            price_info = _get_priceful(request, item, quantity)
+
+            if not price_info:
+                return ""
+
+            price_info = convert_taxness(request, item, price_info, include_taxes)
+            if allow_cache:
+                cache_price_info(request, item, quantity, price_info, include_taxes=include_taxes)
+
+        return money(getattr(price_info, self.property_name))
 
 
 class PricePropertyFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, allow_cache=True):
-        key, val = context_cache.get_cached_value(
-            identifier=self.cache_identifier, item=item, context=context.get('request', context),
-            quantity=quantity, name=self.name, allow_cache=allow_cache)
-        if val is not None:
-            return val
+        request = context.get('request')
+        price_info = get_cached_price_info(request, item, quantity) if allow_cache else None
 
-        priceful = _get_priceful(context.get('request'), item, quantity)
-        if not priceful:
-            context_cache.set_cached_value(key, "")
-            return ""
+        if not price_info:
+            price_info = _get_priceful(request, item, quantity)
 
-        price = getattr(priceful, self.property_name)
-        context_cache.set_cached_value(key, price)
-        return price
+            if not price_info:
+                return ""
+            if allow_cache:
+                cache_price_info(request, item, quantity, price_info)
+
+        return getattr(price_info, self.property_name)
 
 
 class PricePercentPropertyFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, allow_cache=True):
-        key, val = context_cache.get_cached_value(
-            identifier=self.cache_identifier, item=item, context=context.get('request', context),
-            quantity=quantity, name=self.name, allow_cache=allow_cache)
-        if val is not None:
-            return val
+        request = context.get('request')
+        price_info = get_cached_price_info(request, item, quantity) if allow_cache else None
 
-        priceful = _get_priceful(context.get('request'), item, quantity)
-        if not priceful:
-            context_cache.set_cached_value(key, "")
-            return ""
+        if not price_info:
+            price_info = _get_priceful(request, item, quantity)
 
-        val = percent(getattr(priceful, self.property_name))
-        context_cache.set_cached_value(key, val)
-        return val
+            if not price_info:
+                return ""
+            if allow_cache:
+                cache_price_info(request, item, quantity, price_info)
+
+        return percent(getattr(price_info, self.property_name))
 
 
 class TotalPriceDisplayFilter(_ContextFilter):
@@ -165,40 +165,44 @@ class PriceRangeDisplayFilter(_ContextFilter):
         """
         :type product: shuup.core.models.Product
         """
-        key, val = context_cache.get_cached_value(
-            identifier=self.cache_identifier, item=product, context=context.get('request', context),
-            quantity=quantity, name=self.name, allow_cache=allow_cache)
-        if val is not None:
-            return val
-
         options = PriceDisplayOptions.from_context(context)
         if options.hide_prices:
-            val = ("", "")
-            context_cache.set_cached_value(key, val)
-            return val
+            return ("", "")
 
         request = context.get('request')
-        priced_children_key = PRICED_CHILDREN_CACHE_KEY % (product.id, quantity)
-        if hasattr(request, priced_children_key):
-            priced_children = getattr(request, priced_children_key)
-        else:
-            priced_children = product.get_priced_children(request, quantity)
-            setattr(request, priced_children_key, priced_children)
-        priced_products = priced_children if priced_children else [
-            (product, _get_priceful(request, product, quantity))]
+        priced_products = get_many_cached_price_info(
+            request,
+            product,
+            quantity,
+            include_taxes=options.include_taxes
+        ) if allow_cache else None
 
-        def get_formatted_price(priced_product):
-            (prod, price_info) = priced_product
-            if not price_info:
-                return ""
-            pf = convert_taxness(request, prod, price_info, options.include_taxes)
-            price = money(pf.price)
-            return price
+        if not priced_products:
+            priced_children_key = PRICED_CHILDREN_CACHE_KEY % (product.id, quantity)
+            priced_products = []
 
-        min_max = (priced_products[0], priced_products[-1])
-        prices = tuple(get_formatted_price(x) for x in min_max)
-        context_cache.set_cached_value(key, prices)
-        return prices
+            if hasattr(request, priced_children_key):
+                priced_children = getattr(request, priced_children_key)
+            else:
+                priced_children = product.get_priced_children(request, quantity) or [
+                    (product, _get_priceful(request, product, quantity))
+                ]
+                setattr(request, priced_children_key, priced_children)
+
+            for child_product, price_info in priced_children:
+                if not price_info:
+                    continue
+
+                priceful = convert_taxness(request, child_product, price_info, options.include_taxes)
+                priced_products.append(priceful)
+
+            if priced_products and allow_cache:
+                cache_many_price_info(request, product, quantity, priced_products, include_taxes=options.include_taxes)
+
+        if not priced_products:
+            return ("", "")
+
+        return (money(priced_products[0].price), money(priced_products[-1].price))
 
 
 def _get_priceful(request, item, quantity):
@@ -223,15 +227,19 @@ def _get_priceful(request, item, quantity):
         if hasattr(item, 'is_variation_parent') and item.is_variation_parent():
             priced_children_key = PRICED_CHILDREN_CACHE_KEY % (item.id, quantity)
             priced_children = getattr(request, priced_children_key, None)
+
             if priced_children is None:
                 priced_children = item.get_priced_children(request, quantity)
-                setattr(request, priced_children_key, priced_children)
-            price = (priced_children[0][1] if priced_children
-                     else item.get_cheapest_child_price_info(request, quantity))
+
+            price = (
+                priced_children[0][1] if priced_children else item.get_cheapest_child_price_info(request, quantity)
+            )
         else:
             price = item.get_price_info(request, quantity=quantity)
+
         setattr(request, price_key, price)
         return price
+
     if hasattr(item, 'get_total_cost'):
         return item.get_total_cost(request.basket)
 

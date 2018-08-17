@@ -70,7 +70,7 @@ class Select2MultipleMainProductField(Select2MultipleField):
 
 
 class WeekdayField(MultipleChoiceField):
-    DAYS_OF_THE_WEEK = {
+    DAYS_OF_THE_WEEK = [
         (0, _("Monday")),
         (1, _("Tuesday")),
         (2, _("Wednesday")),
@@ -78,7 +78,7 @@ class WeekdayField(MultipleChoiceField):
         (4, _("Friday")),
         (5, _("Saturday")),
         (6, _("Sunday")),
-    }
+    ]
 
     def __init__(self, choices=(), required=True, widget=None, label=None, initial=None, help_text='', *args, **kwargs):
         if not choices:

@@ -5,10 +5,25 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import django
+
 from ._auth import EmailAuthenticationForm
 from ._base import ShuupAdminForm
 
+if django.VERSION < (1, 11):
+    from ._quick_select import (
+        QuickAddRelatedObjectMultiSelectWithoutTemplate as QuickAddRelatedObjectMultiSelect,
+        QuickAddRelatedObjectSelectWithoutTemplate as QuickAddRelatedObjectSelect
+    )
+else:
+    from ._quick_select import (
+        QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect
+    )
+
+
 __all__ = [
     "EmailAuthenticationForm",
-    "ShuupAdminForm"
+    "ShuupAdminForm",
+    "QuickAddRelatedObjectMultiSelect",
+    "QuickAddRelatedObjectSelect"
 ]

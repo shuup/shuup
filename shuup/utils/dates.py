@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import datetime
+import time
 
 import six
 from django.utils import timezone
@@ -267,6 +268,16 @@ def local_now(tz=None):
     :rtype: datetime.datetime
     """
     return timezone.localtime(to_aware(timezone.now()), timezone=tz)
+
+
+def to_timestamp(date):
+    """
+    Get a UNIX timestamp from a date or datetime
+
+    :param datetime.date|datetime.datetime date: the datetime to convert to unix timestamp
+    :rtype float
+    """
+    return time.mktime(date.timetuple())
 
 
 def to_datetime_range(start, end):

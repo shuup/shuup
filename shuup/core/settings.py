@@ -69,12 +69,12 @@ SHUUP_PRICING_MODULE = "customer_group_pricing"
 #:
 #: Each discount module may change the price of a product.  See
 #: `shuup.core.pricing.DiscountModule` for details.
-SHUUP_DISCOUNT_MODULES = ["catalog_campaigns", "customer_group_discount"]
+SHUUP_DISCOUNT_MODULES = ["customer_group_discount", "product_discounts"]
 
 #: List of identifiers of order source modifier modules.
 #:
 #: See `shuup.core.order_creator.OrderSourceModifierModule` for details.
-SHUUP_ORDER_SOURCE_MODIFIER_MODULES = ["basket_campaigns"]
+SHUUP_ORDER_SOURCE_MODIFIER_MODULES = ["basket_campaigns", "discounts_coupon_codes"]
 
 #: The identifier of the tax module to use for determining taxes of products and order lines.
 #:
