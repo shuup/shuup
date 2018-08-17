@@ -67,7 +67,7 @@ class TaskTypeListView(PicotableListView):
             sort_field="name",
             display="name",
             filter_config=TextFilter(
-                filter_field="name",
+                filter_field="translations__name",
                 placeholder=_("Filter by name...")
             )
         )
