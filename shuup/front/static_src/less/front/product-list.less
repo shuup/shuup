@@ -189,6 +189,16 @@
     }
 }
 
+.product-list {
+    .single-product {
+        @media (max-width: @screen-xs-max) {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+    }
+}
+
 .product-list-view {
 
     .single-product {
@@ -248,13 +258,16 @@
                 .make-sm-column(8);
                 .make-lg-column(9);
                 display: flex;
-                flex-flow: column wrap;
+                flex-direction: column;
                 justify-content: center;
-                height: 100%;
+                height: 150px;
                 padding: 15px;
+
+                &.with-description {
+                    height: 200px;
+                }
             }
             .single-product {
-                width: 100%;
                 .product-card {
                     padding-bottom: 42px;
                     text-align: left;
