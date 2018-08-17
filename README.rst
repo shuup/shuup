@@ -111,9 +111,9 @@ OS Addons
 * `Shuup Yaml <https://github.com/shuup/shuup-yaml>`__. Import categories, manufacturers and products to Shuup.
 * `Shuup Mailchimp <https://github.com/shuup/shuup-mailchimp>`__. Mailchimp integration for Shuup.
 
-Purpose of these addons is to demonstrate how to build simple
-addons to extend Shuup. For more here are some useful links to
-learn more about how to extend Shuup.
+The purpose of these addons, is to demonstrate how to build
+other simple addons to extend Shuup. To learn more, here are
+some useful links about how to extend Shuup.
 
 * `Provides system <https://shuup.readthedocs.io/en/latest/ref/provides.html>`__.
 * `Core settings <https://shuup.readthedocs.io/en/latest/api/shuup.core.html#module-shuup.core.settings>`__.
