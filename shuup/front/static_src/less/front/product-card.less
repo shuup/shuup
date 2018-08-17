@@ -6,7 +6,6 @@
     position: relative;
     padding-bottom: 52px;
     width: 100%;
-    max-width: 280px;
     margin-bottom: 30px;
     text-align: center;
 
@@ -43,6 +42,12 @@
         display: block;
         padding: 10px 15px;
         color: @text-color;
+
+        line-height: 22px;
+        height: (22px * 3) + 10px; // 3 lines of height
+        line-clamp: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .image {
         background-position: 50%;

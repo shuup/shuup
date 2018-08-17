@@ -182,3 +182,47 @@
     margin-bottom: 15px;
     padding: 0 30px;
 }
+
+.carousel-section {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding: 0px 30px;
+    + .carousel-section {
+        margin-top: 50px;
+    }
+    .owl-stage-outer {
+        z-index: 2;
+    }
+    .owl-nav {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translate(0, -50%);
+        font-size: 4rem;
+        color: @text-muted;
+
+        .owl-prev, .owl-next {
+            .transition(color 0.25s);
+            &:hover, &:focus {
+                color: @brand-primary;
+            }
+            &.disabled {
+                cursor: default;
+                opacity: 0.3;
+            }
+        }
+
+        .owl-prev {
+            margin-left: -30px;
+            float: left;
+        }
+        .owl-next {
+            float: right;
+            margin-right: -30px;
+        }
+    }
+    .owl-dots {
+        display: none;
+    }
+}

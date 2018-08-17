@@ -1,0 +1,12 @@
+{%- from "shuup/front/macros/product.jinja" import product_box with context -%}
+
+<section class="carousel-section">
+    {% if title %}
+        <div class="title-bar light"><h2>{{ title }}</h2></div>
+    {% endif %}
+    <div class="product-carousel owl-carousel five">
+    {% for product in products if shuup.product.is_visible(product) %}
+        {{ product_box(product, thumbnail_size=(300, 300)) }}
+    {% endfor %}
+    </div>
+</section>
