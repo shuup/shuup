@@ -8,13 +8,15 @@
 import pytest
 
 from shuup.admin.modules.orders.views import (
-    NewLogEntryView, OrderSetStatusView, UpdateAdminCommentView
+    NewLogEntryView, OrderCreatePaymentView, OrderDeletePaymentView,
+    OrderSetStatusView, UpdateAdminCommentView
 )
 from shuup.core.models import (
     Order, OrderLogEntry, OrderStatus, OrderStatusRole, ShippingStatus
 )
 from shuup.testing.factories import (
-    create_random_order, create_random_person, get_default_product
+    create_random_order, create_random_person, get_default_product,
+    get_default_shop
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -73,3 +75,33 @@ def test_update_order_admin_comment(admin_user, rf):
     assert response.status_code < 400
     order.refresh_from_db()
     assert order.admin_comment == comment
+
+
+@pytest.mark.django_db
+def test_delete_payment(admin_user, rf):
+    product = get_default_product()
+    shop_product = product.get_shop_instance(get_default_shop())
+    shop_product.default_price_value = 20
+    shop_product.save()
+
+    order = create_random_order(customer=create_random_person(), products=(product,), completion_probability=0)
+    payment_amount = order.taxful_total_price_value
+
+    # create a payment
+    view = OrderCreatePaymentView.as_view()
+    request = apply_request_middleware(rf.post("/", {"amount": payment_amount}), user=admin_user)
+    response = view(request, pk=order.pk)
+    assert response.status_code == 302
+
+    order.refresh_from_db()
+    assert order.is_paid()
+
+    # delete the payment
+    payment = order.payments.last()
+    view = OrderDeletePaymentView.as_view()
+    request = apply_request_middleware(rf.post("/", {"payment": payment.pk}), user=admin_user)
+    response = view(request, pk=order.pk)
+    assert response.status_code == 302
+
+    order.refresh_from_db()
+    assert order.is_not_paid()

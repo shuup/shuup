@@ -12,7 +12,9 @@ from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView, UpdateView
+from django.views.generic.edit import BaseDeleteView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages
 from shuup.admin.utils.urls import get_model_url
@@ -76,6 +78,9 @@ class OrderCreatePaymentView(UpdateView):
         else:
             return HttpResponseRedirect(get_model_url(order))
 
+    def get_queryset(self):
+        return Order.objects.filter(shop=get_shop(self.request))
+
 
 class OrderSetPaidView(DetailView):
     model = Order
@@ -97,3 +102,28 @@ class OrderSetPaidView(DetailView):
             order.create_payment(amount, description=_("Zero amount payment"))
             messages.success(self.request, _("Order marked as paid."))
         return HttpResponseRedirect(get_model_url(self.get_object()))
+
+    def get_queryset(self):
+        return Order.objects.filter(shop=get_shop(self.request))
+
+
+class OrderDeletePaymentView(BaseDeleteView):
+    model = Order
+
+    def get_queryset(self):
+        return Order.objects.incomplete().filter(shop=get_shop(self.request))
+
+    def delete(self, request, *args, **kwargs):
+        order = self.get_object()
+        payment_id = request.POST.get("payment")
+        order_url = get_model_url(self.get_object())
+        payment = order.payments.filter(pk=payment_id).first() if payment_id else None
+
+        if not payment:
+            messages.error(self.request, _("Payment doesn't exist."))
+            return HttpResponseRedirect(order_url)
+
+        payment.delete()
+        order.update_payment_status()
+        messages.success(self.request, _("Payment deleted."))
+        return HttpResponseRedirect(order_url)

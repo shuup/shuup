@@ -14,6 +14,11 @@ Bug fixes
 
 - Fix filter fields in order status, simple cms and tasks type admin modules
 
+Admin
+~~~~~
+
+- Add option to delete payments from order detail
+
 Discounts
 ~~~~~~~~~
 

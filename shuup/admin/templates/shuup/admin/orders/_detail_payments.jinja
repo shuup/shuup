@@ -6,6 +6,7 @@
             <th>{% trans %}Identifier{% endtrans %}</th>
             <th>{% trans %}Description{% endtrans %}</th>
             <th class="text-right">{% trans %}Amount{% endtrans %}</th>
+            <th>{% trans %}Actions{% endtrans %}</th>
         </tr>
         </thead>
         <tbody>
@@ -15,6 +16,17 @@
                 <td>{{ payment.payment_identifier }}</td>
                 <td>{{ payment.description }}</td>
                 <td class="text-right">{{ payment.amount|money }}</td>
+                <td>
+                    {% if not (payment.order.is_complete() or payment.order.is_canceled()) %}
+                    <a
+                        href="{{ url('shuup_admin:order.delete-payment', pk=payment.order_id) }}"
+                        data-payment="{{ payment.pk }}"
+                        name="delete-payment-link"
+                    >
+                        <i class="fa fa-close"></i> {{ _("Delete") }}
+                    </a>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -25,13 +37,24 @@
         {% for payment in payments %}
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-xs-8">
+                    <div class="col-xs-7">
                         {{ payment.created_on|datetime }}<br>
                         {{ payment.description }}<br>
                         {% trans %}Identifier{% endtrans %}: {{ payment.payment_identifier }}
                     </div>
                     <div class="col-xs-4 text-right">
                         <strong>{{ payment.amount|money }}</strong>
+                    </div>
+                    <div class="col-xs-1 text-center">
+                        {% if not (payment.order.is_complete() or payment.order.is_canceled()) %}
+                        <a
+                            href="{{ url('shuup_admin:order.delete-payment', pk=payment.order_id) }}"
+                            data-payment="{{ payment.pk }}"
+                            name="delete-payment-link"
+                        >
+                            <i class="fa fa-close"></i>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </li>
