@@ -25,5 +25,6 @@ prune shuup/*/*/*/*/node_modules
 prune shuup/*/*/*/node_modules
 prune shuup/*/*/node_modules
 prune shuup/*/node_modules
+prune shuup/**/.cache
 
 recursive-include doc *.rst *.py *.LICENSE Makefile make.bat
