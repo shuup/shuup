@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 22:05+0000\n"
+"POT-Creation-Date: 2018-08-20 15:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -424,7 +424,7 @@ msgstr ""
 msgid "No group"
 msgstr ""
 
-msgid "No shop"
+msgid "No shops"
 msgstr ""
 
 msgid "Inactive"
@@ -863,6 +863,12 @@ msgid "Zero amount payment"
 msgstr ""
 
 msgid "Order marked as paid."
+msgstr ""
+
+msgid "Payment doesn't exist."
+msgstr ""
+
+msgid "Payment deleted."
 msgstr ""
 
 msgid "Line"
@@ -2067,9 +2073,6 @@ msgstr ""
 msgid "Bound User"
 msgstr ""
 
-msgid "No shops"
-msgstr ""
-
 msgid "Companies"
 msgstr ""
 
@@ -3107,7 +3110,13 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+msgid "Delete"
+msgstr ""
+
 msgid "No payments have been created yet."
+msgstr ""
+
+msgid "Are you sure you want to delete this payment?"
 msgstr ""
 
 msgid "Order Contents"
@@ -3162,9 +3171,6 @@ msgid "Tracking Code"
 msgstr ""
 
 msgid "Created"
-msgstr ""
-
-msgid "Delete"
 msgstr ""
 
 msgid "No shipments have been created yet."

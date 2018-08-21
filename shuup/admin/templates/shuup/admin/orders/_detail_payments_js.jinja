@@ -1,0 +1,28 @@
+<script>
+    (function() {
+        $("a[name='delete-payment-link']").click(function (evt) {
+            evt.preventDefault();
+            var paymentId = $(this).data("payment");
+            if (paymentId && confirm("{{ _('Are you sure you want to delete this payment?') }}")) {
+                var form = document.createElement("form");
+                form.method = "POST";
+                form.action = $(this).attr("href");
+
+                var csrfInput = document.createElement("input");
+                csrfInput.type = "hidden";
+                csrfInput.name = "csrfmiddlewaretoken";
+                csrfInput.value = "{{ csrf_token }}";
+                form.appendChild(csrfInput);
+
+                var paymentInput = document.createElement("input");
+                paymentInput.type = "hidden";
+                paymentInput.name = "payment";
+                paymentInput.value = paymentId;
+                form.appendChild(paymentInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    })();
+</script>
