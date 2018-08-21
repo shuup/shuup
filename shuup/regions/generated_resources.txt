@@ -1,2 +1,0 @@
-static/shuup-regions.js
-static/shuup-regions.map

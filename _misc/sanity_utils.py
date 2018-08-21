@@ -112,9 +112,6 @@ def find_files(
             _remove_ignored_directories(path, dirs, ignored_dirs, ignored_path_regexps)
             for filename in files:
                 filepath = posixpath.join(path, filename)
-                if filename == "generated_resources.txt":
-                    _process_generated_resources(path, filepath, generated_resources)
-                    continue
                 if not all(not fnmatch.fnmatch(filename, x) for x in ignored_patterns):
                     continue
                 if not _check_allowed_extension(filepath, allowed_extensions):
@@ -126,14 +123,6 @@ def _check_allowed_extension(filepath, allowed_extensions):
     if allowed_extensions is None:
         return True
     return any(filepath.endswith(extension) for extension in allowed_extensions)
-
-
-def _process_generated_resources(path, manifest_filename, generated_resources):
-    with open(manifest_filename, "r") as generated_resources_manifest:
-        for line in generated_resources_manifest:
-            line = line.strip()
-            if line:
-                generated_resources.add(posixpath.join(path, line))
 
 
 def _remove_ignored_directories(path, dirs, ignored_dirs, ignored_path_regexps):

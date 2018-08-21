@@ -41,8 +41,7 @@ Front
 General
 ~~~~~~~
 
-- Changed the way static resources are built.
-  Parcel is used to build all apps and `generated_resources.txt` is auto-generated.
+- Changed the way static resources are built. Parcel is now used to build all apps.
 
 Importer
 ~~~~~~~~

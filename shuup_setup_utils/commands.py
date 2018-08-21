@@ -47,14 +47,16 @@ class BuildResourcesCommand(distutils.core.Command):
     mode = 'development'
     clean = False
     force = False
+    no_install = False
     directory = '.'
     user_options = [
         ('mode=', 'm', "build mode: 'development' (default) or 'production'"),
         ('clean', 'c', "clean intermediate files before building"),
         ('force', 'f', "force rebuild even if cached result exists"),
+        ('no-install', 'n', "do not install npm packages before building"),
         ('directory=', 'd', "directory to build in, or '.' for all (default)"),
     ]
-    boolean_options = ['clean', 'force']
+    boolean_options = ['clean', 'force', 'no-install']
 
     def initialize_options(self):
         pass
@@ -74,6 +76,7 @@ class BuildResourcesCommand(distutils.core.Command):
         opts.production = (self.mode == 'production')
         opts.clean = self.clean
         opts.force = self.force
+        opts.no_install = self.no_install
         resource_building.build_resources(opts)
 
 

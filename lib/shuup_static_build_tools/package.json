@@ -1,0 +1,12 @@
+{
+  "name": "shuup-static-build-tools",
+  "version": "1.0.0",
+  "description": "Shuup Static Build Tools",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Shuup Team <shuup@shuup.com>",
+  "license": "OSL-3.0",
+  "keywords": [
+    "shuup"
+  ]
+}
