@@ -27,6 +27,7 @@
     "parcel-bundler": "^1.9.7",
     "postcss-modules": "^1.1.0",
     "shuup-static-build-tools": "file:../../lib/shuup_static_build_tools",
-    "simplelightbox": "^1.13.0"
+    "simplelightbox": "^1.13.0",
+    "open-sans-all": "0.1.3"
   }
 }
