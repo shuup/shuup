@@ -1,19 +1,21 @@
 #top-header {
     background: $nav-bg;
-    height: 60px;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: stretch;
-    width: 100%;
+    height: $top-header-height;
+    width: calc(100% - #{$main-menu-width});
     position: fixed;
     top: 0;
-    left: 0;
-    z-index: 1001;
+    border-bottom: 1px solid $border-color;
+    left: $main-menu-width;
+    z-index: 1000;
 
-    // Flex configuration
-    .nav-btn, .dropdown, .nav-menu-button, .logo-wrap {
-        flex: 0 1 auto;
+    @include media-breakpoint-down(md) {
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    @include media-breakpoint-down(sm) {
+        background-color: $white;
     }
 
     span.select2 {
@@ -21,29 +23,18 @@
         margin-top: 10px;
     }
 
-    .site-search {
-        flex: 1;
-    }
-
     .nav-btn {
-        height: 60px;
-        width: 60px;
-        color: #fff;
+        color: $secondary;
         display: inline-block;
-        background: none;
-        line-height: 60px;
-        padding: 0;
-        border-radius: 0;
         text-align: center;
         transition: background 0.2s, color 0.2s;
+        padding: 0.7rem;
 
         i {
             font-size: 18px;
-            line-height: 60px;
         }
 
         &:hover, &:active, &:focus {
-            background: $nav-bg-hover;
             color: $primary;
         }
     }
@@ -62,18 +53,9 @@
         }
 
         .dropdown-toggle {
-            height: 60px;
-            width: 60px;
-            background: none;
-            border: 0;
-            transition: background 0.2s, color 0.2s;
-            color: #fff;
-            padding: 0;
-
-            &:hover {
-                background: $nav-bg-hover;
-                color: $primary;
-            }
+            padding: 0.5rem 0.8rem;
+            margin-right: 15px;
+            cursor: pointer;
 
             i {
                 font-size: 18px;
@@ -82,43 +64,6 @@
         }
 
         .dropdown-menu {
-            top: 110%;
-            text-align: left;
-            left: auto;
-            right: 10px;
-            border: 1px solid $border-color;
-            background: #fff;
-            padding: 0px;
-            min-width: 200px;
-            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.13);
-
-            a:hover {
-                text-decoration: none;
-            }
-
-            &:before {
-                position: absolute;
-                bottom: 100%;
-                right: 12px;
-                border-left: 7px solid transparent;
-                border-right: 7px solid transparent;
-                border-bottom: 7px solid $border-color;
-                content: "";
-                display: block;
-            }
-
-            &:after {
-                position: absolute;
-                bottom: 100%;
-                right: 13px;
-                border-left: 6px solid transparent;
-                border-right: 6px solid transparent;
-                border-bottom: 6px solid #fff;
-                content: "";
-                display: block;
-                z-index: 2;
-            }
-
             .dropdown-list {
                 list-style-type: none;
                 padding: 0;
@@ -142,7 +87,7 @@
             .username {
                 padding: 10px;
                 color: $text-color;
-                border-bottom: 1px solid $border-color;
+
                 .icon {
                     border-radius: 50%;
                     width: 30px;
@@ -151,6 +96,7 @@
                     background: $gray-bg;
                     margin-right: 10px;
                     border: 1px solid $border-color;
+
                     i {
                         width: 28px;
                         height: 28px;
@@ -160,6 +106,7 @@
                         line-height: 28px;
                     }
                 }
+
                 .user {
                     font-weight: normal;
                 }
@@ -182,7 +129,8 @@
         position: relative;
 
         &:hover {
-            background: $nav-bg-hover;
+            background: $gray-bg;
+
             .toggler {
                 @include transition(all 0.5s);
                 span, span:before, span:after {
@@ -190,11 +138,9 @@
                 }
 
                 span:before {
-                    top: -8px;
                     background: $primary !important;
                 }
                 span:after {
-                    top: 8px;
                     background: $primary !important;
                 }
             }
@@ -213,21 +159,19 @@
             position: relative;
             height: 60px;
             width: 60px;
-
-            @include media-breakpoint-up(md) {
-                display: none;
-            }
+            border-right: 1px solid $border-color;
 
             span, span:before, span:after {
-                background: #fff;
+                background: $text-color;
                 border-radius: 1px;
                 width: 22px;
-                height: 3px;
-                position: absolute;
+                height: 2px;
                 display: block;
+                border-radius: 4px;
                 content: "";
                 cursor: pointer;
                 @include transition(all 0.2s);
+                position: absolute;
                 left: 50%;
                 top: 50%;
                 margin-top: -2px;
@@ -235,12 +179,12 @@
             }
 
             span:before {
-                top: -6px;
+                top: -7px;
                 margin-top: 0;
             }
 
             span:after {
-                top: 6px;
+                top: 7px;
                 margin-top: 0;
             }
         }
@@ -264,47 +208,18 @@
         }
     }
 
-    .logo-wrap {
-        a {
-            display: block;
-            transition: background 0.2s;
-            &:hover, &:active, &:focus {
-                background: $nav-bg-hover;
-            }
-        }
-
-        .logo {
-            &.desktop {
-                text-align: center;
-                display: none;
-                height: 60px;
-                width: 175px;
-                padding: 10px 10px 10px 18px;
-
-                @include media-breakpoint-up(md) {
-                    display: inline-block;
-                }
-            }
-            
-            &.mobile {
-                text-align: center;
-                height: 60px;
-                width: 60px;
-                padding: 10px;
-                display: inline-block;
-
-                @include media-breakpoint-up(md) {
-                    display: none;
-                }
-            }
-
-            img { -ms-interpolation-mode: bicubic; }
-
-        }
-    }
-
     .nav-text {
         line-height: 60px;
         color: white;
     }
 }
+
+.site-search-nav {
+    box-shadow: none;
+    transition: box-shadow 0.2s ease-in-out;
+
+    &.site-scrolling {
+        box-shadow: 0 8px 20px rgba($secondary, 0.12);
+    }
+}
+
