@@ -1,10 +1,11 @@
 .support-nav-wrap {
-    position: fixed;
-    background-color: #fff;
     z-index: 2;
     width: 100%;
-    padding-left: 107px;
-    border-bottom: 1px solid #ddd;
+    padding-left: $main-menu-width + 20px;
+
+    @include media-breakpoint-down(md) {
+        padding-left: 15px;
+    }
 
     @include media-breakpoint-down(sm) {
         position: inherit;
@@ -26,18 +27,13 @@ body {
 }
 
 .support-nav {
-    @include clearfix();
-    padding: 20px 0px;
-
-    @include media-breakpoint-down(sm) {
-        padding: 20px 0px 15px 0px;
-    }
+    padding: 2em 0;
 
     .breadcrumbs {
         list-style: none;
         padding: 0;
         margin-bottom: 15px;
-        font-size: 1.2rem;
+        font-size: 0.8rem;
         width: 100%;
         font-weight: normal;
         color: #999;
@@ -62,15 +58,15 @@ body {
                 white-space: nowrap;
                 vertical-align: middle;
 
-                &:after { 
-                    display: none; 
+                &:after {
+                    display: none;
                 }
             }
         }
         a {
             color: #999;
 
-            &:hover, 
+            &:hover,
             &:focus {
                 color: $primary;
             }
@@ -78,10 +74,8 @@ body {
     }
 
     .flex-wrapper {
-        @include media-breakpoint-up(lg) {
-            display: flex;
-            justify-content: space-between;
-        }
+        display: flex;
+        justify-content: space-between;
     }
 
     .main-header {
@@ -94,15 +88,10 @@ body {
 
         small {
             color: lighten($text-color, 20%);
-            font-weight: 300;
         }
     }
 
     .page-actions {
-        border-top: 1px solid $border-color;
-        padding-top: 10px;
-        margin-top: 10px;
-
         &:empty {
             display: none;
         }
@@ -118,6 +107,7 @@ body {
         .btn-toolbar {
             display: block;
             margin: 0;
+            text-align: right;
 
             > .btn,
             > .btn-group {
@@ -131,9 +121,9 @@ body {
 
         .btn {
             margin: 10px 10px 0px 0px;
-            
-            i { 
-                margin-right: 5px; 
+
+            i {
+                margin-right: 5px;
             }
 
             @include media-breakpoint-up(md) {
@@ -175,40 +165,6 @@ body {
         }
 
         .dropdown-menu {
-            @include media-breakpoint-up(md) {
-                left: auto;
-                right: 0;
-            }
-
-            a,
-            button {
-                color: $text-color;
-                transition: all 0.1s;
-                text-overflow: ellipsis;
-                overflow: hidden;
-
-                &:hover, &:focus {
-                    color: $text-color;
-
-                    i {
-                        color: $primary;
-                    }
-                }
-
-                &:active {
-                    color: $text-color;
-                    background-color: #E6E6E6;
-                    border-color: #ADADAD;
-                }
-
-                @include media-breakpoint-down(xs)  {
-                    text-overflow: clip;
-                    overflow: visible;
-                    white-space: normal;
-                    max-width: 300px;
-                }
-            }
-
             button {
                 width: 100%;
                 padding: 3px 20px;
@@ -220,7 +176,7 @@ body {
                     background-color: $dropdown-link-hover-bg;
                 }
             }
-            
+
             i {
                 margin-right: 6px;
                 width: 1.5rem;
