@@ -1,6 +1,7 @@
 // Core variables and mixins
 @import "~bootstrap/scss/_functions";
 @import "~bootstrap/scss/_variables";
+@import "functions";
 @import "variables";
 @import "~bootstrap/scss/_mixins";
 // Reset
@@ -48,9 +49,8 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 @import "~font-awesome/scss/_icons";
 @import "~font-awesome/scss/_screen-reader";
 @import "~jquery.scrollbar/sass/jquery.scrollbar";
-@import url(../../../node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css);
-@import url(../../../node_modules/select2/select2.css);
-@import url(../../../node_modules/select2/select2-bootstrap.css);
+@import "~@chenfengyuan/datepicker/src/css/datepicker.scss";
+@import url(../../../node_modules/select2/dist/css/select2.css); // 4.0.6
 @import url(../../../node_modules/summernote/dist/summernote-bs4.css);
 @import url(../../../node_modules/tether-shepherd/dist/css/shepherd-theme-arrows.css);
 @import url(../../../node_modules/dropzone/dist/dropzone.css);
