@@ -1,0 +1,52 @@
+.loader {
+    animation: loader 1.3s linear alternate infinite;
+}
+
+.loader-content-header {
+    border-bottom: 1px solid $border-color;
+    padding: 1.5rem;
+}
+
+.loader-block {
+    min-width: 80px;
+    height: 10px;
+    background-color: rgba($secondary, 0.2);
+    border-radius: 80px;
+}
+
+.loader-content {
+    background-color: $white;
+    border-radius: $border-radius-xl;
+    box-shadow: $shadow-lg;
+}
+
+.loader-spinner {
+    color: $primary;
+    font-size: 1.5rem;
+    animation: rotate 0.4s linear infinite;
+    transform-origin: center 12.3px;
+}
+
+@keyframes loader {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
