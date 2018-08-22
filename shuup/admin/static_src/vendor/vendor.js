@@ -17,6 +17,9 @@ window._ = _;
 window.Dropzone = require('dropzone');
 Dropzone.autoDiscover = false;
 
+import select2 from 'select2';
+select2($);
+
 require('bootstrap');
 require('chart.js');
 require('imagelightbox');
@@ -28,10 +31,8 @@ require('jquery.easing');
 require('jquery.scrollbar');
 require('moment');
 require('outlayer');
-require('select2');
 require('popper.js');
-
-require('summernote');
+require('summernote/dist/summernote-bs4.js');
 require('tether');
 require('@chenfengyuan/datepicker');
 

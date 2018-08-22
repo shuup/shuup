@@ -7,7 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function activateSelect($select, model, searchMode, attrs={}) {
+import $ from 'jquery';
+import select2 from 'select2';
+select2($);
+
+export function activateSelect($select, model, searchMode, attrs={}) {
     if(model === undefined) {
         return $select.select2($.extend(true, {
             language: "xx"
@@ -33,7 +37,7 @@ function activateSelect($select, model, searchMode, attrs={}) {
     }, attrs));
 }
 
-function activateSelects() {
+export function activateSelects() {
     $("select").each(function(idx, object) {
         const select = $(object);
         // only activate selects that aren't already select2 inputs
@@ -45,43 +49,44 @@ function activateSelects() {
     });
 }
 
-// $(function(){
-//     // Handle localization with Django instead of using select2 localization files
-//     $.fn.select2.amd.define("select2/i18n/xx", [], function () {
-//         return {
-//             errorLoading: function () {
-//                 return gettext("The results could not be loaded");
-//             },
-//             inputTooLong: function (args) {
-//                 var overChars = args.input.length - args.maximum;
-//                 var message = ngettext(
-//                     "Please delete %s character",
-//                     "Please delete %s characters", overChars
-//                 );
-//                 return interpolate(message, [overChars]);
-//             },
-//             inputTooShort: function (args) {
-//                 var remainingChars = args.minimum - args.input.length;
-//                 return interpolate(gettext("Please enter %s or more characters"), [remainingChars]);
-//             },
-//             loadingMore: function () {
-//                 return gettext("Loading more results...");
-//             },
-//             maximumSelected: function (args) {
-//                 var message = ngettext(
-//                     "You can only select %s item",
-//                     "You can only select %s items", args.maximum
-//                 );
-//                 return interpolate(message, [args.maximum]);
-//             },
-//             noResults: function () {
-//                 return gettext("No results found");
-//             },
-//             searching: function () {
-//                 return gettext("Searching...");
-//             }
-//         };
-//     });
+function select2Local() {
+  // Handle localization with Django instead of using select2 localization files
+  $.fn.select2.amd.define("select2/i18n/xx", [], function () {
+      return {
+          errorLoading: function () {
+              return gettext("The results could not be loaded");
+          },
+          inputTooLong: function (args) {
+              var overChars = args.input.length - args.maximum;
+              var message = ngettext(
+                  "Please delete %s character",
+                  "Please delete %s characters", overChars
+              );
+              return interpolate(message, [overChars]);
+          },
+          inputTooShort: function (args) {
+              var remainingChars = args.minimum - args.input.length;
+              return interpolate(gettext("Please enter %s or more characters"), [remainingChars]);
+          },
+          loadingMore: function () {
+              return gettext("Loading more results...");
+          },
+          maximumSelected: function (args) {
+              var message = ngettext(
+                  "You can only select %s item",
+                  "You can only select %s items", args.maximum
+              );
+              return interpolate(message, [args.maximum]);
+          },
+          noResults: function () {
+              return gettext("No results found");
+          },
+          searching: function () {
+              return gettext("Searching...");
+          }
+      };
+  });
+}
 
-//     activateSelects();
-// });
+activateSelects();
+select2Local();
