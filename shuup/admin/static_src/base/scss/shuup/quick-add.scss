@@ -83,7 +83,7 @@ div.container-fluid.support-nav-wrap {
                 color: #000;
             }
 
-            @media (max-width: @screen-xs-max) {
+            @include media-breakpoint-down(sm) {
                 .btn {
                     position: absolute;
                     top: 0px;
