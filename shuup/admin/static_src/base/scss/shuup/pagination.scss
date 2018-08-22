@@ -1,36 +1,29 @@
 .pagination {
-    margin-top: 5px;
     padding: 0;
+    box-shadow: $shadow-md;
 
-    a {
-        font-size: 1.2rem;
-    }
+    li.page-item {
+        a.page-link {
+            background-color: $white;
+            color: $secondary;
+            font-weight: 700;
+            border: 0;
 
-    > li {
-        > a,
-        > span {
-            border-top: none;
-            border-bottom: none;
-            border-right: 1px solid #000;
-            border-left: none;
-        }
-
-        &:first-child {
-            > a,
-            > span {
-                margin-left: 0;
-                border-top: none;
-                border-bottom: none;
-                border-right: 1px solid #000;
-                border-left: none;
+            &:hover {
+                z-index: 0;
+                color: $primary;
+                background-color: $white;
             }
         }
-        
-        &:last-child {
-            > a,
-            > span {
-                border: none;
-            }
+
+        &.disabled .page-link {
+            color: rgba($secondary, 0.2);
+        }
+
+        &.active .page-link {
+            color: $primary;
+            background-image: none;
+            background-color: rgba($primary, 0.08);
         }
     }
 }
