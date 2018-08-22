@@ -28,7 +28,6 @@ downloads/
 eggs/
 env/
 htmlcov/
-lib/
 lib64/
 local_settings.py
 nosetests.xml

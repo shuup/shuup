@@ -2,17 +2,10 @@
   "name": "shuup_front",
   "version": "1.0.0",
   "description": "Shuup Front",
-  "main": "",
+  "main": "build_resources.js",
   "scripts": {
-    "watch:vendorjs": "parcel watch --no-hmr -d static/shuup/front/js static_src/js/vendor.js",
-    "watch:scripts": "parcel watch --no-hmr -d static/shuup/front/js -o scripts static_src/js/index.js",
-    "watch:styles": "parcel watch --no-hmr -d static/shuup/front/css static_src/less/style.js",
-    "watch": "concurrently --kill-others-on-fail npm:watch:*",
-    "build:vendorjs": "parcel build -d static/shuup/front/js static_src/js/vendor.js",
-    "build:scripts": "parcel build -d static/shuup/front/js -o scripts static_src/js/index.js",
-    "build:styles": "parcel build -d static/shuup/front/css static_src/less/style.js",
-    "clean": "rm generated_resources.txt || true",
-    "build": "npm i && npm run clean && concurrently --kill-others-on-fail npm:build:*"
+    "watch": "node build_resources --watch",
+    "build": "node build_resources"
   },
   "shuup": {
     "static_build": true
@@ -25,7 +18,6 @@
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^3.3.6",
     "bootstrap-select": "1.6.3",
-    "concurrently": "^3.6.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "jquery.easing": "^1.4.1",
@@ -33,8 +25,8 @@
     "node-sass": "^4.9.2",
     "owl.carousel": "^2.3.4",
     "parcel-bundler": "^1.9.7",
-    "parcel-plugin-shuup-maninfest": "file:../../shuup_setup_utils/parcel_plugin_shuup_maninfest",
     "postcss-modules": "^1.1.0",
+    "shuup-static-build-tools": "file:../../lib/shuup_static_build_tools",
     "simplelightbox": "^1.13.0"
   }
 }
