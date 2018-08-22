@@ -9,6 +9,8 @@
 import m from "mithril";
 import _ from "lodash";
 
+import { activateSelect } from '../../../../../static_src/base/js/select.js';
+
 export const LINE_TYPES = [
     {id: "product", name: gettext("Product")},
     {id: "other", name: gettext("Other")},
