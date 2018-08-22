@@ -1,5 +1,6 @@
 // Brand colors
-$primary: #35A48C;
+$primary: #07B0F2;
+$secondary: #041E40;
 $success: #27ae60;
 $warning: #e67e22;
 $danger: #e74c3c;
@@ -29,18 +30,22 @@ $state-danger-bg: $danger;
 $state-danger-border: $danger;
 $alert-danger-text: #fff;
 
-// Heading font sizes
-$font-size-h1: 2.5rem;
-$font-size-h2: 2.1rem;
-$font-size-h3: 1.8rem;
-$font-size-h4: 1.4rem;
-$font-size-h5: 1.3rem;
-$font-size-h6: $font-size-h5;
+$font-size-base: 0.9rem;
 
+// Heading font sizes
+$h1-font-size: $font-size-base * 1.7;
+$h2-font-size: $font-size-base * 1.6;
+$h3-font-size: $font-size-base * 1.2;
+$h4-font-size: $font-size-base * 1.1;
+$h5-font-size: $font-size-base * 1;
+$h6-font-size: 0.9rem;
+
+// Other colors
+$white: #fff;
 $text-color: #555;
 $active-text-color: #fff;
 $gray-bg: #f4f4f4;
-$border-color: #ddd;
+$border-color: rgba($secondary, 0.2);
 $gray: $text-color;
 $gray-light: #888;
 $gray-lighter: #aaa;
@@ -56,12 +61,21 @@ $block-green: #94B933;
 $block-yellow: #CFBE00;
 $block-navy: #41589B;
 
-$headings-font-weight: 300;
+$headings-font-weight: 600;
 
 $icon-folder-color: #E1AE46;
 
-$nav-bg: #444;
+$nav-bg: $gray-bg;
 $nav-bg-hover: #333;
+$main-menu-width: 280px;
+$top-header-height: 60px;
+
+$shadow-color: rgba($secondary, 0.1);
+$shadow-lg: 8px 0 40px -8px $shadow-color;
+$shadow-md: 0 4px 20px -2px $shadow-color;
+$shadow-dropdown: 0 8px 18px $shadow-color;
+
+$border-radius-xl: .4rem;
 
 // Pagination
 $pagination-bg: $nav-bg;
@@ -80,7 +94,6 @@ $pagination-active-border: $pagination-border;
 $pagination-active-bg: $nav-bg-hover;
 $pagination-active-color: $pagination-hover-color;
 
-$border-radius-base: 0;
 
 // Select2 bootstrap css vars
 $input-border: $input-border-color;
@@ -91,28 +104,17 @@ $input-height-small: $input-height-sm;
 $input-height-large: $input-height-lg;
 $line-height-small: $line-height-sm;
 $line-height-large: $line-height-lg;
-$border-radius-small: $border-radius-sm;
-$border-radius-large: $border-radius-lg;
+
 $padding-base-vertical: $input-padding-y;
 $padding-base-horizontal: $input-padding-x;
 $padding-small-vertical: $input-padding-y-sm;
 $padding-small-horizontal: $input-padding-x-sm;
 $padding-large-vertical: $input-padding-y-lg;
 $padding-large-horizontal: $input-padding-x-lg;
+
 $btn-default-bg: $primary;
 $btn-default-color: #fff;
 $btn-default-border: $primary;
-
-/// Remove the unit of a length
-/// @param {Number} $number - Number to remove unit from
-/// @return {Number} - Unitless number
-@function strip-unit($number) {
-    @if type-of($number) == 'number' and not unitless($number) {
-        @return $number / ($number * 0 + 1);
-    }
-
-    @return $number;
-}
 
 @mixin reset-filter() {
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);

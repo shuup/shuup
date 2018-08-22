@@ -1,15 +1,18 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 html {
     height: 100%;
-    font-size: 62.5%;
 }
 
 body {
     background: $gray-bg;
     color: $text-color;
     font-family: 'Open Sans', sans-serif;
-    font-size: 1.6rem;
     font-weight: 400;
-    padding-top: 60px;  
+    padding-top: 60px;
     min-height: 100%;
 
     &.popup {
@@ -51,9 +54,7 @@ body {
 
 img {
     max-width: 100%;
-    max-height: 100%;
     height: auto;
-    width: auto;
 }
 
 .container, .container-fluid {
@@ -61,10 +62,14 @@ img {
 }
 
 #main-content {
-    margin-top: 100px;
+    margin-top: 0 !important;
     padding-top: 15px;
     margin-left: $main-menu-width;
     padding: 1.2em;
+
+    @include media-breakpoint-down(md) {
+        margin-left: 0;
+    }
 
     @include media-breakpoint-down(sm) {
         margin-left: 0;
@@ -138,13 +143,6 @@ canvas {
     .browse-text {
         margin-right: 10px;
     }
-}
-
-.dropdown-header {
-    text-transform: uppercase;
-    color: #999;
-    font-weight: normal;
-    font-size: 1.2rem;
 }
 
 .mt-0 {
