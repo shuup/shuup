@@ -23,7 +23,7 @@
         {% else %}
         {% block top %}
             {% if not iframe_mode %}
-                <header id="top-header">{% include "shuup/admin/base/_navigation.jinja" %}</header>
+                <header class="d-flex justify-content-center align-items-center site-search-nav" id="top-header">{% include "shuup/admin/base/_navigation.jinja" %}</header>
                 {% include "shuup/admin/base/_main_menu.jinja" %}
             {% endif %}
         {% endblock %}
