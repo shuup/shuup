@@ -1,23 +1,218 @@
-.btn {
-    border-radius: 0px;
-    border-width: 1px !important;
-    
-    &.btn-red {
-      background-color: $block-red;
-      color:#fff;
+@mixin btn-active-state($color, $darken) {
+    @include box-shadow(inset 0 4px 5px darken($color, $darken));
+    border-top-color: darken($color, $darken);
+    border-left-color: darken($color, $darken);
+    border-right-color: darken($color, $darken);
+}
+
+@mixin btn-hover-state($color, $darken) {
+    border-color: darken($color, $darken);
+    background: darken($color, $darken);
+}
+
+@mixin btn-override-mixin($color, $hover-darken, $active-darken, $dropdown-darken) {
+    border-color: $color;
+    background-color: $color;
+
+    &:hover, &:focus {
+        @include btn-hover-state($color, $hover-darken);
+        color: #fff;
+    }
+
+    &:active {
+        @include btn-active-state($color, $active-darken);
+    }
+
+    &.disabled, &[disabled] {
+        border-color: $color;
+        background-color: $color;
+    }
+
+    &.btn-inverse {
+        border-color: $color;
+        background: transparent;
+        color: $color;
+        &:hover, &:focus {
+            color: #fff;
+            background: $color;
+        }
+        &:active {
+            @include btn-active-state($color, $active-darken);
+        }
+    }
+
+    .btn + .dropdown-toggle {
+        border-left-color: darken($color, $dropdown-darken);
+
+        &:active {
+            @include btn-active-state($color, $dropdown-darken);
+        }
+    }
+
+    .open > .dropdown-toggle {
+        background: darken($color, $dropdown-darken);
+        border-color: darken($color, $dropdown-darken);
+    }
+
+    .open > .btn + .dropdown-toggle {
+        background: darken($color, $dropdown-darken);
+        border-color: transparent;
+        border-left-color: darken($color, $dropdown-darken);
     }
 }
 
+
+// Overwrite some of the bootstraps default button styles
+.btn {
+    background: none;
+    padding: 7px 15px;
+    outline: 0 !important;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    @include transition(all 0.2s);
+
+    &-xs {
+        font-size: 0.8rem;
+        padding: 2px 8px;
+        line-height: 1.5;
+    }
+
+    &-sm {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        line-height: 1.5;
+    }
+
+    &-lg {
+        padding: 10px 20px;
+        font-size: 1.15rem;
+        line-height: 1.33333;
+    }
+
+    &:focus,
+    .btn.focus {
+        box-shadow: 0 0 0 0.1em rgba($primary, 0.25);
+    }
+
+    &.btn-red {
+        background-color: $block-red;
+        color: $white;
+    }
+
+    &.btn-cancel {
+        border-color: $state-danger-border !important;
+        color: $state-danger-border !important;
+        background-color: $white !important;
+    }
+}
+
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] .btn {
+    opacity: 0.45;
+}
+
 .btn-default {
-  border-color: $gray-lighter;
-  color: $gray; 
+    border-color: $border-color;
+    background-color: $white;
+    color: $text-color;
+    box-shadow: $shadow-md;
+
+    &:hover {
+        border-color: $primary;
+        box-shadow: $shadow-lg;
+    }
+
+    &:active {
+        background-color: darken($white, 2%);
+        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08);
+    }
+
+    &:focus {
+        border-color: $primary;
+
+        i {
+            color: $primary;
+        }
+    }
+
+    i {
+        transition: color 0.15s ease-in-out;
+    }
+}
+
+.btn-primary {
+    @include btn-override-mixin($primary, 7%, 12%, 11%);
+    box-shadow: 0 5px 10px -3px rgba(darken($primary, 10%), 0.5);
+    border: none;
+}
+
+.btn-success {
+    @include btn-override-mixin($success, 7%, 12%, 11%);
+}
+
+.btn-info {
+    @include btn-override-mixin($info, 7%, 12%, 11%);
+}
+
+.btn-warning {
+    @include btn-override-mixin($warning, 6%, 12%, 10%);
+}
+
+.btn-danger {
+    @include btn-override-mixin($danger, 10%, 17%, 13%);
+}
+
+.btn-gray {
+    color: #fff;
+    @include btn-override-mixin($gray-light, 10%, 15%, 11%);
 }
 
 .btn-inverse {
-  border-color: $gray-lighter;
+    background-color: rgba($secondary, 0.05);
+    border-color: transparent;
+    color: rgba($secondary, 0.8);
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
 
-  &:hover {
-    background-color: rgba($gray, 0.12);
-    color: $gray;
-  }
+    i {
+        opacity: 0.6;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: rgba($secondary, 0.12);
+        color: rgba($secondary, 0.9);
+
+        i {
+            opacity: 0.8;
+        }
+    }
+
+    &:active,
+    &:focus {
+        box-shadow: 0 0 0 0.2rem rgba($secondary, 0.3);
+    }
+}
+
+.btn-label {
+    background-color: rgba($secondary, 0.05);
+    color: rgba($secondary, 0.7);
+    border-radius: 100px;
+
+    &:hover {
+        background-color: rgba($secondary, 0.1);
+        color: rgba($secondary, 0.9);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
+    }
+}
+
+.btn-icon {
+    i {
+        margin-right: 0.3rem;
+    }
 }

@@ -4,8 +4,8 @@
     width: 100%;
     padding: 10px;
     background: #fff;
-    border: solid #ededed;
-    border-width: 1px;
+    border-radius: $border-radius-xl;
+    box-shadow: $shadow-md;
 
     @include media-breakpoint-down(md)  {
         display: block !important;
@@ -28,8 +28,8 @@
                 }
             }
 
-            .toggle-contents i { 
-                transform: rotate(90deg); 
+            .toggle-contents i {
+                transform: rotate(90deg);
             }
         }
 
@@ -110,7 +110,7 @@
     }
 
     .contact-addresses {
-        .billing-address, 
+        .billing-address,
         .shipping-address {
             margin-bottom: 50px;
 
@@ -120,8 +120,8 @@
                 margin-bottom: 30px;
                 padding-bottom: 10px;
 
-                i { 
-                    margin-right: 5px; 
+                i {
+                    margin-right: 5px;
                 }
             }
         }
@@ -142,10 +142,10 @@
     }
 
     .dl-horizontal {
-        dd { 
-            margin-bottom: 5px; 
+        dd {
+            margin-bottom: 5px;
         }
-        
+
         @include media-breakpoint-up(md) {
             dd { margin-left: 220px; }
             dt { width: 200px; }
@@ -170,7 +170,7 @@
         .toggle-contents {
             display: block;
         }
-        
+
         .collapse {
             display: none;
         }
