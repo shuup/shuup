@@ -231,7 +231,7 @@ class DropdownActionButton(BaseActionButton):
         super(DropdownActionButton, self).__init__(**kwargs)
 
     def render_dropdown(self, request):
-        yield '<div class="dropdown-menu">'
+        yield '<div class="dropdown-menu dropdown-menu-right">'
         for item in self.items:
             for bit in item.render(request):
                 yield bit
@@ -333,7 +333,7 @@ class DropdownDivider(BaseActionButton):
     base_css_classes = ()
 
     def render(self, request):
-        yield '<li class="divider"></li>'
+        yield '<div class="dropdown-divider"></div>'
 
 
 class DropdownHeader(BaseActionButton):
@@ -433,7 +433,7 @@ def get_default_edit_toolbar(
         icon="fa fa-save",
         form_id=save_form_id,
         text=_("Save"),
-        extra_css_class="btn-success",
+        extra_css_class="btn-primary",
         required_permissions=required_permissions,
     )
 
@@ -441,7 +441,7 @@ def get_default_edit_toolbar(
         save_dropdown = DropdownActionButton([
             DropdownItem(onclick="setNextActionAndSubmit('%s', 'return')" % save_form_id, text=_("Save and Exit")),
             DropdownItem(onclick="setNextActionAndSubmit('%s', 'new')" % save_form_id, text=_("Save and Create New")),
-        ], split_button=default_save_button, extra_css_class="btn-success", required_permissions=required_permissions)
+        ], split_button=default_save_button, extra_css_class="btn-primary", required_permissions=required_permissions)
         toolbar.append(save_dropdown)
     else:
         toolbar.append(default_save_button)
