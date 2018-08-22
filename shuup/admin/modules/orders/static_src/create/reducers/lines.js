@@ -40,8 +40,10 @@ function setLineProperties(linesState, lineId, props) {
 }
 
 function getFormattedStockCounts(line) {
-    const physicalCount = ensureNumericValue(line.physicalCount);
-    const logicalCount = ensureNumericValue(line.logicalCount);
+    const physicalCount = parseFloat(ensureNumericValue(line.physicalCount));
+    const logicalCount = parseFloat(ensureNumericValue(line.logicalCount));
+
+
 
     return {
         physicalCount: physicalCount.toFixed(line.salesDecimals) + " " + line.salesUnit,
@@ -75,7 +77,7 @@ function getDiscountsAndTotal(quantity, baseUnitPrice, unitPrice, updateUnitPric
 
 function updateLineFromProduct(state, {payload}) {
     const {id, product} = payload;
-    const line = _.detect(state, (sLine) => sLine.id === id);
+    const line = _.find(state, (sLine) => sLine.id === id);
     if (!line) {
         return state;
     }
@@ -108,7 +110,7 @@ function updateLineFromProduct(state, {payload}) {
 
 function setLineProperty(state, {payload}) {
     const {id, property, value} = payload;
-    const line = _.detect(state, (sLine) => sLine.id === id);
+    const line = _.find(state, (sLine) => sLine.id === id);
     var updates = {};
     if (line) {
         switch (property) {
