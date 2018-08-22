@@ -12,7 +12,7 @@ When using multiple language_dependent_content_tabs in a single page, do remembe
 <div class="language-dependent-content">
     {% if form.languages|length > 1 %}
     <div class="row language-tabs">
-        <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+        <div class="col-12">
             <ul class="nav nav-tabs">
                 {% for language in form.languages %}
                 <li role="presentation" {% if language == shuup_admin.get_current_language() %}class="active"{% endif %} data-lang="{{ language }}">
