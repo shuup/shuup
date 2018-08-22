@@ -1,0 +1,41 @@
+/// Remove the unit of a length
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+
+    @return $number;
+}
+
+@mixin dropdown-arrow($dir) {
+    &::before {
+        content: '';
+        position: absolute;
+        @if $dir == top-left {
+            top: -5px;
+            left: 0.9rem;
+            transform: rotate(45deg);
+        }
+        @if $dir == top-right {
+            top: -5px;
+            right: 0.9rem;
+            transform: rotate(45deg);
+        }
+        @if $dir == bottom-left {
+            bottom: -5px;
+            left: 0.9rem;
+            transform: rotate(-135deg);
+        }
+        @if $dir == bottom-right {
+            bottom: -5px;
+            right: 0.9rem;
+            transform: rotate(-135deg);
+        }
+        background-color: $white;
+        width: 10px;
+        height: 10px;
+        box-shadow: -1px -1px 0 $border-color;
+    }
+}
