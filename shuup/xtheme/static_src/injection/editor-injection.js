@@ -16,35 +16,52 @@ import ajax from "../lib/ajax";
 
 var _sidebarDiv = null;
 var _sidebarIframe = null;
+var _sidebarToggler = null;
 
 function getSidebarDiv() {
     if (_sidebarDiv === null) {
-        _sidebarDiv = el("div", {id: "xt-edit-sidebar"}, [
-            el("div.xt-sidebar-toggler", {
-                $events: {
-                    click: () => {
-                        setSidebarVisibility();
-                    }
-                }
-            }, [el("i.fa"), "Toggle Editor"]),
-            (_sidebarIframe = el("iframe", {id: "xt-edit-sidebar-iframe"}))
+        _sidebarDiv = el("div", { id: "xt-edit-sidebar" }, [
+            el("div", { id: "xt-edit-sidebar-container" },
+                (_sidebarIframe = el("iframe", {
+                    id: "xt-edit-sidebar-iframe"
+                }))
+            )
         ]);
         document.body.appendChild(_sidebarDiv);
     }
     return _sidebarDiv;
 }
 
+function getSidebarToggler() {
+    if (_sidebarToggler === null) {
+        _sidebarToggler = el("div", {
+            id: "xt-sidebar-toggler",
+            $events: {
+                click: () => {
+                    setSidebarVisibility();
+                }
+            }
+        }, [el("i.fa"), gettext("Toggle Editor")])
+        document.body.appendChild(_sidebarToggler);
+    }
+    return _sidebarToggler;
+}
+
 function getSidebarIframe() {
     getSidebarDiv();
+    getSidebarToggler();
     return _sidebarIframe;
 }
 
 function setSidebarVisibility(visible) {
     const sidebarDiv = getSidebarDiv();
+    const sidebarToggler = getSidebarToggler();
     if (visible === undefined) {
         sidebarDiv.classList.toggle("visible");
+        sidebarToggler.classList.toggle("visible");
     } else {
         sidebarDiv.classList.toggle("visible", !!visible);
+        sidebarToggler.classList.toggle("visible", !!visible);
     }
 }
 
@@ -77,7 +94,7 @@ function openPlaceholderEditor(domElement) {
 }
 
 function addEditToggleMarkup() {
-    const hidden = (name, value) => el("input", {type: "hidden", name, value});
+    const hidden = (name, value) => el("input", { type: "hidden", name, value });
     const editing = (window.XthemeEditorConfig.edit);
     if (!document.querySelector(".xt-ph")) {
         // No placeholders in the DOM, so no need to show an Edit button here.
@@ -88,13 +105,13 @@ function addEditToggleMarkup() {
             "action": window.XthemeEditorConfig.commandUrl,
             "method": "POST"
         }, [
-            hidden("csrfmiddlewaretoken", window.XthemeEditorConfig.csrfToken),
-            hidden("path", location.href),
-            hidden("command", (editing ? "edit_off" : "edit_on")),
-            el("button", {
-                "type": "submit"
-            }, (editing ? gettext("Exit Edit") : gettext("Edit Page")))
-        ])
+                hidden("csrfmiddlewaretoken", window.XthemeEditorConfig.csrfToken),
+                hidden("path", location.href),
+                hidden("command", (editing ? "edit_off" : "edit_on")),
+                el("button", {
+                    "type": "submit"
+                }, (editing ? gettext("Exit Edit") : gettext("Edit Page")))
+            ])
     ]);
     let nav = document.querySelector(".navbar-admin-tools .navbar-nav")
     nav.insertBefore(li, nav.firstChild);
@@ -116,7 +133,7 @@ function handleMessage(event) {
         return;   // Not sure where to put output anyway
     }
     ajax({
-        url: mutateURL(location.href, {"_uncache_": +new Date()}),
+        url: mutateURL(location.href, { "_uncache_": +new Date() }),
         success: (text) => {
             const newDoc = document.implementation.createHTMLDocument();
             newDoc.body.innerHTML = text;
