@@ -2,23 +2,10 @@
   "name": "shuup.admin",
   "version": "2.0.0",
   "description": "Shuup Team <shuup@shuup.com>",
-  "main": "",
+  "main": "build_resources.js",
   "scripts": {
-    "watch:styles:base": "parcel watch --no-hmr -d static/shuup_admin/css static_src/base/scss/style.scss -o base",
-    "watch:styles:dashboard": "parcel watch --no-hmr -d static/shuup_admin/css static_src/dashboard/scss/dashboard.scss",
-    "watch:styles:wizard": "parcel watch --no-hmr -d static/shuup_admin/css static_src/wizard/scss/wizard.scss",
-    "watch:styles:media": "parcel watch --no-hmr -d static/shuup_admin/css modules/media/static_src/media/browser/media-browser.scss",
-    "watch:scripts:base": "parcel watch --no-hmr -d static/shuup_admin/js static_src/base/js/base.js",
-    "watch:scripts:contact_group": "parcel watch --no-hmr -d static/shuup_admin/js static_src/contact_group/edit-members.js -o contact-group",
-    "watch:scripts:dashboard": "parcel watch --no-hmr -d static/shuup_admin/js static_src/dashboard/js/dashboard.js --global Chart",
-    "watch:scripts:media": "parcel watch --no-hmr -d static/shuup_admin/js modules/media/static_src/media/browser/Browser.js -o media-browser --global MediaBrowser",
-    "watch:scripts:orders": "parcel watch --no-hmr -d static/shuup_admin/js modules/orders/static_src/create/index.js -o order-creator.js --global OrderCreator",
-    "watch:scripts:picotable": "parcel watch --no-hmr -d static/shuup_admin/js static_src/picotable/picotable.js --global Picotable",
-    "watch:scripts:product": "parcel watch --no-hmr -d static/shuup_admin/js static_src/product/edit_media.js -o product",
-    "watch:scripts:product_var": "parcel watch --no-hmr -d static/shuup_admin/js modules/products/static_src/product-variation-variable-editor.js",
-    "watch:scripts:vendor": "parcel watch --no-hmr -d static/shuup_admin/js static_src/vendor/vendor.js",
-    "watch:scripts:wizard": "parcel watch --no-hmr -d static/shuup_admin/js static_src/wizard/js/wizard.js",
-    "watch": "concurrently --kill-others-on-fail npm:watch:*"
+    "watch": "node build_resources --watch",
+    "build": "node build_resources"
   },
   "shuup": {
     "static_build": true
@@ -53,6 +40,7 @@
     "redux-persist": "^3.5.0",
     "select2": "^4.0.6-rc.1",
     "select2-bootstrap-css": "^1.4.6",
+    "shuup-static-build-tools": "file:../../lib/shuup_static_build_tools",
     "sortablejs": "^1.7.0",
     "summernote": "^0.8.10",
     "tether": "^1.4.4",
@@ -65,7 +53,6 @@
     "babel-core": "^6.26.3",
     "babel-plugin-wildcard": "^5.0.0",
     "babel-preset-env": "^1.7.0",
-    "concurrently": "^3.6.0",
     "eslint": "^5.1.0",
     "parcel-bundler": "^1.9.6",
     "postcss-modules": "^1.1.0"
