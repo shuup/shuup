@@ -23,6 +23,6 @@ runBuildCommands([
     getParcelBuildCommand({
         cacheDir: "front",
         outputDir: "static/shuup/front/css",
-        entryFile: "static_src/less/style.js"
+        entryFile: "static_src/less/style.css"
     })
 ]);
