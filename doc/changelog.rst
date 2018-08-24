@@ -17,6 +17,7 @@ Bug fixes
 Admin
 ~~~~~
 
+- Hide menu categories that don't have entries
 - Split OrderStatus admin module from Order admin module
 - Add option to delete payments from order detail
 
