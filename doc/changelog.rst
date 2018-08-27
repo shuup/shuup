@@ -42,6 +42,7 @@ Front
 
 - Bump template helpers caches when shop products and manufacturers are saved
 - Add edit in admin button to toolbar to enable editing the current object in admin page
+- Make title visibility optional
 
 General
 ~~~~~~~

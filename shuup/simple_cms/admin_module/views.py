@@ -40,6 +40,7 @@ class PageForm(MultiLanguageModelForm):
             'parent',
             'list_children_on_page',
             'show_child_timestamps',
+            'render_title',
         ]
         widgets = {
             "content": TextEditorWidget(attrs={"data-height": 500, "data-noresize": "true"})
