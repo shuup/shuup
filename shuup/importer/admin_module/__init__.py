@@ -50,3 +50,6 @@ class ImportAdminModule(AdminModule):
                 icon="fa fa-star"
             )
         ]
+
+    def get_required_permissions(self):
+        return ["shuup.change_shop"]

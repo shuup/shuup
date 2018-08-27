@@ -27,7 +27,7 @@ class SettingsModule(AdminModule):
                 "shuup.admin.modules.settings.views.SystemSettingsView",
                 name="settings.list",
                 permissions=get_default_model_permissions(Shop)
-            ),
+            )
         ]
 
     def get_menu_entries(self, request):
@@ -39,5 +39,8 @@ class SettingsModule(AdminModule):
                 category=SETTINGS_MENU_CATEGORY,
                 subcategory="other_settings",
                 ordering=4
-            ),
+            )
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(Shop)

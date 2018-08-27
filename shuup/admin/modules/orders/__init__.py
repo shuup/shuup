@@ -129,12 +129,7 @@ class OrderModule(AdminModule):
                 name="order.edit-addresses",
                 permissions=["shuup.change_order"]
             ),
-        ] + get_edit_and_list_urls(
-            url_prefix="^order-status",
-            view_template="shuup.admin.modules.orders.views.OrderStatus%sView",
-            name_template="order_status.%s",
-            permissions=get_default_model_permissions(OrderStatus)
-        )
+        ]
 
     def get_menu_entries(self, request):
         return [
@@ -146,16 +141,7 @@ class OrderModule(AdminModule):
                 subcategory="orders",
                 ordering=1,
                 aliases=[_("Show orders")]
-            ),
-            MenuEntry(
-                text=_("Order Status"),
-                icon="fa fa-inbox",
-                url="shuup_admin:order_status.list",
-                category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
-                ordering=1,
-                aliases=[_("List Statuses")]
-            ),
+            )
         ]
 
     def get_required_permissions(self):
@@ -201,8 +187,6 @@ class OrderModule(AdminModule):
             )
 
     def get_model_url(self, object, kind, shop=None):
-        if hasattr(object, "role"):
-            return derive_model_url(OrderStatus, "shuup_admin:order_status", object, kind)
         return derive_model_url(Order, "shuup_admin:order", object, kind)
 
     def get_help_blocks(self, request, kind):
@@ -220,3 +204,35 @@ class OrderModule(AdminModule):
                 category=HelpBlockCategory.ORDERS,
                 done=Order.objects.filter(shop=request.shop).exists() if kind == "setup" else False
             )
+
+
+class OrderStatusModule(AdminModule):
+    name = _("Order Status")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:order_status.list")
+
+    def get_urls(self):
+        return get_edit_and_list_urls(
+            url_prefix="^order-status",
+            view_template="shuup.admin.modules.orders.views.OrderStatus%sView",
+            name_template="order_status.%s",
+            permissions=get_default_model_permissions(OrderStatus)
+        )
+
+    def get_menu_entries(self, request):
+        return [
+            MenuEntry(
+                text=_("Order Status"),
+                icon="fa fa-inbox",
+                url="shuup_admin:order_status.list",
+                category=STOREFRONT_MENU_CATEGORY,
+                subcategory="settings",
+                ordering=1,
+                aliases=[_("List Statuses")]
+            ),
+        ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(OrderStatus)
+
+    def get_model_url(self, object, kind, shop=None):
+        return derive_model_url(OrderStatus, "shuup_admin:order_status", object, kind)
