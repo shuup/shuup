@@ -84,6 +84,7 @@ button, .xt-button {
         padding: 0px 6px;
         border: 1px solid #ddd;
         border-radius: 2px;
+        display: block;
         &:hover, &:focus {
             background: #eee;
         }
@@ -106,8 +107,10 @@ button, .xt-button {
     }
     .layout-row-cells {
         display: flex;
+        flex-direction: row;
         flex: 1;
         margin-right: 1px;
+
         .layout-cell {
             flex: 1;
             border: 1px solid #ddd;
@@ -119,6 +122,10 @@ button, .xt-button {
             font-size: 12px;
             padding: 0.5rem;
             border-radius: 2px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
             &.current, &:hover, &:focus {
                 background: @color-blue;
                 color: #fff;
@@ -155,6 +162,11 @@ form {
         margin-bottom: 10px;
         &[multiple]{
             height: auto;
+        }
+
+        // prevent zoom on mobile devices
+        @media (max-width: 960px) and (-webkit-min-device-pixel-ratio:0) {
+            font-size: 16px;
         }
     }
     textarea {
