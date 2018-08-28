@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Simple CMS
+~~~~~~~~~~
+
+- Add option to use custom templates when rendering pages
+
 Bug fixes
 ~~~~~~~~~
 
@@ -49,6 +54,7 @@ Front
 - Bump template helpers caches when shop products and manufacturers are saved
 - Add edit in admin button to toolbar to enable editing the current object in admin page
 - Replace CDN styles with local packages
+- Title visibility in CMS pages is now optional
 
 General
 ~~~~~~~

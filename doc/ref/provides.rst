@@ -311,3 +311,6 @@ Simple CMS Provide Categories
 
 ``admin_page_form_part``
     Additional ``FormPart`` classes for Page editing. See :doc:`example <../howto/new_tab>`.
+
+``simple_cms_template``
+    List of available template objects that can be used to render CMS pages.

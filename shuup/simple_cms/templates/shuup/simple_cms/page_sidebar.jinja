@@ -1,0 +1,47 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block before_content_title %}
+    <div class="col-md-3 categories-nav page">
+        {{ category_macros.render_category_menu() }}
+    </div>
+{% endblock %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block content_title %}
+    {% if page.render_title %}
+        {{ page.title }}
+    {% endif %}
+{% endblock %}
+{% block extrameta %}
+{{ macros.render_metadata(page, page.title, page.get_html(), "page") }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+        {% for ancestor in page.get_ancestors() if ancestor.is_visible() %}
+            <li><a href="/{{ ancestor.url }}">{{ ancestor.title }}</a></li>
+        {% endfor %}
+        <li class="active">{{ page.title }}</li>
+    </ol>
+{% endblock %}
+{% block content %}
+    <div class="col-md-8">
+        {{ page.get_html()|safe }}
+        {% if page.list_children_on_page %}
+            {# TODO: add pagination for children list #}
+            {% for child in page.children.visible(request.shop).order_by("-available_from") %}
+                <div class="row">
+                    <a href="/{{ child.url }}"><h2>{{ child.title }}</h2></a>
+                    {% if child.available_from and page.show_child_timestamps %}
+                        <small>{{ child.available_from|datetime }}</small>
+                    {% endif %}
+                    <p>{{ child.get_html()|safe|striptags|truncate(256) }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% placeholder "cms_page" %}{% endplaceholder %}
+    </div>
+{% endblock %}
+{% block extrajs %}
+    {{ category_macros.render_extrajs() }}
+{% endblock %}
