@@ -70,7 +70,6 @@ class ProductBaseForm(MultiLanguageModelForm):
             "keywords",
             "name",
             "slug",
-            "status_text",
             "variation_name",
         )
         widgets = {
@@ -125,7 +124,7 @@ class ProductBaseForm(MultiLanguageModelForm):
             Product, instance=self.instance, cleaned_data=self.cleaned_data)
 
 
-class ShopProductForm(forms.ModelForm):
+class ShopProductForm(MultiLanguageModelForm):
     class Meta:
         model = ShopProduct
         fields = (
@@ -146,6 +145,8 @@ class ShopProductForm(forms.ModelForm):
             "payment_methods",
             "primary_category",
             "categories",
+            # i18n
+            "status_text",
             # TODO: "shop_primary_image",
         )
         help_texts = {

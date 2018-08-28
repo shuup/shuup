@@ -180,10 +180,10 @@
                 id="add-to-cart-button-{{ shop_product.product.id }}"{% if not orderable %} disabled{% endif %}>
             <i class="fa fa-shopping-cart"></i> {{ button_text }}
         </button>
-        {% if not orderable %}
-            <p class="text-right text-muted">
-                <i class="fa fa-info-circle text-info"></i> {% trans %}Product is not orderable.{% endtrans %}
-            </p>
+        {% if shop_product.status_text %}
+        <p class="text-right">
+            <i class="fa fa-info-circle text-info"></i> {{ shop_product.status_text }}
+        </p>
         {% endif %}
     </div>
 {% endmacro %}

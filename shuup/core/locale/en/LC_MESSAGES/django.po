@@ -1473,6 +1473,15 @@ msgid ""
 "description of your product."
 msgstr ""
 
+msgid "status text"
+msgstr ""
+
+msgid ""
+"This text will be shown alongside the product in the shop. It is useful for "
+"informing customers of special stock numbers or preorders. (Ex.: \"Available "
+"in a month\")"
+msgstr ""
+
 msgid ""
 "Invalid display unit: Internal unit of the selected display unit does not "
 "match with the sales unit of the product"
@@ -1488,6 +1497,9 @@ msgid "The Product is invisible to users not logged in."
 msgstr ""
 
 msgid "This product is not visible to your group."
+msgstr ""
+
+msgid "The product is not purchasable"
 msgstr ""
 
 msgid "The product has no supplier."
@@ -1751,15 +1763,6 @@ msgid ""
 "You can enter keywords that describe your product. This will help your "
 "shoppers learn about your products. It will also help shoppers find them in "
 "the store and on the web."
-msgstr ""
-
-msgid "status text"
-msgstr ""
-
-msgid ""
-"This text will be shown alongside the product in the shop. It is useful for "
-"informing customers of special stock numbers or preorders. (Ex.: \"Available "
-"in a month\")"
 msgstr ""
 
 msgid "variation name"

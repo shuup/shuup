@@ -384,6 +384,12 @@ def test_create_shop_product(admin_user):
     assert response.status_code == status.HTTP_201_CREATED
     assert ShopProduct.objects.count() == 1
 
+    # verify shop product data
+    for lang in ("en", "pt-br"):
+        activate(lang)
+        shop_product = ShopProduct.objects.first()
+        _check_shop_product_basic_data(shop_product, shop_data, lang)
+
 
 def test_product_add_attribute(admin_user):
     shop = get_default_shop()
@@ -747,7 +753,15 @@ def _get_shop_product_sample_data():
             CategoryFactory().id
         ],
         "default_price_value": 12.45,
-        "minimum_price_value": 5.35
+        "minimum_price_value": 5.35,
+        "translations": {
+            "en": {
+                "status_text": "available soon",
+            },
+            "pt-br": {
+                "status_text": "disponivel logo",
+            }
+        },
     }
 
 
@@ -824,7 +838,6 @@ def _check_product_basic_data(product, data, lang="en"):
     assert product.description == data["translations"][lang]["description"]
     assert product.slug == data["translations"][lang]["slug"]
     assert product.keywords == data["translations"][lang]["keywords"]
-    assert product.status_text == data["translations"][lang]["status_text"]
     assert product.variation_name == data["translations"][lang]["variation_name"]
 
     assert product.stock_behavior.value == data["stock_behavior"]
@@ -843,6 +856,22 @@ def _check_product_basic_data(product, data, lang="en"):
     assert product.depth == Decimal(data["depth"]).quantize(precision)
     assert product.net_weight == Decimal(data["net_weight"]).quantize(precision)
     assert product.gross_weight == Decimal(data["gross_weight"]).quantize(precision)
+
+
+def _check_shop_product_basic_data(shop_product, data, lang="en"):
+    precision = Decimal("0.01")
+
+    assert shop_product.visibility.value == data["visibility"]
+    assert shop_product.visibility_limit.value == data["visibility_limit"]
+    assert shop_product.purchasable == data["purchasable"]
+
+    assert shop_product.shop.id == data["shop"]
+    assert shop_product.primary_category.id == data["primary_category"]
+    assert shop_product.categories.first().pk == data["categories"][0]
+    assert shop_product.suppliers.first().pk == data["suppliers"][0]
+    assert shop_product.default_price_value == Decimal(data["default_price_value"]).quantize(precision)
+
+    assert shop_product.status_text == data["translations"][lang]["status_text"]
 
 
 def _get_client(admin_user):

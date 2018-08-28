@@ -339,15 +339,6 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
                 "It will also help shoppers find them in the store and on the web."
             )
         ),
-        status_text=models.CharField(
-            max_length=128, blank=True,
-            verbose_name=_('status text'),
-            help_text=_(
-                'This text will be shown alongside the product in the shop. '
-                'It is useful for informing customers of special stock numbers or preorders. '
-                '(Ex.: "Available in a month")'
-            )
-        ),
         variation_name=models.CharField(
             max_length=128, blank=True,
             verbose_name=_('variation name'),

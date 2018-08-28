@@ -63,6 +63,22 @@ def test_product_orderability():
 
 
 @pytest.mark.django_db
+def test_purchasability():
+    anon_contact = AnonymousContact()
+    shop_product = get_default_shop_product()
+    supplier = get_default_supplier()
+    assert shop_product.purchasable
+
+    shop_product.raise_if_not_orderable(supplier=supplier, customer=anon_contact, quantity=1)
+    assert shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1)
+
+    with modify(shop_product, purchasable=False):
+        with pytest.raises(ProductNotOrderableProblem):
+            shop_product.raise_if_not_orderable(supplier=supplier, customer=anon_contact, quantity=1)
+        assert not shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1)
+
+
+@pytest.mark.django_db
 def test_product_minimum_order_quantity(admin_user):
     shop_product = get_default_shop_product()
     supplier = get_default_supplier()

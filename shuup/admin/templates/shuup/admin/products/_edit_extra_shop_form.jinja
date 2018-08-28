@@ -1,4 +1,5 @@
 {% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 {# use the base form #}
 {% set base_form_name = form_def.name.split('_')[0] %}
 {% set shop_product_form = form[base_form_name] %}
@@ -10,6 +11,13 @@
         {% trans %}Strictly shop related information. For example set the minimum price applicable in this shop.{% endtrans %}<br>
         {% trans shop_name=shop_name %}These settings apply only for shop: <b>{{ shop_name }}</b>.{% endtrans %}
     </p>
+
+    {% call(form, language, map) language_dependent_content_tabs(shop_product_form, tab_id_prefix="shop-language") %}
+        {{ bs3.field(shop_product_form[map.status_text]) }}
+    {% endcall %}
+
+    {{ bs3.field(shop_product_form.purchasable) }}
+
     {{ bs3.field(shop_product_form.visibility_limit) }}
     {{ bs3.field(shop_product_form.visibility_groups) }}
 
@@ -24,6 +32,5 @@
     {{ bs3.field(shop_product_form.limit_shipping_methods) }}
     {{ bs3.field(shop_product_form.payment_methods) }}
     {{ bs3.field(shop_product_form.shipping_methods) }}
-
 {% endcall %}
 

@@ -22,7 +22,6 @@
     {% call(form, language, map) language_dependent_content_tabs(product_form, tab_id_prefix="additional-language") %}
         {{ bs3.field(product_form[map.slug]) }}
         {{ bs3.field(product_form[map.variation_name]) }}
-        {{ bs3.field(product_form[map.status_text]) }}
         {{ bs3.field(product_form[map.keywords]) }}
     {% endcall %}
 {% endcall %}
