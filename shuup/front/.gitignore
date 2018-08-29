@@ -1,3 +1,9 @@
 node_modules
 bower_components
 generated_resources.txt
+static/shuup/front/css/*.woff
+static/shuup/front/css/*.woff2
+static/shuup/front/css/*.eot
+static/shuup/front/css/*.svg
+static/shuup/front/css/*.ttf
+

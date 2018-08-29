@@ -1,4 +1,3 @@
-// --- Bootstrap 3 ---
 @bs-path: "~bootstrap/less";
 
 // Core variables and mixins
@@ -49,6 +48,12 @@
 @import "@{bs-path}/utilities.less";
 @import "@{bs-path}/responsive-utilities.less";
 
+@import "summernote.less";
+
+@import "~open-sans-all/less/variables.less";
+@OpenSansFontPath: "../../node_modules/open-sans-all/fonts";
+@import "~open-sans-all/less/open-sans.less";
+
 
 // --- Font Awesome Icons ---
 @fa-path: "~font-awesome/less";
@@ -67,15 +72,3 @@
 @import "@{fa-path}/stacked.less";
 @import "@{fa-path}/icons.less";
 @import "@{fa-path}/screen-reader.less";
-
-// --- Bootstrap Select Styles ---
-@bs-select-path: "~bootstrap-select/less";
-@import "@{bs-select-path}/bootstrap-select.less";
-
-// Vendored Styles
-@import "~simplelightbox/dist/simplelightbox";
-
-
-@import "~open-sans-all/less/variables.less";
-@OpenSansFontPath: "../../node_modules/open-sans-all/fonts";
-@import "~open-sans-all/less/open-sans.less";
