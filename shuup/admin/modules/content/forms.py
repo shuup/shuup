@@ -274,6 +274,7 @@ class ContentWizardForm(forms.Form):
                     title=title,
                     content=rendered_content,
                     visible_in_menu=False,
+                    render_title=True,
                     url=page_identifier,
                     available_from=datetime.now()
                 )

@@ -1,7 +1,13 @@
 {% extends "shuup/front/base.jinja" %}
 
-{% block title %}{{ page.title }}{% endblock %}
-{% block content_title %}{{ page.title }}{% endblock %}
+    {% block title %}{{ page.title }}{% endblock %}
+
+    {% block content_title %}
+        {% if page.render_title %}
+            {{ page.title }}
+        {% endif %}
+    {% endblock %}
+
 {% block extrameta %}
 {{ macros.render_metadata(page, page.title, page.get_html(), "page") }}
 {% endblock %}

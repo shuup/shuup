@@ -11,6 +11,8 @@ from django.core.cache import cache
 from django.http.response import Http404
 from django.utils import translation
 
+from bs4 import BeautifulSoup
+
 from shuup.core.models import ShopStatus
 from shuup.simple_cms.models import Page
 from shuup.simple_cms.views import PageView
@@ -115,3 +117,15 @@ def test_multilanguage_page_404_no_xlate(rf):
         with pytest.raises(Http404):
             response = view_func(request, url="no_content-udm")  # Using Udmurt URL, but xlate is Finnish . . .
             assert response.status_code == 404  # ... should 404
+
+
+@pytest.mark.django_db
+def test_render_page_title(rf):
+    page = create_page(render_title=False, available_from=datetime.date(1988, 1, 1), shop=get_default_shop())
+    view_func = PageView.as_view()
+    request = apply_request_middleware(rf.get("/"))
+    response = view_func(request, url=page.url)
+    response.render()
+    soup = BeautifulSoup(response.content)
+    title = soup.find("h1", class_= "page-header").text
+    assert title == "\n"
