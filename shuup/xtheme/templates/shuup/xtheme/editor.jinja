@@ -2,16 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ static("xtheme/editor.css") }}">
     <script src="{{ static("shuup_admin/js/vendor.js") }}"></script>
     <script>var CSRF_TOKEN = "{{ csrf_token_str }}";</script>
     <script>var ShuupAdminConfig = {{ shuup_admin.get_config()|json }};</script>
     <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}"></script>
     <script src="{{ static("xtheme/editor.js") }}"></script>
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote.css" rel="stylesheet">
 </head>
 <body>
 <div id="global-toolbar">

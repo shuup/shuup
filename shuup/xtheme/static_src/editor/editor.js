@@ -11,6 +11,7 @@ import domready from "../lib/domready";
 import { mutate } from "../lib/qs";
 import el from "../lib/el";
 import $ from "../lib/miniq";
+import "../../node_modules/summernote/src/js/summernote.js";
 
 
 function post(args) {
