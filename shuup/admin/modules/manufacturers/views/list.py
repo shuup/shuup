@@ -20,6 +20,14 @@ class ManufacturerListView(PicotableListView):
     model = Manufacturer
     default_columns = [
         Column(
+            "logo",
+            _(u"Logo"),
+            display="logo",
+            class_name="text-center",
+            raw=True,
+            ordering=1,
+            sortable=False),
+        Column(
             "name",
             _(u"Name"),
             sort_field="name",

@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
+from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
@@ -41,7 +42,7 @@ class ManufacturerModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_default_model_permissions(Manufacturer)
+        return get_default_model_permissions(Manufacturer) | get_default_model_permissions(File)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Manufacturer, "shuup_admin:manufacturer", object, kind)

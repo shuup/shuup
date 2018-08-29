@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from filer.fields.image import FilerImageField
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.utils.analog import define_log_model
@@ -31,6 +32,10 @@ class Manufacturer(models.Model):
         "Enter the URL of the product manufacturer if you would like customers to be able to visit the manufacturer's "
         "website."
     ))
+
+    logo = FilerImageField(
+        verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL,
+        related_name="manufacturer_logos")
 
     class Meta:
         verbose_name = _('manufacturer')
