@@ -145,9 +145,9 @@ def _set_settings(browser, setting_type):
         assert not browser.is_text_present(text)
 
     #shuup_tests/browser/front/test_category_view.py
-    settings_xpath = "(//a[contains(text(),'Settings')])"
+    settings_xpath = "(//a[contains(text(),'Settings')])[2]"
     # go to settings
-    browser.find_by_xpath(settings_xpath).first.click()
+    browser.find_by_xpath(settings_xpath).click()
 
     # select settings
     for idx, (index_key, text) in enumerate(addable_fields):

@@ -227,7 +227,7 @@ def get_menu_entry_categories(request):
                 all_categories.add(category)
 
     # cleans categories that eventually have no entries
-    all_categories = [cat for cat in all_categories if cat.entries]
+    all_categories = [cat for cat in all_categories if cat.entries or cat.children]
     return [c for menu_identifier, c in six.iteritems(menu_categories) if c in all_categories]
 
 
