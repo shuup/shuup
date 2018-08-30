@@ -19,12 +19,19 @@ from shuup.core.shop_provider import get_shop
 
 
 class ManufacturerSerializer(serializers.ModelSerializer):
+
+    logo = serializers.SerializerMethodField()
+
     class Meta:
         model = Manufacturer
         exclude = ("identifier",)
         extra_kwargs = {
             "created_on": {"read_only": True}
         }
+
+    def get_logo(self, manufacturer):
+        if manufacturer.logo:
+            return self.context["request"].build_absolute_uri(manufacturer.logo.url)
 
 
 class ManufacturerViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, SearchableMixin, ModelViewSet):

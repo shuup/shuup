@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 22:05+0000\n"
+"POT-Creation-Date: 2018-08-29 23:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -921,6 +921,12 @@ msgid ""
 "able to visit the manufacturer's website."
 msgstr ""
 
+msgid "logo"
+msgstr ""
+
+msgid "Manufacturer logo. Will be shown on page."
+msgstr ""
+
 msgid "manufacturer"
 msgstr ""
 
@@ -1822,9 +1828,6 @@ msgid "product attributes"
 msgstr ""
 
 msgid "Check this if this service provider can be used when placing orders"
-msgstr ""
-
-msgid "logo"
 msgstr ""
 
 msgid "The service provider name."

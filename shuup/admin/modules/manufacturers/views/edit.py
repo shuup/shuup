@@ -10,25 +10,24 @@ from __future__ import unicode_literals
 from django import forms
 from django.conf import settings
 from django.db.models import Q
-from django.forms.models import ModelForm
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.forms import ShuupAdminFormNoTranslation
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Manufacturer, Shop
 
 
-class ManufacturerForm(ModelForm):
+class ManufacturerForm(ShuupAdminFormNoTranslation):
     class Meta:
         model = Manufacturer
-        exclude = ("identifier", "created_on")
+        fields = ("name", "shops", "url", "logo")
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super(ManufacturerForm, self).__init__(*args, **kwargs)
-
         # add shops field when superuser only
         if getattr(self.request.user, "is_superuser", False):
             self.fields["shops"] = Select2MultipleField(

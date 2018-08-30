@@ -8,7 +8,7 @@
 import django
 
 from ._auth import EmailAuthenticationForm
-from ._base import ShuupAdminForm
+from ._base import ShuupAdminForm, ShuupAdminFormNoTranslation
 
 if django.VERSION < (1, 11):
     from ._quick_select import (
@@ -24,6 +24,7 @@ else:
 __all__ = [
     "EmailAuthenticationForm",
     "ShuupAdminForm",
+    "ShuupAdminFormNoTranslation",
     "QuickAddRelatedObjectMultiSelect",
     "QuickAddRelatedObjectSelect"
 ]
