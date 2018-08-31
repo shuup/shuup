@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
+import mock
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.xtheme.utils import (
     FauxTheme, FauxView, get_jinja2_engine, get_request, plugin_override
@@ -20,6 +20,9 @@ from shuup_tests.xtheme.utils import (
 @pytest.mark.parametrize("global_type", (False, True))
 def test_rendering(edit, injectable, theme_class, global_type):
     request = get_request(edit)
+    request.resolver_match = mock.Mock()
+    request.resolver_match.app_name = "shuup"
+
     with override_current_theme_class(theme_class):
         with plugin_override():
             jeng = get_jinja2_engine()
@@ -31,6 +34,7 @@ def test_rendering(edit, injectable, theme_class, global_type):
             view.xtheme_injection = bool(injectable)
             output = template.render(context={
                 "view": view,
+                "request": request
             }, request=request)
 
             # From now on we render placholders in views that

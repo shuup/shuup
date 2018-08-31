@@ -11,12 +11,14 @@ import decimal
 import numbers
 
 import babel
+import six
 from django import forms
 from django.core.exceptions import ImproperlyConfigured
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import BLANK_CHOICE_DASH
 from django.forms.widgets import NumberInput
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from jsonfield.fields import JSONField
 
@@ -214,3 +216,29 @@ class HexColorField(models.CharField):
         kwargs["max_length"] = 9
         super(HexColorField, self).__init__(**kwargs)
         self.validators.append(RegexValidator("^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$", _("Invalid color")))
+
+
+class SeparatedValuesField(models.TextField):
+    """
+    https://stackoverflow.com/questions/1110153/what-is-the-most-efficient-way-to-store-a-list-in-the-django-models
+    """
+    def __init__(self, *args, **kwargs):
+        self.separator = kwargs.pop("separator", ",")
+        super(SeparatedValuesField, self).__init__(*args, **kwargs)
+
+    def from_db_value(self, value, expression, connection, context):
+        if isinstance(value, six.string_types):
+            return value.split(self.separator)
+        return []
+
+    def get_db_prep_value(self, value, connection, prepared=False):
+        if not value:
+            return
+        if (isinstance(value, list) or isinstance(value, tuple)):
+            return self.separator.join([force_text(s) for s in value])
+        if isinstance(value, six.string_types):
+            return value
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_db_prep_value(value)

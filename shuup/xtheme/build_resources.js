@@ -33,5 +33,15 @@ runBuildCommands([
         cacheDir: "xtheme",
         outputDir: "static/xtheme/",
         entryFile: "static_src/injection/editor-injection.js"
+    }),
+    getParcelBuildCommand({
+        cacheDir: "xtheme",
+        outputDir: "static/xtheme/admin/",
+        entryFile: "static_src/admin/snippet.js"
+    }),
+    getParcelBuildCommand({
+        cacheDir: "xtheme",
+        outputDir: "static/xtheme/admin/",
+        entryFile: "static_src/admin/snippet.less"
     })
 ]);

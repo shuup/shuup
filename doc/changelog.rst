@@ -37,6 +37,7 @@ Core
   to shop product. Show product status at the product detail under the basket button.
 - Enable context cache to accept string as the item argument
 - Add price info cache feature.
+- Add SeparatedValuesField to store a list value as a string separated by a character
 
 Classic Gray
 ~~~~~~~~~~~~
@@ -65,6 +66,7 @@ Xtheme
 
 - Add option to override context for admin. This makes it possible to define
   the logic and which themes are visible for your project.
+- Add global snippet injection feature
 
 Shuup 1.6.9
 -----------
