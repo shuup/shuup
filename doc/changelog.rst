@@ -58,6 +58,12 @@ Importer
 
 - Removed shop field from importer form and using the current admin shop
 
+Xtheme
+~~~~~~
+
+- Add option to override context for admin. This makes it possible to define
+  the logic and which themes are visible for your project.
+
 Shuup 1.6.9
 -----------
 
