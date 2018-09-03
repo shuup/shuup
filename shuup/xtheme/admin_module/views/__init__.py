@@ -9,8 +9,8 @@ from shuup.xtheme.admin_module.views._snippet import (
     SnippetDeleteView, SnippetEditView, SnippetListView
 )
 from shuup.xtheme.admin_module.views._theme import (
-    ActivationForm, get_theme_context, TemplateView, ThemeConfigDetailView,
-    ThemeConfigView, ThemeGuideTemplateView, ThemeWizardPane
+    ActivationForm, TemplateView, ThemeConfigDetailView, ThemeConfigView,
+    ThemeGuideTemplateView, ThemeWizardPane
 )
 
 __all__ = [
@@ -22,6 +22,5 @@ __all__ = [
     "ThemeConfigDetailView",
     "ThemeConfigView",
     "ThemeGuideTemplateView",
-    "ThemeWizardPane",
-    "get_theme_context"
+    "ThemeWizardPane"
 ]
