@@ -189,6 +189,15 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                 "The short description will be used to get the attention of your "
                 "customer with a small but precise description of your product."
             )
+        ),
+        status_text=models.CharField(
+            max_length=128, blank=True,
+            verbose_name=_('status text'),
+            help_text=_(
+                'This text will be shown alongside the product in the shop. '
+                'It is useful for informing customers of special stock numbers or preorders. '
+                '(Ex.: "Available in a month")'
+            )
         )
     )
 
@@ -299,6 +308,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         """
         for error in self.get_visibility_errors(customer):
             yield error
+
+        if not self.purchasable:
+            yield ValidationError(_('The product is not purchasable'), code="not_purchasable")
 
         if supplier is None and not self.suppliers.exists():
             # `ShopProduct` must have at least one `Supplier`.

@@ -33,6 +33,8 @@ Discounts
 Core
 ~~~~
 
+- Enable shop product purchasable attribute and move status text from product
+  to shop product. Show product status at the product detail under the basket button.
 - Enable context cache to accept string as the item argument
 - Add price info cache feature.
 
