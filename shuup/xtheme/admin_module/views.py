@@ -17,33 +17,12 @@ from django.views.generic.edit import FormView
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
-from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
+from shuup.utils.importing import cached_load
 from shuup.xtheme._theme import (
     get_theme_by_identifier, get_theme_cache_key, set_current_theme
 )
 from shuup.xtheme.models import ThemeSettings
-
-
-def get_theme_context(shop):
-    themes = []
-    active_theme = None
-
-    # create one ThemeSettings for each theme if needed
-    for theme in get_provide_objects("xtheme"):
-        if not theme.identifier:
-            continue
-
-        theme_settings = ThemeSettings.objects.get_or_create(theme_identifier=theme.identifier, shop=shop)[0]
-        themes.append(theme)
-
-        if theme_settings.active:
-            active_theme = theme
-
-    return {
-        "theme_classes": sorted(themes, key=lambda t: (t.name or t.identifier)),
-        "current_theme": active_theme
-    }
 
 
 class ActivationForm(forms.Form):
@@ -65,7 +44,7 @@ class ThemeWizardPane(WizardPane):
 
     def get_form_defs(self):
         shop = self.object
-        context = get_theme_context(shop)
+        context = cached_load("SHUUP_XTHEME_ADMIN_THEME_CONTEXT")(shop)
         context.update({"shop": shop})
 
         current_theme_class = (context["current_theme"] or context["theme_classes"][0])
@@ -115,7 +94,7 @@ class ThemeConfigView(FormView):
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigView, self).get_context_data(**kwargs)
         shop = get_shop(self.request)
-        context.update(get_theme_context(shop))
+        context.update(cached_load("SHUUP_XTHEME_ADMIN_THEME_CONTEXT")(shop))
         return context
 
     def form_valid(self, form):
