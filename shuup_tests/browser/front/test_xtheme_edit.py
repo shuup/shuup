@@ -107,13 +107,13 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_xtheme_edit_product(admin_user, browser, live_server, settings):
-    browser = initialize_admin_browser_test(browser, live_server, settings)  # Login to admin as admin user
-
     shop = factories.get_default_shop()
     supplier = factories.get_default_supplier()
     products = []
     for x in range(3):
         products.append(factories.create_product("test%s" % x, shop=shop, supplier=supplier, default_price=10))
+
+    browser = initialize_admin_browser_test(browser, live_server, settings)  # Login to admin as admin user
 
     browser.visit(live_server + "/")
     wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))

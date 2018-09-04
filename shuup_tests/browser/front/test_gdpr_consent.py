@@ -19,7 +19,9 @@ from shuup.testing.utils import initialize_front_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
+
 @pytest.mark.browser
+@pytest.mark.djangodb
 def test_gdpr_consent(browser, live_server, settings):
     browser = initialize_front_browser_test(browser, live_server)
 
