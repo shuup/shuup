@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Panu Tulimäki <panu@shuup.com>, 2016
+# Janne Tammi <janne@shuup.com>, 2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-12 00:45+0000\n"
-"PO-Revision-Date: 2017-09-23 23:06+0000\n"
-"Last-Translator: Janne Tammi <janne@shuup.com>\n"
+"POT-Creation-Date: 2018-07-25 10:46+0000\n"
+"PO-Revision-Date: 2018-09-04 16:13+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,6 +25,10 @@ msgstr "Asiakkaiden tuonti"
 msgid "Company Contact Importer"
 msgstr "Yritysten tuonti"
 
+#, python-format
+msgid "Image '%s' not found, please check whether the image exists."
+msgstr "Kuvaa '%s' ei löytynyt, ole hyvä ja tarkista onko kuva olemassa."
+
 msgid "Please add supplier to row before importing stock quantities."
 msgstr "Ole hyvä ja lisää toimittaja ennen kun voit tuoda varastosaldoja."
 
@@ -35,3 +40,59 @@ msgstr "Tällä toimittajalla ei ole varastonhallinta päällä. Tarkista toimit
 
 msgid "Product Importer"
 msgstr "Tuotteiden tuonti"
+
+msgid "Quantities"
+msgstr "Määrät"
+
+msgid "If you are importing products with quantities, ensure the following:"
+msgstr "Mikäli tuot tuotteita tuotemäärien kanssa, varmista seuraavat asiat:"
+
+#, python-format
+msgid ""
+"You have atleast one <a href=\"%(supplier_url)s\">supplier</a> with \"Stock "
+"Managed\" <strong>on</strong>."
+msgstr "Sinulla on vähintään <a href=\"%(supplier_url)s\">toimittaja</a>, jolle on asetettu \"varastonhallinta\" tilaan<strong>päällä</strong>."
+
+#, python-format
+msgid ""
+"your <a href=\"%(supplier_url)s\">supplier</a> has \"Stock Managed\" "
+"<strong>on</strong>. (Currently <strong>off</strong>)"
+msgstr "<a href=\"%(supplier_url)s\">toimittajallasi</a> on \"varastonhallinta\" <strong>päällä</strong>. (Tällä hetkellä <strong>pois päältä</strong>)"
+
+msgid "your import file has <strong>supplier</strong> field"
+msgstr "tuontitiedostossasi on <strong>toimittaja</strong>-kenttä"
+
+msgid "Images"
+msgstr "Kuvat"
+
+msgid "If you are importing products with images, ensure the following:"
+msgstr "Mikäli tuot tuotteita kuvien kanssa, varmista seuraavat asiat:"
+
+#, python-format
+msgid ""
+"Upload all product images using the <a href=\"%(media_browser_url)s\" "
+"target=\"_blank\">Media Browser</a>."
+msgstr "Lisää kaikki tuotekuvat käyttäen <a href=\"%(media_browser_url)s\" target=\"_blank\">Mediaselainta</a>."
+
+msgid ""
+"Use the image file name on <strong>image</strong> and/or "
+"<strong>images</strong> column(s)."
+msgstr "Käytä kuvan tiedostonimeä <strong>image</strong> ja/tai <strong>images</strong> sarakkeessa."
+
+msgid ""
+"<strong>images</strong> column can receive a comma-separated list of image "
+"names."
+msgstr "<strong>images</strong> sarake voi sisältää puolipisteillä erotetun listan kuvien nimistä."
+
+msgid ""
+"Image names can be the file name (e.g.: <em>product_001.png</em>) or the path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).\n"
+"        Using the full path will ensure that the correct image will be used when there is more than one image with the same name."
+msgstr "Kuvan nimi voi olla tiedostonnimi (kuten: <em>product_001.png</em>) tai polku kuvaan (kuten.: <em>Products/Images/product_001.jpeg</em>).\n        Käyttämällä koko polkua varmistat että oikeaa kuvaa käytetään kun järjestelmässä on useampi kuva samalla nimellä."
+
+msgid "Related objects"
+msgstr "Liittyvät objektit"
+
+msgid ""
+"Columns that are relations to other objects (like Category and Supplier) accept both the object ID number\n"
+"    and the object name. Make sure that when using the name, there should be only a single object for that given name."
+msgstr "Sarakkeet jotka liittyvät muihin objekteihin (kuten Kategorioihin tai Toimittajiin) hyväksyvät molemmat objektin ID:n tai nimen.\nKäyttäessäsi nimeä huomioi että järjestelmässä on vain yksi kohde objekti kyseisellä nimellä."

@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 20:39+0000\n"
-"PO-Revision-Date: 2018-07-26 16:56+0000\n"
+"POT-Creation-Date: 2018-08-16 22:09+0000\n"
+"PO-Revision-Date: 2018-09-04 16:07+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -840,9 +840,6 @@ msgstr "Aseta asiakkuus yritysasiakastilaan"
 msgid "Change customer mode to guest"
 msgstr "Aseta asiakkuus vierastilaan"
 
-msgid "Toggle navigation"
-msgstr "Näytä / piilota navigaatio"
-
 msgid "Tools"
 msgstr "Työkalut"
 
@@ -863,6 +860,17 @@ msgstr "YRITYS"
 
 msgid "PERSON CONTACT"
 msgstr "HENKILÖASIAKAS"
+
+msgid "Toggle navigation"
+msgstr "Näytä / piilota navigaatio"
+
+#, python-brace-format
+msgid "Edit '{object_title}' in administration page"
+msgstr "Muokkaa '{object_title}' hallinnassa"
+
+#, python-brace-format
+msgid "Edit {object_name} in Admin"
+msgstr "Muokkaa {object_name} hallinnassa"
 
 msgid "Shop Administration"
 msgstr "Kaupan hallinta"

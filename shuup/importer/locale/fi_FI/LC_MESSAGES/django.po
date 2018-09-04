@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 23:33+0000\n"
+"POT-Creation-Date: 2018-07-25 12:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
@@ -51,6 +51,13 @@ msgstr "%s ei ole tiedosto"
 
 msgid "File missing."
 msgstr "Tiedosto puuttuu."
+
+msgid "Failed to import the file."
+msgstr "Tiedoston tuonti epäonnistui."
+
+#, python-format
+msgid "Failed while preparing the file: %s."
+msgstr "Tiedoston valmistelussa tapahtui virhe: %s."
 
 msgid "Invalid parameters"
 msgstr "Virheelliset parametrit"
@@ -98,31 +105,6 @@ msgid "This importer provides example files. Click below to download them:"
 msgstr ""
 "Tämä tuonti-työkalu tarjoaa esimerkki tiedostoja. Klikkaa alempaa "
 "ladataksesi ne:"
-
-msgid "Note"
-msgstr "Huomaa"
-
-msgid "If you are importing products with quantities, ensure the following:"
-msgstr "Jos tuot tuotteita määrineen, varmista seuraava:"
-
-#, python-format
-msgid ""
-"You have atleast one <a href=\"%(url)s\">supplier</a> with \"Stock Managed\""
-" <b>on</b>."
-msgstr ""
-"Sinulla on ainakin yksi <a href=\"%(url)s\">toimittaja</a>, jolla on "
-"\"varastonhallinta\" <b>päällä</b>."
-
-#, python-format
-msgid ""
-"your <a href=\"%(url)s\">supplier</a> has \"Stock Managed\" <b>on</b>. "
-"(Currently <b>off</b>)"
-msgstr ""
-"sinun <a href=\"%(url)s\">toimittajalla</a> on \"varastonhallinta\" "
-"<b>päällä</b>. (Tällä hetkellä <b>pois päältä</b>)"
-
-msgid "your import file has <b>supplier</b> field"
-msgstr "tuontitiedostossasi on <b>toimittaja</b> kenttä"
 
 msgid "Continue"
 msgstr "Jatka"
@@ -258,6 +240,9 @@ msgstr "Tuonnin loki"
 
 msgid "Other messages"
 msgstr "Muut viestit"
+
+msgid "Import errors"
+msgstr "Virheitä tuonnissa"
 
 #, python-format
 msgid "Cannot import more than %s rows from one file."
