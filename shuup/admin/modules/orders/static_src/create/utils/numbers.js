@@ -17,7 +17,7 @@ function ensureNumericValue(value, defaultValue = 0, asInteger = false) {
     if (Number.isInteger(value) || asInteger) {
         return parseInt(value, 10);
     }
-    return parseFloat(value).toFixed(2);
+    return parseFloat(value);
 }
 
 export default ensureNumericValue;
