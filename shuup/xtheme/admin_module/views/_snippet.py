@@ -133,3 +133,10 @@ class SnippetDeleteView(BaseDeleteView):
 
     def get_queryset(self):
         return Snippet.objects.filter(shop=get_shop(self.request))
+
+    def delete(self, request, *args, **kwargs):
+        response = super(SnippetDeleteView, self).delete(request, *args, **kwargs)
+        shop = get_shop(self.request)
+        cache_key = GLOBAL_SNIPPETS_CACHE_KEY.format(shop_id=shop.pk)
+        cache.bump_version(cache_key)
+        return response
