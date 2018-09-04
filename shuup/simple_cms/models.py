@@ -111,8 +111,18 @@ class Page(MPTTModel, TranslatableModel):
         ),
         content=models.TextField(verbose_name=_('content'), help_text=_(
             "The page content. This is the text that is displayed when customers click on your page link."
+            "You can leave this empty and add all page content through placeholder editor in shop front."
+            "To edit the style of the page you can use the Snippet plugin which is in shop front editor."
         )),
     )
+    template_name = models.TextField(
+        max_length=500,
+        verbose_name=_("Template path"),
+        default=settings.SHUUP_SIMPLE_CMS_DEFAULT_TEMPLATE
+    )
+    render_title = models.BooleanField(verbose_name=_("render title"), default=True, help_text=_(
+        "Check this if this page should have a visible title"
+    ))
 
     objects = TreeManager.from_queryset(PageQuerySet)()
 

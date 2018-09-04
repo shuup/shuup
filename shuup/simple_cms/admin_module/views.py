@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.forms import DateTimeField
+from django.forms import ChoiceField, DateTimeField
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import (
@@ -18,6 +18,7 @@ from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
+from shuup.apps.provides import get_provide_objects
 from shuup.simple_cms.models import Page
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
@@ -38,8 +39,10 @@ class PageForm(MultiLanguageModelForm):
             'identifier',
             'visible_in_menu',
             'parent',
+            'template_name',
             'list_children_on_page',
             'show_child_timestamps',
+            'render_title',
         ]
         widgets = {
             "content": TextEditorWidget(attrs={"data-height": 500, "data-noresize": "true"})
@@ -49,7 +52,16 @@ class PageForm(MultiLanguageModelForm):
         self.request = kwargs.pop("request")
         kwargs.setdefault("required_languages", ())  # No required languages here
         super(PageForm, self).__init__(**kwargs)
+
         self.fields["parent"].queryset = Page.objects.filter(shop=get_shop(self.request))
+        self.fields["template_name"] = ChoiceField(
+            label=_("Template"),
+            required=False,
+            choices=[
+                (simple_cms_template.template_path, simple_cms_template.name)
+                for simple_cms_template in get_provide_objects("simple_cms_template")
+            ]
+        )
 
     def clean(self):
         """

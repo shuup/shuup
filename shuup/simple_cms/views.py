@@ -35,6 +35,7 @@ class PageView(DetailView):
 
         # get currently active language
         self.object = self.get_object()
+        # set the chosen template
         if not self.object.has_translation(get_language()):
             # Page hasn't been translated into the current language; that's always a 404
             raise Http404()
@@ -45,6 +46,10 @@ class PageView(DetailView):
 
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
+
+    def get_template_names(self):
+        object = self.get_object()
+        return [object.template_name]
 
     def get_queryset(self):
         if getattr(self.request.user, 'is_superuser', False):

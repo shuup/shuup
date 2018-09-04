@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-23 18:59+0000\n"
+"POT-Creation-Date: 2018-09-04 16:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -38,6 +38,9 @@ msgid "Available from"
 msgstr ""
 
 msgid "Available to"
+msgstr ""
+
+msgid "Template"
 msgstr ""
 
 msgid "URL already exists."
@@ -164,7 +167,18 @@ msgstr ""
 
 msgid ""
 "The page content. This is the text that is displayed when customers click on "
-"your page link."
+"your page link.You can leave this empty and add all page content through "
+"placeholder editor in shop front.To edit the style of the page you can use "
+"the Snippet plugin which is in shop front editor."
+msgstr ""
+
+msgid "Template path"
+msgstr ""
+
+msgid "render title"
+msgstr ""
+
+msgid "Check this if this page should have a visible title"
 msgstr ""
 
 msgid "page"
@@ -186,6 +200,12 @@ msgid "All pages are shown, even if not selected"
 msgstr ""
 
 msgid "Hide expired pages"
+msgstr ""
+
+msgid "Default Page"
+msgstr ""
+
+msgid "Page with sidebar"
 msgstr ""
 
 msgid "New Page"

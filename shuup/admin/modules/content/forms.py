@@ -275,6 +275,7 @@ class ContentWizardForm(forms.Form):
                     content=rendered_content,
                     visible_in_menu=False,
                     url=page_identifier,
+                    template_name=settings.SHUUP_SIMPLE_CMS_DEFAULT_TEMPLATE,
                     available_from=datetime.now()
                 )
 

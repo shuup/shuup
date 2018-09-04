@@ -30,6 +30,10 @@ class AppConfig(shuup.apps.AppConfig):
         "xtheme_plugin": [
             "shuup.simple_cms.plugins:PageLinksPlugin"
         ],
+        "simple_cms_template": [
+            "shuup.simple_cms.templates:SimpleCMSDefaultTemplate",
+            "shuup.simple_cms.templates:SimpleCMSTemplateSidebar",
+        ],
     }
 
     def ready(self):
