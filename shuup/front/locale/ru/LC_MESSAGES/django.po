@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Eugene MechanisM <eugene@mechanism.pro>, 2016
+# Eugene <eugene.mechanism@gmail.com>, 2016
 # Алекс Прометеев <promet.alex@gmail.com>, 2017
 # Translator HIO.E <translater@hiqe.ru>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 18:06+0000\n"
-"PO-Revision-Date: 2018-06-28 17:56+0000\n"
+"POT-Creation-Date: 2018-08-16 22:09+0000\n"
+"PO-Revision-Date: 2018-08-17 17:48+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -804,32 +804,58 @@ msgstr "Следующее"
 msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
 msgstr ""
 
-msgid "Toggle navigation"
-msgstr "Включить навигацию"
-
-msgid "Administration Tools"
+msgid "Change visibility limit to"
 msgstr ""
 
-msgid "Maintenance mode"
-msgstr "Режим обслуживания"
+msgid "show only visible products and categories"
+msgstr ""
 
-msgid "ON"
-msgstr "Включено"
+msgid "show all products and categories"
+msgstr ""
 
-msgid "OFF"
-msgstr "Выключено"
+msgid "Change customer to person contact mode"
+msgstr ""
 
-msgid "Shop Administration"
+msgid "Change customer to company contact mode"
+msgstr ""
+
+msgid "Change customer mode to guest"
 msgstr ""
 
 msgid "Tools"
 msgstr "Инструменты"
 
-msgid "Show only visible products and categories"
-msgstr "Показать только видимые товары и категории"
+msgid "Live"
+msgstr ""
 
-msgid "Show all products and categories"
-msgstr "Показать все товары и категории"
+msgid "Maintenance"
+msgstr ""
+
+msgid "Customer mode"
+msgstr ""
+
+msgid "GUEST"
+msgstr ""
+
+msgid "COMPANY CONTACT"
+msgstr ""
+
+msgid "PERSON CONTACT"
+msgstr ""
+
+msgid "Toggle navigation"
+msgstr "Включить навигацию"
+
+#, python-brace-format
+msgid "Edit '{object_title}' in administration page"
+msgstr ""
+
+#, python-brace-format
+msgid "Edit {object_name} in Admin"
+msgstr ""
+
+msgid "Shop Administration"
+msgstr ""
 
 msgid ""
 "There were errors on submitted form fields. Please check them and try again."
@@ -855,12 +881,6 @@ msgstr "Панель администратора"
 
 msgid "Log out"
 msgstr "Выйти"
-
-msgid "Username or email address"
-msgstr "Имя пользователя или адрес электронной почты"
-
-msgid "Password"
-msgstr "Пароль"
 
 msgid "New user? Register here!"
 msgstr "Новый пользователь? Зарегистрируйтесь здесь!"
@@ -994,6 +1014,9 @@ msgstr "Добавить в корзину"
 
 msgid "Product is not orderable."
 msgstr "Товар недоступен"
+
+msgid "Maintenance mode"
+msgstr "Режим обслуживания"
 
 msgid "Shop is currently down for maintenance."
 msgstr "В данный момент магазин находится на обслуживании."

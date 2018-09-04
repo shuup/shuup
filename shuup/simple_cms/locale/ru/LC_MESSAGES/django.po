@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 18:02+0000\n"
-"PO-Revision-Date: 2018-06-26 05:56+0000\n"
+"POT-Creation-Date: 2018-07-23 18:59+0000\n"
+"PO-Revision-Date: 2018-07-25 04:58+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -22,8 +22,8 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-msgid "Simple CMS"
-msgstr "Простое управление контентом"
+msgid "Content Pages"
+msgstr ""
 
 msgid "Pages"
 msgstr "Страницы"
@@ -71,10 +71,11 @@ msgstr "Дата создания"
 msgid "Page"
 msgstr "Страница"
 
-msgid "normal"
+msgid "Content in this placeholder is shown for this page only."
 msgstr ""
 
-msgid "revisioned"
+#, python-format
+msgid "Content in this placeholder is shown for %(title)s only."
 msgstr ""
 
 msgid "shop"
@@ -143,9 +144,6 @@ msgid ""
 "that this requires the children to be listed on the page as well."
 msgstr ""
 
-msgid "page type"
-msgstr ""
-
 msgid "deleted"
 msgstr ""
 
@@ -178,11 +176,6 @@ msgstr "страница"
 msgid "pages"
 msgstr "страницы"
 
-msgid ""
-"This page is protected against changes because it is a GDPR consent "
-"document."
-msgstr ""
-
 msgid "Untitled"
 msgstr "Без имени"
 
@@ -200,15 +193,6 @@ msgstr "Скрыть устаревшие страницы"
 
 msgid "New Page"
 msgstr "Новая Страница"
-
-msgid "General Information"
-msgstr "Общая информация"
-
-msgid "Availability"
-msgstr "Дооступность"
-
-msgid "Extras"
-msgstr "Дополнения"
 
 msgid "Home"
 msgstr "На главную"

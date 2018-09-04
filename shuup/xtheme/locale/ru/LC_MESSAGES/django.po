@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Eugene MechanisM <eugene@mechanism.pro>, 2016
+# Eugene <eugene.mechanism@gmail.com>, 2016
 # Translator HIO.E <translater@hiqe.ru>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-19 17:40+0000\n"
-"PO-Revision-Date: 2018-06-19 18:59+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2018-07-11 03:36+0000\n"
+"PO-Revision-Date: 2018-07-15 01:03+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,6 +67,30 @@ msgstr "Выбор стиля"
 
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Шрифты, цвета и стили для использования в вашей теме."
+
+msgid "Content in this placeholder is shown without limitations."
+msgstr ""
+
+#, python-format
+msgid ""
+"Content in this placeholder is shown for %(category_name)s category only."
+msgstr ""
+
+msgid "Content in this placeholder is shown for guests."
+msgstr ""
+
+msgid "Content in this placeholder is shown for company contacts."
+msgstr ""
+
+msgid "Content in this placeholder is shown for all logged in contacts."
+msgstr ""
+
+msgid "Content in this placeholder is shown for person contacts."
+msgstr ""
+
+#, python-format
+msgid "Content in this placeholder is shown for %(product_name)s only."
+msgstr ""
 
 msgid "Shop '{}' has no active theme"
 msgstr ""
@@ -141,6 +165,15 @@ msgstr "Оставьте незаполненным для ширины по у�
 msgid "Height (px)"
 msgstr "Высота (пикс.)"
 
+msgid "Newest"
+msgstr ""
+
+msgid "Best Selling"
+msgstr ""
+
+msgid "Random"
+msgstr ""
+
 msgid "Product Highlights"
 msgstr "Особенности продукта"
 
@@ -149,6 +182,12 @@ msgstr "Тип"
 
 msgid "Count"
 msgstr "Счёт"
+
+msgid "Only show sale items"
+msgstr ""
+
+msgid "Show only products that have discounts"
+msgstr ""
 
 msgid "Only show in-stock and orderable items"
 msgstr "Показать только товары в наличии и доступные для заказа"
@@ -217,6 +256,11 @@ msgstr "текст"
 msgid "Click to edit placeholder: %s"
 msgstr ""
 
+msgid ""
+"This placeholder is global and content of this placeholder is shown on all "
+"pages."
+msgstr ""
+
 msgid "Delete This Cell"
 msgstr "Удалить данную ячейку"
 
@@ -271,6 +315,9 @@ msgstr "В данной теме нет настроек"
 msgid "Select theme"
 msgstr "Выбрать тему"
 
+msgid "Active"
+msgstr ""
+
 msgid "Guide"
 msgstr "Путеводитель"
 
@@ -289,17 +336,20 @@ msgstr "Активировать тему, чтобы показать путе�
 msgid "No guide"
 msgstr "Путеводителя нет"
 
-msgid "Currently active"
-msgstr "Доступен в настоящий момент"
-
 msgid "Activate"
 msgstr "Активировать"
+
+msgid "Click here to configure the theme"
+msgstr ""
 
 msgid "Configure"
 msgstr "Настроить"
 
 msgid "Theme Name"
 msgstr "Название темы"
+
+msgid "Currently active"
+msgstr "Доступен в настоящий момент"
 
 msgid "Revert Changes"
 msgstr "Отменить изменения"
