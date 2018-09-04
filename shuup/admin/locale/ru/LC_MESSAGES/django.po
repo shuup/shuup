@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-08 20:19+0000\n"
-"PO-Revision-Date: 2018-06-26 05:52+0000\n"
+"POT-Creation-Date: 2018-08-20 15:54+0000\n"
+"PO-Revision-Date: 2018-08-21 06:10+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,9 @@ msgstr "Этот аккаунт не активен"
 
 msgid "Username or email address"
 msgstr "Имя пользователя или адрес электронной почты"
+
+msgid "Create New"
+msgstr "Создать новый"
 
 msgid "Monday"
 msgstr ""
@@ -67,9 +70,6 @@ msgstr "Очистить"
 
 msgid "Select"
 msgstr "Выбрать"
-
-msgid "Create New"
-msgstr "Создать новый"
 
 msgid "Orders"
 msgstr "Заказы"
@@ -205,14 +205,8 @@ msgstr "Статус"
 msgid "Visibility"
 msgstr "Отображаемость"
 
-msgid "Contact Groups"
-msgstr "Группы контактов"
-
-msgid "Price display mode"
-msgstr "Режим отображения цен"
-
-msgid "Set how prices are displayed to contacts in this group."
-msgstr "Настройте отображение стоимостей для контактов данной группы"
+msgid "Contact Group Pricing Display"
+msgstr ""
 
 msgid "unspecified"
 msgstr "Не определено"
@@ -225,6 +219,27 @@ msgstr "Показать стоимость без учёта налогов"
 
 msgid "hide prices"
 msgstr "Скрыть стоимость"
+
+msgid "shop"
+msgstr ""
+
+msgid "Price display mode"
+msgstr "Режим отображения цен"
+
+msgid "Set how prices are displayed to contacts in this group."
+msgstr "Настройте отображение стоимостей для контактов данной группы"
+
+msgid "Group"
+msgstr ""
+
+msgid "Display Mode"
+msgstr ""
+
+msgid "Unspecified"
+msgstr ""
+
+msgid "Contact Groups"
+msgstr "Группы контактов"
 
 msgid "member"
 msgstr "Представитель"
@@ -408,13 +423,16 @@ msgstr "# Заказы"
 msgid "Groups"
 msgstr "Группы"
 
+msgid "Registered in"
+msgstr ""
+
 msgid "Contact"
 msgstr "Контакт"
 
 msgid "No group"
 msgstr ""
 
-msgid "No shop"
+msgid "No shops"
 msgstr ""
 
 msgid "Inactive"
@@ -855,6 +873,12 @@ msgstr "Нулевой платёж"
 msgid "Order marked as paid."
 msgstr "Заказ отмечен, как оплаченный"
 
+msgid "Payment doesn't exist."
+msgstr ""
+
+msgid "Payment deleted."
+msgstr ""
+
 msgid "Line"
 msgstr "Строка"
 
@@ -1171,9 +1195,6 @@ msgstr "Вариант упрощён."
 msgid "Primary Image"
 msgstr "Основное изображение"
 
-msgid "Shop"
-msgstr "Магазин"
-
 msgid "SKU"
 msgstr "Артикул"
 
@@ -1185,6 +1206,9 @@ msgstr "Сортировать по штрих-коду..."
 
 msgid "Mode"
 msgstr "Режим"
+
+msgid "Filter by category name..."
+msgstr ""
 
 msgid "Additional Categories"
 msgstr "Дополнительные категории"
@@ -1521,6 +1545,9 @@ msgstr "Выбор услуг"
 msgid "Enabled"
 msgstr "Включено"
 
+msgid "Shop"
+msgstr "Магазин"
+
 msgid "Payment Processor"
 msgstr "Платёжная система"
 
@@ -1684,6 +1711,9 @@ msgstr "Налоговый класс по умолчанию"
 
 msgid "Suppliers"
 msgstr "Поставщики"
+
+msgid "Select shops for this supplier. Keep it blank to share with all shops."
+msgstr ""
 
 #, python-format
 msgid "No %s module"
@@ -2051,9 +2081,6 @@ msgstr "Нет групп"
 
 msgid "Bound User"
 msgstr "Связанный пользователь"
-
-msgid "No shops"
-msgstr ""
 
 msgid "Companies"
 msgstr "Компании"
@@ -3036,6 +3063,17 @@ msgid ""
 "try again later."
 msgstr "К сожалению, произошла внутренняя ошибка сервера. Попробуйте перезагрузить страницу или вернуться к ней позже."
 
+msgid "Edit the selected object"
+msgstr ""
+
+#, python-brace-format
+msgid "Required. {field_help}"
+msgstr ""
+
+#, python-brace-format
+msgid "Optional. {field_help}"
+msgstr ""
+
 msgid "Welcome to Shuup!"
 msgstr "Добро пожаловать в Shuup!"
 
@@ -3088,8 +3126,14 @@ msgstr "При обновлении комментария администра�
 msgid "Description"
 msgstr "Описание"
 
+msgid "Delete"
+msgstr "Удалить"
+
 msgid "No payments have been created yet."
 msgstr "Ни один платёж ещё не создан."
+
+msgid "Are you sure you want to delete this payment?"
+msgstr ""
 
 msgid "Order Contents"
 msgstr "Содержание заказа"
@@ -3144,9 +3188,6 @@ msgstr "Код для отслеживания доставки"
 
 msgid "Created"
 msgstr "Создан"
-
-msgid "Delete"
-msgstr "Удалить"
 
 msgid "No shipments have been created yet."
 msgstr "Ни одна доставка ещё не была организована."
@@ -3631,14 +3672,6 @@ msgid "Are you sure you wish to delete %s?"
 msgstr ""
 
 #, python-format
-msgid "Required. %s"
-msgstr ""
-
-#, python-format
-msgid "Optional. %s"
-msgstr ""
-
-#, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
 msgstr "Показаны %(per_page)s из  %(n_items)s %(verbose_name_plural)s"
 
@@ -3696,6 +3729,22 @@ msgstr ""
 
 msgid "Mass Edit"
 msgstr "Массовое редактирование"
+
+msgid "Invalid object."
+msgstr ""
+
+msgid "Invalid model."
+msgstr ""
+
+#, python-format
+msgid "You do not have the required permission(s): %s"
+msgstr ""
+
+msgid "Unauthorized"
+msgstr ""
+
+msgid "Object not found"
+msgstr ""
 
 msgid "Storefront"
 msgstr "Витрина"

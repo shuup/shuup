@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-28 17:04+0000\n"
+"POT-Creation-Date: 2018-07-25 12:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Алекс Прометеев <promet.alex@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
@@ -54,6 +54,13 @@ msgstr ""
 msgid "File missing."
 msgstr "Файл не найден."
 
+msgid "Failed to import the file."
+msgstr ""
+
+#, python-format
+msgid "Failed while preparing the file: %s."
+msgstr ""
+
 msgid "Invalid parameters"
 msgstr ""
 
@@ -61,6 +68,9 @@ msgid "Invalid importer"
 msgstr ""
 
 msgid "Invalid file name"
+msgstr ""
+
+msgid "File not found"
 msgstr ""
 
 msgid "Import"
@@ -92,28 +102,6 @@ msgid "Example files"
 msgstr ""
 
 msgid "This importer provides example files. Click below to download them:"
-msgstr ""
-
-msgid "Note"
-msgstr "Примечание"
-
-msgid "If you are importing products with quantities, ensure the following:"
-msgstr ""
-"Если вы импортируете товары с указанием количества, убедитесь в следующем:"
-
-#, python-format
-msgid ""
-"You have atleast one <a href=\"%(url)s\">supplier</a> with \"Stock Managed\""
-" <b>on</b>."
-msgstr ""
-
-#, python-format
-msgid ""
-"your <a href=\"%(url)s\">supplier</a> has \"Stock Managed\" <b>on</b>. "
-"(Currently <b>off</b>)"
-msgstr ""
-
-msgid "your import file has <b>supplier</b> field"
 msgstr ""
 
 msgid "Continue"
@@ -252,6 +240,9 @@ msgstr "Журнал импорта"
 
 msgid "Other messages"
 msgstr "Другие сообщения"
+
+msgid "Import errors"
+msgstr ""
 
 #, python-format
 msgid "Cannot import more than %s rows from one file."

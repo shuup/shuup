@@ -2,8 +2,8 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Eugene MechanisM <eugene@mechanism.pro>, 2016
-# Eugene MechanisM <eugene@mechanism.pro>, 2016
+# Eugene <eugene.mechanism@gmail.com>, 2016
+# Eugene <eugene.mechanism@gmail.com>, 2016
 # George Voronin <sonictorment@gmail.com>, 2017
 # Алекс Прометеев <promet.alex@gmail.com>, 2017
 # Translator HIO.E <translater@hiqe.ru>, 2017
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 13:03+0000\n"
-"PO-Revision-Date: 2018-06-26 05:37+0000\n"
+"POT-Creation-Date: 2018-08-29 23:12+0000\n"
+"PO-Revision-Date: 2018-09-04 05:16+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -284,6 +284,9 @@ msgstr "внутренний идентификатор"
 
 msgid "Do not change this value if you are not sure what you are doing."
 msgstr "Не меняйте это значение, если вы не уверены, за что оно отвечает."
+
+msgid "Invalid color"
+msgstr ""
 
 msgid "Error"
 msgstr "Ошибка"
@@ -676,9 +679,6 @@ msgstr "%(key)s для магазина %(shop)s"
 msgid "%(key)s (global)"
 msgstr "%(key)s (глобально)"
 
-msgid "members"
-msgstr "участники"
-
 msgid "show as pricing option"
 msgstr "показать как вариант ценообразования"
 
@@ -687,6 +687,22 @@ msgstr "показать стоимость с учётом налогов"
 
 msgid "hide prices"
 msgstr "Скрыть стоимости"
+
+msgid "Unknown"
+msgstr ""
+
+#, python-format
+msgid "Price Display Options for Contact Group %s"
+msgstr ""
+
+msgid "contact group price display"
+msgstr ""
+
+msgid "contact group price displays"
+msgstr ""
+
+msgid "members"
+msgstr "участники"
 
 msgid ""
 "The contact group name. Contact groups can be used to target sales and "
@@ -698,6 +714,12 @@ msgstr "группа контактов"
 
 msgid "contact groups"
 msgstr "группы контактов"
+
+msgid "Cannot set shop for default Contact Group."
+msgstr ""
+
+msgid "Contact Group requires a shop."
+msgstr ""
 
 msgid "Can't delete. This object is protected."
 msgstr "Невозможно удалить. Данный объект защищён"
@@ -712,6 +734,9 @@ msgid "Check this if the contact is an active customer."
 msgstr "Поставьте галочку, если лицо с данным контактом является активным клиентом."
 
 msgid "Inform which shops have access to this contact."
+msgstr ""
+
+msgid "registration shop"
 msgstr ""
 
 msgid "default shipping method"
@@ -900,6 +925,12 @@ msgid ""
 "Enter the URL of the product manufacturer if you would like customers to be "
 "able to visit the manufacturer's website."
 msgstr "Введите URL-адрес производителя продукта, если вы хотите, чтобы клиенты могли посетить веб-сайт производителя."
+
+msgid "logo"
+msgstr "логотип"
+
+msgid "Manufacturer logo. Will be shown on page."
+msgstr ""
 
 msgid "manufacturer"
 msgstr "производитель"
@@ -1447,6 +1478,15 @@ msgid ""
 "description of your product."
 msgstr "Введите краткое описание своего товара. Краткое описание будет использовано для привлечения внимания вашего клиента с помощью  небольшого, но точного описания вашего продукта."
 
+msgid "status text"
+msgstr "текст статуса"
+
+msgid ""
+"This text will be shown alongside the product in the shop. It is useful for "
+"informing customers of special stock numbers or preorders. (Ex.: \"Available"
+" in a month\")"
+msgstr "Этот текст будет отображаться рядом с товаром в магазине. Это полезно для информирования клиентов об особых количествах на складе или предварительных заказах. (Пример: «Доступно через месяц»)"
+
 msgid ""
 "Invalid display unit: Internal unit of the selected display unit does not "
 "match with the sales unit of the product"
@@ -1463,6 +1503,9 @@ msgstr "Товар не виден для пользователей, не во�
 
 msgid "This product is not visible to your group."
 msgstr "Товар не отображается для вашей группы."
+
+msgid "The product is not purchasable"
+msgstr ""
 
 msgid "The product has no supplier."
 msgstr "У данного товара нет поставщика."
@@ -1727,15 +1770,6 @@ msgid ""
 "the store and on the web."
 msgstr "Вы можете ввести ключевые слова, описывающие ваш товар. Это поможет вашим покупателям узнать о ваших товарах. Это также поможет покупателям найти их в магазине и в Интернете."
 
-msgid "status text"
-msgstr "текст статуса"
-
-msgid ""
-"This text will be shown alongside the product in the shop. It is useful for "
-"informing customers of special stock numbers or preorders. (Ex.: \"Available"
-" in a month\")"
-msgstr "Этот текст будет отображаться рядом с товаром в магазине. Это полезно для информирования клиентов об особых количествах на складе или предварительных заказах. (Пример: «Доступно через месяц»)"
-
 msgid "variation name"
 msgstr "название вариации"
 
@@ -1804,9 +1838,6 @@ msgstr "атрибуты товара"
 
 msgid "Check this if this service provider can be used when placing orders"
 msgstr "Поставьте галочку, если этот поставщик услуг может использоваться при размещении заказов."
-
-msgid "logo"
-msgstr "логотип"
 
 msgid "The service provider name."
 msgstr "Название поставщика услуг."
