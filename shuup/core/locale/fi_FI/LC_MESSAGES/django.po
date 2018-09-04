@@ -27,8 +27,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 17:09+0000\n"
-"PO-Revision-Date: 2018-07-06 18:47+0000\n"
+"POT-Creation-Date: 2018-08-29 23:12+0000\n"
+"PO-Revision-Date: 2018-09-04 16:16+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -695,9 +695,6 @@ msgstr "%(key)s kaupalle %(shop)s"
 msgid "%(key)s (global)"
 msgstr "%(key)s (globaali)"
 
-msgid "members"
-msgstr "jäsenet"
-
 msgid "show as pricing option"
 msgstr "näytä hinnoitteluvaihtoehtona"
 
@@ -706,6 +703,22 @@ msgstr "näytä hinnat sisältäen verot"
 
 msgid "hide prices"
 msgstr "piilot hinnat"
+
+msgid "Unknown"
+msgstr "Tuntematon"
+
+#, python-format
+msgid "Price Display Options for Contact Group %s"
+msgstr "Hintojen näyttämisen valinnat kontaktiryhmälle %s"
+
+msgid "contact group price display"
+msgstr "kontaktiryhmän hintojen näyttö"
+
+msgid "contact group price displays"
+msgstr "kontaktiryhmien hintojen näyttö"
+
+msgid "members"
+msgstr "jäsenet"
 
 msgid ""
 "The contact group name. Contact groups can be used to target sales and "
@@ -717,6 +730,12 @@ msgstr "kontaktiryhmä"
 
 msgid "contact groups"
 msgstr "kontaktiryhmät"
+
+msgid "Cannot set shop for default Contact Group."
+msgstr "Et voi asettaa kauppaa oletus kontaktiryhmälle."
+
+msgid "Contact Group requires a shop."
+msgstr "Konktaktiryhmä vaatii kaupan."
 
 msgid "Can't delete. This object is protected."
 msgstr "Ei voi poistaa"
@@ -732,6 +751,9 @@ msgstr "Valitse tämä, mikäli kontakti on aktiivinen asiakas."
 
 msgid "Inform which shops have access to this contact."
 msgstr "Valitse kaupat joilla on pääsy tähän kontaktiin."
+
+msgid "registration shop"
+msgstr "rekisteröintikauppa"
 
 msgid "default shipping method"
 msgstr "oletustoimitustapa"
@@ -919,6 +941,12 @@ msgid ""
 "Enter the URL of the product manufacturer if you would like customers to be "
 "able to visit the manufacturer's website."
 msgstr "Anna tuotteen valmistajan URL-osoite, mikäli haluat että asiakkaasi voivat vierailla valmistajan verkkosivuilla sivujesi kautta."
+
+msgid "logo"
+msgstr "logo"
+
+msgid "Manufacturer logo. Will be shown on page."
+msgstr "Valmistajan logo. Näytetään sivulla."
 
 msgid "manufacturer"
 msgstr "valmistaja"
@@ -1466,6 +1494,15 @@ msgid ""
 "description of your product."
 msgstr "Lisää lyhyt kuvaus tuotteestasi. Lyhyt kuvaus on kätevä tapa saad aasiakkaan huomio."
 
+msgid "status text"
+msgstr "tilateksti"
+
+msgid ""
+"This text will be shown alongside the product in the shop. It is useful for "
+"informing customers of special stock numbers or preorders. (Ex.: \"Available"
+" in a month\")"
+msgstr "Tämä teksti näytetään tuotesivuilla. Se on erityisen näppärä kun haluat informoida asiakkaitasi erikoisista varastomääristä tai ennakkotilauksista. (Esimerkiksi \"Saatavilla ensi kuussa\")"
+
 msgid ""
 "Invalid display unit: Internal unit of the selected display unit does not "
 "match with the sales unit of the product"
@@ -1482,6 +1519,9 @@ msgstr "Tuote ei ole näkyvissä kirjautumattomille käyttäjille."
 
 msgid "This product is not visible to your group."
 msgstr "Tuote ei ole näkyvillä ryhmällesi."
+
+msgid "The product is not purchasable"
+msgstr "Tuote ei ole tilattavissa."
 
 msgid "The product has no supplier."
 msgstr "Tuotteella ei ole toimittajaa."
@@ -1746,15 +1786,6 @@ msgid ""
 "the store and on the web."
 msgstr "Voit lisätä avainsanoja, jotka kuvaavat tuotettasi. Tämä auttaa asiakkaitasi oppimaan tuotteistasi, se myös auttaa hakukoneita löytämään kauppasi ja tuotteesi."
 
-msgid "status text"
-msgstr "tilateksti"
-
-msgid ""
-"This text will be shown alongside the product in the shop. It is useful for "
-"informing customers of special stock numbers or preorders. (Ex.: \"Available"
-" in a month\")"
-msgstr "Tämä teksti näytetään tuotesivuilla. Se on erityisen näppärä kun haluat informoida asiakkaitasi erikoisista varastomääristä tai ennakkotilauksista. (Esimerkiksi \"Saatavilla ensi kuussa\")"
-
 msgid "variation name"
 msgstr "variaation nimi"
 
@@ -1823,9 +1854,6 @@ msgstr "tuoteattribuutit"
 
 msgid "Check this if this service provider can be used when placing orders"
 msgstr "Valitse tämä jos palveluntarjoajaa voi käyttää tilauksia tehdessä"
-
-msgid "logo"
-msgstr "logo"
 
 msgid "The service provider name."
 msgstr "Palveluntarjoajan nimi."
