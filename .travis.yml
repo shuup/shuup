@@ -6,7 +6,7 @@ cache:
   directories:
     - "$HOME/.cache/pip"
     - "$HOME/.npm"
-    - "$HOME/.cache/shuup/build_resources"
+    - "$HOME/.cache/shuup"
 env:
   - TOXENV=sanity
   - TOXENV=flake8

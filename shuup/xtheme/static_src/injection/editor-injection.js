@@ -93,6 +93,18 @@ function openPlaceholderEditor(domElement) {
     }, 1); // Defer slide-out, because otherwise browsers coalesce the addClass (as it's done in the same JS "tick")
 }
 
+function addSnippetInjectionMarkup() {
+    const button = el("button", {
+        "type": "button"
+    }, gettext("Inject snippet"));
+    button.addEventListener("click", () => {
+        window.open(window.XthemeEditorConfig.injectSnipperUrl, "_blank");
+    })
+    const li = el("li.xt-snippet-injection", [button]);
+    const nav = document.querySelector(".navbar-admin-tools .navbar-nav")
+    nav.insertBefore(li, nav.firstChild);
+}
+
 function addEditToggleMarkup() {
     const hidden = (name, value) => el("input", { type: "hidden", name, value });
     const editing = (window.XthemeEditorConfig.edit);
@@ -159,6 +171,7 @@ function addPhClickHandler() {
 
 domready(() => {
     window.addEventListener("message", handleMessage, false);
+    addSnippetInjectionMarkup();
     addEditToggleMarkup();
     if (window.XthemeEditorConfig.edit) {
         addPhClickHandler();

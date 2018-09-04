@@ -15,6 +15,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.toolbar import URLActionButton
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.core import cache
@@ -151,6 +152,18 @@ class ThemeConfigDetailView(CreateOrUpdateView):
     def save_form(self, form):
         super(ThemeConfigDetailView, self).save_form(form)
         cache.bump_version(get_theme_cache_key(get_shop(self.request)))
+
+    def get_toolbar(self):
+        toolbar = super(ThemeConfigDetailView, self).get_toolbar()
+        toolbar.append(
+            URLActionButton(
+                text=_("Snippet injection"),
+                icon="fa fa-magic",
+                url=reverse("shuup_admin:xtheme_snippet.list"),
+                extra_css_class="btn-info"
+            )
+        )
+        return toolbar
 
 
 class ThemeGuideTemplateView(TemplateView):

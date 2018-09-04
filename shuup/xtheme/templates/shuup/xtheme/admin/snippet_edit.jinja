@@ -1,0 +1,13 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
+{% block content %}
+    {{ single_section_form("snippet_form", form) }}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ static("xtheme/admin/snippet.css") }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ static("xtheme/admin/snippet.js") }}"></script>
+{% endblock %}

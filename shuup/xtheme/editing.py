@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.urlresolvers import reverse
 from django.middleware.csrf import get_token
 
 from shuup.front.utils.user import is_admin_user
@@ -77,6 +78,12 @@ def can_edit(context):
     if not (request and could_edit(request) and may_inject(context)):
         return False
 
+    # only allow editing shuup front
+    if request:
+        match = request.resolver_match
+        if not match or match.app_name != "shuup":
+            return False
+
     return bool(get_current_theme(request.shop))
 
 
@@ -96,8 +103,9 @@ def add_edit_resources(context):
     view_config = get_view_config(context)
     theme = get_current_theme(request.shop)
     add_resource(context, "body_end", InlineScriptResource.from_vars("XthemeEditorConfig", {
-        "commandUrl": "/xtheme/",  # TODO: Use reverse("shuup:xtheme")?
-        "editUrl": "/xtheme/editor/",  # TODO: Use reverse("shuup:xtheme")?
+        "commandUrl": reverse("shuup:xtheme"),
+        "editUrl": reverse("shuup:xtheme_editor"),
+        "injectSnipperUrl": reverse("shuup_admin:xtheme_snippet.list"),
         "themeIdentifier": theme.identifier,
         "viewName": view_config.view_name,
         "edit": is_edit_mode(request),

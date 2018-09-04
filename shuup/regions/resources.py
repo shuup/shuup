@@ -9,6 +9,7 @@ from django.templatetags.static import static
 
 from shuup.xtheme.resources import add_resource, InlineScriptResource
 
+
 INITIALIZE_FIELDS_FUNCTION = """
 window.initializeRegionFields('%(country_code_field)s', '%(region_code_field)s', '%(region_field)s');
 """

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 03:36+0000\n"
+"POT-Creation-Date: 2018-09-03 19:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -49,6 +49,32 @@ msgstr ""
 msgid "Theming"
 msgstr ""
 
+msgid "Shuup Extensible Theme Engine Snippets"
+msgstr ""
+
+msgid "Snippets"
+msgstr ""
+
+msgid "Theme Snippet Injection"
+msgstr ""
+
+msgid ""
+"Select the themes that will have this snippet injected. Leave the field "
+"blank to inject in all themes."
+msgstr ""
+
+msgid "Select the location of the page to inject the snippet."
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Filter by location..."
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
 msgid "activate"
 msgstr ""
 
@@ -59,6 +85,9 @@ msgid "Choose a theme for your shop"
 msgstr ""
 
 msgid "Theme activated."
+msgstr ""
+
+msgid "Snippet injection"
 msgstr ""
 
 msgid "Stylesheets"
@@ -94,6 +123,15 @@ msgstr ""
 msgid "Shop '{}' has no active theme"
 msgstr ""
 
+msgid "Inline JavaScript"
+msgstr ""
+
+msgid "Inline CSS"
+msgstr ""
+
+msgid "Inline HTML"
+msgstr ""
+
 msgid "current draft"
 msgstr ""
 
@@ -126,6 +164,24 @@ msgstr ""
 
 #, python-format
 msgid "Theme configuration for %s"
+msgstr ""
+
+msgid "location"
+msgstr ""
+
+msgid "snippet type"
+msgstr ""
+
+msgid "snippet"
+msgstr ""
+
+msgid "themes"
+msgstr ""
+
+msgid "Snippet"
+msgstr ""
+
+msgid "Snippet for {} in {}"
 msgstr ""
 
 msgid "Plugin"
@@ -176,9 +232,6 @@ msgstr ""
 msgid "Product Highlights"
 msgstr ""
 
-msgid "Type"
-msgstr ""
-
 msgid "Count"
 msgstr ""
 
@@ -198,9 +251,6 @@ msgid "category"
 msgstr ""
 
 msgid "Category Products Highlight"
-msgstr ""
-
-msgid "Snippets"
 msgstr ""
 
 msgid "In-Place Snippet"
@@ -258,6 +308,24 @@ msgstr ""
 msgid ""
 "This placeholder is global and content of this placeholder is shown on all "
 "pages."
+msgstr ""
+
+msgid "End of head"
+msgstr ""
+
+msgid "Start of head"
+msgstr ""
+
+msgid "End of body"
+msgstr ""
+
+msgid "Start of body"
+msgstr ""
+
+msgid "Content start"
+msgstr ""
+
+msgid "Content end"
 msgstr ""
 
 msgid "Delete This Cell"

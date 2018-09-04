@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from ._behavior_components import ExpensiveSwedenBehaviorComponent
+from ._fields import FieldsModel
 from ._filters import UltraFilter
 from ._methods import CarrierWithCheckoutPhase, PaymentWithCheckoutPhase
 from ._pseudo_payment import PseudoPaymentProcessor
@@ -13,6 +14,7 @@ from ._pseudo_payment import PseudoPaymentProcessor
 __all__ = [
     "CarrierWithCheckoutPhase",
     "ExpensiveSwedenBehaviorComponent",
+    "FieldsModel",
     "PaymentWithCheckoutPhase",
     "PseudoPaymentProcessor",
     "UltraFilter"

@@ -10,7 +10,20 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from enumfields.fields import EnumIntegerField
 
-from shuup.core.fields import TaggedJSONField
+from shuup.core.fields import SeparatedValuesField, TaggedJSONField
+
+
+class SnippetType(object):
+    InlineJS = "inline_js"
+    InlineCSS = "inline_css"
+    InlineHTMLMarkup = "inline_html"
+
+
+SnippetTypeChoices = [
+    (SnippetType.InlineJS, _("Inline JavaScript")),
+    (SnippetType.InlineCSS, _("Inline CSS")),
+    (SnippetType.InlineHTMLMarkup, _("Inline HTML")),
+]
 
 
 class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore
@@ -160,3 +173,24 @@ class ThemeSettings(models.Model):
 
     def __str__(self):
         return _("Theme configuration for %s") % self.theme_identifier
+
+
+class Snippet(models.Model):
+    """
+    Inject snippet code globally filtering by themes if configured
+    """
+    shop = models.ForeignKey("shuup.Shop", related_name="snippets")
+    location = models.CharField(max_length=64, verbose_name=_("location"))
+    snippet_type = models.CharField(max_length=20, verbose_name=_("snippet type"), choices=SnippetTypeChoices)
+    snippet = models.TextField(verbose_name=_("snippet"))
+    # list of theme identifiers that will be have this sniipet injected, if None, it means all themes
+    themes = SeparatedValuesField(verbose_name=_("themes"), blank=True, null=True, help_text=_(
+        "Select the themes that will have this snippet injected. Leave the field blank to inject in all themes."
+    ))
+
+    class Meta:
+        verbose_name = _("Snippet")
+        verbose_name_plural = _("Snippets")
+
+    def __str__(self):
+        return _("Snippet for {} in {}").format(self.location, self.shop)

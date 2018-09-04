@@ -13,22 +13,51 @@ import six
 from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from jinja2.utils import contextfunction
 
+from shuup.core import cache
 from shuup.core.fields import TaggedJSONEncoder
+from shuup.core.shop_provider import get_shop
 from shuup.xtheme.utils import get_html_attrs
 
 LOCATION_INFO = {
-    "head_end": (re.compile(r"</head>", re.I), "pre"),
-    "body_end": (re.compile(r"</body>", re.I), "pre"),
-    "body_start": (re.compile(r"<body[^>]*>", re.I), "post"),
-    "content_start": (re.compile(r"^.*", re.I), "pre"),
-    "content_end": (re.compile(r".*$", re.I), "post")
+    "head_end": {
+        "name": _("End of head"),
+        "regex": re.compile(r"</head>", re.I),
+        "placement": "pre"
+    },
+    "head_start": {
+        "name": _("Start of head"),
+        "regex": re.compile(r"<head[^>]*>", re.I),
+        "placement": "post"
+    },
+    "body_end": {
+        "name": _("End of body"),
+        "regex": re.compile(r"</body>", re.I),
+        "placement": "pre"
+    },
+    "body_start": {
+        "name": _("Start of body"),
+        "regex": re.compile(r"<body[^>]*>", re.I),
+        "placement": "post"
+    },
+    "content_start": {
+        "name": _("Content start"),
+        "regex": re.compile(r"^.*", re.I),
+        "placement": "pre"
+    },
+    "content_end": {
+        "name": _("Content end"),
+        "regex": re.compile(r".*$", re.I),
+        "placement": "post"
+    }
 }
 
 KNOWN_LOCATIONS = set(LOCATION_INFO.keys())
 
 RESOURCE_CONTAINER_VAR_NAME = "_xtheme_resources"
+GLOBAL_SNIPPETS_CACHE_KEY = "global_snippets_{shop_id}"
 
 
 class InlineScriptResource(six.text_type):
@@ -59,6 +88,12 @@ class InlineMarkupResource(six.text_type):
     An inline markup resource (a subclass of string).
 
     The contents are rendered as-is.
+    """
+
+
+class InlineStyleResource(six.text_type):
+    """
+    An inline style resource (a subclass of string).
     """
 
 
@@ -128,6 +163,9 @@ class ResourceContainer(object):
         if isinstance(resource, InlineMarkupResource):
             return force_text(resource)
 
+        if isinstance(resource, InlineStyleResource):
+            return '<style type="text/css">%s</style>' % resource
+
         if isinstance(resource, InlineScriptResource):
             return "<script>%s</script>" % resource
 
@@ -162,8 +200,8 @@ def inject_resources(context, content, clean=True):
     if not rc:  # No resource container? Well, whatever.
         return content
 
-    for location_name, (regex, placement) in LOCATION_INFO.items():
-        match = regex.search(content)
+    for location_name, location in LOCATION_INFO.items():
+        match = location["regex"].search(content)
         if not match:
             continue
         injection = rc.render_resources(location_name, clean=clean)
@@ -173,6 +211,7 @@ def inject_resources(context, content, clean=True):
         start = match.start()
         end = match.end()
 
+        placement = location["placement"]
         if placement == "pre":
             content = content[:start] + injection + content[start:]
         elif placement == "post":
@@ -213,3 +252,56 @@ def add_resource(context, location, resource):
     if rc:
         return bool(rc.add_resource(location, resource))
     return False
+
+
+def valid_view(context):
+    """
+    Prevent adding the global snippet in admin views and in editor view
+    """
+    view_class = getattr(context["view"], "__class__", None) if context.get("view") else None
+    if not view_class or not context.get("request"):
+        return False
+
+    request = context.get("request")
+    if request:
+        match = request.resolver_match
+        if match and match.app_name == "shuup_admin":
+            return False
+
+    view_name = getattr(view_class, "__name__", "")
+    if view_name == "EditorView":
+        return False
+
+    return True
+
+
+def inject_global_snippet(context, content):
+    if not valid_view(context):
+        return
+
+    from shuup.xtheme import get_current_theme
+    from shuup.xtheme.models import Snippet, SnippetType
+    shop = get_shop(context["request"])
+
+    cache_key = GLOBAL_SNIPPETS_CACHE_KEY.format(shop_id=shop.id)
+    snippets = cache.get(cache_key)
+
+    if snippets is None:
+        snippets = Snippet.objects.filter(shop=shop)
+        cache.set(cache_key, snippets)
+
+    for snippet in snippets:
+        if snippet.themes:
+            current_theme = get_current_theme(shop)
+            if current_theme and current_theme.identifier not in snippet.themes:
+                continue
+
+        content = snippet.snippet
+        if snippet.snippet_type == SnippetType.InlineJS:
+            content = InlineScriptResource(content)
+        elif snippet.snippet_type == SnippetType.InlineCSS:
+            content = InlineStyleResource(content)
+        elif snippet.snippet_type == SnippetType.InlineHTMLMarkup:
+            content = InlineMarkupResource(content)
+
+        add_resource(context, snippet.location, content)

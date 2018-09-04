@@ -92,3 +92,19 @@ def test_formatted_decimal_field_default():
     rendered_form = force_text(TestModelForm(instance=Product()))
     rendered_value = re.search('value="(.*?)"', rendered_form).group(1)
     assert rendered_value == "0"
+
+
+def test_separated_value_field():
+    from shuup.testing.models import FieldsModel
+    fm = FieldsModel()
+
+    fm.separated_values = ["1", "2", "3"]
+    fm.separated_values_semi = ["4", "5", "6"]
+    fm.separated_values_dash = ["7", "8", "9"]
+    fm.save()
+
+    fm.refresh_from_db()
+
+    assert fm.separated_values == ["1", "2", "3"]
+    assert fm.separated_values_semi == ["4", "5", "6"]
+    assert fm.separated_values_dash == ["7", "8", "9"]
