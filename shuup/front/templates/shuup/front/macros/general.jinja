@@ -220,9 +220,9 @@
                     <h2>{% trans %}Tools{% endtrans %}</h2>
                     <div class="admin-tools-info">
                     {% if is_maintenance_mode %}
-                        <span class="badge badge-success">{% trans %}Live{% endtrans %}</span>
-                    {% else %}
                         <span class="badge badge-warning">{% trans %}Maintenance{% endtrans %}</span>
+                    {% else %}
+                        <span class="badge badge-success">{% trans %}Live{% endtrans %}</span>
                     {% endif %}
                     </div>
                     <div class="admin-tools-info">
