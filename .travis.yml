@@ -8,6 +8,7 @@ cache:
     - "$HOME/.cache/pip"
     - "$HOME/.npm"
     - "$HOME/.cache/shuup"
+    - shuup
 env:
   - TOXENV=sanity
   - TOXENV=flake8
@@ -23,20 +24,6 @@ matrix:
         - export PATH=$PATH:$PWD/geckodriver
         - "nvm install 7"
         - "nvm use 7"
-        - "export DISPLAY=:99.0"
-        - "sh -e /etc/init.d/xvfb start"
-        - "npm install -g selenium-standalone@6.15.2"
-        - "selenium-standalone install"
-        - "selenium-standalone start &"
-    - python: 3.5
-      env: TOXENV=py35-django19-nomigrations-nocoverage-browser-travis-front
-      before_install:
-        - wget https://github.com/mozilla/geckodriver/releases/download/v0.21.0/geckodriver-v0.21.0-linux64.tar.gz
-        - mkdir geckodriver
-        - tar -xzf geckodriver*.tar.gz -C geckodriver
-        - export PATH=$PATH:$PWD/geckodriver
-        - "nvm install 8"
-        - "nvm use 8"
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
         - "npm install -g selenium-standalone@6.15.2"
@@ -69,6 +56,20 @@ matrix:
         - "selenium-standalone start &"
     - python: 3.6
       env: TOXENV=py36-django111-nomigrations-nocoverage-browser-travis-front
+      before_install:
+        - wget https://github.com/mozilla/geckodriver/releases/download/v0.21.0/geckodriver-v0.21.0-linux64.tar.gz
+        - mkdir geckodriver
+        - tar -xzf geckodriver*.tar.gz -C geckodriver
+        - export PATH=$PATH:$PWD/geckodriver
+        - "nvm install 8"
+        - "nvm use 8"
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+        - "npm install -g selenium-standalone@6.15.2"
+        - "selenium-standalone install"
+        - "selenium-standalone start &"
+    - python: 3.5
+      env: TOXENV=py35-django19-nomigrations-nocoverage-browser-travis-front
       before_install:
         - wget https://github.com/mozilla/geckodriver/releases/download/v0.21.0/geckodriver-v0.21.0-linux64.tar.gz
         - mkdir geckodriver
