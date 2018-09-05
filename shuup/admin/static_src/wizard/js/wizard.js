@@ -44,11 +44,11 @@
                     '<div class="clearfix">' +
                         getButton(gettext("Previous"), "previous", disablePrevious, "btn-primary pull-left " + (config.hidePrevious? "hidden":"")) +
                         getButton(isLastPane() ? gettext("Finish") : gettext("Next"), "next", disableNext, "btn-primary pull-right") +
+                        (
+                            ($activeWizardPane.data("can_skip") === "True" || config.skip) ?
+                            getButton(gettext("Skip"), "skip", false, "btn-default pull-right btn-wizard-skip", config.skipTooltip) : ''
+                        ) +
                     '</div>' +
-                    ($activeWizardPane.data("can_skip") === "True" || config.skip?
-                    '<div class="clearfix">' +
-                        getButton(gettext("Skip"), "skip", false, "btn-default pull-right", config.skipTooltip) +
-                    '</div>': '') +
                 '</div>'
             );
             $activeWizardPane.find('[data-toggle="tooltip"]').tooltip();

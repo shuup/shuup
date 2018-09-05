@@ -20,6 +20,7 @@ Bug fixes
 - Fix Xtheme editor menu for mobile devices
 - Fix filter fields in order status, simple cms and tasks type admin modules
 - Fix GDPR user information serializer to consider the correct document consent structure
+- Fix admin wizard skip button alignment
 
 Admin
 ~~~~~
