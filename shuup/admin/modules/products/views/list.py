@@ -81,7 +81,7 @@ class ProductListView(PicotableListView):
         Column(
             "categories",
             _("Categories"),
-            display="categories",
+            display="format_categories",
             filter_config=TextFilter(
                 filter_field="categories__translations__name",
                 placeholder=_("Filter by category name...")
@@ -99,6 +99,9 @@ class ProductListView(PicotableListView):
         "shuup.admin.modules.products.mass_actions:FileResponseAction",
         "shuup.admin.modules.products.mass_actions:EditProductAttributesAction",
     ]
+
+    def format_categories(self, instance):
+        return ", ".join(list(instance.categories.values_list("translations__name", flat=True)))
 
     def get_columns(self):
         for column in self.columns:
