@@ -29,11 +29,11 @@ def test_summernote_editor_picture(browser, admin_user, live_server, settings):
     factories.get_default_product_type()
     factories.get_default_sales_unit()
     factories.get_default_tax_class()
+    filer_image = factories.get_random_filer_image()
     configuration.set(None, "shuup_product_tour_complete", True)
+
     initialize_admin_browser_test(browser, live_server, settings)
     browser.driver.set_window_size(1920, 1080)
-
-    filer_image = factories.get_random_filer_image()
 
     url = reverse("shuup_admin:shop_product.new")
     browser.visit("%s%s" % (live_server, url))
