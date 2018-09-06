@@ -24,8 +24,9 @@ def do_request_and_asserts(rf, contact, maintenance=False, expect_all_seeing=Fal
         toolbar = soup.find("nav", {"class": "navbar-admin-tools"})
         assert toolbar
 
-    if maintenance:
-        maintenance_class = "badge-success" if maintenance else "badge-warning"
+    if expect_toolbar:
+        assert request.shop.maintenance_mode == maintenance
+        maintenance_class = "badge-warning" if maintenance else "badge-success"
         assert soup.find("span", {"class": maintenance_class})
 
     texts = []
@@ -43,13 +44,7 @@ def do_request_and_asserts(rf, contact, maintenance=False, expect_all_seeing=Fal
 @pytest.mark.django_db
 def test_all_seeing_and_maintenance(rf, admin_user):
     shop = get_default_shop()
-    shop.maintenance_mode = True
-    shop.save()
     admin_contact = get_person_contact(admin_user)
-    do_request_and_asserts(rf, admin_contact, maintenance=True, expect_toolbar=True)
-
-    shop.maintenance_mode = False
-    shop.save()
     do_request_and_asserts(rf, admin_contact, maintenance=False, expect_toolbar=True)
 
     assert not admin_contact.is_all_seeing
@@ -58,8 +53,14 @@ def test_all_seeing_and_maintenance(rf, admin_user):
     del admin_contact.is_all_seeing
     assert admin_contact.is_all_seeing
 
+    assert admin_contact.user.is_superuser
     do_request_and_asserts(rf, admin_contact, maintenance=False, expect_all_seeing=True, expect_toolbar=True)
     configuration.set(None, get_all_seeing_key(admin_contact), False)
+
+    # Test maintenance mode badge
+    shop.maintenance_mode = True
+    shop.save()
+    do_request_and_asserts(rf, admin_contact, maintenance=True, expect_toolbar=True)
 
 
 def test_regular_user_is_blind(rf, regular_user):
