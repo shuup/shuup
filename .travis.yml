@@ -8,7 +8,6 @@ cache:
     - "$HOME/.cache/pip"
     - "$HOME/.npm"
     - "$HOME/.cache/shuup"
-    - shuup
 env:
   - TOXENV=sanity
   - TOXENV=flake8
