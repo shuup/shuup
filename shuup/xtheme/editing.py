@@ -96,7 +96,7 @@ def add_edit_resources(context):
     try:
         command_url = reverse("shuup:xtheme")
         edit_url = reverse("shuup:xtheme_editor")
-        inject_snipper = reverse("shuup:xtheme_editor")
+        inject_snipper = reverse("shuup_admin:xtheme_snippet.list")
     except NoReverseMatch:  # No URLs no resources
         return
 

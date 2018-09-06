@@ -94,6 +94,9 @@ function openPlaceholderEditor(domElement) {
 }
 
 function addSnippetInjectionMarkup() {
+    const nav = document.querySelector(".navbar-admin-tools .navbar-nav");
+    if (!nav) return;  // No navigation no snippet in navigation either
+
     const button = el("button", {
         "type": "button"
     }, gettext("Inject snippet"));
@@ -101,7 +104,6 @@ function addSnippetInjectionMarkup() {
         window.open(window.XthemeEditorConfig.injectSnipperUrl, "_blank");
     })
     const li = el("li.xt-snippet-injection", [button]);
-    const nav = document.querySelector(".navbar-admin-tools .navbar-nav")
     nav.insertBefore(li, nav.firstChild);
 }
 
@@ -125,7 +127,8 @@ function addEditToggleMarkup() {
                 }, (editing ? gettext("Exit Edit") : gettext("Edit Page")))
             ])
     ]);
-    let nav = document.querySelector(".navbar-admin-tools .navbar-nav")
+    let nav = document.querySelector(".navbar-admin-tools .navbar-nav");
+    if (!nav) return;  // No navigation no edit toggle in navigation either
     nav.insertBefore(li, nav.firstChild);
 }
 
