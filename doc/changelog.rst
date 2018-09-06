@@ -1,13 +1,10 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+Shuup 1.6.12
+------------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-09-06 3:15pm -0800.
 
 Simple CMS
 ~~~~~~~~~~
@@ -25,6 +22,7 @@ Bug fixes
 Admin
 ~~~~~
 
+- Fix bug with stocks in order creator
 - Hide menu categories that don't have entries
 - Split OrderStatus admin module from Order admin module
 - Add option to delete payments from order detail
