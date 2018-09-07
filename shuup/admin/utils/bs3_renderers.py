@@ -33,6 +33,8 @@ class AdminFieldRenderer(FieldRenderer):
         kwargs["required_css_class"] = "required-field"
         kwargs["set_required"] = False
         kwargs["bound_css_class"] = " "  # This is a hack, but Django-Bootstrap is silly and requires a truthy value.
+        kwargs["form_group_class"] = "form-group form-content"
+        kwargs["field_class"] = "form-input-group d-flex"
         super(AdminFieldRenderer, self).__init__(field, **kwargs)
         if not self.set_placeholder:
             self.placeholder = None
