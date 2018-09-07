@@ -8,7 +8,7 @@
 }
 
 .folder-tree {
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         display: none;
     }
 
@@ -23,7 +23,7 @@
     }
 
     li a {
-        font-size: 1.6rem;
+        font-size: 0.9rem;
         padding: 5px 10px;
         display: block;
         text-decoration: none;
@@ -32,8 +32,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
 
-        @include media-breakpoint-up(lg) {
-            font-size: 1.8rem;
+        @include media-breakpoint-up(xl) {
+            font-size: 1rem;
         }
 
         &:hover {
@@ -51,7 +51,6 @@
     }
 
     ul li.new-folder-item a {
-        font-size: 1.4rem;
         color: $gray-light;
     }
 
@@ -62,16 +61,15 @@
 }
 
 .title {
-    border-bottom: 3px solid $primary;
     padding-bottom: 15px;
     margin-bottom: 30px;
 
     i, a {
         margin-right: 7px;
-        font-size: 1.8rem;
+        font-size: 1.2rem;
     }
     a.current {
-        font-size: 3rem;
+        font-size: 1.5rem;
         color: $text-color;
     }
 }
@@ -86,17 +84,17 @@
             margin-left: 0;
             margin-right: 15px;
 
-            @include media-breakpoint-down(xs) {
+            @include media-breakpoint-down(md) {
                 margin-bottom: 10px;
             }
 
             &.icons {
-                button { 
-                    padding: 6px 10px 4px 10px; 
+                button {
+                    padding: 6px 10px 4px 10px;
                 }
 
-                i { 
-                    font-size: 1.4rem; 
+                i {
+                    font-size: 1.4rem;
                 }
             }
         }
@@ -105,23 +103,23 @@
     .folder-contents {
         min-height: 350px;
 
-        .grid-folder, 
+        .grid-folder,
         .grid-file {
             margin-bottom: 60px;
 
-            @include media-breakpoint-down(sm) {
+            @include media-breakpoint-down(md) {
                 &:nth-child(2n+1) {
                     clear: both;
                 }
             }
 
-            @include media-breakpoint-between(sm, md) {
+            @include media-breakpoint-between(md, lg) {
                 &:nth-child(3n+1) {
                     clear: both;
                 }
             }
 
-            @include media-breakpoint-up(lg) {
+            @include media-breakpoint-up(xl) {
                 &:nth-child(4n+1) {
                     clear: both;
                 }
@@ -136,7 +134,7 @@
                 margin-bottom: 10px;
                 transition: border-color 0.1s;
 
-                &:hover, 
+                &:hover,
                 &:focus {
                     border-color: $primary;
                 }
@@ -148,16 +146,25 @@
 
             .file-name {
                 text-align: center;
+
+                a {
+                    color: $text-color;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $primary;
+                    }
+                }
             }
         }
 
         .grid-folder {
-            .file-preview { 
-                padding: 30px 15px; 
+            .file-preview {
+                padding: 30px 15px;
             }
 
-            i { 
-                font-size: 60px; 
+            i {
+                font-size: 60px;
             }
         }
 
@@ -178,8 +185,8 @@
             .empty-image {
                 margin-bottom: 25px;
 
-                img { 
-                    max-width: 300px; 
+                img {
+                    max-width: 300px;
                 }
             }
 
@@ -227,7 +234,7 @@
     position: relative;
     transition: background 0.5s;
 
-    .empty-folder, 
+    .empty-folder,
     .upload-hint {
         transition: border-color, color 0.5s;
     }
