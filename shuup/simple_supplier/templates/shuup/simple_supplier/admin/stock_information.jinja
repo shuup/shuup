@@ -1,11 +1,56 @@
-<div id="{{ div_id }}">
+<div id="{{ div_id }}" class="stock-information">
     {% if stock %}
-        <p>{% trans count=stock.physical_count|floatformat(sales_decimals) %}Physical count: {{ count }} {{ sales_unit }}{% endtrans %}</p>
-        <p>{% trans count=stock.logical_count|floatformat(sales_decimals) %}Logical count: {{ count }} {{ sales_unit }}{% endtrans %}</p>
-        <p>{% trans value=stock.stock_unit_price|money %}Value per unit: {{ value }}{% endtrans %}</p>
-        <p>{% trans value=stock.stock_value|money %}Total value: {{ value }}{% endtrans %}</p>
+        <div class="content-block-card stock-information-card text-center">
+            <div class="content-block-card-heading">
+                {% trans count=stock.physical_count|floatformat(sales_decimals) %}
+                <h5>Physical count ({{ sales_unit }})</h5>
+            </div>
+            <div class="content-block-card-content">
+                <span class="amount">{{ count }}</span>
+            {% endtrans %}
+            </div>
+        </div>
+        <div class="content-block-card stock-information-card text-center">
+            <div class="content-block-card-heading">
+                {% trans count=stock.logical_count|floatformat(sales_decimals) %}
+                <h5>Logical count ({{ sales_unit }})</h5>
+            </div>
+            <div class="content-block-card-content">
+                <span class="amount">{{ count }}</span>
+            {% endtrans %}
+            </div>
+        </div>
+        <div class="content-block-card stock-information-card text-center">
+            <div class="content-block-card-heading">
+                {% trans value=stock.stock_unit_price|money %}
+                <h5>Value per unit</h5>
+            </div>
+            <div class="content-block-card-content">
+                <span class="amount">{{ value }}</span>
+            {% endtrans %}
+            </div>
+        </div>
+        <div class="content-block-card stock-information-card text-center">
+            <div class="content-block-card-heading">
+                {% trans value=stock.stock_value|money %}
+                <h5>Total value</h5>
+            </div>
+            <div class="content-block-card-content">
+                <span class="amount">{{ value }}</span>
+            {% endtrans %}
+            </div>
+        </div>
     {% if alert_limit %}
-        <p>{% trans limit=stock.alert_limit|floatformat %}Alert limit: {{ limit }}{% endtrans %}</p>
+        <div class="content-block-card stock-information-card text-center">
+            <div class="content-block-card-heading">
+                {% trans limit=stock.alert_limit|floatformat %}
+                <h5>Alert limit ({{ sales_unit }})</h5>
+            </div>
+            <div class="content-block-card-content">
+                <span class="amount">{{ limit }}</span>
+            {% endtrans %}
+            </div>
+        </div>
     {% endif %}
     {% else %}
         {% trans %}No stock information available.{% endtrans %}
