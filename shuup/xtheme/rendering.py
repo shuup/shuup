@@ -213,6 +213,8 @@ class PlaceholderRenderer(object):
                 classes.append(layout.cell_class_template % {"breakpoint": breakpoint, "width": width})
 
         classes.append(cell.align)
+        if cell.extra_classes:
+            classes.append(cell.extra_classes)
 
         cell_attrs = {
             "class": classes

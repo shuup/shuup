@@ -19,7 +19,7 @@ class LayoutCell(object):
     A single cell in a layout. Maps to Bootstrap's `col-XX-XX` classes.
     """
 
-    def __init__(self, theme, plugin_identifier, config=None, sizes=None, align=""):
+    def __init__(self, theme, plugin_identifier, config=None, sizes=None, align="", extra_classes=""):
         """
         Initialize a layout cell with a given plugin, config and sizing configuration.
 
@@ -37,6 +37,7 @@ class LayoutCell(object):
         self.plugin_identifier = plugin_identifier
         self.config = config or {}
         self.align = align
+        self.extra_classes = extra_classes
 
     @property
     def plugin_class(self):
@@ -105,7 +106,8 @@ class LayoutCell(object):
             plugin_identifier=data.get("plugin"),
             config=data.get("config"),
             sizes=data.get("sizes"),
-            align=data.get("align", "")
+            align=data.get("align", ""),
+            extra_classes=data.get("extra_classes", "")
         )
 
     def serialize(self):
@@ -119,7 +121,8 @@ class LayoutCell(object):
             ("plugin", self.plugin_identifier),
             ("config", self.config),
             ("sizes", self.sizes),
-            ("align", self.align)
+            ("align", self.align),
+            ("extra_classes", self.extra_classes),
         ) if k and v)
 
 
