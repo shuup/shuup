@@ -23,10 +23,10 @@ from shuup.admin.utils.urls import get_model_url, NoModelUrl
 
 
 class BaseActionButton(object):
-    base_css_classes = ("btn",)
+    base_css_classes = ("btn", "")
 
     def __init__(self, text="", icon=None, disable_reason=None, tooltip=None,
-                 extra_css_class="btn-default", required_permissions=(), identifier=None):
+                 extra_css_class="", required_permissions=(), identifier=None):
         """
         :param text: The actual text for the button.
         :param icon: Icon CSS class string
@@ -171,6 +171,8 @@ class JavaScriptActionButton(BaseActionButton):
     An action button that uses `onclick` for action dispatch.
     """
 
+    base_css_classes = ("btn", "btn-default")
+
     def __init__(self, onclick, **kwargs):
         self.onclick = onclick
         super(JavaScriptActionButton, self).__init__(**kwargs)
@@ -302,18 +304,16 @@ class PostActionDropdownItem(PostActionButton):
     """
     A POST action item to be shown in a `DropdownActionButton`.
     """
-    base_css_classes = ()
+    base_css_classes = ("dropdown-item", "")
 
     def __init__(self, **kwargs):
         super(PostActionDropdownItem, self).__init__(**kwargs)
 
     def render(self, request):
         if not get_missing_permissions(request.user, self.required_permissions):
-            yield '<li>'
             button = super(PostActionDropdownItem, self).render(request)
             for bit in button:
                 yield bit
-            yield '</li>'
 
     @staticmethod
     def visible_for_object(object):
@@ -394,7 +394,7 @@ def get_discard_button(discard_url):
         url=discard_url,
         text=_(u"Discard Changes"),
         icon="fa fa-undo",
-        extra_css_class="btn-gray btn-inverse"
+        extra_css_class="dropdown-item"
     )
 
 
@@ -403,6 +403,7 @@ def get_default_edit_toolbar(
         discard_url=None,
         delete_url=None,
         with_split_save=True,
+        with_save_as_copy=False,
         toolbar=None,
         required_permissions=(),
 ):
@@ -430,32 +431,63 @@ def get_default_edit_toolbar(
     toolbar = (Toolbar() if toolbar is None else toolbar)
 
     default_save_button = PostActionButton(
-        icon="fa fa-save",
+        icon="fa fa-check-circle",
         form_id=save_form_id,
         text=_("Save"),
-        extra_css_class="btn-primary",
+        extra_css_class="btn-success btn-save",
         required_permissions=required_permissions,
     )
 
+    save_as_copy_button = DropdownItem(
+        onclick="saveAsACopy()",
+        text=_("Save as a copy"),
+        icon="fa fa-clone",
+    )
+
+
     if with_split_save:
-        save_dropdown = DropdownActionButton([
-            DropdownItem(onclick="setNextActionAndSubmit('%s', 'return')" % save_form_id, text=_("Save and Exit")),
-            DropdownItem(onclick="setNextActionAndSubmit('%s', 'new')" % save_form_id, text=_("Save and Create New")),
-        ], split_button=default_save_button, extra_css_class="btn-primary", required_permissions=required_permissions)
+        dropdown_options = [
+            DropdownItem(
+                onclick="setNextActionAndSubmit('%s', 'return')" % save_form_id,
+                text=_("Save and Exit"),
+                icon="fa fa-floppy-o",
+            ),
+            DropdownItem(
+                onclick="setNextActionAndSubmit('%s', 'new')" % save_form_id,
+                text=_("Save and Create New"),
+                icon="fa fa-file-o",
+            ),
+        ]
+
+        if with_save_as_copy:
+            dropdown_options.append(save_as_copy_button)
+
+        if object and object.pk:
+            if discard_url:
+                dropdown_options.append(DropdownDivider())
+                dropdown_options.append(get_discard_button(try_reverse(discard_url, pk=object.pk)))
+
+        save_dropdown = DropdownActionButton(
+            dropdown_options,
+            split_button=default_save_button,
+            extra_css_class="btn-success btn-dropdown-toggle",
+            required_permissions=required_permissions
+        )
         toolbar.append(save_dropdown)
     else:
         toolbar.append(default_save_button)
 
+    if with_save_as_copy and not with_split_save:
+        toolbar.append(save_as_copy_button)
+
     if object and object.pk:
-        if discard_url:
-            toolbar.append(get_discard_button(try_reverse(discard_url, pk=object.pk)))
         if delete_url:
             delete_url = try_reverse(delete_url, pk=object.pk)
             toolbar.append(PostActionButton(
                 post_url=delete_url,
                 text=_(u"Delete"),
                 icon="fa fa-trash",
-                extra_css_class="btn-danger btn-inverse",
+                extra_css_class="btn-danger",
                 confirm=_("Are you sure you wish to delete %s?") % object,
                 required_permissions=required_permissions
             ))

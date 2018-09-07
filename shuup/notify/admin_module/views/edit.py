@@ -33,7 +33,7 @@ class ScriptEditView(CreateOrUpdateView):
         if self.object.pk:
             buttons = []
 
-            edit_button_title = _("Edit Script Contents...")
+            edit_button_title = _("Edit Script Contents")
 
             # this script was created through a template
             # so show an option to easily edit the template
@@ -49,7 +49,7 @@ class ScriptEditView(CreateOrUpdateView):
                         URLActionButton(
                             text=_("Edit Template"),
                             icon="fa fa-pencil-square-o",
-                            extra_css_class="btn-info",
+                            extra_css_class="btn-primary",
                             url=reverse("shuup_admin:notify.script-template-edit", kwargs={"pk": self.object.pk})
                         )
                     )
@@ -57,7 +57,7 @@ class ScriptEditView(CreateOrUpdateView):
             buttons.insert(0, URLActionButton(
                 text=edit_button_title,
                 icon="fa fa-pencil",
-                extra_css_class="btn-info",
+                extra_css_class="btn-primary",
                 url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk})
             ))
             context["toolbar"] = Toolbar(buttons)
