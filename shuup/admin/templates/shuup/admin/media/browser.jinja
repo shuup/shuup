@@ -6,12 +6,12 @@
 
 {% block action_buttons %}
     <div class="btn-toolbar" role="toolbar">
-        <button class="btn btn-secondary dropdown-toggle" onclick="MediaBrowser.openFolderContextMenu(event)">
+        <button class="btn btn-primary dropdown-toggle" onclick="MediaBrowser.openFolderContextMenu(event)">
             <i class="fa fa-cog"></i>
             {% trans %}Edit{% endtrans %}
             <span class="caret"></span>
         </button>
-        <button class="btn btn-info" id="upload-button-wrapper">
+        <button class="btn btn-inverse" id="upload-button-wrapper">
              {# wrapper will be filled with an invisible file input by Javascript #}
              <i class="fa fa-upload"></i> {% trans %}Upload{% endtrans %}
         </button>
