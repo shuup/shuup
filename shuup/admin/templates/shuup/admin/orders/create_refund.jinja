@@ -41,7 +41,7 @@
                     </div>
                 {% endfor %}
                 <div class="row">
-                    <div class="input-actions">
+                    <div class="input-actions col-12">
                         <button id="add-refund" class="btn btn-info">{% trans %}Add Another Refund{% endtrans %}</button>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
             event.preventDefault();
             addRefundForm();
             incrementTotalForms();
-            activateSelects();
+            window.activateSelects();
             activateLineTypeListeners();
         });
 

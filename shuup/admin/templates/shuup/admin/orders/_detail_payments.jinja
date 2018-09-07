@@ -22,6 +22,7 @@
                         href="{{ url('shuup_admin:order.delete-payment', pk=payment.order_id) }}"
                         data-payment="{{ payment.pk }}"
                         name="delete-payment-link"
+                        class="btn btn-danger btn-sm"
                     >
                         <i class="fa fa-close"></i> {{ _("Delete") }}
                     </a>
@@ -51,6 +52,7 @@
                             href="{{ url('shuup_admin:order.delete-payment', pk=payment.order_id) }}"
                             data-payment="{{ payment.pk }}"
                             name="delete-payment-link"
+                            class="btn btn-danger btn-sm"
                         >
                             <i class="fa fa-close"></i>
                         </a>
