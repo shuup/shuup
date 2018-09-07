@@ -121,34 +121,73 @@ fieldset[disabled] .btn {
     &:hover {
         border-color: $primary;
         box-shadow: $shadow-lg;
-    }
-
-    &:active {
-        background-color: darken($white, 2%);
-        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08);
-    }
-
-    &:focus {
-        border-color: $primary;
 
         i {
             color: $primary;
         }
     }
 
+    &:active:focus {
+        background-color: darken($white, 2%);
+        border-color: $primary;
+        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem rgba($primary, 0.15);
+
+        i {
+            color: $primary;
+        }
+    }
+
+    &:focus {
+        color: $primary;
+        border-color: $primary;
+        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem rgba($primary, 0.15);
+    }
+
     i {
-        transition: color 0.15s ease-in-out;
+        transition: all 0.2s ease-in-out;
+    }
+
+    &.dropdown-toggle {
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba($primary, 0.15);
+        }
     }
 }
 
 .btn-primary {
     @include btn-override-mixin($primary, 7%, 12%, 11%);
-    box-shadow: 0 5px 10px -3px rgba(darken($primary, 10%), 0.5);
+    box-shadow: 0 2px 8px rgba(darken($primary, 10%), 0.3);
     border: none;
+
+    &.btn-dropdown-toggle {
+        background-color: darken($primary, 5%);
+
+        &::after {
+            color: $white;
+        }
+    }
 }
 
 .btn-success {
     @include btn-override-mixin($success, 7%, 12%, 11%);
+    background-color: rgba($success, 0.2);
+    color: $success;
+    font-weight: 700;
+    border-color: rgba($success, 0.05);
+
+    &:hover {
+        background-color: rgba($success, 0.4);
+        color: $success;
+        border-color: rgba($success, 0.15);
+    }
+
+    &.btn-dropdown-toggle {
+        background-color: rgba($success, 0.4);
+
+        &::after {
+            color: $success;
+        }
+    }
 }
 
 .btn-info {
@@ -161,6 +200,27 @@ fieldset[disabled] .btn {
 
 .btn-danger {
     @include btn-override-mixin($danger, 10%, 17%, 13%);
+    background-color: transparent;
+    border-color: transparent;
+    color: $danger;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: rgba($danger, 0.2);
+        color: $danger;
+        border-color: transparent;
+    }
+
+    &.btn-inverse {
+        background-color: rgba($danger, 0.2);
+        border-color: rgba($danger, 0.05);
+    }
+
+    &:focus {
+        box-shadow: none;
+    }
 }
 
 .btn-gray {
@@ -173,8 +233,6 @@ fieldset[disabled] .btn {
     border-color: transparent;
     color: rgba($secondary, 0.8);
     font-weight: 700;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
 
     i {
         opacity: 0.6;
@@ -214,5 +272,21 @@ fieldset[disabled] .btn {
 .btn-icon {
     i {
         margin-right: 0.3rem;
+    }
+}
+
+.btn-text {
+    color: $primary;
+    border: none;
+    background-color: transparent;
+
+    & > i {
+        margin-right: 0.2rem;
+    }
+}
+
+.show > .btn-success.dropdown-toggle {
+    &::after {
+        color: $white;
     }
 }
