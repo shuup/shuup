@@ -1,421 +1,8 @@
 $input-border-color: #D9D9D9;
 $input-bg-color: #F3F3F3;
 
-// Form styles on content blocks
-// .content-block {
-//     .form-group {
-//         margin-bottom: 20px;
-//         position: relative;
-//         @include clearfix;
-
-//         @include media-breakpoint-up(md) {
-//             margin-bottom: 15px;
-//         }
-
-//         // add an asterisk on required field labels
-//         &.required-field {
-//             .control-label:after {
-//                 content: "\2731"; // asterisk
-//                 font-size: 0.9rem;
-//                 position: relative;
-//                 vertical-align: top;
-//                 margin-left: 3px;
-//                 display: inline-block;
-//                 color: $danger;
-//             }
-//         }
-
-//         label, .control-label {
-//             @include make-col-ready();
-//             padding-left: 0;
-//             text-align: right;
-//             padding-top: 8px;
-
-//             @include media-breakpoint-up(md) {
-//                 @include make-col(4);
-//             }
-
-//             @include media-breakpoint-up(xl) {
-//                 @include make-col(3);
-//             }
-//         }
-
-//         .control-label + div:not(.input-group) {
-//             @include make-col-ready();
-//             padding: 0;
-
-//             @include media-breakpoint-up(md) {
-//                 @include make-col(7);
-//             }
-
-//             @include media-breakpoint-up(xl) {
-//                 @include make-col(5)
-//             }
-
-//             .radio:first-child, .checkbox:first-child { padding-top: 10px; }
-
-//             .radio label, .checkbox label {
-//                 margin: 0;
-//                 float: none;
-//                 width: auto;
-//                 padding: 0;
-//                 padding-left: 20px;
-//                 font-size: 1.3rem;
-//                 font-weight: normal;
-
-//                 input[type="radio"],
-//                 input[type="checkbox"] {
-//                     margin-top: 2px;
-//                     position: absolute;
-//                     left: 0;
-//                     margin-left: 0px;
-//                 }
-//                 input[type="checkbox"] {
-//                     margin-left: 5px;
-//                 }
-//             }
-//         }
-
-//         .form-control {
-//             @include make-col-ready();
-//             padding-left: 12px;
-//             padding-right: 12px;
-
-//             @include media-breakpoint-up(md) {
-//                 @include make-col(7);
-//             }
-
-//             @include media-breakpoint-up(xl) {
-//                 @include make-col(5)
-//             }
-//         }
-
-//         .input-group {
-//             @include make-col-ready();
-//             float: none;
-//             padding: 0;
-
-//             @include media-breakpoint-up(md) {
-//                 @include make-col(7);
-//             }
-
-//             @include media-breakpoint-up(xl) {
-//                 @include make-col(5)
-//             }
-
-//             .form-control {
-//                 width: 100%;
-//                 float: none;
-//             }
-//         }
-
-//         .help-block {
-//             @include make-col-ready();
-//             clear: both;
-
-//             @include media-breakpoint-up(md) {
-//                 @include make-col-offset($md, 4);
-//                 @include make-col(7);
-//             }
-
-//             @include media-breakpoint-up(xl) {
-//                 @include make-col-offset($xl, 3);
-//                 @include make-col(5);
-//             }
-
-//             padding-left: 0;
-//             font-size: 1.2rem;
-//             margin-bottom: 5px;
-//         }
-
-//         .help-popover-btn {
-//             @include make-col-ready();
-//             cursor: pointer;
-//             padding-left: 0px;
-//             padding-right: 0px;
-//             position: initial;
-
-//             @include media-breakpoint-up(md) {
-//                 @include make-col(1);
-//             }
-
-//             @include media-breakpoint-down(sm) {
-//                 .btn {
-//                     position: absolute;
-//                     top: 0px;
-//                     right: -15px;
-//                 }
-//             }
-//         }
-
-//         .quick-add-btn + .help-popover-btn,
-//         .edit-object-btn + .help-popover-btn,
-//         .quick-add-btn + .edit-object-btn {
-//             @include media-breakpoint-up(xl) {
-//                 margin-left: -10px;
-//             }
-//         }
-
-//         .quick-add-btn + .help-popover-btn {
-//             @include media-breakpoint-down(xl) {
-//                 margin-left: -15px;
-//             }
-
-//             @include media-breakpoint-down(lg) {
-//                 .btn {
-//                     position: absolute;
-//                     top: 0px;
-//                     right: -15px;
-//                 }
-//             }
-//         }
-
-//         .checkbox + .help-popover-btn {
-//             padding-left: 15px;
-//             margin-top: -8px;
-
-//             @include media-breakpoint-down(sm) {
-//                 .btn {
-//                     top: -8px;
-//                 }
-//             }
-//         }
-
-//         .radio, .checkbox {
-//             margin: 0;
-
-//             label {
-//                 input[type="checkbox"] {
-//                     position: relative;
-//                     margin: 0 5px 0 -15px;
-//                     transform: scale(1.25);
-//                 }
-
-//                 @include media-breakpoint-down(sm) {
-//                     float: none;
-//                     width: auto;
-//                     padding: 0;
-//                     padding-left: 20px;
-//                 }
-//                 @include media-breakpoint-up(md) {
-//                     padding-top: 0;
-//                     input[type="radio"],
-//                     input[type="checkbox"] {
-//                         position: absolute;
-//                         left: 100%;
-//                         margin-left: 0;
-//                     }
-//                     input[type="checkbox"] {
-//                         margin-left: 5px;
-//                     }
-//                 }
-//             }
-//         }
-
-//         // Bootstrap select customization
-//         .bootstrap-select {
-//             padding-left: 0;
-//             padding-right: 0;
-
-//             .form-control {
-//                 float: none;
-//                 width: 100%;
-//             }
-//         }
-
-//         // For input type file
-//         .bootstrap3-multi-input {
-//             padding-top: 5px !important;
-//         }
-
-//         .browse-btn + .btn {
-//             margin: 0px 5px;
-//         }
-
-//         .note-editor.note-frame {
-//             border: 1px solid $input-border-color;
-//         }
-//     }
-
-//     .input-actions {
-//         @include make-col-ready();
-//         margin-top: -10px;
-
-//         @include media-breakpoint-up(md) {
-//             @include make-col-offset($md, 4);
-//             @include make-col(7);
-//             margin-left: -8px;
-//         }
-
-//         @include media-breakpoint-up(xl) {
-//             @include make-col-offset($xl, 3);
-//             @include make-col(5);
-//         }
-
-//         .btn {
-//             margin-bottom: 5px;
-//         }
-//     }
-
-//     // Bootstrap select customization
-//     .bootstrap-select {
-
-//         .dropdown-toggle {
-//             padding-right: 40px;
-//         }
-
-//         .btn-select {
-//             border-width: 2px;
-//             border-color: $input-border-color;
-//         }
-
-//         &.open {
-//             .dropdown-toggle {
-//                 box-shadow: none;
-//                 border-color: $primary;
-//             }
-//         }
-
-//         &.btn-group .btn {
-//             position: relative;
-//             .caret {
-//                 border: 0;
-//                 display: block;
-//                 position: absolute;
-//                 margin: 0;
-//                 height: 38px;
-//                 width: 38px;
-//                 top: 0;
-//                 right: 0;
-
-//                 &:before {
-//                     font-family: "FontAwesome";
-//                     speak: none;
-//                     vertical-align: middle;
-//                     line-height: 1;
-//                     border: 0;
-//                     content: $fa-var-chevron-down; // arrow-down
-//                     display: inline-block;
-//                     width: auto;
-//                     color: $text-color;
-//                     top: 9px;
-//                     left: 11px;
-//                     position: absolute;
-//                 }
-//             }
-//         }
-//         // show-tick
-//         .check-mark {
-//             margin-top: 0 !important;
-//             &:before {
-//                 content: $fa-var-check;
-//                 font-family: FontAwesome;
-//             }
-//         }
-//     }
-
-//     // Separator line that can be used between form fields
-//     .form-divider {
-//         &:before {
-//             content: "";
-//             margin: 10px 0px 20px 0px;
-//             border-bottom: 1px solid $border-color;
-//             @include make-col-ready();
-
-//             @include media-breakpoint-up(sm) {
-//                 @include make-col(12);
-//             }
-
-//             @include media-breakpoint-up(md) {
-//                 @include make-col(8);
-//                 @include make-col-offset($md, 4);
-//                 margin: 10px 0px 30px 0;
-//             }
-
-//             @include media-breakpoint-up(xl) {
-//                 @include make-col(6);
-//                 @include make-col-offset($xl, 3);
-//             }
-//         }
-//         &:after {
-//             content: "";
-//             display: table;
-//             clear: both;
-//         }
-//     }
-
-//     .form-lg {
-//         .form-group {
-//             label, .control-label {
-//                 font-size: 1.3rem;
-//                 padding-top: 11px;
-//             }
-
-//             .help-popover-btn {
-//                 .btn {
-//                     padding: 12px 15px;
-//                 }
-//             }
-
-//             .checkbox + .help-popover-btn {
-//                 margin-top: -3px;
-
-//                 @include media-breakpoint-down(sm) {
-//                     .btn {
-//                         top: -3px;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-
-//     .dropzone,
-//     .dropzone-lg {
-//         border-style: dashed;
-//         border-width: 2px;
-//         border-color: $primary;
-//         text-align: center;
-//         transition: all 0.2s;
-//         background-color: #fff;
-//         cursor: pointer;
-
-//         &.dropzone-no-preview.dz-started {
-//             .dz-preview {
-//                 display: none;
-//             }
-//             .dz-message {
-//                 display: block;
-//             }
-//         }
-
-//         &.dz-drag-hover {
-//             background-color: $primary;
-
-//             .dz-message {
-//                 opacity: 1;
-//                 color: #fff;
-//             }
-//         }
-
-//         input[type="file"] {
-//             display: none;
-//         }
-
-//         .dz-image {
-//             border-radius: 0px;
-//             z-index: 0;
-//         }
-
-//         // don't show size since it doesn't work when using BrowseAPI
-//         .dz-size {
-//             display: none;
-//         }
-//     }
-// }
-
 .form-control {
     border-color: $border-color;
-    height: 38px;
     font-weight: normal;
     -webkit-appearance: none;
     border-radius: $border-radius-lg;
@@ -423,7 +10,31 @@ $input-bg-color: #F3F3F3;
 
     &:focus {
         border-color: $primary;
-        box-shadow: none;
+        box-shadow: 0 0 0 0.2rem rgba($primary, 0.15);
+    }
+}
+
+.form-control[type="text"] {
+    height: 38px;
+}
+
+.form-content {
+    padding: 1.2rem 0.5rem;
+    margin-bottom: 0;
+
+    label {
+        color: rgba($text-color, 0.9);
+        font-weight: 600;
+    }
+}
+
+.required-field {
+    label::after {
+        content: '*';
+        color: $danger;
+        padding: 0.3rem;
+        position: relative;
+        top: 3px;
     }
 }
 
@@ -441,8 +52,10 @@ fieldset[disabled] .form-control {
 }
 
 .input-group-addon {
-    background: #fff;
-    border: 1px solid $input-border-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     .has-error & {
         background: #fff;
     }
@@ -474,8 +87,9 @@ fieldset[disabled] .form-control {
 
     .sidebar-list-item & {
         position: absolute;
-        right: 0px;
-        top: 6px;
+        right: 3px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
 
@@ -572,7 +186,6 @@ fieldset[disabled] .form-control {
         font-size: 0.6rem;
         color: rgba($secondary, 0.5);
         position: relative;
-        right: -5px;
         transform: rotate(0);
         transition: all 0.15s ease-in-out;
         border: 0;
@@ -610,5 +223,25 @@ fieldset[disabled] .form-control {
 }
 
 .dropdown-divider {
-    border-top: 1px solid rgba($border-color, 0.1);
+    border-top: 1px solid rgba($border-color, 0.5);
+}
+
+.help-popover-btn {
+    display: inline-block;
+}
+
+.checkbox {
+    background-color: $white;
+    border-radius: $border-radius-lg;
+    border: 1px solid $border-color;
+    box-shadow: $shadow-md;
+    padding: 0.5rem;
+
+    label {
+        margin-bottom: 0;
+    }
+
+    input {
+        margin-right: 0.2rem;
+    }
 }
