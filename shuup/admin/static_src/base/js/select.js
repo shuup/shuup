@@ -88,5 +88,6 @@ function select2Local() {
   });
 }
 
+window.activateSelects = activateSelects;
 activateSelects();
 select2Local();

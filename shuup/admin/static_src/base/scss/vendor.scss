@@ -24,8 +24,10 @@
 @import "~bootstrap/scss/_alert";
 @import "~bootstrap/scss/_list-group";
 @import "~bootstrap/scss/_close";
+@import "~bootstrap/scss/_card";
 // Components w/ JavaScript
 @import "~bootstrap/scss/_modal";
+@import "~bootstrap/scss/_transitions";
 @import "~bootstrap/scss/_tooltip";
 @import "~bootstrap/scss/_popover";
 // Utility classes
@@ -51,6 +53,7 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts";
 @import "~jquery.scrollbar/sass/jquery.scrollbar";
 @import "~@chenfengyuan/datepicker/src/css/datepicker.scss";
 @import url(../../../node_modules/select2/dist/css/select2.css); // 4.0.6
+@import url(../../../node_modules/select2-bootstrap-css/select2-bootstrap.css); // 4.0.6
 @import url(../../../node_modules/summernote/dist/summernote-bs4.css);
 @import url(../../../node_modules/tether-shepherd/dist/css/shepherd-theme-arrows.css);
 @import url(../../../node_modules/dropzone/dist/dropzone.css);
