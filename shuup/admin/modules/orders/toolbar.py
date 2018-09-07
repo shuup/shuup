@@ -46,7 +46,7 @@ class OrderDetailToolbar(Toolbar):
                     action_menu_items,
                     icon="fa fa-star",
                     text=_(u"Actions"),
-                    extra_css_class="btn-info",
+                    extra_css_class="btn-inverse",
                 )
             )
 
@@ -67,7 +67,7 @@ class OrderDetailToolbar(Toolbar):
                     set_status_menu_items,
                     icon="fa fa-refresh",
                     text=_("Set Status"),
-                    extra_css_class="btn-info set-status-button",
+                    extra_css_class="btn-primary set-status-button",
                 )
             )
 

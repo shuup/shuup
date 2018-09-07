@@ -17,6 +17,7 @@ class AnonymizeContactToolbarButton(PostActionButton):
     def __init__(self, object, **kwargs):
         kwargs["icon"] = "fa fa-user-times"
         kwargs["text"] = _("Anonymize")
+        kwargs["extra_css_class"] = "dropdown-item"
         kwargs["confirm"] = _(
             "This action will replace all contact personal data with random values making it "
             "impossible to be identified. The account will also be deactivated and any "
@@ -38,6 +39,7 @@ class DownloadDataToolbarButton(PostActionButton):
         kwargs["text"] = _("Download data")
         kwargs["name"] = "download"
         kwargs["value"] = "1"
+        kwargs["extra_css_class"] = "dropdown-item"
         kwargs["post_url"] = reverse("shuup_admin:gdpr.download_data", kwargs=dict(pk=object.pk))
         super(DownloadDataToolbarButton, self).__init__(**kwargs)
 
