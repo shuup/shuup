@@ -163,7 +163,7 @@
         tr {
             &.active {
                 td {
-                    background-color: darken($white, 7%);
+                    background-color: rgba(darken($gray-bg, 10%), 0.3);
                 }
 
                 td img {
@@ -206,7 +206,6 @@
 
     .picotable-header {
         align-items: stretch;
-        justify-content: flex-end;
 
         @include media-breakpoint-down(md) {
             margin-bottom: 15px;
@@ -248,6 +247,7 @@
         .picotable-filter {
             width: 280px;
             justify-content: flex-end;
+            margin-left: auto;
         }
 
         .picotable-items-per-page-ctr {
