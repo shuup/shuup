@@ -1,6 +1,7 @@
 {% extends "shuup/admin/base.jinja" %}
 {% from "shuup/admin/macros/general.jinja" import content_with_sidebar %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call content_with_sidebar(content_id="contact_form") %}
         <form method="post" id="contact_form" novalidate>
