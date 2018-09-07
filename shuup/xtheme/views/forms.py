@@ -54,7 +54,11 @@ class LayoutCellGeneralInfoForm(forms.Form):
 
             initial_cell_style = self.layout_cell.extra_classes or ""
             self.fields["cell_extra_classes"] = forms.CharField(
-                label=_("Cell extra class"), initial=initial_cell_style, required=False)
+                label=_("Extra classes"),
+                help_text=_("Add extra CSS classes names to the cell"),
+                initial=initial_cell_style,
+                required=False
+            )
 
         if self.theme:
             plugin_choices = self.theme.get_all_plugin_choices(empty_label=_("No Plugin"))
