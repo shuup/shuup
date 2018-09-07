@@ -6,30 +6,38 @@
     li {
         display: block;
         width:100%;
-        padding: 2px;
-        float:left;
-        line-height: 1.5;
+        padding: 0.5rem;
 
         &:hover {
-            background-color: $block-light-blue;
+            background-color: rgba($border-color, 0.1);
         }
 
-        .btn {
-            float:right;
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba($border-color, 0.5);
         }
 
-        &.sortable-ghost, 
+        &.sortable-ghost,
         &.sortable-chosen {
-            background-color: $primary;
-            color:#fff;
+            color: $primary;
             cursor: hand;
+            background-color: rgba($primary, 0.2);
+            border-bottom-color: transparent;
+
+            i {
+                background-color: $primary;
+                color: $white;
+            }
+
+            button {
+                opacity: 0;
+            }
         }
-        
+
         i {
-            float:left;
-            margin-right: 5px;
-            font-size: 1.6rem;
-            margin-top: 1px;
+            background-color: darken($gray-bg, 2%);
+            padding: 0.6rem 0.7rem;
+            border-radius: $border-radius-lg;
+            margin-right: 0.8rem;
             cursor: move;
 
             &:hover {
@@ -39,15 +47,12 @@
         }
 
         .sortable-field {
-            float:left;
-
             input {
                 display: none;
             }
 
             label {
                 margin-bottom: 0;
-                font-size: 1.4rem;
             }
         }
     }
