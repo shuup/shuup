@@ -2,23 +2,19 @@
 
 {% macro render_range_form(form, form_prefix, idx) %}
     {{ language_dependent_content_tabs(form, tab_id_prefix=form_prefix) }}
-    <div class="form-divider"></div>
     <div>{{ render_monolingual_fields(form) }}</div>
 {% endmacro %}
 
 {% macro render_form(form, form_prefix, idx) %}
     {% set full_prefix = form_prefix + idx|string if idx == "__prefix__" else form_prefix %}
-    <div class="panel panel-default panel-behavior-component panel-{{ full_prefix }}" id="panel-{{ full_prefix }}">
-        <div class="panel-heading" role="tab" id="heading-{{ full_prefix }}">
-            <h4>
-                <a role="button" data-toggle="collapse" href="#collapse{{ full_prefix }}"
-                   aria-expanded="true" aria-controls="collapse{{ full_prefix }}">
-                    {{ formset.get_name() }}
-                </a>
-            </h4>
-            <p>{% trans %}Define price based basket weight range. Range minimum is counted in range only as zero.{% endtrans %}</p>
+    <div class="panel panel-default panel-slide row panel-behavior-component panel-{{ full_prefix }}" id="panel-{{ full_prefix }}">
+        <div class="panel-heading col-12" role="tab" id="heading-{{ full_prefix }}">
+            <a class="panel-title d-flex p-3 flex-column" role="button" data-toggle="collapse" href="#collapse{{ full_prefix }}" aria-expanded="false" aria-controls="collapse{{ full_prefix }}">
+                <h5 class="slide-title">{{ formset.get_name() }}</h5>
+                <p class="mb-0">{% trans %}Define price based basket weight range. Range minimum is counted in range only as zero.{% endtrans %}</p>
+            </a>
         </div>
-        <div id="collapse{{ full_prefix }}" class="component-form panel-collapse collapse in" role="tabpanel">
+        <div id="collapse{{ full_prefix }}" class="component-form col-12 panel-collapse collapse in" role="tabpanel">
             {{ render_range_form(form, full_prefix, idx) }}
         </div>
     </div>
