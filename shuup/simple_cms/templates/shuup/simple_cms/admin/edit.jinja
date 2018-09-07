@@ -4,6 +4,7 @@
 
 {% block title %}{{ page.title or _("New Page") }}{% endblock %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call content_with_sidebar(content_id="page_form") %}
         <form method="post" id="page_form">

@@ -2,6 +2,7 @@
 {% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call single_section_form("display_unit_form", form) %}
         {{ language_dependent_content_tabs(form, ["name", "symbol"]) }}

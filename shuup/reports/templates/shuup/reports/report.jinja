@@ -4,45 +4,48 @@
 
 {% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
-    {% if form %}
-        {% call content_block(_("Reports"), "fa-info-circle") %}
-            <form method="post" id="service_provider_form">
-                {% csrf_token %}
-                {{ render_monolingual_fields(form, field_names="report") }}
-                <div{% if result %} class="collapse"{% endif %} id="collapse">
-                    {{ render_monolingual_fields(form, exclude="report") }}
-                    {% if current_report and current_report.get_description() %}
-                    <div class="form-group">
-                        <div class="control-label">
-                            Report Description
+    <div class="container">
+        {% if form %}
+            {% call content_block(_("Reports"), "fa-info-circle") %}
+                <form method="post" id="service_provider_form">
+                    {% csrf_token %}
+                    {{ render_monolingual_fields(form, field_names="report") }}
+                    <div{% if result %} class="collapse"{% endif %} id="collapse">
+                        {{ render_monolingual_fields(form, exclude="report") }}
+                        {% if current_report and current_report.get_description() %}
+                        <div class="form-group">
+                            <div class="control-label">
+                                Report Description
+                            </div>
+                            <div style="margin-top: 10px;">
+                                {{ current_report.get_description() }}
+                            </div>
                         </div>
-                        <div style="margin-top: 10px;">
-                            {{ current_report.get_description() }}
+                        {% endif %}
+                    </div>
+                    {% if result %}
+                    <div class="row">
+                        <div class="col-md-6">
+                        <button class="btn btn-primary btn-block" type="button" data-target="#collapse" data-toggle="collapse" aria-expanded="false" aria-controls="collapse">{% trans %}Toggle Filters{% endtrans %}</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary btn-block">{% trans %}Get Report{% endtrans %}</button>
                         </div>
                     </div>
-                    {% endif %}
-                </div>
-                {% if result %}
-                <div class="row">
-                    <div class="col-md-6">
-                    <button class="btn btn-primary btn-block" type="button" data-target="#collapse" data-toggle="collapse" aria-expanded="false" aria-controls="collapse">{% trans %}Toggle Filters{% endtrans %}</button>
-                    </div>
-                    <div class="col-md-6">
+                    {% else %}
                         <button type="submit" class="btn btn-primary btn-block">{% trans %}Get Report{% endtrans %}</button>
-                    </div>
-                </div>
-                {% else %}
-                    <button type="submit" class="btn btn-primary btn-block">{% trans %}Get Report{% endtrans %}</button>
-                {% endif %}
-            </form>
-        {% endcall %}
-        {% if result %}
-            <div class="content-block">{{ result }}</div>
+                    {% endif %}
+                </form>
+            {% endcall %}
+            {% if result %}
+                <div class="content-block">{{ result }}</div>
+            {% endif %}
+        {% else %}
+            <div class="content-block">{% trans %}No reports available{% endtrans %}</div>
         {% endif %}
-    {% else %}
-        <div class="content-block">{% trans %}No reports available{% endtrans %}</div>
-    {% endif %}
+    </div>
 {% endblock %}
 
 {% block extra_js %}
