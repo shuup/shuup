@@ -17,6 +17,12 @@ window._ = _;
 window.Dropzone = require('dropzone');
 Dropzone.autoDiscover = false;
 
+window.OrderCreator = require('../../modules/orders/static_src/create/index.js');
+window.Shepherd = require('tether-shepherd');
+
+const m = require('mithril');
+window.m = m;
+
 import select2 from 'select2';
 select2($);
 
@@ -35,10 +41,5 @@ require('popper.js');
 require('summernote/dist/summernote-bs4.js');
 require('tether');
 require('@chenfengyuan/datepicker');
-
-window.Shepherd = require('tether-shepherd');
-
-const m = require('mithril');
-window.m = m;
 
 
