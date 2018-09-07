@@ -1,30 +1,32 @@
 {% extends "shuup/admin/base.jinja" %}
-{% block content %}
-    <div class="container-fluid">
-        <div class="content-block">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <h2>{{ _("Sample Data") }}</h2>
+{% from "shuup/admin/macros/general.jinja" import content_block %}
 
-                    {% if has_installed_sample %}
-                    <p><i class="text-info fa fa-info-circle"></i> {{ _("Your shop currently has some sample data installed. Select below which objects you want to uninstall.") }}</p>
-                    <p>{{ _("After the consolidation, preserved objects will lose their status of Sample Object and it will be no longer possible to distinguish them from the others.") }}</p>
-                    <p class="text-danger"><strong>{{ _("Caution: this action cannot be undone.") }}</strong></p>
-                    <hr/>
-                    <form action="{{ request.path }}" method="post" id="sample-object-form">
-                        {% csrf_token %}
-                        {% for field in form %}
-                            {{ bs3.field(field) }}
-                        {% endfor %}
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-check"></i> {{ _("Consolidate") }}</button>
-                        </div>
-                    </form>
-                    {% else %}
-                        <p><i class="text-info fa fa-info-circle"></i> {{ _("Your shop has no sample data installed!") }}</p>
-                    {% endif %}
-                </div>
+{% block body_class %}shuup-details{% endblock %}
+{% block content %}
+    <div class="container">
+    {% call content_block(_("Consolidate Data"), ("fa-database")) %}
+        <div class="row">
+            <div class="col-12">
+                {% if has_installed_sample %}
+                <p><i class="text-info fa fa-info-circle"></i> {{ _("Your shop currently has some sample data installed. Select below which objects you want to uninstall.") }}</p>
+                <p>{{ _("After the consolidation, preserved objects will lose their status of Sample Object and it will be no longer possible to distinguish them from the others.") }}</p>
+                <p class="text-danger"><strong>{{ _("Caution: this action cannot be undone.") }}</strong></p>
+                <hr/>
+                <form action="{{ request.path }}" method="post" id="sample-object-form">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ bs3.field(field) }}
+                    {% endfor %}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-check"></i> {{ _("Consolidate") }}</button>
+                    </div>
+                </form>
+                {% else %}
+                    <p><i class="text-info fa fa-info-circle"></i> {{ _("Your shop has no sample data installed!") }}</p>
+                {% endif %}
+            </div>
             </div>
         </div>
+    {% endcall %}
     </div>
 {% endblock %}
