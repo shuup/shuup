@@ -1,6 +1,7 @@
 {% extends "shuup/admin/base.jinja" %}
 {% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% if orderability_errors %}
         <div class="container-fluid">
