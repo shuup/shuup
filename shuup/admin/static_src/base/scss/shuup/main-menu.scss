@@ -128,7 +128,7 @@ ul.submenu {
     display: none;
     transform: translateY(-100%);
     padding: 0;
-    margin-left: 2.1em;
+    margin-left: 2.4rem;
 
     &.active {
         display: block;
@@ -187,6 +187,8 @@ a.item-submenu {
         background-color: rgba($secondary, 0.2);
         border-radius: 20px;
         display: block;
+        position: absolute;
+        left: -12px;
         margin-right: 0.7em;
         transform: scale(0.7);
         transition: all 0.2s ease-in-out;
