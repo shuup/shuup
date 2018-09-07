@@ -887,7 +887,7 @@ const Picotable = (function(m, storage) {
             m("div.loader-block.w-100"),
           ]),
           m("div.d-flex.justify-content-center.h-50.col-12.pt-5.pb-5", [
-            m("div.fa.fa-circle-o-notch.loader-spinner")
+            m("div.loader-spinner")
           ])
         ])
       ]);
@@ -1243,3 +1243,5 @@ if (typeof module !== "undefined" && module !== null && module.exports) {
 else if (typeof define === "function" && define.amd) define(function() {
     return Picotable;
 });
+
+new Picotable(document.getElementById("picotable"), window.location.pathname);
