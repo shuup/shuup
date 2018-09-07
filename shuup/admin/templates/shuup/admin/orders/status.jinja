@@ -2,10 +2,10 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 {% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call single_section_form("status_form", form) %}
         {{ language_dependent_content_tabs(form, ["name", "public_name"]) }}
-        <div class="form-divider"></div>
         {{ bs3.field(form.role) }}
         {{ bs3.field(form.identifier) }}
         {{ bs3.field(form.ordering) }}

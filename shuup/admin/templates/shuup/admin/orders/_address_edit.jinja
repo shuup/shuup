@@ -11,27 +11,26 @@
     <div class="container-fluid">
         <div class="content-block">
             <div class="row">
-                <div class="col-xl-12">
+                <div class="pb-4 col-xl-12">
                     <label>
                         <input id="billing-to-shipping" type="checkbox">
                         {% trans %}Use billing address as shipping address{% endtrans %}
                     </label>
                 </div>
             </div>
-            <br />
-            <div class="row order-addresses">
-                <form method="post" action="" id="edit-addresses">
+            <form method="post" action="" id="edit-addresses">
+                <div class="row order-addresses">
                     {% csrf_token %}
-                    <div class="col-xl-6 billing-address">
+                    <div class="col-lg-6 billing-address">
                         <h4 class="underline"><i class="fa fa-file-text"></i> {% trans %}Billing Address{% endtrans %}</h4>
                         {{ address_form(form["billing_address"]) }}
                     </div>
-                    <div class="col-xl-6 shipping-address">
+                    <div class="col-lg-6 shipping-address">
                         <h4 class="underline"><i class="fa fa-truck"></i> {% trans %}Shipping Address{% endtrans %}</h4>
                         {{ address_form(form["shipping_address"]) }}
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
