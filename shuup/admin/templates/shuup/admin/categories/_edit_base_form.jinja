@@ -8,7 +8,6 @@
         {{ bs3.field(category_form[map.slug], widget_class="slugfield") }}
         {{ bs3.field(category_form[map.description]) }}
     {% endcall %}
-    <div class="form-divider"></div>
     {{ bs3.field(category_form.parent) }}
     {{ bs3.field(category_form.ordering) }}
 {% endcall %}
@@ -19,13 +18,13 @@
     {{ bs3.field(category_form.visibility_groups) }}
     {{ bs3.field(category_form.visible_in_menu) }}
     {{ bs3.field(category_form.shops) }}
-    <div class="form-group row">
-    <label class="control-label"></label>
-    {% if category.pk %}
-    <button class="btn btn-primary" onclick="copyVisibilityToProducts(event, $(this))">
-        <i class="fa fa-clone"></i> {% trans %}Copy visibility settings to products{% endtrans %}
-    </button>
-    {% endif %}
+    <div class="form-group">
+        <label class="control-label"></label>
+        {% if category.pk %}
+            <button class="btn btn-primary" onclick="copyVisibilityToProducts(event, $(this))">
+                <i class="fa fa-clone"></i> {% trans %}Copy visibility settings to products{% endtrans %}
+            </button>
+        {% endif %}
     </div>
 {% endcall %}
 
