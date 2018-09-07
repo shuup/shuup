@@ -19,9 +19,23 @@
     .title {
         position: relative;
 
-        &.open {
-            .block-title, .block-subtitle {
+        @include media-breakpoint-up(lg) {
+            padding: 0.7rem;
 
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: -15px;
+                width: calc(100% + 30px);
+                height: 1px;
+                background-color: rgba($border-color, 0.5);
+            }
+        }
+
+        &.open {
+            .block-title,
+            .block-subtitle {
                 @include media-breakpoint-up(md)  {
                     border-color: $primary;
                     padding-bottom: 15px;
@@ -33,12 +47,13 @@
             }
         }
 
-        .block-title, .block-subtitle {
-            border-bottom: 3px solid $primary;
-            padding-bottom: 15px;
+        .block-title,
+        .block-subtitle {
+            padding-bottom: 8px;
             margin-bottom: 0px;
             margin-top: 0;
             padding-right: 40px;
+            font-weight: normal;
             transition: all 0.2s;
 
             @include media-breakpoint-down(md)  {
@@ -51,9 +66,22 @@
             }
 
             i {
-                color: $primary;
-                margin-right: 5px;
+                padding: 0.4rem;
+                font-size: 0.9rem;
+                border-radius: 20px;
+                margin-right: 0.5rem;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
+        }
+
+        .block-title i,
+        h2.block-subtitle i {
+            background-color: rgba($success, 0.2);
+            color: $success;
         }
 
         .toggle-contents {
@@ -87,17 +115,13 @@
         }
     }
 
-    .nav-tabs {
-        margin-top: 30px;
-    }
     .tab-content {
         margin-top: 10px;
     }
+
     .language-tabs {
         margin-top: 0px;
-        a {
-            font-size: 1.3rem;
-        }
+
         .col-sm-8 {
              @include media-breakpoint-up(lg) {
                 padding-left: 8px;
@@ -127,9 +151,34 @@
         }
     }
 
-    .sub-title {
+    .subtitle {
         margin-bottom: 20px;
         margin-top: 30px;
+
+        &.top-line {
+            &::before {
+                content: '';
+                width: calc(100% + 30px);
+                height: 5px;
+                position: absolute;
+                left: -15px;
+                top: -15px;
+                background-color: rgba($border-color, 0.4);
+            }
+        }
+
+        &.bottom-line {
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    h4.block-subtitle {
+        i {
+            background-color: rgba($warning, 0.2);
+            color: $warning;
+        }
     }
 
     hr {
@@ -148,7 +197,10 @@
 
         @include media-breakpoint-up(md) {
             dd { margin-left: 220px; }
-            dt { width: 200px; }
+            dt {
+                width: 200px;
+                float: left;
+            }
         }
     }
 
@@ -179,6 +231,15 @@
             display: block;
         }
     }
+
+    .form-content .form-control,
+    .summernote-wrap,
+    .select2-container,
+    .checkbox {
+        max-width: 80%;
+        margin-right: auto;
+        border-radius: $border-radius-lg;
+    }
 }
 
 .modal-body .content-block {
@@ -190,4 +251,103 @@
             margin-top: 15px;
         }
     }
+}
+
+.note-editor.note-frame {
+    border-color: $border-color;
+    box-shadow: $shadow-md;
+    border-radius: $border-radius-lg;
+}
+
+.note-toolbar {
+    background-color: rgba($border-color, 0.12);
+    border-bottom: 1px solid $border-color;
+}
+
+.content-block-card {
+    border: 1px solid $border-color;
+    border-radius: $border-radius-lg;
+    padding: 0.6rem 0.5rem;
+    margin-bottom: 1rem;
+
+    h5 {
+        color: rgba($text-color, 0.7);
+    }
+
+    span.amount {
+        font-size: 1.6rem;
+    }
+}
+
+.stock-management-form {
+
+    .form-content {
+        padding: 0.8rem 0;
+        padding-top: 0;
+    }
+
+}
+
+.text-between-fields {
+    background-color: $gray-bg;
+}
+
+.list-group-item {
+    border-color: $border-color;
+}
+
+.table th {
+    border-top: none;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(darken($gray-bg, 10%), 0.3);
+}
+
+.theme-card {
+    border-radius: $border-radius-xl;
+}
+
+.card-img-top {
+    border-radius: $border-radius-xl;
+}
+
+.theme-card-body {
+    background-color: $white;
+    width: 90%;
+    margin: 0 auto;
+    z-index: 1000;
+    position: relative;
+    top: -2rem;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+}
+
+.active-theme {
+    &::before {
+        content: '\f00c';
+        font-family: 'FontAwesome';
+        width: 32px;
+        height: 32px;
+        color: $white;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $success;
+        position: absolute;
+        top: -12px;
+        right: 0;
+    }
+}
+
+.btn-configure-theme {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1.5rem 2rem;
 }
