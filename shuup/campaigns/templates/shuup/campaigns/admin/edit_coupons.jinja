@@ -3,12 +3,13 @@
 
 {% block title %}{{ coupon.code or _("New Discount Code") }}{% endblock %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call content_with_sidebar(content_id="coupon_form") %}
         <form method="post" id="coupon_form">
             {% csrf_token %}
             {% call content_block(_("General information"), "fa-clock-o") %}
-                {% set addon_after = "<a href='#' id='id_autogenerate'>%s</a>" % _("Generate") %}
+                {% set addon_after = "<a class='btn btn-primary' href='#' id='id_autogenerate'>%s</a>" % _("Generate") %}
                 {{ bs3.field(form.code, addon_after=addon_after) }}
                 {{ bs3.field(form.usage_limit_customer) }}
                 {% set usage_limit_addon = "<small>%s</small>" % _("%(coupons)s used", coupons=coupon.usages.count()) %}

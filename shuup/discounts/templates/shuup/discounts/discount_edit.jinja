@@ -1,24 +1,22 @@
 {% extends "shuup/admin/base.jinja" %}
-{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
+{% from "shuup/admin/macros/general.jinja" import single_section_form, content_block_subtitle with context %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call single_section_form("discounts_form", form) %}
         {{ bs3.field(form.name) }}
-        <div class="form-divider"></div>
-        <h2>{% trans %}Availability{% endtrans %}</h2>
+        {{ content_block_subtitle("h4", _("Availability"), "fa-calendar-check-o") }}
         {{ bs3.field(form.active) }}
         {{ bs3.field(form.start_datetime) }}
         {{ bs3.field(form.end_datetime) }}
         {{ bs3.field(form.happy_hours) }}
         {{ bs3.field(form.availability_exceptions) }}
-        <div class="form-divider"></div>
-        <h2>{% trans %}Condition{% endtrans %}</h2>
+        {{ content_block_subtitle("h4", _("Condition"), "fa-random") }}
         {{ bs3.field(form.product) }}
         {{ bs3.field(form.category) }}
         {{ bs3.field(form.contact) }}
         {{ bs3.field(form.contact_group) }}
-        <div class="form-divider"></div>
-        <h2>{% trans %}Effect{% endtrans %}</h2>
+        {{ content_block_subtitle("h4", _("Effect"), "fa-percent") }}
         {{ bs3.field(form.discount_amount_value) }}
         {{ bs3.field(form.discounted_price_value) }}
         {{ bs3.field(form.discount_percentage) }}
