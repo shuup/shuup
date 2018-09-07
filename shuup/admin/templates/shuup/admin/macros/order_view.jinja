@@ -22,7 +22,7 @@
                     <td>{{ order.get_status_display() }}</td>
                     <td>{{ order.get_shipping_status_display() }}</td>
                     <td>{{ order.get_payment_status_display() }}</td>
-                    <td>{% if url %}<a href="{{ url }}">{% endif %}<i class="fa fa-arrow-right"></i>{% if url %}</a>{% endif %}</td>
+                    <td>{% if url %}<a class="btn btn-sm btn-inverse" href="{{ url }}">{% endif %}<i class="fa fa-arrow-right"></i>{% if url %}</a>{% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>
