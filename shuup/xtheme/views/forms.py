@@ -52,6 +52,10 @@ class LayoutCellGeneralInfoForm(forms.Form):
             self.fields["cell_align"] = forms.ChoiceField(
                 label=_("Cell align"), choices=self.CELL_ALIGN_CHOICES, initial=initial_cell_align)
 
+            initial_cell_style = self.layout_cell.extra_classes or ""
+            self.fields["cell_extra_classes"] = forms.CharField(
+                label=_("Cell extra class"), initial=initial_cell_style, required=False)
+
         if self.theme:
             plugin_choices = self.theme.get_all_plugin_choices(empty_label=_("No Plugin"))
             plugin_field = self.fields["plugin"]
@@ -73,6 +77,7 @@ class LayoutCellGeneralInfoForm(forms.Form):
             self.layout_cell.sizes[size] = int(data["cell_width"])
 
         self.layout_cell.align = data["cell_align"]
+        self.layout_cell.extra_classes = data["cell_extra_classes"].strip()
 
 
 class LayoutCellFormGroup(FormGroup):

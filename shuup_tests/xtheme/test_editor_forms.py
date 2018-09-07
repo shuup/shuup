@@ -41,7 +41,8 @@ def test_formless_plugin_in_lcfg(rf):
             lcfg = LayoutCellFormGroup(
                 data={
                     "general-cell_width": "%d" % two_thirds,
-                    "general-cell_align": "pull-right"
+                    "general-cell_align": "pull-right",
+                    "general-cell_extra_classes" : "newClass",
                 },
                 layout_cell=cell,
                 theme=theme,
@@ -51,6 +52,7 @@ def test_formless_plugin_in_lcfg(rf):
             assert "plugin" not in lcfg.forms
             assert lcfg.is_valid()
             lcfg.save()
+            assert cell.extra_classes == "newClass"
             assert cell.sizes["md"] == two_thirds  # Something got saved even if the plugin doesn't need config
 
 
@@ -70,6 +72,7 @@ def test_lcfg(rf):
                 data={
                     "general-cell_width": "%d" % two_thirds,
                     "general-cell_align": " ",
+                    "general-cell_extra_classes" : "newClass",
                     "plugin-text_*": "Hello, world!"
                 },
                 layout_cell=cell,
@@ -79,4 +82,5 @@ def test_lcfg(rf):
             assert lcfg.is_valid()  # Let's see now!
             lcfg.save()
             assert cell.sizes["md"] == two_thirds
+            assert cell.extra_classes == "newClass"
             assert cell.config["text"] == {FALLBACK_LANGUAGE_CODE: "Hello, world!"}
