@@ -139,12 +139,6 @@ canvas {
     font-size: 1.3rem;
 }
 
-.browse-widget {
-    .browse-text {
-        margin-right: 10px;
-    }
-}
-
 .mt-0 {
     margin-top: 0;
 }
@@ -154,7 +148,7 @@ canvas {
 }
 
 .section-description {
-    font-size: 1.7rem;
+    color: rgba($text-color, 0.8);
 }
 
 .hidden {
