@@ -18,38 +18,42 @@ window.m = m;
 
 var controller = null;
 
-export function init(config={}) {
-    if (controller !== null) {
-        return;
-    }
-    controller = m.mount(document.getElementById("BrowserView"), {
-        view: BrowserView.view,
-        controller: _.partial(BrowserView.controller, config)
-    });
-    controller.navigateByHash();
-    controller.reloadFolderTree();
+class MediaBrowser {
+  static init(config={}) {
+      if (controller !== null) {
+          return;
+      }
+      controller = m.mount(document.getElementById("BrowserView"), {
+          view: BrowserView.view,
+          controller: _.partial(BrowserView.controller, config)
+      });
+      controller.navigateByHash();
+      controller.reloadFolderTree();
 
-    dragDrop.disableIntraPageDragDrop();
+      dragDrop.disableIntraPageDragDrop();
+  }
+
+  static openFolderContextMenu(event) {
+      const button = event.target;
+      menuManager.open(button, folderContextMenu(controller));
+  }
+
+  static setupUploadButton(element) {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.multiple = true;
+      input.style.display = "none";
+      input.addEventListener("change", function(event) {
+          FileUpload.enqueueMultiple(controller.getUploadUrl(), event.target.files);
+          FileUpload.addQueueCompletionCallback(() => { controller.reloadFolderContentsSoon(); });
+          FileUpload.processQueue();
+      });
+      document.body.appendChild(input);
+      element.addEventListener("click", function(event) {
+          input.click();
+          event.preventDefault();
+      }, false);
+  }
 }
 
-export function openFolderContextMenu(event) {
-    const button = event.target;
-    menuManager.open(button, folderContextMenu(controller));
-}
-
-export function setupUploadButton(element) {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.multiple = true;
-    input.style.display = "none";
-    input.addEventListener("change", function(event) {
-        FileUpload.enqueueMultiple(controller.getUploadUrl(), event.target.files);
-        FileUpload.addQueueCompletionCallback(() => { controller.reloadFolderContentsSoon(); });
-        FileUpload.processQueue();
-    });
-    document.body.appendChild(input);
-    element.addEventListener("click", function(event) {
-        input.click();
-        event.preventDefault();
-    }, false);
-}
+window.MediaBrowser = MediaBrowser;
