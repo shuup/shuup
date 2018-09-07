@@ -36,25 +36,18 @@ class EditProductToolbar(Toolbar):
         self.product = view.object.product
         self.extend(get_default_edit_toolbar(
             self.view, "product_form",
-            delete_url="shuup_admin:shop_product.delete"
+            delete_url="shuup_admin:shop_product.delete",
+            with_save_as_copy=True,
         ))
         if self.product.pk:
             self._build_existing_product()
 
-    def _build_static_buttons(self, product):
-        save_as_copy_button = JavaScriptActionButton(
-            onclick="saveAsACopy()",
-            text=_("Save as a copy"),
-            icon="fa fa-clone",
-        )
-        self.append(save_as_copy_button)
 
     def _build_existing_product(self):
         product = self.product
         # :type product: shuup.core.models.Product
 
         # static buttons
-        self._build_static_buttons(product)
         self._build_action_menu(product)
 
     def _build_action_menu(self, product):
@@ -86,7 +79,7 @@ class EditProductToolbar(Toolbar):
             menu_items,
             icon="fa fa-star",
             text=_(u"Actions"),
-            extra_css_class="btn-info",
+            extra_css_class="btn-inverse btn-actions",
             identifier=ProductActionCategory.MAIN
         ))
 
@@ -187,3 +180,10 @@ class EditProductToolbar(Toolbar):
                 icon="fa fa-retweet",
                 url=self._get_variation_url(product),
             )
+
+    def get_split_save_button(save_form_id):
+        return DropdownActionButton([
+            DropdownItem(onclick="setNextActionAndSubmit('%s', 'return')" % save_form_id, text=_("Save and Exit")),
+            DropdownItem(onclick="setNextActionAndSubmit('%s', 'new')" % save_form_id, text=_("Save and Create New")),
+            JavaScriptActionButton(onclick="saveAsACopy()", text=_("Save as a copy"), icon="fa fa-clone"),
+        ], split_button=default_save_button, extra_css_class="btn-primary", required_permissions=required_permissions)
