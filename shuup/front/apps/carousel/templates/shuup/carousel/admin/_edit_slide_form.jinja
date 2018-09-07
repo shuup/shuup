@@ -3,18 +3,17 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
 
 {% macro render_slide_form(f, form, idx) %}
-    <div class="panel panel-default panel-slide">
-        <div class="panel-heading" role="tab" id="heading{{ idx }}">
-            <a class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ idx }}" aria-expanded="true" aria-controls="collapse{{ idx }}">
-                <span class="title">
+    <div class="panel panel-default panel-slide row">
+        <div class="panel-heading col-12" role="tab" id="heading{{ idx }}">
+            <a class="panel-title panel-carousel-image d-flex align-items-center p-3" role="button" data-toggle="collapse" href="#collapse{{ idx }}" aria-expanded="false" aria-controls="collapse{{ idx }}">
+                <span class="slide-title">
                 {% trans %}Slide{% endtrans %} {%  if f.instance.name %}{{ idx }} {{ f.instance.name }}{% else %}{{ idx }}{% endif %}
                 </span>
-                <i class="fa fa-angle-down pull-right"></i>
+                <i class="ml-auto fa fa-angle-down pull-right"></i>
             </a>
         </div>
-        <div id="collapse{{ idx }}" class="panel-collapse collapse{% if  idx == "__prefix__" or f.errors %} in{% endif %}" role="tabpanel" aria-labelledby="heading{{ idx }}">
+        <div id="collapse{{ idx }}" class="panel-collapse col-12 collapse{% if  idx == "__prefix__" or f.errors %} in{% endif %}" role="tabpanel" aria-labelledby="heading{{ idx }}">
             {{ language_dependent_content_tabs(f, tab_id_prefix=idx) }}
-            <div class="form-divider"></div>
             {{ render_monolingual_fields(f) }}
         </div>
     </div>
@@ -25,7 +24,7 @@
 {% if slides_form.carousel.pk %}
     {% call content_block(_("Slides"), "fa-image") %}
         <div id="slides-section-wrapper-div">
-            <p class="text-muted small">
+            <p class="text-muted">
                 {% trans -%}
                     Only image for default language is required.
                 {%- endtrans %}
@@ -33,9 +32,13 @@
                     If external link is not set link will fallback to product link, category link or cms page link in this order.
                 {%- endtrans %}
             </p>
-            <a class="btn btn-lg btn-text slide-add-new-panel" href="#" data-target-id="id_slides" data-target-panels="slides-section-wrapper-div">+ {% trans %}Add new slide{% endtrans %}</a>
+            <div class="mt-4 mb-4">
+                <a class="btn btn-primary slide-add-new-panel" href="#" data-target-id="id_slides" data-target-panels="slides-section-wrapper-div">
+                <i class="fa fa-plus-circle"></i>
+                {% trans %}Add new slide{% endtrans %}</a>
+            </div>
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="hide" id="placeholder-panel">
+                <div class="d-none" id="placeholder-panel">
                     {{ render_slide_form(slides_form.empty_form, slides_form, "__prefix__") }}
                 </div>
                 {% for f in slides_form %}
