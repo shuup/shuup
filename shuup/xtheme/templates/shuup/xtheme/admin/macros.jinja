@@ -1,42 +1,31 @@
-{% macro theme_table(theme_classes, current_theme, on_activate="", new_tab=False) %}
-    <table class="table table-bordered table-shuup theme-table">
-        <thead>
-            <tr>
-                <th>{% trans %}Active{% endtrans %}</th>
-                <th>{% trans %}Theme{% endtrans %}</th>
-                <th>{% trans %}Guide{% endtrans %}</th>
-                <th colspan="2">{% trans %}Actions{% endtrans %}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for theme in theme_classes %}
-            {% set active_theme = current_theme and theme.identifier == current_theme.identifier %}
-            <tr {% if active_theme %} class="active-row active" {% endif %}>
-                <td class="text-center">
-                    {% if active_theme %}<i class="fa fa-check text-success"></i>{% endif %}
-                </td>
-                <td>
-                    {% if current_theme and theme.identifier == current_theme.identifier %}
-                        <strong class="title">{{ theme.name or theme.identifier }}</strong>
-                    {% else %}
-                        <span class="title">{{ theme.name or theme.identifier }}</span>
-                    {% endif %}
+{% from "shuup/admin/macros/general.jinja" import content_block_subtitle %}
+
+{% macro theme_card(theme_classes, current_theme, on_activate="", new_tab=False) %}
+    <div class="row">
+    {% for theme in theme_classes %}
+        {% set active_theme = current_theme and theme.identifier == current_theme.identifier %}
+            <div class="col-lg-4">
+                <div class="theme-card mb-3{% if active_theme %} active-theme{% endif %}">
+                    <a
+                        {% if new_tab %} target="_blank" {% endif %}
+                        href="{{ url("shuup_admin:xtheme.config_detail", theme_identifier=theme.identifier) }}"
+                        class="btn btn-sm btn-configure-theme btn-default"
+                        data-placement="bottom"
+                        data-trigger="manual"
+                        data-content="{{ _("Click here to configure the theme") }}"
+                    >
+                        <i class="fa fa-cogs"></i>
+                    </a>
+                    {# TODO: Get the actual theme screenshot #}
+                    <img class="card-img-top" src="https://picsum.photos/200/120" alt="Theme screenshot">
+                    <div class="theme-card-body text-center p-3">
+                        <h5>{{ theme.name or theme.identifier }}</h5>
                     {% if theme.author %}
-                        <br><small class="text-muted">{% trans %}Author{% endtrans %}: {{ theme.author }}</small>
+                        <p class="theme-card-text text-muted">{% trans %}Author{% endtrans %}: {{ theme.author }}</p>
                     {% endif %}
-                </td>
-                <td>
                     {% if theme.guide_template %}
-                        {% if active_theme %}
-                            <a href="{{ url("shuup_admin:xtheme.guide", theme_identifier=theme.identifier) }}">{% trans %}Show guide{% endtrans %}</a>
-                        {% else %}
-                            {% trans %}Activate theme to show guide{% endtrans %}
-                        {% endif %}
-                    {% else %}
-                        {% trans %}No guide{% endtrans %}
+                        <a class="btn btn-sm btn-default" href="{{ url("shuup_admin:xtheme.guide", theme_identifier=theme.identifier) }}">{% trans %}Show guide{% endtrans %}</a>
                     {% endif %}
-                </td>
-                <td>
                     <button
                         name="activate"
                         value="{{ theme.identifier }}"
@@ -44,21 +33,11 @@
                         class="btn btn-sm btn-success {% if active_theme %} hidden{% endif %}">
                         <i class="fa fa-check-circle"></i> {% trans %}Activate{% endtrans %}
                     </button>
-                    <a
-                        {% if new_tab %} target="_blank" {% endif %}
-                        href="{{ url("shuup_admin:xtheme.config_detail", theme_identifier=theme.identifier) }}"
-                        class="btn btn-sm btn-configure-theme {% if active_theme %}active btn-info{% else %}btn-gray{% endif %}"
-                        data-placement="bottom"
-                        data-trigger="manual"
-                        data-content="{{ _("Click here to configure the theme") }}"
-                    >
-                        <i class="fa fa-cogs"></i> {% trans %}Configure{% endtrans %}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
+    </div>
     <script>
         (function() {
             window.addEventListener("load", function() {
