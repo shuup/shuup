@@ -42,10 +42,10 @@ $h6-font-size: 0.9rem;
 
 // Other colors
 $white: #fff;
-$text-color: #555;
+$gray-bg: #F5F7F8;
+$text-color: darken($gray-bg, 70%);
 $active-text-color: #fff;
-$gray-bg: #f4f4f4;
-$border-color: rgba($secondary, 0.2);
+$border-color: darken($gray-bg, 15%);
 $gray: $text-color;
 $gray-light: #888;
 $gray-lighter: #aaa;
@@ -75,6 +75,7 @@ $shadow-lg: 8px 0 40px -8px $shadow-color;
 $shadow-md: 0 4px 20px -2px $shadow-color;
 $shadow-dropdown: 0 8px 18px $shadow-color;
 
+$border-radius-lg: .3rem;
 $border-radius-xl: .4rem;
 
 // Pagination
