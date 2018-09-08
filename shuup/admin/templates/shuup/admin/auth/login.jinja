@@ -2,34 +2,65 @@
 {% block title %}{% trans %}Login{% endtrans %}{% endblock %}
 {% from "shuup/admin/macros/general.jinja" import auth_block %}
 {% block content %}
-    {% call auth_block("subtle-slide-in") %}
-        <form action="{{ request.path }}" method="post">
-            {% csrf_token %}
-            {% if error %}
-                <div class="alert alert-danger">
-                    {{ error|striptags }}
+    {% call auth_block() %}
+        <form action="{{ request.path }}" method="post" id="login_form">
+            <div class="auth-body">
+                <div class="auth-heading pt-3 pb-3 text-center">
+                    <h1>{% trans %}Welcome back{% endtrans %}</h1>
+                    {% csrf_token %}
+                    {% if error %}
+                        <p class="mb-0">{{ error|striptags }}</p>
+                    {% endif %}
+                    {% if form.non_field_errors() %}
+                        <div class="auth-alert d-flex alert alert-warning alert-dismissable fade show align-items-start" role="alert">
+                            {% for error in form.non_field_errors() %}
+                                <p class="mb-0"><i class="fa fa-warning mr-2"></i>{{ error }}</p>
+                            {% endfor %}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-            {% if form.non_field_errors() %}
-                <div class="field-error-text text-warning">
-                    {% for error in form.non_field_errors() %}
-                        <h4><i class="fa fa-warning"></i> {{ error }}</h4>
-                    {% endfor %}
+                {{ bs3.field(form.username) }}
+                {{ bs3.field(form.password) }}
+                <a class="mt-2 d-inline-block text-muted" href="{{ url("shuup_admin:request_password") }}">
+                    {% trans %}Forgot your password?{% endtrans %}
+                </a>
+                <input type="hidden" name="next" value="{{ next }}">
+                <div class="actions">
+                    <button class="mt-4 btn btn-primary disabled btn-lg btn-block" type="submit">
+                        <i class="fa fa-sign-in"></i>
+                        {% trans %}Login{% endtrans %}
+                    </button>
                 </div>
-            {% endif %}
-            {{ bs3.field(form.username) }}
-            {{ bs3.field(form.password) }}
-            <input type="hidden" name="next" value="{{ next }}">
-            <div class="actions">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">
-                    <i class="fa fa-sign-in"></i>
-                    {% trans %}Login{% endtrans %}
-                </button>
             </div>
-            <hr>
-            <a href="{{ url("shuup_admin:request_password") }}">
-                {% trans %}Forgot your password?{% endtrans %}
-            </a>
         </form>
     {% endcall %}
+{% endblock %}
+{% block extra_js %}
+<script>
+$(function () {
+    var fields = $("input");
+
+    fields.each(function() {
+        $(this).on("change", function() {
+            if ($(this).val().length > 0) {
+                $('.btn-primary').removeClass('disabled');
+            } else {
+                $('.btn-primary').addClass('disabled');
+            }
+        })
+    });
+
+    $("#login_form").on("submit", function() {
+        var loginBtn = $(this).find('.btn-primary');
+        loginBtn
+            .removeClass('btn-primary')
+            .addClass('btn-default')
+            .empty()
+            .append($('<div class="loader-spinner"></div>'));
+    });
+});
+</script>
 {% endblock %}
