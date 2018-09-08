@@ -19,14 +19,6 @@ body {
         padding-top: 0;
     }
 
-    &.auth {
-        background: #333;
-
-        @include media-breakpoint-down(sm) {
-            padding-top: 0;
-        }
-    }
-
     &.shuup-modal-open {
         overflow: hidden;
     }
