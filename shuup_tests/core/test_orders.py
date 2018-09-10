@@ -488,6 +488,28 @@ def test_refund_with_shipment(restock):
 
 
 @pytest.mark.django_db
+def test_refund_entire_order_restock_shipment_no_supplier_module():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+    check_stock_counts(supplier, product, 0, 0)
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    product_line = order.lines.first()
+    order.create_shipment({product_line.product: 2}, supplier=supplier)
+    check_stock_counts(supplier, product, 0, 0)
+
+    # Create a full refund with `restock_products` set to True
+    order.create_full_refund(restock_products=True)
+
+    check_stock_counts(supplier, product, 0, 0)
+
+
+@pytest.mark.django_db
 @pytest.mark.parametrize("restock", [True, False])
 def test_refund_without_shipment(restock):
     shop = get_default_shop()
