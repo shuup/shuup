@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-20 15:54+0000\n"
+"POT-Creation-Date: 2018-09-10 16:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -599,6 +599,9 @@ msgstr ""
 msgid "You have no permission to change a shared Manufacturer."
 msgstr ""
 
+msgid "Logo"
+msgstr ""
+
 msgid "Media"
 msgstr ""
 
@@ -658,12 +661,6 @@ msgstr ""
 msgid "Show orders"
 msgstr ""
 
-msgid "Order Status"
-msgstr ""
-
-msgid "List Statuses"
-msgstr ""
-
 msgid "Outstanding Orders"
 msgstr ""
 
@@ -672,6 +669,12 @@ msgid "%d outstanding orders"
 msgstr ""
 
 msgid "New order"
+msgstr ""
+
+msgid "Order Status"
+msgstr ""
+
+msgid "List Statuses"
 msgstr ""
 
 #, python-format
@@ -1685,9 +1688,6 @@ msgstr ""
 msgid "Shop {} is now active!"
 msgstr ""
 
-msgid "Logo"
-msgstr ""
-
 msgid "Domain"
 msgstr ""
 
@@ -1704,6 +1704,9 @@ msgid "Suppliers"
 msgstr ""
 
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
+msgstr ""
+
+msgid "It is not possible to manage inventory when no module is selected."
 msgstr ""
 
 #, python-format

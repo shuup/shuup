@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Bug fixes
+~~~~~~~~~
+
+- Fix order refund to not adjust stocks when supplier doesn't manage stocks
+
 Shuup 1.6.13
 ------------
 
