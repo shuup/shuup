@@ -6,12 +6,13 @@
         height: 100px;
     }
 
-    h1:after {
-        content: "";
-        background: $primary;
-        width: 75px;
-        height: 3px;
-        display: block;
-        margin: 20px auto 0;
+    p {
+        opacity: 0.8;
+    }
+}
+
+.home {
+    .icon img {
+        height: 38px;
     }
 }

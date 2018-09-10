@@ -13,18 +13,12 @@
         height: 100px;
     }
 
-    h1:after {
-        content: "";
-        background: #35A48C;
-        width: 75px;
-        height: 3px;
-        display: block;
-        margin: 20px auto 0;
+    p {
+        opacity: 0.8;
     }
 }
 
 .wizard-block {
-    padding: 20px;
     margin-bottom: 30px;
 }
 
@@ -140,7 +134,7 @@
 
             .pane-header {
                 img {
-                    height: 125px;
+                    height: 32px;
                 }
 
                 p {
