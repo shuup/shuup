@@ -109,13 +109,18 @@
             // ... and help text
             $("[data-toggle='popover']").popover();
 
-            $("a.panel-title").each(function(idx) {
-                if (idx === 0) {
-                    $(this).attr("aria-expanded", "true");
-                    $(this).parent().siblings(".panel-collapse").addClass("show highlight");
-                    return false;
-                }
-            })
+            var firstPanel = $(this)
+                                .closest('.content')
+                                .find($("a.panel-title"))
+                                .first();
+
+            if (firstPanel) {
+                firstPanel
+                    .attr("aria-expanded", "true")
+                    .parent()
+                    .siblings(".panel-collapse")
+                    .addClass("show highlight");
+            }
         });
     });
 </script>
