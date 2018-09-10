@@ -240,6 +240,10 @@
         margin-right: auto;
         border-radius: $border-radius-lg;
     }
+
+    .select2-container {
+        min-width: 240px;
+    }
 }
 
 .modal-body .content-block {
