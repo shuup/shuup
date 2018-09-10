@@ -13,6 +13,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Fix order refund to not adjust stocks when supplier doesn't manage stocks
+- Fix product importer to relate the manufaturer to the current shop
 
 Shuup 1.6.13
 ------------
