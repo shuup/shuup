@@ -7,9 +7,10 @@
 </button>
 
 {% if form %}
-    <form action="" method="POST">
+    <form action="" method="POST" id="xt-editor-form">
         {% csrf_token %}
         <input name="save" type="hidden" value="1"/>
+        <input name="publish" type="hidden" value="0"/>
         <table>
             {{ form.general.as_table()|safe }}
         </table>

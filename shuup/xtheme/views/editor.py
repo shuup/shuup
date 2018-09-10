@@ -84,6 +84,9 @@ class EditorView(TemplateView):
             self.form.save()
             self.save_layout()
 
+            if request.POST.get("publish") == "1":
+                return self.dispatch_publish()
+
         return super(EditorView, self).get(request, *args, **kwargs)
 
     def _populate_vars(self):
