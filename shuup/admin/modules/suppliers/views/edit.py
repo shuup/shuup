@@ -47,6 +47,16 @@ class SupplierForm(forms.ModelForm):
             # drop shops fields
             self.fields.pop("shops", None)
 
+    def clean(self):
+        cleaned_data = super(SupplierForm, self).clean()
+        stock_managed = cleaned_data.get("stock_managed")
+        module_identifier = cleaned_data.get("module_identifier")
+
+        if stock_managed and not module_identifier:
+            self.add_error("stock_managed", _("It is not possible to manage inventory when no module is selected."))
+
+        return cleaned_data
+
     def save(self, commit=True):
         instance = super(SupplierForm, self).save(commit)
         instance.shop_products.remove(

@@ -813,12 +813,13 @@ class Order(MoneyPropped, models.Model):
 
                     if unshipped_quantity_to_restock > 0:
                         product_summary[product.pk]["unshipped"] -= unshipped_quantity_to_restock
-                        parent_line.supplier.adjust_stock(
-                            product.id,
-                            unshipped_quantity_to_restock,
-                            created_by=created_by,
-                            type=StockAdjustmentType.RESTOCK_LOGICAL)
-                    if shipped_quantity_to_restock > 0:
+                        if parent_line.supplier.stock_managed:
+                            parent_line.supplier.adjust_stock(
+                                product.id,
+                                unshipped_quantity_to_restock,
+                                created_by=created_by,
+                                type=StockAdjustmentType.RESTOCK_LOGICAL)
+                    if shipped_quantity_to_restock > 0 and parent_line.supplier.stock_managed:
                         parent_line.supplier.adjust_stock(
                             product.id,
                             shipped_quantity_to_restock,
