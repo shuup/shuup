@@ -278,13 +278,16 @@ def get_random_products(context, n_products=6, orderable_only=True, sale_items_o
 
 
 @contextfunction
-def get_products_for_categories(context, categories, n_products=6, orderable_only=True):
+def get_products_for_categories(context, categories, n_products=6, orderable_only=True, sale_items_only=False):
     request = context["request"]
     key, product_ids = context_cache.get_cached_value(
         identifier="products_for_category",
         item=cache_utils.get_products_for_category_cache_item(request.shop),
         context=request,
-        n_products=n_products, categories=categories, orderable_only=orderable_only
+        n_products=n_products,
+        categories=categories,
+        orderable_only=orderable_only,
+        sale_items_only=sale_items_only
     )
     if product_ids is not None and _can_use_cache(product_ids, request.shop, request.customer):
         return Product.objects.filter(id__in=product_ids)
@@ -298,6 +301,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
             "shop_products__categories__in": categories
         },
         orderable_only=orderable_only,
+        sale_items_only=sale_items_only
     )
     products = cache_product_things(request, products)
     product_ids = [product.id for product in products]
