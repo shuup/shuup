@@ -120,6 +120,28 @@ def test_sample_import_all_match(filename):
         assert [c.pk for c in shop_product.categories.all()] == [1,2]
 
 
+@pytest.mark.django_db
+def test_sample_import_shop_relation():
+    activate("en")
+    shop = get_default_shop()
+    get_default_tax_class()
+    get_default_product_type()
+    get_default_sales_unit()
+
+    path = os.path.join(os.path.dirname(__file__), "data", "product", "complex_import.xlsx")
+    transformed_data = transform_file("xlsx", path)
+    importer = ProductImporter(transformed_data, shop, "en")
+    importer.process_data()
+    importer.do_import(ImportMode.CREATE_UPDATE)
+    products = importer.new_objects
+
+    for product in products:
+        shop_product = product.get_shop_instance(shop)
+        for category in shop_product.categories.all():
+            assert shop in category.shops.all()
+        assert shop in product.manufacturer.shops.all()
+
+
 @pytest.mark.parametrize("filename", ["sample_import.xlsx", "sample_import.csv",
                                       "sample_import2.csv", "sample_import3.csv",
                                       "sample_import4.csv", "sample_import5.csv",

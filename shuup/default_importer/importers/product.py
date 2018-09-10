@@ -199,6 +199,14 @@ class ProductMetaBase(ImportMetaBase):
                 setattr(shop_product, field_name, value)
         shop_product.save()
 
+        # add shop relation to the manufacturer
+        if sess.instance.manufacturer:
+            sess.instance.manufacturer.shops.add(sess.shop)
+
+        # add shop relation to all categories
+        for category in shop_product.categories.all():
+            category.shops.add(sess.shop)
+
     def _find_related_values(self, field_name, sess, value):
         is_related_field = False
         if not value:
