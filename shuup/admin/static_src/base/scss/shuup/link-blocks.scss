@@ -1,7 +1,54 @@
 .link-block {
-    padding: 10px 20px;
-    max-width: 1000px;
-    margin: 0 auto 30px auto;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+    }
+
+    &:not(:last-child)::before {
+        top: 50%;
+        left: -4rem;
+        width: 10px;
+        height: 150%;
+        background-color: darken($gray-bg, 10%);
+    }
+
+    &::after {
+        top: 50%;
+        left: -4.85rem;
+        width: 38px;
+        height: 38px;
+        border: 8px solid darken($gray-bg, 10%);
+        border-radius: 200px;
+        background-color: $gray-bg;
+        transform: translateY(-50%);
+        box-shadow: 0 0 0 4px $gray-bg;
+    }
+
+    &.step-done {
+        &::before {
+            background-color: #aad6bf;
+        }
+
+        &::after {
+            content: '\f00c';
+            font-family: 'FontAwesome';
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $success;
+            border-color: $success;
+            color: $white;
+            box-shadow: 0 4px 20px rgba($success, 0.5),
+                        0 0 0 4px $gray-bg;
+        }
+    }
 
     &.green {
         background-color: $primary;
@@ -41,15 +88,10 @@
                 @include media-breakpoint-up(md) {
                     margin-top: 2px;
                 }
-                
+
                 margin-bottom: 0px;
             }
         }
-    }
-
-    .icon {
-        width: 100px;
-        height: 100px;
     }
 
     .done-icon {
@@ -60,7 +102,7 @@
 
     .content {
         &.content-with-logo {
-            margin-left: 120px;
+            // margin-left: 120px;
         }
 
         .description {
