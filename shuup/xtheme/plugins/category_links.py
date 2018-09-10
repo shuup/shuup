@@ -26,8 +26,9 @@ class CategoryLinksConfigForm(GenericPluginForm):
                 name, value = field
                 value.initial = self.plugin.config.get(name, value.initial)
                 self.fields[name] = value
+
         self.fields["categories"] = forms.ModelMultipleChoiceField(
-            queryset=Category.objects.all_visible(customer=None),
+            queryset=Category.objects.all_visible(customer=None, shop=getattr(self.request, "shop")),
             required=False,
             initial=self.plugin.config.get("categories", None),
         )

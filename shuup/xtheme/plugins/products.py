@@ -132,9 +132,10 @@ class ProductsFromCategoryForm(GenericPluginForm):
                 name, value = field
                 value.initial = self.plugin.config.get(name, value.initial)
                 self.fields[name] = value
+
         self.fields["category"] = XThemeModelChoiceField(
             label=_("category"),
-            queryset=Category.objects.all(),
+            queryset=Category.objects.all_except_deleted(shop=getattr(self.request, "shop")),
             required=False,
             initial=self.plugin.config.get("category") if self.plugin else None
         )
@@ -155,15 +156,28 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
         "category",
+        ("sale_items_only", forms.BooleanField(
+            label=_("Only show sale items"),
+            initial=False, required=False,
+            help_text=_("Show only products that have discounts")
+        )),
+        ("orderable_only", forms.BooleanField(
+            label=_("Only show in-stock and orderable items"),
+            initial=True, required=False
+        ))
     ]
 
     def get_context_data(self, context):
         products = []
         category_id = self.config.get("category")
         count = self.config.get("count")
+        orderable_only = self.config.get("orderable_only", True)
+        sale_items_only = self.config.get("sale_items_only", False)
+
         category = Category.objects.filter(id=category_id).first() if category_id else None
         if category:
-            products = get_products_for_categories(context, [category], n_products=count)
+            products = get_products_for_categories(
+                context, [category], n_products=count, orderable_only=orderable_only, sale_items_only=sale_items_only)
         return {
             "request": context["request"],
             "title": self.get_translated_value("title"),

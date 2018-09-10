@@ -15,6 +15,13 @@ Bug fixes
 - Fix order refund to not adjust stocks when supplier doesn't manage stocks
 - Fix product importer to relate the manufaturer to the current shop
 
+Xtheme
+~~~~~~
+
+- Add option to limit category plugin for orderable and discounted
+  products only.
+
+
 Shuup 1.6.13
 ------------
 
