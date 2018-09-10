@@ -429,8 +429,11 @@ class DataImporter(object):
         row_keys = dict((mapping["field"].name, value) for (fname, mapping, value) in field_map_values if value)
         if row_keys:
             qs = [Q(**{fname: value}) for (fname, value) in six.iteritems(row_keys)]
-            if "shop" in [field.name for field in self.model._meta.local_fields]:
+            fields = [field.name for field in self.model._meta.local_fields]
+            if "shop" in fields:
                 qs &= Q(shop=shop)
+            if "shops" in fields:
+                qs &= Q(shops=shop)
 
             and_query = six.moves.reduce(iand, [Q()] + qs)
             or_query = six.moves.reduce(ior, [Q()] + qs)
