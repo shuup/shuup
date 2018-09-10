@@ -8,6 +8,7 @@
 import os
 import pytest
 import selenium
+import time
 
 from django.core.urlresolvers import reverse
 
@@ -19,6 +20,7 @@ from shuup.testing.browser_utils import (
 from shuup.testing.utils import (
     initialize_admin_browser_test
 )
+from shuup.testing.browser_utils import page_has_loaded
 
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
@@ -186,6 +188,63 @@ def test_xtheme_edit_product(admin_user, browser, live_server, settings):
     wait_until_condition(browser, lambda x: not x.is_text_present(second_product_text_content))
 
 
+@pytest.mark.browser
+@pytest.mark.djangodb
+def test_xtheme_edit_save_and_publish(admin_user, browser, live_server, settings):
+    browser = initialize_admin_browser_test(browser, live_server, settings)  # Login to admin as admin user
+    browser.visit(live_server + "/")
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
+
+    # Start edit
+    click_element(browser, ".xt-edit-toggle button[type='submit']")
+
+    # Add some content only visible for person contacts
+    text_content = "Some dummy content!"
+    layout_selector = "#xt-ph-front_content-xtheme-person-contact-layout"
+    placeholder_name = "front_content"
+
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(layout_selector))
+    click_element(browser, layout_selector)
+    with browser.get_iframe("xt-edit-sidebar-iframe") as iframe:
+        wait_until_condition(iframe, lambda x: x.is_text_present("Edit Placeholder: %s" % placeholder_name))
+        wait_until_condition(iframe, lambda x: x.is_element_present_by_css("button.layout-add-row-btn"))
+        click_element(iframe, "button.layout-add-row-btn")
+        time.sleep(1)
+        wait_until_condition(iframe, lambda x: page_has_loaded(x))
+
+        try:
+            wait_until_condition(iframe, lambda x: x.is_element_present_by_css("div.layout-cell"))
+        except selenium.common.exceptions.TimeoutException as e:  # Give the "Add new row" second chance
+            click_element(iframe, "button.layout-add-row-btn")
+            wait_until_condition(iframe, lambda x: x.is_element_present_by_css("div.layout-cell"))
+
+        click_element(iframe, "div.layout-cell")
+
+        wait_until_condition(iframe, lambda x: x.is_element_present_by_css("select[name='general-plugin']"))
+        iframe.select("general-plugin", "text")
+
+        wait_until_condition(iframe, lambda x: x.is_element_present_by_css("div.note-editable"))
+        wait_until_condition(iframe, lambda x: x.is_element_present_by_css("#id_plugin-text_en-editor-wrap"))
+        iframe.execute_script(
+            "$('#id_plugin-text_en-editor-wrap .summernote-editor').summernote('editor.insertText', '%s');" %
+            text_content
+        )
+
+        click_element(iframe, "button.publish-btn")
+        alert = iframe.get_alert()
+        assert alert.text == "Are you sure you wish to publish changes made to this view?"
+        alert.accept()
+
+        time.sleep(1)
+
+        alert = iframe.get_alert()
+        assert alert.text == "You have changed the form. Do you want to save them before publishing?"
+        alert.accept()
+
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
+    wait_until_condition(browser, lambda x: x.is_text_present(text_content))
+
+
 def _edit_layout(browser, placeholder_name, layout_selector, text_content):
     wait_until_condition(browser, lambda x: x.is_element_present_by_css(layout_selector))
     click_element(browser, layout_selector)
@@ -217,6 +276,7 @@ def _edit_layout(browser, placeholder_name, layout_selector, text_content):
         iframe.execute_script(
             "$('#id_plugin-text_en-editor-wrap .summernote-editor').summernote('editor.insertText', '%s');" % text_content
         )
+
         click_element(iframe, "button.submit-form-btn")
         click_element(iframe, "button.publish-btn")
 

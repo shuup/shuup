@@ -96,7 +96,10 @@ function openPlaceholderEditor(domElement) {
 function addSnippetInjectionMarkup() {
     const nav = document.querySelector(".navbar-admin-tools .navbar-nav");
     if (!nav) return;  // No navigation no snippet in navigation either
-
+    if (!document.querySelector(".xt-ph")) {
+        // No placeholders in the DOM, so no need to show Inject button here.
+        return;
+    }
     const button = el("button", {
         "type": "button"
     }, gettext("Inject snippet"));
