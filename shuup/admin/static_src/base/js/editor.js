@@ -64,6 +64,11 @@ function activateEditor($editor, attrs = {}) {
     $editor.parent().find(".note-editable").on("drop", (event) => {
         cancelEvent(event);
     });
+
+    $editor.parent().find(".note-codable").on("blur", function () {
+        var textarea = $editor.parent().find("textarea");
+        textarea.val($editor.summernote("code"));
+    });
     return $summernote;
 }
 
