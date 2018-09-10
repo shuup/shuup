@@ -60,14 +60,16 @@ const handleMainMenu = () => {
     });
   }
 
-  toggleBtn.addEventListener('click', (event) => {
-    if (mainMenu.classList.contains('open')) {
-      mainMenu.classList.remove('open');
-    } else {
-      mainMenu.classList.add('open');
-      hideMainMenu();
-    }
-  });
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', (event) => {
+      if (mainMenu.classList.contains('open')) {
+        mainMenu.classList.remove('open');
+      } else {
+        mainMenu.classList.add('open');
+        hideMainMenu();
+      }
+    });
+  }
 }
 
 export default handleMainMenu;
