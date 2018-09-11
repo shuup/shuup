@@ -31,12 +31,8 @@
                 var targetId = $(this).data("target-id");
                 var $totalFormsField = $("#" + targetId + "-TOTAL_FORMS");
                 $totalFormsField.val(parseInt($totalFormsField.val()) + 1);
-                $(".form-control.datetime").datepicker({
-                    format: "yyyy-mm-dd hh:ii",
-                    autoclose: true,
-                    todayBtn: true,
-                    todayHighlight: true,
-                    fontAwesome: true
+                $(".form-control.datetime").datetimepicker({
+                    format: "Y-m-d H:i",
                 });
                 window.activateSelects();
                 $("[data-toggle='popover']").popover();

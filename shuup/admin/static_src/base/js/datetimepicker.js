@@ -7,12 +7,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 $(function() {
-    $(".form-control.datetime").datepicker({
-        format: "yyyy-mm-dd",
-        autoHide: true
+    $(".form-control.datetime").datetimepicker({
+        format: "Y-m-d H:i",
     });
-    $(".form-control.date").datepicker({
-        format: "yyyy-mm-dd",
-        autoHide: true
+
+    $(".form-control.date").datetimepicker({
+        format: "Y-m-d H:i",
     });
 });
+
