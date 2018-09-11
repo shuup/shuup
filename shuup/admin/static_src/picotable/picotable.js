@@ -368,7 +368,11 @@ const Picotable = (function(m, storage) {
     // Check to see if it's any of the types of filters that
     // we want to highlight by placing it at the top of the table
     function isLiftFilter(col) {
-      return col.id === "name" || col.id === "customer" || col.id === "title" || col.id ==="code"
+      return
+        col.id === "name"
+        || col.id === "customer"
+        || col.id === "title"
+        || col.id ==="code"
     }
 
     function buildNameFilter(ctrl) {
@@ -1209,9 +1213,8 @@ const Picotable = (function(m, storage) {
                     return;
                 }
 
-                $(el).datepicker({
-                    format: "yyyy-mm-dd",
-                    autoHide: true
+                $(el).datetimepicker({
+                  format: "Y-m-d H:i",
                 });
             }
         };

@@ -14,7 +14,6 @@
   "license": "OSL-3.0",
   "private": true,
   "dependencies": {
-    "@chenfengyuan/datepicker": "^1.0.0",
     "bootstrap": "^4.1.2",
     "bootstrap-datetime-picker": "^2.4.4",
     "chart.js": "^2.7.2",
@@ -26,6 +25,7 @@
     "get-size": "^2.0.3",
     "imagelightbox": "^0.10.0",
     "jquery": ">=1.0.0",
+    "jquery-datetimepicker": "^2.5.20",
     "jquery.easing": "^1.4.1",
     "jquery.scrollbar": "^0.2.11",
     "lodash": "^4.17.10",
