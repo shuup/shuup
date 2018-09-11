@@ -1,7 +1,8 @@
 .support-nav-wrap {
     z-index: 2;
     width: 100%;
-    padding-left: $main-menu-width + 20px;
+    padding-left: $main-menu-width + 30px;
+    padding-right: 30px;
 
     @include media-breakpoint-down(md) {
         padding-left: 15px;
@@ -175,13 +176,30 @@ body {
 }
 
 .shuup-details {
-    .support-nav-wrap {
-        max-width: 1140px;
-        @include make-container();
+    .suppoert-nav-wrap {
+        padding-left: $main-menu-width;
     }
 
     .support-nav {
-        margin-left: 140px;
-        width: 100%;
+        margin: 0 auto;
+        padding-right: 15px;
+        padding-left: 15px;
+        min-width: 320px;
+
+        @include media-breakpoint-up(sm) {
+            max-width: 540px;
+        }
+
+        @include media-breakpoint-up(md) {
+            max-width: 720px;
+        }
+
+        @include media-breakpoint-up(lg) {
+            max-width: 960px;
+        }
+
+        @include media-breakpoint-up(xl) {
+            max-width: 1140px;
+        }
     }
 }
