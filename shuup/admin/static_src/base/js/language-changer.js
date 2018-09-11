@@ -22,5 +22,5 @@ function changeLanguage() {
 
 $(function(){
     "use strict";
-    $(".languages li a").click(changeLanguage);
+    $(".languages a").click(changeLanguage);
 });
