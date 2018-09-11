@@ -33,7 +33,7 @@
     <button class="dropdown-toggle btn btn-default" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="false" data-placement="bottom" title="{% trans %}Settings{% endtrans %}">
         {{ request.user }}
     </button>
-    <div class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
+    <div class="languages dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
         {% if request.user.is_authenticated() %}
         <div class="username">
             <span class="icon"><i class="fa fa-user"></i></span>{% trans %}Hello{% endtrans %}, <span class="user">{{ request.user }}</span>!
