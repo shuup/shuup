@@ -30,7 +30,7 @@
 
 
         {% block support_content %}
-            <div class="container-fluid support-nav-wrap{% if iframe_mode %} iframe-mode{% endif %}">
+            <div class="support-nav-wrap{% if iframe_mode %} iframe-mode{% endif %}">
                 {% if shuup_admin.is_multishop_enabled() %}
                 <div class="flex-wrapper">
                     <h3>Active shop: <strong>{{ shuup_admin.get_admin_shop().name }}</strong></h3>
