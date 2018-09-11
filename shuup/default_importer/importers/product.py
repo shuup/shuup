@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 import os
 
 import six
-from django.db.models import ForeignKey, Q
+from django.db.models import ForeignKey, ManyToManyField, Q
 from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
@@ -197,6 +197,7 @@ class ProductMetaBase(ImportMetaBase):
                     continue
 
                 setattr(shop_product, field_name, value)
+
         shop_product.save()
 
         # add shop relation to the manufacturer
@@ -209,9 +210,6 @@ class ProductMetaBase(ImportMetaBase):
 
     def _find_related_values(self, field_name, sess, value):
         is_related_field = False
-        if not value:
-            return (value, is_related_field)
-
         field_mapping = sess.importer.mapping.get(field_name)
 
         for related_field, relmapper in sess.importer.relation_map_cache.items():
@@ -219,6 +217,9 @@ class ProductMetaBase(ImportMetaBase):
                 continue
 
             is_related_field = True
+            if isinstance(related_field, ManyToManyField) and value is None:
+                return ([], related_field)
+
             if isinstance(related_field, ForeignKey):
                 try:
                     value = int(value)  # this is because xlrd causes 1 to be 1.0
