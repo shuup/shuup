@@ -310,7 +310,7 @@ class DataImporter(object):
             if not value or value == "" or value == " ":
                 value = False
 
-        if mapping.get("fk") and value.pk:
+        if mapping.get("fk") and value is not None and value.pk:
             setattr(target, field.name, value)
         else:
             try:
