@@ -40,6 +40,6 @@ require('outlayer');
 require('popper.js');
 require('summernote/dist/summernote-bs4.js');
 require('tether');
-require('@chenfengyuan/datepicker');
+require('jquery-datetimepicker');
 
 
