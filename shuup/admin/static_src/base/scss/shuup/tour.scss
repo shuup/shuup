@@ -10,7 +10,7 @@ body.shepherd-active {
         background: rgba(0, 0, 0, 0.5);
     }
 
-    #main-menu {
+    .main-menu {
         z-index: 10000;
 
         a {
@@ -64,11 +64,12 @@ body.shepherd-active > .shepherd-step {
     }
 
     .btn-primary {
+
         border-color: $primary !important;
         background-color: $primary !important;
     }
 
-    .btn-primary:focus, 
+    .btn-primary:focus,
     .btn-primary:hover {
         border-color: darken($primary, 12%) !important;
         background-color:  darken($primary, 12%) !important;
@@ -111,7 +112,7 @@ body.shepherd-active > .shepherd-step {
 .shepherd-element.shepherd-theme-arrows .shepherd-content footer .shepherd-buttons li .shepherd-button {
     text-transform: none;
     letter-spacing: 0;
-    font-size: 1.4rem;
+    font-size: 0.9rem;
     line-height: 1.42857143;
     padding: 7px 15px;
     border-radius: 4px;
@@ -120,7 +121,7 @@ body.shepherd-active > .shepherd-step {
 .shepherd-element.shepherd-theme-arrows .shepherd-content .shepherd-text p.lead {
     font-size: 16px;
     line-height: inherit;
-    
+
     @media (min-width: 768px) {
         .lead {
             font-size: 21px;
