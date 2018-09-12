@@ -14,8 +14,8 @@
         box-shadow: none;
     }
 
-    @include media-breakpoint-down(sm) {
-        width: 330px;
+    @media (max-width: 420px) {
+        width: 100%;
     }
 
     .scroll-wrapper {
@@ -350,4 +350,10 @@ a.item-submenu {
             }
         }
     }
+}
+
+.mobile-menu-close {
+    margin-right: 1.4rem;
+    font-size: 1.3rem;
+    color: darken($border-color, 10%);
 }
