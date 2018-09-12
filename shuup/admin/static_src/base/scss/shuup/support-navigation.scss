@@ -3,6 +3,7 @@
     width: 100%;
     padding-left: $main-menu-width + 30px;
     padding-right: 30px;
+    padding-top: 10px;
 
     @include media-breakpoint-down(md) {
         padding-left: 15px;

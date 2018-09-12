@@ -46,9 +46,9 @@ window.serializeForm = function($form) {
         }
     }
     return objectData;
-}
+};
 
-function renderFormErrors($form, errors) {
+window.renderFormErrors = function($form, errors) {
     for(let formName in errors) {
         let formErrors = errors[formName];
         for(let fieldName in formErrors) {
@@ -61,13 +61,13 @@ function renderFormErrors($form, errors) {
             }
         }
     }
-}
+};
 
 window.clearErrors = function ($form) {
     $form.find(".has-error").removeClass("has-error");
     $form.find(".error-block").remove();
     $form.parent().find(".errors").empty();
-}
+};
 
 $(function() {
     $(".language-dependent-content").each(function() {

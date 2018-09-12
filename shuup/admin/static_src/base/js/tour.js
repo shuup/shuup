@@ -11,10 +11,13 @@
         if(key !== "home" && typeof(key) !== "undefined") {
             return [];
         }
-        if($("#js-main-menu").position().left !== 0) {
+
+        let menu = $("#main-menu");
+        if (menu && menu.position() && menu.position().left !== 0) {
             // don't show chrome tour on mobile
             return [];
         }
+
         let steps = [];
 
         if ($("li a[data-target-id='quicklinks']").length > 0) {
