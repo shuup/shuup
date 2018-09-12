@@ -8,7 +8,7 @@
  */
 function adjustStock(event, button) {
     event.preventDefault();
-    var stockAdjustDiv = button.parent("div.form");
+    var stockAdjustDiv = button.parent(".stock-management-form");
     var url = stockAdjustDiv.data("url");
     var data = stockAdjustDiv.find(":input").serialize();
     $.ajax({
