@@ -42,7 +42,6 @@ class EditProductToolbar(Toolbar):
         if self.product.pk:
             self._build_existing_product()
 
-
     def _build_existing_product(self):
         product = self.product
         # :type product: shuup.core.models.Product
@@ -181,9 +180,9 @@ class EditProductToolbar(Toolbar):
                 url=self._get_variation_url(product),
             )
 
-    def get_split_save_button(save_form_id):
+    def get_split_save_button(self, save_form_id):
         return DropdownActionButton([
             DropdownItem(onclick="setNextActionAndSubmit('%s', 'return')" % save_form_id, text=_("Save and Exit")),
             DropdownItem(onclick="setNextActionAndSubmit('%s', 'new')" % save_form_id, text=_("Save and Create New")),
             JavaScriptActionButton(onclick="saveAsACopy()", text=_("Save as a copy"), icon="fa fa-clone"),
-        ], split_button=default_save_button, extra_css_class="btn-primary", required_permissions=required_permissions)
+        ], extra_css_class="btn-primary")
