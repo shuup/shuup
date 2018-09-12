@@ -11,7 +11,7 @@
         if(key !== "home" && typeof(key) !== "undefined") {
             return [];
         }
-        if($("#main-menu").position().left !== 0) {
+        if($("#js-main-menu").position().left !== 0) {
             // don't show chrome tour on mobile
             return [];
         }
@@ -132,11 +132,10 @@
         return steps;
     }
 
-    $(document).ready(function() {
-        $("#top-header .show-tour-li").on("click", "a", function(e){
-            e.preventDefault();
-            $.tour();
-        });
+    $(".show-tour").on("click", function(e){
+        e.stopImmediatePropagation()
+        e.preventDefault();
+        $.tour();
     });
 
     $.tour = function(config={}, params) {
