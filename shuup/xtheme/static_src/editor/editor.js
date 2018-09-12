@@ -38,6 +38,7 @@ function updateModelChoiceWidgetURL(select) {
 }
 
 domready(() => {
+    let changesMade = false;
     $(".layout-cell").on("click", function() {
         const {x, y} = this.dataset;
         const newQs = mutate({x, y});
@@ -73,7 +74,16 @@ domready(() => {
         if (!confirm(gettext("Are you sure you wish to publish changes made to this view?"))) {
             return;
         }
-        post({command: "publish"});
+        if (changesMade) {
+            if (confirm(gettext("You have changed the form. Do you want to save them before publishing?"))) {
+                document.getElementsByName("publish")[0].setAttribute("value", "1");
+                document.getElementById("xt-editor-form").submit();
+            } else {
+                post({command: "publish"});
+            }
+        } else {
+            post({command: "publish"});
+        }
     });
     $(".revert-btn").on("click", function() {
         if (!confirm(gettext("Are you sure you wish to revert all changes made since the last published version?"))) {
@@ -81,7 +91,6 @@ domready(() => {
         }
         post({command: "revert"});
     });
-    var changesMade = false;
     $("input, select, textarea").on("change,input", function() {
         if (this.id === "id_general-plugin") {
             return;
@@ -101,6 +110,11 @@ domready(() => {
         element.addEventListener("change", function() {
             updateModelChoiceWidgetURL(document.getElementById(this.id));
         });
+    });
+
+    // when summernote changes, set the flag on
+    jQuery(".summernote-editor").on("summernote.change", (we, contents, $editable) => {
+        changesMade = true;
     });
 
     new Sortable(document.querySelector(".layout-rows"), {
