@@ -26,6 +26,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='slide',
             name='inactive_dot_color',
-            field=shuup.core.fields.HexColorField(blank=True, help_text='Customize the dot color when slide is not active.', max_length=9, null=True, verbose_name='Inactive dot color'),
+            field=shuup.core.fields.HexColorField(blank=True, help_text='Customize the dot border color when slide is not active.', max_length=9, null=True, verbose_name='Inactive dot border color'),
         ),
     ]
