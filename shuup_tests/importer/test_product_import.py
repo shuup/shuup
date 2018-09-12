@@ -139,7 +139,9 @@ def test_sample_import_shop_relation():
         shop_product = product.get_shop_instance(shop)
         for category in shop_product.categories.all():
             assert shop in category.shops.all()
-        assert shop in product.manufacturer.shops.all()
+
+        if product.manufacturer:
+            assert shop in product.manufacturer.shops.all()
 
 
 @pytest.mark.parametrize("filename", ["sample_import.xlsx", "sample_import.csv",
@@ -406,6 +408,18 @@ PRODUCT_DATA = [
         "visibility":"Searchable",
         "tax_class":"Cheap Tax",
         "manufacturer":"Shuup In Space"
+    },
+    {
+        "sku": "test-sku6",
+        "name":"Light Bulb",
+        "price":"3",
+        "description":"Light! Missing categories and manufacturer",
+        "categories": None,
+        "category": None,
+        "product_type":"Mancave",
+        "visibility":"Searchable",
+        "tax_class":"Cheap Tax",
+        "manufacturer": None
     }
 ]
 @pytest.mark.django_db
@@ -426,8 +440,8 @@ def test_complex_import():
     assert len(importer.unmatched_fields) == 0
     importer.do_import(ImportMode.CREATE_UPDATE)
     products = importer.new_objects
-    assert len(products) == 5
-    assert ShopProduct.objects.count() == 5
+    assert len(products) == 6
+    assert ShopProduct.objects.count() == 6
     assert Category.objects.count() == 11
     assert Manufacturer.objects.count() == 4
 
@@ -440,13 +454,20 @@ def test_complex_import():
 
         assert shop_product.default_price_value == Decimal(data["price"])
         assert product.description == data["description"]
-        all_cats = set(data["categories"])
-        all_cats.add(data["category"])
 
-        for cat in shop_product.categories.all():
-            assert cat.name in all_cats
-        assert shop_product.categories.count() == len(all_cats)  # also add primary category
-        assert shop_product.primary_category.name == data["category"]
+        if data.get("categories"):
+            all_cats = set(data["categories"])
+            all_cats.add(data["category"])
+
+            for cat in shop_product.categories.all():
+                assert cat.name in all_cats
+            assert shop_product.categories.count() == len(all_cats)  # also add primary category
+
+        if data.get("category"):
+            assert shop_product.primary_category.name == data["category"]
+
         assert force_text(shop_product.visibility.label) == data["visibility"].lower()
         assert product.tax_class.name == data["tax_class"]
-        assert product.manufacturer.name == data["manufacturer"]
+
+        if data.get("manufacturer"):
+            assert product.manufacturer.name == data["manufacturer"]
