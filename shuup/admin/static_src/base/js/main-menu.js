@@ -50,18 +50,17 @@ const handleMainMenu = () => {
 
   const toggleBtn = document.getElementById('menu-button');
   const mainMenu = document.getElementById('js-main-menu');
+  const closeBtn = document.getElementById('js-menu-close');
 
-  function hideMainMenu() {
-    document.addEventListener('click', event => {
-      if (!mainMenu.contains(event.target) && !toggleBtn.contains(event.target)) {
-        mainMenu.classList.remove('open');
-        document.removeEventListener('click', hideMainMenu);
-      }
+  const hideMainMenu = () => {
+    closeBtn.addEventListener('click', event => {
+      event.preventDefault();
+      mainMenu.classList.remove('open');
     });
   }
 
   if (toggleBtn) {
-    toggleBtn.addEventListener('click', (event) => {
+    toggleBtn.addEventListener('click', () => {
       if (mainMenu.classList.contains('open')) {
         mainMenu.classList.remove('open');
       } else {
