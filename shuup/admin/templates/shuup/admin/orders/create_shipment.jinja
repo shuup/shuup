@@ -11,11 +11,11 @@
                     <tr>
                         <th>{% trans %}Order Line{% endtrans %}</th>
                         <th class="text-right">{% trans %}To Ship{% endtrans %}</th>
-                        <th class="text-right d-sm-none d-md-block">{% trans %}Ordered{% endtrans %}</th>
-                        <th class="text-right d-sm-none d-md-block">{% trans %}Shipped{% endtrans %}</th>
-                        <th class="text-right d-sm-none d-md-block">{% trans %}Refunded{% endtrans %}</th>
-                        <th class="text-right d-sm-none d-md-block">{% trans %}Unshipped{% endtrans %}</th>
-                        <th class="text-right d-none d-sm-block d-md-none">{% trans %}Ordered{% endtrans %}/&#x200b;{% trans %}Shipped{% endtrans %}/&#x200b;{% trans %}Unshipped{% endtrans %}</th>
+                        <th class="text-right d-sm-none d-md-table-cell">{% trans %}Ordered{% endtrans %}</th>
+                        <th class="text-right d-sm-none d-md-table-cell">{% trans %}Shipped{% endtrans %}</th>
+                        <th class="text-right d-sm-none d-md-table-cell">{% trans %}Refunded{% endtrans %}</th>
+                        <th class="text-right d-sm-none d-md-table-cell">{% trans %}Unshipped{% endtrans %}</th>
+                        <th class="text-right d-none d-sm-table-cell d-md-none">{% trans %}Ordered{% endtrans %}/&#x200b;{% trans %}Shipped{% endtrans %}/&#x200b;{% trans %}Unshipped{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -31,11 +31,11 @@
                         {% set shipped_total=form.product_summary.values()|sum("shipped")|number %}
                         {% set refunded_total=form.product_summary.values()|sum("refunded")|number %}
                         {% set unshipped_total=form.product_summary.values()|sum("unshipped")|number %}
-                        <th class="text-right d-sm-none d-md-block">{{ ordered_total }}</th>
-                        <th class="text-right d-sm-none d-md-block">{{ shipped_total }}</th>
-                        <th class="text-right d-sm-none d-md-block">{{ refunded_total }}</th>
-                        <th class="text-right d-sm-none d-md-block">{{ unshipped_total }}</th>
-                        <th class="text-right d-none d-sm-block d-md-none">{{ ordered_total }}/{{ shipped_total }}/{{ unshipped_total }}</th>
+                        <th class="text-right d-sm-none d-md-table-cell">{{ ordered_total }}</th>
+                        <th class="text-right d-sm-none d-md-table-cell">{{ shipped_total }}</th>
+                        <th class="text-right d-sm-none d-md-table-cell">{{ refunded_total }}</th>
+                        <th class="text-right d-sm-none d-md-table-cell">{{ unshipped_total }}</th>
+                        <th class="text-right d-none d-sm-table-cell d-md-none">{{ ordered_total }}/{{ shipped_total }}/{{ unshipped_total }}</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -55,11 +55,11 @@
                                     {% endif %}
                                 </div>
                             </td>
-                            <td class="text-right d-sm-none d-md-block">{{ info.ordered|number }}</td>
-                            <td class="text-right d-sm-none d-md-block">{{ info.shipped|number }}</td>
-                            <td class="text-right d-sm-none d-md-block">{{ info.refunded|number }}</td>
-                            <td class="text-right d-sm-none d-md-block">{{ info.unshipped|number }}</td>
-                            <td class="text-right d-none d-sm-block d-md-none">{{ info.ordered|number }}/{{ info.shipped|number }}/{{ info.unshipped|number }}</td>
+                            <td class="text-right d-sm-none d-md-table-cell">{{ info.ordered|number }}</td>
+                            <td class="text-right d-sm-none d-md-table-cell">{{ info.shipped|number }}</td>
+                            <td class="text-right d-sm-none d-md-table-cell">{{ info.refunded|number }}</td>
+                            <td class="text-right d-sm-none d-md-table-cell">{{ info.unshipped|number }}</td>
+                            <td class="text-right d-none d-sm-table-cell d-md-none">{{ info.ordered|number }}/{{ info.shipped|number }}/{{ info.unshipped|number }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -76,7 +76,8 @@
         function setAllProducts() {
             $(".quantity-column input").each(function() {
                 var $input = $(this);
-                $input.val($input.data("max"));
+                var amount = parseFloat($input.data("max"));
+                $input.val(amount);
             })
         }
     </script>

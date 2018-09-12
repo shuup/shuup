@@ -335,7 +335,7 @@ export function renderCustomerDetailModal(store) {
             contentBlock("i.fa.fa-cubes", gettext("Recent Orders"), recentOrderView(recentOrders), "h3")
         ],
         footer: [
-            m("button.btn.btn-default", {
+            m("button.btn.btn-inverse", {
                 onclick: () => store.dispatch(showCustomerModal(false))
             }, gettext("Close"))
         ]

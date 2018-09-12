@@ -54,7 +54,7 @@ export function selectBox(
 export function contentBlock(icon, title, view, header = "h2") {
     return m("div.content-block",
         m("div.title",
-            m(header + ".block-title", m(icon), " " + title),
+            m(header + ".block-title.d-flex.align-items-center", m(icon), " " + title),
             m("a.toggle-contents", m("i.fa.fa-chevron-right"))
         ),
         m("div.content-wrap.collapse",
@@ -87,24 +87,24 @@ export function table({columns, data=[], tableClass="", emptyMsg=gettext("No rec
 
 export function modal({show=false, sizeClass="", title, body, footer, close}) {
     if(show){
-        $("body").append("<div class='modal-backdrop in'></div>").addClass("modal-open");
+        $("body").append("<div class='modal-backdrop show'></div>").addClass("modal-open");
     } else {
         $("body").removeClass("modal-open").find(".modal-backdrop").remove();
     }
 
     return (
-        m("div.modal" + (show? " show": " hidden"),
+        m("div.modal" + (show ? " d-block fade show": " d-none"),
             m("div.modal-dialog", {class: sizeClass},
                 m("div.modal-content",
                     m("div.modal-header",
+                        title,
                         m("button.close",
                             m("span", {
                                 onclick: () => close()
                             }, m.trust("&times;"))
                         ),
-                        title
                     ),
-                    m("div.modal-body", body),
+                    m("div.container.p-4", body),
                     m("div.modal-footer", footer)
                 )
             )

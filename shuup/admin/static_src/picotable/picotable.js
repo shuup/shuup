@@ -368,11 +368,12 @@ const Picotable = (function(m, storage) {
     // Check to see if it's any of the types of filters that
     // we want to highlight by placing it at the top of the table
     function isLiftFilter(col) {
-      return
+      return (
         col.id === "name"
         || col.id === "customer"
         || col.id === "title"
         || col.id ==="code"
+      )
     }
 
     function buildNameFilter(ctrl) {
