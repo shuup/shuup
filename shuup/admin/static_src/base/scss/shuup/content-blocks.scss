@@ -355,3 +355,14 @@
     right: 0;
     margin: 1.5rem 2rem;
 }
+
+.create-payment {
+    background-color: $gray-bg;
+}
+
+.create-payment-total {
+    h5 {
+        opacity: 0.8;
+        font-weight: normal;
+    }
+}

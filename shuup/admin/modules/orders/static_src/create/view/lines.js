@@ -56,7 +56,7 @@ export function renderOrderLines(store, shop, lines) {
                     href: "#",
                     onclick: (e) => {
                         e.preventDefault();
-                        BrowseAPI.openBrowseWindow({
+                        window.BrowseAPI.openBrowseWindow({
                             kind: "product",
                             filter: {"shop": shop.id},
                             onSelect: (obj) => {
@@ -266,7 +266,7 @@ export function orderLinesView(store, isCreating) {
         infoText += " " + interpolate(gettext("All prices are in %s. Taxes not included"), [shop.selected.currency]);
     }
     return m("div", [
-        m("p", [
+        m("p.alert.alert-info", [
             m("i.fa.fa-info-circle"),
             m("span", " " + infoText)
         ]),
