@@ -235,6 +235,9 @@ class DropdownActionButton(BaseActionButton):
     def render_dropdown(self, request):
         yield '<div class="dropdown-menu dropdown-menu-right">'
         for item in self.items:
+            if not item:  # TODO: Revise!
+                continue
+
             for bit in item.render(request):
                 yield bit
         yield '</div>'

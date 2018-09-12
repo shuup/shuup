@@ -854,7 +854,7 @@ const Picotable = (function(m, storage) {
 
     function buildEmptyState(ctrl) {
       const pageName = $('.main-header').text().toLocaleLowerCase();
-      const title = interpolate(gettext("There are no %s to show"), pageName);
+      const title = interpolate(gettext("There are no %s to show"), [pageName]);
       const button = $('.shuup-toolbar').find('.btn-primary');
 
       let buttonAttr;

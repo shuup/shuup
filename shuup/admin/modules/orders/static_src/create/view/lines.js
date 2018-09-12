@@ -281,7 +281,7 @@ export function orderLinesView(store, isCreating) {
                     href: "#",
                     onclick: (e) => {
                         e.preventDefault();
-                        BrowseAPI.openBrowseWindow({
+                        window.BrowseAPI.openBrowseWindow({
                             kind: "product",
                             filter: {"shop": shop.id},
                             onSelect: (obj) => {

@@ -275,7 +275,7 @@ function renderCustomerSelectionView(store, customer) {
                 m("a.btn.text-success", {
                     id: "select-existing-customer",
                     onclick: () => {
-                        BrowseAPI.openBrowseWindow({
+                        window.BrowseAPI.openBrowseWindow({
                             kind: "contact",
                             clearable: true,
                             onSelect: (obj) => {
