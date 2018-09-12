@@ -2,27 +2,32 @@
 {% from "shuup/admin/macros/general.jinja" import content_block %}
 {% block content %}
     <div class="container-fluid">
-        <div class="content-block">
+        {% call content_block(_("Order Contents"), "fa-file-text") %}
             <form method="post" id="create_payment">
                 {% csrf_token %}
                 {% include "shuup/admin/orders/_order_contents.jinja" with context %}
-                <div class="text-right">
-                    <h3>{% trans %}Paid{% endtrans %}: {{ order.get_total_paid_amount()|money }}</h3>
-                    <h3>{% trans %}Remaining{% endtrans %}: {{ order.get_total_unpaid_amount()|money }}</h3>
-                    <div class="text-center"><button id="total-unpaid" class="btn btn-info" value="{{ order.get_total_unpaid_amount().value }}" type="button">Get Remaining Total</button></div>
+                <div class="row p-3 create-payment">
+                    <div class="col-lg">
+                        {{ bs3.field(form.amount) }}
+                        <button id="total-unpaid" class="btn btn-primary ml-2" value="{{ order.get_total_unpaid_amount().value }}" type="button">Get Remaining Total</button>
+                    </div>
+                    <div class="col-lg create-payment-total text-right p-2 pr-1">
+                        <h5>{% trans %}Paid{% endtrans %}</h5>
+                        <h2>{{ order.get_total_paid_amount()|money }}</h2>
+                        <h5>{% trans %}Remaining{% endtrans %} </h5>
+                        <h2>{{ order.get_total_unpaid_amount()|money }}</h2>
+                    </div>
                 </div>
-                <hr>
-                {{ bs3.field(form.amount) }}
             </form>
-        </div>
+        {% endcall %}
     </div>
 {% endblock %}
 {% block extra_js %}
     <script>
         $("#total-unpaid").click(function(event) {
             event.preventDefault();
-            var total = $(this).val();
-            $("#id_amount").val(total);
+            var total = parseFloat($(this).val());
+            $("#id_amount").val(total.toFixed(2));
         })
     </script>
 {% endblock %}

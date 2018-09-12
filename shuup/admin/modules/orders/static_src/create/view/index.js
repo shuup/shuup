@@ -48,7 +48,7 @@ export default function view() {
         );
         viewObj = [
             m("div.container-fluid",
-                m("button.btn.btn-gray.btn-inverse.pull-right", {
+                m("button.btn.btn-inverse.m-3.pull-right", {
                     onclick: () => {
                         window.localStorage.setItem("resetSavedOrder", "true");
                         window.location.reload();
@@ -62,7 +62,7 @@ export default function view() {
                 contentBlock("i.fa.fa-truck", gettext("Shipping Method"), shipmentMethodSelectView(store)),
                 contentBlock("i.fa.fa-credit-card", gettext("Payment Method"), paymentMethodSelectView(store)),
                 (customerDetails? renderCustomerDetailModal(store) : null),
-                m("div.order-footer",
+                m("div.order-footer.pr-4",
                     m("div.text", m(
                         "small",
                         gettext("Method rules, taxes and possible extra discounts are calculated after proceeding."))
