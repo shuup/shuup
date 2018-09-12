@@ -8,7 +8,7 @@
  */
 
 (() => {
-
+    function init() {
     $(document).ready(function() {
         if(navigator.userAgent.match(/Windows Phone/i)){
             $(".gdpr-consent-warn-content").addClass("windows-phone");
@@ -44,6 +44,9 @@
                 $(".gdpr-consent-warn-bar").remove();
                 $(".gdpr-consent-preferences").remove(); // Remove GDPR divs and their content upon successful completion
                 $("body").removeClass("body-noscroll");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                window.alert(gettext("An error has occurred while saving the consent, please try again."));
             }
         });
     }
@@ -55,4 +58,12 @@
     $("#agree-btn").click(() => {
         saveConsent();
     });
+    }
+    if (typeof jQuery === "undefined") {
+        document.getElementsByClassName("gdpr-consent-warn-bar")[0].hidden = true;
+        document.getElementsByClassName("gdpr-consent-preferences")[0].hidden = true;
+    } else {
+        init();
+    }
+
 })();
