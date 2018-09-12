@@ -73,12 +73,13 @@ class BasePopupChoiceWidget(Widget):
         icon = "<i class='fa fa-external-link'></i>"
 
         return mark_safe(
-            "<a class=\"btn btn-inverse browse-text btn-sm\" style=\"%(css_style)s\" href=\"%(url)s\" target=\"_blank\">%(icon)s %(text)s</a>" % {
-            "css_style": css_style,
-            "icon": icon,
-            "text": escape(text),
-            "url": escape(url),
-        })
+            ("<a class=\"btn btn-inverse browse-text btn-sm\" style=\"%(css_style)s\" \
+            href=\"%(url)s\" target=\"_blank\">%(icon)s %(text)s</a>") % {
+                "css_style": css_style,
+                "icon": icon,
+                "text": escape(text),
+                "url": escape(url),
+            })
 
     def get_object(self, value):
         raise NotImplementedError("Not implemented")

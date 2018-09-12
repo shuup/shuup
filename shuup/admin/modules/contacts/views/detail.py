@@ -20,7 +20,8 @@ from django.views.generic import DetailView
 
 from shuup.admin.modules.contacts.utils import check_contact_permission
 from shuup.admin.toolbar import (
-    DropdownActionButton, DropdownItem, DropdownDivider, PostActionButton, Toolbar, URLActionButton
+    DropdownActionButton, DropdownDivider, PostActionButton, Toolbar,
+    URLActionButton
 )
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.apps.provides import get_provide_objects

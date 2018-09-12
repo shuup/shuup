@@ -444,7 +444,6 @@ def get_default_edit_toolbar(
         icon="fa fa-clone",
     )
 
-
     if with_split_save:
         dropdown_options = [
             DropdownItem(
