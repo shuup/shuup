@@ -1,12 +1,10 @@
 {% extends "shuup/admin/base.jinja" %}
 {% from "shuup/admin/macros/block.jinja" import link_block with context %}
 
+{% block body_class %}home{% endblock %}
 {% block title -%}
     {% trans %}Welcome!{% endtrans %}
 {%- endblock %}
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ static("shuup_admin/css/home.css") }}">
-{% endblock %}
 
 {% block support_content %}
     {% if shuup_admin.is_multishop_enabled() %}
@@ -19,9 +17,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
+    <div class="container home">
         <div class="home-header header text-center">
-            <img src="{{ static("shuup_admin/img/logo-icon.svg") }}">
+            <img class="mb-3" src="{{ static("shuup_admin/img/logo_icon.svg") }}">
             <h1>{% trans %}Welcome to Shuup!{% endtrans %}</h1>
             <p>{% trans %}You're almost done! Complete the following steps to sell your products online{% endtrans %}</p>
         </div>

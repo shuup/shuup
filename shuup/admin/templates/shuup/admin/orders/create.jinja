@@ -9,5 +9,5 @@
 
 {% block extra_js %}
     <script src="{{ static("shuup_admin/js/order-creator.js") }}"></script>
-    <script>OrderCreator.init({{ config|json }})</script>
+    <script>window.OrderCreator.init({{ config|json }})</script>
 {% endblock %}

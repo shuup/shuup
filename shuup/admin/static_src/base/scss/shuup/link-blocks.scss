@@ -1,0 +1,122 @@
+.link-block {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+    }
+
+    &:not(:last-child)::before {
+        top: 50%;
+        left: -4rem;
+        width: 10px;
+        height: 150%;
+        background-color: darken($gray-bg, 10%);
+    }
+
+    &::after {
+        top: 50%;
+        left: -4.85rem;
+        width: 38px;
+        height: 38px;
+        border: 8px solid darken($gray-bg, 10%);
+        border-radius: 200px;
+        background-color: $gray-bg;
+        transform: translateY(-50%);
+        box-shadow: 0 0 0 4px $gray-bg;
+    }
+
+    &.step-done {
+        &::before {
+            background-color: #aad6bf;
+        }
+
+        &::after {
+            content: '\f00c';
+            font-family: 'FontAwesome';
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $success;
+            border-color: $success;
+            color: $white;
+            box-shadow: 0 4px 20px rgba($success, 0.5),
+                        0 0 0 4px $gray-bg;
+        }
+    }
+
+    &.green {
+        background-color: $primary;
+        color: white;
+
+        .btn {
+            background-color: darken($primary, 10);
+            border-color: darken($primary, 10);
+            color: white;
+
+            &:hover {
+                background-color: darken($primary, 20);
+                border-color: darken($primary, 20);
+            }
+        }
+    }
+
+    &.gray {
+        background-color: $block-gray;
+        color: white;
+    }
+
+    &.inline {
+        .text {
+            float: left;
+
+            h3 {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .action {
+            float: right;
+
+            .btn {
+                @include media-breakpoint-up(md) {
+                    margin-top: 2px;
+                }
+
+                margin-bottom: 0px;
+            }
+        }
+    }
+
+    .done-icon {
+        font-size: 3.8rem;
+        margin-top: 2px;
+        color: $primary;
+    }
+
+    .content {
+        &.content-with-logo {
+            // margin-left: 120px;
+        }
+
+        .description {
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .btn {
+            margin-bottom: 10px;
+        }
+    }
+}

@@ -1,0 +1,136 @@
+// Brand colors
+$primary: #07B0F2;
+$secondary: #041E40;
+$success: #27ae60;
+$warning: #e67e22;
+$danger: #e74c3c;
+$info: #228FB7;
+
+// Success colors
+$state-success-text: $success;
+$state-success-bg: $success;
+$state-success-border: $success;
+$alert-success-text: #fff;
+
+// Info colors
+$state-info-text: $info;
+$state-info-bg: $info;
+$state-info-border: $info;
+$alert-info-text: #fff;
+
+// Warning colors
+$state-warning-text: $warning;
+$state-warning-bg: $warning;
+$state-warning-border: $warning;
+$alert-warning-text: #fff;
+
+// Danger colors
+$state-danger-text: $danger;
+$state-danger-bg: $danger;
+$state-danger-border: $danger;
+$alert-danger-text: #fff;
+
+$font-size-base: 0.9rem;
+
+// Heading font sizes
+$h1-font-size: $font-size-base * 1.7;
+$h2-font-size: $font-size-base * 1.6;
+$h3-font-size: $font-size-base * 1.2;
+$h4-font-size: $font-size-base * 1.1;
+$h5-font-size: $font-size-base * 1;
+$h6-font-size: 0.9rem;
+
+// Other colors
+$white: #fff;
+$gray-bg: #F5F7F8;
+$text-color: darken($gray-bg, 70%);
+$active-text-color: #fff;
+$border-color: darken($gray-bg, 15%);
+$gray: $text-color;
+$gray-light: #888;
+$gray-lighter: #aaa;
+
+// Block colors
+$block-light-blue: rgba(66, 154, 175, 0.5);
+$block-blue: #429AAF;
+$block-red: #C54141;
+$block-orange: #D16B2C;
+$block-gray: #555555;
+$block-purple: #7F5C99;
+$block-green: #94B933;
+$block-yellow: #CFBE00;
+$block-navy: #41589B;
+
+$headings-font-weight: 600;
+
+$icon-folder-color: #E1AE46;
+
+$nav-bg: $gray-bg;
+$nav-bg-hover: #333;
+$main-menu-width: 280px;
+$top-header-height: 60px;
+
+$shadow-color: rgba($secondary, 0.1);
+$shadow-lg: 8px 0 40px -8px $shadow-color;
+$shadow-md: 0 4px 20px -2px $shadow-color;
+$shadow-dropdown: 0 8px 18px $shadow-color;
+
+$border-radius-lg: .3rem;
+$border-radius-xl: .4rem;
+
+// Pagination
+$pagination-bg: $nav-bg;
+$pagination-color: #fff;
+$pagination-border: #000;
+
+$pagination-disabled-color: $pagination-color;
+$pagination-disabled-bg: $pagination-bg;
+$pagination-disabled-border: $pagination-border;
+
+$pagination-hover-border: $pagination-border;
+$pagination-hover-bg: $nav-bg-hover;
+$pagination-hover-color: #fff;
+
+$pagination-active-border: $pagination-border;
+$pagination-active-bg: $nav-bg-hover;
+$pagination-active-color: $pagination-hover-color;
+
+
+// Select2 bootstrap css vars
+$input-border: $input-border-color;
+$input-border-focus: $input-focus-border-color;
+$input-bg-disabled: $input-disabled-bg;
+$input-height-base: $input-height;
+$input-height-small: $input-height-sm;
+$input-height-large: $input-height-lg;
+$line-height-small: $line-height-sm;
+$line-height-large: $line-height-lg;
+
+$padding-base-vertical: $input-padding-y;
+$padding-base-horizontal: $input-padding-x;
+$padding-small-vertical: $input-padding-y-sm;
+$padding-small-horizontal: $input-padding-x-sm;
+$padding-large-vertical: $input-padding-y-lg;
+$padding-large-horizontal: $input-padding-x-lg;
+
+$btn-default-bg: $primary;
+$btn-default-color: #fff;
+$btn-default-border: $primary;
+
+@mixin reset-filter() {
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+$xs: strip-unit(map-get($grid-breakpoints, "xs"));
+$sm: strip-unit(map-get($grid-breakpoints, "sm"));
+$md: strip-unit(map-get($grid-breakpoints, "md"));
+$lg: strip-unit(map-get($grid-breakpoints, "lg"));
+$xl: strip-unit(map-get($grid-breakpoints, "xl"));
+
+@mixin rotate($angle) {
+    transform: rotate($angle)
+}
+
+@mixin transition($args) {
+    transition: $args ease-in-out;
+}

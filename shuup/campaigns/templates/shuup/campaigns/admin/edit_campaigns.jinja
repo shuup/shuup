@@ -2,6 +2,7 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
 {% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call content_with_sidebar(content_id="campaign_form") %}
         <form method="post" id="campaign_form">
@@ -10,29 +11,35 @@
             {% include form_defs["base"].template_name with context %}
             {% if form_defs|length > 1 %}
             {% call content_block(_("Rules"), ("fa-cubes")) %}
-                <div class="form-group">
+                <div class="form-group form-content">
                     <label class="control-label" for="rule-select">{% trans %}Rule type{% endtrans %}</label>
-                    <select class="form-control" id="rule-select">
-                        {% for form_def in form_defs %}
-                            {% if "conditions_" in form_def or "filters_" in form_def %}
-                                {% set form_prefix = form_def %}
-                                {% set formset = form[form_def] %}
-                                <option data-target-id="id_{{ form_prefix }}" value="{{ form_prefix }}">{{ formset.get_name() }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    <span class="help-popover-btn">
-                        <a
-                            class="btn" data-toggle="popover" data-placement="bottom" role="button" tabindex="50000"
-                            data-html="true" data-trigger="focus" title="{% trans %}Rule type{% endtrans %}"
-                            data-content="{% trans %}The criteria used to determine whether this campaign is applied.{% endtrans %}" >
-                            <i class="fa fa-question-circle"></i>
-                        </a>
-                    </span>
+                    <div class="form-input-group d-flex">
+                        <select class="form-control" id="rule-select">
+                            {% for form_def in form_defs %}
+                                {% if "conditions_" in form_def or "filters_" in form_def %}
+                                    {% set form_prefix = form_def %}
+                                    {% set formset = form[form_def] %}
+                                    <option data-target-id="id_{{ form_prefix }}" value="{{ form_prefix }}">{{ formset.get_name() }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <span class="help-popover-btn">
+                            <a
+                                class="btn" data-toggle="popover" data-placement="bottom" role="button" tabindex="50000"
+                                data-html="true" data-trigger="focus" title="{% trans %}Rule type{% endtrans %}"
+                                data-content="{% trans %}The criteria used to determine whether this campaign is applied.{% endtrans %}" >
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                    </div>
                 </div>
-                <div class="form-group text-center">
-                    <a class="btn btn-lg btn-text" id="rule-button" href="#">+ {% trans %}Add rule{% endtrans %}</a>
+                <div class="ml-2 form-group">
+                    <a class="btn btn-primary" id="rule-button" href="#">
+                        <i class="fa fa-plus-circle"></i>
+                        {% trans %}Add rule{% endtrans %}
+                    </a>
                 </div>
+                <div class="d-none" id="insert-rule-placeholder"></div>
                 {% for form_def in form_defs %}
                     {% if "conditions_" in form_def or "filters_" in form_def %}
                         {% set form_prefix = form_def %}
@@ -41,10 +48,9 @@
                         {% include template_name with context %}
                     {% endif %}
                 {% endfor %}
-                <div class="hide" id="insert-rule-placeholder"></div>
             {% endcall %}
             {% call content_block(_("Effects"), ("fa-cubes")) %}
-                <div class="form-group">
+                <div class="form-group form-content">
                     <label class="control-label" for="effect-select">{% trans %}Effect type{% endtrans %}</label>
                     <select class="form-control" id="effect-select">
                         {% for form_def in form_defs %}
@@ -56,9 +62,12 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group text-center">
-                    <a class="btn btn-lg btn-text" id="effect-button" href="#">+ {% trans %}Add effect{% endtrans %}</a>
+                <div class="ml-2 form-group">
+                    <a class="btn btn-primary" id="effect-button" href="#">
+                    <i class="fa fa-plus-circle"></i>
+                    {% trans %}Add effect{% endtrans %}</a>
                 </div>
+                <div class="d-none" id="insert-effect-placeholder"></div>
                 {% for form_def in form_defs %}
                     {% if "effects_" in form_def %}
                         {% set form_prefix = form_def %}
@@ -67,7 +76,6 @@
                         {% include template_name with context %}
                     {% endif %}
                 {% endfor %}
-                <div class="hide" id="insert-effect-placeholder"></div>
             {% endcall %}
             {% endif %}
         </form>
@@ -97,9 +105,22 @@
             $totalFormsField.val(componentCount + 1);
 
             // reactivate possible select2 widgets
-            activateSelects();
+            window.activateSelects();
             // ... and help text
             $("[data-toggle='popover']").popover();
+
+            var firstPanel = $(this)
+                                .closest('.content')
+                                .find($("a.panel-title"))
+                                .first();
+
+            if (firstPanel) {
+                firstPanel
+                    .attr("aria-expanded", "true")
+                    .parent()
+                    .siblings(".panel-collapse")
+                    .addClass("show highlight");
+            }
         });
     });
 </script>

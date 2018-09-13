@@ -1,18 +1,13 @@
 {% macro link_block(b, redirect="") %}
-    <div class="row content-block link-block clearfix {{ b.css_class }} ">
+    <div class="row d-flex content-block link-block {{ b.css_class }}{% if b.done %}step-done{% endif %}">
         {% if b.icon_url %}
-            <div class="pull-left">
+            <div class="ml-2 mr-3 d-flex align-items-center justify-content-center">
                 <div class="icon">
                     <img src="{{ static(b.icon_url) }}">
                 </div>
             </div>
         {% endif %}
-        {% if b.done %}
-            <div class="pull-right done-icon">
-                <i class="fa fa-check-circle"></i>
-            </div>
-        {% endif %}
-        <div class="content {% if b.icon_url %}content-with-logo{% endif %}">
+        <div class="content col-lg {% if b.icon_url %}content-with-logo{% endif %}">
             <div class="text">
                 <h3>{{ b.text }}</h3>
                 {% if b.description %}
@@ -30,7 +25,7 @@
                             <input type="submit" class="btn btn-primary {% if not b.css_class %}btn-inverse{% endif %}" value="{{ action.text }}">
                         <form>
                     {% else %}
-                        <a class="btn btn-primary {% if not b.css_class %}btn-inverse{% endif %}"
+                        <a class="btn btn-default"
                             href="{{ action.url }}{% if redirect and not action.no_redirect %}?redirect={{ redirect }}{% endif %}{% if action.hash %}{{ action.hash }}{% endif %}">{{ action.text }}</a>
                     {% endif %}
                 {% endfor %}

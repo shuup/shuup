@@ -6,13 +6,16 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+import { activateDropzone } from '../base/js/dropzone';
+
 $(function() {
     $(".product-media-delete").on("click", function(e) {
         e.preventDefault();
         if (confirm(gettext("Are you sure you want to delete this media?")))
         {
             $(this).parents(".panel").fadeOut();
-            $(this).next(".hide").find("input").prop("checked", true);
+            $(this).next(".d-none").find("input").prop("checked", true);
         }
     });
 
@@ -28,7 +31,7 @@ $(function() {
         $imagePanels.removeClass("panel-selected").addClass("panel-default");
 
         $(".is-primary-image").replaceWith(function() {
-            return $("<a>", {"class": "set-as-primary", "href": "#"}).text(gettext("Set as primary image"));
+            return $("<a>", {"class": "set-as-primary btn btn-sm btn-inverse", "href": "#"}).text(gettext("Set as primary image"));
         });
 
         $imagePanels.each(function(i) {
@@ -49,17 +52,18 @@ $(function() {
         const $source = $("#" + section + "-placeholder-panel");
         const $html = $($source.html().replace(/__prefix__/g, panelCount - 1).replace(/__prefix_name__/g, panelCount));
         let targetId = "id_images";
-        if(section.indexOf("media") > 0) {
+        if (section.indexOf("media") > 0) {
             targetId = "id_media";
         }
-        if(file) {
-            let $contents = $("<a href='" + file.url + "' target='_blank'></a>");
+        if (file) {
+            let $contents = $("<a class='thumbnail-image' href='" + file.url + "' target='_blank'></a>");
+            let $name = "<h4>" + file.name + "</h4>";
             if(targetId === "id_images") {
                 $contents.append("<img src='" + file.url + "'>");
                 $html.find(".thumbnail").append($contents);
             } else {
-                $contents.append("<br><p>" + file.name + "</p>");
-                $html.find(".thumbnail").append($contents);
+                $contents.append("<img src='" + file.url + "' />");
+                $html.find(".extra-fields").prepend($name);
             }
             $html.find(".file-control").find("input").val(file.id);
         }

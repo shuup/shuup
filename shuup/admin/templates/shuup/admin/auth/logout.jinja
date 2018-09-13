@@ -2,15 +2,17 @@
 {% block title %}{% trans %}Logged out{% endtrans %}{% endblock %}
 {% from "shuup/admin/macros/general.jinja" import auth_block %}
 {% block content %}
-    {% call auth_block("subtle-slide-in") %}
-        <h4 class="text-center">{% trans %}You have been securely logged out. Hope to see you soon!{% endtrans %}</h4>
-        <div class="actions">
-            <a class="btn btn-primary btn-lg btn-block" href="{{ url("shuup_admin:login") }}?next={{ url("shuup_admin:dashboard") }}">
-                <i class="fa fa-sign-in"></i> {% trans %}Log in again{% endtrans %}
-            </a>
-            <a class="btn btn-lg btn-block btn-gray" href="/">
-                <i class="fa fa-shopping-cart"></i> {% trans %}Visit shop{% endtrans %}
-            </a>
+    {% call auth_block() %}
+        <div class="auth-body">
+            <h4 class="pt-4 pb-4 text-center">{% trans %}You have been securely logged out. Hope to see you soon!{% endtrans %}</h4>
+            <div class="actions">
+                <a class="btn btn-primary btn-lg btn-block" href="{{ url("shuup_admin:login") }}?next={{ url("shuup_admin:dashboard") }}">
+                    <i class="fa fa-sign-in"></i> {% trans %}Log in again{% endtrans %}
+                </a>
+                <a class="btn btn-inverse btn-lg btn-block" href="/">
+                    <i class="fa fa-shopping-cart"></i> {% trans %}Visit shop{% endtrans %}
+                </a>
+            </div>
         </div>
     {% endcall %}
 {% endblock %}

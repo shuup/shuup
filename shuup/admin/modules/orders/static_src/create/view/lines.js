@@ -6,7 +6,7 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import BrowseAPI from "BrowseAPI";
+const BrowseAPI = window.BrowseAPI;
 import {
     addLine,
     deleteLine,
@@ -56,7 +56,7 @@ export function renderOrderLines(store, shop, lines) {
                     href: "#",
                     onclick: (e) => {
                         e.preventDefault();
-                        BrowseAPI.openBrowseWindow({
+                        window.BrowseAPI.openBrowseWindow({
                             kind: "product",
                             filter: {"shop": shop.id},
                             onSelect: (obj) => {
@@ -266,7 +266,7 @@ export function orderLinesView(store, isCreating) {
         infoText += " " + interpolate(gettext("All prices are in %s. Taxes not included"), [shop.selected.currency]);
     }
     return m("div", [
-        m("p", [
+        m("p.alert.alert-info", [
             m("i.fa.fa-info-circle"),
             m("span", " " + infoText)
         ]),
@@ -281,7 +281,7 @@ export function orderLinesView(store, isCreating) {
                     href: "#",
                     onclick: (e) => {
                         e.preventDefault();
-                        BrowseAPI.openBrowseWindow({
+                        window.BrowseAPI.openBrowseWindow({
                             kind: "product",
                             filter: {"shop": shop.id},
                             onSelect: (obj) => {

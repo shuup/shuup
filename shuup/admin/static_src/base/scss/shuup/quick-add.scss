@@ -1,0 +1,96 @@
+div.container-fluid.support-nav-wrap {
+    &.iframe-mode {
+        top: 0;
+        padding-top: 50px;
+        max-width: 77%;
+    }
+
+    &.notify {
+        position: static;
+        padding-top: 0;
+    }
+}
+
+#create-object-overlay {
+    position: fixed;
+    top: 0;
+    right: 0%;
+    height: 100%;
+    width: 100%;
+    z-index: 2000;
+    background-color: rgba(0,0,0,0.5);
+
+    div.content-pane {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        right: -100%;
+
+        &.open {
+            width: 100%;
+            transition: 1s;
+            transition-property: right;
+            right: 0;
+        }
+
+        @include media-breakpoint-up(lg) {
+            &.open {
+                width: 80%;
+                transition: 1s;
+                transition-property: right;
+                right: 0;
+            }
+        }
+
+        iframe {
+            float: right;
+        }
+    }
+
+    a.close-btn {
+        position: absolute;
+        right: 50px;
+        top: 10px;
+        z-index: 2001;
+    }
+}
+
+.content-block {
+    .form-group {
+        .quick-add-btn {
+            cursor: pointer;
+            float: left;
+            position: initial;
+
+            i.fa-plus:hover {
+                color: #000;
+            }
+
+            @include media-breakpoint-down(xs) {
+                .btn {
+                    position: absolute;
+                    top: 0px;
+                    right: 30px;
+                }
+            }
+        }
+
+        .edit-object-btn {
+            cursor: pointer;
+            float: left;
+            position: initial;
+
+            i.fa-plus:hover {
+                color: #000;
+            }
+
+            @include media-breakpoint-down(sm) {
+                .btn {
+                    position: absolute;
+                    top: 0px;
+                    right: 75px;
+                }
+            }
+        }
+    }
+}

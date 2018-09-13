@@ -52,6 +52,8 @@ def _test_status_filter(browser):
     for order in orders:
         order.set_canceled()
 
+    click_element(browser, "#dropdownFilter")  # Just open the filters
+
     # Filter with cancelled
     cancelled_status = OrderStatus.objects.get_default_canceled()
     _change_status_filter(browser, "%s" % cancelled_status.pk)

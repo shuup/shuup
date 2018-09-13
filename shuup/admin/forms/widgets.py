@@ -33,23 +33,22 @@ class BasePopupChoiceWidget(Widget):
     browse_kind = None
     filter = None
 
-    def __init__(self, attrs=None, clearable=False, empty_text=u"\u2014"):
+    def __init__(self, attrs=None, clearable=False, empty_text=True):
         self.clearable = clearable
         self.empty_text = empty_text
         super(BasePopupChoiceWidget, self).__init__(attrs)
 
     def get_browse_markup(self):
         icon = "<i class='fa fa-folder'></i>"
-        return "<button class='browse-btn btn btn-info btn-sm' type='button'>%(icon)s %(text)s</button>" % {
+        return "<button class='browse-btn btn btn-primary btn-sm' type='button'>%(icon)s %(text)s</button>" % {
             "icon": icon,
-            "text": _("Browse")
+            "text": _("Select Product")
         }
 
     def get_clear_markup(self):
-        icon = "<i class='fa fa-cross'></i>"
-        return "<button class='clear-btn btn btn-default btn-sm' type='button'>%(icon)s %(text)s</button>" % {
+        icon = "<i class='fa fa-trash'></i>"
+        return "<button class='clear-btn btn btn-danger btn-sm' type='button'>%(icon)s</button>" % {
             "icon": icon,
-            "text": _("Clear")
         }
 
     def render_text(self, obj):
@@ -57,6 +56,7 @@ class BasePopupChoiceWidget(Widget):
         text = self.empty_text
         if obj:
             text = force_text(obj)
+            self.empty_text = False
             if not url:
                 try:
                     url = get_model_url(obj)
@@ -65,10 +65,21 @@ class BasePopupChoiceWidget(Widget):
         if not url:
             url = "#"
 
-        return mark_safe("<a class=\"browse-text\" href=\"%(url)s\" target=\"_blank\">%(text)s</a>&nbsp;" % {
-            "text": escape(text),
-            "url": escape(url),
-        })
+        css_style = ""
+
+        if self.empty_text:
+            css_style = "display: none"
+
+        icon = "<i class='fa fa-external-link'></i>"
+
+        return mark_safe(
+            ("<a class=\"btn btn-inverse browse-text btn-sm\" style=\"%(css_style)s\" \
+            href=\"%(url)s\" target=\"_blank\">%(icon)s %(text)s</a>") % {
+                "css_style": css_style,
+                "icon": icon,
+                "text": escape(text),
+                "url": escape(url),
+            })
 
     def get_object(self, value):
         raise NotImplementedError("Not implemented")
@@ -83,11 +94,11 @@ class BasePopupChoiceWidget(Widget):
         bits = [self.get_browse_markup(), pk_input, " ", media_text]
 
         if self.clearable:
-            bits.insert(1, self.get_clear_markup())
+            bits.append(self.get_clear_markup())
 
         return mark_safe("<div %(attrs)s>%(content)s</div>" % {
             "attrs": flatatt_filter({
-                "class": "browse-widget %s-browse-widget" % self.browse_kind,
+                "class": "browse-widget %s-browse-widget d-flex mr-auto align-items-center" % self.browse_kind,
                 "data-browse-kind": self.browse_kind,
                 "data-clearable": self.clearable,
                 "data-empty-text": self.empty_text,
@@ -194,9 +205,9 @@ class ContactChoiceWidget(BasePopupChoiceWidget):
 
     def get_browse_markup(self):
         icon = "<i class='fa fa-user'></i>"
-        return "<button class='browse-btn btn btn-info btn-sm' type='button'>%(icon)s %(text)s</button>" % {
+        return "<button class='browse-btn btn btn-primary btn-sm' type='button'>%(icon)s %(text)s</button>" % {
             "icon": icon,
-            "text": _("Select")
+            "text": _("Select Contact")
         }
 
 

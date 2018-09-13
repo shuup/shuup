@@ -47,7 +47,7 @@ class ScriptListView(PicotableListView):
                 url=reverse("shuup_admin:notify.script.new")
             ),
             JavaScriptActionButton(
-                text=_("New From Template"), icon="fa fa-book", extra_css_class="btn-info",
+                text=_("New From Template"), icon="fa fa-book",
                 onclick="showScriptTemplates()"
             )
         ])

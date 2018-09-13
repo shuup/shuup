@@ -9,8 +9,6 @@
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{{ static("shuup_admin/img/favicon.ico") }}" rel="icon" type="image/x-icon">
-        <link href="{{ static("shuup_admin/css/select2.css") }}" rel="stylesheet" type="text/css">
-        <link href="{{ static("shuup_admin/css/vendor.css") }}" rel="stylesheet" type="text/css">
         <link href="{{ static("shuup_admin/css/base.css") }}" rel="stylesheet" type="text/css">
         {% block extra_css %}{% endblock -%}
         {% block extra_head %}{% endblock -%}
@@ -25,14 +23,14 @@
         {% else %}
         {% block top %}
             {% if not iframe_mode %}
-                <header id="top-header">{% include "shuup/admin/base/_navigation.jinja" %}</header>
+                <header class="d-flex justify-content-center align-items-center site-search-nav" id="top-header">{% include "shuup/admin/base/_navigation.jinja" %}</header>
                 {% include "shuup/admin/base/_main_menu.jinja" %}
             {% endif %}
         {% endblock %}
 
 
         {% block support_content %}
-            <div class="container-fluid support-nav-wrap{% if iframe_mode %} iframe-mode{% endif %}">
+            <div class="support-nav-wrap{% if iframe_mode %} iframe-mode{% endif %}">
                 {% if shuup_admin.is_multishop_enabled() %}
                 <div class="flex-wrapper">
                     <h3>Active shop: <strong>{{ shuup_admin.get_admin_shop().name }}</strong></h3>

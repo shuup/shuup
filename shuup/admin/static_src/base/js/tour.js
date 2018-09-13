@@ -11,10 +11,13 @@
         if(key !== "home" && typeof(key) !== "undefined") {
             return [];
         }
-        if($("#main-menu").position().left !== 0) {
+
+        let menu = $("#main-menu");
+        if (menu && menu.position() && menu.position().left !== 0) {
             // don't show chrome tour on mobile
             return [];
         }
+
         let steps = [];
 
         if ($("li a[data-target-id='quicklinks']").length > 0) {
@@ -132,11 +135,10 @@
         return steps;
     }
 
-    $(document).ready(function() {
-        $("#top-header .show-tour-li").on("click", "a", function(e){
-            e.preventDefault();
-            $.tour();
-        });
+    $(".show-tour").on("click", function(e){
+        e.stopImmediatePropagation()
+        e.preventDefault();
+        $.tour();
     });
 
     $.tour = function(config={}, params) {

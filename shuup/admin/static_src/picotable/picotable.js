@@ -9,6 +9,7 @@
 /* eslint-disable no-plusplus, prefer-const, curly, no-bitwise */
 /* exported Picotable */
 /* global alert, require */
+
 const Picotable = (function(m, storage) {
     "use strict";
     m = m || require("mithril");
@@ -187,31 +188,43 @@ const Picotable = (function(m, storage) {
         }
     }
 
-    function paginator(paginationData, setPage) {
+    function paginator(paginationData, setPage, extraClass) {
         if (paginationData.nItems === 0) return m("nav");
+
         var callback = m.withAttr("rel", setPage);
         var currentPage = paginationData.pageNum;
         var pageLinks = [];
         var pageLink = function(page, title) {
-            return m("a", {rel: page, href: "#", onclick: callback}, title || page);
+            return m("a.page-link", {rel: page, href: "#", onclick: callback}, title || page);
         };
+
         for (var page = 1; page <= paginationData.nPages; page++) {
             if (page === 1 || page === paginationData.nPages || Math.abs(page - currentPage) <= 2) {
-                var li = m("li", {key: page, className: cx({active: currentPage === page})}, pageLink(page));
+                var li = m("li.page-item", {key: page, className: cx({active: currentPage === page})}, pageLink(page));
                 li._page = page;
                 pageLinks.push(li);
             }
         }
+
         addDummies(pageLinks);
-        var prevLink = m("li", {
+
+        var prevLink = m("li.page-item", {
             key: "previous",
             className: cx({disabled: currentPage === 1})
         }, pageLink(currentPage - 1, gettext("Previous")));
-        var nextLink = m("li", {
+
+        var nextLink = m("li.page-item", {
             key: "next",
             className: cx({disabled: currentPage === paginationData.nPages})
         }, pageLink(currentPage + 1, gettext("Next")));
-        return m("nav", m("ul.pagination", prevLink, pageLinks, nextLink));
+
+        let css = '';
+
+        if (typeof extraClass !== 'undefined') {
+          css = `.${extraClass}`;
+        }
+
+        return m("nav" + css, m("ul.pagination", prevLink, pageLinks, nextLink));
     }
 
     function debounceChangeConfig(timeout) {
@@ -229,20 +242,38 @@ const Picotable = (function(m, storage) {
         };
         var select2Config = function() {
             return function(el, isInit) {
-                if(!isInit) {
-                    $(el).select2();
+                if (!isInit) {
+                    $(el).select2({
+                      dropdownParent: $(el).parent()
+                    });
+
+                    const body = $('body').find('.select2-search-input');
+                    const select2Span = $(el).next();
+                    const elements = [select2Span, body];
+
+                    elements.map(el => el.on('click', e => preventSelect(e)));
+
                 }
             };
         };
 
         var select = m("select.form-control", {
-            config: col.filter.select2? select2Config(): null,
+            config: (col.filter.select2) ? select2Config() : null,
             value: JSON.stringify(value),
-            onchange: setFilterValueFromSelect
+            onchange: setFilterValueFromSelect,
+            onclick: preventSelect,
         }, Util.map(col.filter.choices, function(choice) {
-            return m("option", {value: JSON.stringify(choice[0]), key: choice[0]}, choice[1]);
-        }));
-        return m("div.choice-filter", select);
+            return m("option", {
+                value: JSON.stringify(choice[0]),
+                key: choice[0]
+              },
+              choice[1]);
+          })
+        );
+
+        const label = m("h6", col.title);
+
+        return m("div.choice-filter", [label, select]);
     }
 
     function getDefaultValues(ctrl) {
@@ -261,9 +292,9 @@ const Picotable = (function(m, storage) {
     }
 
     function buildColumnRangeFilter(ctrl, col, value) {
-        var setFilterValueFromInput = function(which) {
-            const filterObj = Util.extend({}, ctrl.getFilterValue(col.id) || {}); // Copy current filter object
-            var newValue = this.value;
+      var setFilterValueFromInput = function(which) {
+        const filterObj = Util.extend({}, ctrl.getFilterValue(col.id) || {}); // Copy current filter object
+        var newValue = this.value;
             if (!Util.trim(newValue)) {
                 newValue = null;
             }
@@ -272,11 +303,13 @@ const Picotable = (function(m, storage) {
         };
         var attrs = {"type": col.filter.range.type || "text"};
         var useDatepicker = false;
-        if(attrs.type === "date") {
+
+        if (attrs.type === "date") {
             // use a normal text input since mixing a date input and the datepicker together works weird in chrome
             useDatepicker = true;
             attrs.type = "text";
         }
+
         Util.map(["min", "max", "step"], function(key) {
             var val = col.filter.range[key];
             if (!(val === undefined || val === null)) {
@@ -284,8 +317,11 @@ const Picotable = (function(m, storage) {
                 attrs.type = "number";  // Any of these set means we're talking about numbers
             }
         });
+
         value = value || {};
+
         var minInput = m("input.form-control", Util.extend({}, attrs, {
+            key: "min",
             value: Util.stringValue(value.min),
             placeholder: lang.RANGE_FROM,
             onchange: function() {
@@ -293,7 +329,9 @@ const Picotable = (function(m, storage) {
             },
             config: useDatepicker? ctrl.datePicker() : debounceChangeConfig(500)
         }));
+
         var maxInput = m("input.form-control", Util.extend({}, attrs, {
+            key: "max",
             value: Util.stringValue(value.max),
             placeholder: lang.RANGE_TO,
             onchange: function() {
@@ -301,9 +339,12 @@ const Picotable = (function(m, storage) {
             },
             config: useDatepicker? ctrl.datePicker() : debounceChangeConfig(500)
         }));
+
+        const label = m("h6", col.title);
+
         return m("div.range-filter", [
-            m("div.input-wrapper.min", {key: "min"}, minInput),
-            m("div.input-wrapper.max", {key: "max"}, maxInput)
+            label,
+            m("div.input-group", [minInput, maxInput])
         ]);
     }
 
@@ -312,6 +353,8 @@ const Picotable = (function(m, storage) {
             ctrl.setFilterValue(col.id, this.value);
         };
 
+        const label = m("h6", col.title);
+
         var input = m("input.form-control", {
             type: col.filter.text.type || "text",
             value: Util.stringValue(value),
@@ -319,20 +362,43 @@ const Picotable = (function(m, storage) {
             onchange: setFilterValueFromInput,
             config: debounceChangeConfig(500)
         });
-        return m("div.text-filter", input);
+        return m("div.text-filter", [label, input]);
     }
 
-    function buildColumnFilter(ctrl, col) {
+    // Check to see if it's any of the types of filters that
+    // we want to highlight by placing it at the top of the table
+    function isLiftFilter(col) {
+      return (
+        col.id === "name"
+        || col.id === "customer"
+        || col.id === "title"
+        || col.id ==="code"
+      )
+    }
+
+    function buildNameFilter(ctrl) {
+      var data = ctrl.vm.data();
+      if (data === null) return; // Not loaded, don't return anything
+
+      const [ col ] = data.columns.filter(column => isLiftFilter(column));
+
+      if (col !== undefined && col.filter) {
         var value = ctrl.getFilterValue(col.id);
-        if (col.filter.choices) {
-            return buildColumnChoiceFilter(ctrl, col, value);
-        }
-        if (col.filter.range) {
-            return buildColumnRangeFilter(ctrl, col, value);
-        }
-        if (col.filter.text) {
-            return buildColumnTextFilter(ctrl, col, value);
-        }
+
+        var setFilterValueFromInput = function() {
+          ctrl.setFilterValue(col.id, this.value);
+        };
+
+        var input = m("input.form-control", {
+          type: "text",
+          value: Util.stringValue(value),
+          placeholder: col.filter.placeholder || interpolate(gettext("Filter by %s"), [col.title]),
+          onchange: setFilterValueFromInput,
+          config: debounceChangeConfig(500)
+        });
+
+        return m('div.picotable-filter-name', input)
+      }
     }
 
     function buildColumnHeaderCell(ctrl, col, columnNumber) {
@@ -367,26 +433,65 @@ const Picotable = (function(m, storage) {
             if (columnNumber === 1) {
                 columnSettings.colspan = 2;
             }
+            if (col.id === "primary_image") {
+              columnSettings.className += " hidden-cell";
+            }
         }
-        return m("th", columnSettings, [sortIndicator, " ", col.title]);
+        return m("th", columnSettings, [m("span", "", col.title), " ", sortIndicator]);
     }
 
-    function buildColumnFilterCell(ctrl, col, columnNumber) {
-        var filterControl = null;
-        if (col.filter) {
-            filterControl = buildColumnFilter(ctrl, col);
+    function renderFooter(ctrl) {
+      var data = ctrl.vm.data();
+
+      if (data === null) {  // Not loaded, don't return anything
+          return;
+      }
+
+      var itemInfo = (ctrl.vm.data() ? ctrl.vm.data().itemInfo : null);
+
+      // Build footer
+      const PageSizeSelector = {
+        view: function() {
+          return m("div.btn-group.dropup.picotable-items-per-page-ctr", [
+            m("button.btn.btn-default.dropdown-toggle",
+                {
+                  type: "button",
+                  id: "pipps" + ctrl.id + 1,
+                  "data-toggle": "dropdown",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false",
+                }, `${ctrl.vm.perPage()} / ${lang.PAGE}`),
+                m("div.dropdown-menu", {
+                    "aria-labelledby": "pipps" + ctrl.id + 1,
+                  },
+                  Util.map(ctrl.vm.perPageChoices(), function(value) {
+                    return m("a.dropdown-item",
+                      {
+                        href: "#",
+                        "data-value": value,
+                        onclick: m.withAttr("data-value", function(value) {
+                          ctrl.vm.perPage(value);
+                          ctrl.refresh(true);
+                        })
+                      }, `${value} / ${lang.PAGE}`);
+                  })
+                )
+          ]);
         }
-        var columnSettings = {key: col.id, className: col.className || ""};
-        var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
-        if (massActions.length) {
-            if (columnNumber === 0) {
-                columnSettings.className += " hidden";
-            }
-            if (columnNumber === 1) {
-                columnSettings.colspan = 2;
-            }
+      }
+
+      var FootCell = {
+        view: function() {
+          return paginator(data.pagination, ctrl.setPage, "d-none d-lg-flex");
         }
-        return m("th", columnSettings, [filterControl]);
+      }
+
+      const selectoClasses = "d-flex pt-2 pb-2 justify-content-between align-items-center";
+      return m("div", { class: selectoClasses }, [
+                  m.component(PageSizeSelector),
+                  m("div.picotable-item-info", itemInfo),
+                  m.component(FootCell),
+                ]);
     }
 
     function renderTable(ctrl) {
@@ -403,21 +508,10 @@ const Picotable = (function(m, storage) {
         var columnHeaderCells = Util.map(data.columns, function(col, columnNumber) {
             return buildColumnHeaderCell(ctrl, col, columnNumber);
         });
-        var columnFilterCells = (
-            Util.any(data.columns, Util.property("filter")) ?
-            Util.map(data.columns, function(col, columnNumber) {
-                return buildColumnFilterCell(ctrl, col, columnNumber);
-            }) : null
-        );
-        var thead = m("thead", [
-            m("tr.headers", columnHeaderCells),
-            (columnFilterCells ? m("tr.filters", columnFilterCells) : null)
-        ]);
 
-        // Build footer
-        var footColspan = data.columns.length;
-        var footCell = m("td", {colspan: footColspan}, paginator(data.pagination, ctrl.setPage));
-        var tfoot = m("tfoot", [m("tr", footCell)]);
+        var thead = m("thead", [
+            m("tr.headers", columnHeaderCells)
+        ]);
 
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
 
@@ -426,20 +520,29 @@ const Picotable = (function(m, storage) {
         var rows = Util.map(data.items, function(item) {
             var rowSettings = {key: "item-" + item._id};
             if (massActions.length) {
-                rowSettings.onclick = (function() {
-                    ctrl.saveCheck(item);
+                rowSettings.onclick = (function(e) {
+                    // ctrl.saveCheck(item);
+                    if (item._url && e.target.className !== 'row-selection') {
+                      location.href = item._url;
+                    }
                 });
                 rowSettings.class = ctrl.isChecked(item) ? "active" : "";
             }
+
             return m("tr", rowSettings, Util.map(data.columns, function(col, idx) {
                 var content;
                 if (idx === 0 && massActions.length) {
-                    content = m("input[type=checkbox]", {
+                    content = m("div.input-checkbox", { onclick: preventSelect }, [
+                      m("input[type=checkbox]", {
+                        id: item._id,
                         value: item.type + "-" + item._id,
                         class: "row-selection",
                         onclick: Util.boundPartial(ctrl, ctrl.saveCheck, item),
                         checked: ctrl.isChecked(item)
-                    });
+                      }),
+                      m("label", { for: item._id, })
+                    ]
+                  );
                 }
                 else {
                     content = item[col.id] || "";
@@ -453,8 +556,15 @@ const Picotable = (function(m, storage) {
                             href: "#",
                             onclick: Util.boundPartial(ctrl, ctrl.pickObject, item)
                         }, content);
-                    } else if (item._url) {
-                        content = m("a", {href: item._url, onclick:preventSelect}, content);
+                    } else if (item._url && col.id === "name" || col.id === "title") {
+                        content = m("a", {
+                          href: item._url,
+                          className: "row-" + col.id,
+                        }, content);
+                    } else {
+                        content = m("span", {
+                          className: "row-" + col.id
+                        }, content);
                     }
                 }
                 return m("td", {key: "col-" + col.id, className: col.className || ""}, [content]);
@@ -462,7 +572,8 @@ const Picotable = (function(m, storage) {
         });
         var tbody = m("tbody", rows);
         var massActionsClass = massActions.length ? ".has-mass-actions" : "";
-        return m("table.table.table-striped.picotable-table" + massActionsClass, [thead, tfoot, tbody]);
+
+        return m("table.table.picotable-table" + massActionsClass, [thead, tbody]);
     }
 
     function preventSelect(event) {
@@ -474,27 +585,26 @@ const Picotable = (function(m, storage) {
         var filters = Util.map(data.columns, function(col) {
             if (!col.filter) return null;
             return m("div.single-filter",
-                m("h3", col.title),
                 buildColumnFilter(ctrl, col)
             );
         });
         return m("div.mobile-filters.shuup-modal-bg", {key: "mobileFilterModal"}, [
             m("div.shuup-modal-container", [
-                m("div.shuup-modal-header", [
-                    m("h2.pull-left", [m("i.fa.fa-filter")], gettext("Filters")),
-                    m("button.btn.btn-success.pull-right", {
-                        onclick: function() {
-                            ctrl.vm.showMobileFilterSettings(false);
-                        }
-                    }, "Done"),
+                m("div.shuup-modal-header.d-flex.align-items-center", [
+                    m("h4.mr-auto", [m("i.fa.fa-filter")], gettext("Filters")),
                     m(
-                        "button.btn.btn-gray.btn-inverse.pull-right",
+                        "button.btn.btn-inverse.mr-2",
                         {
                             onclick: ctrl.resetFilters,
                             disabled: Util.isEmpty(ctrl.vm.filterValues())
                         },
                         lang.RESET
-                    )
+                    ),
+                    m("button.btn.btn-primary", {
+                      onclick: function() {
+                          ctrl.vm.showMobileFilterSettings(false);
+                      }
+                  }, "Done"),
                 ]),
                 m("div.mobile-filters-content", filters)
             ])
@@ -551,12 +661,12 @@ const Picotable = (function(m, storage) {
                     if (typeof line === "string") line = {text: line};
                     if (!line.text) return;
                     if (line.raw) line.text = m.trust(line.raw);
-                    var rowClass = "div.inner-row." +
+                    var rowClass = "div.row.mobile-row." +
                         (line.title ? "with-title" : "") +
                         (line.class ? "." + line.class : "");
                     return m(rowClass, [
-                        (line.title ? m("div.column.title", line.title) : null),
-                        m("div.column", line.text)
+                        (line.title ? m("div.col-6.title", line.title) : null),
+                        m("div.col-6.value", line.text)
                     ]);
                 });
                 if (!Util.any(content, function(v) {
@@ -570,9 +680,9 @@ const Picotable = (function(m, storage) {
                 content = Util.map(data.columns, function(col) {
                     var colContent = item[col.id] || "";
                     if (col.raw) colContent = m.trust(colContent);
-                    return m("div.inner-row.with-title", [
-                        m("div.column.title", col.title),
-                        m("div.column", colContent)
+                    return m("div.mobile-row.row.with-title", [
+                        m("div.col-6.title", col.title),
+                        m("div.col-6.text-right", colContent)
                     ]);
                 });
             }
@@ -582,10 +692,10 @@ const Picotable = (function(m, storage) {
                 linkAttrs.href = "#";
             }
             var element = (item._linked_in_mobile ? m("a.inner", linkAttrs, content) : m("span.inner", content));
-            return m("div.list-element", element);
+            return m("div.list-element.col-12", element);
         });
         return m("div.mobile", [
-            m("div.row.mobile-header", [
+            m("div.mobile-header.row", [
                 m("div.col-sm-6", [
                     m("button.btn.btn-info.btn-block.toggle-btn",
                         {
@@ -602,8 +712,8 @@ const Picotable = (function(m, storage) {
             ]),
             (ctrl.vm.showMobileFilterSettings() ? getMobileFilterModal(ctrl) : null),
             m("hr"),
-            m("div.mobile-items", listItems),
-            paginator(data.pagination, ctrl.setPage)
+            m("div.mobile-items.row ", listItems),
+            paginator(data.pagination, ctrl.setPage, "mobile-pagination")
         ]);
     }
 
@@ -616,15 +726,17 @@ const Picotable = (function(m, storage) {
         var select2Config = function() {
             return function(el, isInit) {
                 if(!isInit) {
-                    $(el).select2();
+                    $(el).select2().data('select2').$dropdown.addClass('mass-action-dropdown');
                 }
             };
         };
 
+
         const totalItemCount = ctrl.vm.data().pagination.nItems;
         if (totalItemCount === 0) {
-            return "";
+          return "";
         }
+
         const listedItemCount = ctrl.vm.data().items.length;
         const initialMassActions = [
             {key: 0, value: gettext("Select Action")},
@@ -635,15 +747,14 @@ const Picotable = (function(m, storage) {
         massActions = initialMassActions.concat(massActions);
 
         return m("div.picotable-mass-actions", [
-            (ctrl.vm.allItemsSelected() ? m("p", interpolate(gettext("All %s Items Selected"), [totalItemCount])) : null),
-            m("select.picotable-mass-action-select.form-control",
+            m("select.picotable-mass-action-select",
                 {
                     id: "mass-action-select" + ctrl.id,
                     config: select2Config(),
                     value: 0,
                     onchange: m.withAttr("value", function(value) {
                         ctrl.doMassAction(value);
-                    })
+                    }),
                 },
                 Util.map(massActions, function(obj) {
                     const defaultKeys = ["key", "value"];
@@ -662,47 +773,157 @@ const Picotable = (function(m, storage) {
         ]);
     }
 
+    function buildColumnFilter(ctrl, col) {
+      var value = ctrl.getFilterValue(col.id);
+      if (col.filter.choices) {
+          return buildColumnChoiceFilter(ctrl, col, value);
+      }
+      if (col.filter.range) {
+          return buildColumnRangeFilter(ctrl, col, value);
+      }
+      if (col.filter.text && !isLiftFilter(col)) {
+          return buildColumnTextFilter(ctrl, col, value);
+      }
+    }
+
+    function buildColumnFilterCell(ctrl, col) {
+        var filterControl = null;
+        if (col.filter && !isLiftFilter(col)) {
+            filterControl = buildColumnFilter(ctrl, col);
+            var columnSettings = {key: col.id};
+            var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
+
+            return m("div.pt-2.pb-2", columnSettings, [filterControl]);
+        }
+    }
+
+    function renderFilter(ctrl) {
+      const data = ctrl.vm.data();
+      if (data === null) return; // Not loaded, don't return anything
+
+      const columnFilterCells = (
+        data.columns.filter(col => col.filter) ?
+        data.columns.map(col => {
+          if (col.sortable && !isLiftFilter(col)) return buildColumnFilterCell(ctrl, col)}) :
+        null
+      );
+
+      function initSelect() {
+        const filter = ctrl.vm.filterValues();
+        return filter;
+      }
+
+      const dropdownButtonSettings = {
+        "id": "dropdownFilter",
+        "data-toggle": "dropdown",
+        "aria-haspopup": "true",
+        "aria-expanded": "false",
+        onclick: initSelect,
+      };
+
+      return m("div.picotable-filter.btn-group.d-none.d-lg-flex", [
+        m("button.btn.btn-default.btn-icon.dropdown-toggle", dropdownButtonSettings,
+          m("i.fa.fa-filter"), gettext("Filters")),
+          m("div.dropdown-menu.dropdown-menu-right.pl-3.pr-3", {
+            "aria-labelledby": "dropdownFilter"
+            }, [
+            (columnFilterCells ? m("div.filters.d-flex.flex-column", columnFilterCells) : null),
+            m("div.picotable-reset-filters-ctr",
+              m(
+                  "button.picotable-reset-filters-btn.btn.btn-inverse",
+                  {
+                      onclick: ctrl.resetFilters,
+                      disabled: Util.isEmpty(ctrl.vm.filterValues())
+                  },
+                  lang.RESET_FILTERS
+                )
+              )
+            ]
+          )
+        ]
+      )
+    }
+
     function renderHeader(ctrl) {
-        var itemInfo = (ctrl.vm.data() ? ctrl.vm.data().itemInfo : null);
         return m("div.picotable-header", [
             renderMassActions(ctrl),
-            m("div.picotable-items-per-page-ctr", [
-                m("select.picotable-items-per-page-select.form-control",
-                    {
-                        id: "pipps" + ctrl.id,
-                        value: ctrl.vm.perPage(),
-                        onchange: m.withAttr("value", function(value) {
-                            ctrl.vm.perPage(value);
-                            ctrl.refresh();
-                        })
-                    },
-                    Util.map(ctrl.vm.perPageChoices(), function(value) {
-                        return m("option", { value: value }, `${value} / ${lang.PAGE}`);
-                    })
-                )
-            ]),
-            m("div.picotable-item-info", itemInfo),
-            m("div.picotable-reset-filters-ctr",
-                m(
-                    "button.picotable-reset-filters-btn.btn.btn-gray.btn-inverse",
-                    {
-                        onclick: ctrl.resetFilters,
-                        disabled: Util.isEmpty(ctrl.vm.filterValues())
-                    },
-                    lang.RESET_FILTERS
-                )
-            )
+            buildNameFilter(ctrl),
+            renderFilter(ctrl)
         ]);
+    }
+
+    function buildEmptyState(ctrl) {
+      const pageName = $('.main-header').text().toLocaleLowerCase();
+      const title = interpolate(gettext("There are no %s to show"), [pageName]);
+      const button = $('.shuup-toolbar').find('.btn-primary');
+
+      let buttonAttr;
+      if (button.length > 0) {
+        buttonAttr = {
+          title: button.text(),
+          href: button[0].pathname
+        }
+      }
+
+      const markup = [
+        m("h3", title),
+        (buttonAttr ? m("p", gettext("How about creating a new entry?")) : null),
+        (buttonAttr ? m("a.btn.btn-default", {href: buttonAttr.href}, buttonAttr.title) : null)
+      ];
+
+      const markupCss = "div.w-100.d-flex.flex-column.align-items-center.justify-content-center.text-center";
+      return m(markupCss, markup);
+    }
+
+    function renderEmptyState(ctrl) {
+
+      return m("div.picotable-empty", [buildEmptyState(ctrl)]);
+    }
+
+    function renderLoader() {
+      return m("div.loader", [
+        m("div.mt-4.mb-4.row", [
+          m("div.btn.btn-default.pt-3.pb-3.mr-3", m("div.loader-block")),
+          m("div.btn.btn-default.w-50.pt-3.pb-3.mr-auto"),
+          m("div.btn.btn-default.pt-3.pb-3", m("div.loader-block")),
+        ]),
+        m("div.loader-content.row", [
+          m("div.loader-content-header.col-12.w-100.ml-0", [
+            m("div.loader-block.w-100"),
+          ]),
+          m("div.d-flex.justify-content-center.h-50.col-12.pt-5.pb-5", [
+            m("div.loader-spinner")
+          ])
+        ])
+      ]);
     }
 
     function PicotableView(ctrl) {
-        return m("div.table-view", [
-            (ctrl.vm.showHeader() ? renderHeader(ctrl) : null),
-            (ctrl.vm.renderMode() === "mobile" ? renderMobileTable(ctrl) : renderTable(ctrl))
-        ]);
+      const data = ctrl.vm.data();
+      if (data === null) return;
+
+      const showEmptyState = (ctrl) => {
+        if (data.items.length > 0) {
+          return [
+            (ctrl.vm.renderMode() === "mobile" ? renderMobileTable(ctrl) : renderTable(ctrl)),
+            renderFooter(ctrl)
+          ];
+        } else {
+          return renderEmptyState(ctrl);
+        }
+      }
+
+      return m("div.table-view", [
+        (ctrl.vm.showHeader() ? renderHeader(ctrl) : null),
+        (showEmptyState(ctrl)),
+      ]);
     }
 
-    function PicotableController() {
+    function renderPicotable(ctrl) {
+      return (ctrl.vm.isLoading) ? renderLoader() : PicotableView(ctrl);
+    }
+
+    function PicotableController(ctrl) {
         var ctrl = this;
         ctrl.id = "" + 0 | (Math.random() * 0x7FFFFFF);
         ctrl.vm = {
@@ -719,7 +940,8 @@ const Picotable = (function(m, storage) {
             data: m.prop(null),
             renderMode: m.prop("normal"),
             showMobileFilterSettings: m.prop(false),
-            pickId: m.prop(null)
+            pickId: m.prop(null),
+            isLoading: true
         };
         ctrl.setRenderMode = function(mode) {
             var oldMode = ctrl.vm.renderMode();
@@ -764,8 +986,8 @@ const Picotable = (function(m, storage) {
             ctrl.refresh();
         };
         ctrl.resetFilters = function() {
-            ctrl.vm.filterValues({});
-            ctrl.refresh();
+          ctrl.vm.filterValues({});
+          ctrl.refresh();
         };
         ctrl.resetCheckboxes = function() {
             ctrl.vm.allItemsSelected(false);
@@ -853,6 +1075,9 @@ const Picotable = (function(m, storage) {
             switch (value) {
                 case "select_all":
                     ctrl.selectAllProducts();
+                    const totalItemCount = ctrl.vm.data().pagination.nItems;
+                    const selectAllMessage = interpolate(gettext("All %s Items Selected"), [totalItemCount]);
+                    window.Messages.enqueue({tags: "info", text: selectAllMessage});
                     return;
                 case "select_listed":
                     ctrl.selectAllListedProducts();
@@ -917,13 +1142,17 @@ const Picotable = (function(m, storage) {
         };
         ctrl.refresh = function() {
             var url = ctrl.vm.url();
+
+            ctrl.vm.isLoading = true;
+
             if (!url) return;
             var data = {
-                sort: ctrl.vm.sort(),
-                perPage: 0 | ctrl.vm.perPage(),
-                page: 0 | ctrl.vm.page(),
-                filters: ctrl.vm.filterValues()
+              sort: ctrl.vm.sort(),
+              perPage: 0 | ctrl.vm.perPage(),
+              page: 0 | ctrl.vm.page(),
+              filters: ctrl.vm.filterValues()
             };
+
             const params = m.route.parseQueryString(decodeURI(location.search));
             params.jq = JSON.stringify(data);
             m.request({
@@ -932,6 +1161,8 @@ const Picotable = (function(m, storage) {
                 data: params
             }).then(ctrl.vm.data, function() {
                 alert("An error occurred.");
+            }).then(function(){
+              ctrl.vm.isLoading = false;
             });
             ctrl.saveSettings();
         };
@@ -984,12 +1215,7 @@ const Picotable = (function(m, storage) {
                 }
 
                 $(el).datetimepicker({
-                    format: "yyyy-mm-dd",
-                    autoclose: true,
-                    todayBtn: true,
-                    todayHighlight: true,
-                    fontAwesome: true,
-                    minView: 2
+                  format: "Y-m-d H:i",
                 });
             }
         };
@@ -1008,7 +1234,7 @@ const Picotable = (function(m, storage) {
     }
 
     var generator = function(container, dataSourceUrl) {
-        this.ctrl = m.mount(container, {view: PicotableView, controller: PicotableController});
+        this.ctrl = m.mount(container, {view: renderPicotable, controller: PicotableController});
         this.ctrl.setSource(dataSourceUrl);
     };
     generator.lang = lang;
@@ -1021,3 +1247,5 @@ if (typeof module !== "undefined" && module !== null && module.exports) {
 else if (typeof define === "function" && define.amd) define(function() {
     return Picotable;
 });
+
+new Picotable(document.getElementById("picotable"), window.location.pathname);

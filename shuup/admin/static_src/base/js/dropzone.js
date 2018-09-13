@@ -100,6 +100,7 @@ function activateDropzones() {
 }
 
 $(function(){
-    Dropzone.autoDiscover = false;
     activateDropzones();
 });
+
+module.exports = { activateDropzone }

@@ -3,6 +3,7 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
 {% block title %}{% trans %}Settings{% endtrans %}{% endblock %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call content_with_sidebar(content_id="settings_form") %}
         <form method="post" id="settings_form">

@@ -7,59 +7,69 @@
         {{ h|safe }}
     {% endfor %}
     {%- set is_primary = f.is_primary.value() if is_image_form else None %}
-    <div class="panel{% if is_primary %} panel-selected{% else %} panel-default{% endif %}" data-prefix="{{ f.prefix }}">
-        <div class="panel-heading clearfix">
-          <h2 class="panel-title pull-left">
+    <div class="panel{% if is_primary %} panel-selected{% else %} panel-default{% endif %} pt-4" data-prefix="{{ f.prefix }}">
+        <div class="panel-heading d-flex align-items-center pb-1">
+          <h4 class="panel-title mr-auto">
               {%- if is_image_form -%}
                 {{- _("Product image %(index)s", index=idx) -}}
               {%- else -%}
                 {{- _("Product media %(index)s", index=idx) -}}
               {%- endif -%}
-            </h2>
+            </h4>
             {% if is_image_form %}
-                <div class="primary-action pull-right">
+                <div class="primary-action">
                     {% if f.is_primary.value() %}
                         <span class="is-primary-image">{% trans %}Primary image{% endtrans %}</span>
                     {% else %}
-                        <a href="#" class="set-as-primary">{% trans %}Set as primary image{% endtrans %}</a>
+                        <a href="#" class="btn btn-sm btn-inverse set-as-primary">{% trans %}Set as primary image{% endtrans %}</a>
                     {% endif %}
-                    <div class="hide">{{ f.is_primary }}</div>
+                    <div class="d-none">{{ f.is_primary }}</div>
                 </div>
             {% endif %}
         </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-4 file-control">
+        <div class="panel-body pb-4">
+            <div class="media-row row align-items-center">
+                <div class="col-2 file-control">
                     {%- set thumbnail = f.get_thumbnail(request) %}
-                    <div class="thumbnail">
+                            <div class="thumbnail">
                         {% if thumbnail %}
-                            <a href="{{ f.file_url }}" target="_blank"><img src="{{ thumbnail.url }}"></a>
-                        {% elif f.instance.pk %}
-                            <br>
-                            <a href="{{ f.file_url }}" target="_blank"><p>{{ f.instance.effective_title }}</p></a>
+                                <a class="thumbnail-image" href="{{ f.file_url }}" target="_blank">
+                                    <img src="{{ thumbnail.url }}" />
+                                </a>
+                        {% elif  f.instance.pk %}
+                                <a class="thumbnail-image thumbnail-file href="{{ f.file_url }}" target="_blank">
+                                    <i class="fa fa-file-o"></i>
+                                </a>
                         {% endif %}
-                    </div>
+                            </div>
                     {{ f.file }}
                 </div>
-                <div class="col-sm-4 extra-fields">
-                {% if not is_image_form %}
-                    {{ bs3.field(f.external_url) }}
+                <div class="col extra-fields">
+                {% if f.instance.pk %}
+                    <h4>{{ f.instance.effective_title }}</h4>
                 {% endif %}
-                </div>
-                <div class="col-sm-4 actions">
                     {% if media_form.can_delete and f.instance.pk %}
-                    <a href="#" class="text-muted product-media-delete"><i class="fa fa-times"></i> {% trans %}Delete{% endtrans %}</a>
-                    <div class="hide">{{ f.DELETE }}</div>
+                        <a href="#" class="btn btn-inverse btn-sm product-media-delete mr-2"><i class="fa fa-trash"></i></a>
+                        <div class="d-none">{{ f.DELETE }}</div>
                     {% endif %}
+                    {%- set id = media_form.prefix + "-" + idx|safe %}
+                    <a href="#collapse-{{ id }}" class="btn btn-default btn-sm" role="button" data-toggle="collapse" aria-expanded="false">
+                        <i class="fa fa-cog"></i>
+                    </a>
+                </div>
+                <div class="col-3 actions d-flex align-items-center justify-content-center">
                     {{ bs3.field(f.ordering) }}
                 </div>
             </div>
         </div>
         {%- set id = media_form.prefix + "-" + idx|safe %}
-        <div class="panel-footer" id="media-accordion-{{ id }}" role="tablist" aria-multiselectable="true">
-            <div role="tab" id="media-{{ id }}">
+        <div class="panel-footer row" id="media-accordion-{{ id }}" role="tablist" aria-multiselectable="true">
+            <div role="tab" id="media-{{ id }}" class="panel-footer-inner col-12">
                 <div id="collapse-{{ id }}" class="advanced-container collapse" role="tabpanel" aria-labelledby="media-{{ id }}">
                     <div class="advanced-body">
+                        {% if not is_image_form %}
+                            {{ bs3.field(f.external_url) }}
+                        {% endif %}
                         {{ bs3.field(f.public) }}
                         {% if not is_image_form %}
                             {{ bs3.field(f.purchased) }}
@@ -73,11 +83,6 @@
                         {% endcall %}
                     </div>
                 </div>
-            </div>
-            <div class="toggle-advanced">
-                <a role="button" data-toggle="collapse" data-parent="#media-accordion-{{ id }}" href="#collapse-{{ id }}" aria-expanded="false" aria-controls="collapse-{{ id }}">
-                    <i class="fa fa-cog"></i> {% trans %}Advanced options{% endtrans %}
-                </a>
             </div>
         </div>
     </div>
@@ -96,13 +101,15 @@
         {% if is_image_form %}data-kind="images"{% endif %}
         data-product_id="{{ product.pk }}"
         data-upload_path="/products/{{ media_form.prefix }}">
+        <div class="dz-message" data-dz-message>
+            <span>{% trans %}Drop files here or click to <a href="#">browse</a>.{% endtrans %}</span>
+        </div>
     </div>
-    <br>
     {{ media_form.management_form }}
     {% for f in media_form %}
         {{ render_media_form(f, media_form, loop.index, is_image_form) }}
     {% endfor %}
-    <div class="hide" id="{{ id }}-placeholder-panel">
+    <div class="d-none" id="{{ id }}-placeholder-panel">
         {{ render_media_form(media_form.empty_form, media_form, "__prefix_name__", is_image_form) }}
     </div>
 {% endcall %}

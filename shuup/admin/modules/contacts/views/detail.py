@@ -20,7 +20,8 @@ from django.views.generic import DetailView
 
 from shuup.admin.modules.contacts.utils import check_contact_permission
 from shuup.admin.toolbar import (
-    DropdownActionButton, PostActionButton, Toolbar, URLActionButton
+    DropdownActionButton, DropdownDivider, PostActionButton, Toolbar,
+    URLActionButton
 )
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.apps.provides import get_provide_objects
@@ -48,7 +49,7 @@ class ContactDetailToolbar(Toolbar):
         elif not getattr(self.user, "email", None):
             disable_reason = _("User has no associated email.")
 
-        self.append(PostActionButton(
+        return PostActionButton(
             post_url=reverse("shuup_admin:contact.reset_password", kwargs={"pk": self.contact.pk}),
             name="pk",
             value=self.contact.pk,
@@ -57,40 +58,58 @@ class ContactDetailToolbar(Toolbar):
             confirm=_("Are you sure you wish to send a password recovery email to %s?") % self.contact.email,
             icon="fa fa-undo",
             disable_reason=disable_reason,
-            extra_css_class="btn-gray btn-inverse",
-        ))
+            extra_css_class="dropdown-item",
+        )
 
     def build_new_user_button(self):
         if self.user or isinstance(self.contact, CompanyContact):
             return
-        self.append(URLActionButton(
+        return URLActionButton(
             url=reverse("shuup_admin:user.new") + "?contact_id=%s" % self.contact.pk,
             text=_(u"New User"),
             tooltip=_(u"Create a user for the contact."),
-            icon="fa fa-star",
-            extra_css_class="btn-gray btn-inverse",
+            icon="fa fa-user-plus",
+            extra_css_class="dropdown-item",
             required_permissions=get_default_model_permissions(get_user_model()),
-        ))
+        )
 
     def build_new_order_button(self):
-        self.append(URLActionButton(
+        return URLActionButton(
             url=reverse("shuup_admin:order.new") + "?contact_id=%s" % self.contact.pk,
             text=_(u"New Order"),
             tooltip=_(u"Create an order for the contact."),
-            icon="fa fa-plus",
-            extra_css_class="btn-success",
+            icon="fa fa-shopping-cart",
+            extra_css_class="dropdown-item",
             required_permissions=["shuup.add_order"],
-        ))
+        )
 
     def build_deactivate_button(self):
-        self.append(PostActionButton(
+        return PostActionButton(
             post_url=self.request.path,
             name="set_is_active",
             value="0" if self.contact.is_active else "1",
             icon="fa fa-times-circle",
             text=_(u"Deactivate Contact") if self.contact.is_active else _(u"Activate Contact"),
-            extra_css_class="btn-gray",
-        ))
+            extra_css_class="dropdown-item btn-danger",
+        )
+
+    def build_user_button(self):
+        menu_items = [
+            self.build_new_order_button(),
+            DropdownDivider(),
+            self.build_new_user_button(),
+            self.build_renew_password_button(),
+            DropdownDivider(),
+            self.build_deactivate_button(),
+        ]
+        self.append(
+            DropdownActionButton(
+                menu_items,
+                icon="fa fa-user",
+                text=_(u"Options"),
+                extra_css_class="btn-info"
+            )
+        )
 
     def build_provides_buttons(self):
         action_menu_items = []
@@ -104,7 +123,7 @@ class ContactDetailToolbar(Toolbar):
                     action_menu_items,
                     icon="fa fa-star",
                     text=_(u"Actions"),
-                    extra_css_class="btn-info",
+                    extra_css_class="btn-inverse",
                 )
             )
 
@@ -118,12 +137,12 @@ class ContactDetailToolbar(Toolbar):
         self.append(URLActionButton(
             url=reverse("shuup_admin:contact.edit", kwargs={"pk": self.contact.pk}),
             icon="fa fa-pencil",
-            text=_(u"Edit..."),
-            extra_css_class="btn-info",
+            text=_(u"Edit"),
+            extra_css_class="btn-primary",
         ))
         self.build_renew_password_button()
         self.build_new_user_button()
-        self.build_deactivate_button()
+        self.build_user_button()
         self.build_new_order_button()
         self.build_provides_buttons()
 

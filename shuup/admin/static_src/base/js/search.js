@@ -20,7 +20,7 @@ $(function() {
                 text.toLowerCase().replace(/[^a-z0-9]+/g, "") +
                 lastChoices
             ).split("");
-            const key = _.detect(keys, (possibleKey) => !usedShortcuts[possibleKey]);
+            const key = _.find(keys, (possibleKey) => !usedShortcuts[possibleKey]);
             if (key !== null) {
                 usedShortcuts[key] = true;
             }
@@ -62,7 +62,7 @@ $(function() {
         );
 
         const actionResultContents = m("div",
-            m("ul", _.map(actionResults, (result) => singleResultLi(result, "a.btn.btn-gray")))
+            m("ul", _.map(actionResults, (result) => singleResultLi(result, "a.btn.btn-label")))
         );
 
         return m("div.container-fluid",
@@ -153,5 +153,13 @@ $(function() {
         if ($(this).val().length > 0) {
             $("#site-search-results").slideDown(300, "easeInSine");
         }
+    });
+
+    $(window).on('scroll', () => {
+      if (window.scrollY > 0) {
+        $('.site-search-nav').addClass('site-scrolling');
+      } else {
+        $('.site-search-nav').removeClass('site-scrolling');
+      }
     });
 });

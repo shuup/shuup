@@ -10,7 +10,7 @@ import {get} from "../api";
 import {clearExistingCustomer, retrieveCustomerData, setAddressProperty,
     setAddressSavingOption, setShipToBillingAddress, setIsCompany, showCustomerModal, retrieveCustomerDetails} from "../actions";
 import {ADDRESS_FIELDS, selectBox, contentBlock, infoRow, table, modal, Select2, HelpPopover} from "./utils";
-import BrowseAPI from "BrowseAPI";
+const BrowseAPI = window.BrowseAPI;
 
 function removeWarningBlocks(parentElement){
     var previousWarnings = parentElement.getElementsByClassName("duplicate-warning");
@@ -275,7 +275,7 @@ function renderCustomerSelectionView(store, customer) {
                 m("a.btn.text-success", {
                     id: "select-existing-customer",
                     onclick: () => {
-                        BrowseAPI.openBrowseWindow({
+                        window.BrowseAPI.openBrowseWindow({
                             kind: "contact",
                             clearable: true,
                             onSelect: (obj) => {
@@ -335,7 +335,7 @@ export function renderCustomerDetailModal(store) {
             contentBlock("i.fa.fa-cubes", gettext("Recent Orders"), recentOrderView(recentOrders), "h3")
         ],
         footer: [
-            m("button.btn.btn-default", {
+            m("button.btn.btn-inverse", {
                 onclick: () => store.dispatch(showCustomerModal(false))
             }, gettext("Close"))
         ]

@@ -1,0 +1,130 @@
+body.shepherd-active {
+    &:before {
+        content: " ";
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 10000;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .main-menu {
+        z-index: 10000;
+
+        a {
+            opacity: 0.3;
+        }
+
+        a.shepherd-enabled {
+            opacity: 1;
+        }
+    }
+
+    #top-header {
+        z-index: 10000;
+
+        & > * {
+            opacity: 0.3;
+        }
+
+        #site-search.shepherd-enabled,
+        .shop-btn.shepherd-enabled {
+            opacity: 1;
+        }
+    }
+
+    a.shepherd-enabled {
+        z-index: 10002;
+    }
+
+    div.sidebar-list {
+        a.shepherd-enabled {
+            background: #fff;
+            color: #35A48C;
+            font-weight: normal;
+        }
+    }
+
+}
+
+body.shepherd-active > .shepherd-step {
+    z-index: 10001;
+    pointer-events: auto;
+
+    &.has-banner {
+        header {
+            display: none;
+        }
+
+        .shepherd-text {
+            padding: 0;
+        }
+    }
+
+    .btn-primary {
+
+        border-color: $primary !important;
+        background-color: $primary !important;
+    }
+
+    .btn-primary:focus,
+    .btn-primary:hover {
+        border-color: darken($primary, 12%) !important;
+        background-color:  darken($primary, 12%) !important;
+    }
+
+    .icon {
+        width: 200px;
+        height: 200px;
+    }
+
+    .step-with-icon {
+        margin-left: 220px;
+        max-width: 400px;
+    }
+
+    .step-with-banner {
+        padding: 1em;
+    }
+
+    .lead {
+        max-width: 400px;
+    }
+
+    @include media-breakpoint-down(sm) {
+        .pull-left {
+            display: block;
+            width: 100%;
+
+            .icon {
+                margin: 0 auto;
+            }
+        }
+
+        .step-with-icon {
+            margin-left: 0;
+        }
+    }
+}
+
+.shepherd-element.shepherd-theme-arrows .shepherd-content footer .shepherd-buttons li .shepherd-button {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.9rem;
+    line-height: 1.42857143;
+    padding: 7px 15px;
+    border-radius: 4px;
+}
+
+.shepherd-element.shepherd-theme-arrows .shepherd-content .shepherd-text p.lead {
+    font-size: 16px;
+    line-height: inherit;
+
+    @media (min-width: 768px) {
+        .lead {
+            font-size: 21px;
+        }
+    }
+}

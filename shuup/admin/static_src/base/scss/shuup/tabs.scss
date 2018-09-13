@@ -1,0 +1,53 @@
+.nav-tabs {
+    border-bottom: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: rgba($border-color, 0.5);
+
+    }
+
+    a.nav-link {
+        display: inline-block;
+        border-radius: 0;
+        border: 0;
+        border-top: 3px solid transparent;
+        padding: 1rem 0;
+        margin: 0 1rem;
+        font-weight: 700;
+        color: rgba($text-color, 0.8);
+        position: relative;
+        text-decoration: none;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: $primary;
+            z-index: 100;
+            transform: scaleX(0);
+            transition: transform 0.15s ease-in-out;
+            transform-origin: left;
+        }
+
+        &:hover,
+        &:focus,
+        &.active {
+            border-top-color: transparent;
+            color: $primary;
+            background-color: transparent;
+
+            &::after {
+                transform: scaleX(1);
+            }
+        }
+    }
+}

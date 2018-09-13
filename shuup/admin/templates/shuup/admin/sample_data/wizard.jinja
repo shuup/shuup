@@ -1,6 +1,6 @@
 <div class="form-def" data-name="{{ pane.identifier }}" id="sample-data-form">
     <div class="row">
-        <div class="panel panel-default col-sm-6 col-sm-offset-3">
+        <div class="panel panel-default col-md-6 offset-md-3">
             <h2>{{ _("Select the objects you want to install") }}</h2>
             {% for field in pane.forms[form_def.name] %}
                 {{ bs3.field(field) }}

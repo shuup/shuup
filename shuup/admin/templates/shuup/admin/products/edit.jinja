@@ -1,20 +1,19 @@
 {% extends "shuup/admin/base.jinja" %}
 {% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
-    {% if orderability_errors %}
-        <div class="container-fluid">
-            {# TODO: FIX THIS FOR MOBILE SCREEN SIZES #}
-            <p class="pull-right"
-               data-toggle="tooltip"
-               data-title="{% for error in orderability_errors %}{{ error }} {% endfor %}"
-               data-placement="bottom">
-                <i class="fa fa-info-circle text-info"></i> {% trans %}This product is currently not orderable.{% endtrans %}
-            </p>
-        </div>
-    {% endif %}
     {% call content_with_sidebar(content_id="product_form") %}
         <form method="post" id="product_form" novalidate>
+            {% if orderability_errors %}
+                {# TODO: FIX THIS FOR MOBILE SCREEN SIZES #}
+                <p class="alert alert-info"
+                data-toggle="tooltip"
+                data-title="{% for error in orderability_errors %}{{ error }} {% endfor %}"
+                data-placement="bottom">
+                    <i class="fa fa-info-circle text-info"></i> {% trans %}This product is currently not orderable.{% endtrans %}
+                </p>
+            {% endif %}
             {% csrf_token %}
             {% call content_block(_("Basic Information"), "fa-info-circle", id="basic-information-section") %}
                 {% for form_def in form.form_defs.values() %}

@@ -2,10 +2,10 @@
     <form action="" method="post">
         <div class="form-group">
             <label class="control-label" for="admin-comment">{% trans %}Comment{% endtrans %}</label>
-            <textarea class="form-control" id="admin-comment" type="text">{{ order.admin_comment }}</textarea>
+            <textarea class="form-control" id="admin-comment">{{ order.admin_comment }}</textarea>
         </div>
         <div class="row">
-            <div class="input-actions">
+            <div class="input-actions col-12">
                 <button class="btn btn-info" href="#">{% trans %}Save comment{% endtrans %}</button>
             </div>
         </div>

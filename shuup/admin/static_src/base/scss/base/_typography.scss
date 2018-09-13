@@ -1,0 +1,38 @@
+//-- Import Open Sans
+$FontPathOpenSans: "../../../node_modules/npm-font-open-sans/fonts" !default;
+
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: normal;
+    font-style: normal;
+    src: url('#{$FontPathOpenSans}/Regular/OpenSans-Regular.eot');
+    src: url('#{$FontPathOpenSans}/Regular/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
+        url('#{$FontPathOpenSans}/Regular/OpenSans-Regular.woff2') format('woff2'),
+        url('#{$FontPathOpenSans}/Regular/OpenSans-Regular.woff') format('woff'),
+        url('#{$FontPathOpenSans}/Regular/OpenSans-Regular.ttf') format('truetype'),
+        url('#{$FontPathOpenSans}/Regular/OpenSans-Regular.svg#OpenSansRegular') format('svg');
+  }
+
+@font-face {
+font-family: 'Open Sans';
+font-weight: 600;
+font-style: normal;
+src: url('#{$FontPathOpenSans}/Semibold/OpenSans-Semibold.eot');
+src: url('#{$FontPathOpenSans}/Semibold/OpenSans-Semibold.eot?#iefix') format('embedded-opentype'),
+        url('#{$FontPathOpenSans}/Semibold/OpenSans-Semibold.woff2') format('woff2'),
+        url('#{$FontPathOpenSans}/Semibold/OpenSans-Semibold.woff') format('woff'),
+        url('#{$FontPathOpenSans}/Semibold/OpenSans-Semibold.ttf') format('truetype'),
+        url('#{$FontPathOpenSans}/Semibold/OpenSans-Semibold.svg#OpenSansSemibold') format('svg');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-style: normal;
+    src: url('#{$FontPathOpenSans}/Bold/OpenSans-Bold.eot');
+    src: url('#{$FontPathOpenSans}/Bold/OpenSans-Bold.eot?#iefix') format('embedded-opentype'),
+        url('#{$FontPathOpenSans}/Bold/OpenSans-Bold.woff2') format('woff2'),
+        url('#{$FontPathOpenSans}/Bold/OpenSans-Bold.woff') format('woff'),
+        url('#{$FontPathOpenSans}/Bold/OpenSans-Bold.ttf') format('truetype'),
+        url('#{$FontPathOpenSans}/Bold/OpenSans-Bold.svg#OpenSansBold') format('svg');
+  }

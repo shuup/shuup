@@ -75,7 +75,7 @@ def test_contact_detail_has_mocked_toolbar_action_items(rf, admin_user):
 def _check_if_mock_action_item_exists(view_func, request, contact):
     response = view_func(request, pk=contact.pk)
     soup = BeautifulSoup(response.render().content)
-    for dropdown_link in soup.find_all("a", {"class": "btn-default"}):
+    for dropdown_link in soup.find_all("a", {"class": "dropdown-item"}):
         if dropdown_link.get("href", "") == "/#mocktoolbaractionitem":
             return True
     return False

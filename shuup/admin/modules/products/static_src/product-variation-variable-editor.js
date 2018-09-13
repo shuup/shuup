@@ -6,6 +6,10 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+const m = require('mithril');
+window.m = m;
+
 window.VariationVariableEditor = (function(m, _) {
     "use strict";
     var languages = null;
@@ -77,7 +81,7 @@ window.VariationVariableEditor = (function(m, _) {
     function variableSortableSetup() {
         const variableWrap = document.getElementById("product-variable-wrap");
         if (document.getElementsByClassName("variable-sort-handle").length > 0) {
-            Sortable.create(variableWrap, {
+            window.Sortable.create(variableWrap, {
               group: "variable-sort",
               handle: ".variable-sort-handle",
               onEnd: function (event) {
@@ -95,7 +99,7 @@ window.VariationVariableEditor = (function(m, _) {
         const valuesTables = document.getElementsByClassName('product-variable-values');
         var index = 0;
         [].forEach.call(valuesTables, function (el) {
-            Sortable.create(el, {
+            window.Sortable.create(el, {
                 group: "value-sort-" + index,
                 handle: ".value-sort-handle",
                 onEnd: function (event) {

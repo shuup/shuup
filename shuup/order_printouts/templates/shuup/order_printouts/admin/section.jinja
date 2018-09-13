@@ -1,16 +1,16 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
 {% set shipments = order.shipments.all() %}
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-4">
+    <div class="col-12 p-3">
         <h3 class="page-header mt-0">{% trans %}Confirmation{% endtrans %}</h3>
         {% if printouts_section.can_create_pdf %}
         <a href="{{ url('shuup_admin:printouts.confirmation_pdf', order.pk) }}"
-           class="btn btn-info btn-block" target="_blank">
+           class="btn btn-info" target="_blank">
             {% trans %}Get Order Confirmation PDF{% endtrans %}
         </a>
         {% endif %}
         <a href="{{ url('shuup_admin:printouts.confirmation_html', order.pk) }}"
-           class="btn btn-primary btn-block" target="_blank">
+           class="btn btn-primary" target="_blank">
             {% trans %}Get Order Confirmation HTML{% endtrans %}
         </a>
         {% if shipments|length %}
@@ -18,26 +18,26 @@
             {% for shipment in shipments %}
                 {% if printouts_section.can_create_pdf %}
                 <a href="{{ url('shuup_admin:printouts.delivery_pdf', shipment.pk) }}"
-                   class="btn btn-info btn-block" target="_blank">
+                   class="btn btn-info" target="_blank">
                     {% trans id=shipment.pk %}Get Delivery Slip PDF (Shipment {{ id }}){% endtrans %}
                 </a>
                 {% endif %}
                 <a href="{{ url('shuup_admin:printouts.delivery_html', shipment.pk) }}"
-                   class="btn btn-primary btn-block" target="_blank">
+                   class="btn btn-primary" target="_blank">
                     {% trans id=shipment.pk %}Get Delivery Slip HTML (Shipment {{ id }}){% endtrans %}
                 </a>
             {% endfor %}
             <p>&nbsp;</p>
         {% endif %}
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-8">
+    <div class="col-12 p-3">
         {% if printouts_section.can_create_pdf %}
             <h3 class="page-header mt-0">{% trans %}Send Email{% endtrans %}</h3>
             <form id="printouts-email-form" action="/">
                 {% csrf_token %}
                 {{ render_monolingual_fields(printouts_section.email_form) }}
                 <div class="row">
-                    <div class="input-actions">
+                    <div class="input-actions col-12">
                         {% set order_email_url = url('shuup_admin:printouts.confirmation_email', order.pk) %}
                         <button class="btn btn-primary" data-url="{{ order_email_url }}" onClick="sendPrintoutsAsEmail(event, this);">
                             <i class="fa fa-send"></i>&nbsp;
@@ -45,7 +45,6 @@
                         </button>
                         {% for shipment in shipments or [] %}
                             {% set shipment_email_url = url('shuup_admin:printouts.delivery_email', shipment.pk) %}
-                            <br>
                             <button class="btn btn-primary" data-url="{{ shipment_email_url }}" onClick="sendPrintoutsAsEmail(event, this);">
                                 <i class="fa fa-send"></i>&nbsp;
                                 {% trans id=shipment.pk %}Send Delivery Slip (Shipment {{ id }}){% endtrans %}
