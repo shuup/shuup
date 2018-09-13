@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ static("xtheme/editor.css") }}">
-    <script src="{{ static("shuup_admin/js/vendor.js") }}"></script>
     <script>var CSRF_TOKEN = "{{ csrf_token_str }}";</script>
     <script>var ShuupAdminConfig = {{ shuup_admin.get_config()|json }};</script>
     <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}"></script>
-    <script src="{{ static("xtheme/editor.js") }}"></script>
+    <script src="{{ static('xtheme/vendor.js') }}"></script>
+    <script src="{{ static('xtheme/editor.js') }}"></script>
 </head>
 <body>
 <div id="global-toolbar">
@@ -19,7 +19,7 @@
     {% include "shuup/xtheme/_editor_cell.jinja" with context %}
 {% endif %}
 {% if changed %}
-    <script>refreshPlaceholderInParent({{ layout.placeholder_name|json }});</script>
+    <script>window.refreshPlaceholderInParent({{ layout.placeholder_name|json }});</script>
 {% endif %}
 <script>
     (function(){

@@ -32,6 +32,11 @@ runBuildCommands([
     getParcelBuildCommand({
         cacheDir: "xtheme",
         outputDir: "static/xtheme/",
+        entryFile: "static_src/editor/vendor.js"
+    }),
+    getParcelBuildCommand({
+        cacheDir: "xtheme",
+        outputDir: "static/xtheme/",
         entryFile: "static_src/injection/editor-injection.js"
     }),
     getParcelBuildCommand({
