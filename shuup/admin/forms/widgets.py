@@ -268,5 +268,9 @@ class QuickAddContactGroupSelect(QuickAddRelatedObjectSelect):
     url = reverse_lazy("shuup_admin:contact_group.new")
 
 
+class QuickAddContactGroupMultiSelect(QuickAddRelatedObjectMultiSelect):
+    url = reverse_lazy("shuup_admin:contact_group.new")
+
+
 class TimeInput(DjangoTimeInput):
     input_type = "time"

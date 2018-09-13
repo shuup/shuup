@@ -14,7 +14,8 @@ from enumfields import EnumField
 
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import (
-    PersonContactChoiceWidget, QuickAddTaxGroupSelect
+    PersonContactChoiceWidget, QuickAddContactGroupMultiSelect,
+    QuickAddTaxGroupSelect
 )
 from shuup.admin.shop_provider import get_shop
 from shuup.core.fields import LanguageFormField
@@ -47,7 +48,7 @@ class ContactBaseFormMixin(object):
             queryset=ContactGroup.objects.all_except_defaults(),
             initial=(self.instance.groups.all_except_defaults() if self.instance.pk else ()),
             required=False,
-            widget=forms.SelectMultiple(),
+            widget=QuickAddContactGroupMultiSelect(attrs={"data-model": "shuup.ContactGroup"}),
             label=_("Contact Groups"),
             help_text=_(
                 "The contact groups this contact belongs to. Contact groups are defined in Contacts - Contact Groups "
