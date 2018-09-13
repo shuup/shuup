@@ -9,7 +9,7 @@ import os
 
 import pytest
 
-from shuup.testing.browser_utils import wait_until_condition
+from shuup.testing.browser_utils import wait_until_condition, wait_until_appeared
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -22,8 +22,14 @@ def test_menu(browser, admin_user, live_server, settings):
     get_default_shop()
     initialize_admin_browser_test(browser, live_server, settings)
 
-    browser.find_by_css(".menu-list li").first.click()
-    wait_until_condition(browser, lambda x: x.is_text_present("New product"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome!"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Quicklinks"))
+    browser.find_by_css(".quicklinks a").first.click()
+
+    wait_until_appeared(browser, ".item-category.item-active")
+    browser.find_by_css(".menu-list li a")[1].click()
+
+    wait_until_condition(browser, lambda x: x.is_text_present("New shop product"))
 
 
 @pytest.mark.browser
@@ -34,9 +40,12 @@ def test_menu_small_device(browser, admin_user, live_server, settings):
     browser.driver.set_window_size(480, 960)
     initialize_admin_browser_test(browser, live_server, settings)
 
-    # TODO: Revise next line! For some the logo blocks selenium with regular click.
-    browser.execute_script('$("#menu-button").click()')
+    wait_until_appeared(browser, "#menu-button")
+    browser.find_by_css("#menu-button").first.click()
     wait_until_condition(browser, lambda x: x.is_text_present("Quicklinks"))
-    browser.execute_script('document.getElementById("js-main-menu").scrollIntoView();')
-    browser.find_by_css(".menu-list li").first.click()
-    wait_until_condition(browser, lambda x: x.is_text_present("New product"))
+    browser.find_by_css(".quicklinks a").first.click()
+
+    wait_until_appeared(browser, ".item-category.item-active")
+    browser.find_by_css(".menu-list li a")[1].click()
+
+    wait_until_condition(browser, lambda x: x.is_text_present("New shop product"))
