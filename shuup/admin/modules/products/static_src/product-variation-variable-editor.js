@@ -81,7 +81,7 @@ window.VariationVariableEditor = (function(m, _) {
     function variableSortableSetup() {
         const variableWrap = document.getElementById("product-variable-wrap");
         if (document.getElementsByClassName("variable-sort-handle").length > 0) {
-            Sortable.create(variableWrap, {
+            window.Sortable.create(variableWrap, {
               group: "variable-sort",
               handle: ".variable-sort-handle",
               onEnd: function (event) {
@@ -99,7 +99,7 @@ window.VariationVariableEditor = (function(m, _) {
         const valuesTables = document.getElementsByClassName('product-variable-values');
         var index = 0;
         [].forEach.call(valuesTables, function (el) {
-            Sortable.create(el, {
+            window.Sortable.create(el, {
                 group: "value-sort-" + index,
                 handle: ".value-sort-handle",
                 onEnd: function (event) {
