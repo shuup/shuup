@@ -47,7 +47,7 @@ def test_order_detail_has_default_toolbar_action_items(rf, admin_user, has_price
 def _check_if_button_exists(view_func, request, order, url):
     response = view_func(request, pk=order.pk)
     soup = BeautifulSoup(response.render().content)
-    for dropdown_btn in soup.find_all("button", {"class": "btn-default"}):
+    for dropdown_btn in soup.find_all("button", {"class": "dropdown-item"}):
         if dropdown_btn.get("formaction", "") == url:
             return True
     return False
@@ -56,7 +56,7 @@ def _check_if_button_exists(view_func, request, order, url):
 def _check_if_link_exists(view_func, request, order, url):
     response = view_func(request, pk=order.pk)
     soup = BeautifulSoup(response.render().content)
-    for dropdown_link in soup.find_all("a", {"class": "btn-default"}):
+    for dropdown_link in soup.find_all("a", {"class": "dropdown-item"}):
         if dropdown_link.get("href", "") == url:
             return True
     return False
