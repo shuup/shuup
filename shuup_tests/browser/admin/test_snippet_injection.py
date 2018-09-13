@@ -74,6 +74,6 @@ def test_xtheme_snippet_injection(browser, admin_user, live_server, settings):
     browser.visit("%s%s" % (live_server, url))
     assert Snippet.objects.filter(shop=shop).exists()
 
-    click_element(browser, "button.btn.btn-danger.btn-inverse")
+    click_element(browser, ".shuup-toolbar button.btn.btn-danger")
     browser.get_alert().accept()
     wait_until_condition(browser, lambda x: not Snippet.objects.filter(shop=shop).exists())

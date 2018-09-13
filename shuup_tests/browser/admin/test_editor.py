@@ -38,8 +38,9 @@ def test_summernote_editor_picture(browser, admin_user, live_server, settings):
     url = reverse("shuup_admin:shop_product.new")
     browser.visit("%s%s" % (live_server, url))
 
-    wait_until_appeared(browser, "#id_base-description__en-editor-wrap button[aria-label='Picture']")
-    click_element(browser, "#id_base-description__en-editor-wrap button[aria-label='Picture']")
+    img_icon_selector = "#id_base-description__en-editor-wrap i[class='note-icon-picture']"
+    wait_until_appeared(browser, img_icon_selector)
+    click_element(browser, img_icon_selector)
     wait_until_condition(browser, lambda b: len(b.windows) == 2)
 
     # change to the media browser window
@@ -54,4 +55,6 @@ def test_summernote_editor_picture(browser, admin_user, live_server, settings):
     browser.windows.current = browser.windows[0]
 
     # make sure the image was added to the editor
-    wait_until_appeared(browser, "#id_base-description__en-editor-wrap .note-editable img[src='%s']" % filer_image.url, timeout=20)
+    wait_until_appeared(
+        browser,
+        "#id_base-description__en-editor-wrap .note-editable img[src='%s']" % filer_image.url, timeout=20)

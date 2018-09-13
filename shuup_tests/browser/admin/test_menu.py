@@ -25,13 +25,18 @@ def test_menu(browser, admin_user, live_server, settings):
     browser.find_by_css(".menu-list li").first.click()
     wait_until_condition(browser, lambda x: x.is_text_present("New product"))
 
+
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_menu_small_device(browser, admin_user, live_server, settings):
     get_default_shop()
-    initialize_admin_browser_test(browser, live_server, settings)
 
     browser.driver.set_window_size(480, 960)
-    browser.find_by_css("#menu-button").first.click()
+    initialize_admin_browser_test(browser, live_server, settings)
+
+    # TODO: Revise next line! For some the logo blocks selenium with regular click.
+    browser.execute_script('$("#menu-button").click()')
+    wait_until_condition(browser, lambda x: x.is_text_present("Quicklinks"))
+    browser.execute_script('document.getElementById("js-main-menu").scrollIntoView();')
     browser.find_by_css(".menu-list li").first.click()
     wait_until_condition(browser, lambda x: x.is_text_present("New product"))

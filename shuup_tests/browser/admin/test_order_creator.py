@@ -63,6 +63,8 @@ def test_order_creator_view_2(browser, admin_user, live_server, settings):
     get_initial_order_status()
     supplier = get_default_supplier()
     person = create_random_person()
+    person.registration_shop = shop
+    person.save()
     person.shops.add(shop)
 
     create_product("test-sku0", shop=shop, default_price=10, supplier=supplier)
@@ -92,13 +94,7 @@ def _visit_order_creator_view(browser, live_server):
     assert browser.is_element_present_by_css("h1.main-header")
 
 def _test_language_change(browser):
-    assert browser.is_element_present_by_css("h2[class='block-title']")
-    # By default the initialization the admin should be in English
-    found_customer_details_en = False
-    for block_title in browser.find_by_css("h2[class='block-title']"):
-        if "Customer Details" in block_title.text:
-            found_customer_details_en = True
-    assert found_customer_details_en
+    wait_until_condition(browser, lambda x: x.is_text_present("Customer Details"))
 
     # Make sure that the translations is handled correctly and change to Finnish
     browser.find_by_id("dropdownMenu").click()
@@ -114,8 +110,8 @@ def _test_language_change(browser):
 def _test_customer_using_search(browser, person):
     click_element(browser, "#customer-search .select2")
     wait_until_appeared(browser, "input.select2-search__field")
-    browser.find_by_css("input.select2-search__field").first.value = person.name
-    wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
+    browser.find_by_css("input.select2-search__field").first.value = person.first_name
+    wait_until_appeared(browser, ".select2-results__option[aria-selected='false']")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
     wait_until_condition(browser, lambda x: len(x.find_by_css(".view-details-link")) == 1)
 
@@ -156,7 +152,7 @@ def _test_quick_add_lines(browser):
 
     # add line automatically by searching and clicking on match
     browser.find_by_css("input.select2-search__field").first.value = "test-sku"
-    wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
+    wait_until_appeared(browser, ".select2-results__option[aria-selected='false']")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
     wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="quantity"]').first.value == '3')
     assert line_items.first.find_by_css('input[name="quantity"]').first.value == '3', "three pieces added"
@@ -166,7 +162,7 @@ def _test_quick_add_lines(browser):
     click_element(browser, "#quick-add .select2")
     wait_until_appeared(browser, "input.select2-search__field")
     browser.find_by_css("input.select2-search__field").first.value = "test-sku0"
-    wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
+    wait_until_appeared(browser, ".select2-results__option[aria-selected='false']")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
     wait_until_condition(browser, lambda x: len(x.find_by_css('#lines .list-group-item')) == 2)
     line_items = browser.find_by_id("lines").find_by_css('.list-group-item')
@@ -251,7 +247,11 @@ def _test_methods(browser, shipping_method, payment_method):
     # check defaults
     assert browser.find_by_name("shipping").value == "0"
     assert browser.find_by_name("payment").value == "0"
+
+    move_to_element(browser, "select[name='shipping']")
     browser.select("shipping", shipping_method.pk)
+
+    move_to_element(browser, "select[name='payment']")
     browser.select("payment", payment_method.pk)
 
 
