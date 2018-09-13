@@ -65,11 +65,11 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
 
     url = reverse("shuup_admin:notify.script.list")
     browser.visit("%s%s" % (live_server, url))
-    wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(".shuup-toolbar a.btn.btn-default"))
     post_initialize()
 
     # find the button to load from template
-    browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
+    browser.find_by_css(".shuup-toolbar a.btn.btn-default").first.click()
 
     identifier = script_template_cls.identifier
     form_id = "form-" + identifier
@@ -118,11 +118,11 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
 
     url = reverse("shuup_admin:notify.script.list")
     browser.visit("%s%s" % (live_server, url))
-    wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(".shuup-toolbar a.btn.btn-default"))
     post_initialize()
 
     # find the button to load from template
-    browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
+    browser.find_by_css(".shuup-toolbar a.btn.btn-default").first.click()
 
     identifier = script_template_cls.identifier
     form_id = "form-" + identifier
@@ -148,6 +148,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     """)
 
     # fill form
+    move_to_element(browser, "#id_base-send_to")
     browser.select('base-send_to', 'other')
     browser.find_by_id("id_base-recipient").fill("other@shuup.com")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
@@ -173,7 +174,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     wait_until_condition(browser, lambda b: b.is_text_present("Edit Script Information"))
 
     # find the button to edit the script content through template editor
-    browser.find_by_css("div.btn-toolbar a.btn.btn-info").last.click()
+    browser.find_by_css(".shuup-toolbar a.btn.btn-primary").last.click()
     edit_url = reverse("shuup_admin:notify.script-template-edit", kwargs={"pk": script.pk})
     wait_until_condition(browser, lambda b: b.url.endswith(edit_url))
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
@@ -212,11 +213,11 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
 
     url = reverse("shuup_admin:notify.script.list")
     browser.visit("%s%s" % (live_server, url))
-    wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(".shuup-toolbar a.btn.btn-default"))
     post_initialize()
 
     # find the button to load from template
-    browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
+    browser.find_by_css(".shuup-toolbar a.btn.btn-default").first.click()
 
     identifier = StockLimitEmailScriptTemplate.identifier
     form_id = "form-" + identifier
@@ -255,7 +256,7 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
     wait_until_condition(browser, lambda b: b.is_text_present("Edit Script Information"))
 
     # find the button to edit the script content through template editor
-    browser.find_by_css("div.btn-toolbar a.btn.btn-info").last.click()
+    browser.find_by_css(".shuup-toolbar a.btn.btn-primary").last.click()
     edit_url = reverse("shuup_admin:notify.script-template-edit", kwargs={"pk": script.pk})
     wait_until_condition(browser, lambda b: b.url.endswith(edit_url))
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
@@ -289,11 +290,11 @@ def test_dummy_script_template(browser, admin_user, live_server, settings):
     with override_provides("notify_script_template", ["shuup.testing.notify_script_templates:DummyScriptTemplate"]):
         url = reverse("shuup_admin:notify.script.list")
         browser.visit("%s%s" % (live_server, url))
-        wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+        wait_until_condition(browser, lambda x: x.is_element_present_by_css(".shuup-toolbar a.btn.btn-default"))
         post_initialize()
 
         # find the button to load from template
-        browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
+        browser.find_by_css(".shuup-toolbar a.btn.btn-default").first.click()
 
         identifier = DummyScriptTemplate.identifier
         form_id = "form-" + identifier
@@ -319,5 +320,5 @@ def test_dummy_script_template(browser, admin_user, live_server, settings):
         wait_until_condition(browser, lambda b: b.is_text_present("Edit Script Information"))
 
         # should exist only a single button to edit the script content
-        assert len(browser.find_by_css("div.btn-toolbar a.btn.btn-info")) == 1
-        assert "Edit Script Contents" in browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.text
+        assert len(browser.find_by_css(".shuup-toolbar a.btn.btn-primary")) == 1
+        assert "Edit Script Contents" in browser.find_by_css(".shuup-toolbar a.btn.btn-primary").first.text

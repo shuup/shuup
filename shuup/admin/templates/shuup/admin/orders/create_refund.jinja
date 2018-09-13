@@ -4,7 +4,12 @@
 {% macro render_form(form) %}
     <div class="form-group">
       <label class="control-label" for="">{{ form.line_number.label }}</label>
-      <select class="form-control" id="id_{{ form.line_number.html_name }}" name="{{ form.line_number.html_name }}">
+      <select
+          class="form-control"
+          id="id_{{ form.line_number.html_name }}"
+          name="{{ form.line_number.html_name }}"
+          onchange="window.lineTypeChanged(this)"
+      >
       {% for value, display in line_number_choices %}
           <option value="{{ value }}"{% if loop.first %} selected="selected"{% endif %}>{{ display }}</option>
       {% endfor %}
@@ -49,78 +54,84 @@
         </div>
     </div>
 {% endblock %}
+
 {% block extra_js %}
 <script>
     window.LineData = {{ json_line_data|json }};
     (function(){
-        function getTotalFormsNumber(){
+        window.getTotalFormsNumber = function() {
             return parseInt($("#id_form-TOTAL_FORMS").val());
-        }
+        };
 
-        function incrementTotalForms(){
+        window.incrementTotalForms = function(){
             totalField = $("#id_form-TOTAL_FORMS");
             totalField.val(parseInt(totalField.val()) + 1);
-        }
+        };
 
-        function addRefundForm(){
+        window.setFormGroupVisibility = function($input, show) {
+            if (show) {
+                $input.closest('.form-group').removeClass('hidden');
+            } else {
+                $input.closest('.form-group').addClass('hidden');
+            }
+        };
+
+        window.lineTypeChanged = function(el) {
+            var $refund = $(el).closest('.refund-line');
+            var lineId = $(el).val();
+            if(lineId === "amount") {
+                window.setFormGroupVisibility(
+                    $refund.find("input[id$='quantity']"), false);
+                window.setFormGroupVisibility(
+                    $refund.find("input[id$='amount']"), true);
+                window.setFormGroupVisibility(
+                    $refund.find("input[id$='text']"), true);
+                window.setFormGroupVisibility(
+                    $refund.find("input[id$='restock_products']"), false);
+            } else {
+                var line = LineData[lineId];
+                window.setFormGroupVisibility(
+                    $refund.find("input[id$='quantity']"), line && line["quantity"] != 0);
+                window.setFormGroupVisibility(
+                    $refund.find("input[id$='amount']"), line && line["amount"] != 0);
+                window.setFormGroupVisibility(
+                    $refund.find("input[id$='text']"), false);
+                window.setFormGroupVisibility(
+                    $refund.find("input[id$='restock_products']"), line && line["type"] === "product");
+                $refund.find("input[id$='quantity']").val(line? line.quantity : 0);
+                $refund.find("input[id$='amount']").val(line? line.amount : 0);
+            }
+        };
+
+        window.setLineTypeChanged = function() {
+            $(this).change(window.lineTypeChanged);
+        };
+
+        window.activateLineTypeListeners = function() {
+            $('div.refund-line:not("#empty-form") select').each(function(e) {
+                $(e.target).change(window.lineTypeChanged);
+            });
+        };
+
+        window.addRefundForm = function() {
             var $lastForm = $(".refund-line").last();
             var $blankForm = $("#empty-form");
             $blankForm.find("span.select2.select2-container").remove();
             $blankForm.find("select").removeClass("select2-hidden-accessible");
             var $newForm = $blankForm.clone();
-            var html = $newForm.get(0).outerHTML.replace(/__prefix__/g, getTotalFormsNumber());
-            $newForm = $(html).removeClass('hidden');
+            var html = $newForm.get(0).outerHTML.replace(/__prefix__/g, window.getTotalFormsNumber());
+            $newForm = $(html).removeClass('hidden').removeAttr("id");
             $newForm.insertAfter($lastForm);
             $("[data-toggle='popover']").popover();
-        }
 
-        $("#add-refund").on("click", function(event){
-            event.preventDefault();
-            addRefundForm();
-            incrementTotalForms();
+            window.incrementTotalForms();
             window.activateSelects();
-            activateLineTypeListeners();
+        };
+
+        $("#add-refund").on("click", function(event) {
+            event.preventDefault();
+            window.addRefundForm();
         });
-
-        function setFormGroupVisibility($input, show){
-            if(show) {
-                $input.closest('.form-group').removeClass('hidden');
-            }
-            else {
-                $input.closest('.form-group').addClass('hidden');
-            }
-        }
-
-        function activateLineTypeListeners(){
-            $(".refund-line").find("select").on("change", function(){
-                var $refund = $(this).closest('.refund-line');
-                var lineId = $(this).val();
-                if(lineId === "amount") {
-                    setFormGroupVisibility(
-                        $refund.find("input[id$='quantity']"), false);
-                    setFormGroupVisibility(
-                        $refund.find("input[id$='amount']"), true);
-                    setFormGroupVisibility(
-                        $refund.find("input[id$='text']"), true);
-                    setFormGroupVisibility(
-                        $refund.find("input[id$='restock_products']"), false);
-                } else {
-                    var line = LineData[lineId];
-                    setFormGroupVisibility(
-                        $refund.find("input[id$='quantity']"), line && line["quantity"] != 0);
-                    setFormGroupVisibility(
-                        $refund.find("input[id$='amount']"), line && line["amount"] != 0);
-                    setFormGroupVisibility(
-                        $refund.find("input[id$='text']"), false);
-                    setFormGroupVisibility(
-                        $refund.find("input[id$='restock_products']"), line && line["type"] === "product");
-                    $refund.find("input[id$='quantity']").val(line? line.quantity : 0);
-                    $refund.find("input[id$='amount']").val(line? line.amount : 0);
-                }
-            });
-        }
-
-        activateLineTypeListeners();
     })()
 </script>
 {% endblock %}

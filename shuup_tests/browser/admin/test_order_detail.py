@@ -45,14 +45,16 @@ def change_addresses(live_server, browser, order):
     edit_url = reverse("shuup_admin:order.edit-addresses", kwargs={"pk": order.pk})
     browser.visit("%s%s" % (live_server, edit_url))
     order_edited_log_entries = order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count()
-    wait_until_condition(browser, condition=lambda x: x.is_text_present("Edit Addresses"))
+
+    edit_address_title = "Save -- Order %s" % order.pk
+    wait_until_condition(browser, condition=lambda x: x.is_text_present(edit_address_title))
     # Do nothing just hit the save
     click_element(browser, "button[form='edit-addresses']")
     assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries
 
     # Update billing address email
     browser.visit("%s%s" % (live_server, edit_url))
-    wait_until_condition(browser, condition=lambda x: x.is_text_present("Edit Addresses"))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present(edit_address_title))
     new_email = "somerandomemail@example.com"
     browser.fill("billing_address-email", new_email)
     assert new_email != order.billing_address.email
@@ -66,7 +68,7 @@ def change_addresses(live_server, browser, order):
 
     # Update shipping address postal code
     browser.visit("%s%s" % (live_server, edit_url))
-    wait_until_condition(browser, condition=lambda x: x.is_text_present("Edit Addresses"))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present(edit_address_title))
     new_postal_code = "20540"
     browser.fill("shipping_address-postal_code", new_postal_code)
     assert new_postal_code != order.shipping_address.postal_code
@@ -80,7 +82,7 @@ def change_addresses(live_server, browser, order):
 
     # Now update both same time
     browser.visit("%s%s" % (live_server, edit_url))
-    wait_until_condition(browser, condition=lambda x: x.is_text_present("Edit Addresses"))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present(edit_address_title))
     click_element(browser, "#billing-to-shipping")
     new_name = "%s (edited)" % order.billing_address.name
     browser.fill("billing_address-name", new_name)
