@@ -10,9 +10,11 @@ import os
 
 import pytest
 from django.core.urlresolvers import reverse
+from selenium.webdriver.common.keys import Keys
 
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition
+    click_element, move_to_element, wait_until_appeared,
+    wait_until_condition
 )
 from shuup.testing.factories import (
     create_order_with_product, get_default_product, get_default_shop,
@@ -84,15 +86,24 @@ def _test_refund_view(browser, live_server, order):
     assert len(browser.find_by_css("#id_form-0-line_number option")) == 12 # blank + arbitrary amount + num lines
     click_element(browser, "#select2-id_form-0-line_number-container")
     wait_until_appeared(browser, "input.select2-search__field")
+    wait_until_appeared(browser, ".select2-results__option[aria-selected='false']")
     browser.execute_script('$($(".select2-results__option")[1]).trigger({type: "mouseup"})') # select arbitrary amount
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_form-0-text")))
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_form-0-amount")))
     browser.find_by_css("#id_form-0-text").first.value = "test"
     browser.find_by_css("#id_form-0-amount").first.value = "900"
+    move_to_element(browser, "#add-refund")
     click_element(browser, "#add-refund")
+
+    # New line starts here...
+    move_to_element(browser, "#add-refund")
     click_element(browser, "#select2-id_form-1-line_number-container")
     wait_until_appeared(browser, "input.select2-search__field")
-    browser.execute_script('$($(".select2-results__option")[2]).trigger({type: "mouseup"})') # select first line
+
+    elem = browser.find_by_css("input.select2-search__field").first
+    elem._element.send_keys("line 1")
+    elem._element.send_keys(Keys.RETURN)
+
     assert decimal.Decimal(browser.find_by_css("#id_form-1-amount").first.value) == decimal.Decimal("100.00")
     assert int(decimal.Decimal(browser.find_by_css("#id_form-1-quantity").first.value)) == 10
     click_element(browser, "button[form='create_refund']")
