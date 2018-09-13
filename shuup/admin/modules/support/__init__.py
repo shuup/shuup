@@ -42,11 +42,11 @@ class ShuupSupportModule(AdminModule):
     def _get_support_block(self, request):
         support_block = DashboardContentBlock.by_rendering_template(
             "support", request, "shuup/admin/support/_support_dashboard_block.jinja", {})
-        support_block.size = "small"
+        support_block.size = "medium"
         return [support_block]
 
     def get_dashboard_blocks(self, request):
         blocks = []
-        blocks.extend(self._get_article_block(request))
+        # blocks.extend(self._get_article_block(request))
         blocks.extend(self._get_support_block(request))
         return blocks
