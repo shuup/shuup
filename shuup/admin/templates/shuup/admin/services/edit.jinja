@@ -38,7 +38,7 @@
                     <i class="fa fa-plus-circle"></i>
                     {% trans %}Add component{% endtrans %}</a>
                 </div>
-                <div class="hide" id="insert-placeholder"></div>
+                <div class="d-none" id="insert-placeholder"></div>
                 {% for form_def in form_defs %}
                     {% if form_def != "base" %}
                         {% set form_prefix = form_def %}

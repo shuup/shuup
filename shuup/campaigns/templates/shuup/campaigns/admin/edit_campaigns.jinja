@@ -39,7 +39,7 @@
                         {% trans %}Add rule{% endtrans %}
                     </a>
                 </div>
-                <div class="hide" id="insert-rule-placeholder"></div>
+                <div class="d-none" id="insert-rule-placeholder"></div>
                 {% for form_def in form_defs %}
                     {% if "conditions_" in form_def or "filters_" in form_def %}
                         {% set form_prefix = form_def %}
@@ -67,7 +67,7 @@
                     <i class="fa fa-plus-circle"></i>
                     {% trans %}Add effect{% endtrans %}</a>
                 </div>
-                <div class="hide" id="insert-effect-placeholder"></div>
+                <div class="d-none" id="insert-effect-placeholder"></div>
                 {% for form_def in form_defs %}
                     {% if "effects_" in form_def %}
                         {% set form_prefix = form_def %}

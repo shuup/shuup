@@ -22,7 +22,7 @@
 {% endmacro %}
 
 {{ formset.management_form }}
-<div class="hide" id="{{ form_prefix }}-placeholder">
+<div class="d-none" id="{{ form_prefix }}-placeholder">
     {{ render_form(formset.empty_form, form_prefix, "__prefix__") }}
 </div>
 {% for f in formset %}
