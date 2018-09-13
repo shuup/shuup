@@ -10,7 +10,7 @@ import pytest
 
 from shuup.core.models import Product
 from shuup.core.utils.product_caching_object import ProductCachingObject
-from shuup.testing.factories import create_product, get_default_shop_product
+from shuup.testing.factories import create_product, get_default_shop_product, get_default_category
 
 
 def test_product_caching_object_nulling():
@@ -69,3 +69,14 @@ def test_product_caching_object():
     pco.product_id = product.pk
     assert pco.product == product
     assert pco.product_id == product.pk
+
+
+@pytest.mark.django_db
+def test_shopproduct_category_manytomany():
+    shop_product = get_default_shop_product()
+    category = get_default_category()
+    shop_product.categories = [category]
+    category.shop_products = [shop_product]
+    shop_product.save()
+    assert shop_product.categories.first() == category
+    assert category.shop_products.first() == shop_product
