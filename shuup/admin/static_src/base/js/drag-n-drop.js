@@ -9,10 +9,8 @@
 window.targetElement = null;
 window.sourceElement = null;
 
-const Sortable = require('sortablejs');
-
 function updateOrdering(e) {
-    var items = ""
+    var items = "";
     window.targetElement.find("input[type=checkbox]").each(function(idx, elem) {
        items += $(elem).attr("name") + "|";
     });
@@ -52,7 +50,7 @@ window.activateSortable = function(targetElement, sourceElement) {
     window.sourceElement = $source;
 
     var el = document.getElementById(targetElement);
-    var sortable = Sortable.create(el, {
+    var sortable = window.Sortable.create(el, {
         handle: ".sorting-handle",
         onEnd: function (/**Event*/evt) {
             updateOrdering();
