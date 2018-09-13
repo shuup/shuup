@@ -26,6 +26,8 @@ window.m = m;
 import select2 from 'select2';
 select2($);
 
+window.Sortable = require('sortablejs');
+
 require('bootstrap');
 require('chart.js');
 require('imagelightbox');
@@ -41,5 +43,3 @@ require('popper.js');
 require('summernote/dist/summernote-bs4.js');
 require('tether');
 require('jquery-datetimepicker');
-
-
