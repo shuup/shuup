@@ -255,8 +255,8 @@ def _edit_layout(browser, placeholder_name, layout_selector, text_content):
 
         # Well the second click here makes it so that the next
         # timeout exception doesn't happen (often). For some reason
-        # the button wasn't clickable when present. This is also
-        # weird since outside the brwoser tests there is no reason
+        # the button wasn't able to click when present. This is also
+        # weird since outside the browser tests there is no reason
         # to expect that 'add row' is slower than other requests.
         click_element(iframe, "button.layout-add-row-btn")
 
