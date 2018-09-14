@@ -1,23 +1,30 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+Shuup 1.6.15
+------------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-09-14 8:30am -0800.
+
+Admin
+~~~~~
+
+- Enable Contact Group Quick add for Contact edit page
 
 Bug fixes
 ~~~~~~~~~
 
+- Fix ShopProduct & Category ManyToMany relation
 - Fix order refund to not adjust stocks when supplier doesn't manage stocks
-- Fix product importer to relate the manufaturer to the current shop
+- Fix product importer to relate the manufacturer to the current shop
+- Fix Summernote editing through code view without toggling back to normal view
 
 Xtheme
 ~~~~~~
 
+- Add Extra CSS/Style class to cells. With snippet tool you can customize
+  your content.
+- Ask merchant to save plugin when publishing with changes
 - Add option to limit category plugin for orderable and discounted
   products only.
 
