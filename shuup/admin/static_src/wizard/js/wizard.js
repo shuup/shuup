@@ -75,8 +75,8 @@
 
         function submit() {
             let $form = $activeWizardPane.find("form");
-            clearErrors($form);
-            return $.ajax({method: "POST", traditional: true, data: serializeForm($form)});
+            window.clearErrors($form);
+            return $.ajax({method: "POST", traditional: true, data: window.serializeForm($form)});
         }
 
         var pubFuncs = {next, previous, submit};

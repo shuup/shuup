@@ -1,7 +1,7 @@
+{% from "shuup/admin/macros/general.jinja" import content_block_subtitle %}
 <div class="row">
-    <div class="col-md-12">
-        <h3 class="page-header"><i class="fa fa-file-text"></i> {% trans %}Order Contents{% endtrans %}</h4>
-        <div class="hidden-xs">
+    <div class="col-lg-12">
+        <div class="table-responsive d-none d-xl-block">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -40,39 +40,39 @@
                 </tbody>
             </table>
         </div>
-        <div class="visible-xs mobile-list-group">
+        <div class="d-sm-block d-xl-none mobile-list-group">
             <ul class="list-group">
                 {% for line in order.lines.order_by("ordering") %}
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-sm-6">
                                 <strong>{{ line.sku }}</strong>
                             </div>
-                            <div class="col-xs-6 text-right">
+                            <div class="col-sm-6 text-right">
                                 {{ line.text }}
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-sm-6">
                                 {{ line.quantity|number }} &times; {{ line.taxless_base_unit_price|money }} {% if line.taxless_discount_amount %}<span class="text-muted">{% trans %}Discount{% endtrans %}{{ line.taxless_discount_amount|money }}</span>{% endif %}
                             </div>
-                            <div class="col-xs-6 text-right">
+                            <div class="col-sm-6 text-right">
                                 <strong>{% trans %}Total{% endtrans %}: {{ line.taxful_price|money }}</strong>
                             </div>
-                            <div class="col-xs-12 text-right text-muted">
+                            <div class="col-sm-12 text-right text-muted">
                                 {{ line.tax_rate|percent }} {% trans %}Tax{% endtrans %} ({{ line.taxless_price|money }} {% trans %}Taxless{% endtrans %})
                             </div>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
-            <div class="clearfix">
-                <div class="col-xs-6"><strong>{% trans %}Taxless Total{% endtrans %}</strong></div>
-                <div class="col-xs-6 text-right"><strong>{{ order.taxless_total_price|money }}</strong></div>
+            <div class="row">
+                <div class="col-sm-6 p-3"><strong>{% trans %}Taxless Total{% endtrans %}</strong></div>
+                <div class="col-sm-6 text-right p-3"><strong>{{ order.taxless_total_price|money }}</strong></div>
             </div>
-            <div class="clearfix">
-                <div class="col-xs-6"><strong>{% trans %}Total incl. Tax{% endtrans %}</strong></div>
-                <div class="col-xs-6 text-right"><strong>{{ order.taxful_total_price|money }}</strong></div>
+            <div class="row">
+                <div class="col-sm-6 p-3"><strong>{% trans %}Total incl. Tax{% endtrans %}</strong></div>
+                <div class="col-sm-6 text-right p-3"><strong>{{ order.taxful_total_price|money }}</strong></div>
             </div>
         </div>
     </div>

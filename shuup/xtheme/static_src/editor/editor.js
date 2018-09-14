@@ -6,13 +6,9 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import "../../../admin/static_src/base/js/browse-widget.js"
 import domready from "../lib/domready";
 import { mutate } from "../lib/qs";
 import el from "../lib/el";
-import $ from "../lib/miniq";
-import "../../node_modules/summernote/src/js/summernote.js";
-
 
 function post(args) {
     if (window.CSRF_TOKEN) {

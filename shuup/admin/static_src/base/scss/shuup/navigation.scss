@@ -1,0 +1,225 @@
+#top-header {
+    background: $nav-bg;
+    height: $top-header-height;
+    width: calc(100% - #{$main-menu-width});
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid $border-color;
+    left: $main-menu-width;
+    z-index: 1000;
+
+    @include media-breakpoint-down(md) {
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    @include media-breakpoint-down(sm) {
+        background-color: $white;
+    }
+
+    span.select2 {
+        flex: 0.25;
+        margin-top: 10px;
+    }
+
+    .nav-btn {
+        color: $secondary;
+        display: inline-block;
+        text-align: center;
+        transition: background 0.2s, color 0.2s;
+        padding: 0.7rem;
+
+        i {
+            font-size: 18px;
+        }
+
+        &:hover, &:active, &:focus {
+            color: $primary;
+        }
+    }
+
+    .dropdown {
+        display: inline-block;
+
+        &.open {
+            .dropdown-toggle {
+                background: $nav-bg-hover;
+                color: $primary;
+                &:hover, &:active, &:focus {
+                    background: $nav-bg-hover;
+                }
+            }
+        }
+
+        .dropdown-toggle {
+            padding: 0.5rem 0.8rem;
+            margin-right: 30px;
+            cursor: pointer;
+
+            i {
+                font-size: 18px;
+                line-height: 60px;
+            }
+        }
+
+        .dropdown-menu {
+            .dropdown-list {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                a {
+                    display: block;
+                    margin: 0;
+                    padding: 10px;
+                    color: $text-color;
+                    &:hover {
+                        color: $primary;
+                        background: $gray-bg;
+                    }
+                    &.active {
+                        color: $active-text-color;
+                        background: $primary;
+                    }
+                }
+            }
+
+            .username {
+                padding: 10px;
+                color: $text-color;
+
+                .icon {
+                    border-radius: 50%;
+                    width: 30px;
+                    height: 30px;
+                    display: inline-block;
+                    background: $gray-bg;
+                    margin-right: 10px;
+                    border: 1px solid $border-color;
+
+                    i {
+                        width: 28px;
+                        height: 28px;
+                        text-align: center;
+                        vertical-align: middle;
+                        color: #999;
+                        line-height: 28px;
+                    }
+                }
+
+                .user {
+                    font-weight: normal;
+                }
+            }
+
+            .actions {
+                padding: 10px;
+            }
+        }
+    }
+
+    .nav-menu-button {
+        padding: 0;
+        margin: 0;
+        display: block;
+        background: none;
+        border: 0;
+        outline: 0 !important;
+        transition: background 0.2s, box-shadow 0.2s;
+        position: relative;
+
+        &:hover {
+            background: $gray-bg;
+
+            .toggler {
+                @include transition(all 0.5s);
+                span, span:before, span:after {
+                    background: $primary;
+                }
+
+                span:before {
+                    background: $primary !important;
+                }
+                span:after {
+                    background: $primary !important;
+                }
+            }
+            &:before {
+                height: 100%;
+            }
+        }
+
+        body.menu-open & {
+            background: $nav-bg-hover;
+        }
+
+        .toggler {
+            display: block;
+            float: left;
+            position: relative;
+            height: 60px;
+            width: 60px;
+            border-right: 1px solid $border-color;
+
+            span, span:before, span:after {
+                background: $text-color;
+                border-radius: 1px;
+                width: 22px;
+                height: 2px;
+                display: block;
+                border-radius: 4px;
+                content: "";
+                cursor: pointer;
+                @include transition(all 0.2s);
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-top: -2px;
+                margin-left: -11px;
+            }
+
+            span:before {
+                top: -7px;
+                margin-top: 0;
+            }
+
+            span:after {
+                top: 7px;
+                margin-top: 0;
+            }
+        }
+
+        body.menu-open & .toggler span {
+            background-color: transparent;
+
+            &:before, &:after {
+                top: 0;
+            }
+
+            &:before {
+                background: $primary;
+                @include rotate(-45deg);
+            }
+
+            &:after {
+                background: $primary;
+                @include rotate(45deg);
+            }
+        }
+    }
+
+    .nav-text {
+        line-height: 60px;
+        color: white;
+    }
+}
+
+.site-search-nav {
+    box-shadow: none;
+    transition: box-shadow 0.2s ease-in-out;
+
+    &.site-scrolling {
+        box-shadow: 0 8px 20px rgba($secondary, 0.12);
+    }
+}
+

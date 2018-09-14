@@ -2,7 +2,7 @@
     <div class="auth-block {{ extra_classes }}">
         <div class="auth-block-content">
             <div class="auth-block-logo">
-                <img src="{{ static("shuup_admin/img/logo_with_text.svg") }}" alt="Shuup">
+                <img src="{{ static("shuup_admin/img/logo_icon.svg") }}" alt="Shuup">
             </div>
             <div class="auth-block-body">{{ caller() }}</div>
         </div>
@@ -10,10 +10,10 @@
 {% endmacro %}
 
 {% macro content_with_sidebar(content_id="", extra_classes="") %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="{{ content_id }}"></div>
-            <div class="col-md-9 {{ extra_classes }}">
+            <div class="col-md-3 section-navigation d-none d-lg-block" data-navigatee="{{ content_id }}"></div>
+            <div class="col-md-12 col-lg-9 {{ extra_classes }}">
                 {{ caller() }}
             </div>
         </div>
@@ -24,13 +24,13 @@
     <div id="{{ id }}" class="content-block {% if collapsed %}collapsed{% endif %}">
         <div class="title">
             {% if heading %}
-                <h2 class="block-title">{% if icon %} <i class="fa {{ icon }}"></i> {% endif %}{{ heading }}</h2>
+                <h2 class="block-title d-flex align-items-center">{% if icon %} <i class="fa {{ icon }}"></i> {% endif %}{{ heading }}</h2>
             {% endif %}
-            <a href="#" class="toggle-contents">
+            <a href="#" class="toggle-contents" data-toggle="collapse" data-target="">
                 <i class="fa fa-chevron-right"></i>
             </a>
         </div>
-        <div class="content-wrap collapse {{ extra_classes }}">
+        <div class="content-wrap collapse {{ extra_classes }}" >
             <div class="content">
                 {{ caller() }}
             </div>
@@ -38,23 +38,35 @@
     </div>
 {% endmacro %}
 
+{% macro content_block_subtitle(heading, title, icon, full_width=False, top_line=True, bottom_line=True) %}
+    <div class="title subtitle {% if bottom_line == false %}bottom-line{% endif %}{% if top_line %}top-line{% endif %}{% if full_width %}w-100{% endif %}">
+        <{{heading}} class="block-subtitle d-flex align-items-center">
+            {% if icon %}
+                <i class="fa {{ icon }}"></i>
+            {% endif %}
+            {{ title }}
+        </{{heading}}>
+    </div>
+{% endmacro %}
+
 {% macro text_between_fields() %}
     <div class="row">
-        <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+        <div class="text-between-fields col-12 p-4">
             {{ caller() }}
-            <br>
         </div>
     </div>
 {% endmacro %}
 
 {% macro info_row(header, value, url=None, class="") %}
     {% if value is defined and value is not none and value != "" %}
-        <dt>{{ header }}</dt>
-        <dd{% if class %} class="{{ class }}"{% endif %}>
-            {%- if url %}<a href="{{ url }}">{% endif -%}
-            {{ value }}
-            {%- if url %}</a>{% endif -%}
-        </dd>
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ header }}</h5>
+            <span {% if class %} class="{{ class }}"{% endif %}>
+                {%- if url %}<a href="{{ url }}">{% endif -%}
+                {{ value }}
+                {%- if url %}</a>{% endif -%}
+            </span>
+        </div>
         {% if caller %}
             <dd>{{ caller() }}</dd>
         {% endif %}
@@ -82,7 +94,7 @@
 {% endmacro %}
 
 {% macro single_section_form(form_id, form, section_title="") %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-3 section-navigation" data-navigatee="{{ form_id }}"></div>
             <div class="col-md-9">

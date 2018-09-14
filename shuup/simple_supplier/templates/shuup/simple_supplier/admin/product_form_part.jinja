@@ -5,13 +5,15 @@
     {% if suppliers %}
         {% if product_qty > 1 %}<h2><a href="{{ product_url }}" target="_blank">{{ product.name }}</a></h2>{% endif %}
         {% for supplier in suppliers %}
-            <h3>{{ supplier.name }}</h3>
-                <div class="col-md-6">
-                    {{ ss_form.get_stock_information(supplier, product)|safe }}
-                </div>
-                <div class="col-md-6">
-                    {{ ss_form.get_stock_adjustment_form(supplier, product)|safe }}
-                </div>
+            <div class="col-12 pl-3 pt-2">
+                <h3>{{ supplier.name }}</h3>
+            </div>
+            <div class="col-3 p-3">
+                {{ ss_form.get_stock_information(supplier, product)|safe }}
+            </div>
+            <div class="col-9">
+                {{ ss_form.get_stock_adjustment_form(supplier, product)|safe }}
+            </div>
         {% endfor %}
     {% else %}
         <p>
@@ -30,10 +32,10 @@
     {% for product in form.products %}
         {% set product_url = shuup_admin.model_url(product) %}
         <div class="row">
-            <div class="col-sm-12">
-                {% if product.is_stocked() %}
-                    {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
-                {% else %}
+            {% if product.is_stocked() %}
+                {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
+            {% else %}
+                <div class="col-12">
                     <p>
                         {% trans product_name=product.name, product_url=product_url -%}
                             Product <a href="{{ product_url }}" target="_blank">{{ product_name }}</a> is not stocked.
@@ -42,8 +44,8 @@
                             Please set product stock behavior at Additional Details section.
                         {%- endtrans %}
                     </p>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
         </div>
     {% endfor %}
 {% endmacro %}
@@ -53,7 +55,7 @@
         {{ render_products(ss_form) }}
     {% else %}
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-12">
                 <p class="section-description">
                     {% trans module_name=ss_form.module_name -%}
                         No suppliers with {{ module_name }} available.

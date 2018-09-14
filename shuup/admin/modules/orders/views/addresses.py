@@ -71,13 +71,13 @@ class OrderAddressEditView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(OrderAddressEditView, self).get_context_data(**kwargs)
-        context["title"] = _("Edit Addresses -- %s") % context["order"]
+        context["title"] = _("Save -- %s") % context["order"]
         context["toolbar"] = Toolbar([
             PostActionButton(
                 icon="fa fa-check-circle",
                 form_id="edit-addresses",
-                text=_("Edit Addresses"),
-                extra_css_class="btn-success",
+                text=_("Save"),
+                extra_css_class="btn-primary",
             ),
         ])
         return context

@@ -5,7 +5,7 @@
   "main": "build_resources.js",
   "scripts": {
     "watch": "node build_resources --watch",
-    "build": "node build_resources"
+    "build": "node build_resources --sync"
   },
   "shuup": {
     "static_build": true

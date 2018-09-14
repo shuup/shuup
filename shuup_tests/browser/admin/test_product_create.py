@@ -17,8 +17,8 @@ from shuup import configuration
 from shuup.admin.signals import object_created
 from shuup.core.models import Category, Product
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition,
-    wait_until_disappeared
+    click_element, move_to_element, wait_until_appeared,
+    wait_until_condition, wait_until_disappeared
 )
 from shuup.testing.factories import (
     get_default_product_type, get_default_sales_unit,
@@ -50,6 +50,7 @@ def test_product_create(browser, admin_user, live_server, settings):
     price_value = 10
     short_description = "short but gold"
 
+    move_to_element(browser, "#id_base-sku")
     browser.fill("base-sku", sku)
     browser.fill("base-name__en", name)
     browser.fill("base-short_description__en", short_description)
@@ -76,7 +77,7 @@ def _add_custom_product_created_message(sender, object, **kwargs):
 def _add_primary_category(browser, shop):
     assert Category.objects.count() == 0
     select_id = "id_shop%s-primary_category" % shop.pk
-    browser.execute_script('$("#%s").parent().find("span.quick-add-btn a.btn").click();' % select_id)
+    browser.execute_script('$("#%s").parent().find("div.quick-add-btn a.btn").click();' % select_id)
 
     wait_until_condition(browser, condition=lambda x: x.find_by_id("create-object-content-pane").has_class("open"))
     with browser.get_iframe('create-object-iframe') as iframe:
@@ -93,7 +94,7 @@ def _add_additional_category(browser, shop):
     assert Category.objects.count() == 1
     select_id = "id_shop%s-categories" % shop.pk
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 1)
-    browser.execute_script('$("#%s").parent().find("span.quick-add-btn a.btn").click();' % select_id)
+    browser.execute_script('$("#%s").parent().find("div.quick-add-btn a.btn").click();' % select_id)
     wait_until_condition(browser, condition=lambda x: x.find_by_id("create-object-content-pane").has_class("open"))
     with browser.get_iframe('create-object-iframe') as iframe:
         iframe.fill("base-name__en", "Test Category 2")

@@ -1,16 +1,14 @@
-<div class="form" data-url="{{ url("shuup_admin:simple_supplier.stocks", supplier_id=supplier.id, product_id=product.id) }}">
+<div class="stock-management-form mb-5" data-url="{{ url("shuup_admin:simple_supplier.stocks", supplier_id=supplier.id, product_id=product.id) }}">
     {% csrf_token %}
     {% for field in adjustment_form %}
         {{ bs3.field(field, form_group_class=False ) }}
     {% endfor %}
-    <br>
-    <button class="btn btn-primary btn-block" onclick="adjustStock(event, $(this))">
+    <button class="btn btn-primary mt-2" onclick="adjustStock(event, $(this))">
         <i class="fa fa-arrow-circle-up"></i> {% trans %}Add stock{% endtrans %}
     </button>
 </div>
 {% if alert_limit_form %}
-<hr>
-<div class="form" data-url="{{ url("shuup_admin:simple_supplier.alert_limits", supplier_id=supplier.id, product_id=product.id) }}">
+<div class="stock-management-form" data-url="{{ url("shuup_admin:simple_supplier.alert_limits", supplier_id=supplier.id, product_id=product.id) }}">
     {% csrf_token %}
     {{ bs3.field(alert_limit_form.alert_limit, form_group_class=False ) }}
     <span class="help-block">
@@ -18,8 +16,7 @@
             Alert limit <a href="{{ notify_url }}" target="_blank">notification scripts</a> are executed when product stock falls below set quantity.
         {%- endtrans %}
     </span>
-    <br>
-    <button class="btn btn-primary btn-block" onclick="adjustStock(event, $(this))">
+    <button class="btn btn-primary d-block mt-3" onclick="adjustStock(event, $(this))">
         <i class="fa fa-arrow-circle-up"></i> {% trans %}Change alert limit{% endtrans %}
     </button>
 </div>

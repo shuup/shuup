@@ -8,6 +8,7 @@
     {% endif %}
 {% endblock %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call content_with_sidebar(content_id="script_form") %}
         <form method="post" id="script_form">
@@ -18,7 +19,7 @@
                 {{ bs3.field(form.enabled) }}
                 <div class="row">
                     <div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-4">
-                        <button class="btn btn-success btn-block" type="submit">
+                        <button class="btn btn-success" type="submit">
                             <i class="fa fa-check"></i> {% trans %}OK{% endtrans %}
                         </button>
                     </div>

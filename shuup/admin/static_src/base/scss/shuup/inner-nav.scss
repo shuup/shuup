@@ -1,0 +1,43 @@
+.section-navigation {
+    margin-top: 4px;
+
+    @include media-breakpoint-down(sm) {
+        display: none;
+    }
+}
+
+.sidebar-list-item {
+    display: block;
+    padding: 12px 8px;
+    margin-bottom: 8px;
+    color: $text-color;
+    position: relative;
+    border-radius: 4px;
+
+    &:hover, &:focus {
+        color: $primary;
+        text-decoration: none;
+
+        i {
+            opacity: 0.8;
+        }
+    }
+    &.active {
+        background: #fff;
+        color: $primary;
+        font-weight: normal;
+        box-shadow: $box-shadow-sm;
+
+        i {
+            opacity: 0.8;
+        }
+    }
+    &.errors {
+        padding-right: 35px;
+    }
+    i {
+        opacity: 0.7;
+        width: 30px;
+        text-align: center;
+    }
+}

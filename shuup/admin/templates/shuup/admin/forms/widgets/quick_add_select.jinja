@@ -5,15 +5,15 @@
     {% include widget.template_name %}{% endfor %}{% if group_name %}
     </optgroup>{% endif %}{% endfor %}
 </select>
-<span class="quick-add-btn">
-<a
-    class="btn"
-    data-url="{{ quick_add_url }}"
-    data-toggle="popover"
-    data-placement="bottom"
-    data-trigger="manual"
-    data-content="{{ quick_add_btn_title }}">
-        <i class="fa fa-plus text-primary"></i>
-</a>
-</span>
+<div class="quick-add-btn">
+    <a
+        class="btn btn-inverse"
+        data-url="{{ quick_add_url }}"
+        data-toggle="popover"
+        data-placement="bottom"
+        data-trigger="manual"
+        data-content="{{ quick_add_btn_title }}">
+            <i class="fa fa-plus text-primary"></i>
+    </a>
+</div>
 {% endif %}

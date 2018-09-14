@@ -24,7 +24,7 @@ window.setNextActionAndSubmit = function(formId, nextAction) {
     $form.submit();
 };
 
-function serializeForm($form) {
+window.serializeForm = function($form) {
     const arrayData = $form.serializeArray();
     let objectData = {};
     for(let i = 0; i < arrayData.length; i++) {
@@ -46,9 +46,9 @@ function serializeForm($form) {
         }
     }
     return objectData;
-}
+};
 
-function renderFormErrors($form, errors) {
+window.renderFormErrors = function($form, errors) {
     for(let formName in errors) {
         let formErrors = errors[formName];
         for(let fieldName in formErrors) {
@@ -61,13 +61,13 @@ function renderFormErrors($form, errors) {
             }
         }
     }
-}
+};
 
-function clearErrors($form) {
+window.clearErrors = function ($form) {
     $form.find(".has-error").removeClass("has-error");
     $form.find(".error-block").remove();
     $form.parent().find(".errors").empty();
-}
+};
 
 $(function() {
     $(".language-dependent-content").each(function() {

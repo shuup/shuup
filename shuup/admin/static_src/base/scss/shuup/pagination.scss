@@ -1,0 +1,29 @@
+.pagination {
+    padding: 0;
+    box-shadow: $shadow-md;
+
+    li.page-item {
+        a.page-link {
+            background-color: $white;
+            color: $secondary;
+            font-weight: 700;
+            border: 0;
+
+            &:hover {
+                z-index: 0;
+                color: $primary;
+                background-color: $white;
+            }
+        }
+
+        &.disabled .page-link {
+            color: rgba($secondary, 0.2);
+        }
+
+        &.active .page-link {
+            color: $primary;
+            background-image: none;
+            background-color: rgba($primary, 0.08);
+        }
+    }
+}

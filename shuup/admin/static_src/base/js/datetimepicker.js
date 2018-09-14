@@ -8,18 +8,11 @@
  */
 $(function() {
     $(".form-control.datetime").datetimepicker({
-        format: "yyyy-mm-dd hh:ii",
-        autoclose: true,
-        todayBtn: true,
-        todayHighlight: true,
-        fontAwesome: true
+        format: "Y-m-d H:i",
     });
+
     $(".form-control.date").datetimepicker({
-        format: "yyyy-mm-dd",
-        autoclose: true,
-        todayBtn: true,
-        todayHighlight: true,
-        fontAwesome: true,
-        minView: 2
+        format: "Y-m-d H:i",
     });
 });
+

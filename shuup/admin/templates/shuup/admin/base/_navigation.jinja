@@ -1,28 +1,15 @@
-<button id="menu-button" class="nav-menu-button" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Menu{% endtrans %}">
+<button id="menu-button" class="nav-menu-button d-flex d-lg-none" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Menu{% endtrans %}">
     <span class="toggler">
         <span></span>
     </span>
 </button>
 
-<div class="logo-wrap">
-    <a href="{{ url("shuup_admin:dashboard") }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Dashboard{% endtrans %}">
-        <span class="logo desktop">
-            <img src="{{ static("shuup_admin/img/logo.svg") }}">
-        </span>
-        <span class="logo mobile">
-            <img src="{{ static("shuup_admin/img/logo-icon.svg") }}">
-        </span>
-    </a>
-</div>
-
-<a class="nav-btn shop-btn" href="{{ url("shuup_admin:home") }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Go home{% endtrans %}"><i class="fa fa-home"></i></a>
-
-<div id="site-search" class="site-search">
-    <div class="desktop hidden-xs">
+<div id="site-search" class="site-search d-flex flex-grow-1">
+    <div class="desktop d-none d-md-flex flex-grow-1">
         <input type="search" accesskey="s" id="site-search-input" class="form-control site-search-input" placeholder="{% trans %}Search for{% endtrans %}..."><i class="input-icon fa fa-search"></i>
     </div>
-    <div class="mobile text-right visible-xs">
-        <button class="dropdown-toggle" id="dropdownSearch" type="button" data-toggle="dropdown" aria-expanded="true">
+    <div class="mobile text-right d-md-none">
+        <button class="dropdown-toggle" id="dropdownSearch" type="button" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-search"></i>
         </button>
         <div class="dropdown-menu mobile-search-dropdown" role="menu" aria-labelledby="dropdownSearch">
@@ -34,33 +21,32 @@
 </div>
 
 {% set support_id=shuup_admin.get_support_id() %}
-{% if support_id %}<p class="nav-text hidden-xs">{% trans %}Support ID: {% endtrans %}{{ support_id }}</p>{% endif %}
+{% if support_id %}<p class="nav-text d-sm-none d-md-block">{% trans %}Support ID: {% endtrans %}{{ support_id }}</p>{% endif %}
 
-{% set front_url=shuup_admin.get_front_url() %}
-{% if front_url %}<a class="nav-btn shop-btn visit-store" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-eye"></i></a>{% endif %}
+<div class="site-links d-none d-lg-block mr-3">
+    <a class="nav-btn shop-btn" href="{{ url("shuup_admin:home") }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Go home{% endtrans %}"><i class="fa fa-home"></i></a>
 
+    {% set front_url=shuup_admin.get_front_url() %}
+    {% if front_url %}<a class="nav-btn shop-btn visit-store" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-eye"></i></a>{% endif %}
+</div>
 <div class="dropdown">
-    <button class="dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true" data-placement="bottom" title="{% trans %}Settings{% endtrans %}">
-        <i class="fa fa-cog"></i>
+    <button class="dropdown-toggle btn btn-default" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="false" data-placement="bottom" title="{% trans %}Settings{% endtrans %}">
+        {{ request.user }}
     </button>
-    <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+    <div class="languages dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
         {% if request.user.is_authenticated() %}
         <div class="username">
             <span class="icon"><i class="fa fa-user"></i></span>{% trans %}Hello{% endtrans %}, <span class="user">{{ request.user }}</span>!
         </div>
         {% if LANGUAGES|length > 1 %}
-        <ul class="dropdown-list languages">
             {% for (code, name, local_name) in get_language_choices() %}
-            <li><a href="#" class="{% if LANGUAGE_CODE == code %} active{% endif %}" data-value="{{ code }}">{{ name }} ({{ local_name }})</a></li>
+            <a href="#" class="dropdown-item {% if LANGUAGE_CODE == code %} active{% endif %}" data-value="{{ code }}">{{ name }} ({{ local_name }})</a>
             {% endfor %}
-        </ul>
         {% endif %}
-        <div class="divider"></div>
-        <ul class="dropdown-list">
-            <li class="show-tour-li"><a href="#">{% trans %}Show Tour{% endtrans %}</a></li>
-        </ul>
+        <div class="dropdown-divider"></div>
+            <a href="#" class="show-tour dropdown-item">{% trans %}Show Tour{% endtrans %}</a>
         <div class="actions">
-            <a href="{{ url("shuup_admin:logout") }}" class="btn btn-block btn-sm btn-info">
+            <a href="{{ url("shuup_admin:logout") }}" class="btn btn-block btn-inverse">
                 <i class="fa fa-sign-out"></i> {% trans %}Log out{% endtrans %}
             </a>
         </div>

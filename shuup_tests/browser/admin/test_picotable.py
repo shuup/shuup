@@ -12,8 +12,8 @@ import pytest
 from django.core.urlresolvers import reverse
 
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_appeared_xpath,
-    wait_until_condition
+    click_element, move_to_element, wait_until_appeared,
+    wait_until_appeared_xpath, wait_until_condition
 )
 from shuup.testing.factories import (
     create_product, create_random_person, get_default_shop,
@@ -72,17 +72,17 @@ def test_list_views(browser, admin_user, live_server, settings, visit_type):
         creator(shop)
 
     initialize_admin_browser_test(browser, live_server, settings)
-    _visit_list_view(browser, live_server, visit_type)
+    _visit_list_view(browser, live_server, visit_type, creator)
     if list_view_settings[visit_type].get("test_pagination", False):
         _test_pagination(browser)
-    _set_settings(browser, visit_type)
+    _set_settings(browser, visit_type, creator)
 
 
-def _visit_list_view(browser, live_server, list_view_name):
+def _visit_list_view(browser, live_server, list_view_name, creator):
     url = reverse("shuup_admin:%s.list" % list_view_name)
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, lambda x: x.is_text_present(list_view_settings[list_view_name]["page_header"]))
-    wait_until_appeared(browser, ".picotable-item-info")
+    _check_picotable_item_info(browser, creator)
 
 
 def _test_pagination(browser):
@@ -135,7 +135,7 @@ def _click_item(items, value):
     time.sleep(0.5)  # Wait mithril for a half sec
 
 
-def _set_settings(browser, setting_type):
+def _set_settings(browser, setting_type, creator):
     used_settings = list_view_settings[setting_type]
     default_column_count = used_settings["default_column_count"]
     addable_fields = used_settings["addable_fields"]
@@ -144,10 +144,7 @@ def _set_settings(browser, setting_type):
     for idx, text in addable_fields:
         assert not browser.is_text_present(text)
 
-    #shuup_tests/browser/front/test_category_view.py
-    settings_xpath = "(//a[contains(text(),'Settings')])[2]"
-    # go to settings
-    browser.find_by_xpath(settings_xpath).click()
+    browser.find_by_css(".shuup-toolbar .btn.btn-inverse").first.click()
 
     # select settings
     for idx, (index_key, text) in enumerate(addable_fields):
@@ -157,14 +154,16 @@ def _set_settings(browser, setting_type):
         wait_until_appeared_xpath(browser, "//ul[@id='target-sortable']/li[%d]/button" % expected_index)
 
     # save settings
-    browser.find_by_css(".btn.btn-success").first.click()
-    wait_until_appeared(browser, ".picotable-item-info")
+    move_to_element(browser, ".shuup-toolbar .btn.btn-success")
+    browser.find_by_css(".shuup-toolbar .btn.btn-success").first.click()
+    _check_picotable_item_info(browser, creator)
 
-    for idx, text in addable_fields:
-        wait_until_condition(browser, lambda x: x.is_text_present(text))
+    if creator:
+        for idx, text in addable_fields:
+            wait_until_condition(browser, lambda x: x.is_text_present(text))
 
     # go back to settings
-    browser.find_by_xpath(settings_xpath).click()
+    browser.find_by_css(".shuup-toolbar .btn.btn-inverse").first.click()
 
     wait_until_appeared_xpath(browser, "//a[contains(text(),'Reset Defaults')]")
 
@@ -172,8 +171,16 @@ def _set_settings(browser, setting_type):
     browser.find_by_xpath("//a[contains(text(),'Reset Defaults')]").click()
 
     # wait
-    wait_until_appeared(browser, ".picotable-item-info")
+    _check_picotable_item_info(browser, creator)
 
     # not selected by default
-    for idx, text in addable_fields:
-        assert not browser.is_text_present(text)
+    if creator:
+        for idx, text in addable_fields:
+           assert not browser.is_text_present(text)
+
+
+def _check_picotable_item_info(browser, creator):
+    if creator:
+        wait_until_appeared(browser, ".picotable-item-info")
+    else:
+        wait_until_condition(browser, condition=lambda x: x.is_text_present("There are no permission groups to show"))

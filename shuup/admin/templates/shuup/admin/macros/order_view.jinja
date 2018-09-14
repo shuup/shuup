@@ -1,5 +1,5 @@
 {% macro order_view(orders) %}
-    <div class="hidden-xs">
+    <div class="d-sm-none d-md-block">
         <table class="table table-condensed table-striped">
             <thead>
             <tr>
@@ -22,13 +22,13 @@
                     <td>{{ order.get_status_display() }}</td>
                     <td>{{ order.get_shipping_status_display() }}</td>
                     <td>{{ order.get_payment_status_display() }}</td>
-                    <td>{% if url %}<a href="{{ url }}">{% endif %}<i class="fa fa-arrow-right"></i>{% if url %}</a>{% endif %}</td>
+                    <td>{% if url %}<a class="btn btn-sm btn-inverse" href="{{ url }}">{% endif %}<i class="fa fa-arrow-right"></i>{% if url %}</a>{% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-    <div class="visible-xs mobile-list-group">
+    <div class="d-none d-sm-block d-md-none mobile-list-group">
         <ul class="list-group">
             {% for order in orders %}
                 {% set url = shuup_admin.model_url(order) %}

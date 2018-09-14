@@ -146,7 +146,7 @@ export function processQueue() {
     if (_.any(queue, (file) => file.status === "uploading")) {
         return;  // Don't allow uploading multiple files simultaneously though...
     }
-    const nextFile = _.detect(queue, (file) => (file.status === "new"));
+    const nextFile = _.find(queue, (file) => (file.status === "new"));
     updateQueueViewSoon();
     if (nextFile) {
         beginUpload(nextFile);

@@ -1,0 +1,59 @@
+.sortable {
+    padding:0;
+    margin:0;
+    list-style: none;
+
+    li {
+        display: block;
+        width:100%;
+        padding: 0.5rem;
+
+        &:hover {
+            background-color: rgba($border-color, 0.1);
+        }
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba($border-color, 0.5);
+        }
+
+        &.sortable-ghost,
+        &.sortable-chosen {
+            color: $primary;
+            cursor: hand;
+            background-color: rgba($primary, 0.2);
+            border-bottom-color: transparent;
+
+            i {
+                background-color: $primary;
+                color: $white;
+            }
+
+            button {
+                opacity: 0;
+            }
+        }
+
+        i {
+            background-color: darken($gray-bg, 2%);
+            padding: 0.6rem 0.7rem;
+            border-radius: $border-radius-lg;
+            margin-right: 0.8rem;
+            cursor: move;
+
+            &:hover {
+                cursor: move;
+            }
+
+        }
+
+        .sortable-field {
+            input {
+                display: none;
+            }
+
+            label {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

@@ -68,7 +68,7 @@ class ShopModule(AdminModule):
                     "url": self.get_model_url(shop, "edit"),
                     "hash": "#shop-images-section"
                 }],
-                icon_url="shuup_admin/img/logo-icon.svg",
+                icon_url="shuup_admin/img/logo_icon.svg",
                 done=shop.logo,
                 required=False
             )

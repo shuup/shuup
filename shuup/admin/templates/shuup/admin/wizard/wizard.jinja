@@ -9,9 +9,9 @@
 {% block top %}{% endblock %}
 {% block support_content %}{% endblock %}
 {% block content_wrap %}
-<div id="wizard-page" class="container-fluid">
+<div id="wizard-page" class="container">
     <div class="wizard-header">
-        <img class="logo" src="{{ static("shuup_admin/img/logo-icon.svg") }}">
+        <img class="logo mb-2" src="{{ static("shuup_admin/img/logo_icon.svg") }}">
         <h1>{% trans %}Welcome to Shuup!{% endtrans %}</h1>
         <p>{% trans %}Please fill out the following information to get your store up and running{% endtrans %}</p>
     </div>
@@ -20,22 +20,21 @@
             <div class="wizard-pane-container">
                 {% for pane in panes %}
                     <div class="wizard-pane {{ pane.identifier }}" data-can_skip="{{ pane.can_skip }}">
-                        <div class="pane-header text-center">
-                            {% if pane.icon %}
-                                <img src="{{ static(pane.icon) }}">
-                            {% else %}
-                                <br>
-                            {% endif %}
-                            <p>
-                            {{ pane.text }}
-                            <br>
+                        <div class="pane-header">
+                            <div class="title">
+                                <h2>
+                                    {% if pane.icon %}
+                                        <img src="{{ static(pane.icon) }}">
+                                    {% endif %}
+                                    {{ pane.text }}
+                                </h2>
                             {% if pane.editable %}
                                 <small>{% trans %}All information entered here can be edited later.{% endtrans %}</small>
                             {% endif %}
-                            </p>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="errors col-sm-6 col-sm-offset-3"></div>
+                            <div class="errors col-md-6 offset-md-3"></div>
                         </div>
                         <form method="POST" class="form-lg">
                             {% csrf_token %}

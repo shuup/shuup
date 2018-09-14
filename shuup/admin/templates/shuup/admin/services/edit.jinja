@@ -2,6 +2,7 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
 {% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
     {% call content_with_sidebar(content_id="service_form") %}
         <form method="post" id="service_form" novalidate>
@@ -10,29 +11,34 @@
             {% include form_defs["base"].template_name with context %}
             {% if form_defs|length > 1 %}
             {% call content_block(_("Behavior"), ("fa-cubes")) %}
-                <div class="form-group">
+                <div class="form-group form-content">
                     <label class="control-label" for="id_component-select">{% trans %}Behavior component type{% endtrans %}</label>
-                    <select class="form-control" id="component-select">
-                        {% for form_def in form_defs %}
-                            {% if form_def != "base" %}
-                                {% set form_prefix = form_def %}
-                                {% set formset = form[form_def] %}
-                                <option data-target-id="id_{{ form_prefix }}" value="{{ form_prefix }}">{{ formset.get_name() }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    <span class="help-popover-btn">
-                        <a
-                            class="btn" data-toggle="popover" data-placement="bottom" role="button" tabindex="50000"
-                            data-html="true" data-trigger="focus" title="{% trans %}Behavior component type{% endtrans %}"
-                            data-content="{% trans %}The behaviors for this service. These behaviors can be used to add costs to the order or can be used to restrict availability of the service.{% endtrans %}" >
-                            <i class="fa fa-question-circle"></i>
-                        </a>
-                    </span>
+                    <div class="form-input-group d-flex">
+                        <select class="form-control" id="component-select">
+                            {% for form_def in form_defs %}
+                                {% if form_def != "base" %}
+                                    {% set form_prefix = form_def %}
+                                    {% set formset = form[form_def] %}
+                                    <option data-target-id="id_{{ form_prefix }}" value="{{ form_prefix }}">{{ formset.get_name() }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <div class="help-popover-btn">
+                            <a
+                                class="btn" data-toggle="popover" data-placement="bottom" role="button" tabindex="50000"
+                                data-html="true" data-trigger="focus" title="{% trans %}Behavior component type{% endtrans %}"
+                                data-content="{% trans %}The behaviors for this service. These behaviors can be used to add costs to the order or can be used to restrict availability of the service.{% endtrans %}" >
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group text-center">
-                    <a class="btn btn-lg btn-text" id="component-button" href="#">+ {% trans %}Add component{% endtrans %}</a>
+                <div class="ml-2 form-group">
+                    <a class="btn btn-primary" id="component-button" href="#">
+                    <i class="fa fa-plus-circle"></i>
+                    {% trans %}Add component{% endtrans %}</a>
                 </div>
+                <div class="d-none" id="insert-placeholder"></div>
                 {% for form_def in form_defs %}
                     {% if form_def != "base" %}
                         {% set form_prefix = form_def %}
@@ -41,7 +47,6 @@
                         {% include template_name with context %}
                     {% endif %}
                 {% endfor %}
-                <div class="hide" id="insert-placeholder"></div>
             {% endcall %}
             {% endif %}
         </form>
@@ -70,9 +75,17 @@
             $totalFormsField.val(componentCount + 1);
 
             // reactivate possible select2 widgets
-            activateSelects();
+            window.activateSelects();
             // ... and help text
             $("[data-toggle='popover']").popover();
+
+            $("a.panel-title").each(function(idx) {
+                if (idx === 0) {
+                    $(this).attr("aria-expanded", "true");
+                    $(this).parent().siblings(".panel-collapse").addClass("show highlight");
+                    return false;
+                }
+            })
         });
         $("#id_base-payment_processor,#id_base-carrier").on("change", function() {
             var url = window.location.href.split('?')[0];

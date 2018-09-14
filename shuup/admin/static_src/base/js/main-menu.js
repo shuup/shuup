@@ -1,84 +1,74 @@
-/**
- * This file is part of Shuup.
- *
- * Copyright (c) 2012-2018, Shuup Inc. All rights reserved.
- *
- * This source code is licensed under the OSL-3.0 license found in the
- * LICENSE file in the root directory of this source tree.
- */
-$(function() {
-    "use strict";
+// /**
+//  * This file is part of Shuup.
+//  *
+//  * Copyright (c) 2012-2018, Shuup Inc. All rights reserved.
+//  *
+//  * This source code is licensed under the OSL-3.0 license found in the
+//  * LICENSE file in the root directory of this source tree.
+//  */
 
-    function openMainNav() {
-        $(document.body).addClass("menu-open");
-    }
+const handleMainMenu = () => {
+  const categoryLink = document.getElementsByClassName('item-category');
 
-    function closeMainNav() {
-        $(document.body).removeClass("menu-open");
-    }
+  const closeMenu = () => {
+    Array.from(categoryLink).forEach((item) => {
+      const categoryArrow = item.querySelector('.item-arrow');
+      const submenu = item.nextElementSibling;
 
-    function mainNavIsOpen() {
-        return $(document.body).hasClass("menu-open");
-    }
-
-    $("#menu-button").click(function(event) {
-        closeAllSubmenus();
-        $("#site-search.mobile").removeClass("open"); // Close search if open on mobile
-        event.stopPropagation();
-        if (mainNavIsOpen()) {
-            closeMainNav();
-        } else {
-            openMainNav();
-        }
+      if (item.classList.contains('item-active')) {
+        item.classList.remove('item-active');
+        submenu.classList.remove('active');
+        categoryArrow.classList.remove('rotate');
+      }
     });
+  }
 
-    function closeAllSubmenus() {
-        $(".category-submenu").each(function(idx, elem){
-            $(elem).removeClass("open");
-        });
-    }
-    $(document).on("click", "#main-menu ul.menu-list > li a", function(e) {
-        e.preventDefault();
-        e.stopPropagation();  // do not close submenus
-        const target_id = $(this).data("target-id");
-        $(".category-submenu").each(function(idx, elem){
-            if($(elem).attr("id") != target_id) {
-                $(elem).removeClass("open");
-            }
-        });
-        const $target = $("#" + target_id);
-        if (!$target.length) {
-            return;
-        }
-        const isOpen = $target.hasClass("open");
-        $target.toggleClass("open", !isOpen);
-    });
+  const openMenu = (element) => {
+    const categoryArrow = element.querySelector('.item-arrow');
+    const submenu = element.nextElementSibling;
 
-    $(window).click(function() {
-        closeAllSubmenus();
-    });
+    element.classList.add('item-active');
+    submenu.classList.add('active');
+    categoryArrow.classList.add('rotate');
+  }
 
-    $('.category-submenu').click(function(event){
-        event.stopPropagation();
-        if($(event.target).hasClass("fa-close")) {
-            closeAllSubmenus();
-        }
-    });
+  Array.from(categoryLink).forEach((item) => {
+    item.addEventListener('click', (event) => {
+      event.preventDefault();
 
-    window.onresize = (function() {
-        closeAllSubmenus();
-        if($(window).width() < 768) {
-            closeMainNav();
-        }
+      const currentItem = event.currentTarget;
+      const isActive = currentItem.classList.contains('item-active');
+
+      closeMenu();
+      openMenu(item);
+
+      if (isActive) {
+        closeMenu();
+      }
     });
-    if (window.Masonry) {
-        const Masonry = window.Masonry;
-        $(".category-menu-content").each(function(idx, elem) {
-            const msnry = new Masonry(elem, {
-                itemSelector: '.submenu-container',
-                columnWidth: '.submenu-container',
-                percentPosition: true
-            });
-        });
-    }
-});
+  });
+
+  const toggleBtn = document.getElementById('menu-button');
+  const mainMenu = document.getElementById('js-main-menu');
+  const closeBtn = document.getElementById('js-menu-close');
+
+  const hideMainMenu = () => {
+    closeBtn.addEventListener('click', event => {
+      event.preventDefault();
+      mainMenu.classList.remove('open');
+    });
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      if (mainMenu.classList.contains('open')) {
+        mainMenu.classList.remove('open');
+      } else {
+        mainMenu.classList.add('open');
+        hideMainMenu();
+      }
+    });
+  }
+}
+
+export default handleMainMenu;

@@ -9,6 +9,5 @@
         {{ bs3.field(shipping_method_form[map.name]) }}
         {{ bs3.field(shipping_method_form[map.description]) }}
     {% endcall %}
-    <div class="form-divider"></div>
     {{ render_monolingual_fields(shipping_method_form, exclude=priority_fields) }}
 {% endcall %}

@@ -1,9 +1,10 @@
 {% extends "shuup/admin/base.jinja" %}
-{% from "shuup/xtheme/admin/macros.jinja" import theme_table %}
+{% from "shuup/xtheme/admin/macros.jinja" import theme_card %}
 {% block title %}{% trans %}Classic Gray{% endtrans %}{% endblock %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="content-block">
             <p>{% trans %}This theme has no special settings to configure.{% endtrans %}</p>
         </div>

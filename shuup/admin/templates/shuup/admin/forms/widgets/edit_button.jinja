@@ -1,8 +1,8 @@
 {% set editable_model = (field.widget.editable_model or field.widget.attrs.get("data-edit-model")) %}
 {% if editable_model %}
-<span class="edit-object-btn">
+<div class="edit-object-btn mr-1 ml-1">
     <a
-        class="btn"
+        class="btn btn-inverse"
         data-toggle="popover"
         data-placement="bottom"
         data-trigger="manual"
@@ -13,5 +13,5 @@
     >
         <i class="fa fa-pencil text-primary"></i>
     </a>
-</span>
+</div>
 {% endif %}

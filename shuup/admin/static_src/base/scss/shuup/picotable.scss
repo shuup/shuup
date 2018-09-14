@@ -1,0 +1,411 @@
+#picotable {
+    .table {
+        margin-top: 1rem;
+        background-color: $white;
+        border-radius: 6px;
+        box-shadow: $shadow-lg;
+    }
+
+    .table td {
+        border: 0;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.65rem 1rem;
+    }
+
+    .table th.hidden-cell {
+        font-size: 0;
+    }
+
+    thead {
+        tr.headers {
+            border-bottom: 2px solid #dae0e8;
+
+            th {
+                color: rgba($secondary, 0.6);
+                font-size: 0.9rem;
+                border: 0;
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+                user-select: none;
+                transition: all 0.2s ease-in-out;
+
+                span:hover {
+                    color: $primary;
+                }
+
+                @include media-breakpoint-up(xl) {
+                    white-space: nowrap;
+                }
+
+                &.sortable {
+                    cursor: pointer;
+                }
+
+                &.sorted-asc,
+                &.sorted-desc {
+                    color: $secondary;
+
+                    i {
+                        color: $primary;
+                    }
+                }
+
+                i {
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        .range-filter {
+            min-width: 170px;
+
+            .input-wrapper {
+                display: inline-block;
+                vertical-align: bottom;
+
+                &.max, &.min {
+                    margin: 0px 2px;
+                }
+            }
+
+            input[type="date"] {
+                width: 100%;
+            }
+
+            input[type="number"] {
+                width: 80px;
+            }
+
+            .input-wrapper + .input-wrapper {
+                input[type="date"] {
+                    margin-top: 2px;
+                }
+            }
+        }
+
+        .select2 {
+            width: 100% !important;
+            outline: none;
+
+            .select2-selection {
+                border: 0;
+                background-color: #fff;
+                min-height: 32px;
+                padding: 0;
+                outline: none;
+
+                .select2-selection__rendered {
+                    line-height: 32px;
+                }
+
+                &.select2-selection--single {
+                    border-radius: 0;
+                }
+
+                &.select2-selection--multiple {
+                    border-radius: 0;
+                }
+
+                .select2-selection__arrow {
+                    height: 32px;
+                }
+
+                .select2-selection__choice {
+                    border-radius: 0;
+                }
+            }
+        }
+
+        .select2-dropdown {
+            z-index: 2000 !important;
+        }
+    }
+
+    tbody {
+        tr {
+            transition: all 0.1s linear;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid rgba($secondary, 0.12);
+            }
+        }
+
+        tr:hover {
+            background-color: darken($white, 2%);
+
+            td img {
+                border-color: rgba($secondary, 0.6);
+            }
+        }
+
+        th,
+        td {
+            padding: 5px;
+            vertical-align: middle;
+            border: 0;
+
+            .input-checkbox {
+                width: 30px;
+                margin: 0 auto;
+            }
+
+            input.row-selection {
+                // display:none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+            }
+        }
+
+        tr {
+            &.active {
+                td {
+                    background-color: rgba(darken($gray-bg, 10%), 0.3);
+                }
+
+                td img {
+                    border-color: rgba($secondary, 0.6);
+                }
+            }
+        }
+
+        td a {
+            color: darken($primary, 10%);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        td img {
+            width: 42px;
+            height: 42px;
+            padding: 4px;
+            background-color: $white;
+            border: 1px solid rgba($secondary, 0.25);
+            border-radius: 2px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        td {
+            cursor:pointer;
+        }
+
+        td span.row-sku {
+            font-size: 0.8rem;
+            color: rgba($secondary, 0.6);
+            background-color: rgba($secondary, 0.08);
+            border-radius: 20px;
+            padding: 5px 12px;
+        }
+    }
+
+    .picotable-header {
+        align-items: stretch;
+
+        @include media-breakpoint-down(md) {
+            margin-bottom: 15px;
+        }
+
+        @include media-breakpoint-down(xl) {
+            display: flex;
+        }
+
+        .picotable-mass-actions {
+            @include media-breakpoint-down(sm) {
+                text-align: center;
+                float: left;
+            }
+
+            @include media-breakpoint-down(md) {
+            }
+
+            @include media-breakpoint-up(lg) {
+                display: block;
+            }
+
+            .picotable-items-per-page-select {
+                margin-bottom: 5px;
+                margin-left: 0px;
+                max-width: 240px;
+                display: inline-block;
+
+                @include media-breakpoint-up(md) {
+                    width: 240px !important;
+                }
+            }
+        }
+
+        .picotable-filter-name {
+            flex: 1;
+        }
+
+        .picotable-filter {
+            width: 280px;
+            justify-content: flex-end;
+            margin-left: auto;
+        }
+
+        .picotable-items-per-page-ctr {
+            @include media-breakpoint-down(sm) {
+                text-align: left;
+            }
+
+            @include media-breakpoint-down(md)  {
+                text-align: right;
+            }
+
+            @include media-breakpoint-up(lg) {
+                display: block;
+                flex: 1;
+            }
+
+            .picotable-items-per-page-select,
+            .select2.select2-container {
+                margin-left: 20px;
+                max-width: 100px;
+                display: inline-block;
+                float: none;
+            }
+        }
+
+        .picotable-item-info {
+            margin-top: 10px;
+
+            @include media-breakpoint-down(sm) {
+                text-align: center;
+            }
+
+            @include media-breakpoint-between(md, lg) {
+                @include make-col-ready();
+                @include make-col($sm, 6);
+                text-align: right;
+            }
+
+            @include media-breakpoint-up(lg) {
+                flex: 1;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+        }
+
+        .picotable-reset-filters-ctr {
+            display: none;
+
+            @include media-breakpoint-up(lg) {
+                display: flex;
+                justify-content: center;
+                margin: 0.5em 0;
+            }
+        }
+    }
+
+    .mobile-header {
+        .toggle-btn {
+            @include media-breakpoint-down(sm) {
+                margin-bottom: 15px;
+            }
+
+            i {
+                margin-right: 7px;
+            }
+        }
+    }
+
+    .mobile-filters {
+        &-content {
+            padding: 15px;
+
+            .single-filter {
+                padding-bottom: 15px;
+
+                &:last-child {
+                    border: none;
+                }
+            }
+
+            .range-filter div + div {
+                margin-top: 5px;
+            }
+        }
+    }
+
+    .mobile-items {
+        margin-top: 30px;
+
+        .list-element {
+            margin-bottom: 15px;
+            display: block;
+
+            a.inner {
+                background-color: $white;
+                width: 100%;
+                display: block;
+                border: 1px solid $border-color;
+                border-radius: 4px;
+                box-shadow: $shadow-md;
+            }
+
+            .inner-row {
+
+                .column {
+                    font-size: 1rem;
+                    color: $primary;
+                    word-wrap: break-word;
+                }
+
+                &.with-title {
+                    .column {
+                        &:last-child {
+                            text-align: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mobile-row {
+    color: rgba($text-color, 0.8);
+    font-size: 1rem;
+    padding: 0.8rem 0.5rem;
+    margin: 0;
+    border-bottom: 1px solid rgba($border-color, 0.08);
+
+    &.header {
+        color: $text-color;
+        font-weight: 700;
+    }
+
+    &.with-title {
+        .value {
+            text-align: right;
+        }
+    }
+}
+
+nav.mobile-pagination {
+    margin: 1rem 0;
+
+    ul.pagination {
+        background-color: $white;
+        justify-content: center;
+    }
+}
+
+.mass-action-dropdown .select2-dropdown {
+    width: 300px !important;
+}
+
+.picotable-empty > div {
+    min-height: 50vh;
+
+    h3, p {
+        opacity: 0.8;
+    }
+}

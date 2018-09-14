@@ -76,7 +76,7 @@ class AdminRegexURLPattern(RegexURLPattern):
         """
         if self.require_authentication:
             if not request.user.is_authenticated():
-                return _("You must be logged in.")
+                return _("Sign in to continue")
             elif not getattr(request.user, 'is_staff', False):
                 return _("You must be a staff member.")
 
