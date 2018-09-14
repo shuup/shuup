@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 
+from shuup.core.models import Category
+
 
 def update_categories_post_save(sender, instance, **kwargs):
     if not getattr(settings, "SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES", False):
@@ -30,7 +32,15 @@ def update_categories_through(sender, instance, **kwargs):
 
     if not instance.pk:
         return
+    if isinstance(instance, Category):
+        shop_products = instance.shop_products.all()
+        for shop_product in shop_products:
+            set_shop_product_category(shop_product)
+    else:
+        set_shop_product_category(instance)
 
+
+def set_shop_product_category(instance):
     if not instance.categories.count():
         return
 
