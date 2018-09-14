@@ -8,6 +8,13 @@ cache:
     - "$HOME/.cache/pip"
     - "$HOME/.npm"
     - "$HOME/.cache/shuup"
+    - shuup/admin/node_modules
+    - shuup/front/node_modules
+    - shuup/gdpr/node_modules
+    - shuup/notify/node_modules
+    - shuup/regions/node_modules
+    - shuup/themes/classic_gray/node_modules
+    - shuup/xtheme/node_modules
 env:
   - TOXENV=sanity
   - TOXENV=flake8
