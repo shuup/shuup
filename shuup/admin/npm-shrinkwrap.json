@@ -188,6 +188,14 @@
         }
       }
     },
+    "acorn5-object-spread": {
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/acorn5-object-spread/-/acorn5-object-spread-4.0.0.tgz",
+      "integrity": "sha1-1XWAge7ZcSGrC+R+Mcqu8qo5lpc=",
+      "requires": {
+        "acorn": "^5.1.2"
+      }
+    },
     "ajv": {
       "version": "5.5.2",
       "resolved": "https://registry.npmjs.org/ajv/-/ajv-5.5.2.tgz",
@@ -10899,6 +10907,7 @@
       "resolved": "https://registry.npmjs.org/rijs.sync/-/rijs.sync-2.3.5.tgz",
       "integrity": "sha512-tcbhmjLyWb+2s2gdiSmROEoD/OQPFeKC9xBnKgs0H+umY8CaVrVPGFdr1y1qovm7HxUbdk/BKqi94GQDc5XB3A==",
       "requires": {
+        "buble": "github:pemrouz/buble#4e639aeeb64712ac95dc30a52750d1ee4432c9c8",
         "express": "^4.14.0",
         "lru_map": "^0.3.3",
         "platform": "^1.3.4",
@@ -10916,7 +10925,7 @@
         },
         "buble": {
           "version": "github:pemrouz/buble#4e639aeeb64712ac95dc30a52750d1ee4432c9c8",
-          "from": "github:pemrouz/buble#4e639aeeb64712ac95dc30a52750d1ee4432c9c8",
+          "from": "github:pemrouz/buble",
           "requires": {
             "acorn": "^5.1.2",
             "acorn-jsx": "^3.0.1",
@@ -10926,16 +10935,6 @@
             "minimist": "^1.2.0",
             "os-homedir": "^1.0.1",
             "vlq": "^0.2.2"
-          },
-          "dependencies": {
-            "acorn5-object-spread": {
-              "version": "4.0.0",
-              "resolved": "https://registry.npmjs.org/acorn5-object-spread/-/acorn5-object-spread-4.0.0.tgz",
-              "integrity": "sha1-1XWAge7ZcSGrC+R+Mcqu8qo5lpc=",
-              "requires": {
-                "acorn": "^5.1.2"
-              }
-            }
           }
         },
         "chalk": {
