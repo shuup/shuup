@@ -17,8 +17,8 @@ from shuup import configuration
 from shuup.admin.signals import object_created
 from shuup.core.models import Category, Product
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition,
-    wait_until_disappeared
+    click_element, move_to_element, wait_until_appeared,
+    wait_until_condition, wait_until_disappeared
 )
 from shuup.testing.factories import (
     get_default_product_type, get_default_sales_unit,
@@ -50,6 +50,7 @@ def test_product_create(browser, admin_user, live_server, settings):
     price_value = 10
     short_description = "short but gold"
 
+    move_to_element(browser, "#id_base-sku")
     browser.fill("base-sku", sku)
     browser.fill("base-name__en", name)
     browser.fill("base-short_description__en", short_description)
