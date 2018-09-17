@@ -6,7 +6,7 @@
         <form action="{{ request.path }}" method="post" id="login_form">
             <div class="auth-body">
                 <div class="auth-heading pt-3 pb-3 text-center">
-                    <h1>{% trans %}Welcome back{% endtrans %}</h1>
+                    <h1 class="h1">{% trans %}Welcome back{% endtrans %}</h1>
                     {% csrf_token %}
                     {% if error %}
                         <p class="mb-0">{{ error|striptags }}</p>
