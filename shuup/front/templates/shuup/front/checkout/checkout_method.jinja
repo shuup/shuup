@@ -1,4 +1,5 @@
 {% extends "shuup/front/checkout/_base.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_field with context %}
 
 {% block checkout_phase_content %}
     <div class="row">
@@ -11,8 +12,7 @@
                     {{ macros.alert(error, mode="danger") }}
                 {% endfor %}
                 {% for f in login_form.hidden_fields() %}{{ f }}{% endfor %}
-                {{ macros.render_field(login_form.username) }}
-                {{ macros.render_field(login_form.password) }}
+                {% for f in login_form.visible_fields() %}{{ render_field(f) }}{% endfor %}
                 <button type="submit" class="btn btn-primary btn-block" name="login">
                     <i class="fa fa-sign-in"></i> {% trans %}Log in{% endtrans %}
                 </button>
