@@ -10,7 +10,9 @@
 from django.db.backends.signals import connection_created
 from django.db.models.signals import m2m_changed, post_save
 
-from shuup.core.models import Product, ShopProduct, Tax, TaxClass
+from shuup.core.models import (
+    Category, Product, ShopProduct, Tax, TaxClass
+)
 from shuup.core.utils.context_cache import (
     bump_product_signal_handler, bump_shop_product_signal_handler
 )
@@ -33,8 +35,13 @@ def handle_product_post_save(sender, instance, **kwargs):
 
 
 def handle_shop_product_post_save(sender, instance, **kwargs):
-    bump_shop_product_signal_handler(sender, instance, **kwargs)
-    bump_prices_for_shop_product(instance)
+    if isinstance(instance, Category):
+        for shop_product in instance.shop_products.all():
+            bump_shop_product_signal_handler(sender, shop_product, **kwargs)
+            bump_prices_for_shop_product(shop_product)
+    else:
+        bump_shop_product_signal_handler(sender, instance, **kwargs)
+        bump_prices_for_shop_product(instance)
 
 
 # connect signals to bump caches on Product and ShopProduct change
