@@ -58,7 +58,7 @@
             </div>
         {% endblock %}
         {% block content_wrap %}
-        <main id="main-content">
+        <main id="main-content"{% if iframe_mode %}class="iframe-mode"{% endif %}>
             {% block content %}{% endblock %}
         </main>
         {% endblock %}
