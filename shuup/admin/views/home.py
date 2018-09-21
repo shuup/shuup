@@ -106,7 +106,7 @@ class HomeView(TemplateView):
                 priority=1000,
                 text=_("Publish your store"),
                 description=_("Let customers browse your store and make purchases"),
-                css_class="green",
+                css_class="green ",
                 actions=[{
                     "method": "POST",
                     "text": _("Publish shop"),
@@ -116,7 +116,8 @@ class HomeView(TemplateView):
                         "redirect": reverse("shuup_admin:dashboard")
                     }
                 }],
-                icon_url="shuup_admin/img/publish.png"
+                icon_url="shuup_admin/img/publish.png",
+                done=not self.request.shop.maintenance_mode
             )
         )
         return context
