@@ -18,7 +18,7 @@
     }
 
     .cells {
-        @include media-breakpoint-up(sm) {
+        @include media-breakpoint-up(lg) {
             display: flex;
         }
     }
@@ -29,7 +29,7 @@
         width: 100%;
         position: relative;
 
-        @include media-breakpoint-up(sm) {
+        @include media-breakpoint-up(lg) {
             padding: 0px 8px;
             flex: 1 auto;
             align-self: flex-end;

@@ -157,7 +157,7 @@ export const Select2 = {
 
 export const HelpPopover = {
     view: function(ctrl, attrs) {
-        return m("span.help-popover-btn", [
+        return m("div.help-popover-btn", [
             m("a.btn", {
                 role: "button",
                 config: HelpPopover.config(attrs),
