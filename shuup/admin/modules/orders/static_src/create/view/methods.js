@@ -11,8 +11,9 @@ import {selectBox, HelpPopover} from "./utils";
 
 function renderMethod(store, mode, title, selectedMethod, choices, emptyChoice, helpText) {
     return [
-        m("div.form-group", [
-                m("label.control-label", title),
+        m("div.form-group.form-content", [
+            m("label.control-label", title),
+            m("div.form-input-group.d-flex", [
                 selectBox(selectedMethod ? selectedMethod.id : 0, function () {
                     const newMethod = _.find(choices, {"id": parseInt(this.value)});
                     (mode === "shipping" ?
@@ -23,8 +24,8 @@ function renderMethod(store, mode, title, selectedMethod, choices, emptyChoice, 
                     title: title,
                     content: helpText
                 })
-            ]
-        )
+            ])
+        ])
     ];
 }
 
