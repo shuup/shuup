@@ -10,7 +10,7 @@
     }
 
     @include media-breakpoint-down(md) {
-        padding-left: 15px;
+        padding-left: 30px;
     }
 
     @include media-breakpoint-down(sm) {
@@ -182,30 +182,8 @@ body {
 }
 
 .shuup-details {
-    .suppoert-nav-wrap {
-        padding-left: $main-menu-width;
-    }
-
     .support-nav {
         margin: 0 auto;
-        padding-right: 15px;
-        padding-left: 15px;
         min-width: 320px;
-
-        @include media-breakpoint-up(sm) {
-            max-width: 540px;
-        }
-
-        @include media-breakpoint-up(md) {
-            max-width: 720px;
-        }
-
-        @include media-breakpoint-up(lg) {
-            max-width: 960px;
-        }
-
-        @include media-breakpoint-up(xl) {
-            max-width: 1140px;
-        }
     }
 }
