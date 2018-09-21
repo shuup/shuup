@@ -77,7 +77,9 @@ def _add_custom_product_created_message(sender, object, **kwargs):
 def _add_primary_category(browser, shop):
     assert Category.objects.count() == 0
     select_id = "id_shop%s-primary_category" % shop.pk
-    browser.execute_script('$("#%s").parent().find("div.quick-add-btn a.btn").click();' % select_id)
+    move_to_element(browser, "#%s" % select_id)
+    wait_until_appeared(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
+    click_element(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
 
     wait_until_condition(browser, condition=lambda x: x.find_by_id("create-object-content-pane").has_class("open"))
     with browser.get_iframe('create-object-iframe') as iframe:
@@ -93,8 +95,11 @@ def _add_primary_category(browser, shop):
 def _add_additional_category(browser, shop):
     assert Category.objects.count() == 1
     select_id = "id_shop%s-categories" % shop.pk
+    move_to_element(browser, "#%s" % select_id)
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 1)
-    browser.execute_script('$("#%s").parent().find("div.quick-add-btn a.btn").click();' % select_id)
+    wait_until_appeared(browser, "#id_shop%d-categories ~ .quick-add-btn a.btn" % shop.id)
+    click_element(browser, "#id_shop%d-categories ~ .quick-add-btn a.btn" % shop.id)
+
     wait_until_condition(browser, condition=lambda x: x.find_by_id("create-object-content-pane").has_class("open"))
     with browser.get_iframe('create-object-iframe') as iframe:
         iframe.fill("base-name__en", "Test Category 2")
