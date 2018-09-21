@@ -55,9 +55,12 @@ img {
 
 #main-content {
     margin-top: 0 !important;
-    padding-top: 15px;
     margin-left: $main-menu-width;
     padding: 1.2em;
+
+    &.iframe-mode {
+        margin-left: 0;
+    }
 
     @include media-breakpoint-down(md) {
         margin-left: 0;
