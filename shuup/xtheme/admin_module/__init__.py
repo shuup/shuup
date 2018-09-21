@@ -126,7 +126,7 @@ class XthemeSnippetsAdminModule(AdminModule):
     def get_menu_entries(self, request):
         return [
             MenuEntry(
-                text=_("Theme Snippet Injection"),
+                text=_("Theme Custom CSS/JS"),
                 icon="fa fa-magic",
                 url="shuup_admin:xtheme_snippet.list",
                 category=CONTENT_MENU_CATEGORY,

@@ -102,10 +102,10 @@ function addSnippetInjectionMarkup() {
     }
     const button = el("button", {
         "type": "button"
-    }, gettext("Inject snippet"));
+    }, gettext("Custom CSS/JS"));
     button.addEventListener("click", () => {
         window.open(window.XthemeEditorConfig.injectSnipperUrl, "_blank");
-    })
+    });
     const li = el("li.xt-snippet-injection", [button]);
     nav.insertBefore(li, nav.firstChild);
 }

@@ -157,7 +157,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         toolbar = super(ThemeConfigDetailView, self).get_toolbar()
         toolbar.append(
             URLActionButton(
-                text=_("Snippet injection"),
+                text=_("Custom CSS/JS"),
                 icon="fa fa-magic",
                 url=reverse("shuup_admin:xtheme_snippet.list"),
                 extra_css_class="btn-info"
