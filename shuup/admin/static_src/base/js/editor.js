@@ -31,15 +31,15 @@ function activateEditor($editor, attrs = {}) {
     }
 
     const toolbar = [
-      ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
-      ['color', ['color']],
-      ['para', ['ul', 'ol', 'paragraph']],
-      ['table', ['table']],
-      ['insert', ["link", "media", "video"]],
+      ["style", ["style", "bold", "italic", "underline", "clear"]],
+      ["color", ["color"]],
+      ["para", ["ul", "ol", "paragraph"]],
+      ["table", ["table"]],
+      ["insert", ["link", "media", "video", "codeview"]],
       [$.summernote.options.toolbar.filter((option => option[0] !== "insert")).concat([
         ["insert", ["link", "media", "video"]]
       ])],
-    ]
+    ];
 
     const $summernote = $editor.summernote($.extend(true, {
         height: 200,
