@@ -10,7 +10,7 @@
 {% endmacro %}
 
 {% macro content_with_sidebar(content_id="", extra_classes="") %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 section-navigation d-none d-lg-block" data-navigatee="{{ content_id }}"></div>
             <div class="col-md-12 col-lg-9 {{ extra_classes }}">
@@ -94,7 +94,7 @@
 {% endmacro %}
 
 {% macro single_section_form(form_id, form, section_title="") %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 section-navigation" data-navigatee="{{ form_id }}"></div>
             <div class="col-md-9">

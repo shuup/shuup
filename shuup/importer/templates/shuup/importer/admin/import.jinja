@@ -2,7 +2,7 @@
 {% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
 
 {% block content %}
-    <div class="container">
+    <div class="container-fluid">
     {% call content_block(_("Data Import"), "fa-info-circle") %}
         <form method="post" enctype="multipart/form-data" action="" id="import_form">
             {% csrf_token %}
