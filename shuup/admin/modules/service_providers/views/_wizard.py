@@ -14,7 +14,7 @@ from shuup.core.models import PaymentMethod, ShippingMethod
 
 
 class ServiceProviderTypeForm(forms.Form):
-    providers = forms.CharField(label=_("Provider"), required=False)
+    providers = forms.CharField(label=_("Provider"), required=False, widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
         self.provider_label = kwargs.pop("label", "")
