@@ -135,6 +135,10 @@ class ShopAddressWizardForm(forms.ModelForm):
         super(ShopAddressWizardForm, self).__init__(**kwargs)
         self.fields["postal_code"].required = True
         self.fields["phone"].required = True
+
+        if not self.instance.pk:
+            self.fields["country"].initial = settings.SHUUP_ADDRESS_HOME_COUNTRY
+
         if self.instance.pk:
             name_components = self.instance.name.split(" ")
             first_name = ""
