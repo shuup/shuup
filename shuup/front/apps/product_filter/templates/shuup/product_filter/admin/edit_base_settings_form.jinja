@@ -1,0 +1,6 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+
+{% call content_block(_("Basic filter settings"), "fa-info-circle") %}
+    {{ render_monolingual_fields(form["base_settings"]) }}
+{% endcall %}
