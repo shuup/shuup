@@ -31,7 +31,7 @@ def schema(model, identifier, **info):
 class Initializer(object):
     schemata = [
         schema(
-            Shop, "default", name="Default Shop", public_name="Default Shop",
+            Shop, "default", name="Default Shop", public_name="Default Shop", domain="localhost",
             status=ShopStatus.ENABLED, maintenance_mode=True),
         schema(ProductType, "default", name="Standard Product"),
         schema(ProductType, "digital", name="Digital Product"),
@@ -44,7 +44,8 @@ class Initializer(object):
         schema(Currency, "BRL", decimal_places=2),
         schema(Currency, "JPY", decimal_places=0),
         schema(Currency, "CNY", decimal_places=2),
-        schema(Currency, "GBP", decimal_places=2)
+        schema(Currency, "GBP", decimal_places=2),
+        schema(Currency, "CAD", decimal_places=2),
     ]
 
     def __init__(self):
