@@ -368,6 +368,12 @@
             }
         }
     }
+
+    .picotable-item-info {
+        @include media-breakpoint-down(sm) {
+            text-align: center;
+        }
+    }
 }
 
 .mobile-row {
