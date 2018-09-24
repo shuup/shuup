@@ -10,7 +10,8 @@
                         {% if new_tab %} target="_blank" {% endif %}
                         href="{{ url("shuup_admin:xtheme.config_detail", theme_identifier=theme.identifier) }}"
                         class="btn btn-sm btn-configure-theme btn-default"
-                        data-placement="bottom"
+                        data-toggle="popover"
+                        data-placement="top"
                         data-trigger="manual"
                         data-content="{{ _("Click here to configure the theme") }}"
                     >
