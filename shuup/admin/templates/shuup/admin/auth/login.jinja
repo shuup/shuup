@@ -6,7 +6,7 @@
         <form action="{{ request.path }}" method="post" id="login_form">
             <div class="auth-body">
                 <div class="auth-heading pt-3 pb-3 text-center">
-                    <h1>{% trans %}Welcome back{% endtrans %}</h1>
+                    <h1 class="h1">{% trans %}Welcome back{% endtrans %}</h1>
                     {% csrf_token %}
                     {% if error %}
                         <p class="mb-0">{{ error|striptags }}</p>
@@ -29,7 +29,7 @@
                 </a>
                 <input type="hidden" name="next" value="{{ next }}">
                 <div class="actions">
-                    <button class="mt-4 btn btn-primary disabled btn-lg btn-block" type="submit">
+                    <button class="mt-4 btn btn-primary btn-lg btn-block" type="submit">
                         <i class="fa fa-sign-in"></i>
                         {% trans %}Login{% endtrans %}
                     </button>
@@ -41,18 +41,6 @@
 {% block extra_js %}
 <script>
 $(function () {
-    var fields = $("input");
-
-    fields.each(function() {
-        $(this).on("change", function() {
-            if ($(this).val().length > 0) {
-                $('.btn-primary').removeClass('disabled');
-            } else {
-                $('.btn-primary').addClass('disabled');
-            }
-        })
-    });
-
     $("#login_form").on("submit", function() {
         var loginBtn = $(this).find('.btn-primary');
         loginBtn
