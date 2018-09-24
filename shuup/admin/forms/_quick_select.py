@@ -14,20 +14,17 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
-class QuickAddRelatedObjectSelectBase(Select):
+class QuickAddRelatedObjectSelectMixin(object):
     def __init__(self, attrs=None, choices=(), editable_model=None):
+        attrs = attrs or {}
         self.editable_model = editable_model
         if editable_model:
-            edit_model_attr = {"data-edit-model": editable_model}
+            attrs.update({"data-edit-model": editable_model})
 
-            if attrs:
-                attrs.update(edit_model_attr)
-            else:
-                attrs = edit_model_attr
-        super(QuickAddRelatedObjectSelectBase, self).__init__(attrs, choices)
+        super(QuickAddRelatedObjectSelectMixin, self).__init__(attrs, choices)
 
 
-class QuickAddRelatedObjectSelect(QuickAddRelatedObjectSelectBase):
+class QuickAddRelatedObjectSelect(QuickAddRelatedObjectSelectMixin, Select):
     url = ""
     model = ""
     template_name = "shuup/admin/forms/widgets/quick_add_select.jinja"
@@ -43,7 +40,7 @@ class QuickAddRelatedObjectSelect(QuickAddRelatedObjectSelectBase):
         return context
 
 
-class QuickAddRelatedObjectMultiSelect(SelectMultiple):
+class QuickAddRelatedObjectMultiSelect(QuickAddRelatedObjectSelectMixin, SelectMultiple):
     url = ""
     template_name = "shuup/admin/forms/widgets/quick_add_select.jinja"
 
@@ -60,7 +57,7 @@ class QuickAddRelatedObjectMultiSelect(SelectMultiple):
         return context
 
 
-class QuickAddRelatedObjectSelectWithoutTemplate(QuickAddRelatedObjectSelectBase):
+class QuickAddRelatedObjectSelectWithoutTemplate(QuickAddRelatedObjectSelectMixin, Select):
     """
     Old implementation for Django 1.9 and 1.8 where the select
     still has the render.
@@ -106,7 +103,7 @@ class QuickAddRelatedObjectSelectWithoutTemplate(QuickAddRelatedObjectSelectBase
         return mark_safe('\n'.join(output))
 
 
-class QuickAddRelatedObjectMultiSelectWithoutTemplate(SelectMultiple):
+class QuickAddRelatedObjectMultiSelectWithoutTemplate(QuickAddRelatedObjectSelectMixin, SelectMultiple):
     """
     Old implementation for Django 1.9 and 1.8 where the select
     still has the render.
