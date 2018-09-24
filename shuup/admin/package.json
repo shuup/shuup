@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^8.6.5",
-    "babel-core": "^6.26.3",
+    "babel-core": "https://registry.npmjs.org/babel-core/-/babel-core-6.26.3.tgz",
     "babel-plugin-wildcard": "^5.0.0",
     "babel-preset-env": "^1.7.0",
     "eslint": "^5.1.0",

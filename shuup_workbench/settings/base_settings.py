@@ -66,7 +66,7 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.gdpr',
     'shuup.tasks',
     'shuup.discounts',
-
+    'shuup.front.apps.product_filter',
     # external apps
     'bootstrap3',
     'django_countries',
