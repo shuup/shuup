@@ -47,8 +47,8 @@ export default function view() {
                 null
         );
         viewObj = [
-            m("div.container-fluid",
-                m("button.btn.btn-inverse.m-3.pull-right", {
+            m("div.container-fluid.text-right",
+                m("button.btn.btn-inverse.mb-3", {
                     onclick: () => {
                         window.localStorage.setItem("resetSavedOrder", "true");
                         window.location.reload();

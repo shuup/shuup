@@ -519,15 +519,13 @@ const Picotable = (function(m, storage) {
         var isPick = !!ctrl.vm.pickId();
         var rows = Util.map(data.items, function(item) {
             var rowSettings = {key: "item-" + item._id};
-            if (massActions.length) {
-                rowSettings.onclick = (function(e) {
-                    // ctrl.saveCheck(item);
-                    if (item._url && e.target.className !== 'row-selection') {
-                      location.href = item._url;
-                    }
-                });
-                rowSettings.class = ctrl.isChecked(item) ? "active" : "";
-            }
+            rowSettings.onclick = (function(e) {
+                // ctrl.saveCheck(item);
+                if (item._url && e.target.className !== 'row-selection') {
+                  location.href = item._url;
+                }
+            });
+            rowSettings.class = ctrl.isChecked(item) ? "active" : "";
 
             return m("tr", rowSettings, Util.map(data.columns, function(col, idx) {
                 var content;
@@ -550,13 +548,14 @@ const Picotable = (function(m, storage) {
                 if (col.raw) {
                     content = m.trust(content);
                 }
+
                 if (col.linked) {
                     if (isPick) {
                         content = m("a", {
                             href: "#",
                             onclick: Util.boundPartial(ctrl, ctrl.pickObject, item)
                         }, content);
-                    } else if (item._url && col.id === "name" || col.id === "title") {
+                    } else if (item._url && (col.id === "name" || col.id === "title" || col.id === "username")) {
                         content = m("a", {
                           href: item._url,
                           className: "row-" + col.id,
@@ -719,6 +718,10 @@ const Picotable = (function(m, storage) {
 
     function renderMassActions(ctrl) {
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
+        if (massActions.length === 0) {
+            return "";
+        }
+
         var isPick = !!ctrl.vm.pickId();
         if (massActions === null || isPick) {
             return "";

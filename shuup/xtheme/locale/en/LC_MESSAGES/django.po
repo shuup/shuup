@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-12 13:49+0000\n"
+"POT-Creation-Date: 2018-09-21 23:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -55,7 +55,7 @@ msgstr ""
 msgid "Snippets"
 msgstr ""
 
-msgid "Theme Snippet Injection"
+msgid "Theme Custom CSS/JS"
 msgstr ""
 
 msgid ""
@@ -87,7 +87,7 @@ msgstr ""
 msgid "Theme activated."
 msgstr ""
 
-msgid "Snippet injection"
+msgid "Custom CSS/JS"
 msgstr ""
 
 msgid "Stylesheets"
@@ -382,13 +382,7 @@ msgstr ""
 msgid "Select theme"
 msgstr ""
 
-msgid "Active"
-msgstr ""
-
-msgid "Guide"
-msgstr ""
-
-msgid "Actions"
+msgid "Click here to configure the theme"
 msgstr ""
 
 msgid "Author"
@@ -397,22 +391,13 @@ msgstr ""
 msgid "Show guide"
 msgstr ""
 
-msgid "Activate theme to show guide"
-msgstr ""
-
-msgid "No guide"
-msgstr ""
-
 msgid "Activate"
 msgstr ""
 
-msgid "Click here to configure the theme"
-msgstr ""
-
-msgid "Configure"
-msgstr ""
-
 msgid "Theme Name"
+msgstr ""
+
+msgid "Actions"
 msgstr ""
 
 msgid "Currently active"

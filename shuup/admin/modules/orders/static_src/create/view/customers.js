@@ -45,15 +45,17 @@ function renderAddress(store, shop, customer, address, addressType) {
         const isRequired = (field.key === "tax_number" && customer.isCompany ? true : field.required);
         const helpText = field.helpText.replace("%s", gettext(addressType));
         if (field.key === "country") {
-            return m("div.form-group" + (isRequired ? " required-field" : ""), [
+            return m("div.form-group.form-content" + (isRequired ? " required-field" : ""), [
                 m("label.control-label", field.label),
-                selectBox(_.get(address, field.key, ""), function () {
-                    store.dispatch(setAddressProperty(addressType, field.key, this.value));
-                }, shop.countries, "id", "name", addressType + "-" + field.key),
-                m.component(HelpPopover, {
-                    title: field.label,
-                    content: helpText
-                })
+                m("div.form-input-group.d-flex", [
+                    selectBox(_.get(address, field.key, ""), function () {
+                        store.dispatch(setAddressProperty(addressType, field.key, this.value));
+                    }, shop.countries, "id", "name", addressType + "-" + field.key),
+                    m.component(HelpPopover, {
+                        title: field.label,
+                        content: helpText
+                    })
+                ])
             ]);
         }
         var onchange = function () {
@@ -77,15 +79,17 @@ function renderAddress(store, shop, customer, address, addressType) {
             const regionsData = window.REGIONS[country];
             if (regionsData) {
                 if (field.key === "region_code") {
-                    return m("div.form-group" + (isRequired ? " required-field" : ""), [
+                    return m("div.form-group.form-content" + (isRequired ? " required-field" : ""), [
                         m("label.control-label", field.label),
-                        selectBox(
-                            _.get(address, field.key, ""), onchange, regionsData,
-                            "code", "name", addressType + "-" + field.key, {code: "", name: "---------"}),
-                        m.component(HelpPopover, {
-                            title: field.label,
-                            content: helpText
-                        })
+                        m("div.form-input-group.d-flex", [
+                            selectBox(
+                                _.get(address, field.key, ""), onchange, regionsData,
+                                "code", "name", addressType + "-" + field.key, {code: "", name: "---------"}),
+                            m.component(HelpPopover, {
+                                title: field.label,
+                                content: helpText
+                            })
+                        ])
                     ]);
                 }
                 if (field.key === "region") {
@@ -102,20 +106,22 @@ function renderAddress(store, shop, customer, address, addressType) {
             }
         }
 
-        return m("div.form-group" + (isRequired ? " required-field" : ""), [
+        return m("div.form-group.form-content" + (isRequired ? " required-field" : ""), [
             m("label.control-label", field.label),
-            m("input.form-control", {
-                type: "text",
-                name: addressType + "-" + field.key,
-                placeholder: field.label,
-                required: isRequired,
-                value: _.get(address, field.key, ""),
-                onchange: onchange
-            }),
-            m.component(HelpPopover, {
-                title: field.label,
-                content: helpText
-            })
+            m("div.form-input-group.d-flex", [
+                m("input.form-control", {
+                    type: "text",
+                    name: addressType + "-" + field.key,
+                    placeholder: field.label,
+                    required: isRequired,
+                    value: _.get(address, field.key, ""),
+                    onchange: onchange
+                }),
+                m.component(HelpPopover, {
+                    title: field.label,
+                    content: helpText
+                })
+            ])
         ]);
     }).value();
 }

@@ -229,7 +229,7 @@
             if(type !== "first" && type !== "last") {
                 buttons.push({
                     text: "Previous",
-                    classes: "btn shepherd-button-secondary",
+                    classes: "btn btn-primary",
                     action: tour.back
                 });
             }
