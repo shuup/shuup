@@ -9,6 +9,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.db.transaction import atomic
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
@@ -54,7 +55,7 @@ class CategoryBaseForm(ShuupAdminForm):
         category_queryset = Category.objects.filter(shops=get_shop(request)).exclude(status=CategoryStatus.DELETED)
         self.fields["parent"].queryset = category_queryset
         self.fields["parent"].choices = [(None, "----")] + [
-            (category.pk, category.name) for category in category_queryset.exclude(id=kwargs["instance"].pk)
+            (category.pk, force_text(category)) for category in category_queryset.exclude(id=kwargs["instance"].pk)
         ]
 
     def clean_parent(self):

@@ -160,7 +160,13 @@ class Category(MPTTModel, TranslatableModel):
         order_insertion_by = ["ordering"]
 
     def __str__(self):
-        return self.safe_translation_getter("name", any_language=True) or self.identifier
+        return self.get_hierarchy()
+
+    def get_hierarchy(self, reverse=True):
+        return " / ".join([
+            ancestor.safe_translation_getter("name", any_language=True) or ancestor.identifier
+            for ancestor in self.get_ancestors(ascending=reverse, include_self=True)
+        ])
 
     def is_visible(self, customer):
         if customer and customer.is_all_seeing:

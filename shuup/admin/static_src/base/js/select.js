@@ -11,13 +11,18 @@ import $ from 'jquery';
 import select2 from 'select2';
 select2($);
 
-export function activateSelect($select, model, searchMode, attrs={}) {
+export function activateSelect($select, model, searchMode, noExpand=false, attrs={}) {
+    if (!noExpand) {
+        // make sure to expand the select2 to use all the available space
+        $select.width("100%");
+    }
+
     if(model === undefined) {
-        return $select.select2($.extend(true, {
-            language: "xx"
+        return $select.select2(Object.assign({
+            language: "xx",
         }, attrs));
     }
-    return $select.select2($.extend(true, {
+    return $select.select2(Object.assign({
         language: "xx",
         minimumInputLength: 3,
         ajax: {
@@ -44,7 +49,8 @@ export function activateSelects() {
         if (!select.hasClass("select2-hidden-accessible") && !select.hasClass("no-select2")) {
             const model = select.data("model");
             const searchMode = select.data("search-mode");
-            activateSelect(select, model, searchMode);
+            const noExpand = select.data("no-expand");
+            activateSelect(select, model, searchMode, noExpand);
         }
     });
 }
