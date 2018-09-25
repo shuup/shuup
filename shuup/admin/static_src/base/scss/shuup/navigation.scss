@@ -1,12 +1,12 @@
 #top-header {
     background: $nav-bg;
     height: $top-header-height;
-    width: calc(100% - #{$main-menu-width});
     position: fixed;
     top: 0;
     border-bottom: 1px solid $border-color;
-    left: $main-menu-width;
     z-index: 1000;
+    left: 0px;
+    width: 100%;
 
     @include media-breakpoint-down(md) {
         left: 0;
@@ -149,9 +149,6 @@
             }
         }
 
-        body.menu-open & {
-            background: $nav-bg-hover;
-        }
 
         .toggler {
             display: block;
@@ -160,6 +157,7 @@
             height: 60px;
             width: 60px;
             border-right: 1px solid $border-color;
+            background-color: transparent;
 
             span, span:before, span:after {
                 background: $text-color;
@@ -197,12 +195,12 @@
             }
 
             &:before {
-                background: $primary;
+                background: black;
                 @include rotate(-45deg);
             }
 
             &:after {
-                background: $primary;
+                background: black;
                 @include rotate(45deg);
             }
         }

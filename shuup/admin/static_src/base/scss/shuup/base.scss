@@ -23,10 +23,27 @@ body {
         overflow: hidden;
     }
 
+
     &.menu-open {
+
         @include media-breakpoint-down(sm) {
             overflow: hidden;
         }
+
+        #top-header {
+            left: $main-menu-width;
+            width: calc(100% - #{$main-menu-width});
+        }
+        @include media-breakpoint-up(lg) {
+            .support-nav-wrap {
+                padding-left: $main-menu-width + 30px;
+            }
+
+            #main-content {
+                margin-left: $main-menu-width;
+            }
+        }
+
     }
 }
 
@@ -56,7 +73,7 @@ img {
 #main-content {
     margin-top: 0 !important;
     padding-top: 15px;
-    margin-left: $main-menu-width;
+    margin-left: 0px;
     padding: 1.2em;
 
     @include media-breakpoint-down(md) {
@@ -104,6 +121,8 @@ canvas {
     max-height: 100%;
     height: auto !important;
     width: auto !important;
+
+
 }
 
 .tooltip {

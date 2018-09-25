@@ -58,15 +58,16 @@ const handleMainMenu = () => {
       mainMenu.classList.remove('open');
     });
   }
-
+  // media query change
+  if ($(window).width() >= 1024) {
+    $("body").toggleClass("menu-open");
+    $('.main-menu').addClass('open');
+  }
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
-      if (mainMenu.classList.contains('open')) {
-        mainMenu.classList.remove('open');
-      } else {
-        mainMenu.classList.add('open');
-        hideMainMenu();
-      }
+      $("body").toggleClass("menu-open");
+      $('.main-menu').toggleClass('open');
+
     });
   }
 }
