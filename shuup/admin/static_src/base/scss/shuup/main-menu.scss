@@ -9,6 +9,7 @@
     box-shadow: $shadow-lg;
     transition: transform 0.15s ease-in-out;
     -webkit-overflow-scrolling: touch;
+    display: none;
 
     @include media-breakpoint-down(md) {
         transform: translate3d(-100%,0,0);

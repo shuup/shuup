@@ -7,6 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import "@babel/polyfill";
+
 //-- jQuery
 var jquery = require("jquery");
 window.$ = window.jQuery = jquery;

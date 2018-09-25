@@ -58,14 +58,42 @@ const handleMainMenu = () => {
       mainMenu.classList.remove('open');
     });
   }
+  var desktop = false;
+  function closeAdminMenu() {
+    $('#top-header').css({ 'left' : '0px', 'width' : '100%'});
+    $('.support-nav-wrap').css({ 'padding-left': '30px' });
+    $('#main-content').css({ 'margin-left': '0px' });
+  }
+  function openAdminMenu() {
+    $('#top-header').css({ left: '280px', width : 'calc(100% - 280px)' });
+    $('.support-nav-wrap').css({ 'padding-left': '310px' });
+    $('#main-content').css({ 'margin-left': '280px' });
+  }
+  // media query change
+  function widthChange() {
+    if(($(window).width() > 768) && (mainMenu.classList.contains('open'))) {
+      openAdminMenu();
+    } else {
+      closeAdminMenu();
+    }
+  }
+
+  window.addEventListener("resize", widthChange);
+  if ($(window).width() >= 1024) {
+    $('.main-menu').addClass('open');
+  }
 
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
       if (mainMenu.classList.contains('open')) {
         mainMenu.classList.remove('open');
+          closeAdminMenu();
       } else {
         mainMenu.classList.add('open');
-        hideMainMenu();
+        if (!($(window).width() < 1024)) {
+          openAdminMenu();
+        }
+       hideMainMenu();
       }
     });
   }
