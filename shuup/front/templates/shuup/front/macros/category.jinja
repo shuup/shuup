@@ -57,11 +57,11 @@
                 <li{% if category and c == category %} class="current-page"{% endif %}>
                     {% if children %}
                         <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">
-                            <i class="fa menu-arrow"></i> {{ c }}
+                            <i class="fa menu-arrow"></i> {{ c.name }}
                         </a>
                         <ul>{{ loop(children) }}</ul>
                     {% else %}
-                        <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>
+                        <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c.name }}</a>
                     {% endif %}
                 </li>
             {% endfor %}
