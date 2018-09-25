@@ -49,7 +49,7 @@ def test_product_create(browser, admin_user, live_server, settings):
     name = "Some product name"
     price_value = 10
     short_description = "short but gold"
-
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("New shop product"))
     move_to_element(browser, "#id_base-sku")
     browser.fill("base-sku", sku)
     browser.fill("base-name__en", name)
