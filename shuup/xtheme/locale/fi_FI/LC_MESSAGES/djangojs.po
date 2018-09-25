@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 17:55+0000\n"
-"PO-Revision-Date: 2018-09-04 16:05+0000\n"
+"POT-Creation-Date: 2018-09-21 23:57+0000\n"
+"PO-Revision-Date: 2018-09-25 17:18+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,9 @@ msgstr "Oletko varma että haluat poistaa tämän solun?"
 msgid "Are you sure you wish to publish changes made to this view?"
 msgstr "Haluatko varmasti julkaista tähän näkymään tehdyt muutokset?"
 
+msgid "You have changed the form. Do you want to save them before publishing?"
+msgstr "Lomakkeella on muutoksia. Haluatko tallentaa muutokset ennen julkaisua?"
+
 msgid ""
 "Are you sure you wish to revert all changes made since the last published "
 "version?"
@@ -52,6 +55,9 @@ msgstr "Liitännäisten vaihtaminen aiheuttaa muiden tämän lomakkeen muutosten
 
 msgid "Toggle Editor"
 msgstr "Näytä / piilota editori"
+
+msgid "Custom CSS/JS"
+msgstr "Kustomoitu CSS/JS"
 
 msgid "Exit Edit"
 msgstr "Sulje editori"
