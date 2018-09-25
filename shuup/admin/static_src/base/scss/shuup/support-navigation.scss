@@ -13,8 +13,10 @@
         padding-left: 30px;
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(xs) {
         position: inherit;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
 
@@ -83,6 +85,10 @@ body {
     .flex-wrapper {
         display: flex;
         justify-content: space-between;
+
+        @include media-breakpoint-down(xs) {
+            flex-direction: column;
+        }
     }
 
     .main-header {
@@ -115,28 +121,48 @@ body {
             display: flex;
             flex-direction: row-reverse;
 
+            @include media-breakpoint-down(xs) {
+                flex-direction: column;
+            }
+
             .btn-danger {
                 order: 1;
             }
         }
 
         .btn {
-            margin: 10px 10px 0px 0px;
+            margin: 10px 10px 0 0;
 
             i {
                 margin-right: 5px;
             }
 
             @include media-breakpoint-up(md) {
-                margin: 0px 0px 0px 10px;
+                margin: 0 0 0 10px;
+            }
+
+            @include media-breakpoint-down(xs) {
+                margin: 10px 0 0 0;
+
+                &:not(.dropdown-toggle) {
+                    width: 100%;
+                }
+
+                &.btn-actions {
+                    width: 100%;
+                }
             }
         }
 
         .btn-group {
-            margin: 10px 10px 0px 0px;
+            margin: 10px 10px 0 0;
 
             @include media-breakpoint-up(md) {
-                margin: 0px 0px 0px 10px;
+                margin: 0 0 0 10px;
+            }
+
+            @include media-breakpoint-down(xs) {
+                margin: 10px 0 0 0;
             }
 
             .btn {
@@ -184,6 +210,6 @@ body {
 .shuup-details {
     .support-nav {
         margin: 0 auto;
-        min-width: 320px;
+        min-width: 0;
     }
 }
