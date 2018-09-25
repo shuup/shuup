@@ -14,6 +14,10 @@
   "license": "OSL-3.0",
   "private": true,
   "dependencies": {
+    "autoprefixer": "^8.6.5",
+    "babel-core": "^6.26.3",
+    "babel-plugin-wildcard": "^5.0.0",
+    "babel-preset-env": "^1.7.0",
     "bootstrap": "^4.1.2",
     "bootstrap-datetime-picker": "^2.4.4",
     "chart.js": "^2.7.2",
@@ -34,7 +38,9 @@
     "node-sass": "^4.9.2",
     "npm-font-open-sans": "^1.1.0",
     "outlayer": "^2.1.1",
+    "parcel-bundler": "^1.9.6",
     "popper": "^1.0.1",
+    "postcss-modules": "^1.1.0",
     "redux": "^3.0.4",
     "redux-actions": "^0.9.0",
     "redux-persist": "^3.5.0",
@@ -49,12 +55,6 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "devDependencies": {
-    "autoprefixer": "^8.6.5",
-    "babel-core": "^6.26.3",
-    "babel-plugin-wildcard": "^5.0.0",
-    "babel-preset-env": "^1.7.0",
-    "eslint": "^5.1.0",
-    "parcel-bundler": "^1.9.6",
-    "postcss-modules": "^1.1.0"
+    "eslint": "^5.1.0"
   }
 }
