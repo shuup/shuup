@@ -14,6 +14,7 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.text import camel_case_to_spaces
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
 
@@ -119,7 +120,7 @@ class EditScriptContentView(DetailView):
         context["step_next_names"] = get_enum_choices_dict(StepNext)
         context["toolbar"] = Toolbar([
             JavaScriptActionButton(
-                text="Save", icon="fa fa-save", extra_css_class="btn-success",
+                text=_("Save"), icon="fa fa-save", extra_css_class="btn-success",
                 onclick="window.ScriptEditor.save();return false"
             ),
             get_discard_button(get_model_url(self.object, "edit"))
