@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-23 23:26+0000\n"
+"POT-Creation-Date: 2018-09-25 22:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -732,13 +732,20 @@ msgid "Select All %s Items"
 msgstr ""
 
 #, javascript-format
-msgid "All %s Items Selected"
+msgid "There are no %s to show"
+msgstr ""
+
+msgid "How about creating a new entry?"
 msgstr ""
 
 msgid "Mass Action complete."
 msgstr ""
 
 msgid "Something went wrong."
+msgstr ""
+
+#, javascript-format
+msgid "All %s Items Selected"
 msgstr ""
 
 msgid "You haven't selected anything"

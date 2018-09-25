@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-10 16:14+0000\n"
+"POT-Creation-Date: 2018-09-25 22:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -59,13 +59,10 @@ msgstr ""
 msgid "Sunday"
 msgstr ""
 
-msgid "Browse"
+msgid "Select Product"
 msgstr ""
 
-msgid "Clear"
-msgstr ""
-
-msgid "Select"
+msgid "Select Contact"
 msgstr ""
 
 msgid "Orders"
@@ -200,6 +197,21 @@ msgid "Status"
 msgstr ""
 
 msgid "Visibility"
+msgstr ""
+
+msgid "Organize"
+msgstr ""
+
+msgid "Organize categories"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Categories saved"
+msgstr ""
+
+msgid "Payload is missing from the request"
 msgstr ""
 
 msgid "Contact Group Pricing Display"
@@ -360,10 +372,13 @@ msgstr ""
 msgid "Activate Contact"
 msgstr ""
 
+msgid "Options"
+msgstr ""
+
 msgid "Actions"
 msgstr ""
 
-msgid "Edit..."
+msgid "Edit"
 msgstr ""
 
 msgid "You can not deactivate a superuser."
@@ -790,7 +805,7 @@ msgid "%(field)s saved successfully."
 msgstr ""
 
 #, python-format
-msgid "Edit Addresses -- %s"
+msgid "Save -- %s"
 msgstr ""
 
 msgid "Unable to set order as completed at this point"
@@ -1135,9 +1150,6 @@ msgstr ""
 msgid "Edit Cross-Sell: %s"
 msgstr ""
 
-msgid "Save"
-msgstr ""
-
 msgid "Changes saved."
 msgstr ""
 
@@ -1217,9 +1229,6 @@ msgstr ""
 msgid "Products changed successfully"
 msgstr ""
 
-msgid "Save as a copy"
-msgstr ""
-
 msgid "Manage Cross-Selling"
 msgstr ""
 
@@ -1254,6 +1263,15 @@ msgid "Convert to Package Parent"
 msgstr ""
 
 msgid "Convert to Variation Parent"
+msgstr ""
+
+msgid "Save and Exit"
+msgstr ""
+
+msgid "Save and Create New"
+msgstr ""
+
+msgid "Save as a copy"
 msgstr ""
 
 msgid "Sales Dashboard"
@@ -1952,6 +1970,9 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+msgid "Welcome back"
+msgstr ""
+
 msgid "Forgot your password?"
 msgstr ""
 
@@ -1993,22 +2014,22 @@ msgstr ""
 msgid "Send password recovery instructions"
 msgstr ""
 
+msgid "Dashboard"
+msgstr ""
+
 msgid "Quicklinks"
 msgstr ""
 
 msgid "Menu"
 msgstr ""
 
-msgid "Dashboard"
-msgstr ""
-
-msgid "Go home"
-msgstr ""
-
 msgid "Search for"
 msgstr ""
 
 msgid "Support ID: "
+msgstr ""
+
+msgid "Go home"
 msgstr ""
 
 msgid "Hello"
@@ -2044,6 +2065,20 @@ msgstr ""
 msgid ""
 "You can add a name, description, picture or anything you want to make it "
 "stand out."
+msgstr ""
+
+msgid "Show in Menu"
+msgstr ""
+
+msgid "Hide from Menu"
+msgstr ""
+
+msgid ""
+"Drag and drop categories below to sort and change the hierarchy. Make sure "
+"to Save to apply the changes."
+msgstr ""
+
+msgid "You can also change the menu visibility of categories through buttons."
 msgstr ""
 
 msgid "General information"
@@ -3082,17 +3117,11 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-msgid "Save and Exit"
-msgstr ""
-
 msgid "This action effects on all products."
 msgstr ""
 
 #, python-format
 msgid "This action effects %(item_count)s products."
-msgstr ""
-
-msgid "Edit"
 msgstr ""
 
 msgid "Upload"
@@ -3120,9 +3149,6 @@ msgid "No payments have been created yet."
 msgstr ""
 
 msgid "Are you sure you want to delete this payment?"
-msgstr ""
-
-msgid "Order Contents"
 msgstr ""
 
 msgid "Text"
@@ -3199,6 +3225,9 @@ msgstr ""
 msgid "Confirm Refund"
 msgstr ""
 
+msgid "Order Contents"
+msgstr ""
+
 msgid "Paid"
 msgstr ""
 
@@ -3235,6 +3264,9 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
+msgid "Order Details"
+msgstr ""
+
 msgid "Order Number"
 msgstr ""
 
@@ -3242,6 +3274,12 @@ msgid "Reference"
 msgstr ""
 
 msgid "Label"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Shipping Method"
 msgstr ""
 
 msgid "Ordered by"
@@ -3260,12 +3298,6 @@ msgid "Total Price"
 msgstr ""
 
 msgid "Customer Comment"
-msgstr ""
-
-msgid "Payment Method"
-msgstr ""
-
-msgid "Shipping Method"
 msgstr ""
 
 msgid "Tracking codes"
@@ -3318,9 +3350,6 @@ msgstr ""
 msgid "Set as primary image"
 msgstr ""
 
-msgid "Advanced options"
-msgstr ""
-
 msgid "Product Images"
 msgstr ""
 
@@ -3331,6 +3360,9 @@ msgid "You can attach files such as manual to the merchandise(s) here."
 msgstr ""
 
 msgid "Showcase your merchandise here."
+msgstr ""
+
+msgid "Drop files here or click to <a href=\"#\">browse</a>."
 msgstr ""
 
 msgid "All the orders that have this product."
@@ -3454,6 +3486,9 @@ msgid "YTD"
 msgstr ""
 
 msgid "Totals"
+msgstr ""
+
+msgid "Consolidate Data"
 msgstr ""
 
 msgid ""
@@ -3652,9 +3687,6 @@ msgstr ""
 msgid "Discard Changes"
 msgstr ""
 
-msgid "Save and Create New"
-msgstr ""
-
 #, python-format
 msgid "Are you sure you wish to delete %s?"
 msgstr ""
@@ -3679,7 +3711,7 @@ msgstr ""
 msgid "Log in with different credentials..."
 msgstr ""
 
-msgid "You must be logged in."
+msgid "Sign in to continue"
 msgstr ""
 
 msgid "You must be a staff member."
