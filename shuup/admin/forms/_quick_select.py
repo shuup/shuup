@@ -92,7 +92,7 @@ class QuickAddRelatedObjectSelectWithoutTemplate(QuickAddRelatedObjectSelectBase
         quick_add_button = """
             <span class="quick-add-btn">
                 <a
-                    class="btn"
+                    class="btn btn-inverse"
                     data-url="%s?mode=iframe&quick_add_target=%s"
                     data-toggle="popover"
                     data-placement="bottom"
@@ -134,7 +134,7 @@ class QuickAddRelatedObjectMultiSelectWithoutTemplate(SelectMultiple):
         quick_add_button = """
             <span class="quick-add-btn">
                 <a
-                    class="btn"
+                    class="btn btn-inverse"
                     data-url="%s?mode=iframe&quick_add_target=%s"
                     data-toggle="popover"
                     data-placement="bottom"
