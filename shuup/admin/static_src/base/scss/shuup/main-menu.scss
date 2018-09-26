@@ -116,7 +116,7 @@
     &.open {
         transform: translate3d(0,0,0);
         box-shadow: $shadow-lg;
-        display: block !important;
+        display: block;
     }
 }
 
