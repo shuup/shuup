@@ -28,6 +28,64 @@ body {
             overflow: hidden;
         }
     }
+
+    @include media-breakpoint-up(lg) {
+        &.desktop-menu-closed {
+             #top-header {
+                 left: 0;
+                 width: 100%;
+             }
+
+             .support-nav-wrap {
+                 left: 30px;
+                 padding-left: 30px;
+             }
+
+             #main-content {
+                 margin-left: 0;
+             }
+
+             #js-main-menu {
+                 display: none;
+             }
+        }
+
+        &:not(.desktop-menu-closed)  {
+            #top-header .toggler span {
+                background-color: transparent;
+
+                &:before, &:after {
+                    top: 0;
+                }
+
+                &:hover, &:before, &:after {
+                    background: red;
+                }
+
+                &:before {
+                    background: $black;
+                    @include rotate(-45deg);
+                }
+
+                &:after {
+                    background: $black;
+                    @include rotate(45deg);
+                }
+            }
+
+            #top-header .nav-menu-button {
+                &:hover {
+                    .toggler {
+                        span, span:before, span:after {
+                            background: $gray-bg;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 *::selection {

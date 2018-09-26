@@ -21,7 +21,7 @@ const handleMainMenu = () => {
         categoryArrow.classList.remove('rotate');
       }
     });
-  }
+  };
 
   const openMenu = (element) => {
     const categoryArrow = element.querySelector('.item-arrow');
@@ -30,9 +30,9 @@ const handleMainMenu = () => {
     element.classList.add('item-active');
     submenu.classList.add('active');
     categoryArrow.classList.add('rotate');
-  }
+  };
 
-  Array.from(categoryLink).forEach((item) => {
+  [...categoryLink].forEach((item) => {
     item.addEventListener('click', (event) => {
       event.preventDefault();
 
@@ -57,10 +57,11 @@ const handleMainMenu = () => {
       event.preventDefault();
       mainMenu.classList.remove('open');
     });
-  }
+  };
 
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
+      $("body").toggleClass("desktop-menu-closed");
       if (mainMenu.classList.contains('open')) {
         mainMenu.classList.remove('open');
       } else {
@@ -69,6 +70,6 @@ const handleMainMenu = () => {
       }
     });
   }
-}
+};
 
 export default handleMainMenu;
