@@ -18,15 +18,19 @@ $(function() {
     if (window.DashboardCharts) {
         window.DashboardCharts.init();
     }
-    if (window.Masonry) {
-        const Masonry = window.Masonry;
 
-        const msnry = new Masonry(document.getElementById("dashboard-wrapper"), {
+    if (window.Masonry) {
+        const msnry = new window.Masonry(document.getElementById("dashboard-wrapper"), {
             itemSelector: ".block",
             columnWidth: ".block",
             percentPosition: true
         });
+
+        document.getElementById("menu-button").addEventListener("click", () => {
+            setTimeout(() => {msnry.layout()}, 500)
+        });
     }
+
     $(document).on("click", "button.dismiss-button", function() {
         const $button = $(this);
         const url = $button.data("dismissUrl");
