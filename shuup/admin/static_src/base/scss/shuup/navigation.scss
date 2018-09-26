@@ -133,6 +133,7 @@
 
             .toggler {
                 @include transition(all 0.5s);
+
                 span, span:before, span:after {
                     background: $primary;
                 }
@@ -140,10 +141,12 @@
                 span:before {
                     background: $primary !important;
                 }
+
                 span:after {
                     background: $primary !important;
                 }
             }
+
             &:before {
                 height: 100%;
             }
@@ -162,15 +165,15 @@
             border-right: 1px solid $border-color;
 
             span, span:before, span:after {
+                @include transition(all 0.2s);
+
                 background: $text-color;
-                border-radius: 1px;
                 width: 22px;
                 height: 2px;
                 display: block;
                 border-radius: 4px;
                 content: "";
                 cursor: pointer;
-                @include transition(all 0.2s);
                 position: absolute;
                 left: 50%;
                 top: 50%;
@@ -186,24 +189,6 @@
             span:after {
                 top: 7px;
                 margin-top: 0;
-            }
-        }
-
-        body.menu-open & .toggler span {
-            background-color: transparent;
-
-            &:before, &:after {
-                top: 0;
-            }
-
-            &:before {
-                background: $primary;
-                @include rotate(-45deg);
-            }
-
-            &:after {
-                background: $primary;
-                @include rotate(45deg);
             }
         }
     }
