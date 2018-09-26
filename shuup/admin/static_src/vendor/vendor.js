@@ -18,7 +18,7 @@ window.Dropzone = require('dropzone');
 Dropzone.autoDiscover = false;
 
 window.OrderCreator = require('../../modules/orders/static_src/create/index.js');
-window.Shepherd = require('tether-shepherd');
+window.Shepherd = require('shepherd.js');
 
 const m = require('mithril');
 window.m = m;
@@ -41,5 +41,4 @@ require('moment');
 require('outlayer');
 require('popper.js');
 require('summernote/dist/summernote-bs4.js');
-require('tether');
 require('jquery-datetimepicker');

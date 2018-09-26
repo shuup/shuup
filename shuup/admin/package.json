@@ -46,11 +46,10 @@
     "redux-persist": "^3.5.0",
     "select2": "^4.0.6-rc.1",
     "select2-bootstrap-css": "^1.4.6",
+    "shepherd.js": "^2.0.0-beta.18",
     "shuup-static-build-tools": "file:../../lib/shuup_static_build_tools",
     "sortablejs": "^1.7.0",
     "summernote": "^0.8.10",
-    "tether": "^1.4.4",
-    "tether-shepherd": "^1.8.1",
     "tooltip.js": "^1.2.0",
     "vinyl-source-stream": "^2.0.0"
   },
