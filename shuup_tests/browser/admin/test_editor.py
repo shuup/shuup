@@ -14,7 +14,8 @@ from django.utils.translation import activate
 from shuup import configuration
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition
+    click_element, move_to_element, wait_until_appeared,
+    wait_until_condition
 )
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -37,9 +38,10 @@ def test_summernote_editor_picture(browser, admin_user, live_server, settings):
 
     url = reverse("shuup_admin:shop_product.new")
     browser.visit("%s%s" % (live_server, url))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("New shop product"))
 
     img_icon_selector = "#id_base-description__en-editor-wrap i[class='note-icon-picture']"
-    wait_until_appeared(browser, img_icon_selector)
+    move_to_element(browser, img_icon_selector)
     click_element(browser, img_icon_selector)
     wait_until_condition(browser, lambda b: len(b.windows) == 2)
 
