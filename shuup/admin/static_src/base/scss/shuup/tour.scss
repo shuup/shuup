@@ -64,7 +64,6 @@ body.shepherd-active > .shepherd-step {
     }
 
     .btn-primary {
-
         border-color: $primary !important;
         background-color: $primary !important;
     }
@@ -127,4 +126,28 @@ body.shepherd-active > .shepherd-step {
             font-size: 21px;
         }
     }
+}
+
+.shepherd-element {
+    z-index: 100001;
+    max-width: 450px;
+
+    &-wide {
+        max-width: none;
+    }
+
+    .pull-left {
+        width: 30%;
+    }
+    .step-with-icon {
+        float: left;
+        position: relative;
+        width: 70%;
+    }
+}
+
+ a.show-tour {
+     @include media-breakpoint-down(md) {
+        display: none;
+     }
 }
