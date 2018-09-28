@@ -16,9 +16,11 @@ from mock import patch
 from shuup.core.utils.price_cache import (
     cache_price_info, get_cached_price_info
 )
+from shuup.discounts.exceptions import DiscountM2MChangeError
 from shuup.discounts.models import (
     AvailabilityException, Discount, HappyHour, TimeRange
 )
+from shuup.discounts.signal_handers import handle_generic_m2m_changed
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 
@@ -103,7 +105,7 @@ def test_bump_caches_signal(rf):
             start_datetime=now+timedelta(days=20),
             end_datetime=now+timedelta(days=30),
         )
-        discount.availability_exceptions.add(availability_exception)
+        availability_exception.discounts.add(discount)
         assert_product1_is_not_cached()
         assert_cache_product1(True)
         assert_product2_is_cached()
@@ -114,7 +116,7 @@ def test_bump_caches_signal(rf):
         assert_product2_is_cached()
 
         happy_hour = HappyHour.objects.create(name="hh 1")
-        discount.happy_hours.add(happy_hour)
+        happy_hour.discounts.add(discount)
         assert_product1_is_not_cached()
         assert_cache_product1(True)
         assert_product2_is_cached()
@@ -143,3 +145,6 @@ def test_bump_caches_signal(rf):
         assert_product1_is_not_cached()
         assert_cache_product1(True)
         assert_product2_is_cached()
+
+        with pytest.raises(DiscountM2MChangeError):
+            handle_generic_m2m_changed("test", time_range)

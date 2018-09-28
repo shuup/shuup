@@ -9,8 +9,9 @@ from __future__ import unicode_literals
 
 from django.db.models.signals import m2m_changed, post_save, pre_delete
 
-from shuup.core.models import Shop, ShopProduct
+from shuup.core.models import Category, ShopProduct
 from shuup.core.utils.price_cache import bump_all_price_caches
+from shuup.discounts.exceptions import DiscountM2MChangeError
 from shuup.discounts.models import (
     AvailabilityException, CouponCode, Discount, HappyHour, TimeRange
 )
@@ -59,52 +60,48 @@ def handle_coupon_post_save(sender, instance, **kwargs):
         bump_all_price_caches(shops)
 
 
-def hangle_generic_m2m_changed(sender, instance, **kwargs):
+def handle_generic_m2m_changed(sender, instance, **kwargs):
     """
     As `instance` can be an instance of the sender or of the class the ManyToManyField is related to,
     we need to check the type of the instance and forward to the correct handler
     """
-    if isinstance(instance, Shop):
-        bump_price_expiration([instance.pk])
-        bump_all_price_caches([instance.pk])
-
-    elif isinstance(instance, ShopProduct):
+    if isinstance(instance, ShopProduct):
         bump_price_expiration([instance.shop_id])
         bump_all_price_caches([instance.shop_id])
-
+    elif isinstance(instance, Category):
+        for shop_id in set(instance.shop_products.all().values_list("shop_id", flat=True)):
+            bump_price_expiration([shop_id])
+            bump_all_price_caches([shop_id])
     elif isinstance(instance, Discount):
         handle_discount_post_save(sender, instance, **kwargs)
-
     elif isinstance(instance, HappyHour):
         handle_happy_hour_post_save(sender, instance, **kwargs)
-
-    elif isinstance(instance, TimeRange):
-        handle_time_range_post_save(sender, instance, **kwargs)
-
     elif isinstance(instance, AvailabilityException):
         handle_availability_exception_post_save(sender, instance, **kwargs)
+    else:
+        raise DiscountM2MChangeError("Invalid instance type.")
 
 
 # Bump price info and price expiration caches when Discount related models are changed
 m2m_changed.connect(
-    hangle_generic_m2m_changed,
+    handle_generic_m2m_changed,
     sender=Discount.shops.through,
     dispatch_uid="discounts:changed_shops_m2m"
 )
 m2m_changed.connect(
-    hangle_generic_m2m_changed,
+    handle_generic_m2m_changed,
     sender=Discount.happy_hours.through,
     dispatch_uid="discounts:changed_happy_hours_m2m"
 )
 m2m_changed.connect(
-    hangle_generic_m2m_changed,
+    handle_generic_m2m_changed,
     sender=Discount.availability_exceptions.through,
     dispatch_uid="discounts:changed_availability_exceptions_m2m"
 )
 
 # Bump price info and price expiration caches when categories from shop products change
 m2m_changed.connect(
-    hangle_generic_m2m_changed,
+    handle_generic_m2m_changed,
     sender=ShopProduct.categories.through,
     dispatch_uid="discounts:changed_shop_product_categories"
 )

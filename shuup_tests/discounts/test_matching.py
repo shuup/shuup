@@ -142,7 +142,7 @@ def test_category_product_discount_with_contact(rf):
     request, product = _init_test_for_product(rf, default_price)
 
     category = factories.get_default_category()
-    product.get_shop_instance(request.shop).categories.add(category)
+    category.shop_products.add(product.get_shop_instance(request.shop))
     product_discount_amount = 4
     discount = Discount.objects.create(active=True, category=category, discount_amount_value=product_discount_amount)
     discount.shops.add(request.shop)
