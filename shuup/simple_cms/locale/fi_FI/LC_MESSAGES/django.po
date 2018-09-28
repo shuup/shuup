@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-23 18:59+0000\n"
-"PO-Revision-Date: 2018-07-26 15:41+0000\n"
+"POT-Creation-Date: 2018-09-04 16:19+0000\n"
+"PO-Revision-Date: 2018-09-28 21:15+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,9 @@ msgstr "Saatavilla alkaen"
 
 msgid "Available to"
 msgstr "Saatavilla päättyen"
+
+msgid "Template"
+msgstr "Malline"
 
 msgid "URL already exists."
 msgstr "Antamasi verkko-osoite on jo olemassa."
@@ -179,8 +182,19 @@ msgstr "sisältö"
 
 msgid ""
 "The page content. This is the text that is displayed when customers click on"
-" your page link."
-msgstr "Sivun sisältö. Tämä teksti näytetään, mikäli asiakas klikkaa sivulinkkiäsi."
+" your page link.You can leave this empty and add all page content through "
+"placeholder editor in shop front.To edit the style of the page you can use "
+"the Snippet plugin which is in shop front editor."
+msgstr "Sivusi sisältö. Tämä sisältö näytetään asiakkaalle, kun hän avaa sivun. Voit halutessasi lisätä itse sisällön joko tässä näkymässä, tai kaupan puolella (muokkaamalla sisältöalueita). Tyylien muokkaamiseen voit käyttää CSS/JS lisäosaa."
+
+msgid "Template path"
+msgstr "Mallinteen polku"
+
+msgid "render title"
+msgstr "Näytä otsikko"
+
+msgid "Check this if this page should have a visible title"
+msgstr "Valitse tämä, mikäli haluat otsikon näkyvän sivulla."
 
 msgid "page"
 msgstr "sivu"
@@ -202,6 +216,12 @@ msgstr "Kaikki sivut ovat näkyvillä, vaikka eivät olisi valittuina"
 
 msgid "Hide expired pages"
 msgstr "Piilota vanhentuneet sivut"
+
+msgid "Default Page"
+msgstr "Oletussivu"
+
+msgid "Page with sidebar"
+msgstr "Sisältösivu sivupalkilla"
 
 msgid "New Page"
 msgstr "Uusi sivu"

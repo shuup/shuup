@@ -26,9 +26,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-20 15:54+0000\n"
-"PO-Revision-Date: 2018-08-24 17:04+0000\n"
-"Last-Translator: Janne Tammi <janne@shuup.com>\n"
+"POT-Creation-Date: 2018-09-10 16:14+0000\n"
+"PO-Revision-Date: 2018-09-25 17:33+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -618,6 +618,9 @@ msgstr "Valitse kaupat tälle valmistajalle. Jätä tyhjäksi jakaaksesi kaikkie
 msgid "You have no permission to change a shared Manufacturer."
 msgstr "Sinulla ei ole oikeuksia muokata yhteistä valmistajaa."
 
+msgid "Logo"
+msgstr "Logo"
+
 msgid "Media"
 msgstr "Media"
 
@@ -677,12 +680,6 @@ msgstr "%(file)s siirretty sijainnista %(old)s sijaintiin %(new)s."
 msgid "Show orders"
 msgstr "Näytä tilaukset"
 
-msgid "Order Status"
-msgstr "Tilauksen tila"
-
-msgid "List Statuses"
-msgstr "Listaa tilat"
-
 msgid "Outstanding Orders"
 msgstr "Avoimet tilaukset"
 
@@ -692,6 +689,12 @@ msgstr "%d avointa tilausta"
 
 msgid "New order"
 msgstr "Uusi tilaus"
+
+msgid "Order Status"
+msgstr "Tilauksen tila"
+
+msgid "List Statuses"
+msgstr "Listaa tilat"
 
 #, python-format
 msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
@@ -1705,9 +1708,6 @@ msgstr "Kauppasi on nyt auki!"
 msgid "Shop {} is now active!"
 msgstr "Kauppa {} on nyt aktiivinen!"
 
-msgid "Logo"
-msgstr "Logo"
-
 msgid "Domain"
 msgstr "Verkkotunnus"
 
@@ -1725,6 +1725,9 @@ msgstr "Toimittajat"
 
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr "Valitse kaupat tälle toimittajalle. Jätä tyhjäksi, mikäli se jaetaan kaikkien kauppojen kesken."
+
+msgid "It is not possible to manage inventory when no module is selected."
+msgstr "Varastonhallintaa ei voi tehdä ilman moduulin valintaa."
 
 #, python-format
 msgid "No %s module"

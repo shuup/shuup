@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 03:36+0000\n"
-"PO-Revision-Date: 2018-07-16 21:58+0000\n"
+"POT-Creation-Date: 2018-09-21 23:57+0000\n"
+"PO-Revision-Date: 2018-09-28 21:19+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -66,6 +66,32 @@ msgstr "Teema ei ole aktiivinen. Klikkaa tästä aktivoidaksesi teema."
 msgid "Theming"
 msgstr "Teemat"
 
+msgid "Shuup Extensible Theme Engine Snippets"
+msgstr "Shuup laajennettava teemamoottori koodinpätkät"
+
+msgid "Snippets"
+msgstr "Koodinpätkät"
+
+msgid "Theme Custom CSS/JS"
+msgstr "Teeman kustomoitu CSS/JS"
+
+msgid ""
+"Select the themes that will have this snippet injected. Leave the field "
+"blank to inject in all themes."
+msgstr "Valitse teemat, joihin tämä koodinpätkä liitetään. Jätä tyhjäksi, mikäli haluat liitää tämän koodinpätkän jokaiseen teemaan."
+
+msgid "Select the location of the page to inject the snippet."
+msgstr "Valitse koodinpätkän sijainti sivulla."
+
+msgid "Location"
+msgstr "Sijainti"
+
+msgid "Filter by location..."
+msgstr "Suodata sijainnin mukaan..."
+
+msgid "Type"
+msgstr "Tyyppi"
+
 msgid "activate"
 msgstr "aktivoi"
 
@@ -77,6 +103,9 @@ msgstr "Valitse teema kaupallesi"
 
 msgid "Theme activated."
 msgstr "Teema aktivoitu."
+
+msgid "Custom CSS/JS"
+msgstr "Kustomoitu CSS/JS"
 
 msgid "Stylesheets"
 msgstr "Tyylit"
@@ -111,6 +140,15 @@ msgstr "Tämä sisältöalue näytetään vain tuotteelle %(product_name)s."
 msgid "Shop '{}' has no active theme"
 msgstr "Kaupalla '{}' ei ole aktiivista teemaa"
 
+msgid "Inline JavaScript"
+msgstr "JavaScript-upotus"
+
+msgid "Inline CSS"
+msgstr "CSS-upotus"
+
+msgid "Inline HTML"
+msgstr "HTML-upotus"
+
 msgid "current draft"
 msgstr "nykyinen vedos"
 
@@ -144,6 +182,24 @@ msgstr "data"
 #, python-format
 msgid "Theme configuration for %s"
 msgstr "Teeman %s asetukset"
+
+msgid "location"
+msgstr "sijainti"
+
+msgid "snippet type"
+msgstr "koodinpätkän tyyppi"
+
+msgid "snippet"
+msgstr "koodinpätkä"
+
+msgid "themes"
+msgstr "teemat"
+
+msgid "Snippet"
+msgstr "Koodinpätkä"
+
+msgid "Snippet for {} in {}"
+msgstr "Koodinpätkä {} {}"
 
 msgid "Plugin"
 msgstr "Lisäosa"
@@ -193,9 +249,6 @@ msgstr "Satunnainen"
 msgid "Product Highlights"
 msgstr "Tuotenostot"
 
-msgid "Type"
-msgstr "Tyyppi"
-
 msgid "Count"
 msgstr "Lukumäärä"
 
@@ -216,9 +269,6 @@ msgstr "kategoria"
 
 msgid "Category Products Highlight"
 msgstr "Kategoriatuotenostot"
-
-msgid "Snippets"
-msgstr "Koodinpätkät"
 
 msgid "In-Place Snippet"
 msgstr "Kohdalla olevat koodinpätkät"
@@ -277,6 +327,24 @@ msgid ""
 "pages."
 msgstr "Sisältöalue on globaali ja sen sisältö näytetään kaikilla näkymillä."
 
+msgid "End of head"
+msgstr "Head-elementin loppu"
+
+msgid "Start of head"
+msgstr "Head-elementin alku"
+
+msgid "End of body"
+msgstr "Body-elementin loppu"
+
+msgid "Start of body"
+msgstr "Body-elementin alku"
+
+msgid "Content start"
+msgstr "Sisällön alku"
+
+msgid "Content end"
+msgstr "Sisällön loppu"
+
 msgid "Delete This Cell"
 msgstr "Poista tämä solu"
 
@@ -331,14 +399,8 @@ msgstr "Teemalla ei ole asetuksia."
 msgid "Select theme"
 msgstr "Valitse teema"
 
-msgid "Active"
-msgstr "Aktiivinen"
-
-msgid "Guide"
-msgstr "Opas"
-
-msgid "Actions"
-msgstr "Toiminnot"
+msgid "Click here to configure the theme"
+msgstr "Klikkaa tätä asentaaksesi teeman"
 
 msgid "Author"
 msgstr "Tekijä"
@@ -346,23 +408,14 @@ msgstr "Tekijä"
 msgid "Show guide"
 msgstr "Näytä ohjeistus"
 
-msgid "Activate theme to show guide"
-msgstr "Aktivoi teema nähdäksesi ohjeistuksen"
-
-msgid "No guide"
-msgstr "Ei ohjeistusta"
-
 msgid "Activate"
 msgstr "Aktivoi"
 
-msgid "Click here to configure the theme"
-msgstr "Klikkaa tähän asentaaksesi teeman"
-
-msgid "Configure"
-msgstr "Muokkaa"
-
 msgid "Theme Name"
 msgstr "Teeman nimi"
+
+msgid "Actions"
+msgstr "Toiminnot"
 
 msgid "Currently active"
 msgstr "Aktiivinen tällä hetkellä"
@@ -419,6 +472,12 @@ msgstr "Solun leveys"
 
 msgid "Cell align"
 msgstr "Solun tasaus"
+
+msgid "Extra classes"
+msgstr "Ylimääräiset luokat"
+
+msgid "Add extra CSS classes names to the cell"
+msgstr "Lisää ylimääräinen CSS-luokka soluun"
 
 msgid "No Plugin"
 msgstr "Ei lisäosaa"
