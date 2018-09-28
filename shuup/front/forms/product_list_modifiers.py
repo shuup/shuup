@@ -310,8 +310,12 @@ class CategoryProductListFilter(SimpleProductListModifier):
         data = [
             (
                 "categories",
-                forms.ModelMultipleChoiceField(
-                    queryset=queryset, required=False, label=_('Categories'), widget=FilterWidget())
+                forms.MultipleChoiceField(
+                    choices=[(cat.pk, cat.name) for cat in queryset],
+                    required=False,
+                    label=_('Categories'),
+                    widget=FilterWidget()
+                )
             ),
         ]
         context_cache.set_cached_value(key, data)

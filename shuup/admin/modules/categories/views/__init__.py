@@ -8,5 +8,12 @@ from .copy import CategoryCopyVisibilityView
 from .delete import CategoryDeleteView
 from .edit import CategoryEditView
 from .list import CategoryListView
+from .organize import CategoryOrganizeView
 
-__all__ = ["CategoryEditView", "CategoryDeleteView", "CategoryListView", "CategoryCopyVisibilityView"]
+__all__ = [
+    "CategoryEditView",
+    "CategoryDeleteView",
+    "CategoryListView",
+    "CategoryCopyVisibilityView",
+    "CategoryOrganizeView"
+]

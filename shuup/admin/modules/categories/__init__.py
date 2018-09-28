@@ -39,6 +39,12 @@ class CategoryModule(AdminModule):
                 name="category.delete",
                 permissions=get_default_model_permissions(Category)
             ),
+            admin_url(
+                "^categories/organize/$",
+                "shuup.admin.modules.categories.views.CategoryOrganizeView",
+                name="category.organize",
+                permissions=get_default_model_permissions(Category)
+            )
         ] + get_edit_and_list_urls(
             url_prefix="^categories",
             view_template="shuup.admin.modules.categories.views.Category%sView",
