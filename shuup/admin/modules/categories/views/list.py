@@ -7,8 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
+from shuup.admin.toolbar import URLActionButton
 from shuup.admin.utils.picotable import ChoicesFilter, Column, MPTTFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Category, CategoryStatus, CategoryVisibility
@@ -44,7 +47,7 @@ class CategoryListView(PicotableListView):
         return choices
 
     def get_queryset(self):
-        return Category.objects.all_except_deleted(shop=self.request.shop)
+        return Category.objects.all_except_deleted(shop=get_shop(self.request))
 
     def format_name(self, instance, *args, **kwargs):
         level = getattr(instance, instance._mptt_meta.level_attr)
@@ -55,3 +58,16 @@ class CategoryListView(PicotableListView):
             {"text": "%s" % instance, "class": "header"},
             {"title": _(u"Status"), "text": item.get("status")},
         ]
+
+    def get_toolbar(self):
+        toolbar = super(CategoryListView, self).get_toolbar()
+        toolbar.append(
+            URLActionButton(
+                url=reverse("shuup_admin:category.organize"),
+                text=_("Organize"),
+                tooltip=_("Organize categories"),
+                icon="fa fa-sitemap",
+                extra_css_class="btn-default"
+            )
+        )
+        return toolbar
