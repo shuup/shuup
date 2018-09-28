@@ -27,8 +27,6 @@
                 {% include "shuup/admin/base/_main_menu.jinja" %}
             {% endif %}
         {% endblock %}
-
-
         {% block support_content %}
             <div class="support-nav-wrap{% if iframe_mode %} iframe-mode{% endif %}">
                 {% if shuup_admin.is_multishop_enabled() %}
@@ -61,6 +59,7 @@
         <main id="main-content"{% if iframe_mode %}class="iframe-mode"{% endif %}>
             {% block content %}{% endblock %}
         </main>
+        {% block scroll_top_button %}<div id="scroll-to-top"></div>{% endblock %}
         {% endblock %}
         {% block post_content %}{% endblock %}
         {% endif %}
