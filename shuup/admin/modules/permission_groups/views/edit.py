@@ -36,7 +36,8 @@ class PermissionGroupForm(forms.ModelForm):
             help_text=_(
                 "Select the modules that should be accessible by this permission group. "
                 "Modules with the same permissions as selected modules will be added automatically."
-            )
+            ),
+            widget=forms.CheckboxSelectMultiple
         )
         initial_members = self._get_initial_members()
         members_field = Select2MultipleField(
