@@ -30,10 +30,11 @@ from shuup_tests.utils.forms import get_form_data
 
 
 @pytest.mark.django_db
-def test_category_module_search(rf):
+def test_category_module_search(rf, admin_user):
     cm = CategoryModule()
     category = CategoryFactory()
-    request = rf.get("/")
+    shop = get_default_shop()
+    request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)
     assert not empty_iterable(cm.get_search_results(request, query=category.identifier))
     assert empty_iterable(cm.get_search_results(request, query="k"))
 
