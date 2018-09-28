@@ -12,6 +12,7 @@ from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
@@ -22,7 +23,7 @@ from shuup.core.models import Category
 
 class CategoryModule(AdminModule):
     name = _("Categories")
-    category = _("Products")
+    category = _("Categories")
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:category.list", category=PRODUCTS_MENU_CATEGORY)
 
     def get_urls(self):
@@ -62,8 +63,10 @@ class CategoryModule(AdminModule):
 
     def get_search_results(self, request, query):
         minimum_query_length = 3
+
         if len(query) >= minimum_query_length:
-            categories = Category.objects.filter(
+            shop = get_shop(request)
+            categories = Category.objects.all_except_deleted(shop=shop).filter(
                 Q(translations__name__icontains=query) |
                 Q(identifier__icontains=query)
             ).distinct().order_by("tree_id", "lft")
