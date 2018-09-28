@@ -27,6 +27,5 @@ import './timesince.js';
 import './tooltip.js';
 import './tour.js';
 import './select.js';
-import handleMainMenu from './main-menu.js';
-
-handleMainMenu();
+import './components.js';
+import './main-menu.js';

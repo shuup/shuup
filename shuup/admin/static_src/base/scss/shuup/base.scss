@@ -86,6 +86,13 @@ body {
         }
     }
 
+    // add extra bottom padding to the bottom so the scroll to top button doesn't endup over components and text
+    &.scrolled {
+        padding-bottom: 2rem !important;
+        @include media-breakpoint-down(sm) {
+            padding-bottom: 3rem !important;
+        }
+    }
 }
 
 *::selection {
@@ -135,6 +142,47 @@ img {
 
     body.popup & {
         padding: 5px;
+    }
+}
+
+#scroll-to-top {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .scroll-to-top-button {
+        cursor: pointer;
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.15);
+        border-radius: 50%;
+        background-color: lighten($primary, 50%);
+        z-index: 999999;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        color: $primary;
+        transform: translateY(0);
+
+        &:hover {
+            color: lighten($primary, 20%);
+            animation-timing-function: ease-in-out;
+            animation: jump 0.1s linear forwards;
+        }
+    }
+}
+@keyframes jump {
+    to {
+        transform: translateY(-0.3rem);
     }
 }
 

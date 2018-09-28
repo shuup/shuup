@@ -80,7 +80,6 @@
 
 {% block content_wrap %}
     <main id="main-content" class="dashboard">
-
         {% block content %}
             <div id="dashboard-wrapper">
 
@@ -107,6 +106,7 @@
             </div>
         {% endblock %}
     </main>
+    {% block scroll_top_button %}<div id="scroll-to-top"></div>{% endblock %}
 {% endblock %}
 
 {% block extra_js %}

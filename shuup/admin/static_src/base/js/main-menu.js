@@ -72,4 +72,5 @@ const handleMainMenu = () => {
   }
 };
 
+handleMainMenu();
 export default handleMainMenu;
