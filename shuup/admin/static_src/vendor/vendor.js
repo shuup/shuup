@@ -8,6 +8,8 @@
  */
 
 //-- jQuery
+import select2 from 'select2';
+
 var jquery = require("jquery");
 window.$ = window.jQuery = jquery;
 
@@ -23,10 +25,10 @@ window.Shepherd = require('shepherd.js');
 const m = require('mithril');
 window.m = m;
 
-import select2 from 'select2';
 select2($);
 
-window.Sortable = require('sortablejs');
+window.Sortable = require('sortablejs');  // TODO: Deprecate and merge to html5sortable
+window.html5sortable = require('html5sortable/dist/html5sortable.cjs');
 
 require('bootstrap');
 require('chart.js');
