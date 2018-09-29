@@ -18,6 +18,7 @@ from shuup.campaigns.models.matching import (
 from shuup.core import cache
 from shuup.core.models import Category, ShopProduct
 
+from .exceptions import CampaignsInvalidInstanceForCacheUpdate
 from .utils.sales_range import assign_to_group_based_on_sales
 
 
@@ -55,6 +56,8 @@ def update_filter_cache(sender, instance, **kwargs):
     elif isinstance(instance, Category):
         for shop_product in instance.shop_products.all():
             update_matching_catalog_filters(shop_product)
+    else:
+        raise CampaignsInvalidInstanceForCacheUpdate("Invalid instance type.")
 
 
 def invalidate_context_filter_cache(sender, instance, **kwargs):

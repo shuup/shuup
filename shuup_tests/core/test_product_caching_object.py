@@ -72,11 +72,18 @@ def test_product_caching_object():
 
 
 @pytest.mark.django_db
-def test_shopproduct_category_manytomany():
+def test_shopproduct_categories_manytomany():
     shop_product = get_default_shop_product()
     category = get_default_category()
     shop_product.categories = [category]
-    category.shop_products = [shop_product]
-    shop_product.save()
     assert shop_product.categories.first() == category
     assert category.shop_products.first() == shop_product
+
+
+@pytest.mark.django_db
+def test_categories_shopproducts_manytomany():
+    shop_product = get_default_shop_product()
+    category = get_default_category()
+    category.shop_products = [shop_product]
+    assert category.shop_products.first() == shop_product
+    assert shop_product.categories.first() == category

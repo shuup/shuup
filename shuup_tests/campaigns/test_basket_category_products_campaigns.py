@@ -7,6 +7,7 @@
 import decimal
 import pytest
 
+from shuup.campaigns.exceptions import CampaignsInvalidInstanceForCacheUpdate
 from shuup.campaigns.models import BasketCampaign
 from shuup.campaigns.models.basket_conditions import (
     CategoryProductsBasketCondition, ComparisonOperator
@@ -14,6 +15,7 @@ from shuup.campaigns.models.basket_conditions import (
 from shuup.campaigns.models.basket_line_effects import (
     DiscountFromCategoryProducts
 )
+from shuup.campaigns.signal_handlers import update_filter_cache
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
     create_product, get_default_supplier, get_default_category,
@@ -41,7 +43,7 @@ def test_category_product_in_basket_condition(rf):
     # No match the product does not have the category
     assert not condition.matches(basket, [])
 
-    shop_product.categories.add(category)
+    category.shop_products.add(shop_product)
     assert condition.matches(basket, [])
 
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
@@ -54,6 +56,9 @@ def test_category_product_in_basket_condition(rf):
 
     condition.excluded_categories.add(category)
     assert not condition.matches(basket, [])
+
+    with pytest.raises(CampaignsInvalidInstanceForCacheUpdate):
+        update_filter_cache("test", shop)
 
 
 @pytest.mark.django_db

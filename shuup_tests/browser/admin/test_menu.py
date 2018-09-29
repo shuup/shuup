@@ -8,6 +8,7 @@
 import os
 
 import pytest
+import selenium
 
 from django.core.urlresolvers import reverse
 
@@ -26,7 +27,18 @@ def test_menu(browser, admin_user, live_server, settings):
 
     wait_until_condition(browser, lambda x: x.is_text_present("Welcome!"))
     wait_until_condition(browser, lambda x: x.is_text_present("Quicklinks"))
-    browser.find_by_css(".quicklinks a").first.click()
+
+    try:
+        browser.find_by_css(".quicklinks a").first.click()
+    except selenium.common.exceptions.TimeoutException as e:
+        # TODO: Revise!
+        # Give the Quicklinks click second chance. It seems there is a way
+        # to click it too fast. Wouldn't be too worried this to be actual
+        # issue with the menu. Looks like something that happens under
+        # 10% of time in my local environment, but main reason for this
+        # is Travis.
+        browser.find_by_css(".quicklinks a").first.click()
+
 
     wait_until_appeared(browser, ".item-category.item-active")
     browser.find_by_css(".menu-list li a")[1].click()

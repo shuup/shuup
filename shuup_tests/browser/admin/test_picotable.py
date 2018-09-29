@@ -99,16 +99,13 @@ def _test_pagination(browser):
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", ellipses, "3", "4", "5", "6", "7", ellipses, "11", "Next"])
 
-
     _goto_page(browser, 7)
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", ellipses, "5", "6", "7", "8", "9", ellipses, "11", "Next"])
 
-
     _goto_page(browser, 9)
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", ellipses, "7", "8", "9", "10", "11", "Next"])
-
 
     _goto_page(browser, 11)
     items = _get_pagination_content(browser)
@@ -126,7 +123,9 @@ def _assert_pagination_content(items, content):
 
 def _goto_page(browser, page_number):
     click_element(browser, "a[rel='%s']" % page_number)
-    wait_until_appeared(browser, "li.active a[rel='%s']" % page_number)
+    element = "li.active a[rel='%s']" % page_number
+    wait_until_appeared(browser, element)
+    move_to_element(browser, element)
 
 
 def _click_item(items, value):

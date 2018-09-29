@@ -8,6 +8,7 @@
 import os
 
 import pytest
+import selenium
 import time
 
 from django.core.urlresolvers import reverse
@@ -41,15 +42,15 @@ def test_product_create(browser, admin_user, live_server, settings):
     configuration.set(None, "shuup_product_tour_complete", True)
     object_created.connect(_add_custom_product_created_message, sender=Product, dispatch_uid="object_created_signal_test")
     initialize_admin_browser_test(browser, live_server, settings)
-    browser.driver.set_window_size(1920, 1080)
 
     url = reverse("shuup_admin:shop_product.new")
     browser.visit("%s%s" % (live_server, url))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("New shop product"))
+
     sku = "testsku"
     name = "Some product name"
     price_value = 10
     short_description = "short but gold"
-    wait_until_condition(browser, condition=lambda x: x.is_text_present("New shop product"))
     move_to_element(browser, "#id_base-sku")
     browser.fill("base-sku", sku)
     browser.fill("base-name__en", name)
@@ -60,8 +61,17 @@ def test_product_create(browser, admin_user, live_server, settings):
     _add_primary_category(browser, shop)
     _add_additional_category(browser, shop)
 
-    click_element(browser, "button[form='product_form']")
-    wait_until_appeared(browser, "div[class='message success']")
+    move_to_element(browser, "button[form='product_form']")
+    try:
+        click_element(browser, "button[form='product_form']")
+        wait_until_appeared(browser, "div[class='message success']")
+    except selenium.common.exceptions.WebDriverException as e:
+        # TODO: Revise!
+        # Give a product save second chance it seems that the save can
+        # lag a little and the success message doesn't happen fast
+        # enough every single time.
+        click_element(browser, "button[form='product_form']")
+        wait_until_appeared(browser, "div[class='message success']")
     product = Product.objects.filter(sku=sku).first()
     assert product.log_entries.filter(identifier=OBJECT_CREATED_LOG_IDENTIFIER).count() == 1
     object_created.disconnect(sender=Product, dispatch_uid="object_created_signal_test")
@@ -77,15 +87,16 @@ def _add_custom_product_created_message(sender, object, **kwargs):
 def _add_primary_category(browser, shop):
     assert Category.objects.count() == 0
     select_id = "id_shop%s-primary_category" % shop.pk
-    move_to_element(browser, "#%s" % select_id)
+    move_to_element(browser, "#%s" % select_id, header_height=100)
+
+    # Quick add new primary category
     wait_until_appeared(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
     click_element(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
-
-    wait_until_condition(browser, condition=lambda x: x.find_by_id("create-object-content-pane").has_class("open"))
+    wait_until_appeared(browser, "#create-object-iframe")
     with browser.get_iframe('create-object-iframe') as iframe:
+        wait_until_appeared(iframe, "input[name='base-name__en']")
         iframe.fill("base-name__en", "Test Category")
-        time.sleep(3)  # Let's just wait here to the iFrame to open fully (for Chrome and headless)
-        click_element(iframe, "button[form='category_form']")
+        _save_category(iframe)
 
     wait_until_condition(browser, condition=lambda x: not x.is_element_present_by_id("create-object-overlay"))
     check_category_count(browser, 1)
@@ -95,16 +106,17 @@ def _add_primary_category(browser, shop):
 def _add_additional_category(browser, shop):
     assert Category.objects.count() == 1
     select_id = "id_shop%s-categories" % shop.pk
-    move_to_element(browser, "#%s" % select_id)
-    wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 1)
-    wait_until_appeared(browser, "#id_shop%d-categories ~ .quick-add-btn a.btn" % shop.id)
-    click_element(browser, "#id_shop%d-categories ~ .quick-add-btn a.btn" % shop.id)
+    move_to_element(browser, "#%s" % select_id, header_height=100)
 
-    wait_until_condition(browser, condition=lambda x: x.find_by_id("create-object-content-pane").has_class("open"))
+    # Quick add new additional category
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 1)
+    wait_until_appeared(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
+    click_element(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
+    wait_until_appeared(browser, "#create-object-iframe")
     with browser.get_iframe('create-object-iframe') as iframe:
+        wait_until_appeared(iframe, "input[name='base-name__en']")
         iframe.fill("base-name__en", "Test Category 2")
-        time.sleep(3)  # Let's just wait here to the iFrame to open fully (for Chrome and headless)
-        click_element(iframe, "button[form='category_form']")
+        _save_category(iframe)
 
     wait_until_condition(browser, condition=lambda x: not x.is_element_present_by_id("create-object-overlay"))
     check_category_count(browser, 2)
@@ -116,3 +128,12 @@ def check_category_count(browser, target_count):
         browser,
         condition=lambda x: Category.objects.count() == target_count
     )
+
+
+def _save_category(iframe):  # TODO: Revise! It seems that iframes are hard for Travis
+    time.sleep(3)  # Let's just wait here to the iFrame to open fully (for Chrome and headless)
+    wait_until_appeared(iframe, "button[form='category_form']")
+    try:
+        click_element(iframe, "button[form='category_form']")
+    except selenium.common.exceptions.SessionNotCreatedException as e:
+        click_element(iframe, "button[form='category_form']")
