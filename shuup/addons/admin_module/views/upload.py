@@ -14,7 +14,6 @@ import traceback
 import zipfile
 
 from django import forms
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -111,11 +110,6 @@ class AddonUploadConfirmView(FormView):
         context = {}
         try:
             addon_path = self.get_addon_path()
-            if hasattr(settings, 'WHEEL_USER'):
-                # Do not import at the top as it would introduce extra
-                # dependencies to the project.
-                from shuup.addons.verify import verify_wheel
-                verify_wheel(addon_path)
             installer.install_package(addon_path)
         except Exception:
             context["error"] = traceback.format_exc()
