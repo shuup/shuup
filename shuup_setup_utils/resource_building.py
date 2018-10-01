@@ -22,12 +22,14 @@ class Options(object):
     :ivar clean: clean intermediate build files before building
     :ivar force: rebuild even if cached result exists
     :ivar no_install: do not install npm packages before building
+    :ivar ci: whether the build is running inside a Continuous Integration environment
     """
     directories = '.'
     production = False
     clean = False
     force = False
     no_install = False
+    ci = False
 
 
 def build_resources(options):
@@ -49,11 +51,14 @@ class Builder(object):
         self.root_directory = root_directory
         self.opts = options
         self.dirs_to_clean = ['node_modules', 'bower_components']
-        self.install_command = 'npm install'.split()
-        self.build_command = 'npm run build'.split()
+        self.install_command = ['npm', 'install']
+        self.build_command = ['npm', 'run', 'build']
         self.env = os.environ.copy()
         self.env['NODE_ENV'] = 'production' if self.opts.production else ''
         self.env['CI'] = 'true'
+
+        if self.opts.ci:
+            self.install_command.append('--no-audit')
 
     def build_all(self):
         package_json_dirs = list(self._find_package_json_dirs())
