@@ -21,6 +21,7 @@ from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.utils.menu import is_menu_open
 from shuup.admin.utils.urls import manipulate_query_string, NoModelUrl
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
@@ -106,7 +107,8 @@ def get_config(context):
         "menuUrl": manipulate_query_string(reverse("shuup_admin:menu"), **qs),
         "browserUrls": get_browser_urls(),
         "csrf": get_token(request),
-        "docsPage": settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE
+        "docsPage": settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE,
+        "menuOpen": is_menu_open(request)
     }
 
 

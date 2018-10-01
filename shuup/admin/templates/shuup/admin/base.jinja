@@ -12,10 +12,11 @@
         <link href="{{ static("shuup_admin/css/base.css") }}" rel="stylesheet" type="text/css">
         {% block extra_css %}{% endblock -%}
         {% block extra_head %}{% endblock -%}
-        <script>var ShuupAdminConfig = {{ shuup_admin.get_config()|json }};</script>
+        {% set conf = shuup_admin.get_config() %}
+        <script>var ShuupAdminConfig = {{ conf|json }};</script>
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
     </head>
-    <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}">
+    <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}{% if not conf["menuOpen"] %} desktop-menu-closed{% endif %}">
         {% if iframe_close %}
             <script>
                 parent.window.addToSelect2('{{ quick_add_target }}', '{{ quick_add_option_id }}', '{{ quick_add_option_name }}');
