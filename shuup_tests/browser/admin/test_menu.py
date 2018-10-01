@@ -71,3 +71,22 @@ def test_menu_small_device(browser, admin_user, live_server, settings):
     browser.find_by_css(".menu-list li a")[1].click()
 
     wait_until_condition(browser, lambda x: x.is_text_present("New shop product"))
+
+
+@pytest.mark.browser
+@pytest.mark.djangodb
+def test_menu_toggle(browser, admin_user, live_server, settings):
+    get_default_shop()
+    initialize_admin_browser_test(browser, live_server, settings)
+
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome!"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Quicklinks"))
+
+    browser.find_by_css("#menu-button").first.click()
+    url = live_server + "/sa"
+    browser.visit(url)
+    assert browser.find_by_css(".desktop-menu-closed")
+
+    browser.find_by_css("#menu-button").first.click()
+    browser.visit(url)
+    assert not browser.find_by_css(".desktop-menu-closed")

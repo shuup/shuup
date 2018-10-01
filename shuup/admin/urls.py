@@ -22,7 +22,7 @@ from shuup.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.edit import EditObjectView
 from shuup.admin.views.home import HomeView
-from shuup.admin.views.menu import MenuView
+from shuup.admin.views.menu import MenuToggleView, MenuView
 from shuup.admin.views.password import RequestPasswordView, ResetPasswordView
 from shuup.admin.views.search import SearchView
 from shuup.admin.views.select import MultiselectAjaxView
@@ -51,6 +51,7 @@ def get_urls():
         admin_url(r'^select/$', MultiselectAjaxView.as_view(), name='select'),
         admin_url(r'^edit/$', EditObjectView.as_view(), name='edit'),
         admin_url(r'^menu/$', MenuView.as_view(), name='menu'),
+        admin_url(r'^toggle-menu/$', MenuToggleView.as_view(), name='menu_toggle'),
         admin_url(
             r'^login/$',
             login,
