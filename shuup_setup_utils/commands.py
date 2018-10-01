@@ -48,12 +48,14 @@ class BuildResourcesCommand(distutils.core.Command):
     clean = False
     force = False
     no_install = False
+    ci = False
     directory = '.'
     user_options = [
         ('mode=', 'm', "build mode: 'development' (default) or 'production'"),
         ('clean', 'c', "clean intermediate files before building"),
         ('force', 'f', "force rebuild even if cached result exists"),
         ('no-install', 'n', "do not install npm packages before building"),
+        ('ci', 't', "indicates that this build is running inside a Continuous Integration environment"),
         ('directory=', 'd', "directory to build in, or '.' for all (default)"),
     ]
     boolean_options = ['clean', 'force', 'no-install']
@@ -77,6 +79,7 @@ class BuildResourcesCommand(distutils.core.Command):
         opts.clean = self.clean
         opts.force = self.force
         opts.no_install = self.no_install
+        opts.ci = self.ci
         resource_building.build_resources(opts)
 
 
