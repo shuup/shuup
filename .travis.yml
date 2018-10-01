@@ -67,8 +67,8 @@ jobs:
         - mkdir geckodriver
         - tar -xzf geckodriver*.tar.gz -C geckodriver
         - export PATH=$PATH:$PWD/geckodriver
-        - "nvm install 7"
-        - "nvm use 7"
+        - "nvm install 8"
+        - "nvm use 8"
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
         - "npm install -g selenium-standalone@6.15.2"
