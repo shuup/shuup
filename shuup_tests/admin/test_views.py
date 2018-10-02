@@ -21,7 +21,7 @@ from shuup.core.models import ShopProductVisibility
 from shuup.testing.factories import (
     CategoryFactory, create_random_order, create_random_person,
     get_default_category, get_default_product, get_default_shop,
-    create_product)
+    get_default_supplier, create_product)
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
@@ -32,6 +32,7 @@ from shuup.utils.importing import load
     "shuup.admin.modules.contacts.views:ContactListView",
     "shuup.admin.modules.orders.views:OrderListView",
     "shuup.admin.modules.products.views:ProductListView",
+    "shuup.admin.modules.users.views:UserListView"
 ])
 @pytest.mark.django_db
 def test_list_view(rf, class_spec, admin_user):
@@ -109,8 +110,13 @@ def test_edit_view_adding_messages_to_form_group(rf, admin_user):
 def test_product_edit_view(rf, admin_user, settings):
     shop = get_default_shop()  # obvious prerequisite
     shop.staff_members.add(admin_user)
-    product = get_default_product()
-    shop_product = product.get_shop_instance(shop)
+    parent = create_product("ComplexVarParent", shop=shop, supplier=get_default_supplier())
+    sizes = [("%sL" % ("X" * x)) for x in range(4)]
+    for size in sizes:
+        child = create_product(
+            "ComplexVarChild-%s" % size, shop=shop, supplier=get_default_supplier())
+        child.link_to_parent(parent, variables={"size": size})
+    shop_product = parent.get_shop_instance(shop)
     cat = CategoryFactory()
 
     assert not shop_product.categories.exists()
