@@ -15,5 +15,5 @@ class MenuView(TemplateView):
 
 class MenuToggleView(View):
     def post(self, request, *args, **kwargs):
-        request.session["menu_open"] = int(request.POST.get("menu_open", 0))
+        request.session["menu_open"] = not bool(request.session.get("menu_open", True))
         return JsonResponse({"success": True})
