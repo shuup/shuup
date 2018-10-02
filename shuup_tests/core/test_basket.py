@@ -30,6 +30,10 @@ def test_set_customer_with_custom_basket_lines(rf):
         user = factories.create_random_user()
         request = apply_request_middleware(rf.get("/"), user=user)
         basket = get_basket(request, "basket")
+        shipping_method = factories.get_default_shipping_method()
+        payment_method = factories.get_default_payment_method()
+        customer = get_person_contact(user)
+        customer_comment = "Some comment"
 
         base_unit_price = basket.shop.create_price("10.99")
 
@@ -40,10 +44,19 @@ def test_set_customer_with_custom_basket_lines(rf):
                         quantity=1,
                         base_unit_price=base_unit_price)
 
-        basket.customer = get_person_contact(user)
+        basket.customer = customer
+        assert basket.customer_comment is None
+        basket.customer_comment = customer_comment
+        assert basket.payment_method is None
+        assert basket.shipping_method is None
+        basket.payment_method = payment_method
+        basket.shipping_method = shipping_method
         basket.refresh_lines()
         basket.save()
         assert basket.customer == get_person_contact(user)
+        assert basket.customer_comment == "Some comment"
+        assert basket.shipping_method == shipping_method
+        assert basket.payment_method == payment_method
 
 
 @pytest.mark.django_db
