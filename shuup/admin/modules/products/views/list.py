@@ -72,7 +72,7 @@ class ProductListView(PicotableListView):
         Column(
             "primary_category",
             _("Primary Category"),
-            display="primary_category",
+            display=(lambda instance: instance.primary_category.name if instance.primary_category else None),
             filter_config=TextFilter(
                 filter_field="primary_category__translations__name",
                 placeholder=_("Filter by category name...")
