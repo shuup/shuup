@@ -249,3 +249,23 @@ def test_product_edit_view_multishop(rf, admin_user, settings):
         response.render()
         content = force_text(response.content)
         assert product.sku in content
+
+
+def test_menu_view(rf, admin_user):
+    get_default_shop()  # obvious prerequisite
+    view = load("shuup.admin.views.menu:MenuToggleView").as_view()
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+
+    assert "menu_open" not in request.session
+
+    response = view(request)
+    if hasattr(response, "render"):
+        response.render()
+    assert response.status_code == 200
+    assert not request.session["menu_open"]  # Menu closed
+
+    response = view(request)
+    if hasattr(response, "render"):
+        response.render()
+    assert response.status_code == 200
+    assert request.session["menu_open"]  # Menu open
