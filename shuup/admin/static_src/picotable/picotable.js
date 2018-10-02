@@ -664,8 +664,8 @@ const Picotable = (function(m, storage) {
                         (line.title ? "with-title" : "") +
                         (line.class ? "." + line.class : "");
                     return m(rowClass, [
-                        (line.title ? m("div.col-6.title", line.title) : null),
-                        m("div.col-6.value", line.text)
+                        (line.title ? m(".col.title", line.title) : null),
+                        m(".col.value", line.text)
                     ]);
                 });
                 if (!Util.any(content, function(v) {
@@ -680,8 +680,8 @@ const Picotable = (function(m, storage) {
                     var colContent = item[col.id] || "";
                     if (col.raw) colContent = m.trust(colContent);
                     return m("div.mobile-row.row.with-title", [
-                        m("div.col-6.title", col.title),
-                        m("div.col-6.text-right", colContent)
+                        m(".col.title", col.title),
+                        m(".col.text-right", colContent)
                     ]);
                 });
             }
@@ -695,14 +695,14 @@ const Picotable = (function(m, storage) {
         });
         return m("div.mobile", [
             m("div.mobile-header.row", [
-                m("div.col-sm-6", [
+                m("div.col", [
                     m("button.btn.btn-info.btn-block.toggle-btn",
                         {
                             onclick: function() {
                                 ctrl.vm.showMobileFilterSettings(true);
                             }
                         },
-                        [m("i.fa.fa-filter")], "Show filters"
+                        [m("i.fa.fa-filter")], gettext("Show filters")
                     )
                 ]),
                 m("div.col-sm-6", [
