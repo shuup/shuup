@@ -55,6 +55,14 @@ shuup.front.settings module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.signal\_handlers module
+-----------------------------------
+
+.. automodule:: shuup.front.signal_handlers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.signals module
 --------------------------
 

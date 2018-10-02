@@ -35,14 +35,6 @@ shuup.addons.reloader module
     :undoc-members:
     :show-inheritance:
 
-shuup.addons.verify module
---------------------------
-
-.. automodule:: shuup.addons.verify
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

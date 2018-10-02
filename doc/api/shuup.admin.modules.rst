@@ -8,6 +8,7 @@ Subpackages
 
     shuup.admin.modules.attributes
     shuup.admin.modules.categories
+    shuup.admin.modules.contact_group_price_display
     shuup.admin.modules.contact_groups
     shuup.admin.modules.contacts
     shuup.admin.modules.content

@@ -84,6 +84,14 @@ shuup.core.utils.name\_mixin module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.utils.price\_cache module
+------------------------------------
+
+.. automodule:: shuup.core.utils.price_cache
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.utils.price\_display module
 --------------------------------------
 
