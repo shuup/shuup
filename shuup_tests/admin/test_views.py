@@ -32,6 +32,7 @@ from shuup.utils.importing import load
     "shuup.admin.modules.contacts.views:ContactListView",
     "shuup.admin.modules.orders.views:OrderListView",
     "shuup.admin.modules.products.views:ProductListView",
+    "shuup.admin.modules.users.views:UserListView"
 ])
 @pytest.mark.django_db
 def test_list_view(rf, class_spec, admin_user):
