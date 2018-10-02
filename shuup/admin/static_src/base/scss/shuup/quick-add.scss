@@ -60,7 +60,12 @@ div.container-fluid.support-nav-wrap {
         .quick-add-btn {
             cursor: pointer;
             float: left;
-            position: initial;
+            position: relative;
+            margin-top: 4px;
+
+            @include media-breakpoint-down(xs) {
+                margin-left: 75px;
+            }
 
             i.fa-plus:hover {
                 color: #000;
@@ -69,7 +74,7 @@ div.container-fluid.support-nav-wrap {
             @include media-breakpoint-down(xs) {
                 .btn {
                     position: absolute;
-                    top: 0px;
+                    top: 0;
                     right: 30px;
                 }
             }
