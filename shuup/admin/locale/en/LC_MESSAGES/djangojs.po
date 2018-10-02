@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 16:49+0000\n"
+"POT-Creation-Date: 2018-10-02 16:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -733,6 +733,9 @@ msgstr ""
 
 #, javascript-format
 msgid "There are no %s to show"
+msgstr ""
+
+msgid "with selected filters"
 msgstr ""
 
 msgid "How about creating a new entry?"
