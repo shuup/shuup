@@ -12,6 +12,14 @@ shuup.admin.forms.fields module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.forms.quick\_select module
+--------------------------------------
+
+.. automodule:: shuup.admin.forms.quick_select
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.forms.widgets module
 --------------------------------
 

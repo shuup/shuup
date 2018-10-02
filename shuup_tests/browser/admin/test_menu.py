@@ -82,11 +82,29 @@ def test_menu_toggle(browser, admin_user, live_server, settings):
     wait_until_condition(browser, lambda x: x.is_text_present("Welcome!"))
     wait_until_condition(browser, lambda x: x.is_text_present("Quicklinks"))
 
-    browser.find_by_css("#menu-button").first.click()
-    url = live_server + "/sa"
-    browser.visit(url)
-    assert browser.find_by_css(".desktop-menu-closed")
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css("#menu-button"))
 
+    # Close menu
+    try:
+        browser.find_by_css("#menu-button").first.click()
+    except selenium.common.exceptions.TimeoutException as e:
+        browser.find_by_css("#menu-button").first.click()
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(".desktop-menu-closed"))
+
+    url = reverse("shuup_admin:order.list")
+    browser.visit("%s%s" % (live_server, url))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Orders"))
+
+    # Should be closed after page load
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(".desktop-menu-closed"))
+
+    # Open menu
     browser.find_by_css("#menu-button").first.click()
-    browser.visit(url)
-    assert not browser.find_by_css(".desktop-menu-closed")
+    wait_until_condition(browser, lambda x: not x.is_element_present_by_css(".desktop-menu-closed"))
+
+    url = reverse("shuup_admin:shop_product.list")
+    browser.visit("%s%s" % (live_server, url))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Products"))
+
+    # Should be still open after page load
+    wait_until_condition(browser, lambda x: not x.is_element_present_by_css(".desktop-menu-closed"))

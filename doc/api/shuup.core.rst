@@ -74,6 +74,14 @@ shuup.core.shop\_provider module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.signal\_handers module
+---------------------------------
+
+.. automodule:: shuup.core.signal_handers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.signals module
 -------------------------
 

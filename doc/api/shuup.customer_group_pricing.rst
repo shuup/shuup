@@ -36,6 +36,14 @@ shuup.customer\_group\_pricing.module module
     :undoc-members:
     :show-inheritance:
 
+shuup.customer\_group\_pricing.signal\_handers module
+-----------------------------------------------------
+
+.. automodule:: shuup.customer_group_pricing.signal_handers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.customer\_group\_pricing.utils module
 -------------------------------------------
 

@@ -95,7 +95,7 @@ Roadmap
 * Per object placeholders. Option to add content per contact group, category, product and CMS page. `#1220 <https://github.com/shuup/shuup/issues/1220>`__ :white_check_mark:.
 * Pricing cache. To improve the performance issues with complex catalog campaigns. `#1163 <https://github.com/shuup/shuup/issues/1163>`__ :white_check_mark:.
 * Option for 'centrally' or 'separately' managed products. `#1275 <https://github.com/shuup/shuup/issues/1275>`__.
-* Improve shop product purchasable attribute. `#1281 <https://github.com/shuup/shuup/issues/1281>`__.
+* Improve shop product purchasable attribute. `#1281 <https://github.com/shuup/shuup/issues/1281>`__ :white_check_mark:.
 * Improve product stock behavior. `#1249 <https://github.com/shuup/shuup/issues/1249>`__.
 * Improved unit tests for the multishop feature. `#1160 <https://github.com/shuup/shuup/issues/1160>`__.
 * Improve order status and order status history. `#1211 <https://github.com/shuup/shuup/issues/1211>`__.
@@ -111,6 +111,8 @@ OS Addons
 * `Shuup Checkoutfi <https://github.com/shuup/shuup-checkoutfi>`__. Checkout.fi integration for Shuup.
 * `Shuup Yaml <https://github.com/shuup/shuup-yaml>`__. Import categories, manufacturers and products to Shuup.
 * `Shuup Mailchimp <https://github.com/shuup/shuup-mailchimp>`__. Mailchimp integration for Shuup.
+* `Shuup Xtheme Layouts <https://github.com/shuup/shuup-xtheme-extra-layouts>`__. Xtheme layouts for Shuup.
+
 
 The purpose of these addons, is to demonstrate how to build
 other simple addons to extend Shuup. To learn more, here are

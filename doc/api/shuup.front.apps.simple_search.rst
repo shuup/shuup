@@ -12,6 +12,14 @@ shuup.front.apps.simple\_search.forms module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.apps.simple\_search.settings module
+-----------------------------------------------
+
+.. automodule:: shuup.front.apps.simple_search.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.apps.simple\_search.template\_helpers module
 --------------------------------------------------------
 

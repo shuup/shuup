@@ -4,6 +4,14 @@ shuup.front.utils package
 Submodules
 ----------
 
+shuup.front.utils.cache module
+------------------------------
+
+.. automodule:: shuup.front.utils.cache
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.utils.companies module
 ----------------------------------
 
@@ -48,6 +56,14 @@ shuup.front.utils.translation module
 ------------------------------------
 
 .. automodule:: shuup.front.utils.translation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.front.utils.urls module
+-----------------------------
+
+.. automodule:: shuup.front.utils.urls
     :members:
     :undoc-members:
     :show-inheritance:

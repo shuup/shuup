@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     shuup.xtheme.admin_module
+    shuup.xtheme.layout
     shuup.xtheme.plugins
     shuup.xtheme.templatetags
     shuup.xtheme.views
@@ -42,14 +43,6 @@ shuup.xtheme.forms module
 -------------------------
 
 .. automodule:: shuup.xtheme.forms
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shuup.xtheme.layout module
---------------------------
-
-.. automodule:: shuup.xtheme.layout
     :members:
     :undoc-members:
     :show-inheritance:
@@ -90,6 +83,14 @@ shuup.xtheme.resources module
 -----------------------------
 
 .. automodule:: shuup.xtheme.resources
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.xtheme.settings module
+----------------------------
+
+.. automodule:: shuup.xtheme.settings
     :members:
     :undoc-members:
     :show-inheritance:

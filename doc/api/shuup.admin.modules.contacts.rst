@@ -43,6 +43,14 @@ shuup.admin.modules.contacts.sections module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.modules.contacts.utils module
+-----------------------------------------
+
+.. automodule:: shuup.admin.modules.contacts.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

@@ -124,6 +124,14 @@ shuup.utils.iterables module
     :undoc-members:
     :show-inheritance:
 
+shuup.utils.migrations module
+-----------------------------
+
+.. automodule:: shuup.utils.migrations
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.utils.models module
 -------------------------
 

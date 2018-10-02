@@ -32,6 +32,14 @@ shuup.campaigns.consts module
     :undoc-members:
     :show-inheritance:
 
+shuup.campaigns.exceptions module
+---------------------------------
+
+.. automodule:: shuup.campaigns.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.campaigns.modules module
 ------------------------------
 
