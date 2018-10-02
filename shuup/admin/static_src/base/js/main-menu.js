@@ -62,8 +62,8 @@ const handleMainMenu = () => {
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
       $("body").toggleClass("desktop-menu-closed");
-      var menu_open = ($("body").hasClass("desktop-menu-closed")) ? 0 : 1;
-      $.post("/sa/toggle-menu/", { "csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, menu_open });
+      const menuOpen = ($("body").hasClass("desktop-menu-closed")) ? 0 : 1;
+      $.post("/sa/toggle-menu/", { "csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, menuOpen });
       if (mainMenu.classList.contains('open')) {
         mainMenu.classList.remove('open');
       } else {
