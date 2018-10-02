@@ -857,7 +857,10 @@ const Picotable = (function(m, storage) {
 
     function buildEmptyState(ctrl) {
       const pageName = $('.main-header').text().toLocaleLowerCase();
-      const title = interpolate(gettext("There are no %s to show"), [pageName]);
+      var title = interpolate(gettext("There are no %s to show"), [pageName]);
+      if (Object.keys(ctrl.vm.filterValues()).length) {
+          title = interpolate("%s %s", [title, gettext("with selected filters")]);
+      }
       const button = $('.shuup-toolbar').find('.btn-primary');
 
       let buttonAttr;
@@ -879,7 +882,6 @@ const Picotable = (function(m, storage) {
     }
 
     function renderEmptyState(ctrl) {
-
       return m("div.picotable-empty", [buildEmptyState(ctrl)]);
     }
 
@@ -986,11 +988,29 @@ const Picotable = (function(m, storage) {
             filters[colId] = value;
             filters = Util.omitNulls(filters);
             ctrl.vm.filterValues(filters);
+            ctrl.saveFilters();
             ctrl.refresh();
+        };
+        ctrl.getFilterKey = function() {
+            var pieces = window.location.pathname.split("/").filter((piece) => piece.length);
+            return interpolate("%s_filters", [pieces[pieces.length-1]]);
         };
         ctrl.resetFilters = function() {
           ctrl.vm.filterValues({});
+          storage.setItem(ctrl.getFilterKey(), JSON.stringify({}));
           ctrl.refresh();
+        };
+        ctrl.getFilters = function() {
+            if (!storage) {
+                return ctrl.vm.filterValues();
+            }
+            const filters = storage.getItem(ctrl.getFilterKey());
+            return filters ? JSON.parse(filters) : {};
+        };
+        ctrl.saveFilters = function() {
+            if (!storage) return;
+            var filters = ctrl.vm.filterValues();
+            storage.setItem(ctrl.getFilterKey(), JSON.stringify(filters));
         };
         ctrl.resetCheckboxes = function() {
             ctrl.vm.allItemsSelected(false);
@@ -1149,6 +1169,9 @@ const Picotable = (function(m, storage) {
             ctrl.vm.isLoading = true;
 
             if (!url) return;
+            if (!Object.keys(ctrl.vm.filterValues()).length) {
+                ctrl.vm.filterValues(ctrl.getFilters());
+            }
             var data = {
               sort: ctrl.vm.sort(),
               perPage: 0 | ctrl.vm.perPage(),
