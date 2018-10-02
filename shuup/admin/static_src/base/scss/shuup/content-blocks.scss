@@ -331,6 +331,10 @@
     top: -2rem;
     border-radius: $border-radius-lg;
     box-shadow: $shadow-md;
+
+    .btn {
+        margin: 5px;
+    }
 }
 
 .active-theme {
