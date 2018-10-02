@@ -35,6 +35,9 @@ class CategoryEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
         context = super(CategoryEditView, self).get_context_data(**kwargs)
         context["tour_key"] = "category"
         context["tour_complete"] = is_tour_complete(get_shop(self.request), "category")
+        if self.object.pk:
+            context["title"] = self.object.name
+
         return context
 
     def form_valid(self, form):
