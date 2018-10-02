@@ -12,14 +12,6 @@ shuup.regions.apps module
     :undoc-members:
     :show-inheritance:
 
-shuup.regions.data module
--------------------------
-
-.. automodule:: shuup.regions.data
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 shuup.regions.resources module
 ------------------------------
 

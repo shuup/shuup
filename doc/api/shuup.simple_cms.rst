@@ -11,6 +11,14 @@ Subpackages
 Submodules
 ----------
 
+shuup.simple\_cms.layout module
+-------------------------------
+
+.. automodule:: shuup.simple_cms.layout
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.simple\_cms.models module
 -------------------------------
 
@@ -27,10 +35,26 @@ shuup.simple\_cms.plugins module
     :undoc-members:
     :show-inheritance:
 
+shuup.simple\_cms.settings module
+---------------------------------
+
+.. automodule:: shuup.simple_cms.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.simple\_cms.template\_helpers module
 ------------------------------------------
 
 .. automodule:: shuup.simple_cms.template_helpers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.simple\_cms.templates module
+----------------------------------
+
+.. automodule:: shuup.simple_cms.templates
     :members:
     :undoc-members:
     :show-inheritance:

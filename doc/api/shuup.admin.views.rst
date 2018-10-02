@@ -12,6 +12,14 @@ shuup.admin.views.dashboard module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.views.edit module
+-----------------------------
+
+.. automodule:: shuup.admin.views.edit
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.views.home module
 -----------------------------
 

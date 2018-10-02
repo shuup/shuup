@@ -20,6 +20,14 @@ shuup.admin.utils.forms module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.utils.menu module
+-----------------------------
+
+.. automodule:: shuup.admin.utils.menu
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.utils.permissions module
 ------------------------------------
 

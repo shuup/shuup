@@ -16,6 +16,7 @@ Subpackages
     shuup.default_importer
     shuup.default_reports
     shuup.default_tax
+    shuup.discounts
     shuup.front
     shuup.gdpr
     shuup.guide
