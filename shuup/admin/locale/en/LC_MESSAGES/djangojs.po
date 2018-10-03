@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 16:19+0000\n"
+"POT-Creation-Date: 2018-10-02 18:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -716,6 +716,9 @@ msgid "Filter by %s"
 msgstr ""
 
 msgid "Filters"
+msgstr ""
+
+msgid "Show filters"
 msgstr ""
 
 msgid "Select Action"

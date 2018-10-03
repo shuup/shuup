@@ -53,7 +53,7 @@ class StocksListView(PicotableListView):
         self.columns = self.default_columns
 
     def get_object_abstract(self, instance, item):
-        item.update({"_linked_in_mobile": False, "_url": self.get_object_url(instance.product)})
+        item.update({"_linked_in_mobile": False, "_url": ""})
         return [
             {"text": item.get("name"), "class": "header"},
             {"title": "", "text": item.get("sku")},
