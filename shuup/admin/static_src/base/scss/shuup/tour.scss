@@ -117,6 +117,10 @@ body.shepherd-active > .shepherd-step {
     border-radius: 4px;
 }
 
+.shepherd-element {
+    width: auto;
+}
+
 .shepherd-element.shepherd-theme-arrows .shepherd-content .shepherd-text p.lead {
     font-size: 16px;
     line-height: inherit;
