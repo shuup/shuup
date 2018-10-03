@@ -10732,13 +10732,20 @@
       }
     },
     "shepherd.js": {
-      "version": "2.0.0-beta.18",
-      "resolved": "https://registry.npmjs.org/shepherd.js/-/shepherd.js-2.0.0-beta.18.tgz",
-      "integrity": "sha512-emi0WfQBQYf/qfZmm7yzvVCrjPCIYVudvbhN0eaTwLmNdrtnZvZFRSc+7aA1BoOVgUpgU0UF7WjyqNG9Da0kow==",
+      "version": "2.0.0-beta.27",
+      "resolved": "https://registry.npmjs.org/shepherd.js/-/shepherd.js-2.0.0-beta.27.tgz",
+      "integrity": "sha512-z4AbyF5hQsF8LJc9LWHfYtx2/cNQWuSW404CwODEeqXexCsm3UrOe1h0TZaUzZdOPW/vuG0wnKR/MDtcnbFwrA==",
       "requires": {
         "element-matches": "^0.1.2",
-        "lodash": "^4.17.10",
+        "lodash-es": "^4.17.10",
         "popper.js": "^1.14.3"
+      },
+      "dependencies": {
+        "lodash-es": {
+          "version": "4.17.11",
+          "resolved": "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.11.tgz",
+          "integrity": "sha512-DHb1ub+rMjjrxqlB3H56/6MXtm1lSksDp2rA2cNWjG8mlDUYFhUj3Di2Zn5IwSU87xLv8tNIQ7sSwE/YOX/D/Q=="
+        }
       }
     },
     "shuup-static-build-tools": {

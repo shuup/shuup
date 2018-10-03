@@ -6,13 +6,13 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-(function($) {
+((($) => {
     function getAppChromeSteps(key) {
         if(key !== "home" && typeof(key) !== "undefined") {
             return [];
         }
 
-        let menu = $("#main-menu");
+        const menu = $("#main-menu");
         if (menu && menu.position() && menu.position().left !== 0) {
             // don't show chrome tour on mobile
             return [];
@@ -20,12 +20,12 @@
         const popperOptions = {
             modifiers: {
                 preventOverflow: {
-                    boundariesElement: 'offsetParent'
+                    boundariesElement: "offsetParent"
                 }
             }
         };
 
-        let steps = [];
+        const steps = [];
         if (!$("body").hasClass("desktop-menu-closed")) {
             if ($("li a[data-target-id='quicklinks']").length > 0) {
                 steps.push({
@@ -76,7 +76,6 @@
                     title: gettext("Campaigns"),
                     text: [gettext("Great loyalty tool for creating marketing, campaigns, special offers and coupons to entice your shoppers!"), gettext("Set offers based on their previous purchase behavior to up- and cross sale your inventory.")],
                     attachTo: "li a[data-target-id='category-5'] right",
-                    scrollTo: false,
                     popperOptions
                 });
             }
@@ -104,7 +103,6 @@
                     title: gettext("Shops"),
                     text: [gettext("Place for your Shop specific settings. You can customize taxes, currencies, customer groups, and many other things in this menu.")],
                     attachTo: "li a[data-target-id='category-6'] right",
-                    scrollTo: true,
                     popperOptions
                 });
             }
@@ -114,8 +112,15 @@
                     title: gettext("Addons"),
                     text: [gettext("This is your connection interface. Addons and other systems you use can be attached to your store through powerful data connections."), gettext("Supercharge your site and gather crazy amounts of data with integrations to CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of.")],
                     attachTo: "li a[data-target-id='category-7'] right",
-                    scrollTo: true,
-                    popperOptions
+                    popperOptions,
+                    when: {
+                        show() {
+                            $("ul.menu-list").addClass("pb-5");
+                        },
+                        hide() {
+                            $("ul.menu-list").removeClass("pb-5");
+                        }
+                    }
                 });
             }
 
@@ -127,11 +132,18 @@
                     ],
                     attachTo: "li a[data-target-id='category-8'] right",
                     scrollTo: true,
-                    popperOptions
+                    popperOptions,
+                    when: {
+                        show() {
+                            $("ul.menu-list").addClass("pb-5");
+                        },
+                        hide() {
+                            $("ul.menu-list").removeClass("pb-5");
+                        }
+                    }
                 });
             }
         }
-
 
         if ($("#site-search").length > 0 && $("#site-search").is(":visible")) {
             steps.push({
@@ -163,18 +175,18 @@
     }
 
     $(".show-tour").on("click", function(e) {
-        e.stopImmediatePropagation()
+        e.stopImmediatePropagation();
         e.preventDefault();
         $.tour();
     });
 
-    $.tour = function(config={}, params) {
+    $.tour = (config={}, params) => {
         if(config === "setPageSteps") {
             this.pageSteps = params;
             return;
         }
-        let tour = new Shepherd.Tour({
-            defaults: {
+        const tour = new window.Shepherd.Tour({
+            defaultStepOptions: {
                 classes: "shepherd-theme-arrows",
                 scrollTo: true,
                 showCancelLink: true
@@ -231,7 +243,7 @@
 
         function getTextLines(text) {
             let content = "";
-            for(let i = 0; i < text.length; i++) {
+            for(let i = 0; i < text.length; i+=1) {
                 content += "<p class='lead'>" + text[i] + "</p>";
             }
             return content;
@@ -252,7 +264,7 @@
 
         }
         function getTourButtons(type) {
-            let buttons = [];
+            const buttons = [];
             if(type !== "first" && type !== "last") {
                 buttons.push({
                     text: "Previous",
@@ -286,4 +298,4 @@
         tour.start();
         return tour;
     };
-}(jQuery));
+})(jQuery));
