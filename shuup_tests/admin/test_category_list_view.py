@@ -34,7 +34,7 @@ def test_list_view(rf, admin_user):
     response = view(request)
     assert 200 <= response.status_code < 300
 
-    data = json.loads(response.content)
+    data = json.loads(response.content.decode("utf-8"))
     parent_data = _get_item_data(data, parent_category)
     assert _get_abstract_header(parent_data) == parent_category.name
 
