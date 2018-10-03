@@ -1,24 +1,26 @@
 <div id="order-log-entries">
-    <table class="table table-striped{% if not log_entries %} hidden{% endif %}">
-        <thead>
-            <tr>
-                <th>{% trans %}Message{% endtrans %}</th>
-                <th>{% trans %}Type{% endtrans %}</th>
-                <th>{% trans %}Date{% endtrans %}</th>
-                <th>{% trans %}User{% endtrans %}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in log_entries %}
+    <div class="table-responsive">
+        <table class="table table-striped{% if not log_entries %} hidden{% endif %}">
+            <thead>
                 <tr>
-                    <td>{{ entry.message }}</td>
-                    <td>{{ entry.kind }}</td>
-                    <td>{{ entry.created_on }}</td>
-                    <td>{{ entry.user }}</td>
+                    <th>{% trans %}Message{% endtrans %}</th>
+                    <th>{% trans %}Type{% endtrans %}</th>
+                    <th>{% trans %}Date{% endtrans %}</th>
+                    <th>{% trans %}User{% endtrans %}</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for entry in log_entries %}
+                    <tr>
+                        <td>{{ entry.message }}</td>
+                        <td>{{ entry.kind }}</td>
+                        <td>{{ entry.created_on|datetime }}</td>
+                        <td>{{ entry.user }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% if not log_entries %}
         <div id="no-log-entries-text">
             <p>{% trans %}No log entries have been added yet.{% endtrans %}</p>
@@ -26,9 +28,11 @@
         </div>
     {% endif %}
     <form action="" method="post">
-        <div class="form-group">
+        <div class="form-group form-content">
             <label class="control-label" for="log-message">{% trans %}Message{% endtrans %}</label>
-            <textarea class="form-control" id="log-message" rows="4"></textarea>
+            <div class="form-input-group d-flex">
+                <textarea class="form-control" id="log-message" rows="4"></textarea>
+            </div>
         </div>
         <div class="row">
             <div class="col-12 input-actions">
