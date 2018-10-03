@@ -36,6 +36,6 @@ def test_list_view(rf, admin_user):
     response = view(request)
     assert 200 <= response.status_code < 300
 
-    data = json.loads(response.content)
+    data = json.loads(response.content.decode("utf-8"))
     for item in data["items"]:
         assert item["_url"] == ""
