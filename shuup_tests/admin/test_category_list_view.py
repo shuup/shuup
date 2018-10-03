@@ -9,8 +9,8 @@ import json
 
 import pytest
 
+from shuup.core.models import CategoryStatus
 from shuup.testing import factories
-
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
 
@@ -19,10 +19,10 @@ from shuup.utils.importing import load
 def test_list_view(rf, admin_user):
     shop = factories.get_default_shop()
 
-    parent_category = factories.CategoryFactory()
+    parent_category = factories.CategoryFactory(status=CategoryStatus.VISIBLE)
     parent_category.shops.add(shop)
 
-    child_category = factories.CategoryFactory()
+    child_category = factories.CategoryFactory(status=CategoryStatus.VISIBLE)
     child_category.parent = parent_category
     child_category.save()
     child_category.shops.add(shop)
