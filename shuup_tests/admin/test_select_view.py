@@ -16,7 +16,7 @@ from shuup.core.models import (
     Category, CompanyContact, PersonContact, Product, ProductMode,
     SalesUnit, ShopProduct, ShopProductVisibility
 )
-from shuup.testing.factories import create_product, get_default_shop
+from shuup.testing.factories import create_product, get_default_shop, create_random_user
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
 
@@ -204,35 +204,38 @@ def test_multi_select_with_product_sales_unit(rf, admin_user):
 @pytest.mark.parametrize("contact_cls", [
     PersonContact, CompanyContact
 ])
-def test_ajax_select_view_with_contacts(rf, contact_cls, admin_user):
+def test_ajax_select_view_with_contacts(rf, contact_cls):
     shop = get_default_shop()
+    staff = create_random_user(is_staff=True)
+    shop.staff_members.add(staff)
+
     view = MultiselectAjaxView.as_view()
     model_name = "shuup.%s" % contact_cls._meta.model_name
-    results = _get_search_results(rf, view, model_name, "some str", admin_user)
+    results = _get_search_results(rf, view, model_name, "some str", staff)
     assert len(results) == 0
 
     # customer doesn't belong to shop
     customer = contact_cls.objects.create(name="Michael Jackson", email="michael@example.com")
-    results = _get_search_results(rf, view, model_name, "michael", admin_user)
+    results = _get_search_results(rf, view, model_name, "michael", staff)
     assert len(results) == 0
 
     customer.add_to_shop(shop)
-    results = _get_search_results(rf, view, model_name, "michael", admin_user)
+    results = _get_search_results(rf, view, model_name, "michael", staff)
     assert len(results) == 1
     assert results[0].get("id") == customer.id
     assert results[0].get("name") == customer.name
 
-    results = _get_search_results(rf, view, model_name, "jacks", admin_user)
+    results = _get_search_results(rf, view, model_name, "jacks", staff)
     assert len(results) == 1
     assert results[0].get("id") == customer.id
     assert results[0].get("name") == customer.name
 
-    results = _get_search_results(rf, view, model_name, "el@ex", admin_user)
+    results = _get_search_results(rf, view, model_name, "el@ex", staff)
     assert len(results) == 1
     assert results[0].get("id") == customer.id
     assert results[0].get("name") == customer.name
 
-    results = _get_search_results(rf, view, model_name, "random", admin_user)  # Shouldn't find anything with this
+    results = _get_search_results(rf, view, model_name, "random", staff)  # Shouldn't find anything with this
     assert len(results) == 0
 
 
@@ -273,7 +276,10 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
     view = MultiselectAjaxView.as_view()
     assert "joe" in regular_user.username
 
-    results = _get_search_results(rf, view, "auth.User", "joe", admin_user)
+    staff = create_random_user(is_staff=True)
+    shop.staff_members.add(staff)
+
+    results = _get_search_results(rf, view, "auth.User", "joe", staff)
     assert len(results) == 1
     assert results[0].get("id") == regular_user.id
     assert results[0].get("name") == regular_user.username
@@ -281,11 +287,11 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
     contact = PersonContact.objects.create(first_name="Joe", last_name="Somebody")
 
     # contact not in shop
-    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
+    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", staff)
     assert len(results) == 0
 
     contact.add_to_shop(shop)
-    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
+    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", staff)
     assert len(results) == 1
 
     assert results[0].get("id") == contact.id
@@ -294,6 +300,6 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
     contact.is_active = False
     contact.save()
 
-    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
+    results = _get_search_results(rf, view, "shuup.PersonContact", "joe", staff)
 
     assert len(results) == 0
