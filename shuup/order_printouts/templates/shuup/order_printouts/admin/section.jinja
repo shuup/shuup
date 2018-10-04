@@ -4,30 +4,49 @@
     <div class="col-12 p-3">
         <h3 class="page-header mt-0">{% trans %}Confirmation{% endtrans %}</h3>
         {% if printouts_section.can_create_pdf %}
-        <a href="{{ url('shuup_admin:printouts.confirmation_pdf', order.pk) }}"
-           class="btn btn-info" target="_blank">
-            {% trans %}Get Order Confirmation PDF{% endtrans %}
-        </a>
+        <div class="d-flex flex-row d-sm-inline-block mt-2">
+            <a
+                href="{{ url('shuup_admin:printouts.confirmation_pdf', order.pk) }}"
+                class="btn btn-info flex-fill"
+                target="_blank"
+            >
+                {% trans %}Get Order Confirmation PDF{% endtrans %}
+            </a>
+        </div>
         {% endif %}
-        <a href="{{ url('shuup_admin:printouts.confirmation_html', order.pk) }}"
-           class="btn btn-primary" target="_blank">
-            {% trans %}Get Order Confirmation HTML{% endtrans %}
-        </a>
+        <div class="d-flex flex-row d-sm-inline-block mt-2">
+            <a
+                href="{{ url('shuup_admin:printouts.confirmation_html', order.pk) }}"
+                class="btn btn-primary flex-fill"
+                target="_blank"
+            >
+                {% trans %}Get Order Confirmation HTML{% endtrans %}
+            </a>
+        </div>
         {% if shipments|length %}
-            <h3 class="page-header">{% trans %}Shipments{% endtrans %}</h3>
+            <h3 class="page-header mt-3">{% trans %}Shipments{% endtrans %}</h3>
             {% for shipment in shipments %}
                 {% if printouts_section.can_create_pdf %}
-                <a href="{{ url('shuup_admin:printouts.delivery_pdf', shipment.pk) }}"
-                   class="btn btn-info" target="_blank">
-                    {% trans id=shipment.pk %}Get Delivery Slip PDF (Shipment {{ id }}){% endtrans %}
-                </a>
+                <div class="d-flex flex-row d-sm-inline-block mt-2">
+                    <a
+                        href="{{ url('shuup_admin:printouts.delivery_pdf', shipment.pk) }}"
+                        class="btn btn-info flex-fill"
+                        target="_blank"
+                    >
+                        {% trans id=shipment.pk %}Get Delivery Slip PDF (Shipment {{ id }}){% endtrans %}
+                    </a>
+                </div>
                 {% endif %}
-                <a href="{{ url('shuup_admin:printouts.delivery_html', shipment.pk) }}"
-                   class="btn btn-primary" target="_blank">
-                    {% trans id=shipment.pk %}Get Delivery Slip HTML (Shipment {{ id }}){% endtrans %}
-                </a>
+                <div class="d-flex flex-row d-sm-inline-block mt-2">
+                    <a
+                        href="{{ url('shuup_admin:printouts.delivery_html', shipment.pk) }}"
+                        class="btn btn-primary flex-fill"
+                        target="_blank"
+                    >
+                        {% trans id=shipment.pk %}Get Delivery Slip HTML (Shipment {{ id }}){% endtrans %}
+                    </a>
+                </div>
             {% endfor %}
-            <p>&nbsp;</p>
         {% endif %}
     </div>
     <div class="col-12 p-3">
@@ -39,16 +58,20 @@
                 <div class="row">
                     <div class="input-actions col-12">
                         {% set order_email_url = url('shuup_admin:printouts.confirmation_email', order.pk) %}
-                        <button class="btn btn-primary" data-url="{{ order_email_url }}" onClick="sendPrintoutsAsEmail(event, this);">
-                            <i class="fa fa-send"></i>&nbsp;
-                            {% trans %}Send Order Confirmation{% endtrans %}
-                        </button>
+                        <div class="d-flex flex-row d-sm-inline-block mt-2">
+                            <button class="btn btn-primary flex-fill" data-url="{{ order_email_url }}" onClick="sendPrintoutsAsEmail(event, this);">
+                                <i class="fa fa-send"></i>&nbsp;
+                                {% trans %}Send Order Confirmation{% endtrans %}
+                            </button>
+                        </div>
                         {% for shipment in shipments or [] %}
                             {% set shipment_email_url = url('shuup_admin:printouts.delivery_email', shipment.pk) %}
-                            <button class="btn btn-primary" data-url="{{ shipment_email_url }}" onClick="sendPrintoutsAsEmail(event, this);">
-                                <i class="fa fa-send"></i>&nbsp;
-                                {% trans id=shipment.pk %}Send Delivery Slip (Shipment {{ id }}){% endtrans %}
-                            </button>
+                            <div class="d-flex flex-row d-sm-inline-block mt-2">
+                                <button class="btn btn-primary flex-fill" data-url="{{ shipment_email_url }}" onClick="sendPrintoutsAsEmail(event, this);">
+                                    <i class="fa fa-send"></i>&nbsp;
+                                    {% trans id=shipment.pk %}Send Delivery Slip (Shipment {{ id }}){% endtrans %}
+                                </button>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
