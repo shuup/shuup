@@ -13,13 +13,16 @@ const ScrollToTopButton = {
         };
         $(window).on("scroll", () => {
             const scrolled = (window.scrollY > 50);
-            ctrl.visible(scrolled);
-            if (scrolled) {
-                $("body").addClass("scrolled");
-            } else {
-                $("body").removeClass("scrolled");
+            const changed = (ctrl.visible() !== scrolled);
+            if (changed) {
+                ctrl.visible(scrolled);
+                if (scrolled) {
+                    $("body").addClass("scrolled");
+                } else {
+                    $("body").removeClass("scrolled");
+                }
+                m.redraw();
             }
-            m.redraw();
         });
         return ctrl;
     },
