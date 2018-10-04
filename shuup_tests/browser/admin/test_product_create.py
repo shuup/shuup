@@ -14,7 +14,6 @@ import time
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
-from shuup import configuration
 from shuup.admin.signals import object_created
 from shuup.core.models import Category, Product
 from shuup.testing.browser_utils import (
@@ -39,7 +38,6 @@ def test_product_create(browser, admin_user, live_server, settings):
     get_default_product_type()
     get_default_sales_unit()
     get_default_tax_class()
-    configuration.set(None, "shuup_product_tour_complete", True)
     object_created.connect(_add_custom_product_created_message, sender=Product, dispatch_uid="object_created_signal_test")
     initialize_admin_browser_test(browser, live_server, settings)
 
@@ -57,7 +55,6 @@ def test_product_create(browser, admin_user, live_server, settings):
     browser.fill("base-short_description__en", short_description)
     browser.fill("shop%s-default_price_value" % shop.pk, price_value)
 
-    configuration.set(None, "shuup_category_tour_complete", True)
     _add_primary_category(browser, shop)
     _add_additional_category(browser, shop)
 

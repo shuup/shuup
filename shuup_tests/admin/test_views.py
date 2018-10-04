@@ -14,6 +14,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import activate
 
 from shuup.admin.modules.products.views import ProductEditView
+from shuup.admin.utils.tour import is_tour_complete
 from shuup.core.models import Product
 from shuup.core.models import Shop
 from shuup.core.models import ShopProduct
@@ -275,3 +276,12 @@ def test_menu_view(rf, admin_user):
         response.render()
     assert response.status_code == 200
     assert request.session["menu_open"]  # Menu open
+
+
+def test_tour_view(rf, admin_user):
+    shop = get_default_shop()
+    assert is_tour_complete(shop, "home", admin_user) is False
+    view = load("shuup.admin.views.tour:TourView").as_view()
+    request = apply_request_middleware(rf.post("/", data={"tourKey": "home"}), user=admin_user)
+    view(request)
+    assert is_tour_complete(shop, "home", admin_user)

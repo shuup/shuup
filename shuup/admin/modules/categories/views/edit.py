@@ -34,7 +34,7 @@ class CategoryEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
     def get_context_data(self, **kwargs):
         context = super(CategoryEditView, self).get_context_data(**kwargs)
         context["tour_key"] = "category"
-        context["tour_complete"] = is_tour_complete(get_shop(self.request), "category")
+        context["tour_complete"] = is_tour_complete(get_shop(self.request), "category", user=self.request.user)
         if self.object.pk:
             context["title"] = self.object.name
 

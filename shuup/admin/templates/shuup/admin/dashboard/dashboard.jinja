@@ -113,13 +113,17 @@
     <script src="{{ static("shuup_admin/js/dashboard.js") }}"></script>
     <script>
         (function(){
-            $.tour("setPageSteps", [{
-                text: [
-                    "{% trans %}This is the dashboard for your store. It’s like the flight deck for your ecommerce spaceship. You can control everything from here.{% endtrans %}",
-                    "{% trans %}Check out your shoppers’ info, add more products or categories, setup marketing campaigns, see orders and sales stats, and track the money you’ve made.{% endtrans %}",
-                    "{% trans %}Every setting you could possibly need is in here.{% endtrans %}"
-                ]
-            }]);
+            $.tour({
+                method: "setPageSteps",
+                steps: [{
+                    title: "{{ _('Dashboard') }}",
+                    text: [
+                        "{% trans %}This is the dashboard for your store. It’s like the flight deck for your ecommerce spaceship. You can control everything from here.{% endtrans %}",
+                        "{% trans %}Check out your shoppers’ info, add more products or categories, setup marketing campaigns, see orders and sales stats, and track the money you’ve made.{% endtrans %}",
+                        "{% trans %}Every setting you could possibly need is in here.{% endtrans %}"
+                    ]
+                }]
+            });
         })();
     </script>
 {% endblock %}
