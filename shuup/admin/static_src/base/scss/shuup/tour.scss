@@ -49,7 +49,7 @@ body.shepherd-active {
 
 }
 
-body.shepherd-active > .shepherd-step {
+body.shepherd-active > .shepherd-element {
     z-index: 10001;
     pointer-events: auto;
 
@@ -79,11 +79,6 @@ body.shepherd-active > .shepherd-step {
         height: 200px;
     }
 
-    .step-with-icon {
-        margin-left: 220px;
-        max-width: 400px;
-    }
-
     .step-with-banner {
         padding: 1em;
     }
@@ -101,14 +96,10 @@ body.shepherd-active > .shepherd-step {
                 margin: 0 auto;
             }
         }
-
-        .step-with-icon {
-            margin-left: 0;
-        }
     }
 }
 
-.shepherd-element.shepherd-theme-arrows .shepherd-content footer .shepherd-buttons li .shepherd-button {
+.shepherd-element .shepherd-content footer .shepherd-buttons li .shepherd-button {
     text-transform: none;
     letter-spacing: 0;
     font-size: 0.9rem;
@@ -121,7 +112,7 @@ body.shepherd-active > .shepherd-step {
     width: auto;
 }
 
-.shepherd-element.shepherd-theme-arrows .shepherd-content .shepherd-text p.lead {
+.shepherd-element .shepherd-content .shepherd-text p.lead {
     font-size: 16px;
     line-height: inherit;
 

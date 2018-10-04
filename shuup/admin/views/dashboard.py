@@ -33,7 +33,7 @@ class DashboardView(TemplateView):
                 blocks.extend(module.get_dashboard_blocks(request=self.request))
         context["activity"] = get_activity(request=self.request)
         context["tour_key"] = "dashboard"
-        context["tour_complete"] = is_tour_complete(get_shop(self.request), "dashboard")
+        context["tour_complete"] = is_tour_complete(get_shop(self.request), "dashboard", user=self.request.user)
         return context
 
     def get(self, request, *args, **kwargs):

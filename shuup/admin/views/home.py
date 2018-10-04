@@ -67,7 +67,7 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context["blocks"] = blocks = []
         context["tour_key"] = "home"
-        context["tour_complete"] = is_tour_complete(get_shop(self.request), "home")
+        context["tour_complete"] = is_tour_complete(get_shop(self.request), "home", user=self.request.user)
         wizard_complete = setup_wizard_complete(self.request)
 
         wizard_url = reverse("shuup_admin:wizard")

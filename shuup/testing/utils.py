@@ -13,8 +13,9 @@ from django.core.exceptions import MiddlewareNotUsed
 from django.utils.module_loading import import_string
 from django.utils.translation import activate, get_language
 
-from shuup import configuration
 from shuup.admin.shop_provider import set_shop
+from shuup.admin.utils.tour import set_tour_complete
+from shuup.core import cache
 from shuup.testing.factories import get_default_shop
 
 
@@ -120,13 +121,23 @@ def initialize_front_browser_test(browser, live_server):
     return browser
 
 
-def initialize_admin_browser_test(
-        browser, live_server, settings, username="admin", password="password", onboarding=False, language="en"):
+def initialize_admin_browser_test(browser, live_server, settings, username="admin", password="password",
+                                  onboarding=False, language="en", shop=None, tour_complete=True):
     if not onboarding:
         settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
     activate("en")
-    get_default_shop()
-    configuration.set(None, "shuup_dashboard_tour_complete", True)
+    cache.clear()
+
+    shop = shop or get_default_shop()
+
+    if tour_complete:
+        from django.contrib.auth import get_user_model
+        user = get_user_model().objects.get(username=username)
+        set_tour_complete(shop, "dashboard", True, user)
+        set_tour_complete(shop, "home", True, user)
+        set_tour_complete(shop, "product", True, user)
+        set_tour_complete(shop, "category", True, user)
+
     url = live_server + "/sa"
     browser.visit(url)
     browser.fill('username', username)

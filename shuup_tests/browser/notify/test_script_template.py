@@ -45,7 +45,6 @@ def post_initialize():
     DB seems to be randomly locked and we want to wait
     until we perform these post procedures.
     """
-    configuration.set(None, "shuup_product_tour_complete", True)
     Script.objects.all().delete()
 
 
