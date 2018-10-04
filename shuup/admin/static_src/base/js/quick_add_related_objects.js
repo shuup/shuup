@@ -40,7 +40,7 @@ function createQuickIframe(url) {
     overlay.appendChild(contentPane);
 
     const closeIcon = document.createElement("i");
-    closeIcon.className = "fa fa-times-circle-o fa-3x text-danger";
+    closeIcon.className = "fa fa-times fa-2x";
     const closeButton = document.createElement("a");
     closeButton.className = "close-btn";
     closeButton.href = "#";
@@ -71,6 +71,7 @@ function createQuickIframe(url) {
 }
 
 window.setupQuickAdd = function (element) {
+    $(element).parent().siblings(".select2-container").addClass("has-quick-btn");
     $(element).on("click", function(e) {
         e.preventDefault();
         createQuickIframe($(this).data("url"));
@@ -79,7 +80,9 @@ window.setupQuickAdd = function (element) {
 
 window.setupEditButton = function (element) {
     // setup each target
+    $(element).parent().siblings(".select2-container").addClass("has-quick-btn");
     $(element).each(function () {
+        $(element).siblings(".select2-container").addClass("has-quick-btn");
         var target = this;
         var selectTarget = $(target).data("target");
 

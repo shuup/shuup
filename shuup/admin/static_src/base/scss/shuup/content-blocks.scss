@@ -244,7 +244,16 @@
     }
 
     .select2-container {
-        min-width: 240px;
+        min-width: 200px;
+
+        // make room to add quick add buttons
+        @include media-breakpoint-down(sm) {
+            &.has-quick-btn::after {
+                content: "";
+                height: 45px;
+                display: block;
+            }
+        }
     }
 }
 

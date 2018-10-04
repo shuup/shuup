@@ -66,14 +66,17 @@ function renderAddress(store, shop, customer, address, addressType) {
         if (field.key === "tax_number" || field.key === "email") {
             onchange = function () {
                 store.dispatch(setAddressProperty(addressType, field.key, this.value));
-                get("customer_exists", {
-                    "field": field.key, "value": this.value
-                }).then((data) => {
-                    removeWarningBlocks(this.parentElement);
-                    if (data.id && data.id !== customer.id) {
-                        buildWarningBlock(store, this.parentElement, field.label.toLowerCase(), data.name, data.id);
-                    }
-                });
+
+                if (this.value) {
+                    get("customer_exists", {
+                        "field": field.key, "value": this.value
+                    }).then((data) => {
+                        removeWarningBlocks(this.parentElement);
+                        if (data.id && data.id !== customer.id) {
+                            buildWarningBlock(store, this.parentElement, field.label.toLowerCase(), data.name, data.id);
+                        }
+                    });
+                }
             };
         }
         if (window.REGIONS) {
@@ -183,8 +186,6 @@ function renderCustomerAddressView(store, shop, customer) {
             ])
         ]),
         m("hr"),
-        m("br"),
-        m("br"),
         m("div.row", [
             m("div.col-sm-6",
                 m("fieldset", [
@@ -277,7 +278,7 @@ function renderCustomerSelectionView(store, customer) {
                     },
                     clear: true,
                     attrs: {
-                        placeholder: gettext("Search by name or email")
+                        placeholder: gettext("Search by name or email"),
                     }
                 }),
                 m("a.btn.text-success", {
@@ -320,8 +321,7 @@ function renderCustomerSelectionView(store, customer) {
                         }, gettext("View Details"))
                     ]) : m("p", gettext("A new customer will be created based on billing address.")))
             ])
-        ]),
-        m("br")
+        ])
     ];
 }
 

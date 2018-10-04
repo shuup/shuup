@@ -49,8 +49,8 @@ div.container-fluid.support-nav-wrap {
 
     a.close-btn {
         position: absolute;
-        right: 50px;
-        top: 10px;
+        right: 30px;
+        top: 20px;
         z-index: 2001;
     }
 }
@@ -66,6 +66,20 @@ div.container-fluid.support-nav-wrap {
             i.fa-plus:hover {
                 color: #000;
             }
+
+            @include media-breakpoint-up(sm) {
+                margin-left: 5px;
+            }
+
+            i.fa-plus:hover {
+                color: #000;
+            }
+
+            @include media-breakpoint-down(xs) {
+                position: absolute;
+                left: 3px;
+                bottom: 0px;
+            }
         }
 
         .edit-object-btn {
@@ -76,6 +90,12 @@ div.container-fluid.support-nav-wrap {
 
             i.fa-plus:hover {
                 color: #000;
+            }
+
+            @include media-breakpoint-down(xs) {
+                position: absolute;
+                left: 50px;
+                bottom: 0px;
             }
         }
     }
