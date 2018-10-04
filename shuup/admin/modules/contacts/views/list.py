@@ -118,7 +118,7 @@ class ContactListView(PicotableListView):
         :type instance: shuup.core.models.Contact
         """
         bits = filter(None, [
-            item.get("type"),
+            self.get_type_display(instance),
             _("Active") if instance.is_active else _("Inactive"),
             _("Email: %s") % (instance.email or "\u2014"),
             _("Phone: %s") % (instance.phone or "\u2014"),
