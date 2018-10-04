@@ -66,14 +66,17 @@ function renderAddress(store, shop, customer, address, addressType) {
         if (field.key === "tax_number" || field.key === "email") {
             onchange = function () {
                 store.dispatch(setAddressProperty(addressType, field.key, this.value));
-                get("customer_exists", {
-                    "field": field.key, "value": this.value
-                }).then((data) => {
-                    removeWarningBlocks(this.parentElement);
-                    if (data.id && data.id !== customer.id) {
-                        buildWarningBlock(store, this.parentElement, field.label.toLowerCase(), data.name, data.id);
-                    }
-                });
+
+                if (this.value) {
+                    get("customer_exists", {
+                        "field": field.key, "value": this.value
+                    }).then((data) => {
+                        removeWarningBlocks(this.parentElement);
+                        if (data.id && data.id !== customer.id) {
+                            buildWarningBlock(store, this.parentElement, field.label.toLowerCase(), data.name, data.id);
+                        }
+                    });
+                }
             };
         }
         if (window.REGIONS) {

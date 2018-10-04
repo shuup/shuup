@@ -26,7 +26,7 @@ export default function view() {
         viewObj = m("div.container-fluid",
             confirmView(source),
             m("div", [
-                m("button.btn.btn-danger.btn-lg" + (creating ? ".disabled" : ""), {
+                m("button.btn.btn-outline-danger.btn-lg" + (creating ? ".disabled" : ""), {
                     disabled: creating,
                     onclick: () => {
                         store.dispatch(clearOrderSourceData());

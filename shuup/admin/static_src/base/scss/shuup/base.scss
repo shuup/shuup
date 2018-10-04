@@ -150,12 +150,15 @@ img {
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 99999;
+    pointer-events: none;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
 
     .scroll-to-top-button {
+        pointer-events: all;
         cursor: pointer;
         width: 2.5rem;
         height: 2.5rem;
@@ -163,7 +166,6 @@ img {
         box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.15);
         border-radius: 50%;
         background-color: lighten($primary, 50%);
-        z-index: 999999;
 
         display: flex;
         flex-direction: column;
