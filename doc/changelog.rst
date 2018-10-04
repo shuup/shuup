@@ -1,6 +1,15 @@
 Shuup Change Log
 ================
 
+Unrealeased
+-----------
+
+- List all changes after last release here (newer on top).  Each change
+  on a separate bullet point line.  Wrap the file at 79 columns or so.
+  When releasing next version, the "Unreleased" header will be replaced
+  with appropriate version header and this help text will be removed.
+
+
 Shuup 1.7.0
 -----------
 
