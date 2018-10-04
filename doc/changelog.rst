@@ -1,13 +1,21 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.7.0
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-10-03 8:25pm -0800.
+
+Admin
+~~~~~
+
+- New design and improved usability
+
+Front & Xtheme
+~~~~~~~~~~~~~~
+
+- Bug fixes for various features added in
+  the latest 1.6.x releases.
 
 
 Shuup 1.6.16
