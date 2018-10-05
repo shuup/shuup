@@ -287,7 +287,7 @@ def get_shop_overview_block(request, currency, for_date=None):
             "ytd": ytd,
             "totals": totals
         })
-    block.size = "small"
+    block.size = "medium"
     return block
 
 

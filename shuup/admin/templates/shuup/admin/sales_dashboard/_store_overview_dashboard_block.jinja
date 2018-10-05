@@ -1,9 +1,9 @@
 {% macro render_row(label, dict) %}
     <tr>
-        <td>{{ label }}</td>
-        <td class="text-right">{{ dict["sales"]|money }}</td>
-        <td class="text-right">{{ dict["num_orders"] }}</td>
-        <td class="text-right">{{ dict["num_customers"] }}</td>
+        <td class="text-nowrap">{{ label }}</td>
+        <td class="text-right text-nowrap">{{ dict["sales"]|money }}</td>
+        <td class="text-right text-nowrap">{{ dict["num_orders"] }}</td>
+        <td class="text-right text-nowrap">{{ dict["num_customers"] }}</td>
     </tr>
 {% endmacro %}
 
@@ -25,8 +25,8 @@
                 </thead>
                 <tbody>
                     {{ render_row(_("Today"), daily) }}
-                    {{ render_row(_("MTD"), mtd) }}
-                    {{ render_row(_("YTD"), ytd) }}
+                    {{ render_row(_("Month to date (MTD)"), mtd) }}
+                    {{ render_row(_("Year to date (YTD)"), ytd) }}
                     {{ render_row(_("Totals"), totals) }}
                 </tbody>
             </table>
