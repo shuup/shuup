@@ -14,7 +14,7 @@ from shuup.testing import factories
 from shuup.testing.browser_utils import (
     click_element, wait_until_appeared, wait_until_condition
 )
-from shuup.testing.utils import initialize_admin_browser_test
+from shuup.testing.browser_utils import initialize_admin_browser_test
 from shuup.core import cache
 from shuup.xtheme import get_current_theme
 from shuup.xtheme.models import Snippet

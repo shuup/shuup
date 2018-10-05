@@ -5,12 +5,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.utils.translation import activate
 from selenium.common.exceptions import (
     ElementNotVisibleException, StaleElementReferenceException
 )
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.wait import WebDriverWait
+from shuup.admin.utils.tour import set_tour_complete
+from shuup.core import cache
+from shuup.testing.factories import get_default_shop
 
 
 def wait_until_disappeared(browser, css_selector, timeout=10, frequency=1.0):
@@ -132,3 +136,45 @@ def page_has_loaded(browser):
     :rtype bool
     """
     return browser.evaluate_script("document.readyState") == "complete"
+
+
+def initialize_front_browser_test(browser, live_server):
+    activate("en")
+    get_default_shop()
+    url = live_server + "/"
+    browser.visit(url)
+    # set shop language to eng
+    browser.find_by_id("language-changer").click()
+    browser.find_by_xpath('//a[@class="language"]').first.click()
+    return browser
+
+
+def initialize_admin_browser_test(browser, live_server, settings, username="admin", password="password",
+                                  onboarding=False, language="en", shop=None, tour_complete=True):
+    if not onboarding:
+        settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
+    activate("en")
+    cache.clear()
+
+    shop = shop or get_default_shop()
+
+    if tour_complete:
+        from django.contrib.auth import get_user_model
+        user = get_user_model().objects.get(username=username)
+        set_tour_complete(shop, "dashboard", True, user)
+        set_tour_complete(shop, "home", True, user)
+        set_tour_complete(shop, "product", True, user)
+        set_tour_complete(shop, "category", True, user)
+
+    url = live_server + "/sa"
+    browser.visit(url)
+    browser.fill('username', username)
+    browser.fill('password', password)
+    browser.find_by_css(".btn.btn-primary.btn-lg.btn-block").first.click()
+
+    if not onboarding:
+        # set shop language to eng
+        browser.find_by_id("dropdownMenu").click()
+        browser.find_by_xpath('//a[@data-value="%s"]' % language).first.click()
+
+    return browser

@@ -17,7 +17,7 @@ from shuup.testing import factories
 from shuup.testing.browser_utils import (
     click_element, wait_until_condition
 )
-from shuup.testing.utils import (
+from shuup.testing.browser_utils import (
     initialize_admin_browser_test
 )
 from shuup.testing.browser_utils import page_has_loaded
