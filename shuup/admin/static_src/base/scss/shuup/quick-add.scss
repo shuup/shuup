@@ -63,38 +63,19 @@ div.container-fluid.support-nav-wrap {
             position: relative;
             margin-top: 4px;
 
-            @include media-breakpoint-down(xs) {
-                margin-left: 75px;
-            }
-
             i.fa-plus:hover {
                 color: #000;
-            }
-
-            @include media-breakpoint-down(xs) {
-                .btn {
-                    position: absolute;
-                    top: 0;
-                    right: 30px;
-                }
             }
         }
 
         .edit-object-btn {
             cursor: pointer;
             float: left;
-            position: initial;
+            position: relative;
+            margin-top: 4px;
 
             i.fa-plus:hover {
                 color: #000;
-            }
-
-            @include media-breakpoint-down(sm) {
-                .btn {
-                    position: absolute;
-                    top: 0px;
-                    right: 75px;
-                }
             }
         }
     }
