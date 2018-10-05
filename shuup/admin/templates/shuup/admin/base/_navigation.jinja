@@ -30,7 +30,7 @@
     {% if front_url %}<a class="nav-btn shop-btn visit-store" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-eye"></i></a>{% endif %}
 </div>
 <div class="dropdown">
-    <button class="dropdown-toggle btn btn-default" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="false" data-placement="bottom" title="{% trans %}Settings{% endtrans %}">
+    <button class="dropdown-toggle btn btn-default" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="false" data-display="static" title="{% trans %}Settings{% endtrans %}">
         {{ request.user }}
     </button>
     <div class="languages dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
