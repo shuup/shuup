@@ -109,7 +109,7 @@
                            aria-expanded="true"
                            aria-controls="categories">{{ field.label }}</a>
                         <br>
-                        {{ bs3.field(field, render_label=False) }}
+                        {{ render_field(field, render_label=False) }}
                     </div>
                 {% endif %}
             {% endfor %}

@@ -25,7 +25,7 @@
     </li>
 {% endmacro %}
 
-{% macro render_field(field, classes="", layout="", show_help_text=True) %}
+{% macro render_field(field, classes="", layout="", show_help_text=True, render_label=True) %}
     {% if field.field.widget.is_hidden %}
         {{ field.as_widget()|safe }}
     {% else %}
@@ -33,9 +33,11 @@
         {% if widget_name == "checkboxinput" %}
             <div class="custom-checkbox {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
                 {{ field.as_widget()|safe }}
+                {% if render_label %}
                 <label for="{{ field.auto_id }}">
                     {{ field.label }}
                 </label>
+                {% endif %}
                 {% if field.errors %}
                     <p class="help-block">
                         {% for error in field.errors %}
@@ -50,13 +52,17 @@
         {% elif widget_name == "radio" %}
             <div class="custom-radio {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
                 {{ field.as_widget()|safe }}
+                {% if render_label %}
                 <label for="{{ field.auto_id }}">
                     {{ field.label }}
                 </label>
+                {% endif %}
             </div>
         {% elif widget_name == "select" %}
             <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                {% if render_label %}
                 <label class="control-label {% if layout == "horizontal" %}col-md-3{% endif %}" for="{{ field.auto_id }}">{{ field.label }}</label>
+                {% endif %}
                 {% if layout == "horizontal" %}
                     <div class="col-md-9">
                 {% endif %}
@@ -77,7 +83,9 @@
             </div>
         {% else %}
             <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                {% if render_label %}
                 <label class="control-label {% if layout == "horizontal" %}col-md-3{% endif %}" for="{{ field.auto_id }}">{{ field.label }}</label>
+                {% endif %}
                 {% if layout == "horizontal" %}
                     <div class="col-md-9">
                 {% endif %}
