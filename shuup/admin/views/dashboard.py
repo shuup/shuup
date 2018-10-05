@@ -11,6 +11,7 @@ from django.views.generic.base import TemplateView
 
 import shuup
 from shuup.admin.dashboard import get_activity
+from shuup.admin.dashboard.blocks import DashboardBlock
 from shuup.admin.module_registry import get_modules
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_missing_permissions
@@ -31,6 +32,9 @@ class DashboardView(TemplateView):
             if not get_missing_permissions(self.request.user, module.get_required_permissions()):
                 notifications.extend(module.get_notifications(request=self.request))
                 blocks.extend(module.get_dashboard_blocks(request=self.request))
+
+        # sort blocks by size, trying to make them fit better
+        blocks.sort(key=lambda block: DashboardBlock.SIZES.index(block.size))
         context["activity"] = get_activity(request=self.request)
         context["tour_key"] = "dashboard"
         context["tour_complete"] = is_tour_complete(get_shop(self.request), "dashboard", user=self.request.user)
