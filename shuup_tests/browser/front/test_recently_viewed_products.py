@@ -8,7 +8,7 @@ import os
 import pytest
 from django.core.urlresolvers import reverse
 
-from shuup.testing.utils import initialize_front_browser_test
+from shuup.testing.browser_utils import initialize_front_browser_test
 from shuup.testing.factories import (
     create_product, get_default_category, get_default_shop
 )

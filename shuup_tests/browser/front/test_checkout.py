@@ -21,7 +21,7 @@ from shuup.testing.factories import (
     get_default_shop, get_default_supplier, get_payment_method,
     get_shipping_method
 )
-from shuup.testing.utils import initialize_front_browser_test
+from shuup.testing.browser_utils import initialize_front_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 

@@ -24,7 +24,7 @@ from shuup.testing.factories import (
     create_random_user, get_default_product_type, get_default_sales_unit,
     get_default_shop, get_default_tax_class
 )
-from shuup.testing.utils import initialize_admin_browser_test
+from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
