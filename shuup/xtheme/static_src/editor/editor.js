@@ -115,6 +115,7 @@ domready(() => {
 
     new Sortable(document.querySelector(".layout-rows"), {
         handle: ".layout-move-row-btn",
+		forceFallback: true,
         onUpdate: function(evt) {
             post({command: "move_row_to_index", from_y: evt.oldIndex, to_y: evt.newIndex});
         }
