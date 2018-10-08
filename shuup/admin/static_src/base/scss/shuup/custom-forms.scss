@@ -201,7 +201,8 @@ fieldset[disabled] .form-control {
 }
 
 .dropdown-menu.dropdown-menu-right {
-    top: 10px !important;
+    top: 35px !important;
+    right: 30px;
     @include dropdown-arrow(top-right);
 }
 
