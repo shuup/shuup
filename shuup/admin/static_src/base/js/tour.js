@@ -8,7 +8,7 @@
  */
 ((($) => {
     function getAppChromeSteps(key) {
-        if(key !== "home" && typeof(key) !== "undefined") {
+        if (key !== "home" && typeof (key) !== "undefined") {
             return [];
         }
 
@@ -174,15 +174,19 @@
         return steps;
     }
 
-    $(".show-tour").on("click", function(e) {
+    $(".show-tour").on("click", (e) => {
         e.stopImmediatePropagation();
         e.preventDefault();
         $.tour();
     });
 
-    $.tour = (config={}, params) => {
-        if(config === "setPageSteps") {
-            this.pageSteps = params;
+    $.tour = (config = {}) => {
+        if (config.method === "setPageSteps") {
+            this.pageSteps = config.steps;
+
+            if (config.mode) {
+                this.mode = config.mode;
+            }
             return;
         }
         const tour = new window.Shepherd.Tour({
@@ -193,37 +197,38 @@
             }
         });
 
-        var steps = [];
-        if (this.pageSteps && this.pageSteps.length > 1) {
+        let steps = [];
+        if (this.pageSteps) {
             steps = this.pageSteps;
-        }
-        else {
-            steps = (this.pageSteps || []).concat(getAppChromeSteps(config.tourKey));
+
+            if (this.mode === "homeTour") {
+                steps = steps.concat(getAppChromeSteps(config.tourKey));
+            }
+        } else {
+            steps = getAppChromeSteps(config.tourKey);
         }
 
         $.each(steps, (idx, step) => {
             var buttonType = null;
-            if(idx === 0) {
+            if (idx === 0) {
                 buttonType = "first";
             }
-            if(idx === steps.length - 1) {
+            if (idx === steps.length - 1) {
                 buttonType = "last";
             }
-            step = $.extend({}, step, {buttons: getTourButtons(buttonType)});
+            step = $.extend({}, step, { buttons: getTourButtons(buttonType) });
             let content = "";
-            if(step.icon) {
-                content += "<div class='clearfix'>";
-                content += "<div class='pull-left'>";
+            if (step.icon) {
+                content += "<div class='d-flex flex-row justify-content-between align-items-center'>";
                 content += "<div class='icon'>";
                 content += "<img src='" + step.icon + "' />";
                 content += "</div>";
-                content += "</div>";
-                content += "<div class='step-with-icon'>";
+                content += "<div class='step-with-icon flex-fill'>";
                 content += getTextLines(step.text);
                 content += getHelpButton(step.helpPage);
                 content += "</div>";
                 content += "</div>";
-            } else if(step.banner){
+            } else if (step.banner) {
                 content += "<div>";
                 content += "<div class='banner'>";
                 content += "<img src='" + step.banner + "' />";
@@ -243,15 +248,15 @@
 
         function getTextLines(text) {
             let content = "";
-            for(let i = 0; i < text.length; i+=1) {
-                content += "<p class='lead'>" + text[i] + "</p>";
+            for (let i = 0; i < text.length; i += 1) {
+                content += "<p>" + text[i] + "</p>";
             }
             return content;
         }
 
         function getHelpButton(page) {
             let content = "";
-            if(page) {
+            if (page) {
                 const helpUrl = window.ShuupAdminConfig.docsPage + page;
                 content += "<br>";
                 content += "<p class='text-center'>";
@@ -265,7 +270,7 @@
         }
         function getTourButtons(type) {
             const buttons = [];
-            if(type !== "first" && type !== "last") {
+            if (type !== "first" && type !== "last") {
                 buttons.push({
                     text: "Previous",
                     classes: "btn btn-primary",
@@ -273,7 +278,7 @@
                 });
             }
 
-            if(type === "last") {
+            if (type === "last") {
                 buttons.push({
                     text: "OK",
                     classes: "btn btn-primary",
@@ -290,9 +295,9 @@
             return buttons;
         }
 
-        if(config.tourKey) {
+        if (config.tourKey) {
             tour.on("cancel", () => {
-                $.post(config.url, {"csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, "tourKey": config.tourKey});
+                $.post(config.url, { "csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, "tourKey": config.tourKey });
             });
         }
         tour.start();

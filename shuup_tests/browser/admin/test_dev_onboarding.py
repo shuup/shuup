@@ -11,12 +11,11 @@ import pytest
 
 from django.core.management import call_command
 
-from shuup import configuration
 from shuup.core.models import AnonymousContact, Product, Shop, Supplier
 from shuup.testing.browser_utils import (
     click_element, wait_until_appeared, wait_until_condition
 )
-from shuup.testing.utils import initialize_admin_browser_test
+from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -29,7 +28,6 @@ def test_dev_onboarding(browser, admin_user, live_server, settings):
     shop = Shop.objects.first()
     assert shop.maintenance_mode
     initialize_admin_browser_test(browser, live_server, settings, onboarding=True)
-    configuration.set(shop, "shuup_home_tour_complete", True)  # Make home view tour complete
 
     browser.fill("address-first_name", "Matti")
     browser.fill("address-last_name", "Teppo")
@@ -68,7 +66,7 @@ def test_dev_onboarding(browser, admin_user, live_server, settings):
     click_element(browser, "button[name='next']")
 
     wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Shuup!"))
-    
+
     click_element(browser, "input[value='Publish shop']")
 
     shop.refresh_from_db()

@@ -16,7 +16,7 @@ from shuup.testing import factories
 from shuup.testing.browser_utils import (
     click_element, page_has_loaded, wait_until_appeared, wait_until_condition
 )
-from shuup.testing.utils import initialize_admin_browser_test
+from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 

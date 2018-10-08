@@ -96,7 +96,7 @@
                     scrollTo: false,
                 });
             }
-            if ($("a[href='#contact-group-media-section']").length > 0) {
+            if ($("a[href='#product-media-section']").length > 0) {
                 steps.push({
                     title: "{% trans %}Product Files{% endtrans %}",
                     text: ["{% trans %}You can attach files such as manual to the merchandise(s) here.{% endtrans %}"],
@@ -104,7 +104,7 @@
                     scrollTo: false,
                 });
             }
-            if ($("a[href='#contact-group-images-section']").length > 0) {
+            if ($("a[href='#product-images-section']").length > 0) {
                 steps.push({
                     title: "{% trans %}Images{% endtrans %}",
                     text: ["{% trans %}Showcase your merchandise here.{% endtrans %}"],
@@ -129,7 +129,7 @@
                     scrollTo: false,
                 });
             }
-            $.tour("setPageSteps", steps);
+            $.tour({ method: "setPageSteps", steps: steps });
         });
     </script>
     {% for product_section in product_sections %}

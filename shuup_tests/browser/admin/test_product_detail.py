@@ -10,12 +10,11 @@ import os
 import pytest
 from django.core.urlresolvers import reverse
 
-from shuup import configuration
 from shuup.testing.browser_utils import (
     click_element, wait_until_condition, wait_until_appeared
 )
 from shuup.testing.factories import create_product, get_default_shop
-from shuup.testing.utils import initialize_admin_browser_test
+from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -25,7 +24,6 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 def test_product_detail(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     product = create_product("test_sku", shop, default_price=10)
-    configuration.set(None, "shuup_product_tour_complete", True)
     initialize_admin_browser_test(browser, live_server, settings)
 
     url = reverse("shuup_admin:shop_product.edit", kwargs={"pk": product.get_shop_instance(shop).pk})

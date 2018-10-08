@@ -31,16 +31,20 @@
 {% block extra_js %}
     <script>
         (function(){
-            $.tour("setPageSteps", [{
-                banner: "{{ static("shuup_admin/img/welcome_banner.png") }}",
-                showCancelLink: false,
-                classes: "shepherd-theme-arrows has-banner",
-                text: [
-                    "{% trans %}Hi, new shop owner!{% endtrans %}",
-                    "{% trans %}Welcome to your store admin!{% endtrans %}",
-                    "{% trans %}Let’s go through some of the things you can do here. Click next to begin.{% endtrans %}"
-                ]
-            }]);
+            $.tour({
+                method: "setPageSteps",
+                mode: "homeTour",
+                steps: [{
+                    banner: "{{ static('shuup_admin/img/welcome_banner.png') }}",
+                    showCancelLink: false,
+                    classes: "shepherd-theme-arrows has-banner",
+                    text: [
+                        "{% trans %}Hi, new shop owner!{% endtrans %}",
+                        "{% trans %}Welcome to your store admin!{% endtrans %}",
+                        "{% trans %}Let’s go through some of the things you can do here. Click next to begin.{% endtrans %}"
+                    ]
+                }]
+            });
         })();
     </script>
 {% endblock %}

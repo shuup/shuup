@@ -12,7 +12,6 @@ import pytest
 from django.contrib.auth.models import Group, Permission
 from django.core.urlresolvers import reverse
 
-from shuup import configuration
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permission_object_from_string
@@ -25,7 +24,7 @@ from shuup.testing.factories import (
     create_random_user, get_default_product_type, get_default_sales_unit,
     get_default_shop, get_default_tax_class
 )
-from shuup.testing.utils import initialize_admin_browser_test
+from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -37,7 +36,6 @@ def test_quick_add(browser, admin_user, live_server, settings):
     get_default_product_type()
     get_default_sales_unit()
     get_default_tax_class()
-    configuration.set(None, "shuup_product_tour_complete", True)
     initialize_admin_browser_test(browser, live_server, settings)
 
     url = reverse("shuup_admin:shop_product.new")
@@ -51,8 +49,6 @@ def test_quick_add(browser, admin_user, live_server, settings):
     browser.fill("base-name__en", name)
     browser.fill("base-short_description__en", short_description)
     browser.fill("shop%s-default_price_value" % shop.pk, price_value)
-
-    configuration.set(None, "shuup_category_tour_complete", True)
 
     wait_until_appeared(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
     click_element(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
@@ -109,7 +105,6 @@ def test_edit_button_no_permission(browser, admin_user, live_server, settings):
     get_default_product_type()
     get_default_sales_unit()
     get_default_tax_class()
-    configuration.set(None, "shuup_product_tour_complete", True)
     initialize_admin_browser_test(browser, live_server, settings, username=manager.username)
 
     url = reverse("shuup_admin:shop_product.new")
@@ -124,8 +119,6 @@ def test_edit_button_no_permission(browser, admin_user, live_server, settings):
     browser.fill("base-name__en", name)
     browser.fill("base-short_description__en", short_description)
     browser.fill("shop%s-default_price_value" % shop.pk, price_value)
-
-    configuration.set(None, "shuup_category_tour_complete", True)
 
     wait_until_appeared(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
     click_element(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)

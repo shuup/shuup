@@ -11,13 +11,12 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
-from shuup import configuration
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
     click_element, move_to_element, wait_until_appeared,
     wait_until_condition
 )
-from shuup.testing.utils import initialize_admin_browser_test
+from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -32,7 +31,6 @@ def test_summernote_editor_picture(browser, admin_user, live_server, settings):
     factories.get_default_sales_unit()
     factories.get_default_tax_class()
     filer_image = factories.get_random_filer_image()
-    configuration.set(None, "shuup_product_tour_complete", True)
 
     initialize_admin_browser_test(browser, live_server, settings)
     browser.driver.set_window_size(1920, 1080)

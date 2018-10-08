@@ -28,7 +28,7 @@ from shuup.testing.browser_utils import (
     click_element, move_to_element, wait_until_condition
 )
 from shuup.testing.notify_script_templates import DummyScriptTemplate
-from shuup.testing.utils import initialize_admin_browser_test
+from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -45,7 +45,6 @@ def post_initialize():
     DB seems to be randomly locked and we want to wait
     until we perform these post procedures.
     """
-    configuration.set(None, "shuup_product_tour_complete", True)
     Script.objects.all().delete()
 
 

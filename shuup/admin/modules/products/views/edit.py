@@ -236,7 +236,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         context["orderability_errors"] = orderability_errors
         context["product_sections"] = []
         context["tour_key"] = "product"
-        context["tour_complete"] = is_tour_complete(get_shop(self.request), "product")
+        context["tour_complete"] = is_tour_complete(get_shop(self.request), "product", user=self.request.user)
 
         product_sections_provides = sorted(get_provide_objects("admin_product_section"), key=lambda x: x.order)
         for admin_product_section in product_sections_provides:
