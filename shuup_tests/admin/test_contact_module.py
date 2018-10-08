@@ -5,14 +5,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import json
 import pytest
 from django.test.utils import override_settings
 
 from shuup.admin.modules.contacts import ContactModule
 from shuup.admin.modules.contacts.views.detail import ContactDetailView
-from shuup.core.models import Contact
+from shuup.admin.modules.contacts.views.list import ContactListView
+from shuup.core.models import Contact, PersonContact
 from shuup.testing.factories import (
-    create_random_person, create_random_user, get_default_shop, get_shop
+    create_random_person, create_random_user, get_default_shop, get_shop, create_random_user
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import empty_iterable
@@ -71,3 +73,52 @@ def test_contact_module_search_multishop(rf):
         # no shop found
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
         assert empty_iterable(cm.get_search_results(request, query=contact.email))
+
+
+@pytest.mark.django_db
+def test_contact_list_multiple_shop(rf):
+    shop1 = get_default_shop()
+    shop2 = get_shop(identifier="shop2", name="Shop 2")
+    staff = create_random_user(is_staff=True)
+
+    Contact.objects.all().delete()
+
+    shop1.staff_members.add(staff)
+    shop2.staff_members.add(staff)
+
+    contact1 = create_random_person(locale="en_US")
+    contact1.shops.add(shop1)
+    contact2 = create_random_person(locale="en_US")
+    contact2.shops.add(shop2)
+
+    view_func = ContactListView.as_view()
+
+    # do not send which shop.. it should return all contacts
+    payload = {"jq": json.dumps({"perPage": 100, "page": 1})}
+    request = apply_request_middleware(rf.get("/", data=payload), user=staff)
+    response = view_func(request)
+    assert response.status_code == 200
+    data = json.loads(response.content.decode("utf-8"))
+    contacts = [contact["_id"] for contact in data["items"]]
+    assert contact1.pk in contacts
+    assert contact2.pk in contacts
+
+    # request contacts from shop1
+    payload = {"jq": json.dumps({"perPage": 100, "page": 1}), "shop": shop1.pk}
+    request = apply_request_middleware(rf.get("/", data=payload), user=staff)
+    response = view_func(request)
+    assert response.status_code == 200
+    data = json.loads(response.content.decode("utf-8"))
+    contacts = [contact["_id"] for contact in data["items"]]
+    assert contact1.pk in contacts
+    assert contact2.pk not in contacts
+
+    # request contacts from shop2
+    payload = {"jq": json.dumps({"perPage": 100, "page": 1}), "shop": shop2.pk}
+    request = apply_request_middleware(rf.get("/", data=payload), user=staff)
+    response = view_func(request)
+    assert response.status_code == 200
+    data = json.loads(response.content.decode("utf-8"))
+    contacts = [contact["_id"] for contact in data["items"]]
+    assert contact1.pk not in contacts
+    assert contact2.pk in contacts

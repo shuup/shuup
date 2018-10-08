@@ -72,15 +72,22 @@ class MultiselectAjaxView(TemplateView):
             if not _field_exists(user_model, "name"):
                 self.search_fields.remove("name")
 
-    def get_data(self, request, *args, **kwargs):
+    def get_data(self, request, *args, **kwargs):   # noqa
         model_name = request.GET.get("model")
         if not model_name:
             return []
 
         cls = apps.get_model(model_name)
         qs = cls.objects.all()
-        shop = self.request.shop
-        qs = self._filter_query(cls, qs, shop, getattr(request.user, "is_superuser", False))
+        shop = request.shop
+
+        # if shop is informed, make sure user has access to it
+        if request.GET.get("shop"):
+            query_shop = Shop.objects.get_for_user(request.user).filter(pk=request.GET["shop"]).first()
+            if query_shop:
+                shop = query_shop
+
+        qs = self._filter_query(cls, qs, shop)
         self.init_search_fields(cls)
         if not self.search_fields:
             return [{"id": None, "name": _("Couldn't get selections for %s.") % model_name}]
@@ -118,7 +125,7 @@ class MultiselectAjaxView(TemplateView):
         qs = qs.distinct()
         return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
 
-    def _filter_query(self, cls, qs, shop, is_superuser):
+    def _filter_query(self, cls, qs, shop):
         if hasattr(cls.objects, "all_except_deleted"):
             qs = cls.objects.all_except_deleted(shop=shop)
         if hasattr(cls.objects, "get_for_user"):
@@ -126,19 +133,17 @@ class MultiselectAjaxView(TemplateView):
         if issubclass(cls, Product):
             qs = qs.filter(shop_products__shop=shop)
 
-        # filter by shop, when not superuser
-        if not is_superuser:
-            # Get all relation fields and check whether this models has
-            # relation to Shop mode, if so, filter by the current shop
-            allowed_shop_fields = ["shop", "shops"]
-            related_fields = [models.OneToOneField, models.ForeignKey, models.ManyToManyField]
-            shop_related_fields = [
-                field
-                for field in cls._meta.get_fields()
-                if type(field) in related_fields and field.related_model == Shop and field.name in allowed_shop_fields
-            ]
-            for shop_field in shop_related_fields:
-                qs = qs.filter(**{shop_field.name: shop})
+        # Get all relation fields and check whether this models has
+        # relation to Shop mode, if so, filter by the current shop
+        allowed_shop_fields = ["shop", "shops"]
+        related_fields = [models.OneToOneField, models.ForeignKey, models.ManyToManyField]
+        shop_related_fields = [
+            field
+            for field in cls._meta.get_fields()
+            if type(field) in related_fields and field.related_model == Shop and field.name in allowed_shop_fields
+        ]
+        for shop_field in shop_related_fields:
+            qs = qs.filter(**{shop_field.name: shop})
 
         return qs
 
