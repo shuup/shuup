@@ -106,6 +106,9 @@ class ShopEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     def form_valid(self, form):
         return self.save_form_parts(form)
 
+    def get_queryset(self):
+        return Shop.objects.get_for_user(self.request.user)
+
 
 class ShopSelectView(View):
     def get(self, request, *args, **kwargs):

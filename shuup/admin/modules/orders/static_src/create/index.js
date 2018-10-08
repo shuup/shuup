@@ -33,66 +33,67 @@ export function init(config = {}) {
     if (controller !== null) {
         return;
     }
-    var countryDefault = config.countryDefault;
-    if (!countryDefault && config.countries.length > 0) {
-        countryDefault = config.countries[0].id;
-    }
-    store.dispatch(setShopChoices(config.shops || []));
-    store.dispatch(setShop(config.shops[0] || []));
-    store.dispatch(setCountries(config.countries || []));
-    store.dispatch(setAddressProperty("billing", "country", countryDefault));
-    store.dispatch(setAddressProperty("shipping", "country", countryDefault));
-    store.dispatch(setShippingMethodChoices(config.shippingMethods || []));
-    store.dispatch(setPaymentMethodChoices(config.paymentMethods || []));
-    const orderId = config.orderId;
-    store.dispatch(setOrderId(orderId));
-    const customerData = config.customerData;
     const persistor = persistStore(store, {
         keyPrefix: interpolate("order_creator_shop-%s:", [config.shops[0].id])
-    });
-    persistor.purge(["customerDetails", "quickAdd"]);
-    const resetOrder = window.localStorage.getItem("resetSavedOrder") || "false";
-    var savedOrder = { id: null };
-    if (resetOrder === "true") {
-        persistor.purgeAll();
-        window.localStorage.setItem("resetSavedOrder", "false");
-    } else {
-        const savedOrderStr = window.localStorage.getItem("reduxPersist:order");
-        if (savedOrderStr) {
-            savedOrder = JSON.parse(savedOrderStr);
+    }, () => {
+        var countryDefault = config.countryDefault;
+        if (!countryDefault && config.countries.length > 0) {
+            countryDefault = config.countries[0].id;
         }
-    }
+        store.dispatch(setShopChoices(config.shops || []));
+        store.dispatch(setShop(config.shops[0] || []));
+        store.dispatch(setCountries(config.countries || []));
+        store.dispatch(setAddressProperty("billing", "country", countryDefault));
+        store.dispatch(setAddressProperty("shipping", "country", countryDefault));
+        store.dispatch(setShippingMethodChoices(config.shippingMethods || []));
+        store.dispatch(setPaymentMethodChoices(config.paymentMethods || []));
+        const orderId = config.orderId;
+        store.dispatch(setOrderId(orderId));
+        const customerData = config.customerData;
 
-    if (customerData) { // contact -> New Order
-        persistor.purgeAll();
-        store.dispatch(setCustomer(customerData));
-    }
-
-    if (orderId) { // Edit mode
-        if (!savedOrder.id || savedOrder.id !== orderId) {
-            // Saved order id does not match with current order
-            // Purge the wrong saved state and initialize from orderData
+        persistor.purge(["customerDetails", "quickAdd"]);
+        const resetOrder = window.localStorage.getItem("resetSavedOrder") || "false";
+        var savedOrder = { id: null };
+        if (resetOrder === "true") {
             persistor.purgeAll();
-            store.dispatch(setShop(config.orderData.shop));
-            store.dispatch(setCustomer(config.orderData.customer));
-            store.dispatch(setShippingMethod(config.orderData.shippingMethodId));
-            store.dispatch(setPaymentMethod(config.orderData.paymentMethodId));
-            store.dispatch(setLines(config.orderData.lines));
-            store.dispatch(updateTotals(store.getState));
+            window.localStorage.setItem("resetSavedOrder", "false");
+        } else {
+            const savedOrderStr = window.localStorage.getItem("reduxPersist:order");
+            if (savedOrderStr) {
+                savedOrder = JSON.parse(savedOrderStr);
+            }
         }
-    } else {  // New mode
-        if (savedOrder.id) {
-            // Purge the old saved state for existing order
-            persistor.purgeAll();
-        }
-    }
 
-    controller = m.mount(document.getElementById("order-tool-container"), {
-        view,
-        controller: _.noop
-    });
-    store.subscribe(() => {
-        m.redraw();
+        if (customerData) { // contact -> New Order
+            persistor.purgeAll();
+            store.dispatch(setCustomer(customerData));
+        }
+
+        if (orderId) { // Edit mode
+            if (!savedOrder.id || savedOrder.id !== orderId) {
+                // Saved order id does not match with current order
+                // Purge the wrong saved state and initialize from orderData
+                persistor.purgeAll();
+                store.dispatch(setShop(config.orderData.shop));
+                store.dispatch(setCustomer(config.orderData.customer));
+                store.dispatch(setShippingMethod(config.orderData.shippingMethodId));
+                store.dispatch(setPaymentMethod(config.orderData.paymentMethodId));
+                store.dispatch(setLines(config.orderData.lines));
+                store.dispatch(updateTotals(store.getState));
+            }
+        } else {  // New mode
+            if (savedOrder.id) {
+                // Purge the old saved state for existing order
+                persistor.purgeAll();
+            }
+        }
+        controller = m.mount(document.getElementById("order-tool-container"), {
+            view,
+            controller: _.noop
+        });
+        store.subscribe(() => {
+            m.redraw();
+        });
     });
 }
 

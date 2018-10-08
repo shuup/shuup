@@ -271,6 +271,7 @@ function renderCustomerSelectionView(store, customer) {
                 m.component(Select2, {
                     name: "customer-search",
                     model: "shuup.contact",
+                    extraFilters: () => ({ shop: store.getState().shop.selected.id }),
                     onchange: (obj) => {
                         if (obj.length > 0) {
                             store.dispatch(retrieveCustomerData({ id: obj[0].id }));
@@ -278,7 +279,7 @@ function renderCustomerSelectionView(store, customer) {
                     },
                     clear: true,
                     attrs: {
-                        placeholder: gettext("Search by name or email"),
+                        placeholder: gettext("Search by name or email")
                     }
                 }),
                 m("a.btn.text-success", {
@@ -287,6 +288,7 @@ function renderCustomerSelectionView(store, customer) {
                         window.BrowseAPI.openBrowseWindow({
                             kind: "contact",
                             clearable: true,
+                            shop: store.getState().shop.selected.id,
                             onSelect: (obj) => {
                                 store.dispatch(retrieveCustomerData({ id: obj.id }));
                             }
@@ -335,7 +337,9 @@ export function renderCustomerDetailModal(store) {
     return modal({
         show: customerDetails.showCustomerModal,
         sizeClass: "modal-lg",
-        close: () => store.dispatch(showCustomerModal(false)),
+        close: () => {
+            store.dispatch(showCustomerModal(false))
+        },
         title: m("h3.modal-title", customerInfo.name),
         body: [
             contentBlock("i.fa.fa-info-circle", gettext("Customer Information"), customerDetailView(customerInfo), "h3"),
@@ -344,7 +348,9 @@ export function renderCustomerDetailModal(store) {
         ],
         footer: [
             m("button.btn.btn-inverse", {
-                onclick: () => store.dispatch(showCustomerModal(false))
+                onclick: () => {
+                    store.dispatch(showCustomerModal(false));
+                }
             }, gettext("Close"))
         ]
     });

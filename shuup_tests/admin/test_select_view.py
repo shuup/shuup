@@ -16,13 +16,13 @@ from shuup.core.models import (
     Category, CompanyContact, PersonContact, Product, ProductMode,
     SalesUnit, ShopProduct, ShopProductVisibility
 )
-from shuup.testing.factories import create_product, get_default_shop
+from shuup.testing.factories import create_product, get_default_shop, get_shop, create_random_user
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
 
 
 
-def _get_search_results(rf, view, model_name, search_str, user, search_mode=None, sales_units=None):
+def _get_search_results(rf, view, model_name, search_str, user, search_mode=None, sales_units=None, shop=None):
     data = {
         "model": model_name,
         "search": search_str
@@ -32,6 +32,9 @@ def _get_search_results(rf, view, model_name, search_str, user, search_mode=None
 
     if sales_units:
         data.update({"salesUnits": sales_units})
+
+    if shop:
+        data.update({"shop": shop.pk})
 
     request = apply_request_middleware(rf.get("sa/search", data), user=user)
     response = view(request)
@@ -207,6 +210,10 @@ def test_multi_select_with_product_sales_unit(rf, admin_user):
 def test_ajax_select_view_with_contacts(rf, contact_cls, admin_user):
     shop = get_default_shop()
     view = MultiselectAjaxView.as_view()
+
+    results = _get_search_results(rf, view, "", "some str", admin_user)
+    assert len(results) == 0
+
     model_name = "shuup.%s" % contact_cls._meta.model_name
     results = _get_search_results(rf, view, model_name, "some str", admin_user)
     assert len(results) == 0
@@ -234,6 +241,55 @@ def test_ajax_select_view_with_contacts(rf, contact_cls, admin_user):
 
     results = _get_search_results(rf, view, model_name, "random", admin_user)  # Shouldn't find anything with this
     assert len(results) == 0
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("contact_cls", [
+    PersonContact, CompanyContact
+])
+def test_ajax_select_view_with_contacts_multipleshop(rf, contact_cls):
+    shop1 = get_default_shop()
+    shop2 = get_shop(identifier="shop2")
+    staff = create_random_user(is_staff=True)
+    shop1.staff_members.add(staff)
+    shop2.staff_members.add(staff)
+
+    view = MultiselectAjaxView.as_view()
+    model_name = "shuup.%s" % contact_cls._meta.model_name
+
+    customer = contact_cls.objects.create(name="Michael Jackson", email="michael@example.com")
+    customer_shop1 = contact_cls.objects.create(name="Roberto", email="robert@example.com")
+    customer_shop2 = contact_cls.objects.create(name="Maria", email="maria@example.com")
+
+    results = _get_search_results(rf, view, model_name, "michael", staff)
+    assert len(results) == 0
+
+    customer.add_to_shop(shop1)
+    customer.add_to_shop(shop2)
+    customer_shop1.add_to_shop(shop1)
+    customer_shop2.add_to_shop(shop2)
+
+    for shop in [shop1, shop2]:
+        results = _get_search_results(rf, view, model_name, "michael", staff, shop=shop)
+        assert len(results) == 1
+        assert results[0].get("id") == customer.id
+        assert results[0].get("name") == customer.name
+
+        results = _get_search_results(rf, view, model_name, "roberto", staff, shop=shop)
+        if shop == shop1:
+            assert len(results) == 1
+            assert results[0].get("id") == customer_shop1.id
+            assert results[0].get("name") == customer_shop1.name
+        else:
+            assert len(results) == 0
+
+        results = _get_search_results(rf, view, model_name, "maria", staff, shop=shop)
+        if shop == shop2:
+            assert len(results) == 1
+            assert results[0].get("id") == customer_shop2.id
+            assert results[0].get("name") == customer_shop2.name
+        else:
+            assert len(results) == 0
 
 
 @pytest.mark.django_db

@@ -62,7 +62,8 @@ window.BrowseAPI = (function() {
             "kind=" + kind,
             "pick=" + id,
             (filter ? "filter=" + filter : null),
-            (disabledMenus ? "disabledMenus=" + disabledMenus.join(",") : null)
+            (disabledMenus ? "disabledMenus=" + disabledMenus.join(",") : null),
+            (options.shop ? "shop=" + options.shop : null)
         ]).join("&");
         const popup = window.open(
             browserUrl + (browserUrl.indexOf("?") > -1 ? "&" : "?") + qs,

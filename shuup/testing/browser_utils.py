@@ -12,6 +12,7 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.wait import WebDriverWait
+
 from shuup.admin.utils.tour import set_tour_complete
 from shuup.core import cache
 from shuup.testing.factories import get_default_shop

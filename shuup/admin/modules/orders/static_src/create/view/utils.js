@@ -98,11 +98,9 @@ export function modal({show=false, sizeClass="", title, body, footer, close}) {
                 m("div.modal-content",
                     m("div.modal-header",
                         title,
-                        m("button.close",
-                            m("span", {
-                                onclick: () => close()
-                            }, m.trust("&times;"))
-                        ),
+                        m("button.close", {
+                            onclick: () => close()
+                        }, m("span", m.trust("&times;")))
                     ),
                     m("div.container.p-4", body),
                     m("div.modal-footer", footer)
@@ -119,16 +117,16 @@ export const Select2 = {
             config: Select2.config(attrs)
         });
     },
-    config: function(ctrl) {
+    config: function(attrs) {
         return function(element, isInitialized) {
             if(typeof jQuery !== "undefined" && typeof jQuery.fn.select2 !== "undefined") {
                 const $el = $(element);
                 if (!isInitialized) {
-                    activateSelect($el, ctrl.model, ctrl.searchMode, ctrl.attrs).on("change", () => {
+                    activateSelect($el, attrs.model, attrs.searchMode, attrs.extraFilters, false, attrs.attrs).on("change", () => {
                         // note: data is only populated when an element is actually clicked or enter is pressed
                         const data = $el.select2("data");
-                        ctrl.onchange(data);
-                        if(ctrl.focus && ctrl.focus()){
+                        attrs.onchange(data);
+                        if(attrs.focus && attrs.focus()){
                             // close it first to clear the search box...
                             $el.select2("close");
                             $el.select2("open");
@@ -136,11 +134,11 @@ export const Select2 = {
                     });
                 } else {
                     // this doesn't actually set the value for ajax autoadd
-                    if(ctrl.value) {
-                        $el.val(ctrl.value().id).trigger("change");
+                    if(attrs.value) {
+                        $el.val(attrs.value().id).trigger("change");
                     }
 
-                    if(ctrl.clear) {
+                    if(attrs.clear) {
                         $el.select2("val", "");
                     }
 

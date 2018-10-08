@@ -85,7 +85,10 @@ class ContactListView(PicotableListView):
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
 
-        if request_limited(self.request):
+        if self.request.GET.get("shop"):
+            qs = qs.filter(shops=Shop.objects.get_for_user(self.request.user).filter(pk=self.request.GET["shop"]))
+
+        elif request_limited(self.request):
             shop = get_shop(self.request)
             qs = qs.filter(shops=shop)
 
