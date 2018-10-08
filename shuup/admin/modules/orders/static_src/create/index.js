@@ -10,7 +10,7 @@
 import _ from "lodash";
 import m from "mithril";
 import view from "./view";
-import {persistStore} from "redux-persist";
+import { persistStore } from "redux-persist";
 import store from "./store";
 import {
     setShopChoices,
@@ -34,7 +34,7 @@ export function init(config = {}) {
         return;
     }
     var countryDefault = config.countryDefault;
-    if(!countryDefault && config.countries.length > 0){
+    if (!countryDefault && config.countries.length > 0) {
         countryDefault = config.countries[0].id;
     }
     store.dispatch(setShopChoices(config.shops || []));
@@ -47,11 +47,12 @@ export function init(config = {}) {
     const orderId = config.orderId;
     store.dispatch(setOrderId(orderId));
     const customerData = config.customerData;
-
-    const persistor = persistStore(store);
+    const persistor = persistStore(store, {
+        keyPrefix: interpolate("order_creator_shop-%s:", [config.shops[0].id])
+    });
     persistor.purge(["customerDetails", "quickAdd"]);
     const resetOrder = window.localStorage.getItem("resetSavedOrder") || "false";
-    var savedOrder = {id: null};
+    var savedOrder = { id: null };
     if (resetOrder === "true") {
         persistor.purgeAll();
         window.localStorage.setItem("resetSavedOrder", "false");
@@ -102,6 +103,6 @@ export function debugSaveState() {
 
 export function debugLoadState() {
     const state = JSON.parse(window.localStorage.getItem("_OrderCreatorState"));
-    store.dispatch({"type": "_replaceState", "payload": state});
+    store.dispatch({ "type": "_replaceState", "payload": state });
     console.log("Loaded.");  // eslint-disable-line no-console
 }
