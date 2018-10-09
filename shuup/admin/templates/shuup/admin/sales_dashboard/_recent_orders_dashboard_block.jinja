@@ -17,10 +17,10 @@
                 <tbody>
                     {% for order in orders %}
                         <tr>
-                            <td><a href="{{ shuup_admin.model_url(order, "detail") }}">{{ order.id }}</a></td>
-                            <td>{{ order.get_customer_name() }}</td>
-                            <td class="text-right">{{ order.taxful_total_price|money }}</td>
-                            <td>{{ order.order_date|datetime }}</td>
+                            <td class="text-nowrap"><a href="{{ shuup_admin.model_url(order, "detail") }}">{{ order.id }}</a></td>
+                            <td class="text-nowrap">{{ order.get_customer_name() }}</td>
+                            <td class="text-right text-nowrap">{{ order.taxful_total_price|money }}</td>
+                            <td class="text-nowrap">{{ order.order_date|datetime }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

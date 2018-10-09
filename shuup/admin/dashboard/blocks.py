@@ -15,7 +15,7 @@ from shuup.utils.numbers import parse_decimal_string
 
 class DashboardBlock(object):
     type = None
-    SIZES = ("small", "medium", "large", "full")
+    SIZES = ("small", "medium", "normal", "large", "full")
     default_size = "normal"
 
     def __init__(self, id, size=None, color=None):
