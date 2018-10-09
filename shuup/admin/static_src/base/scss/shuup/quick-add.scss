@@ -20,6 +20,16 @@ div.container-fluid.support-nav-wrap {
     z-index: 2000;
     background-color: rgba(0,0,0,0.5);
 
+    .top-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 62px;
+        background: $white;
+        box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    }
+
     div.content-pane {
         position: absolute;
         top: 0;
