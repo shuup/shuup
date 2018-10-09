@@ -113,8 +113,8 @@ class HappyHourForm(forms.ModelForm):
 
         # Since we touch these views in init we need to reset some
         # widgets and help texts after setting the initial values.
-        self.fields["from_hour"].widget = TimeInput()
-        self.fields["to_hour"].widget = TimeInput()
+        self.fields["from_hour"].widget = TimeInput(attrs={"class": "time"})
+        self.fields["to_hour"].widget = TimeInput(attrs={"class": "time"})
         help_texts = [
             ("from_hour", _("12pm is considered noon and 12am as midnight. Start hour is included to the discount.")),
             ("to_hour", _("12pm is considered noon and 12am as midnight. End hours is included to the discount.")),
