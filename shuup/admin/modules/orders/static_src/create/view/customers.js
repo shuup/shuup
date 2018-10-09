@@ -6,16 +6,18 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {get} from "../api";
-import {clearExistingCustomer, retrieveCustomerData, setAddressProperty,
-    setAddressSavingOption, setShipToBillingAddress, setIsCompany, showCustomerModal, retrieveCustomerDetails} from "../actions";
-import {ADDRESS_FIELDS, selectBox, contentBlock, infoRow, table, modal, Select2, HelpPopover} from "./utils";
+import { get } from "../api";
+import {
+    clearExistingCustomer, retrieveCustomerData, setAddressProperty,
+    setAddressSavingOption, setShipToBillingAddress, setIsCompany, showCustomerModal, retrieveCustomerDetails
+} from "../actions";
+import { ADDRESS_FIELDS, selectBox, contentBlock, infoRow, table, modal, Select2, HelpPopover } from "./utils";
 const BrowseAPI = window.BrowseAPI;
 
-function removeWarningBlocks(parentElement){
+function removeWarningBlocks(parentElement) {
     var previousWarnings = parentElement.getElementsByClassName("duplicate-warning");
 
-    while(previousWarnings[0]){
+    while (previousWarnings[0]) {
         previousWarnings[0].parentNode.removeChild(previousWarnings[0]);
     }
 }
@@ -30,8 +32,8 @@ function buildWarningBlock(store, parentElement, fieldName, customerName, custom
 
     var link = document.createElement("a");
     link.href = "#";
-    link.onclick = function() {
-        store.dispatch(retrieveCustomerData({id: customerId}));
+    link.onclick = function () {
+        store.dispatch(retrieveCustomerData({ id: customerId }));
         removeWarningBlocks(document);
     };
     link.innerHTML = interpolate(gettext("Click to select user %s."), [customerName]);
@@ -61,17 +63,20 @@ function renderAddress(store, shop, customer, address, addressType) {
         var onchange = function () {
             store.dispatch(setAddressProperty(addressType, field.key, this.value));
         };
-        if (field.key === "tax_number" || field.key === "email"){
-            onchange = function() {
+        if (field.key === "tax_number" || field.key === "email") {
+            onchange = function () {
                 store.dispatch(setAddressProperty(addressType, field.key, this.value));
-                get("customer_exists", {
-                    "field": field.key, "value": this.value
-                }).then((data) => {
-                    removeWarningBlocks(this.parentElement);
-                    if (data.id && data.id !== customer.id) {
-                        buildWarningBlock(store, this.parentElement, field.label.toLowerCase(), data.name, data.id);
-                    }
-                });
+
+                if (this.value) {
+                    get("customer_exists", {
+                        "field": field.key, "value": this.value
+                    }).then((data) => {
+                        removeWarningBlocks(this.parentElement);
+                        if (data.id && data.id !== customer.id) {
+                            buildWarningBlock(store, this.parentElement, field.label.toLowerCase(), data.name, data.id);
+                        }
+                    });
+                }
             };
         }
         if (window.REGIONS) {
@@ -84,7 +89,7 @@ function renderAddress(store, shop, customer, address, addressType) {
                         m("div.form-input-group.d-flex", [
                             selectBox(
                                 _.get(address, field.key, ""), onchange, regionsData,
-                                "code", "name", addressType + "-" + field.key, {code: "", name: "---------"}),
+                                "code", "name", addressType + "-" + field.key, { code: "", name: "---------" }),
                             m.component(HelpPopover, {
                                 title: field.label,
                                 content: helpText
@@ -137,7 +142,7 @@ function renderCustomerAddressView(store, shop, customer) {
                         name: "save-address",
                         type: "checkbox",
                         checked: customer.saveAddress,
-                        onchange: function() {
+                        onchange: function () {
                             store.dispatch(setAddressSavingOption(this.checked));
                         }
                     }),
@@ -153,7 +158,7 @@ function renderCustomerAddressView(store, shop, customer) {
                         name: "ship-to-billing-address",
                         type: "checkbox",
                         checked: customer.shipToBillingAddress,
-                        onchange: function() {
+                        onchange: function () {
                             store.dispatch(setShipToBillingAddress(this.checked));
                         }
                     }),
@@ -169,7 +174,7 @@ function renderCustomerAddressView(store, shop, customer) {
                         name: "order-for-company",
                         type: "checkbox",
                         checked: customer.isCompany,
-                        onchange: function() {
+                        onchange: function () {
                             store.dispatch(setIsCompany(this.checked));
                         }
                     }),
@@ -181,8 +186,6 @@ function renderCustomerAddressView(store, shop, customer) {
             ])
         ]),
         m("hr"),
-        m("br"),
-        m("br"),
         m("div.row", [
             m("div.col-sm-6",
                 m("fieldset", [
@@ -230,8 +233,8 @@ function customerDetailView(customerInfo) {
 
 function orderSummaryView(orderSummary) {
     const columns = [
-        {key: "year", label: gettext("Year")},
-        {key: "total", label: gettext("Total Sales")}
+        { key: "year", label: gettext("Year") },
+        { key: "total", label: gettext("Total Sales") }
     ];
 
     return m("div.table-responsive",
@@ -245,11 +248,11 @@ function orderSummaryView(orderSummary) {
 
 function recentOrderView(recentOrders) {
     const columns = [
-        {key: "order_date", label: gettext("Date")},
-        {key: "shipment_status", label: gettext("Shipment Status")},
-        {key: "payment_status", label: gettext("Payment Status")},
-        {key: "status", label: gettext("Order Status")},
-        {key: "total", label: gettext("Total")}
+        { key: "order_date", label: gettext("Date") },
+        { key: "shipment_status", label: gettext("Shipment Status") },
+        { key: "payment_status", label: gettext("Payment Status") },
+        { key: "status", label: gettext("Order Status") },
+        { key: "total", label: gettext("Total") }
     ];
 
     return m("div.table-responsive",
@@ -264,13 +267,14 @@ function recentOrderView(recentOrders) {
 function renderCustomerSelectionView(store, customer) {
     return [
         m("div.row", [
-            m("div.col-lg-6.col-md-12", {id: "customer-search"}, [
+            m("div.col-lg-6.col-md-12", { id: "customer-search" }, [
                 m.component(Select2, {
                     name: "customer-search",
                     model: "shuup.contact",
+                    extraFilters: () => ({ shop: store.getState().shop.selected.id }),
                     onchange: (obj) => {
-                        if(obj.length > 0) {
-                            store.dispatch(retrieveCustomerData({id: obj[0].id}));
+                        if (obj.length > 0) {
+                            store.dispatch(retrieveCustomerData({ id: obj[0].id }));
                         }
                     },
                     clear: true,
@@ -284,13 +288,14 @@ function renderCustomerSelectionView(store, customer) {
                         window.BrowseAPI.openBrowseWindow({
                             kind: "contact",
                             clearable: true,
+                            shop: store.getState().shop.selected.id,
                             onSelect: (obj) => {
-                                store.dispatch(retrieveCustomerData({id: obj.id}));
+                                store.dispatch(retrieveCustomerData({ id: obj.id }));
                             }
                         });
                     }
                 }, m("i.fa.fa-search")),
-                m("button.btn.text-success" + (!customer.id ? ".disabled": ""), {
+                m("button.btn.text-success" + (!customer.id ? ".disabled" : ""), {
                     id: "clear-customer",
                     disabled: !customer.id,
                     onclick: () => {
@@ -304,27 +309,26 @@ function renderCustomerSelectionView(store, customer) {
             ])
         ]),
         m("div.row", [
-            m("div.col-lg-6.col-md-12.mt-1", {id: "customer-description"}, [
-                (customer.id?
-                m("p.view-details-link", [
-                    m("div", gettext("Customer") + ": " + customer.name),
-                    m("a[href='#customer-detail-view']", {
-                        onclick: (e) => {
-                            e.preventDefault();
-                            store.dispatch(retrieveCustomerDetails({id: customer.id})).then(() => {
-                                store.dispatch(showCustomerModal(true));
-                            });
-                        }
-                    }, gettext("View Details"))
-                ]) : m("p", gettext("A new customer will be created based on billing address.")))
+            m("div.col-lg-6.col-md-12.mt-1", { id: "customer-description" }, [
+                (customer.id ?
+                    m("p.view-details-link", [
+                        m("div", gettext("Customer") + ": " + customer.name),
+                        m("a[href='#customer-detail-view']", {
+                            onclick: (e) => {
+                                e.preventDefault();
+                                store.dispatch(retrieveCustomerDetails({ id: customer.id })).then(() => {
+                                    store.dispatch(showCustomerModal(true));
+                                });
+                            }
+                        }, gettext("View Details"))
+                    ]) : m("p", gettext("A new customer will be created based on billing address.")))
             ])
-        ]),
-        m("br")
+        ])
     ];
 }
 
 export function renderCustomerDetailModal(store) {
-    const {customerDetails} = store.getState();
+    const { customerDetails } = store.getState();
 
     const customerInfo = customerDetails.customerInfo || {};
     const orderSummary = customerDetails.orderSummary || [];
@@ -333,7 +337,9 @@ export function renderCustomerDetailModal(store) {
     return modal({
         show: customerDetails.showCustomerModal,
         sizeClass: "modal-lg",
-        close: () => store.dispatch(showCustomerModal(false)),
+        close: () => {
+            store.dispatch(showCustomerModal(false))
+        },
         title: m("h3.modal-title", customerInfo.name),
         body: [
             contentBlock("i.fa.fa-info-circle", gettext("Customer Information"), customerDetailView(customerInfo), "h3"),
@@ -342,14 +348,16 @@ export function renderCustomerDetailModal(store) {
         ],
         footer: [
             m("button.btn.btn-inverse", {
-                onclick: () => store.dispatch(showCustomerModal(false))
+                onclick: () => {
+                    store.dispatch(showCustomerModal(false));
+                }
             }, gettext("Close"))
         ]
     });
 }
 
 export function customerSelectView(store) {
-    const {customer, order, shop} = store.getState();
+    const { customer, order, shop } = store.getState();
     return m("div", [
         ((!customer.id && order.id !== null) ? m("p.text-danger", gettext("Warning: No customer account is currently associated with this order.")) : null),
         renderCustomerSelectionView(store, customer),

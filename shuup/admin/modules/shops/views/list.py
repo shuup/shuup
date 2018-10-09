@@ -36,10 +36,7 @@ class ShopListView(PicotableListView):
     ]
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
-            return super(ShopListView, self).get_queryset()
-        else:
-            return Shop.objects.get_for_user(self.request.user)
+        return Shop.objects.get_for_user(self.request.user)
 
     def get_toolbar(self):
         if ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):

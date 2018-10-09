@@ -26,7 +26,7 @@ export default function view() {
         viewObj = m("div.container-fluid",
             confirmView(source),
             m("div", [
-                m("button.btn.btn-danger.btn-lg" + (creating ? ".disabled" : ""), {
+                m("button.btn.btn-outline-danger.btn-lg" + (creating ? ".disabled" : ""), {
                     disabled: creating,
                     onclick: () => {
                         store.dispatch(clearOrderSourceData());
@@ -62,25 +62,26 @@ export default function view() {
                 contentBlock("i.fa.fa-truck", gettext("Shipping Method"), shipmentMethodSelectView(store)),
                 contentBlock("i.fa.fa-credit-card", gettext("Payment Method"), paymentMethodSelectView(store)),
                 (customerDetails? renderCustomerDetailModal(store) : null),
-                m("div.order-footer.pr-4",
-                    m("div.text", m(
-                        "small",
-                        gettext("Method rules, taxes and possible extra discounts are calculated after proceeding."))
+                m("div.order-footer",
+                    m("small.text.help-text",
+                        gettext("Method rules, taxes and possible extra discounts are calculated after proceeding.")
                     ),
-                    m("div.text",
-                        m("h2",
-                            m("small", gettext("Total") + ": "), ensureNumericValue(total) + " " + selected.currency)
-                    ),
-                    m("div.proceed-button", [
-                        m("button.btn.btn-success.btn-block" + (creating ? ".disabled" : ""), {
-                            disabled: creating,
-                            onclick: () => {
-                                if(!source) {
-                                    store.dispatch(retrieveOrderSourceData());
+                    m(".total-container",
+                        m("div.text.total",
+                            m("h2",
+                                m("small", gettext("Total") + ": "), ensureNumericValue(total) + " " + selected.currency)
+                        ),
+                        m("div.proceed-button",
+                            m("button.btn.btn-success.btn-block" + (creating ? ".disabled" : ""), {
+                                disabled: creating,
+                                onclick: () => {
+                                    if(!source) {
+                                        store.dispatch(retrieveOrderSourceData());
+                                    }
                                 }
-                            }
-                        }, m("i.fa.fa-check"), " " + gettext("Proceed"))
-                    ])
+                            }, m("i.fa.fa-check"), " " + gettext("Proceed"))
+                        )
+                    )
                 )
             )
         ];

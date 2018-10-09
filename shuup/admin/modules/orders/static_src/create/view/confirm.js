@@ -82,7 +82,7 @@ function renderAddressBlock(title, address){
 }
 
 export function confirmView(source) {
-    return [
+    return m(".content",
         m("div.table-responsive",
             m("table.table.table-striped", [
                 m("thead", renderHeaders()),
@@ -96,5 +96,5 @@ export function confirmView(source) {
             m("div.col-md-6", renderAddressBlock(gettext("Billing address"), source.billingAddress)),
             m("div.col-md-6", renderAddressBlock(gettext("Shipping address"), source.shippingAddress))
         ])
-    ];
+    );
 }

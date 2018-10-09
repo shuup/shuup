@@ -72,14 +72,21 @@ class MultiselectAjaxView(TemplateView):
             if not _field_exists(user_model, "name"):
                 self.search_fields.remove("name")
 
-    def get_data(self, request, *args, **kwargs):
+    def get_data(self, request, *args, **kwargs):   # noqa
         model_name = request.GET.get("model")
         if not model_name:
             return []
 
         cls = apps.get_model(model_name)
         qs = cls.objects.all()
-        shop = self.request.shop
+        shop = request.shop
+
+        # if shop is informed, make sure user has access to it
+        if request.GET.get("shop"):
+            query_shop = Shop.objects.get_for_user(request.user).filter(pk=request.GET["shop"]).first()
+            if query_shop:
+                shop = query_shop
+
         qs = self._filter_query(cls, qs, shop)
         self.init_search_fields(cls)
         if not self.search_fields:
@@ -128,11 +135,12 @@ class MultiselectAjaxView(TemplateView):
 
         # Get all relation fields and check whether this models has
         # relation to Shop mode, if so, filter by the current shop
+        allowed_shop_fields = ["shop", "shops"]
         related_fields = [models.OneToOneField, models.ForeignKey, models.ManyToManyField]
         shop_related_fields = [
             field
             for field in cls._meta.get_fields()
-            if type(field) in related_fields and field.related_model == Shop
+            if type(field) in related_fields and field.related_model == Shop and field.name in allowed_shop_fields
         ]
         for shop_field in shop_related_fields:
             qs = qs.filter(**{shop_field.name: shop})

@@ -186,7 +186,7 @@ export function renderOrderLines(store, shop, lines) {
                         e.preventDefault();
                         window.open(line.product.url, "_blank");
                     }
-                }, m("i.fa.fa-edit")));
+                }, m("i.fa.fa-edit.fa-2x")));
         }
         return m("div.list-group-item", [
             m("div.cells", [
@@ -206,7 +206,7 @@ export function renderOrderLines(store, shop, lines) {
                             store.dispatch(deleteLine(line.id));
                             store.dispatch(updateTotals(store.getState));
                         }
-                    }, m("i.fa.fa-trash")))
+                    }, m("i.fa.fa-trash.fa-2x")))
             ]),
             line.errors ? m("p.text-danger", line.errors) : null
         ]);
@@ -270,12 +270,10 @@ export function orderLinesView(store, isCreating) {
             m("i.fa.fa-info-circle"),
             m("span", " " + infoText)
         ]),
-        m("br"),
-        m("br"),
         m("div.list-group", {id: "lines"}, renderOrderLines(store, shop.selected, lines)),
         m("hr"),
         m("div.row", [
-            m("div.col-sm-6", {id: "quick-add"}, [
+            m("div.col-sm-8.col-md-6", {id: "quick-add"}, [
                 m.component(ProductQuickSelect, {store: store}),
                 m("button.btn.text-success", {
                     href: "#",
@@ -307,7 +305,7 @@ export function orderLinesView(store, isCreating) {
                     m("span.quick-add-check-text", " " + gettext("Automatically add selected product"))
                 ])
             ]),
-            m("div.col-sm-6",
+            m("div.col-sm-4.col-md-6",
                 m("button.btn.text-success.pull-right" + (isCreating ? ".disabled": ""), {
                     id: "add-line",
                     disabled: isCreating,

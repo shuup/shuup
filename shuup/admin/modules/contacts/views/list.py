@@ -85,7 +85,10 @@ class ContactListView(PicotableListView):
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
 
-        if request_limited(self.request):
+        if self.request.GET.get("shop"):
+            qs = qs.filter(shops=Shop.objects.get_for_user(self.request.user).filter(pk=self.request.GET["shop"]))
+
+        elif request_limited(self.request):
             shop = get_shop(self.request)
             qs = qs.filter(shops=shop)
 
@@ -118,7 +121,7 @@ class ContactListView(PicotableListView):
         :type instance: shuup.core.models.Contact
         """
         bits = filter(None, [
-            item.get("type"),
+            self.get_type_display(instance),
             _("Active") if instance.is_active else _("Inactive"),
             _("Email: %s") % (instance.email or "\u2014"),
             _("Phone: %s") % (instance.phone or "\u2014"),

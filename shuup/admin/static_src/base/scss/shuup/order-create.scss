@@ -1,19 +1,17 @@
 .order-create {
     .inline-checkbox {
         position: relative;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
+        align-items: center;
 
-        @include media-breakpoint-down(sm) {
-            label {
-                display: block;
-                float: none !important;
-                text-align: left;
-            }
+        @include media-breakpoint-down(xs) {
+            justify-content: space-between;
+        }
 
-            .help-popover-btn {
-                position: absolute;
-                top: 0px;
-                right: 0px;
-            }
+        label {
+            margin-bottom: 0;
         }
     }
 
@@ -80,25 +78,71 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 50px;
-        line-height: 50px;
+        height: 55px;
         background: #fff;
         border-top: 1px solid $border-color;
         text-align: right;
+        padding: 0.5rem;
+        padding-right: 0.6rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        align-items: center;
+
+        @include media-breakpoint-down(sm) {
+            height: 80px;
+            .total h2 {
+                font-size: 1.44rem;
+            }
+        }
+        @include media-breakpoint-down(xs) {
+            height: 100px;
+            justify-content: space-between;
+
+            .help-text {
+                flex: 1 1 100%;
+            }
+        }
+        @include media-breakpoint-up(lg) {
+            height: 55px;
+            justify-content: space-between;
+            left: 280px;
+        }
+
+        .total-container {
+            flex: 1;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
 
         .text {
             display: inline-block;
             vertical-align: middle;
-            margin-right: 25px;
 
             h2 {
                 margin: 0;
             }
         }
 
+        .total h2 {
+            white-space: nowrap;
+            margin-right: 15px;
+        }
+
         .proceed-button {
             vertical-align: middle;
             display: inline-block;
         }
+    }
+
+    .select2-container {
+        min-width: 65% !important;
+    }
+}
+
+body.desktop-menu-closed .order-footer {
+    @include media-breakpoint-up(md) {
+        left: 0px;
     }
 }
