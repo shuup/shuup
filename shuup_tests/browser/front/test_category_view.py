@@ -496,10 +496,20 @@ def second_category_sort_with_price_filter(browser, category):
         }
     )
     browser.reload()
+
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_price_range option")) == 5)
-    browser.select("price_range", "-5")
+    # 5 products and let's filter all products with price less than 5
+    click_element(browser, "button[data-id='id_price_range']")
+    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li[data-original-index='1'] a")
+
+    # 4 products and let's filter products with price +12
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 4)
-    browser.select("price_range", "12-")
+    click_element(browser, "button[data-id='id_price_range']")
+    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li[data-original-index='4'] a")
+
+    # Now 2 products left and now filter with price 8-11
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
-    browser.select("price_range", "8-11")
+    click_element(browser, "button[data-id='id_price_range']")
+    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li[data-original-index='3'] a")
+
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 3)
