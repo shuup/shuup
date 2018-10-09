@@ -14,5 +14,10 @@ $(function() {
     $(".form-control.date").datetimepicker({
         format: "Y-m-d H:i",
     });
+
+    $(".form-control.time").datetimepicker({
+        datepicker: false,
+        format: "H:i",
+    });
 });
 

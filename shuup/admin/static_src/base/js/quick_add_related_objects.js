@@ -39,6 +39,9 @@ function createQuickIframe(url) {
     contentPane.className = "content-pane";
     overlay.appendChild(contentPane);
 
+    const topBar = document.createElement("div");
+    topBar.className = "top-bar";
+
     const closeIcon = document.createElement("i");
     closeIcon.className = "fa fa-times fa-2x";
     const closeButton = document.createElement("a");
@@ -51,7 +54,8 @@ function createQuickIframe(url) {
         window.closeQuickIFrame();
     };
     closeButton.appendChild(closeIcon);
-    contentPane.appendChild(closeButton);
+    topBar.appendChild(closeButton);
+    contentPane.appendChild(topBar);
 
     const iFrame = document.createElement("iframe");
     iFrame.frameBorder = 0;
