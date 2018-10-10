@@ -87,7 +87,7 @@ domready(() => {
         }
         post({command: "revert"});
     });
-    $("input, select, textarea").on("change,input", function() {
+    $("input, select, textarea").on("change input", function() {
         if (this.id === "id_general-plugin") {
             return;
         }
