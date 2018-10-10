@@ -143,7 +143,7 @@ export function addQueueCompletionCallback(callback) {
 }
 
 export function processQueue() {
-    if (_.any(queue, (file) => file.status === "uploading")) {
+    if (_.some(queue, (file) => file.status === "uploading")) {
         return;  // Don't allow uploading multiple files simultaneously though...
     }
     const nextFile = _.find(queue, (file) => (file.status === "new"));
