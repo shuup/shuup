@@ -90,17 +90,17 @@ function activateDropzone($dropzone, attrs={}) {
     }
 }
 
-function activateDropzones() {
+window.activateDropzones = function() {
     $("div[data-dropzone='true']").each(function(idx, object) {
         const dropzone = $(object);
         if(!dropzone.attr("id").includes("__prefix__") && dropzone.find(".dz-message").length === 0) {
             activateDropzone(dropzone);
         }
     });
-}
+};
 
 $(function(){
-    activateDropzones();
+    window.activateDropzones();
 });
 
 module.exports = { activateDropzone }
