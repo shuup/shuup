@@ -437,3 +437,8 @@ def get_admin_edit_url(context, intance_or_model):
             url=url,
             name=intance_or_model._meta.verbose_name.title(),
         )
+
+
+@contextfunction
+def get_powered_by_content(context):
+    return settings.SHUUP_FRONT_POWERED_BY_CONTENT

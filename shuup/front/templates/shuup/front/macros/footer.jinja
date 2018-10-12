@@ -22,10 +22,14 @@
                 {% endplaceholder %}
             </div>
         </div>
+
         <div class="footer-bottom">
             <div class="container">
                     {% placeholder "footer-bottom" global %}{% endplaceholder %}
-                    <p class="powered">Powered by <a href="https://shuup.com">Shuup</a></p>
+                    {% set powered_by_content = shuup.general.get_powered_by_content() %}
+                    {% if powered_by_content %}
+                        {{ powered_by_content|safe }}
+                    {% endif %}
                 </div>
             </div>
         </div>

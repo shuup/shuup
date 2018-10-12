@@ -98,3 +98,9 @@ SHUUP_PERSON_CONTACT_FIELD_PROPERTIES = {}
 #: It should be noted, however, that overriding some settings (such as making a
 #: required field non-required) could create other validation issues.
 SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES = {}
+
+#: Shuup powered by default content. This content is rendered in theme bottom
+#: by default at shuup.front.templates.shuup.front.macros.footer.jinja
+SHUUP_FRONT_POWERED_BY_CONTENT = """
+    <p class="powered">Powered by <a target="_blank" href="https://shuup.com">Shuup</a></p>
+""".strip()
