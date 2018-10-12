@@ -16,15 +16,17 @@
 {% call content_block() %}
     <h3 class="text-center">
     {% if is_all_selected %}
-        {% trans%}This action effects on all products.{% endtrans %}
+        {% trans%}This action effects on all items.{% endtrans %}
     {% else %}
-        {% trans item_count=item_count %}This action effects {{ item_count }} products.{% endtrans %}
+        {% trans item_count=item_count %}This action affects {{ item_count }} item(s).{% endtrans %}
     {% endif %}
     </h3>
 
     <form method="post" id="mass_edit">
         {% csrf_token %}
-        {{ bs3.form(form) }}
+        {% for field in form %}
+            {{ bs3.field(field) }}
+        {% endfor %}
     </form>
 {% endcall %}
 {% endblock %}

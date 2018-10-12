@@ -35,10 +35,15 @@ function addToActive(e) {
 
     var label = $(this).data("label");
     var name = $(this).data("name");
-
+    var sourceItem = $(this).closest("li");
     const $source = $("#source-placeholder li");
     const html = $source.html().replace(/NAME/g, name).replace(/LABEL/g, label);
-    window.targetElement.append($("<li>").html(html));
+
+    const item = document.createElement("li");
+    item.setAttribute("class", sourceItem.prop("class"));
+    item.innerHTML = html;
+
+    window.targetElement.append($(item));
     $(this).closest("li").remove();
     updateOrdering();
 }
@@ -50,7 +55,7 @@ window.activateSortable = function(targetElement, sourceElement) {
     window.sourceElement = $source;
 
     var el = document.getElementById(targetElement);
-    var sortable = window.Sortable.create(el, {
+    window.Sortable.create(el, {
         handle: ".sorting-handle",
         onEnd: function (/**Event*/evt) {
             updateOrdering();

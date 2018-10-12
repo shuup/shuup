@@ -6,9 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from datetime import date, datetime
+from datetime import date, datetime, time
 
-from shuup.utils.dates import parse_date, parse_datetime
+from shuup.utils.dates import (
+    parse_date, parse_datetime, try_parse_date, try_parse_datetime,
+    try_parse_time
+)
 
 
 def test_parse_date():
@@ -25,6 +28,8 @@ def test_parse_date():
     assert parse_date(date_fmt1) == expected_date
     assert parse_date(date_fmt2) == expected_date
     assert parse_date(date_fmt3) == expected_date
+    assert try_parse_date(1) is None
+
 
 
 def test_parse_datetime():
@@ -40,3 +45,27 @@ def test_parse_datetime():
     assert parse_datetime(date_fmt1) == datetime(2016, 12, 31)
     assert parse_datetime(date_fmt2) == datetime(2016, 12, 31, 15, 40, 34, 404540)
     assert parse_datetime(date_fmt3) == datetime(2016, 12, 31)
+
+
+def test_parse_time():
+    now = datetime.now()
+
+    time_fmt1 = "10:20"
+    time_fmt2 = "12:32:21"
+
+    assert try_parse_time(now) == now.time()
+    assert try_parse_time(now.time()) == now.time()
+    assert try_parse_time(time_fmt1) == time(10, 20)
+    assert try_parse_time(time_fmt2) == time(12, 32, 21)
+    assert try_parse_time("12341") is None
+
+
+def test_try_parse_datetime():
+    date_fmt1 = "2016-12-31 15:40:34"
+    date_fmt2 = "2018-12-31 15:40"
+    date_fmt3 = "12/31/2016"
+
+    assert try_parse_datetime(date_fmt1) == datetime(2016, 12, 31, 15, 40, 34)
+    assert try_parse_datetime(date_fmt2) == datetime(2018, 12, 31, 15, 40)
+    assert try_parse_datetime(date_fmt3) == datetime(2016, 12, 31)
+    assert try_parse_datetime("abc") is None

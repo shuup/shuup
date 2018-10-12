@@ -8,7 +8,6 @@ import six
 from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -18,9 +17,7 @@ from shuup.admin.forms.widgets import (
     QuickAddCategoryMultiSelect, QuickAddCategorySelect
 )
 from shuup.admin.utils.views import MassEditMixin
-from shuup.core.models import (
-    Category, Product, ShopProduct, ShopProductVisibility
-)
+from shuup.core.models import Category, Product, ShopProductVisibility
 
 
 class MassEditForm(forms.Form):
@@ -41,13 +38,12 @@ class ProductMassEditView(MassEditMixin, FormView):
     form_class = MassEditForm
 
     def form_valid(self, form):
+        query = Product.objects.filter(shop_products__shop=self.request.shop)
 
-        product_ids = ShopProduct.objects.filter(id__in=self.ids).values_list("product__id", flat=True)
+        if not isinstance(self.ids, six.string_types) and self.ids != "all":
+            query = query.filter(shop_products__id__in=self.ids)
 
-        query = Q(id__in=product_ids)
-        if isinstance(self.ids, six.string_types) and self.ids == "all":
-            query = Q()
-        for product in Product.objects.filter(query):
+        for product in query:
             shop_product = product.get_shop_instance(self.request.shop)
 
             for k, v in six.iteritems(form.cleaned_data):
