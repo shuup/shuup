@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-12 13:08+0000\n"
+"POT-Creation-Date: 2018-10-12 20:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -3129,11 +3129,11 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-msgid "This action effects on all products."
+msgid "This action effects on all items."
 msgstr ""
 
 #, python-format
-msgid "This action effects %(item_count)s products."
+msgid "This action affects %(item_count)s item(s)."
 msgstr ""
 
 msgid "Upload"

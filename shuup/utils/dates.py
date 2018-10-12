@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import datetime
+import itertools
 import time
 
 import six
@@ -15,7 +16,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 
-__all__ = ("parse_date", "parse_time", "try_parse_date", "try_parse_time")
+__all__ = ("parse_date", "parse_time", "try_parse_date", "try_parse_time", "try_parse_datetime")
 
 _date_formats = (
     "%Y-%m-%d",
@@ -31,6 +32,11 @@ _time_formats = (
     "%H:%M:%S",
     "%H:%M",
 )
+
+_datetime_formats = list(itertools.chain.from_iterable([
+    ["{} %H:%M:%S".format(fmt) for fmt in _date_formats],
+    ["{} %H:%M".format(fmt) for fmt in _date_formats]
+]))
 
 locale_year_and_month_formats = {
     # Sourced from the Unicode CLDR, version 27.1.
@@ -86,7 +92,7 @@ def _parse_date_str(value):
 
 def _parse_datetime_str(value):
     value = value.strip()
-    for fmt in _date_formats:
+    for fmt in itertools.chain.from_iterable((_datetime_formats, _date_formats)):
         try:
             return datetime.datetime.strptime(value, fmt)
         except:
@@ -164,10 +170,10 @@ def parse_time(value):
     if isinstance(value, datetime.datetime):
         return value.time()
     if isinstance(value, six.string_types):
-        time = _parse_time_str(value)
-        if not time:
+        parsed_time = _parse_time_str(value)
+        if not parsed_time:
             raise ValueError("Unable to parse %s as date." % value)
-        return time
+        return parsed_time
     raise ValueError("Unable to parse %s as date (unknown type)." % value)
 
 

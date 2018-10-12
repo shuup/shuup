@@ -24,7 +24,7 @@ from filer.models import Image
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import ProductMedia
-from shuup.utils.dates import try_parse_date
+from shuup.utils.dates import try_parse_datetime
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 from shuup.utils.importing import load
 from shuup.utils.money import Money
@@ -193,8 +193,8 @@ class DateRangeFilter(RangeFilter):
     def filter_queryset(self, queryset, column, value, context):
         if value:
             value = {
-                "min": try_parse_date(value.get("min")),
-                "max": try_parse_date(value.get("max")),
+                "min": try_parse_datetime(value.get("min")),
+                "max": try_parse_datetime(value.get("max"))
             }
         return super(DateRangeFilter, self).filter_queryset(queryset, column, value, context)
 
