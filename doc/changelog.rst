@@ -1,13 +1,26 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.7.1
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-10-12 8:50am -0800.
+
+Admin
+~~~~~
+
+- General fixes to new design
+- Fix bug in tour and update to latest shepherd
+- Fix bugs in select2 and picotable
+- Fix several issues in admin order creator around
+  creating orders on mobile device.
+- Fix issue in media browser uploads
+
+Front & Xtheme
+~~~~~~~~~~~~~~
+
+- Fix bug in sorting placeholders
+- Fix image dropzone issue in carousel admin
 
 
 Shuup 1.7.0
