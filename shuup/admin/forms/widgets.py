@@ -32,6 +32,10 @@ from shuup.core.models import (
 class BasePopupChoiceWidget(Widget):
     browse_kind = None
     filter = None
+    browse_text = _("Select")
+    select_icon = "fa fa-folder"
+    clear_icon = "fa fa-trash"
+    external_icon = "fa fa-external-link"
 
     def __init__(self, attrs=None, clearable=False, empty_text=True):
         self.clearable = clearable
@@ -39,21 +43,21 @@ class BasePopupChoiceWidget(Widget):
         super(BasePopupChoiceWidget, self).__init__(attrs)
 
     def get_browse_markup(self):
-        icon = "<i class='fa fa-folder'></i>"
-        return "<button class='browse-btn btn btn-primary btn-sm' type='button'>%(icon)s %(text)s</button>" % {
-            "icon": icon,
-            "text": _("Select Product")
+        return """
+            <button class='browse-btn btn btn-primary btn-sm' type='button'><i class='%(icon)s'></i> %(text)s</button>
+        """ % {
+            "icon": self.select_icon,
+            "text": self.browse_text
         }
 
     def get_clear_markup(self):
-        icon = "<i class='fa fa-trash'></i>"
-        return "<button class='clear-btn btn btn-danger btn-sm' type='button'>%(icon)s</button>" % {
-            "icon": icon,
+        return "<button class='clear-btn btn btn-danger btn-sm' type='button'><i class='%(icon)s'></i></button>" % {
+            "icon": self.clear_icon
         }
 
     def render_text(self, obj):
         url = getattr(obj, "url", None)
-        text = self.empty_text
+        text = ""
         if obj:
             text = force_text(obj)
             self.empty_text = False
@@ -62,15 +66,16 @@ class BasePopupChoiceWidget(Widget):
                     url = get_model_url(obj)
                 except NoModelUrl:
                     pass
+
         if not url:
             url = "#"
 
         css_style = ""
 
-        if self.empty_text:
+        if self.empty_text or not text:
             css_style = "display: none"
 
-        icon = "<i class='fa fa-external-link'></i>"
+        icon = "<i class='%s'></i>" % self.external_icon
 
         return mark_safe(
             ("<a class=\"btn btn-inverse browse-text btn-sm\" style=\"%(css_style)s\" \
@@ -174,6 +179,7 @@ class TextEditorWidget(Textarea):
 
 class MediaChoiceWidget(BasePopupChoiceWidget):
     browse_kind = "media"
+    browse_text = _("Select Media")
 
     def get_object(self, value):
         return File.objects.get(pk=value)
@@ -181,10 +187,12 @@ class MediaChoiceWidget(BasePopupChoiceWidget):
 
 class ImageChoiceWidget(MediaChoiceWidget):
     filter = "images"
+    browse_text = _("Select Image")
 
 
 class ProductChoiceWidget(BasePopupChoiceWidget):
     browse_kind = "product"
+    browse_text = _("Select Product")
 
     def get_object(self, value):
         return Product.objects.get(pk=value)
@@ -192,6 +200,7 @@ class ProductChoiceWidget(BasePopupChoiceWidget):
 
 class ShopProductChoiceWidget(BasePopupChoiceWidget):
     browse_kind = "shop_product"
+    browse_text = _("Select Product")
 
     def get_object(self, value):
         return ShopProduct.objects.get(pk=value)
@@ -199,6 +208,8 @@ class ShopProductChoiceWidget(BasePopupChoiceWidget):
 
 class ContactChoiceWidget(BasePopupChoiceWidget):
     browse_kind = "contact"
+    browse_text = _("Select Contact")
+    icon = "fa fa-user"
 
     def get_object(self, value):
         return Contact.objects.get(pk=value)
@@ -207,7 +218,7 @@ class ContactChoiceWidget(BasePopupChoiceWidget):
         icon = "<i class='fa fa-user'></i>"
         return "<button class='browse-btn btn btn-primary btn-sm' type='button'>%(icon)s %(text)s</button>" % {
             "icon": icon,
-            "text": _("Select Contact")
+            "text": self.browse_text
         }
 
 
