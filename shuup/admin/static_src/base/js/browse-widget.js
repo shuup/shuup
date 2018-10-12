@@ -120,7 +120,7 @@ $(function() {
                 $text.show();
             }});
         } catch(e) {
-            alert(e);
+            console.error(e);
             return false;
         }
     });
