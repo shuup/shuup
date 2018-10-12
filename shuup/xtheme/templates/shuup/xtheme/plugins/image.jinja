@@ -1,5 +1,5 @@
 <section class="xtheme-image-plugin">
-    <h2>{{ title }}</h2>
+    {% if title %}<h2>{{ title }}</h2>{% endif %}
     {% if image %}
         {% if url %}<a href="{{ url }}">{% endif %}
             <img src="{{ image.url }}"
