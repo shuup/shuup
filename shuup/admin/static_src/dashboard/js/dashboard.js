@@ -19,8 +19,9 @@ $(function() {
         window.DashboardCharts.init();
     }
 
-    if (window.Masonry) {
-        const msnry = new window.Masonry(document.getElementById("dashboard-wrapper"), {
+    const target = document.getElementById("dashboard-wrapper");
+    if (target && window.Masonry) {
+        const msnry = new window.Masonry(target, {
             itemSelector: ".block",
             columnWidth: ".block",
             percentPosition: true
