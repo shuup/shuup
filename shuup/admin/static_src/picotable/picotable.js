@@ -323,8 +323,10 @@ const Picotable = (function (m, storage) {
             key: "min",
             value: Util.stringValue(value.min),
             placeholder: lang.RANGE_FROM,
-            onchange: function () {
-                setFilterValueFromInput.call(this, "min");
+            onchange: function (e) {
+                if (value.min !== e.target.value) {
+                    setFilterValueFromInput.call(this, "min");
+                }
             },
             config: useDatepicker ? ctrl.datePicker() : debounceChangeConfig(500)
         }));
@@ -333,8 +335,10 @@ const Picotable = (function (m, storage) {
             key: "max",
             value: Util.stringValue(value.max),
             placeholder: lang.RANGE_TO,
-            onchange: function () {
-                setFilterValueFromInput.call(this, "max");
+            onchange: function (e) {
+                if (value.max !== e.target.value) {
+                    setFilterValueFromInput.call(this, "max");
+                }
             },
             config: useDatepicker ? ctrl.datePicker() : debounceChangeConfig(500)
         }));
