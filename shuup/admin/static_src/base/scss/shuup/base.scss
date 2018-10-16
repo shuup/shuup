@@ -269,3 +269,12 @@ canvas {
 .hidden {
     display: none;
 }
+
+pre {
+    code {
+        max-height: 300px;
+        overflow-y: scroll;
+        display: block;
+        background-color: #f9f9f9;
+    }
+}
