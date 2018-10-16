@@ -15,15 +15,17 @@ from shuup.utils.numbers import parse_decimal_string
 
 class DashboardBlock(object):
     type = None
-    SIZES = ("small", "medium", "normal", "large", "full")
+    sort_order = 0
+    SIZES = ("small", "normal", "medium", "large", "full")
     default_size = "normal"
 
-    def __init__(self, id, size=None, color=None):
+    def __init__(self, id, size=None, color=None, sort_order=0):
         self.id = id
         if size not in self.SIZES:  # pragma: no cover
             size = self.default_size
         self.size = size
         self.color = color
+        self.sort_order = sort_order
 
 
 class DashboardContentBlock(DashboardBlock):
@@ -50,6 +52,7 @@ class DashboardValueBlock(DashboardBlock):
         self.color = kwargs.pop("color", None)
         self.icon = kwargs.pop("icon", None)
         self.subtitle = kwargs.pop("subtitle", None)
+        self.sort_order = kwargs.pop("sort_order", 0)
 
 
 class DashboardNumberBlock(DashboardValueBlock):

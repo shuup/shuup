@@ -33,8 +33,8 @@ class DashboardView(TemplateView):
                 notifications.extend(module.get_notifications(request=self.request))
                 blocks.extend(module.get_dashboard_blocks(request=self.request))
 
-        # sort blocks by size, trying to make them fit better
-        blocks.sort(key=lambda block: DashboardBlock.SIZES.index(block.size))
+        # sort blocks by sort order and size, trying to make them fit better
+        blocks.sort(key=lambda block: (block.sort_order, DashboardBlock.SIZES.index(block.size)))
         context["activity"] = get_activity(request=self.request)
         context["tour_key"] = "dashboard"
         context["tour_complete"] = is_tour_complete(get_shop(self.request), "dashboard", user=self.request.user)

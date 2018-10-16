@@ -53,6 +53,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         self.request = request
         self.currency = shop.currency
         super(OrderValueChartDashboardBlock, self).__init__(id, **kwargs)
+        self.sort_order = 2
 
     @property
     def size(self):
@@ -185,7 +186,8 @@ def get_lifetime_sales_block(request, currency=None):
         value=(lifetime_sales_data.get("sum") or 0),
         currency=currency,
         icon="fa fa-line-chart",
-        subtitle=get_subtitle(lifetime_sales_data.get("count"))
+        subtitle=get_subtitle(lifetime_sales_data.get("count")),
+        sort_order=1
     )
 
 
@@ -211,7 +213,8 @@ def get_avg_purchase_size_block(request, currency=None):
         value=(average_purchase_size.get("sum") or 0),
         currency=currency,
         icon="fa fa-shopping-cart",
-        subtitle=get_subtitle(lifetime_sales_data.get("count"))
+        subtitle=get_subtitle(lifetime_sales_data.get("count")),
+        sort_order=1
     )
 
 
@@ -233,7 +236,8 @@ def get_open_orders_block(request, currency=None):
         value=TaxfulPrice((open_order_data.get("sum") or 0), currency),
         currency=currency,
         icon="fa fa-inbox",
-        subtitle=get_subtitle(open_order_data.get("count"))
+        subtitle=get_subtitle(open_order_data.get("count")),
+        sort_order=1
     )
 
 
@@ -288,6 +292,7 @@ def get_shop_overview_block(request, currency, for_date=None):
             "totals": totals
         })
     block.size = "medium"
+    block.sort_order = 0
     return block
 
 
@@ -300,4 +305,5 @@ def get_recent_orders_block(request, currency=None):
         }
     )
     block.size = "medium"
+    block.sort_order = 2
     return block
