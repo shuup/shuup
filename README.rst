@@ -123,3 +123,15 @@ some useful links about how to extend Shuup.
 * `Front settings <https://shuup.readthedocs.io/en/latest/api/shuup.front.html#module-shuup.front.settings>`__.
 * `Admin settings <https://shuup.readthedocs.io/en/latest/api/shuup.admin.html#module-shuup.admin.settings>`__.
 * `Extending Shuup <https://shuup.readthedocs.io/en/latest/#extending-shuup>`__.
+
+
+Admin Preview
+-------------
+
+.. image:: doc/_static/admin_shop_product.png
+    :target: doc/_static/admin_shop_product.png
+    :height: 300px
+
+.. image:: doc/_static/admin_order_detail.png
+    :target: doc/_static/admin_order_detail.png
+    :height: 300px
