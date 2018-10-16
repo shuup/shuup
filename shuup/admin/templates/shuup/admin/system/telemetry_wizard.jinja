@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="content-block">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>{% trans %}About Shuup Telemetry{% endtrans %}</h2>
+                <p>{% trans %}Shuup will occasionally send telemetry data to a Shuup.com server.{% endtrans %}</p>
+                <p>{% trans host=request.get_host() %}The data contains an unique installation key, as well as the hostname of the installation (as sent by the visiting browser; currently <code>{{ host }}</code>).{% endtrans %}</p>
+                <p>{% trans %}No business data or other customer information is ever sent. Shuup.com only uses the telemetry data for statistical purposes and for insights about the software's installation base.{% endtrans %}</p>
+                <hr>
+                <h2>{% trans %}Opt-in / opt-out{% endtrans %}</h2>
+                <form action="{{ request.path }}" method="post">
+                    {% csrf_token %}
+                    {% if form_def.context.opt_in %}
+                        <p><span class="text-success"><strong>{% trans %}You are currently <span class="lead label label-success">opted in</span> to send telemetry data to Shuup.com.{% endtrans %}</strong></span> {% trans %}Thank you for your valuable contribution.{% endtrans %} <i class="fa fa-heart-o"></i><br></p>
+                    {% else %}
+                        <p class="text-warning"><strong>{% trans %}You are currently <span class="label label-warning">opted out</span> of Shuup telemetry.{% endtrans %}</strong></p>
+                    {% endif %}
+                    {% for field in pane.forms[form_def.name] %}
+                        {{ bs3.field(field) }}
+                    {% endfor %}
+                </form>
+                <hr>
+                <h2>{% trans %}Last Telemetry{% endtrans %}</h2>
+                {% if form_def.context.is_grace and form_def.context.opt_in %}
+                    <p><i class="text-info fa fa-info-circle"></i> {% trans %}Telemetry submission is currently suspended; data will only be sent 24 hours after installation if still opted in at that point.{% endtrans %}</p>
+                {% elif form_def.context.last_submission_time %}
+                    <p>{% trans submission_datetime=form_def.context.last_submission_time|datetime, submission_timesince=form_def.context.last_submission_time|timesince %}Telemetry data was last submitted at {{ submission_datetime }} - ({{ submission_timesince }}) ago{% endtrans %}</p>
+                    <a href="?last">{% trans %}See the data that was submitted.{% endtrans %}</a>
+                {% else %}
+                    {% trans %}Telemetry data has not yet been submitted.{% endtrans %}
+                {% endif %}
+                <hr>
+            </div>
+            <div class="col-lg-6">
+                <h2>{% trans %}Telemetry Data{% endtrans %}</h2>
+                <p>{% trans %}Here is an example of the data that would be submitted right now.{% endtrans %}</p>
+                <pre><code>{{ form_def.context.submission_data }}</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
