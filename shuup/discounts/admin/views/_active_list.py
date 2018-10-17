@@ -60,6 +60,8 @@ class DiscountListView(PicotableListView):
         "shuup.discounts.admin.mass_actions:ArchiveMassAction"
     ]
 
+    toolbar_buttons_provider_key = "discount_list_toolbar_provider"
+
     def get_discount_effect(self, instance):
         if not (instance.discount_amount_value or instance.discounted_price_value or instance.discount_percentage):
             return "-"

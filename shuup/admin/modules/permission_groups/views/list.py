@@ -26,6 +26,7 @@ class PermissionGroupListView(PicotableListView):
             filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))
         ),
     ]
+    toolbar_buttons_provider_key = "permission_group_list_toolbar_provider"
 
     def get_context_data(self, **kwargs):
         context = super(PermissionGroupListView, self).get_context_data(**kwargs)
@@ -37,5 +38,5 @@ class PermissionGroupListView(PicotableListView):
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:permission_group.new", text=_("Create new Permission Group")),
             settings_button
-        ])
+        ], view=self)
         return context

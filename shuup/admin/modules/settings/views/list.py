@@ -82,6 +82,6 @@ class ListSettingsView(FormView):
                 text=_("Reset Defaults"),
                 onclick="resetDefaultValues()",
             )
-        ])
+        ], view=self)
         context["defaults"] = "|".join([self.settings.get_settings_key(c.id) for c in self.settings.default_columns])
         return context

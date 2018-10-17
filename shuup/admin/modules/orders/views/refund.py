@@ -81,7 +81,7 @@ class OrderCreateRefundView(UpdateView):
                 extra_css_class="btn-info",
                 disable_reason=_("This order already has existing refunds") if self.object.has_refunds() else None
             ),
-        ])
+        ], view=self)
 
         # Setting the line_numbers choices dynamically creates issues with the blank formset,
         # So adding that to the context to be rendered manually
@@ -221,7 +221,7 @@ class OrderCreateFullRefundView(UpdateView):
                 text=_("Cancel"),
                 extra_css_class="btn-danger",
             ),
-        ])
+        ], view=self)
         return context
 
     def get_form_kwargs(self):

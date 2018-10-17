@@ -212,13 +212,14 @@ class PicotableListView(PicotableViewMixin, ListView):
             self.columns = (self.settings.columns or self.default_columns)
 
     def get_toolbar(self):
-        buttons = []
+        toolbar = Toolbar()
+
         model = self.model
         if hasattr(self, "get_model"):
             model = self.get_model()
         new_button = NewActionButton.for_model(model)
         if new_button:
-            buttons.append(new_button)
+            toolbar.append(new_button)
 
         return_url = self.url_identifier if self.url_identifier else None
         if self.request.user.is_superuser:
@@ -226,9 +227,10 @@ class PicotableListView(PicotableViewMixin, ListView):
         else:
             settings_button = None
         if settings_button:
-            buttons.append(settings_button)
+            toolbar.append(settings_button)
 
-        return Toolbar(buttons)
+        toolbar.extend(Toolbar.for_view(self))
+        return toolbar
 
     def get_context_data(self, **kwargs):
         context = super(PicotableListView, self).get_context_data(**kwargs)

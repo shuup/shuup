@@ -124,5 +124,5 @@ class EditScriptContentView(DetailView):
                 onclick="window.ScriptEditor.save();return false"
             ),
             get_discard_button(get_model_url(self.object, "edit"))
-        ])
+        ], view=self)
         return context

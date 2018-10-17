@@ -34,7 +34,7 @@ class CategoryOrganizeView(TemplateView):
         return context
 
     def get_toolbar(self):
-        toolbar = Toolbar()
+        toolbar = Toolbar.for_view(self)
         toolbar.append(
             JavaScriptActionButton(
                 onclick="window.saveCategories();",

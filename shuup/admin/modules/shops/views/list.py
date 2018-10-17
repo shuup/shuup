@@ -34,6 +34,7 @@ class ShopListView(PicotableListView):
         Column("identifier", _(u"Identifier")),
         Column("status", _(u"Status"), filter_config=ChoicesFilter(choices=ShopStatus.choices)),
     ]
+    toolbar_buttons_provider_key = "shop_list_toolbar_provider"
 
     def get_queryset(self):
         return Shop.objects.get_for_user(self.request.user)
@@ -42,4 +43,4 @@ class ShopListView(PicotableListView):
         if ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             return super(ShopListView, self).get_toolbar()
         else:
-            return Toolbar([])
+            return Toolbar.for_view(self)

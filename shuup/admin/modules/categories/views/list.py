@@ -37,6 +37,7 @@ class CategoryListView(PicotableListView):
         ),
         Column("visibility", _(u"Visibility"), filter_config=ChoicesFilter(choices=CategoryVisibility.choices)),
     ]
+    toolbar_buttons_provider_key = "category_list_toolbar_provider"
 
     def get_name_filter_choices(self):
         choices = []

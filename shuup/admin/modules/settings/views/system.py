@@ -59,5 +59,5 @@ class SystemSettingsView(FormPartsViewMixin, FormView):
                 text=_("Save system settings"),
                 extra_css_class="btn-success",
             )
-        ])
+        ], view=self)
         return context

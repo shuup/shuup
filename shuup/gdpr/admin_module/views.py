@@ -47,7 +47,7 @@ class GDPRView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
                 text=_("Save"),
                 extra_css_class="btn-success",
             )
-        ])
+        ], view=self)
         return toobar
 
     def get_queryset(self):

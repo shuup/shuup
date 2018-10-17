@@ -27,6 +27,7 @@ class CampaignListView(PicotableListView):
         Column("end_datetime", _("Ends")),
         Column("active", _("Active"), filter_config=ChoicesFilter(choices=[(0, _("No")), (1, _("Yes"))])),
     ]
+    toolbar_buttons_provider_key = "campaign_list_toolbar_provider"
 
     def get_queryset(self):
         shop = self.request.shop
@@ -63,7 +64,7 @@ class CatalogCampaignListView(CampaignListView):
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:catalog_campaign.new", text=_("Create new Catalog Campaign")),
             settings_button
-        ])
+        ], view=self)
         return context
 
 
@@ -79,7 +80,7 @@ class BasketCampaignListView(CampaignListView):
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:basket_campaign.new", text=_("Create new Basket Campaign")),
             settings_button
-        ])
+        ], view=self)
         return context
 
 
@@ -110,5 +111,5 @@ class CouponListView(PicotableListView):
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:coupon.new", text=_("Create new Coupon")),
             settings_button
-        ])
+        ], view=self)
         return context
