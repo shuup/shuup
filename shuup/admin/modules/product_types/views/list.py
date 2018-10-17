@@ -26,6 +26,7 @@ class ProductTypeListView(PicotableListView):
             filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name..."))),
         Column("n_attributes", _(u"Number of Attributes")),
     ]
+    toolbar_buttons_provider_key = "product_type_list_toolbar_provider"
 
     def get_queryset(self):
         return ProductType.objects.all().annotate(n_attributes=Count("attributes"))

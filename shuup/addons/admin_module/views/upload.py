@@ -65,7 +65,7 @@ class AddonUploadView(FormView):
                 text=_("Upload"),
                 extra_css_class="btn-success",
             )
-        ])
+        ], view=self)
         return context
 
 
@@ -101,7 +101,7 @@ class AddonUploadConfirmView(FormView):
                 text=_("Install Addon"),
                 extra_css_class="btn-success",
             )
-        ])
+        ], view=self)
         return context
 
     def form_valid(self, form):

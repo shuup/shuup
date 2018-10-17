@@ -23,6 +23,7 @@ class UnitListView(PicotableListView):
         Column("symbol", _(u"Symbol"), sort_field="translations__symbol", display="symbol"),
         Column("decimals", _(u"Allowed decimals")),
     ]
+    toolbar_buttons_provider_key = "sales_unit_list_toolbar_provider"
 
     def get_queryset(self):
         return self.model.objects.all()

@@ -33,6 +33,7 @@ class UserListView(PicotableListView):
         Column("is_staff", _(u"Staff"), filter_config=true_or_false_filter),
         Column("is_superuser", _(u"Superuser"), filter_config=true_or_false_filter),
     ]
+    toolbar_buttons_provider_key = "user_list_toolbar_provider"
 
     def get_model(self):
         return get_user_model()

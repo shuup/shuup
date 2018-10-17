@@ -114,7 +114,7 @@ class ProductMediaEditView(UpdateView):
                 text=_("Save"),
                 extra_css_class="btn-success",
             ),
-        ])
+        ], view=self)
         return context
 
     def get_form_kwargs(self):

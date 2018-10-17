@@ -39,6 +39,7 @@ class TaxListView(PicotableListView):
         # Column("amount", _(u"Amount")),
         Column("enabled", _(u"Enabled"), filter_config=true_or_false_filter),
     ]
+    toolbar_buttons_provider_key = "tax_list_toolbar_provider"
 
 
 class CustomerTaxGroupListView(PicotableListView):

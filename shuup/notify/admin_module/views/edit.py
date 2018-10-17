@@ -60,7 +60,7 @@ class ScriptEditView(CreateOrUpdateView):
                 extra_css_class="btn-primary",
                 url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk})
             ))
-            context["toolbar"] = Toolbar(buttons)
+            context["toolbar"] = Toolbar(buttons, view=self)
         return context
 
     def get_form_kwargs(self):

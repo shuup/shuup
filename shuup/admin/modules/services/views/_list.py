@@ -33,6 +33,7 @@ class ServiceListView(PicotableListView):
         Column("enabled", _(u"Enabled"), filter_config=true_or_false_filter),
         Column("shop", _(u"Shop"))
     ]
+    toolbar_buttons_provider_key = "service_list_toolbar_provider"
 
     def get_object_abstract(self, instance, item):
         return [

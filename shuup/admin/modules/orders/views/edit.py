@@ -173,7 +173,7 @@ class OrderEditView(CreateOrUpdateView):
         return context
 
     def get_toolbar(self):
-        return Toolbar([])
+        return Toolbar.for_view(self)
 
     def get_config(self):
         order = self.object

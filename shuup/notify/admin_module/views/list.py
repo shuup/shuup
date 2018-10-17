@@ -31,6 +31,7 @@ class ScriptListView(PicotableListView):
         Column("event_identifier", _("Event"), display="get_event_identifier_text"),
         Column("enabled", _("Enabled"), filter_config=true_or_false_filter),
     ]
+    toolbar_buttons_provider_key = "notify_list_toolbar_provider"
 
     def get_object_url(self, instance):
         return reverse("shuup_admin:notify.script.edit", kwargs={"pk": instance.pk})
@@ -50,7 +51,7 @@ class ScriptListView(PicotableListView):
                 text=_("New From Template"), icon="fa fa-book",
                 onclick="showScriptTemplates()"
             )
-        ])
+        ], view=self)
 
     def get_object_abstract(self, instance, item):
         return [

@@ -34,6 +34,7 @@ class SupplierListView(PicotableListView):
         Column("type", _(u"Type")),
         Column("module_identifier", _(u"Module"), display="get_module_display", sortable=True)
     ]
+    toolbar_buttons_provider_key = "supplier_list_toolbar_provider"
 
     def get_queryset(self):
         return Supplier.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True))
@@ -45,4 +46,4 @@ class SupplierListView(PicotableListView):
         if settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
             return super(SupplierListView, self).get_toolbar()
         else:
-            return Toolbar([])
+            return Toolbar.for_view(self)

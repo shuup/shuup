@@ -48,6 +48,7 @@ class CartListView(PicotableListView):
             filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
         ),
     ]
+    toolbar_buttons_provider_key = "cart_list_toolbar_provider"
 
     def get_shops(self):
         return Shop.objects.get_for_user(self.request.user)

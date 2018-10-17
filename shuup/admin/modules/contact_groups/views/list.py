@@ -25,6 +25,7 @@ class ContactGroupListView(PicotableListView):
         )),
         Column("n_members", _(u"Number of Members")),
     ]
+    toolbar_buttons_provider_key = "contact_group_list_toolbar_provider"
 
     def get_queryset(self):
         return ContactGroup.objects.all_except_defaults().annotate(n_members=Count("members"))
@@ -38,5 +39,5 @@ class ContactGroupListView(PicotableListView):
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:contact_group.new"),
             settings_button
-        ])
+        ], view=self)
         return context

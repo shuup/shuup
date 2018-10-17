@@ -29,6 +29,7 @@ class ContactGroupPriceDisplayListView(PicotableListView):
         Column("group", _(u"Group"), display="group"),
         Column("display_mode", _(u"Display Mode"), display="show_display_mode")
     ]
+    toolbar_buttons_provider_key = "contact_group_price_list_toolbar_provider"
 
     def get_queryset(self):
         if getattr(self.request.user, "is_superuser", False):
@@ -56,5 +57,5 @@ class ContactGroupPriceDisplayListView(PicotableListView):
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:contact_group_price_display.new") if can_create else None,
             settings_button
-        ])
+        ], view=self)
         return context

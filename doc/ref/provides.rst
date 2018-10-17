@@ -92,6 +92,11 @@ Core
     Additional ``BaseActionButton`` subclasses for Contact edit.
     Subclass init should take current contact as a parameter.
 
+``admin_toolbar_button_provider``
+    Object that provides buttons to all toolbars.
+    Providers must subclass from ``shuup.admin.toolbar.BaseToolbarButtonProvider``
+    and implement the ``get_buttons_for_view`` method.
+
 ``admin_contact_section``
     Additional ``Section`` subclasses for Contact detail sections.
 
@@ -314,3 +319,19 @@ Simple CMS Provide Categories
 
 ``simple_cms_template``
     List of available template objects that can be used to render CMS pages.
+
+List of objects that have provides key as attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some objects have attributes that contain a provide key which are used to load provides dunamically.
+They are specially used in mixins when they can be attached to some class which overrides the attribute
+with its own provide key name, making it easier to extend provides related to class. Here is the list
+of objects that have this attribute which can be overrided on a specialization:
+
+``FormPartsViewMixin.form_part_class_provide_key``
+    Adds form parts to a view dynamically. Each view will have a custom provide key value.
+
+``View.toolbar_buttons_provider_key``
+    Adds buttons to a view's toolbar. Each view will have a custom provide key value.
+    Only views that use toolbars can use this attribute, as in ``PicotableViewMixin``.
+    Check `~shuup.admin.modules.categories.views.list.CategoryListView` for an example.

@@ -99,6 +99,7 @@ class ProductListView(PicotableListView):
         "shuup.admin.modules.products.mass_actions:FileResponseAction",
         "shuup.admin.modules.products.mass_actions:EditProductAttributesAction",
     ]
+    toolbar_buttons_provider_key = "product_list_toolbar_provider"
 
     def format_categories(self, instance):
         return ", ".join(list(instance.categories.values_list("translations__name", flat=True)))
