@@ -67,7 +67,8 @@ class TelemetryWizardPane(WizardPane):
     """
     identifier = "telemetry"
     icon = "shuup_admin/img/configure.png"
-    title = _("Telemetry")
+    title = _("Telemetry")  # Shown in home action button
+    text = _("Telemetry")  # Shown in wizard view
 
     def visible(self):
         return True
