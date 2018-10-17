@@ -16,11 +16,11 @@ from django.utils.html import conditional_escape, format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-from shuup.apps.provides import get_provide_objects
 from shuup.admin.utils.forms import flatatt_filter
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.str_utils import camelcase_to_snakecase
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
+from shuup.apps.provides import get_provide_objects
 
 
 class BaseToolbarButtonProvider(object):

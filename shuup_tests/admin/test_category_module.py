@@ -5,8 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import json
-
 import pytest
 from django.db import transaction
 from django.test import override_settings
@@ -16,7 +14,7 @@ from shuup.admin.modules.categories.forms import (
     CategoryBaseForm, CategoryProductForm
 )
 from shuup.admin.modules.categories.views import (
-    CategoryCopyVisibilityView, CategoryEditView, CategoryOrganizeView
+    CategoryCopyVisibilityView, CategoryEditView
 )
 from shuup.core.models import (
     Category, CategoryStatus, CategoryVisibility, ProductMode,
@@ -332,55 +330,3 @@ def test_category_copy_visibility(rf, admin_user):
     assert shop_product.visibility_limit.value == category.visibility.value
     assert shop_product.visibility_groups.count() == category.visibility_groups.count()
     assert set(shop_product.visibility_groups.all()) == set(category.visibility_groups.all())
-
-
-@pytest.mark.django_db
-def test_category_organize_view(rf, admin_user):
-    shop = get_default_shop()
-
-    cat1 = Category.objects.create(name="cat1")
-    cat2 = Category.objects.create(name="cat2")
-    cat3 = Category.objects.create(name="cat3")
-
-    cat1.shops.add(shop)
-    cat2.shops.add(shop)
-    cat3.shops.add(shop)
-
-    view = CategoryOrganizeView.as_view()
-    request = apply_request_middleware(rf.get("/"), user=admin_user)
-    response = view(request)
-    assert response.status_code == 200
-    response.render()
-    content = response.content.decode("utf-8")
-    assert "Organize categories" in content
-
-    payload = [
-        {
-            "id": cat1.pk,
-            "visible_in_menu": True,
-            "position": 1,
-            "children": [
-                {
-                    "id": cat2.pk,
-                    "visible_in_menu": False,
-                    "position": 1
-                },
-                {
-                    "id": cat3.pk,
-                    "visible_in_menu": True,
-                    "position": 2
-                }
-            ]
-        }
-    ]
-    request = apply_request_middleware(rf.post("/", data={"payload": json.dumps(payload)}), user=admin_user)
-    response = view(request)
-    assert response.status_code == 200
-
-    cat1 = Category.objects.get(pk=cat1.pk)
-    cat2 = Category.objects.get(pk=cat2.pk)
-    cat3 = Category.objects.get(pk=cat3.pk)
-
-    assert cat1.parent is None
-    assert cat2.parent == cat1
-    assert cat3.parent == cat1
