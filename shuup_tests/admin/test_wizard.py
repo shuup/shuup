@@ -18,6 +18,7 @@ from shuup.core.models import (
     CustomCarrier, CustomPaymentProcessor, PaymentMethod, ServiceProvider,
     ShippingMethod, Shop, TaxClass
 )
+from shuup.core.telemetry import is_opt_out
 from shuup.testing.factories import (
     get_currency, get_default_shop, get_default_tax_class
 )
@@ -155,3 +156,49 @@ def test_xtheme_wizard_pane(rf, admin_user):
             response = WizardView.as_view()(request)
             assert isinstance(get_current_theme(shop), FauxTheme)
             assert_redirect_to_dashboard(rf, admin_user, shop)
+
+
+@pytest.mark.django_db
+def test_telemetry_wizard_pane(rf, admin_user):
+    with override_settings(SHUUP_SETUP_WIZARD_PANE_SPEC=["shuup.admin.modules.system.views.TelemetryWizardPane"]):
+        shop = get_default_shop()
+        request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)
+        response = WizardView.as_view()(request)
+        assert response.status_code == 200
+
+        assert not is_opt_out()
+        soup = BeautifulSoup(response.render().content)
+        h2_elements = soup.find_all("h2")
+        expected_h2_element_titles = [
+            "Telemetry",
+            "About Shuup Telemetry",
+            "Telemetry Data",
+            "Opt-in / opt-out",
+            "Last Telemetry"
+        ]
+        assert len(h2_elements) == len(expected_h2_element_titles)
+        for h2_element in h2_elements:
+            assert h2_element.text.strip() in expected_h2_element_titles
+
+        # By default installation should be opted in
+        assert "Thank you for your valuable contribution." in soup.text
+
+        # Opt out
+        fields = _extract_fields(rf, admin_user)
+        fields["telemetry-opt_in_telemetry"] = False
+
+        request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
+        response = WizardView.as_view()(request)
+        assert response.status_code == 200  # Post seems to cause JSON response
+
+        assert is_opt_out()
+
+        # So let's re-get the telemetry page
+        request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)
+        response = WizardView.as_view()(request)
+        assert response.status_code == 200
+        soup = BeautifulSoup(response.render().content)
+
+        # Installation should be now opted out
+        assert "Thank you for your valuable contribution." not in soup.text
+        assert "You are currently opted out of Shuup telemetry." in soup.text
