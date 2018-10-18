@@ -59,12 +59,13 @@ class CreateOrUpdateView(UpdateView):
         if context["iframe_mode"] and self.object and self.object.id is not None:
             name = None
             for field in get_possible_name_fields_for_model(self.object.__class__):
-                name = getattr(self.object, field)
+                name = getattr(self.object, field, None)
                 if name:
                     break
 
             context["iframe_close"] = bool(self.request.GET.get("iframe_close"))
             context["quick_add_target"] = self.request.GET.get("quick_add_target", "")
+            context["quick_add_callback"] = self.request.GET.get("quick_add_callback", "")
             context["quick_add_option_id"] = self.object.id
             context["quick_add_option_name"] = name if name else _("Unnamed")
         return context
@@ -78,11 +79,19 @@ class CreateOrUpdateView(UpdateView):
     def get_new_url(self):
         return get_model_url(self.object, kind="new", shop=self.request.shop)
 
-    def get_success_url(self):
+    def get_success_url(self):  # noqa (C901)
         if self.request.GET.get("mode", "") == "iframe":
+            params = ["mode=iframe", "iframe_close=yes"]
+
             quick_add_target = self.request.GET.get("quick_add_target")
-            return "%s?mode=iframe&quick_add_target=%s&iframe_close=yes" % (
-                get_model_url(self.object, shop=self.request.shop), quick_add_target)
+            if quick_add_target:
+                params.append("quick_add_target=%s" % quick_add_target)
+
+            quick_add_callback = self.request.GET.get("quick_add_callback")
+            if quick_add_callback:
+                params.append("quick_add_callback=%s" % quick_add_callback)
+
+            return "%s?%s" % (get_model_url(self.object, shop=self.request.shop), "&".join(params))
 
         next = self.request.POST.get("__next")
         try:
