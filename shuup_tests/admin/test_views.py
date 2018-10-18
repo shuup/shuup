@@ -12,17 +12,18 @@ import six
 from bs4 import BeautifulSoup
 from django.utils.encoding import force_text
 from django.utils.translation import activate
+from django.test.client import Client
 
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.utils.tour import is_tour_complete
-from shuup.core.models import Product
-from shuup.core.models import Shop
-from shuup.core.models import ShopProduct
-from shuup.core.models import ShopProductVisibility
+from shuup.core.models import (
+    Product, Shop, ShopProduct, ShopProductVisibility
+)
 from shuup.testing.factories import (
-    CategoryFactory, create_random_order, create_random_person,
+    CategoryFactory, create_product, create_random_order, create_random_person,
     get_default_category, get_default_product, get_default_shop,
-    get_default_supplier, create_product)
+    get_default_supplier
+)
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
@@ -33,12 +34,27 @@ from shuup.utils.importing import load
     "shuup.admin.modules.contacts.views:ContactListView",
     "shuup.admin.modules.orders.views:OrderListView",
     "shuup.admin.modules.products.views:ProductListView",
-    "shuup.admin.modules.users.views:UserListView"
+    "shuup.admin.modules.users.views:UserListView",
+    "shuup.campaigns.admin_module.views.BasketCampaignListView",
+    "shuup.campaigns.admin_module.views.CouponListView",
+    "shuup.campaigns.admin_module.views.CatalogCampaignListView",
+    "shuup.admin.modules.contact_groups.views.ContactGroupListView",
+    "shuup.gdpr.admin_module.views.GDPRView",
+    "shuup.admin.modules.contact_group_price_display.views.ContactGroupPriceDisplayListView",
+    "shuup.admin.modules.permission_groups.views.PermissionGroupListView",
+    "shuup.admin.modules.settings.views.SystemSettingsView"
 ])
 @pytest.mark.django_db
 def test_list_view(rf, class_spec, admin_user):
-    shop = get_default_shop()
+    get_default_shop()
     view = load(class_spec).as_view()
+
+    # normal request
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    response = view(request)
+    assert response.status_code == 200
+
+    # picotable request
     request = apply_request_middleware(rf.get("/", {
         "jq": json.dumps({"perPage": 100, "page": 1})
     }), user=admin_user)
@@ -77,6 +93,55 @@ def test_detail_view(rf, admin_user, model_and_class):
         response.render()
     assert 200 <= response.status_code < 300
 
+    # request with iframe mode
+    request = apply_request_middleware(rf.get("/", {"mode": "iframe"}), user=admin_user)
+    response = view(request, pk=pk)
+    if hasattr(response, "render"):
+        response.render()
+    assert 200 <= response.status_code < 300
+
+
+@pytest.mark.parametrize("extra_query_param,extra_query_value,expected_script", [
+    ("", "", "parent.window.closeQuickIFrame()"),
+    ("quick_add_target", "select2name", "parent.window.addToSelect2('select2name'"),
+    ("quick_add_callback", "myTarget", "parent.window.myTarget("),
+])
+@pytest.mark.django_db
+def test_iframe_mode(rf, admin_user, extra_query_param, extra_query_value, expected_script):
+    get_default_shop()
+    view = load("shuup.admin.modules.categories.views:CategoryEditView").as_view()
+
+    request = apply_request_middleware(rf.get("/", {"mode": "iframe"}), user=admin_user)
+    response = view(request)
+    if hasattr(response, "render"):
+        response.render()
+    assert 200 <= response.status_code < 300
+
+    content = force_text(response.content)
+    post = extract_form_fields(BeautifulSoup(content, "lxml"))
+    post.update({
+        "base-name__en": "Name"
+    })
+    post.pop("base-image")
+
+    # save iframe mode
+    request = apply_request_middleware(rf.post("/", post), user=admin_user)
+    request.GET = request.GET.copy()
+    request.GET["mode"] = "iframe"
+
+    if extra_query_param:
+        request.GET[extra_query_param] = extra_query_value
+
+    response = view(request)
+    assert response.status_code == 302
+
+    client = Client()
+    client.login(username="admin", password="password")
+
+    response = client.get(response.url)
+    assert response.status_code == 200
+    assert expected_script in force_text(response.content)
+
 
 @pytest.mark.django_db
 def test_edit_view_adding_messages_to_form_group(rf, admin_user):
@@ -92,7 +157,7 @@ def test_edit_view_adding_messages_to_form_group(rf, admin_user):
     assert ProductEditView.add_form_errors_as_messages
 
     content = force_text(response.content)
-    post = extract_form_fields(BeautifulSoup(content))
+    post = extract_form_fields(BeautifulSoup(content, "lxml"))
     post_data = {
         # Error in the base form part
         "base-name__en": "",
@@ -129,7 +194,7 @@ def test_product_edit_view(rf, admin_user, settings):
     response.render()
 
     content = force_text(response.content)
-    post = extract_form_fields(BeautifulSoup(content))
+    post = extract_form_fields(BeautifulSoup(content, "lxml"))
 
     # Needed for Django 1.8 tests to pass
     post.update({
