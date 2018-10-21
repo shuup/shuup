@@ -79,7 +79,8 @@ BROWSER_URL_NAMES = {
     "product": "shuup_admin:shop_product.list",
     "contact": "shuup_admin:contact.list",
     "setLanguage": "shuup_admin:set-language",
-    "tour": "shuup_admin:tour"
+    "tour": "shuup_admin:tour",
+    "menu_toggle": "shuup_admin:menu_toggle"
 }
 
 
