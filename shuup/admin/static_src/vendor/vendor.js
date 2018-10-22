@@ -44,3 +44,4 @@ require('outlayer');
 require('popper.js');
 require('summernote/dist/summernote-bs4.js');
 require('jquery-datetimepicker');
+require('bootstrap-colorpicker');
