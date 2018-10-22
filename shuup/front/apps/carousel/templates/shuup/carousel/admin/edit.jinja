@@ -17,27 +17,82 @@
 
 {% block extra_js %}
     <script>
+        function setupRemoveSlides() {
+            var targetId = $(".slide-add-new-panel").data("target-id");
+
+            $(".btn-remove-slide").off("click");
+            $(".btn-remove-slide").click(function (e) {
+                $(e.target).closest(".panel").remove();
+                var $totalFormsField = $("#" + targetId + "-TOTAL_FORMS");
+                $totalFormsField.val(parseInt($totalFormsField.val()) - 1);
+            });
+        }
+
         $(function () {
+            $("#carousel_form").on("submit", function (e) {
+                var lastValidFormIndex = 0;
+
+                $("#placeholder-panel").remove();
+
+                // get the last valid index from existent slides
+                $("#slides-section-wrapper-div").find(".panel").each(function(index, element) {
+                    var index = $(element).data("idx");
+                    if (index) {
+                        index = parseInt(index);
+                        if (index > lastValidFormIndex) {
+                            lastValidFormIndex = index;
+                        }
+                    }
+                });
+                // replace all __slide_prefix__ input names with a valid index
+                $("#slides-section-wrapper-div").find(".panel.placeholder-added-panel").each(function(index, element) {
+                    $(element).find("[name*='__slide_prefix__']").each(function (index, field) {
+                        $(field).prop("name", field.name.replace(/__slide_prefix__/g, lastValidFormIndex));
+                        $(field).prop("id", field.id.replace(/__slide_prefix__/g, lastValidFormIndex));
+                    });
+                    lastValidFormIndex++;
+                });
+            });
+
             $(".slide-add-new-panel").on("click", function (e) {
                 e.preventDefault();
-                var panelCount = $("#" + $(this).data("target-panels") + " .panel").length;
+                var panelCount = $("#" + $(this).data("target-panels") + " .panel:not(.placeholder-panel)").length;
+
                 var $source = $("#placeholder-panel");
                 // Remove activated select2 spans from placeholder
                 $source.find("span.select2.select2-container").remove();
-                $source.find("select.select2-hidden-accessible").removeClass("select2-hidden-accessible");
-                var $html = $($source.html().replace(/__prefix__/g, panelCount));
-                $html.find('.panel-title .title').text('{{ _('Slide') }}' + ' ' + panelCount);
+                $source.find("select.select2-hidden-accessible")
+                    .removeClass("select2-hidden-accessible")
+                    .removeAttr("data-select2-id")
+                    .find("option").removeAttr("data-select2-id");
+
+                var $html = $($source.html()
+                    .replace(/__panel_prefix__/g, panelCount + 1)
+                    .replace(/__prefix__/g, "__slide_prefix__") // set a custom special name to make dropzones work here
+                    .replace(/placeholder-panel/g, "placeholder-added-panel")
+                );
+                $html.find('.panel-title .slide-title').text('{{ _('Slide') }}' + ' ' + (panelCount + 1));
                 $html.insertAfter($source);
+
                 var targetId = $(this).data("target-id");
                 var $totalFormsField = $("#" + targetId + "-TOTAL_FORMS");
                 $totalFormsField.val(parseInt($totalFormsField.val()) + 1);
                 $(".form-control.datetime").datetimepicker({
                     format: "Y-m-d H:i",
                 });
+
                 window.activateSelects();
                 $("[data-toggle='popover']").popover();
                 window.activateDropzones();
+
+                $html.find(".hex-color-picker").each((index, el) => {
+                    window.activateColorPicker(el);
+                });
+
+                setupRemoveSlides();
             });
+
+            setupRemoveSlides();
         });
     </script>
 {% endblock %}
