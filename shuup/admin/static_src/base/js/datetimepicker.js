@@ -8,16 +8,17 @@
  */
 $(function() {
     $(".form-control.datetime").datetimepicker({
-        format: "Y-m-d H:i",
+        format: "Y-m-d H:i"
     });
 
     $(".form-control.date").datetimepicker({
-        format: "Y-m-d H:i",
+        format: "Y-m-d",
+        timepicker: false
     });
 
     $(".form-control.time").datetimepicker({
-        datepicker: false,
         format: "H:i",
+        datepicker: false
     });
 });
 
