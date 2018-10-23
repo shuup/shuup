@@ -144,10 +144,15 @@ class ShuupAPISchemaGenerator(SchemaGenerator):
         return fields
 
 
+class JSONOpenAPIRenderer(renderers.OpenAPIRenderer):
+    media_type = 'application/json'
+
+
 class SwaggerSchemaView(APIView):
     renderer_classes = [
         renderers.OpenAPIRenderer,
-        renderers.SwaggerUIRenderer
+        renderers.SwaggerUIRenderer,
+        JSONOpenAPIRenderer
     ]
 
     def get(self, request):
