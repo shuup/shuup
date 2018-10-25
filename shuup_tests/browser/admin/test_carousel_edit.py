@@ -22,6 +22,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_carousel_create(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     filer_image = factories.get_random_filer_image()
@@ -75,6 +76,7 @@ def test_carousel_create(browser, admin_user, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_carousel_multi_slide(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     filer_image = factories.get_random_filer_image()
