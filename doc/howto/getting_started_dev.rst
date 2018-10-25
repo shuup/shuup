@@ -161,19 +161,19 @@ For OSX with Homebrew:
 
 .. code-block:: shell
 
-    # Install Chrome driver (tested with 2.34.522932 (4140ab217e1ca1bec0c4b4d1b148f3361eb3a03e)
+    # Install Chrome driver (tested with 2.34.522932 (4140ab217e1ca1bec0c4b4d1b148f3361eb3a03e))
     brew install chromedriver
 
     # Install Geckodriver (for Firefox)
     brew install geckodriver
 
-    # If your current version is below 0.19.1 (for Firefox)
+    # If your current version is below 0.23.0 (for Firefox)
     brew upgrade geckodriver
 
-    # Make sure the selenium is up to date (tested with 3.12.0)
+    # Make sure the selenium is up to date (tested with 3.4.0)
     pip install selenium -U
 
-    # Make sure splinter is up to date (tested with 0.8.0)
+    # Make sure splinter is up to date (tested with 0.9.0)
     pip install splinter -U
 
 For other OS and browsers check package documentation directly:
