@@ -38,6 +38,7 @@ class ManufacturerListView(PicotableListView):
             )
         ),
     ]
+    toolbar_buttons_provider_key = "manufacturer_list_toolbar_provider"
 
     def get_queryset(self):
         return Manufacturer.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True))

@@ -20,6 +20,28 @@ from shuup.admin.utils.forms import flatatt_filter
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.str_utils import camelcase_to_snakecase
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
+from shuup.apps.provides import get_provide_objects
+
+
+class BaseToolbarButtonProvider(object):
+    @classmethod
+    def get_buttons_for_view(cls, view):
+        """
+        Implement this method to add custom buttons to a view's toolbar
+
+        You can check the view attributes before returning buttons.
+        In case you need to access the request, get it from the view: `view.request`.
+        You can also access the view object when that is available:
+
+        ```
+        if getattr(view, "object", None):
+            yield JavaScriptActionButton(onclick="window.doSomething()", text="Do Something")
+        ```
+
+        :param view django.views.View: the view object to add the toolbar.
+        :rtype iterator|list
+        """
+        return []
 
 
 class BaseActionButton(object):
@@ -366,6 +388,51 @@ class ButtonGroup(list):
 
 
 class Toolbar(list):
+    """
+    Toolbar for admin views
+
+    Add buttons (subclasses of BaseActionButton) to the toolbar through `toolbar.append(button)` method.
+
+    A toolbar can be created for a given View using `Toolbar.for_view(view_instance)` class method.
+    This method will create an empty toolbar and it will be populated using button providers
+    that are loaded using provides.
+    Views which have the `toolbar_buttons_provider_key` attribute indicate that buttons
+    should be added to the toolbar using that provide key, e.g:
+
+    in your `view.py`:
+    ```
+    class MyView(View):
+        toolbar_buttons_provider_key = 'my_view_toolbar_provider_key'
+    ```
+
+    in your `apps.py`:
+    ```
+    class AppConfig(shuup.apps.AppConfig):
+        provides = {
+            "my_view_toolbar_provider_key": [
+                "myapp.toolbar:MyViewToolbarButtonProvider"
+            ]
+        }
+    ```
+
+    in your `toolbar.py`:
+    ```
+    class MyViewToolbarButtonProvider(BaseToolbarButtonProvider):
+        @classmethod
+        def get_buttons_for_view(cls, view):
+            if getattr(view, "object", None) and isinstance(view.object, Product):
+                yield JavaScriptActionButton(onclick="window.doSomething()", text="Do Something")
+    ```
+
+    You can also provide buttons to the tollbar of any view using the `admin_toolbar_button_provider` provide key.
+    """
+
+    def __init__(self, *args, **kwargs):
+        view = kwargs.pop("view", None)
+        super(Toolbar, self).__init__(*args, **kwargs)
+        if view:
+            self.extend(Toolbar.for_view(view))
+
     def render(self, request):
         # The toolbar is wrapped in a form without an action,
         # but `PostActionButton`s use the HTML5 `formaction` attribute.
@@ -383,6 +450,21 @@ class Toolbar(list):
 
     def render_to_string(self, request):
         return "".join(force_text(bit) for bit in self.render(request))
+
+    @classmethod
+    def for_view(cls, view):
+        toolbar = cls()
+
+        # add buttons from the view toolbar button provider
+        if getattr(view, "toolbar_buttons_provider_key", None):
+            for toolbar_buttons_provider in get_provide_objects(view.toolbar_buttons_provider_key):
+                toolbar.extend(list(toolbar_buttons_provider.get_buttons_for_view(view)))
+
+        # add buttons from the global toolbar button provider
+        for admin_toolbar_button_provider in get_provide_objects("admin_toolbar_button_provider"):
+            toolbar.extend(list(admin_toolbar_button_provider.get_buttons_for_view(view)))
+
+        return toolbar
 
 
 def try_reverse(viewname, **kwargs):
@@ -431,7 +513,8 @@ def get_default_edit_toolbar(
     request = view_object.request
     object = getattr(view_object, "object", None)
     discard_url = (discard_url or request.path)
-    toolbar = (Toolbar() if toolbar is None else toolbar)
+    existing_toolbar = (toolbar is not None)
+    toolbar = (toolbar if existing_toolbar else Toolbar.for_view(view_object))
 
     default_save_button = PostActionButton(
         icon="fa fa-check-circle",
@@ -494,6 +577,7 @@ def get_default_edit_toolbar(
                 required_permissions=required_permissions
             ))
 
-    # TODO: Add extensibility
+    if existing_toolbar:
+        toolbar.extend(Toolbar.for_view(view_object))
 
     return toolbar

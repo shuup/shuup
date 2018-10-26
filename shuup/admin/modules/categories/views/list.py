@@ -7,11 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.toolbar import URLActionButton
 from shuup.admin.utils.picotable import ChoicesFilter, Column, MPTTFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Category, CategoryStatus, CategoryVisibility
@@ -37,6 +35,7 @@ class CategoryListView(PicotableListView):
         ),
         Column("visibility", _(u"Visibility"), filter_config=ChoicesFilter(choices=CategoryVisibility.choices)),
     ]
+    toolbar_buttons_provider_key = "category_list_toolbar_provider"
 
     def get_name_filter_choices(self):
         choices = []
@@ -58,16 +57,3 @@ class CategoryListView(PicotableListView):
             {"text": "%s" % instance.name, "class": "header"},
             {"title": _(u"Status"), "text": item.get("status")},
         ]
-
-    def get_toolbar(self):
-        toolbar = super(CategoryListView, self).get_toolbar()
-        toolbar.append(
-            URLActionButton(
-                url=reverse("shuup_admin:category.organize"),
-                text=_("Organize"),
-                tooltip=_("Organize categories"),
-                icon="fa fa-sitemap",
-                extra_css_class="btn-default"
-            )
-        )
-        return toolbar

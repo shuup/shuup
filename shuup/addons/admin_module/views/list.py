@@ -93,7 +93,7 @@ class AddonListView(FormView):
                 extra_css_class="btn-info",
                 icon="fa fa-upload",
             )
-        ])
+        ], view=self)
         if self.request.GET.get("reload"):
             context["toolbar"].append(
                 URLActionButton(

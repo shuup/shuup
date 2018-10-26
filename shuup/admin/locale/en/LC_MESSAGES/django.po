@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-16 17:13+0000\n"
+"POT-Creation-Date: 2018-10-17 20:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -206,21 +206,6 @@ msgid "Status"
 msgstr ""
 
 msgid "Visibility"
-msgstr ""
-
-msgid "Organize"
-msgstr ""
-
-msgid "Organize categories"
-msgstr ""
-
-msgid "Save"
-msgstr ""
-
-msgid "Categories saved"
-msgstr ""
-
-msgid "Payload is missing from the request"
 msgstr ""
 
 msgid "Contact Group Pricing Display"
@@ -815,6 +800,9 @@ msgstr ""
 
 #, python-format
 msgid "Save -- %s"
+msgstr ""
+
+msgid "Save"
 msgstr ""
 
 msgid "Unable to set order as completed at this point"
@@ -2077,23 +2065,6 @@ msgstr ""
 msgid ""
 "You can add a name, description, picture or anything you want to make it "
 "stand out."
-msgstr ""
-
-msgid "Show in Menu"
-msgstr ""
-
-msgid "Hide from Menu"
-msgstr ""
-
-msgid ""
-"Drag and drop categories below to sort and change the hierarchy. Make sure "
-"to Save to apply the changes."
-msgstr ""
-
-msgid "You can also change the menu visibility of categories through buttons."
-msgstr ""
-
-msgid "Sorry, this view is not supported on small screen devices."
 msgstr ""
 
 msgid "General information"

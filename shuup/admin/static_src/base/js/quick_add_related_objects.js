@@ -73,6 +73,7 @@ function createQuickIframe(url) {
     contentPane.appendChild(iFrame);
     $(document.body).append(overlay);
 }
+window.createQuickAddIframe = createQuickIframe;
 
 window.setupQuickAdd = function (element) {
     $(element).parent().siblings(".select2-container").addClass("has-quick-btn");

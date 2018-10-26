@@ -51,14 +51,16 @@ class OrderListView(PicotableListView):
         "shuup.admin.modules.orders.mass_actions:OrderConfirmationPdfAction",
         "shuup.admin.modules.orders.mass_actions:OrderDeliveryPdfAction",
     ]
+    toolbar_buttons_provider_key = "order_list_toolbar_provider"
 
     def get_toolbar(self):
-        return Toolbar([
+        toolbar = Toolbar([
             NewActionButton.for_model(
                 Order, url=reverse("shuup_admin:order.new")
             ),
             SettingsActionButton.for_model(Order, return_url="order")
-        ])
+        ], view=self)
+        return toolbar
 
     def get_queryset(self):
         return super(OrderListView, self).get_queryset().exclude(deleted=True).filter(shop=self.request.shop)

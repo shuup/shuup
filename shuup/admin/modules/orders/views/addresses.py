@@ -79,5 +79,5 @@ class OrderAddressEditView(UpdateView):
                 text=_("Save"),
                 extra_css_class="btn-primary",
             ),
-        ])
+        ], view=self)
         return context

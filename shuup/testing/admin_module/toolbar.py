@@ -9,7 +9,9 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.toolbar import DropdownItem, URLActionButton
+from shuup.admin.toolbar import (
+    BaseToolbarButtonProvider, DropdownItem, URLActionButton
+)
 
 
 class MockContactToolbarButton(URLActionButton):
@@ -43,3 +45,18 @@ class MockProductToolbarActionItem(DropdownItem):
         kwargs["text"] = _("This is %(sku)s") % {"sku": object.sku}
         kwargs["url"] = "#%(sku)s" % {"sku": object.sku}
         super(MockProductToolbarActionItem, self).__init__(**kwargs)
+
+
+class MockContactGroupToolbarButton(URLActionButton):
+    def __init__(self, **kwargs):
+        kwargs["icon"] = "fa fa-user"
+        kwargs["text"] = _("Hello")
+        kwargs["extra_css_class"] = "btn-info btn-contact-group-hello"
+        kwargs["url"] = "/#mocktoolbarbutton"
+        super(MockContactGroupToolbarButton, self).__init__(**kwargs)
+
+
+class ContactGroupPriceDisplayButtonProvider(BaseToolbarButtonProvider):
+    @classmethod
+    def get_buttons_for_view(cls, view):
+        return [MockContactGroupToolbarButton()]

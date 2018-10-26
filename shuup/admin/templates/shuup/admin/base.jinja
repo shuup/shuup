@@ -19,7 +19,13 @@
     <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}{% if not conf["menuOpen"] %} desktop-menu-closed{% endif %}">
         {% if iframe_close %}
             <script>
-                parent.window.addToSelect2('{{ quick_add_target }}', '{{ quick_add_option_id }}', '{{ quick_add_option_name }}');
+                {% if quick_add_target %}
+                    parent.window.addToSelect2('{{ quick_add_target }}', '{{ quick_add_option_id }}', '{{ quick_add_option_name }}');
+                {% elif quick_add_callback %}
+                    parent.window.{{ quick_add_callback}}('{{ quick_add_option_id }}', '{{ quick_add_option_name }}');
+                {% else %}
+                    parent.window.closeQuickIFrame();
+                {% endif %}
             </script>
         {% else %}
         {% block top %}
