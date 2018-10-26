@@ -13,6 +13,9 @@
   "author": "Shuup Team <support@shuup.com>",
   "license": "OSL-3.0",
   "private": true,
+  "alias": {
+    "jQuery": "jquery"
+  },
   "dependencies": {
     "autoprefixer": "^8.6.5",
     "babel-core": "^6.26.3",
@@ -20,6 +23,7 @@
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^4.1.2",
     "bootstrap-datetime-picker": "^2.4.4",
+    "bootstrap-colorpicker": "^3.0.3",
     "chart.js": "^2.7.2",
     "desandro-matches-selector": "^2.0.2",
     "dropzone": "^5.5.1",

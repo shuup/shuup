@@ -19,7 +19,7 @@
     {% endif %}
     {% if slide.active_dot_color %}
     .owl-dot:nth-child({{ loop.index }}).active {
-        border-width: 0px !important;
+        border: 1px solid {{ slide.active_dot_color }} !important;
         background-color: {{ slide.active_dot_color }} !important;
     }
     {% endif %}

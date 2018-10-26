@@ -2,8 +2,8 @@
 
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
 
-{% macro render_slide_form(f, form, idx) %}
-    <div class="panel panel-default panel-slide row">
+{% macro render_slide_form(f, form, idx, is_placeholder=False) %}
+    <div class="panel panel-default panel-slide row {% if is_placeholder %}placeholder-panel{% endif%}" id="slide-panel-{{ idx }}" {% if not is_placeholder %}data-idx="{{ idx }}"{% endif %}>
         <div class="panel-heading col-12" role="tab" id="heading{{ idx }}">
             <a class="panel-title panel-carousel-image d-flex align-items-center p-3" role="button" data-toggle="collapse" href="#collapse{{ idx }}" aria-expanded="false" aria-controls="collapse{{ idx }}">
                 <span class="slide-title">
@@ -13,8 +13,13 @@
             </a>
         </div>
         <div id="collapse{{ idx }}" class="panel-collapse col-12 collapse{% if  idx == "__prefix__" or f.errors %} in{% endif %}" role="tabpanel" aria-labelledby="heading{{ idx }}">
-            {{ language_dependent_content_tabs(f, tab_id_prefix=idx) }}
-            {{ render_monolingual_fields(f) }}
+            {{ language_dependent_content_tabs(f, tab_id_prefix="slide_{}".format(idx)) }}
+            {{ render_monolingual_fields(f, exclude=(["DELETE"] if is_placeholder else [])) }}
+            {% if is_placeholder %}
+            <div class="text-center mb-3">
+                <button class="btn btn-outline-danger btn-remove-slide" type="button" target="slide-panel-{{ idx }}">{{ _("Remove Slide") }}</button>
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}
@@ -39,10 +44,10 @@
             </div>
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="d-none" id="placeholder-panel">
-                    {{ render_slide_form(slides_form.empty_form, slides_form, "__prefix__") }}
+                    {{ render_slide_form(slides_form.empty_form, slides_form, "__panel_prefix__", True) }}
                 </div>
                 {% for f in slides_form %}
-                    {{ render_slide_form(f, slides_form, loop.index) }}
+                    {{ render_slide_form(f, slides_form, loop.index, not f.instance.pk) }}
                 {% endfor %}
             </div>
         </div>

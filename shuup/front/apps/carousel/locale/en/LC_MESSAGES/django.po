@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 16:09+0000\n"
+"POT-Creation-Date: 2018-10-22 23:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -240,6 +240,9 @@ msgid "Basic details"
 msgstr ""
 
 msgid "Advanced options"
+msgstr ""
+
+msgid "Remove Slide"
 msgstr ""
 
 msgid "Only image for default language is required."

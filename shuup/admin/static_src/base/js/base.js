@@ -7,6 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import './browse-widget.js';
+import './color-picker.js';
 import './content-blocks.js';
 import './datetimepicker.js';
 import './drag-n-drop.js';
