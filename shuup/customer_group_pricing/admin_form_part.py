@@ -33,9 +33,9 @@ class CustomerGroupPricingForm(forms.Form):
             Q(price_display_options__show_pricing=True) |
             Q(
                 id__in=CgpPrice.objects.filter(product=self.product)
-                .values_list("group_id", flat=True).distinct()
+                .values_list("group_id", flat=True)
             )
-        ))
+        ).distinct())
         prices_by_shop_and_group = dict(
             ((shop_id or 0, group_id or 0), price)
             for (shop_id, group_id, price)
@@ -114,9 +114,9 @@ class CustomerGroupDiscountForm(forms.Form):
             Q(price_display_options__show_pricing=True) |
             Q(
                 id__in=CgpDiscount.objects.filter(product=self.product)
-                .values_list("group_id", flat=True).distinct()
+                .values_list("group_id", flat=True)
             )
-        ))
+        ).distinct())
         discounts_by_shop_and_group = dict(
             ((shop_id or 0, group_id or 0), discount_amount)
             for (shop_id, group_id, discount_amount)

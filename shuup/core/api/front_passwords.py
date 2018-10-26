@@ -72,6 +72,8 @@ class SetAuthenticatedUserPasswordSerializer(serializers.Serializer):
 
 
 class PasswordResetViewSet(GenericViewSet):
+    serializer_class = serializers.BaseSerializer
+
     def create(self, request):
         form = RecoverPasswordForm(request.data)
         if form.is_valid():
@@ -82,6 +84,8 @@ class PasswordResetViewSet(GenericViewSet):
 
 
 class SetPasswordViewSet(GenericViewSet):
+    serializer_class = serializers.BaseSerializer
+
     def create(self, request):
         if not request.user.is_anonymous():
             serializer = SetAuthenticatedUserPasswordSerializer(data=request.data, context={'request': request})
