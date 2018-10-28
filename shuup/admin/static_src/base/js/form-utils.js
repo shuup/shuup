@@ -69,6 +69,23 @@ window.clearErrors = function ($form) {
     $form.parent().find(".errors").empty();
 };
 
+function inViewport (el) {
+
+    var r, html;
+    if ( !el || 1 !== el.nodeType ) { return false; }
+    html = document.documentElement;
+    r = el.getBoundingClientRect();
+
+    return ( !!r
+      && r.bottom >= 0
+      && r.right >= 0
+      && r.top <= html.clientHeight
+      && r.left <= html.clientWidth
+    );
+
+}
+
+
 $(function() {
     $(".language-dependent-content").each(function() {
         const $ctr = $(this);
@@ -94,4 +111,21 @@ $(function() {
             }
         });
     });
+
+    window.onscroll = function() {
+        const saveBtn = document.getElementsByClassName("btn btn-success btn-save")[0];
+        const groupBtn = document.getElementsByClassName("btn-group")[0];
+        const dropBtn = document.getElementsByClassName("btn dropdown-toggle btn-success btn-dropdown-toggle")[0];
+        if(saveBtn) {
+            if (document.body.scrollTop === 0 && document.documentElement.scrollTop === 0){
+                saveBtn.classList.remove("opaque");
+                dropBtn.classList.remove("opaque");
+                groupBtn.classList.remove("opaque");
+            } else if (!(inViewport(saveBtn))) {
+                groupBtn.classList.add("opaque")
+                saveBtn.classList.add("opaque");
+                dropBtn.classList.add("opaque");
+            }
+        }
+    };
 }());
