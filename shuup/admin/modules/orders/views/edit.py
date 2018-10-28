@@ -178,8 +178,6 @@ class OrderEditView(CreateOrUpdateView):
     def get_config(self):
         order = self.object
         shop_queryset = Shop.objects.get_for_user(self.request.user).filter(status=ShopStatus.ENABLED)
-        if getattr(self.request.user, "is_superuser", False):
-            shop_queryset = shop_queryset.filter(staff_members=self.request.user)
         shops = [encode_shop(shop) for shop in shop_queryset]
         shop = self.request.shop
         customer_id = self.request.GET.get("contact_id")
