@@ -183,9 +183,26 @@ fieldset[disabled] .btn {
 
     &.btn-dropdown-toggle {
         background-color: rgba($success, 0.4);
+        transition: none;
 
-        &::after {
-            color: $success;
+        &.opaque {
+            background-color: darken($success, 0.1);
+
+            &::after {
+                color: $white !important;
+            }
+        }
+    }
+
+    &.btn-save {
+        transition: none;
+
+        &.opaque {
+            @include media-breakpoint-down(sm) {
+                padding: 5px;
+            }
+            background-color: darken($success, 5%);
+            color:$white;
         }
     }
 }
