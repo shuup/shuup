@@ -55,7 +55,7 @@ export function init(config = {}) {
         const resetOrder = window.localStorage.getItem("resetSavedOrder") || "false";
         var savedOrder = { id: null };
         if (resetOrder === "true") {
-            persistor.purgeAll();
+            persistor.purge();
             window.localStorage.setItem("resetSavedOrder", "false");
         } else {
             const savedOrderStr = window.localStorage.getItem("reduxPersist:order");
@@ -65,7 +65,7 @@ export function init(config = {}) {
         }
 
         if (customerData) { // contact -> New Order
-            persistor.purgeAll();
+            persistor.purge();
             store.dispatch(setCustomer(customerData));
         }
 
