@@ -125,12 +125,13 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None,
     return products_qs[:n_products]
 
 
-def _can_use_cache(product_ids, shop, customer):
+def _can_use_cache(products, shop, customer):
     """
     Check whether the cached products can be still used
 
     If any of the products is no more orderable refetch the products
     """
+    product_ids = [prod.pk for prod in products]
     for supplier in Supplier.objects.filter(shops__in=[shop]):
         for sp in ShopProduct.objects.filter(product__id__in=product_ids, shop=shop):
             if not sp.is_orderable(supplier, customer=customer, quantity=sp.minimum_purchase_quantity):
@@ -142,7 +143,7 @@ def _can_use_cache(product_ids, shop, customer):
 def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_only=True, sale_items_only=False):
     request = context["request"]
 
-    key, product_ids = context_cache.get_cached_value(
+    key, products = context_cache.get_cached_value(
         identifier="best_selling_products",
         item=cache_utils.get_best_selling_products_cache_item(request.shop),
         context=request,
@@ -150,12 +151,11 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
         orderable_only=orderable_only, sale_items_only=sale_items_only
     )
 
-    if product_ids is not None and _can_use_cache(product_ids, request.shop, request.customer):
-        return Product.objects.filter(id__in=product_ids)
+    if products is not None and _can_use_cache(products, request.shop, request.customer):
+        return products
 
     products = _get_best_selling_products(cutoff_days, n_products, orderable_only, request, sale_items_only)
-    product_ids = [product.id for product in products]
-    context_cache.set_cached_value(key, product_ids, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
@@ -223,14 +223,14 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
 def get_newest_products(context, n_products=6, orderable_only=True, sale_items_only=False):
     request = context["request"]
 
-    key, product_ids = context_cache.get_cached_value(
+    key, products = context_cache.get_cached_value(
         identifier="newest_products",
         item=cache_utils.get_newest_products_cache_item(request.shop),
         context=request,
         n_products=n_products, orderable_only=orderable_only, sale_items_only=sale_items_only
     )
-    if product_ids is not None and _can_use_cache(product_ids, request.shop, request.customer):
-        return Product.objects.filter(id__in=product_ids)
+    if products is not None and _can_use_cache(products, request.shop, request.customer):
+        return products
 
     products = get_listed_products(
         context,
@@ -243,23 +243,22 @@ def get_newest_products(context, n_products=6, orderable_only=True, sale_items_o
         sale_items_only=sale_items_only
     )
     products = cache_product_things(request, products)
-    product_ids = [product.id for product in products]
-    context_cache.set_cached_value(key, product_ids, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
 def get_random_products(context, n_products=6, orderable_only=True, sale_items_only=False):
     request = context["request"]
-    key, product_ids = context_cache.get_cached_value(
+    key, products = context_cache.get_cached_value(
         identifier="random_products",
         item=cache_utils.get_random_products_cache_item(request.shop),
         context=request,
         n_products=n_products, orderable_only=orderable_only,
         sale_items_only=sale_items_only
     )
-    if product_ids is not None and _can_use_cache(product_ids, request.shop, request.customer):
-        return Product.objects.filter(id__in=product_ids)
+    if products is not None and _can_use_cache(products, request.shop, request.customer):
+        return products
 
     products = get_listed_products(
         context,
@@ -272,15 +271,14 @@ def get_random_products(context, n_products=6, orderable_only=True, sale_items_o
         sale_items_only=sale_items_only
     )
     products = cache_product_things(request, products)
-    product_ids = [product.id for product in products]
-    context_cache.set_cached_value(key, product_ids, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
 def get_products_for_categories(context, categories, n_products=6, orderable_only=True, sale_items_only=False):
     request = context["request"]
-    key, product_ids = context_cache.get_cached_value(
+    key, products = context_cache.get_cached_value(
         identifier="products_for_category",
         item=cache_utils.get_products_for_category_cache_item(request.shop),
         context=request,
@@ -289,8 +287,8 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         orderable_only=orderable_only,
         sale_items_only=sale_items_only
     )
-    if product_ids is not None and _can_use_cache(product_ids, request.shop, request.customer):
-        return Product.objects.filter(id__in=product_ids)
+    if products is not None and _can_use_cache(products, request.shop, request.customer):
+        return products
 
     products = get_listed_products(
         context,
@@ -304,8 +302,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         sale_items_only=sale_items_only
     )
     products = cache_product_things(request, products)
-    product_ids = [product.id for product in products]
-    context_cache.set_cached_value(key, product_ids, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 

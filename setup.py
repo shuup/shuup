@@ -92,7 +92,6 @@ REQUIRES = [
     'django-filter>=1.0,<1.2',
     'django-jinja>=1.4,<3',
     'django-mptt>=0.8.0,<0.10',  # Django-filer doesn't officially support 0.9.0
-    'django-parler>=1.5,<2',
     'django-parler-rest>=1.3a1,<2',
     'django-polymorphic>=0.8,<2.1.0',  # For Django 1.8 and 1.9 use version lower 1
     'django-registration-redux>=1.5,<1.9',
@@ -117,8 +116,12 @@ REQUIRES = [
     'secretstorage==2.3.1',
     'six>=1.9,<2',
     'unicodecsv==0.14.1',
-    'xlrd>=1'
+    'xlrd>=1',
+
+    # FIXME: Use this commit until Django Parler v1.9.3 is released and publishe in PyPI
+    'django-parler @ https://github.com/django-parler/django-parler/tarball/10479b0'
 ]
+
 
 REQUIRES_FOR_PYTHON2_ONLY = [
     'pillow>=3.4.2,<4'
@@ -167,5 +170,5 @@ if __name__ == '__main__':
         extras_require=EXTRAS_REQUIRE,
         packages=utils.find_packages(exclude=EXCLUDED_PACKAGES),
         include_package_data=True,
-        cmdclass=utils.COMMANDS,
+        cmdclass=utils.COMMANDS
     )
