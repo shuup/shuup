@@ -125,20 +125,6 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None,
     return products_qs[:n_products]
 
 
-def _can_use_cache(products, shop, customer):
-    """
-    Check whether the cached products can be still used
-
-    If any of the products is no more orderable refetch the products
-    """
-    product_ids = [prod.pk for prod in products]
-    for supplier in Supplier.objects.filter(shops__in=[shop]):
-        for sp in ShopProduct.objects.filter(product__id__in=product_ids, shop=shop):
-            if not sp.is_orderable(supplier, customer=customer, quantity=sp.minimum_purchase_quantity):
-                return False
-    return True
-
-
 @contextfunction
 def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_only=True, sale_items_only=False):
     request = context["request"]
@@ -151,7 +137,7 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
         orderable_only=orderable_only, sale_items_only=sale_items_only
     )
 
-    if products is not None and _can_use_cache(products, request.shop, request.customer):
+    if products is not None:
         return products
 
     products = _get_best_selling_products(cutoff_days, n_products, orderable_only, request, sale_items_only)
@@ -229,7 +215,7 @@ def get_newest_products(context, n_products=6, orderable_only=True, sale_items_o
         context=request,
         n_products=n_products, orderable_only=orderable_only, sale_items_only=sale_items_only
     )
-    if products is not None and _can_use_cache(products, request.shop, request.customer):
+    if products is not None:
         return products
 
     products = get_listed_products(
@@ -257,7 +243,7 @@ def get_random_products(context, n_products=6, orderable_only=True, sale_items_o
         n_products=n_products, orderable_only=orderable_only,
         sale_items_only=sale_items_only
     )
-    if products is not None and _can_use_cache(products, request.shop, request.customer):
+    if products is not None:
         return products
 
     products = get_listed_products(
@@ -287,7 +273,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         orderable_only=orderable_only,
         sale_items_only=sale_items_only
     )
-    if products is not None and _can_use_cache(products, request.shop, request.customer):
+    if products is not None:
         return products
 
     products = get_listed_products(

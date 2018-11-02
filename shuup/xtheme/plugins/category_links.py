@@ -73,7 +73,7 @@ class CategoryLinksPlugin(TemplatedPlugin):
         categories = Category.objects.all_visible(
             customer=getattr(request, "customer"),
             shop=getattr(request, "shop")
-        )
+        ).prefetch_related("translations")
         if not show_all_categories:
             categories = categories.filter(id__in=selected_categories)
         return {

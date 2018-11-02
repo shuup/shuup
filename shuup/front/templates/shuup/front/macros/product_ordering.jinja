@@ -2,7 +2,7 @@
 
 
 {% macro render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children) %}
-    {%- set shop_product = product.get_shop_instance(request.shop, allow_cache=False) -%}
+    {%- set shop_product = product.get_shop_instance(request.shop, allow_cache=True) -%}
     {% if not quantity %}
         {%- set quantity = shop_product.rounded_minimum_purchase_quantity -%}
     {% endif %}

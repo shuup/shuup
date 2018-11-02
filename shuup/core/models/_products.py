@@ -132,6 +132,24 @@ class ProductType(TranslatableModel):
 class ProductQuerySet(TranslatableQuerySet):
     _invisible_modes = [ProductMode.VARIATION_CHILD]
 
+    def _select_related(self):
+        return self.select_related(
+            "primary_image",
+            "sales_unit",
+            "tax_class",
+            "manufacturer"
+        ).prefetch_related(
+            "translations",
+            "shop_products",
+            "shop_products__display_unit",
+            "shop_products__display_unit__internal_unit",
+            "shop_products__display_unit__translations",
+            "shop_products__categories",
+            "shop_products__categories__translations",
+            "shop_products__primary_category",
+            "primary_image__file"
+        )
+
     def _visible(self, shop, customer, language=None):
         root = (self.language(language) if language else self)
         qs = root.all().filter(shop_products__shop=shop)
@@ -161,15 +179,15 @@ class ProductQuerySet(TranslatableQuerySet):
     def _get_qs(self, shop, customer, language, visibility_type):
         qs = self._visible(shop=shop, customer=customer, language=language)
         if customer and customer.is_all_seeing:
-            return qs
+            return qs._select_related()
         else:
             from ._product_shops import ShopProductVisibility
             return qs.filter(
                 shop_products__shop=shop,
                 shop_products__visibility__in=(
                     visibility_type, ShopProductVisibility.ALWAYS_VISIBLE
-                ),
-            )
+                )
+            )._select_related()
 
     def listed(self, shop, customer=None, language=None):
         from ._product_shops import ShopProductVisibility
