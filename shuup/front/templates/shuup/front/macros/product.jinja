@@ -53,7 +53,7 @@ Inheritance order for product macors:
 
 {% macro render_product_price(product, show_units=True) %}
     {% if show_prices() and not xtheme.get("hide_prices") %}
-        {%- set unit = product.get_shop_instance(request.shop).unit -%}
+        {%- set unit = product.get_shop_instance(request.shop, allow_cache=True).unit -%}
         {%- set (per_qty, per_text) = unit.get_per_values(show_units) -%}
         <div class="price-line">
             <span class="lead">

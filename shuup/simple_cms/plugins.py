@@ -79,7 +79,7 @@ class PageLinksPlugin(TemplatedPlugin):
         show_all_pages = self.config.get("show_all_pages", True)
         hide_expired = self.config.get("hide_expired", False)
 
-        pages_qs = Page.objects.filter()
+        pages_qs = Page.objects.prefetch_related("translations")
         if hide_expired:
             pages_qs = pages_qs.visible(context["request"].shop)
 

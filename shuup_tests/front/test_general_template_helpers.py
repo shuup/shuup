@@ -264,9 +264,13 @@ def test_get_best_selling_products_cache_bump():
     cache.clear()
     from shuup.front.template_helpers import general
     context = get_jinja_context()
-    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
 
-    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+    def set_cache_value(key, value, timeout=None):
+        if "best_selling_products" in key:
+            return set_cached_value_mock(key, value, timeout)
+
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cache_value):
         assert set_cached_value_mock.call_count == 0
 
         assert general.get_best_selling_products(context, 2, orderable_only=False)
@@ -432,8 +436,11 @@ def test_get_newest_products_cache_bump():
     context = get_jinja_context()
     cache.clear()
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+    def set_cache_value(key, value, timeout=None):
+        if "newest_products" in key:
+            return set_cached_value_mock(key, value, timeout)
 
-    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cache_value):
         assert set_cached_value_mock.call_count == 0
 
         assert general.get_newest_products(context, 2, orderable_only=False)
@@ -518,8 +525,11 @@ def test_get_random_products_cache_bump():
     context = get_jinja_context()
     cache.clear()
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+    def set_cache_value(key, value, timeout=None):
+        if "random_products" in key:
+            return set_cached_value_mock(key, value, timeout)
 
-    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cache_value):
         assert set_cached_value_mock.call_count == 0
 
         assert general.get_random_products(context, n_products=10)
@@ -581,7 +591,11 @@ def test_products_for_category_cache_bump():
 
     cache.clear()
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
-    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+    def set_cache_value(key, value, timeout=None):
+        if "products_for_category" in key:
+            return set_cached_value_mock(key, value, timeout)
+
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cache_value):
         assert set_cached_value_mock.call_count == 0
 
         assert general.get_products_for_categories(context, [category])
@@ -618,7 +632,11 @@ def test_get_all_manufacturers():
     products[2].manufacturer = manuf3; products[2].save()
 
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
-    with mock.patch.object(context_cache, "set_cached_value", new=set_cached_value_mock):
+    def set_cache_value(key, value, timeout=None):
+        if "all_manufacturers" in key:
+            return set_cached_value_mock(key, value, timeout)
+
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cache_value):
         assert set_cached_value_mock.call_count == 0
 
         # manufacturers are cached
