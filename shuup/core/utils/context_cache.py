@@ -190,7 +190,14 @@ def _get_items_from_context(context):
         for k, v in six.iteritems(context):
             if k in HASHABLE_KEYS:
                 if k == "customer" and hasattr(v, "groups"):
-                    v = v.groups.all()
+                    # cache groups in the instance to prevent creating a new queryset everytime
+                    if hasattr(v, "_cached_groups"):
+                        v = v._cached_groups
+                    else:
+                        groups_value = _get_val(v.groups.all())
+                        v._cached_groups = groups_value
+                        v = groups_value
+
                     k = "customer_groups"
                 items[k] = _get_val(v)
     else:
