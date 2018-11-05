@@ -127,6 +127,7 @@
 }
 
 #xt-edit-sidebar {
+    display: none;
     font-family: 'Open Sans', sans-serif;
     position: fixed;
     z-index: 999999; // Can we go higher?
@@ -135,15 +136,30 @@
     max-width: 450px;
     width: 100%;
     height: 100%;
-    transform: translateX(-100%) translateZ(0);  // translateZ to force composition layer
     transition: transform 0.5s;
     background: #fff;
     box-shadow: 0px 0 4px 0 rgba(0, 0, 0, 0.15);
     overflow: hidden;
 
     &.visible {
-        transform: translateX(0%);
+        display: block;
     }
+
+    &.popout {
+        display: block;
+        height: 80%;
+        width: 90%;
+        max-width: 100%;
+        top: 10%;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 10px 10px 135px -17px rgba(0,0,0,0.75);
+        left:0;
+        right:0;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
 
     @media (max-width: 560px) {
         padding-bottom: 5rem;
