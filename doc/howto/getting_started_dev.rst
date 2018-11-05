@@ -170,7 +170,7 @@ For OSX with Homebrew:
     # If your current version is below 0.23.0 (for Firefox)
     brew upgrade geckodriver
 
-    # Make sure the selenium is up to date (tested with 3.4.0)
+    # Make sure the selenium is up to date (tested with 3.141.0)
     pip install selenium -U
 
     # Make sure splinter is up to date (tested with 0.9.0)
