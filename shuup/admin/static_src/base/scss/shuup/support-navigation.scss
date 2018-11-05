@@ -1,5 +1,5 @@
 .support-nav-wrap {
-    z-index: 2;
+    z-index: $zindex-dropdown;
     width: 100%;
     padding-left: $main-menu-width + 30px;
     padding-right: 30px;
@@ -163,6 +163,13 @@ body {
 
             @include media-breakpoint-down(xs) {
                 margin: 10px 0 0 0;
+            }
+
+            &.opaque {
+                position: fixed;
+                bottom: 10px;
+                right: 20px;
+                z-index: $zindex-fixed;
             }
 
             .btn {
