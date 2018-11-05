@@ -184,25 +184,43 @@ def get_cache_key_for_context(identifier, item, context, **kwargs):
     return "%s:%s_%s" % (namespace, identifier, hash(frozenset(items.items())))
 
 
-def _get_items_from_context(context):
+def _get_items_from_context(context):   # noqa (C901)
     items = {}
     if hasattr(context, "items"):
         for k, v in six.iteritems(context):
             if k in HASHABLE_KEYS:
                 if k == "customer" and hasattr(v, "groups"):
-                    v = v.groups.all()
+                    # cache groups in the instance to prevent creating a new queryset everytime
+                    if hasattr(v, "_ctx_cache_cached_groups"):
+                        v = v._ctx_cache_cached_groups
+                    else:
+                        groups_value = _get_val(v.groups.all())
+                        v._ctx_cache_cached_groups = groups_value
+                        v = groups_value
+
                     k = "customer_groups"
                 items[k] = _get_val(v)
     else:
         for key in HASHABLE_KEYS:
             val = None
+
             if hasattr(context, key):
-                if key == "customer":
-                    # some context only has customer, transfer this to customer groups
-                    val = "|".join(list(map(str, getattr(context, key).groups.all().values_list("pk", flat=True))))
-                    key = "customer_groups"
+                cache_key = "_ctx_cache_{}".format(key)
+
+                if hasattr(context, cache_key):
+                    val = getattr(context, cache_key)
+                    if key == "customer":
+                        key = "customer_groups"
                 else:
-                    val = _get_val(getattr(context, key))
+                    if key == "customer":
+                        # some context only has customer, transfer this to customer groups
+                        val = "|".join(list(map(str, getattr(context, key).groups.all().values_list("pk", flat=True))))
+                        key = "customer_groups"
+                    else:
+                        val = _get_val(getattr(context, key))
+
+                    setattr(context, cache_key, val)
+
             items[key] = val
     return items
 

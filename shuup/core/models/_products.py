@@ -132,6 +132,24 @@ class ProductType(TranslatableModel):
 class ProductQuerySet(TranslatableQuerySet):
     _invisible_modes = [ProductMode.VARIATION_CHILD]
 
+    def _select_related(self):
+        return self.select_related(
+            "primary_image",
+            "sales_unit",
+            "tax_class",
+            "manufacturer"
+        ).prefetch_related(
+            "translations",
+            "shop_products",
+            "shop_products__display_unit",
+            "shop_products__display_unit__internal_unit",
+            "shop_products__display_unit__translations",
+            "shop_products__categories",
+            "shop_products__categories__translations",
+            "shop_products__primary_category",
+            "primary_image__file"
+        )
+
     def _visible(self, shop, customer, language=None):
         root = (self.language(language) if language else self)
         qs = root.all().filter(shop_products__shop=shop)
@@ -161,15 +179,15 @@ class ProductQuerySet(TranslatableQuerySet):
     def _get_qs(self, shop, customer, language, visibility_type):
         qs = self._visible(shop=shop, customer=customer, language=language)
         if customer and customer.is_all_seeing:
-            return qs
+            return qs._select_related()
         else:
             from ._product_shops import ShopProductVisibility
             return qs.filter(
                 shop_products__shop=shop,
                 shop_products__visibility__in=(
                     visibility_type, ShopProductVisibility.ALWAYS_VISIBLE
-                ),
-            )
+                )
+            )._select_related()
 
     def listed(self, shop, customer=None, language=None):
         from ._product_shops import ShopProductVisibility
@@ -368,17 +386,18 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         :rtype: shuup.core.models.ShopProduct
         """
 
-        # FIXME: Temporary removed the cache to prevent parler issues
-        # Uncomment this as soon as https://github.com/shuup/shuup/issues/1323 is fixed
-        # and Django Parler version is bumped with the fix
+        from shuup.core.utils import context_cache
+        key, val = context_cache.get_cached_value(
+            identifier="shop_product",
+            item=self,
+            context={"shop": shop},
+            allow_cache=allow_cache
+        )
+        if val is not None:
+            return val
 
-        # from shuup.core.utils import context_cache
-        # key, val = context_cache.get_cached_value(
-        #     identifier="shop_product", item=self, context={"shop": shop}, allow_cache=allow_cache)
-        # if val is not None:
-        #     return val
         shop_inst = self.shop_products.get(shop_id=shop.id)
-        # context_cache.set_cached_value(key, shop_inst)
+        context_cache.set_cached_value(key, shop_inst)
         return shop_inst
 
     def get_priced_children(self, context, quantity=1):

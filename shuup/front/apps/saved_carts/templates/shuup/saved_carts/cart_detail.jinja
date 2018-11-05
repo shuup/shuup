@@ -32,7 +32,7 @@
                 <tbody>
                 {% for line in lines %}
                     {% set product = line.product %}
-                    {% set unit = line.product.get_shop_instance(request.shop).unit -%}
+                    {% set unit = line.product.get_shop_instance(request.shop, allow_cache=True).unit -%}
                     {% set image = product.primary_image %}
                     {% if not image and product.variation_parent %}
                         {% set image = product.variation_parent.primary_image %}

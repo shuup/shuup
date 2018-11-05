@@ -148,7 +148,7 @@
     {% set quantity_map = product.get_package_child_to_quantity_map() %}
     <ul class="package-children">
         {% for child in package_children %}
-            {%- set unit = child.get_shop_instance(request.shop).unit -%}
+            {%- set unit = child.get_shop_instance(request.shop, allow_cache=True).unit -%}
             <li><small><em>
                 {{- unit.render_quantity(quantity_map[child]) }}
                 &times; {{ child -}}

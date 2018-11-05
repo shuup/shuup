@@ -12,14 +12,16 @@ from decimal import Decimal, ROUND_HALF_UP
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext
+from django.utils.translation import ugettext_lazy as _
 from parler.models import (
     TranslatedField, TranslatedFields, TranslatedFieldsModel
 )
 
+from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField, QuantityField
 from shuup.utils.i18n import format_number
 from shuup.utils.numbers import bankers_round, parse_decimal_string
@@ -104,7 +106,15 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
 
         :rtype: DisplayUnit
         """
-        default_display_unit = self.display_units.filter(default=True).first()
+        cache_key = "display_unit:sales_unit_{}_default_display_unit".format(self.pk)
+        default_display_unit = cache.get(cache_key)
+
+        if default_display_unit is None:
+            default_display_unit = self.display_units.filter(default=True).first()
+            # Set 0 to cache to prevent None values, which will not be a valid cache value
+            # 0 will be invalid below, hence we prevent another query here
+            cache.set(cache_key, default_display_unit or 0)
+
         return default_display_unit or SalesUnitAsDisplayUnit(self)
 
 
@@ -421,3 +431,11 @@ def _get_value_symbol_template():
 def _round_to_digits(value, digits, rounding=ROUND_HALF_UP):
     precision = Decimal('1.' + ('1' * digits))
     return value.quantize(precision, rounding=rounding)
+
+
+def bump_sales_unit_cache_signal(*args, **kwargs):
+    cache.bump_version("display_unit")
+
+
+post_save.connect(bump_sales_unit_cache_signal, sender=SalesUnit)
+post_save.connect(bump_sales_unit_cache_signal, sender=DisplayUnit)
