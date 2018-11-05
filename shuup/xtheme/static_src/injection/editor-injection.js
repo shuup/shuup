@@ -32,36 +32,17 @@ function getSidebarDiv() {
     return _sidebarDiv;
 }
 
-function getSidebarToggler() {
-    if (_sidebarToggler === null) {
-        _sidebarToggler = el("div", {
-            id: "xt-sidebar-toggler",
-            $events: {
-                click: () => {
-                    setSidebarVisibility();
-                }
-            }
-        }, [el("i.fa"), gettext("Toggle Editor")])
-        document.body.appendChild(_sidebarToggler);
-    }
-    return _sidebarToggler;
-}
-
 function getSidebarIframe() {
     getSidebarDiv();
-    getSidebarToggler();
     return _sidebarIframe;
 }
 
-function setSidebarVisibility(visible) {
+function setPopup(visible) {
     const sidebarDiv = getSidebarDiv();
-    const sidebarToggler = getSidebarToggler();
     if (visible === undefined) {
-        sidebarDiv.classList.toggle("visible");
-        sidebarToggler.classList.toggle("visible");
+        sidebarDiv.classList.toggle("popout");
     } else {
-        sidebarDiv.classList.toggle("visible", !!visible);
-        sidebarToggler.classList.toggle("visible", !!visible);
+        sidebarDiv.classList.toggle("popout", !!visible);
     }
 }
 
@@ -89,7 +70,7 @@ function openPlaceholderEditor(domElement) {
     };
     getSidebarIframe().src = window.XthemeEditorConfig.editUrl + "?" + stringify(urlParams);
     setTimeout(() => {
-        setSidebarVisibility(true);
+        setPopup(true);
     }, 1); // Defer slide-out, because otherwise browsers coalesce the addClass (as it's done in the same JS "tick")
 }
 
@@ -175,11 +156,25 @@ function addPhClickHandler() {
     }, false);
 }
 
+function addCloseHandler() {
+    document.addEventListener("keyup", (event) => {
+        if (event.key === "Escape") {
+            setPopup(false);
+        }
+    }, false);
+}
+
 domready(() => {
     window.addEventListener("message", handleMessage, false);
     addSnippetInjectionMarkup();
     addEditToggleMarkup();
     if (window.XthemeEditorConfig.edit) {
         addPhClickHandler();
+        addCloseHandler();
     }
 });
+
+
+window.togglePopup = function(visible) {
+    setPopup(visible);
+};

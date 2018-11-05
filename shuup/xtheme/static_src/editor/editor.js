@@ -81,6 +81,11 @@ domready(() => {
             post({command: "publish"});
         }
     });
+
+    $("#xtheme-editor-close").on("click", function() {
+        parent.togglePopup(false);
+    });
+
     $(".revert-btn").on("click", function() {
         if (!confirm(gettext("Are you sure you wish to revert all changes made since the last published version?"))) {
             return;
@@ -113,7 +118,7 @@ domready(() => {
         changesMade = true;
     });
 
-    new Sortable(document.querySelector(".layout-rows"), {
+    new window.Sortable(document.querySelector(".layout-rows"), {
         handle: ".layout-move-row-btn",
 		forceFallback: true,
         onUpdate: function(evt) {
@@ -123,8 +128,8 @@ domready(() => {
 
     var els = document.getElementsByClassName("layout-row-cells");
     for(var i = 0; i < els.length; i++) {
-        new Sortable(els[i], {
-            group: 'cells',
+        new window.Sortable(els[i], {
+            group: "cells",
             onUpdate: function(evt) {
                 // cell re-arranged within the same row
                 post({
