@@ -11,10 +11,12 @@ from django.db.backends.signals import connection_created
 from django.db.models.signals import m2m_changed, post_save
 
 from shuup.core.models import (
-    Category, Product, ShopProduct, Tax, TaxClass
+    Category, CompanyContact, ContactGroup, PersonContact, Product,
+    ShopProduct, Tax, TaxClass
 )
 from shuup.core.utils.context_cache import (
-    bump_product_signal_handler, bump_shop_product_signal_handler
+    bump_internal_cache, bump_product_signal_handler,
+    bump_shop_product_signal_handler
 )
 from shuup.core.utils.db import extend_sqlite_functions
 from shuup.core.utils.price_cache import (
@@ -44,6 +46,10 @@ def handle_shop_product_post_save(sender, instance, **kwargs):
         bump_prices_for_shop_product(instance)
 
 
+def handle_contact_post_save(sender, instance, **kwargs):
+    bump_internal_cache()
+
+
 # connect signals to bump caches on Product and ShopProduct change
 m2m_changed.connect(
     handle_shop_product_post_save,
@@ -64,5 +70,14 @@ post_save.connect(
 # connect signals to bump price caches on Tax and TaxClass change
 post_save.connect(handle_post_save_bump_all_prices_caches, sender=Tax, dispatch_uid="tax_class:bump_prices_cache")
 post_save.connect(handle_post_save_bump_all_prices_caches, sender=TaxClass, dispatch_uid="tax_class:bump_prices_cache")
+
+# connect signals to bump context cache internal cache for contacts
+post_save.connect(handle_contact_post_save, sender=PersonContact, dispatch_uid="person_contact:bump_context_cache")
+post_save.connect(handle_contact_post_save, sender=CompanyContact, dispatch_uid="company_contact:bump_context_cache")
+m2m_changed.connect(
+    handle_contact_post_save,
+    sender=ContactGroup.members.through,
+    dispatch_uid="contact_group:change_members"
+)
 
 connection_created.connect(extend_sqlite_functions)

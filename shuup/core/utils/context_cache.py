@@ -184,44 +184,69 @@ def get_cache_key_for_context(identifier, item, context, **kwargs):
     return "%s:%s_%s" % (namespace, identifier, hash(frozenset(items.items())))
 
 
+def bump_internal_cache():
+    cache.bump_version("_ctx_cache")
+
+
+def _get_cached_value_from_context(context, key, value):
+    cached_value = None
+
+    # 1) check whether the value is cached inside the context as an attribute
+    try:
+        cache_key = "_ctx_cache_{}".format(key)
+        cached_value = getattr(context, cache_key)
+    except AttributeError:
+        pass
+
+    # 2) Check whether the value is cached in general cache
+    # we can only cache objects that has `pk` attribute
+    if cached_value is None and hasattr(value, "pk"):
+        cache_key = "_ctx_cache:{}_{}".format(key, value.pk)
+        cached_value = cache.get(cache_key)
+
+    # 3) Nothing is cached, then read the value itself
+    if cached_value is None:
+        if key == "customer" and value:
+            cached_value = _get_val(value.groups.all())
+        else:
+            cached_value = _get_val(value)
+
+        # Set the value as attribute of the context
+        # somethings this will raise AttributeError because the
+        # context is not a valid object, like a dictionary
+        try:
+            cache_key = "_ctx_cache_{}".format(key)
+            setattr(context, cache_key, cached_value)
+        except AttributeError:
+            pass
+
+        # cache the value in the general cache
+        if hasattr(value, "pk"):
+            cache_key = "_ctx_cache:{}_{}".format(key, value.pk)
+            cache.set(cache_key, cached_value)
+
+    return cached_value
+
+
 def _get_items_from_context(context):   # noqa (C901)
     items = {}
-    if hasattr(context, "items"):
-        for k, v in six.iteritems(context):
-            if k in HASHABLE_KEYS:
-                if k == "customer" and hasattr(v, "groups"):
-                    # cache groups in the instance to prevent creating a new queryset everytime
-                    if hasattr(v, "_ctx_cache_cached_groups"):
-                        v = v._ctx_cache_cached_groups
-                    else:
-                        groups_value = _get_val(v.groups.all())
-                        v._ctx_cache_cached_groups = groups_value
-                        v = groups_value
 
-                    k = "customer_groups"
-                items[k] = _get_val(v)
+    def handle_item(context, key, value):
+        value = _get_cached_value_from_context(context, key, value)
+        if key == "customer":
+            key = "customer_groups"
+        items[key] = value
+
+    if hasattr(context, "items"):
+        for key, value in list(six.iteritems(context)):
+            if key in HASHABLE_KEYS:
+                handle_item(context, key, value)
     else:
         for key in HASHABLE_KEYS:
-            val = None
-
             if hasattr(context, key):
-                cache_key = "_ctx_cache_{}".format(key)
+                value = getattr(context, key, None)
+                handle_item(context, key, value)
 
-                if hasattr(context, cache_key):
-                    val = getattr(context, cache_key)
-                    if key == "customer":
-                        key = "customer_groups"
-                else:
-                    if key == "customer":
-                        # some context only has customer, transfer this to customer groups
-                        val = "|".join(list(map(str, getattr(context, key).groups.all().values_list("pk", flat=True))))
-                        key = "customer_groups"
-                    else:
-                        val = _get_val(getattr(context, key))
-
-                    setattr(context, cache_key, val)
-
-            items[key] = val
     return items
 
 
