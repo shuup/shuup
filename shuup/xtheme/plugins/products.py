@@ -174,10 +174,14 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         orderable_only = self.config.get("orderable_only", True)
         sale_items_only = self.config.get("sale_items_only", False)
 
-        category = Category.objects.filter(id=category_id).first() if category_id else None
-        if category:
+        if category_id:
             products = get_products_for_categories(
-                context, [category], n_products=count, orderable_only=orderable_only, sale_items_only=sale_items_only)
+                context,
+                [category_id],
+                n_products=count,
+                orderable_only=orderable_only,
+                sale_items_only=sale_items_only
+            )
         return {
             "request": context["request"],
             "title": self.get_translated_value("title"),
