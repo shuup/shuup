@@ -18,7 +18,7 @@ from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
 from shuup.admin.views.home import SimpleHelpBlock
-from shuup.core.models import Shop
+from shuup.core.models import Shop, ShopStatus
 
 
 class ShopModule(AdminModule):
@@ -85,7 +85,8 @@ class ShopModule(AdminModule):
 
         minimum_query_length = 3
         if len(query) >= minimum_query_length:
-            shops = Shop.objects.get_for_user(request.user).filter(translations__name__icontains=query)
+            shops = Shop.objects.get_for_user(request.user).filter(
+                translations__name__icontains=query, status=ShopStatus.ENABLED)
             for i, shop in enumerate(shops[:10]):
                 relevance = 100 - i
                 yield SearchResult(
