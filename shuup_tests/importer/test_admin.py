@@ -163,7 +163,8 @@ def test_invalid_files(rf, admin_user):
         "shop": shop.pk,
         "language": lang,
     }
-    soup = client.soup(process_path, data=data)
+    response, soup = client.response_and_soup(process_path, data=data)
+    assert response.status_code == 400
     assert "File missing." in str(soup)
 
 
@@ -203,7 +204,8 @@ def test_invalid_file_type(rf, admin_user):
         "shop": shop.pk,
         "language": lang,
     }
-    soup = client.soup(process_path, data=data)
+    response, soup = client.response_and_soup(process_path, data=data)
+    assert response.status_code == 400
 
     for row in soup.findAll("tr"):
         first_td = row.find("td")

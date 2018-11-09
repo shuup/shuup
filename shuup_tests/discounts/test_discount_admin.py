@@ -60,7 +60,7 @@ def test_discount_admin_edit_view(rf, staff_user, admin_user):
         assert discount1.shops.first() == shop
 
         # Test with superuser and with different shop
-        shop2 = factories.get_shop()
+        shop2 = factories.get_shop(enabled=True)
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user, shop=shop2)
         set_shop(request, shop2)
         view_func = DiscountEditView.as_view()
@@ -84,7 +84,7 @@ def test_discount_admin_edit_view(rf, staff_user, admin_user):
 
 
 def _test_discount_list_view(rf, index):
-    shop = factories.get_shop(identifier="shop%s" % index)
+    shop = factories.get_shop(identifier="shop%s" % index, enabled=True)
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
 
@@ -289,7 +289,7 @@ def test_discount_admin_list_view(rf, admin_user):
 
 
 def _test_discount_delete_view(rf, index):
-    shop = factories.get_shop(identifier="shop%s" % index)
+    shop = factories.get_shop(identifier="shop%s" % index, enabled=True)
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
     discount_identifier = "discount%s" % index

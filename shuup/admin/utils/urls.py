@@ -23,6 +23,7 @@ from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.module_registry import get_modules
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_missing_permissions
 )
@@ -79,6 +80,8 @@ class AdminRegexURLPattern(RegexURLPattern):
                 return _("Sign in to continue")
             elif not getattr(request.user, 'is_staff', False):
                 return _("You must be a staff member.")
+            elif not get_shop(request):
+                return _("There is no active shop available. Contact support for more details.")
 
         missing_permissions = get_missing_permissions(request.user, self.permissions)
         if missing_permissions:

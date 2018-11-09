@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Shop
+from shuup.core.models import Shop, ShopStatus
 from shuup.core.utils.shops import get_shop_from_host
 from shuup.utils.importing import cached_load
 
@@ -25,7 +25,7 @@ class AdminShopProvider(object):
         if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
             return Shop.objects.first()
 
-        permitted_shops = Shop.objects.get_for_user(request.user)
+        permitted_shops = Shop.objects.get_for_user(request.user).filter(status=ShopStatus.ENABLED)
 
         if SHOP_SESSION_KEY in request.session:
             shop = Shop.objects.filter(pk=request.session[SHOP_SESSION_KEY]).first()

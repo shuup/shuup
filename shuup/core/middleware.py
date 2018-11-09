@@ -23,12 +23,13 @@ class ExceptionMiddleware(object):
             return exception.response
 
         if isinstance(exception, (ValidationError, Problem)):
+            status_code = 400
             if request.is_ajax():
                 return JsonResponse({
                     "error": force_text(exception),
                     "code": getattr(exception, "code", None)
-                })
-            return render(request, self._get_problem_templates(request), {
+                }, status=status_code)
+            return render(request, self._get_problem_templates(request), status=status_code, context={
                 "title": getattr(exception, "title", None) or _("Error"),
                 "message": exception.message,
                 "exception": exception,

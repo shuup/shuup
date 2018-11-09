@@ -25,11 +25,11 @@ from shuup.testing.utils import apply_request_middleware
 @pytest.mark.django_db
 def test_media_view_images(rf):
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
-        shop1 = factories.get_shop(identifier="shop1")
+        shop1 = factories.get_shop(identifier="shop1", enabled=True)
         shop1_staff1 = _create_random_staff(shop1)
         shop1_staff2 = _create_random_staff(shop1)
 
-        shop2 = factories.get_shop(identifier="shop2")
+        shop2 = factories.get_shop(identifier="shop2", enabled=True)
         shop2_staff = _create_random_staff(shop2)
 
         # Let's agree this folder is created by for example carousel
@@ -74,8 +74,8 @@ def test_media_view_images(rf):
 @pytest.mark.django_db
 def test_edit_shared_folder(admin_user):
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
-        shop1 = factories.get_shop(identifier="shop1")
-        shop2 = factories.get_shop(identifier="shop2")
+        shop1 = factories.get_shop(identifier="shop1", enabled=True)
+        shop2 = factories.get_shop(identifier="shop2", enabled=True)
 
         folder = Folder.objects.create(name="Test folder")  # Shared folder
         folder_count = Folder.objects.count()
@@ -114,8 +114,8 @@ def test_edit_shared_folder(admin_user):
 @pytest.mark.django_db
 def test_edit_shared_file(admin_user):
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
-        shop1 = factories.get_shop(identifier="shop1")
-        shop2 = factories.get_shop(identifier="shop2")
+        shop1 = factories.get_shop(identifier="shop1", enabled=True)
+        shop2 = factories.get_shop(identifier="shop2", enabled=True)
 
         folder1 = Folder.objects.create(name="folder1")
         folder2 = Folder.objects.create(name="folder2")

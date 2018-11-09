@@ -151,8 +151,8 @@ def test_sample_import_shop_relation():
 @pytest.mark.django_db
 def test_sample_import_all_match_all_shops(filename):
     activate("en")
-    shop1 = get_shop(identifier="shop1", domain="shop1")
-    shop2 = get_shop(identifier="shop2", domain="shop2")
+    shop1 = get_shop(identifier="shop1", domain="shop1", enabled=True)
+    shop2 = get_shop(identifier="shop2", domain="shop2", enabled=True)
     Product.objects.all().delete()
 
     tax_class = get_default_tax_class()
