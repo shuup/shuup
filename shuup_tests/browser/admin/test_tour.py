@@ -138,6 +138,7 @@ def test_product_tour(browser, admin_user, live_server, settings):
         wait_until_condition(browser, lambda x: x.is_text_present("Welcome!"))
         browser.visit(live_server + "/sa/products/%d/" % shop_product.pk)
 
+        wait_until_condition(browser, lambda x: x.is_text_present(shop_product.product.name))
         wait_until_condition(browser, lambda x: x.is_text_present("You are adding a product."))
         wait_until_condition(browser, lambda x: x.is_element_present_by_css(".shepherd-button.btn-primary"))
         click_element(browser, ".shepherd-button.btn-primary")

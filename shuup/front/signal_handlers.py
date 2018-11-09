@@ -7,8 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from filer.models import Image
 
-from shuup.core.models import Manufacturer, Shop, ShopProduct
+from shuup.core import cache
+from shuup.core.models import Manufacturer, ProductMedia, Shop, ShopProduct
 from shuup.core.signals import context_cache_item_bumped  # noqa
 from shuup.core.utils import context_cache
 from shuup.front.utils import cache as cache_utils
@@ -41,4 +43,11 @@ def handle_manufacturer_post_save(sender, instance, **kwargs):
             context_cache.bump_cache_for_item(cache_utils.get_all_manufacturers_cache_item(shop))
 
 
+def bump_instance_thumbnail_cache(sender, instance, **kwargs):
+    cache_namespace = "thumbnail_{}_{}".format(instance.pk, instance.__class__.__name__)
+    cache.bump_version(cache_namespace)
+
+
+post_save.connect(bump_instance_thumbnail_cache, sender=ProductMedia)
+post_save.connect(bump_instance_thumbnail_cache, sender=Image)
 post_save.connect(handle_manufacturer_post_save, sender=Manufacturer)

@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+# This file is part of Shuup.
+#
+# Copyright (c) 2012-2018, Shuup Inc. All rights reserved.
+#
+# This source code is licensed under the OSL-3.0 license found in the
+# LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import base64
@@ -6,11 +13,67 @@ from io import BytesIO
 import pytest
 from easy_thumbnails.files import Thumbnailer
 
-from shuup.front.templatetags.thumbnails import thumbnail
+from shuup.core import cache
+from shuup.core.models import ProductMedia
+from shuup.front.templatetags.thumbnails import (
+    _get_cached_thumbnail_url, thumbnail
+)
+from shuup.testing import factories
+
+
+def setup_function(fn):
+    cache.clear()
 
 
 def test_thumbnailing_none():
     assert thumbnail(None) is None
+
+
+@pytest.mark.django_db
+def test_thumbnail_cache():
+    image1 = factories.get_random_filer_image()
+    image2 = factories.get_random_filer_image()
+    media = ProductMedia.objects.create(product=factories.get_default_product(), file=image2)
+
+    cache_key, cached_url = _get_cached_thumbnail_url(image1, alias=None, generate=True)
+    assert cache_key and not cached_url
+    url = thumbnail(image1)
+    cache_key, cached_url = _get_cached_thumbnail_url(image1, alias=None, generate=True)
+    assert cache_key and cached_url == url
+
+    cache_key, cached_url = _get_cached_thumbnail_url(media, alias=None, generate=True)
+    assert cache_key and not cached_url
+    url = thumbnail(media)
+    cache_key, cached_url = _get_cached_thumbnail_url(media, alias=None, generate=True)
+    assert cache_key and cached_url == url
+
+    img_url = "http://www.shuup.com/logo.png"
+    cache_key, cached_url = _get_cached_thumbnail_url(img_url, alias=None, generate=True)
+    assert cache_key and not cached_url
+    url = thumbnail(img_url)
+    cache_key, cached_url = _get_cached_thumbnail_url(img_url, alias=None, generate=True)
+    assert cache_key and cached_url == url
+
+    source = Thumbnailer(file=BytesIO(TEST_PNG), name="logo.png")
+    source.url = '/media/logo.png'
+    cache_key, cached_url = _get_cached_thumbnail_url(source, alias=None, generate=True)
+    assert cache_key and not cached_url
+    url = thumbnail(source)
+    cache_key, cached_url = _get_cached_thumbnail_url(source, alias=None, generate=True)
+    assert cache_key and cached_url == url
+
+    # check whether caches are bumped
+    image1.save()
+    cache_key, cached_url = _get_cached_thumbnail_url(image1, alias=None, generate=True)
+    assert cache_key and not cached_url
+
+    media.save()
+    cache_key, cached_url = _get_cached_thumbnail_url(media, alias=None, generate=True)
+    assert cache_key and not cached_url
+
+    media.delete()
+    image1.delete()
+    image2.delete()
 
 
 def test_thumbnailing_with_none_as_thumbnailer():
