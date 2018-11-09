@@ -23,9 +23,11 @@ from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.module_registry import get_modules
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_missing_permissions
 )
+from shuup.core.models import ShopStatus
 from shuup.utils import importing
 from shuup.utils.excs import Problem
 
@@ -75,10 +77,14 @@ class AdminRegexURLPattern(RegexURLPattern):
         :rtype: str|None
         """
         if self.require_authentication:
+            shop = get_shop(request)
             if not request.user.is_authenticated():
                 return _("Sign in to continue")
             elif not getattr(request.user, 'is_staff', False):
                 return _("You must be a staff member.")
+            elif shop:
+                if (shop.status == ShopStatus.DISABLED and not getattr(request.user, 'is_superuser', False)):
+                    return _("You must be a superuser to login to this shop")
 
         missing_permissions = get_missing_permissions(request.user, self.permissions)
         if missing_permissions:

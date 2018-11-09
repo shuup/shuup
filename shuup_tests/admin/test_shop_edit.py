@@ -16,7 +16,7 @@ from django.test.utils import override_settings
 from shuup.core.models import ConfigurationItem, Shop, ShopStatus
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person, get_currency,
-    get_default_shop, get_default_supplier
+    get_default_shop, get_default_supplier, create_random_user
 )
 from shuup_tests.utils import printable_gibberish, SmartClient
 from shuup_tests.utils.forms import get_form_data
@@ -150,3 +150,21 @@ def get_base_form_data(shop):
         "product_list_facets-filter_products_by_manufacturer_ordering": "1",
         "product_list_facets-filter_products_by_variation_value_ordering": "1",
     }
+
+
+@pytest.mark.django_db
+def test_staff_login_disabled_shop(rf):
+    shop = get_default_shop()
+    shop.status = ShopStatus.DISABLED
+    staff_user = create_random_user(is_staff=True)
+    staff_user.set_password("randpw")
+    shop.staff_members.add(staff_user)
+    shop.save()
+    staff_user.save(update_fields=("is_active", "password"))
+    assert staff_user in [staff for staff in shop.staff_members.all()]
+    assert shop.status == ShopStatus.DISABLED
+    client = SmartClient()
+    url = reverse("shuup_admin:dashboard")
+    client.login(username=staff_user.username, password="randpw")
+    response, soup = client.response_and_soup(url)
+    assert "You must be a superuser to login to this shop" in soup.prettify()
