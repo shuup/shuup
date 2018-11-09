@@ -45,8 +45,8 @@ def test_manufacturer_admin_simple_shop(rf, staff_user, admin_user):
 @pytest.mark.parametrize("superuser", [True, False])
 def test_manufacturer_admin_multishop_shop(rf, staff_user, admin_user, superuser):
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
-        shop1 = factories.get_shop(identifier="shop1")
-        shop2 = factories.get_shop(identifier="shop2")
+        shop1 = factories.get_shop(identifier="shop1", enabled=True)
+        shop2 = factories.get_shop(identifier="shop2", enabled=True)
         shop1.staff_members.add(staff_user)
         shop2.staff_members.add(staff_user)
 

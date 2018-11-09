@@ -20,7 +20,6 @@ from shuup.testing.factories import (
 )
 from shuup_tests.utils import printable_gibberish, SmartClient
 from shuup_tests.utils.forms import get_form_data
-from shuup.testing.soup_utils import extract_form_fields
 
 
 @pytest.mark.django_db

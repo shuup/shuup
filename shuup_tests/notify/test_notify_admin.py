@@ -47,8 +47,8 @@ def test_notify_item_admin_form():
 @pytest.mark.django_db
 def test_admin_script_list(rf, admin_user):
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
-        shop1 = factories.get_shop(identifier="shop-1")
-        shop2 = factories.get_shop(identifier="shop-2")
+        shop1 = factories.get_shop(identifier="shop-1", enabled=True)
+        shop2 = factories.get_shop(identifier="shop-2", enabled=True)
 
         shop1.staff_members.add(admin_user)
         shop2.staff_members.add(admin_user)

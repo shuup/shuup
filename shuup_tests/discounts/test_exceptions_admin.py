@@ -40,7 +40,7 @@ def test_exceptions_admin_edit_view(rf, staff_user, admin_user):
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         shop = factories.get_default_shop()
         shop.staff_members.add(staff_user)
-        factories.get_shop(identifier="shop2")
+        factories.get_shop(identifier="shop2", enabled=True)
         assert Shop.objects.count() == 2
 
         # Staff user gets shop automatically
@@ -63,7 +63,7 @@ def test_exceptions_admin_edit_view(rf, staff_user, admin_user):
         assert exception1.shops.first() == shop
 
         # Test with superuser and with different shop
-        shop2 = factories.get_shop()
+        shop2 = factories.get_shop(enabled=True)
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user, shop=shop2)
         set_shop(request, shop2)
         view_func = AvailabilityExceptionEditView.as_view()
@@ -132,7 +132,7 @@ def test_exceptions_admin_edit_form_set_discount(rf, staff_user, admin_user):
 
 
 def _test_exception_list_view(rf, index):
-    shop = factories.get_shop(identifier="shop%s" % index)
+    shop = factories.get_shop(identifier="shop%s" % index, enabled=True)
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
 
@@ -184,7 +184,7 @@ def test_discount_admin_list_view(rf, admin_user):
 
 
 def _test_exception_delete_view(rf, index):
-    shop = factories.get_shop(identifier="shop%s" % index)
+    shop = factories.get_shop(identifier="shop%s" % index, enabled=True)
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
     exception_name = "Exception %s" % index
