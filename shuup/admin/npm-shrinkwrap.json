@@ -1636,6 +1636,15 @@
       "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.1.3.tgz",
       "integrity": "sha1-DrNxryyESOjCEEEdDLgkpkCaEr4="
     },
+    "bootstrap-colorpicker": {
+      "version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/bootstrap-colorpicker/-/bootstrap-colorpicker-3.0.3.tgz",
+      "integrity": "sha512-xDVuG5ZLDKLoYdBodnrKo417eqFlNwpk6gNbv1mAFdFno0p0xnkYm9KQTiUqR4kva9t+hlJJc2UURZnD6fvn+Q==",
+      "requires": {
+        "bootstrap": "^4.0",
+        "jquery": ">=2.1.0"
+      }
+    },
     "bootstrap-datetime-picker": {
       "version": "2.4.4",
       "resolved": "https://registry.npmjs.org/bootstrap-datetime-picker/-/bootstrap-datetime-picker-2.4.4.tgz",
