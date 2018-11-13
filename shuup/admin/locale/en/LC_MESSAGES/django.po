@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-17 20:20+0000\n"
+"POT-Creation-Date: 2018-11-13 13:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -3701,6 +3701,9 @@ msgid "Sign in to continue"
 msgstr ""
 
 msgid "You must be a staff member."
+msgstr ""
+
+msgid "There is no active shop available. Contact support for more details."
 msgstr ""
 
 #, python-format

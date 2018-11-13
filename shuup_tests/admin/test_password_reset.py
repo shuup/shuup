@@ -96,7 +96,7 @@ def test_reset_admin_user_password_errors(client):
         reverse("shuup_admin:recover_password", kwargs=dict(uidb64=uid, token="invalid")),
         data={"new_password1": new_password, "new_password2": new_password}
     )
-    assert response.status_code == 200
+    assert response.status_code == 400
     assert "This recovery link is invalid" in response.content.decode("utf-8")
 
     # invalid uid
@@ -104,7 +104,7 @@ def test_reset_admin_user_password_errors(client):
         reverse("shuup_admin:recover_password", kwargs=dict(uidb64="uid", token=token)),
         data={"new_password1": new_password, "new_password2": new_password}
     )
-    assert response.status_code == 200
+    assert response.status_code == 400
     assert "This recovery link is invalid" in response.content.decode("utf-8")
 
     # invalid passwords
@@ -112,7 +112,7 @@ def test_reset_admin_user_password_errors(client):
         reverse("shuup_admin:recover_password", kwargs=dict(uidb64=uid, token=token)),
         data={"new_password1": new_password, "new_password2": "wrong"}
     )
-    assert response.status_code == 200
+    assert response.status_code == 200  # Django forms likes to return invalid forms as 200. So be it.
     assert escape("The two password fields didn't match.") in response.content.decode("utf-8")
 
     # all good
