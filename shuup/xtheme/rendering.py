@@ -134,7 +134,7 @@ class PlaceholderRenderer(object):
                     "wrapper_end": "</div>",
                 })
 
-        return Markup(full_content)
+        return Markup('<div class="placeholder-edit-wrap">%s</div>' % full_content)
 
     def _get_wrapper_attrs(self, layout):
         layout_data_key = get_layout_data_key(self.placeholder_name, layout, self.context)
@@ -162,8 +162,9 @@ class PlaceholderRenderer(object):
                 glopal_help_text = _(
                     "This placeholder is global and content of this placeholder is shown on all pages.")
                 help_text += " " + force_text(glopal_help_text)
-
-            write('<p class="placeholder-help-text">%s</p>' % help_text)
+            ph_name = self.placeholder_name.replace("_", " ").title()
+            tmpl = '<p class="placeholder-help-text">%s<span class="layout-identifier">%s</span></p>'
+            write(tmpl % (help_text, ph_name))
 
         if self.edit and self.default_layout:
             self._render_default_layout_script_tag(write)
