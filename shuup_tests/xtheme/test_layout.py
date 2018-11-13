@@ -47,13 +47,14 @@ def test_layout_rendering(rf):
                 (template, layout, gibberish, ctx) = get_test_template_bits(request)
                 result = six.text_type(render_placeholder(ctx, "test", layout, "test"))
                 expect = """
+                <div class="placeholder-edit-wrap">
                 <div class="xt-ph" id="xt-ph-test">
                 <div class="row xt-ph-row">
                 <div class="col-md-12 hidden-xs xt-ph-cell"><p>%s</p></div>
                 </div>
                 </div>
+                </div>
                 """ % gibberish
-
                 assert close_enough(result, expect)
 
 

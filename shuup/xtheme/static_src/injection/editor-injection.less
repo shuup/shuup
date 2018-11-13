@@ -11,7 +11,7 @@
 
 .xt-ph-edit {
     border: 2px dashed @color-blue;
-    min-height: 20px;
+    min-height: 40px;
     cursor: pointer;
     padding: 0.2rem;
     margin-bottom: 10px;
@@ -53,12 +53,32 @@
     }
 
     .placeholder-help-text {
-        text-align: center;
-        font-style: italic;
-        color: #000000;
-        font-size: 14px !important;
-        border-bottom: 2px solid @color-blue;
-        padding-bottom: 5px;
+        font-size: 12px !important;
+        text-align: left;
+        color: #fff !important;
+        padding: 5px;
+        background: @color-blue !important;
+        font-weight: bold;
+
+        .layout-identifier {
+            float: right;
+            font-size: 10px;
+            font-weight: normal;
+        }
+    }
+}
+
+.placeholder-edit-wrap:nth-child(even) {
+    .xt-ph-edit {
+        border: 2px dashed darken(@color-blue, 20%) !important;
+
+        &:hover {
+            border-style: solid !important;
+        }
+
+        .placeholder-help-text {
+            background: darken(@color-blue, 20%) !important;
+        }
     }
 }
 
