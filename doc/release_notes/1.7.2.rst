@@ -1,0 +1,7 @@
+Shuup 1.7.2 Release Notes
+=========================
+
+Released on 2018-11-14 10:30am -0800.
+
+List of changes see `Git commit log
+<https://github.com/shuup/shuup/commits/v1.7.2>`__.
