@@ -1,13 +1,49 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.7.2
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-11-14 10:30am -0800.
+
+Admin
+~~~~~
+
+- Move save button to bottom right corner when not visible
+- Move category organizer to addon
+- Add option for custom toolbar buttons through provides
+- Introduce goto for shopfront
+
+Core
+~~~~
+
+- Improve context caches and optimize front queries
+
+Wizard
+~~~~~~
+
+- Introduce telemetry wizard step
+
+Xtheme
+~~~~~~
+
+- Show editor on popup instead of sidebar
+
+Bug Fixes
+~~~~~~~~~
+
+- Admin: Include shop parameter to authentication
+- Xtheme: fix plugin form styles
+- Admin: Make only active shops visible in search
+- Admin: fix order creation errors
+- Admin: fix datepicker format
+- Front: fix carousel admin
+- Admin: fix color widget
+- Admin: fix issue with hardcoded menu-toggle URL
+- Admin: fix dashboard blocks sort order
+- Admin: check whether Masonry can be created before initialize it
+- Admin: fix multiple issues with picotable
+- Xtheme: fix image plugin by rendering h2 only when necessary
 
 
 Shuup 1.7.1
