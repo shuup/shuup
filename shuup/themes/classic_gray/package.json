@@ -15,7 +15,7 @@
   "dependencies": {
     "autoprefixer": "^8.6.4",
     "babel-preset-env": "^1.7.0",
-    "bootstrap": "^3.3.6",
+    "bootstrap": "https://github.com/shuup/bootstrap.git#852c02e",
     "bootstrap-select": "1.6.3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
@@ -23,10 +23,13 @@
     "less": "^3.0.4",
     "node-sass": "^4.9.2",
     "owl.carousel": "^2.3.4",
-    "parcel-bundler": "^1.9.7",
+    "parcel-bundler": "^1.10.3",
     "postcss-modules": "^1.1.0",
     "simplelightbox": "^1.13.0",
     "shuup-static-build-tools": "file:../../../lib/shuup_static_build_tools",
     "open-sans-all": "0.1.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3"
   }
 }
