@@ -77,7 +77,7 @@ def test_search_product_list(browser, live_server, settings):
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 9)
 
     check_default_ordering(browser)
-    # basic_sorting_test(browser)
+    basic_sorting_test(browser)
     second_test_query(browser, live_server, url)
 
 

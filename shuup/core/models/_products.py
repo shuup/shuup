@@ -494,7 +494,11 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         :type context: shuup.core.pricing.PricingContextable
         :rtype: shuup.core.pricing.Price
         """
-        return self.get_price_info(context, quantity).price
+        # Check if product has variations (children) if yes, return cheapest variation price
+        if self.is_variation_parent():
+            return self.get_cheapest_child_price_info(context, quantity).price
+        else:
+            return self.get_price_info(context, quantity).price
 
     def get_base_price(self, context, quantity=1):
         """
