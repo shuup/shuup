@@ -10,6 +10,7 @@ from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
+from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
@@ -136,7 +137,14 @@ class ThemeConfigDetailView(CreateOrUpdateView):
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigDetailView, self).get_context_data(**kwargs)
         shop = get_shop(self.request)
-        context["theme"] = self.get_theme()
+        theme = self.get_theme()
+        context["theme"] = theme
+        context["guide"] = None
+
+        if theme.guide_template:
+            template = loader.get_template(theme.guide_template)
+            context["guide"] = template.render({}, request=self.request)
+
         context["active_stylesheet"] = self.object.data.get("settings", {}).get("stylesheet", None)
         context["shop"] = shop
         return context
