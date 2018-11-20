@@ -1,7 +1,7 @@
 {% if request.is_ajax() %}
     {%- import "shuup/front/macros/general.jinja" as macros with context -%}
     {%- import "shuup/front/macros/category.jinja" as category_macros with context -%}
-    {{ category_macros.render_product_list() }}
+    {{ category_macros.render_product_list(pre_selected_supplier) }}
 {% else %}
     {% extends "shuup/front/base.jinja" %}
     {% block extrameta %}
@@ -24,7 +24,7 @@
     {% block content %}
         <script>window.PRODUCT_LIST_FILTERS = {{ form.fields.keys()|list|json }};</script>
         {{ category_macros.render_information() }}
-        {{ category_macros.render_products_section() }}
+        {{ category_macros.render_products_section(pre_selected_supplier) }}
     {% endblock %}
 {% endif %}
 

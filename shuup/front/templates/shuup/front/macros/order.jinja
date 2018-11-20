@@ -1,5 +1,6 @@
 {% extends "shuup/front/macros/theme/order.jinja" %}
-{% from "shuup/front/macros/general.jinja" import render_field %}
+{% from "shuup/front/macros/general.jinja" import render_field, render_supplier_info %}
+
 
 {% macro print_order_detail(order, show_attachments=False) %}
     {{ render_lines_information(order) }}
@@ -88,6 +89,7 @@
             <tbody>
                 {% for line in lines %}
                     {% set product = line.product %}
+                    {% set show_supplier_info = (line.supplier and xtheme.get("show_supplier_info")) %}
                     <tr>
                         <td>
                             {% if product %}
@@ -108,6 +110,7 @@
                         </td>
                         <td>
                             {{ line.text }}
+                            {% if show_supplier_info %}{{ render_supplier_info(line.supplier) }}{% endif %}
                             {% if show_product_package_info and product and product.is_package_parent() %}
                                 {{ render_package_children(product) }}
                             {% endif %}

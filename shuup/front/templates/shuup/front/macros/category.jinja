@@ -17,7 +17,7 @@
     <hr>
 {% endmacro %}
 
-{% macro render_products_section() %}
+{% macro render_products_section(pre_selected_supplier=None) %}
     <div class="row">
         <div class="col-md-3 categories-nav">
             {{ render_category_menu() }}
@@ -35,7 +35,7 @@
         <div class="col-md-9 products-wrap">
             {% placeholder "category_top_extra" %}{% endplaceholder %}
             {{ render_product_filters_top() }}
-            {{ render_product_list() }}
+            {{ render_product_list(pre_selected_supplier) }}
         </div>
     </div>
     {% placeholder "category_bottom_extra" %}{% endplaceholder %}
@@ -118,13 +118,15 @@
 {% endmacro %}
 
 
-{% macro render_product_list() %}
+{% macro render_product_list(pre_selected_supplier=None) %}
     <div id="ajax_content">
             {%  set pagination = shuup.general.get_pagination_variables(products, page_size or 12) %}
             <div class="row product-list-view grid">
                 {% for product in pagination.objects if shuup.product.is_visible(product) %}
                     <div class="single-product">
-                        {{ product_box(product, show_description=True, class="product-card category-view box") }}
+                        {{ product_box(
+                            product, show_description=True,
+                            class="product-card category-view box", supplier=pre_selected_supplier) }}
                     </div>
                 {% endfor %}
             </div>

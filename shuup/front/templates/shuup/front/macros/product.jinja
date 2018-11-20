@@ -8,13 +8,21 @@ Inheritance order for product macors:
     theme/product.jinja
 #}
 {% extends "shuup/front/macros/product_image.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_supplier_info %}
 
-{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500)) %}
-    {% set u = url("shuup:product", pk=product.pk, slug=product.slug) %}
+{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500), supplier=None) %}
+    {% if supplier %}
+        {% set u = url("shuup:supplier-product", supplier_pk=supplier.pk, pk=product.pk, slug=product.slug) %}
+    {% else %}
+        {% set u = url("shuup:product", pk=product.pk, slug=product.slug) %}
+        {% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
+        {% set supplier = shop_product.get_supplier() %}
+    {% endif %}
+    {% set show_supplier_info = (supplier and xtheme.get("show_supplier_info")) %}
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
         <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
-            {% if product|is_discounted %}
-                <span class="badge product-badge sale">{{ -(product|discount_rate)|percent }}</span>
+            {% if product|is_discounted(supplier=supplier) %}
+                <span class="badge product-badge sale">{{ -(product|discount_rate(supplier=supplier))|percent }}</span>
             {% endif %}
             {% if show_image %}
                 {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
@@ -28,11 +36,14 @@ Inheritance order for product macors:
                 </div>
             {% endif %}
             <div class="detail-wrap">
-                <div class="name">{{ product.name }}</div>
+                <div class="name">
+                    {{ product.name }}
+                    {% if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
+                </div>
                 <div class="actions-wrap">
                     {% if show_prices() and not xtheme.get("hide_prices") %}
                     <div class="price">
-                        {{ render_product_price(product, show_units=False) }}
+                        {{ render_product_price(product, show_units=False, supplier=supplier) }}
                     </div>
                     {% endif %}
                 </div>
@@ -51,18 +62,18 @@ Inheritance order for product macors:
     </div>
 {% endmacro %}
 
-{% macro render_product_price(product, show_units=True) %}
+{% macro render_product_price(product, show_units=True, supplier=None) %}
     {% if show_prices() and not xtheme.get("hide_prices") %}
         {%- set unit = product.get_shop_instance(request.shop, allow_cache=True).unit -%}
         {%- set (per_qty, per_text) = unit.get_per_values(show_units) -%}
         <div class="price-line">
             <span class="lead">
                 {%- if product.is_variation_parent() -%}
-                    {% set (min_price, max_price) = product|price_range(per_qty) %}
+                    {% set (min_price, max_price) = product|price_range(per_qty, supplier=supplier) %}
                     {% if min_price == max_price %}
-                        {% if product|is_discounted -%}
+                        {% if product|is_discounted(supplier=supplier) -%}
                         <small class="text-muted original-price original"><s>
-                            {{- product|base_price(per_qty) -}}
+                            {{- product|base_price(per_qty, supplier=supplier) -}}
                         </s></small>
                         {%- endif %}
                         <strong>{{ min_price }}</strong>
@@ -70,12 +81,12 @@ Inheritance order for product macors:
                         <strong>{{ min_price }} &ndash; {{ max_price }}</strong>
                     {% endif %}
                 {%- else -%}
-                    {% if product|is_discounted -%}
+                    {% if product|is_discounted(supplier=supplier) -%}
                         <small class="text-muted original-price original"><s>
-                            {{- product|base_price(per_qty) -}}
+                            {{- product|base_price(per_qty, supplier=supplier) -}}
                         </s></small>
                     {%- endif %}
-                    <strong>{{ product|price(per_qty) }}</strong>
+                    <strong>{{ product|price(per_qty, supplier=supplier) }}</strong>
                 {%- endif -%}
                 {%- if per_text -%}
                     <small> / {{ per_text }}</small>
