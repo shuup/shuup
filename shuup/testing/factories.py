@@ -794,7 +794,7 @@ def create_random_company(shop=None):
     return contact
 
 
-def create_random_order(customer=None, products=(), completion_probability=0, shop=None):
+def create_random_order(customer=None, products=(), completion_probability=0, shop=None, random_products=True):
     if not customer:
         customer = Contact.objects.all().order_by("?").first()
 
@@ -823,8 +823,17 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
     if not products:
         products = list(Product.objects.listed(source.shop, customer).order_by("?")[:40])
 
-    for i in range(random.randint(3, 10)):
-        product = random.choice(products)
+    if random_products:
+        quantity = random.randint(3, 10)
+    else:
+        quantity = len(products)
+
+    for i in range(quantity):
+        if random_products:
+            product = random.choice(products)
+        else:
+            product = products[i]
+
         quantity = random.randint(1, 5)
         price_info = product.get_price_info(pricing_context, quantity=quantity)
         shop_product = product.get_shop_instance(source.shop)
@@ -840,6 +849,7 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
             text=product.safe_translation_getter("name", any_language=True)
         )
         assert line.price == price_info.price
+
     with atomic():
         oc = OrderCreator()
         order = oc.create_order(source)

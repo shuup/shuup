@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import View
 
-from shuup.core.models import Order, ProductMode, Supplier
+from shuup.core.models import Order, ProductMode
 from shuup.front.views.dashboard import DashboardViewMixin
 
 
@@ -38,17 +38,15 @@ class OrderDetailView(DashboardViewMixin, OrderViewMixin, django.views.generic.D
 
 
 class ReorderView(View):
-
     def get(self, request, *args, **kwargs):
         try:
             order = Order.objects.get(customer=request.customer, pk=kwargs["pk"])
         except Order.DoesNotExist:
             return HttpResponseRedirect(reverse("shuup:show-order", kwargs=kwargs))
 
-        supplier = Supplier.objects.first()
         for line in _get_reorderable_lines(order):
             request.basket.add_product(
-                supplier=supplier,
+                supplier=line.supplier,
                 shop=request.shop,
                 product=line.product,
                 quantity=line.quantity
