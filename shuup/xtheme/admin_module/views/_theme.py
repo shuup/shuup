@@ -15,7 +15,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.toolbar import URLActionButton
+from shuup.admin.toolbar import get_default_edit_toolbar, URLActionButton
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.core import cache
@@ -154,7 +154,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         cache.bump_version(get_theme_cache_key(get_shop(self.request)))
 
     def get_toolbar(self):
-        toolbar = super(ThemeConfigDetailView, self).get_toolbar()
+        toolbar = get_default_edit_toolbar(self, self.get_save_form_id(), with_split_save=False)
         toolbar.append(
             URLActionButton(
                 text=_("Custom CSS/JS"),
