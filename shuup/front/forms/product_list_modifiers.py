@@ -38,7 +38,20 @@ class FilterWidget(forms.SelectMultiple):
             choices_to_render.append((option_value, option_label))
         return mark_safe(
             render_to_string("shuup/front/product/filter_choice.jinja", {
-                "name": name, "values": value, "choices": choices_to_render})
+                "name": name, "values": value, "choices": choices_to_render, "one_choice": False})
+        )
+
+
+class OneChoiceFilterWidget(forms.Select):
+    def render(self, name, value, attrs=None, choices=()):
+        if value is None:
+            value = []
+        choices_to_render = []
+        for option_value, option_label in chain(self.choices, choices):
+            choices_to_render.append((option_value, option_label))
+        return mark_safe(
+            render_to_string("shuup/front/product/filter_choice.jinja", {
+                "name": name, "values": value, "choices": choices_to_render, "one_choice": True})
         )
 
 
@@ -61,7 +74,7 @@ class SimpleProductListModifier(ProductListFormModifier):
     def get_admin_fields(self):
         return [
             (self.is_active_key, forms.BooleanField(label=self.is_active_label, required=False)),
-            (self.ordering_key, forms.IntegerField(label=self.ordering_label, initial=1))
+            (self.ordering_key, forms.IntegerField(label=self.ordering_label, initial=1, required=False))
         ]
 
 

@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import get_language
 from django.views.generic import DetailView
 
-from shuup.core.models import Product, ProductMode, ShopProduct
+from shuup.core.models import Product, ProductMode, ShopProduct, Supplier
 from shuup.front.utils.product import get_product_context
 from shuup.utils.excs import extract_messages, Problem
 
@@ -27,7 +27,12 @@ class ProductDetailView(DetailView):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         language = self.language = get_language()
 
-        context.update(get_product_context(self.request, self.object, language))
+        supplier = None
+        supplier_pk = self.kwargs.get("supplier_pk")
+        if supplier_pk:
+            supplier = Supplier.objects.filter(id=supplier_pk, shops=self.request.shop).first()
+
+        context.update(get_product_context(self.request, self.object, language, supplier))
         # TODO: Maybe add hook for ProductDetailView get_context_data?
         # dispatch_hook("get_context_data", view=self, context=context)
         return context

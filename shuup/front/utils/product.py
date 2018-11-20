@@ -21,7 +21,7 @@ from shuup.front.utils.views import cache_product_things
 from shuup.utils.numbers import get_string_sort_order
 
 
-def get_product_context(request, product, language=None):   # noqa (C901)
+def get_product_context(request, product, language=None, supplier=None):   # noqa (C901)
     """
     Get product context
 
@@ -71,6 +71,9 @@ def get_product_context(request, product, language=None):   # noqa (C901)
         attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE)
     context["primary_image"] = shop_product.public_primary_image
     context["images"] = shop_product.public_images
+    if supplier:
+        context["pre_selected_supplier"] = supplier
+
     context["order_form"] = _get_order_form(request, context, product, language)
 
     for provide_object in get_provide_objects("product_context_extra"):

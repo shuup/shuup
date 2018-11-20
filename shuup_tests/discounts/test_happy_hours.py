@@ -329,7 +329,7 @@ def test_happy_hour_prices_expiration(rf):
                     assert discount_percent_template.render(context) == "0%"
 
                     if cache_test == 1:
-                        assert get_cached_price_info(get_request(), product, 1)
+                        assert get_cached_price_info(get_request(), product, 1, supplier=shop_product.get_supplier())
 
         # now we are inside happy hour range
         with patch("django.utils.timezone.now", new=lambda: inside_happy_hour):
@@ -346,7 +346,7 @@ def test_happy_hour_prices_expiration(rf):
                     assert discount_percent_template.render(context) == "40%"
 
                     if cache_test == 1:
-                        assert get_cached_price_info(get_request(), product, 1)
+                        assert get_cached_price_info(get_request(), product, 1, supplier=shop_product.get_supplier())
 
                 # we change the discounted price from $6 to $7
                 # cached should be bumped
@@ -361,7 +361,7 @@ def test_happy_hour_prices_expiration(rf):
                     assert discount_percent_template.render(context) == "30%"
 
                     if cache_test == 1:
-                        assert get_cached_price_info(get_request(), product, 1)
+                        assert get_cached_price_info(get_request(), product, 1, supplier=shop_product.get_supplier())
 
         # now we are inside happy hour range
         with patch("django.utils.timezone.now", new=lambda: after_happy_hours):
@@ -376,4 +376,4 @@ def test_happy_hour_prices_expiration(rf):
                     assert discount_percent_template.render(context) == "0%"
 
                     if cache_test == 1:
-                        assert get_cached_price_info(get_request(), product, 1)
+                        assert get_cached_price_info(get_request(), product, 1, supplier=shop_product.get_supplier())

@@ -54,6 +54,7 @@ class CategoryView(DetailView):
         ).filter(
             **self.get_product_filters()
         ).filter(get_query_filters(self.request, category, data=data))
+
         products = get_product_queryset(products, self.request, category, data).distinct()
 
         products = post_filter_products(self.request, category, products, data)
@@ -61,4 +62,8 @@ class CategoryView(DetailView):
         products = sort_products(self.request, category, products, data)
         context["page_size"] = data.get("limit", 12)
         context["products"] = products
+
+        if "supplier" in data:
+            context["pre_selected_supplier"] = data.get("supplier")
+
         return context

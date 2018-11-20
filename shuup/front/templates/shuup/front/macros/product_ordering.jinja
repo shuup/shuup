@@ -1,8 +1,12 @@
 {% extends "shuup/front/macros/theme/product.jinja" %}
 
 
-{% macro render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children) %}
+{% macro render_product_order_section(
+        product, variation_variables, variation_children, unorderability_reason,
+        orderable_variation_children, pre_selected_supplier=None) %}
+
     {%- set shop_product = product.get_shop_instance(request.shop, allow_cache=True) -%}
+    {%- set supplier = pre_selected_supplier or shop_product.get_supplier() %}
     {% if not quantity %}
         {%- set quantity = shop_product.rounded_minimum_purchase_quantity -%}
     {% endif %}
@@ -21,20 +25,21 @@
         <form role="form" method="post" action="{{ url("shuup:basket") }}" class="add-to-basket">
             {% set return_path = return_url if return_url else request.path %}
             <input type="hidden" name="return" value="{{ return_path }}">
+            <input type="hidden" name="supplier_id" value="{{ supplier.id }}">
             {% if unorderability_reason %}
                 <p class="text-warning not-orderable">{{ unorderability_reason }}</p>
             {% elif variation_variables %}
-                {{ variable_variation_form(shop_product, quantity, variation_variables, orderable_variation_children) }}
+                {{ variable_variation_form(shop_product, quantity, variation_variables, orderable_variation_children, supplier) }}
             {% elif variation_children %}
-                {{ simple_variation_form(shop_product, quantity, orderable_variation_children) }}
+                {{ simple_variation_form(shop_product, quantity, orderable_variation_children, supplier) }}
             {% else %}
-                {{ simple_product_form(shop_product, quantity) }}
+                {{ simple_product_form(shop_product, quantity, supplier=supplier) }}
             {% endif %}
         </form>
     </div>
 {% endmacro %}
 
-{% macro variable_variation_form(shop_product, quantity, variation_variables, orderable_variation_children) %}
+{% macro variable_variation_form(shop_product, quantity, variation_variables, orderable_variation_children, supplier) %}
     {% set variation_orderable = orderable_variation_children|length %}
     {% if shop_product.product.variation_parent %}
         {%- set product_id = shop_product.product.variation_parent.pk -%}
@@ -57,11 +62,11 @@
                 </select>
             </div>
         {% endfor %}
-        {{ product_order_section(shop_product, quantity, variation_orderable) }}
+        {{ product_order_section(shop_product, quantity, variation_orderable, supplier=supplier) }}
     </div>
 {% endmacro %}
 
-{% macro simple_variation_form(shop_product, quantity, orderable_variation_children) %}
+{% macro simple_variation_form(shop_product, quantity, orderable_variation_children, supplier) %}
     {% set is_orderable = (orderable_variation_children|length > 0) %}
     {% if shop_product.product.variation_parent %}
         {%- set product_id = shop_product.product.variation_parent.pk -%}
@@ -83,20 +88,20 @@
                 {% endfor %}
             </select>
         </div>
-        {{ product_order_section(shop_product, quantity, is_orderable) }}
+        {{ product_order_section(shop_product, quantity, is_orderable, supplier=supplier) }}
     </div>
 {% endmacro %}
 
-{% macro simple_product_form(shop_product, quantity, command="add", show_quantity=True, show_price=True, button_text=None) %}
+{% macro simple_product_form(shop_product, quantity, command="add", show_quantity=True, show_price=True, button_text=None, supplier=None) %}
     <input type="hidden" name="command" value="{{ command }}">
     <input type="hidden" name="product_id" value="{{ shop_product.product.id }}">
     {% set is_orderable = shop_product.is_orderable(supplier=None, customer=request.customer, quantity=quantity, allow_cache=True) %}
     <div class="prices">
-        {{ product_order_section(shop_product, quantity, is_orderable, show_quantity=show_quantity, show_price=show_price, button_text=button_text) }}
+        {{ product_order_section(shop_product, quantity, is_orderable, show_quantity=show_quantity, show_price=show_price, button_text=button_text, supplier=supplier) }}
     </div>
 {% endmacro %}
 
-{% macro product_order_section(shop_product, quantity, is_orderable, show_quantity=True, show_price=True, button_text=None) %}
+{% macro product_order_section(shop_product, quantity, is_orderable, show_quantity=True, show_price=True, button_text=None, supplier=None) %}
     {% if show_prices() and not xtheme.get("hide_prices") %}
         {% if (show_price or show_quantity) %}
         <div class="row">
@@ -107,7 +112,7 @@
             </div>
             {% if show_price %}
             <div class="col-sm-6">
-                {{ product_price_div(shop_product, quantity) }}
+                {{ product_price_div(shop_product, quantity, supplier) }}
             </div>
             {% endif %}
         </div>
@@ -148,7 +153,7 @@
     </div>
 {% endmacro %}
 
-{% macro product_price_div(shop_product, quantity) %}
+{% macro product_price_div(shop_product, quantity, supplier) %}
     {% if shop_product.product.variation_parent %}
         {%- set product_id = shop_product.product.variation_parent.pk -%}
     {% else %}
@@ -158,13 +163,13 @@
     <div class="price text-right product-price-div" id="product-price-div-{{ product_id }}">
         <h2>
             <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
-            <span class="product-price"><strong>{{ product|price(quantity) }}</strong></span>
+            <span class="product-price"><strong>{{ product|price(quantity, supplier=supplier) }}</strong></span>
         </h2>
         <span class="small text-muted">
-            {% if product|is_discounted(quantity) %}
-            (<s>{{ product|base_unit_price(quantity) }}</s>)
+            {% if product|is_discounted(quantity, supplier=supplier) %}
+            (<s>{{ product|base_unit_price(quantity, supplier=supplier) }}</s>)
             {% endif %}
-            {{ product|discounted_unit_price(quantity) }}/{{ product.sales_unit.symbol }}
+            {{ product|discounted_unit_price(quantity, supplier=supplier) }}/{{ product.sales_unit.symbol }}
         </span>
     </div>
 {% endmacro %}

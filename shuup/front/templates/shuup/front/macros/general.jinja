@@ -358,3 +358,7 @@
         <meta property="og:image" content="{{ request.build_absolute_uri(primary_image.url) }}">
     {% endif %}
 {% endmacro %}
+
+{% macro render_supplier_info(supplier) %}
+    <p class="supplier-info"><small>{{ _("By %(supplier_name)s", supplier_name=supplier.name) }}</small></p>
+{% endmacro %}
