@@ -62,6 +62,13 @@
                 <div style="clear:both;"></div>
                 {% endif %}
             {% endcall %}
+
+            {% if guide %}
+            {% call content_block(_("Theme Guide"), "fa-cog") %}
+                {{ guide }}
+            {% endcall %}
+            {% endif %}
+
         </form>
 
     {% endcall %}
