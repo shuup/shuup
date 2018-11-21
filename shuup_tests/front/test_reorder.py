@@ -80,7 +80,7 @@ def test_reorder_view():
     # reorder products
     response = client.get(reorder_url)
     assert response.status_code == 302
-    assert response.url == reverse("shuup:basket")
+    assert response.url.endswith(reverse("shuup:basket"))
 
     # go to basket
     response = client.get(response.url)
