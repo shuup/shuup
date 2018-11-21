@@ -13,6 +13,8 @@ from django.db.models import Q
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumField
+from filer.fields.image import FilerImageField
 from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
 from parler.managers import TranslatableQuerySet
@@ -20,6 +22,15 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.utils.analog import define_log_model, LogEntryKind
+
+
+class PageOpenGraphType(Enum):
+    Website = "website"
+    Article = "article"
+
+    class Labels:
+        Website = _("Website")
+        Article = _("Article")
 
 
 class PageQuerySet(TranslatableQuerySet):
@@ -52,14 +63,20 @@ class PageQuerySet(TranslatableQuerySet):
 @python_2_unicode_compatible
 class Page(MPTTModel, TranslatableModel):
     shop = models.ForeignKey("shuup.Shop", verbose_name=_('shop'))
-    available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available from'), help_text=_(
-        "Set an available from date to restrict the page to be available only after a certain date and time. "
-        "This is useful for pages describing sales campaigns or other time-sensitive pages."
-    ))
-    available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available to'), help_text=_(
-        "Set an available to date to restrict the page to be available only after a certain date and time. "
-        "This is useful for pages describing sales campaigns or other time-sensitive pages."
-    ))
+    available_from = models.DateTimeField(
+        null=True, blank=True, db_index=True,
+        verbose_name=_('available from'), help_text=_(
+            "Set an available from date to restrict the page to be available only after a certain date and time. "
+            "This is useful for pages describing sales campaigns or other time-sensitive pages."
+        )
+    )
+    available_to = models.DateTimeField(
+        null=True, blank=True, db_index=True,
+        verbose_name=_('available to'), help_text=_(
+            "Set an available to date to restrict the page to be available only after a certain date and time. "
+            "This is useful for pages describing sales campaigns or other time-sensitive pages."
+        )
+    )
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL,
@@ -113,7 +130,7 @@ class Page(MPTTModel, TranslatableModel):
             "The page content. This is the text that is displayed when customers click on your page link."
             "You can leave this empty and add all page content through placeholder editor in shop front."
             "To edit the style of the page you can use the Snippet plugin which is in shop front editor."
-        )),
+        ))
     )
     template_name = models.TextField(
         max_length=500,
@@ -178,6 +195,42 @@ class Page(MPTTModel, TranslatableModel):
 
     def __str__(self):
         return force_text(self.safe_translation_getter("title", any_language=True, default=_("Untitled")))
+
+
+@python_2_unicode_compatible
+class PageOpenGraph(TranslatableModel):
+    """
+    Object that describes Open Graph extra meta attributes
+    """
+    page = models.OneToOneField(Page, verbose_name=_('page'), related_name="open_graph")
+
+    image = FilerImageField(
+        verbose_name=_("Image"),
+        blank=True, null=True,
+        on_delete=models.SET_NULL,
+        help_text=_("The image of your object."), related_name="blog_meta_image"
+    )
+    og_type = EnumField(PageOpenGraphType, verbose_name=_("type"), default=PageOpenGraphType.Website)
+    translations = TranslatedFields(
+        title=models.CharField(max_length=100, blank=True, verbose_name=_("Title"), help_text=_(
+            'The title of your object as it should appear within the graph, e.g. The Rock.'
+        )),
+        description=models.TextField(max_length=160, blank=True, verbose_name=_("Description"), help_text=_(
+            "A one to two sentence description of your object."
+        )),
+        section=models.CharField(max_length=256, blank=True, verbose_name=_("Section"), help_text=_(
+            "A high-level section name, e.g. Technology. Only applicable when type is Article."
+        )),
+        tags=models.CharField(max_length=256, blank=True, verbose_name=_("Tags"), help_text=_(
+            "Tag words associated with this article. Only applicable when type is Article."
+        )),
+        article_author=models.CharField(max_length=100, blank=True, verbose_name=_("Article author"), help_text=_(
+            'The name of the author for the article. Only applicable when type is Article.'
+        ))
+    )
+
+    def __str__(self):
+        return force_text(self.page)
 
 
 PageLogEntry = define_log_model(Page)
