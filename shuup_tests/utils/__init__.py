@@ -28,11 +28,11 @@ class SmartClient(Client):
     def soup(self, path, data=None, method="get"):
         response = getattr(self, method)(path=path, data=data)
         assert 200 <= response.status_code <= 299, "Valid status"
-        return BeautifulSoup(response.content)
+        return BeautifulSoup(response.content, "lxml")
 
     def response_and_soup(self, path, data=None, method="get"):
         response = getattr(self, method)(path=path, data=data)
-        return (response, BeautifulSoup(response.content))
+        return (response, BeautifulSoup(response.content, "lxml"))
 
 
 def empty_iterable(obj):

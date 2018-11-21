@@ -1,0 +1,12 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% set og_form = form["opengraph"] %}
+
+{% call content_block(("OpenGraph Information"), icon="fa-sitemap") %}
+    <p>
+        {% trans %}Fill the fields below to add extra OpenGraph information to the page meta.
+        If not informed, some values will be inferred from the page attributes.{% endtrans %}
+    </p>
+    {{ language_dependent_content_tabs(og_form) }}
+    {{ render_monolingual_fields(og_form) }}
+{% endcall %}

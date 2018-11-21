@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-04 16:19+0000\n"
+"POT-Creation-Date: 2018-11-21 19:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -76,6 +76,12 @@ msgstr ""
 
 #, python-format
 msgid "Content in this placeholder is shown for %(title)s only."
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "Article"
 msgstr ""
 
 msgid "shop"
@@ -190,6 +196,47 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
+msgid "Image"
+msgstr ""
+
+msgid "The image of your object."
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid ""
+"The title of your object as it should appear within the graph, e.g. The Rock."
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "A one to two sentence description of your object."
+msgstr ""
+
+msgid "Section"
+msgstr ""
+
+msgid ""
+"A high-level section name, e.g. Technology. Only applicable when type is "
+"Article."
+msgstr ""
+
+msgid "Tags"
+msgstr ""
+
+msgid ""
+"Tag words associated with this article. Only applicable when type is Article."
+msgstr ""
+
+msgid "Article author"
+msgstr ""
+
+msgid ""
+"The name of the author for the article. Only applicable when type is Article."
+msgstr ""
+
 msgid "CMS Page Links"
 msgstr ""
 
@@ -206,6 +253,12 @@ msgid "Default Page"
 msgstr ""
 
 msgid "Page with sidebar"
+msgstr ""
+
+msgid ""
+"Fill the fields below to add extra OpenGraph information to the page meta.\n"
+"        If not informed, some values will be inferred from the page "
+"attributes."
 msgstr ""
 
 msgid "New Page"
