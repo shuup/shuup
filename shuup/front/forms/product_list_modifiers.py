@@ -24,7 +24,7 @@ from shuup.core.models import (
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils.sorts_and_filters import (
-    get_configuration, ProductListFormModifier
+    get_configuration, get_form_field_label, ProductListFormModifier
 )
 from shuup.utils.i18n import format_money
 
@@ -72,7 +72,12 @@ class SortProductListByName(SimpleProductListModifier):
     ordering_label = _("Ordering for sort by name")
 
     def get_fields(self, request, category=None):
-        return [("sort", forms.CharField(required=False, widget=forms.Select(), label=_('Sort')))]
+        return [
+            (
+                "sort",
+                forms.CharField(required=False, widget=forms.Select(), label=get_form_field_label("sort", _('Sort')))
+            )
+        ]
 
     def get_choices_for_fields(self):
         return [
@@ -117,7 +122,12 @@ class SortProductListByPrice(SimpleProductListModifier):
     ordering_label = _("Ordering for sort by price")
 
     def get_fields(self, request, category=None):
-        return [("sort", forms.CharField(required=False, widget=forms.Select(), label=_('Sort')))]
+        return [
+            (
+                "sort",
+                forms.CharField(required=False, widget=forms.Select(), label=get_form_field_label("sort", _('Sort')))
+            )
+        ]
 
     def get_choices_for_fields(self):
         return [
@@ -164,7 +174,12 @@ class SortProductListByCreatedDate(SimpleProductListModifier):
     ordering_label = _("Ordering for sort by date created")
 
     def get_fields(self, request, category=None):
-        return [("sort", forms.CharField(required=False, widget=forms.Select(), label=_('Sort')))]
+        return [
+            (
+                "sort",
+                forms.CharField(required=False, widget=forms.Select(), label=get_form_field_label("sort", _('Sort')))
+            )
+        ]
 
     def get_choices_for_fields(self):
         return [
@@ -241,7 +256,7 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
         ).exclude(visibility=ShopProductVisibility.NOT_VISIBLE)
 
         if category:
-            shop_products_qs = shop_products_qs.filter(categories=category)
+            shop_products_qs = shop_products_qs.filter(Q(primary_category=category) | Q(categories=category))
 
         queryset = Manufacturer.objects.filter(
             Q(product__shop_products__in=shop_products_qs),
@@ -257,7 +272,7 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
                 forms.ModelMultipleChoiceField(
                     queryset=queryset,
                     required=False,
-                    label=_('Manufacturers'),
+                    label=get_form_field_label("manufacturers", _('Manufacturers')),
                     widget=FilterWidget()
                 )
             ),
@@ -313,7 +328,7 @@ class CategoryProductListFilter(SimpleProductListModifier):
                 forms.MultipleChoiceField(
                     choices=[(cat.pk, cat.name) for cat in queryset],
                     required=False,
-                    label=_('Categories'),
+                    label=get_form_field_label("categories", _('Categories')),
                     widget=FilterWidget()
                 )
             ),
@@ -345,7 +360,13 @@ class LimitProductListPageSize(SimpleProductListModifier):
     ordering_label = _("Ordering for limit page size")
 
     def get_fields(self, request, category=None):
-        return [("limit", forms.IntegerField(required=False, widget=forms.Select(), label=_("Products per page")))]
+        return [
+            (
+                "limit",
+                forms.IntegerField(
+                    required=False, widget=forms.Select(), label=get_form_field_label("limit", _("Products per page")))
+            )
+        ]
 
     def get_choices_for_fields(self):
         return [
@@ -450,7 +471,11 @@ class ProductPriceFilter(SimpleProductListModifier):
         choices = [(None, "-------")] + get_price_ranges(
             request.shop, min_price, max_price, range_size)
         return [
-            ("price_range", forms.ChoiceField(required=False, choices=choices, label=_("Price"))),
+            (
+                "price_range",
+                forms.ChoiceField(
+                    required=False, choices=choices, label=get_form_field_label("price_range", _("Price")))
+            ),
         ]
 
     def filter_products(self, request, products, data):
