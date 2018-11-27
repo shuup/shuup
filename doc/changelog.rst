@@ -1,13 +1,13 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.7.3
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+- Front: fix bug with re-ordering
+- Fix django-parler dependency
+- Update Bootstrap version for front to prevent
+  vulnerabilities
 
 
 Shuup 1.7.2
