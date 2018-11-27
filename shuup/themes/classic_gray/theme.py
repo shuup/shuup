@@ -23,7 +23,13 @@ class ClassicGrayTheme(Theme):
     fields = [
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
         ("hide_prices", forms.BooleanField(required=False, initial=False, label=_("Hide prices"))),
-        ("catalog_mode", forms.BooleanField(required=False, initial=False, label=_("Set shop in catalog mode")))
+        ("catalog_mode", forms.BooleanField(required=False, initial=False, label=_("Set shop in catalog mode"))),
+        (
+            "show_supplier_info",
+            forms.BooleanField(
+                required=False, initial=False, label=_("Show supplier info"),
+                help_text=_("Show supplier name in product-box, product-detail, basket- and order-lines"))
+        )
     ]
 
     guide_template = "classic_gray/admin/guide.jinja"

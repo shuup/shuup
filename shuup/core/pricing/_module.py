@@ -53,7 +53,8 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         return self.pricing_context_class(
             customer=request.customer,
             shop=request.shop,
-            basket=getattr(request, "basket", None)
+            basket=getattr(request, "basket", None),
+            supplier=getattr(request, "supplier", None),
         )
 
     def get_context_from_data(self, shop, customer, time=None, **kwargs):

@@ -10,6 +10,7 @@ from ._fields import FieldsModel
 from ._filters import UltraFilter
 from ._methods import CarrierWithCheckoutPhase, PaymentWithCheckoutPhase
 from ._pseudo_payment import PseudoPaymentProcessor
+from ._supplier_pricing import SupplierPrice
 
 __all__ = [
     "CarrierWithCheckoutPhase",
@@ -17,5 +18,6 @@ __all__ = [
     "FieldsModel",
     "PaymentWithCheckoutPhase",
     "PseudoPaymentProcessor",
+    "SupplierPrice",
     "UltraFilter"
 ]

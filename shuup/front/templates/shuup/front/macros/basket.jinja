@@ -1,5 +1,6 @@
 {% extends "shuup/front/macros/theme/basket.jinja" %}
 {%- import "shuup/front/macros/order.jinja" as order_macros with context -%}
+{%- from "shuup/front/macros/general.jinja" import render_supplier_info -%}
 
 {% macro render_basket_content(basket) %}
     <div class="basket-items">
@@ -17,6 +18,7 @@
 {% macro _render_basket_line(line) %}
     {% set product = line.product %}
     {% set shop_product = line.shop_product %}
+    {% set show_supplier_info = xtheme.get("show_supplier_info") %}
     <div class="single-item">
         {% if product %}
         <div class="product-image">
@@ -44,6 +46,7 @@
             <h4 class="name">
                 {% if product %}
                     <a class="product-name" href="{{ shuup.urls.model_url(product) }}">{{ line.text }}</a>
+                    {% if show_supplier_info %}{{ render_supplier_info(line.supplier) }}{% endif %}
                 {% else %}
                     {{ line.text }}
                 {% endif %}

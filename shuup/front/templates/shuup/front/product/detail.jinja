@@ -24,10 +24,11 @@
 {% endblock %}
 
 {% block content %}
+    {% set supplier = pre_selected_supplier or shop_product.get_supplier() %}
     <div class="row product-main">
         <div class="visible-xs">
             <div class="col-sm-12">
-                {{ product_macros.render_product_basic_information(product) }}
+                {{ product_macros.render_product_basic_information(product, supplier) }}
             </div>
         </div>
         <div class="product-image col-sm-6 col-md-5">
@@ -35,7 +36,7 @@
         </div>
         <div class="product-basic-details col-sm-6 col-md-7">
             <div class="hidden-xs">
-                {{ product_macros.render_product_basic_information(product) }}
+                {{ product_macros.render_product_basic_information(product, supplier) }}
             </div>
             {% placeholder "product_extra_1" %}{% endplaceholder %}
             {{ order_form }}

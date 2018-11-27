@@ -104,3 +104,15 @@ SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES = {}
 SHUUP_FRONT_POWERED_BY_CONTENT = """
     <p class="powered">Powered by <a target="_blank" href="https://shuup.com">Shuup</a></p>
 """.strip()
+
+
+#: Override sort and filters labels with your own.
+#:
+#: Define dictionary with field identifier as key and new label as value.
+#:
+#: SHUUP_FRONT_OVERRIDE_SORTS_AND_FILTERS_LABELS_LOGIC = {
+#:      "manufacturers": _("Brands"),
+#:      "suppliers": _("Filter by vendor")
+#: }
+#:
+SHUUP_FRONT_OVERRIDE_SORTS_AND_FILTERS_LABELS_LOGIC = {}

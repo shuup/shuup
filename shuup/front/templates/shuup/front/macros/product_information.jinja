@@ -1,7 +1,10 @@
 {% extends "shuup/front/macros/product_ordering.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_supplier_info %}
 
-{% macro render_product_basic_information(product) %}
-    <h1 class="product-name">{{ product.name }}</h1>
+{% macro render_product_basic_information(product, supplier=None) %}
+    {% set show_supplier_info = (supplier and xtheme.get("show_supplier_info")) %}
+    <h1 class="product-name{% if show_supplier_info %} show-supplier-info{% endif %}">{{ product.name }}</h1>
+    {%  if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
     <p class="text-muted product-sku"><small>{{ product.sku }}</small></p>
     {% if product.short_description %}
         <p class="product-short-description">{{ product.short_description|safe }}</p>

@@ -538,9 +538,9 @@ class BaseBasket(OrderSource):
         """
         Refresh lines recalculating prices
         """
-        pricing_context = PricingContext(shop=self.shop, customer=self.customer)
         for line_data in self._data_lines:
             line = BasketLine.from_dict(self, line_data)
+            pricing_context = PricingContext(shop=self.shop, customer=self.customer, supplier=line.supplier)
             line.cache_info(pricing_context)
             self._add_or_replace_line(line)
 
@@ -550,7 +550,7 @@ class BaseBasket(OrderSource):
         if new_quantity is not None:
             line.set_quantity(new_quantity)
         line.update(**kwargs)
-        line.cache_info(PricingContext(shop=self.shop, customer=self.customer))
+        line.cache_info(PricingContext(shop=self.shop, customer=self.customer, supplier=line.supplier))
         self._add_or_replace_line(line)
         return line
 

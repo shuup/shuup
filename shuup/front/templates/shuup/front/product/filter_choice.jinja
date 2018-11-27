@@ -3,7 +3,7 @@
         {% for choice_key, choice_label in choices %}
             <div class="custom-checkbox">
                 <input
-                    type="checkbox"
+                    type="{% if one_choice %}radio{% else %}checkbox{% endif %}"
                     name="{{ name }}"
                     id="{{ name }}-{{ choice_key}}"
                     class="product-filter"

@@ -1,4 +1,9 @@
 {%- from "shuup/front/macros/product.jinja" import render_product_order_section, render_product_price with context -%}
+{% from "shuup/front/macros/general.jinja" import render_supplier_info %}
+
+{% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
+{% set supplier = shop_product.get_supplier() %}
+{% set show_supplier_info = (supplier and xtheme.get("show_supplier_info")) %}
 
 <div class="product-preview-modal modal fade"
      id="product-{{ product.id }}-modal"
@@ -16,9 +21,9 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="preview-image">
-                        {% if product|is_discounted %}
+                        {% if product|is_discounted(supplier=supplier) %}
                             <div class="badge product-badge sale">
-                                {% set discount_percent = product|discount_percent %}
+                                {% set discount_percent = product|discount_percent(supplier=supplier) %}
                                 {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
                             </div>
                         {% endif %}
@@ -30,7 +35,8 @@
                         {% endif %}
                     </div>
                     <div class="preview-details">
-                        <h2>{{ product.name }}</h2>
+                        <h2 class="product-name {% if show_supplier_info %}show-supplier-info{% endif %}">{{ product.name }}</h2>
+                        {% if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
                         {% if product.short_description %}
                             <p class="description">
                                 {{ product.short_description|safe }}
@@ -38,7 +44,7 @@
                         {% endif %}
                         {% if show_prices() and not xtheme.get("hide_prices") %}
                             <div class="product-price">
-                                {{ render_product_price(product) }}
+                                {{ render_product_price(product, supplier=supplier) }}
                             </div>
                         {% endif %}
                         <hr>

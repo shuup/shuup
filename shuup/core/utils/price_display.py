@@ -76,7 +76,7 @@ class _ContextFunction(_ContextObject):
 
 
 class PriceDisplayFilter(_ContextFilter):
-    def __call__(self, context, item, quantity=1, include_taxes=None, allow_cache=True):
+    def __call__(self, context, item, quantity=1, include_taxes=None, allow_cache=True, supplier=None):
         options = PriceDisplayOptions.from_context(context)
         if options.hide_prices:
             return ""
@@ -89,50 +89,51 @@ class PriceDisplayFilter(_ContextFilter):
             request,
             item,
             quantity,
-            include_taxes=include_taxes
+            include_taxes=include_taxes,
+            supplier=supplier
         ) if allow_cache else None
 
         if not price_info:
-            price_info = _get_priceful(request, item, quantity)
+            price_info = _get_priceful(request, item, quantity, supplier)
 
             if not price_info:
                 return ""
 
             price_info = convert_taxness(request, item, price_info, include_taxes)
             if allow_cache:
-                cache_price_info(request, item, quantity, price_info, include_taxes=include_taxes)
+                cache_price_info(request, item, quantity, price_info, include_taxes=include_taxes, supplier=supplier)
 
         return money(getattr(price_info, self.property_name))
 
 
 class PricePropertyFilter(_ContextFilter):
-    def __call__(self, context, item, quantity=1, allow_cache=True):
+    def __call__(self, context, item, quantity=1, allow_cache=True, supplier=None):
         request = context.get('request')
-        price_info = get_cached_price_info(request, item, quantity) if allow_cache else None
+        price_info = get_cached_price_info(request, item, quantity, supplier=supplier) if allow_cache else None
 
         if not price_info:
-            price_info = _get_priceful(request, item, quantity)
+            price_info = _get_priceful(request, item, quantity, supplier)
 
             if not price_info:
                 return ""
             if allow_cache:
-                cache_price_info(request, item, quantity, price_info)
+                cache_price_info(request, item, quantity, price_info, supplier=supplier)
 
         return getattr(price_info, self.property_name)
 
 
 class PricePercentPropertyFilter(_ContextFilter):
-    def __call__(self, context, item, quantity=1, allow_cache=True):
+    def __call__(self, context, item, quantity=1, allow_cache=True, supplier=None):
         request = context.get('request')
-        price_info = get_cached_price_info(request, item, quantity) if allow_cache else None
+        price_info = get_cached_price_info(request, item, quantity, supplier=supplier) if allow_cache else None
 
         if not price_info:
-            price_info = _get_priceful(request, item, quantity)
+            price_info = _get_priceful(request, item, quantity, supplier)
 
             if not price_info:
                 return ""
             if allow_cache:
-                cache_price_info(request, item, quantity, price_info)
+                cache_price_info(request, item, quantity, price_info, supplier=supplier)
 
         return percent(getattr(price_info, self.property_name))
 
@@ -161,7 +162,7 @@ class TotalPriceDisplayFilter(_ContextFilter):
 
 
 class PriceRangeDisplayFilter(_ContextFilter):
-    def __call__(self, context, product, quantity=1, allow_cache=True):
+    def __call__(self, context, product, quantity=1, allow_cache=True, supplier=None):
         """
         :type product: shuup.core.models.Product
         """
@@ -174,7 +175,8 @@ class PriceRangeDisplayFilter(_ContextFilter):
             request,
             product,
             quantity,
-            include_taxes=options.include_taxes
+            include_taxes=options.include_taxes,
+            supplier=supplier
         ) if allow_cache else None
 
         if not priced_products:
@@ -185,7 +187,7 @@ class PriceRangeDisplayFilter(_ContextFilter):
                 priced_children = getattr(request, priced_children_key)
             else:
                 priced_children = product.get_priced_children(request, quantity) or [
-                    (product, _get_priceful(request, product, quantity))
+                    (product, _get_priceful(request, product, quantity, supplier))
                 ]
                 setattr(request, priced_children_key, priced_children)
 
@@ -197,7 +199,13 @@ class PriceRangeDisplayFilter(_ContextFilter):
                 priced_products.append(priceful)
 
             if priced_products and allow_cache:
-                cache_many_price_info(request, product, quantity, priced_products, include_taxes=options.include_taxes)
+                cache_many_price_info(
+                    request,
+                    product,
+                    quantity,
+                    priced_products,
+                    include_taxes=options.include_taxes,
+                    supplier=supplier)
 
         if not priced_products:
             return ("", "")
@@ -205,7 +213,7 @@ class PriceRangeDisplayFilter(_ContextFilter):
         return (money(priced_products[0].price), money(priced_products[-1].price))
 
 
-def _get_priceful(request, item, quantity):
+def _get_priceful(request, item, quantity, supplier):
     """
     Get priceful from given item.
 
@@ -214,10 +222,25 @@ def _get_priceful(request, item, quantity):
     should implement the `Priceful` interface.
 
     :type request: django.http.HttpRequest
+    :param request: used as pricing context
     :type item: shuup.core.taxing.TaxableItem
     :type quantity: numbers.Number
+    :type supplier: shuup.core.models.Supplier
+    :param supplier: used to pass for pricing context
     :rtype: shuup.core.pricing.Priceful|None
     """
+    if supplier:
+        # Passed from template and sometimes chosen by end user,
+        # but most of the time just decided by supplier strategy.
+        setattr(request, 'supplier', supplier)
+
+    if hasattr(item, 'supplier'):
+        # When item already has supplier fe. order and basket lines.
+        # This is always forced and supplier passed from template
+        # can't override this. Though developer should never pass
+        # supplier to template filter while getting price for source line.
+        setattr(request, 'supplier', getattr(item, 'supplier'))
+
     if hasattr(item, 'get_price_info'):
         key_prefix = "%s-%s-" % (item.id, quantity)
         price_key = "%s_get_priceful" % key_prefix

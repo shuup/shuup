@@ -1,2 +1,5 @@
 {%- import "shuup/front/macros/product.jinja" as product_macros with context -%}
-{{ product_macros.render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children) }}
+{{ product_macros.render_product_order_section(
+    product, variation_variables, variation_children,
+    unorderability_reason, orderable_variation_children,
+    pre_selected_supplier=pre_selected_supplier) }}

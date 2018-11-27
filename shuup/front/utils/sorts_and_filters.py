@@ -301,3 +301,7 @@ def _get_active_modifiers(shop=None, category=None):
     if category and key:
         context_cache.set_cached_value(key, sorted_objects)
     return sorted_objects
+
+
+def get_form_field_label(identifier, default):
+    return settings.SHUUP_FRONT_OVERRIDE_SORTS_AND_FILTERS_LABELS_LOGIC.get(identifier, default)
