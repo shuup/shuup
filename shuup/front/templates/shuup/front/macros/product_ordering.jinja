@@ -3,10 +3,10 @@
 
 {% macro render_product_order_section(
         product, variation_variables, variation_children, unorderability_reason,
-        orderable_variation_children, pre_selected_supplier=None) %}
+        orderable_variation_children, supplier=None) %}
 
     {%- set shop_product = product.get_shop_instance(request.shop, allow_cache=True) -%}
-    {%- set supplier = pre_selected_supplier or shop_product.get_supplier() %}
+    {%- set supplier = supplier or shop_product.get_supplier() %}
     {% if not quantity %}
         {%- set quantity = shop_product.rounded_minimum_purchase_quantity -%}
     {% endif %}
@@ -22,10 +22,11 @@
                 });
             </script>
         {% endif %}
+
         <form role="form" method="post" action="{{ url("shuup:basket") }}" class="add-to-basket">
             {% set return_path = return_url if return_url else request.path %}
             <input type="hidden" name="return" value="{{ return_path }}">
-            <input type="hidden" name="supplier_id" value="{{ supplier.id }}">
+            {{ supplier_input(shop_product, supplier) }}
             {% if unorderability_reason %}
                 <p class="text-warning not-orderable">{{ unorderability_reason }}</p>
             {% elif variation_variables %}
@@ -37,6 +38,15 @@
             {% endif %}
         </form>
     </div>
+{% endmacro %}
+
+{% macro supplier_input(shop_product, supplier) %}
+    {% if shop_product.product.variation_parent %}
+        {%- set product_id = shop_product.product.variation_parent.pk -%}
+    {% else %}
+        {%- set product_id = shop_product.product.pk -%}
+    {% endif %}
+    <input type="hidden" id="product-supplier-{{ product_id }}" name="supplier_id" value="{{ supplier.id }}">
 {% endmacro %}
 
 {% macro variable_variation_form(shop_product, quantity, variation_variables, orderable_variation_children, supplier) %}
