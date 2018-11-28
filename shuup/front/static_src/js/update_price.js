@@ -19,6 +19,11 @@ window.updatePrice = function updatePrice(productId) {
         unitType: $("#product-unit-type-" + productId).val()
     };
 
+    const $supplier = $("#product-supplier-" + productId);
+    if ($supplier.length > 0) {
+        data.supplier = $supplier.val();
+    }
+
     var $simpleVariationSelect = $("#product-variations-" + productId);
     if ($simpleVariationSelect.length > 0) {
         // Smells like a simple variation; use the selected child's ID instead.

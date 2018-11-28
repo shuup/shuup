@@ -27,10 +27,12 @@ class ProductDetailView(DetailView):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         language = self.language = get_language()
 
-        supplier = None
         supplier_pk = self.kwargs.get("supplier_pk")
         if supplier_pk:
             supplier = Supplier.objects.filter(id=supplier_pk, shops=self.request.shop).first()
+        else:
+            shop_product = self.object.get_shop_instance(self.request.shop, allow_cache=True)
+            supplier = shop_product.get_supplier(self.request.customer)
 
         context.update(get_product_context(self.request, self.object, language, supplier))
         # TODO: Maybe add hook for ProductDetailView get_context_data?

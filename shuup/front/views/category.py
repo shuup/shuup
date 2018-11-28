@@ -64,6 +64,6 @@ class CategoryView(DetailView):
         context["products"] = products
 
         if "supplier" in data:
-            context["pre_selected_supplier"] = data.get("supplier")
+            context["supplier"] = data.get("supplier")
 
         return context
