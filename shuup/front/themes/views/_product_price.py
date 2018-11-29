@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 import decimal
 
-from shuup.core.models import ProductVariationResult, ShopProduct
+from shuup.core.models import ProductVariationResult, ShopProduct, Supplier
 from shuup.front.views.product import ProductDetailView
 from shuup.utils.numbers import parse_simple_decimal
 
@@ -27,13 +27,11 @@ class ProductPriceView(ProductDetailView):
 
     def is_orderable(self):
         product = self.object
-        if not product:
-            return False
         try:
-            shop_product = product.get_shop_instance(self.request.shop)
+            shop_product = product.get_shop_instance(self.request.shop, allow_cache=True)
         except ShopProduct.DoesNotExist:
             return False
-        quantity = self._get_quantity()
+        quantity = self._get_quantity(shop_product)
         if not quantity:
             return False
         if not shop_product.is_orderable(None, self.request.customer, quantity):
@@ -45,12 +43,27 @@ class ProductPriceView(ProductDetailView):
         if not context["product"] or not self.is_orderable():
             self.template_name = "shuup/front/product/detail_order_section_no_product.jinja"
             return context
-        quantity = self._get_quantity()
+
+        product = self.object
+        try:
+            shop_product = product.get_shop_instance(self.request.shop, allow_cache=True)
+        except ShopProduct.DoesNotExist:
+            return False
+        quantity = self._get_quantity(shop_product)
         if quantity is not None:
             context["quantity"] = context["product"].sales_unit.round(quantity)
+
+        supplier_pk = self.request.GET.get("supplier", None)
+        if supplier_pk is not None:
+            context["supplier"] = Supplier.objects.filter(pk=int(supplier_pk)).first()
+        else:
+            context["supplier"] = shop_product.get_supplier(
+                customer=self.request.customer,
+                quantity=(quantity or shop_product.minimum_purchase_quantity))
+
         return context
 
-    def _get_quantity(self):
+    def _get_quantity(self, shop_product):
         quantity_text = self.request.GET.get("quantity", '')
         quantity = parse_simple_decimal(quantity_text, None)
         if quantity is None or quantity < 0:
@@ -59,10 +72,6 @@ class ProductPriceView(ProductDetailView):
         if unit_type == 'internal':
             return quantity
         else:
-            try:
-                shop_product = self.object.get_shop_instance(self.request.shop)
-            except ShopProduct.DoesNotExist:
-                return None
             return shop_product.unit.from_display(decimal.Decimal(quantity))
 
     def get_variation_variables(self):

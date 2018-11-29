@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block content %}
-    {% set supplier = pre_selected_supplier or shop_product.get_supplier() %}
+    {% set supplier = supplier or shop_product.get_supplier() %}
     <div class="row product-main">
         <div class="visible-xs">
             <div class="col-sm-12">

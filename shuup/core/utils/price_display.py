@@ -243,6 +243,9 @@ def _get_priceful(request, item, quantity, supplier):
 
     if hasattr(item, 'get_price_info'):
         key_prefix = "%s-%s-" % (item.id, quantity)
+        if supplier:
+            key_prefix += "-%s" % (supplier.id)
+
         price_key = "%s_get_priceful" % key_prefix
         if hasattr(request, price_key):
             return getattr(request, price_key)

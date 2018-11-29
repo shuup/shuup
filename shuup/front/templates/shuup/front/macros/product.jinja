@@ -10,7 +10,10 @@ Inheritance order for product macors:
 {% extends "shuup/front/macros/product_image.jinja" %}
 {% from "shuup/front/macros/general.jinja" import render_supplier_info %}
 
-{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500), supplier=None) %}
+{% macro product_box(
+        product, show_image=True, show_description=True, class="product-box",
+        thumbnail_size=(500,500), supplier=None) %}
+
     {% if supplier %}
         {% set u = url("shuup:supplier-product", supplier_pk=supplier.pk, pk=product.pk, slug=product.slug) %}
     {% else %}
@@ -18,6 +21,7 @@ Inheritance order for product macors:
         {% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
         {% set supplier = shop_product.get_supplier() %}
     {% endif %}
+
     {% set show_supplier_info = (supplier and xtheme.get("show_supplier_info")) %}
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
         <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
