@@ -65,7 +65,7 @@ def test_coupon(browser, live_server, settings):
     browser = initialize_front_browser_test(browser, live_server)
 
     _add_product_to_basket_from_category(live_server, browser, first_category, shop)
-    _activate_basket_campaign_through_coupon(browser, first_category, shop)
+    _test_coupon_activation_and_removal(browser, first_category, shop)
 
 
 def _populate_products_form_data(data, shop, category=None):
@@ -148,7 +148,7 @@ def _create_category_product_discount(category, shop, discount_amount):
     discount.shops = [shop]
 
 
-def _activate_basket_campaign_through_coupon(browser, category, shop):
+def _test_coupon_activation_and_removal(browser, category, shop):
     # We should already be at basket so let's verify the total
     wait_until_condition(browser, lambda x: "110.53" in x.find_by_css("div.total-price strong").first.text)
 
@@ -159,6 +159,11 @@ def _activate_basket_campaign_through_coupon(browser, category, shop):
     wait_until_condition(browser, lambda x: x.is_text_present(coupon_code))
     wait_until_condition(browser, lambda x: "-€22.11" in x.find_by_css("div.product-sum h4.price").last.text)
     wait_until_condition(browser, lambda x: "€88.42" in x.find_by_css("div.total-price strong").first.text)
+    wait_until_condition(browser, lambda x: "€88.42" in x.find_by_css("div.total-price strong").first.text)
+    wait_until_condition(browser, lambda x: x.is_element_present_by_value(coupon_code))
+    click_element(browser, "button[name^='delete_discount']")
+    wait_until_condition(browser, lambda x: not(x.is_text_present(coupon_code)))
+    wait_until_condition(browser, lambda x: "110.53" in x.find_by_css("div.total-price strong").first.text)
 
     # TODO: Should disabling catalog campaigns here change the line totals
 

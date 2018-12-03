@@ -659,6 +659,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
         "quantity", "base_unit_price", "discount_amount",
         "sku", "text",
         "require_verification", "accounting_identifier",
+        "value"
     ]
     _FIELDSET = set(_FIELDS)
     _OBJECT_FIELDS = {
@@ -699,7 +700,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
         self.text = kwargs.pop("text", "")
         self.require_verification = kwargs.pop("require_verification", False)
         self.accounting_identifier = kwargs.pop("accounting_identifier", "")
-
+        self.value = kwargs.pop("value", "")
         self.line_source = kwargs.pop("line_source", LineSource.CUSTOMER)
 
         self._taxes = None

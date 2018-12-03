@@ -76,9 +76,10 @@ class BasketCampaignModule(OrderSourceModifierModule):
 
     def _get_campaign_line(self, campaign, highest_discount, order_source):
         text = campaign.public_name
-
+        value = ""
         if campaign.coupon:
             text += " (%s %s)" % (_("Coupon Code:"), campaign.coupon.code)
+            value = campaign.coupon.code
 
         return order_source.create_line(
             line_id="discount_%s" % str(random.randint(0, 0x7FFFFFFF)),
@@ -86,7 +87,8 @@ class BasketCampaignModule(OrderSourceModifierModule):
             quantity=1,
             discount_amount=campaign.shop.create_price(highest_discount),
             text=text,
-            line_source=LineSource.DISCOUNT_MODULE
+            line_source=LineSource.DISCOUNT_MODULE,
+            value=value
         )
 
     def can_use_code(self, order_source, code):

@@ -18,6 +18,7 @@
 {% macro _render_basket_line(line) %}
     {% set product = line.product %}
     {% set shop_product = line.shop_product %}
+    {% set value = line.value %}
     {% set show_supplier_info = xtheme.get("show_supplier_info") %}
     <div class="single-item">
         {% if product %}
@@ -91,10 +92,11 @@
             </div>
         {% endif %}
         <div class="delete">
-            {% if line.can_delete %}
+            {% if line.can_delete or line.value != "" %}
                 <button type="submit"
                         class="btn btn-sm"
                         name="delete_{{ line.line_id }}"
+                        value = "{{ value }}"
                         title="{% trans %}Remove product from basket{% endtrans %}">
                     <i class="fa fa-times"></i>
                 </button>
@@ -253,7 +255,7 @@
             };
 
             $.ajax({
-                url: "",
+                url: "{{ url("shuup:basket") }}",
                 method: "POST",
                 data: data,
                 success: function(response) {
@@ -270,6 +272,26 @@
             });
         }
     });
+    $("button[name^='delete_discount']").click(function() {
+        const coupon = $("button[name^='delete_discount']").val();
+        const data = {
+                "command": "remove_campaign_code",
+                "code": coupon
+            };
+             $.ajax({
+                url: "{{ url("shuup:basket") }}",
+                method: "POST",
+                data: data,
+                success: function(response) {
+                    if (response.ok) {
+                        location.reload();
+                    }
+                    else {
+                    }
+                }
+            });
+    });
+
 {% endmacro %}
 
 {% macro save_cart_js() %}
