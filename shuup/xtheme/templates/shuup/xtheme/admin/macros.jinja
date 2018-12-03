@@ -6,17 +6,6 @@
         {% set active_theme = current_theme and theme.identifier == current_theme.identifier %}
             <div class="col-lg-4">
                 <div class="theme-card mb-3{% if active_theme %} active-theme{% endif %}">
-                    <a
-                        {% if new_tab %} target="_blank" {% endif %}
-                        href="{{ url("shuup_admin:xtheme.config_detail", theme_identifier=theme.identifier) }}"
-                        class="btn btn-sm btn-configure-theme btn-default"
-                        data-toggle="popover"
-                        data-placement="top"
-                        data-trigger="manual"
-                        data-content="{{ _("Click here to configure the theme") }}"
-                    >
-                        <i class="fa fa-cogs"></i>
-                    </a>
                     {# TODO: Get the actual theme screenshot #}
                     <img class="card-img-top" src="{{ static("shuup_admin/img/theme_placeholder.png") }}" alt="Theme screenshot">
                     <div class="theme-card-body text-center p-3">
@@ -24,9 +13,7 @@
                     {% if theme.author %}
                         <p class="theme-card-text text-muted">{% trans %}Author{% endtrans %}: {{ theme.author }}</p>
                     {% endif %}
-                    {% if theme.guide_template %}
-                        <a class="btn btn-sm btn-default" href="{{ url("shuup_admin:xtheme.guide", theme_identifier=theme.identifier) }}">{% trans %}Show guide{% endtrans %}</a>
-                    {% endif %}
+                    <a class="btn btn-sm btn-default" href="{{ url("shuup_admin:xtheme.config_detail", theme_identifier=theme.identifier) }}"><i class="fa fa-cogs"></i> {% trans %}Configure{% endtrans %}</a>
                     <button
                         name="activate"
                         value="{{ theme.identifier }}"

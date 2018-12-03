@@ -10,12 +10,13 @@ from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
+from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.toolbar import URLActionButton
+from shuup.admin.toolbar import get_default_edit_toolbar, URLActionButton
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.core import cache
@@ -136,7 +137,14 @@ class ThemeConfigDetailView(CreateOrUpdateView):
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigDetailView, self).get_context_data(**kwargs)
         shop = get_shop(self.request)
-        context["theme"] = self.get_theme()
+        theme = self.get_theme()
+        context["theme"] = theme
+        context["guide"] = None
+
+        if theme.guide_template:
+            template = loader.get_template(theme.guide_template)
+            context["guide"] = template.render({}, request=self.request)
+
         context["active_stylesheet"] = self.object.data.get("settings", {}).get("stylesheet", None)
         context["shop"] = shop
         return context
@@ -154,7 +162,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         cache.bump_version(get_theme_cache_key(get_shop(self.request)))
 
     def get_toolbar(self):
-        toolbar = super(ThemeConfigDetailView, self).get_toolbar()
+        toolbar = get_default_edit_toolbar(self, self.get_save_form_id(), with_split_save=False)
         toolbar.append(
             URLActionButton(
                 text=_("Custom CSS/JS"),
