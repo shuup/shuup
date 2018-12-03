@@ -274,6 +274,7 @@ class Column(object):
         self.ordering = kwargs.pop("ordering", 9999)
         self.context = None  # will be set after initializing
         self.sort_field = kwargs.pop("sort_field", None)
+        self.allow_highlight = kwargs.pop("allow_highlight", True)
 
         if kwargs and type(self) is Column:  # If we're not derived, validate that client code doesn't fail
             raise NameError("Unexpected kwarg(s): %s" % kwargs.keys())
@@ -286,6 +287,7 @@ class Column(object):
             "filter": self.filter_config.to_json(context=context) if self.filter_config else None,
             "sortable": bool(self.sortable),
             "linked": bool(self.linked),
+            "allowHighlight": bool(self.allow_highlight),
             "raw": bool(self.raw),
         }
         return dict((key, value) for (key, value) in six.iteritems(out) if value is not None)

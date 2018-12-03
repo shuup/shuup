@@ -370,13 +370,9 @@ const Picotable = (function (m, storage) {
 
     // Check to see if it's any of the types of filters that
     // we want to highlight by placing it at the top of the table
+    // FIXME: remove fixed col names from here and bring from col definition
     function isLiftFilter(col) {
-        return (
-            col.id === "name"
-            || col.id === "customer"
-            || col.id === "title"
-            || col.id === "code"
-        );
+        return (col.allowHighlight && ["name", "customer", "title", "code"].includes(col.id));
     }
 
     function buildNameFilter(ctrl) {
@@ -808,7 +804,7 @@ const Picotable = (function (m, storage) {
         const columnFilterCells = (
             data.columns.filter(col => col.filter) ?
                 data.columns.map(col => {
-                    if (col.sortable && !isLiftFilter(col)) {
+                    if (!isLiftFilter(col)) {
                         return buildColumnFilterCell(ctrl, col);
                     }
                 }) : null

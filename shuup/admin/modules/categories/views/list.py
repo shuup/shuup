@@ -20,7 +20,7 @@ class CategoryListView(PicotableListView):
     default_columns = [
         Column("image", _("Image"), sortable=False, linked=True, raw=True),
         Column(
-            "name", _(u"Name"), sortable=False, display="format_name", linked=True,
+            "name", _(u"Name"), sortable=False, display="format_name", linked=True, allow_highlight=False,
             filter_config=MPTTFilter(
                 choices="get_name_filter_choices",
                 filter_field="id"
