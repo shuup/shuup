@@ -5,12 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytz
 
 from datetime import date, datetime, time
 
 from shuup.utils.dates import (
     parse_date, parse_datetime, try_parse_date, try_parse_datetime,
-    try_parse_time
+    try_parse_time, to_aware
 )
 
 
@@ -69,3 +70,19 @@ def test_try_parse_datetime():
     assert try_parse_datetime(date_fmt2) == datetime(2018, 12, 31, 15, 40)
     assert try_parse_datetime(date_fmt3) == datetime(2016, 12, 31)
     assert try_parse_datetime("abc") is None
+
+
+def test_dst_safe_aware():
+    random_date = date(2018, 11, 4)
+
+    # with dst
+    sao_paulo = to_aware(random_date, tz=pytz.timezone("America/Sao_Paulo"))
+    assert sao_paulo.hour == 0
+    assert sao_paulo.minute == 0
+    assert sao_paulo.tzinfo._dst.seconds == 3600  # 1hr
+
+    # without dst
+    madrid = to_aware(random_date, tz=pytz.timezone("Europe/Madrid"))
+    assert madrid.hour == 0
+    assert madrid.minute == 0
+    assert madrid.tzinfo._dst.seconds == 0

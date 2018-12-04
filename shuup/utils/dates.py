@@ -259,10 +259,34 @@ def to_aware(date, time=datetime.time.min, tz=None):
     if isinstance(date, datetime.datetime):
         if timezone.is_aware(date):
             return date
-        return timezone.make_aware(date, timezone=tz)
+        return dst_safe_timezone_aware(date, tz)
     assert isinstance(date, datetime.date), '%r should be date' % (date,)
     combined = datetime.datetime.combine(date, time)
-    return timezone.make_aware(combined, timezone=tz)
+    return dst_safe_timezone_aware(combined, tz)
+
+
+def dst_safe_timezone_aware(dt, tz=None):
+    """
+    Safely make datetime aware considering Daylight Saving Time (DST) cases.
+
+    If `timezone.make_aware` raises `pytz.exceptions.NonExistentTimeError`,
+    it means the time doesn't exist on that timezone it is probably DST.
+
+    :type dt: datetime.datetime
+    :param dt:
+      Datetime object to make aware
+    :type tz: datetime.tzinfo|None
+      Timezone to use, default ``timezone.get_current_timezone()``
+    :rtype: datetime.datetime
+    :return:
+      Converted aware datetime object
+    """
+    from pytz.exceptions import NonExistentTimeError
+
+    try:
+        return timezone.make_aware(dt, timezone=tz)
+    except NonExistentTimeError:
+        return timezone.make_aware(dt, timezone=tz, is_dst=True)
 
 
 def local_now(tz=None):

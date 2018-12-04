@@ -14,6 +14,7 @@ from django.utils.translation import get_language
 
 from shuup.core import cache
 from shuup.core.models import OrderLine, OrderLineType, Product
+from shuup.utils.dates import to_aware
 
 
 def get_best_selling_product_info(shop_ids, cutoff_days=30):
@@ -26,7 +27,7 @@ def get_best_selling_product_info(shop_ids, cutoff_days=30):
             OrderLine.objects
             .filter(
                 order__shop_id__in=shop_ids,
-                order__order_date__gte=cutoff_date,
+                order__order_date__gte=to_aware(cutoff_date),
                 type=OrderLineType.PRODUCT
             )
             .values("product")
