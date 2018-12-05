@@ -7,6 +7,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- /* IMPORTANT! Using a CSS file to be able to import LESS and SCSS files at once! */
+/* IMPORTANT! Using a CSS file to be able to import LESS and SCSS files at once! */
 @import "./style.less";
 @import "./vendor.scss";
