@@ -8,5 +8,6 @@
  */
 
 /* IMPORTANT! Using a CSS file to be able to import LESS and SCSS files at once! */
+@import "./vendor.less";
 @import "./style.less";
 @import "./vendor.scss";
