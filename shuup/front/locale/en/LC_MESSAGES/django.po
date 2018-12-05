@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-26 20:53+0000\n"
+"POT-Creation-Date: 2018-12-05 12:59+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -721,6 +721,9 @@ msgstr ""
 msgid "Proceed to checkout"
 msgstr ""
 
+msgid "Coupons applied"
+msgstr ""
+
 msgid "Have a coupon code? Enter it here"
 msgstr ""
 
@@ -740,6 +743,12 @@ msgid "Save"
 msgstr ""
 
 msgid "Back to Products"
+msgstr ""
+
+msgid "Invalid coupon code."
+msgstr ""
+
+msgid "Error when removing coupon."
 msgstr ""
 
 msgid "Coupon is not available."
