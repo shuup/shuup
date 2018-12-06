@@ -165,7 +165,7 @@ Core
 
 ``front_model_url_resolver``
     List of functions that resolve a model instance into an object URL.
-    The first valid url returned by a provide will be used by the called.
+    The first valid url returned by a provide will be used by the caller.
 
 ``admin_model_url_resolver``
     List of functions that resolve a model instance into an object URL.
