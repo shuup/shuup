@@ -34,6 +34,9 @@ class AppConfig(shuup.apps.AppConfig):
             "shuup.simple_cms.templates:SimpleCMSDefaultTemplate",
             "shuup.simple_cms.templates:SimpleCMSTemplateSidebar",
         ],
+        "admin_page_form_part": [
+            "shuup.simple_cms.admin_module.form_parts:CMSOpenGraphFormPart"
+        ]
     }
 
     def ready(self):

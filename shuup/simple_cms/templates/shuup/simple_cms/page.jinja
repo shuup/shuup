@@ -1,4 +1,5 @@
 {% extends "shuup/front/base.jinja" %}
+{% from "shuup/simple_cms/macros.jinja" import render_open_graph with context %}
 
 {% block title %}{{ page.title }}{% endblock %}
 
@@ -9,8 +10,9 @@
 {% endblock %}
 
 {% block extrameta %}
-{{ macros.render_metadata(page, page.title, page.get_html(), "page") }}
+{{ render_open_graph(page) }}
 {% endblock %}
+
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><a href="/">{% trans %}Home{% endtrans %}</a></li>

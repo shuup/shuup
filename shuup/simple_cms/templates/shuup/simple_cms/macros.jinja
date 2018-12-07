@@ -1,0 +1,36 @@
+{% macro render_open_graph(page) %}
+    {% set title = (page.open_graph and page.open_graph.title) or page.title %}
+    {% set description = (page.open_graph and page.open_graph.description) or (page.content|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'")) %}
+    {% set type = (page.open_graph and page.open_graph.og_type.value) or "website" %}
+
+    <meta property="og:site_name" content="{{ (request.shop.public_name or request.shop.name) }}">
+    <meta property="og:url" content="{{ shuup.urls.model_url(object, absolute=True) }}">
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:type" content="{{ type }}" />
+    <meta property="og:description" content="{{ description }}" />
+
+    {% if (page.open_graph and page.open_graph.image) %}
+        <meta property="og:image" content="{{ request.build_absolute_uri(page.open_graph.image.url) }}" />
+    {% endif %}
+
+    {% if type == "article" %}
+        {% set author = (page.open_graph and page.open_graph.article_author) or page.created_by %}
+        <meta property="article:author" content="{{ author }}">
+        <meta property="article:modified_time" content="{{ page.modified_on.isoformat() }}">
+
+        {% if (page.open_graph and page.open_graph.section) %}
+        <meta property="article:section" content="{{ page.open_graph.section }}">
+        {% endif %}
+
+        {% if (page.open_graph and page.open_graph.tags) %}
+        <meta property="article:tag" content="{{ page.open_graph.tags }}">
+        {% endif %}
+
+        {% if page.available_from %}
+        <meta property="article:published_time" content="{{ page.available_from.isoformat() }}">
+        {% endif %}
+        {% if page.available_to %}
+        <meta property="article:expiration_time" content="{{ page.available_to.isoformat() }}">
+        {% endif %}
+    {% endif %}
+{% endmacro %}
