@@ -11,23 +11,22 @@
     "static_build": true
   },
   "author": "Shuup Team <shuup@shuup.com>",
-  "private": true,
   "license": "OSL-3.0",
   "dependencies": {
     "autoprefixer": "^8.6.4",
     "babel-preset-env": "^1.7.0",
-    "bootstrap": "https://github.com/shuup/bootstrap.git#852c02e",
+    "bootstrap": "https://github.com/shuup/bootstrap/tarball/852c02e",
     "bootstrap-select": "1.6.3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "jquery.easing": "^1.4.1",
     "less": "^3.0.4",
-    "node-sass": "^4.9.2",
     "open-sans-all": "0.1.3",
     "owl.carousel": "^2.3.4",
     "parcel-bundler": "^1.10.3",
     "postcss-modules": "^1.1.0",
-    "shuup-static-build-tools": "file:../../lib/shuup_static_build_tools",
+    "sass": "^1.15.1",
+    "shuup-static-build-tools": "^1.0.2",
     "simplelightbox": "^1.13.0"
   },
   "devDependencies": {

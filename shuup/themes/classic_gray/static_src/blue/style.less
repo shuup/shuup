@@ -7,7 +7,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@import "../../../../front/static_src/less/style.less";
+ @front-path: "../../../../front/static_src/less";
+
+ @import "./vendor.less";
+
+ // Styles for Shuup Xtheme Plugins
+ @import "@{front-path}/front/xtheme.less";
+
+ // Custom styles for Shuup Classic Gray Theme
+ @import "@{front-path}/front/variables.less";
+ @import "@{front-path}/front/base.less";
+ @import "@{front-path}/front/inputs.less";
+ @import "@{front-path}/front/navigation.less";
+ @import "@{front-path}/front/footer.less";
+ @import "@{front-path}/front/modals.less";
+ @import "@{front-path}/front/product-card.less";
+ @import "@{front-path}/front/product-list.less";
+ @import "@{front-path}/front/product.less";
+ @import "@{front-path}/front/basket.less";
+ @import "@{front-path}/front/loader.less";
+ @import "@{front-path}/front/user-account.less";
+ @import "@{front-path}/front/carousel.less";
+ @import "@{front-path}/front/social-media-links.less";
+ @import "@{front-path}/front/dashboard.less";
+ @import "@{front-path}/front/product_list_filters.less";
+ @import "@{front-path}/front/badges.less";
 
 // Custom variables for blue color scheme
 @brand-primary: #21bffd;

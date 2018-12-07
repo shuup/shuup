@@ -17,8 +17,11 @@
     "autoprefixer": "^8.6.4",
     "babel-preset-env": "^1.7.0",
     "less": "^3.0.4",
-    "parcel-bundler": "^1.9.7",
+    "parcel-bundler": "^1.10.3",
     "postcss-modules": "^1.1.0",
-    "shuup-static-build-tools": "file:../../lib/shuup_static_build_tools"
+    "shuup-static-build-tools": "^1.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3"
   }
 }
