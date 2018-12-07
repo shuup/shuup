@@ -28,7 +28,7 @@ from shuup.core.models import (
 )
 from shuup.core.order_creator import OrderCreator
 from shuup.front.basket import get_basket
-from shuup.front.basket.commands import handle_add_campaign_code
+from shuup.front.basket.commands import handle_add_campaign_code, handle_remove_campaign_code
 from shuup.testing.factories import (
     CategoryFactory, create_product, get_default_product, get_default_shop,
     get_default_supplier, get_shipping_method
@@ -258,23 +258,33 @@ def test_multiple_campaigns_match_with_coupon(rf):
 
     dc = Coupon.objects.create(code="TEST", active=True)
     campaign2 = BasketCampaign.objects.create(
-            shop=shop, public_name="test",
-            name="test",
-            coupon=dc,
-            active=True
+        shop=shop, public_name="test",
+        name="test",
+        coupon=dc,
+        active=True
     )
 
     BasketDiscountAmount.objects.create(discount_amount=discount2, campaign=campaign2)
-
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     resp = handle_add_campaign_code(request, basket, dc.code)
     assert resp.get("ok")
 
-    discount_lines_values = [line.discount_amount for line in basket.get_final_lines()]
+    discount_lines_values = [line.discount_amount for line in basket.get_final_lines() if line.type == OrderLineType.DISCOUNT]
     assert price(discount1) in discount_lines_values
     assert price(discount2) in discount_lines_values
     assert basket.total_price == (price(product_price) * basket.product_count - price(discount1) - price(discount2))
+
+    assert basket.codes == [dc.code]
+
+    # test code removal
+    resp = handle_remove_campaign_code(request, basket, dc.code)
+    assert resp.get("ok")
+
+    assert basket.codes == []
+    discount_lines_values = [line.discount_amount for line in basket.get_final_lines() if line.type == OrderLineType.DISCOUNT]
+    assert price(discount1) in discount_lines_values
+    assert not price(discount2) in discount_lines_values
 
 
 @pytest.mark.django_db

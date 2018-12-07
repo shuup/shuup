@@ -10,6 +10,7 @@
             {{ render_basket_lines(basket) }}
             {{ render_unorderable_basket_lines(basket) }}
         </form>
+        {{ render_used_coupons(basket) }}
         {{ render_coupon_div(basket) }}
         {{ render_basket_summary(basket) }}
     </div>
@@ -158,6 +159,24 @@
     </a>
 {% endmacro %}
 
+{% macro render_used_coupons(basket) %}
+    {% if basket.codes %}
+    <div class="row basket-used-codes">
+        <div class="col-sm-6 col-sm-offset-6">
+            <p class="used-coupon-text">{% trans %}Coupons applied{% endtrans %}</p>
+            {% for code in basket.codes %}
+                <div class="basket-used-code">
+                    <span class="basket-code">{{ code }}</span>
+                    <button class="btn btn-primary basket-remove-code-btn" data-code="{{ code }}" type="button">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endmacro %}
+
 {% macro render_coupon_div(basket) %}
     <div class="row basket-discount-code">
         <div class="col-sm-6 pull-right">
@@ -165,10 +184,10 @@
             <div id="collapseCoupon">
                 <div class="input-group">
                     <input type="text"
-                           class="form-control"
-                           name="code"
-                           id="discount-code"
-                           placeholder="{% trans %}Coupon Code{% endtrans %}">
+                        class="form-control"
+                        name="code"
+                        id="discount-code"
+                        placeholder="{% trans %}Coupon Code{% endtrans %}">
                     <span class="input-group-btn">
                         <button type="submit"
                                 id="submit-code"
@@ -230,6 +249,7 @@
             {{ submit_coupon_code() }}
             {{ save_cart_js() }}
             {{ single_submit_form() }}
+            {{ remove_basket_code() }}
         });
     </script>
 {% endmacro %}
@@ -240,14 +260,41 @@
     });
 {% endmacro %}
 
+{% macro remove_basket_code() %}
+    $(".basket-remove-code-btn").click(function(evt) {
+        var code = $(evt.target).data("code");
+        if (code) {
+            var data = {
+                "command": "remove_campaign_code",
+                "code": code
+            };
+            $.ajax({
+                url: "",
+                method: "POST",
+                data: data,
+                success: function(response) {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert("{% trans %}Invalid coupon code.{% endtrans %}")
+                    }
+                },
+                error: function() {
+                    alert("{% trans %}Error when removing coupon.{% endtrans %}")
+                }
+            });
+        }
+    });
+{% endmacro %}
+
 {% macro submit_coupon_code() %}
     $("#submit-code").click(function(e){
         e.preventDefault();
-        const coupon = $("#discount-code").val();
+        var coupon = $("#discount-code").val();
 
         if (coupon.length) {
             // ajax request to command
-            const data = {
+            var data = {
                 "command": "add_campaign_code",
                 "code": coupon
             };
@@ -259,8 +306,7 @@
                 success: function(response) {
                     if (response.ok) {
                         location.reload();
-                    }
-                    else {
+                    } else {
                         alert("{% trans %}Coupon is not available.{% endtrans %}")
                     }
                 },
@@ -276,7 +322,7 @@
     {% if shuup.urls.has_url("shuup:saved_cart.save") %}
         $("#save-cart").click(function(e){
             e.preventDefault();
-            const title = $("#cart-title").val();
+            var title = $("#cart-title").val();
             $("#save-cart-status").empty();
             $.ajax({
                 url: "{{ url('shuup:saved_cart.save') }}",
