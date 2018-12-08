@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import six
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import ShopProduct
@@ -63,8 +64,9 @@ class ProductDiscountModule(DiscountModule):
                 )
 
         if discounted_prices:
+            product_id = (product if isinstance(product, six.integer_types) else product.pk)
             minimum_price_values = list(ShopProduct.objects.filter(
-                product_id=product.pk, shop=shop).values_list("minimum_price_value", flat=True))
+                product_id=product_id, shop=shop).values_list("minimum_price_value", flat=True))
 
             minimum_price_value = minimum_price_values[0] if minimum_price_values else 0
 
