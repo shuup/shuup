@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import datetime
+import django
 import itertools
 import time
 
@@ -286,7 +287,10 @@ def dst_safe_timezone_aware(dt, tz=None):
     try:
         return timezone.make_aware(dt, timezone=tz)
     except NonExistentTimeError:
-        return timezone.make_aware(dt, timezone=tz, is_dst=True)
+        if django.VERSION < (1, 9):
+            raise  # is_dst parameter not available for Django 1.8
+        else:
+            return timezone.make_aware(dt, timezone=tz, is_dst=True)
 
 
 def local_now(tz=None):
