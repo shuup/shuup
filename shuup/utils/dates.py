@@ -288,9 +288,12 @@ def dst_safe_timezone_aware(dt, tz=None):
         return timezone.make_aware(dt, timezone=tz)
     except NonExistentTimeError:
         if django.VERSION < (1, 9):
-            raise  # is_dst parameter not available for Django 1.8
-        else:
-            return timezone.make_aware(dt, timezone=tz, is_dst=True)
+            # is_dst parameter not available for Django 1.8
+            if tz is None:
+                tz = timezone.get_current_timezone()
+            return tz.localize(dt, is_dst=True)
+
+        return timezone.make_aware(dt, timezone=tz, is_dst=True)
 
 
 def local_now(tz=None):
