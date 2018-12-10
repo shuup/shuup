@@ -14,6 +14,7 @@ from shuup.discounts.models import CouponCode, CouponUsage, Discount
 from shuup.discounts.modules import CouponCodeModule
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+from shuup.core.pricing import get_price_info
 
 
 def _init_test_for_product_without_basket(rf, default_price):
@@ -84,6 +85,8 @@ def test_matching_coupon_code(rf):
     basket.add_code(coupon_code)
     assert coupon_code.code in basket.codes
     assert coupon_code.code in request.basket.codes
+
+    get_price_info(context=request, product=product.id) # Test if get_price_info works with product.id sent
     assert product.get_price_info(request).price == request.shop.create_price(default_price - discount_amount)
 
     # Apply coupon code after order is created
