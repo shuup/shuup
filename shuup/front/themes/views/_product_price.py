@@ -55,7 +55,7 @@ class ProductPriceView(ProductDetailView):
 
         supplier_pk = self.request.GET.get("supplier", None)
         if supplier_pk is not None:
-            context["supplier"] = Supplier.objects.filter(pk=int(supplier_pk)).first()
+            context["supplier"] = Supplier.objects.enabled().filter(pk=int(supplier_pk)).first()
         else:
             context["supplier"] = shop_product.get_supplier(
                 customer=self.request.customer,

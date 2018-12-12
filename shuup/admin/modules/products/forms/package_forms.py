@@ -74,7 +74,7 @@ def get_stock_statuses(product, shop_products):
     sales_decimals = sales_unit.decimals if sales_unit else 0
     sales_unit_symbol = sales_unit.symbol if sales_unit else ""
     for shop_product in shop_products:
-        for supplier in shop_product.suppliers.all():
+        for supplier in shop_product.suppliers.enabled():
             if supplier in stocks.keys():
                 continue
             stock_status = supplier.get_stock_status(product_id=product.id)
@@ -94,7 +94,7 @@ def get_orderability_errors(product, shop_products):
                 quantity=shop_product.minimum_purchase_quantity,
                 customer=None)]
         )
-        for supplier in shop_product.suppliers.all():
+        for supplier in shop_product.suppliers.enabled():
             orderability_errors.extend(
                 ["%s: %s" % (supplier.name, msg.message)
                  for msg in supplier.get_orderability_errors(

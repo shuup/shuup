@@ -78,7 +78,7 @@ def get_product_cross_sells(
         except ShopProduct.DoesNotExist:
             continue
         if orderable_only:
-            for supplier in Supplier.objects.all():
+            for supplier in Supplier.objects.enabled():
                 if shop_product.is_orderable(
                         supplier, request.customer, shop_product.minimum_purchase_quantity, allow_cache=True):
                     related_products.append(product)

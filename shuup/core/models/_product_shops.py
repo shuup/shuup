@@ -207,7 +207,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
     def save(self, *args, **kwargs):
         self.clean()
         super(ShopProduct, self).save(*args, **kwargs)
-        for supplier in self.suppliers.all():
+        for supplier in self.suppliers.enabled():
             supplier.module.update_stock(product_id=self.product.id)
 
     def clean(self):
@@ -312,7 +312,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         if not self.purchasable:
             yield ValidationError(_('The product is not purchasable'), code="not_purchasable")
 
-        if supplier is None and not self.suppliers.exists():
+        if supplier is None and not self.suppliers.enabled().exists():
             # `ShopProduct` must have at least one `Supplier`.
             # If supplier is not given and the `ShopProduct` itself
             # doesn't have suppliers we cannot sell this product.
@@ -327,7 +327,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                 code="purchase_quantity_not_met"
             )
 
-        if supplier and not self.suppliers.filter(pk=supplier.pk).exists():
+        if supplier and not self.suppliers.enabled().filter(pk=supplier.pk).exists():
             yield ValidationError(
                 _('The product is not supplied by %s.') % supplier,
                 code="invalid_supplier"
