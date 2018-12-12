@@ -167,12 +167,12 @@ class ShopProductForm(MultiLanguageModelForm):
         super(ShopProductForm, self).__init__(**kwargs)
         payment_methods_qs = PaymentMethod.objects.all()
         shipping_methods_qs = ShippingMethod.objects.all()
-        suppliers_qs = Supplier.objects.all()
+        suppliers_qs = Supplier.objects.enabled()
         if self.request:
             shop = self.request.shop
             payment_methods_qs = payment_methods_qs.filter(shop=shop)
             shipping_methods_qs = ShippingMethod.objects.filter(shop=shop)
-            suppliers_qs = shop.suppliers.all()
+            suppliers_qs = shop.suppliers.enabled()
         self.fields["payment_methods"].queryset = payment_methods_qs
         self.fields["shipping_methods"].queryset = shipping_methods_qs
         self.fields["suppliers"].queryset = suppliers_qs

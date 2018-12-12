@@ -36,7 +36,7 @@ class StocksListView(PicotableListView):
         ),
         Column(
             "supplier", _("Supplier"), display="supplier", linked=False,
-            filter_config=ChoicesFilter(Supplier.objects.filter(module_identifier="simple_supplier"))
+            filter_config=ChoicesFilter(Supplier.objects.enabled().filter(module_identifier="simple_supplier"))
         ),
         Column(
             "stock_information", _("Stock information"), display="get_stock_information",
@@ -64,6 +64,7 @@ class StocksListView(PicotableListView):
     def get_queryset(self):
         return StockCount.objects.filter(
             supplier__module_identifier="simple_supplier",
+            supplier__enabled=True,
             product__stock_behavior=StockBehavior.STOCKED,
             product__deleted=False
         ).order_by("product__id")

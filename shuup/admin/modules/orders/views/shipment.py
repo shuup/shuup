@@ -65,7 +65,7 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         # This is what simple supplier expects. If we would create shipment
         # for different supplier that is already selected for order line we
         # end failing the stock calculations at the simple supplier.
-        suppliers = Supplier.objects.filter(
+        suppliers = Supplier.objects.enabled().filter(
             order_lines__product__shipping_mode=ShippingMode.SHIPPED,
             order_lines__order=order
         ).distinct()

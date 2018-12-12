@@ -294,5 +294,5 @@ class ProductImporter(DataImporter):
     def get_help_context_data(cls, request):
         from shuup.admin.shop_provider import get_shop
         return {
-            "supplier": Supplier.objects.filter(shops=get_shop(request)).first()
+            "supplier": Supplier.objects.enabled().filter(shops=get_shop(request)).first()
         }
