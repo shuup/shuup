@@ -25,7 +25,6 @@ class PackageChildForm(forms.Form):
     def __init__(self, **kwargs):
         initial = kwargs.get("initial", {})
         self.product = initial.get("child")
-        self.shop_products = []
         super(PackageChildForm, self).__init__(**kwargs)
 
     def get_shop_products(self, user):
@@ -39,7 +38,7 @@ class PackageChildForm(forms.Form):
             for shop in shop_queryset:
                 try:
                     shop_product = self.product.get_shop_instance(shop)
-                    self.shop_products.append(shop_product)
+                    shop_products.append(shop_product)
                 except ShopProduct.DoesNotExist:
                     continue
             return shop_products
