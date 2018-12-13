@@ -274,8 +274,8 @@ def get_shop_overview_block(request, currency, for_date=None):
 
     daily = get_order_overview_for_date_range(currency, start_of_day, end, shop=shop)
     mtd = get_order_overview_for_date_range(currency, start_of_month, end, shop=shop)
-    ytd = get_order_overview_for_date_range(currency, start_of_year, end)
-    totals = get_orders_by_currency(currency).complete().aggregate(
+    ytd = get_order_overview_for_date_range(currency, start_of_year, end, shop=shop)
+    totals = get_orders_by_currency(currency).complete().filter(shop=shop).aggregate(
         num_orders=Count("id"),
         num_customers=Count("customer", distinct=True),
         sales=Sum("taxful_total_price_value")
