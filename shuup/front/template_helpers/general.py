@@ -94,7 +94,7 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None,
         pricing_context = PricingContext(shop=shop, customer=customer)
 
     if orderable_only:
-        suppliers = Supplier.objects.filter(shops=shop)
+        suppliers = Supplier.objects.enabled().filter(shops=shop)
         products = []
         for product in products_qs.iterator():
             if len(products) == n_products:
@@ -167,7 +167,7 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
     suppliers = []
     if orderable_only:
         # get suppliers for later use
-        suppliers = Supplier.objects.filter(shops__in=[request.shop])
+        suppliers = Supplier.objects.enabled().filter(shops__in=[request.shop])
 
     if sale_items_only:
         from shuup.core.pricing import PricingContext

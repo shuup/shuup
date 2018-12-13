@@ -229,7 +229,7 @@ class ProductStockStatusSerializer(serializers.Serializer):
 
     def get_stocks(self, product):
         stocks = []
-        supplier_qs = Supplier.objects.filter(shop_products__product=product).distinct()
+        supplier_qs = Supplier.objects.enabled().filter(shop_products__product=product).distinct()
 
         # filtered by supplier
         supplier_id = int(parse_decimal_string(self.context["request"].query_params.get("supplier", 0)))
@@ -264,7 +264,7 @@ class ProductFilter(FilterSet):
     product = django_filters.NumberFilter(name="pk", lookup_expr="exact")
     sku = django_filters.CharFilter(name="sku", lookup_expr="exact")
     supplier = django_filters.ModelChoiceFilter(name="shop_products__suppliers",
-                                                queryset=Supplier.objects.all(),
+                                                queryset=Supplier.objects.enabled(),
                                                 lookup_expr="exact")
 
     class Meta:

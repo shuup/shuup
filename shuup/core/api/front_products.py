@@ -250,7 +250,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
         return SalesUnitSerializer(shop_product.product.sales_unit).data
 
     def get_is_orderable(self, shop_product):
-        suppliers = shop_product.suppliers.all()
+        suppliers = shop_product.suppliers.enabled()
         if len(suppliers) == 0:
             return False
         try:

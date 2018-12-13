@@ -130,7 +130,7 @@ class ShopProductFormPart(FormPart):
     def get_initial(self):
         if not self.object.pk:
             return {
-                "suppliers": [Supplier.objects.first()]
+                "suppliers": [Supplier.objects.enabled().first()]
             }
 
     def has_perm(self):

@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import StockBehavior
 from shuup.testing.factories import (
     create_random_person, get_default_shop, get_default_shop_product,
     get_default_supplier
@@ -51,3 +50,18 @@ def test_get_suppliable_products():
 
     assert len(list(supplier.get_suppliable_products(shop, customer=customer))) == 1
     assert len(list(supplier.get_orderability_errors(shop_product, quantity=1000, customer=customer))) == 0
+
+
+@pytest.mark.django_db
+def test_suppliers_disabled():
+    customer = create_random_person()
+    shop_product = get_default_shop_product()
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+
+    assert shop_product.get_supplier() == supplier
+
+    supplier.enabled = False
+    supplier.save()
+    assert shop_product.get_supplier() is None
+    assert len(list(supplier.get_suppliable_products(shop, customer=customer))) == 0

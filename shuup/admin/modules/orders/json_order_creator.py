@@ -429,6 +429,6 @@ class JsonOrderCreator(object):
         for prod_id in removed_ids:
             product = Product.objects.get(id=prod_id)
             shop_product = product.get_shop_instance(shop)
-            supplier = shop_product.suppliers.first()
+            supplier = shop_product.suppliers.enabled().first()
             if supplier:
                 supplier.module.update_stock(product)

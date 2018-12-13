@@ -10,4 +10,4 @@
 class FirstSupplierStrategy(object):
 
     def get_supplier(self, **kwargs):
-        return kwargs["shop_product"].suppliers.first()
+        return kwargs["shop_product"].suppliers.enabled().first()

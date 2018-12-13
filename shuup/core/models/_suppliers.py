@@ -27,6 +27,11 @@ class SupplierType(Enum):
         EXTERNAL = _('external')
 
 
+class SupplierQueryset(models.QuerySet):
+    def enabled(self):
+        return self.filter(enabled=True)
+
+
 @python_2_unicode_compatible
 class Supplier(ModuleInterface, ShuupModel):
     default_module_spec = "shuup.core.suppliers:BaseSupplierModule"
@@ -54,6 +59,11 @@ class Supplier(ModuleInterface, ShuupModel):
             "You can select which shops the supplier is available to."
         )
     )
+    enabled = models.BooleanField(default=True, verbose_name=_("enabled"), help_text=_(
+        "Indicates whether this supplier is currently enabled."
+    ))
+
+    objects = SupplierQueryset.as_manager()
 
     def __str__(self):
         return self.name
