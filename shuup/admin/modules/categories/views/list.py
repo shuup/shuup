@@ -17,6 +17,7 @@ from shuup.core.models import Category, CategoryStatus, CategoryVisibility
 
 class CategoryListView(PicotableListView):
     model = Category
+    category_status_choices = [(status.value, status) for status in CategoryStatus if status != CategoryStatus.DELETED]
     default_columns = [
         Column("image", _("Image"), sortable=False, linked=True, raw=True),
         Column(
@@ -29,7 +30,7 @@ class CategoryListView(PicotableListView):
         Column(
             "status", _(u"Status"),
             filter_config=ChoicesFilter(
-                choices=CategoryStatus.choices,
+                choices=category_status_choices,
                 default=CategoryStatus.VISIBLE.value
             )
         ),
