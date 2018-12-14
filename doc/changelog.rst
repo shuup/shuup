@@ -1,13 +1,12 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.8.1
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-12-14 3:45pm -0800.
+
+Fix release for Django 1.8 support.
 
 
 Shuup 1.8.0
