@@ -1,13 +1,34 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.8.0
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2018-12-14 8:45am -0800.
+
+Admin
+~~~~~
+
+- Fix dashboard block to include the current shop
+  in the queryset
+- XTheme: Show guide on theme config page
+- Theme editing, remove guide button
+- Add option to prevent highlighting a picotable column
+
+Core
+~~~~
+
+- Improve to_aware function to consider DST cases
+- Add option to pass supplier to pricing context
+  for option for supplier based pricing.
+
+Front
+~~~~~
+
+- Add supplier is enabled information to supplier
+- Add option to remove coupon codes from the basket
+- Add option to show and select supplier from front
+  when adding products to basket.
 
 
 Shuup 1.7.3
