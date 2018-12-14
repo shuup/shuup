@@ -1,0 +1,7 @@
+Shuup 1.8.1 Release Notes
+=========================
+
+Released on 2018-12-14 3:45pm -0800.
+
+List of changes see `Git commit log
+<https://github.com/shuup/shuup/commits/v1.8.1>`__.
