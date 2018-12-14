@@ -22,21 +22,15 @@ def test_opengrah_admin(admin_user):
     assert Page.objects.count() == 0
     response, soup = client.response_and_soup(reverse("shuup_admin:simple_cms.page.new"))
     assert response.status_code == 200
-    payload = extract_form_fields(soup)
-
-    # do some cleaning
-    for key in payload.keys():
-        if payload[key] is None:
-            payload[key] = ""
 
     # save simple page
-    payload.update({
+    payload = {
         "base-title__en": "My Article",
         "base-url__en": "my-article",
         "base-available_from": "01/01/2018 00:00:00",
         "base-available_to": "01/01/2019 00:00:00",
-        "base-content__en": "Some content here"
-    })
+        "base-content__en": "Some content here",
+    }
     response = client.post(reverse("shuup_admin:simple_cms.page.new"), data=payload)
     assert response.status_code == 302
     assert Page.objects.count() == 1
