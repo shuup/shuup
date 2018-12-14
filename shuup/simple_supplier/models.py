@@ -32,7 +32,8 @@ def _get_prices_include_tax():
 
 
 class StockAdjustment(models.Model):
-    product = models.ForeignKey("shuup.Product", related_name="+", on_delete=models.CASCADE, verbose_name=_("product"))
+    product = models.ForeignKey(
+        "shuup.Product", related_name="stock_adjustments", on_delete=models.CASCADE, verbose_name=_("product"))
     supplier = models.ForeignKey("shuup.Supplier", on_delete=models.CASCADE, verbose_name=_("supplier"))
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
     created_by = models.ForeignKey(
