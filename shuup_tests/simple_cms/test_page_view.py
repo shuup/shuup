@@ -23,7 +23,7 @@ from shuup_tests.simple_cms.utils import create_multilanguage_page, create_page
 
 @pytest.mark.django_db
 def test_anon_cant_see_invisible_page(rf):
-    page = create_page(shop=get_default_shop())
+    page = create_page(shop=get_default_shop(), available_from=None)
     get_default_shop()
     view_func = PageView.as_view()
     request = apply_request_middleware(rf.get("/"))

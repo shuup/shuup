@@ -17,7 +17,7 @@ from shuup.testing.factories import get_default_shop
 @pytest.mark.django_db
 def test_none_dates_page_not_visible():
     # create page that is not anymore visible
-    page = create_page(shop=get_default_shop())
+    page = create_page(shop=get_default_shop(), available_from=None)
 
     assert not Page.objects.visible(get_default_shop()).filter(pk=page.pk).exists()
     assert not page.is_visible()
