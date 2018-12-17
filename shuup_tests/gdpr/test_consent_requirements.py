@@ -43,7 +43,7 @@ def test_consent_required(rf):
     assert not is_documents_consent_in_sync(shop, user)
 
     # create revisioned page
-    hidden_page = Page.objects.create(shop=shop, )
+    hidden_page = Page.objects.create(shop=shop, available_from=None)
     assert hidden_page not in Page.objects.visible(shop=shop)
     assert gdpr_settings.privacy_policy_page == get_privacy_policy_page(shop)
     assert hidden_page in get_possible_consent_pages(shop)
