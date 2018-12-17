@@ -8,33 +8,29 @@
 from __future__ import unicode_literals
 
 from collections import Counter
-from decimal import Decimal
 
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from six import iteritems
 
-from shuup import configuration
 from shuup.core import taxing
 from shuup.core.fields.utils import ensure_decimal_places
 from shuup.core.models import (
     AnonymousContact, OrderStatus, PaymentMethod, Product, ProductMode,
-    ShippingMethod, ShippingMode, Shop, ShopProduct, Supplier, TaxClass
+    ShippingMethod, ShippingMode, Shop, Supplier, TaxClass
 )
 from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
 from shuup.core.utils.line_unit_mixin import LineWithUnit
 from shuup.utils.decorators import non_reentrant
-from shuup.utils.i18n import format_money, is_existing_language
+from shuup.utils.i18n import is_existing_language
 from shuup.utils.money import Money
 
 from ._source_modifier import get_order_source_modifier_modules
-from .constants import ORDER_MIN_TOTAL_CONFIG_KEY
 from .signals import post_compute_source_lines
 
 
@@ -524,39 +520,10 @@ class OrderSource(object):
             raise ValidationError(error_message.args[0], code="invalid_order_source")
 
     def get_validation_errors(self):  # noqa (C901)
-        # check for the minimum sum of order total
-        min_total = configuration.get(self.shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(0))
-        total = (self.taxful_total_price.value if self.shop.prices_include_tax else self.taxless_total_price.value)
-        if total < min_total:
-            min_total_price = format_money(self.shop.create_price(min_total))
-            yield ValidationError(_("The total should be greater than {} to be ordered.").format(min_total_price),
-                                  code="order_total_too_low")
-
-        shipping_method = self.shipping_method
-        payment_method = self.payment_method
-
-        if shipping_method:
-            for error in shipping_method.get_unavailability_reasons(source=self):
+        from shuup.apps.provides import get_provide_objects
+        for order_source_validator in get_provide_objects("order_source_validator"):
+            for error in order_source_validator.get_validation_errors(self):
                 yield error
-
-        if payment_method:
-            for error in payment_method.get_unavailability_reasons(source=self):
-                yield error
-
-        for supplier in self._get_suppliers():
-            for product, quantity in iteritems(self._get_products_and_quantities(supplier)):
-                try:
-                    shop_product = product.get_shop_instance(shop=self.shop)
-                except ShopProduct.DoesNotExist:
-                    yield ValidationError(
-                        _("%s not available in this shop") % product.name,
-                        code="product_not_available_in_shop"
-                    )
-                    continue
-                for error in shop_product.get_orderability_errors(
-                        supplier=supplier, quantity=quantity, customer=self.customer):
-                    error.message = "%s: %s" % (product.name, error.message)
-                    yield error
 
     def _get_suppliers(self):
             return set([l.supplier for l in self.get_lines() if l.supplier])
