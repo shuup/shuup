@@ -74,7 +74,7 @@ def test_invisible_children(rf):
     parent_content = "Parent content"
     page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content, shop=shop)
     children_content = "Children content"
-    create_page(content=children_content, parent=page, shop=shop)  # Create invisible children
+    create_page(content=children_content, parent=page, shop=shop, available_from=None)  # Create invisible children
 
     assert page.list_children_on_page == False
     check_children_content(request, page, children_content, False)

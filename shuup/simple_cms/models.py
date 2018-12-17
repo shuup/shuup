@@ -64,7 +64,7 @@ class PageQuerySet(TranslatableQuerySet):
 class Page(MPTTModel, TranslatableModel):
     shop = models.ForeignKey("shuup.Shop", verbose_name=_('shop'))
     available_from = models.DateTimeField(
-        null=True, blank=True, db_index=True,
+        default=now, null=True, blank=True, db_index=True,
         verbose_name=_('available from'), help_text=_(
             "Set an available from date to restrict the page to be available only after a certain date and time. "
             "This is useful for pages describing sales campaigns or other time-sensitive pages."
