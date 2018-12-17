@@ -227,6 +227,11 @@ Core
     order source, e.g. in its
     `~shuup.core.order_creator.OrderSource.get_final_lines`.
 
+``order_source_validator``
+    List of classes that validate a given `~shuup.core.order_creator.OrderSource` and return an error iterator.
+    The class must have a ``get_validation_errors`` class method which receives the ``order_source`` and returns/yields
+    ``ValidationError`` instances.
+
 ``pricing_module``
     Pricing module classes; the pricing module in use is set with the ``SHUUP_PRICING_MODULE`` setting.
 

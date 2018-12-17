@@ -15,6 +15,10 @@ from ._source_modifier import (
     get_order_source_modifier_modules, is_code_usable,
     OrderSourceModifierModule
 )
+from ._validators import (
+    OrderSourceMethodsUnavailabilityReasonsValidator,
+    OrderSourceMinTotalValidator, OrderSourceSupplierValidator
+)
 
 __all__ = [
     "get_order_source_modifier_modules",
@@ -23,6 +27,9 @@ __all__ = [
     "OrderModifier",
     "OrderSource",
     "OrderSourceModifierModule",
+    "OrderSourceMethodsUnavailabilityReasonsValidator",
+    "OrderSourceMinTotalValidator",
+    "OrderSourceSupplierValidator",
     "SourceLine",
     "TaxesNotCalculated"
 ]

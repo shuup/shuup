@@ -29,6 +29,11 @@ class ShuupCoreAppConfig(AppConfig):
         "pricing_module": [
             "shuup.core.pricing.default_pricing:DefaultPricingModule"
         ],
+        "order_source_validator": [
+            "shuup.core.order_creator:OrderSourceMinTotalValidator",
+            "shuup.core.order_creator:OrderSourceMethodsUnavailabilityReasonsValidator",
+            "shuup.core.order_creator:OrderSourceSupplierValidator",
+        ]
     }
 
     def ready(self):
