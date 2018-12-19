@@ -69,7 +69,7 @@
     </div>
 {% endmacro %}
 
-{% macro render_product_filters_top() %}
+{% macro render_product_filters_top(item=None) %}
     <div class="row product-list-actions">
         <div class="col-sm-4">
             {% if "sort" in form.fields.keys() %}
