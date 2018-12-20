@@ -178,7 +178,7 @@ def get_shop_count(context):
 
 @contextfunction
 def get_admin_shop(context):
-    return context["request"].shop
+    return get_shop(context["request"])
 
 
 @contextfunction
