@@ -219,3 +219,37 @@ def test_report_writer_populator_provide():
 
         for k, v in REPORT_WRITERS_MAP.items():
             assert populator.populated_map[k] == v
+
+
+def test_get_totals_return_correct_totals():
+    expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(10, 1, 0, 1)
+    report_data = {
+        "report": SalesTestReport.get_name(),
+        "shop": shop.pk,
+        "date_range": DateRangeChoices.THIS_YEAR,
+        "writer": "html",
+        "force_download": 1,
+    }
+    data = [{
+        "date": "",
+        "order_count": None,
+        "product_count": 10,
+        "taxless_total": TaxlessPrice("10", "EUR"),
+        "taxful_total": TaxfulPrice("5", "EUR"),
+    }, {
+        "date": "",
+        "order_count": 12,
+        "product_count": None,
+        "taxless_total": TaxlessPrice("20", "EUR"),
+        "taxful_total": None,
+    }]
+    report = SalesTestReport(**report_data)
+    totals = report.get_totals(data)
+    expected = {
+        "date": None,
+        "order_count": 12,
+        "product_count": 10,
+        "taxless_total": TaxlessPrice("30", "EUR"),
+        "taxful_total": TaxfulPrice("5", "EUR")
+    }
+    assert totals == expected
