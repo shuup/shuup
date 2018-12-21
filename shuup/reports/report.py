@@ -112,7 +112,7 @@ class ShuupReportBase(object):
                         totals[k] = None
 
                 if type(val) in countable_types:
-                    totals[k] += val
+                    totals[k] = totals[k] + val if totals[k] else val
 
         return totals
 
