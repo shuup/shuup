@@ -263,7 +263,7 @@
 {% endmacro %}
 
 {% macro render_confirm_form(form) %}
-    <form role="form" method="post" action="{{ phase_urls["confirm"] }}">
+    <form role="form" method="post" action="{{ phase_urls["confirm"] }}" id="confirm_form">
         {% csrf_token %}
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -325,3 +325,4 @@
         <i class="fa fa-check"></i> {% trans %}Place Order{% endtrans %}
     </button>
 {% endmacro %}
+
