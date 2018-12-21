@@ -14,3 +14,12 @@
         </ul>
     {% endif %}
 {% endblock %}
+
+{% block extrajs %}
+    {{ super() }}
+    <script>
+        $("#confirm_form").on("submit", function() {
+            $(".btn-lg").text("{% trans %}Please wait...{% endtrans %}").prop("disabled", "true");
+        });
+    </script>
+{% endblock %}
