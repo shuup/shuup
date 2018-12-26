@@ -73,7 +73,7 @@ export function init(config = {}) {
             if (!savedOrder.id || savedOrder.id !== orderId) {
                 // Saved order id does not match with current order
                 // Purge the wrong saved state and initialize from orderData
-                persistor.purgeAll();
+                persistor.purge();
                 store.dispatch(setShop(config.orderData.shop));
                 store.dispatch(setCustomer(config.orderData.customer));
                 store.dispatch(setShippingMethod(config.orderData.shippingMethodId));
@@ -84,7 +84,7 @@ export function init(config = {}) {
         } else {  // New mode
             if (savedOrder.id) {
                 // Purge the old saved state for existing order
-                persistor.purgeAll();
+                persistor.purge();
             }
         }
         controller = m.mount(document.getElementById("order-tool-container"), {
