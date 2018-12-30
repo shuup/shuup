@@ -116,15 +116,23 @@ $(function() {
         const saveBtn = document.getElementsByClassName("btn btn-success btn-save")[0];
         const groupBtn = document.getElementsByClassName("btn-group")[0];
         const dropBtn = document.getElementsByClassName("btn dropdown-toggle btn-success btn-dropdown-toggle")[0];
-        if(saveBtn) {
-            if (document.body.scrollTop === 0 && document.documentElement.scrollTop === 0){
-                saveBtn.classList.remove("opaque");
-                dropBtn.classList.remove("opaque");
-                groupBtn.classList.remove("opaque");
-            } else if (!(inViewport(saveBtn))) {
-                groupBtn.classList.add("opaque")
-                saveBtn.classList.add("opaque");
-                dropBtn.classList.add("opaque");
+        elemArr = []
+        if(dropBtn) {
+            elemArr.push(groupBtn);
+            elemArr.push(dropBtn);
+        }
+        else if (saveBtn) {
+            elemArr.push(saveBtn);
+        }
+
+        if (document.body.scrollTop === 0 && document.documentElement.scrollTop === 0){
+            for(let el of elemArr) {
+                el.classList.remove("opaque");
+            }
+        }
+        else if (!(inViewport(saveBtn))) {
+            for(let el of elemArr) {
+                el.classList.add("opaque");
             }
         }
     };
