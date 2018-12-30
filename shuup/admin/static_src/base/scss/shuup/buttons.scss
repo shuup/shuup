@@ -203,6 +203,10 @@ fieldset[disabled] .btn {
             }
             background-color: darken($success, 5%);
             color:$white;
+            position: fixed;
+            bottom: 10px;
+            right: 20px;
+            z-index: $zindex-fixed;
         }
     }
 }

@@ -166,10 +166,15 @@ body {
             }
 
             &.opaque {
+                background-color: darken($success, 5%);
                 position: fixed;
                 bottom: 10px;
                 right: 20px;
                 z-index: $zindex-fixed;
+
+                .btn-success {
+                    color: $white;
+                }
             }
 
             .btn {
