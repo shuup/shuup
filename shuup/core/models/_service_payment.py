@@ -116,8 +116,12 @@ class PaymentProcessor(ServiceProvider):
             order.save(update_fields=("payment_status",))
 
     def _create_service(self, choice_identifier, **kwargs):
-        return PaymentMethod.objects.create(
+        labels = kwargs.pop("labels", None)
+        service = PaymentMethod.objects.create(
             payment_processor=self, choice_identifier=choice_identifier, **kwargs)
+        if labels:
+            service.labels = labels
+        return service
 
 
 class PaymentUrls(object):

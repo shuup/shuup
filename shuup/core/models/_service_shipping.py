@@ -87,8 +87,12 @@ class Carrier(ServiceProvider):
         super(Carrier, self).delete(*args, **kwargs)
 
     def _create_service(self, choice_identifier, **kwargs):
-        return ShippingMethod.objects.create(
+        labels = kwargs.pop("labels", None)
+        service = ShippingMethod.objects.create(
             carrier=self, choice_identifier=choice_identifier, **kwargs)
+        if labels:
+            service.labels = labels
+        return service
 
 
 class CustomCarrier(Carrier):
