@@ -49,23 +49,25 @@ window.serializeForm = function($form) {
 };
 
 window.renderFormErrors = function($form, errors) {
-    for(let formName in errors) {
-        let formErrors = errors[formName];
-        for(let fieldName in formErrors) {
-            let fieldErrors = formErrors[fieldName].join(" ");
+    Object.keys(errors).forEach((formName) => {
+        const formErrors = errors[formName];
+        Object.keys(formErrors).forEach((fieldName) => {
+            const fieldErrors = formErrors[fieldName].join(" ");
             if(fieldName === "__all__") {
                 $form.parent().find(".errors").append('<div class="alert alert-danger">' + fieldErrors + '</div>');
             } else {
-                let $field = $form.find(":input[name='" + formName + "-" + fieldName + "']").parent(".form-group");
-                $field.append("<span class='help-block error-block'>" + fieldErrors + "</span>").addClass("has-error");
+                const field = $("[name=" + formName + "-" + fieldName + "]");
+                field.closest(".form-group").addClass("has-error");
+                $("<br><span class='help-block error-block'>" + fieldErrors + "</span>").insertBefore(field.closest(".form-input-group"));
             }
-        }
-    }
+        });
+    });
 };
 
 window.clearErrors = function ($form) {
     $form.find(".has-error").removeClass("has-error");
     $form.find(".error-block").remove();
+    $form.find("br").remove();
     $form.parent().find(".errors").empty();
 };
 

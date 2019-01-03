@@ -98,6 +98,7 @@
                             next();
                         }
                     }).fail((err) => {
+                        window.clearErrors($activeWizardPane.find("form")); // Remove previous form errors
                         this.find("i.fa.fa-spinner").remove();
                         renderFormErrors($activeWizardPane.find("form"), err.responseJSON);
                     });
