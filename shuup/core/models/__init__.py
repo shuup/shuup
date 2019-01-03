@@ -29,6 +29,7 @@ from ._contacts import (
 )
 from ._counters import Counter, CounterType
 from ._currencies import Currency, get_currency_precision
+from ._labels import Label
 from ._manufacturers import Manufacturer
 from ._media import MediaFile, MediaFolder
 from ._order_lines import (
@@ -115,6 +116,7 @@ __all__ = [
     "Gender",
     "GroupAvailabilityBehaviorComponent",
     "ImmutableAddress",
+    "Label",
     "Manufacturer",
     "MediaFile",
     "MediaFolder",

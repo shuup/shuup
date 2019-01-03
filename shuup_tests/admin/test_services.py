@@ -21,7 +21,7 @@ from shuup.admin.modules.services.views import (
 )
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import override_provides
-from shuup.core.models import PaymentMethod, ShippingMethod
+from shuup.core.models import Label, PaymentMethod, ShippingMethod
 from shuup.testing.factories import (
     create_empty_order, get_custom_carrier, get_custom_payment_processor,
     get_default_payment_method, get_default_shipping_method, get_default_shop,
@@ -115,7 +115,7 @@ def test_method_creation(rf, admin_user, view, model, service_provider_attr, get
             "base-name__en": "Custom method",
             "base-shop": get_default_shop().id,
             "base-tax_class": get_default_tax_class().id,
-            "base-enabled": True,
+            "base-enabled": True
         }
         # Default provider CustomCarrier/CustomPaymentProcessor should be set in form init
         methods_before = model.objects.count()
@@ -126,6 +126,45 @@ def test_method_creation(rf, admin_user, view, model, service_provider_attr, get
             response.render()
         assert response.status_code in [200, 302]
         assert model.objects.count() == (methods_before + 1)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("view,model,service_provider_attr,get_provider", [
+    (PaymentMethodEditView, PaymentMethod, "payment_processor", get_custom_payment_processor),
+    (ShippingMethodEditView, ShippingMethod, "carrier", get_custom_carrier)
+])
+def test_method_creation_with_labels(rf, admin_user, view, model, service_provider_attr, get_provider):
+    """
+    To make things little bit more simple let's use only english as
+    an language.
+    """
+    with override_settings(LANGUAGES=[("en", "en")]):
+        for identifier, name in [("pickup", "Pickup"), ("delivery", "Delivery"), ("airmail", "Airmail")]:
+            label = Label.objects.create(identifier=identifier, name=name)
+            assert label.name == name
+            assert "%s" % label == name
+
+        view = view.as_view()
+        service_provider_field = "base-%s" % service_provider_attr
+        data = {
+            service_provider_field: get_provider().id,
+            "base-choice_identifier": "manual",
+            "base-name__en": "Custom method",
+            "base-shop": get_default_shop().id,
+            "base-tax_class": get_default_tax_class().id,
+            "base-enabled": True,
+            "base-labels": Label.objects.values_list("pk", flat=True)
+        }
+        # Default provider CustomCarrier/CustomPaymentProcessor should be set in form init
+        methods_before = model.objects.count()
+        url = "/?provider=%s" % get_provider().id
+        request = apply_request_middleware(rf.post(url, data=data), user=admin_user)
+        response = view(request, pk=None)
+        if hasattr(response, "render"):
+            response.render()
+        assert response.status_code in [200, 302]
+        assert model.objects.count() == (methods_before + 1)
+        assert model.objects.last().labels.count() == Label.objects.count()
 
 
 @pytest.mark.django_db

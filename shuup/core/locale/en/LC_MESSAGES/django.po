@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-29 23:12+0000\n"
+"POT-Creation-Date: 2019-01-03 20:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -905,6 +905,15 @@ msgstr ""
 msgid "currencies"
 msgstr ""
 
+msgid "The shop name. This name is displayed throughout admin."
+msgstr ""
+
+msgid "label"
+msgstr ""
+
+msgid "labels"
+msgstr ""
+
 msgid "added"
 msgstr ""
 
@@ -922,9 +931,6 @@ msgid ""
 msgstr ""
 
 msgid "logo"
-msgstr ""
-
-msgid "Manufacturer logo. Will be shown on page."
 msgstr ""
 
 msgid "manufacturer"
@@ -1107,9 +1113,6 @@ msgid "order statuses"
 msgstr ""
 
 msgid "order identifier"
-msgstr ""
-
-msgid "label"
 msgstr ""
 
 msgid "reference number"
@@ -2170,12 +2173,21 @@ msgstr ""
 msgid "staff members"
 msgstr ""
 
-msgid "The shop name. This name is displayed throughout admin."
-msgstr ""
-
 msgid ""
 "The public shop name. This name is displayed in the store front and in any "
 "customer email correspondence."
+msgstr ""
+
+msgid ""
+"To make your shop stand out, give it an awesome description. This is what "
+"will help your shoppers learn about your shop. It will also help shoppers "
+"find your store from the web."
+msgstr ""
+
+msgid ""
+"Enter a short description for your shop. The short description will be used "
+"to get the attention of your customer with a small but precise description "
+"of your shop."
 msgstr ""
 
 msgid "maintenance message"
@@ -2230,6 +2242,9 @@ msgid "module data"
 msgstr ""
 
 msgid "You can select which shops the supplier is available to."
+msgstr ""
+
+msgid "Indicates whether this supplier is currently enabled."
 msgstr ""
 
 msgid "Cannot change business critical fields of Tax that is in use"

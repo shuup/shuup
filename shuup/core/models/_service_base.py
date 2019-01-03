@@ -217,6 +217,7 @@ class Service(TranslatableShuupModel):
 
     behavior_components = models.ManyToManyField(
         'ServiceBehaviorComponent', verbose_name=_("behavior components"))
+    labels = models.ManyToManyField("Label", blank=True, verbose_name=_("labels"))
 
     objects = ServiceQuerySet.as_manager()
 
