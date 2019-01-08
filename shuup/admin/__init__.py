@@ -44,7 +44,8 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.suppliers:SupplierModule",
             "shuup.admin.modules.support:ShuupSupportModule",
             "shuup.admin.modules.sample_data:SampleDataAdminModule",
-            "shuup.admin.modules.settings.SettingsModule"
+            "shuup.admin.modules.settings.SettingsModule",
+            "shuup.admin.modules.labels:LabelsModule",
         ],
         "admin_shop_form_part": [
             "shuup.admin.modules.settings.form_parts.OrderConfigurationFormPart"

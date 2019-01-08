@@ -85,6 +85,7 @@ class Shop(ChangeProtected, TranslatableShuupModel):
         "MutableAddress", verbose_name=_("contact address"), blank=True, null=True, on_delete=models.SET_NULL)
     staff_members = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True, related_name="+", verbose_name=_('staff members'))
+    labels = models.ManyToManyField("Label", blank=True, related_name="shops", verbose_name=_("labels"))
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64, verbose_name=_("name"), help_text=_(
@@ -93,6 +94,22 @@ class Shop(ChangeProtected, TranslatableShuupModel):
         public_name=models.CharField(max_length=64, verbose_name=_("public name"), help_text=_(
             "The public shop name. This name is displayed in the store front and in any customer email correspondence."
         )),
+        description=models.TextField(
+            blank=True, verbose_name=_('description'),
+            help_text=_(
+                "To make your shop stand out, give it an awesome description. "
+                "This is what will help your shoppers learn about your shop. "
+                "It will also help shoppers find your store from the web."
+            )
+        ),
+        short_description=models.CharField(
+            max_length=150, blank=True, verbose_name=_('short description'),
+            help_text=_(
+                "Enter a short description for your shop. "
+                "The short description will be used to get the attention of your "
+                "customer with a small but precise description of your shop."
+            )
+        ),
         maintenance_message=models.CharField(
             max_length=300, blank=True, verbose_name=_("maintenance message"), help_text=_(
                 "The message to display to customers while your shop is in maintenance mode."

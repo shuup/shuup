@@ -13,7 +13,9 @@ from django.utils.translation import ugettext_lazy as _
 from django_countries import Countries
 
 from shuup.admin.forms import ShuupAdminForm
-from shuup.admin.forms.widgets import TextEditorWidget
+from shuup.admin.forms.widgets import (
+    QuickAddLabelMultiSelect, TextEditorWidget
+)
 from shuup.core.models import (
     CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
     GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
@@ -31,10 +33,11 @@ class BaseMethodForm(ShuupAdminForm):
         ]
         base_fields = [
             "choice_identifier", "name", "description", "enabled",
-            "logo", "tax_class"
+            "logo", "tax_class", "labels"
         ]
         widgets = {
-            "description": TextEditorWidget()
+            "description": TextEditorWidget(),
+            "labels": QuickAddLabelMultiSelect(),
         }
 
     def __init__(self, **kwargs):

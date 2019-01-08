@@ -13,7 +13,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.forms.widgets import QuickAddUserMultiSelect
+from shuup.admin.forms.widgets import (
+    QuickAddLabelMultiSelect, QuickAddUserMultiSelect
+)
 from shuup.core.models import Currency, MutableAddress, Shop
 from shuup.core.settings_provider import ShuupSettings
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
@@ -32,6 +34,9 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
     class Meta:
         model = Shop
         exclude = ("owner", "options", "contact_address")
+        widgets = {
+            "labels": QuickAddLabelMultiSelect(),
+        }
 
     def __init__(self, **kwargs):
         super(ShopBaseForm, self).__init__(**kwargs)
