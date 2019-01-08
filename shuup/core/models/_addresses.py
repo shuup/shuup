@@ -31,8 +31,8 @@ REGION_ISO3166 = {
     )),
     "european-union": set((
         "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GR",
-        "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI",
-        "SK"
+        "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE",
+        "SI", "SK"
     ))
 }
 
