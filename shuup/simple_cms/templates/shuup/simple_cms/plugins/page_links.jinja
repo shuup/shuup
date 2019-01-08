@@ -4,7 +4,7 @@
         <ul>
         {% for page in pages %}
             <li>
-                <a href="/{{ page.url }}">{{ page }}</a>
+                <a href="{{ url('shuup:cms_page', url=page.url) }}">{{ page }}</a>
             </li>
         {% endfor %}
         </ul>
