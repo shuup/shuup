@@ -16,12 +16,11 @@ https://shuup.com/
 Copyright
 ---------
 
-Copyright (C) 2012-2018 by Shuup Inc. <support@shuup.com>
+Copyright (C) 2012-2019 by Shoop Commerce Ltd. <support@shuup.com>
 
-Shuup is International Registered Trademark & Property of Shuup Inc.,
-Business Address: 200 Continental Drive, Suite 401,
-Newark, DE 19713,
-United States Of America
+Shuup is International Registered Trademark & Property of Shoop Commerce Ltd.,
+Business ID: FI27184225,
+Business Address: Iso-Roobertinkatu 20-22, 00120 HELSINKI, Finland.
 
 CLA
 ---
