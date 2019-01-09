@@ -12,7 +12,14 @@ from rest_framework import mixins, serializers, viewsets
 
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.address import AddressSerializer
-from shuup.core.api.orders import OrderFilter, OrderTaxesMixin
+from shuup.core.api.orders import (
+    OrderFilter, OrderTaxesMixin, PaymentSerializer
+)
+from shuup.core.api.serializers import LabelSerializer
+from shuup.core.api.service import (
+    PaymentMethodSerializer, ShippingMethodSerializer
+)
+from shuup.core.api.shop import CurrencySerializer
 from shuup.core.models import (
     Currency, get_person_contact, Order, OrderLine, Shop
 )
@@ -22,8 +29,6 @@ from .mixins import (
     BaseLineSerializerMixin, BaseOrderTotalSerializerMixin,
     TaxLineSerializerMixin
 )
-from .orders import PaymentSerializer
-from .shop import CurrencySerializer
 
 
 def filter_products_lines(line):
@@ -56,14 +61,18 @@ def sum_order_lines_price(order, attribute, filter_line_fn=None):
     return sum([getattr(x, attribute) for x in order.lines.all() if (not filter_line_fn or filter_line_fn(x))], zero)
 
 
-class ShopSerializer(serializers.ModelSerializer):
+class OrderShopSerializer(serializers.ModelSerializer):
     logo = serializers.SerializerMethodField()
     contact_address = AddressSerializer()
     options = serializers.JSONField(binary=False, required=False)
+    labels = LabelSerializer(many=True)
 
     class Meta:
         model = Shop
-        fields = ("id", "name", "logo", "options", "contact_address")
+        fields = (
+            "id", "name", "description", "short_description",
+            "logo", "options", "contact_address", "labels"
+        )
 
     def get_logo(self, shop):
         if shop.logo:
@@ -126,6 +135,10 @@ class OrderSumTotalSerializerMixin(serializers.Serializer):
 
 class BaseOrderSerializer(serializers.Serializer):
     currency = serializers.SerializerMethodField()
+    shipping_address = AddressSerializer()
+    billing_address = AddressSerializer()
+    payment_method = PaymentMethodSerializer()
+    shipping_method = ShippingMethodSerializer()
 
     def get_currency(self, order):
         return CurrencySerializer(Currency.objects.get(code=order.currency), context=self.context).data
@@ -135,7 +148,7 @@ class OrderSerializer(BaseOrderTotalSerializerMixin,
                       OrderSumTotalSerializerMixin,
                       BaseOrderSerializer,
                       serializers.ModelSerializer):
-    shop = ShopSerializer()
+    shop = OrderShopSerializer()
     payments = PaymentSerializer(many=True)
 
     class Meta:

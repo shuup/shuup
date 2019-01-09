@@ -10,9 +10,10 @@ from __future__ import unicode_literals
 from parler_rest.serializers import (
     TranslatableModelSerializer, TranslatedFieldsField
 )
+from rest_framework import serializers
 from rest_framework.fields import empty
-from rest_framework.serializers import SerializerMethodField
 
+from shuup.core.api.serializers import LabelSerializer
 from shuup.core.models import (
     PaymentMethod, ServiceBehaviorComponent, ShippingMethod
 )
@@ -44,9 +45,10 @@ class BehaviorComponentSerializer(TranslatableModelSerializer):
 
 
 class ServiceBaseSerializer(TranslatableModelSerializer):
-    price = SerializerMethodField()
-    is_available = SerializerMethodField()
-    behavior_components = SerializerMethodField()
+    price = serializers.SerializerMethodField()
+    is_available = serializers.SerializerMethodField()
+    behavior_components = serializers.SerializerMethodField()
+    labels = LabelSerializer(many=True)
 
     def get_is_available(self, service):
         is_available = None

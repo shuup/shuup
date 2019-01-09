@@ -8,10 +8,10 @@
 from __future__ import unicode_literals
 
 import datetime
-import django
 import itertools
 import time
 
+import django
 import six
 from django.utils import timezone
 from django.utils.translation import ugettext as _

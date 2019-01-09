@@ -20,6 +20,7 @@ from rest_framework.settings import api_settings
 from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.api.address import AddressSerializer
+from shuup.core.api.serializers import LabelSerializer
 from shuup.core.models import Currency, Shop, ShopStatus
 from shuup.utils.i18n import get_current_babel_locale
 
@@ -43,6 +44,7 @@ class ShopSerializer(TranslatableModelSerializer):
     contact_address = AddressSerializer(read_only=True)
     distance = serializers.SerializerMethodField()
     options = serializers.JSONField(binary=False, required=False)
+    labels = LabelSerializer(many=True, required=False)
 
     class Meta:
         model = Shop
