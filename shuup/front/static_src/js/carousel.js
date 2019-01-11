@@ -19,9 +19,10 @@ $(function() {
             autoplayTimeout: interval,
             autoplayHoverPause: pauseOnHover,
             nav: arrowsVisible,
+            navElement: "span",
             navText: [
-                '<i class="fa fa-angle-left .carousel-control .icon-prev"></i>',
-                '<i class="fa fa-angle-right .carousel-control .icon-prev"></i>'
+                '<span type="button" role="presentation" class="owl-prev"><i class="fa carousel fa-angle-left .carousel-control .icon-prev"></i></span>',
+                '<span type="button" role="presentation" class="owl-next"><i class="fa carousel fa-angle-right .carousel-control .icon-next"></i></span>'
             ],
             dots: useDotNavigation,
             items: 1
@@ -40,9 +41,10 @@ $(function() {
         $(this).owlCarousel({
             margin: 30,
             nav: arrowsVisible,
+            navElement: "span",
             navText: [
-                '<i class="fa fa-angle-left .carousel-control .icon-prev"></i>',
-                '<i class="fa fa-angle-right .carousel-control .icon-prev"></i>'
+                '<span type="button" role="presentation" class="owl-prev"><i class="fa fa-angle-left .carousel-control .icon-prev"></i></span>',
+                '<span type="button" role="presentation" class="owl-next"><i class="fa fa-angle-right .carousel-control .icon-next"></i></span>'
             ],
             responsiveClass: true,
             responsive: (responsiveConfigure ? responsiveConfigure : {0: {items: 2}, 640: {items: 2}, 992: {items: 4}})
