@@ -1,13 +1,36 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.8.2
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-01-11 12:45pm -0800.
+
+Core
+~~~~
+
+- Introduce labels for shops and services. Labels can be used to
+  group services and shops for multishop/multivendor purposes.
+- Introduce order source validator. This enables custom validation
+  for very specific cases, such as, customer age check, basket can't
+  have a product because customer has some limit to buy it.
+
+
+Miscellaneous
+~~~~~~~~~~~~~
+
+- Front: fix bug in carousel with Firefox and increase padding
+  for slide-arrows
+- Simple CMS: fix bug in page links
+- Addresses: add Croatia to list of EU countries
+- Wizard: fix bug in showing field errors at onboarding
+- Front: show admin button for all when there is no theme selected
+- Admin: fix bug in "save"-button at xtheme edit
+- Admin: fix product attribute card on opening
+- Admin: Fix bug in order edit view
+- Reports: fix bug in report get_totals
+- Front: disable "place order"-button on checkout after submit
+- Simple CMS: set page availability by default
 
 
 Shuup 1.8.1
