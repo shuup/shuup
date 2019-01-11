@@ -133,6 +133,13 @@
         position: absolute;
         top: 50%;
         margin-top: -15px;
+
+    }
+    .carousel { // Don't add padding to carousel banners.
+        padding: 15px 20px;
+        @media (max-width: @screen-xs-max) {
+            padding: unset;
+        }
     }
     .fa-angle-left {
         left: -25px;
