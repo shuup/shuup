@@ -93,8 +93,8 @@ Roadmap
 
 * Per object placeholders. Option to add content per contact group, category, product and CMS page. `#1220 <https://github.com/shuup/shuup/issues/1220>`__ :white_check_mark:.
 * Pricing cache. To improve the performance issues with complex catalog campaigns. `#1163 <https://github.com/shuup/shuup/issues/1163>`__ :white_check_mark:.
-* Option for 'centrally' or 'separately' managed products. `#1275 <https://github.com/shuup/shuup/issues/1275>`__.
 * Improve shop product purchasable attribute. `#1281 <https://github.com/shuup/shuup/issues/1281>`__ :white_check_mark:.
+* Option for 'centrally' or 'separately' managed products. `#1275 <https://github.com/shuup/shuup/issues/1275>`__.
 * Improve product stock behavior. `#1249 <https://github.com/shuup/shuup/issues/1249>`__.
 * Improved unit tests for the multishop feature. `#1160 <https://github.com/shuup/shuup/issues/1160>`__.
 * Improve order status and order status history. `#1211 <https://github.com/shuup/shuup/issues/1211>`__.
@@ -104,6 +104,8 @@ Roadmap
 
 OS Addons
 ---------
+
+* `Django-project template <https://github.com/shuup/shuup-project-template>`__. Django-project template.
 
 * `Shuup Product Reviews <https://github.com/shuup/shuup-product-reviews>`__. Shuup Product Reviews.
 * `Shuup Stripe <https://github.com/shuup/shuup-stripe>`__. Stripe Payment Processor Addon for Shuup.
