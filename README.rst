@@ -54,6 +54,8 @@ Install Shuup
 See `Getting Started
 <http://shuup.readthedocs.io/en/latest/howto/getting_started.html>`__.
 
+For simple project example see our `Django-project template <https://github.com/shuup/shuup-project-template>`__.
+
 Getting Started with Shuup development
 --------------------------------------
 
