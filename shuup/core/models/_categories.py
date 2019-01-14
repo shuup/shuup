@@ -168,6 +168,16 @@ class Category(MPTTModel, TranslatableModel):
             for ancestor in self.get_ancestors(ascending=reverse, include_self=True).prefetch_related("translations")
         ])
 
+    def get_cached_children(self):
+        from shuup.core import cache
+        key = "category_cached_children:{}".format(self.pk)
+        children = cache.get(key)
+        if children is not None:
+            return children
+        children = self.get_children()
+        cache.set(key, children)
+        return children
+
     def is_visible(self, customer):
         if customer and customer.is_all_seeing:
             return (self.status != CategoryStatus.DELETED)
@@ -213,6 +223,11 @@ class Category(MPTTModel, TranslatableModel):
     def save(self, *args, **kwargs):
         rv = super(Category, self).save(*args, **kwargs)
         generate_multilanguage_slugs(self, self._get_slug_name)
+
+        # bump children cache
+        from shuup.core import cache
+        cache.bump_version("category_cached_children")
+
         return rv
 
 
