@@ -142,3 +142,17 @@ def test_category_deletion(admin_user):
     assert Category.objects.all_visible(customer=admin).count() == 1
     assert Category.objects.all_except_deleted().count() == 1
     configuration.set(None, get_all_seeing_key(admin), False)
+
+
+@pytest.mark.django_db
+def test_category_cached_children(admin_user):
+    parent = Category.objects.create(name="Parent")
+    child1 = Category.objects.create(name="Child1", parent=parent)
+    child2 = Category.objects.create(name="Child2", parent=parent)
+    child3 = Category.objects.create(name="Child3", parent=parent)
+
+    for cache_test in range(2):
+        children = parent.get_cached_children()
+        assert children[0] == child1
+        assert children[1] == child2
+        assert children[2] == child3

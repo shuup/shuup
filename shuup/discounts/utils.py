@@ -31,28 +31,42 @@ def get_potential_discounts_for_product(context, product, available_only=True):
     shop = context.shop
     product_id = product if isinstance(product, six.integer_types) else product.pk
 
-    category_ids = Category.objects.filter(shop_products__product_id=product_id).values_list("id", flat=True)
-    group_ids = context.customer.groups.values_list("id", flat=True)
+    category_ids = list(Category.objects.filter(shop_products__product_id=product_id).values_list("id", flat=True))
+    group_ids = list(context.customer.groups.values_list("id", flat=True))
 
     # Product condition is always applied
     condition_query = (Q(product__isnull=True) | Q(product_id=product_id))
 
     # Apply category conditions
-    condition_query &= (
-        Q(category__isnull=True) |
-        (Q(exclude_selected_category=False) & Q(category__id__in=category_ids)) |
-        (Q(exclude_selected_category=True) & ~Q(category__id__in=category_ids))
-    )
+    if len(category_ids) == 1:
+        condition_query &= (
+            Q(category__isnull=True) |
+            (Q(exclude_selected_category=False) & Q(category__id=category_ids[0])) |
+            (Q(exclude_selected_category=True) & ~Q(category__id=category_ids[0]))
+        )
+    else:
+        condition_query &= (
+            Q(category__isnull=True) |
+            (Q(exclude_selected_category=False) & Q(category__id__in=category_ids)) |
+            (Q(exclude_selected_category=True) & ~Q(category__id__in=category_ids))
+        )
 
     # Apply contact conditions
     condition_query &= (Q(contact__isnull=True) | Q(contact_id=context.customer.pk))
 
     # Apply contact group conditions
-    condition_query &= (
-        Q(contact_group__isnull=True) |
-        (Q(exclude_selected_contact_group=False) & Q(contact_group__id__in=group_ids)) |
-        (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id__in=group_ids))
-    )
+    if len(group_ids) == 1:
+        condition_query &= (
+            Q(contact_group__isnull=True) |
+            (Q(exclude_selected_contact_group=False) & Q(contact_group__id=group_ids[0])) |
+            (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id=group_ids[0]))
+        )
+    else:
+        condition_query &= (
+            Q(contact_group__isnull=True) |
+            (Q(exclude_selected_contact_group=False) & Q(contact_group__id__in=group_ids)) |
+            (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id__in=group_ids))
+        )
 
     # Apply coupon code condition
     basket = getattr(context, "basket", None)
