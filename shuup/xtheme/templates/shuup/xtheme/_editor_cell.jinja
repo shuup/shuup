@@ -59,7 +59,10 @@
                 <table>
                 {% for field in monolingual_fields %}
                     <tr>
-                        <th>{{ form.forms["plugin"][field].label }}:</th>
+                        <th>
+                            <div>{{ form.forms["plugin"][field].label }}:</div>
+                            <div><small class="text-muted">{{ form.forms["plugin"][field].help_text }}</small></div>
+                        </th>
                         <td>{{ form.forms["plugin"][field] }}</td>
                     </tr>
                 {% endfor %}

@@ -39,23 +39,8 @@ def _group_list_items(group_list, number):
         yield tuple(group_list[i: i + number])
 
 
-def _is_sale_item(product, pricing_context):
-    if product.is_variation_parent():
-        for variation in product.variation_children.all():
-            if variation.get_price_info(pricing_context).is_discounted:
-                return True
-
-    elif product.is_package_parent():
-        for package_child in product.get_all_package_children():
-            if package_child.get_price_info(pricing_context).is_discounted:
-                return True
-
-    return product.get_price_info(pricing_context).is_discounted
-
-
 @contextfunction    # noqa (C901)
-def get_listed_products(context, n_products, ordering=None, filter_dict=None,
-                        orderable_only=True, sale_items_only=False):
+def get_listed_products(context, n_products, ordering=None, filter_dict=None, orderable_only=True):
     """
     Returns all products marked as listed that are determined to be
     visible based on the current context.
@@ -89,13 +74,12 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None,
     if ordering:
         products_qs = products_qs.order_by(ordering)
 
-    if sale_items_only:
-        from shuup.core.pricing import PricingContext
-        pricing_context = PricingContext(shop=shop, customer=customer)
+    products_qs = products_qs[:n_products]
 
     if orderable_only:
         suppliers = Supplier.objects.enabled().filter(shops=shop)
         products = []
+
         for product in products_qs.iterator():
             if len(products) == n_products:
                 break
@@ -106,27 +90,16 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None,
 
             for supplier in suppliers:
                 if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
-                    if sale_items_only and not _is_sale_item(product, pricing_context):
-                        continue
                     products.append(product)
                     break
 
         return products
 
-    elif sale_items_only:
-        products = []
-        for product in products_qs.iterator():
-            if len(products) == n_products:
-                break
-            if _is_sale_item(product, pricing_context):
-                products.append(product)
-        return products
-
-    return products_qs[:n_products]
+    return products_qs
 
 
 @contextfunction
-def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_only=True, sale_items_only=False):
+def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_only=True):
     request = context["request"]
 
     key, products = context_cache.get_cached_value(
@@ -134,18 +107,18 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
         item=cache_utils.get_best_selling_products_cache_item(request.shop),
         context=request,
         n_products=n_products, cutoff_days=cutoff_days,
-        orderable_only=orderable_only, sale_items_only=sale_items_only
+        orderable_only=orderable_only
     )
 
     if products is not None:
         return products
 
-    products = _get_best_selling_products(cutoff_days, n_products, orderable_only, request, sale_items_only)
+    products = _get_best_selling_products(cutoff_days, n_products, orderable_only, request)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
-def _get_best_selling_products(cutoff_days, n_products, orderable_only, request, sale_items_only):  # noqa (C901)
+def _get_best_selling_products(cutoff_days, n_products, orderable_only, request):  # noqa (C901)
     data = get_best_selling_product_info(
         shop_ids=[request.shop.pk],
         cutoff_days=cutoff_days
@@ -169,19 +142,12 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
         # get suppliers for later use
         suppliers = Supplier.objects.enabled().filter(shops__in=[request.shop])
 
-    if sale_items_only:
-        from shuup.core.pricing import PricingContext
-        pricing_context = PricingContext(shop=request.shop, customer=request.customer)
-
     # group product ids in groups of n_products
     # to prevent querying ALL products at once
     for grouped_product_ids in _group_list_items(product_ids, n_products):
         for product in Product.objects.filter(id__in=grouped_product_ids):
             if len(products) == n_products:
                 break
-
-            if sale_items_only and not _is_sale_item(product, pricing_context):
-                continue
 
             try:
                 shop_product = product.get_shop_instance(request.shop, allow_cache=True)
@@ -206,14 +172,14 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
 
 
 @contextfunction
-def get_newest_products(context, n_products=6, orderable_only=True, sale_items_only=False):
+def get_newest_products(context, n_products=6, orderable_only=True):
     request = context["request"]
 
     key, products = context_cache.get_cached_value(
         identifier="newest_products",
         item=cache_utils.get_newest_products_cache_item(request.shop),
         context=request,
-        n_products=n_products, orderable_only=orderable_only, sale_items_only=sale_items_only
+        n_products=n_products, orderable_only=orderable_only
     )
     if products is not None:
         return products
@@ -225,8 +191,7 @@ def get_newest_products(context, n_products=6, orderable_only=True, sale_items_o
         filter_dict={
             "variation_parent": None
         },
-        orderable_only=orderable_only,
-        sale_items_only=sale_items_only
+        orderable_only=orderable_only
     )
     products = cache_product_things(request, products)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
@@ -234,14 +199,13 @@ def get_newest_products(context, n_products=6, orderable_only=True, sale_items_o
 
 
 @contextfunction
-def get_random_products(context, n_products=6, orderable_only=True, sale_items_only=False):
+def get_random_products(context, n_products=6, orderable_only=True):
     request = context["request"]
     key, products = context_cache.get_cached_value(
         identifier="random_products",
         item=cache_utils.get_random_products_cache_item(request.shop),
         context=request,
-        n_products=n_products, orderable_only=orderable_only,
-        sale_items_only=sale_items_only
+        n_products=n_products, orderable_only=orderable_only
     )
     if products is not None:
         return products
@@ -253,8 +217,7 @@ def get_random_products(context, n_products=6, orderable_only=True, sale_items_o
         filter_dict={
             "variation_parent": None
         },
-        orderable_only=orderable_only,
-        sale_items_only=sale_items_only
+        orderable_only=orderable_only
     )
     products = cache_product_things(request, products)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
@@ -262,7 +225,7 @@ def get_random_products(context, n_products=6, orderable_only=True, sale_items_o
 
 
 @contextfunction
-def get_products_for_categories(context, categories, n_products=6, orderable_only=True, sale_items_only=False):
+def get_products_for_categories(context, categories, n_products=6, orderable_only=True):
     request = context["request"]
     key, products = context_cache.get_cached_value(
         identifier="products_for_category",
@@ -270,8 +233,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         context=request,
         n_products=n_products,
         categories=categories,
-        orderable_only=orderable_only,
-        sale_items_only=sale_items_only
+        orderable_only=orderable_only
     )
     if products is not None:
         return products
@@ -284,8 +246,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
             "variation_parent": None,
             "shop_products__categories__in": categories
         },
-        orderable_only=orderable_only,
-        sale_items_only=sale_items_only
+        orderable_only=orderable_only
     )
     products = cache_product_things(request, products)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
