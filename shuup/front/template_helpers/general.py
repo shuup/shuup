@@ -74,14 +74,14 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
     if ordering:
         products_qs = products_qs.order_by(ordering)
 
-    products_qs = products_qs[:n_products]
+    products = list(products_qs[:n_products])
 
     if orderable_only:
         suppliers = Supplier.objects.enabled().filter(shops=shop)
-        products = []
+        valid_products = []
 
-        for product in products_qs.iterator():
-            if len(products) == n_products:
+        for product in products:
+            if len(valid_products) == n_products:
                 break
             try:
                 shop_product = product.get_shop_instance(shop, allow_cache=True)
@@ -90,12 +90,12 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
 
             for supplier in suppliers:
                 if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
-                    products.append(product)
+                    valid_products.append(product)
                     break
 
-        return products
+        return valid_products
 
-    return products_qs
+    return products
 
 
 @contextfunction
@@ -136,35 +136,38 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request)
         d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)
     ]
 
-    products = []
-    suppliers = []
-    if orderable_only:
-        # get suppliers for later use
-        suppliers = Supplier.objects.enabled().filter(shops__in=[request.shop])
-
     # group product ids in groups of n_products
     # to prevent querying ALL products at once
+    products = []
     for grouped_product_ids in _group_list_items(product_ids, n_products):
-        for product in Product.objects.filter(id__in=grouped_product_ids):
+        valid_products_qs = Product.objects.listed(
+            shop=request.shop,
+            customer=request.customer
+        ).filter(
+            id__in=grouped_product_ids,
+            shop_products__shop=request.shop,
+            shop_products__suppliers__enabled=True
+        )
+        for product in valid_products_qs.iterator():
+            products.append(product)
+
             if len(products) == n_products:
                 break
 
-            try:
-                shop_product = product.get_shop_instance(request.shop, allow_cache=True)
-            except ShopProduct.DoesNotExist:
-                continue
-
-            if orderable_only:
-                for supplier in suppliers:
-                    if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
-                        products.append(product)
-                        break
-
-            elif shop_product.is_visible(request.customer):
-                products.append(product)
-
         if len(products) == n_products:
             break
+
+    if orderable_only:
+        suppliers = Supplier.objects.enabled().filter(shops=request.shop)
+        for product in products:
+            for supplier in suppliers:
+                try:
+                    shop_product = product.get_shop_instance(request.shop, allow_cache=True)
+                except ShopProduct.DoesNotExist:
+                    continue
+
+                if not shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
+                    products.remove(product)
 
     products = cache_product_things(request, products)
     products = sorted(products, key=lambda p: product_ids.index(p.id))  # pragma: no branch

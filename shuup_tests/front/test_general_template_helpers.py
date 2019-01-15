@@ -86,82 +86,6 @@ def test_get_listed_products_orderable_only():
 
 
 @pytest.mark.django_db
-def test_get_listed_products_sale_only():
-    context = get_jinja_context()
-    shop = get_default_shop()
-    supplier = get_default_supplier()
-    n_products = 10
-
-    # Create product with nodiscount
-    product = create_product(
-        "test-sku",
-        supplier=supplier,
-        shop=shop,
-        default_price=10
-    )
-
-    from shuup.front.template_helpers import general
-    for cache_test in range(2):
-        assert general.get_listed_products(context, n_products, orderable_only=False, sale_items_only=True) == []
-
-    from shuup.customer_group_pricing.models import CgpDiscount
-    CgpDiscount.objects.create(
-        shop=shop,
-        product=product,
-        group=AnonymousContact.get_default_group(),
-        discount_amount_value=5
-    )
-    for cache_test in range(2):
-        assert product in general.get_listed_products(context, n_products, orderable_only=False, sale_items_only=True)
-
-    # create a package product
-    package_product = create_product("package", shop, supplier, default_price=30)
-    pkg_children = [create_product("PackageChild-%d" % x, shop, supplier, default_price=(x+1)) for x in range(3)]
-    package_def = {child: 1 + i for (i, child) in enumerate(pkg_children)}
-    package_product.make_package(package_def)
-    package_product.save()
-
-    # package product is not returned as it has not discount
-    for cache_test in range(2):
-        assert len(general.get_listed_products(context, n_products, orderable_only=False, sale_items_only=True)) == 1
-
-    CgpDiscount.objects.create(
-        shop=shop,
-        product=package_product,
-        group=AnonymousContact.get_default_group(),
-        discount_amount_value=3
-    )
-    for cache_test in range(2):
-        products = general.get_listed_products(context, n_products, orderable_only=False, sale_items_only=True)
-        assert len(products) == 2
-        assert package_product in products
-
-    # create a variation parent product
-    parent = create_product("parent", shop, supplier, default_price=40)
-    var_children = [create_product("VariationChild-%d" % x, shop, supplier, default_price=(x+1)) for x in range(3)]
-    for var_child in var_children:
-        var_child.link_to_parent(parent, {"option": var_child.sku})
-
-    # still the same, as there is no discount for variation
-    for cache_test in range(2):
-        products = general.get_listed_products(context, n_products, orderable_only=False, sale_items_only=True)
-        assert len(products) == 2
-
-    # add discount for just a variation child
-    CgpDiscount.objects.create(
-        shop=shop,
-        product=var_children[0],
-        group=AnonymousContact.get_default_group(),
-        discount_amount_value=0.1
-    )
-
-    for cache_test in range(2):
-        products = general.get_listed_products(context, n_products, orderable_only=False, sale_items_only=True)
-        assert len(products) == 3
-        assert parent in products
-
-
-@pytest.mark.django_db
 def test_get_listed_products_filter():
     context = get_jinja_context()
     shop = get_default_shop()
@@ -226,9 +150,6 @@ def test_get_best_selling_products():
         assert product1 not in best_selling_products
         assert product2 in best_selling_products
 
-    # return only products with discounts
-    assert len(general.get_best_selling_products(context, n_products=5, sale_items_only=True)) == 0
-
     # add a new product with discounted amount
     product3 = create_product("product3", supplier=supplier, shop=shop, default_price=30)
     create_order_with_product(product3, supplier, quantity=1, taxless_base_unit_price=30, shop=shop)
@@ -239,11 +160,6 @@ def test_get_best_selling_products():
         group=AnonymousContact.get_default_group(),
         discount_amount_value=5
     )
-    cache.clear()
-    for cache_test in range(2):
-        best_selling = general.get_best_selling_products(context, n_products=5, sale_items_only=True)
-        assert len(best_selling) == 1
-        product3 in best_selling
 
 
 @pytest.mark.django_db
@@ -338,10 +254,6 @@ def test_best_selling_products_with_multiple_orders():
     for cache_test in range(2):
         assert product_3 == general.get_best_selling_products(context, n_products=n_products)[0]
 
-    # return only products with discounts
-    for cache_test in range(2):
-        assert len(general.get_best_selling_products(context, n_products=n_products, sale_items_only=True)) == 0
-
     # add a new product with discounted amount
     product_4 = create_product("test-sku-4", supplier=supplier, shop=shop, default_price=price)
     create_order_with_product(product_4, supplier, quantity=2, taxless_base_unit_price=price, shop=shop)
@@ -352,11 +264,6 @@ def test_best_selling_products_with_multiple_orders():
         group=AnonymousContact.get_default_group(),
         discount_amount_value=(price * 0.1)
     )
-    cache.clear()
-    for cache_test in range(2):
-        best_selling = general.get_best_selling_products(context, n_products=n_products, sale_items_only=True)
-        assert len(best_selling) == 1
-        assert product_4 in best_selling
 
 
 @pytest.mark.django_db
@@ -389,37 +296,6 @@ def test_get_newest_products():
     assert len(newest_products) == 1
     assert products[0] not in newest_products
     assert products[1] in newest_products
-
-
-@pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
-def test_get_newest_products_sale_only():
-    from shuup.front.template_helpers import general
-
-    supplier = get_default_supplier()
-    shop = get_default_shop()
-    product = create_product("sku-1", supplier=supplier, shop=shop, default_price=10)
-    context = get_jinja_context()
-
-    cache.clear()
-    for cache_test in range(2):
-        assert len(general.get_newest_products(context, n_products=10)) == 1
-        assert len(general.get_newest_products(context, n_products=10, sale_items_only=True)) == 0
-
-    # add a catalog campaign discount for the product
-    from shuup.campaigns.models import CatalogCampaign
-    from shuup.campaigns.models.catalog_filters import ProductFilter
-    from shuup.campaigns.models.product_effects import ProductDiscountAmount
-    campaign = CatalogCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
-    product_filter = ProductFilter.objects.create()
-    product_filter.products.add(product)
-    campaign.filters.add(product_filter)
-    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=0.1)
-
-    cache.clear()
-    for cache_test in range(2):
-        assert len(general.get_newest_products(context, n_products=10, sale_items_only=True)) == 1
-        assert product in general.get_newest_products(context, n_products=10, sale_items_only=True)
 
 
 @pytest.mark.django_db
@@ -476,37 +352,6 @@ def test_get_random_products():
     # only 2 parent products exist
     assert products[0] in random_products
     assert products[1] in random_products
-
-
-@pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
-def test_get_random_products_sale_only():
-    from shuup.front.template_helpers import general
-
-    supplier = get_default_supplier()
-    shop = get_default_shop()
-    product = create_product("sku-1", supplier=supplier, shop=shop, default_price=10)
-    context = get_jinja_context()
-
-    cache.clear()
-    for cache_test in range(2):
-        assert len(general.get_random_products(context, n_products=10)) == 1
-        assert len(general.get_random_products(context, n_products=10, sale_items_only=True)) == 0
-
-    # add a catalog campaign discount for the product
-    from shuup.campaigns.models import CatalogCampaign
-    from shuup.campaigns.models.catalog_filters import ProductFilter
-    from shuup.campaigns.models.product_effects import ProductDiscountAmount
-    campaign = CatalogCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
-    product_filter = ProductFilter.objects.create()
-    product_filter.products.add(product)
-    campaign.filters.add(product_filter)
-    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=0.1)
-
-    cache.clear()
-    for cache_test in range(2):
-        assert len(general.get_random_products(context, n_products=10, sale_items_only=True)) == 1
-        assert product in general.get_random_products(context, n_products=10, sale_items_only=True)
 
 
 @pytest.mark.django_db
