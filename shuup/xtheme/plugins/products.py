@@ -43,13 +43,12 @@ class ProductHighlightPlugin(TemplatedPlugin):
             initial=HighlightType.NEWEST.value
         )),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
-        ("sale_items_only", forms.BooleanField(
-            label=_("Only show sale items"),
-            initial=False, required=False,
-            help_text=_("Show only products that have discounts")
-        )),
         ("orderable_only", forms.BooleanField(
             label=_("Only show in-stock and orderable items"),
+            help_text=_(
+                "Warning: The final number of products can be lower than 'Count' "
+                "as it will filter out unorderable products from a set of 'Count' products."
+            ),
             initial=True, required=False
         ))
     ]
@@ -58,19 +57,17 @@ class ProductHighlightPlugin(TemplatedPlugin):
         highlight_type = self.config.get("type", HighlightType.NEWEST.value)
         count = self.config.get("count", 4)
         orderable_only = self.config.get("orderable_only", True)
-        sale_items_only = self.config.get("sale_items_only", False)
 
         if highlight_type == HighlightType.NEWEST.value:
-            products = get_newest_products(context, count, orderable_only, sale_items_only)
+            products = get_newest_products(context, count, orderable_only)
         elif highlight_type == HighlightType.BEST_SELLING.value:
             products = get_best_selling_products(
                 context,
                 count,
                 orderable_only=orderable_only,
-                sale_items_only=sale_items_only
             )
         elif highlight_type == HighlightType.RANDOM.value:
-            products = get_random_products(context, count, orderable_only, sale_items_only)
+            products = get_random_products(context, count, orderable_only)
         else:
             products = []
 
@@ -156,11 +153,6 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
         "category",
-        ("sale_items_only", forms.BooleanField(
-            label=_("Only show sale items"),
-            initial=False, required=False,
-            help_text=_("Show only products that have discounts")
-        )),
         ("orderable_only", forms.BooleanField(
             label=_("Only show in-stock and orderable items"),
             initial=True, required=False
@@ -172,15 +164,13 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         category_id = self.config.get("category")
         count = self.config.get("count")
         orderable_only = self.config.get("orderable_only", True)
-        sale_items_only = self.config.get("sale_items_only", False)
 
         if category_id:
             products = get_products_for_categories(
                 context,
                 [category_id],
                 n_products=count,
-                orderable_only=orderable_only,
-                sale_items_only=sale_items_only
+                orderable_only=orderable_only
             )
         return {
             "request": context["request"],
