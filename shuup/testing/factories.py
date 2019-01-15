@@ -147,7 +147,7 @@ class ShopProductFactory(DjangoModelFactory):
     class Meta:
         model = ShopProduct
 
-    purchasable = FuzzyBoolean(probability=0.7)
+    purchasable = FuzzyBoolean(probability=1)
     visibility = fuzzy.FuzzyChoice([
         ShopProductVisibility.NOT_VISIBLE,
         ShopProductVisibility.LISTED,
