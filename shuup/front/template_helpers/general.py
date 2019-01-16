@@ -40,7 +40,7 @@ def _group_list_items(group_list, number):
 
 
 @contextfunction    # noqa (C901)
-def get_listed_products(context, n_products, ordering=None, filter_dict=None, orderable_only=True):
+def get_listed_products(context, n_products, ordering=None, filter_dict=None, orderable_only=True, extra_filters=None):
     """
     Returns all products marked as listed that are determined to be
     visible based on the current context.
@@ -55,6 +55,8 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
     :type filter_dict: dict[str, object]
     :param orderable_only: Boolean limiting results to orderable products
     :type orderable_only: bool
+    :param extra_filters: Extra filters to be used in Product Queryset
+    :type extra_filters: django.db.models.Q
     :rtype: list[shuup.core.models.Product]
     """
     request = context["request"]
@@ -70,6 +72,9 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         customer=customer,
         language=get_language(),
     ).filter(**filter_dict)
+
+    if extra_filters:
+        products_qs = products_qs.filter(extra_filters)
 
     if ordering:
         products_qs = products_qs.order_by(ordering)
