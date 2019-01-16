@@ -8,8 +8,6 @@
 import mock
 import pytest
 
-from django.test import override_settings
-
 from shuup.core import cache
 from shuup.core.models import (
     AnonymousContact, Manufacturer, Product, ShopProduct,
