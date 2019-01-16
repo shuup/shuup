@@ -19,7 +19,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
 from shuup.core.models import (
-    Carrier, Contact, Product, ProductMode, Shop, ShopProductVisibility
+    Carrier, Contact, Product, ProductMode, Shop, ShopProduct,
+    ShopProductVisibility
 )
 
 
@@ -62,6 +63,8 @@ class MultiselectAjaxView(TemplateView):
         if issubclass(cls, Product):
             self.search_fields.append("sku")
             self.search_fields.append("barcode")
+        if issubclass(cls, ShopProduct):
+            self.search_fields.append("product__translations__name")
 
         user_model = get_user_model()
         if issubclass(cls, user_model):

@@ -542,6 +542,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         }
         return supplier_strategy().get_supplier(**kwargs)
 
+    def __str__(self):
+        return self.get_name()
+
     def get_name(self):
         return self._safe_get_string("name")
 

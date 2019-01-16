@@ -84,10 +84,14 @@ class EditorView(TemplateView):
             self.form.save()
             self.save_layout()
 
+            # after we save the new layout configs, make sure to reload the saved data in forms
+            # so the returned get() response contains updated data
+            self.build_form()
+
             if request.POST.get("publish") == "1":
                 return self.dispatch_publish()
 
-        return super(EditorView, self).get(request, *args, **kwargs)
+        return self.get(request, *args, **kwargs)
 
     def _populate_vars(self):
         theme = get_theme_by_identifier(self.request.GET["theme"], self.request.shop)
