@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-29 17:47+0000\n"
+"POT-Creation-Date: 2019-01-17 18:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -235,22 +235,30 @@ msgstr ""
 msgid "Count"
 msgstr ""
 
-msgid "Only show sale items"
-msgstr ""
-
-msgid "Show only products that have discounts"
-msgstr ""
-
 msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
 msgstr ""
 
 msgid "Product Cross Sells"
 msgstr ""
 
-msgid "category"
+msgid "Category"
 msgstr ""
 
 msgid "Category Products Highlight"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Select all products you want to show"
+msgstr ""
+
+msgid "Product Selection"
 msgstr ""
 
 msgid "In-Place Snippet"

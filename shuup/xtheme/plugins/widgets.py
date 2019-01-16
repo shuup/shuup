@@ -26,3 +26,24 @@ class XThemeModelChoiceField(forms.ModelChoiceField):
 
     def label_from_instance(self, obj):
         return obj
+
+
+class XThemeMultipleChoiceField(forms.MultipleChoiceField):
+    """
+    A custom option field that doesn't validate whether the selected value
+    is in choices field as that is created dynamically
+    """
+    def __init__(self, choices=(), required=True, widget=None, label=None,
+                 initial=None, help_text='', validate_choices=True, *args, **kwargs):
+        self.validate_choices = validate_choices
+        super(XThemeMultipleChoiceField, self).__init__(
+            choices=choices, required=required, widget=widget, label=label,
+            initial=initial, help_text=help_text, *args, **kwargs
+        )
+
+    def validate(self, value):
+        if self.validate_choices:
+            super(XThemeMultipleChoiceField, self).validate(value)
+        else:
+            if self.required and not value:
+                raise forms.ValidationError(self.error_messages['required'], code='required')

@@ -74,7 +74,7 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
     if ordering:
         products_qs = products_qs.order_by(ordering)
 
-    products = list(products_qs[:n_products])
+    products = list(products_qs.distinct()[:n_products])
 
     if orderable_only:
         suppliers = Supplier.objects.enabled().filter(shops=shop)

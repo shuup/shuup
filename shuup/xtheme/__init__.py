@@ -43,6 +43,7 @@ class XThemeAppConfig(AppConfig):
             "shuup.xtheme.plugins.products:ProductsFromCategoryPlugin",
             "shuup.xtheme.plugins.products:ProductHighlightPlugin",
             "shuup.xtheme.plugins.products:ProductCrossSellsPlugin",
+            "shuup.xtheme.plugins.products:ProductSelectionPlugin",
             "shuup.xtheme.plugins.snippets:SnippetsPlugin",
             "shuup.xtheme.plugins.social_media_links:SocialMediaLinksPlugin",
             "shuup.xtheme.plugins.text:TextPlugin",

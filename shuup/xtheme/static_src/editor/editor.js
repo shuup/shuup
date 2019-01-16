@@ -25,6 +25,59 @@ function post(args) {
     form.submit();
 }
 
+function activateSelect($select, model, searchMode, extraFilters = null, noExpand = false, attrs = {}) {
+    if (model === undefined) {
+        // for now, just select with models will be converted into select2
+        return;
+    }
+
+    if (!noExpand) {
+        // make sure to expand the select2 to use all the available space
+        $select.width("100%");
+    }
+
+    return $select.select2(Object.assign({
+        language: "xx",
+        minimumInputLength: 3,
+        ajax: {
+            url: window.ShuupAdminConfig.browserUrls.select,
+            dataType: "json",
+            data: function (params) {
+                const data = {
+                    model: model,
+                    searchMode: searchMode,
+                    search: params.term,
+                };
+                // extraFilters is a fn that returns extra params for the query
+                if (extraFilters) {
+                    Object.assign(data, extraFilters(params));
+                }
+                return data;
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data.results, function (item) {
+                        return { text: item.name, id: item.id };
+                    })
+                };
+            }
+        }
+    }, attrs));
+}
+
+function activateSelects() {
+    $("select").each(function (idx, object) {
+        const select = $(object);
+        // only activate selects that aren't already select2 inputs
+        if (!select.hasClass("select2-hidden-accessible") && !select.hasClass("no-select2")) {
+            const model = select.data("model");
+            const searchMode = select.data("search-mode");
+            const noExpand = select.data("no-expand");
+            activateSelect(select, model, searchMode, noExpand);
+        }
+    });
+}
+
 function updateModelChoiceWidgetURL(select) {
     const selectedObject = select.options[select.selectedIndex];
     const url = selectedObject.dataset.adminUrl;
@@ -152,6 +205,7 @@ domready(() => {
             }
         });
     }
+    activateSelects();
 });
 
 window.refreshPlaceholderInParent = (placeholderName) => {

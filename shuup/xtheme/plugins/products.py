@@ -9,7 +9,9 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 
-from shuup.core.models import Category, ProductCrossSell, ProductCrossSellType
+from shuup.core.models import (
+    Category, Product, ProductCrossSell, ProductCrossSellType
+)
 from shuup.front.template_helpers.general import (
     get_best_selling_products, get_newest_products,
     get_products_for_categories, get_random_products
@@ -17,7 +19,9 @@ from shuup.front.template_helpers.general import (
 from shuup.front.template_helpers.product import map_relation_type
 from shuup.xtheme import TemplatedPlugin
 from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
-from shuup.xtheme.plugins.widgets import XThemeModelChoiceField
+from shuup.xtheme.plugins.widgets import (
+    XThemeModelChoiceField, XThemeMultipleChoiceField
+)
 
 
 class HighlightType(Enum):
@@ -87,9 +91,14 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("type", ProductCrossSell.type.field.formfield()),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
-        ("orderable_only", forms.BooleanField(label=_("Only show in-stock and orderable items"),
-                                              initial=True,
-                                              required=False))
+        ("orderable_only", forms.BooleanField(
+            label=_("Only show in-stock and orderable items"),
+            initial=True, required=False,
+            help_text=_(
+                "Warning: The final number of products can be lower than 'Count' "
+                "as it will filter out unorderable products from a set of 'Count' products."
+            )
+        ))
     ]
 
     def __init__(self, config):
@@ -131,7 +140,7 @@ class ProductsFromCategoryForm(GenericPluginForm):
                 self.fields[name] = value
 
         self.fields["category"] = XThemeModelChoiceField(
-            label=_("category"),
+            label=_("Category"),
             queryset=Category.objects.all_except_deleted(shop=getattr(self.request, "shop")),
             required=False,
             initial=self.plugin.config.get("category") if self.plugin else None
@@ -152,10 +161,13 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
-        "category",
         ("orderable_only", forms.BooleanField(
             label=_("Only show in-stock and orderable items"),
-            initial=True, required=False
+            initial=True, required=False,
+            help_text=_(
+                "Warning: The final number of products can be lower than 'Count' "
+                "as it will filter out unorderable products from a set of 'Count' products."
+            )
         ))
     ]
 
@@ -176,4 +188,69 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
             "request": context["request"],
             "title": self.get_translated_value("title"),
             "products": products
+        }
+
+
+class ProductSelectionConfigForm(GenericPluginForm):
+    """
+    A configuration form for the ProductSelectionPlugin
+    """
+    def populate(self):
+        """
+        A custom populate method to display product choices
+        """
+        for field in self.plugin.fields:
+            if isinstance(field, tuple):
+                name, value = field
+                value.initial = self.plugin.config.get(name, value.initial)
+                self.fields[name] = value
+
+        initial_products = []
+        if self.plugin.config.get("products"):
+            initial_products = [
+                (p.pk, p.safe_translation_getter("name"))
+                for p in Product.objects.filter(pk__in=self.plugin.config["products"])
+            ]
+
+        self.fields["products"] = XThemeMultipleChoiceField(
+            validate_choices=False,
+            choices=initial_products,
+            label=_("Products"),
+            help_text=_("Select all products you want to show"),
+            required=True,
+            initial=[initial[0] for initial in initial_products],
+            widget=forms.SelectMultiple(attrs={
+                "data-model": "shuup.product",
+                "data-searchMode": "main"
+            })
+        )
+
+
+class ProductSelectionPlugin(TemplatedPlugin):
+    """
+    A plugin that renders a selection of products
+    """
+    identifier = "product_selection"
+    name = _("Product Selection")
+    template_name = "shuup/xtheme/plugins/product_selection_plugin.jinja"
+    editor_form_class = ProductSelectionConfigForm
+    fields = [
+        ("title", TranslatableField(label=_("Title"), required=False, initial=""))
+    ]
+
+    def get_context_data(self, context):
+        request = context["request"]
+        products = self.config.get("products")
+        products_qs = Product.objects.none()
+
+        if products:
+            products_qs = Product.objects.listed(
+                shop=request.shop,
+                customer=request.customer
+            ).filter(shop_products__pk__in=products)
+
+        return {
+            "request": request,
+            "title": self.get_translated_value("title"),
+            "products": products_qs
         }

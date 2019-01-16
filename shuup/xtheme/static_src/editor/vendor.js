@@ -10,6 +10,8 @@
 //-- jQuery
 var jquery = require("jquery");
 window.$ = window.jQuery = jquery;
+const select2 = require("select2");
+select2($);
 
 const _ = require('lodash');
 window._ = _;
