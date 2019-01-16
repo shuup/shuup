@@ -14,7 +14,7 @@ from shuup.admin.modules.manufacturers import ManufacturerModule
 from shuup.admin.modules.product_types import ProductTypeModule
 from shuup.admin.modules.products import ProductModule
 from shuup.admin.modules.products.views import (
-    ProductEditView, ProductMediaBulkAdderView
+    ProductEditView, ProductMediaBulkAdderView, ProductDeleteView
 )
 from shuup.admin.modules.services import (
     PaymentMethodModule, ShippingMethodModule
@@ -22,7 +22,7 @@ from shuup.admin.modules.services import (
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.views.search import get_search_results
-from shuup.core.models import ProductMedia, ProductMediaKind, ProductVisibility
+from shuup.core.models import ProductMedia, ProductMediaKind, ProductVisibility, ShopProduct
 from shuup.importer.admin_module import ImportAdminModule
 from shuup.testing.factories import (
     create_product, get_default_product, get_default_shop
@@ -82,6 +82,19 @@ def test_product_edit_view_with_params(rf, admin_user):
             response = view_func(request)
             assert (sku in response.rendered_content)  # it's probable the SKU is there
             assert (name in response.rendered_content)  # it's probable the name is there
+
+@pytest.mark.django_db
+def test_product_delete_view(rf, admin_user):
+    shop = get_default_shop()
+    prod = create_product("prod")
+    shop_product = ShopProduct.objects.create(product=prod, shop=shop)
+    shop_product.save()
+    assert shop_product.pk != shop_product.product.pk
+    request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
+    view_func = ProductDeleteView.as_view()
+    response = view_func(request, pk=shop_product.pk)
+    prod.refresh_from_db()
+    assert prod.deleted
 
 @pytest.mark.django_db
 def test_product_media_bulk_adder(rf, admin_user):
