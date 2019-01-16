@@ -54,6 +54,7 @@ def test_ajax_select_view_with_products(rf, admin_user):
 
     product_name_en = "The Product"
     product = create_product("the product", shop=shop, **{"name": product_name_en})
+    shop_product = product.get_shop_instance(shop)
 
     product_name_fi = "tuote"
     product.set_current_language("fi")
@@ -72,6 +73,11 @@ def test_ajax_select_view_with_products(rf, admin_user):
     results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
     assert len(results) == 1
     assert results[0].get("id") == product.id
+    assert results[0].get("name") == product_name_en
+
+    results = _get_search_results(rf, view, "shuup.ShopProduct", "product", admin_user)
+    assert len(results) == 1
+    assert results[0].get("id") == shop_product.id
     assert results[0].get("name") == product_name_en
 
     activate("fi")
