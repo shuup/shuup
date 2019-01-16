@@ -85,7 +85,7 @@ def thumbnail(source, alias=None, generate=True, **kwargs):
         if cache_key:
             cache.set(cache_key, thumbnail_url)
         return thumbnail_url
-    except (IOError, InvalidImageFormatError):
+    except (IOError, InvalidImageFormatError, ValueError):
         return None
 
 
