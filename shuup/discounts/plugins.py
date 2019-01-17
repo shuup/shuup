@@ -77,6 +77,7 @@ class DiscountedProductsPlugin(TemplatedPlugin):
         count = self.config.get("count", 4)
         orderable_only = self.config.get("orderable_only", True)
         discounts = self.config.get("discounts")
+        products = []
 
         if discounts:
             # make sure to have only available discounts
@@ -85,8 +86,6 @@ class DiscountedProductsPlugin(TemplatedPlugin):
                 Q(product_discounts__in=discounts) | Q(shop_products__categories__category_discounts__in=discounts)
             )
             products = get_listed_products(context, count, orderable_only=orderable_only, extra_filters=extra_filters)
-        else:
-            products = []
 
         return {
             "request": context["request"],
