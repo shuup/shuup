@@ -57,22 +57,26 @@ def test_get_listed_products_orderable_only():
         stock_behavior=StockBehavior.STOCKED
     )
 
+    create_product("test-sku-2", supplier=simple_supplier, shop=shop, stock_behavior=StockBehavior.STOCKED)
+    create_product("test-sku-3", supplier=simple_supplier, shop=shop, stock_behavior=StockBehavior.STOCKED)
+    create_product("test-sku-4", supplier=simple_supplier, shop=shop, stock_behavior=StockBehavior.STOCKED)
+
     from shuup.front.template_helpers import general
 
     for cache_test in range(2):
         assert len(general.get_listed_products(context, n_products, orderable_only=True)) == 0
 
     for cache_test in range(2):
-        assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 1
+        assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 2
 
     # Increase stock on product
     quantity = product.get_shop_instance(shop).minimum_purchase_quantity
     simple_supplier.adjust_stock(product.id, quantity)
     for cache_test in range(2):
-        assert len(general.get_listed_products(context, n_products, orderable_only=True)) == 1
+        assert len(general.get_listed_products(context, n_products, orderable_only=True)) == 0
 
     for cache_test in range(2):
-        assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 1
+        assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 2
 
     # Decrease stock on product
     simple_supplier.adjust_stock(product.id, -quantity)
@@ -80,7 +84,7 @@ def test_get_listed_products_orderable_only():
         assert len(general.get_listed_products(context, n_products, orderable_only=True)) == 0
 
     for cache_test in range(2):
-        assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 1
+        assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 2
 
 
 @pytest.mark.django_db
@@ -100,6 +104,7 @@ def test_get_listed_products_filter():
         shop=shop,
     )
 
+    cache.clear()
     from shuup.front.template_helpers import general
     filter_dict = {"id": product_1.id}
     for cache_test in range(2):
@@ -111,6 +116,43 @@ def test_get_listed_products_filter():
         product_list = general.get_listed_products(context, n_products=2, filter_dict=filter_dict, orderable_only=False)
         assert product_1 in product_list
         assert product_2 not in product_list
+
+
+@pytest.mark.django_db
+def test_get_listed_products_cache_bump():
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    product_1 = create_product("test-sku-1", supplier=supplier, shop=shop,)
+
+    from shuup.front.template_helpers import general
+    filter_dict = {"id": product_1.pk}
+
+    cache.clear()
+    context = get_jinja_context()
+
+    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+    def set_cache_value(key, value, timeout=None):
+        if "listed_products" in key:
+            return set_cached_value_mock(key, value, timeout)
+
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cache_value):
+        assert set_cached_value_mock.call_count == 0
+
+        for cache_test in range(2):
+            assert general.get_listed_products(context, n_products=2, filter_dict=filter_dict, orderable_only=False)
+            assert set_cached_value_mock.call_count == 1
+
+        # bump cache
+        product_1.save()
+        for cache_test in range(2):
+            assert general.get_listed_products(context, n_products=2, filter_dict=filter_dict, orderable_only=False)
+            assert set_cached_value_mock.call_count == 2
+
+        # use other filters
+        from django.db.models import Q
+        for cache_test in range(2):
+            assert general.get_listed_products(context, n_products=2, extra_filters=Q(translations__name__isnull=False))
+            assert set_cached_value_mock.call_count == 3
 
 
 @pytest.mark.django_db
@@ -158,6 +200,13 @@ def test_get_best_selling_products():
         group=AnonymousContact.get_default_group(),
         discount_amount_value=5
     )
+    cache.clear()
+    for cache_test in range(2):
+        best_selling_products = list(general.get_best_selling_products(context, n_products=3, orderable_only=True))
+        assert len(best_selling_products) == 2
+        assert product1 not in best_selling_products
+        assert product2 in best_selling_products
+        assert product3 in best_selling_products
 
 
 @pytest.mark.django_db
