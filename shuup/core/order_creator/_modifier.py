@@ -51,6 +51,6 @@ class OrderModifier(OrderProcessor):
             line.delete()
 
         for product, supplier in products_to_adjust_stock:
-            supplier.module.update_stock(product)
+            supplier.module.update_stock(product.id)
 
         return self.finalize_creation(order, order_source)

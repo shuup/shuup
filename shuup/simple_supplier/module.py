@@ -8,6 +8,7 @@
 from django.conf import settings
 
 from shuup.core.models import Product, StockBehavior
+from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.suppliers import BaseSupplierModule
 from shuup.core.suppliers.enums import StockAdjustmentType
@@ -54,6 +55,10 @@ class SimpleSupplierModule(BaseSupplierModule):
         return adjustment
 
     def update_stock(self, product_id):
+        """
+        Supplier module update stock should always bump product
+        cache and send `shuup.core.signals.stocks_updated` signal.
+        """
         supplier_id = self.supplier.pk
         # TODO: Consider whether this should be done without a cache table
         values = get_current_stock_value(supplier_id=supplier_id, product_id=product_id)
@@ -77,3 +82,4 @@ class SimpleSupplierModule(BaseSupplierModule):
 
         sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))
         context_cache.bump_cache_for_product(Product.objects.get(id=product_id))
+        stocks_updated.send(type(self), shops=self.supplier.shops.all(), product_ids=[product_id])
