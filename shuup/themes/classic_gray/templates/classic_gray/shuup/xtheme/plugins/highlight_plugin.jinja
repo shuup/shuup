@@ -1,5 +1,5 @@
 {%- from "shuup/front/macros/product.jinja" import product_box with context -%}
-
+{% if products %}
 <section class="carousel-section">
     {% if title %}
         <div class="title-bar light"><h2>{{ title }}</h2></div>
@@ -10,3 +10,4 @@
     {% endfor %}
     </div>
 </section>
+{% endif %}

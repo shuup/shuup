@@ -1,4 +1,5 @@
 {%- from "shuup/front/macros/product.jinja" import product_box with context -%}
+{% if products %}
 <section class="product-highlight-plugin">
     {% if title %}<h2>{{ title }}</h2>{% endif %}
     <div class="row">
@@ -9,3 +10,4 @@
     {% endfor %}
     </div>
 </section>
+{% endif %}
