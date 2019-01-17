@@ -26,6 +26,7 @@ def handle_context_cache_item_bumped(sender, item, **kwargs):
     """
     if isinstance(item, ShopProduct):
         shop = item.shop
+        context_cache.bump_cache_for_item(cache_utils.get_listed_products_cache_item(shop))
         context_cache.bump_cache_for_item(cache_utils.get_best_selling_products_cache_item(shop))
         context_cache.bump_cache_for_item(cache_utils.get_newest_products_cache_item(shop))
         context_cache.bump_cache_for_item(cache_utils.get_products_for_category_cache_item(shop))

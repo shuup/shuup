@@ -39,8 +39,9 @@ def _group_list_items(group_list, number):
         yield tuple(group_list[i: i + number])
 
 
-@contextfunction    # noqa (C901)
-def get_listed_products(context, n_products, ordering=None, filter_dict=None, orderable_only=True, extra_filters=None):
+def _get_listed_products(context, n_products, ordering=None,    # noqa (C901)
+                         filter_dict=None, orderable_only=True,
+                         extra_filters=None):
     """
     Returns all products marked as listed that are determined to be
     visible based on the current context.
@@ -100,6 +101,39 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
 
         return valid_products
 
+    return products
+
+
+@contextfunction
+def get_listed_products(context, n_products, ordering=None, filter_dict=None, orderable_only=True, extra_filters=None):
+    """
+    A cached version of _get_listed_products
+    """
+    request = context["request"]
+
+    key, products = context_cache.get_cached_value(
+        identifier="listed_products",
+        item=cache_utils.get_listed_products_cache_item(request.shop),
+        context=request,
+        n_products=n_products,
+        ordering=ordering,
+        filter_dict=filter_dict,
+        orderable_only=orderable_only,
+        extra_filters=hash(str(extra_filters))
+    )
+    if products is not None:
+        return products
+
+    products = _get_listed_products(
+        context,
+        n_products,
+        ordering=ordering,
+        filter_dict=filter_dict,
+        orderable_only=orderable_only,
+        extra_filters=extra_filters
+    )
+    products = cache_product_things(request, products)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
@@ -192,7 +226,7 @@ def get_newest_products(context, n_products=6, orderable_only=True):
     if products is not None:
         return products
 
-    products = get_listed_products(
+    products = _get_listed_products(
         context,
         n_products,
         ordering="-pk",
@@ -218,7 +252,7 @@ def get_random_products(context, n_products=6, orderable_only=True):
     if products is not None:
         return products
 
-    products = get_listed_products(
+    products = _get_listed_products(
         context,
         n_products,
         ordering="?",
@@ -246,7 +280,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
     if products is not None:
         return products
 
-    products = get_listed_products(
+    products = _get_listed_products(
         context,
         n_products,
         ordering="?",

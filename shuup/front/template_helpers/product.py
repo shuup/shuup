@@ -9,36 +9,11 @@ from django.conf import settings
 from jinja2.utils import contextfunction
 
 from shuup.core.models import (
-    AttributeVisibility, Product, ProductAttribute, ProductCrossSell,
-    ProductCrossSellType, ShopProduct, Supplier
+    Product, ProductCrossSell, ProductCrossSellType, ShopProduct, Supplier
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils import cache as cache_utils
 from shuup.utils.text import force_ascii
-
-
-def get_visible_attributes(product):
-    return ProductAttribute.objects.filter(
-        product=product,
-        attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE
-    )
-
-
-# Deprecated, see `get_product_cross_sells()`
-@contextfunction
-def get_products_bought_with(context, product, count=5):
-    related_product_cross_sells = (
-        ProductCrossSell.objects
-        .filter(product1=product, type=ProductCrossSellType.COMPUTED)
-        .order_by("-weight")[:(count * 4)])
-    products = []
-    for cross_sell in related_product_cross_sells:
-        product2 = cross_sell.product2
-        if product2.is_visible_to_user(context["request"].user) and product2.is_list_visible():
-            products.append(product2)
-        if len(products) >= count:
-            break
-    return products
 
 
 @contextfunction
@@ -51,14 +26,12 @@ def is_visible(context, product):
 
     try:
         shop_product = product.get_shop_instance(shop=request.shop, allow_cache=True)
+        visible = shop_product.is_visible(request.customer)
     except ShopProduct.DoesNotExist:
-        return False
+        visible = False
 
-    for error in shop_product.get_visibility_errors(customer=request.customer):  # pragma: no branch
-        context_cache.set_cached_value(key, False)
-        return False
-    context_cache.set_cached_value(key, True)
-    return True
+    context_cache.set_cached_value(key, visible)
+    return visible
 
 
 @contextfunction
@@ -125,7 +98,3 @@ def map_relation_type(relation_type):
         return getattr(ProductCrossSellType, attr_name)
     except AttributeError:
         raise LookupError('Unknown ProductCrossSellType %r' % (relation_type,))
-
-
-def get_shop_product(product, shop):
-    return product.get_shop_instance(shop, get_shop_instance=True)
