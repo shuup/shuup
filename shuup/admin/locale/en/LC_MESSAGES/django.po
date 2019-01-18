@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-03 20:34+0000\n"
+"POT-Creation-Date: 2019-01-18 22:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1067,12 +1067,21 @@ msgid ""
 "tab."
 msgstr ""
 
+msgid "Select a manufacturer"
+msgstr ""
+
+msgid "Product type"
+msgstr ""
+
 msgid "Given value is already in use, please use unique SKU and try again."
 msgstr ""
 
 msgid ""
 "Number of units that can be purchased after the product is out of stock. Set "
 "to blank for product to be purchasable without limits"
+msgstr ""
+
+msgid "Select a category"
 msgstr ""
 
 msgid "Minimum Purchase Quantity must be greater than 0."
