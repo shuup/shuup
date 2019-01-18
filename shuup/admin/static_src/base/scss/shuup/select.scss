@@ -45,6 +45,24 @@ span.select2-selection--single,
 span.select2-selection__rendered {
     color: $text-color;
 }
+span.select2-selection__rendered {
+    width: 100%;
+    padding-right: 2.2rem !important;
+
+    .select2-selection__clear {
+        font-size: 1.5rem;
+        color: rgba($secondary, 0.5);
+    }
+}
+
+.select2-container--default
+.select2-selection--multiple
+.select2-selection__clear {
+    font-size: 1.5rem;
+    color: rgba($secondary, 0.5);
+    padding-right: 2.0rem !important;
+    margin: 0;
+}
 
 .select2-container--open
 .select2-selection {

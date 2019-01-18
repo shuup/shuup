@@ -20,7 +20,7 @@ from shuup.xtheme._theme import get_current_theme, override_current_theme_class
 from shuup.xtheme.layout import LayoutCell
 from shuup.xtheme.plugins.category_links import CategoryLinksPlugin
 from shuup.xtheme.plugins.image import ImageIDField, ImagePluginChoiceWidget
-from shuup.xtheme.plugins.products import ProductSelectionPlugin
+from shuup.xtheme.plugins.products import ProductSelectionPlugin, ProductHighlightPlugin, HighlightType
 from shuup.xtheme.plugins.snippets import SnippetsPlugin
 from shuup.xtheme.plugins.social_media_links import SocialMediaLinksPlugin
 from shuup.xtheme.views.forms import LayoutCellFormGroup
@@ -241,3 +241,37 @@ def test_product_selection_plugin(rf):
         assert lcfg.is_valid()
         lcfg.save()
         assert cell.config["products"] == [str(p1.pk), str(p2.pk)]
+
+@pytest.mark.parametrize("highlight_type,orderable", [
+    (HighlightType.NEWEST.value, True),
+    (HighlightType.RANDOM.value, True),
+    (HighlightType.NEWEST.value, False),
+    (HighlightType.RANDOM.value, False),
+])
+@pytest.mark.django_db
+def test_product_hightlight_plugin(rf, highlight_type, orderable):
+    shop = get_default_shop()
+    p1 = create_product("p1", shop, get_default_supplier(), "10")
+    p2 = create_product("p2", shop, get_default_supplier(), "20")
+    p3 = create_product("p3", shop, get_default_supplier(), "30")
+    p4 = create_product("p4", shop, get_default_supplier(), "40")
+
+    sp4 = p4.get_shop_instance(shop)
+    sp4.purchasable = False
+    sp4.save()
+
+    context = get_context(rf)
+    plugin = ProductHighlightPlugin({
+        "type": highlight_type,
+        "count": 4,
+        "orderable_only": orderable
+    })
+    context_products = plugin.get_context_data(context)["products"]
+
+    assert p1 in context_products
+    assert p2 in context_products
+    assert p3 in context_products
+    if orderable:
+        assert p4 not in context_products
+    else:
+        assert p4 in context_products

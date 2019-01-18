@@ -8,7 +8,7 @@ from decimal import Decimal
 from numbers import Number
 
 from django.forms import (
-    DecimalField, Field, MultipleChoiceField, SelectMultiple
+    DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
 )
 from django.utils.translation import ugettext_lazy as _
 
@@ -38,6 +38,29 @@ class PercentageField(DecimalField):
         return attrs
 
 
+class Select2ModelField(Field):
+    widget = Select
+
+    def __init__(self, model, *args, **kwargs):
+        self.model = model
+        super(Select2ModelField, self).__init__(*args, **kwargs)
+
+    def prepare_value(self, value):
+        return getattr(value, "pk", value)
+
+    def to_python(self, value):
+        if value:
+            return self.model.objects.filter(pk=value).first()
+
+    def widget_attrs(self, widget):
+        attrs = super(Select2ModelField, self).widget_attrs(widget)
+        model_name = "%s.%s" % (self.model._meta.app_label, self.model._meta.model_name)
+        attrs.update({"data-model": model_name})
+        if not self.required:
+            attrs["data-allow-clear"] = "true"
+        return attrs
+
+
 class Select2MultipleField(Field):
     widget = SelectMultiple
 
@@ -58,7 +81,22 @@ class Select2MultipleField(Field):
         attrs = super(Select2MultipleField, self).widget_attrs(widget)
         model_name = "%s.%s" % (self.model._meta.app_label, self.model._meta.model_name)
         attrs.update({"data-model": model_name})
+        if not self.required:
+            attrs["data-allow-clear"] = "true"
         return attrs
+
+
+class Select2ModelMultipleField(Select2MultipleField):
+    """
+    Just like Select2MultipleField, but return instances instead of ids
+    """
+    def prepare_value(self, value):
+        return [getattr(v, "pk", v) for v in value or []]
+
+    def to_python(self, value):
+        if value:
+            return self.model.objects.filter(pk__in=value)
+        return []
 
 
 class Select2MultipleMainProductField(Select2MultipleField):

@@ -59,7 +59,14 @@ export function activateSelects() {
             const model = select.data("model");
             const searchMode = select.data("search-mode");
             const noExpand = select.data("no-expand");
-            activateSelect(select, model, searchMode, noExpand);
+            const placeholder = select.data("placeholder");
+            // do not set clear when there is no placeholder to use
+            const allowClear = placeholder ? select.data("allow-clear") : null;
+            const attrs = {
+                placeholder,
+                allowClear
+            };
+            activateSelect(select, model, searchMode, null, noExpand, attrs);
         }
     });
 }
