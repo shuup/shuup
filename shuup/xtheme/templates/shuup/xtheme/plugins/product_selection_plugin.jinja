@@ -1,13 +1,1 @@
-{%- from "shuup/front/macros/product.jinja" import product_box with context -%}
-{% if products %}
-<section class="product-selection-plugin">
-    {% if title %}<h2>{{ title }}</h2>{% endif %}
-    <div class="row">
-    {% for product in products if shuup.product.is_visible(product) %}
-        <div class="col-sm-4 col-md-3 single-product">
-            {{ product_box(product) }}
-        </div>
-    {% endfor %}
-    </div>
-</section>
-{% endif %}
+{%- extends "shuup/xtheme/plugins/highlight_plugin.jinja"  -%}
