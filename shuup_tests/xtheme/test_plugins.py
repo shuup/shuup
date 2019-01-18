@@ -11,8 +11,9 @@ from filer.models import File
 
 from shuup.core.models import CategoryStatus, CategoryVisibility
 from shuup.testing.factories import (
-    create_product, create_random_person, get_default_category,
-    get_default_customer_group, get_default_shop, get_default_supplier
+    CategoryFactory, create_product, create_random_person,
+    get_default_category, get_default_customer_group, get_default_shop,
+    get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.xtheme import resources
@@ -20,7 +21,10 @@ from shuup.xtheme._theme import get_current_theme, override_current_theme_class
 from shuup.xtheme.layout import LayoutCell
 from shuup.xtheme.plugins.category_links import CategoryLinksPlugin
 from shuup.xtheme.plugins.image import ImageIDField, ImagePluginChoiceWidget
-from shuup.xtheme.plugins.products import ProductSelectionPlugin
+from shuup.xtheme.plugins.products import (
+    HighlightType, ProductHighlightPlugin, ProductSelectionPlugin,
+    ProductsFromCategoryPlugin
+)
 from shuup.xtheme.plugins.snippets import SnippetsPlugin
 from shuup.xtheme.plugins.social_media_links import SocialMediaLinksPlugin
 from shuup.xtheme.views.forms import LayoutCellFormGroup
@@ -241,3 +245,135 @@ def test_product_selection_plugin(rf):
         assert lcfg.is_valid()
         lcfg.save()
         assert cell.config["products"] == [str(p1.pk), str(p2.pk)]
+
+@pytest.mark.parametrize("highlight_type,orderable", [
+    (HighlightType.NEWEST.value, True),
+    (HighlightType.RANDOM.value, True),
+    (HighlightType.NEWEST.value, False),
+    (HighlightType.RANDOM.value, False),
+])
+@pytest.mark.django_db
+def test_product_hightlight_plugin(rf, highlight_type, orderable):
+    shop = get_default_shop()
+    p1 = create_product("p1", shop, get_default_supplier(), "10")
+    p2 = create_product("p2", shop, get_default_supplier(), "20")
+    p3 = create_product("p3", shop, get_default_supplier(), "30")
+    p4 = create_product("p4", shop, get_default_supplier(), "40")
+
+    sp4 = p4.get_shop_instance(shop)
+    sp4.purchasable = False
+    sp4.save()
+
+    context = get_context(rf)
+    plugin = ProductHighlightPlugin({
+        "type": highlight_type,
+        "count": 4,
+        "orderable_only": orderable
+    })
+    context_products = plugin.get_context_data(context)["products"]
+
+    assert p1 in context_products
+    assert p2 in context_products
+    assert p3 in context_products
+    if orderable:
+        assert p4 not in context_products
+    else:
+        assert p4 in context_products
+
+
+@pytest.mark.django_db
+def test_product_selection_plugin(rf):
+    shop = get_default_shop()
+    p1 = create_product("p1", shop, get_default_supplier(), "10")
+    p2 = create_product("p2", shop, get_default_supplier(), "20")
+    p3 = create_product("p3", shop, get_default_supplier(), "30")
+    p4 = create_product("p4", shop, get_default_supplier(), "40")
+
+    sp1 = p1.get_shop_instance(shop)
+    sp2 = p2.get_shop_instance(shop)
+    sp3 = p3.get_shop_instance(shop)
+
+    context = get_context(rf)
+    plugin = ProductSelectionPlugin({
+        "products": [sp1.pk, sp2.pk, sp3.pk]
+    })
+    context_products = plugin.get_context_data(context)["products"]
+    assert p1 in context_products
+    assert p2 in context_products
+    assert p3 in context_products
+    assert p4 not in context_products
+
+    # test the plugin form
+    with override_current_theme_class(None):
+        theme = get_current_theme(get_default_shop())
+        cell = LayoutCell(theme, ProductSelectionPlugin.identifier, sizes={"md": 8})
+        lcfg = LayoutCellFormGroup(layout_cell=cell, theme=theme, request=apply_request_middleware(rf.get("/")))
+        # not valid, products are required
+        assert not lcfg.is_valid()
+
+        lcfg = LayoutCellFormGroup(
+            data={
+                "general-cell_width": "8",
+                "general-cell_align": "pull-right",
+                "plugin-products": [p1.pk, p2.pk]
+            },
+            layout_cell=cell,
+            theme=theme,
+            request=apply_request_middleware(rf.get("/"))
+        )
+        assert lcfg.is_valid()
+        lcfg.save()
+        assert cell.config["products"] == [str(p1.pk), str(p2.pk)]
+
+
+@pytest.mark.django_db
+def test_product_from_category_plugin(rf):
+    shop = get_default_shop()
+    category1 = get_default_category()
+    category2 = CategoryFactory(status=CategoryStatus.VISIBLE)
+
+    category1.shops.add(shop)
+    category2.shops.add(shop)
+
+    p1 = create_product("p1", shop, get_default_supplier(), "10")
+    p2 = create_product("p2", shop, get_default_supplier(), "20")
+    p3 = create_product("p3", shop, get_default_supplier(), "30")
+
+    sp1 = p1.get_shop_instance(shop)
+    sp2 = p2.get_shop_instance(shop)
+    sp3 = p3.get_shop_instance(shop)
+
+    sp1.categories.add(category1)
+    sp2.categories.add(category1)
+    sp3.categories.add(category2)
+
+    context = get_context(rf)
+    plugin = ProductsFromCategoryPlugin({
+        "category": category1.pk
+    })
+    context_products = plugin.get_context_data(context)["products"]
+    assert p1 in context_products
+    assert p2 in context_products
+    assert p3 not in context_products
+
+    # test the plugin form
+    with override_current_theme_class(None):
+        theme = get_current_theme(get_default_shop())
+        cell = LayoutCell(theme, ProductsFromCategoryPlugin.identifier, sizes={"md": 8})
+        lcfg = LayoutCellFormGroup(layout_cell=cell, theme=theme, request=apply_request_middleware(rf.get("/")))
+        assert not lcfg.is_valid()
+
+        lcfg = LayoutCellFormGroup(
+            data={
+                "general-cell_width": "8",
+                "general-cell_align": "pull-right",
+                "plugin-count": 4,
+                "plugin-category": category2.pk
+            },
+            layout_cell=cell,
+            theme=theme,
+            request=apply_request_middleware(rf.get("/"))
+        )
+        assert lcfg.is_valid()
+        lcfg.save()
+        assert cell.config["category"] == str(category2.pk)

@@ -16,19 +16,24 @@ from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from filer.models import Image
 
+from shuup.admin.forms.fields import (
+    Select2ModelField, Select2ModelMultipleField
+)
 from shuup.admin.forms.widgets import (
     FileDnDUploaderWidget, QuickAddCategoryMultiSelect, QuickAddCategorySelect,
     QuickAddDisplayUnitSelect, QuickAddManufacturerSelect,
     QuickAddPaymentMethodsSelect, QuickAddProductTypeSelect,
     QuickAddSalesUnitSelect, QuickAddShippingMethodsSelect,
-    QuickAddTaxClassSelect, TextEditorWidget
+    QuickAddSupplierMultiSelect, QuickAddTaxClassSelect, TextEditorWidget
 )
 from shuup.admin.signals import form_post_clean, form_pre_clean
 from shuup.core.models import (
-    Attribute, AttributeType, Category, PaymentMethod, Product, ProductMedia,
-    ProductMediaKind, ShippingMethod, ShopProduct, Supplier
+    Attribute, AttributeType, Category, Manufacturer, PaymentMethod, Product,
+    ProductMedia, ProductMediaKind, ProductType, ShippingMethod, ShopProduct,
+    Supplier
 )
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import (
@@ -76,8 +81,6 @@ class ProductBaseForm(MultiLanguageModelForm):
             "keywords": forms.TextInput(),
             "sales_unit": QuickAddSalesUnitSelect(editable_model="shuup.SalesUnit"),
             "tax_class": QuickAddTaxClassSelect(editable_model="shuup.TaxClass"),
-            "type": QuickAddProductTypeSelect(editable_model="shuup.ProductType"),
-            "manufacturer": QuickAddManufacturerSelect(editable_model="shuup.Manufacturer"),
             "description": TextEditorWidget(),
             "short_description": forms.TextInput(),
         }
@@ -88,6 +91,31 @@ class ProductBaseForm(MultiLanguageModelForm):
         self.fields["sales_unit"].required = True  # TODO: Move this to model
         if self.instance.pk:
             del self.fields["file"]
+
+        self.fields["manufacturer"] = Select2ModelField(
+            required=False,
+            initial=(self.instance.manufacturer if self.instance.pk else None),
+            model=Manufacturer,
+            widget=QuickAddManufacturerSelect(
+                initial=(self.instance.manufacturer if self.instance.pk else None),
+                editable_model="shuup.Manufacturer",
+                attrs={"data-placeholder": ugettext("Select a manufacturer")}
+            )
+        )
+        if self.instance.pk:
+            initial_type = self.instance.type
+        else:
+            initial_type = kwargs.get("initial", {}).get("type")
+
+        self.fields["type"] = Select2ModelField(
+            label=_("Product type"),
+            initial=initial_type,
+            model=ProductType,
+            widget=QuickAddProductTypeSelect(
+                editable_model="shuup.ProductType",
+                initial=initial_type
+            )
+        )
 
     def clean_sku(self):
         sku = self.cleaned_data["sku"]
@@ -155,8 +183,6 @@ class ShopProductForm(MultiLanguageModelForm):
         }
         widgets = {
             "display_unit": QuickAddDisplayUnitSelect(editable_model="shuup.DisplayUnit"),
-            "primary_category": QuickAddCategorySelect(editable_model="shuup.Category"),
-            "categories": QuickAddCategoryMultiSelect(),
             "payment_methods": QuickAddPaymentMethodsSelect(),
             "shipping_methods": QuickAddShippingMethodsSelect(),
         }
@@ -167,19 +193,46 @@ class ShopProductForm(MultiLanguageModelForm):
         super(ShopProductForm, self).__init__(**kwargs)
         payment_methods_qs = PaymentMethod.objects.all()
         shipping_methods_qs = ShippingMethod.objects.all()
-        suppliers_qs = Supplier.objects.enabled()
         if self.request:
             shop = self.request.shop
             payment_methods_qs = payment_methods_qs.filter(shop=shop)
             shipping_methods_qs = ShippingMethod.objects.filter(shop=shop)
-            suppliers_qs = shop.suppliers.enabled()
         self.fields["payment_methods"].queryset = payment_methods_qs
         self.fields["shipping_methods"].queryset = shipping_methods_qs
-        self.fields["suppliers"].queryset = suppliers_qs
-        category_qs = Category.objects.all_except_deleted(shop=self.request.shop).prefetch_related('translations')
         self.fields["default_price_value"].required = True
-        self.fields["primary_category"].queryset = category_qs
-        self.fields["categories"].queryset = category_qs
+
+        initial_suppliers = []
+        initial_categories = []
+
+        if self.instance.pk:
+            initial_suppliers = self.instance.suppliers.all()
+            initial_categories = self.instance.categories.all()
+
+        self.fields["suppliers"] = Select2ModelMultipleField(
+            initial=initial_suppliers,
+            model=Supplier,
+            widget=QuickAddSupplierMultiSelect(
+                initial=initial_suppliers,
+                attrs={"data-search-mode": "enabled"}
+            ),
+            required=False
+        )
+        self.fields["primary_category"] = Select2ModelField(
+            initial=(self.instance.primary_category if self.instance.pk else None),
+            model=Category,
+            widget=QuickAddCategorySelect(
+                editable_model="shuup.Category",
+                initial=(self.instance.primary_category if self.instance.pk else None),
+                attrs={"data-placeholder": ugettext("Select a category")}
+            ),
+            required=False
+        )
+        self.fields["categories"] = Select2ModelMultipleField(
+            initial=initial_categories,
+            model=Category,
+            widget=QuickAddCategoryMultiSelect(initial=initial_categories),
+            required=False
+        )
 
     # TODO: Move this to model
     def clean_minimum_purchase_quantity(self):
@@ -202,15 +255,21 @@ class ShopProductForm(MultiLanguageModelForm):
             return data
 
         # handle this here since form_part save causes problems with signals
-        primary_category = data["primary_category"]
-        categories = data["categories"]
+        primary_category = data.get("primary_category")
+        categories = data.get("categories", []) or []
+        if categories:
+            categories = list(categories)
+
         if not primary_category and categories:
             primary_category = categories[0]  # first is going to be primary
+
         if primary_category and primary_category not in categories:
-            combined = [primary_category.pk] + list(categories.values_list("pk", flat=True))
-            categories = Category.objects.filter(pk__in=combined)
+            combined = [primary_category] + categories
+            categories = combined
+
         data["primary_category"] = primary_category
         data["categories"] = categories
+
         form_post_clean.send(
             ShopProduct, instance=self.instance, cleaned_data=data)
         return data

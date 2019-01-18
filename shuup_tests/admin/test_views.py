@@ -222,7 +222,7 @@ def test_product_edit_view(rf, admin_user, settings):
 
     post_data = {
         'shop1-default_price_value': 12,
-        'shop1-primary_category': [cat.pk],
+        'shop1-primary_category': cat.pk,
         'shop1-categories': []
     }
     post.update(post_data)
