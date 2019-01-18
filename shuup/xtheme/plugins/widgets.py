@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.template.loader import render_to_string
+from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 
 
@@ -28,22 +29,62 @@ class XThemeModelChoiceField(forms.ModelChoiceField):
         return obj
 
 
-class XThemeMultipleChoiceField(forms.MultipleChoiceField):
-    """
-    A custom option field that doesn't validate whether the selected value
-    is in choices field as that is created dynamically
-    """
-    def __init__(self, choices=(), required=True, widget=None, label=None,
-                 initial=None, help_text='', validate_choices=True, *args, **kwargs):
-        self.validate_choices = validate_choices
-        super(XThemeMultipleChoiceField, self).__init__(
-            choices=choices, required=required, widget=widget, label=label,
-            initial=initial, help_text=help_text, *args, **kwargs
+class XThemeSelect2ModelMultipleChoiceField(forms.MultipleChoiceField):
+    def __init__(self, model, required=True, label=None,
+                 initial=None, help_text='', extra_widget_attrs={}, *args, **kwargs):
+        widget_attrs = {"data-model": model}
+        widget_attrs.update(extra_widget_attrs)
+
+        choices = []
+        if initial:
+            from django.apps import apps
+            app_label, model_name = model.split(".")
+            model = apps.get_model(app_label, model_name)
+            choices = [
+                (instance.pk, force_text(instance))
+                for instance in model.objects.filter(pk__in=initial)
+            ]
+
+        super(XThemeSelect2ModelMultipleChoiceField, self).__init__(
+            choices=choices,
+            required=required,
+            widget=forms.SelectMultiple(attrs=widget_attrs),
+            label=label,
+            initial=initial,
+            help_text=help_text,
+            *args, **kwargs
         )
 
     def validate(self, value):
-        if self.validate_choices:
-            super(XThemeMultipleChoiceField, self).validate(value)
-        else:
-            if self.required and not value:
-                raise forms.ValidationError(self.error_messages['required'], code='required')
+        if self.required and not value:
+            raise forms.ValidationError(self.error_messages['required'], code='required')
+
+
+class XThemeSelect2ModelChoiceField(forms.ChoiceField):
+    def __init__(self, model, required=True, label=None,
+                 initial=None, help_text='', extra_widget_attrs={}, *args, **kwargs):
+        widget_attrs = {"data-model": model}
+        widget_attrs.update(extra_widget_attrs)
+
+        choices = []
+        if initial:
+            from django.apps import apps
+            app_label, model_name = model.split(".")
+            model = apps.get_model(app_label, model_name)
+            instance = model.objects.filter(pk=initial).first()
+            if instance:
+                choices = [(instance.pk, force_text(instance))]
+
+        super(XThemeSelect2ModelChoiceField, self).__init__(
+            choices=choices,
+            required=required,
+            widget=forms.Select(attrs=widget_attrs),
+            label=label,
+            initial=initial,
+            help_text=help_text,
+            *args, **kwargs
+        )
+
+    def validate(self, value):
+        if self.required and not value:
+            raise forms.ValidationError(self.error_messages['required'], code='required')

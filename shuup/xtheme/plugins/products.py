@@ -9,9 +9,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 
-from shuup.core.models import (
-    Category, Product, ProductCrossSell, ProductCrossSellType
-)
+from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType
 from shuup.front.template_helpers.general import (
     get_best_selling_products, get_newest_products,
     get_products_for_categories, get_random_products
@@ -20,7 +18,7 @@ from shuup.front.template_helpers.product import map_relation_type
 from shuup.xtheme import TemplatedPlugin
 from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
 from shuup.xtheme.plugins.widgets import (
-    XThemeModelChoiceField, XThemeMultipleChoiceField
+    XThemeSelect2ModelChoiceField, XThemeSelect2ModelMultipleChoiceField
 )
 
 
@@ -139,18 +137,12 @@ class ProductsFromCategoryForm(GenericPluginForm):
                 value.initial = self.plugin.config.get(name, value.initial)
                 self.fields[name] = value
 
-        self.fields["category"] = XThemeModelChoiceField(
+        self.fields["category"] = XThemeSelect2ModelChoiceField(
+            model="shuup.category",
             label=_("Category"),
-            queryset=Category.objects.all_except_deleted(shop=getattr(self.request, "shop")),
             required=False,
             initial=self.plugin.config.get("category") if self.plugin else None
         )
-
-    def clean(self):
-        cleaned_data = super(ProductsFromCategoryForm, self).clean()
-        carousel = cleaned_data.get("category")
-        cleaned_data["category"] = carousel.pk if hasattr(carousel, "pk") else None
-        return cleaned_data
 
 
 class ProductsFromCategoryPlugin(TemplatedPlugin):
@@ -205,24 +197,15 @@ class ProductSelectionConfigForm(GenericPluginForm):
                 value.initial = self.plugin.config.get(name, value.initial)
                 self.fields[name] = value
 
-        initial_products = []
-        if self.plugin.config.get("products"):
-            initial_products = [
-                (p.pk, p.safe_translation_getter("name"))
-                for p in Product.objects.filter(pk__in=self.plugin.config["products"])
-            ]
-
-        self.fields["products"] = XThemeMultipleChoiceField(
-            validate_choices=False,
-            choices=initial_products,
+        self.fields["products"] = XThemeSelect2ModelMultipleChoiceField(
+            model="shuup.product",
             label=_("Products"),
             help_text=_("Select all products you want to show"),
             required=True,
-            initial=[initial[0] for initial in initial_products],
-            widget=forms.SelectMultiple(attrs={
-                "data-model": "shuup.product",
-                "data-searchMode": "main"
-            })
+            initial=self.plugin.config.get("products"),
+            extra_widget_attrs={
+                "data-search-mode": "main"
+            }
         )
 
 

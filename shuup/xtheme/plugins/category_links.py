@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import Category
 from shuup.xtheme import TemplatedPlugin
 from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
+from shuup.xtheme.plugins.widgets import XThemeSelect2ModelMultipleChoiceField
 
 
 class CategoryLinksConfigForm(GenericPluginForm):
@@ -27,20 +28,15 @@ class CategoryLinksConfigForm(GenericPluginForm):
                 value.initial = self.plugin.config.get(name, value.initial)
                 self.fields[name] = value
 
-        self.fields["categories"] = forms.ModelMultipleChoiceField(
-            queryset=Category.objects.all_visible(customer=None, shop=getattr(self.request, "shop")),
+        self.fields["categories"] = XThemeSelect2ModelMultipleChoiceField(
+            model="shuup.category",
             required=False,
-            initial=self.plugin.config.get("categories", None),
+            label=_("Categories"),
+            initial=self.plugin.config.get("categories"),
+            extra_widget_attrs={
+                "data-search-mode": "visible"
+            }
         )
-
-    def clean(self):
-        """
-        A custom clean method to save category configuration information in a serializable form
-        """
-        cleaned_data = super(CategoryLinksConfigForm, self).clean()
-        categories = cleaned_data.get("categories", [])
-        cleaned_data["categories"] = [category.pk for category in categories if hasattr(category, "pk")]
-        return cleaned_data
 
 
 class CategoryLinksPlugin(TemplatedPlugin):
