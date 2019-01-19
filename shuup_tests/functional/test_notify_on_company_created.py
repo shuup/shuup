@@ -81,7 +81,7 @@ def test_notify_on_company_created(regular_user, allow_company_registration):
         script.delete()
     else:
         response = client.get(company_edit_url)
-        assert response.status_code == 404
+        assert reverse("shuup:customer_edit") in response.url
         assert Notification.objects.filter(identifier="company_created").count() == 0
 
 
