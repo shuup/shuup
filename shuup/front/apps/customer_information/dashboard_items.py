@@ -8,6 +8,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import CompanyContact
+from shuup.front.utils.companies import allow_company_registration
 from shuup.front.utils.dashboard import DashboardItem
 
 
@@ -36,7 +37,7 @@ class CompanyDashboardItem(DashboardItem):
 
     def show_on_menu(self):
         # Only show this on menu if customer is company
-        return isinstance(self.request.customer, CompanyContact)
+        return (isinstance(self.request.customer, CompanyContact) or allow_company_registration(self.request.shop))
 
 
 class AddressBookDashboardItem(DashboardItem):
