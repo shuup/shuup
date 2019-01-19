@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
+from django.http.response import Http404
 
 from shuup import configuration
 from shuup.admin.modules.contacts.views import ContactDetailView
@@ -498,8 +499,8 @@ def test_create_company_from_customer_dashboard(allow_company_registration, comp
         # If company registration is not allowed,
         # can't create company contacts from customer dashboard
         request = apply_request_middleware(rf.get("/"), user=admin_user)
-        response = view_func(request)
-        assert response.status_code == 404
+        with pytest.raises(Http404):
+            response = view_func(request)
     else:
         request = apply_request_middleware(
             rf.post("/", {

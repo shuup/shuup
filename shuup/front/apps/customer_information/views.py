@@ -9,7 +9,7 @@ import six
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import password_change
-from django.http import HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
@@ -87,7 +87,7 @@ class CompanyEditView(DashboardViewMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if not allow_company_registration(request.shop):
-            return HttpResponseNotFound()
+            raise Http404()
         return super(CompanyEditView, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
