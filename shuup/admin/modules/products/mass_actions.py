@@ -14,6 +14,7 @@ from six import string_types
 
 from shuup.admin.modules.products.views.list import ProductListView
 from shuup.admin.modules.settings.view_settings import ViewSettings
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import (
     PicotableFileMassAction, PicotableMassAction, PicotableRedirectMassAction
 )
@@ -25,10 +26,13 @@ class VisibleMassAction(PicotableMassAction):
     identifier = "mass_action_product_visible"
 
     def process(self, request, ids):
-        query = Q(product__pk__in=ids)
+        shop = get_shop(request)
+        query = Q(product__pk__in=ids, shop=shop)
         if isinstance(ids, string_types) and ids == "all":
-            query = Q()
-        ShopProduct.objects.filter(query).update(visibility=ShopProductVisibility.ALWAYS_VISIBLE)
+            query = Q(shop=shop)
+        for shop_product in ShopProduct.objects.filter(query).iterator():
+            shop_product.visibility = ShopProductVisibility.ALWAYS_VISIBLE
+            shop_product.save()
 
 
 class InvisibleMassAction(PicotableMassAction):
@@ -36,10 +40,13 @@ class InvisibleMassAction(PicotableMassAction):
     identifier = "mass_action_product_invisible"
 
     def process(self, request, ids):
-        query = Q(product__pk__in=ids)
+        shop = get_shop(request)
+        query = Q(product__pk__in=ids, shop=shop)
         if isinstance(ids, string_types) and ids == "all":
-            query = Q()
-        ShopProduct.objects.filter(query).update(visibility=ShopProductVisibility.NOT_VISIBLE)
+            query = Q(shop=shop)
+        for shop_product in ShopProduct.objects.filter(query).iterator():
+            shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
+            shop_product.save()
 
 
 class FileResponseAction(PicotableFileMassAction):
@@ -47,9 +54,10 @@ class FileResponseAction(PicotableFileMassAction):
     identifier = "mass_action_product_simple_csv"
 
     def process(self, request, ids):
-        query = Q(id__in=ids)
+        shop = get_shop(request)
+        query = Q(id__in=ids, shop=shop)
         if isinstance(ids, string_types) and ids == "all":
-            query = Q()
+            query = Q(shop=shop)
         view_settings = ViewSettings(ShopProduct, ProductListView.default_columns, ProductListView)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="products.csv"'
