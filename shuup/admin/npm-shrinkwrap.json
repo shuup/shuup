@@ -1049,6 +1049,14 @@
         }
       }
     },
+    "acorn5-object-spread": {
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/acorn5-object-spread/-/acorn5-object-spread-4.0.0.tgz",
+      "integrity": "sha1-1XWAge7ZcSGrC+R+Mcqu8qo5lpc=",
+      "requires": {
+        "acorn": "^5.1.2"
+      }
+    },
     "ajv": {
       "version": "5.5.2",
       "resolved": "https://registry.npmjs.org/ajv/-/ajv-5.5.2.tgz",
@@ -5465,8 +5473,7 @@
         },
         "ansi-regex": {
           "version": "2.1.1",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "aproba": {
           "version": "1.2.0",
@@ -5484,13 +5491,11 @@
         },
         "balanced-match": {
           "version": "1.0.0",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "brace-expansion": {
           "version": "1.1.11",
           "bundled": true,
-          "optional": true,
           "requires": {
             "balanced-match": "^1.0.0",
             "concat-map": "0.0.1"
@@ -5503,18 +5508,15 @@
         },
         "code-point-at": {
           "version": "1.1.0",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "concat-map": {
           "version": "0.0.1",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "console-control-strings": {
           "version": "1.1.0",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "core-util-is": {
           "version": "1.0.2",
@@ -5617,8 +5619,7 @@
         },
         "inherits": {
           "version": "2.0.3",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "ini": {
           "version": "1.3.5",
@@ -5628,7 +5629,6 @@
         "is-fullwidth-code-point": {
           "version": "1.0.0",
           "bundled": true,
-          "optional": true,
           "requires": {
             "number-is-nan": "^1.0.0"
           }
@@ -5641,20 +5641,17 @@
         "minimatch": {
           "version": "3.0.4",
           "bundled": true,
-          "optional": true,
           "requires": {
             "brace-expansion": "^1.1.7"
           }
         },
         "minimist": {
           "version": "0.0.8",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "minipass": {
           "version": "2.2.4",
           "bundled": true,
-          "optional": true,
           "requires": {
             "safe-buffer": "^5.1.1",
             "yallist": "^3.0.0"
@@ -5671,7 +5668,6 @@
         "mkdirp": {
           "version": "0.5.1",
           "bundled": true,
-          "optional": true,
           "requires": {
             "minimist": "0.0.8"
           }
@@ -5744,8 +5740,7 @@
         },
         "number-is-nan": {
           "version": "1.0.1",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "object-assign": {
           "version": "4.1.1",
@@ -5755,7 +5750,6 @@
         "once": {
           "version": "1.4.0",
           "bundled": true,
-          "optional": true,
           "requires": {
             "wrappy": "1"
           }
@@ -5831,8 +5825,7 @@
         },
         "safe-buffer": {
           "version": "5.1.1",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "safer-buffer": {
           "version": "2.1.2",
@@ -5862,7 +5855,6 @@
         "string-width": {
           "version": "1.0.2",
           "bundled": true,
-          "optional": true,
           "requires": {
             "code-point-at": "^1.0.0",
             "is-fullwidth-code-point": "^1.0.0",
@@ -5880,7 +5872,6 @@
         "strip-ansi": {
           "version": "3.0.1",
           "bundled": true,
-          "optional": true,
           "requires": {
             "ansi-regex": "^2.0.0"
           }
@@ -5919,13 +5910,11 @@
         },
         "wrappy": {
           "version": "1.0.2",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "yallist": {
           "version": "3.0.2",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         }
       }
     },
@@ -8241,7 +8230,7 @@
     "osenv": {
       "version": "0.1.5",
       "resolved": "https://registry.npmjs.org/osenv/-/osenv-0.1.5.tgz",
-      "integrity": "sha1-hc36+uso6Gd/QW4odZK18/SepBA=",
+      "integrity": "sha512-0CWcCECdMVc2Rw3U5w9ZjqX6ga6ubk1xDVKxtBQPK7wis/0F2r9T6k4ydGYhecl7YUBxBVxhL5oisPsNxAPe2g==",
       "requires": {
         "os-homedir": "^1.0.0",
         "os-tmpdir": "^1.0.0"
@@ -11542,6 +11531,7 @@
       "resolved": "https://registry.npmjs.org/rijs.sync/-/rijs.sync-2.3.5.tgz",
       "integrity": "sha1-hyjG19cqgBcvy6MWsn0KQ/MESas=",
       "requires": {
+        "buble": "github:pemrouz/buble#4e639aeeb64712ac95dc30a52750d1ee4432c9c8",
         "express": "^4.14.0",
         "lru_map": "^0.3.3",
         "platform": "^1.3.4",
@@ -11559,7 +11549,7 @@
         },
         "buble": {
           "version": "github:pemrouz/buble#4e639aeeb64712ac95dc30a52750d1ee4432c9c8",
-          "from": "github:pemrouz/buble#4e639aeeb64712ac95dc30a52750d1ee4432c9c8",
+          "from": "github:pemrouz/buble",
           "requires": {
             "acorn": "^5.1.2",
             "acorn-jsx": "^3.0.1",
@@ -11569,22 +11559,12 @@
             "minimist": "^1.2.0",
             "os-homedir": "^1.0.1",
             "vlq": "^0.2.2"
-          },
-          "dependencies": {
-            "acorn5-object-spread": {
-              "version": "4.0.0",
-              "resolved": "https://registry.npmjs.org/acorn5-object-spread/-/acorn5-object-spread-4.0.0.tgz",
-              "integrity": "sha1-1XWAge7ZcSGrC+R+Mcqu8qo5lpc=",
-              "requires": {
-                "acorn": "^5.1.2"
-              }
-            }
           }
         },
         "chalk": {
-          "version": "2.4.1",
-          "resolved": "https://registry.npmjs.org/chalk/-/chalk-2.4.1.tgz",
-          "integrity": "sha512-ObN6h1v2fTJSmUXoS3nMQ92LbDK9be4TV+6G+omQlGJFdcUX5heKi1LZ1YnRMIgwTLEj3E24bT6tYni50rlCfQ==",
+          "version": "2.4.2",
+          "resolved": "https://registry.npmjs.org/chalk/-/chalk-2.4.2.tgz",
+          "integrity": "sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==",
           "requires": {
             "ansi-styles": "^3.2.1",
             "escape-string-regexp": "^1.0.5",
@@ -11593,7 +11573,7 @@
         },
         "magic-string": {
           "version": "0.22.5",
-          "resolved": "http://registry.npmjs.org/magic-string/-/magic-string-0.22.5.tgz",
+          "resolved": "https://registry.npmjs.org/magic-string/-/magic-string-0.22.5.tgz",
           "integrity": "sha512-oreip9rJZkzvA8Qzk9HFs8fZGF/u7H/gtrE8EN6RjKJ9kh2HlC+yQ2QezifqTZfGyiuAV0dRv5a+y/8gBb1m9w==",
           "requires": {
             "vlq": "^0.2.2"
