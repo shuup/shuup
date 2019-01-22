@@ -14,7 +14,7 @@ from django.utils.translation import activate, get_language
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.core.models import (
     Category, CompanyContact, PersonContact, Product, ProductMode,
-    SalesUnit, ShopProduct, ShopProductVisibility
+    SalesUnit, ShopProduct, ShopProductVisibility, CategoryStatus
 )
 from shuup.testing.factories import create_product, get_default_shop, get_shop, create_random_user
 from shuup.testing.utils import apply_request_middleware
@@ -54,6 +54,7 @@ def test_ajax_select_view_with_products(rf, admin_user):
 
     product_name_en = "The Product"
     product = create_product("the product", shop=shop, **{"name": product_name_en})
+    shop_product = product.get_shop_instance(shop)
 
     product_name_fi = "tuote"
     product.set_current_language("fi")
@@ -72,6 +73,11 @@ def test_ajax_select_view_with_products(rf, admin_user):
     results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
     assert len(results) == 1
     assert results[0].get("id") == product.id
+    assert results[0].get("name") == product_name_en
+
+    results = _get_search_results(rf, view, "shuup.ShopProduct", "product", admin_user)
+    assert len(results) == 1
+    assert results[0].get("id") == shop_product.id
     assert results[0].get("name") == product_name_en
 
     activate("fi")
@@ -353,3 +359,23 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
     results = _get_search_results(rf, view, "shuup.PersonContact", "joe", admin_user)
 
     assert len(results) == 0
+
+
+@pytest.mark.django_db
+def test_select_categpru(rf, admin_user):
+    shop = get_default_shop()
+    activate("en")
+    view = MultiselectAjaxView.as_view()
+
+    category1 = Category.objects.create(name="category", status=CategoryStatus.VISIBLE)
+    category2 = Category.objects.create(name="category", status=CategoryStatus.INVISIBLE)
+    Category.objects.create(name="category")
+    category1.shops.add(shop)
+    category2.shops.add(shop)
+
+    results = _get_search_results(rf, view, "shuup.Category", "category", admin_user)
+    assert len(results) == 2
+
+    # only visible
+    results = _get_search_results(rf, view, "shuup.Category", "category", admin_user, search_mode="visible")
+    assert len(results) == 1

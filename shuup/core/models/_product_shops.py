@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import warnings
+
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -286,15 +288,17 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                     code="product_not_visible_to_group"
                 )
 
+        # TODO: Remove from Shuup 2.0
         for receiver, response in get_visibility_errors.send(ShopProduct, shop_product=self, customer=customer):
+            warnings.warn("Visibility errors through signals are deprecated", DeprecationWarning)
             for error in response:
                 yield error
 
-    # TODO: Refactor get_orderability_errors, it's too complex
-    def get_orderability_errors(  # noqa (C901)
-            self, supplier, quantity, customer, ignore_minimum=False):
+    def get_orderability_errors(self, supplier, quantity, customer, ignore_minimum=False):
         """
         Yield ValidationErrors that would cause this product to not be orderable.
+
+        Shop product to be orderable it needs to be visible visible and purchasable
 
         :param supplier: Supplier to order this product from. May be None.
         :type supplier: shuup.core.models.Supplier
@@ -309,101 +313,50 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         for error in self.get_visibility_errors(customer):
             yield error
 
+        for error in self.get_purchasability_errors(supplier, customer, quantity, ignore_minimum):
+            yield error
+
+    def get_purchasability_errors(self, supplier, customer, quantity, ignore_minimum=False):
+        """
+        Yield ValidationErrors that would cause this product to not be purchasable.
+
+        Shop product to be purchasable it has to have purchasable attribute set on
+        and pass all quantity and supplier checks.
+
+        :param supplier: Supplier to order this product from. May be None.
+        :type supplier: shuup.core.models.Supplier
+        :param quantity: Quantity to order.
+        :type quantity: int|Decimal
+        :param customer: Customer contact.
+        :type customer: shuup.core.models.Contact
+        :param ignore_minimum: Ignore any limitations caused by quantity minimums.
+        :type ignore_minimum: bool
+        :return: Iterable[ValidationError]
+        """
         if not self.purchasable:
             yield ValidationError(_('The product is not purchasable'), code="not_purchasable")
 
-        if supplier is None and not self.suppliers.enabled().exists():
-            # `ShopProduct` must have at least one `Supplier`.
-            # If supplier is not given and the `ShopProduct` itself
-            # doesn't have suppliers we cannot sell this product.
-            yield ValidationError(
-                _('The product has no supplier.'),
-                code="no_supplier"
-            )
+        for error in self.get_quantity_errors(quantity, ignore_minimum):
+            yield error
 
+        for error in self.get_supplier_errors(supplier, customer, quantity, ignore_minimum):
+            yield error
+
+        # TODO: Remove from Shuup 2.0
+        for receiver, response in get_orderability_errors.send(
+            ShopProduct, shop_product=self, customer=customer, supplier=supplier, quantity=quantity
+        ):
+            warnings.warn("Orderability errors through signals are deprecated", DeprecationWarning)
+            for error in response:
+                yield error
+
+    def get_quantity_errors(self, quantity, ignore_minimum):
         if not ignore_minimum and quantity < self.minimum_purchase_quantity:
             yield ValidationError(
                 _('The purchase quantity needs to be at least %d for this product.') % self.minimum_purchase_quantity,
                 code="purchase_quantity_not_met"
             )
 
-        if supplier and not self.suppliers.enabled().filter(pk=supplier.pk).exists():
-            yield ValidationError(
-                _('The product is not supplied by %s.') % supplier,
-                code="invalid_supplier"
-            )
-
-        if self.product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
-            sellable = False
-            for child_product in self.product.variation_children.all():
-                try:
-                    child_shop_product = child_product.get_shop_instance(self.shop)
-                except ShopProduct.DoesNotExist:
-                    continue
-
-                if child_shop_product.is_orderable(
-                        supplier=supplier,
-                        customer=customer,
-                        quantity=child_shop_product.minimum_purchase_quantity,
-                        allow_cache=False
-                ):
-                    sellable = True
-                    break
-            if not sellable:
-                yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
-        elif self.product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
-            from shuup.core.models import ProductVariationResult
-            sellable = False
-            for combo in self.product.get_all_available_combinations():
-                res = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
-                if not res:
-                    continue
-                try:
-                    child_shop_product = res.get_shop_instance(self.shop)
-                except ShopProduct.DoesNotExist:
-                    continue
-
-                if child_shop_product.is_orderable(
-                        supplier=supplier,
-                        customer=customer,
-                        quantity=child_shop_product.minimum_purchase_quantity,
-                        allow_cache=False
-                ):
-                    sellable = True
-                    break
-            if not sellable:
-                yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
-        elif self.product.is_package_parent():
-            for child_product, child_quantity in six.iteritems(self.product.get_package_child_to_quantity_map()):
-                try:
-                    child_shop_product = child_product.get_shop_instance(shop=self.shop, allow_cache=False)
-                except ShopProduct.DoesNotExist:
-                    yield ValidationError("%s: Not available in %s" % (child_product, self.shop), code="invalid_shop")
-                else:
-                    for error in child_shop_product.get_orderability_errors(
-                            supplier=supplier,
-                            quantity=(quantity * child_quantity),
-                            customer=customer,
-                            ignore_minimum=ignore_minimum
-                    ):
-                        message = getattr(error, "message", "")
-                        code = getattr(error, "code", None)
-                        yield ValidationError("%s: %s" % (child_product, message), code=code)
-
-        elif supplier:  # Test supplier orderability only for variation children and normal products
-            for error in supplier.get_orderability_errors(self, quantity, customer=customer):
-                yield error
-
-        for error in self.get_quantity_errors(quantity):
-            yield error
-
-        for receiver, response in get_orderability_errors.send(
-            ShopProduct, shop_product=self, customer=customer, supplier=supplier, quantity=quantity
-        ):
-            for error in response:
-                yield error
-
-    def get_quantity_errors(self, quantity):
         purchase_multiple = self.purchase_multiple
         if quantity > 0 and purchase_multiple > 0 and (quantity % purchase_multiple) != 0:
             p = (quantity // purchase_multiple)
@@ -426,6 +379,96 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                         larger_amount=render_qty(larger_p))
             yield ValidationError(message, code="invalid_purchase_multiple")
 
+    def get_supplier_errors(self, supplier, customer, quantity, ignore_minimum):
+        enabled_supplier_pks = self.suppliers.enabled().values_list("pk", flat=True)
+        if supplier is None and not enabled_supplier_pks:
+            # `ShopProduct` must have at least one `Supplier`.
+            # If supplier is not given and the `ShopProduct` itself
+            # doesn't have suppliers we cannot sell this product.
+            yield ValidationError(
+                _('The product has no supplier.'),
+                code="no_supplier"
+            )
+
+        if supplier and supplier.pk not in enabled_supplier_pks:
+            yield ValidationError(
+                _('The product is not supplied by %s.') % supplier,
+                code="invalid_supplier"
+            )
+
+        errors = []
+        if self.product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
+            errors = self.get_orderability_errors_for_simple_variation_parent(supplier, customer)
+        elif self.product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
+            errors = self.get_orderability_errors_for_variable_variation_parent(supplier, customer)
+        elif self.product.is_package_parent():
+            errors = self.get_orderability_errors_for_package_parent(supplier, customer, quantity, ignore_minimum)
+        elif supplier:  # Test supplier orderability only for variation children and normal products
+            errors = supplier.get_orderability_errors(self, quantity, customer=customer)
+
+        for error in errors:
+            yield error
+
+    def get_orderability_errors_for_simple_variation_parent(self, supplier, customer):
+        sellable = False
+        for child_product in self.product.variation_children.all():
+            try:
+                child_shop_product = child_product.get_shop_instance(self.shop)
+            except ShopProduct.DoesNotExist:
+                continue
+
+            if child_shop_product.is_orderable(
+                    supplier=supplier,
+                    customer=customer,
+                    quantity=child_shop_product.minimum_purchase_quantity,
+                    allow_cache=False
+            ):
+                sellable = True
+                break
+
+        if not sellable:
+            yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
+
+    def get_orderability_errors_for_variable_variation_parent(self, supplier, customer):
+        from shuup.core.models import ProductVariationResult
+        sellable = False
+        for combo in self.product.get_all_available_combinations():
+            res = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
+            if not res:
+                continue
+            try:
+                child_shop_product = res.get_shop_instance(self.shop)
+            except ShopProduct.DoesNotExist:
+                continue
+
+            if child_shop_product.is_orderable(
+                    supplier=supplier,
+                    customer=customer,
+                    quantity=child_shop_product.minimum_purchase_quantity,
+                    allow_cache=False
+            ):
+                sellable = True
+                break
+        if not sellable:
+            yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
+
+    def get_orderability_errors_for_package_parent(self, supplier, customer, quantity, ignore_minimum):
+        for child_product, child_quantity in six.iteritems(self.product.get_package_child_to_quantity_map()):
+            try:
+                child_shop_product = child_product.get_shop_instance(shop=self.shop, allow_cache=False)
+            except ShopProduct.DoesNotExist:
+                yield ValidationError("%s: Not available in %s" % (child_product, self.shop), code="invalid_shop")
+            else:
+                for error in child_shop_product.get_orderability_errors(
+                        supplier=supplier,
+                        quantity=(quantity * child_quantity),
+                        customer=customer,
+                        ignore_minimum=ignore_minimum
+                ):
+                    message = getattr(error, "message", "")
+                    code = getattr(error, "code", None)
+                    yield ValidationError("%s: %s" % (child_product, message), code=code)
+
     def raise_if_not_orderable(self, supplier, customer, quantity, ignore_minimum=False):
         for message in self.get_orderability_errors(
             supplier=supplier, quantity=quantity, customer=customer, ignore_minimum=ignore_minimum
@@ -437,6 +480,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             raise ProductNotVisibleProblem(message.args[0])
 
     def is_orderable(self, supplier, customer, quantity, allow_cache=True):
+        """
+        Product to be orderable it needs to be visible and purchasable
+        """
         key, val = context_cache.get_cached_value(
             identifier="is_orderable", item=self, context={"customer": customer},
             supplier=supplier, stock_managed=bool(supplier and supplier.stock_managed),
@@ -457,7 +503,19 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         return True
 
     def is_visible(self, customer):
+        """
+        Visible products is shown in store front based on customer
+        or customer group limitations
+        """
         for message in self.get_visibility_errors(customer=customer):
+            return False
+        return True
+
+    def is_purchasable(self, supplier, customer, quantity):
+        """
+        Whether product can be purchasable
+        """
+        for message in self.get_purchasability_errors(supplier, customer, quantity):
             return False
         return True
 
@@ -541,6 +599,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             "shipping_address": shipping_address
         }
         return supplier_strategy().get_supplier(**kwargs)
+
+    def __str__(self):
+        return self.get_name()
 
     def get_name(self):
         return self._safe_get_string("name")

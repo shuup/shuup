@@ -5,6 +5,9 @@
 .. image:: https://img.shields.io/pypi/v/shuup.svg
    :alt: PyPI
    :target: https://github.com/shuup/shuup
+.. image:: https://snyk.io/test/github/shuup/shuup/badge.svg
+   :alt: Known Vulnerabilities
+   :target: https://snyk.io/test/github/shuup/shuup
 
 Shuup
 =====

@@ -19,7 +19,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
 from shuup.core.models import (
-    Carrier, Contact, Product, ProductMode, Shop, ShopProductVisibility
+    Carrier, Category, Contact, Product, ProductMode, Shop, ShopProduct,
+    ShopProductVisibility, Supplier
 )
 
 
@@ -62,6 +63,8 @@ class MultiselectAjaxView(TemplateView):
         if issubclass(cls, Product):
             self.search_fields.append("sku")
             self.search_fields.append("barcode")
+        if issubclass(cls, ShopProduct):
+            self.search_fields.append("product__translations__name")
 
         user_model = get_user_model()
         if issubclass(cls, user_model):
@@ -87,7 +90,8 @@ class MultiselectAjaxView(TemplateView):
             if query_shop:
                 shop = query_shop
 
-        qs = self._filter_query(cls, qs, shop)
+        search_mode = request.GET.get("searchMode")
+        qs = self._filter_query(cls, qs, shop, search_mode)
         self.init_search_fields(cls)
         if not self.search_fields:
             return [{"id": None, "name": _("Couldn't get selections for %s.") % model_name}]
@@ -103,7 +107,6 @@ class MultiselectAjaxView(TemplateView):
 
             qs = qs.filter(query)
 
-        search_mode = request.GET.get("searchMode")
         if search_mode and search_mode == "main" and issubclass(cls, Product):
             qs = qs.filter(mode__in=[
                 ProductMode.SIMPLE_VARIATION_PARENT,
@@ -125,11 +128,16 @@ class MultiselectAjaxView(TemplateView):
         qs = qs.distinct()
         return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
 
-    def _filter_query(self, cls, qs, shop):
-        if hasattr(cls.objects, "all_except_deleted"):
+    def _filter_query(self, cls, qs, shop, search_mode=None):
+        if search_mode == "visible" and issubclass(cls, Category):
+            qs = cls.objects.all_visible(self.request.customer, shop=self.request.shop)
+        elif search_mode == "enabled" and issubclass(cls, Supplier):
+            qs = cls.objects.enabled()
+        elif hasattr(cls.objects, "all_except_deleted"):
             qs = cls.objects.all_except_deleted(shop=shop)
-        if hasattr(cls.objects, "get_for_user"):
+        elif hasattr(cls.objects, "get_for_user"):
             qs = cls.objects.get_for_user(self.request.user)
+
         if issubclass(cls, Product):
             qs = qs.filter(shop_products__shop=shop)
 

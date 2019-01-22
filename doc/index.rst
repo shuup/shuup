@@ -36,6 +36,7 @@ Developing Shuup
 * :doc:`web_api`
 * :doc:`howto/basic_admin_tasks`
 * :doc:`howto/dev_tools`
+* :doc:`ref/performance_optimizations`
 
 
 Extending Shuup

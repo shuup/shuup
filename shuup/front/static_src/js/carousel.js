@@ -51,8 +51,8 @@ $(function() {
         });
     });
 
-    // Set up owl carousel for product list with 5 items
-    $(".owl-carousel.five").owlCarousel({
+    // Set up owl carousel for product list and make sure they have the owl-carousel styles
+    $(".product-carousel.carousel-items").owlCarousel({
         margin: 20,
         nav: true,
         navText: [

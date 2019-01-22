@@ -10,7 +10,9 @@ from django.dispatch import receiver
 from filer.models import Image
 
 from shuup.core import cache
-from shuup.core.models import Manufacturer, ProductMedia, Shop, ShopProduct
+from shuup.core.models import (
+    Manufacturer, ProductCrossSell, ProductMedia, Shop, ShopProduct
+)
 from shuup.core.signals import context_cache_item_bumped  # noqa
 from shuup.core.utils import context_cache
 from shuup.front.utils import cache as cache_utils
@@ -24,6 +26,7 @@ def handle_context_cache_item_bumped(sender, item, **kwargs):
     """
     if isinstance(item, ShopProduct):
         shop = item.shop
+        context_cache.bump_cache_for_item(cache_utils.get_listed_products_cache_item(shop))
         context_cache.bump_cache_for_item(cache_utils.get_best_selling_products_cache_item(shop))
         context_cache.bump_cache_for_item(cache_utils.get_newest_products_cache_item(shop))
         context_cache.bump_cache_for_item(cache_utils.get_products_for_category_cache_item(shop))
@@ -48,6 +51,17 @@ def bump_instance_thumbnail_cache(sender, instance, **kwargs):
     cache.bump_version(cache_namespace)
 
 
+def handle_cross_sell_post_save(sender, instance, **kwargs):
+    shop_ids = list(
+        ShopProduct.objects.filter(
+            product__in=[instance.product1, instance.product2]
+        ).values_list("shop", flat=True).distinct()
+    )
+    for shop_id in shop_ids:
+        context_cache.bump_cache_for_item(cache_utils.get_cross_sells_cache_item(shop_id))
+
+
 post_save.connect(bump_instance_thumbnail_cache, sender=ProductMedia)
 post_save.connect(bump_instance_thumbnail_cache, sender=Image)
 post_save.connect(handle_manufacturer_post_save, sender=Manufacturer)
+post_save.connect(handle_cross_sell_post_save, sender=ProductCrossSell)

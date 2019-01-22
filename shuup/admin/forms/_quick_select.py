@@ -14,19 +14,40 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
-class QuickAddRelatedObjectSelectMixin(object):
+class QuickAddRelatedObjectBaseMixin(object):
+    model = None
+    url = None
+
     def __init__(self, attrs=None, choices=(), editable_model=None):
         attrs = attrs or {}
         self.editable_model = editable_model
         if editable_model:
             attrs.update({"data-edit-model": editable_model})
+        super(QuickAddRelatedObjectBaseMixin, self).__init__(attrs, choices)
 
-        super(QuickAddRelatedObjectSelectMixin, self).__init__(attrs, choices)
+
+class QuickAddRelatedObjectSelectMixin(QuickAddRelatedObjectBaseMixin):
+    def __init__(self, attrs=None, choices=(), editable_model=None, initial=None):
+        """
+        :param initial int: primary key of the object that is initially selected
+        """
+        if self.model and initial:
+            choices = [(initial.pk, force_text(initial))]
+        super(QuickAddRelatedObjectSelectMixin, self).__init__(attrs, choices, editable_model)
+
+
+class QuickAddRelatedObjectMultipleSelectMixin(QuickAddRelatedObjectBaseMixin):
+    def __init__(self, attrs=None, choices=(), editable_model=None, initial=None):
+        """
+        :param initial list[int]: list of primary keys of the objects that
+            are initially selected
+        """
+        if self.model and initial:
+            choices = [(instance.pk, force_text(instance)) for instance in initial]
+        super(QuickAddRelatedObjectMultipleSelectMixin, self).__init__(attrs, choices, editable_model)
 
 
 class QuickAddRelatedObjectSelect(QuickAddRelatedObjectSelectMixin, Select):
-    url = ""
-    model = ""
     template_name = "shuup/admin/forms/widgets/quick_add_select.jinja"
 
     def get_context(self, name, value, attrs):
@@ -40,8 +61,7 @@ class QuickAddRelatedObjectSelect(QuickAddRelatedObjectSelectMixin, Select):
         return context
 
 
-class QuickAddRelatedObjectMultiSelect(QuickAddRelatedObjectSelectMixin, SelectMultiple):
-    url = ""
+class QuickAddRelatedObjectMultiSelect(QuickAddRelatedObjectMultipleSelectMixin, SelectMultiple):
     template_name = "shuup/admin/forms/widgets/quick_add_select.jinja"
 
     def get_context(self, name, value, attrs):
@@ -103,7 +123,7 @@ class QuickAddRelatedObjectSelectWithoutTemplate(QuickAddRelatedObjectSelectMixi
         return mark_safe('\n'.join(output))
 
 
-class QuickAddRelatedObjectMultiSelectWithoutTemplate(QuickAddRelatedObjectSelectMixin, SelectMultiple):
+class QuickAddRelatedObjectMultiSelectWithoutTemplate(QuickAddRelatedObjectMultipleSelectMixin, SelectMultiple):
     """
     Old implementation for Django 1.9 and 1.8 where the select
     still has the render.

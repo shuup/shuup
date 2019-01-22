@@ -7,9 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
+import mock
+
+from shuup.core import cache
 from shuup.core.models import (
     ProductCrossSell, ProductCrossSellType, StockBehavior
 )
+from shuup.core.utils import context_cache
 from shuup.front.template_helpers import product as product_helpers
 from shuup.testing.factories import (
     create_product, get_default_shop, get_default_supplier
@@ -49,6 +53,7 @@ def test_cross_sell_plugin_type():
 
     # Make sure quantities returned by plugin match
     for type, count in type_counts:
+        cache.clear()
         assert len(list(product_helpers.get_product_cross_sells(context, product, type, count))) == count
 
 
@@ -64,5 +69,38 @@ def test_cross_sell_plugin_count():
     type = ProductCrossSellType.RELATED
     _create_cross_sell_products(product, shop, supplier, type, total_count)
     assert ProductCrossSell.objects.filter(product1=product, type=type).count() == total_count
-
+    cache.clear()
     assert len(list(product_helpers.get_product_cross_sells(context, product, type, trim_count))) == trim_count
+
+
+@pytest.mark.django_db
+def test_cross_sell_plugin_cache_bump():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product("test-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
+    context = get_jinja_context(product=product)
+    total_count = 5
+    trim_count = 3
+
+    type = ProductCrossSellType.RELATED
+    _create_cross_sell_products(product, shop, supplier, type, total_count)
+    assert ProductCrossSell.objects.filter(product1=product, type=type).count() == total_count
+
+    set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+    def set_cache_value(key, value, timeout=None):
+        if "product_cross_sells" in key:
+            return set_cached_value_mock(key, value, timeout)
+
+    with mock.patch.object(context_cache, "set_cached_value", new=set_cache_value):
+        assert set_cached_value_mock.call_count == 0
+        assert product_helpers.get_product_cross_sells(context, product, type, trim_count)
+        assert set_cached_value_mock.call_count == 1
+
+        # call again, the cache should be returned instead and the set_cached_value shouldn't be called again
+        assert product_helpers.get_product_cross_sells(context, product, type, trim_count)
+        assert set_cached_value_mock.call_count == 1
+
+        # bump caches
+        ProductCrossSell.objects.filter(product1=product, type=type).first().save()
+        assert product_helpers.get_product_cross_sells(context, product, type, trim_count)
+        assert set_cached_value_mock.call_count == 2

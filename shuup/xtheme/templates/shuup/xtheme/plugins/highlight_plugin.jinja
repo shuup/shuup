@@ -1,11 +1,14 @@
+{# This template requires shuup.front static resources to setup the carousel of products using owl-carousel #}
 {%- from "shuup/front/macros/product.jinja" import product_box with context -%}
-<section class="product-highlight-plugin">
-    {% if title %}<h2>{{ title }}</h2>{% endif %}
-    <div class="row">
+{% if products %}
+<section class="product-highlight-plugin carousel-section">
+    {% if title %}
+        <div class="title-bar light"><h2>{{ title }}</h2></div>
+    {% endif %}
+    <div class="product-carousel carousel-items owl-carousel">
     {% for product in products if shuup.product.is_visible(product) %}
-        <div class="col-sm-4 col-md-3 single-product">
-            {{ product_box(product) }}
-        </div>
+        {{ product_box(product, thumbnail_size=(300, 300)) }}
     {% endfor %}
     </div>
 </section>
+{% endif %}

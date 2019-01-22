@@ -19,6 +19,9 @@ class AppConfig(shuup.apps.AppConfig):
         ],
         "discount_module": ["shuup.discounts.modules:ProductDiscountModule"],
         "order_source_modifier_module": ["shuup.discounts.modules:CouponCodeModule"],
+        "xtheme_plugin": [
+            "shuup.discounts.plugins:DiscountedProductsPlugin"
+        ]
     }
 
     def ready(self):

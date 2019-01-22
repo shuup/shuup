@@ -1,13 +1,16 @@
+{# This template requires shuup.front static resources to setup the carousel of products using owl-carousel #}
 {%- from "shuup/front/macros/product.jinja" import product_box with context -%}
 {%- set cross_sell_products = shuup.product.get_product_cross_sells(product, type, count=count, orderable_only=orderable_only) %}
 {% if cross_sell_products %}
     <hr>
-    {% if title %}<h3>{{ title }}</h3>{% endif %}
-    <div class="row">
-        {% for product in cross_sell_products %}
-            <div class="col-md-3">
+    <div class="product-cross-sells-plugin carousel-section"></section>
+        {% if title %}
+            <div class="title-bar"><h2>{{ title }}</h2></div>
+        {% endif %}
+        <div class="product-carousel carousel-items owl-carousel">
+            {% for product in cross_sell_products %}
                 {{ product_box(product) }}
-            </div>
         {% endfor %}
+        </div>
     </div>
 {% endif %}
