@@ -426,13 +426,7 @@ const Picotable = (function (m, storage) {
         var columnSettings = { key: col.id, className: cx(classSet), onclick: columnOnClick };
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
         if (massActions.length) {
-            if (columnNumber === 0) {
-                columnSettings.className += " hidden";
-            }
-            if (columnNumber === 1) {
-                columnSettings.colspan = 2;
-            }
-            if (col.id === "primary_image") {
+            if ((col.id === "primary_image") || (columnNumber === 0)) {
                 columnSettings.className += " hidden-cell";
             }
         }
