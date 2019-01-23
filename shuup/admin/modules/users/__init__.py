@@ -12,7 +12,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import (
+    AdminCustomModelPermissionDef, AdminDefaultModelPermissionDef
+)
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 
@@ -22,57 +24,58 @@ class UserModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:user.list")
 
     def get_urls(self):
-        permissions = get_default_model_permissions(get_user_model())
-
+        user_model = get_user_model()
         return [
             admin_url(
-                "^users/(?P<pk>\d+)/change-password/$",
+                r"^users/(?P<pk>\d+)/change-password/$",
                 "shuup.admin.modules.users.views.UserChangePasswordView",
                 name="user.change-password",
-                permissions=permissions
+                permissions=[AdminCustomModelPermissionDef(user_model, "change_pwd", _("Can change passwords"))]
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/reset-password/$",
+                r"^users/(?P<pk>\d+)/reset-password/$",
                 "shuup.admin.modules.users.views.UserResetPasswordView",
                 name="user.reset-password",
-                permissions=permissions
+                permissions=[AdminCustomModelPermissionDef(user_model, "reset_pwd", _("Can reset passwords"))]
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/change-permissions/$",
+                r"^users/(?P<pk>\d+)/change-permissions/$",
                 "shuup.admin.modules.users.views.UserChangePermissionsView",
                 name="user.change-permissions",
-                permissions=["auth.change_permission"]
+                permissions=[
+                    AdminCustomModelPermissionDef(user_model, "change_permissions", _("Can change permissions"))
+                ]
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/$",
+                r"^users/(?P<pk>\d+)/$",
                 "shuup.admin.modules.users.views.UserDetailView",
                 name="user.detail",
-                permissions=permissions
+                permissions=[AdminDefaultModelPermissionDef(user_model, "view")]
             ),
             admin_url(
-                "^users/new/$",
+                r"^users/new/$",
                 "shuup.admin.modules.users.views.UserDetailView",
                 kwargs={"pk": None},
                 name="user.new",
-                permissions=permissions
+                permissions=[AdminDefaultModelPermissionDef(user_model, "add")]
             ),
             admin_url(
-                "^users/$",
+                r"^users/$",
                 "shuup.admin.modules.users.views.UserListView",
                 name="user.list",
-                permissions=permissions
+                permissions=[AdminDefaultModelPermissionDef(user_model, "list")]
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/login/$",
+                r"^users/(?P<pk>\d+)/login/$",
                 "shuup.admin.modules.users.views.LoginAsUserView",
                 name="user.login-as",
-                permissions=permissions
+                permissions=[AdminCustomModelPermissionDef(user_model, "login_as", _("Can login as user"))]
             ),
             admin_url(
-                "^contacts/list-settings/",
+                r"^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="user.list_settings",
-                permissions=permissions,
+                permissions=[AdminDefaultModelPermissionDef(user_model, "list")]
             )
         ]
 
@@ -117,9 +120,6 @@ class UserModule(AdminModule):
             done=request.shop.staff_members.exclude(id=request.user.id).exists() if kind == "setup" else False,
             required=False
         )
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(get_user_model())
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(get_user_model(), "shuup_admin:user", object, kind)

@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import ContactGroupPriceDisplay
 
@@ -22,10 +21,10 @@ class ContactGroupPriceDisplayModule(AdminModule):
 
     def get_urls(self):
         return get_edit_and_list_urls(
-            url_prefix="^contact_group_price_display",
+            url_prefix=r"^contact_group_price_display",
             view_template="shuup.admin.modules.contact_group_price_display.views.ContactGroupPriceDisplay%sView",
             name_template="contact_group_price_display.%s",
-            permissions=get_default_model_permissions(ContactGroupPriceDisplay),
+            permissions_for_model=ContactGroupPriceDisplay
         )
 
     def get_menu_entries(self, request):
@@ -38,9 +37,6 @@ class ContactGroupPriceDisplayModule(AdminModule):
                 ordering=3
             ),
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(ContactGroupPriceDisplay)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(ContactGroupPriceDisplay, "shuup_admin:contact_group_price_display", object, kind)

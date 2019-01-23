@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminCustomModelPermissionDef
 from shuup.admin.utils.urls import admin_url
 from shuup.core.models import Shop
 
@@ -22,10 +22,10 @@ class APIModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^system/api/$",
+                r"^system/api/$",
                 "shuup.api.admin_module.views.permissions.APIPermissionView",
                 name="api_permission",
-                permissions=get_default_model_permissions(Shop)
+                permissions=[AdminCustomModelPermissionDef(Shop, "api_permissions", _("Can change API permissions"))]
             )
         ]
 
@@ -39,6 +39,3 @@ class APIModule(AdminModule):
                 subcategory="permissions",
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(Shop)

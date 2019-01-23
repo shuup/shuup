@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.discounts.models import CouponCode
 
@@ -26,14 +26,14 @@ class CouponCodeModule(AdminModule):
             "^discounts_coupon_codes/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.CouponCodeDeleteView",
             name="discounts_coupon_codes.delete",
-            permissions=get_default_model_permissions(CouponCode)
+            permissions=[AdminDefaultModelPermissionDef(CouponCode, "delete")]
         )
 
         return [delete] + get_edit_and_list_urls(
             url_prefix="^discounts_coupon_codes",
             view_template="shuup.discounts.admin.views.CouponCode%sView",
             name_template="discounts_coupon_codes.%s",
-            permissions=get_default_model_permissions(CouponCode)
+            permissions_for_model=CouponCode
         )
 
     def get_menu_entries(self, request):
@@ -46,9 +46,6 @@ class CouponCodeModule(AdminModule):
                 ordering=8
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(CouponCode)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(CouponCode, "shuup_admin:discounts_coupon_codes", object, kind)

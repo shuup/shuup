@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.discounts.models import HappyHour
 
@@ -26,14 +26,14 @@ class HappyHourModule(AdminModule):
             "^discounts_happy_hour/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.HappyHourDeleteView",
             name="discounts_happy_hour.delete",
-            permissions=get_default_model_permissions(HappyHour)
+            permissions=[AdminDefaultModelPermissionDef(HappyHour, "delete")]
         )
 
         return [delete] + get_edit_and_list_urls(
             url_prefix="^discounts_happy_hour",
             view_template="shuup.discounts.admin.views.HappyHour%sView",
             name_template="discounts_happy_hour.%s",
-            permissions=get_default_model_permissions(HappyHour)
+            permissions_for_model=HappyHour
         )
 
     def get_menu_entries(self, request):
@@ -46,9 +46,6 @@ class HappyHourModule(AdminModule):
                 ordering=7
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(HappyHour)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(HappyHour, "shuup_admin:discounts_happy_hour", object, kind)

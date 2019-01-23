@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -29,13 +29,13 @@ class ServiceProviderModule(AdminModule):
                 "^service_provider/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.service_providers.views.ServiceProviderDeleteView",
                 name="service_provider.delete",
-                permissions=["shuup.delete_serviceprovider"]
+                permissions=[AdminDefaultModelPermissionDef(ServiceProvider, "delete")]
             )
         ] + get_edit_and_list_urls(
             url_prefix="^service_provider",
             view_template="shuup.admin.modules.service_providers.views.ServiceProvider%sView",
             name_template="service_provider.%s",
-            permissions=get_default_model_permissions(ServiceProvider)
+            permissions_for_model=ServiceProvider
         )
 
     def get_menu_category_icons(self):
@@ -52,9 +52,6 @@ class ServiceProviderModule(AdminModule):
                 ordering=3
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(ServiceProvider)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(ServiceProvider, "shuup_admin:service_provider", object, kind)

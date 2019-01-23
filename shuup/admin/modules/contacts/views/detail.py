@@ -23,9 +23,9 @@ from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, PostActionButton, Toolbar,
     URLActionButton
 )
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import CompanyContact, Contact
+from shuup.core.models import CompanyContact, Contact, Order
 from shuup.front.apps.registration.signals import company_contact_activated
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.excs import Problem
@@ -70,7 +70,7 @@ class ContactDetailToolbar(Toolbar):
             tooltip=_(u"Create a user for the contact."),
             icon="fa fa-user-plus",
             extra_css_class="dropdown-item",
-            required_permissions=get_default_model_permissions(get_user_model()),
+            required_permissions=[AdminDefaultModelPermissionDef(get_user_model(), "add")]
         )
 
     def build_new_order_button(self):
@@ -80,7 +80,7 @@ class ContactDetailToolbar(Toolbar):
             tooltip=_(u"Create an order for the contact."),
             icon="fa fa-shopping-cart",
             extra_css_class="dropdown-item",
-            required_permissions=["shuup.add_order"],
+            required_permissions=[AdminDefaultModelPermissionDef(Order, "add")]
         )
 
     def build_deactivate_button(self):

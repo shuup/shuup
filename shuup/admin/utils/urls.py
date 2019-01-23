@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import inspect
 import json
+import warnings
 
 import six
 from django.conf import settings
@@ -25,9 +26,10 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.module_registry import get_modules
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_missing_permissions
+    AdminDefaultModelPermissionDef, get_missing_permissions
 )
 from shuup.utils import importing
+from shuup.utils.deprecation import RemovedInShuup20Warning
 from shuup.utils.excs import Problem
 
 try:
@@ -38,11 +40,16 @@ except ImportError:  # pragma: no cover
 
 class AdminRegexURLPattern(RegexURLPattern):
     def __init__(self, regex, callback, default_args=None, name=None, require_authentication=True, permissions=()):
-        self.permissions = tuple(permissions)
+        self._permissions = permissions
         self.require_authentication = require_authentication
         if callable(callback):
             callback = self.wrap_with_permissions(callback)
         super(AdminRegexURLPattern, self).__init__(regex, callback, default_args, name)
+
+    @property
+    def permissions(self):
+        for permission in self._permissions:
+            yield str(permission)
 
     def _get_unauth_response(self, request, reason):
         """
@@ -130,7 +137,9 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
     )
 
 
-def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions=()):
+def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions=(),
+                           edit_permissions=(), add_permissions=(),
+                           list_permissions=(), permissions_for_model=None):
     """
     Get a list of edit/new/list URLs for (presumably) an object type with standardized URLs and names.
 
@@ -141,34 +150,58 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
     :type view_template: str
     :param name_template: A template string for the URLnames. E.g. "tax.%s"
     :type name_template: str
+    :param edit_permissions: list of permissions for edit object view
+    :type edit_permissions: list[str]
+    :param add_permissions: list of permissions for new object view
+    :type add_permissions: list[str]
+    :param list_permissions: list of permissions for list objects view
+    :type list_permissions: list[str]
+    :type permissions_for_model: django.db.Model
+    :param permissions_for_model: the model to use for retrieve permissions from
+        When given, all permissions parameters will be overrided with permissions
+        from this model
     :return: List of URLs
     :rtype: list[AdminRegexURLPattern]
     """
+
+    # when permissions is available, we use all permissions from the given model
+    # also override them when permissions is passed, for backwards compatibility
+    if permissions_for_model:
+        edit_permissions = [AdminDefaultModelPermissionDef(permissions_for_model, "change")]
+        add_permissions = [AdminDefaultModelPermissionDef(permissions_for_model, "add")]
+        list_permissions = [AdminDefaultModelPermissionDef(permissions_for_model, "list")]
+
+    elif permissions:
+        warnings.warn("permissions is deprecated, use permissions_for_model instead", RemovedInShuup20Warning)
+        edit_permissions = set(permissions) | set(edit_permissions)
+        add_permissions = set(permissions) | set(add_permissions)
+        list_permissions = set(permissions) | set(list_permissions)
+
     return [
         admin_url(
-            "%s/(?P<pk>\d+)/$" % url_prefix,
+            r"%s/(?P<pk>\d+)/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "edit",
-            permissions=permissions
+            permissions=edit_permissions
         ),
         admin_url(
-            "%s/new/$" % url_prefix,
+            r"%s/new/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "new",
             kwargs={"pk": None},
-            permissions=permissions
+            permissions=add_permissions
         ),
         admin_url(
-            "%s/$" % url_prefix,
+            r"%s/$" % url_prefix,
             view_template % "List",
             name=name_template % "list",
-            permissions=permissions
+            permissions=list_permissions
         ),
         admin_url(
-            "%s/list-settings/" % url_prefix,
+            r"%s/list-settings/" % url_prefix,
             "shuup.admin.modules.settings.views.ListSettingsView",
             name=name_template % "list_settings",
-            permissions=permissions,
+            permissions=list_permissions
         )
     ]
 
@@ -211,8 +244,7 @@ def get_model_url(object, kind="detail", user=None, required_permissions=None, s
             if required_permissions is not None:
                 permissions = required_permissions
             else:
-                # TODO: Check permission type based on kind
-                permissions = get_default_model_permissions(object)
+                permissions = [AdminDefaultModelPermissionDef(object, kind)]
             if not get_missing_permissions(user, permissions):
                 return url
     raise NoModelUrl("Can't get object URL of kind %s: %r" % (kind, force_text(object)))

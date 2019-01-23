@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.discounts.models import AvailabilityException
 
@@ -23,17 +23,17 @@ class AvailabilityExceptionModule(AdminModule):
     def get_urls(self):
         from shuup.admin.urls import admin_url
         delete = admin_url(
-            "^discounts_availability_exception/(?P<pk>\d+)/delete/$",
+            r"^discounts_availability_exception/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.AvailabilityExceptionDeleteView",
             name="discounts_availability_exception.delete",
-            permissions=get_default_model_permissions(AvailabilityException)
+            permissions=[AdminDefaultModelPermissionDef(AvailabilityException, "delete")]
         )
 
         return [delete] + get_edit_and_list_urls(
-            url_prefix="^discounts_availability_exception",
+            url_prefix=r"^discounts_availability_exception",
             view_template="shuup.discounts.admin.views.AvailabilityException%sView",
             name_template="discounts_availability_exception.%s",
-            permissions=get_default_model_permissions(AvailabilityException)
+            permissions_for_model=AvailabilityException
         )
 
     def get_menu_entries(self, request):
@@ -46,9 +46,6 @@ class AvailabilityExceptionModule(AdminModule):
                 ordering=6
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(AvailabilityException)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(AvailabilityException, "shuup_admin:discounts_availability_exception", object, kind)

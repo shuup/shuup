@@ -14,7 +14,7 @@ from django_jinja.backend import Jinja2
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -36,22 +36,22 @@ class XthemeAdminModule(AdminModule):
     def get_urls(self):  # doccov: ignore
         return [
             admin_url(
-                "^xtheme/guide/(?P<theme_identifier>.+?)/",
+                r"^xtheme/guide/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeGuideTemplateView",
                 name="xtheme.guide",
-                permissions=get_default_model_permissions(ThemeSettings)
+                permissions=[AdminDefaultModelPermissionDef(ThemeSettings, "change")]
             ),
             admin_url(
-                "^xtheme/configure/(?P<theme_identifier>.+?)/",
+                r"^xtheme/configure/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeConfigDetailView",
                 name="xtheme.config_detail",
-                permissions=get_default_model_permissions(ThemeSettings)
+                permissions=[AdminDefaultModelPermissionDef(ThemeSettings, "change")]
             ),
             admin_url(
-                "^xtheme/theme",
+                r"^xtheme/theme",
                 "shuup.xtheme.admin_module.views.ThemeConfigView",
                 name="xtheme.config",
-                permissions=get_default_model_permissions(ThemeSettings)
+                permissions=[AdminDefaultModelPermissionDef(ThemeSettings, "change")]
             )
         ]
 
@@ -80,9 +80,6 @@ class XthemeAdminModule(AdminModule):
                 icon_url="xtheme/theme.png"
             )
 
-    def get_required_permissions(self):
-        return get_default_model_permissions(ThemeSettings)
-
     def get_notifications(self, request):
         try:
             engine = engines["jinja2"]
@@ -110,16 +107,16 @@ class XthemeSnippetsAdminModule(AdminModule):
 
     def get_urls(self):
         return get_edit_and_list_urls(
-            url_prefix="^xtheme/snippet",
+            url_prefix=r"^xtheme/snippet",
             view_template="shuup.xtheme.admin_module.views.Snippet%sView",
             name_template="xtheme_snippet.%s",
-            permissions=get_default_model_permissions(Snippet)
+            permissions_for_model=Snippet
         ) + [
             admin_url(
-                "^xtheme/snippet/(?P<pk>\d+)/delete/$",
+                r"^xtheme/snippet/(?P<pk>\d+)/delete/$",
                 "shuup.xtheme.admin_module.views.SnippetDeleteView",
                 name="xtheme_snippet.delete",
-                permissions=get_default_model_permissions(Snippet)
+                permissions=[AdminDefaultModelPermissionDef(Snippet, "delete")]
             )
         ]
 
@@ -134,9 +131,6 @@ class XthemeSnippetsAdminModule(AdminModule):
                 ordering=2
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(Snippet)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Snippet, "shuup_admin:xtheme_snippet", object, kind)

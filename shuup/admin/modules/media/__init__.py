@@ -10,7 +10,7 @@ from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.admin.utils.urls import admin_url
 
 
@@ -25,15 +25,16 @@ class MediaModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^media/$",
+                r"^media/$",
                 "shuup.admin.modules.media.views.MediaBrowserView",
                 name="media.browse",
-                permissions=get_default_model_permissions(File),
+                permissions=[
+                    AdminDefaultModelPermissionDef(File, "change"),
+                    AdminDefaultModelPermissionDef(File, "add"),
+                    AdminDefaultModelPermissionDef(File, "delete")
+                ]
             ),
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(File)
 
     def get_menu_entries(self, request):
         return [

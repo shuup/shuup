@@ -64,7 +64,19 @@ class AdminModule(object):
         """
         :rtype: list[str]
         """
+        if self.name != "_Base_":
+            from shuup.admin.utils.permissions import AdminModulePermissionDef
+            return [AdminModulePermissionDef(self)]
         return ()
+
+    def get_per_view_permissions(self):
+        """
+        :rtype: list[str]
+        """
+        permissions = []
+        for admin_url in self.get_urls():
+            permissions.extend(admin_url.permissions)
+        return permissions
 
     def get_notifications(self, request):
         """

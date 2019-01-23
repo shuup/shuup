@@ -14,7 +14,7 @@ from django.db.models import Q, Sum
 from django.template.loader import render_to_string
 
 from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_missing_permissions
+    AdminDefaultModelPermissionDef, get_missing_permissions
 )
 from shuup.core.models import (
     OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct, ShipmentStatus,
@@ -127,7 +127,7 @@ def get_stock_adjustment_div(request, supplier, product):
     if "shuup.notify" in settings.INSTALLED_APPS:
         from shuup.notify.models import Notification
         context["alert_limit_form"] = AlertLimitForm(initial={"alert_limit": 0})
-        if not get_missing_permissions(request.user, get_default_model_permissions(Notification)):
+        if not get_missing_permissions(request.user, [AdminDefaultModelPermissionDef(Notification, "list")]):
             context["notify_url"] = reverse("shuup_admin:notify.script.list")
         else:
             context["notify_url"] = ""

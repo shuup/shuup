@@ -2,6 +2,125 @@
 {% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
 
 {% block body_class %}shuup-details{% endblock %}
+
 {% block content %}
-    {{ single_section_form("permission_group_form", form) }}
+    {% call single_section_form("permission_group_form", form) %}
+        {{ bs3.field(form.name) }}
+        {{ bs3.field(form.members) }}
+
+        <h3>{{ _("Permissions") }}</h3>
+
+        <div class="accordion" id="permissions-accordion">
+            <div class="mb-3">
+                <button class="btn btn-info select-all-permissions" type="button">
+                    {{ _("Select all permissions") }}
+                </button>
+                <button class="btn btn-info deselect-all-permissions" type="button">
+                    {{ _("Deselect all permissions") }}
+                </button>
+            </div>
+            <div class="modules-permissions">
+                {% for module in form.admin_modules %}
+                {% set module_identifier = "{}.{}".format(module.__class__.__module__, module.__class__.__name__).replace(".", "-") %}
+                <div class="card">
+                    <div class="card-header" id="header-{{ module_identifier }}">
+                        <h5 class="mb-0">
+                            <button
+                                class="btn btn-link btn-block text-left"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#collapse-{{ module_identifier }}"
+                                aria-expanded="true"
+                                aria-controls="collapse-{{ module_identifier }}"
+                            >
+                                {{ module.name }}
+                            </button>
+                        </h5>
+                    </div>
+                    <div
+                        id="collapse-{{ module_identifier }}"
+                        class="collapse"
+                        aria-labelledby="header-{{ module_identifier }}"
+                        data-parent="#permissions-accordion"
+                    >
+                        <div class="card-body">
+                            <div class="required-permissions">
+                            {% for field_id in module.required_permissions_fields %}
+                                {% if loop.first %}
+                                <h4>{{ _("Module permission") }}</h4>
+                                <p class="text-muted">
+                                    <small>
+                                        {{ _("Select the following permission to enable users to access this module.") }}
+                                    </small>
+                                </p>
+                                {% endif %}
+                                {{ bs3.field(form[field_id], form_group_class="form-group") }}
+                            {% endfor %}
+                            </div>
+                            <div class="per-view-permissions">
+                            {% for field_id in module.per_view_permissions_fields %}
+                                {% if loop.first %}
+                                <label class="d-flex justify-content-row align-items-center">
+                                    <input type="checkbox" class="per-view-permissions-select-all mr-2">
+                                    <h4 class="mb-0">{{ _("Features permissions") }}</h4>
+                                </label>
+                                <p class="text-muted">
+                                    <small>
+                                        {{ _("Select the permissions to enable access to specific features of the module.") }}
+                                    </small>
+                                </p>
+                                {% endif %}
+                                <div class="per-view-permission">
+                                    {{ bs3.field(form[field_id], form_group_class="form-group") }}
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    (function() {
+        // make all checkboxes for the same id be checked/unchecked
+        function handleCheckboxChanged(inputElement) {
+            if (inputElement.name.indexOf(":")) {
+                var perm_id = inputElement.name.split(":")[1];
+                $("#permissions-accordion input[name*=':" + perm_id + "']").prop("checked", inputElement.checked);
+            }
+        }
+        $(".per-view-permissions .per-view-permissions-select-all").on("change", function(evt) {
+            $(evt.target).closest(".per-view-permissions").find("input[type='checkbox']").prop("checked", evt.target.checked).each(function(index, element) {
+                handleCheckboxChanged(element);
+            });
+        });
+        $("#permissions-accordion input[type='checkbox']").on("change", function(evt) {
+            handleCheckboxChanged(evt.target);
+        });
+
+        $(".per-view-permissions").each(function (index, element) {
+            // if all checkboxes are checked, make the select all checked
+            var totalCheckboxes = $(element).find(".per-view-permission input[type='checkbox']").length;
+            if (totalCheckboxes > 0) {
+                var totalChecked = $(element).find(".per-view-permission input[type='checkbox'][checked]").length;
+
+                if (totalChecked > 0 && totalCheckboxes === totalChecked) {
+                    $(element).find(".per-view-permissions-select-all").prop("checked", true);
+                }
+            }
+        });
+
+        $(".select-all-permissions").on("click", function(evt) {
+            $(".modules-permissions input[type='checkbox']").prop("checked", true);
+        });
+        $(".deselect-all-permissions").on("click", function(evt) {
+            $(".modules-permissions input[type='checkbox']").prop("checked", false);
+        });
+    })();
+</script>
 {% endblock %}

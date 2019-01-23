@@ -15,14 +15,14 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import AdminModule, MenuEntry, Notification, SearchResult
 from shuup.admin.menu import ORDERS_MENU_CATEGORY, STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_permissions_from_urls
+    AdminCustomModelPermissionDef, AdminDefaultModelPermissionDef
 )
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.core.models import (
-    Contact, Order, OrderStatus, OrderStatusRole, Product
+    Order, OrderStatus, OrderStatusRole, Payment, Shipment
 )
 
 
@@ -33,102 +33,104 @@ class OrderModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^orders/(?P<pk>\d+)/create-shipment/$",
+                r"^orders/(?P<pk>\d+)/create-shipment/$",
                 "shuup.admin.modules.orders.views.OrderCreateShipmentView",
                 name="order.create-shipment",
-                permissions=["shuup.add_shipment"]
+                permissions=[AdminDefaultModelPermissionDef(Shipment, "add")]
             ),
             admin_url(
-                "^shipments/(?P<pk>\d+)/delete/$",
+                r"^shipments/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.orders.views.ShipmentDeleteView",
                 name="order.delete-shipment",
-                permissions=["shuup.delete_shipment"]
+                permissions=[AdminDefaultModelPermissionDef(Shipment, "delete")]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/create-payment/$",
+                r"^orders/(?P<pk>\d+)/create-payment/$",
                 "shuup.admin.modules.orders.views.OrderCreatePaymentView",
                 name="order.create-payment",
-                permissions=["shuup.add_payment"]
+                permissions=[AdminDefaultModelPermissionDef(Payment, "add")]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/delete-payment/$",
+                r"^orders/(?P<pk>\d+)/delete-payment/$",
                 "shuup.admin.modules.orders.views.OrderDeletePaymentView",
                 name="order.delete-payment",
-                permissions=["shuup.delete_payment"]
+                permissions=[AdminDefaultModelPermissionDef(Payment, "delete")]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/set-paid/$",
+                r"^orders/(?P<pk>\d+)/set-paid/$",
                 "shuup.admin.modules.orders.views.OrderSetPaidView",
                 name="order.set-paid",
-                permissions=["shuup.add_payment"]
+                permissions=[AdminDefaultModelPermissionDef(Payment, "add")]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/set-status/$",
+                r"^orders/(?P<pk>\d+)/set-status/$",
                 "shuup.admin.modules.orders.views.OrderSetStatusView",
                 name="order.set-status",
-                permissions=get_default_model_permissions(Order)
+                permissions=[AdminCustomModelPermissionDef(Order, "set_status", _("Can set order status"))]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/new-log-entry/$",
+                r"^orders/(?P<pk>\d+)/new-log-entry/$",
                 "shuup.admin.modules.orders.views.NewLogEntryView",
                 name="order.new-log-entry",
-                permissions=get_default_model_permissions(Order)
+                permissions=[AdminCustomModelPermissionDef(Order, "new_log_entry", _("Can add log entry"))]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/update-admin-comment/$",
+                r"^orders/(?P<pk>\d+)/update-admin-comment/$",
                 "shuup.admin.modules.orders.views.UpdateAdminCommentView",
                 name="order.update-admin-comment",
-                permissions=get_default_model_permissions(Order)
+                permissions=[
+                    AdminCustomModelPermissionDef(Order, "update_admin_comment", _("Can update admin comment"))
+                ]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/create-refund/$",
+                r"^orders/(?P<pk>\d+)/create-refund/$",
                 "shuup.admin.modules.orders.views.OrderCreateRefundView",
                 name="order.create-refund",
-                permissions=get_default_model_permissions(Order)
+                permissions=[AdminCustomModelPermissionDef(Order, "create_refund", _("Can create order refund"))]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/create-refund/full-refund$",
+                r"^orders/(?P<pk>\d+)/create-refund/full-refund$",
                 "shuup.admin.modules.orders.views.OrderCreateFullRefundView",
                 name="order.create-full-refund",
-                permissions=get_default_model_permissions(Order)
+                permissions=[AdminCustomModelPermissionDef(Order, "create_refund", _("Can create order refund"))]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/$",
+                r"^orders/(?P<pk>\d+)/$",
                 "shuup.admin.modules.orders.views.OrderDetailView",
                 name="order.detail",
-                permissions=get_default_model_permissions(Order)
+                permissions=[AdminDefaultModelPermissionDef(Order, "view")]
             ),
             admin_url(
-                "^orders/new/$",
+                r"^orders/new/$",
                 "shuup.admin.modules.orders.views.OrderEditView",
                 name="order.new",
-                permissions=["shuup.add_order"]
+                permissions=[AdminDefaultModelPermissionDef(Order, "add")]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/edit/$",
+                r"^orders/(?P<pk>\d+)/edit/$",
                 "shuup.admin.modules.orders.views.OrderEditView",
                 name="order.edit",
-                permissions=["shuup.change_order"]
+                permissions=[AdminDefaultModelPermissionDef(Order, "change")]
             ),
             admin_url(
-                "^orders/$",
+                r"^orders/$",
                 "shuup.admin.modules.orders.views.OrderListView",
                 name="order.list",
-                permissions=get_default_model_permissions(Order),
+                permissions=[AdminDefaultModelPermissionDef(Order, "list")]
 
             ),
             admin_url(
-                "^orders/list-settings/",
+                r"^orders/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="order.list_settings",
-                permissions=get_default_model_permissions(Order),
+                permissions=[AdminDefaultModelPermissionDef(Order, "list")]
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/edit-addresses/$",
+                r"^orders/(?P<pk>\d+)/edit-addresses/$",
                 "shuup.admin.modules.orders.views.OrderAddressEditView",
                 name="order.edit-addresses",
-                permissions=["shuup.change_order"]
-            ),
+                permissions=[AdminDefaultModelPermissionDef(Order, "change")]
+            )
         ]
 
     def get_menu_entries(self, request):
@@ -143,14 +145,6 @@ class OrderModule(AdminModule):
                 aliases=[_("Show orders")]
             )
         ]
-
-    def get_required_permissions(self):
-        return (
-            get_permissions_from_urls(self.get_urls()) |
-            get_default_model_permissions(Contact) |
-            get_default_model_permissions(Order) |
-            get_default_model_permissions(Product)
-        )
 
     def get_search_results(self, request, query):
         minimum_query_length = 3
@@ -212,10 +206,10 @@ class OrderStatusModule(AdminModule):
 
     def get_urls(self):
         return get_edit_and_list_urls(
-            url_prefix="^order-status",
+            url_prefix=r"^order-status",
             view_template="shuup.admin.modules.orders.views.OrderStatus%sView",
             name_template="order_status.%s",
-            permissions=get_default_model_permissions(OrderStatus)
+            permissions_for_model=OrderStatus
         )
 
     def get_menu_entries(self, request):
@@ -230,9 +224,6 @@ class OrderStatusModule(AdminModule):
                 aliases=[_("List Statuses")]
             ),
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(OrderStatus)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(OrderStatus, "shuup_admin:order_status", object, kind)

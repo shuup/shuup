@@ -13,7 +13,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.permissions import get_missing_permissions
+from shuup.admin.utils.permissions import (
+    AdminDefaultModelPermissionDef, get_missing_permissions
+)
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.utils.excs import Problem
 
@@ -35,7 +37,7 @@ class EditObjectView(View):
 
         instance = model.objects.filter(pk=object_id).first()
         if instance:
-            required_permission = "%s.change_%s" % (instance._meta.app_label, instance._meta.model_name)
+            required_permission = AdminDefaultModelPermissionDef(instance, "change")
             missing_permissions = get_missing_permissions(request.user, [required_permission])
 
             if missing_permissions:

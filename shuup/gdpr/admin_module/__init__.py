@@ -11,9 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminCustomModelPermissionDef
 from shuup.admin.utils.urls import admin_url
-from shuup.core.models import Contact
 from shuup.gdpr.models import GDPRSettings
 
 
@@ -23,22 +22,24 @@ class GDPRModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^gdpr/$",
+                r"^gdpr/$",
                 "shuup.gdpr.admin_module.views.GDPRView",
                 name="gdpr.settings",
-                permissions=get_default_model_permissions(GDPRSettings)
+                permissions=[
+                    AdminCustomModelPermissionDef(GDPRSettings, "gdpr_settings", _("Can change GDPR settings"))
+                ]
             ),
             admin_url(
-                "^gdpr/contact/(?P<pk>\d+)/anonymize/$",
+                r"^gdpr/contact/(?P<pk>\d+)/anonymize/$",
                 "shuup.gdpr.admin_module.views.GDPRAnonymizeView",
                 name="gdpr.anonymize",
-                permissions=get_default_model_permissions(Contact)
+                permissions=[AdminCustomModelPermissionDef(GDPRSettings, "anonymyze", _("Can anonymize users"))]
             ),
             admin_url(
-                "^gdpr/contact/(?P<pk>\d+)/download/$",
+                r"^gdpr/contact/(?P<pk>\d+)/download/$",
                 "shuup.gdpr.admin_module.views.GDPRDownloadDataView",
                 name="gdpr.download_data",
-                permissions=get_default_model_permissions(Contact)
+                permissions=[AdminCustomModelPermissionDef(GDPRSettings, "download_data", _("Can download users data"))]
             )
         ]
 
@@ -52,6 +53,3 @@ class GDPRModule(AdminModule):
                 subcategory="other_settings",
             ),
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(GDPRSettings)

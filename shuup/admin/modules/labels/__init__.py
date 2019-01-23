@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Label
 
@@ -22,19 +22,19 @@ class LabelsModule(AdminModule):
 
     def get_urls(self):
         from shuup.admin.urls import admin_url
-        delete = admin_url(
-            "^labels/(?P<pk>\d+)/delete/$",
-            "shuup.admin.modules.labels.views.LabelDeleteView",
-            name="label.delete",
-            permissions=get_default_model_permissions(Label)
-        )
-
-        return [delete] + get_edit_and_list_urls(
-            url_prefix="^labels",
+        return get_edit_and_list_urls(
+            url_prefix=r"^labels",
             view_template="shuup.admin.modules.labels.views.Label%sView",
             name_template="label.%s",
-            permissions=get_default_model_permissions(Label)
-        )
+            permissions_for_model=Label
+        ) + [
+            admin_url(
+                r"^labels/(?P<pk>\d+)/delete/$",
+                "shuup.admin.modules.labels.views.LabelDeleteView",
+                name="label.delete",
+                permissions=[AdminDefaultModelPermissionDef(Label, "delete")]
+            )
+        ]
 
     def get_menu_entries(self, request):
         return [
@@ -47,9 +47,6 @@ class LabelsModule(AdminModule):
                 ordering=5
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(Label)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Label, "shuup_admin:label", object, kind)

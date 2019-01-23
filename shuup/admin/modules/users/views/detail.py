@@ -28,6 +28,7 @@ from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, DropdownItem,
     get_default_edit_toolbar, PostActionButton, Toolbar
 )
+from shuup.admin.utils.permissions import AdminCustomModelPermissionDef
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
 from shuup.utils.excs import Problem
@@ -149,7 +150,10 @@ class UserDetailToolbar(Toolbar):
         )
         permissions_button = DropdownItem(
             url=reverse("shuup_admin:user.change-permissions", kwargs={"pk": user.pk}),
-            text=_(u"Edit Permissions"), icon="fa fa-lock", required_permissions=["auth.change_permission"]
+            text=_(u"Edit Permissions"), icon="fa fa-lock",
+            required_permissions=[
+                AdminCustomModelPermissionDef(get_user_model(), "change_permissions", _("Can change permissions"))
+            ]
         )
         menu_items = [
             change_password_button,

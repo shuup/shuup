@@ -74,6 +74,3 @@ class ARestrictedTestModule(ATestModule):
 
     def get_menu_entries(self, request):
         return [MenuEntry(text="OK", url="/OK", category="RestrictedTest", aliases=("spooky",))]
-
-    def get_required_permissions(self):
-        return set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])

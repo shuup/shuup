@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.utils.permissions import AdminDefaultModelPermissionDef
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -31,19 +31,18 @@ class ServiceModule(AdminModule):
     url_name_prefix = None
 
     def get_urls(self):
-        permissions = self.get_required_permissions()
         return [
             admin_url(
                 "%s/(?P<pk>\d+)/delete/$" % self.url_prefix,
                 self.view_template % "Delete",
                 name=self.name_template % "delete",
-                permissions=permissions
+                permissions=[AdminDefaultModelPermissionDef(self.model, "delete")]
             )
         ] + get_edit_and_list_urls(
             url_prefix=self.url_prefix,
             view_template=self.view_template,
             name_template=self.name_template,
-            permissions=permissions
+            permissions_for_model=self.model
         )
 
     def get_menu_entries(self, request):
@@ -56,9 +55,6 @@ class ServiceModule(AdminModule):
                 ordering=self.menu_ordering
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(PaymentMethod) | get_default_model_permissions(ShippingMethod)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(self.model, self.url_name_prefix, object, kind)
