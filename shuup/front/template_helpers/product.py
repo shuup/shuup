@@ -5,15 +5,43 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import warnings
+
 from django.conf import settings
 from jinja2.utils import contextfunction
 
 from shuup.core.models import (
-    Product, ProductCrossSell, ProductCrossSellType, ShopProduct, Supplier
+    AttributeVisibility, Product, ProductAttribute, ProductCrossSell,
+    ProductCrossSellType, ShopProduct, Supplier
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils import cache as cache_utils
 from shuup.utils.text import force_ascii
+
+
+def get_visible_attributes(product):
+    return ProductAttribute.objects.filter(
+        product=product,
+        attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE
+    )
+
+
+# Deprecated, see `get_product_cross_sells()`
+@contextfunction
+def get_products_bought_with(context, product, count=5):
+    warnings.warn("Doesn't seem to be used and was already removed once", DeprecationWarning)
+    related_product_cross_sells = (
+        ProductCrossSell.objects
+        .filter(product1=product, type=ProductCrossSellType.COMPUTED)
+        .order_by("-weight")[:(count * 4)])
+    products = []
+    for cross_sell in related_product_cross_sells:
+        product2 = cross_sell.product2
+        if product2.is_visible_to_user(context["request"].user) and product2.is_list_visible():
+            products.append(product2)
+        if len(products) >= count:
+            break
+    return products
 
 
 @contextfunction
