@@ -11,8 +11,8 @@ from django.conf import settings
 from jinja2.utils import contextfunction
 
 from shuup.core.models import (
-    AttributeVisibility, Product, ProductAttribute, ProductCrossSell,
-    ProductCrossSellType, ShopProduct, Supplier
+    AttributeVisibility, get_person_contact, Product, ProductAttribute,
+    ProductCrossSell, ProductCrossSellType, ShopProduct, Supplier
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils import cache as cache_utils
@@ -29,19 +29,16 @@ def get_visible_attributes(product):
 # Deprecated, see `get_product_cross_sells()`
 @contextfunction
 def get_products_bought_with(context, product, count=5):
-    warnings.warn("Doesn't seem to be used and was already removed once", DeprecationWarning)
-    related_product_cross_sells = (
+    warnings.warn("Products bought with template helper is deprecated.", DeprecationWarning)
+    related_product_cross_sells = set(
         ProductCrossSell.objects
-        .filter(product1=product, type=ProductCrossSellType.COMPUTED)
+        .filter(product1=product, type=ProductCrossSellType.COMPUTED).values_list("product2_id", flat=True)
         .order_by("-weight")[:(count * 4)])
-    products = []
-    for cross_sell in related_product_cross_sells:
-        product2 = cross_sell.product2
-        if product2.is_visible_to_user(context["request"].user) and product2.is_list_visible():
-            products.append(product2)
-        if len(products) >= count:
-            break
-    return products
+
+    request = context["request"]
+    customer = get_person_contact(request.user)
+    return Product.objects.listed(
+        shop=request.shop, customer=customer).filter(pk__in=related_product_cross_sells)[:count]
 
 
 @contextfunction
