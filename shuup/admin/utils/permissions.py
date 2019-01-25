@@ -16,110 +16,124 @@ from shuup.core import cache
 LOGGER = getLogger(__name__)
 
 
-class PermissionDef(object):
-    model = None
-    codename = None
-    permission_key = None
-    name = None
+#class PermissionDef(object):
+#    model = None
+#    codename = None
+#    permission_key = None
+#    name = None
+#
+#    def __init__(self, model, codename, name=None):
+#        self.model = model
+#        self.codename = codename
+#        self.permission_key = "%s.%s" % (model._meta.app_label, self.codename)
+#        self.name = name
+#
+#    def ensure(self):
+#        """
+#        Create the permission in database if needed
+#        """
+#        cache_key = "perm:%s" % self.permission_key
+#        cached_value = cache.get(cache_key)
+#        if cached_value is not None:
+#            return
+#        content_type = ContentType.objects.get_for_model(self.model)
+#        permission = Permission.objects.update_or_create(
+#            codename=self.codename,
+#            content_type=content_type,
+#            defaults=dict(name=force_text(self.name))
+#        )[0]
+#        cache.set(cache_key, permission)
+#
+#    def __str__(self):
+#        return self.permission_key
+#
+#    def __repr__(self):
+#        return self.__str__()
+#
+#
+#class AdminDefaultModelPermissionDef(PermissionDef):
+#    operation = None
+#
+#    def __init__(self, model, operation):
+#        """
+#        Create a permission definition from a model and operation
+#
+#        :param model: Model class
+#        :type model: django.db.Model
+#        :param operation: the operation (add, change, delete, etc.)
+#        :type operation: string
+#        """
+#        # use the base permission name, eg: "Can delete shops"
+#        self.operation = operation
+#
+#        codename = "%s_%s" % (operation, model._meta.model_name)
+#        name = _("Can {operation} {model_verbose_name}").format(
+#            operation=operation,
+#            model_verbose_name=model._meta.verbose_name_plural
+#        )
+#        super(AdminDefaultModelPermissionDef, self).__init__(model, codename, name)
+#
+#
+#class AdminCustomModelPermissionDef(PermissionDef):
+#    def __init__(self, model, codename, name):
+#        """
+#        Create a permission definition from a model and custom codename and name
+#
+#        :param model: Model class
+#        :type model: django.db.Model
+#        :param codename: the permission codename name
+#        :type codename: string
+#        :param name: the name of the custom permission
+#        :type name: string
+#        """
+#        assert "." not in codename, "Dot notation is not allowed in codename"
+#        # to prevent duplicate codenames, we add the model name as a prefix to the codename
+#        codename = "%s_%s" % (model._meta.model_name, codename)
+#        super(AdminCustomModelPermissionDef, self).__init__(model, codename, name)
+#
+#    def ensure(self):
+#        cache_key = "perm:%s" % self.permission_key
+#        cached_value = cache.get(cache_key)
+#        if cached_value is not None:
+#            return
+#        content_type = ContentType.objects.get_for_model(self.model)
+#        permission = Permission.objects.update_or_create(
+#            codename=self.codename,
+#            content_type=content_type,
+#            defaults=dict(name=self.name)
+#        )[0]
+#        cache.set(cache_key, permission)
+#
+#
+#class AdminModulePermissionDef(PermissionDef):
+#    def __init__(self, admin_module):
+#        """
+#        Create a permission definition from an admin module
+#
+#        :param admin_module: admin module
+#        :type model: shuup.admin.AdminModule
+#        """
+#        from shuup.core.models import Shop
+#        name = _("Access {module_name}").format(module_name=admin_module.name)
+#        codename = "admin_module:{}:{}".format(
+#            admin_module.__class__.__module__.replace(".", "-"),
+#            admin_module.__class__.__name__
+#        )
+#        super(AdminModulePermissionDef, self).__init__(Shop, codename, name)
 
-    def __init__(self, model, codename, name=None):
-        self.model = model
-        self.codename = codename
-        self.permission_key = "%s.%s" % (model._meta.app_label, self.codename)
-        self.name = name
 
-    def ensure(self):
-        """
-        Create the permission in database if needed
-        """
-        cache_key = "perm:%s" % self.permission_key
-        cached_value = cache.get(cache_key)
-        if cached_value is not None:
-            return
-        content_type = ContentType.objects.get_for_model(self.model)
-        permission = Permission.objects.update_or_create(
-            codename=self.codename,
-            content_type=content_type,
-            defaults=dict(name=force_text(self.name))
-        )[0]
-        cache.set(cache_key, permission)
+def get_permission_str(model, permission):
+    """
+    Return permission string for given model and permission
+    combination. Caller is responsible that the permission
+    actually exists for the model
 
-    def __str__(self):
-        return self.permission_key
-
-    def __repr__(self):
-        return self.__str__()
-
-
-class AdminDefaultModelPermissionDef(PermissionDef):
-    operation = None
-
-    def __init__(self, model, operation):
-        """
-        Create a permission definition from a model and operation
-
-        :param model: Model class
-        :type model: django.db.Model
-        :param operation: the operation (add, change, delete, etc.)
-        :type operation: string
-        """
-        # use the base permission name, eg: "Can delete shops"
-        self.operation = operation
-
-        codename = "%s_%s" % (operation, model._meta.model_name)
-        name = _("Can {operation} {model_verbose_name}").format(
-            operation=operation,
-            model_verbose_name=model._meta.verbose_name_plural
-        )
-        super(AdminDefaultModelPermissionDef, self).__init__(model, codename, name)
-
-
-class AdminCustomModelPermissionDef(PermissionDef):
-    def __init__(self, model, codename, name):
-        """
-        Create a permission definition from a model and custom codename and name
-
-        :param model: Model class
-        :type model: django.db.Model
-        :param codename: the permission codename name
-        :type codename: string
-        :param name: the name of the custom permission
-        :type name: string
-        """
-        assert "." not in codename, "Dot notation is not allowed in codename"
-        # to prevent duplicate codenames, we add the model name as a prefix to the codename
-        codename = "%s_%s" % (model._meta.model_name, codename)
-        super(AdminCustomModelPermissionDef, self).__init__(model, codename, name)
-
-    def ensure(self):
-        cache_key = "perm:%s" % self.permission_key
-        cached_value = cache.get(cache_key)
-        if cached_value is not None:
-            return
-        content_type = ContentType.objects.get_for_model(self.model)
-        permission = Permission.objects.update_or_create(
-            codename=self.codename,
-            content_type=content_type,
-            defaults=dict(name=self.name)
-        )[0]
-        cache.set(cache_key, permission)
-
-
-class AdminModulePermissionDef(PermissionDef):
-    def __init__(self, admin_module):
-        """
-        Create a permission definition from an admin module
-
-        :param admin_module: admin module
-        :type model: shuup.admin.AdminModule
-        """
-        from shuup.core.models import Shop
-        name = _("Access {module_name}").format(module_name=admin_module.name)
-        codename = "admin_module:{}:{}".format(
-            admin_module.__class__.__module__.replace(".", "-"),
-            admin_module.__class__.__name__
-        )
-        super(AdminModulePermissionDef, self).__init__(Shop, codename, name)
+    :param model: Model class
+    :param permission: Permission string eg. change, delete, add or viw
+    :return: permission string
+    :rtype: str
+    """
+    return "%s.%s_%s" % (model._meta.app_label, permission, model._meta.model_name)
 
 
 def get_default_model_permissions(model):
@@ -132,8 +146,10 @@ def get_default_model_permissions(model):
     :rtype: set[str]
     """
     permissions = set()
+
     for default in model._meta.default_permissions:
-        permissions.add(AdminDefaultModelPermissionDef(model, default))
+        permissions.add("%s.%s_%s" % (model._meta.app_label, default, model._meta.model_name))
+
     return permissions
 
 

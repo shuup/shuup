@@ -40,6 +40,9 @@ class Manufacturer(models.Model):
     class Meta:
         verbose_name = _('manufacturer')
         verbose_name_plural = _('manufacturers')
+        permissions = (
+            ("view", "Can view manufacturers"),
+        )
 
     def __str__(self):  # pragma: no cover
         return u'%s' % (self.name)

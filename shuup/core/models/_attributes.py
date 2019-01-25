@@ -131,6 +131,9 @@ class Attribute(TranslatableModel):
     class Meta:
         verbose_name = _('attribute')
         verbose_name_plural = _('attributes')
+        permissions = (
+            ("view", "Can view attributes"),
+        )
 
     def __str__(self):
         return u'%s' % self.name

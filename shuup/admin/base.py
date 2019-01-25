@@ -62,15 +62,22 @@ class AdminModule(object):
 
     def get_required_permissions(self):
         """
+        Set of permissions strings which are required to make
+        admin module available
+
+        E.g. `return set(get_permission_str(Attribute, "view"))`
+
         :rtype: list[str]
         """
-        if self.name != "_Base_":
-            from shuup.admin.utils.permissions import AdminModulePermissionDef
-            return [AdminModulePermissionDef(self)]
         return ()
 
     def get_per_view_permissions(self):
         """
+        Set of all possible per vie permissions defined by
+        admin URLs. Be cautious in case you override this.
+        This is mainly for permissions group admin to list
+        per view permissions for this module.
+
         :rtype: list[str]
         """
         permissions = []

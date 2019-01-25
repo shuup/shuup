@@ -66,6 +66,9 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
     class Meta:
         verbose_name = _('sales unit')
         verbose_name_plural = _('sales units')
+        permissions = (
+            ("view", "Can view sales units"),
+        )
 
     def __str__(self):
         return self.safe_translation_getter("name", default=self.identifier) or ""
@@ -195,6 +198,9 @@ class DisplayUnit(TranslatableShuupModel):
     class Meta:
         verbose_name = _("display unit")
         verbose_name_plural = _("display units")
+        permissions = (
+            ("view", "Can view display units"),
+        )
 
 
 @python_2_unicode_compatible

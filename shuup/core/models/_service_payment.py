@@ -48,6 +48,9 @@ class PaymentMethod(Service):
     class Meta:
         verbose_name = _("payment method")
         verbose_name_plural = _("payment methods")
+        permissions = (
+            ("view", "Can view payment methods"),
+        )
 
     def can_delete(self):
         return not Order.objects.filter(payment_method=self).exists()
@@ -165,6 +168,9 @@ class CustomPaymentProcessor(PaymentProcessor):
     class Meta:
         verbose_name = _("custom payment processor")
         verbose_name_plural = _("custom payment processors")
+        permissions = (
+            ("view", "Can view custom payemnt processors"),
+        )
 
     def get_service_choices(self):
         return [

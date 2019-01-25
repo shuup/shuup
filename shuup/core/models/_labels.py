@@ -30,6 +30,9 @@ class Label(TranslatableShuupModel):
     class Meta:
         verbose_name = _('label')
         verbose_name_plural = _('labels')
+        permissions = (
+            ("view", "Can view labels"),
+        )
 
     def __str__(self):
         return self.safe_translation_getter("name", default=self.identifier)

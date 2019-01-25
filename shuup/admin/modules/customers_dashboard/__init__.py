@@ -8,6 +8,8 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule
+from shuup.admin.utils.permissions import get_permission_str
+from shuup.core.models import Contact
 
 from .dashboard import get_active_customers_block
 
@@ -17,3 +19,6 @@ class CustomersDashboardModule(AdminModule):
 
     def get_dashboard_blocks(self, request):
         yield get_active_customers_block(request)
+
+    def get_required_permissions(self):
+        return set(get_permission_str(Contact, "view"))  # TODO: This could be a spot for custom admin permission

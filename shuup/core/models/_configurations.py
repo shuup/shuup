@@ -29,6 +29,9 @@ class ConfigurationItem(ShuupModel):
         unique_together = [("shop", "key")]
         verbose_name = _("configuration item")
         verbose_name_plural = _("configuration items")
+        permissions = (
+            ("view", "Can view configuration items"),
+        )
 
     def __str__(self):
         if self.shop:

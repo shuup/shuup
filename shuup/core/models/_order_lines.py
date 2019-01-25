@@ -170,6 +170,11 @@ class OrderLine(LineWithUnit, AbstractOrderLine):
 
     # TODO: Store the display and sales unit to OrderLine
 
+    class Meta:
+        permissions = (
+            ("view", "Can view order lines"),
+        )
+
     @property
     def shop(self):
         return self.order.shop
@@ -197,6 +202,9 @@ class OrderLineTax(MoneyPropped, ShuupModel, LineTax):
 
     class Meta:
         ordering = ["ordering"]
+        permissions = (
+            ("view", "Can view order line taxes"),
+        )
 
     def __str__(self):
         return "%s: %s on %s" % (self.name, self.amount, self.base_amount)

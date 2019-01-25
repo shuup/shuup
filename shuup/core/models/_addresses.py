@@ -246,6 +246,9 @@ class SavedAddress(ShuupModel):
         verbose_name = _('saved address')
         verbose_name_plural = _('saved addresses')
         ordering = ("owner_id", "role", "title")
+        permissions = (
+            ("view", "Can view saved addresses"),
+        )
 
     def __str__(self):
         return u"%s" % self.get_title()

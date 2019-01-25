@@ -65,6 +65,13 @@ class Supplier(ModuleInterface, ShuupModel):
 
     objects = SupplierQueryset.as_manager()
 
+    class Meta:
+        verbose_name = _('supplier')
+        verbose_name_plural = _('suppliers')
+        permissions = (
+            ("view", "Can view suppliers"),
+        )
+
     def __str__(self):
         return self.name
 

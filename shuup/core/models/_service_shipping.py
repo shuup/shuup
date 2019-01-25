@@ -41,6 +41,9 @@ class ShippingMethod(Service):
     class Meta:
         verbose_name = _("shipping method")
         verbose_name_plural = _("shipping methods")
+        permissions = (
+            ("view", "Can view shipping methods"),
+        )
 
     def can_delete(self):
         return not Order.objects.filter(shipping_method=self).exists()
@@ -102,6 +105,9 @@ class CustomCarrier(Carrier):
     class Meta:
         verbose_name = _("custom carrier")
         verbose_name_plural = _("custom carriers")
+        permissions = (
+            ("view", "Can view custom carriers"),
+        )
 
     def get_service_choices(self):
         return [ServiceChoice('manual', _("Manually processed shipment"))]

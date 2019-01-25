@@ -12,9 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
-from shuup.admin.utils.permissions import (
-    AdminCustomModelPermissionDef, AdminDefaultModelPermissionDef
-)
+from shuup.admin.utils.permissions import get_permission_str
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shuup.core.models import Contact
 
@@ -30,47 +28,49 @@ class ContactModule(AdminModule):
                 "shuup.admin.modules.contacts.views.ContactEditView",
                 kwargs={"pk": None},
                 name="contact.new",
-                permissions=[AdminDefaultModelPermissionDef(Contact, "add")]
+                permissions=[get_permission_str(Contact, "add")]
             ),
             admin_url(
                 r"^contacts/(?P<pk>\d+)/edit/$",
                 "shuup.admin.modules.contacts.views.ContactEditView",
                 name="contact.edit",
-                permissions=[AdminDefaultModelPermissionDef(Contact, "change")]
+                permissions=[get_permission_str(Contact, "change")]
             ),
             admin_url(
                 r"^contacts/(?P<pk>\d+)/$",
                 "shuup.admin.modules.contacts.views.ContactDetailView",
                 name="contact.detail",
-                permissions=[AdminDefaultModelPermissionDef(Contact, "view")]
+                permissions=[get_permission_str(Contact, "view")]
             ),
             admin_url(
                 r"^contacts/reset-password/(?P<pk>\d+)/$",
                 "shuup.admin.modules.contacts.views.ContactResetPasswordView",
                 name="contact.reset_password",
-                permissions=[AdminCustomModelPermissionDef(Contact, "reset_pwd", _("Can reset password"))]
+                permissions=[get_permission_str(Contact, "change")]  # TODO: Do we need separate permission for this.
             ),
             admin_url(
                 r"^contacts/$",
                 "shuup.admin.modules.contacts.views.ContactListView",
                 name="contact.list",
-                permissions=[AdminDefaultModelPermissionDef(Contact, "list")]
+                permissions=[get_permission_str(Contact, "view")]
             ),
             admin_url(
                 r"^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="contact.list_settings",
-                permissions=[AdminDefaultModelPermissionDef(Contact, "list")]
+                permissions=[get_permission_str(Contact, "view")]
             ),
             admin_url(
-                r"^contacts/mass-edit/$", "shuup.admin.modules.contacts.views.ContactMassEditView",
+                r"^contacts/mass-edit/$",
+                "shuup.admin.modules.contacts.views.ContactMassEditView",
                 name="contact.mass_edit",
-                permissions=[AdminCustomModelPermissionDef(Contact, "mass_edit", _("Can mass edit"))]
+                permissions=[get_permission_str(Contact, "change")]
             ),
             admin_url(
-                r"^contacts/mass-edit-group/$", "shuup.admin.modules.contacts.views.ContactGroupMassEditView",
+                r"^contacts/mass-edit-group/$",
+                "shuup.admin.modules.contacts.views.ContactGroupMassEditView",
                 name="contact.mass_edit_group",
-                permissions=[AdminCustomModelPermissionDef(Contact, "mass_edit", _("Can mass edit"))]
+                permissions=[get_permission_str(Contact, "change")]
             )
         ]
 
@@ -100,6 +100,9 @@ class ContactModule(AdminModule):
                     text=six.text_type(contact), url=get_model_url(contact),
                     category=_("Contacts"), relevance=relevance
                 )
+
+    def get_required_permissions(self):
+        return set(get_permission_str(Contact, "view"))
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Contact, "shuup_admin:contact", object, kind)

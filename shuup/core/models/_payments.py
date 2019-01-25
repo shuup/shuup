@@ -41,6 +41,9 @@ class Payment(AbstractPayment):
     class Meta:
         verbose_name = _('payment')
         verbose_name_plural = _('payments')
+        permissions = (
+            ("view", "Can view payments"),
+        )
 
     @property
     def currency(self):

@@ -81,6 +81,9 @@ class Shipment(ShuupModel):
     class Meta:
         verbose_name = _('shipment')
         verbose_name_plural = _('shipments')
+        permissions = (
+            ("view", "Can view shipments"),
+        )
 
     def __init__(self, *args, **kwargs):
         super(Shipment, self).__init__(*args, **kwargs)
@@ -176,6 +179,9 @@ class ShipmentProduct(ShuupModel):
     class Meta:
         verbose_name = _('sent product')
         verbose_name_plural = _('sent products')
+        permissions = (
+            ("view", "Can view shipping products"),
+        )
 
     def __str__(self):  # pragma: no cover
         return "%(quantity)s of '%(product)s' in Shipment #%(shipment_pk)s" % {

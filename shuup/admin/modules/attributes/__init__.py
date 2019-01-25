@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
+from shuup.admin.utils.permissions import get_permission_str
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Attribute
 
@@ -24,7 +25,7 @@ class AttributeModule(AdminModule):
             url_prefix=r"^attributes",
             view_template="shuup.admin.modules.attributes.views.Attribute%sView",
             name_template="attribute.%s",
-            permissions_for_model=Attribute
+            permissions_from_model=Attribute
         )
 
     def get_menu_category_icons(self):
@@ -41,6 +42,9 @@ class AttributeModule(AdminModule):
                 ordering=8
             )
         ]
+
+    def get_required_permissions(self):
+        return set(get_permission_str(Attribute, "view"))
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Attribute, "shuup_admin:attribute", object, kind)

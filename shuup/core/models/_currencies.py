@@ -50,6 +50,9 @@ class Currency(models.Model):
     class Meta:
         verbose_name = _("currency")
         verbose_name_plural = _("currencies")
+        permissions = (
+            ("view", "Can view currencies"),
+        )
 
     def __str__(self):
         return self.code

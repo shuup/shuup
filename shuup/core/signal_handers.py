@@ -82,17 +82,17 @@ m2m_changed.connect(
 )
 
 connection_created.connect(extend_sqlite_functions)
-
-# flag to determine whether this already ran
-ADMIN_URLS_ENSURED = False
-
-
-# ensure admin permissions after migrations
-@receiver(post_migrate)
-def on_post_migrate(sender, **kwargs):
-    global ADMIN_URLS_ENSURED   # noqa
-    from shuup.utils.djangoenv import has_installed
-    if not ADMIN_URLS_ENSURED and has_installed("shuup.admin"):
-        from shuup.admin.utils.permissions import ensure_admin_permissions
-        ensure_admin_permissions()
-        ADMIN_URLS_ENSURED = True
+#
+## flag to determine whether this already ran
+#ADMIN_URLS_ENSURED = False
+#
+#
+## ensure admin permissions after migrations
+#@receiver(post_migrate)
+#def on_post_migrate(sender, **kwargs):
+#    global ADMIN_URLS_ENSURED   # noqa
+#    from shuup.utils.djangoenv import has_installed
+#    if not ADMIN_URLS_ENSURED and has_installed("shuup.admin"):
+#        from shuup.admin.utils.permissions import ensure_admin_permissions
+#        ensure_admin_permissions()
+#        ADMIN_URLS_ENSURED = True

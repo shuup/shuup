@@ -416,6 +416,9 @@ class Order(MoneyPropped, models.Model):
         ordering = ("-id",)
         verbose_name = _('order')
         verbose_name_plural = _('orders')
+        permissions = (
+            ("view", "Can view orders"),
+        )
 
     def __str__(self):  # pragma: no cover
         if self.billing_address_id:

@@ -155,6 +155,9 @@ class Category(MPTTModel, TranslatableModel):
         ordering = ('tree_id', 'lft')
         verbose_name = _('category')
         verbose_name_plural = _('categories')
+        permissions = (
+            ("view", "Can view categories"),
+        )
 
     class MPTTMeta:
         order_insertion_by = ["ordering"]

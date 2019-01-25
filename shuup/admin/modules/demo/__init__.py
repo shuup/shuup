@@ -25,6 +25,7 @@ from shuup.testing.text_data import random_title
 from shuup.utils.i18n import get_current_babel_locale
 
 
+# TODO: Move this under testing since this should only be there when shuup.testing in installed apps.
 class DemoModule(AdminModule):
     name = _("Demo")
 

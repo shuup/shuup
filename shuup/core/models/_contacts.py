@@ -71,6 +71,9 @@ class ContactGroupPriceDisplay(models.Model):
         verbose_name = _('contact group price display')
         verbose_name_plural = _('contact group price displays')
         unique_together = ("shop", "group",)
+        permissions = (
+            ("view", "Can view contact group price displays"),
+        )
 
     def to_price_display(self):
         return PriceDisplayOptions(
@@ -107,6 +110,9 @@ class ContactGroup(TranslatableShuupModel):
     class Meta:
         verbose_name = _('contact group')
         verbose_name_plural = _('contact groups')
+        permissions = (
+            ("view", "Can view contact groups"),
+        )
 
     def clean(self):
         super(ContactGroup, self).clean()
@@ -255,6 +261,9 @@ class Contact(PolymorphicShuupModel):
     class Meta:
         verbose_name = _('contact')
         verbose_name_plural = _('contacts')
+        permissions = (
+            ("view", "Can view contacts"),
+        )
 
     def __init__(self, *args, **kwargs):
         if self.default_tax_group_getter:

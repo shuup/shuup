@@ -28,6 +28,9 @@ class Counter(models.Model):
     class Meta:
         verbose_name = _('counter')
         verbose_name_plural = _('counters')
+        permissions = (
+            ("view", "Can view counters"),
+        )
 
     @classmethod
     def get_and_increment(cls, id):

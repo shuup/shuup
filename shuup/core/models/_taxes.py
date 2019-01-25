@@ -94,6 +94,9 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
     class Meta:
         verbose_name = _('tax')
         verbose_name_plural = _('taxes')
+        permissions = (
+            ("view", "Can view taxes"),
+        )
 
 
 class TaxClass(TranslatableShuupModel):
@@ -112,6 +115,9 @@ class TaxClass(TranslatableShuupModel):
     class Meta:
         verbose_name = _('tax class')
         verbose_name_plural = _('tax classes')
+        permissions = (
+            ("view", "Can view tax classes"),
+        )
 
 
 class CustomerTaxGroup(TranslatableShuupModel):
@@ -128,6 +134,9 @@ class CustomerTaxGroup(TranslatableShuupModel):
     class Meta:
         verbose_name = _('customer tax group')
         verbose_name_plural = _('customer tax groups')
+        permissions = (
+            ("view", "Can view customer tax groups"),
+        )
 
     @classmethod
     def get_default_person_group(cls):

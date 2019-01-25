@@ -26,7 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.module_registry import get_modules
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import (
-    AdminDefaultModelPermissionDef, get_missing_permissions
+    get_permission_str, get_missing_permissions
 )
 from shuup.utils import importing
 from shuup.utils.deprecation import RemovedInShuup20Warning
@@ -137,45 +137,46 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
     )
 
 
-def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions=(),
-                           edit_permissions=(), add_permissions=(),
-                           list_permissions=(), permissions_for_model=None):
+def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions=(), permissions_from_model=None):
     """
-    Get a list of edit/new/list URLs for (presumably) an object type with standardized URLs and names.
+    Get a list of edit/new/list URLs for (presumably) an object
+    type with standardized URLs and names.
 
-    :param url_prefix: What to prefix the generated URLs with. E.g. `"^taxes/tax"`
+    :param url_prefix:
+        What to prefix the generated URLs with. E.g. `"^taxes/tax"`
     :type url_prefix: str
-    :param view_template: A template string for the dotted name of the view class.
-                          E.g. "shuup.admin.modules.taxes.views.Tax%sView"
+    :param view_template:
+        A template string for the dotted name of the view class.
+        E.g. "shuup.admin.modules.taxes.views.Tax%sView"
     :type view_template: str
-    :param name_template: A template string for the URLnames. E.g. "tax.%s"
+    :param name_template:
+        A template string for the URL names. E.g. "tax.%s"
     :type name_template: str
-    :param edit_permissions: list of permissions for edit object view
-    :type edit_permissions: list[str]
-    :param add_permissions: list of permissions for new object view
-    :type add_permissions: list[str]
-    :param list_permissions: list of permissions for list objects view
-    :type list_permissions: list[str]
-    :type permissions_for_model: django.db.Model
-    :param permissions_for_model: the model to use for retrieve permissions from
-        When given, all permissions parameters will be overrided with permissions
-        from this model
+    :param permissions:
+        set of permission strings applied to each URL. If used these
+        will be applied to all URLs
+    :type permissions: set()
+    :param permissions_from_model:
+        Django model to generate individual permissions from. Only
+        used in case separate permissions is not passed.
+        Warning: This parameter expects the model to have view
+        permission defined.
+    :type permissions_from_model: django.db.Model
     :return: List of URLs
     :rtype: list[AdminRegexURLPattern]
     """
-
-    # when permissions is available, we use all permissions from the given model
-    # also override them when permissions is passed, for backwards compatibility
-    if permissions_for_model:
-        edit_permissions = [AdminDefaultModelPermissionDef(permissions_for_model, "change")]
-        add_permissions = [AdminDefaultModelPermissionDef(permissions_for_model, "add")]
-        list_permissions = [AdminDefaultModelPermissionDef(permissions_for_model, "list")]
-
-    elif permissions:
-        warnings.warn("permissions is deprecated, use permissions_for_model instead", RemovedInShuup20Warning)
-        edit_permissions = set(permissions) | set(edit_permissions)
-        add_permissions = set(permissions) | set(add_permissions)
-        list_permissions = set(permissions) | set(list_permissions)
+    if permissions:
+        edit_permissions = permissions
+        add_permissions = permissions
+        list_permissions = permissions
+    elif permissions_from_model:
+        edit_permissions = set(get_permission_str(permissions_from_model, "change"))
+        add_permissions = set(get_permission_str(permissions_from_model, "add"))
+        list_permissions = set(get_permission_str(permissions_from_model, "view"))
+    else:
+        edit_permissions = set()
+        add_permissions = set()
+        list_permissions = set()
 
     return [
         admin_url(

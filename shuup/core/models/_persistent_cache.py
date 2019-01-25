@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
 
 
+# TODO (2.0): Revise! Looks a lot something that should be done with configuration items.
 class PersistentCacheEntry(models.Model):
     module = models.CharField(max_length=64, verbose_name=_('module'))
     key = models.CharField(max_length=64, verbose_name=_('key'))

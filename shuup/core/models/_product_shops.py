@@ -205,6 +205,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     class Meta:
         unique_together = (("shop", "product",),)
+        permissions = (
+            ("view", "Can view shop products"),
+        )
 
     def save(self, *args, **kwargs):
         self.clean()

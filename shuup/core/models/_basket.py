@@ -70,3 +70,6 @@ class Basket(MoneyPropped, models.Model):
     class Meta:
         verbose_name = _('basket')
         verbose_name_plural = _('baskets')
+        permissions = (
+            ("view", "Can view baskets"),
+        )

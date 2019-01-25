@@ -22,6 +22,9 @@ class SuppliedProduct(models.Model):
 
     class Meta:
         unique_together = (("supplier", "product", ), )
+        permissions = (
+            ("view", "Can view supplied products"),
+        )
 
 
 SuppliedProductLogEntry = define_log_model(SuppliedProduct)

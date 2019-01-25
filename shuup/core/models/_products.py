@@ -124,6 +124,9 @@ class ProductType(TranslatableModel):
     class Meta:
         verbose_name = _('product type')
         verbose_name_plural = _('product types')
+        permissions = (
+            ("view", "Can view product types"),
+        )
 
     def __str__(self):
         return (self.safe_translation_getter("name") or self.identifier)
@@ -373,6 +376,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         ordering = ('-id',)
         verbose_name = _('product')
         verbose_name_plural = _('products')
+        permissions = (
+            ("view", "Can view products"),
+        )
 
     def __str__(self):
         try:

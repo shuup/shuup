@@ -84,6 +84,9 @@ class ProductMedia(TranslatableModel):
         verbose_name = _('product attachment')
         verbose_name_plural = _('product attachments')
         ordering = ["ordering", ]
+        permissions = (
+            ("view", "Can view product medias"),
+        )
 
     def __str__(self):  # pragma: no cover
         return self.effective_title
