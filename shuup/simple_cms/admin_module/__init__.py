@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.simple_cms.models import Page
@@ -25,8 +24,7 @@ class SimpleCMSAdminModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^cms/page",
             view_template="shuup.simple_cms.admin_module.views.Page%sView",
-            name_template="simple_cms.page.%s",
-            permissions=get_default_model_permissions(Page)
+            name_template="simple_cms.page.%s"
         )
 
     def get_menu_entries(self, request):
@@ -53,9 +51,6 @@ class SimpleCMSAdminModule(AdminModule):
                 category=HelpBlockCategory.STOREFRONT,
                 icon_url="simple_cms/page.png"
             )
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(Page)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Page, "shuup_admin:simple_cms.page", object, kind)

@@ -12,6 +12,7 @@ import hashlib
 import six
 from django.core.urlresolvers import reverse
 from django.utils.encoding import force_bytes, force_text
+from django.utils.translation import override
 
 
 class AdminModule(object):
@@ -64,7 +65,8 @@ class AdminModule(object):
         """
         :rtype: list[str]
         """
-        return ()
+        with override(language="en"):
+            return ("%s" % self.name,)
 
     def get_notifications(self, request):
         """

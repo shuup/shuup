@@ -14,14 +14,13 @@ from django_jinja.backend import Jinja2
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.xtheme._theme import get_current_theme
 from shuup.xtheme.engine import XthemeEnvironment
-from shuup.xtheme.models import Snippet, ThemeSettings
+from shuup.xtheme.models import Snippet
 
 
 class XthemeAdminModule(AdminModule):
@@ -38,20 +37,17 @@ class XthemeAdminModule(AdminModule):
             admin_url(
                 "^xtheme/guide/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeGuideTemplateView",
-                name="xtheme.guide",
-                permissions=get_default_model_permissions(ThemeSettings)
+                name="xtheme.guide"
             ),
             admin_url(
                 "^xtheme/configure/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeConfigDetailView",
-                name="xtheme.config_detail",
-                permissions=get_default_model_permissions(ThemeSettings)
+                name="xtheme.config_detail"
             ),
             admin_url(
                 "^xtheme/theme",
                 "shuup.xtheme.admin_module.views.ThemeConfigView",
-                name="xtheme.config",
-                permissions=get_default_model_permissions(ThemeSettings)
+                name="xtheme.config"
             )
         ]
 
@@ -79,9 +75,6 @@ class XthemeAdminModule(AdminModule):
                 category=HelpBlockCategory.STOREFRONT,
                 icon_url="xtheme/theme.png"
             )
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(ThemeSettings)
 
     def get_notifications(self, request):
         try:
@@ -112,14 +105,12 @@ class XthemeSnippetsAdminModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^xtheme/snippet",
             view_template="shuup.xtheme.admin_module.views.Snippet%sView",
-            name_template="xtheme_snippet.%s",
-            permissions=get_default_model_permissions(Snippet)
+            name_template="xtheme_snippet.%s"
         ) + [
             admin_url(
                 "^xtheme/snippet/(?P<pk>\d+)/delete/$",
                 "shuup.xtheme.admin_module.views.SnippetDeleteView",
-                name="xtheme_snippet.delete",
-                permissions=get_default_model_permissions(Snippet)
+                name="xtheme_snippet.delete"
             )
         ]
 
@@ -134,9 +125,6 @@ class XthemeSnippetsAdminModule(AdminModule):
                 ordering=2
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(Snippet)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Snippet, "shuup_admin:xtheme_snippet", object, kind)

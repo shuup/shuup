@@ -18,6 +18,7 @@ import faker
 import six
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group as PermissionGroup
 from django.core.files.base import ContentFile
 from django.core.validators import validate_email, ValidationError
 from django.db.transaction import atomic
@@ -29,6 +30,7 @@ from faker.utils.loading import find_available_locales
 from filer.models import imagemodels
 from six import BytesIO
 
+from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     AnonymousContact, Attribute, AttributeType, AttributeVisibility, Basket,
@@ -911,3 +913,18 @@ def get_basket(shop=None):
         prices_include_tax=shop.prices_include_tax,
         currency=shop.currency
     )
+
+
+def get_default_permission_group(permissions=("dashboard",)):
+    group, _ = PermissionGroup.objects.get_or_create(name=DEFAULT_NAME)
+    set_permissions_for_group(group.id, permissions)
+    return group
+
+
+def get_default_staff_user(shop=None):
+    if not shop:
+        shop = get_default_shop()
+    user = create_random_user()
+    user.groups.add(get_default_permission_group())
+    shop.staff_members.add(user)
+    return user

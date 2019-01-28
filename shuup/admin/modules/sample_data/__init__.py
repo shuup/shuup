@@ -15,7 +15,6 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.modules.sample_data import manager as sample_manager
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.core.models import Shop
 from shuup.core.settings_provider import ShuupSettings
@@ -31,7 +30,7 @@ class SampleDataAdminModule(AdminModule):
                 "^sample_data/$",
                 "shuup.admin.modules.sample_data.views.ConsolidateSampleObjectsView",
                 name="sample_data",
-                permissions=get_default_model_permissions(Shop)
+                permissions=["sample_data"]
             )
         ]
 
@@ -51,7 +50,7 @@ class SampleDataAdminModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_default_model_permissions(Shop)
+        return ("Access sample data module",)
 
     def get_notifications(self, request):
         """ Injects a message to the user and also a notification """

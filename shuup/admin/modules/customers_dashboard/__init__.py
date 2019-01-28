@@ -15,8 +15,5 @@ from .dashboard import get_active_customers_block
 class CustomersDashboardModule(AdminModule):
     name = _("Customers Dashboard")
 
-    def get_required_permissions(self):
-        return ("shuup.view_customers_dashboard",)
-
     def get_dashboard_blocks(self, request):
         yield get_active_customers_block(request)

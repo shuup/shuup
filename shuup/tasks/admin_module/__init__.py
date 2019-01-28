@@ -14,7 +14,6 @@ from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.dashboard import DashboardContentBlock
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
@@ -30,20 +29,17 @@ class TaskAdminModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^tasks",
             view_template="shuup.tasks.admin_module.views.Task%sView",
-            name_template="task.%s",
-            permissions=get_default_model_permissions(Task)
+            name_template="task.%s"
         ) + [
             admin_url(
                 "^tasks/(?P<pk>\d+)/delete/$",
                 "shuup.tasks.admin_module.views.TaskDeleteView",
-                name="task.delete",
-                permissions=get_default_model_permissions(Task)
+                name="task.delete"
             ),
             admin_url(
                 "^tasks/(?P<pk>\d+)/set_status/$",
                 "shuup.tasks.admin_module.views.TaskSetStatusView",
-                name="task.set_status",
-                permissions=get_default_model_permissions(Task)
+                name="task.set_status"
             ),
         ]
 
@@ -58,9 +54,6 @@ class TaskAdminModule(AdminModule):
                 aliases=[_("Show Tasks")]
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(Task)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Task, "shuup_admin:task", object, kind)
@@ -116,8 +109,7 @@ class TaskTypeAdminModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^task_type",
             view_template="shuup.tasks.admin_module.views.TaskType%sView",
-            name_template="task_type.%s",
-            permissions=get_default_model_permissions(TaskType)
+            name_template="task_type.%s"
         )
 
     def get_menu_entries(self, request):
@@ -131,9 +123,6 @@ class TaskTypeAdminModule(AdminModule):
                 aliases=[_("Show Task Types")]
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(TaskType)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(TaskType, "shuup_admin:task_type", object, kind)

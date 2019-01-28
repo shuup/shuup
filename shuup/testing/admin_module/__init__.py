@@ -9,9 +9,7 @@ from __future__ import unicode_literals
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
-from shuup.core.models import Shop
 
 
 class TestingAdminModule(AdminModule):
@@ -20,8 +18,7 @@ class TestingAdminModule(AdminModule):
             admin_url(
                 "^mocker/$",
                 "shuup.testing.admin_module.mocker_view.MockerView",
-                name="mocker",
-                permissions=get_default_model_permissions(Shop)
+                name="mocker"
             )
         ]
 
@@ -35,6 +32,3 @@ class TestingAdminModule(AdminModule):
                 icon="fa fa-star"
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(Shop)
