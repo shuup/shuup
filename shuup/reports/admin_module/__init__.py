@@ -20,7 +20,11 @@ class ReportsAdminModule(AdminModule):
 
     def get_urls(self):
         return [
-            admin_url("^reports/$", "shuup.reports.admin_module.views.ReportView", name="reports.list")
+            admin_url(
+                "^reports/$",
+                "shuup.reports.admin_module.views.ReportView",
+                name="reports.list"
+            )
         ]
 
     def get_menu_entries(self, request):

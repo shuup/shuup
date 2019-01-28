@@ -22,9 +22,10 @@ from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.module_registry import (
     get_module_urls, get_modules, replace_modules
 )
+from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.search import get_search_results
-from shuup.testing.factories import get_default_shop
+from shuup.testing.factories import get_default_shop, get_default_staff_user
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.excs import Problem
 from shuup_tests.admin.fixtures.test_module import ATestModule, ARestrictedTestModule
@@ -93,14 +94,19 @@ def test_dashboard_blocks(rf):
 @pytest.mark.django_db
 def test_dashboard_blocks_permissions(rf, client):
     with replace_modules([ARestrictedTestModule]):
-        permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
         request = rf.get("/")
-        request.user = StaffUser()
+        request.user = get_default_staff_user(get_default_shop())  # Dashboard permission is added by default
         request.session = client.session
         view = DashboardView(request=request)
         assert not view.get_context_data()["blocks"]
 
-        request.user.permissions = permissions
+        # By default there is only dashboard permission so to be
+        # able to see some blocks permission to some admin module
+        # providing dashboard bocks needed.
+        set_permissions_for_group(
+            request.user.groups.first(),
+            set("dashboard") | set(ARestrictedTestModule().get_required_permissions())
+        )
         view = DashboardView(request=request)
         assert view.get_context_data()["blocks"]
 
@@ -149,15 +155,18 @@ def test_url_auth(rf):
         assert did_disallow(urls["test-auth"].callback, request)
         assert did_disallow(urls["test-perm"].callback, request)
         assert not did_disallow(urls["test-unauth"].callback, request)
+
         request.user = AuthenticatedUser()
         assert did_disallow(urls["test-auth"].callback, request)
         assert did_disallow(urls["test-perm"].callback, request)
         assert not did_disallow(urls["test-unauth"].callback, request)
+
         request.user = StaffUser()
         assert not did_disallow(urls["test-auth"].callback, request)
         assert did_disallow(urls["test-perm"].callback, request)
         assert not did_disallow(urls["test-unauth"].callback, request)
-        request.user = SuperUser()
+
+        request.user = SuperUser()  # Can access all
         assert not did_disallow(urls["test-auth"].callback, request)
         assert not did_disallow(urls["test-perm"].callback, request)
         assert not did_disallow(urls["test-unauth"].callback, request)

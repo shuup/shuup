@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import inspect
 import json
+import warnings
 
 import six
 from django.conf import settings
@@ -114,7 +115,10 @@ class AdminRegexURLPattern(RegexURLPattern):
         self._callback = value
 
 
-def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentication=True, permissions=()):
+def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentication=True, permissions=None):
+    if permissions is None:
+        permissions = ((name,) if name else ())
+
     if isinstance(view, six.string_types):
         if not view:
             raise ImproperlyConfigured('Empty URL pattern view name not permitted (for pattern %r)' % regex)
@@ -144,31 +148,37 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
     :return: List of URLs
     :rtype: list[AdminRegexURLPattern]
     """
+    if permissions:
+        warnings.warn(
+            "get_edit_and_list_urls permissions attribute will be deprecated in Shuup 2.0 as unused for this util.",
+            DeprecationWarning
+        )
+
     return [
         admin_url(
             "%s/(?P<pk>\d+)/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "edit",
-            permissions=permissions
+            permissions=(name_template % "edit",)
         ),
         admin_url(
             "%s/new/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "new",
             kwargs={"pk": None},
-            permissions=permissions
+            permissions=(name_template % "new",)
         ),
         admin_url(
             "%s/$" % url_prefix,
             view_template % "List",
             name=name_template % "list",
-            permissions=permissions
+            permissions=(name_template % "list",)
         ),
         admin_url(
             "%s/list-settings/" % url_prefix,
             "shuup.admin.modules.settings.views.ListSettingsView",
             name=name_template % "list_settings",
-            permissions=permissions,
+            permissions=(name_template % "list_settings",)
         )
     ]
 

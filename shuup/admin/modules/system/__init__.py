@@ -11,9 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
-from shuup.core.models import Shop
 from shuup.core.telemetry import (
     is_in_grace_period, is_opt_out, is_telemetry_enabled
 )
@@ -27,8 +25,7 @@ class SystemModule(AdminModule):
             admin_url(
                 "^system/telemetry/$",
                 "shuup.admin.modules.system.views.telemetry.TelemetryView",
-                name="telemetry",
-                permissions=get_default_model_permissions(Shop)
+                name="telemetry"
             )
         ]
 
@@ -42,9 +39,6 @@ class SystemModule(AdminModule):
                 subcategory="other_settings",
             ) if is_telemetry_enabled() else None,
         ] if e]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(Shop)
 
     def get_notifications(self, request):
         if is_telemetry_enabled() and is_in_grace_period() and not is_opt_out():

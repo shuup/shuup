@@ -16,7 +16,6 @@ from django.views.decorators.csrf import csrf_exempt
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -32,49 +31,41 @@ class NotifyAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, "shuup_admin:notify.script.list")
 
     def get_urls(self):
-        permissions = get_default_model_permissions(NotificationModel)
         return [
             admin_url(
                 "notify/script-item-editor/",
                 "shuup.notify.admin_module.views.script_item_editor",
-                name="notify.script-item-editor",
-                permissions=permissions
+                name="notify.script-item-editor"
             ),
             admin_url(
                 "notify/script/content/(?P<pk>\d+)/",
                 "shuup.notify.admin_module.views.EditScriptContentView",
-                name="notify.script.edit-content",
-                permissions=permissions
+                name="notify.script.edit-content"
             ),
             admin_url(
                 "notify/mark-read/(?P<pk>\d+)/$",
                 self.mark_notification_read_view,
-                name="notify.mark-read",
-                permissions=permissions
+                name="notify.mark-read"
             ),
             admin_url(
                 "notify/script-template/",
                 "shuup.notify.admin_module.views.ScriptTemplateView",
-                name="notify.script-template",
-                permissions=permissions
+                name="notify.script-template"
             ),
             admin_url(
                 "notify/script-template-config/(?P<id>.+)/",
                 "shuup.notify.admin_module.views.ScriptTemplateConfigView",
-                name="notify.script-template-config",
-                permissions=permissions
+                name="notify.script-template-config"
             ),
             admin_url(
                 "notify/script-template-edit/(?P<pk>.+)/",
                 "shuup.notify.admin_module.views.ScriptTemplateEditView",
-                name="notify.script-template-edit",
-                permissions=permissions
+                name="notify.script-template-edit"
             ),
         ] + get_edit_and_list_urls(
             url_prefix="^notify/script",
             view_template="shuup.notify.admin_module.views.Script%sView",
-            name_template="notify.script.%s",
-            permissions=permissions
+            name_template="notify.script.%s"
         )
 
     def get_menu_entries(self, request):
@@ -88,9 +79,6 @@ class NotifyAdminModule(AdminModule):
                 aliases=[_("Show notification scripts")]
             )
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(NotificationModel)
 
     @csrf_exempt
     def mark_notification_read_view(self, request, pk):

@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -27,14 +26,12 @@ class ContactGroupModule(AdminModule):
             admin_url(
                 "^contact_group/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.contact_groups.views.ContactGroupDeleteView",
-                name="contact_group.delete",
-                permissions=["shuup.delete_contactgroup"],
+                name="contact_group.delete"
             )
         ] + get_edit_and_list_urls(
             url_prefix="^contact_group",
             view_template="shuup.admin.modules.contact_groups.views.ContactGroup%sView",
-            name_template="contact_group.%s",
-            permissions=get_default_model_permissions(ContactGroup),
+            name_template="contact_group.%s"
         )
 
     def get_menu_entries(self, request):
@@ -47,9 +44,6 @@ class ContactGroupModule(AdminModule):
                 ordering=2
             ),
         ]
-
-    def get_required_permissions(self):
-        return get_default_model_permissions(ContactGroup)
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(ContactGroup, "shuup_admin:contact_group", object, kind)

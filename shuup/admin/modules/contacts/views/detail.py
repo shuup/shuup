@@ -11,7 +11,6 @@ import warnings
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
@@ -26,7 +25,6 @@ from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, PostActionButton, Toolbar,
     URLActionButton
 )
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, Contact
 from shuup.front.apps.registration.signals import company_contact_activated
@@ -73,7 +71,7 @@ class ContactDetailToolbar(Toolbar):
             tooltip=_(u"Create a user for the contact."),
             icon="fa fa-user-plus",
             extra_css_class="dropdown-item",
-            required_permissions=get_default_model_permissions(get_user_model()),
+            required_permissions=("user.new",),
         )
 
     def build_new_order_button(self):
@@ -83,7 +81,7 @@ class ContactDetailToolbar(Toolbar):
             tooltip=_(u"Create an order for the contact."),
             icon="fa fa-shopping-cart",
             extra_css_class="dropdown-item",
-            required_permissions=["shuup.add_order"],
+            required_permissions=("order.new",),
         )
 
     def build_deactivate_button(self):

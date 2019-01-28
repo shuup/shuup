@@ -23,20 +23,17 @@ class ImportAdminModule(AdminModule):
             admin_url(
                 "^importer/import$",
                 "shuup.importer.admin_module.import_views.ImportView",
-                name="importer.import",
-                permissions=["shuup.change_shop"]
+                name="importer.import"
             ),
             admin_url(
                 "^importer/import/process$",
                 "shuup.importer.admin_module.import_views.ImportProcessView",
-                name="importer.import_process",
-                permissions=["shuup.change_shop"]
+                name="importer.import_process"
             ),
             admin_url(
                 "^importer/example$",
                 "shuup.importer.admin_module.import_views.ExampleFileDownloadView",
-                name="importer.download_example",
-                permissions=["shuup.change_shop"]
+                name="importer.download_example"
             ),
         ]
 
@@ -50,6 +47,3 @@ class ImportAdminModule(AdminModule):
                 icon="fa fa-star"
             )
         ]
-
-    def get_required_permissions(self):
-        return ["shuup.change_shop"]

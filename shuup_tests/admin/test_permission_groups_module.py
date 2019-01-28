@@ -14,7 +14,7 @@ from shuup.admin.module_registry import get_modules, replace_modules
 from shuup.admin.modules.permission_groups.views.edit import (
     PermissionGroupEditView, PermissionGroupForm
 )
-from shuup.admin.utils.permissions import get_permission_object_from_string
+from shuup.admin.utils.permissions import get_permissions_from_group
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule
@@ -43,23 +43,23 @@ def test_permission_group_form_updates_members(regular_user):
         assert module_permissions
 
         group = get_default_permission_group()
-        form = PermissionGroupForm(instance=group, prefix=None)
+        PermissionGroupForm(instance=group, prefix=None)
 
         assert not group.permissions.all()
         assert not group.user_set.all()
 
         data = {
             "name": "New Name",
-            "modules": [force_text(test_module.name)],
             "members": [force_text(regular_user.pk)],
         }
+        for permission in ARestrictedTestModule().get_required_permissions():
+            data["perm:%s" % permission] = permission
 
         form = PermissionGroupForm(instance=group, prefix=None, data=data)
         form.save()
 
-        module_permissions = [get_permission_object_from_string(m) for m in module_permissions]
         assert group.name == "New Name"
-        assert set(module_permissions) == set(group.permissions.all())
+        assert set(module_permissions) == get_permissions_from_group(group)
         assert regular_user in group.user_set.all()
 
         form = PermissionGroupForm(instance=group, prefix=None, data={"name": "Name"})
@@ -75,5 +75,4 @@ def test_only_show_modules_with_defined_names():
     in admin.
     """
     form = PermissionGroupForm(prefix=None)
-    choices = [name for (name, value) in form.fields["modules"].choices]
-    assert AdminModule.name not in choices
+    assert AdminModule.name not in form.admin_modules
