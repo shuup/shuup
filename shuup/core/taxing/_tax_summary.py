@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2019, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2018, Shuup Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -33,14 +33,17 @@ class TaxSummary(list):
         tax_amount_by_tax = defaultdict(lambda: zero_amount)
         raw_base_amount_by_tax = defaultdict(lambda: zero_amount)
         base_amount_by_tax = defaultdict(lambda: zero_amount)
+        taxful_total_by_tax = defaultdict(lambda: zero_amount)
         for line_tax in line_taxes:
             assert isinstance(line_tax, LineTax)
             tax_amount_by_tax[line_tax.tax] += line_tax.amount
             raw_base_amount_by_tax[line_tax.tax] += line_tax.base_amount
             base_amount_by_tax[line_tax.tax] += line_tax.base_amount.as_rounded()
+            taxful_total_by_tax[line_tax.tax] += line_tax.taxful_price
 
         lines = [
-            TaxSummaryLine.from_tax(tax, base_amount_by_tax[tax], raw_base_amount_by_tax[tax], tax_amount)
+            TaxSummaryLine.from_tax(tax, base_amount_by_tax[tax], raw_base_amount_by_tax[tax],
+                                    tax_amount, taxful_total_by_tax[tax])
             for (tax, tax_amount) in tax_amount_by_tax.items()
         ]
         if untaxed:
@@ -61,22 +64,26 @@ class TaxSummaryLine(object):
     _MONEY_FIELDS = set(["tax_amount", "taxful", "based_on", "raw_based_on"])
 
     @classmethod
-    def from_tax(cls, tax, based_on, raw_based_on, tax_amount):
+    def from_tax(cls, tax, based_on, raw_based_on, tax_amount, taxful=None):
         return cls(
             tax_id=tax.id, tax_code=tax.code, tax_name=tax.name,
             tax_rate=tax.rate, based_on=based_on, raw_based_on=raw_based_on,
-            tax_amount=tax_amount)
+            tax_amount=tax_amount, taxful=taxful)
 
     def __init__(self, tax_id, tax_code, tax_name, tax_rate,
-                 based_on, raw_based_on, tax_amount):
+                 based_on, raw_based_on, tax_amount, taxful=None):
         self.tax_id = tax_id
         self.tax_code = tax_code
         self.tax_name = tax_name
         self.tax_rate = tax_rate
         self.raw_based_on = ensure_decimal_places(raw_based_on)
         self.based_on = ensure_decimal_places(based_on)
-        self.tax_amount = ensure_decimal_places(tax_amount)
-        self.taxful = (self.raw_based_on + tax_amount).as_rounded()
+        if taxful:
+            self.tax_amount = taxful - self.raw_based_on
+            self.taxful = taxful
+        else:
+            self.tax_amount = ensure_decimal_places(tax_amount)
+            self.taxful = (self.raw_based_on + self.tax_amount)
 
     def get_sort_key(self):
         return (-self.tax_rate or 0, self.tax_name)

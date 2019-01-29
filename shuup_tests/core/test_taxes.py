@@ -84,10 +84,10 @@ def test_broken_order(admin_user):
     """
     """
     quantities = [44, 23, 65]
-    expected = sum(quantities) * 50
-    expected_based_on = expected / 1.5
+    expected = sum(quantities) * 50 # 50 is the product price
+    expected_based_on = expected / 1.5 # dividing by 1.5 because the default tax rate is 0.5
 
-    # Shuup is calculating taxes per line so there will be some "errors"
+    # Shuup is calculating taxes per line so there will be some rounding "errors"
     expected_based_on = ensure_decimal_places(Decimal("%s" % (expected_based_on + 0.01)))
 
     shop = get_default_shop()
@@ -153,7 +153,7 @@ def test_broken_order(admin_user):
     assert summary.taxful == summary.raw_based_on + summary.tax_amount
 
     assert summary.tax_rate == tax.rate
-    assert summary.taxful.value == (summary.based_on + summary.tax_amount).value - Decimal("%s" % 0.01)
+    assert summary.taxful.value == (summary.based_on + summary.tax_amount).value - Decimal("%s" % 0.01) # adjusting tests to rounding errors
 
     # create order from basket
     creator = OrderCreator()
