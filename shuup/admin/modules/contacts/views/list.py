@@ -87,6 +87,10 @@ class ContactListView(PicotableListView):
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
 
+        # non superusers can't see superusers contacts
+        if not self.request.user.is_superuser:
+            qs = qs.exclude(PersonContact___user__is_superuser=True)
+
         if self.request.GET.get("shop"):
             qs = qs.filter(shops=Shop.objects.get_for_user(self.request.user).filter(pk=self.request.GET["shop"]))
 

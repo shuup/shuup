@@ -18,7 +18,10 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
-from shuup.admin.modules.contacts.utils import check_contact_permission
+from shuup.admin.modules.contacts.utils import (
+    check_contact_permission, request_limited
+)
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, PostActionButton, Toolbar,
     URLActionButton
@@ -156,6 +159,18 @@ class ContactDetailView(DetailView):
         contact = super(ContactDetailView, self).get_object(*args, **kwargs)
         check_contact_permission(self.request, contact)
         return contact
+
+    def get_queryset(self):
+        qs = super(ContactDetailView, self).get_queryset()
+
+        if request_limited(self.request):
+            qs = qs.filter(shops=get_shop(self.request))
+
+        if not self.request.user.is_superuser:
+            # non superusers can't see superusers contacts
+            qs = qs.exclude(PersonContact___user__is_superuser=True)
+
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(ContactDetailView, self).get_context_data(**kwargs)

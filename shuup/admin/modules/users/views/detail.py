@@ -234,6 +234,15 @@ class UserDetailView(CreateOrUpdateView):
             return Contact.objects.get(pk=contact_id)
         return None
 
+    def get_queryset(self):
+        qs = super(UserDetailView, self).get_queryset()
+
+        # non superusers can't see superusers
+        if not self.request.user.is_superuser:
+            qs = qs.filter(is_superuser=False)
+
+        return qs
+
     def get_initial(self):
         initial = super(UserDetailView, self).get_initial()
         contact = self._get_bind_contact()

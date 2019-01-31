@@ -44,6 +44,11 @@ class UserListView(PicotableListView):
         qs = self.get_model().objects.all()
         if "date_joined" in [f.name for f in model._meta.get_fields()]:
             qs = qs.order_by("-date_joined")
+
+        # non superusers can't see superusers
+        if not self.request.user.is_superuser:
+            qs = qs.filter(is_superuser=False)
+
         return qs
 
     def get_context_data(self, **kwargs):
