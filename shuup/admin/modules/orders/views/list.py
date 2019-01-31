@@ -52,6 +52,7 @@ class OrderListView(PicotableListView):
         "shuup.admin.modules.orders.mass_actions:OrderDeliveryPdfAction",
     ]
     toolbar_buttons_provider_key = "order_list_toolbar_provider"
+    mass_actions_provider_key = "order_list_mass_actions_provider"
 
     def get_toolbar(self):
         toolbar = Toolbar([

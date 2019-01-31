@@ -62,6 +62,7 @@ class ContactListView(PicotableListView):
         "shuup.admin.modules.contacts.mass_actions:EditContactGroupsAction",
     ]
     toolbar_buttons_provider_key = "contact_list_toolbar_provider"
+    mass_actions_provider_key = "contact_list_mass_actions_provider"
 
     def get_shops(self):
         return Shop.objects.get_for_user(self.request.user)

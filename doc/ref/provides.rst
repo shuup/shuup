@@ -97,6 +97,11 @@ Core
     Providers must subclass from ``shuup.admin.toolbar.BaseToolbarButtonProvider``
     and implement the ``get_buttons_for_view`` method.
 
+``admin_mass_actions_provider```
+    Object that provides mass actions to all views.
+    Providers must subclass from ``shuup.admin.utils.picotable.PicotableMassActionProvider``
+    and implement the ``get_mass_actions_for_view`` method.
+
 ``admin_contact_section``
     Additional ``Section`` subclasses for Contact detail sections.
 
@@ -339,4 +344,10 @@ of objects that have this attribute which can be overrided on a specialization:
 ``View.toolbar_buttons_provider_key``
     Adds buttons to a view's toolbar. Each view will have a custom provide key value.
     Only views that use toolbars can use this attribute, as in ``PicotableViewMixin``.
+    Check `~shuup.admin.modules.categories.views.list.CategoryListView` for an example.
+
+``View.mass_actions_provider_key``
+    Adds mass actions view. Each view will have a custom provide key value.
+    Only views that inherints from ``PicotableListView`` or ``PicotableViewMixin`` will have mass actions added.
+    All providers must inherit from `PicotableMassActionProvider` base class.
     Check `~shuup.admin.modules.categories.views.list.CategoryListView` for an example.

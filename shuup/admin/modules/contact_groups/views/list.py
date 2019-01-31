@@ -26,6 +26,7 @@ class ContactGroupListView(PicotableListView):
         Column("n_members", _(u"Number of Members")),
     ]
     toolbar_buttons_provider_key = "contact_group_list_toolbar_provider"
+    mass_actions_provider_key = "contact_group_list_mass_actions_provider"
 
     def get_queryset(self):
         return ContactGroup.objects.all_except_defaults().annotate(n_members=Count("members"))

@@ -43,6 +43,7 @@ class TaskListView(PicotableListView):
         Column("comments", _("Comments"), sort_field="comments", display="get_comments_count", class_name="text-center")
     ]
     toolbar_buttons_provider_key = "task_list_toolbar_provider"
+    mass_actions_provider_key = "task_list_actions_provider"
 
     def get_comments_count(self, instance, **kwargs):
         return instance.comments.for_contact(get_person_contact(self.request.user)).count()

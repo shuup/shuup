@@ -32,6 +32,7 @@ class AttributeListView(PicotableListView):
         Column("n_product_types", _("Used in # Product Types")),
     ]
     toolbar_buttons_provider_key = "attribute_list_toolbar_provider"
+    mass_actions_provider_key = "attribute_list_mass_actions_provider"
 
     def get_queryset(self):
         return Attribute.objects.all().annotate(n_product_types=Count("product_types"))

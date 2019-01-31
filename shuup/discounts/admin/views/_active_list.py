@@ -61,6 +61,7 @@ class DiscountListView(PicotableListView):
     ]
 
     toolbar_buttons_provider_key = "discount_list_toolbar_provider"
+    mass_actions_provider_key = "discount_list_actions_provider"
 
     def get_discount_effect(self, instance):
         if not (instance.discount_amount_value or instance.discounted_price_value or instance.discount_percentage):
