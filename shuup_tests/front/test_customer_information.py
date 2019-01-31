@@ -135,9 +135,9 @@ def test_company_edit_form_links_company(regular_user, allow_company_registratio
         assert get_company_contact(regular_user)
     else:
         response = client.get(company_edit_url)
-        assert response.status_code == 404
+        assert reverse("shuup:customer_edit") in response.url
         response = client.post(company_edit_url, data)
-        assert response.status_code == 404
+        assert reverse("shuup:customer_edit") in response.url
 
 
 @pytest.mark.django_db
@@ -258,7 +258,7 @@ def test_company_tax_number_limitations(regular_user, allow_company_registration
         client.login(username=REGULAR_USER_USERNAME, password=REGULAR_USER_PASSWORD)
         company_edit_url = reverse("shuup:company_edit")
         response = client.get(company_edit_url)
-        assert response.status_code == 404
+        assert reverse("shuup:customer_edit") in response.url
 
 
 @pytest.mark.django_db

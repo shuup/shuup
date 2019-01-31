@@ -349,7 +349,7 @@ def test_company_registration(django_user_model, client, allow_company_registrat
     )
     if not allow_company_registration:
         response = client.get(url)
-        assert response.status_code == 404
+        assert reverse("shuup:registration_register") in response.url
     else:
         response = client.post(url, data={
             'company-name': "Test company",
@@ -499,7 +499,7 @@ def test_create_company_from_customer_dashboard(allow_company_registration, comp
         # can't create company contacts from customer dashboard
         request = apply_request_middleware(rf.get("/"), user=admin_user)
         response = view_func(request)
-        assert response.status_code == 404
+        assert reverse("shuup:customer_edit") in response.url
     else:
         request = apply_request_middleware(
             rf.post("/", {

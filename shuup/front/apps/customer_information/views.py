@@ -9,7 +9,6 @@ import six
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import password_change
-from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
@@ -86,8 +85,8 @@ class CompanyEditView(DashboardViewMixin, FormView):
     template_name = "shuup/customer_information/edit_company.jinja"
 
     def dispatch(self, request, *args, **kwargs):
-        if not allow_company_registration(request.shop):
-            return HttpResponseNotFound()
+        if not (bool(get_company_contact(self.request.user)) or allow_company_registration(self.request.shop)):
+            return redirect("shuup:customer_edit")
         return super(CompanyEditView, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):

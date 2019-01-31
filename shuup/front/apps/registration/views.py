@@ -8,7 +8,6 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
@@ -83,7 +82,7 @@ class CompanyRegistrationView(RegistrationViewMixin, default_views.RegistrationV
 
     def dispatch(self, request, *args, **kwargs):
         if not allow_company_registration(request.shop):
-            return HttpResponseNotFound()
+            return redirect("shuup:registration_register")
         return super(CompanyRegistrationView, self).dispatch(request, *args, **kwargs)
 
     def register(self, form):
