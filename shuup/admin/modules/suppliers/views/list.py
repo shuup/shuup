@@ -35,6 +35,7 @@ class SupplierListView(PicotableListView):
         Column("module_identifier", _(u"Module"), display="get_module_display", sortable=True)
     ]
     toolbar_buttons_provider_key = "supplier_list_toolbar_provider"
+    mass_actions_provider_key = "supplier_list_mass_actions_provider"
 
     def get_queryset(self):
         return Supplier.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True))

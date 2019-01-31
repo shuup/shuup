@@ -25,6 +25,7 @@ class ServiceProviderListView(PicotableListView):
         Column("type", _(u"Type"), display="get_type_display", sortable=False),
     ]
     toolbar_buttons_provider_key = "service_provider_list_toolbar_provider"
+    mass_actions_provider_key = "service_provider_mass_actions_provider"
 
     def get_type_display(self, instance):
         return instance._meta.verbose_name.capitalize()

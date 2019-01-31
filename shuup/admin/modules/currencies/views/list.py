@@ -34,6 +34,7 @@ class CurrencyListView(PicotableListView):
         )
     ]
     toolbar_buttons_provider_key = "currency_list_toolbar_provider"
+    mass_actions_provider_key = "currency_list_mass_actions_provider"
 
     def format_decimal_places(self, instance):
         return "{0}".format(instance.decimal_places)

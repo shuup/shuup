@@ -35,6 +35,7 @@ class ShopListView(PicotableListView):
         Column("status", _(u"Status"), filter_config=ChoicesFilter(choices=ShopStatus.choices)),
     ]
     toolbar_buttons_provider_key = "shop_list_toolbar_provider"
+    mass_actions_provider_key = "shop_list_mass_actions_provider"
 
     def get_queryset(self):
         return Shop.objects.get_for_user(self.request.user)
