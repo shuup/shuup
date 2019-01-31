@@ -24,6 +24,7 @@ class UnitListView(PicotableListView):
         Column("decimals", _(u"Allowed decimals")),
     ]
     toolbar_buttons_provider_key = "sales_unit_list_toolbar_provider"
+    mass_actions_provider_key = "sales_unit_list_mass_actions_provider"
 
     def get_queryset(self):
         return self.model.objects.all()

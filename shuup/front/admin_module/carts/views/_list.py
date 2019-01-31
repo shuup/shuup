@@ -49,6 +49,7 @@ class CartListView(PicotableListView):
         ),
     ]
     toolbar_buttons_provider_key = "cart_list_toolbar_provider"
+    mass_actions_provider_key = "cart_list_actions_provider"
 
     def get_shops(self):
         return Shop.objects.get_for_user(self.request.user)

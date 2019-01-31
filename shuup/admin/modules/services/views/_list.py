@@ -34,6 +34,7 @@ class ServiceListView(PicotableListView):
         Column("shop", _(u"Shop"))
     ]
     toolbar_buttons_provider_key = "service_list_toolbar_provider"
+    mass_actions_provider_key = "service_list_mass_actions_provider"
 
     def get_object_abstract(self, instance, item):
         return [

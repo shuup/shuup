@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth import get_user_model
-from django.core.exceptions import PermissionDenied
+from django.http.response import Http404
 from django.test.utils import override_settings
 
 from shuup.admin.forms.fields import Select2MultipleField
@@ -188,7 +188,7 @@ def test_contact_edit_multishop(rf):
         view = ContactDetailView.as_view()
 
         # contact not found for this shop
-        with pytest.raises(PermissionDenied):
+        with pytest.raises(Http404):
             response = view(request, pk=contact.id)
 
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
@@ -222,7 +222,7 @@ def test_contact_company_edit_multishop(rf):
 
         # permission denied for contact and shop1
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
-        with pytest.raises(PermissionDenied):
+        with pytest.raises(Http404):
             response = view(request, pk=contact.id)
         # permission granted for contact and shop2
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
@@ -231,7 +231,7 @@ def test_contact_company_edit_multishop(rf):
 
         # permission denied for company and shop2
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
-        with pytest.raises(PermissionDenied):
+        with pytest.raises(Http404):
             response = view(request, pk=company.id)
         # permission granted for company and shop1
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
@@ -299,7 +299,7 @@ def test_contact_detail_multishop(rf):
 
         # contact not found for this shop
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)
-        with pytest.raises(PermissionDenied):
+        with pytest.raises(Http404):
             response = view(request, pk=contact.id)
 
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
@@ -326,7 +326,7 @@ def test_company_contact_detail_multishop(rf):
 
         # company not found for this shop
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop2)
-        with pytest.raises(PermissionDenied):
+        with pytest.raises(Http404):
             response = view(request, pk=company.id)
 
         request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop1)

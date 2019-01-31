@@ -62,6 +62,7 @@ class ContactListView(PicotableListView):
         "shuup.admin.modules.contacts.mass_actions:EditContactGroupsAction",
     ]
     toolbar_buttons_provider_key = "contact_list_toolbar_provider"
+    mass_actions_provider_key = "contact_list_mass_actions_provider"
 
     def get_shops(self):
         return Shop.objects.get_for_user(self.request.user)
@@ -85,6 +86,10 @@ class ContactListView(PicotableListView):
         qs = super(ContactListView, self).get_queryset()
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
+
+        # non superusers can't see superusers contacts
+        if not self.request.user.is_superuser:
+            qs = qs.exclude(PersonContact___user__is_superuser=True)
 
         if self.request.GET.get("shop"):
             qs = qs.filter(shops=Shop.objects.get_for_user(self.request.user).filter(pk=self.request.GET["shop"]))

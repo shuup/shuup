@@ -27,6 +27,7 @@ class PermissionGroupListView(PicotableListView):
         ),
     ]
     toolbar_buttons_provider_key = "permission_group_list_toolbar_provider"
+    mass_actions_provider_key = "permission_group_list_mass_actions_provider"
 
     def get_context_data(self, **kwargs):
         context = super(PermissionGroupListView, self).get_context_data(**kwargs)

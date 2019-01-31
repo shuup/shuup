@@ -28,6 +28,7 @@ class CampaignListView(PicotableListView):
         Column("active", _("Active"), filter_config=ChoicesFilter(choices=[(0, _("No")), (1, _("Yes"))])),
     ]
     toolbar_buttons_provider_key = "campaign_list_toolbar_provider"
+    mass_actions_provider_key = "campaign_list_actions_provider"
 
     def get_queryset(self):
         shop = self.request.shop

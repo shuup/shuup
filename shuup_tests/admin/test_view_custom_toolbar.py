@@ -16,7 +16,7 @@ from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
-def test_custom_view_toolbar_buuttons(rf, admin_user):
+def test_custom_view_toolbar_buttons(rf, admin_user):
     factories.get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     list_view_func = ContactGroupPriceDisplayListView.as_view()

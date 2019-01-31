@@ -30,6 +30,7 @@ class ContactGroupPriceDisplayListView(PicotableListView):
         Column("display_mode", _(u"Display Mode"), display="show_display_mode")
     ]
     toolbar_buttons_provider_key = "contact_group_price_list_toolbar_provider"
+    mass_actions_provider_key = "contact_group_price_list_mass_actions_provider"
 
     def get_queryset(self):
         if getattr(self.request.user, "is_superuser", False):

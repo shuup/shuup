@@ -481,6 +481,7 @@ class PicotableViewMixin(object):
     related_objects = []
     template_name = "shuup/admin/base_picotable.jinja"
     toolbar_buttons_provider_key = None
+    mass_actions_provider_key = None
 
     def process_picotable(self, query_json):
         mass_actions = self.load_mass_actions()
@@ -517,8 +518,22 @@ class PicotableViewMixin(object):
         mass_action.process(request, ids)
         return JsonResponse({"ok": True})
 
+    def _get_mass_actions(self):
+        mass_actions = self.mass_actions[:]  # copy
+
+        # add mass actions from the view mass action provider
+        if getattr(self, "mass_actions_provider_key", None):
+            for mass_action_provider in get_provide_objects(self.mass_actions_provider_key):
+                mass_actions.extend(list(mass_action_provider.get_mass_actions_for_view(self)))
+
+        # add mass actions from the global mass action provider
+        for mass_action_provider in get_provide_objects("admin_mass_actions_provider"):
+            mass_actions.extend(list(mass_action_provider.get_mass_actions_for_view(self)))
+
+        return mass_actions
+
     def _get_mass_action(self, action_identifier):
-        for mass_action in self.mass_actions:
+        for mass_action in self._get_mass_actions():
             loaded_action = load(mass_action)()
             if loaded_action.identifier == action_identifier:
                 return loaded_action
@@ -554,9 +569,8 @@ class PicotableViewMixin(object):
         return json.loads(filter_string) if filter_string else {}
 
     def load_mass_actions(self):
-        # TODO: Make extendable through provides in near future
         actions = []
-        for action in self.mass_actions:
+        for action in self._get_mass_actions():
             obj = load(action)()
             action_data = {}
             extra_data = obj.get_action_info(self.request)
@@ -606,6 +620,17 @@ class PicotableMassAction(object):
         :return dict: dictionary with extra info to be rendered in option element
         """
         return {}
+
+
+class PicotableMassActionProvider(object):
+    @classmethod
+    def get_mass_actions_for_view(cls, view):
+        """
+        Returns a list of mass actions for a given `view`
+        :param view: `django.views.View`
+        :return list[PicotableMassAction]: list of picotable mass actions definition (strings)
+        """
+        return []
 
 
 class PicotableFileMassAction(PicotableMassAction):

@@ -34,6 +34,7 @@ class UserListView(PicotableListView):
         Column("is_superuser", _(u"Superuser"), filter_config=true_or_false_filter),
     ]
     toolbar_buttons_provider_key = "user_list_toolbar_provider"
+    mass_actions_provider_key = "user_list_mass_actions_provider"
 
     def get_model(self):
         return get_user_model()
@@ -43,6 +44,11 @@ class UserListView(PicotableListView):
         qs = self.get_model().objects.all()
         if "date_joined" in [f.name for f in model._meta.get_fields()]:
             qs = qs.order_by("-date_joined")
+
+        # non superusers can't see superusers
+        if not self.request.user.is_superuser:
+            qs = qs.filter(is_superuser=False)
+
         return qs
 
     def get_context_data(self, **kwargs):

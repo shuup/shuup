@@ -32,6 +32,7 @@ class ScriptListView(PicotableListView):
         Column("enabled", _("Enabled"), filter_config=true_or_false_filter),
     ]
     toolbar_buttons_provider_key = "notify_list_toolbar_provider"
+    mass_actions_provider_key = "notify_list_actions_provider"
 
     def get_object_url(self, instance):
         return reverse("shuup_admin:notify.script.edit", kwargs={"pk": instance.pk})
