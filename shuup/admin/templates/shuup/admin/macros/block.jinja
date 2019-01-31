@@ -9,9 +9,9 @@
         {% endif %}
         <div class="content col-lg {% if b.icon_url %}content-with-logo{% endif %}">
             <div class="text">
-                <h3>{{ b.text }}</h3>
+                <h3>{{ b.text|safe }}</h3>
                 {% if b.description %}
-                    <p class="description">{{ b.description }}</p>
+                    <p class="description">{{ b.description|safe }}</p>
                 {% endif %}
             </div>
             <div class="action">
