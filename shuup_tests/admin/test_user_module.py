@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import json
+
 import pytest
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user, get_user_model
@@ -13,13 +15,15 @@ from django.core import mail
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.forms.models import modelform_factory
+from django.http.response import Http404
 from django.utils.encoding import force_text
 
 from shuup.admin.modules.users.views import (
-    LoginAsUserView, UserChangePermissionsView, UserDetailView
+    LoginAsUserView, UserChangePermissionsView, UserDetailView, UserListView
 )
-from shuup.admin.modules.users.views.permissions import \
+from shuup.admin.modules.users.views.permissions import (
     PermissionChangeFormBase
+)
 from shuup.core.models import Contact, get_person_contact
 from shuup.testing.factories import (
     create_random_person, get_default_shop, UserFactory
@@ -33,7 +37,7 @@ from shuup_tests.utils.fixtures import regular_user
 
 @pytest.mark.django_db
 def test_user_detail_works_at_all(rf, admin_user):
-    get_default_shop()
+    shop = get_default_shop()
     user = get_user_model().objects.create(
         username=printable_gibberish(20),
         first_name=printable_gibberish(10),
@@ -49,6 +53,47 @@ def test_user_detail_works_at_all(rf, admin_user):
     assert response.status_code < 500 and not get_user_model().objects.get(pk=user.pk).is_active
     with pytest.raises(Problem):
         view_func(apply_request_middleware(rf.post("/", {"set_is_active": "0"}), user=admin_user), pk=admin_user.pk)
+
+    user = get_user_model().objects.create(
+        username=printable_gibberish(20),
+        first_name=printable_gibberish(10),
+        last_name=printable_gibberish(10),
+        password="suihku",
+        is_staff=True,
+        is_superuser=False
+    )
+    shop.staff_members.add(user)
+    # non superusers can't see superusers
+    with pytest.raises(Http404):
+        view_func(apply_request_middleware(rf.get("/"), user=user), pk=admin_user.pk)
+
+
+@pytest.mark.django_db
+def test_user_list(rf, admin_user):
+    shop = get_default_shop()
+    user = get_user_model().objects.create(
+        username=printable_gibberish(20),
+        first_name=printable_gibberish(10),
+        last_name=printable_gibberish(10),
+        password="suihku",
+        is_staff=True,
+        is_superuser=False
+    )
+    shop.staff_members.add(user)
+    view_func = UserListView.as_view()
+    request = rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})})
+
+    # check with superuser
+    response = view_func(apply_request_middleware(request, user=admin_user))
+    assert response.status_code == 200
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data["items"]) == 2
+
+    # check with staff user
+    response = view_func(apply_request_middleware(request, user=user))
+    assert response.status_code == 200
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data["items"]) == 1
 
 
 @pytest.mark.django_db

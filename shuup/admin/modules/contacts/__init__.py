@@ -98,6 +98,9 @@ class ContactModule(AdminModule):
             if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
                 filters &= Q(shops=request.shop)
 
+            if not request.user.is_superuser:
+                filters &= ~Q(PersonContact___user__is_superuser=True)
+
             contacts = Contact.objects.filter(filters)
             for i, contact in enumerate(contacts[:10]):
                 relevance = 100 - i
