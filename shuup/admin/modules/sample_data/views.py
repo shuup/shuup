@@ -87,6 +87,10 @@ class SampleObjectsWizardPane(WizardPane):
     def visible(self):
         return not configuration.get(None, "sample_data_wizard_completed", False)
 
+    def valid(self):
+        from shuup.admin.utils.permissions import has_permission
+        return has_permission(self.request.user, "sample_data")
+
     def get_form_defs(self):
         return [
             TemplatedWizardFormDef(

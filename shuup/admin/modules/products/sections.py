@@ -25,7 +25,9 @@ class ProductOrdersSection(Section):
         has_product_id = bool(product.pk)
         if not request:
             return has_product_id
-        return bool(request.user.has_perm('shuup.view_product') and has_product_id)
+
+        from shuup.admin.utils.permissions import has_permission
+        return bool(has_product_id) and has_permission(request.user, "shop_product.edit")
 
     @classmethod
     def get_context_data(cls, product, request=None):

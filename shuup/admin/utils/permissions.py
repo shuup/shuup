@@ -64,6 +64,20 @@ def get_missing_permissions(user, permissions):
     return missing_permissions
 
 
+def has_permission(user, permission):
+    """
+    Returns whether user has permission for a given permission string.
+
+    :param user: User instance to check for permission
+    :type user: django.contrib.auth.models.User
+    :param permission: Permission string
+    :type permission: str
+    :return: Whether user has permission
+    :rtype: bool
+    """
+    return not bool(get_missing_permissions(user, [permission]))
+
+
 def _get_permission_key_for_group(group_id):
     return "%s_admin_permissions" % group_id
 
@@ -119,3 +133,22 @@ def get_permission_object_from_string(permission_string):
     )
     app_label, codename = permission_string.split(".")
     return Permission.objects.get(content_type__app_label=app_label, codename=codename)
+
+
+def get_permissions_for_module_url(admin_module, url_name):
+    """
+    Returns a set of permissions for a given admin module that match with `url_name`.
+
+    If the url_name doesn't match with any admin url, a blank set is returned
+
+    :param admin_module: The admin module to return permissions
+    :type admin_module: shuup.admin.AdminModule
+    :param url_name: the url name
+    :type url_name: string
+    :return: Set of permissions for the given module and url
+    :rtype: set[str]
+    """
+    for url in admin_module.get_urls():
+        if url.name == url_name:
+            return get_permissions_from_urls([url])
+    return set()

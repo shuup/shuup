@@ -23,7 +23,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_dev_onboarding(browser, admin_user, live_server, settings):
-    Shop.objects.first().delete()  # Delete first hop created by test initializations
+    Shop.objects.first().delete()  # Delete first shop created by test initializations
     call_command("shuup_init", *[], **{})
     shop = Shop.objects.first()
     assert shop.maintenance_mode

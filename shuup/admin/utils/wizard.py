@@ -66,18 +66,18 @@ def setup_wizard_complete(request):
     shop = get_shop(request)
     complete = configuration.get(shop, "setup_wizard_complete")
     if complete is None:
-        return not setup_wizard_visible_panes(shop)
+        return not setup_wizard_visible_panes(shop, request=request)
     return complete
 
 
-def setup_wizard_visible_panes(shop):
+def setup_wizard_visible_panes(shop, request):
     """
     Check if shop wizard has visible panes that require merchant configuration.
 
     :return: whether the setup wizard has visible panes
     :rtype: Boolean
     """
-    return len(load_setup_wizard_panes(shop)) > 0
+    return len(load_setup_wizard_panes(shop, request)) > 0
 
 
 def setup_blocks_complete(request):
