@@ -136,7 +136,8 @@ class ProductModule(AdminModule):
                 "url": self.get_model_url(ShopProduct, "new")
             }
         ]
-        if "shuup.importer" in settings.INSTALLED_APPS and request.user.has_perm("shop.change_shop"):
+        from shuup.admin.utils.permissions import has_permission
+        if "shuup.importer" in settings.INSTALLED_APPS and has_permission(request.user, "importer.import"):
             actions.append({
                 "text": _("Import"),
                 "url": reverse("shuup_admin:importer.import")

@@ -73,6 +73,10 @@ class TelemetryWizardPane(WizardPane):
     def visible(self):
         return True
 
+    def valid(self):
+        from shuup.admin.utils.permissions import has_permission
+        return has_permission(self.request.user, "xtheme.config")
+
     def get_form_defs(self):
         form_defs = []
 

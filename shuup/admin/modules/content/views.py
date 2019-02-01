@@ -30,6 +30,16 @@ class ContentWizardPane(WizardPane):
         This pane will be only valid when at least
         SimpleCMS or xTheme or Notify are in INSTALLED APPS
         """
+        permissions = []
+        if djangoenv.has_installed("shuup.simple_cms"):
+            permissions.append("simple_cms.page.edit")
+        if djangoenv.has_installed("shuup.notify"):
+            permissions.append("notify.script.edit-content")
+
+        from shuup.admin.utils.permissions import get_missing_permissions
+        if get_missing_permissions(self.request.user, permissions):
+            return False
+
         return (djangoenv.has_installed("shuup.simple_cms") or djangoenv.has_installed("shuup.xtheme") or
                 djangoenv.has_installed("shuup.notify"))
 

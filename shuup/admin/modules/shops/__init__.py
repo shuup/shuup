@@ -8,10 +8,12 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
@@ -65,6 +67,26 @@ class ShopModule(AdminModule):
                 }],
                 icon_url="shuup_admin/img/logo_icon.svg",
                 done=shop.logo,
+                required=False
+            )
+
+            shop = get_shop(request)
+            yield SimpleHelpBlock(
+                priority=1000,
+                text=_("Publish your store"),
+                description=_("Let customers browse your store and make purchases"),
+                css_class="green ",
+                actions=[{
+                    "method": "POST",
+                    "text": _("Publish shop"),
+                    "url": reverse("shuup_admin:shop.enable", kwargs={"pk": shop.pk}),
+                    "data": {
+                        "enable": True,
+                        "redirect": reverse("shuup_admin:dashboard")
+                    }
+                }],
+                icon_url="shuup_admin/img/publish.png",
+                done=(not shop.maintenance_mode),
                 required=False
             )
 

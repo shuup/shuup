@@ -29,8 +29,7 @@ class SampleDataAdminModule(AdminModule):
             admin_url(
                 "^sample_data/$",
                 "shuup.admin.modules.sample_data.views.ConsolidateSampleObjectsView",
-                name="sample_data",
-                permissions=["sample_data"]
+                name="sample_data"
             )
         ]
 

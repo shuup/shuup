@@ -31,9 +31,8 @@ def test_model_url():
 
 @pytest.mark.django_db
 def test_model_url_with_permissions():
-    permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
+    permissions = set(["shop_product.new", "shop_product.delete", "shop_product.edit"])
     shop = get_default_shop()
-
     p = get_default_product()
 
     # If no user is given, don't check for permissions
@@ -47,7 +46,7 @@ def test_model_url_with_permissions():
     # If a user is given and permissions are provided, check for those permissions
     assert get_model_url(p, user=user, required_permissions=(), shop=shop)
     with pytest.raises(NoModelUrl):
-        assert get_model_url(p, user=user, required_permissions=["shuup.add_product"], shop=shop)
+        assert get_model_url(p, user=user, required_permissions=["shop_product.new"], shop=shop)
 
     # Confirm that url is returned with correct permissions
     set_permissions_for_group(user.groups.first(), permissions)

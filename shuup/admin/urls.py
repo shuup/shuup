@@ -43,8 +43,8 @@ def get_urls():
     urls.extend(get_module_urls())
 
     urls.extend([
-        admin_url(r'^$', DashboardView.as_view(), name='dashboard'),
-        admin_url(r'^home/$', HomeView.as_view(), name='home'),
+        admin_url(r'^$', DashboardView.as_view(), name='dashboard', permissions=()),
+        admin_url(r'^home/$', HomeView.as_view(), name='home', permissions=()),
         admin_url(r'^wizard/$', WizardView.as_view(), name='wizard', permissions=()),
         admin_url(r'^tour/$', TourView.as_view(), name='tour', permissions=()),
         admin_url(r'^search/$', SearchView.as_view(), name='search', permissions=()),

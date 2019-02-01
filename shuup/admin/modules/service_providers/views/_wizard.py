@@ -82,6 +82,10 @@ class CarrierWizardPane(ServiceWizardFormPartMixin, WizardPane):
     provider_label = _("shipping method")
     form_def_provide_key = "carrier_wizard_form_def"
 
+    def valid(self):
+        from shuup.admin.utils.permissions import has_permission
+        return has_permission(self.request.user, "shipping_method.edit")
+
 
 class PaymentWizardPane(ServiceWizardFormPartMixin, WizardPane):
     identifier = "payment"
@@ -92,3 +96,7 @@ class PaymentWizardPane(ServiceWizardFormPartMixin, WizardPane):
     base_name = "payment_method_base"
     provider_label = _("payment method")
     form_def_provide_key = "payment_processor_wizard_form_def"
+
+    def valid(self):
+        from shuup.admin.utils.permissions import has_permission
+        return has_permission(self.request.user, "payment_method.edit")
