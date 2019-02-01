@@ -28,6 +28,6 @@ class DummyMassActionProvider(PicotableMassActionProvider):
     @classmethod
     def get_mass_actions_for_view(cls, view):
         return [
-            "shuup.testing.admin_module.mass_actions:DummyPicotableMassAction1",
-            "shuup.testing.admin_module.mass_actions:DummyPicotableMassAction2"
+            "shuup.testing.modules.mocker.mass_actions:DummyPicotableMassAction1",
+            "shuup.testing.modules.mocker.mass_actions:DummyPicotableMassAction2"
         ]

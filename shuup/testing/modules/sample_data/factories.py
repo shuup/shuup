@@ -17,7 +17,7 @@ from django.conf import settings
 from PIL import Image
 from six import BytesIO
 
-from shuup.admin.modules.sample_data import SAMPLE_IMAGES_BASE_DIR
+from shuup.testing.modules.sample_data import SAMPLE_IMAGES_BASE_DIR
 from shuup.core.models import (
     Category, CategoryStatus, MediaFile, PersonContact, Product, ProductMedia,
     ProductMediaKind, SalesUnit, ShopProduct, ShopProductVisibility

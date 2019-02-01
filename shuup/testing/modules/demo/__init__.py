@@ -68,7 +68,7 @@ class DemoModule(AdminModule):
             if word:
                 yield SearchResult(word, url="https://google.com/?q=%s" % word)
                 yield SearchResult(word[::-1], url="https://google.com/?q=%s" % word[::-1])
-        yield SearchResult("Create test: %s" % query, url="about:blank", icon="fa fa-plus", is_action=True)
+        yield SearchResult("Create test: %s" % query, url="http://about:blank", icon="fa fa-plus", is_action=True)
 
     def get_notifications(self, request):
         if not self.check_demo_optin(request):

@@ -39,11 +39,10 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.sales_units:SalesUnitModule",
             "shuup.admin.modules.sales_dashboard:SalesDashboardModule",
             "shuup.admin.modules.shops:ShopModule",
-            "shuup.admin.modules.demo:DemoModule",
+
             "shuup.admin.modules.manufacturers:ManufacturerModule",
             "shuup.admin.modules.suppliers:SupplierModule",
             "shuup.admin.modules.support:ShuupSupportModule",
-            "shuup.admin.modules.sample_data:SampleDataAdminModule",
             "shuup.admin.modules.settings.SettingsModule",
             "shuup.admin.modules.labels:LabelsModule",
         ],

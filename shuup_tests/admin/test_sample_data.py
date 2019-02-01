@@ -9,10 +9,10 @@ import pytest
 from django.core.urlresolvers import reverse
 
 from shuup import configuration
-from shuup.admin.modules.sample_data import manager
-from shuup.admin.modules.sample_data.data import BUSINESS_SEGMENTS
-from shuup.admin.modules.sample_data.forms import ConsolidateObjectsForm
-from shuup.admin.modules.sample_data.views import ConsolidateSampleObjectsView
+from shuup.testing.modules.sample_data import manager
+from shuup.testing.modules.sample_data.data import BUSINESS_SEGMENTS
+from shuup.testing.modules.sample_data.forms import ConsolidateObjectsForm
+from shuup.testing.modules.sample_data.views import ConsolidateSampleObjectsView
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.wizard import WizardView
 from shuup.core.models import AnonymousContact, Category, Product, Shop
@@ -69,7 +69,7 @@ def test_sample_data_manager():
 @pytest.mark.django_db
 def test_sample_data_wizard_pane(rf, admin_user, settings):
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.sample_data.views.SampleObjectsWizardPane"
+        "shuup.testing.modules.sample_data.views.SampleObjectsWizardPane"
     ]
 
     shop = get_default_shop()

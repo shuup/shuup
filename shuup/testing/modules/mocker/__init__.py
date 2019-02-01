@@ -17,7 +17,7 @@ class TestingAdminModule(AdminModule):
         return [
             admin_url(
                 "^mocker/$",
-                "shuup.testing.admin_module.mocker_view.MockerView",
+                "shuup.testing.modules.mocker.mocker_view.MockerView",
                 name="mocker"
             )
         ]
