@@ -14,7 +14,7 @@ from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.modules.content.data import ORDER_CONFIRMATION
+from shuup.testing.modules.content.data import ORDER_CONFIRMATION
 from shuup.front.notify_events import (
     OrderReceived, PaymentCreated, RefundCreated, ShipmentCreated,
     ShipmentDeleted

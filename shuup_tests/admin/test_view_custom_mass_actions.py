@@ -29,7 +29,7 @@ def test_view_custom_mass_actions(rf, admin_user):
 
     # test with specific key
     with override_provides("manufacturer_list_mass_actions_provider", [
-        "shuup.testing.admin_module.mass_actions:DummyMassActionProvider"
+        "shuup.testing.modules.mocker.mass_actions:DummyMassActionProvider"
     ]):
         response = list_view_func(request)
         data = json.loads(response.content.decode("utf-8"))
@@ -40,7 +40,7 @@ def test_view_custom_mass_actions(rf, admin_user):
     list_view_func = SalesUnitListView.as_view()
     # test with global
     with override_provides("admin_mass_actions_provider", [
-        "shuup.testing.admin_module.mass_actions:DummyMassActionProvider"
+        "shuup.testing.modules.mocker.mass_actions:DummyMassActionProvider"
     ]):
         response = list_view_func(request)
         data = json.loads(response.content.decode("utf-8"))

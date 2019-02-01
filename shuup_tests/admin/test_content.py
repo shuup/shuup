@@ -12,8 +12,8 @@ from django.utils import translation
 from django.utils.encoding import force_text
 
 from shuup import configuration
-from shuup.admin.modules.content import data
-from shuup.admin.modules.content.forms import (
+from shuup.testing.modules.content import data
+from shuup.testing.modules.content.forms import (
     BEHAVIOR_ORDER_CONFIRM_KEY, BehaviorWizardForm, CONTENT_FOOTER_KEY,
     ContentWizardForm
 )
@@ -178,7 +178,7 @@ def test_content_form(settings):
 @pytest.mark.django_db
 def test_content_wizard_pane(rf, admin_user, settings):
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.content.views.ContentWizardPane"
+        "shuup.testing.modules.content.views.ContentWizardPane"
     ]
     shop = get_default_shop()
 
@@ -263,7 +263,7 @@ def test_content_wizard_pane(rf, admin_user, settings):
 @pytest.mark.django_db
 def test_content_wizard_pane2(rf, admin_user, settings):
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.content.views.ContentWizardPane"
+        "shuup.testing.modules.content.views.ContentWizardPane"
     ]
 
     shop = get_default_shop()

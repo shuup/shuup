@@ -64,7 +64,7 @@ def test_contact_detail_has_mocked_toolbar_action_items(rf, admin_user):
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view_func = ContactDetailView.as_view()
     with override_provides("admin_contact_toolbar_action_item", [
-        "shuup.testing.admin_module.toolbar:MockContactToolbarActionItem"
+        "shuup.testing.modules.mocker.toolbar:MockContactToolbarActionItem"
     ]):
         assert _check_if_mock_action_item_exists(view_func, request, contact)
 
