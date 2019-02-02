@@ -16,7 +16,6 @@ from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.testing.modules.sample_data import manager as sample_manager
 from shuup.admin.utils.urls import admin_url
-from shuup.core.models import Shop
 from shuup.core.settings_provider import ShuupSettings
 
 SAMPLE_BASE_DIR = os.path.dirname(os.path.dirname(__file__))
