@@ -15,6 +15,7 @@ import six
 from babel.dates import format_date
 from bs4 import BeautifulSoup
 from django.utils.encoding import force_text
+from django.utils.functional import lazy
 from django.utils.safestring import SafeText
 from django.utils.translation import ugettext_lazy as _
 
@@ -25,7 +26,9 @@ from shuup.reports.admin_module.views import ReportView
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.report import ShuupReportBase
 from shuup.reports.writer import (
-    get_writer_instance, REPORT_WRITERS_MAP, ReportWriterPopulator
+    ExcelReportWriter, get_writer_instance, HTMLReportWriter, JSONReportWriter,
+    PDFReportWriter, PprintReportWriter, REPORT_WRITERS_MAP,
+    ReportWriterPopulator
 )
 from shuup.testing.factories import (
     create_order_with_product, get_default_product, get_default_shop,
@@ -219,6 +222,41 @@ def test_report_writer_populator_provide():
 
         for k, v in REPORT_WRITERS_MAP.items():
             assert populator.populated_map[k] == v
+
+
+def test_report_writers():
+    """
+    Just check whether something breaks while writing differnt types of data
+    """
+    shop = get_default_shop()
+    product = get_default_product()
+    supplier = get_default_supplier()
+    order = create_order_with_product(
+        product=product, supplier=supplier, quantity=1, taxless_base_unit_price=10, tax_rate=0, n_lines=2, shop=shop)
+    order.create_payment(order.taxful_total_price.amount)
+
+    data = {
+        "report": SalesTestReport.get_name(),
+        "shop": shop.pk,
+        "date_range": DateRangeChoices.THIS_YEAR,
+        "writer": "html",
+        "force_download": 1,
+    }
+    report = SalesTestReport(**data)
+
+    for writer_cls in [ExcelReportWriter, PDFReportWriter, PprintReportWriter, HTMLReportWriter, JSONReportWriter]:
+        writer = writer_cls()
+        report_data = [
+            {
+                "date": order,
+                "order_count": Decimal(2),
+                "product_count": int(3),
+                "taxless_total": lazy(lambda: order.taxless_total_price_value),
+                "taxful_total": order.taxful_total_price,
+            }
+        ]
+        writer.write_data_table(report, report_data)
+        assert writer.get_rendered_output()
 
 
 def test_get_totals_return_correct_totals():

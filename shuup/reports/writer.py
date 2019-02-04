@@ -13,6 +13,7 @@ from pprint import pformat
 import six
 from babel.dates import format_datetime
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db import models
 from django.http import HttpResponse
 from django.template.defaultfilters import floatformat
 from django.template.loader import render_to_string
@@ -136,16 +137,32 @@ class ExcelReportWriter(ReportWriter):
     def next_page(self):
         self.worksheet = self.workbook.create_sheet()
 
+    def _w(self, content):
+        if content is not None:
+            if isinstance(content, TaxlessPrice) or isinstance(content, TaxfulPrice):
+                content = floatformat(content.amount.value, 2)
+
+            if isinstance(content, Decimal):
+                content = floatformat(content, 2)
+
+            if callable(content):
+                content = force_text(content)
+
+            if isinstance(content, models.Model):
+                content = force_text(content)
+
+        return content
+
     def write_data_table(self, report, report_data, has_totals=True):
         self.worksheet.append([c["title"] for c in report.schema])
         for datum in report_data:
             datum = report.read_datum(datum)
-            self.worksheet.append(datum)
+            self.worksheet.append([self._w(data) for data in datum])
 
         if has_totals:
             for datum in report.get_totals(report_data):
                 datum = report.read_datum(datum)
-                self.worksheet.append(datum)
+                self.worksheet.append([self._w(data) for data in datum])
 
     def write_page_heading(self, text):
         self.worksheet.append([text])
@@ -155,7 +172,7 @@ class ExcelReportWriter(ReportWriter):
         self.worksheet.append([text])
 
     def write_text(self, text):
-        self.worksheet.append([text])
+        self.worksheet.append(text)
 
     def get_rendered_output(self):
         bio = BytesIO()
