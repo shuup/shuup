@@ -17,12 +17,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from shuup import configuration
-from shuup.admin.modules.sample_data import manager as sample_manager
-from shuup.admin.modules.sample_data.data import BUSINESS_SEGMENTS
-from shuup.admin.modules.sample_data.factories import (
+from shuup.testing.modules.sample_data import manager as sample_manager
+from shuup.testing.modules.sample_data.data import BUSINESS_SEGMENTS
+from shuup.testing.modules.sample_data.factories import (
     create_sample_carousel, create_sample_category, create_sample_product
 )
-from shuup.admin.modules.sample_data.forms import (
+from shuup.testing.modules.sample_data.forms import (
     ConsolidateObjectsForm, SampleObjectsWizardForm
 )
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
@@ -86,6 +86,10 @@ class SampleObjectsWizardPane(WizardPane):
 
     def visible(self):
         return not configuration.get(None, "sample_data_wizard_completed", False)
+
+    def valid(self):
+        from shuup.admin.utils.permissions import has_permission
+        return has_permission(self.request.user, "sample_data")
 
     def get_form_defs(self):
         return [

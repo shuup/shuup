@@ -14,9 +14,6 @@ from shuup.admin.currencybound import CurrencyBound
 class SalesDashboardModule(CurrencyBound, AdminModule):
     name = _("Sales Dashboard")
 
-    def get_required_permissions(self):
-        return ("shuup.view_sales_dashboard",)
-
     def get_dashboard_blocks(self, request):
         import shuup.admin.modules.sales_dashboard.dashboard as dashboard
         currency = self.currency

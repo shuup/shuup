@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import inspect
 import json
+import warnings
 
 import six
 from django.conf import settings
@@ -24,9 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_missing_permissions
-)
+from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.utils import importing
 from shuup.utils.excs import Problem
 
@@ -114,7 +113,10 @@ class AdminRegexURLPattern(RegexURLPattern):
         self._callback = value
 
 
-def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentication=True, permissions=()):
+def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentication=True, permissions=None):
+    if permissions is None:
+        permissions = ((name,) if name else ())
+
     if isinstance(view, six.string_types):
         if not view:
             raise ImproperlyConfigured('Empty URL pattern view name not permitted (for pattern %r)' % regex)
@@ -144,31 +146,37 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
     :return: List of URLs
     :rtype: list[AdminRegexURLPattern]
     """
+    if permissions:
+        warnings.warn(
+            "get_edit_and_list_urls permissions attribute will be deprecated in Shuup 2.0 as unused for this util.",
+            DeprecationWarning
+        )
+
     return [
         admin_url(
             "%s/(?P<pk>\d+)/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "edit",
-            permissions=permissions
+            permissions=(name_template % "edit",)
         ),
         admin_url(
             "%s/new/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "new",
             kwargs={"pk": None},
-            permissions=permissions
+            permissions=(name_template % "new",)
         ),
         admin_url(
             "%s/$" % url_prefix,
             view_template % "List",
             name=name_template % "list",
-            permissions=permissions
+            permissions=(name_template % "list",)
         ),
         admin_url(
             "%s/list-settings/" % url_prefix,
             "shuup.admin.modules.settings.views.ListSettingsView",
             name=name_template % "list_settings",
-            permissions=permissions,
+            permissions=(name_template % "list_settings",)
         )
     ]
 
@@ -177,7 +185,9 @@ class NoModelUrl(ValueError):
     pass
 
 
-def get_model_url(object, kind="detail", user=None, required_permissions=None, shop=None, **kwargs):
+def get_model_url(object, kind="detail", user=None,
+                  required_permissions=None, shop=None,
+                  raise_permission_denied=False, **kwargs):
     """
     Get a an admin object URL for the given object or object class by
     interrogating each admin module.
@@ -197,24 +207,52 @@ def get_model_url(object, kind="detail", user=None, required_permissions=None, s
     :type required_permissions: Iterable[str]|None
     :param shop: The shop that owns the resource
     :type request: shuup.core.models.Shop|None
+    :param raise_permission_denied: raise PermissionDenied exception if the url
+        is found but user has not permission. If false, None will be returned instead.
+        Default is False
+    :type raise_permission_denied: bool
     :return: Resolved URL.
     :rtype: str
     """
     for module in get_modules():
         url = module.get_model_url(object, kind, shop)
+
         if not url:
             continue
+
         if user is None:
             return url
-        else:
-            permissions = ()
+
+        from django.core.urlresolvers import resolve, Resolver404
+
+        try:
             if required_permissions is not None:
+                warnings.warn(
+                    "required_permissions parameter will be deprecated in Shuup 2.0 as unused for this util.",
+                    DeprecationWarning
+                )
                 permissions = required_permissions
             else:
-                # TODO: Check permission type based on kind
-                permissions = get_default_model_permissions(object)
-            if not get_missing_permissions(user, permissions):
+                resolved = resolve(url)
+                from shuup.admin.utils.permissions import get_permissions_for_module_url
+                permissions = get_permissions_for_module_url(module, resolved.url_name)
+
+            missing_permissions = get_missing_permissions(user, permissions)
+
+            if not missing_permissions:
                 return url
+
+            if raise_permission_denied:
+                from django.core.exceptions import PermissionDenied
+                reason = _("Can't view this page. You do not have the required permission(s): {permissions}").format(
+                    permissions=", ".join(missing_permissions)
+                )
+                raise PermissionDenied(reason)
+
+        except Resolver404:
+            # what are you doing developer?
+            return url
+
     raise NoModelUrl("Can't get object URL of kind %s: %r" % (kind, force_text(object)))
 
 

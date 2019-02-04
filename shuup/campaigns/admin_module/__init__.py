@@ -12,12 +12,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
-from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_permissions_from_urls
-)
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
-from shuup.campaigns.models import BasketCampaign, CatalogCampaign, Coupon
+from shuup.campaigns.models import BasketCampaign, Coupon
 
 
 class CampaignAdminModule(AdminModule):
@@ -27,22 +24,19 @@ class CampaignAdminModule(AdminModule):
         basket_campaign_urls = get_edit_and_list_urls(
             url_prefix="^campaigns/basket",
             view_template="shuup.campaigns.admin_module.views.BasketCampaign%sView",
-            name_template="basket_campaign.%s",
-            permissions=get_default_model_permissions(BasketCampaign)
+            name_template="basket_campaign.%s"
         )
 
         coupon_urls = get_edit_and_list_urls(
             url_prefix="^campaigns/coupons",
             view_template="shuup.campaigns.admin_module.views.Coupon%sView",
-            name_template="coupon.%s",
-            permissions=get_default_model_permissions(Coupon)
+            name_template="coupon.%s"
         )
 
         catalog_campaign_urls = get_edit_and_list_urls(
             url_prefix="^campaigns/catalog",
             view_template="shuup.campaigns.admin_module.views.CatalogCampaign%sView",
-            name_template="catalog_campaign.%s",
-            permissions=get_default_model_permissions(CatalogCampaign)
+            name_template="catalog_campaign.%s"
         ) if _show_catalog_campaigns_in_admin() else []
 
         return basket_campaign_urls + catalog_campaign_urls + coupon_urls
@@ -91,9 +85,6 @@ class CampaignAdminModule(AdminModule):
                 category=HelpBlockCategory.CAMPAIGNS,
                 icon_url="shuup/campaigns/img/campaign.png"
             )
-
-    def get_required_permissions(self):
-        return get_permissions_from_urls(self.get_urls())
 
     def get_model_url(self, object, kind, shop=None):
         if not hasattr(object, "admin_url_suffix"):

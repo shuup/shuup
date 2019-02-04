@@ -43,45 +43,50 @@ def get_urls():
     urls.extend(get_module_urls())
 
     urls.extend([
-        admin_url(r'^$', DashboardView.as_view(), name='dashboard'),
-        admin_url(r'^home/$', HomeView.as_view(), name='home'),
-        admin_url(r'^wizard/$', WizardView.as_view(), name='wizard'),
-        admin_url(r'^tour/$', TourView.as_view(), name='tour'),
-        admin_url(r'^search/$', SearchView.as_view(), name='search'),
-        admin_url(r'^select/$', MultiselectAjaxView.as_view(), name='select'),
-        admin_url(r'^edit/$', EditObjectView.as_view(), name='edit'),
-        admin_url(r'^menu/$', MenuView.as_view(), name='menu'),
-        admin_url(r'^toggle-menu/$', MenuToggleView.as_view(), name='menu_toggle'),
+        admin_url(r'^$', DashboardView.as_view(), name='dashboard', permissions=()),
+        admin_url(r'^home/$', HomeView.as_view(), name='home', permissions=()),
+        admin_url(r'^wizard/$', WizardView.as_view(), name='wizard', permissions=()),
+        admin_url(r'^tour/$', TourView.as_view(), name='tour', permissions=()),
+        admin_url(r'^search/$', SearchView.as_view(), name='search', permissions=()),
+        admin_url(r'^select/$', MultiselectAjaxView.as_view(), name='select', permissions=()),
+        admin_url(r'^edit/$', EditObjectView.as_view(), name='edit', permissions=()),
+        admin_url(r'^menu/$', MenuView.as_view(), name='menu', permissions=()),
+        admin_url(r'^toggle-menu/$', MenuToggleView.as_view(), name='menu_toggle', permissions=()),
         admin_url(
             r'^login/$',
             login,
             kwargs={"template_name": "shuup/admin/auth/login.jinja"},
             name='login',
-            require_authentication=False
+            require_authentication=False,
+            permissions=()
         ),
         admin_url(
             r'^logout/$',
             auth_views.logout,
             kwargs={"template_name": "shuup/admin/auth/logout.jinja"},
             name='logout',
-            require_authentication=False
+            require_authentication=False,
+            permissions=()
         ),
         admin_url(
             r'^recover-password/(?P<uidb64>.+)/(?P<token>.+)/$',
             ResetPasswordView,
             name='recover_password',
-            require_authentication=False
+            require_authentication=False,
+            permissions=()
         ),
         admin_url(
             r'^request-password/$',
             RequestPasswordView,
             name='request_password',
-            require_authentication=False
+            require_authentication=False,
+            permissions=()
         ),
         admin_url(
             r'^set-language/$',
             csrf_exempt(set_language),
-            name="set-language"
+            name="set-language",
+            permissions=()
         ),
     ])
 

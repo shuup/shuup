@@ -23,7 +23,7 @@ def test_custom_view_toolbar_buttons(rf, admin_user):
     edit_view_func = ContactGroupPriceDisplayEditView.as_view()
 
     with override_provides("contact_group_price_list_toolbar_provider", [
-        "shuup.testing.admin_module.toolbar:ContactGroupPriceDisplayButtonProvider"
+        "shuup.testing.modules.mocker.toolbar:ContactGroupPriceDisplayButtonProvider"
     ]):
         list_response = list_view_func(request)
         list_response.render()
@@ -37,7 +37,7 @@ def test_custom_view_toolbar_buttons(rf, admin_user):
 
     # use global provider - all views should have that button
     with override_provides("admin_toolbar_button_provider", [
-        "shuup.testing.admin_module.toolbar:ContactGroupPriceDisplayButtonProvider"
+        "shuup.testing.modules.mocker.toolbar:ContactGroupPriceDisplayButtonProvider"
     ]):
         list_response = list_view_func(request)
         list_response.render()

@@ -8,12 +8,12 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
@@ -30,20 +30,17 @@ class ShopModule(AdminModule):
             admin_url(
                 "^shops/(?P<pk>\d+)/enable/$",
                 "shuup.admin.modules.shops.views.ShopEnablerView",
-                name="shop.enable",
-                permissions=get_default_model_permissions(Shop)
+                name="shop.enable"
             ),
             admin_url(
                 "^shops/(?P<pk>\d+)/select/$",
                 "shuup.admin.modules.shops.views.ShopSelectView",
-                name="shop.select",
-                permissions=get_default_model_permissions(Shop)
+                name="shop.select"
             ),
         ] + get_edit_and_list_urls(
             url_prefix="^shops",
             view_template="shuup.admin.modules.shops.views.Shop%sView",
-            name_template="shop.%s",
-            permissions=get_default_model_permissions(Shop)
+            name_template="shop.%s"
         )
 
     def get_menu_entries(self, request):
@@ -73,8 +70,25 @@ class ShopModule(AdminModule):
                 required=False
             )
 
-    def get_required_permissions(self):
-        return get_default_model_permissions(Shop) | get_default_model_permissions(File)
+            shop = get_shop(request)
+            yield SimpleHelpBlock(
+                priority=1000,
+                text=_("Publish your store"),
+                description=_("Let customers browse your store and make purchases"),
+                css_class="green ",
+                actions=[{
+                    "method": "POST",
+                    "text": _("Publish shop"),
+                    "url": reverse("shuup_admin:shop.enable", kwargs={"pk": shop.pk}),
+                    "data": {
+                        "enable": True,
+                        "redirect": reverse("shuup_admin:dashboard")
+                    }
+                }],
+                icon_url="shuup_admin/img/publish.png",
+                done=(not shop.maintenance_mode),
+                required=False
+            )
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Shop, "shuup_admin:shop", object, kind)

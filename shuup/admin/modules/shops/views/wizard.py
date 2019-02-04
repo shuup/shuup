@@ -23,6 +23,10 @@ class ShopWizardPane(WizardPane):
     title = _("Shop Details")
     text = _("Add an address so you can get paid")
 
+    def valid(self):
+        from shuup.admin.utils.permissions import has_permission
+        return has_permission(self.request.user, "shop.edit")
+
     def visible(self):
         return not self.object.contact_address
 

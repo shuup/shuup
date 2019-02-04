@@ -12,8 +12,8 @@ from django.utils import translation
 from django.utils.encoding import force_text
 
 from shuup import configuration
-from shuup.admin.modules.content import data
-from shuup.admin.modules.content.forms import (
+from shuup.testing.modules.content import data
+from shuup.testing.modules.content.forms import (
     BEHAVIOR_ORDER_CONFIRM_KEY, BehaviorWizardForm, CONTENT_FOOTER_KEY,
     ContentWizardForm
 )
@@ -178,9 +178,8 @@ def test_content_form(settings):
 @pytest.mark.django_db
 def test_content_wizard_pane(rf, admin_user, settings):
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.content.views.ContentWizardPane"
+        "shuup.testing.modules.content.views.ContentWizardPane"
     ]
-
     shop = get_default_shop()
 
     pane_data = {
@@ -264,18 +263,19 @@ def test_content_wizard_pane(rf, admin_user, settings):
 @pytest.mark.django_db
 def test_content_wizard_pane2(rf, admin_user, settings):
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.content.views.ContentWizardPane"
+        "shuup.testing.modules.content.views.ContentWizardPane"
     ]
 
     shop = get_default_shop()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
 
     settings.INSTALLED_APPS.remove("shuup.simple_cms")
     settings.INSTALLED_APPS.remove("shuup.xtheme")
     settings.INSTALLED_APPS.remove("shuup.notify")
 
     # no pane, because ContentWizardPane is invalid (no necessary app installed)
-    assert wizard.load_setup_wizard_panes(shop) == []
-    assert wizard.load_setup_wizard_panes(shop, visible_only=False) == []
+    assert wizard.load_setup_wizard_panes(shop, request) == []
+    assert wizard.load_setup_wizard_panes(shop, request, visible_only=False) == []
     pane_data = {
         'pane_id': 'content',
         'content-privacy_policy': True,
@@ -292,8 +292,9 @@ def test_content_wizard_pane2(rf, admin_user, settings):
     assert response["Location"].startswith(reverse("shuup:login"))
 
     # add the simple cms - create only the pages and footer
+    request = apply_request_middleware(rf.get("/"), user=admin_user, skip_session=True)
     settings.INSTALLED_APPS.append("shuup.simple_cms")
-    assert len(wizard.load_setup_wizard_panes(shop, visible_only=False)) == 1
+    assert len(wizard.load_setup_wizard_panes(shop, request, visible_only=False)) == 1
     request = apply_request_middleware(rf.post("/", data=pane_data), user=admin_user)
     response = WizardView.as_view()(request)
     assert response.status_code == 200
@@ -305,7 +306,7 @@ def test_content_wizard_pane2(rf, admin_user, settings):
 
     # add the xtheme - create the footer
     settings.INSTALLED_APPS.append("shuup.xtheme")
-    assert len(wizard.load_setup_wizard_panes(shop, visible_only=False)) == 1
+    assert len(wizard.load_setup_wizard_panes(shop, request, visible_only=False)) == 1
     request = apply_request_middleware(rf.post("/", data=pane_data), user=admin_user)
     response = WizardView.as_view()(request)
     assert response.status_code == 200
@@ -317,7 +318,7 @@ def test_content_wizard_pane2(rf, admin_user, settings):
 
     # add the notify - create only the notification
     settings.INSTALLED_APPS.append("shuup.notify")
-    assert len(wizard.load_setup_wizard_panes(shop, visible_only=False)) == 1
+    assert len(wizard.load_setup_wizard_panes(shop, request, visible_only=False)) == 1
     request = apply_request_middleware(rf.post("/", data=pane_data), user=admin_user)
     response = WizardView.as_view()(request)
     assert response.status_code == 200

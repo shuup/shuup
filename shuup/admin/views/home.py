@@ -65,11 +65,12 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
+        shop = get_shop(self.request)
         context["blocks"] = blocks = []
         context["tour_key"] = "home"
-        context["tour_complete"] = is_tour_complete(get_shop(self.request), "home", user=self.request.user)
-        wizard_complete = setup_wizard_complete(self.request)
+        context["tour_complete"] = is_tour_complete(shop, "home", user=self.request.user)
 
+        wizard_complete = setup_wizard_complete(self.request)
         wizard_url = reverse("shuup_admin:wizard")
         wizard_actions = []
         if not wizard_complete:
@@ -78,8 +79,7 @@ class HomeView(TemplateView):
                 "url": wizard_url
             })
         else:
-            wizard_steps = load_setup_wizard_panes(
-                shop=self.request.shop, request=self.request, visible_only=False)
+            wizard_steps = load_setup_wizard_panes(shop=shop, request=self.request, visible_only=False)
             for step in wizard_steps:
                 wizard_actions.append({
                     "text": step.title,
@@ -101,23 +101,4 @@ class HomeView(TemplateView):
             if not get_missing_permissions(self.request.user, module.get_required_permissions()):
                 blocks.extend(module.get_help_blocks(request=self.request, kind="setup"))
         blocks.sort(key=lambda b: b.priority)
-        blocks.append(
-            SimpleHelpBlock(
-                priority=1000,
-                text=_("Publish your store"),
-                description=_("Let customers browse your store and make purchases"),
-                css_class="green ",
-                actions=[{
-                    "method": "POST",
-                    "text": _("Publish shop"),
-                    "url": reverse("shuup_admin:shop.enable", kwargs={"pk": self.request.shop.pk}),
-                    "data": {
-                        "enable": True,
-                        "redirect": reverse("shuup_admin:dashboard")
-                    }
-                }],
-                icon_url="shuup_admin/img/publish.png",
-                done=not self.request.shop.maintenance_mode
-            )
-        )
         return context

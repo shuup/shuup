@@ -33,10 +33,10 @@ class ATestModule(AdminModule):
         return [
             admin_url(
                 "test/$", OkAction,
-                name="test-auth", require_authentication=True),
+                name="test-auth", require_authentication=True, permissions=()),
             admin_url(
                 "test2/$", "shuup_tests.admin.fixtures.test_module.OkAction",
-                name="test-unauth", require_authentication=False),
+                name="test-unauth", require_authentication=False, permissions=()),
             admin_url(
                 "test3/$", "shuup_tests.admin.fixtures.test_module.OkAction",
                 name="test-perm", require_authentication=True,
@@ -74,6 +74,3 @@ class ARestrictedTestModule(ATestModule):
 
     def get_menu_entries(self, request):
         return [MenuEntry(text="OK", url="/OK", category="RestrictedTest", aliases=("spooky",))]
-
-    def get_required_permissions(self):
-        return set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])

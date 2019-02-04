@@ -9,8 +9,8 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.modules.sample_data import manager as sample_manager
-from shuup.admin.modules.sample_data.data import BUSINESS_SEGMENTS
+from shuup.testing.modules.sample_data import manager as sample_manager
+from shuup.testing.modules.sample_data.data import BUSINESS_SEGMENTS
 
 
 class SampleObjectsWizardForm(forms.Form):

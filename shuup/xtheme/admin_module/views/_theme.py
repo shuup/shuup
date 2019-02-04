@@ -41,6 +41,10 @@ class ThemeWizardPane(WizardPane):
     title = _("Theme")
     text = _("Choose a theme for your shop")
 
+    def valid(self):
+        from shuup.admin.utils.permissions import has_permission
+        return has_permission(self.request.user, "telemetry")
+
     def visible(self):
         return (ThemeSettings.objects.filter(active=False, shop=self.object).count() == 0)
 

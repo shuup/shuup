@@ -22,7 +22,9 @@ class ShuupTestingAppConfig(AppConfig):
     label = "shuup_testing"
     provides = {
         "admin_module": [
-            "shuup.testing.admin_module:TestingAdminModule"
+            "shuup.testing.modules.mocker:TestingAdminModule",
+            "shuup.testing.modules.sample_data:SampleDataAdminModule",
+            "shuup.testing.modules.demo:DemoModule",
         ],
         "service_provider_admin_form": [
             "shuup.testing.service_forms:PseudoPaymentProcessorForm",
@@ -34,19 +36,19 @@ class ShuupTestingAppConfig(AppConfig):
             "shuup.testing.simple_checkout_phase.ShipmentPhaseProvider",
         ],
         "admin_contact_toolbar_button": [
-            "shuup.testing.admin_module.toolbar:MockContactToolbarButton",
+            "shuup.testing.modules.mocker.toolbar:MockContactToolbarButton",
         ],
         "admin_contact_toolbar_action_item": [
-             "shuup.testing.admin_module.toolbar:MockContactToolbarActionItem",
+             "shuup.testing.modules.mocker.toolbar:MockContactToolbarActionItem",
         ],
         "admin_contact_edit_toolbar_button": [
-            "shuup.testing.admin_module.toolbar:MockContactToolbarButton",
+            "shuup.testing.modules.mocker.toolbar:MockContactToolbarButton",
         ],
         "admin_product_toolbar_action_item": [
-            "shuup.testing.admin_module.toolbar:MockProductToolbarActionItem",
+            "shuup.testing.modules.mocker.toolbar:MockProductToolbarActionItem",
         ],
         "admin_contact_section": [
-            "shuup.testing.admin_module.sections:MockContactSection",
+            "shuup.testing.modules.mocker.sections:MockContactSection",
         ],
         "importers": [
             "shuup.testing.importers.DummyImporter",

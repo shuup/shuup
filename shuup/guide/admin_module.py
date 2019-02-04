@@ -49,3 +49,6 @@ class GuideAdminModule(AdminModule):
                 relevance=0,
                 target="_blank"
             )
+
+    def get_required_permissions(self):
+        return ("Access guide module",)

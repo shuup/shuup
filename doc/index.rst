@@ -23,6 +23,7 @@ Developing Shuup
 ----------------
 
 * :doc:`howto/getting_started_dev`
+* :doc:`ref/admin_module`
 * :doc:`ref/data_model`
 * :doc:`ref/provides`
 * :doc:`ref/services`
