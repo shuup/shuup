@@ -55,7 +55,6 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.campaigns',
     'shuup.simple_supplier',
     'shuup.order_printouts',
-    'shuup.testing',
     'shuup.utils',
     'shuup.xtheme',
     'shuup.reports',
@@ -230,8 +229,7 @@ SHUUP_SETUP_WIZARD_PANE_SPEC = [
     "shuup.admin.modules.service_providers.views.PaymentWizardPane",
     "shuup.admin.modules.service_providers.views.CarrierWizardPane",
     "shuup.xtheme.admin_module.views.ThemeWizardPane",
-    "shuup.testing.modules.content.views.ContentWizardPane" if DEBUG and "shuup.testing" in INSTALLED_APPS else "",
-    "shuup.testing.modules.sample_data.views.SampleObjectsWizardPane",
+    "shuup.testing.modules.sample_data.views.SampleObjectsWizardPane" if DEBUG else "",
     "shuup.admin.modules.system.views.TelemetryWizardPane"
 ]
 
