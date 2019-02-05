@@ -9,13 +9,16 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
+from filer.fields.image import FilerImageField
 from jsonfield import JSONField
+from parler.managers import TranslatableQuerySet
+from parler.models import TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.modules import ModuleInterface
 from shuup.utils.analog import define_log_model
 
-from ._base import ShuupModel
+from ._base import TranslatableShuupModel
 
 
 class SupplierType(Enum):
@@ -27,16 +30,18 @@ class SupplierType(Enum):
         EXTERNAL = _('external')
 
 
-class SupplierQueryset(models.QuerySet):
+class SupplierQueryset(TranslatableQuerySet):
     def enabled(self):
-        return self.filter(enabled=True)
+        return self.filter(enabled=True, is_approved=True)
 
 
 @python_2_unicode_compatible
-class Supplier(ModuleInterface, ShuupModel):
+class Supplier(ModuleInterface, TranslatableShuupModel):
     default_module_spec = "shuup.core.suppliers:BaseSupplierModule"
     module_provides_key = "supplier_module"
 
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on'))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_('modified on'))
     identifier = InternalIdentifierField(unique=True)
     name = models.CharField(verbose_name=_("name"), max_length=64, help_text=_(
         "The product suppliers name. "
@@ -62,6 +67,22 @@ class Supplier(ModuleInterface, ShuupModel):
     enabled = models.BooleanField(default=True, verbose_name=_("enabled"), help_text=_(
         "Indicates whether this supplier is currently enabled."
     ))
+    logo = FilerImageField(
+        verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL, related_name="supplier_logos")
+    contact_address = models.ForeignKey(
+        "MutableAddress",
+        related_name="supplier_addresses",
+        verbose_name=_("contact address"),
+        blank=True, null=True,
+        on_delete=models.SET_NULL
+    )
+    is_approved = models.BooleanField(default=True, verbose_name=_("approved"), help_text=_(
+        "Indicates whether this supplier is currently approved."
+    ))
+    options = JSONField(blank=True, null=True, verbose_name=_("options"))
+    translations = TranslatedFields(
+        description=models.TextField(blank=True, verbose_name=_("description"))
+    )
 
     objects = SupplierQueryset.as_manager()
 

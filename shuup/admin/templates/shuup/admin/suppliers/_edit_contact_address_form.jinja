@@ -1,0 +1,8 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% set address_form = form["address"] %}
+
+{% call content_block(_("Contact Address"), "fa-map-marker") %}
+    {% for field in address_form %}
+        {{ bs3.field(field) }}
+    {% endfor %}
+{% endcall %}

@@ -83,10 +83,6 @@ def add_front_resources(context, content):
     elif view_name == "OrderEditView":
         add_resource(context, "body_end", static("shuup-regions.js"))
 
-    elif view_name in ["AddressBookEditView"]:
-        add_resource(context, "body_end", static("shuup-regions.js"))
-        add_init_fields_resource(context, "#id_address-country", "#id_address-region_code", "#id_address-region")
-
-    elif view_name in ["WizardView"]:
+    elif view_name in ["AddressBookEditView", "WizardView", "ShopEditView", "SupplierEditView"]:
         add_resource(context, "body_end", static("shuup-regions.js"))
         add_init_fields_resource(context, "#id_address-country", "#id_address-region_code", "#id_address-region")
