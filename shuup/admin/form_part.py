@@ -91,7 +91,8 @@ class SaveFormPartsMixin(object):
                     form_part.object = self.object
         if is_new:
             object_created.send(sender=type(self.object), object=self.object)
-        add_create_or_change_message(self.request, self.object, is_new)
+
+        self._add_create_or_change_message(self.request, self.object, is_new)
 
         if self.request.GET.get("redirect") and not self.request.POST.get("__next"):
             return HttpResponseRedirect(self.request.GET.get("redirect"))
@@ -103,3 +104,6 @@ class SaveFormPartsMixin(object):
             return HttpResponseRedirect(get_model_url(self.object, shop=self.request.shop))
         else:
             return HttpResponseRedirect(self.request.path)
+
+    def _add_create_or_change_message(self, request, object, is_new):
+        add_create_or_change_message(request, object, is_new)

@@ -127,8 +127,11 @@ class CreateOrUpdateView(UpdateView):
         self.save_form(form)
         if is_new:
             object_created.send(sender=type(self.object), object=self.object)
-        add_create_or_change_message(self.request, self.object, is_new=is_new)
+        self._add_create_or_change_message(self.request, self.object, is_new=is_new)
         return HttpResponseRedirect(self.get_success_url())
+
+    def _add_create_or_change_message(self, request, object, is_new):
+        add_create_or_change_message(request, object, is_new)
 
     def save_form(self, form):
         # Subclass hook.
