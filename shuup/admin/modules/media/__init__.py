@@ -27,6 +27,11 @@ class MediaModule(AdminModule):
                 "shuup.admin.modules.media.views.MediaBrowserView",
                 name="media.browse"
             ),
+            admin_url(
+                "^media/upload/$",
+                "shuup.admin.modules.media.views.media_upload",
+                name="media.upload"
+            )
         ]
 
     def get_menu_entries(self, request):
