@@ -87,7 +87,6 @@ class SlideFormSet(BaseModelFormSet):
         self.carousel = kwargs.pop("carousel")
         self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
         self.request = kwargs.pop("request")
-        kwargs.pop("empty_permitted")
         super(SlideFormSet, self).__init__(*args, **kwargs)
 
     def get_queryset(self):

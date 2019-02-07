@@ -31,7 +31,6 @@ class BehaviorFormSet(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         self.form_class = kwargs.pop("form")
         self.owner = kwargs.pop("owner")
-        kwargs.pop("empty_permitted")
         super(BehaviorFormSet, self).__init__(*args, **kwargs)
 
     def _get_actual_model(self):

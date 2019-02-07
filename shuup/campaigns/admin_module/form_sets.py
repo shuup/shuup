@@ -32,7 +32,6 @@ class BaseFormset(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         self.form_class = kwargs.pop("form")
         self.owner = kwargs.pop("owner")
-        kwargs.pop("empty_permitted")
         super(BaseFormset, self).__init__(*args, **kwargs)
 
     def get_name(self):
