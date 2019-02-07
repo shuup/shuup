@@ -114,10 +114,14 @@ class BasePopupChoiceWidget(Widget):
 
 
 class FileDnDUploaderWidget(Widget):
-    def __init__(self, attrs=None, kind=None, upload_path="/", clearable=False):
+    def __init__(self, attrs=None, kind=None, upload_path="/", clearable=False, browsable=True, upload_url=None):
         self.kind = kind
         self.upload_path = upload_path
         self.clearable = clearable
+        self.browsable = browsable
+        if not upload_url:
+            upload_url = reverse_lazy("shuup_admin:media.upload")
+        self.upload_url = upload_url
         super(FileDnDUploaderWidget, self).__init__(attrs)
 
     def _get_file_attrs(self, file):
@@ -147,8 +151,11 @@ class FileDnDUploaderWidget(Widget):
         file_attrs = [
             "data-upload_path='%s'" % self.upload_path,
             "data-add_remove_links='%s'" % self.clearable,
-            "data-dropzone='true'"
+            "data-dropzone='true'",
+            "data-browsable='%s'" % self.browsable,
         ]
+        if self.upload_url:
+            file_attrs.append("data-upload_url='%s'" % self.upload_url)
         if self.kind:
             file_attrs.append("data-kind='%s'" % self.kind)
         if value:

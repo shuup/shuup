@@ -13,6 +13,7 @@ from shuup.admin.modules.categories import CategoryModule
 from shuup.admin.modules.manufacturers import ManufacturerModule
 from shuup.admin.modules.product_types import ProductTypeModule
 from shuup.admin.modules.products import ProductModule
+from shuup.admin.modules.media import MediaModule
 from shuup.admin.modules.products.views import (
     ProductEditView, ProductMediaBulkAdderView, ProductDeleteView
 )
@@ -37,7 +38,7 @@ def test_product_module_search(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule,
+    with replace_modules([CategoryModule, ImportAdminModule, ProductModule, MediaModule,
                           ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
         with admin_only_urls():
             default_product = get_default_product()
@@ -57,7 +58,7 @@ def test_product_edit_view_works_at_all(rf, admin_user):
     shop_product.save()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule,
+    with replace_modules([CategoryModule, ImportAdminModule, ProductModule, MediaModule,
                           ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
         with admin_only_urls():
             view_func = ProductEditView.as_view()
@@ -75,7 +76,7 @@ def test_product_edit_view_with_params(rf, admin_user):
     name = "test name"
     request = apply_request_middleware(rf.get("/", {"name": name, "sku": sku}), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule,
+    with replace_modules([CategoryModule, ImportAdminModule, ProductModule, MediaModule,
                           ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
         with admin_only_urls():
             view_func = ProductEditView.as_view()
