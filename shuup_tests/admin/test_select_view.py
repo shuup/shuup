@@ -14,7 +14,7 @@ from django.utils.translation import activate, get_language
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.core.models import (
     Category, CompanyContact, PersonContact, Product, ProductMode,
-    SalesUnit, ShopProduct, ShopProductVisibility, CategoryStatus
+    SalesUnit, ShopProduct, ShopProductVisibility, CategoryStatus, Supplier
 )
 from shuup.testing.factories import create_product, get_default_shop, get_shop, create_random_user
 from shuup.testing.utils import apply_request_middleware
@@ -362,7 +362,7 @@ def test_multiselect_inactive_users_and_contacts(rf, regular_user, admin_user):
 
 
 @pytest.mark.django_db
-def test_select_categpru(rf, admin_user):
+def test_select_category(rf, admin_user):
     shop = get_default_shop()
     activate("en")
     view = MultiselectAjaxView.as_view()
@@ -378,4 +378,25 @@ def test_select_categpru(rf, admin_user):
 
     # only visible
     results = _get_search_results(rf, view, "shuup.Category", "category", admin_user, search_mode="visible")
+    assert len(results) == 1
+
+
+@pytest.mark.django_db
+def test_select_supplier(rf, admin_user):
+    shop = get_default_shop()
+    activate("en")
+    view = MultiselectAjaxView.as_view()
+
+    supplier1 = Supplier.objects.create(name="supplier1", enabled=True)
+    supplier2 = Supplier.objects.create(name="supplier2", enabled=False)
+    Supplier.objects.create(name="supplier3", enabled=True)
+
+    supplier1.shops.add(shop)
+    supplier2.shops.add(shop)
+
+    results = _get_search_results(rf, view, "shuup.supplier", "supplier", admin_user)
+    assert len(results) == 2
+
+    # only enabled
+    results = _get_search_results(rf, view, "shuup.supplier", "supplier", admin_user, search_mode="enabled")
     assert len(results) == 1
