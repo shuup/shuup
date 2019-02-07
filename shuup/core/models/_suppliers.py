@@ -84,6 +84,7 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         description=models.TextField(blank=True, verbose_name=_("description"))
     )
 
+    search_fields = ["name"]
     objects = SupplierQueryset.as_manager()
 
     def __str__(self):
