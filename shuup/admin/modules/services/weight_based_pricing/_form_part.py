@@ -31,7 +31,6 @@ class WeightBasedPriceRangeForm(ShuupAdminForm):
 
 class CustomRangeFormSet(forms.BaseInlineFormSet):
     def __init__(self, *args, **kwargs):
-        kwargs.pop("empty_permitted")
         super(CustomRangeFormSet, self).__init__(*args, **kwargs)
 
     def get_name(self):
