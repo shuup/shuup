@@ -26,7 +26,7 @@ class FormDef(object):
 
     def instantiate(self, prefix, group_initial=None, **extra_kwargs):
         kwargs = {"prefix": prefix}
-        if not isinstance(self.form_class, BaseFormSet):
+        if not issubclass(self.form_class, BaseFormSet):
             # FormSets don't support `empty_permitted` (they'll deal with it themselves)
             kwargs["empty_permitted"] = not self.required
 

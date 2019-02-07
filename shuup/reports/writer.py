@@ -146,7 +146,7 @@ class ExcelReportWriter(ReportWriter):
                 content = floatformat(content, 2)
 
             if callable(content):
-                content = force_text(content)
+                content = force_text(content())
 
             if isinstance(content, models.Model):
                 content = force_text(content)

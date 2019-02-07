@@ -169,7 +169,7 @@ class MediaBrowserView(TemplateView):
     def post(self, request, *args, **kwargs):
         action = request.POST.get("action") or request.GET.get("action")
         if action == "upload":
-            return self.handle_upload()
+            return media_upload(request, *args, **kwargs)
 
         # Instead of normal POST variables, the Mithril `m.request()`
         # method passes data as a JSON payload (which is a good idea,
@@ -243,41 +243,6 @@ class MediaBrowserView(TemplateView):
             ]
         }})
 
-    def handle_upload(self):
-        request = self.request
-        shop = get_shop(request)
-        try:
-            folder_id = int(request.POST.get("folder_id") or request.GET.get("folder_id") or 0)
-            path = request.POST.get("path") or request.GET.get("path") or None
-            if folder_id != 0:
-                folder = _get_folder_query(shop).get(pk=folder_id)
-            elif path:
-                folder = get_or_create_folder(shop, path)
-            else:
-                folder = None  # Root folder upload. How bold!
-        except Exception as exc:
-            return JsonResponse({"error": "Invalid folder: %s" % force_text(exc)})
-
-        try:
-            upload_file = request.FILES["file"]
-
-            if upload_file.content_type.startswith("image/"):
-                filer_file = filer_image_from_upload(request, path=folder, upload_data=upload_file)
-                _ensure_media_file(shop, filer_file)
-            else:
-                filer_file = filer_file_from_upload(request, path=folder, upload_data=upload_file)
-                _ensure_media_file(shop, filer_file)
-        except Exception as exc:
-            return JsonResponse({"error": force_text(exc)})
-
-        return JsonResponse({
-            "file": _filer_file_to_json_dict(filer_file),
-            "message": _("%(file)s uploaded to %(folder)s") % {
-                "file": filer_file.label,
-                "folder": get_folder_name(folder)
-            }
-        })
-
     def handle_post_rename_folder(self, data):
         shop = get_shop(self.request)
         folder = _get_folder_query(shop).get(pk=data["id"])
@@ -347,3 +312,38 @@ class MediaBrowserView(TemplateView):
                 "new": get_folder_name(folder)
             }
         })
+
+
+def media_upload(request, *args, **kwargs):
+    shop = get_shop(request)
+    try:
+        folder_id = int(request.POST.get("folder_id") or request.GET.get("folder_id") or 0)
+        path = request.POST.get("path") or request.GET.get("path") or None
+        if folder_id != 0:
+            folder = _get_folder_query(shop).get(pk=folder_id)
+        elif path:
+            folder = get_or_create_folder(shop, path)
+        else:
+            folder = None  # Root folder upload. How bold!
+    except Exception as exc:
+        return JsonResponse({"error": "Invalid folder: %s" % force_text(exc)})
+
+    try:
+        upload_file = request.FILES["file"]
+
+        if upload_file.content_type.startswith("image/"):
+            filer_file = filer_image_from_upload(request, path=folder, upload_data=upload_file)
+        else:
+            filer_file = filer_file_from_upload(request, path=folder, upload_data=upload_file)
+
+        _ensure_media_file(shop, filer_file)
+    except Exception as exc:
+        return JsonResponse({"error": force_text(exc)})
+
+    return JsonResponse({
+        "file": _filer_file_to_json_dict(filer_file),
+        "message": _("%(file)s uploaded to %(folder)s") % {
+            "file": filer_file.label,
+            "folder": get_folder_name(folder)
+        }
+    })

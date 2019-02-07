@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-05 13:51+0000\n"
+"POT-Creation-Date: 2019-02-07 13:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -533,10 +533,6 @@ msgstr ""
 msgid "Browse Media"
 msgstr ""
 
-#, python-format
-msgid "%(file)s uploaded to %(folder)s"
-msgstr ""
-
 msgid "Can not rename shared folder."
 msgstr ""
 
@@ -563,6 +559,10 @@ msgstr ""
 
 #, python-format
 msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr ""
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
 msgstr ""
 
 msgid "Show orders"

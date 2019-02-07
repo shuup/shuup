@@ -13,24 +13,27 @@ function activateDropzone($dropzone, attrs={}) {
     }
 
     const selector = "#" + $dropzone.attr("id");
-    const uploadPath = $(selector).data().upload_path;
-    const addRemoveLinks = $(selector).data().add_remove_links;
-    const mediaUrl = window.ShuupAdminConfig.browserUrls.media;
+    const $data = $(selector).data();
+    const uploadPath = $data.upload_path;
+    const addRemoveLinks = $data.add_remove_links;
+    const uploadUrl = $data.upload_url || window.ShuupAdminConfig.browserUrls.media;
+    const browsable = ($data.browsable === "True");
     const params = $.extend(true, {
-        url: mediaUrl + "?action=upload&path=" + uploadPath,
+        url: uploadUrl + "?action=upload&path=" + uploadPath,
+        uploadUrl,
         params: {
             csrfmiddlewaretoken: window.ShuupAdminConfig.csrf
         },
-        addRemoveLinks: (addRemoveLinks == "True"),
+        addRemoveLinks: (addRemoveLinks === "True"),
         dictRemoveFile: gettext("Clear"),
         autoProcessQueue: true,
         uploadMultiple: false,
         parallelUploads: 1,
         maxFiles: 1,
-        dictDefaultMessage: gettext("Drop files here or click to browse."),
+        dictDefaultMessage: browsable ? gettext("Drop files here or click to browse.") : gettext("Drop files here."),
         clickable: false,
         accept: function(file, done) {
-            if ($(selector).data().kind === "images" && file.type.indexOf("image") < 0) {
+            if ($data.kind === "images" && file.type.indexOf("image") < 0) {
                 done(gettext("only images can be uploaded!"));
             } else {
                 done();
@@ -38,7 +41,6 @@ function activateDropzone($dropzone, attrs={}) {
         }
     }, attrs);
     const dropzone = new Dropzone(selector, params);
-
 
     dropzone.on("addedfile", attrs.onAddedFile || function(file) {
         if(params.maxFiles === 1 && dropzone.files.length > 1) {
@@ -60,24 +62,26 @@ function activateDropzone($dropzone, attrs={}) {
 
     dropzone.on("queuecomplete", attrs.onQueueComplete || $.noop);
 
-    $(selector).on("click", function(e) {
-        window.BrowseAPI.openBrowseWindow({
-            kind: "media",
-            disabledMenus: ["delete", "rename"],
-            filter: $(selector).data().kind,
-            onSelect: (obj) => {
-                obj.name = obj.text;
-                $(selector).find("input").val(obj.id);
-                $(selector).find(".dz-preview").remove();
-                dropzone.emit("addedfile", obj);
-                if(obj.thumbnail) {
-                    dropzone.emit("thumbnail", obj, obj.thumbnail);
+    if (browsable) {
+        $(selector).on("click", function(e) {
+            window.BrowseAPI.openBrowseWindow({
+                kind: "media",
+                disabledMenus: ["delete", "rename"],
+                filter: $(selector).data().kind,
+                onSelect: (obj) => {
+                    obj.name = obj.text;
+                    $(selector).find("input").val(obj.id);
+                    $(selector).find(".dz-preview").remove();
+                    dropzone.emit("addedfile", obj);
+                    if(obj.thumbnail) {
+                        dropzone.emit("thumbnail", obj, obj.thumbnail);
+                    }
+                    dropzone.emit("success", obj);
+                    dropzone.emit("complete", obj);
                 }
-                dropzone.emit("success", obj);
-                dropzone.emit("complete", obj);
-            }
+            });
         });
-    });
+    }
 
     const data = $(selector).data();
     if(data.url) {
