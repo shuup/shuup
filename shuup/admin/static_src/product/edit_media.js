@@ -129,9 +129,8 @@ $(function() {
     dropzones.forEach(function(zoneData) {
         var fieldId = "#" + zoneData.field + "-dropzone";
         if ($(fieldId).length) {
-            const mediaUrl = window.ShuupAdminConfig.browserUrls.media;
             activateDropzone($(fieldId), {
-                url: mediaUrl + "?action=upload&path=" + zoneData.targetPath,
+                uploadPath: zoneData.targetPath,
                 maxFiles: zoneData.maxFiles,
                 onSuccess: function(file) {
                     onDropzoneSuccess($("#" + zoneData.field), file);
