@@ -12,6 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
@@ -159,7 +160,9 @@ class ProductQuerySet(TranslatableQuerySet):
         else:
             from ._product_shops import ShopProductVisibility
             qs = qs.exclude(
-                Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE) | Q(mode__in=self._invisible_modes)
+                Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE) |
+                Q(mode__in=self._invisible_modes) |
+                Q(shop_products__available_until__lte=now())
             )
             if customer and not customer.is_anonymous:
                 visible_to_logged_in_q = Q(shop_products__visibility_limit__in=(
