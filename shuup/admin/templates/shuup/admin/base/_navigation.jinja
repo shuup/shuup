@@ -20,9 +20,6 @@
     <div id="site-search-results" class="site-search-results"></div>
 </div>
 
-{% set support_id=shuup_admin.get_support_id() %}
-{% if support_id %}<p class="nav-text d-sm-none d-md-block">{% trans %}Support ID: {% endtrans %}{{ support_id }}</p>{% endif %}
-
 <div class="site-links d-none d-lg-block mr-3">
     <a class="nav-btn shop-btn" href="{{ url("shuup_admin:home") }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Go home{% endtrans %}"><i class="fa fa-home"></i></a>
 
