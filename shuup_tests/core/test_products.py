@@ -6,16 +6,19 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-import pytest
-from shuup import configuration
+from datetime import timedelta
 
+import pytest
+from django.utils.timezone import now
+
+from shuup import configuration
 from shuup.core.models import (
     AnonymousContact, get_person_contact, Product, ProductVisibility,
     ShopProductVisibility
 )
 from shuup.testing.factories import (
-    create_product, get_default_customer_group, get_default_shop,
-    get_default_shop_product, get_default_supplier, get_all_seeing_key
+    create_product, get_all_seeing_key, get_default_customer_group,
+    get_default_shop, get_default_shop_product, get_default_supplier
 )
 from shuup_tests.core.utils import modify
 from shuup_tests.utils.fixtures import regular_user
@@ -112,3 +115,30 @@ def test_get_prices_children(rf, regular_user):
     parent.refresh_from_db()
     prices = parent.get_priced_children(request)
     assert len(prices) == 1
+
+
+@pytest.mark.parametrize("available_until,visible", [
+    (now() + timedelta(days=2), True),
+    (now() - timedelta(days=2), False),
+])
+@pytest.mark.django_db
+def test_product_available(admin_user, regular_user, available_until, visible):
+    shop = get_default_shop()
+    product = create_product("test-sku", shop=shop)
+    shop_product = product.get_shop_instance(shop)
+    regular_contact = get_person_contact(regular_user)
+    admin_contact = get_person_contact(admin_user)
+
+    shop_product.available_until = available_until
+    shop_product.save()
+
+    assert (product in Product.objects.listed(shop=shop)) == visible
+    assert (product in Product.objects.searchable(shop=shop)) == visible
+    assert (product in Product.objects.listed(shop=shop, customer=admin_contact)) == visible
+    assert (product in Product.objects.searchable(shop=shop, customer=admin_contact)) == visible
+    assert (product in Product.objects.searchable(shop=shop, customer=regular_contact)) == visible
+
+    configuration.set(None, get_all_seeing_key(admin_contact), True)
+    assert product in Product.objects.listed(shop=shop, customer=admin_contact)
+    assert product in Product.objects.searchable(shop=shop, customer=admin_contact)
+    configuration.set(None, get_all_seeing_key(admin_contact), False)

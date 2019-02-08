@@ -159,6 +159,7 @@ class ShopProductForm(MultiLanguageModelForm):
             "default_price_value",
             "minimum_price_value",
             "suppliers",
+            "available_until",
             "visibility",
             "purchasable",
             "visibility_limit",
