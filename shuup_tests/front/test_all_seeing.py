@@ -49,8 +49,6 @@ def test_all_seeing_and_maintenance(rf, admin_user):
 
     assert not admin_contact.is_all_seeing
     configuration.set(None, get_all_seeing_key(admin_user), True)
-    # refresh cache
-    del admin_contact.is_all_seeing
     assert admin_contact.is_all_seeing
 
     assert admin_contact.user.is_superuser

@@ -14,6 +14,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.models import TranslatableModel, TranslatedFields
@@ -166,6 +167,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             "This is useful to make sure your product price stays above cost."
         )
     )
+    available_until = models.DateTimeField(verbose_name=_("available until"), null=True, blank=True, help_text=_(
+        "After this date the product will be invisible."
+    ))
 
     display_unit = models.ForeignKey(
         DisplayUnit, null=True, blank=True,
@@ -198,7 +202,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             help_text=_(
                 'This text will be shown alongside the product in the shop. '
                 'It is useful for informing customers of special stock numbers or preorders. '
-                '(Ex.: "Available in a month")'
+                '(Ex.: Available in a month)'
             )
         )
     )
@@ -270,6 +274,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
         if not self.visible:
             yield ValidationError(_('This product is not visible.'), code="product_not_visible")
+
+        if self.available_until and now() > self.available_until:
+            yield ValidationError(_('This product is not available.'), code="product_not_available")
 
         is_logged_in = (bool(customer) and not customer.is_anonymous)
 

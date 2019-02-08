@@ -45,5 +45,4 @@ def test_product_price(client):
             )
             soup = BeautifulSoup(response.content)
             price_span = soup.find("span", {"class": "product-price"})
-            print(price_span)
             assert "%s" % price in price_span.text

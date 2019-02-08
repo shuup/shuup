@@ -47,5 +47,4 @@ def _get_item_data(data, item):
 
 
 def _get_abstract_header(item_data):
-    print(item_data)
     return [item for item in item_data["_abstract"] if item.get("class", "") == "header"][0]["text"]

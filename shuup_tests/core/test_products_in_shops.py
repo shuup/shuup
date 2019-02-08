@@ -6,11 +6,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import uuid
+from datetime import timedelta
 
 import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import override_settings
+from django.utils.timezone import now
 from django.utils.translation import activate
 from parler.models import TranslationDoesNotExist
 
@@ -148,6 +150,32 @@ def test_product_visibility(rf, admin_user, regular_user):
         assert error_exists(shop_product.get_visibility_errors(customer=regular_contact), "product_not_visible_to_group")
 
     configuration.set(None, get_all_seeing_key(admin_contact), False)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_product_visibility_available_until(rf, admin_user, regular_user):
+    anon_contact = get_person_contact(AnonymousUser())
+    shop_product = get_default_shop_product()
+    admin_contact = get_person_contact(admin_user)
+    regular_contact = get_person_contact(regular_user)
+    customer_group = get_default_customer_group()
+    grouped_user = get_user_model().objects.create_user(username=printable_gibberish(20))
+    grouped_contact = get_person_contact(grouped_user)
+    customer_group.members.add(grouped_contact)
+
+    with modify(shop_product, available_until=(now() + timedelta(seconds=200))):
+        assert error_does_not_exist(shop_product.get_visibility_errors(customer=anon_contact), "product_not_available")
+        assert error_does_not_exist(shop_product.get_visibility_errors(customer=grouped_contact), "product_not_available")
+        assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_available")
+        assert error_does_not_exist(shop_product.get_visibility_errors(customer=regular_contact), "product_not_available")
+
+    with modify(shop_product, available_until=(now() - timedelta(seconds=150))):
+        assert error_exists(shop_product.get_visibility_errors(customer=anon_contact), "product_not_available")
+        assert error_exists(shop_product.get_visibility_errors(customer=grouped_contact), "product_not_available")
+        assert error_exists(shop_product.get_visibility_errors(customer=admin_contact), "product_not_available")
+        assert error_exists(shop_product.get_visibility_errors(customer=regular_contact), "product_not_available")
+
 
 @pytest.mark.django_db
 def test_complex_orderability(admin_user):
