@@ -12,12 +12,13 @@ import six
 from bs4 import BeautifulSoup
 from django.utils.encoding import force_text
 from django.utils.translation import activate
+from django.test import override_settings
 from django.test.client import Client
 
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.core.models import (
-    Product, Shop, ShopProduct, ShopProductVisibility
+    Product, Shop, ShopProduct, ShopProductVisibility, ShopStatus
 )
 from shuup.testing.factories import (
     CategoryFactory, create_product, create_random_order, create_random_person,
@@ -301,26 +302,29 @@ def test_product_edit_view(rf, admin_user, settings):
 
 
 @pytest.mark.django_db
-def test_product_edit_view_multishop(rf, admin_user, settings):
-    activate("en")
+def test_product_edit_view_multishop(rf, admin_user):
+    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+        activate("en")
+        product = create_product(sku="TEST-SKU-HAHA")
+        shop_products = []
 
-    product = create_product(sku="TEST-SKU-HAHA")
+        for i in range(5):
+            shop_name = "test%d" % i
+            shop = Shop.objects.create(name=shop_name, domain=shop_name, status=ShopStatus.ENABLED)
+            shop_products.append(
+                ShopProduct.objects.create(product=product, shop=shop, visibility=ShopProductVisibility.ALWAYS_VISIBLE)
+            )
 
-    for i in range(5):
-        shop = Shop.objects.create(name="test-%d" % i)
-        sp = ShopProduct.objects.create(
-            product=product, shop=shop, visibility=ShopProductVisibility.ALWAYS_VISIBLE
-        )
+        assert Product.objects.count() == 1
 
-    assert Product.objects.count() == 1
-
-    view = ProductEditView.as_view()
-    for shop_product in ShopProduct.objects.all():
-        request = apply_request_middleware(rf.get("/"), user=admin_user)
-        response = view(request, pk=shop_product.pk)
-        response.render()
-        content = force_text(response.content)
-        assert product.sku in content
+        view = ProductEditView.as_view()
+        for shop_product in shop_products:
+            request = apply_request_middleware(rf.get("/", HTTP_HOST=shop_product.shop.domain), user=admin_user)
+            response = view(request, pk=shop_product.pk)
+            assert response.status_code == 200
+            response.render()
+            content = force_text(response.content)
+            assert product.sku in content
 
 
 def test_menu_view(rf, admin_user):

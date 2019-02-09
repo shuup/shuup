@@ -216,6 +216,9 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     def get_toolbar(self):
         return EditProductToolbar(view=self)
 
+    def get_queryset(self):
+        return super(ProductEditView, self).get_queryset().filter(shop=get_shop(self.request))
+
     def get_context_data(self, **kwargs):
         context = super(ProductEditView, self).get_context_data(**kwargs)
         orderability_errors = []
