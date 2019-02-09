@@ -130,27 +130,29 @@ class ProductModule(AdminModule):
                     )
 
     def get_help_blocks(self, request, kind):
-        actions = [
-            {
+        actions = []
+
+        from shuup.admin.utils.permissions import has_permission
+        if has_permission(request.user, "shop_product.new"):
+            actions.append({
                 "text": _("New product"),
                 "url": self.get_model_url(ShopProduct, "new")
-            }
-        ]
-        from shuup.admin.utils.permissions import has_permission
+            })
         if "shuup.importer" in settings.INSTALLED_APPS and has_permission(request.user, "importer.import"):
             actions.append({
                 "text": _("Import"),
                 "url": reverse("shuup_admin:importer.import")
             })
 
-        yield SimpleHelpBlock(
-            text=_("Add a product to see it in your store"),
-            actions=actions,
-            icon_url="shuup_admin/img/product.png",
-            priority=0,
-            category=HelpBlockCategory.PRODUCTS,
-            done=Product.objects.filter(shop_products__shop=request.shop).exists() if kind == "setup" else False
-        )
+        if actions:
+            yield SimpleHelpBlock(
+                text=_("Add a product to see it in your store"),
+                actions=actions,
+                icon_url="shuup_admin/img/product.png",
+                priority=0,
+                category=HelpBlockCategory.PRODUCTS,
+                done=Product.objects.filter(shop_products__shop=request.shop).exists() if kind == "setup" else False
+            )
 
     def get_model_url(self, object, kind, shop=None):
         if isinstance(object, Product):

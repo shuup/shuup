@@ -69,17 +69,19 @@ class CategoryModule(AdminModule):
                 )
 
     def get_help_blocks(self, request, kind):
-        yield SimpleHelpBlock(
-            text=_("Add a product category to organize your products"),
-            actions=[{
-                "text": _("New category"),
-                "url": get_model_url(Category, "new")
-            }],
-            icon_url="shuup_admin/img/category.png",
-            category=HelpBlockCategory.PRODUCTS,
-            priority=1,
-            done=Category.objects.filter(shops=request.shop).exists() if kind == "setup" else False
-        )
+        from shuup.admin.utils.permissions import has_permission
+        if has_permission(request.user, "category.new"):
+            yield SimpleHelpBlock(
+                text=_("Add a product category to organize your products"),
+                actions=[{
+                    "text": _("New category"),
+                    "url": get_model_url(Category, "new")
+                }],
+                icon_url="shuup_admin/img/category.png",
+                category=HelpBlockCategory.PRODUCTS,
+                priority=1,
+                done=Category.objects.filter(shops=request.shop).exists() if kind == "setup" else False
+            )
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Category, "shuup_admin:category", object, kind)
