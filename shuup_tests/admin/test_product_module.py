@@ -5,17 +5,22 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import json
+
 import pytest
+from django.http.response import Http404
+from django.test import override_settings
 from filer.models import File
 
 from shuup.admin.module_registry import replace_modules
 from shuup.admin.modules.categories import CategoryModule
 from shuup.admin.modules.manufacturers import ManufacturerModule
+from shuup.admin.modules.media import MediaModule
 from shuup.admin.modules.product_types import ProductTypeModule
 from shuup.admin.modules.products import ProductModule
-from shuup.admin.modules.media import MediaModule
 from shuup.admin.modules.products.views import (
-    ProductEditView, ProductMediaBulkAdderView, ProductDeleteView
+    ProductDeleteView, ProductEditView, ProductListView,
+    ProductMediaBulkAdderView
 )
 from shuup.admin.modules.services import (
     PaymentMethodModule, ShippingMethodModule
@@ -23,11 +28,14 @@ from shuup.admin.modules.services import (
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.views.search import get_search_results
-from shuup.core.models import ProductMedia, ProductMediaKind, ProductVisibility, ShopProduct
+from shuup.core.models import (
+    ProductMedia, ProductMediaKind, ProductVisibility, ShopProduct
+)
 from shuup.importer.admin_module import ImportAdminModule
 from shuup.testing.factories import (
-    create_product, get_default_product, get_default_shop
+    create_product, create_random_user, get_default_product, get_default_shop
 )
+from shuup.testing.factories import get_shop as get_new_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.admin.utils import admin_only_urls
 from shuup_tests.utils import empty_iterable
@@ -84,6 +92,7 @@ def test_product_edit_view_with_params(rf, admin_user):
             assert (sku in response.rendered_content)  # it's probable the SKU is there
             assert (name in response.rendered_content)  # it's probable the name is there
 
+
 @pytest.mark.django_db
 def test_product_delete_view(rf, admin_user):
     shop = get_default_shop()
@@ -96,6 +105,7 @@ def test_product_delete_view(rf, admin_user):
     response = view_func(request, pk=shop_product.pk)
     prod.refresh_from_db()
     assert prod.deleted
+
 
 @pytest.mark.django_db
 def test_product_media_bulk_adder(rf, admin_user):
@@ -149,3 +159,32 @@ def test_product_media_bulk_adder(rf, admin_user):
     assert response.status_code == 200
     assert ProductMedia.objects.count() == 2
     assert ProductMedia.objects.filter(product_id=product.pk, file_id=f2.id, kind=ProductMediaKind.GENERIC_FILE).exists()
+
+
+@pytest.mark.django_db
+def test_product_edit_view_multipleshops(rf):
+    """
+    Check whether a staff user from Shop A can see the product from Shop B
+    when the staff user is only attached to Shop A
+    """
+    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+        shop1 = get_default_shop()
+        shop2 = get_new_shop(identifier="shop2", domain="shop2", name="Shop 2")
+        shop2_staff = create_random_user(is_staff=True)
+        shop2.staff_members.add(shop2_staff)
+
+        product = create_product("shop1-product", shop=shop1)
+        shop_product = product.get_shop_instance(shop1)
+        request = apply_request_middleware(rf.get("/", HTTP_HOST=shop2.domain), user=shop2_staff)
+
+        view_func = ProductEditView.as_view()
+        with pytest.raises(Http404):
+            view_func(request, pk=shop_product.pk)
+
+        view_func = ProductListView.as_view()
+        payload = {"jq": json.dumps({"perPage": 100, "page": 1}), "shop": shop2.pk}
+        request = apply_request_middleware(rf.get("/", payload, HTTP_HOST=shop2.domain), user=shop2_staff)
+        response = view_func(request)
+        assert response.status_code == 200
+        data = json.loads(response.content.decode("utf-8"))
+        assert len(data["items"]) == 0

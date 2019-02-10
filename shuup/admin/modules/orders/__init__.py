@@ -161,7 +161,8 @@ class OrderModule(AdminModule):
         return derive_model_url(Order, "shuup_admin:order", object, kind)
 
     def get_help_blocks(self, request, kind):
-        if kind == "quicklink":
+        from shuup.admin.utils.permissions import has_permission
+        if kind == "quicklink" and has_permission(request.user, "order.new"):
             actions = [{
                 "text": _("New order"),
                 "url": self.get_model_url(Order, "new")
