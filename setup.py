@@ -114,7 +114,6 @@ REQUIRES = [
     'pytoml>=0.1.0,<0.2',
     'pytz>=2015.4',
     'requests>=2.7,<3',
-    'secretstorage==2.3.1',
     'six>=1.9,<2',
     'unicodecsv==0.14.1',
     'xlrd>=1'
