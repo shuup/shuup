@@ -1269,4 +1269,7 @@ else if (typeof define === "function" && define.amd) define(function () {
     return Picotable;
 });
 
-new Picotable(document.getElementById("picotable"), window.location.pathname);
+const picotableElement = document.getElementById("picotable");
+if (picotableElement) {
+   window.picotable = new Picotable(picotableElement, window.location.pathname);
+}
