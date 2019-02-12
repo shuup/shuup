@@ -90,6 +90,7 @@ class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
     require_verification = models.BooleanField(default=False, verbose_name=_('require verification'))
     verified = models.BooleanField(default=False, verbose_name=_('verified'))
     extra_data = JSONField(blank=True, null=True, verbose_name=_('extra data'))
+    labels = models.ManyToManyField("Label", blank=True, verbose_name=_("labels"))
 
     # The following fields govern calculation of the prices
     quantity = QuantityField(verbose_name=_('quantity'), default=1)
