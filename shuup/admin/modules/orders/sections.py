@@ -10,8 +10,32 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext as _
 
 from shuup.admin.base import Section
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shipment
 from shuup.core.models._orders import OrderLogEntry
+
+
+class BasicDetailsOrderSection(Section):
+    identifier = "order_details"
+    name = _("Details")
+    icon = "fa-info-circle"
+    template = "shuup/admin/orders/_detail_section.jinja"
+    order = 0
+
+    @classmethod
+    def visible_for_object(cls, order, request=None):
+        return True
+
+    @classmethod
+    def get_context_data(cls, order, request=None):
+        provided_information = []
+        for provided_info in sorted(get_provide_objects("admin_order_information"), key=lambda x: x.order):
+            info = provided_info(order)
+            if info.provides_info():
+                provided_information.append((info.title, info.information))
+        return {
+            "provided_information": provided_information
+        }
 
 
 class PaymentOrderSection(Section):
@@ -24,7 +48,7 @@ class PaymentOrderSection(Section):
 
     @classmethod
     def visible_for_object(cls, order, request=None):
-        return True
+        return order.payments.exists()
 
     @classmethod
     def get_context_data(cls, order, request=None):
@@ -40,7 +64,7 @@ class ShipmentSection(Section):
 
     @staticmethod
     def visible_for_object(order, request=None):
-        return True
+        return Shipment.objects.filter(order=order).exists()
 
     @staticmethod
     def get_context_data(order, request=None):

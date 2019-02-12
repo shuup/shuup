@@ -116,11 +116,6 @@ def test_order_detail_info_row_extend(rf, admin_user):
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view_func = OrderDetailView.as_view()
 
-    # Test that context["provided_information"] is empty by default
-    with override_provides("admin_order_information", []):
-        response = view_func(request, pk=order.pk)
-        assert response.context_data['provided_information'] == []
-
     # Test that we can insert extra information rows into Order detail page
     with override_provides("admin_order_information", [
         "shuup_tests.admin.test_order_detail_extensibility:PaymentMethodName",

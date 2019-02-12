@@ -1,0 +1,119 @@
+{% from "shuup/admin/macros/general.jinja" import content_block, info_row, content_with_sidebar, content_block_subtitle %}
+
+{% set customer_url = shuup_admin.model_url(order.customer, "detail") %}
+{% set orderer_url = shuup_admin.model_url(order.orderer, "detail") %}
+{% set creator_url = shuup_admin.model_url(order.creator, "detail") %}
+
+{% macro contact_row(label, contact) %}
+    {% set url = shuup_admin.model_url(contact, "detail") %}
+    {% if contact is not none and contact.account_manager is not none %}
+        {{ info_row(label, contact ~ " (" ~ contact.account_manager ~ ")", url) }}
+    {% else %}
+        {{ info_row(label, contact, url) }}
+    {% endif %}
+{% endmacro %}
+
+{%- macro render_objects(objs) -%}
+    {%- for obj in objs -%}
+        {{- obj -}}
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+{{ content_block_subtitle("h4", _("Order Details"), "fa-truck", top_line=False, bottom_line=False) }}
+<div class="row pl-3 pb-3">
+    <div class="content-block-card col pt-4 pb-4 mr-3 text-center">
+        <h5 class="text-muted">{{_("Order Status")}}</h5>
+        <div class="content-block-card-content">
+            <h2 class="text-default">{{ order.get_status_display() }}</h2>
+        </div>
+    </div>
+    {% if order.payment_method %}
+    <div class="content-block-card col pt-4 pb-4 mr-3 text-center">
+        <h5 class="text-muted">{{_("Payment Status")}}</h5>
+        <div class="content-block-card-content">
+            <h2 class="text-default">{{ order.get_payment_status_display() }}</h2>
+        </div>
+    </div>
+    {% endif %}
+    {% if order.shipping_method %}
+    <div class="content-block-card col pt-4 pb-4 mr-3 text-center">
+        <h5 class="text-muted">{{_("Shipping Status")}}</h5>
+        <div class="content-block-card-content">
+            <h2 class="text-default">{{ order.get_shipping_status_display() }}</h2>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="list-group">
+            {{ info_row(_("Order Number"), order.identifier) }}
+            {{ info_row(_("Order Date"), order.order_date|datetime) }}
+            {{ info_row(_("Reference"), order.reference_number) }}
+            {{ info_row(_("Label"), order.label.replace("_", " ").title()) }}
+            {{ info_row(_("Payment Method"), order.get_payment_method_display()) }}
+            {{ info_row(_("Shipping Method"), order.get_shipping_method_display()) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="list-group">
+            {{ contact_row(_("Customer"), order.customer) }}
+            {{ contact_row(_("Ordered by"), order.orderer) }}
+            {{ info_row(_("Creator"), order.creator, creator_url) }}
+            {{ info_row(_("Phone"), order.phone, "tel:" ~ order.phone) }}
+            {{ info_row(_("Email"), order.email, "mailto:" ~ order.email) }}
+            {{ info_row(_("Tax number"), order.tax_number) }}
+            {{ info_row(_("Total Price (taxless)"), order.taxless_total_price|money) }}
+            {{ info_row(_("Total Price"), order.taxful_total_price|money) }}
+            {{ info_row(_("Customer Comment"), order.customer_comment|linebreaksbr) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="list-group">
+            {% set tracking_codes = order.get_tracking_codes() %}
+            {% if tracking_codes %}
+                {{ info_row(_("Tracking codes"), render_objects(tracking_codes)) }}
+            {% endif %}
+            {% if order_details.provided_information %}
+                {% for title, info in order_details.provided_information %}
+                    {{ info_row(title, info) }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row">
+</div>
+{% if order.shipping_address_id or order.billing_address_id %}
+    <div class="row">
+        <div class="col-lg-12">
+            {{ content_block_subtitle("h4", _("Address Information"), "fa-map-marker", top_line=False)}}
+            <div class="row contact-addresses">
+                <div class="col-lg-6 billing-address">
+                    <h4 class="pt-3 pb-3"><strong>{% trans %}Billing address{% endtrans %}</strong></h4>
+                    <div class="list-group">
+                        {% for line in order.billing_address or [] %}
+                            <address class="list-group-item">{{ line }}</address>
+                        {% else %}
+                            <p><i class="fa fa-warning text-warning"></i> {% trans %}No billing address defined.{% endtrans %}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-6 shipping-address">
+                    <h4 class="pt-3 pb-3"><strong>{% trans %}Shipping address{% endtrans %}</strong></h4>
+                    <div class="list-group">
+                        {% for line in order.shipping_address or [] %}
+                            <address class="list-group-item">{{ line }}</address>
+                        {% else %}
+                            <p><i class="fa fa-warning text-warning"></i> {% trans %}No shipping address defined.{% endtrans %}</p>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% block order_contents %}
+    {% include "shuup/admin/orders/_order_contents.jinja" with context %}
+{% endblock %}
