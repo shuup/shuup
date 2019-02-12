@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-03 20:34+0000\n"
+"POT-Creation-Date: 2019-02-12 17:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -905,9 +905,6 @@ msgstr ""
 msgid "currencies"
 msgstr ""
 
-msgid "The shop name. This name is displayed throughout admin."
-msgstr ""
-
 msgid "label"
 msgstr ""
 
@@ -1450,6 +1447,12 @@ msgid ""
 "product price stays above cost."
 msgstr ""
 
+msgid "available until"
+msgstr ""
+
+msgid "After this date the product will be invisible."
+msgstr ""
+
 msgid "display unit"
 msgstr ""
 
@@ -1481,8 +1484,8 @@ msgstr ""
 
 msgid ""
 "This text will be shown alongside the product in the shop. It is useful for "
-"informing customers of special stock numbers or preorders. (Ex.: \"Available "
-"in a month\")"
+"informing customers of special stock numbers or preorders. (Ex.: Available "
+"in a month)"
 msgstr ""
 
 msgid ""
@@ -1496,6 +1499,9 @@ msgstr ""
 msgid "This product is not visible."
 msgstr ""
 
+msgid "This product is not available."
+msgstr ""
+
 msgid "The Product is invisible to users not logged in."
 msgstr ""
 
@@ -1505,18 +1511,8 @@ msgstr ""
 msgid "The product is not purchasable"
 msgstr ""
 
-msgid "The product has no supplier."
-msgstr ""
-
 #, python-format
 msgid "The purchase quantity needs to be at least %d for this product."
-msgstr ""
-
-#, python-format
-msgid "The product is not supplied by %s."
-msgstr ""
-
-msgid "Product has no sellable children"
 msgstr ""
 
 #, python-brace-format
@@ -1529,6 +1525,16 @@ msgstr ""
 msgid ""
 "The product can only be ordered in multiples of {package_size}, for example "
 "{smaller_amount} or {larger_amount}"
+msgstr ""
+
+msgid "The product has no supplier."
+msgstr ""
+
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr ""
+
+msgid "Product has no sellable children"
 msgstr ""
 
 msgid "variation variable"
@@ -2173,6 +2179,9 @@ msgstr ""
 msgid "staff members"
 msgstr ""
 
+msgid "The shop name. This name is displayed throughout admin."
+msgstr ""
+
 msgid ""
 "The public shop name. This name is displayed in the store front and in any "
 "customer email correspondence."
@@ -2245,6 +2254,12 @@ msgid "You can select which shops the supplier is available to."
 msgstr ""
 
 msgid "Indicates whether this supplier is currently enabled."
+msgstr ""
+
+msgid "approved"
+msgstr ""
+
+msgid "Indicates whether this supplier is currently approved."
 msgstr ""
 
 msgid "Cannot change business critical fields of Tax that is in use"

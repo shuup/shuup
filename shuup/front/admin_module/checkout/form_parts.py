@@ -45,7 +45,7 @@ class CheckoutShopFormPart(FormPart):
             name=self.name,
             form_class=self.form,
             template_name="shuup/front/admin/checkout.jinja",
-            required=False,
+            required=True,
             kwargs={"initial": initial}
         )
 

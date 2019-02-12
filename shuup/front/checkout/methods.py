@@ -97,7 +97,6 @@ class MethodsForm(forms.Form):
             field.widget.request = self.request
             if field.choices:
                 field.initial = field.choices[0]
-                field.required = True
 
 
 class MethodsPhase(CheckoutPhaseViewMixin, FormView):
@@ -112,10 +111,10 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
 
         if shipping_required and not self.storage.get("shipping_method_id"):
             return False
-        elif payment_required and not self.storage.get("payment_method_id"):
+        if payment_required and not self.storage.get("payment_method_id"):
             return False
 
-        return self.storage.has_any(["shipping_method_id", "payment_method_id"])
+        return True
 
     def process(self):
         shipping_method = ShippingMethod.objects.filter(pk=self.storage["shipping_method_id"]).first()
@@ -134,11 +133,11 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
     def form_valid(self, form):
         for field_name in ["shipping_method", "payment_method"]:
             storage_key = "%s_id" % field_name
+            value = None
 
-            if form.fields[field_name].required:
+            if form.cleaned_data.get(field_name):
                 value = form.cleaned_data[field_name].id
-            else:
-                value = None
+
             self.storage[storage_key] = value
 
         return super(MethodsPhase, self).form_valid(form)

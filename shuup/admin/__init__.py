@@ -72,6 +72,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.services.weight_based_pricing.WeightBasedPricingFormPart"
         ],
         "admin_order_section": [
+            "shuup.admin.modules.orders.sections:BasicDetailsOrderSection",
             "shuup.admin.modules.orders.sections:PaymentOrderSection",
             "shuup.admin.modules.orders.sections:LogEntriesOrderSection",
             "shuup.admin.modules.orders.sections:ShipmentSection",
