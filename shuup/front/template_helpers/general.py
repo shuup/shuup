@@ -197,16 +197,19 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request)
             break
 
     if orderable_only:
+        valid_products = []
         suppliers = Supplier.objects.enabled().filter(shops=request.shop)
-        for product in products:
-            for supplier in suppliers:
-                try:
-                    shop_product = product.get_shop_instance(request.shop, allow_cache=True)
-                except ShopProduct.DoesNotExist:
-                    continue
 
-                if not shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
-                    products.remove(product)
+        for product in products:
+            # this instance should always exist as the listed() queryset uses the current shop as a filter
+            shop_product = product.get_shop_instance(request.shop, allow_cache=True)
+
+            for supplier in suppliers:
+                if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
+                    valid_products.append(product)
+                    break
+
+        products = valid_products
 
     products = cache_product_things(request, products)
     products = sorted(products, key=lambda p: product_ids.index(p.id))  # pragma: no branch
