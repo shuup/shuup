@@ -11,7 +11,7 @@ import pytest
 from shuup.core import cache
 from shuup.core.models import (
     AnonymousContact, Manufacturer, Product, ShopProduct,
-    ShopProductVisibility, StockBehavior
+    ShopProductVisibility, StockBehavior, Supplier
 )
 from shuup.core.utils import context_cache
 from shuup.front.apps.auth.forms import EmailAuthenticationForm
@@ -162,9 +162,14 @@ def test_get_best_selling_products():
 
     # No products sold
     assert len(list(general.get_best_selling_products(context, n_products=3))) == 0
+    shop = get_default_shop()
 
     supplier = get_default_supplier()
-    shop = get_default_shop()
+    supplier2 = Supplier.objects.create(name="supplier2", enabled=True, is_approved=True)
+    supplier3 = Supplier.objects.create(name="supplier3", enabled=True, is_approved=True)
+    supplier2.shops.add(shop)
+    supplier3.shops.add(shop)
+
     product1 = create_product("product1", shop, supplier, 10)
     product2 = create_product("product2", shop, supplier, 20)
     create_order_with_product(product1, supplier, quantity=1, taxless_base_unit_price=10, shop=shop)
