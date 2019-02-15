@@ -13,7 +13,14 @@ window.refreshFilters = function refreshFilters(pageNumber) {
         var filterObj = $("#id_" + key);
         if (filterObj.is("select")) {  // Basic select, checkbox etc...
             state[key] = filterObj.val();
-        } else if (filterObj.is("div")) {  // Should be filter widget
+        } else if (filterObj.is("input[type='text']")) {
+            state[key] = filterObj.val();
+        } else if (filterObj.is("input[type='number']")) {
+            state[key] = filterObj.val();
+        } else if (filterObj.is("input[type='checkbox']")) {
+            state[key] = filterObj.prop("checked") ? 1 : 0;
+        }
+         else if (filterObj.is("div")) {  // Should be filter widget
             var values = [];
             filterObj.find("input:checked").each(function() {
                 values.push($(this).val());
@@ -54,12 +61,14 @@ function getFilterString(state) {
     if(state !== null) {
         filterString = "?";
         $.each(state, function(key, value) {
-            var shouldAppendAmpersand = ("&?".indexOf(filterString[filterString.length-1]) > 0);
-            filterString += (shouldAppendAmpersand ? "" : "&");
-            if (value.constructor === Array) {
-                filterString += (value.length > 0 ? (key + "=" + value.join("&" + key + "=")) : "");
-            } else {
-                filterString += (value ? key + "=" + value: "");
+            if (value) {
+                var shouldAppendAmpersand = ("&?".indexOf(filterString[filterString.length-1]) > 0);
+                filterString += (shouldAppendAmpersand ? "" : "&");
+                if (value.constructor === Array) {
+                    filterString += (value.length > 0 ? (key + "=" + value.join("&" + key + "=")) : "");
+                } else {
+                    filterString += (value ? key + "=" + value: "");
+                }
             }
         });
     }
