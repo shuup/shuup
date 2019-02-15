@@ -261,7 +261,7 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
     ordering_label = _("Ordering for filter by manufacturer")
 
     def get_fields(self, request, category=None):
-        if not Manufacturer.objects.exists():
+        if not Manufacturer.objects.filter(Q(shops__isnull=True) | Q(shops=request.shop)).exists():
             return
 
         shop_products_qs = ShopProduct.objects.filter(
@@ -315,7 +315,7 @@ class CategoryProductListFilter(SimpleProductListModifier):
     ordering_label = _("Ordering for filter by category")
 
     def get_fields(self, request, category=None):
-        if not Category.objects.exists():
+        if not Category.objects.filter(shops=request.shop).exists():
             return
 
         key, val = context_cache.get_cached_value(
