@@ -261,7 +261,7 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
     ordering_label = _("Ordering for filter by manufacturer")
 
     def get_fields(self, request, category=None):
-        if not Manufacturer.objects.exists():
+        if not Manufacturer.objects.filter(Q(shops__isnull=True) | Q(shops=request.shop)).exists():
             return
 
         shop_products_qs = ShopProduct.objects.filter(
@@ -315,7 +315,7 @@ class CategoryProductListFilter(SimpleProductListModifier):
     ordering_label = _("Ordering for filter by category")
 
     def get_fields(self, request, category=None):
-        if not Category.objects.exists():
+        if not Category.objects.filter(shops=request.shop).exists():
             return
 
         key, val = context_cache.get_cached_value(
@@ -550,7 +550,11 @@ def get_price_ranges(shop, min_price, max_price, range_step):
         if range_max < max_price:
             range_max_price = format_money(shop.create_price(range_max))
             ranges.append(
-                ("%s-%s" % (range_min, range_max), "%s to %s" % (range_min_price, range_max_price)))
+                (
+                    "%s-%s" % (range_min, range_max),
+                    _("%(min)s to %(max)s") % dict(min=range_min_price, max=range_max_price)
+                )
+            )
 
     max_price_value = format_money(shop.create_price(max_price))
     ranges.append(("%s-" % max_price, _("%(max_limit)s & Above") % {"max_limit": max_price_value}))

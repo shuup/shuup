@@ -56,7 +56,8 @@ class StockAdjustment(models.Model):
 class StockCount(models.Model):
     alert_limit = QuantityField(default=0, editable=False, verbose_name=_("alert limit"))
     product = models.ForeignKey(
-        "shuup.Product", related_name="+", editable=False, on_delete=models.CASCADE, verbose_name=_("product"))
+        "shuup.Product", related_name="simple_supplier_stock_count",
+        editable=False, on_delete=models.CASCADE, verbose_name=_("product"))
     supplier = models.ForeignKey(
         "shuup.Supplier", editable=False, on_delete=models.CASCADE, verbose_name=_("supplier"))
     logical_count = QuantityField(default=0, editable=False, verbose_name=_("logical count"))

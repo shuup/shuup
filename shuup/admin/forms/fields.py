@@ -69,7 +69,15 @@ class Select2MultipleField(Field):
         super(Select2MultipleField, self).__init__(*args, **kwargs)
 
     def prepare_value(self, value):
-        return [getattr(v, "pk", v) for v in value or []]
+        values = [getattr(v, "pk", v) for v in value or []]
+        # make sure to add the initial values as choices to the field
+        if values and not self.widget.choices:
+            from django.utils.encoding import force_text
+            self.widget.choices = [
+                (instance.pk, force_text(instance))
+                for instance in self.model.objects.filter(pk__in=values)
+            ]
+        return values
 
     def to_python(self, value):
         value = super(Select2MultipleField, self).to_python(value)

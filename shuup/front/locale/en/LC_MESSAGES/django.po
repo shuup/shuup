@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-15 20:22+0000\n"
+"POT-Creation-Date: 2019-02-15 15:08+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -366,6 +366,10 @@ msgstr ""
 
 #, python-format
 msgid "Under %(min_limit)s"
+msgstr ""
+
+#, python-format
+msgid "%(min)s to %(max)s"
 msgstr ""
 
 #, python-format
