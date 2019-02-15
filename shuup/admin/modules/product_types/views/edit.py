@@ -29,7 +29,6 @@ class ProductTypeForm(MultiLanguageModelForm):
         super(ProductTypeForm, self).__init__(**kwargs)
         if self.instance.pk:
             choices = [(a.pk, a.name) for a in self.instance.attributes.all()]
-            self.fields["attributes"].widget.choices = choices
             self.fields["attributes"].initial = [pk for pk, name in choices]
 
     def clean_attributes(self):
