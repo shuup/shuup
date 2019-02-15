@@ -18,9 +18,11 @@ from shuup.front.utils.sorts_and_filters import (
 class ConfigurationForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ConfigurationForm, self).__init__(*args, **kwargs)
+        self.form_module_map = dict()
         for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY) or []:
             for field_key, field in extend_class().get_admin_fields() or []:
                 self.fields[field_key] = field
+                self.form_module_map[field_key] = extend_class
 
 
 class ConfigurationShopFormPart(FormPart):
