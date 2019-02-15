@@ -550,7 +550,11 @@ def get_price_ranges(shop, min_price, max_price, range_step):
         if range_max < max_price:
             range_max_price = format_money(shop.create_price(range_max))
             ranges.append(
-                ("%s-%s" % (range_min, range_max), "%s to %s" % (range_min_price, range_max_price)))
+                (
+                    "%s-%s" % (range_min, range_max),
+                    _("%(min)s to %(max)s") % dict(min=range_min_price, max=range_max_price)
+                )
+            )
 
     max_price_value = format_money(shop.create_price(max_price))
     ranges.append(("%s-" % max_price, _("%(max_limit)s & Above") % {"max_limit": max_price_value}))
