@@ -13,6 +13,9 @@
     .table th,
     .table td {
         padding: 0.65rem 1rem;
+        max-width: 500px;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
     }
 
     .table th.hidden-cell {
