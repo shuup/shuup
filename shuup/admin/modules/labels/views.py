@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
@@ -57,6 +58,7 @@ class LabelDeleteView(DetailView):
 
     def post(self, request, *args, **kwargs):
         label = self.get_object()
+        label_name = force_text(label)
         label.delete()
-        messages.success(request, _("%s has been deleted.") % label)
+        messages.success(request, _("%s has been deleted.") % label_name)
         return HttpResponseRedirect(reverse_lazy("shuup_admin:label.list"))
