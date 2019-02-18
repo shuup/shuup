@@ -8,11 +8,13 @@
 from __future__ import unicode_literals
 
 from collections import OrderedDict
+from datetime import datetime
 from decimal import Decimal
 
 import six
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
+from django.utils.timezone import make_aware
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
@@ -44,6 +46,12 @@ class ShuupReportBase(object):
             self.shop = Shop.objects.get(pk=self.options["shop"])
         else:
             self.shop = None
+
+        if self.start_date is None:
+            self.start_date = make_aware(datetime.min)
+        if self.end_date is None:
+            self.end_date = make_aware(datetime.max)
+
         self.rendered = False
 
     def __unicode__(self):
