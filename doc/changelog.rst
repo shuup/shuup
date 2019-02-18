@@ -1,13 +1,54 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.0
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-02-19 12:00pm -0800.
+
+Admin
+~~~~~
+
+- Add documentation for admin modules
+- Improve admin module permissions
+- Make mass actions extendable
+- Enable HTML content in help blocks
+- Fix picotable checkboxes breaking the layout
+- Add select2 widgets to fetch models async
+- Fix Product deletion returning 404
+
+Core
+~~~~
+
+- Add labels to order lines
+- Add product available until field
+- Add extra supplier fields
+
+Discounts
+~~~~~~~~~
+
+- Add xtheme plugin to render only products which have discount
+- Prevent doing unnecessary joins when fetching discounts
+
+Front
+~~~~~
+
+- Multiple bug fixes around sorts and filters
+- Improve company registration logic
+- Fix issue with image thumbnails
+- Improve the way orderability is handled in template tags
+- Remove deals only filter from plugins
+
+Reports
+~~~~~~~
+
+- Fix excel report writer by forcing strings when writing
+
+Xtheme
+~~~~~~
+
+- Change plugins template to render only when products are available
+- Create plugin to render a selection of products
 
 
 Shuup 1.8.2
