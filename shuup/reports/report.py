@@ -8,13 +8,13 @@
 from __future__ import unicode_literals
 
 from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
 
 import six
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
-from django.utils.timezone import make_aware
+from django.utils.timezone import get_current_timezone, make_aware
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
@@ -48,9 +48,9 @@ class ShuupReportBase(object):
             self.shop = None
 
         if self.start_date is None:
-            self.start_date = make_aware(datetime.min)
+            self.start_date = make_aware(datetime.min + timedelta(days=1), get_current_timezone())
         if self.end_date is None:
-            self.end_date = make_aware(datetime.max)
+            self.end_date = make_aware(datetime.max - timedelta(days=1), get_current_timezone())
 
         self.rendered = False
 
