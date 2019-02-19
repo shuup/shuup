@@ -291,3 +291,24 @@ def test_get_totals_return_correct_totals():
         "taxful_total": TaxfulPrice("5", "EUR")
     }
     assert totals == expected
+
+
+@pytest.mark.parametrize("start_date,end_date", [
+    (None, None),
+    ("1990-01-01", None),
+    (None, "2100-01-01")
+])
+@pytest.mark.django_db
+def test_none_dates(start_date, end_date):
+    _, _, shop, order = initialize_report_test(10, 2, 0, 1)
+    data = {
+        "report": SalesTestReport.get_name(),
+        "shop": shop.pk,
+        "start_date": start_date,
+        "end_date": end_date,
+        "writer": "json",
+        "force_download": 1
+    }
+    report = SalesTestReport(**data)
+    data = report.get_data()
+    assert data["data"]
