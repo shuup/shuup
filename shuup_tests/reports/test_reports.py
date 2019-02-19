@@ -14,6 +14,7 @@ import pytest
 import six
 from babel.dates import format_date
 from bs4 import BeautifulSoup
+from django.test.utils import override_settings
 from django.utils.encoding import force_text
 from django.utils.functional import lazy
 from django.utils.safestring import SafeText
@@ -301,14 +302,17 @@ def test_get_totals_return_correct_totals():
 @pytest.mark.django_db
 def test_none_dates(start_date, end_date):
     _, _, shop, order = initialize_report_test(10, 2, 0, 1)
-    data = {
-        "report": SalesTestReport.get_name(),
-        "shop": shop.pk,
-        "start_date": start_date,
-        "end_date": end_date,
-        "writer": "json",
-        "force_download": 1
-    }
-    report = SalesTestReport(**data)
-    data = report.get_data()
-    assert data["data"]
+
+    for timezone in ["UTC", "America/Sao_Paulo", "Etc/GMT+12", "Pacific/Kiritimati"]:
+        with override_settings(TIME_ZONE=timezone):
+            data = {
+                "report": SalesTestReport.get_name(),
+                "shop": shop.pk,
+                "start_date": start_date,
+                "end_date": end_date,
+                "writer": "json",
+                "force_download": 1
+            }
+            report = SalesTestReport(**data)
+            data = report.get_data()
+            assert data["data"]
