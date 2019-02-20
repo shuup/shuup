@@ -148,7 +148,7 @@ class ViewSettings(object):
         for field in model._parler_meta.root_model._meta.get_fields():
             if field.name in defaults:
                 continue
-            if field.name in ["id", "master"]:  # we don't want duplicate id's
+            if field.name in ["id", "master", "language_code"]:  # exclude these fields
                 continue
             column = self._get_translated_column(model, field, known_names, identifier)
             columns.append(column)
