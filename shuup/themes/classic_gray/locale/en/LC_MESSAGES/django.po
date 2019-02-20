@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-13 17:48+0000\n"
+"POT-Creation-Date: 2019-02-21 23:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,9 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-msgid "Classic Gray"
-msgstr ""
 
 msgid "This theme has no special settings to configure."
 msgstr ""
@@ -36,15 +33,6 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-msgid "Show Frontpage Welcome Text"
-msgstr ""
-
-msgid "Hide prices"
-msgstr ""
-
-msgid "Set shop in catalog mode"
-msgstr ""
-
 msgid "Default"
 msgstr ""
 
@@ -52,4 +40,7 @@ msgid "Midnight Blue"
 msgstr ""
 
 msgid "Candy Pink"
+msgstr ""
+
+msgid "Show Frontpage Welcome Text"
 msgstr ""

@@ -100,6 +100,10 @@ Inheritance order for product macors:
     {% endif %}
 {% endmacro %}
 
+{% macro render_product_detail_top_placeholder() %}
+    {% placeholder "detail_top_placeholder" %}{% endplaceholder %}
+{% endmacro %}
+
 {% macro render_product_placeholder_section() %}
     {% placeholder "product_bottom" %}
         {% row %}
