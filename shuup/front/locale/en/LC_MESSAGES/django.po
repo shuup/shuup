@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-15 15:08+0000\n"
+"POT-Creation-Date: 2019-02-21 23:08+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -889,6 +889,11 @@ msgstr ""
 msgid "By %(supplier_name)s"
 msgstr ""
 
+#, python-brace-format
+msgid ""
+"Available until: <span class=\"availability-date\">{date}</span></small>"
+msgstr ""
+
 msgid "Edit account details"
 msgstr ""
 
@@ -986,15 +991,6 @@ msgstr ""
 msgid "Product Information"
 msgstr ""
 
-msgid "Description"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
-msgid "Attributes"
-msgstr ""
-
 msgid "Includes these products"
 msgstr ""
 
@@ -1011,6 +1007,9 @@ msgid "Manufacturer"
 msgstr ""
 
 msgid "Package Size"
+msgstr ""
+
+msgid "Available Until"
 msgstr ""
 
 msgid "Width"
@@ -1038,6 +1037,10 @@ msgid "Select product"
 msgstr ""
 
 msgid "Add to cart"
+msgstr ""
+
+#, python-brace-format
+msgid "Available until: {date}"
 msgstr ""
 
 msgid "Maintenance mode"
@@ -1083,6 +1086,57 @@ msgid "Open product page"
 msgstr ""
 
 msgid "Newest products"
+msgstr ""
+
+msgid "Hide prices"
+msgstr ""
+
+msgid "Set shop in catalog mode"
+msgstr ""
+
+msgid "Show supplier info"
+msgstr ""
+
+msgid ""
+"Show supplier name in product-box, product-detail, basket- and order-lines"
+msgstr ""
+
+msgid "Show Product Details"
+msgstr ""
+
+msgid ""
+"If you check this, extra information will be shown on product page in "
+"frontend."
+msgstr ""
+
+msgid "Product detail extra tab title"
+msgstr ""
+
+msgid "Enter the title for the product detail extra tab."
+msgstr ""
+
+msgid "Product detail extra tab content"
+msgstr ""
+
+msgid "Enter the content for the product detail extra tab."
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Product reviews"
+msgstr ""
+
+msgid "Product detail tabs"
+msgstr ""
+
+msgid "Select all tabs that should be renderd in product details."
 msgstr ""
 
 msgid "Tax number is not valid."

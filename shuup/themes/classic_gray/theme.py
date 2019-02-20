@@ -11,29 +11,16 @@ from django import forms
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.front.themes import BaseThemeFieldsMixin
 from shuup.xtheme import Theme
 
 
-class ClassicGrayTheme(Theme):
+class ClassicGrayTheme(BaseThemeFieldsMixin, Theme):
     identifier = "shuup.themes.classic_gray"
     name = "Shuup Classic Gray Theme"
     author = "Shuup Team"
     template_dir = "classic_gray"
-
-    fields = [
-        ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
-        ("hide_prices", forms.BooleanField(required=False, initial=False, label=_("Hide prices"))),
-        ("catalog_mode", forms.BooleanField(required=False, initial=False, label=_("Set shop in catalog mode"))),
-        (
-            "show_supplier_info",
-            forms.BooleanField(
-                required=False, initial=False, label=_("Show supplier info"),
-                help_text=_("Show supplier name in product-box, product-detail, basket- and order-lines"))
-        )
-    ]
-
     guide_template = "classic_gray/admin/guide.jinja"
-
     stylesheets = [
         {
             "identifier": "default",
@@ -54,6 +41,14 @@ class ClassicGrayTheme(Theme):
             "images": ["shuup/front/img/no_image.png"]
         },
     ]
+
+    _theme_fields = [
+        ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text")))
+    ]
+
+    @property
+    def fields(self):
+        return self._theme_fields + super(ClassicGrayTheme, self).get_base_fields()
 
     def get_view(self, view_name):
         import shuup.front.themes.views as views
