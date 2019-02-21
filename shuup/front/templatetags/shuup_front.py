@@ -51,3 +51,10 @@ def _cached_markdown(str_value):
 @library.filter(name="markdown")
 def markdown(value):
     return mark_safe(_cached_markdown(force_text(value)))
+
+
+@library.filter(name="replace_field_attrs")
+def replace_field_attrs(field, **attrs):
+    for attr, value in attrs.items():
+        setattr(field.field, attr, value)
+    return field

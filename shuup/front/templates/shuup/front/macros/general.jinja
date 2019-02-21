@@ -32,7 +32,7 @@
         {% set widget_name = field.field.widget.__class__.__name__|lower %}
         {% if widget_name == "checkboxinput" %}
             <div class="custom-checkbox {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
-                {{ field.as_widget()|safe }}
+                {{ (field|replace_field_attrs(required=false)).as_widget()|safe }}
                 {% if render_label %}
                 <label for="{{ field.auto_id }}">
                     {{ field.label }}
