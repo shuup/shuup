@@ -109,6 +109,10 @@
                             <dt>{% trans %}Package Size{% endtrans %}</dt>
                             <dd>{{ shop_product.purchase_multiple }}</dd>
                         {% endif %}
+                        {% if shop_product.available_until %}
+                            <dt>{% trans %}Available Until{% endtrans %}</dt>
+                            <dd>{{ shop_product.available_until|date }}</dd>
+                        {% endif %}
                         {% if product.width or product.height or product.depth %}
                             <dt>{% trans %}Width{% endtrans %}</dt>
                             <dd>{{ product.width|floatformat(2) }} mm</dd>
