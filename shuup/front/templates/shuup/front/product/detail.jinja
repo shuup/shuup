@@ -44,8 +44,10 @@
             {% placeholder "product_extra_2" %}{% endplaceholder %}
         </div>
     </div>
-
-    {{ product_macros.render_product_information(product) }}
+    {{ product_macros.render_product_detail_top_placeholder() }}
+    {% if xtheme.get("show_product_detail_section", True) %}
+        {{ product_macros.render_product_information(product) }}
+    {% endif %}
     {# By default this extra section contains placeholders for cross sells #}
     {{ product_macros.render_product_placeholder_section() }}
     {# By default this lists all children for package parent #}

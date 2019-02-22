@@ -17,110 +17,155 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_product_information(product) %}
-    <hr>
-    <h3>{% trans %}Product Information{% endtrans %}</h3>
+
+{% macro render_product_title_tab(tab_id, icon=None) %}
+    {% set tabs = xtheme.get_product_details_tabs() %}
+    {% if tabs and tabs[0][0] == tab_id %}
+        {% set active = True %}
+    {% endif %}
+    {% for tab, label in xtheme.get_product_details_tabs() %}
+        {% if tab == tab_id %}
+            <li role="presentation"{% if active %} class="active"{% endif %}>
+                <a href="#{{ tab_id }}" aria-controls="{{ tab_id }}" role="tab" data-toggle="tab">
+                    {% if icon %}<i class="{{ icon }}"></i>{% endif %}
+                    {{ label }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_product_information(product, render_title=True) %}
+    {% if render_title %}
+        <hr>
+        <h3>{% trans %}Product Information{% endtrans %}</h3>
+    {% endif %}
     {% set media_files = product.get_public_media() %}
+    {% set tabs = xtheme.get_product_details_tabs() %}
+    {% if tabs %}
+        {% set active_tab = tabs[0][0] %}
+    {% endif %}
+
     <div class="product-tabs" role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">{% trans %}Description{% endtrans %}</a></li>
-            <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">{% trans %}Details{% endtrans %}</a></li>
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+            {{ render_product_title_tab("description", "fa fa-file-text-o") }}
+            {{ render_product_title_tab("details", "fa fa-info-circle") }}
             {% if attributes %}
-                <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">{% trans %}Attributes{% endtrans %}</a></li>
+                {{ render_product_title_tab("attributes", "fa fa-tags") }}
             {% endif %}
             {% if media_files %}
-                <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">{% trans %}Files{% endtrans %}</a></li>
+                {{ render_product_title_tab("files", "fa fa-file-archive-o") }}
+            {% endif %}
+            {{ render_product_title_tab("product_reviews", "fa fa-star") }}
+            {% if xtheme.get("product_detail_extra_tab_title") %}
+                <li role="presentation">
+                    <a href="#extra" aria-controls="extra" role="tab" data-toggle="tab">
+                        {{ xtheme.get("product_detail_extra_tab_title")|safe }}
+                    </a>
+                </li>
             {% endif %}
         </ul>
         <div class="tab-content">
-            <div role="tabpanel" class="product-description tab-pane fade in active" id="tab1">
-                {% if product.description or package_children %}
-                    {{ product.description|safe }}
-                    {% if package_children %}
-                        {% set quantity_map = product.get_package_child_to_quantity_map() %}
-                        <p><strong>{% trans %}Includes these products{% endtrans %}</strong></p>
-                        <ul>
-                            {% for child in package_children %}
-                                <li>
-                                    {{ product_line(child, quantity_map[child]) }}
-                                </li>
-                            {% endfor %}
-                        </ul>
+            {% if xtheme.should_render_product_detail_tab("description") %}
+                <div role="tabpanel" class="product-description tab-pane fade in {% if active_tab == 'description' %}in active{% endif %}" id="description">
+                    {% if product.description or package_children %}
+                        {{ product.description|safe }}
+                        {% if package_children %}
+                            {% set quantity_map = product.get_package_child_to_quantity_map() %}
+                            <p><strong>{% trans %}Includes these products{% endtrans %}</strong></p>
+                            <ul>
+                                {% for child in package_children %}
+                                    <li>
+                                        {{ product_line(child, quantity_map[child]) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% else %}
+                        {% trans %}No product description available{% endtrans %}
                     {% endif %}
-                {% else %}
-                    {% trans %}No product description available{% endtrans %}
-                {% endif %}
-            </div>
-            <div role="tabpanel" class="product-attributes tab-pane fade" id="tab2">
-                <dl class="dl-horizontal">
-                    <dt>{% trans %}SKU{% endtrans %}</dt>
-                    <dd>{{ product.sku }}</dd>
-                    {% if product.barcode %}
-                        <dt>{% trans %}Barcode{% endtrans %}</dt>
-                        <dd>{{ product.barcode }}</dd>
-                    {% endif %}
-                    {% if product.manufacturer %}
-                        <dt>{% trans %}Manufacturer{% endtrans %}</dt>
-                        <dd>
-                            {% if product.manufacturer.url %}
-                                <a href="{{ product.manufacturer.url }}" target="_blank">{{ product.manufacturer.name }}</a>
-                            {% else %}
-                                {{ product.manufacturer.name }}
-                            {% endif %}
-                        </dd>
-                    {% endif %}
-                    {% if shop_product.purchase_multiple and shop_product.purchase_multiple > 1 %}
-                        <dt>{% trans %}Package Size{% endtrans %}</dt>
-                        <dd>{{ shop_product.purchase_multiple }}</dd>
-                    {% endif %}
-                    {% if product.width or product.height or product.depth %}
-                        <dt>{% trans %}Width{% endtrans %}</dt>
-                        <dd>{{ product.width|floatformat(2) }} mm</dd>
-                        <dt>{% trans %}Height{% endtrans %}</dt>
-                        <dd>{{ product.height|floatformat(2) }} mm</dd>
-                        <dt>{% trans %}Depth{% endtrans %}</dt>
-                        <dd>{{ product.depth|floatformat(2) }} mm</dd>
-                    {% endif %}
-                    {% if product.net_weight %}
-                        <dt>{% trans %}Net Weight{% endtrans %}</dt>
-                        <dd>
-                            {% if product.net_weight < 1000 %}
-                                {{ product.net_weight|floatformat(2) }} g
-                            {% else %}
-                                {{ (product.net_weight / 1000)|floatformat(2) }} kg
-                            {% endif %}
-                        </dd>
-                    {% endif %}
-                    {% if product.gross_weight %}
-                        <dt>{% trans %}Gross Weight{% endtrans %}</dt>
-                        <dd>
-                            {% if product.gross_weight < 1000 %}
-                                {{ product.gross_weight|floatformat(2) }} g
-                            {% else %}
-                                {{ (product.gross_weight / 1000)|floatformat(2) }} kg
-                            {% endif %}
-                        </dd>
-                    {% endif %}
-                    {% if product.external_link %}
-                        <dt>{% trans %}External link{% endtrans %}</dt>
-                        <dd><a href="{{ product.external_link }}" target="_blank">{{ product.external_link }}</a></dd>
-                    {% endif %}
-                </dl>
-            </div>
-            {% if attributes %}
-                <div role="tabpanel" class="product-attributes tab-pane fade" id="tab3">
+                </div>
+            {% endif %}
+            {% if xtheme.should_render_product_detail_tab("details") %}
+                <div role="tabpanel" class="product-attributes tab-pane fade {% if active_tab == 'details' %}in active{% endif %}" id="details">
                     <dl class="dl-horizontal">
-                        {% for attribute in attributes %}
-                            {% if attribute.value is not none %}
-                                <dt>{{ attribute.name }}</dt>
-                                <dd>{{ attribute.formatted_value }}</dd>
-                            {% endif %}
-                        {% endfor %}
+                        <dt>{% trans %}SKU{% endtrans %}</dt>
+                        <dd>{{ product.sku }}</dd>
+                        {% if product.barcode %}
+                            <dt>{% trans %}Barcode{% endtrans %}</dt>
+                            <dd>{{ product.barcode }}</dd>
+                        {% endif %}
+                        {% if product.manufacturer %}
+                            <dt>{% trans %}Manufacturer{% endtrans %}</dt>
+                            <dd>
+                                {% if product.manufacturer.url %}
+                                    <a href="{{ product.manufacturer.url }}" target="_blank">{{ product.manufacturer.name }}</a>
+                                {% else %}
+                                    {{ product.manufacturer.name }}
+                                {% endif %}
+                            </dd>
+                        {% endif %}
+                        {% if shop_product.purchase_multiple and shop_product.purchase_multiple > 1 %}
+                            <dt>{% trans %}Package Size{% endtrans %}</dt>
+                            <dd>{{ shop_product.purchase_multiple }}</dd>
+                        {% endif %}
+                        {% if shop_product.available_until %}
+                            <dt>{% trans %}Available Until{% endtrans %}</dt>
+                            <dd>{{ shop_product.available_until|date }}</dd>
+                        {% endif %}
+                        {% if product.width or product.height or product.depth %}
+                            <dt>{% trans %}Width{% endtrans %}</dt>
+                            <dd>{{ product.width|floatformat(2) }} mm</dd>
+                            <dt>{% trans %}Height{% endtrans %}</dt>
+                            <dd>{{ product.height|floatformat(2) }} mm</dd>
+                            <dt>{% trans %}Depth{% endtrans %}</dt>
+                            <dd>{{ product.depth|floatformat(2) }} mm</dd>
+                        {% endif %}
+                        {% if product.net_weight %}
+                            <dt>{% trans %}Net Weight{% endtrans %}</dt>
+                            <dd>
+                                {% if product.net_weight < 1000 %}
+                                    {{ product.net_weight|floatformat(2) }} g
+                                {% else %}
+                                    {{ (product.net_weight / 1000)|floatformat(2) }} kg
+                                {% endif %}
+                            </dd>
+                        {% endif %}
+                        {% if product.gross_weight %}
+                            <dt>{% trans %}Gross Weight{% endtrans %}</dt>
+                            <dd>
+                                {% if product.gross_weight < 1000 %}
+                                    {{ product.gross_weight|floatformat(2) }} g
+                                {% else %}
+                                    {{ (product.gross_weight / 1000)|floatformat(2) }} kg
+                                {% endif %}
+                            </dd>
+                        {% endif %}
+                        {% if product.external_link %}
+                            <dt>{% trans %}External link{% endtrans %}</dt>
+                            <dd><a href="{{ product.external_link }}" target="_blank">{{ product.external_link }}</a></dd>
+                        {% endif %}
                     </dl>
                 </div>
             {% endif %}
-            {% if media_files %}
-                <div role="tabpanel" class="product-files tab-pane fade" id="tab4">
+            {% if attributes and xtheme.should_render_product_detail_tab("attributes") %}
+                <div role="tabpanel" class="product-attributes tab-pane fade {% if active_tab == 'attributes' %}in active{% endif %}" id="attributes">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-condensed">
+                            {% for attribute in shuup.product.get_visible_attributes(product) %}
+                                <tr>
+                                {% if attribute.value is not none %}
+                                    <td>{{ attribute.name }}</td>
+                                    <td>{{ attribute.formatted_value }}</td>
+                                {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+            {% if media_files and xtheme.should_render_product_detail_tab("files") %}
+                <div role="tabpanel" class="product-files tab-pane fade {% if active_tab == 'files' %}in active{% endif %}" id="files">
                     <table class="table">
                         {% for file in media_files %}
                             <tr>
@@ -133,6 +178,18 @@
                             </tr>
                         {% endfor %}
                     </table>
+                </div>
+            {% endif %}
+            {% if xtheme.should_render_product_detail_tab("product_reviews") %}
+                <div role="tabpanel" class="product-reviews tab-pane fade {% if active_tab == 'product_reviews' %}in active{% endif %}" id="product_reviews">
+                    {% set review_product=shop_product.product %}
+                    {% set title=(reviews_tab_title or "") %}
+                    {% include "shuup_product_reviews/plugins/reviews_comments.jinja" with context %}
+                </div>
+            {% endif %}
+            {% if xtheme.get("product_detail_extra_tab_title") %}
+                <div role="tabpanel" class="product-extra-content tab-pane fade" id="extra">
+                    {{ xtheme.get("product_detail_extra_tab_content")|safe }}
                 </div>
             {% endif %}
         </div>

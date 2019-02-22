@@ -32,7 +32,7 @@
         {% set widget_name = field.field.widget.__class__.__name__|lower %}
         {% if widget_name == "checkboxinput" %}
             <div class="custom-checkbox {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
-                {{ field.as_widget()|safe }}
+                {{ (field|replace_field_attrs(required=false)).as_widget()|safe }}
                 {% if render_label %}
                 <label for="{{ field.auto_id }}">
                     {{ field.label }}
@@ -361,4 +361,10 @@
 
 {% macro render_supplier_info(supplier) %}
     <p class="supplier-info"><small>{{ _("By %(supplier_name)s", supplier_name=supplier.name) }}</small></p>
+{% endmacro %}
+
+{% macro render_availability_info(shop_product) %}
+    <div class="available-until">
+        <small>{{ _('Available until: <span class="availability-date">{date}</span></small>').format(date=shop_product.available_until|date) }}
+    </div>
 {% endmacro %}

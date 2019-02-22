@@ -8,17 +8,16 @@ Inheritance order for product macors:
     theme/product.jinja
 #}
 {% extends "shuup/front/macros/product_image.jinja" %}
-{% from "shuup/front/macros/general.jinja" import render_supplier_info %}
+{% from "shuup/front/macros/general.jinja" import render_supplier_info, render_availability_info %}
 
 {% macro product_box(
         product, show_image=True, show_description=True, class="product-box",
         thumbnail_size=(500,500), supplier=None) %}
-
+    {% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
     {% if supplier %}
         {% set u = url("shuup:supplier-product", supplier_pk=supplier.pk, pk=product.pk, slug=product.slug) %}
     {% else %}
         {% set u = url("shuup:product", pk=product.pk, slug=product.slug) %}
-        {% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
         {% set supplier = shop_product.get_supplier() %}
     {% endif %}
 
@@ -42,8 +41,9 @@ Inheritance order for product macors:
             <div class="detail-wrap">
                 <div class="name">
                     {{ product.name }}
-                    {% if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
                 </div>
+                {% if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
+                {% if shop_product and shop_product.available_until %}{{ render_availability_info(shop_product) }}{% endif %}
                 <div class="actions-wrap">
                     {% if show_prices() and not xtheme.get("hide_prices") %}
                     <div class="price">
@@ -98,6 +98,10 @@ Inheritance order for product macors:
             </span>
         </div>
     {% endif %}
+{% endmacro %}
+
+{% macro render_product_detail_top_placeholder() %}
+    {% placeholder "detail_top_placeholder" %}{% endplaceholder %}
 {% endmacro %}
 
 {% macro render_product_placeholder_section() %}

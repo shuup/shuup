@@ -200,5 +200,10 @@
             <i class="fa fa-info-circle text-info"></i> {{ shop_product.status_text }}
         </p>
         {% endif %}
+        {% if shop_product.available_until %}
+        <p class="text-right">
+            <i class="fa fa-calendar text-info"></i> {{ _("Available until: {date}").format(date=shop_product.available_until|date) }}
+        </p>
+        {% endif %}
     </div>
 {% endmacro %}
