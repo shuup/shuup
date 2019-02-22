@@ -41,7 +41,7 @@ class ConfigurationShopFormPart(FormPart):
             kwargs={"initial": get_configuration(shop=self.object)})
 
     def form_valid(self, form):
-        if self.name in form.forms:
+        if self.name in form.forms and form[self.name].has_changed():
             set_configuration(shop=self.object, data=form[self.name].cleaned_data)
 
 
@@ -61,5 +61,5 @@ class ConfigurationCategoryFormPart(FormPart):
             kwargs={"initial": get_configuration(category=self.object)})
 
     def form_valid(self, form):
-        if self.name in form.forms:
+        if self.name in form.forms and form[self.name].has_changed():
             set_configuration(category=self.object, data=form[self.name].cleaned_data)
