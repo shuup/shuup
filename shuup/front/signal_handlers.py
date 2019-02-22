@@ -11,11 +11,12 @@ from filer.models import Image
 
 from shuup.core import cache
 from shuup.core.models import (
-    Manufacturer, ProductCrossSell, ProductMedia, Shop, ShopProduct
+    Manufacturer, Product, ProductCrossSell, ProductMedia, Shop, ShopProduct
 )
 from shuup.core.signals import context_cache_item_bumped  # noqa
 from shuup.core.utils import context_cache
 from shuup.front.utils import cache as cache_utils
+from shuup.front.utils.sorts_and_filters import bump_product_queryset_cache
 
 
 @receiver(context_cache_item_bumped, dispatch_uid="context-cache-item-bumped")
@@ -31,6 +32,10 @@ def handle_context_cache_item_bumped(sender, item, **kwargs):
         context_cache.bump_cache_for_item(cache_utils.get_newest_products_cache_item(shop))
         context_cache.bump_cache_for_item(cache_utils.get_products_for_category_cache_item(shop))
         context_cache.bump_cache_for_item(cache_utils.get_random_products_cache_item(shop))
+        bump_product_queryset_cache()
+
+    elif isinstance(item, Product):
+        bump_product_queryset_cache()
 
 
 def handle_manufacturer_post_save(sender, instance, **kwargs):
