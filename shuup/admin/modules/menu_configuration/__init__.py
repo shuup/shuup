@@ -6,13 +6,13 @@ from shuup.admin.utils.urls import (
 
 class MenuConfigurationModule(AdminModule):
     name = _("Menu Configuration")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:menu_configuration")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:menu_configuration.form")
 
     def get_urls(self):
         return [
             admin_url(
                 "^menu-configuration/$",
                 "shuup.admin.modules.menu_configuration.views.MenuConfigurationFormView",
-                name="menu_configuration.list"
+                name="menu_configuration.form"
             ),
         ]
