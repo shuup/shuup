@@ -1,3 +1,3 @@
-from .list import MenuConfigurationListView
+from .form import MenuConfigurationFormView
 
-__all__ = ["MenuConfigurationListView"]
+__all__ = ["MenuConfigurationFormView"]

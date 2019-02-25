@@ -1,7 +1,6 @@
-from django.views.generic import View
+from django.views.generic import FormView
 from django.http import HttpResponse
 
-
-class MenuConfigurationListView(View):
+class MenuConfigurationFormView(FormView):
     def get(self, request):
         return HttpResponse('Menu Configuration')

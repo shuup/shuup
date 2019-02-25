@@ -12,7 +12,7 @@ class MenuConfigurationModule(AdminModule):
         return [
             admin_url(
                 "^menu-configuration/$",
-                "shuup.admin.modules.menu_configuration.views.MenuConfigurationListView",
+                "shuup.admin.modules.menu_configuration.views.MenuConfigurationFormView",
                 name="menu_configuration.list"
             ),
         ]
