@@ -1,0 +1,20 @@
+#menu-configuration {
+    .card-title {
+        display: inline-block;
+    }
+    .fa-reorder {
+        margin-right: 1em;
+    }
+    .category-icon {
+        background-color: rgba(7, 167, 242, .1);
+        color: #07b0f2;
+        width: 2.4em;
+        height: 2.4em;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        padding: .5em .7em;
+        margin: 0 .2em .7em 0;
+    }
+}

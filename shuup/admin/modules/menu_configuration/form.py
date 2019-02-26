@@ -12,6 +12,6 @@ class ConfigurationForm(forms.Form):
         modules = list(get_modules())
         super(ConfigurationForm, self).__init__(**kwargs)
         # for module in modules:
-        #     print(module.name)
+            # print(module.name)
         # for form_field, conf_key in six.iteritems(modules):
         #     self.initial[form_field] = configuration.get(self.shop, conf_key)

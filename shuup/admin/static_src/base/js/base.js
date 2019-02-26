@@ -30,3 +30,4 @@ import './tour.js';
 import './select.js';
 import './components.js';
 import './main-menu.js';
+import './menu-configuration.js';

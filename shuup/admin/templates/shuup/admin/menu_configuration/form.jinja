@@ -1,7 +1,7 @@
 {% extends "shuup/admin/base.jinja" %}
 
 {% block content %}
-    <div class="container-fluid">
+    <div class="container-fluid" id="menu-configuration">
         <div class="row">
             <div class="col-12">
                 <h1>{% trans %}Menu Configuration{% endtrans %}</h1>
@@ -9,28 +9,63 @@
             <div class="col-12">
                 <div class="content-block">
                     <div class="d-none d-md-block d-lg-block d-xl-block">
-                    
-                        <div class="card">
-                            <div class="card-body">
-                                <i class="fa fa-reorder"></i>
-                                <h5 class="card-title">Orders</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <i class="fa fa-reorder"></i>
-                                <h5 class="card-title">Products</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                            </div>
-                        </div>
 
+                        <div class="sortable">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="fa fa-reorder"></i>
+                                    <i class="fa fa-inbox category-icon"></i>
+                                    <h3 class="card-title">Orders</h3>
+                                    <h5 class="card-subtitle mb-2 text-muted">Orders Category</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    
+                                    <div class="sortable">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <i class="fa fa-reorder"></i>
+                                                <h5 class="card-title">Orders</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <i class="fa fa-reorder"></i>
+                                                <h5 class="card-title">Carts</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="fa fa-reorder"></i>
+                                    <i class="fa fa-cube category-icon"></i>
+                                    <h3 class="card-title">Products</h3>
+                                    <h5 class="card-subtitle mb-2 text-muted">Products Category</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                                    <div class="sortable">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <i class="fa fa-reorder"></i>
+                                                <h5 class="card-title">Products</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <i class="fa fa-reorder"></i>
+                                                <h5 class="card-title">Categories</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
