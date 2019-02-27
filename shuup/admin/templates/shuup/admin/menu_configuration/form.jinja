@@ -5,6 +5,11 @@
         <div class="row">
             <div class="col-12">
                 <h1>{% trans %}Menu Configuration{% endtrans %}</h1>
+                <div class="btn-toolbar">
+                    <a href="#" class="btn btn-default btn-success">
+                        <i class="fa fa-save"></i>&nbsp;Save
+                    </a>
+                </div>
             </div>
             <div class="col-12">
                 <div class="content-block">
@@ -13,24 +18,61 @@
                         <div class="sortable">
                             <div class="card">
                                 <div class="card-body">
-                                    <i class="fa fa-reorder"></i>
-                                    <i class="fa fa-inbox category-icon"></i>
-                                    <h3 class="card-title">Orders</h3>
+                                    <div class="header">
+                                        <div>
+                                            <i class="fa fa-reorder"></i>
+                                            <i class="fa fa-inbox category-icon"></i>
+                                            <h3 class="card-title">Orders</h3>
+                                        </div>
+                                        <div class="actions">
+                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#order-children">
+                                                <span>
+                                                    <span class="label d-none d-xl-inline-block">Display Menu Children</span>
+                                                </span>
+                                            </button>
+                                            <button type="button" class="bn btn-primary action-btn btn-show">
+                                                <span>
+                                                    <i class="fa fa-eye"></i>
+                                                    <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <h5 class="card-subtitle mb-2 text-muted">Orders Category</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                     
-                                    <div class="sortable">
+                                    <div class="sortable collapse" id="order-children">
                                         <div class="card">
                                             <div class="card-body">
-                                                <i class="fa fa-reorder"></i>
-                                                <h5 class="card-title">Orders</h5>
+                                                <div class="header">
+                                                    <div>
+                                                        <i class="fa fa-reorder"></i>
+                                                        <h3 class="card-title">Orders</h3>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="bn btn-primary action-btn btn-show">
+                                                            <i class="fa fa-eye"></i>
+                                                            <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
                                         <div class="card">
                                             <div class="card-body">
-                                                <i class="fa fa-reorder"></i>
-                                                <h5 class="card-title">Carts</h5>
+                                            <div class="header">
+                                                <div>
+                                                    <i class="fa fa-reorder"></i>
+                                                    <h3 class="card-title">Carts</h3>
+                                                </div>
+                                                <div class="actions">
+                                                    <button type="button" class="bn btn-primary action-btn btn-show">
+                                                        <i class="fa fa-eye"></i>
+                                                        <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                    </button>
+                                                </div>
+                                                </div>
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
@@ -40,24 +82,172 @@
                             </div>
                             <div class="card">
                                 <div class="card-body">
-                                    <i class="fa fa-reorder"></i>
-                                    <i class="fa fa-cube category-icon"></i>
-                                    <h3 class="card-title">Products</h3>
+                                    <div class="header">
+                                        <div>
+                                            <i class="fa fa-reorder"></i>
+                                            <i class="fa fa-cube category-icon"></i>
+                                            <h3 class="card-title">Products</h3>
+                                        </div>
+                                        <div class="actions">
+                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#product-children">
+                                                <span>
+                                                    <span class="label d-none d-xl-inline-block">Display Menu Children</span>
+                                                </span>
+                                            </button>
+                                            <button type="button" class="bn btn-primary action-btn btn-show">
+                                                <i class="fa fa-eye"></i>
+                                                <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <h5 class="card-subtitle mb-2 text-muted">Products Category</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 
-                                    <div class="sortable">
+                                    <div class="sortable collapse" id="product-children">
                                         <div class="card">
                                             <div class="card-body">
-                                                <i class="fa fa-reorder"></i>
-                                                <h5 class="card-title">Products</h5>
+                                                <div class="header">
+                                                    <div>
+                                                        <i class="fa fa-reorder"></i>
+                                                        <h3 class="card-title">Products</h3>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="bn btn-primary action-btn btn-show">
+                                                            <i class="fa fa-eye"></i>
+                                                            <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
                                         <div class="card">
                                             <div class="card-body">
-                                                <i class="fa fa-reorder"></i>
-                                                <h5 class="card-title">Categories</h5>
+                                                <div class="header">
+                                                    <div>
+                                                        <i class="fa fa-reorder"></i>
+                                                        <h3 class="card-title">Categories</h3>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="bn btn-primary action-btn btn-show">
+                                                            <i class="fa fa-eye"></i>
+                                                            <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="header">
+                                        <div>
+                                            <i class="fa fa-reorder"></i>
+                                            <i class="fa fa-users category-icon"></i>
+                                            <h3 class="card-title">Contacts</h3>
+                                        </div>
+                                        <div class="actions">
+                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#contact-children">
+                                                <span>
+                                                    <span class="label d-none d-xl-inline-block">Display Menu Children</span>
+                                                </span>
+                                            </button>
+                                            <button type="button" class="bn btn-primary action-btn btn-show">
+                                                <i class="fa fa-eye"></i>
+                                                <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-subtitle mb-2 text-muted">Contacts Category</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                                    <div class="sortable collapse" id="contact-children">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="header">
+                                                    <div>
+                                                        <i class="fa fa-reorder"></i>
+                                                        <h3 class="card-title">Contacts</h3>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="bn btn-primary action-btn btn-show">
+                                                            <i class="fa fa-eye"></i>
+                                                            <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="header">
+                                                    <div>
+                                                        <i class="fa fa-reorder"></i>
+                                                        <h3 class="card-title">Contact Groups</h3>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="bn btn-primary action-btn btn-show">
+                                                            <i class="fa fa-eye"></i>
+                                                            <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="header">
+                                                    <div>
+                                                        <i class="fa fa-reorder"></i>
+                                                        <h3 class="card-title">Contact Group Pricing Display</h3>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="bn btn-primary action-btn btn-show">
+                                                            <i class="fa fa-eye"></i>
+                                                            <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="header">
+                                                    <div>
+                                                        <i class="fa fa-reorder"></i>
+                                                        <h3 class="card-title">Tasks</h3>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="bn btn-primary action-btn btn-show">
+                                                            <i class="fa fa-eye"></i>
+                                                            <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="header">
+                                                    <div>
+                                                        <i class="fa fa-reorder"></i>
+                                                        <h3 class="card-title">Task Types</h3>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="bn btn-primary action-btn btn-show">
+                                                            <i class="fa fa-eye"></i>
+                                                            <span class="label d-none d-xl-inline-block">Show in Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>

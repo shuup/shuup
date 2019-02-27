@@ -1,4 +1,20 @@
 #menu-configuration {
+    .col-12 {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            padding: 7px 15px;
+            margin-left: 5px;
+            font-size: 1rem;
+            border-radius: 4px;
+        }
+    }
     .card-title {
         display: inline-block;
     }
