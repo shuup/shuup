@@ -3,6 +3,9 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 25px;
+        a {
+            font-size: 1.1rem;
+        }
     }
     .header {
         display: flex;
@@ -11,7 +14,7 @@
         button {
             padding: 7px 15px;
             margin-left: 5px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             border-radius: 4px;
         }
     }

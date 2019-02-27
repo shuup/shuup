@@ -6,7 +6,7 @@
             <div class="col-12">
                 <h1>{% trans %}Menu Configuration{% endtrans %}</h1>
                 <div class="btn-toolbar">
-                    <a href="#" class="btn btn-default btn-success">
+                    <a href="#" class="btn btn-default btn-success" id="menu-configuration-save">
                         <i class="fa fa-save"></i>&nbsp;Save
                     </a>
                 </div>
@@ -16,7 +16,7 @@
                     <div class="d-none d-md-block d-lg-block d-xl-block">
 
                         <div class="sortable">
-                            <div class="card">
+                            <div class="card" data-name="orders" data-visible-in-menu="true">
                                 <div class="card-body">
                                     <div class="header">
                                         <div>
@@ -25,7 +25,7 @@
                                             <h3 class="card-title">Orders</h3>
                                         </div>
                                         <div class="actions">
-                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#order-children">
+                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#menu-configuration-order">
                                                 <span>
                                                     <span class="label d-none d-xl-inline-block">Display Menu Children</span>
                                                 </span>
@@ -41,8 +41,8 @@
                                     <h5 class="card-subtitle mb-2 text-muted">Orders Category</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                     
-                                    <div class="sortable collapse" id="order-children">
-                                        <div class="card">
+                                    <div class="sortable collapse" id="menu-configuration-order">
+                                        <div class="card" data-name="orders-orders" data-visible-in-menu="true">
                                             <div class="card-body">
                                                 <div class="header">
                                                     <div>
@@ -59,7 +59,7 @@
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
-                                        <div class="card">
+                                        <div class="card" data-name="orders-carts" data-visible-in-menu="true">
                                             <div class="card-body">
                                             <div class="header">
                                                 <div>
@@ -80,7 +80,7 @@
 
                                 </div>
                             </div>
-                            <div class="card">
+                            <div class="card" data-name="products" data-visible-in-menu="true">
                                 <div class="card-body">
                                     <div class="header">
                                         <div>
@@ -89,7 +89,7 @@
                                             <h3 class="card-title">Products</h3>
                                         </div>
                                         <div class="actions">
-                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#product-children">
+                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#menu-configuration-product">
                                                 <span>
                                                     <span class="label d-none d-xl-inline-block">Display Menu Children</span>
                                                 </span>
@@ -103,8 +103,8 @@
                                     <h5 class="card-subtitle mb-2 text-muted">Products Category</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 
-                                    <div class="sortable collapse" id="product-children">
-                                        <div class="card">
+                                    <div class="sortable collapse" id="menu-configuration-product">
+                                        <div class="card" data-name="products-products" data-visible-in-menu="true">
                                             <div class="card-body">
                                                 <div class="header">
                                                     <div>
@@ -121,7 +121,7 @@
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
-                                        <div class="card">
+                                        <div class="card" data-name="products-categories" data-visible-in-menu="true">
                                             <div class="card-body">
                                                 <div class="header">
                                                     <div>
@@ -142,7 +142,7 @@
 
                                 </div>
                             </div>
-                            <div class="card">
+                            <div class="card" data-name="contacts" data-visible-in-menu="true">
                                 <div class="card-body">
                                     <div class="header">
                                         <div>
@@ -151,7 +151,7 @@
                                             <h3 class="card-title">Contacts</h3>
                                         </div>
                                         <div class="actions">
-                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#contact-children">
+                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#menu-configuration-contact">
                                                 <span>
                                                     <span class="label d-none d-xl-inline-block">Display Menu Children</span>
                                                 </span>
@@ -165,8 +165,8 @@
                                     <h5 class="card-subtitle mb-2 text-muted">Contacts Category</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 
-                                    <div class="sortable collapse" id="contact-children">
-                                        <div class="card">
+                                    <div class="sortable collapse" id="menu-configuration-contact">
+                                        <div class="card" data-name="contacts-contacts" data-visible-in-menu="true">
                                             <div class="card-body">
                                                 <div class="header">
                                                     <div>
@@ -183,7 +183,7 @@
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
-                                        <div class="card">
+                                        <div class="card" data-name="contacts-contact-groups" data-visible-in-menu="true">
                                             <div class="card-body">
                                                 <div class="header">
                                                     <div>
@@ -200,7 +200,7 @@
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
-                                        <div class="card">
+                                        <div class="card" data-name="contacts-contact-group-pricing-display" data-visible-in-menu="true">
                                             <div class="card-body">
                                                 <div class="header">
                                                     <div>
@@ -217,7 +217,7 @@
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
-                                        <div class="card">
+                                        <div class="card" data-name="contacts-tasks" data-visible-in-menu="true">
                                             <div class="card-body">
                                                 <div class="header">
                                                     <div>
@@ -234,7 +234,7 @@
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                             </div>
                                         </div>
-                                        <div class="card">
+                                        <div class="card" data-name="contacts-task-types" data-visible-in-menu="true">
                                             <div class="card-body">
                                                 <div class="header">
                                                     <div>
