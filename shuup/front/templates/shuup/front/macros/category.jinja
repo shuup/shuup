@@ -101,16 +101,20 @@
 
         <div id="filters" class="filters collapse" aria-expanded="false">
             {% for field in form %}
-                {% if field.name not in ["sort", "q", "limit"] %}
-                    <div class="filter-block">
-                        <a href="#{{ field.name }}"
-                           class="block-title"
-                           data-toggle="collapse"
-                           aria-expanded="true"
-                           aria-controls="categories">{{ field.label }}</a>
-                        <br>
-                        {{ render_field(field, render_label=False) }}
-                    </div>
+                {% if field.field.widget.is_hidden %}
+                    {{ field.as_widget()|safe }}
+                {% else %}
+                    {% if field.name not in ["sort", "q", "limit"] %}
+                        <div class="filter-block">
+                            <a href="#{{ field.name }}"
+                            class="block-title"
+                            data-toggle="collapse"
+                            aria-expanded="true"
+                            aria-controls="categories">{{ field.label }}</a>
+                            <br>
+                            {{ render_field(field, render_label=False) }}
+                        </div>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
