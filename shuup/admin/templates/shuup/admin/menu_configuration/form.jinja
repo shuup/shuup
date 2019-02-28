@@ -25,22 +25,39 @@
                                             <h3 class="card-title">Orders</h3>
                                         </div>
                                         <div class="actions">
-                                            <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#menu-configuration-order">
+                                            {# <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#menu-configuration-order">
                                                 <span>
                                                     <span class="label d-none d-xl-inline-block">Display Menu Children</span>
                                                 </span>
-                                            </button>
-                                            <button type="button" class="bn btn-primary action-btn btn-show">
+                                            </button> #}
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-primary active btn-left">
+                                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> 
+                                                        <i class="fa fa-eye"></i>
+                                                        Visible
+                                                </label>
+                                                <label class="btn btn-primary btn-right">
+                                                    <input type="radio" name="options" id="option2" autocomplete="off"> 
+                                                    <i class="fa fa-eye-slash"></i>
+                                                    Hidden
+                                                </label>
+                                            </div>
+                                            {# <button type="button" class="bn btn-primary action-btn btn-show">
                                                 <span>
                                                     <i class="fa fa-eye"></i>
                                                     <span class="label d-none d-xl-inline-block">Show in Menu</span>
                                                 </span>
-                                            </button>
+                                            </button> #}
                                         </div>
                                     </div>
                                     <h5 class="card-subtitle mb-2 text-muted">Orders Category</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    
+                                    <button type="button" class="bn btn-primary action-btn btn-show" data-toggle="collapse" data-target="#menu-configuration-order">
+                                        <span>
+                                            <i class="fa fa-caret-right"></i>                                            
+                                            <span class="label d-none d-xl-inline-block">Display Menu Children</span>
+                                        </span>
+                                    </button>
                                     <div class="sortable collapse" id="menu-configuration-order">
                                         <div class="card" data-name="orders-orders" data-visible-in-menu="true">
                                             <div class="card-body">
