@@ -106,6 +106,16 @@ class SalesTestReport(ShuupReportBase):
         return self.get_return_data(data)
 
 
+class SalesTestReportForRequestTets(SalesTestReport):
+    def get_objects(self):
+        assert self.request
+        return super(SalesTestReportForRequestTets, self).get_objects()
+
+    def get_data(self):
+        assert self.request
+        return super(SalesTestReportForRequestTets, self).get_data()
+
+
 @pytest.mark.django_db
 def test_reporting(rf, admin_user):
 
@@ -119,7 +129,7 @@ def test_reporting(rf, admin_user):
                                                                                         tax_rate,
                                                                                         line_count)
 
-    with override_provides("reports", [__name__ + ":SalesTestReport"]):
+    with override_provides("reports", [__name__ + ":SalesTestReportForRequestTets"]):
         data = {
             "report": SalesTestReport.get_name(),
             "shop": shop.pk,
