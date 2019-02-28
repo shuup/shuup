@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import REPORTS_MENU_CATEGORY
 from shuup.admin.utils.urls import admin_url
+from shuup.reports.report import get_report_classes
 
 
 class ReportsAdminModule(AdminModule):
@@ -36,3 +37,9 @@ class ReportsAdminModule(AdminModule):
                 category=REPORTS_MENU_CATEGORY
             )
         ]
+
+    def get_extra_permissions(self):
+        report_identifiers = set()
+        for report_class in get_report_classes():
+            report_identifiers.add(report_class)
+        return report_identifiers

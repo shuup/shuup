@@ -20,7 +20,7 @@ class ReportView(FormView):
     add_form_errors_as_messages = True
 
     def get_form(self, form_class=None):
-        self.report_classes = get_report_classes()
+        self.report_classes = get_report_classes(self.request)
         selected_report = self.request.GET.get("report")
         if selected_report:
             return self._get_concrete_form(selected_report)
@@ -35,7 +35,7 @@ class ReportView(FormView):
         selected_report = self.request.GET.get("report")
         form_info = self.report_classes[selected_report] if selected_report else None
         if not form_info:
-            report_classes = get_report_classes()
+            report_classes = get_report_classes(self.request)
             if not report_classes:
                 return None
             form_info = six.next(six.itervalues(report_classes))
@@ -43,7 +43,7 @@ class ReportView(FormView):
         return self._get_form(form_info)
 
     def _get_choices(self):
-        return [(k, v.title) for k, v in six.iteritems(get_report_classes())]
+        return [(k, v.title) for k, v in six.iteritems(get_report_classes(self.request))]
 
     def _get_form(self, selected):
         form = self.form_class(request=self.request, **self.get_form_kwargs())
@@ -59,7 +59,7 @@ class ReportView(FormView):
 
     def form_valid(self, form):
         writer = get_writer_instance(form.cleaned_data["writer"])
-        report = form.get_report_instance()
+        report = form.get_report_instance(self.request)
         if not self.request.POST.get("force_download") and writer.writer_type in ("html", "pprint", "json"):
             output = writer.render_report(report, inline=True)
             return self.render_to_response(self.get_context_data(form=form, result=output))
