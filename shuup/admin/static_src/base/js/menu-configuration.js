@@ -1,8 +1,9 @@
 $(document).ready(function() {
 
-    $("button").on("click", function() {
-        console.log($(this).find(".fa-caret-down"));
-    })
+    $("button.display-children").on("click", function() {
+        var caretRight = $(this).find("i.fa");
+            $(caretRight).toggleClass("fa-caret-right").toggleClass("fa-caret-down");
+    });
 
     html5sortable(".sortable", {
         placeholder: "<div class=\"card\"></div>",
