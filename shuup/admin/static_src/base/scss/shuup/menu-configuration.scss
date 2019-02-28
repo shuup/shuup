@@ -4,8 +4,11 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 25px;
-        a {
+        a.btn-success {
             font-size: 1.1rem;
+        }
+        a.btn-success:hover > .fa-save {
+            color: #27ae60;
         }
     }
     button {
@@ -23,11 +26,11 @@
             padding: 7px 15px;
             font-size: 1.1rem;
         }
-        .btn-left {
+        .menu-visible {
             border-top-left-radius: 4px;
             border-bottom-left-radius: 4px;
         }
-        .btn-right {
+        .menu-hidden {
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
         }

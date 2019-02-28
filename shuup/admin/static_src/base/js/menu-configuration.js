@@ -1,10 +1,22 @@
 $(document).ready(function() {
 
+    // Button icons on Display Menu Children
     $("button.display-children").on("click", function() {
         var caretRight = $(this).find("i.fa");
-            $(caretRight).toggleClass("fa-caret-right").toggleClass("fa-caret-down");
+        $(caretRight).toggleClass("fa-caret-right").toggleClass("fa-caret-down");
     });
 
+    // Hide and make visible in menu
+    $("label.menu-hidden").on("click", function() {
+        var menuItem = $(this).parents(".card")[0];
+        menuItem.dataset.visibleInMenu = false;
+    });
+    $("label.menu-visible").on("click", function() {
+        var menuItem = $(this).parents(".card")[0];
+        menuItem.dataset.visibleInMenu = true;
+    });
+
+    // Drag and Drop
     html5sortable(".sortable", {
         placeholder: "<div class=\"card\"></div>",
         forcePlaceholderSize: true,
@@ -25,7 +37,7 @@ $(document).ready(function() {
     });
     $("#menu-configuration-save").on("click", function() {
         var serialized = html5sortable(".sortable", "serialize");
-        // console.log(serialized);
+        console.log(serialized);
         
     })
 });
