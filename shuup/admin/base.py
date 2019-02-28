@@ -68,6 +68,17 @@ class AdminModule(object):
         with override(language="en"):
             return ("%s" % self.name,)
 
+    def get_extra_permissions(self):
+        """
+        Define custom extra permissions for admin module for option
+        to limit certain parts of the admin module based on per user
+        permission string. Should return unique list permission strings
+        across the installation to prevent unwanted side effects.
+
+        :rtype: list[str]
+        """
+        return ()
+
     def get_notifications(self, request):
         """
         :rtype: list[shuup.admin.base.Notification]
