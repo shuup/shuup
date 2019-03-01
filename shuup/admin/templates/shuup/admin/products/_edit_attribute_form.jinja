@@ -3,8 +3,6 @@
 
 {% set attr_form = form[form_def.name] %}
 
-<p class="section-description">{% trans %}All the required product information.{% endtrans %}</p>
-
 {% call content_block(_("Attributes"), "fa-tags", collapsed=True) %}
     {{ language_dependent_content_tabs(attr_form, tab_id_prefix="attributes") }}
     <div class="form-divider"></div>
