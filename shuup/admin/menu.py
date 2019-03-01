@@ -143,6 +143,50 @@ MAIN_MENU = [
     }
 ]
 
+configured_menu = [
+    {
+        "identifier": ORDERS_MENU_CATEGORY,
+        "title": _("Orders"),
+        "icon": "fa fa-inbox",
+        "position": 0,
+        "visible": True,
+        "children": [
+            {
+                "identifier": "orders",
+                "title": _("Orders"),
+                "position": 0,
+                "visible": True,
+            },
+            {
+                "identifier": "carts",
+                "title": _("Carts"),
+                "position": 1,
+                "visible": True,
+            }
+        ]
+    },
+    {
+        "identifier": PRODUCTS_MENU_CATEGORY,
+        "title": _("Products"),
+        "icon": "fa fa-cube",
+        "position": 1,
+        "visible": True,
+        "children": [
+            {
+                "identifier": "products",
+                "title": _("Products"),
+                "position": 0,
+                "visible": True,
+            },
+            {
+                "identifier": "carts",
+                "title": _("Carts"),
+                "position": 1,
+                "visible": True,
+            },
+        ]
+    },
+]
 
 class _MenuCategory(object):
     """
@@ -165,12 +209,24 @@ def extend_main_menu(menu):
     return menu
 
 
+#def parse_custom_menu(menutree):
+    #for saeraerare
+
+    #return menu in same format as the MAIN_MENU
+
 def get_menu_entry_categories(request): # noqa (C901)
     menu_categories = OrderedDict()
     menu_children = OrderedDict()
 
     # Update main menu from provides
-    main_menu = extend_main_menu(MAIN_MENU)
+
+    # custom_menu = configuration.get(None, "shuup_menu_whatever")
+    if 0: #custom_menu:
+        main_menu = parse_custom_menu(configured_menu)
+    else: 
+        main_menu = MAIN_MENU
+
+    main_menu = extend_main_menu(main_menu)
 
     menu_category_icons = {}
     for menu_item in main_menu:
@@ -188,7 +244,7 @@ def get_menu_entry_categories(request): # noqa (C901)
             menu_categories[identifier].children.append(child_category)
 
         menu_category_icons[identifier] = icon
-
+    
     modules = list(get_modules())
     for module in modules:
         menu_category_icons.update(
@@ -208,7 +264,6 @@ def get_menu_entry_categories(request): # noqa (C901)
 
             entry_identifier = "%s:%s" % (category_identifier, subcategory) if subcategory else category_identifier
             menu_items = menu_children if subcategory else menu_categories
-
             category = menu_items.get(entry_identifier)
             if not category:
                 category_identifier = force_text(category_identifier or module.name)
