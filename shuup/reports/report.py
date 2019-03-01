@@ -38,10 +38,12 @@ class ShuupReportBase(object):
             self.options = kwargs["initial"]
         else:
             self.options = kwargs
+
         self.start_date = kwargs.get("start_date", None)
         self.end_date = kwargs.get("end_date", None)
         if self.options.get("date_range"):
             self.start_date, self.end_date = parse_date_range(self.options["date_range"])
+
         if self.options.get("shop"):
             self.shop = Shop.objects.get(pk=self.options["shop"])
         else:
@@ -51,6 +53,9 @@ class ShuupReportBase(object):
             self.start_date = make_aware(datetime.min + timedelta(days=1), get_current_timezone())
         if self.end_date is None:
             self.end_date = make_aware(datetime.max - timedelta(days=1), get_current_timezone())
+
+        if self.options.get("request"):
+            self.request = self.options["request"]
 
         self.rendered = False
 
@@ -68,6 +73,14 @@ class ShuupReportBase(object):
     @classmethod
     def get_description(cls):
         return force_text(cls.description)
+
+    @classmethod
+    def is_available(cls, request):
+        try:
+            from shuup.admin.utils.permissions import has_permission
+            return has_permission(request.user, cls.identifier)
+        except ImportError:
+            return True
 
     def ensure_texts(self):
         """
@@ -125,15 +138,16 @@ class ShuupReportBase(object):
         return totals
 
 
-def get_report_class(name):
-    for cls_name, cls in six.iteritems(get_report_classes()):
+def get_report_class(name, request):
+    for cls_name, cls in six.iteritems(get_report_classes(request)):
         if cls_name == name:
             return cls
     return None
 
 
-def get_report_classes():
+def get_report_classes(request=None, provides_key="reports"):
     items = {}
-    for cls in list(get_provide_objects("reports")):
-        items[cls.get_name()] = cls
+    for cls in list(get_provide_objects(provides_key)):
+        if not (request and not cls.is_available(request)):
+            items[cls.get_name()] = cls
     return OrderedDict(sorted(items.items(), key=lambda t: t[1].title))

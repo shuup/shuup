@@ -62,7 +62,11 @@ class PermissionGroupForm(forms.ModelForm):
                 else:
                     all_permissions_granted = False
 
-            for permission in get_permissions_from_urls(admin_module.get_urls()):
+            extra_permissions = (
+                list(get_permissions_from_urls(admin_module.get_urls())) +
+                list(admin_module.get_extra_permissions())
+            )
+            for permission in extra_permissions:
                 field_id = "perm:{}".format(permission)
                 self.fields[field_id] = forms.BooleanField(
                     required=False,
