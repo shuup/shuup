@@ -8,5 +8,13 @@ class MenuConfigurationFormView(FormView):
     form_class = ConfigurationForm
 
     def get_form_kwargs(self):
+        # TODO: deprecate
         kwargs = super(MenuConfigurationFormView, self).get_form_kwargs()
         return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(MenuConfigurationFormView, self).get_context_data(**kwargs)
+        context["cock"] = "benjamin is a GOd"
+        return context
+
+    

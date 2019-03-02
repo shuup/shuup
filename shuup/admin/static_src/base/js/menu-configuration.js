@@ -1,3 +1,8 @@
+
+function capitalize(str) {
+    return str[0].toUpperCase() + str.slice(1, str.length);
+}
+
 $(document).ready(function() {
 
     // Button icons on Display Menu Children
@@ -51,8 +56,8 @@ $(document).ready(function() {
         subMenus.forEach(function(subMenu) {
             Array.from(subMenu.items).forEach(function(menuItem) {
                 structuredSubMenus[menuItem.name] = {
-                    identifier: menuItem.name,
-                    title: "_('" + menuItem.name + "')",
+                    identifier: capitalize(menuItem.name),
+                    title: "_('" + capitalize(menuItem.name) + "')",
                     visible: menuItem.visibleInMenu,
                     position: menuItem.position, 
                 };
@@ -66,7 +71,7 @@ $(document).ready(function() {
             var name = category.name.split("-")[0];
             var entry = {
                 identifier: name.toUpperCase() + "_MENU_CATEGORY",
-                title: "_('" + name + "')",
+                title: "_('" + capitalize(name) + "')",
                 icon: category.icon,
                 visible: category.visibleInMenu,
                 position: category.position,
@@ -79,85 +84,3 @@ $(document).ready(function() {
         console.log(structuredMenu);
     });
 });
-
-// MAIN_MENU = [
-//     {
-//         "identifier": ORDERS_MENU_CATEGORY,
-//         "title": _("Orders"),
-//         "icon": "fa fa-inbox",
-//         "children": [
-//             {
-//                 "identifier": "orders",
-//                 "title": _("Orders")
-//             },
-//         ]
-//     },
-//     {
-//         "identifier": PRODUCTS_MENU_CATEGORY,
-//         "title": _("Products"),
-//         "icon": "fa fa-cube",
-//         "children": [
-//             {
-//                 "identifier": "products",
-//                 "title": _("Products")
-//             },
-//         ]
-//     },
-// ]
-
-
-
-
-// configured_menu = [
-//     {
-//         "container": None,
-//         "items": [
-//             {
-//                 "children": ["orders", "carts"],
-//                 "name": "orders-category",
-//                 "postion": 0,
-//                 "visible-in-menu": True,
-//             },
-//             {
-//                 "children": ["products", "categories"],
-//                 "name": "products-category",
-//                 "postion": 1,
-//                 "visible-in-menu": True,
-//             }
-//         ]
-//     },
-//     {
-//         "container": None,
-//         "items": [
-//             {
-//                 "children": [],
-//                 "name": "orders",
-//                 "postion": 0,
-//                 "visible-in-menu": True,
-//             },
-//             {
-//                 "children": [],
-//                 "name": "carts",
-//                 "postion": 1,
-//                 "visible-in-menu": True,
-//             }
-//         ]
-//     },
-//     {
-//         "container": None,
-//         "items": [
-//             {
-//                 "children": [],
-//                 "name": "products",
-//                 "postion": 0,
-//                 "visible-in-menu": True,
-//             },
-//             {
-//                 "children": [],
-//                 "name": "categories",
-//                 "postion": 1,
-//                 "visible-in-menu": True,
-//             }
-//         ]
-//     }
-// ]

@@ -1,7 +1,22 @@
 {% extends "shuup/admin/base.jinja" %}
 
-{% block content %}
+{% from "shuup/admin/macros/block.jinja" import link_block %}
+
+{% set categories = shuup_admin.get_menu_entry_categories() %}
+{% set quicklinks = shuup_admin.get_quicklinks() %}
+
+
+{% block content %}    
+    {% for category in categories %}
+        {{ category.name }}:<br>
+        {% for child in category.children %}
+            {% for entry in child %}
+                ----- {{ entry.text }} <br>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
     <div class="container-fluid" id="menu-configuration">
+
         <div class="row">
             <div class="col-12">
                 <h1>{% trans %}Menu Configuration{% endtrans %}</h1>
@@ -11,349 +26,123 @@
                     </a>
                 </div>
             </div>
+
             <div class="col-12">
                 <div class="content-block">
                     <div class="d-none d-md-block d-lg-block d-xl-block">
 
                         <div class="sortable">
-                            <div class="card" data-name="orders-category" data-visible-in-menu="true">
-                                <div class="card-body">
-                                    <div class="header">
-                                        <div>
-                                            <i class="fa fa-reorder"></i>
-                                            <i class="fa fa-inbox category-icon"></i>
-                                            <h3 class="card-title">Orders</h3>
-                                        </div>
-                                        <div class="actions">
-                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-primary active menu-visible">
-                                                    <input type="radio" autocomplete="off" checked> 
+                            {% for category in categories %}
+                                {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
+                                <div class="card" data-name="{{category.name}}-category" data-visible-in-menu="true">
+                                    <div class="card-body">
+                                        <div class="header">
+                                            <div>
+                                                <i class="fa fa-reorder"></i>
+                                                <i class="fa fa-inbox category-icon"></i>
+                                                <h3 class="card-title">{{ category.name }}</h3>
+                                            </div>
+                                            <div class="actions">
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <label class="btn btn-primary active menu-visible">
+                                                        <input type="radio" autocomplete="off" checked> 
                                                         <i class="fa fa-eye"></i>
                                                         Visible
-                                                </label>
-                                                <label class="btn btn-primary menu-hidden">
-                                                    <input type="radio" autocomplete="off"> 
+                                                    </label>
+                                                    <label class="btn btn-primary menu-hidden">
+                                                        <input type="radio" autocomplete="off"> 
                                                         <i class="fa fa-eye-slash"></i>
                                                         Hidden
-                                                </label>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <h5 class="card-subtitle mb-2 text-muted">Orders Category</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <button type="button" class="bn btn-primary action-btn btn-show display-children" data-toggle="collapse" data-target="#menu-configuration-order">
-                                        <span>
-                                            <i class="fa fa-caret-right"></i>                                            
-                                            <span class="label d-none d-xl-inline-block">Display Menu Children</span>
-                                        </span>
-                                    </button>
-                                    <div class="sortable collapse" id="menu-configuration-order">
-                                        <div class="card" data-name="orders" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Orders</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
+                                        <h5 class="card-subtitle mb-2 text-muted">{{ category.name }} Category</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        {# {% if category.children %} #}
+                                            <button type="button" class="bn btn-primary action-btn btn-show display-children" data-toggle="collapse" data-target="#menu-configuration-{{category.name}}">
+                                                <span>
+                                                    <i class="fa fa-caret-right"></i>                                            
+                                                    <span class="label d-none d-xl-inline-block">Display Menu Children</span>
+                                                </span>
+                                            </button>
+                                        {# {% endif %} #}
+                                        <div class="sortable collapse" id="menu-configuration-{{category.name}}">
+                                            {% for child in category.children %}
+                                                {% for entry in child %}                                                
+                                                    <div class="card" data-name={{entry.text}} data-visible-in-menu="true">
+                                                        <div class="card-body">
+                                                            <div class="header">
+                                                                <div>
+                                                                    <i class="fa fa-reorder"></i>
+                                                                    <h3 class="card-title">{{ entry.text }}</h3>
+                                                                </div>
+                                                                <div class="actions">
+                                                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                                        <label class="btn btn-primary active menu-visible">
+                                                                            <input type="radio" autocomplete="off" checked> 
+                                                                            <i class="fa fa-eye"></i>
+                                                                            Visible
+                                                                        </label>
+                                                                        <label class="btn btn-primary menu-hidden">
+                                                                            <input type="radio" autocomplete="off"> 
+                                                                            <i class="fa fa-eye-slash"></i>
+                                                                            Hidden
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                        <div class="card" data-name="carts" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Carts</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
+                                                {% endfor %}
+                                                {% if not only_entry %}
+                                                    {% for entry in category %}                                                
+                                                        <div class="card" data-name={{entry.text}} data-visible-in-menu="true">
+                                                            <div class="card-body">
+                                                                <div class="header">
+                                                                    <div>
+                                                                        <i class="fa fa-reorder"></i>
+                                                                        <h3 class="card-title">{{ entry.text }}</h3>
+                                                                    </div>
+                                                                    <div class="actions">
+                                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                                            <label class="btn btn-primary active menu-visible">
+                                                                                <input type="radio" autocomplete="off" checked> 
+                                                                                <i class="fa fa-eye"></i>
+                                                                                Visible
+                                                                            </label>
+                                                                            <label class="btn btn-primary menu-hidden">
+                                                                                <input type="radio" autocomplete="off"> 
+                                                                                <i class="fa fa-eye-slash"></i>
+                                                                                Hidden
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card" data-name="products-category" data-visible-in-menu="true">
-                                <div class="card-body">
-                                    <div class="header">
-                                        <div>
-                                            <i class="fa fa-reorder"></i>
-                                            <i class="fa fa-cube category-icon"></i>
-                                            <h3 class="card-title">Products</h3>
-                                        </div>
-                                        <div class="actions">
-                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-primary active menu-visible">
-                                                    <input type="radio" autocomplete="off" checked> 
-                                                        <i class="fa fa-eye"></i>
-                                                        Visible
-                                                </label>
-                                                <label class="btn btn-primary menu-hidden">
-                                                    <input type="radio" autocomplete="off"> 
-                                                        <i class="fa fa-eye-slash"></i>
-                                                        Hidden
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h5 class="card-subtitle mb-2 text-muted">Products Category</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <button type="button" class="bn btn-primary action-btn btn-show display-children" data-toggle="collapse" data-target="#menu-configuration-product">
-                                        <span>
-                                            <i class="fa fa-caret-right"></i>                                            
-                                            <span class="label d-none d-xl-inline-block">Display Menu Children</span>
-                                        </span>
-                                    </button>
-
-                                    <div class="sortable collapse" id="menu-configuration-product">
-                                        <div class="card" data-name="products" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Products</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                        <div class="card" data-name="categories" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Categories</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="card" data-name="contacts-category" data-visible-in-menu="true">
-                                <div class="card-body">
-                                    <div class="header">
-                                        <div>
-                                            <i class="fa fa-reorder"></i>
-                                            <i class="fa fa-users category-icon"></i>
-                                            <h3 class="card-title">Contacts</h3>
-                                        </div>
-                                        <div class="actions">
-                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-primary active menu-visible">
-                                                    <input type="radio" autocomplete="off" checked> 
-                                                        <i class="fa fa-eye"></i>
-                                                        Visible
-                                                </label>
-                                                <label class="btn btn-primary menu-hidden">
-                                                    <input type="radio" autocomplete="off"> 
-                                                        <i class="fa fa-eye-slash"></i>
-                                                        Hidden
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h5 class="card-subtitle mb-2 text-muted">Contacts Category</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <button type="button" class="bn btn-primary action-btn btn-show display-children" data-toggle="collapse" data-target="#menu-configuration-contact">
-                                        <span>
-                                            <i class="fa fa-caret-right"></i>                                            
-                                            <span class="label d-none d-xl-inline-block">Display Menu Children</span>
-                                        </span>
-                                    </button>
-                                    <div class="sortable collapse" id="menu-configuration-contact">
-                                        <div class="card" data-name="contacts" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Contacts</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                        <div class="card" data-name="contact-groups" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Contact Groups</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                        <div class="card" data-name="contact-group-pricing-display" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Contact Group Pricing Display</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                        <div class="card" data-name="tasks" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Tasks</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                        <div class="card" data-name="task-types" data-visible-in-menu="true">
-                                            <div class="card-body">
-                                                <div class="header">
-                                                    <div>
-                                                        <i class="fa fa-reorder"></i>
-                                                        <h3 class="card-title">Task Types</h3>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                            <label class="btn btn-primary active menu-visible">
-                                                                <input type="radio" autocomplete="off" checked> 
-                                                                    <i class="fa fa-eye"></i>
-                                                                    Visible
-                                                            </label>
-                                                            <label class="btn btn-primary menu-hidden">
-                                                                <input type="radio" autocomplete="off"> 
-                                                                    <i class="fa fa-eye-slash"></i>
-                                                                    Hidden
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                            {% endfor%}
                         </div>
+
                     </div>
                 </div>
             </div>
+
+            
+                            {# </div>
+                        </div>
+                    </div>
+                </div>
+            </div> #}
         </div>
     </div>
 {% endblock %}

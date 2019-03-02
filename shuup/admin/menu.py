@@ -145,42 +145,42 @@ MAIN_MENU = [
 
 configured_menu = [
     {
-        "identifier": ORDERS_MENU_CATEGORY,
-        "title": _("Orders"),
+        "identifier": "ORDERS_MENU_CATEGORY",
+        "title": "_('Orders')",
         "icon": "fa fa-inbox",
         "position": 0,
         "visible": True,
         "children": [
             {
                 "identifier": "orders",
-                "title": _("Orders"),
+                "title": "_('Orders')",
                 "position": 0,
                 "visible": True,
             },
             {
                 "identifier": "carts",
-                "title": _("Carts"),
+                "title": "_('Carts')",
                 "position": 1,
                 "visible": True,
             }
         ]
     },
     {
-        "identifier": PRODUCTS_MENU_CATEGORY,
-        "title": _("Products"),
+        "identifier": "PRODUCTS_MENU_CATEGORY",
+        "title": "_('Products')",
         "icon": "fa fa-cube",
         "position": 1,
         "visible": True,
         "children": [
             {
                 "identifier": "products",
-                "title": _("Products"),
+                "title": "_('Products')",
                 "position": 0,
                 "visible": True,
             },
             {
                 "identifier": "carts",
-                "title": _("Carts"),
+                "title": "_('Carts')",
                 "position": 1,
                 "visible": True,
             },
@@ -208,11 +208,14 @@ def extend_main_menu(menu):
         menu = menu_updater(menu).update()
     return menu
 
-
-#def parse_custom_menu(menutree):
-    #for saeraerare
-
-    #return menu in same format as the MAIN_MENU
+def parse_custom_menu(menutree):
+    for menu_item in menutree:
+        print(menu_item["identifier"])
+        menu_item["identifier"] = eval(menu_item["identifier"])
+        menu_item["title"] = eval(menu_item["title"])
+        for submenu_item in menu_item["children"]:
+            submenu_item["title"] = eval(submenu_item["title"])
+    return menutree
 
 def get_menu_entry_categories(request): # noqa (C901)
     menu_categories = OrderedDict()
@@ -227,7 +230,6 @@ def get_menu_entry_categories(request): # noqa (C901)
         main_menu = MAIN_MENU
 
     main_menu = extend_main_menu(main_menu)
-
     menu_category_icons = {}
     for menu_item in main_menu:
         identifier = menu_item["identifier"]
