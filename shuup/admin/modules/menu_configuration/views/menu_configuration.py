@@ -14,7 +14,6 @@ class MenuConfigurationFormView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(MenuConfigurationFormView, self).get_context_data(**kwargs)
-        context["cock"] = "benjamin is a GOd"
         return context
 
     

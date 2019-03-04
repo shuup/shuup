@@ -1,8 +1,3 @@
-
-function capitalize(str) {
-    return str[0].toUpperCase() + str.slice(1, str.length);
-}
-
 $(document).ready(function() {
 
     // Button icons on Display Menu Children
@@ -56,8 +51,8 @@ $(document).ready(function() {
         subMenus.forEach(function(subMenu) {
             Array.from(subMenu.items).forEach(function(menuItem) {
                 structuredSubMenus[menuItem.name] = {
-                    identifier: capitalize(menuItem.name),
-                    title: "_('" + capitalize(menuItem.name) + "')",
+                    identifier: menuItem.name.toLowerCase(),
+                    title: "_('" + menuItem.name + "')",
                     visible: menuItem.visibleInMenu,
                     position: menuItem.position, 
                 };
@@ -71,7 +66,7 @@ $(document).ready(function() {
             var name = category.name.split("-")[0];
             var entry = {
                 identifier: name.toUpperCase() + "_MENU_CATEGORY",
-                title: "_('" + capitalize(name) + "')",
+                title: "_('" + name + "')",
                 icon: category.icon,
                 visible: category.visibleInMenu,
                 position: category.position,

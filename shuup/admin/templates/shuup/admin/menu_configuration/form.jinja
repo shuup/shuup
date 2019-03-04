@@ -3,7 +3,7 @@
 {% from "shuup/admin/macros/block.jinja" import link_block %}
 
 {% set categories = shuup_admin.get_menu_entry_categories() %}
-{% set quicklinks = shuup_admin.get_quicklinks() %}
+{# {% set quicklinks = shuup_admin.get_quicklinks() %} #}
 
 
 {% block content %}    
@@ -26,7 +26,7 @@
                         <div class="sortable">
                             {% for category in categories %}
                                 {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
-                                <div class="card" data-name="{{category.name}}-category" data-visible-in-menu="true">
+                                <div class="card" data-name="{{category.name}}_category" data-visible-in-menu="true">
                                     <div class="card-body">
                                         <div class="header">
                                             <div>
@@ -63,7 +63,7 @@
                                         <div class="sortable collapse" id="menu-configuration-{{category.name}}">
                                             {% for child in category.children %}
                                                 {% for entry in child %}                                                
-                                                    <div class="card" data-name={{entry.text}} data-visible-in-menu="true">
+                                                    <div class="card" data-name="{{entry.text}}" data-visible-in-menu="true">
                                                         <div class="card-body">
                                                             <div class="header">
                                                                 <div>
@@ -92,7 +92,7 @@
                                             {% endfor %}
                                             {% if not only_entry %}
                                                 {% for entry in category %}                                                
-                                                    <div class="card" data-name={{entry.text}} data-visible-in-menu="true">
+                                                    <div class="card" data-name="{{entry.text}}" data-visible-in-menu="true">
                                                         <div class="card-body">
                                                             <div class="header">
                                                                 <div>
