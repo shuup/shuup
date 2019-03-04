@@ -143,51 +143,6 @@ MAIN_MENU = [
     }
 ]
 
-configured_menu = [
-    {
-        "identifier": "ORDERS_MENU_CATEGORY",
-        "title": "_('Orders')",
-        "icon": "fa fa-inbox",
-        "position": 0,
-        "visible": True,
-        "children": [
-            {
-                "identifier": "orders",
-                "title": "_('Orders')",
-                "position": 0,
-                "visible": True,
-            },
-            {
-                "identifier": "carts",
-                "title": "_('Carts')",
-                "position": 1,
-                "visible": True,
-            }
-        ]
-    },
-    {
-        "identifier": "PRODUCTS_MENU_CATEGORY",
-        "title": "_('Products')",
-        "icon": "fa fa-cube",
-        "position": 1,
-        "visible": True,
-        "children": [
-            {
-                "identifier": "products",
-                "title": "_('Products')",
-                "position": 0,
-                "visible": True,
-            },
-            {
-                "identifier": "carts",
-                "title": "_('Carts')",
-                "position": 1,
-                "visible": True,
-            },
-        ]
-    },
-]
-
 class _MenuCategory(object):
     """
     Internal menu category object.
@@ -223,11 +178,7 @@ def get_menu_entry_categories(request): # noqa (C901)
 
     # Update main menu from provides
 
-    # custom_menu = configuration.get(None, "shuup_menu_whatever")
-    if 0: #custom_menu:
-        main_menu = parse_custom_menu(configured_menu)
-    else: 
-        main_menu = MAIN_MENU
+    main_menu = MAIN_MENU
 
     main_menu = extend_main_menu(main_menu)
     menu_category_icons = {}

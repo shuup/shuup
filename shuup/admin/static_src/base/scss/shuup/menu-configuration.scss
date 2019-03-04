@@ -7,7 +7,7 @@
         a.btn-success {
             font-size: 1.1rem;
         }
-        a.btn-success:hover > .fa-save {
+        :hover > .fa-save {
             color: #27ae60;
         }
     }
@@ -39,6 +39,7 @@
         display: inline-block;
     }
     .fa-reorder {
+        cursor: move;
         margin-right: 1em;
     }
     .category-icon {

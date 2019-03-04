@@ -63,7 +63,7 @@ $(document).ready(function() {
         var structuredMenu = [];
 
         categories.forEach(function(category) {
-            var name = category.name.split("-")[0];
+            var name = category.name.split("_")[0];
             var entry = {
                 identifier: name.toUpperCase() + "_MENU_CATEGORY",
                 title: "_('" + name + "')",
