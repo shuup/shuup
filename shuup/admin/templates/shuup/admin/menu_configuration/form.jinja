@@ -7,14 +7,6 @@
 
 
 {% block content %}    
-    {% for category in categories %}
-        {{ category.name }}:<br>
-        {% for child in category.children %}
-            {% for entry in child %}
-                ----- {{ entry.text }} <br>
-            {% endfor %}
-        {% endfor %}
-    {% endfor %}
     <div class="container-fluid" id="menu-configuration">
 
         <div class="row">
@@ -59,14 +51,15 @@
                                         </div>
                                         <h5 class="card-subtitle mb-2 text-muted">{{ category.name }} Category</h5>
                                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        {# {% if category.children %} #}
+                                        {% if not only_entry %}
                                             <button type="button" class="bn btn-primary action-btn btn-show display-children" data-toggle="collapse" data-target="#menu-configuration-{{category.name}}">
                                                 <span>
                                                     <i class="fa fa-caret-right"></i>                                            
                                                     <span class="label d-none d-xl-inline-block">Display Menu Children</span>
                                                 </span>
                                             </button>
-                                        {# {% endif %} #}
+                                        {% endif %}
+
                                         <div class="sortable collapse" id="menu-configuration-{{category.name}}">
                                             {% for child in category.children %}
                                                 {% for entry in child %}                                                
@@ -96,36 +89,36 @@
                                                         </div>
                                                     </div>
                                                 {% endfor %}
-                                                {% if not only_entry %}
-                                                    {% for entry in category %}                                                
-                                                        <div class="card" data-name={{entry.text}} data-visible-in-menu="true">
-                                                            <div class="card-body">
-                                                                <div class="header">
-                                                                    <div>
-                                                                        <i class="fa fa-reorder"></i>
-                                                                        <h3 class="card-title">{{ entry.text }}</h3>
-                                                                    </div>
-                                                                    <div class="actions">
-                                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                                            <label class="btn btn-primary active menu-visible">
-                                                                                <input type="radio" autocomplete="off" checked> 
-                                                                                <i class="fa fa-eye"></i>
-                                                                                Visible
-                                                                            </label>
-                                                                            <label class="btn btn-primary menu-hidden">
-                                                                                <input type="radio" autocomplete="off"> 
-                                                                                <i class="fa fa-eye-slash"></i>
-                                                                                Hidden
-                                                                            </label>
-                                                                        </div>
+                                            {% endfor %}
+                                            {% if not only_entry %}
+                                                {% for entry in category %}                                                
+                                                    <div class="card" data-name={{entry.text}} data-visible-in-menu="true">
+                                                        <div class="card-body">
+                                                            <div class="header">
+                                                                <div>
+                                                                    <i class="fa fa-reorder"></i>
+                                                                    <h3 class="card-title">{{ entry.text }}</h3>
+                                                                </div>
+                                                                <div class="actions">
+                                                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                                        <label class="btn btn-primary active menu-visible">
+                                                                            <input type="radio" autocomplete="off" checked> 
+                                                                            <i class="fa fa-eye"></i>
+                                                                            Visible
+                                                                        </label>
+                                                                        <label class="btn btn-primary menu-hidden">
+                                                                            <input type="radio" autocomplete="off"> 
+                                                                            <i class="fa fa-eye-slash"></i>
+                                                                            Hidden
+                                                                        </label>
                                                                     </div>
                                                                 </div>
-                                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                                             </div>
+                                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                                         </div>
-                                                    {% endfor %}
-                                                {% endif %}
-                                            {% endfor %}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
                                         </div>
 
                                     </div>
@@ -137,12 +130,6 @@
                 </div>
             </div>
 
-            
-                            {# </div>
-                        </div>
-                    </div>
-                </div>
-            </div> #}
         </div>
     </div>
 {% endblock %}
