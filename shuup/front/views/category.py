@@ -56,7 +56,6 @@ class CategoryView(DetailView):
         ).filter(get_query_filters(self.request, category, data=data))
 
         products = get_product_queryset(products, self.request, category, data).distinct()
-
         products = post_filter_products(self.request, category, products, data)
         products = cache_product_things(self.request, products)
         products = sort_products(self.request, category, products, data)
