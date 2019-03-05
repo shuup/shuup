@@ -275,8 +275,14 @@ def get_product_queryset(queryset, request, category, data):
     if product_ids is not None:
         return Product.objects.filter(id__in=product_ids)
 
+    # pass the request and category down to the `get_queryset` method
+    queryset_data = data.copy()
+    queryset_data.update({
+        "request": request,
+        "category": category
+    })
     for extend_obj in _get_active_modifiers(request.shop, category):
-        new_queryset = extend_obj.get_queryset(queryset, data)
+        new_queryset = extend_obj.get_queryset(queryset, queryset_data)
         if new_queryset is not None:
             queryset = new_queryset
 
