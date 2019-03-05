@@ -16,7 +16,7 @@ from shuup.campaigns.models.campaigns import BasketCampaign, CatalogCampaign
 from shuup.campaigns.models.catalog_filters import CategoryFilter
 from shuup.campaigns.models.product_effects import ProductDiscountAmount
 from shuup.core.models import (
-    AnonymousContact, OrderLineType, ShippingStatus, StockBehavior, PaymentStatus
+    AnonymousContact, OrderLineType, ShippingStatus, PaymentStatus
 )
 from shuup.core.order_creator import OrderCreator
 from shuup.core.pricing import get_pricing_module
@@ -118,7 +118,6 @@ def _get_order(prices_include_tax=False, include_basket_campaign=False, include_
             sku=product_data.pop("sku"),
             shop=shop,
             supplier=supplier,
-            stock_behavior=StockBehavior.STOCKED,
             tax_class=get_default_tax_class(),
             **product_data)
         shop_product = product.get_shop_instance(shop)

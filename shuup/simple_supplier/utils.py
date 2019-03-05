@@ -19,7 +19,9 @@ from shuup.core.models import (
     ShipmentType
 )
 from shuup.core.suppliers.base import StockAdjustmentType
-from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
+from shuup.simple_supplier.forms import (
+    AlertLimitForm, StockAdjustmentForm, StockManagedForm
+)
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 
 
@@ -113,17 +115,20 @@ def get_stock_adjustment_div(request, supplier, product):
     :return: html div as a string
     :rtype: str
     """
+    stock = StockCount.objects.get_or_create(product=product, supplier=supplier)[0]
     latest_adjustment = StockAdjustment.objects.filter(
         product=product, supplier=supplier, type=StockAdjustmentType.INVENTORY).last()
-    purchase_price = (latest_adjustment.purchase_price_value if latest_adjustment else Decimal("0.00"))
+    purchase_price = (latest_adjustment.purchase_price.as_rounded().value if latest_adjustment else Decimal())
     context = {
         "product": product,
         "supplier": supplier,
         "delta_step": pow(0.1, product.sales_unit.decimals) if product.sales_unit.decimals else 0,
         "adjustment_form": StockAdjustmentForm(initial={"purchase_price": purchase_price, "delta": None}),
+        "stock": stock,
+        "stock_managed_form": StockManagedForm(initial={"stock_managed": not stock.stock_managed})
     }
     if "shuup.notify" in settings.INSTALLED_APPS:
-        context["alert_limit_form"] = AlertLimitForm(initial={"alert_limit": 0})
+        context["alert_limit_form"] = AlertLimitForm(initial={"alert_limit": stock.alert_limit or Decimal()})
         if not get_missing_permissions(request.user, ("notify.script.list",)):
             context["notify_url"] = reverse("shuup_admin:notify.script.list")
         else:

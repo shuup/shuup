@@ -30,6 +30,11 @@ class StocksAdminModule(AdminModule):
                 name="simple_supplier.alert_limits"
             ),
             admin_url(
+                "^manage-stock/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
+                "shuup.simple_supplier.admin_module.views.process_stock_managed",
+                name="simple_supplier.stock_managed"
+            ),
+            admin_url(
                 "^stocks/",
                 "shuup.simple_supplier.admin_module.views.StocksListView",
                 name="simple_supplier.stocks"

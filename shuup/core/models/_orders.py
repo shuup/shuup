@@ -52,7 +52,7 @@ from shuup.utils.properties import (
 
 from ._order_lines import OrderLine, OrderLineType
 from ._order_utils import get_order_identifier, get_reference_number
-from ._products import Product, StockBehavior
+from ._products import Product
 from ._suppliers import Supplier
 
 
@@ -803,7 +803,7 @@ class Order(MoneyPropped, models.Model):
                 if product and quantity > parent_line.max_refundable_quantity:
                     raise RefundExceedsQuantityException
 
-                if (restock_products and quantity and product and (product.stock_behavior == StockBehavior.STOCKED)):
+                if restock_products and quantity and product:
                     from shuup.core.suppliers.enums import StockAdjustmentType
                     # restock from the unshipped quantity first
                     unshipped_quantity_to_restock = min(quantity, product_summary[product.pk]["unshipped"])
