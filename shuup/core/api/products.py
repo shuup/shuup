@@ -26,7 +26,7 @@ from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.models import (
     Product, ProductAttribute, ProductPackageLink, ProductType,
     ProductVariationResult, ProductVisibility, ShippingMode, ShopProduct,
-    ShopProductVisibility, StockBehavior, Supplier
+    ShopProductVisibility, Supplier
 )
 from shuup.utils.numbers import parse_decimal_string
 
@@ -120,7 +120,6 @@ class ProductSerializer(TranslatableModelSerializer):
     shop_products = ShopProductSubsetSerializer(many=True, required=False)
     primary_image = ProductMediaSerializer(read_only=True)
     media = ProductMediaSerializer(read_only=True, many=True)
-    stock_behavior = EnumField(enum=StockBehavior)
     shipping_mode = EnumField(enum=ShippingMode)
     attributes = ProductAttributeSerializer(many=True, required=False)
     package_content = serializers.SerializerMethodField()

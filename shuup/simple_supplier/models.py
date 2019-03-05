@@ -55,6 +55,9 @@ class StockAdjustment(models.Model):
 
 class StockCount(models.Model):
     alert_limit = QuantityField(default=0, editable=False, verbose_name=_("alert limit"))
+    stock_managed = models.BooleanField(verbose_name=_("stock managed"), default=True, help_text=_(
+        "Use this to override the supplier default stock behavior per product."
+    ))
     product = models.ForeignKey(
         "shuup.Product", related_name="simple_supplier_stock_count",
         editable=False, on_delete=models.CASCADE, verbose_name=_("product"))

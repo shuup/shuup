@@ -13,7 +13,7 @@ from django.utils.translation import ugettext
 
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
-from shuup.core.models import Product, StockBehavior, Supplier
+from shuup.core.models import Product, Supplier
 from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
 from shuup.simple_supplier.models import StockCount
 from shuup.simple_supplier.utils import (
@@ -65,7 +65,7 @@ class StocksListView(PicotableListView):
         return StockCount.objects.filter(
             supplier__module_identifier="simple_supplier",
             supplier__enabled=True,
-            product__stock_behavior=StockBehavior.STOCKED,
+            supplier__stock_managed=True,
             product__deleted=False
         ).order_by("product__id")
 
@@ -99,6 +99,15 @@ def get_adjustment_success_message(stock_adjustment):
         ) % arguments
 
 
+def _get_success_message(request, supplier, product, message):
+    return {
+        "stockInformationDiv": "#%s" % get_stock_information_div_id(supplier, product),
+        "updatedStockInformation": get_stock_information_html(supplier, product),
+        "updatedStockManagement": get_stock_adjustment_div(request, supplier, product),
+        "message": message
+    }
+
+
 def _process_stock_adjustment(form, request, supplier_id, product_id):
     data = form.cleaned_data
     supplier = Supplier.objects.get(id=supplier_id)
@@ -108,13 +117,12 @@ def _process_stock_adjustment(form, request, supplier_id, product_id):
         purchase_price=data.get("purchase_price"),
         created_by=request.user
     )
-    success_message = {
-        "stockInformationDiv": "#%s" % get_stock_information_div_id(
-            stock_adjustment.supplier, stock_adjustment.product),
-        "updatedStockInformation": get_stock_information_html(
-            stock_adjustment.supplier, stock_adjustment.product),
-        "message": get_adjustment_success_message(stock_adjustment)
-    }
+    success_message = _get_success_message(
+        request,
+        stock_adjustment.supplier,
+        stock_adjustment.product,
+        get_adjustment_success_message(stock_adjustment)
+    )
     return JsonResponse(success_message, status=200)
 
 
@@ -133,12 +141,15 @@ def _process_alert_limit(form, request, supplier_id, product_id):
 
     supplier = Supplier.objects.get(id=supplier_id)
 
-    success_message = {
-        "stockInformationDiv": "#%s" % get_stock_information_div_id(supplier, product),
-        "updatedStockInformation": get_stock_information_html(supplier, product),
-        "message": _("Alert limit for product %(product_name)s set to %(value)s.") % {
-            "product_name": product.name, "value": sc.alert_limit},
-    }
+    success_message = _get_success_message(
+        request,
+        supplier,
+        product,
+        _("Alert limit for product %(product_name)s set to %(value)s.") % {
+            "product_name": product.name,
+            "value": sc.alert_limit
+        }
+    )
     return JsonResponse(success_message, status=200)
 
 
@@ -161,3 +172,23 @@ def _process_and_catch_errors(process, form_class, request, supplier_id, product
         error_message = ugettext(
             "Error, please check submitted values and try again (%(error)s).") % {"error":  exc}
         return JsonResponse({"message": error_message}, status=400)
+
+
+def process_stock_managed(request, supplier_id, product_id):
+    if request.method != "POST":
+        raise Exception(_("Not allowed"))
+
+    stock_managed = bool(request.POST.get("stock_managed") == "True")
+    supplier = Supplier.objects.get(id=supplier_id)
+    product = Product.objects.get(id=product_id)
+    stock_count = StockCount.objects.get(supplier=supplier, product=product)
+    stock_count.stock_managed = stock_managed
+    stock_count.save()
+
+    if stock_managed:
+        msg = _("Stock management is now enabled for {product}").format(product=product)
+    else:
+        msg = _("Stock management is now disabled for {product}").format(product=product)
+
+    success_message = _get_success_message(request, supplier, product, msg)
+    return JsonResponse(success_message, status=200)

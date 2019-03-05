@@ -11,7 +11,7 @@ import pytest
 from shuup.core import cache
 from shuup.core.models import (
     AnonymousContact, Manufacturer, Product, ShopProduct,
-    ShopProductVisibility, StockBehavior, Supplier
+    ShopProductVisibility, Supplier
 )
 from shuup.core.utils import context_cache
 from shuup.front.apps.auth.forms import EmailAuthenticationForm
@@ -53,13 +53,12 @@ def test_get_listed_products_orderable_only():
     product = create_product(
         "test-sku",
         supplier=simple_supplier,
-        shop=shop,
-        stock_behavior=StockBehavior.STOCKED
+        shop=shop
     )
 
-    create_product("test-sku-2", supplier=simple_supplier, shop=shop, stock_behavior=StockBehavior.STOCKED)
-    create_product("test-sku-3", supplier=simple_supplier, shop=shop, stock_behavior=StockBehavior.STOCKED)
-    create_product("test-sku-4", supplier=simple_supplier, shop=shop, stock_behavior=StockBehavior.STOCKED)
+    create_product("test-sku-2", supplier=simple_supplier, shop=shop)
+    create_product("test-sku-3", supplier=simple_supplier, shop=shop)
+    create_product("test-sku-4", supplier=simple_supplier, shop=shop)
 
     from shuup.front.template_helpers import general
 

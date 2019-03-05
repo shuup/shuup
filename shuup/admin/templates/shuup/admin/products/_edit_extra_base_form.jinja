@@ -5,7 +5,6 @@
 {% call content_block(_("Additional Details"), "fa-file-text", id="additional-details-section") %}
     <p class="section-description">{% trans %}Product features such as size, weight and keywords are located here.{% endtrans %}</p>
 
-    {{ bs3.field(product_form.stock_behavior) }}
     {{ bs3.field(product_form.shipping_mode) }}
     {{ bs3.field(product_form.tax_class) }}
 
