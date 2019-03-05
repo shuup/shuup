@@ -12,7 +12,7 @@ import mock
 from shuup.core import cache
 from shuup.core.models import (
     Attribute, AttributeType, AttributeVisibility, ProductAttribute,
-    ProductCrossSell, ProductCrossSellType, ShopProductVisibility, StockBehavior
+    ProductCrossSell, ProductCrossSellType, ShopProductVisibility
 )
 from shuup.core.utils import context_cache
 from shuup.front.template_helpers import product as product_helpers
@@ -29,7 +29,6 @@ def _create_cross_sell_products(product, shop, supplier, type, product_count, hi
             "{}-test-sku-{}-{}".format(type, count, original_count),
             shop=shop,
             supplier=supplier,
-            stock_behavior=StockBehavior.UNSTOCKED
         )
         ProductCrossSell.objects.create(product1=product, product2=related_product, type=type)
         if hidden:
@@ -46,7 +45,7 @@ def test_cross_sell_plugin_type():
     """
     shop = get_default_shop()
     supplier = get_default_supplier()
-    product = create_product("test-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
+    product = create_product("test-sku", shop=shop, supplier=supplier)
     context = get_jinja_context(product=product)
     type_counts = ((ProductCrossSellType.RELATED, 1),
                    (ProductCrossSellType.RECOMMENDED, 2),
@@ -86,7 +85,7 @@ def test_bought_with_template_helper():
 def test_cross_sell_plugin_count():
     shop = get_default_shop()
     supplier = get_default_supplier()
-    product = create_product("test-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
+    product = create_product("test-sku", shop=shop, supplier=supplier)
     context = get_jinja_context(product=product)
     total_count = 5
     trim_count = 3
@@ -102,7 +101,7 @@ def test_cross_sell_plugin_count():
 def test_cross_sell_plugin_cache_bump():
     shop = get_default_shop()
     supplier = get_default_supplier()
-    product = create_product("test-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
+    product = create_product("test-sku", shop=shop, supplier=supplier)
     context = get_jinja_context(product=product)
     total_count = 5
     trim_count = 3
@@ -135,7 +134,7 @@ def test_cross_sell_plugin_cache_bump():
 def test_visible_attributes():
     shop = get_default_shop()
     supplier = get_default_supplier()
-    product = create_product("test-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
+    product = create_product("test-sku", shop=shop, supplier=supplier)
 
     _add_attribute_for_product(
         product, "attr1", AttributeType.BOOLEAN, AttributeVisibility.SHOW_ON_PRODUCT_PAGE, "attr1")
@@ -149,7 +148,7 @@ def test_visible_attributes():
 
     assert len(product_helpers.get_visible_attributes(product)) == 2
 
-    new_product = create_product("test-sku-2", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
+    new_product = create_product("test-sku-2", shop=shop, supplier=supplier)
     ProductAttribute.objects.create(product=new_product, attribute=Attribute.objects.filter(identifier="attr1").first())
 
     assert len(product_helpers.get_visible_attributes(product)) == 2

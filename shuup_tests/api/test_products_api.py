@@ -24,7 +24,7 @@ from shuup.core.models import (
     CategoryVisibility, Manufacturer, Product, ProductAttribute,
     ProductMediaKind, ProductMode, ProductPackageLink, ProductType,
     ProductVisibility, SalesUnit, ShippingMode, Shop, ShopProduct,
-    ShopProductVisibility, StockBehavior, Supplier, TaxClass
+    ShopProductVisibility, Supplier, TaxClass
 )
 from shuup.testing.factories import (
     ATTR_SPECS, CategoryFactory, create_product, create_random_contact_group,
@@ -79,8 +79,6 @@ def test_get_product_stocks(admin_user):
     supplier2 = create_simple_supplier("2")
 
     product1 = create_product("product 1")
-    product1.stock_behavior = StockBehavior.STOCKED
-    product1.save()
     sp = ShopProduct.objects.create(product=product1, shop=shop1)
     sp.suppliers.add(supplier1)
     sp.suppliers.add(supplier2)
@@ -89,16 +87,12 @@ def test_get_product_stocks(admin_user):
     sp.suppliers.add(supplier2)
 
     product2 = create_product("product 2")
-    product2.stock_behavior = StockBehavior.STOCKED
-    product2.save()
     sp = ShopProduct.objects.create(product=product2, shop=shop1)
     sp.suppliers.add(supplier1)
     sp = ShopProduct.objects.create(product=product2, shop=shop2)
     sp.suppliers.add(supplier1)
 
     product3 = create_product("product 3", shop=shop1, supplier=supplier2)
-    product3.stock_behavior = StockBehavior.STOCKED
-    product3.save()
 
     # put some stock
     supplier1.adjust_stock(product1.pk, 100)
@@ -704,7 +698,6 @@ def test_create_complete_product(admin_user):
                 "variation_name": "Produto Vermelho"
             }
         },
-        "stock_behavior": StockBehavior.STOCKED.value,
         "shipping_mode": ShippingMode.SHIPPED.value,
         "sales_unit": sales_unit.pk,
         "tax_class": tax_class.pk,
@@ -788,7 +781,6 @@ def _get_product_sample_data():
         },
 
         # others
-        "stock_behavior": StockBehavior.STOCKED.value,
         "shipping_mode": ShippingMode.SHIPPED.value,
         "sales_unit": get_default_sales_unit().pk,
         "tax_class": get_default_tax_class().pk,
@@ -840,7 +832,6 @@ def _check_product_basic_data(product, data, lang="en"):
     assert product.keywords == data["translations"][lang]["keywords"]
     assert product.variation_name == data["translations"][lang]["variation_name"]
 
-    assert product.stock_behavior.value == data["stock_behavior"]
     assert product.shipping_mode.value == data["shipping_mode"]
     assert product.sales_unit.id == data["sales_unit"]
     assert product.tax_class.id == data["tax_class"]

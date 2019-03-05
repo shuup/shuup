@@ -1,4 +1,5 @@
 {% from "shuup/admin/macros/general.jinja" import content_block with context %}
+{% from "shuup/simple_supplier/admin/macros.jinja" import render_scripts %}
 {% set ss_form = form["simple_supplier"] %}
 
 {%  macro render_product(suppliers, product, product_url, product_qty) %}
@@ -32,20 +33,7 @@
     {% for product in form.products %}
         {% set product_url = shuup_admin.model_url(product) %}
         <div class="row">
-            {% if product.is_stocked() %}
-                {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
-            {% else %}
-                <div class="col-12">
-                    <p>
-                        {% trans product_name=product.name, product_url=product_url -%}
-                            Product <a href="{{ product_url }}" target="_blank">{{ product_name }}</a> is not stocked.
-                        {%- endtrans %}
-                        {% trans -%}
-                            Please set product stock behavior at Additional Details section.
-                        {%- endtrans %}
-                    </p>
-                </div>
-            {% endif %}
+            {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
         </div>
     {% endfor %}
 {% endmacro %}
@@ -70,5 +58,5 @@
 {% endcall %}
 
 {% block extra_js %}
-    <script src="{{ static("simple_supplier/js/extra.js") }}"></script>
+    {{ render_scripts() }}
 {% endblock %}

@@ -9,7 +9,6 @@ import json
 
 import pytest
 
-from shuup.core.models import StockBehavior
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
@@ -22,8 +21,6 @@ def test_list_view(rf, admin_user):
     supplier = get_simple_supplier()
 
     product = factories.create_product(sku="test", shop=shop, supplier=supplier)
-    product.stock_behavior = StockBehavior.STOCKED
-    product.save()
     shop_product = product.get_shop_instance(shop)
     shop_product.primary_category = factories.get_default_category()
     shop_product.save()

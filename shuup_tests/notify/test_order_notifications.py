@@ -16,8 +16,7 @@ from django.utils.translation import activate
 from shuup.core import cache
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
-    get_person_contact, MutableAddress, Order, OrderLineType, Product,
-    StockBehavior
+    get_person_contact, MutableAddress, Order, OrderLineType, Product
 )
 from shuup.core.order_creator import OrderCreator
 from shuup.core.pricing import get_pricing_module
@@ -163,7 +162,6 @@ def _get_custom_order(regular_user, **kwargs):
             sku=product_data.pop("sku"),
             shop=shop,
             supplier=supplier,
-            stock_behavior=StockBehavior.STOCKED,
             tax_class=get_default_tax_class(),
             **product_data)
         shop_product = product.get_shop_instance(shop)

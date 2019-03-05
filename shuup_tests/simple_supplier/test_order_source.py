@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import get_person_contact, OrderLineType, StockBehavior
+from shuup.core.models import get_person_contact, OrderLineType
 from shuup.testing.factories import (
     create_product, get_default_payment_method, get_default_shipping_method,
     get_default_shop, get_initial_order_status
@@ -34,8 +34,6 @@ def test_order_source(rf, admin_user):
     shop = get_default_shop()
     supplier = get_simple_supplier()
     product = create_product("simple-test-product", shop, supplier)
-    product.stock_behavior = StockBehavior.STOCKED
-    product.save()
     quantity = 345
     supplier.adjust_stock(product.pk, quantity)
     assert supplier.get_stock_statuses([product.id])[product.id].logical_count == quantity

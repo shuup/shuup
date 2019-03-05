@@ -14,7 +14,6 @@ from django.test import override_settings
 
 from shuup.admin.modules.products.views.edit import ProductEditView
 from shuup.core import cache
-from shuup.core.models import StockBehavior
 from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
 from shuup.simple_supplier.admin_module.views import (
     process_alert_limit, process_stock_adjustment
@@ -128,10 +127,6 @@ def test_admin_form(rf, admin_user):
     frm = SimpleSupplierForm(product=product, request=request)
     # Form contains 1 product even if the product is not stocked
     assert len(frm.products) == 1
-    assert not frm.products[0].is_stocked()
-
-    product.stock_behavior = StockBehavior.STOCKED  # Make product stocked
-    product.save()
 
     # Now since product is stocked it should be in the form
     frm = SimpleSupplierForm(product=product, request=request)
@@ -139,8 +134,6 @@ def test_admin_form(rf, admin_user):
 
     # Add stocked children for product
     child_product = create_product("child-test-product", shop, supplier)
-    child_product.stock_behavior = StockBehavior.STOCKED
-    child_product.save()
     child_product.link_to_parent(product)
 
     # Admin form should now contain only child products for product
@@ -204,8 +197,6 @@ def test_alert_limit_notification(rf, admin_user):
         supplier = get_simple_supplier()
         shop = get_default_shop()
         product = create_product("simple-test-product", shop, supplier)
-        product.stock_behavior = StockBehavior.STOCKED
-        product.save()
 
         sc = StockCount.objects.get(supplier=supplier, product=product)
         sc.alert_limit = 10

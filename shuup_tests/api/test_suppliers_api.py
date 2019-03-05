@@ -13,7 +13,7 @@ import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from shuup.core.models import Shop, ShopProduct, StockBehavior, Supplier
+from shuup.core.models import Shop, ShopProduct, Supplier
 from shuup.testing.factories import (
     create_product, get_default_shop, get_default_shop_product,
     get_default_supplier
@@ -42,20 +42,17 @@ def test_get_suppliers(admin_user):
     supplier2 = create_simple_supplier("supplier2")
 
     product1 = create_product("product 1")
-    product1.stock_behavior = StockBehavior.STOCKED
     sp = ShopProduct.objects.create(product=product1, shop=shop1)
     sp = ShopProduct.objects.create(product=product1, shop=shop2)
     sp.suppliers.add(supplier1)
     sp.suppliers.add(supplier2)
 
     product2 = create_product("product 2")
-    product2.stock_behavior = StockBehavior.STOCKED
     sp = ShopProduct.objects.create(product=product2, shop=shop1)
     sp = ShopProduct.objects.create(product=product2, shop=shop2)
     sp.suppliers.add(supplier1)
 
     product3 = create_product("product 3")
-    product3.stock_behavior = StockBehavior.STOCKED
     sp = ShopProduct.objects.create(product=product3, shop=shop1)
     sp.suppliers.add(supplier2)
 
@@ -125,8 +122,6 @@ def test_get_suppliers(admin_user):
 def test_adjust_stock(admin_user):
     get_default_shop()
     sp = get_default_shop_product()
-    sp.stock_behavior = StockBehavior.STOCKED
-    sp.save()
     client = _get_client(admin_user)
     supplier1 = get_simple_supplier()
     supplier2 = get_default_supplier()

@@ -1,23 +1,40 @@
-<div class="stock-management-form mb-5" data-url="{{ url("shuup_admin:simple_supplier.stocks", supplier_id=supplier.id, product_id=product.id) }}">
-    {% csrf_token %}
-    {% for field in adjustment_form %}
-        {{ bs3.field(field, form_group_class=False ) }}
-    {% endfor %}
-    <button class="btn btn-primary mt-2" onclick="adjustStock(event, $(this))">
-        <i class="fa fa-arrow-circle-up"></i> {% trans %}Add stock{% endtrans %}
-    </button>
+<div class="stock-management-container" data-supplier="{{ supplier.id }}" data-product="{{ product.id }}">
+    {% if stock.stock_managed %}
+        <div class="stock-management-form mb-5" data-url="{{ url("shuup_admin:simple_supplier.stocks", supplier_id=supplier.id, product_id=product.id) }}">
+            {% csrf_token %}
+            {% for field in adjustment_form %}
+                {{ bs3.field(field, form_group_class=False ) }}
+            {% endfor %}
+            <button type="button" class="btn btn-primary mt-2" onclick="adjustStock(this);">
+                <i class="fa fa-arrow-circle-up"></i> {% trans %}Add stock{% endtrans %}
+            </button>
+        </div>
+        {% if alert_limit_form %}
+        <div class="stock-management-form" data-url="{{ url("shuup_admin:simple_supplier.alert_limits", supplier_id=supplier.id, product_id=product.id) }}">
+            {% csrf_token %}
+            {{ bs3.field(alert_limit_form.alert_limit, form_group_class=False ) }}
+            <span class="help-block">
+                {% trans -%}
+                    Alert limit <a href="{{ notify_url }}" target="_blank">notification scripts</a> are executed when product stock falls below set quantity.
+                {%- endtrans %}
+            </span>
+            <button type="button" class="btn btn-primary d-block mt-3" onclick="adjustStock(this);">
+                <i class="fa fa-arrow-circle-up"></i> {% trans %}Change alert limit{% endtrans %}
+            </button>
+        </div>
+        {% endif %}
+    {% endif %}
+    <div class="stock-management-form" data-url="{{ url("shuup_admin:simple_supplier.stock_managed", supplier_id=supplier.id, product_id=product.id) }}">
+        {% csrf_token %}
+        {{ bs3.field(stock_managed_form.stock_managed) }}
+        {% set extra_clss = "btn-danger" if stock.stock_managed else "btn-success" %}
+        {% set icon = "fa-times" if stock.stock_managed else "fa-check" %}
+        {% set label = _("Disable stock management") if stock.stock_managed else _("Enable stock management") %}
+
+        <div class="text-center">
+            <button type="button" class="btn mt-3 {{ extra_clss }}" onclick="adjustStock(this);">
+                <i class="fa {{ icon }}"></i> {{ label }}
+            </button>
+        </div>
+    </div>
 </div>
-{% if alert_limit_form %}
-<div class="stock-management-form" data-url="{{ url("shuup_admin:simple_supplier.alert_limits", supplier_id=supplier.id, product_id=product.id) }}">
-    {% csrf_token %}
-    {{ bs3.field(alert_limit_form.alert_limit, form_group_class=False ) }}
-    <span class="help-block">
-        {% trans -%}
-            Alert limit <a href="{{ notify_url }}" target="_blank">notification scripts</a> are executed when product stock falls below set quantity.
-        {%- endtrans %}
-    </span>
-    <button class="btn btn-primary d-block mt-3" onclick="adjustStock(event, $(this))">
-        <i class="fa fa-arrow-circle-up"></i> {% trans %}Change alert limit{% endtrans %}
-    </button>
-</div>
-{% endif %}
