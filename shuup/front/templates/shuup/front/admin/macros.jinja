@@ -1,0 +1,20 @@
+{% macro render_sort_filters_fields(facet_form, exclude_fields=[]) %}
+    {% set current_module = none %}
+    {% for field in facet_form %}
+        {% if field.name not in exclude_fields %}
+            {% if current_module and facet_form.form_module_map[field.name] != current_module %}
+            <hr />
+            {% endif %}
+            {% if field.name not in facet_form.translated_field_names %}
+                {% if field_names and field.name not in field_names %}
+                    {% continue %}
+                {% elif exclude and field.name in exclude %}
+                    {% continue %}
+                {% else %}
+                    {{ bs3.field(field) }}
+                {% endif %}
+            {% endif %}
+            {% set current_module = facet_form.form_module_map[field.name] %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

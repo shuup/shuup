@@ -24,15 +24,25 @@ def test_product_price_range_filter():
     shop_product.save()
 
     client = SmartClient()
-    set_configuration(
-        category=category,
-        data={
-            "filter_products_by_price": True,
-            "filter_products_by_price_range_min": 5,
-            "filter_products_by_price_range_max": 15,
-            "filter_products_by_price_range_size": 5
-        }
-    )
+    config = {
+        "filter_products_by_price": True,
+        "filter_products_by_price_range_min": 5,
+        "filter_products_by_price_range_max": 15,
+        "filter_products_by_price_range_size": 5
+    }
+    set_configuration(category=category, data=config)
+    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    response, soup = client.response_and_soup(url)
+    assert response.status_code == 200
+    assert soup.find(id="product-%d" % product.id)
+    price_range_select = soup.find(id="id_price_range")
+    # as the configuration is not set to override shop default configuration
+    # this field shouldn't be there..
+    assert price_range_select is None
+
+    # make the category configuration override the shop's default config
+    config.update({"override_default_configuration": True})
+    set_configuration(category=category, data=config)
     url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
     response, soup = client.response_and_soup(url)
     assert response.status_code == 200
@@ -46,3 +56,13 @@ def test_product_price_range_filter():
     response, soup = client.response_and_soup(filtered_url)
     assert response.status_code == 200
     assert not soup.find(id="product-%d" % product.id)
+
+    # explicitly disable the override
+    config.update({"override_default_configuration": False})
+    set_configuration(category=category, data=config)
+    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    response, soup = client.response_and_soup(url)
+    assert response.status_code == 200
+    assert soup.find(id="product-%d" % product.id)
+    price_range_select = soup.find(id="id_price_range")
+    assert price_range_select is None
