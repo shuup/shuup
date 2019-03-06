@@ -203,7 +203,7 @@
 {% endmacro %}
 
 {% macro render_cart_saver() %}
-    {% if user.is_authenticated() and shuup.urls.has_url("shuup:saved_cart.save") %}
+    {% if request.person and shuup.urls.has_url("shuup:saved_cart.save") %}
         <div class="cart-saver row">
             <div class="col-sm-6 col-sm-offset-6">
                 <div class="clearfix">

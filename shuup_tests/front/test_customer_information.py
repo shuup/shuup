@@ -21,9 +21,12 @@ from shuup import configuration
 from shuup.core.models import (
     CompanyContact, get_company_contact, get_person_contact
 )
+from shuup.core.utils.users import force_anonymous_contact_for_user
 from shuup.front.apps.customer_information.forms import PersonContactForm
-from shuup.testing.factories import get_default_shop
+from shuup.front.views.dashboard import DashboardView
+from shuup.testing.factories import get_default_shop, create_random_user
 from shuup.testing.soup_utils import extract_form_fields
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
 from shuup_tests.utils.fixtures import (
     regular_user, REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME
@@ -277,3 +280,19 @@ def test_person_contact_form_field_overrides():
         form = PersonContactForm()
         assert type(form.fields["gender"].widget) == forms.HiddenInput
         assert form.fields["phone"].required is True
+
+
+@pytest.mark.django_db
+def test_dashboard_invisible_for_guests(rf):
+    user = create_random_user()
+    request = apply_request_middleware(rf.get("/"), user=user)
+    view = DashboardView.as_view()
+
+    # all ok
+    response = view(request)
+    assert response.status_code == 200
+
+    force_anonymous_contact_for_user(user)
+    request = apply_request_middleware(rf.get("/"), user=user)
+    response = view(request)
+    assert response.status_code == 302
