@@ -212,9 +212,9 @@ class AppliedAttribute(TranslatableModel):
     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, verbose_name=_("attribute"))
 
     numeric_value = models.DecimalField(
-        null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"))
+        null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"), db_index=True)
     datetime_value = models.DateTimeField(
-        auto_now_add=False, editable=True, null=True, blank=True, verbose_name=_("datetime value"))
+        auto_now_add=False, editable=True, null=True, blank=True, verbose_name=_("datetime value"), db_index=True)
     untranslated_string_value = models.TextField(blank=True, verbose_name=_("untranslated value"))
 
     # Concrete subclasses will require this TranslatedFields declaration:
