@@ -204,10 +204,16 @@ class ProductListForm(forms.Form):
         return cleaned_data
 
 
-def get_configuration(shop=None, category=None):
+def get_configuration(shop=None, category=None, force_category_override=False):
     default_configuration = configuration.get(
         shop, FACETED_DEFAULT_CONF_KEY, settings.SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION)
-    return (configuration.get(None, _get_category_configuration_key(category)) or default_configuration)
+
+    category_config = configuration.get(None, _get_category_configuration_key(category))
+    # when override_default_configuration is True, we override the default configuration
+    if category_config and (category_config.get("override_default_configuration") or force_category_override):
+        return category_config
+
+    return default_configuration
 
 
 def set_configuration(shop=None, category=None, data=None):
