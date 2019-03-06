@@ -513,10 +513,7 @@ const Picotable = (function (m, storage) {
         var rows = Util.map(data.items, function (item) {
             var rowSettings = { key: "item-" + item._id };
             rowSettings.onclick = (function (e) {
-                // ctrl.saveCheck(item);
-                if (item._url && e.target.className !== 'row-selection') {
-                    location.href = item._url;
-                }
+                ctrl.saveCheck(item);
             });
             rowSettings.class = ctrl.isChecked(item) ? "active" : "";
 
@@ -531,9 +528,9 @@ const Picotable = (function (m, storage) {
                             onclick: Util.boundPartial(ctrl, ctrl.saveCheck, item),
                             checked: ctrl.isChecked(item)
                         }),
-                        m("label", { for: item._id, })
-                    ]
-                    );
+                        m("label", { for: item._id, }),
+                        (item._url ? m("a", {href: item._url}, m("i.fa.fa-edit")) : null),
+                    ]);
                 }
                 else {
                     content = item[col.id] || "";
@@ -655,8 +652,22 @@ const Picotable = (function (m, storage) {
                     if (line.raw) line.text = m.trust(line.raw);
                     var rowClass = "div.row.mobile-row." +
                         (line.title ? "with-title" : "") +
-                        (line.class ? "." + line.class : "");
+                        (line.class ? (line.title ? "." : "") + line.class : "");
                     return m(rowClass, [
+                        ( line.class ? 
+                            m("div.input-checkbox", { onclick: preventSelect }, [
+                                m("input[type=checkbox]", {
+                                    id: item._id,
+                                    value: item.type + "-" + item._id,
+                                    class: "row-selection",
+                                    onclick: Util.boundPartial(ctrl, ctrl.saveCheck, item),
+                                    checked: ctrl.isChecked(item)
+                                }),
+                                m("label", { for: item._id, }),
+                                (item_url ? m("a", {href: item._url}, m("i.fa.fa-edit")) : null),
+                            ])
+                            : null
+                        ),
                         (line.title ? m(".col.title", line.title) : null),
                         m(".col.value", line.text)
                     ]);
@@ -683,7 +694,12 @@ const Picotable = (function (m, storage) {
                 linkAttrs.onclick = Util.boundPartial(ctrl, ctrl.pickObject, item);
                 linkAttrs.href = "#";
             }
-            var element = (item._linked_in_mobile ? m("a.inner", linkAttrs, content) : m("span.inner", content));
+            var element = m("span.inner", {
+                class: "row-selection",
+                onclick: (e) => {
+                    ctrl.saveCheck(item);
+                }
+            }, content);
             return m("div.list-element.col-12", element);
         });
         return m("div.mobile", [
