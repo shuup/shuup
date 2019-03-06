@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 23:08+0000\n"
+"POT-Creation-Date: 2019-03-06 17:12+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -99,6 +99,14 @@ msgid "Company tax number validation"
 msgstr ""
 
 msgid "Company tax number format is validated for European countries."
+msgstr ""
+
+msgid "Override shop's default configuration"
+msgstr ""
+
+msgid ""
+"If checked, this configuration will be used instead of the shop's default "
+"configuration."
 msgstr ""
 
 msgid "Available languages in storefront"
