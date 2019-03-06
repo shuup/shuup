@@ -94,7 +94,17 @@ def test_sorts_and_filter_in_category_edit(rf, admin_user):
             if hasattr(response, "render"):
                 response.render()
             assert response.status_code in [200, 302]
+            # not overriding
+            assert get_configuration(category=category) == settings.SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION
+
+            data["product_list_facets-override_default_configuration"] = True
+            request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
+            response = view(request, pk=category.pk)
+            if hasattr(response, "render"):
+                response.render()
+            assert response.status_code in [200, 302]
             expected_configurations = {
+                "override_default_configuration": True,
                 "sort_products_by_name": True,
                 "sort_products_by_name_ordering": 6,
                 "sort_products_by_price": False,

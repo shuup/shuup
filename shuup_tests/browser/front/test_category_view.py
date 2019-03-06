@@ -149,6 +149,7 @@ def test_category_product_filters_4(browser, live_server, settings):
     set_configuration(
         category=first_cat,
         data={
+            "override_default_configuration": True,
             "sort_products_by_name": True,
             "sort_products_by_name_ordering": 1,
             "sort_products_by_price": True,
@@ -262,7 +263,7 @@ def hide_sorts_for_shop(browser, shop):
 
 
 def show_sorts_for_the_category_only(browser, category):
-    set_configuration(category=category, data={"sort_products_by_name": True})
+    set_configuration(category=category, data={"override_default_configuration": True, "sort_products_by_name": True})
     browser.reload()
     wait_until_condition(browser, lambda x: x.is_text_present("Sort"))
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_sort option")) == 2)
@@ -271,6 +272,7 @@ def show_sorts_for_the_category_only(browser, category):
     set_configuration(
         category=category,
         data={
+            "override_default_configuration": True,
             "sort_products_by_name": True,
             "sort_products_by_name_ordering": 1,
             "sort_products_by_price": True,
@@ -328,6 +330,7 @@ def manufacturer_filter_test(browser, category, manufacturer):
     set_configuration(
         category=category,
         data={
+            "override_default_configuration": True,
             "sort_products_by_name": True,
             "sort_products_by_name_ordering": 1,
             "sort_products_by_price": True,
@@ -347,6 +350,7 @@ def variations_filter_test(browser, category):
     set_configuration(
         category=category,
         data={
+            "override_default_configuration": True,
             "sort_products_by_name": True,
             "sort_products_by_name_ordering": 1,
             "sort_products_by_price": True,
@@ -406,6 +410,7 @@ def categories_filter_test(browser, first_cat, second_cat, third_cat):
     set_configuration(
         category=first_cat,
         data={
+            "override_default_configuration": True,
             "sort_products_by_name": True,
             "sort_products_by_name_ordering": 1,
             "sort_products_by_price": True,
@@ -489,6 +494,7 @@ def second_category_sort_with_price_filter(browser, category):
     set_configuration(
         category=category,
         data={
+            "override_default_configuration": True,
             "filter_products_by_price": True,
             "filter_products_by_price_range_min": 5,
             "filter_products_by_price_range_max": 12,

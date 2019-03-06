@@ -35,26 +35,28 @@
 {% endmacro %}
 
 {% macro render_info_dropdown(show_quick_login=True) %}
-    {% if user.is_authenticated() %}
+    {% if user.is_authenticated() or request.person %}
         {% call _render_info_for_authenticated_users() %}
-            {{ _render_dropdown_item(url("shuup:customer_edit"), "fa fa-user fa-fw", _("Edit account details")) }}
-            {% if request.is_company_member %}
-                {{ _render_dropdown_item(url("shuup:company_edit"), "fa fa-users fa-fw", _("Edit company details")) }}
+            {% if request.person %}
+                {{ _render_dropdown_item(url("shuup:customer_edit"), "fa fa-user fa-fw", _("Edit account details")) }}
+                {% if request.is_company_member %}
+                    {{ _render_dropdown_item(url("shuup:company_edit"), "fa fa-users fa-fw", _("Edit company details")) }}
+                {% endif %}
+                {% if shuup.urls.has_url("shuup:personal-orders") %}
+                    {{ _render_dropdown_item(url("shuup:personal-orders"), "fa fa-list-alt fa-fw", _("My orders")) }}
+                {% endif %}
+                {% if shuup.urls.has_url("shuup:saved_cart.list") %}
+                    {{ _render_dropdown_item(url("shuup:saved_cart.list"), "fa fa-shopping-cart fa-fw", _("My saved carts")) }}
+                {% endif %}
+                {% if shuup.urls.has_url("shuup:personal_wishlists") %}
+                    {{ _render_dropdown_item(url("shuup:personal_wishlists"), "fa fa-star fa-fw", _("My wishlists")) }}
+                {% endif %}
+                {% if shuup.general.is_shop_admin() %}
+                    {{ _render_dropdown_item(url("shuup_admin:dashboard"), "fa fa-dashboard fa-fw", _("Admin panel")) }}
+                {% endif %}
             {% endif %}
-            {% if shuup.urls.has_url("shuup:personal-orders") %}
-                {{ _render_dropdown_item(url("shuup:personal-orders"), "fa fa-list-alt fa-fw", _("My orders")) }}
-            {% endif %}
-            {% if shuup.urls.has_url("shuup:saved_cart.list") %}
-                {{ _render_dropdown_item(url("shuup:saved_cart.list"), "fa fa-shopping-cart fa-fw", _("My saved carts")) }}
-            {% endif %}
-            {% if shuup.urls.has_url("shuup:personal_wishlists") %}
-                {{ _render_dropdown_item(url("shuup:personal_wishlists"), "fa fa-star fa-fw", _("My wishlists")) }}
-            {% endif %}
-            {% if shuup.general.is_shop_admin() %}
-                {{ _render_dropdown_item(url("shuup_admin:dashboard"), "fa fa-dashboard fa-fw", _("Admin panel")) }}
-            {% endif %}
-            {% if shuup.urls.has_url("shuup:logout") %}
-                {{ _render_dropdown_item(url("shuup:logout"), "fa fa-sign-out fa-fw", _("Log out"), True) }}
+            {% if user.is_authenticated() and shuup.urls.has_url("shuup:logout") %}
+                {{ _render_dropdown_item(url("shuup:logout"), "fa fa-sign-out fa-fw", _("Log out"), request.person == true) }}
             {% endif %}
         {% endcall %}
     {% elif show_quick_login %} {# Checking if the login dropdown should be shown #}

@@ -3,5 +3,8 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
 
 {% call content_block(_("Product list sorts and filters"), icon="fa-th-list") %}
-    {{ render_sort_filters_fields(form["product_list_facets"]) }}
+    {% set facets_form = form["product_list_facets"] %}
+    {{ bs3.field(facets_form.override_default_configuration) }}
+    <hr />
+    {{ render_sort_filters_fields(facets_form, ["override_default_configuration"]) }}
 {% endcall %}
