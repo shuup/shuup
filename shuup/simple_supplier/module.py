@@ -51,8 +51,13 @@ class SimpleSupplierModule(BaseSupplierModule):
 
     def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None,
                      type=StockAdjustmentType.INVENTORY):
-        # item doesn't manage stocks
-        if not StockCount.objects.filter(supplier=self.supplier, product_id=product_id, stock_managed=True).exists():
+
+        stock_count = StockCount.objects.get_or_create(
+            supplier=self.supplier,
+            product_id=product_id,
+        )[0]
+        if not stock_count.stock_managed:
+            # item doesn't manage stocks
             return
 
         adjustment = StockAdjustment.objects.create(
@@ -74,7 +79,14 @@ class SimpleSupplierModule(BaseSupplierModule):
         supplier_id = self.supplier.pk
         # TODO: Consider whether this should be done without a cache table
         values = get_current_stock_value(supplier_id=supplier_id, product_id=product_id)
-        sv, _ = StockCount.objects.get_or_create(supplier_id=supplier_id, product_id=product_id)
+        sv, _ = StockCount.objects.get_or_create(
+            supplier_id=supplier_id,
+            product_id=product_id,
+        )
+        if not sv.stock_managed:
+            # item doesn't manage stocks
+            return
+
         sv.logical_count = values["logical_count"]
         sv.physical_count = values["physical_count"]
         latest_event = (
