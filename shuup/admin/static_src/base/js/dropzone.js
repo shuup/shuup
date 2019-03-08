@@ -30,7 +30,7 @@ function activateDropzone($dropzone, attrs={}) {
         uploadMultiple: false,
         parallelUploads: 1,
         maxFiles: 1,
-        dictDefaultMessage: browsable ? gettext("Drop files here or click to browse.") : gettext("Drop files here."),
+        dictDefaultMessage: gettext("Drop files here or click to browse."),
         clickable: false,
         accept: function(file, done) {
             if ($data.kind === "images" && file.type.indexOf("image") < 0) {
@@ -62,8 +62,8 @@ function activateDropzone($dropzone, attrs={}) {
 
     dropzone.on("queuecomplete", attrs.onQueueComplete || $.noop);
 
-    if (browsable) {
-        $(selector).on("click", function(e) {
+    $(selector).on("click", function() {
+        if (browsable) {
             window.BrowseAPI.openBrowseWindow({
                 kind: "media",
                 disabledMenus: ["delete", "rename"],
@@ -80,8 +80,16 @@ function activateDropzone($dropzone, attrs={}) {
                     dropzone.emit("complete", obj);
                 }
             });
-        });
-    }
+        } else {
+            const fileInput = document.createElement("input");
+            document.body.appendChild(fileInput);
+            $(fileInput).prop("type", "file").css("display", "none").on("change", (evt) => {
+                const file = evt.target.files[0];
+                dropzone.addFile(file);
+                fileInput.remove();
+            }).trigger("click");
+        }
+    });
 
     const data = $(selector).data();
     if(data.url) {
