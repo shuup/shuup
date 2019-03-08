@@ -59,8 +59,7 @@ def get_product_ids_for_query_str(request, query_str, limit, product_ids=[]):
     if not query_str:
         return []
 
-    entry_query = get_compiled_query(
-        query_str, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
+    entry_query = get_compiled_query(query_str, settings.SHUUP_SIMPLE_SEARCH_FIELDS)
     return list(Product.objects.searchable(
         shop=request.shop,
         customer=request.customer
