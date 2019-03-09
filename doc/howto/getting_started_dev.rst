@@ -31,7 +31,11 @@ are used to get your changes into Shuup Base.
    forking repos <https://help.github.com/articles/fork-a-repo/>`__ for
    details.
 
-2. Setup a virtualenv and activate it.  You may use the traditional
+2. Python < 3.6 is recommended only advanced users. To cover large amount
+   of issues with setup it is recommended to run
+   `pip install -U pip setuptools wheel` before creating virtualenv.
+
+3. Setup a virtualenv and activate it.  You may use the traditional
    ``virtualenv`` command, or the newer ``python -m venv`` if you're
    using Python 3.  See `Virtualenv User Guide
    <https://virtualenv.pypa.io/en/latest/userguide.html>`__, if you
@@ -43,7 +47,7 @@ are used to get your changes into Shuup Base.
       virtualenv shuup-venv
       . shuup-venv/bin/activate
 
-3. Finally, you'll need to install Shuup in the activated virtualenv in
+4. Finally, you'll need to install Shuup in the activated virtualenv in
    development mode.  To do that, run the following commands in the
    root of the checkout (within the activated virtualenv):
 
@@ -70,6 +74,10 @@ are used to get your changes into Shuup Base.
     Error is still there? Try to edit Windows environment PATH, and move GTK Runtime
     location to the top of the list.
 
+.. note::
+    Extra information/warning regarding SQLite `read more
+    <https://github.com/shuup/shuup/issues/1730>`__.
+
 
 Workbench, the built-in test project
 ------------------------------------
@@ -90,13 +98,16 @@ root.
    python -m shuup_workbench migrate
 
    # Import some basic data.
-   python -m shuup_workbench shuup_populate_mock --with-superuser=admin
+   python -m shuup_workbench shuup_init
+
+   # Create superuser so you can login admin panel
+   python -m shuup_workbench createsuperuser
 
    # Run the Django development server (on port 8000 by default).
    python -m shuup_workbench runserver
 
-You can use the credentials ``admin``/``admin``, that is username ``admin``
-and password ``admin`` to log in as a superuser on http://127.0.0.1:8000/ .
+You can use the created credentials to log in as a superuser on
+http://127.0.0.1:8000/sa/ .
 
 Building resources
 ------------------
@@ -118,6 +129,12 @@ The command also accepts couple arguments, see its help for more details:
 .. code-block:: shell
 
    python setup.py build_resources --help
+
+.. note::
+    Make sure your running rather new version from `Node
+    <https://nodejs.org/en/>`__ and non LTS version is recommended
+    for advanced users only.
+
 
 Running tests
 -------------
