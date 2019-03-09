@@ -14,6 +14,7 @@ from django.utils.translation import ugettext
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Product, Supplier
+from shuup.core.utils import context_cache
 from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
 from shuup.simple_supplier.models import StockCount
 from shuup.simple_supplier.utils import (
@@ -181,9 +182,9 @@ def process_stock_managed(request, supplier_id, product_id):
     stock_managed = bool(request.POST.get("stock_managed") == "True")
     supplier = Supplier.objects.get(id=supplier_id)
     product = Product.objects.get(id=product_id)
-    stock_count = StockCount.objects.get(supplier=supplier, product=product)
-    stock_count.stock_managed = stock_managed
-    stock_count.save()
+    StockCount.objects.filter(supplier=supplier, product=product).update(stock_managed=stock_managed)
+    for shop in supplier.shops.all():
+        context_cache.bump_cache_for_product(product, shop=shop)
 
     if stock_managed:
         msg = _("Stock management is now enabled for {product}").format(product=product)
