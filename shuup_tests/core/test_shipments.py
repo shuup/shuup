@@ -11,8 +11,7 @@ import pytest
 from django.conf import settings
 
 from shuup.core.models import (
-    Shipment, ShipmentProduct, ShippingMode, ShippingStatus,
-    StockBehavior
+    Shipment, ShipmentProduct, ShippingMode, ShippingStatus
 )
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_product,
@@ -235,6 +234,5 @@ def _get_product_data(stocked=False):
             "net_weight": decimal.Decimal("1"),
             "gross_weight": decimal.Decimal("43.34257"),
             "quantity": decimal.Decimal("15"),
-            "stock_behavior": StockBehavior.STOCKED if stocked else StockBehavior.UNSTOCKED
         }
     ]

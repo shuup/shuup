@@ -87,7 +87,7 @@ def test_admin_edit(rf, admin_user):
     assert options.show_prices
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    response = view(request, pk=group.pk)
+    response = view(request, pk=cgpd.pk)
     response.render()
     content = force_text(response.content)
 

@@ -40,3 +40,7 @@ class StockAdjustmentForm(forms.Form):
 
 class AlertLimitForm(forms.Form):
     alert_limit = forms.DecimalField(label=_("Alert limit"))
+
+
+class StockManagedForm(forms.Form):
+    stock_managed = forms.BooleanField(widget=forms.HiddenInput())

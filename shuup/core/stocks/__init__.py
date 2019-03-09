@@ -9,7 +9,14 @@ from shuup.core.utils.product_caching_object import ProductCachingObject
 
 
 class ProductStockStatus(ProductCachingObject):
-    def __init__(self, product=None, product_id=None, logical_count=0, physical_count=0, message=None, error=None):
+    logical_count = 0
+    physical_count = 0
+    message = None
+    error = None
+    stock_managed = False
+
+    def __init__(self, product=None, product_id=None, logical_count=0,
+                 physical_count=0, message=None, error=None, stock_managed=False):
         if product_id:
             self.product_id = product_id
         else:
@@ -20,3 +27,4 @@ class ProductStockStatus(ProductCachingObject):
         self.physical_count = physical_count
         self.message = message
         self.error = error
+        self.stock_managed = stock_managed

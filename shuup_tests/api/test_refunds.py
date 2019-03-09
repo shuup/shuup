@@ -13,7 +13,7 @@ import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from shuup.core.models import OrderLineType, PaymentStatus, StockBehavior
+from shuup.core.models import OrderLineType, PaymentStatus
 from shuup.simple_supplier.models import StockAdjustment
 from shuup.testing.factories import (
     create_order_with_product, create_product,
@@ -97,7 +97,6 @@ def test_refund_entire_order_without_restock(admin_user):
         "test-sku",
         shop=get_default_shop(),
         default_price=10,
-        stock_behavior=StockBehavior.STOCKED
     )
     supplier.adjust_stock(product.id, 5)
     _check_stock_counts(supplier, product, 5, 5)
@@ -136,7 +135,6 @@ def test_refund_entire_order_with_restock(admin_user):
         "test-sku",
         shop=get_default_shop(),
         default_price=10,
-        stock_behavior=StockBehavior.STOCKED
     )
     supplier.adjust_stock(product.id, 5)
     _check_stock_counts(supplier, product, 5, 5)

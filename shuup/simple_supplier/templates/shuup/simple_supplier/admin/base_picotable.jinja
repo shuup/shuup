@@ -1,6 +1,7 @@
 {% extends "shuup/admin/base_picotable.jinja" %}
+{% from "shuup/simple_supplier/admin/macros.jinja" import render_scripts %}
 
 {% block extra_js %}
-    <script src="{{ static("shuup_admin/js/picotable.js") }}"></script>
-    <script src="{{ static("simple_supplier/js/extra.js") }}"></script>
+    <script src="{{ static('shuup_admin/js/picotable.js') }}"></script>
+    {{ render_scripts() }}
 {% endblock %}

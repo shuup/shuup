@@ -1,0 +1,35 @@
+{% macro render_scripts() %}
+    <script>
+        function post(url, data, $stockManagementContainer) {
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                success: function(msg) {
+                    if (msg.stockInformationDiv) {
+                        $(msg.stockInformationDiv).html(msg.updatedStockInformation);
+                    }
+                    if (msg.updatedStockManagement) {
+                        $stockManagementContainer.replaceWith(msg.updatedStockManagement);
+                    }
+                    window.Messages.enqueue({
+                        tags: "info",
+                        text: msg.message
+                    });
+                },
+                error: function(response) {
+                    window.Messages.enqueue({
+                        tags: "error",
+                        text: response.message
+                    });
+                }
+            });
+        }
+        window.adjustStock = function (element) {
+            var stockAdjustDiv = $(element).closest(".stock-management-form");
+            var url = stockAdjustDiv.data("url");
+            var data = stockAdjustDiv.find(":input").serialize();
+            post(url, data, $(element).closest(".stock-management-container"));
+        }
+    </script>
+{% endmacro %}

@@ -28,4 +28,4 @@ context_cache_item_bumped = Signal(providing_args=["item"], use_caching=True)
 #:      You can attach signal receiver for this to change
 #:      product visibility after it has become unorderable.
 #:
-stocks_updated = Signal(providing_args=["shops", "product_ids"], use_caching=True)
+stocks_updated = Signal(providing_args=["shops", "product_ids", "supplier"], use_caching=True)

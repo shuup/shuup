@@ -14,7 +14,6 @@ from django.test import override_settings
 
 from shuup.admin.modules.products.views.edit import ProductEditView
 from shuup.core import cache
-from shuup.core.models import StockBehavior
 from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
 from shuup.simple_supplier.admin_module.views import (
     process_alert_limit, process_stock_adjustment
@@ -56,22 +55,37 @@ def test_simple_supplier(rf):
 
 
 @pytest.mark.django_db
-def test_supplier_with_stock_counts(rf):
-    supplier = get_simple_supplier(stock_managed=False)
+@pytest.mark.parametrize("stock_managed", [True, False])
+def test_supplier_with_stock_counts(rf, stock_managed):
+    supplier = get_simple_supplier(stock_managed=stock_managed)
     shop = get_default_shop()
     product = create_product("simple-test-product", shop, supplier)
     quantity = random.randint(100, 600)
-    supplier.adjust_stock(product.pk, quantity)
-    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == quantity
-    # No orderability errors since product is not stocked
-    assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity+1, customer=None))
 
-    supplier.stock_managed = True
-    supplier.save()
-
-    assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))
-    # Now since product is stocked we get orderability error with quantity + 1
-    assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity+1, customer=None))
+    if stock_managed:
+        # Adjust
+        supplier.adjust_stock(product.pk, quantity)
+        # Check that count is adjusted
+        assert supplier.get_stock_statuses([product.id])[product.id].logical_count == quantity
+        # Since product is stocked with quantity we get no orderability error with quantity
+        assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))
+        # Since product is stocked with quantity we get orderability error with quantity + 1
+        assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity+1, customer=None))
+    else:
+        # Check that count is not adjusted
+        assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 0
+        # No orderability errors since product is not stocked
+        assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))
+        # Turn it to stocked
+        supplier.stock_managed = True
+        supplier.save()
+        supplier.adjust_stock(product.pk, quantity)
+        # Check that count is adjusted
+        assert supplier.get_stock_statuses([product.id])[product.id].logical_count == quantity
+        # No orderability errors since product is stocked with quantity
+        assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))
+        # Since product is stocked with quantity we get orderability errors with quantity + 1
+        assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity+1, customer=None))
 
 
 @pytest.mark.django_db
@@ -128,10 +142,6 @@ def test_admin_form(rf, admin_user):
     frm = SimpleSupplierForm(product=product, request=request)
     # Form contains 1 product even if the product is not stocked
     assert len(frm.products) == 1
-    assert not frm.products[0].is_stocked()
-
-    product.stock_behavior = StockBehavior.STOCKED  # Make product stocked
-    product.save()
 
     # Now since product is stocked it should be in the form
     frm = SimpleSupplierForm(product=product, request=request)
@@ -139,8 +149,6 @@ def test_admin_form(rf, admin_user):
 
     # Add stocked children for product
     child_product = create_product("child-test-product", shop, supplier)
-    child_product.stock_behavior = StockBehavior.STOCKED
-    child_product.save()
     child_product.link_to_parent(product)
 
     # Admin form should now contain only child products for product
@@ -204,8 +212,6 @@ def test_alert_limit_notification(rf, admin_user):
         supplier = get_simple_supplier()
         shop = get_default_shop()
         product = create_product("simple-test-product", shop, supplier)
-        product.stock_behavior = StockBehavior.STOCKED
-        product.save()
 
         sc = StockCount.objects.get(supplier=supplier, product=product)
         sc.alert_limit = 10

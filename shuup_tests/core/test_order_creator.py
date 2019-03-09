@@ -16,7 +16,7 @@ from django.test import override_settings
 
 from shuup import configuration
 from shuup.core.models import (
-    get_person_contact, Order, OrderLineType, Shop, StockBehavior
+    get_person_contact, Order, OrderLineType, Shop
 )
 from shuup.core.order_creator import OrderCreator, OrderSource, SourceLine
 from shuup.core.order_creator._creator import OrderProcessor
@@ -131,10 +131,6 @@ def test_order_creator_with_package_product(rf, admin_user):
     shop_product = package_product.get_shop_instance(shop)
     quantity_map = package_product.get_package_child_to_quantity_map()
     product_1, product_2 = quantity_map.keys()
-    product_1.stock_behavior = StockBehavior.STOCKED
-    product_1.save()
-    product_2.stock_behavior = StockBehavior.STOCKED
-    product_2.save()
 
     assert quantity_map[product_1] == 1
     assert quantity_map[product_2] == 2

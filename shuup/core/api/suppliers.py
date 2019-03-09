@@ -26,6 +26,7 @@ class ProductStockStatusSerializer(serializers.Serializer):
     physical_count = FormattedDecimalField(coerce_to_string=False)
     message = serializers.CharField()
     error = serializers.CharField()
+    stock_managed = serializers.BooleanField()
 
 
 class StockAdjustmentSerializer(serializers.Serializer):

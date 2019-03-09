@@ -63,6 +63,7 @@ class ProductVisibility(Enum):
         VISIBLE_TO_GROUPS = _('visible to groups')
 
 
+# Deprecated. Used in old migrations
 class StockBehavior(Enum):
     UNSTOCKED = 0
     STOCKED = 1
@@ -223,10 +224,6 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         "self", null=True, blank=True, related_name='variation_children',
         on_delete=models.PROTECT,
         verbose_name=_('variation parent'))
-    stock_behavior = EnumIntegerField(
-        StockBehavior, default=StockBehavior.UNSTOCKED, verbose_name=_('stock'),
-        help_text=_("Set to stocked if inventory should be managed within Shuup.")
-    )
     shipping_mode = EnumIntegerField(
         ShippingMode, default=ShippingMode.SHIPPED, verbose_name=_('shipping mode'),
         help_text=_("Set to shipped if the product requires shipment.")
@@ -770,9 +767,6 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     def get_public_media(self):
         return self.media.filter(enabled=True, public=True).exclude(kind=ProductMediaKind.IMAGE)
-
-    def is_stocked(self):
-        return (self.stock_behavior == StockBehavior.STOCKED)
 
     def is_container(self):
         return (self.is_package_parent() or self.is_subscription_parent())
