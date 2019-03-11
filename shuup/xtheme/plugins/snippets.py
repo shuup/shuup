@@ -9,7 +9,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.xtheme import Plugin, resources
-from shuup.xtheme.resources import add_resource, InlineMarkupResource
+from shuup.xtheme.resources import add_resource, JinjaMarkupResource
 
 
 class SnippetsPlugin(Plugin):
@@ -31,5 +31,8 @@ class SnippetsPlugin(Plugin):
         for location, __ in self.fields:
             if location in resources.KNOWN_LOCATIONS:
                 resource = self.config.get(location, "")
-                add_resource(context, location, InlineMarkupResource(resource))
-        return self.config.get("in_place", "")
+                add_resource(context, location, JinjaMarkupResource(resource, context))
+
+        in_place = self.config.get("in_place", "")
+        if in_place:
+            return JinjaMarkupResource(in_place, context).render()
