@@ -52,6 +52,14 @@ shuup.front.utils.sorts\_and\_filters module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.utils.suppliers module
+----------------------------------
+
+.. automodule:: shuup.front.utils.suppliers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.utils.translation module
 ------------------------------------
 

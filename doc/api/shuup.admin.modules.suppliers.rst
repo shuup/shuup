@@ -8,6 +8,18 @@ Subpackages
 
     shuup.admin.modules.suppliers.views
 
+Submodules
+----------
+
+shuup.admin.modules.suppliers.forms module
+------------------------------------------
+
+.. automodule:: shuup.admin.modules.suppliers.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Module contents
 ---------------
 

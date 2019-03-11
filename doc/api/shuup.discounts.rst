@@ -37,6 +37,14 @@ shuup.discounts.modules module
     :undoc-members:
     :show-inheritance:
 
+shuup.discounts.plugins module
+------------------------------
+
+.. automodule:: shuup.discounts.plugins
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.discounts.settings module
 -------------------------------
 
