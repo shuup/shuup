@@ -11,10 +11,9 @@ Subpackages
     shuup.admin.modules.contact_group_price_display
     shuup.admin.modules.contact_groups
     shuup.admin.modules.contacts
-    shuup.admin.modules.content
     shuup.admin.modules.currencies
     shuup.admin.modules.customers_dashboard
-    shuup.admin.modules.demo
+    shuup.admin.modules.labels
     shuup.admin.modules.manufacturers
     shuup.admin.modules.media
     shuup.admin.modules.orders
@@ -23,7 +22,6 @@ Subpackages
     shuup.admin.modules.products
     shuup.admin.modules.sales_dashboard
     shuup.admin.modules.sales_units
-    shuup.admin.modules.sample_data
     shuup.admin.modules.service_providers
     shuup.admin.modules.services
     shuup.admin.modules.settings

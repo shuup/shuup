@@ -36,14 +36,6 @@ shuup.admin.modules.categories.views.list module
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.categories.views.organize module
-----------------------------------------------------
-
-.. automodule:: shuup.admin.modules.categories.views.organize
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

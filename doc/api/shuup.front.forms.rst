@@ -20,6 +20,14 @@ shuup.front.forms.product\_list\_modifiers module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.forms.product\_list\_supplier\_modifier module
+----------------------------------------------------------
+
+.. automodule:: shuup.front.forms.product_list_supplier_modifier
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

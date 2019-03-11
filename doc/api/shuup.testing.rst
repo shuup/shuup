@@ -6,9 +6,10 @@ Subpackages
 
 .. toctree::
 
-    shuup.testing.admin_module
     shuup.testing.management
     shuup.testing.models
+    shuup.testing.modules
+    shuup.testing.supplier_pricing
     shuup.testing.themes
 
 Submodules
@@ -82,6 +83,14 @@ shuup.testing.notify\_script\_templates module
 ----------------------------------------------
 
 .. automodule:: shuup.testing.notify_script_templates
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.testing.receivers module
+------------------------------
+
+.. automodule:: shuup.testing.receivers
     :members:
     :undoc-members:
     :show-inheritance:

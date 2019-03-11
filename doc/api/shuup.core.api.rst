@@ -1,6 +1,13 @@
 shuup.core.api package
 ======================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    shuup.core.api.serializers
+
 Submodules
 ----------
 
