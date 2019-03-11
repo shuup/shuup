@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import re
+from logging import getLogger
 
 import six
 from django.utils.encoding import force_text
@@ -20,6 +21,8 @@ from shuup.core import cache
 from shuup.core.fields import TaggedJSONEncoder
 from shuup.core.shop_provider import get_shop
 from shuup.xtheme.utils import get_html_attrs
+
+LOGGER = getLogger(__name__)
 
 LOCATION_INFO = {
     "head_end": {
@@ -81,6 +84,35 @@ class InlineScriptResource(six.text_type):
         """
         ns = dict(*args, **kwargs)
         return cls("window.%s = %s;" % (var_name, TaggedJSONEncoder().encode(ns)))
+
+
+class JinjaMarkupResource(object):
+    """
+    A Jinja markup resource.
+    """
+    def __init__(self, template, context):
+        self.template = template
+        self.context = context
+
+    def __str__(self):
+        return self.template
+
+    def render(self):
+        template = force_text(self.template)
+        if not template:
+            return template
+
+        from django.template import engines
+        for engine_name in engines:
+            engine = engines[engine_name]
+            try:
+                return engine.env.from_string(template).render(self.context)
+            except:
+                LOGGER.exception("Failed to render Jinja string in Snippet plugin")
+                return force_text(_("(Error while rendering)"))
+
+    def __eq__(self, other):
+        return (self.render() == other)
 
 
 class InlineMarkupResource(six.text_type):
@@ -159,6 +191,9 @@ class ResourceContainer(object):
         """
         if not resource:  # pragma: no cover
             return ""
+
+        if isinstance(resource, JinjaMarkupResource):
+            return resource.render()
 
         if isinstance(resource, InlineMarkupResource):
             return force_text(resource)

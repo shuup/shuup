@@ -10,7 +10,7 @@ import pytest
 from shuup.xtheme import Plugin
 from shuup.xtheme.resources import (
     add_resource, inject_resources, InlineMarkupResource, InlineScriptResource,
-    RESOURCE_CONTAINER_VAR_NAME, ResourceContainer
+    RESOURCE_CONTAINER_VAR_NAME, ResourceContainer, JinjaMarkupResource
 )
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.xtheme.utils import (
@@ -35,6 +35,8 @@ class ResourceInjectorPlugin(Plugin):
         add_resource(context, "head_end", "")  # Test the no-op branch
         add_resource(context, "content_start", InlineMarkupResource("START"))
         add_resource(context, "content_end", InlineMarkupResource("END"))
+        add_resource(context, "content_end", InlineMarkupResource("END"))
+        add_resource(context, "body_end", JinjaMarkupResource("1+1={{ 1+1 }}", context))
         return self.message
 
 
@@ -54,3 +56,19 @@ def test_without_rc():
     content1 = "<html>"
     content2 = inject_resources(ctx, content1)
     assert content1 == content2
+
+
+def test_jinja_resource():
+    request = get_request()
+    (template, layout, gibberish, context) = get_test_template_bits(request)
+    assert JinjaMarkupResource("1+1={{ 1+1|float }}", context).render() == "1+1=2.0"
+    assert JinjaMarkupResource("{{ 1|thisdoesnwork }}", context) == "(Error while rendering)"
+    assert JinjaMarkupResource("", context) == ""
+    assert str(JinjaMarkupResource("1+1", context)) == "1+1"
+
+    container = ResourceContainer()
+    container.add_resource("body_end", JinjaMarkupResource("1+1={{ 1+1|float }}", context))
+    container.add_resource("body_end", JinjaMarkupResource("{{ 1|thisdoesnwork }}", context))
+    container.add_resource("body_end", JinjaMarkupResource("", context))
+
+    assert container.render_resources("body_end") == "1+1=2.0(Error while rendering)"
