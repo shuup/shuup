@@ -8,7 +8,7 @@
 #: ReadtheDocs API URL
 #:
 #: URL for fetching search results via ReadtheDocs API.
-SHUUP_GUIDE_API_URL = "https://readthedocs.org/api/v2/search/?project=shoop-guide&version=latest&"
+SHUUP_GUIDE_API_URL = "https://readthedocs.org/api/v2/docsearch/?project=shoop-guide&version=latest&"
 
 #: ReadtheDocs link URL
 #:
@@ -20,7 +20,7 @@ SHUUP_GUIDE_LINK_URL = "http://shuup-guide.readthedocs.io/en/latest/search.html?
 #:
 #: If true, fetch results via the ReadtheDocs API, otherwise only
 #: display a link to RTD search page.
-SHUUP_GUIDE_FETCH_RESULTS = True
+SHUUP_GUIDE_FETCH_RESULTS = False
 
 #: Timeout limit for fetching search results
 #:

@@ -25,6 +25,12 @@ class GuideAdminModule(AdminModule):
                 )
                 json = response.json()
                 if "results" in json:
+                    if "hits" not in json["results"]:
+                        return
+
+                    if "hits" not in json["results"]["hits"]:
+                        return
+
                     results = json["results"]["hits"]["hits"]
                     for result in results:
                         title = result["fields"]["title"][0]
