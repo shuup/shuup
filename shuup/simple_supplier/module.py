@@ -77,16 +77,13 @@ class SimpleSupplierModule(BaseSupplierModule):
         cache and send `shuup.core.signals.stocks_updated` signal.
         """
         supplier_id = self.supplier.pk
-        # TODO: Consider whether this should be done without a cache table
-        values = get_current_stock_value(supplier_id=supplier_id, product_id=product_id)
-        sv, _ = StockCount.objects.get_or_create(
-            supplier_id=supplier_id,
-            product_id=product_id,
-        )
+        sv, _ = StockCount.objects.get_or_create(supplier_id=supplier_id, product_id=product_id)
         if not sv.stock_managed:
             # item doesn't manage stocks
             return
 
+        # TODO: Consider whether this should be done without a cache table
+        values = get_current_stock_value(supplier_id=supplier_id, product_id=product_id)
         sv.logical_count = values["logical_count"]
         sv.physical_count = values["physical_count"]
         latest_event = (
@@ -96,7 +93,7 @@ class SimpleSupplierModule(BaseSupplierModule):
         if latest_event:
             sv.stock_value_value = latest_event.purchase_price_value * sv.logical_count
 
-        if self.supplier.stock_managed and sv.stock_managed and has_installed("shuup.notify"):
+        if self.supplier.stock_managed and has_installed("shuup.notify"):
             if sv.alert_limit and sv.physical_count < sv.alert_limit:
                 product = Product.objects.filter(id=product_id).first()
                 if product:
