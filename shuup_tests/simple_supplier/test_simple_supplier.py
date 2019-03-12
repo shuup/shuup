@@ -16,7 +16,7 @@ from shuup.admin.modules.products.views.edit import ProductEditView
 from shuup.core import cache
 from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
 from shuup.simple_supplier.admin_module.views import (
-    process_alert_limit, process_stock_adjustment
+    process_alert_limit, process_stock_adjustment, process_stock_managed
 )
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 from shuup.simple_supplier.notify_events import AlertLimitReached
@@ -253,3 +253,48 @@ def test_alert_limit_notification(rf, admin_user):
 
         event = AlertLimitReached(product=product, supplier=supplier)
         assert event.variable_values["dispatched_last_24hs"] is False
+
+
+@pytest.mark.django_db
+def test_process_stock_managed(rf, admin_user):
+    supplier = get_simple_supplier(stock_managed=False)
+    shop = get_default_shop()
+    product = create_product("simple-test-product", shop)
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    request.POST = {
+        "stock_managed": False,
+    }
+    with pytest.raises(Exception) as ex:
+        # Should raise exception becasue only POST is allowed
+        response = process_stock_managed(request, supplier.id, product.id)
+    request.method = "POST"
+    # Now should pass the method validation
+    response = process_stock_managed(request, supplier.id, product.id)
+    # Check if success
+    assert response.status_code == 200
+    # Check no stock count
+    sc = StockCount.objects.filter(
+        supplier=supplier, product=product).first()
+    assert sc.logical_count == 0
+    # Check stock count managed by default
+    assert sc.stock_managed == True
+    # Now test with stock managed turned off
+    request.POST = {
+        "stock_managed": "False",
+    }
+    response = process_stock_managed(request, supplier.id, product.id)
+    assert response.status_code == 200
+    # Check stock management is disabled for product
+    sc = StockCount.objects.filter(
+        supplier=supplier, product=product).first()
+    assert sc.stock_managed == False
+    # Now test with stock managed turned on
+    request.POST = {
+        "stock_managed": "True",
+    }
+    response = process_stock_managed(request, supplier.id, product.id)
+    assert response.status_code == 200
+    # Check stock management is enabled for product
+    sc = StockCount.objects.filter(
+        supplier=supplier, product=product).first()
+    assert sc.stock_managed == True
