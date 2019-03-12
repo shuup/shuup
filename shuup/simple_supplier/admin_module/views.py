@@ -182,7 +182,10 @@ def process_stock_managed(request, supplier_id, product_id):
     stock_managed = bool(request.POST.get("stock_managed") == "True")
     supplier = Supplier.objects.get(id=supplier_id)
     product = Product.objects.get(id=product_id)
-    StockCount.objects.filter(supplier=supplier, product=product).update(stock_managed=stock_managed)
+    stock_count = StockCount.objects.get_or_create(supplier=supplier, product=product)[0]
+    stock_count.stock_managed = stock_managed
+    stock_count.save(update_fields=["stock_managed"])
+
     for shop in supplier.shops.all():
         context_cache.bump_cache_for_product(product, shop=shop)
 
