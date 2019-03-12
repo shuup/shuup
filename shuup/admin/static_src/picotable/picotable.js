@@ -664,7 +664,7 @@ const Picotable = (function (m, storage) {
                                     checked: ctrl.isChecked(item)
                                 }),
                                 m("label", { for: item._id, }),
-                                (item_url ? m("a", {href: item._url}, m("i.fa.fa-edit")) : null),
+                                (item._url ? m("a", {href: item._url}, m("i.fa.fa-edit")) : null),
                             ])
                             : null
                         ),
