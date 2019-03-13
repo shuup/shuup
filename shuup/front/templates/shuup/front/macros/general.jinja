@@ -360,7 +360,10 @@
 {% endmacro %}
 
 {% macro render_supplier_info(supplier) %}
-    <p class="supplier-info"><small>{{ _("By %(supplier_name)s", supplier_name=supplier.name) }}</small></p>
+    {% set supplier_url = shuup.urls.model_url(supplier, raise_when_not_found=False) %}
+    {% if supplier_url %}<a class="supplier-info-link" href="{{ supplier_url }}">{% endif %}
+        <p class="supplier-info"><small>{{ _("By %(supplier_name)s", supplier_name=supplier.name) }}</small></p>
+    {% if supplier_url %}</a>{% endif %}
 {% endmacro %}
 
 {% macro render_availability_info(shop_product) %}
