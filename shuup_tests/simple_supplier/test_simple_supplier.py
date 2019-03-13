@@ -260,28 +260,23 @@ def test_process_stock_managed(rf, admin_user):
     supplier = get_simple_supplier(stock_managed=False)
     shop = get_default_shop()
     product = create_product("simple-test-product", shop)
-    request = apply_request_middleware(rf.get("/"), user=admin_user)
-    request.POST = {
-        "stock_managed": False,
-    }
+    request = apply_request_middleware(rf.get("/", data={"stock_managed": True}), user=admin_user)
+
     with pytest.raises(Exception) as ex:
         # Should raise exception becasue only POST is allowed
         response = process_stock_managed(request, supplier.id, product.id)
-    request.method = "POST"
-    # Now should pass the method validation
+
+    request = apply_request_middleware(rf.post("/", data={"stock_managed": True}), user=admin_user)
     response = process_stock_managed(request, supplier.id, product.id)
-    # Check if success
     assert response.status_code == 200
+
     # Check no stock count
-    sc = StockCount.objects.filter(
-        supplier=supplier, product=product).first()
+    sc = StockCount.objects.filter(supplier=supplier, product=product).first()
     assert sc.logical_count == 0
     # Check stock count managed by default
     assert sc.stock_managed == True
     # Now test with stock managed turned off
-    request.POST = {
-        "stock_managed": "False",
-    }
+    request = apply_request_middleware(rf.post("/", data={"stock_managed": False}), user=admin_user)
     response = process_stock_managed(request, supplier.id, product.id)
     assert response.status_code == 200
     # Check stock management is disabled for product
@@ -289,9 +284,7 @@ def test_process_stock_managed(rf, admin_user):
         supplier=supplier, product=product).first()
     assert sc.stock_managed == False
     # Now test with stock managed turned on
-    request.POST = {
-        "stock_managed": "True",
-    }
+    request = apply_request_middleware(rf.post("/", data={"stock_managed": True}), user=admin_user)
     response = process_stock_managed(request, supplier.id, product.id)
     assert response.status_code == 200
     # Check stock management is enabled for product
