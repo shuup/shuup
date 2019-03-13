@@ -12,9 +12,13 @@ import { activateDropzone } from '../base/js/dropzone';
 $(function() {
     $(".product-media-delete").on("click", function(e) {
         e.preventDefault();
+        const $panel = $(this).parents(".panel");
         if (confirm(gettext("Are you sure you want to delete this media?")))
         {
-            $(this).parents(".panel").fadeOut();
+            $(this).next(".d-none").find("input").prop("checked", true);
+            $panel.fadeOut(400, () => {
+                $panel.find("input[id$='-is_primary']").prop("checked", false);
+            });
             $(this).next(".d-none").find("input").prop("checked", true);
         }
     });
@@ -23,9 +27,7 @@ $(function() {
         e.preventDefault();
         const $panel = $(this).parents(".panel");
         const prefix = $panel.data("prefix");
-
         const [, current] = prefix.split("-");
-
         const $imagePanels = $("#product-images-section .panel");
 
         $imagePanels.removeClass("panel-selected").addClass("panel-default");
@@ -68,6 +70,11 @@ $(function() {
             $html.find(".file-control").find("input").val(file.id);
         }
         $html.insertBefore($source);
+
+        // this is an image and this is the first item added, make it the primary
+        if (targetId === "id_images" && $section.find("input[id$='-is_primary']:checked").length === 0) {
+            $html.find(".set-as-primary").trigger("click");
+        }
     }
 
     function onDropzoneQueueComplete(dropzone, kind) {

@@ -163,10 +163,24 @@ class ProductMediaBulkAdderView(View):
         for file_id in ids:
             if not ProductMedia.objects.filter(
                     product_id=shop_product.product_id, file_id=file_id, kind=kind, shops__in=[shop_id]).exists():
+
+                is_first_image = False
+                if kind == ProductMediaKind.IMAGE:
+                    is_first_image = (ProductMedia.objects.filter(
+                        product_id=shop_product.product_id,
+                        kind=kind,
+                        shops__in=[shop_id]
+                    ).count() == 0)
+
                 image = ProductMedia.objects.create(
                     product_id=shop_product.product_id,
                     file_id=file_id,
                     kind=kind,
                 )
                 image.shops.add(shop_id)
+
+                if is_first_image:
+                    shop_product.product.primary_image = image
+                    shop_product.product.save(update_fields=["primary_image"])
+
         return JsonResponse({"response": "success", "message": force_text(_("Files added to product."))})
