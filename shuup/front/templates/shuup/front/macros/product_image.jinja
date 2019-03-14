@@ -11,7 +11,7 @@
     <div id="carousel_product_{{ product.id }}" class="product-carousel carousel fade" data-ride="carousel" data-interval="false">
         <div class="carousel-inner">
             {% for product_image in images %}
-                <div class="item{% if product_image == primary_image %} active{% endif %}">
+                <div class="item{% if ((not primary_image and loop.index == 1) or product_image == primary_image) %} active{% endif %}">
                     {% set product_image_cropped = product_image|thumbnail(size=(700, 700)) %}
                     {% if loop|count > 1 %}
                         <a data-imagelightbox="image-multiple" href="{{ product_image.url }}" rel="gallery" class="thumbnail">
