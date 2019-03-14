@@ -6,17 +6,16 @@
 # LICENSE file in the root directory of this source tree.
 
 import decimal
-import pytest
 
+import pytest
 from django.conf import settings
 
-from shuup.core.models import (
-    Shipment, ShipmentProduct, ShippingMode, ShippingStatus
-)
-from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product,
-    get_default_shop, get_default_supplier
-)
+from shuup.core.models import (Shipment, ShipmentProduct, ShippingMode,
+                               ShippingStatus)
+from shuup.simple_supplier.admin_module.views import process_stock_managed
+from shuup.testing.factories import (add_product_to_order, create_empty_order,
+                                     create_product, get_default_shop,
+                                     get_default_supplier)
 from shuup.utils.excs import Problem
 
 
@@ -125,14 +124,14 @@ def test_shipment_with_insufficient_stock(stock_managed):
     shop = get_default_shop()
     supplier = get_simple_supplier(stock_managed=stock_managed)
 
-    order = _get_order(shop, supplier, stocked=True)
+    order = _get_order(shop, supplier)
     product_line = order.lines.products().first()
     product = product_line.product
     assert product_line.quantity == 15
 
     supplier.adjust_stock(product.pk, delta=10)
     stock_status = supplier.get_stock_status(product.pk)
-    assert stock_status.physical_count == 10
+    assert stock_status.physical_count == (10 if stock_managed else 0)
 
     order.create_shipment({product: 5}, supplier=supplier)
     assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
@@ -164,7 +163,7 @@ def test_shipment_with_unshippable_products():
         default_price=5.55)
     product.shipping_mode = ShippingMode.NOT_SHIPPED
     product.save()
-    order = _get_order(shop, supplier, stocked=False)
+    order = _get_order(shop, supplier)
     initial_product_line_count = order.lines.products().count()
     add_product_to_order(order, supplier, product, quantity=4, taxless_base_unit_price=3)
     order.cache_prices()
@@ -208,11 +207,11 @@ def test_order_with_only_unshippable_products():
     assert order.can_set_complete()
 
 
-def _get_order(shop, supplier, stocked=False):
+def _get_order(shop, supplier):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
-    for product_data in _get_product_data(stocked):
+    for product_data in _get_product_data():
         quantity = product_data.pop("quantity")
         product = create_product(
             sku=product_data.pop("sku"),
@@ -227,7 +226,7 @@ def _get_order(shop, supplier, stocked=False):
     return order
 
 
-def _get_product_data(stocked=False):
+def _get_product_data():
     return [
         {
             "sku": "sku1234",

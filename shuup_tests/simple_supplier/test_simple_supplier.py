@@ -80,7 +80,20 @@ def test_supplier_with_stock_counts(rf, stock_managed):
         supplier.stock_managed = True
         supplier.save()
         supplier.adjust_stock(product.pk, quantity)
-        # Check that count is adjusted
+
+        # Check that count did not get adjusted since this product already has
+        # stock count since we checked it just above. Before this proudct can be
+        # adjusted again it has to be set stock managed first.
+        assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 0
+
+        stock_count = StockCount.objects.filter(supplier=supplier, product=product).first()
+        assert not stock_count.stock_managed
+        StockCount.objects.filter(supplier=supplier, product=product).update(stock_managed=True)
+
+        # Take new quantity so we can be sure that the first
+        # quantity did not do nothing
+        quantity = random.randint(100, 1600)
+        supplier.adjust_stock(product.pk, quantity)
         assert supplier.get_stock_statuses([product.id])[product.id].logical_count == quantity
         # No orderability errors since product is stocked with quantity
         assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))

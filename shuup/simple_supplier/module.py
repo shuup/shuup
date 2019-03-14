@@ -37,9 +37,6 @@ class SimpleSupplierModule(BaseSupplierModule):
         stati = []
         for product_id in product_ids:
             stock_managed = values.get(product_id, null)[2]
-            if stock_managed is None:
-                stock_managed = self.supplier.stock_manage
-
             stati.append(ProductStockStatus(
                 product_id=product_id,
                 physical_count=values.get(product_id, null)[0],
@@ -55,6 +52,7 @@ class SimpleSupplierModule(BaseSupplierModule):
         stock_count = StockCount.objects.get_or_create(
             supplier=self.supplier,
             product_id=product_id,
+            defaults={"stock_managed": self.supplier.stock_managed}
         )[0]
         if not stock_count.stock_managed:
             # item doesn't manage stocks
@@ -77,7 +75,9 @@ class SimpleSupplierModule(BaseSupplierModule):
         cache and send `shuup.core.signals.stocks_updated` signal.
         """
         supplier_id = self.supplier.pk
-        sv, _ = StockCount.objects.get_or_create(supplier_id=supplier_id, product_id=product_id)
+        sv, _ = StockCount.objects.get_or_create(
+            supplier_id=supplier_id, product_id=product_id, defaults={"stock_managed": self.supplier.stock_managed}
+        )
         if not sv.stock_managed:
             # item doesn't manage stocks
             return

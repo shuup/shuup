@@ -115,7 +115,9 @@ def get_stock_adjustment_div(request, supplier, product):
     :return: html div as a string
     :rtype: str
     """
-    stock = StockCount.objects.get_or_create(product=product, supplier=supplier)[0]
+    stock = StockCount.objects.get_or_create(
+        product=product, supplier=supplier, defaults={"stock_managed": supplier.stock_managed}
+    )[0]
     latest_adjustment = StockAdjustment.objects.filter(
         product=product, supplier=supplier, type=StockAdjustmentType.INVENTORY).last()
     purchase_price = (latest_adjustment.purchase_price.as_rounded().value if latest_adjustment else Decimal())
