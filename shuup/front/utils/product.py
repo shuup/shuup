@@ -38,7 +38,7 @@ def get_product_context(request, product, language=None, supplier=None):   # noq
     context["product"] = product
     context["category"] = shop_product.primary_category
     context["orderability_errors"] = list(shop_product.get_orderability_errors(
-        supplier=None, quantity=1, customer=request.customer, ignore_minimum=True))
+        supplier=supplier, quantity=1, customer=request.customer, ignore_minimum=True))
     context["variation_children"] = []
     if product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
         context["variation_children"] = cache_product_things(
@@ -51,14 +51,17 @@ def get_product_context(request, product, language=None, supplier=None):   # noq
         context["orderable_variation_children"] = []
         for p in context["variation_children"]:
             try:
-                if p.get_shop_instance(request.shop).is_orderable(supplier=None, customer=request.customer, quantity=1):
+                if p.get_shop_instance(request.shop).is_orderable(
+                        supplier=supplier, customer=request.customer, quantity=1):
                     context["orderable_variation_children"].append(p)
             except ShopProduct.DoesNotExist:
                 pass
 
     elif product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
         variation_variables = product.variation_variables.all().prefetch_related("values")
-        orderable_children, is_orderable = get_orderable_variation_children(product, request, variation_variables)
+        orderable_children, is_orderable = get_orderable_variation_children(
+            product, request, variation_variables, supplier
+        )
         context["orderable_variation_children"] = orderable_children
         context["variation_orderable"] = is_orderable
         context["variation_variables"] = variation_variables
@@ -114,14 +117,15 @@ def _unpack_orderable_variation_children_from_cache(cached_value):
     return (orderable_variation_children, orderable)
 
 
-def get_orderable_variation_children(product, request, variation_variables):    # noqa (C901)
+def get_orderable_variation_children(product, request, variation_variables, supplier=None):    # noqa (C901)
     if not variation_variables:
         variation_variables = product.variation_variables.all().prefetch_related("values")
 
     key, val = context_cache.get_cached_value(
         identifier="orderable_variation_children",
         item=product, context=request,
-        variation_variables=variation_variables
+        variation_variables=variation_variables,
+        supplier=supplier
     )
     if val is not None:
         return _unpack_orderable_variation_children_from_cache(val)
@@ -136,14 +140,17 @@ def get_orderable_variation_children(product, request, variation_variables):    
                 orderable_variation_children[variable] = []
 
         res = ProductVariationResult.resolve(product, combo)
+        if not res:
+            continue
+
         try:
             shop_product = res.get_shop_instance(request.shop)
         except ShopProduct.DoesNotExist:
             continue
 
-        if res and shop_product.is_orderable(supplier=None, customer=request.customer, quantity=1):
+        if res and shop_product.is_orderable(
+                supplier=supplier, customer=request.customer, quantity=shop_product.minimum_purchase_quantity):
             orderable += 1
-
             for variable, value in six.iteritems(combo):
                 if value not in orderable_variation_children[variable]:
                     orderable_variation_children[variable].append(value)

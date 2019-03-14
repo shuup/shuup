@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 import decimal
 
-from shuup.core.models import ProductVariationResult, ShopProduct, Supplier
+from shuup.core.models import ProductVariationResult, Supplier
 from shuup.front.views.product import ProductDetailView
 from shuup.utils.numbers import parse_simple_decimal
 
@@ -20,38 +20,18 @@ class ProductPriceView(ProductDetailView):
     def get_object(self, queryset=None):
         product = super(ProductPriceView, self).get_object(queryset)
         vars = self.get_variation_variables()
-        if vars:
-            return ProductVariationResult.resolve(product, vars)
-        else:
-            return product
-
-    def is_orderable(self):
-        product = self.object
-        try:
-            shop_product = product.get_shop_instance(self.request.shop, allow_cache=True)
-        except ShopProduct.DoesNotExist:
-            return False
-        quantity = self._get_quantity(shop_product)
-        if not quantity:
-            return False
-        if not shop_product.is_orderable(None, self.request.customer, quantity):
-            return False
-        return True
+        return (ProductVariationResult.resolve(product, vars) if vars else product)
 
     def get_context_data(self, **kwargs):
         context = super(ProductPriceView, self).get_context_data(**kwargs)
-        if not context["product"] or not self.is_orderable():
-            self.template_name = "shuup/front/product/detail_order_section_no_product.jinja"
-            return context
+        shop_product = context["shop_product"]
 
-        product = self.object
-        try:
-            shop_product = product.get_shop_instance(self.request.shop, allow_cache=True)
-        except ShopProduct.DoesNotExist:
-            return False
         quantity = self._get_quantity(shop_product)
         if quantity is not None:
             context["quantity"] = context["product"].sales_unit.round(quantity)
+        else:
+            self.template_name = "shuup/front/product/detail_order_section_no_product.jinja"
+            return context
 
         supplier_pk = self.request.GET.get("supplier", None)
         if supplier_pk is not None:
@@ -60,6 +40,11 @@ class ProductPriceView(ProductDetailView):
             context["supplier"] = shop_product.get_supplier(
                 customer=self.request.customer,
                 quantity=(quantity or shop_product.minimum_purchase_quantity))
+
+        is_orderable = shop_product.is_orderable(context["supplier"], self.request.customer, context["quantity"])
+        if not context["product"] or not is_orderable:
+            self.template_name = "shuup/front/product/detail_order_section_no_product.jinja"
+            return context
 
         return context
 
