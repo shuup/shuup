@@ -513,7 +513,11 @@ const Picotable = (function (m, storage) {
         var rows = Util.map(data.items, function (item) {
             var rowSettings = { key: "item-" + item._id };
             rowSettings.onclick = (function (e) {
-                ctrl.saveCheck(item);
+                if (massActions.length) {
+                    ctrl.saveCheck(item);
+                } else if (item._url && e.target.className !== "row-selection") {
+                    location.href = item._url;
+                }
             });
             rowSettings.class = ctrl.isChecked(item) ? "active" : "";
 
@@ -642,6 +646,7 @@ const Picotable = (function (m, storage) {
         ctrl.vm.filterValues(defaultValues);
 
         var isPick = !!ctrl.vm.pickId();
+        var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
         var listItems = Util.map(data.items, function (item) {
             var content = null;
             if (item._abstract && item._abstract.length) {
@@ -654,7 +659,7 @@ const Picotable = (function (m, storage) {
                         (line.title ? "with-title" : "") +
                         (line.class ? (line.title ? "." : "") + line.class : "");
                     return m(rowClass, [
-                        ( line.class ? 
+                        (line.class && massActions.length ?
                             m("div.input-checkbox", { onclick: preventSelect }, [
                                 m("input[type=checkbox]", {
                                     id: item._id,
@@ -664,7 +669,7 @@ const Picotable = (function (m, storage) {
                                     checked: ctrl.isChecked(item)
                                 }),
                                 m("label", { for: item._id, }),
-                                (item._url ? m("a", {href: item._url}, m("i.fa.fa-edit")) : null),
+                                (item._url ? m("a", {href: item._url}, m("i.fa.fa-edit")) : null)
                             ])
                             : null
                         ),
@@ -694,12 +699,17 @@ const Picotable = (function (m, storage) {
                 linkAttrs.onclick = Util.boundPartial(ctrl, ctrl.pickObject, item);
                 linkAttrs.href = "#";
             }
-            var element = m("span.inner", {
-                class: "row-selection",
-                onclick: (e) => {
-                    ctrl.saveCheck(item);
-                }
-            }, content);
+            var element = null;
+            if (massActions.length) {
+                element = m("span.inner", {
+                    class: "row-selection",
+                    onclick: (e) => {
+                        ctrl.saveCheck(item);
+                    }
+                }, content);
+            } else {
+                element = (item._linked_in_mobile ? m("a.inner", linkAttrs, content) : m("span.inner", content));
+            }
             return m("div.list-element.col-12", element);
         });
         return m("div.mobile", [
