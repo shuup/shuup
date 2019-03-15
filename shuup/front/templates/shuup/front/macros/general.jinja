@@ -359,11 +359,11 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_supplier_info(supplier) %}
+{% macro render_supplier_info(supplier, render_link=True) %}
     {% set supplier_url = shuup.urls.model_url(supplier, raise_when_not_found=False) %}
-    {% if supplier_url %}<a class="supplier-info-link" href="{{ supplier_url }}">{% endif %}
-        <p class="supplier-info"><small>{{ _("By %(supplier_name)s", supplier_name=supplier.name) }}</small></p>
-    {% if supplier_url %}</a>{% endif %}
+    {% if supplier_url and render_link %}<a class="supplier-info-link" href="{{ supplier_url }}">{% endif %}
+        <p class="supplier-info"><small>{{ _("By <strong>%(supplier_name)s</strong>", supplier_name=supplier.name) }}</small></p>
+    {% if supplier_url and render_link %}</a>{% endif %}
 {% endmacro %}
 
 {% macro render_availability_info(shop_product) %}

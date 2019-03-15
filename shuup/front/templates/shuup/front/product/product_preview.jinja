@@ -36,7 +36,7 @@
                     </div>
                     <div class="preview-details">
                         <h2 class="product-name {% if show_supplier_info %}show-supplier-info{% endif %}">{{ product.name }}</h2>
-                        {% if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
+                        {% if show_supplier_info %}{{ render_supplier_info(supplier, render_link=False) }}{% endif %}
                         {% if product.short_description %}
                             <p class="description">
                                 {{ product.short_description|safe }}

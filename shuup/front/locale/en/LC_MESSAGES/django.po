@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 17:12+0000\n"
+"POT-Creation-Date: 2019-03-15 22:12+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -894,7 +894,7 @@ msgid ""
 msgstr ""
 
 #, python-format
-msgid "By %(supplier_name)s"
+msgid "By <strong>%(supplier_name)s</strong>"
 msgstr ""
 
 #, python-brace-format
