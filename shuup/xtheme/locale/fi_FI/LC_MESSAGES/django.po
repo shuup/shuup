@@ -5,7 +5,7 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne@shuup.com>, 2016
 # Janne Tammi <janne@shuup.com>, 2015
@@ -25,9 +25,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 23:57+0000\n"
-"PO-Revision-Date: 2018-09-28 21:19+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2019-01-18 22:57+0000\n"
+"PO-Revision-Date: 2019-01-22 22:56+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -204,6 +204,9 @@ msgstr "Koodinpätkä {} {}"
 msgid "Plugin"
 msgstr "Lisäosa"
 
+msgid "Categories"
+msgstr ""
+
 msgid "Category Links"
 msgstr "Kategorialinkit"
 
@@ -252,23 +255,31 @@ msgstr "Tuotenostot"
 msgid "Count"
 msgstr "Lukumäärä"
 
-msgid "Only show sale items"
-msgstr "Näytä vain myynnissä olevat tuotteet"
-
-msgid "Show only products that have discounts"
-msgstr "Näytä vain alennuksessa olevat tuotteet"
-
 msgid "Only show in-stock and orderable items"
 msgstr "Näytä vain varastossa olevat sekä tilattavat tuotteet"
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
 
 msgid "Product Cross Sells"
 msgstr "Tuotteiden ristiinmyynti"
 
-msgid "category"
-msgstr "kategoria"
+msgid "Category"
+msgstr ""
 
 msgid "Category Products Highlight"
 msgstr "Kategoriatuotenostot"
+
+msgid "Products"
+msgstr ""
+
+msgid "Select all products you want to show"
+msgstr ""
+
+msgid "Product Selection"
+msgstr ""
 
 msgid "In-Place Snippet"
 msgstr "Kohdalla olevat koodinpätkät"
@@ -399,14 +410,14 @@ msgstr "Teemalla ei ole asetuksia."
 msgid "Select theme"
 msgstr "Valitse teema"
 
-msgid "Click here to configure the theme"
-msgstr "Klikkaa tätä asentaaksesi teeman"
+msgid "Theme Guide"
+msgstr ""
 
 msgid "Author"
 msgstr "Tekijä"
 
-msgid "Show guide"
-msgstr "Näytä ohjeistus"
+msgid "Configure"
+msgstr ""
 
 msgid "Activate"
 msgstr "Aktivoi"

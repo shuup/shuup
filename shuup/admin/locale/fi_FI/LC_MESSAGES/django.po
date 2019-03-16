@@ -5,7 +5,7 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne@shuup.com>, 2015-2018
 # Janne Tammi <janne@shuup.com>, 2015
@@ -20,15 +20,15 @@
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tomi Järvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
-# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016-2017
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2016-2017
 # Ville-Pekka Altti <ville-pekka.altti@anders.fi>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-10 16:14+0000\n"
-"PO-Revision-Date: 2018-09-25 17:33+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2019-03-08 17:25+0000\n"
+"PO-Revision-Date: 2019-03-10 04:56+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,14 +77,20 @@ msgstr "Lauantai"
 msgid "Sunday"
 msgstr "Sunnuntai"
 
-msgid "Browse"
-msgstr "Selaa"
-
-msgid "Clear"
-msgstr "Tyhjennä"
-
 msgid "Select"
-msgstr "Valitse"
+msgstr ""
+
+msgid "Select Media"
+msgstr ""
+
+msgid "Select Image"
+msgstr ""
+
+msgid "Select Product"
+msgstr ""
+
+msgid "Select Contact"
+msgstr ""
 
 msgid "Orders"
 msgstr "Tilaukset"
@@ -379,11 +385,14 @@ msgstr "Deaktivoi kontakti"
 msgid "Activate Contact"
 msgstr "Aktivoi kontakti"
 
+msgid "Options"
+msgstr ""
+
 msgid "Actions"
 msgstr "Toiminnot"
 
-msgid "Edit..."
-msgstr "Muokkaa..."
+msgid "Edit"
+msgstr "Muokkaa"
 
 msgid "You can not deactivate a superuser."
 msgstr "Et voi deaktivoida pääkäyttäjää."
@@ -476,114 +485,6 @@ msgstr "Kontaktiryhmien muokkaus onnistui"
 msgid "The contact does not have an associated user."
 msgstr "Kontaktilla ei ole liitettyä käyttäjää."
 
-msgid "About Us"
-msgstr "Tietoja meistä"
-
-msgid "Privacy Policy"
-msgstr "Tietosuojakäytäntö"
-
-msgid "Terms and Conditions"
-msgstr "Käyttöehdot"
-
-msgid "Refund Policy"
-msgstr "Palautusoikeus"
-
-msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
-msgstr "{{ order.shop }} - Tilaus {{ order.identifier }} vastaanotettu"
-
-msgid "Send customer order confirmation email"
-msgstr "Lähetä asiakkaalle tilausvahvistussähköposti"
-
-msgid ""
-"We will configure a notification to send the customer an email after a "
-"placed order. You can disable this option later or even change the layout of"
-" the email."
-msgstr "Määritämme sähköposti-ilmoituksen joka lähetetään asiakkaalle kun hän tekee tilauksen. Voit myöhemmin muuttaa tätä asetusta tai jopa koko sähköpostia."
-
-msgid "Create About Us page"
-msgstr "Luo Tietoja Meistä -sivu"
-
-msgid ""
-"We have already created an 'About Us' template for you based on your shop "
-"information. You must review the page and change it accordingly."
-msgstr "Olemme jo luoneet 'Tietoja Meistä' pohjan käyttöösi kauppasi tietoihin perustuen. Sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
-
-msgid ""
-"We will create an 'About Us' template for you. We will base content of the "
-"page on your shop information. After we are done, you must review the page "
-"and change it accordingly."
-msgstr "Luomme 'Tietoja Meistä' pohjan sinulle. Käytämme sisällön pohjana kauppasi tietoja. Kun olemme valmiita, sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
-
-msgid "Create Privacy Policy page"
-msgstr "Luo tietosuojakäytäntö -sivu"
-
-msgid ""
-"We have already created a 'Privacy Policy' template for you based on your "
-"shop information. You must review the page and change it accordingly."
-msgstr "Olemme jo luoneet 'Tietosuojakäytäntö' -sivun perustuen kauppasi tietoihin. Sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
-
-msgid ""
-"We will create a 'Privacy Policy' template for you. We will base content of "
-"the page on your shop information. After we are done, you must review the "
-"page and change it accordingly."
-msgstr "Luomme 'Tietosuojakäytäntö' -sivun sinulle. Käytämme sisällön pohjana kauppasi tietoja. Kun olemme valmiita, sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
-
-msgid "Create Terms and Conditions page"
-msgstr "Luo Käyttöehdot -sivu"
-
-msgid ""
-"We have already created a 'Terms & Conditions' template for you based on "
-"your shop information. You must review the page and change it accordingly."
-msgstr "Olemme jo luoneet 'Käyttöehdot' pohjan käyttöösi kauppasi tietoihin perustuen. Sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
-
-msgid ""
-"We will create an 'Terms & Conditions' template for you. We will base "
-"content of the page on your shop information. After we are done, you must "
-"review the page and change it accordingly."
-msgstr "Luomme 'Käyttöehdot' -sivun sinulle. Käytämme sisällön pohjana kauppasi tietoja. Kun olemme valmiita, sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
-
-msgid "Create Refund Policy page"
-msgstr "Luo Palautusoikeus -sivu"
-
-msgid ""
-"We have already created a 'Refund Policy' template for you based on your "
-"shop information. You must review the page and change it accordingly."
-msgstr "Olemme jo luoneet 'Palautusoikeus' -sivun perustuen kauppasi tietoihin. Sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
-
-msgid ""
-"We will create an 'Refund Policy' template for you. We will base content of "
-"the page on your shop information. After we are done, you must review the "
-"page and change it accordingly."
-msgstr "Luomme 'Palautusoikeus' -sivun sinulle. Käytämme sisällön pohjana kauppasi tietoja. Kun olemme valmiita, sinun pitää tarkistaa sivu ja muuttaa sitä tarpeen mukaan."
-
-msgid "Configure the footer"
-msgstr "Muokkaa alatunnistetta"
-
-msgid ""
-"We will now configure your shop footer and fill it with some of your shop's "
-"information. Don't worry, you can change this at any time."
-msgstr "Muokkaamme nyt kauppasi alatunnistetta. Lisäämme sinne joitain kauppasi tietoja. Älä silti huoli, voit vaihtaa tätä koska tahansa."
-
-msgid "Content & Behavior"
-msgstr "Sisältö & Käyttäytyminen"
-
-msgid ""
-"Add the initial content and configure the customer notifications for your "
-"shop"
-msgstr "Lisää alustava sisältö kaupallesi ja muokkaa kauppasi asiakasilmoituksia "
-
-msgid "Configure notifications for your shop"
-msgstr "Muokkaa kauppasi ilmoituksia"
-
-msgid "Add the initial content"
-msgstr "Lisää alustava sisältö"
-
-msgid "Configure the initial content pages"
-msgstr "Muokkaa alustavia sisältösivuja"
-
-msgid "Configure some notifications"
-msgstr "Muokkaa joitakin ilmoituksia"
-
 msgid "Currencies"
 msgstr "Valuutat"
 
@@ -605,8 +506,14 @@ msgstr "Aktiivisia asiakkaita"
 msgid "Based on orders within 30 days"
 msgstr "Perustuen viimeisen 30 päivän tilauksiin"
 
-msgid "Demo"
-msgstr "Demo"
+msgid "Labels"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Modified on"
+msgstr ""
 
 msgid "Manufacturers"
 msgstr "Valmistajat"
@@ -645,10 +552,6 @@ msgstr "Kansio %s poistettu."
 msgid "Browse Media"
 msgstr "Selaa mediaa"
 
-#, python-format
-msgid "%(file)s uploaded to %(folder)s"
-msgstr "%(file)s lähetetty kansioon %(folder)s"
-
 msgid "Can not rename shared folder."
 msgstr "Yhteistä kansiota ei voida uudelleennimetä."
 
@@ -676,6 +579,10 @@ msgstr "Yhteistä tiedostoa ei voi siirtää."
 #, python-format
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s siirretty sijainnista %(old)s sijaintiin %(new)s."
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr "%(file)s lähetetty kansioon %(folder)s"
 
 msgid "Show orders"
 msgstr "Näytä tilaukset"
@@ -746,6 +653,9 @@ msgstr "Kaikkien valinta ei ole tuettu toiminto"
 msgid "Print Delivery PDF(s)"
 msgstr "Tulosta Toimitus-PDF:t"
 
+msgid "Details"
+msgstr "Tiedot"
+
 msgid "Payments"
 msgstr "Maksut"
 
@@ -809,8 +719,11 @@ msgid "%(field)s saved successfully."
 msgstr "%(field)s tallennettu onnistuneesti."
 
 #, python-format
-msgid "Edit Addresses -- %s"
-msgstr "Muokkaa osoitteita -- %s"
+msgid "Save -- %s"
+msgstr ""
+
+msgid "Save"
+msgstr "Tallenna"
 
 msgid "Unable to set order as completed at this point"
 msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
@@ -1011,15 +924,6 @@ msgstr "Käyttöoikeusryhmät"
 msgid "The permission group name."
 msgstr "Oikeusryhmän nimi"
 
-msgid "Module Permissions"
-msgstr "Modulin käyttöoikeudet"
-
-msgid ""
-"Select the modules that should be accessible by this permission group. "
-"Modules with the same permissions as selected modules will be added "
-"automatically."
-msgstr "Valitse moduulit, jotka ovat käytettävissä oikeusryhmälle. Modulit, jotka jakavat samat oikeudet, lisätään automaattisesti."
-
 msgid "Set the users that belong to this permission group."
 msgstr "Aseta käyttäjät, jotka kuuluvat oikeusryhmään."
 
@@ -1065,6 +969,12 @@ msgid ""
 "tab."
 msgstr "Tuotteen pääkuva. Voit lisätä lisäkuvia Tuotekuvat välilehdellä."
 
+msgid "Select a manufacturer"
+msgstr ""
+
+msgid "Product type"
+msgstr ""
+
 msgid "Given value is already in use, please use unique SKU and try again."
 msgstr "Annettu arvon on jo käytössä, ole hyvä ja tarkista että tuotenumero ei ole käytössä."
 
@@ -1072,6 +982,9 @@ msgid ""
 "Number of units that can be purchased after the product is out of stock. Set"
 " to blank for product to be purchasable without limits"
 msgstr "Tuotemäärä joka voidaan vielä ostaa kun tuotetta ei ole varastossa. Aseta tyhjäksi mikäli jälkimyyntiä ei haluta rajoittaa."
+
+msgid "Select a category"
+msgstr ""
 
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "Minimiostomäärän tulee olla vähintään 0."
@@ -1154,9 +1067,6 @@ msgstr "Tuote"
 msgid "Edit Cross-Sell: %s"
 msgstr "Muokkaa ristiinmyyntiä: %s"
 
-msgid "Save"
-msgstr "Tallenna"
-
 msgid "Changes saved."
 msgstr "Muutokset tallennettu."
 
@@ -1236,9 +1146,6 @@ msgstr "Massamuokkaus: Tuotteet"
 msgid "Products changed successfully"
 msgstr "Tuotteiden muokkaus onnistui"
 
-msgid "Save as a copy"
-msgstr "Tallenna kopiona"
-
 msgid "Manage Cross-Selling"
 msgstr "Hallinnoi ristiinmyyntiä"
 
@@ -1274,6 +1181,15 @@ msgstr "Muunna paketti-isännäksi"
 
 msgid "Convert to Variation Parent"
 msgstr "Muunna variaatioisännäksi"
+
+msgid "Save and Exit"
+msgstr "Tallenna ja poistu"
+
+msgid "Save and Create New"
+msgstr "Tallenna ja luo uusi"
+
+msgid "Save as a copy"
+msgstr "Tallenna kopiona"
 
 msgid "Sales Dashboard"
 msgstr "Myynnin hallintapaneeli"
@@ -1317,135 +1233,6 @@ msgstr "Symboli"
 
 msgid "Allowed decimals"
 msgstr "Sallitut desimaalit"
-
-msgid ""
-"There is sample data installed. Access \"Settings > Sample Data\" for more "
-"information."
-msgstr "Mallitietueet asennettu. Mene \"Asetukset > Mallitietueet\" saadaksesi lisätietoja."
-
-msgid ""
-"There is sample data installed. Click here to consolidate or delete them."
-msgstr "Mallitietueet asennettu. Klikkaa tästä pitääksesi tai poistaaksesi ne."
-
-msgid "Sample Data"
-msgstr "Mallitietueet"
-
-msgid "Cosmetics and perfumes"
-msgstr "Kosmetiikka ja parfyymit"
-
-msgid "USpicy Makeup Brushes"
-msgstr "USpicy Meikkiharjat"
-
-msgid ""
-"Professional 10 pieces makeup brush set with soft oval toothbrush design"
-msgstr "Ammattilaisten 10 osainen meikkiharjasetti pehmeällä ovaalilla harjapäällä"
-
-msgid "Precision Eyelash Curler"
-msgstr "Precision Silmäripsikiharrin"
-
-msgid ""
-"Precision Eyelash Curler is the professional choice of makeup artists "
-"everywhere."
-msgstr "Precision Silmäripsikiharrin on ammattilaisten valinta kaikkialla."
-
-msgid "PureMoist Lipstick"
-msgstr "PureMoist Huulipuna"
-
-msgid ""
-"PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
-"and protect lips."
-msgstr "PureMoist Huulipuna kostetuttaa ja suojelee huuliasi."
-
-msgid "Clinique Happy"
-msgstr "Clinique Happy"
-
-msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
-msgstr "Ripaus sitrushedelmiä. Runsaasti kukkia. Sekoitus tunteita."
-
-msgid "Tommy Girld by Tommy Hilfiger Perfume"
-msgstr "Tommy Girld by Tommy Hilfiger Perfume"
-
-msgid ""
-"A refreshing and energetic floral - with low notes of sandalwood and "
-"heather."
-msgstr "Virkistävän ja energisen kukkainen - santelipuun ja kanervan viitteillä."
-
-msgid "Bvlgari Omnia Crystalline Eau de Toilette"
-msgstr "Bvlgari Omnia Crystalline Eau de Toilette"
-
-msgid ""
-"Give yourself over to this fragrance as intoxicating and pure as a woman's "
-"soul is fragile."
-msgstr "Antaudu tälle huumaavalle tuoksulle joka on huumaava ja puhdas kuin naisen sielu on hauras."
-
-msgid "Still Jennifer Lopez Perfume"
-msgstr "Still Jennifer Lopez Perfume"
-
-msgid ""
-"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still"
-" fragrance."
-msgstr "Ole itsevarma ja energinen kun käytät Jennifer Lopez Still tuoksuja."
-
-msgid "La Vie Est Belle"
-msgstr "La Vie Est Belle"
-
-msgid "A captivating new scent joins the La vie est belle path to happiness."
-msgstr "Mahtava uusi tuoksu liittyy La Vie Est Bellen iloiseen tuoksusarjaan."
-
-msgid "Smooth Viking Beard Brush"
-msgstr "Pehmeä Viking Beard harja"
-
-msgid "Just a beard brush."
-msgstr "Vain partaharja."
-
-msgid "Beard & Stash Oil"
-msgstr "Beard & Stash Öljy"
-
-msgid "This oil is natural, and is made with the perfect combination of oils."
-msgstr "Tämä luonnontuote on täydellinen yhdistelmä öljyjä."
-
-msgid "Sample Carousel"
-msgstr "Mallikaruselli"
-
-msgid "Business Segment"
-msgstr "Liiketoimintasegmentti"
-
-msgid "Select your business segment to install categories."
-msgstr "Valitse liiketoimintasegmenttisi tuoteryhmien asentamiseen."
-
-msgid "Install Categories"
-msgstr "Asenna tuoteryhmät"
-
-msgid "Check this to install sample categories."
-msgstr "Valitse tämä asentaaksesi tuoteryhmät."
-
-msgid "Install Products"
-msgstr "Asenna tuotteet"
-
-msgid "Check this to install sample products."
-msgstr "Valitse tämä asentaaksesi mallituotteet."
-
-msgid "Install Carousel"
-msgstr "Asenna karuselli"
-
-msgid "Check this to install a sample carousel."
-msgstr "Valitse tämä asentaaksesi mallikarusellin."
-
-msgid "Uninstall Categories"
-msgstr "Poista tuoteryhmät"
-
-msgid "Uninstall Products"
-msgstr "Poista tuotteet"
-
-msgid "Uninstall Carousel"
-msgstr "Poista karuselli"
-
-msgid "Sample data were consolidated"
-msgstr "Mallitietueet pidetään"
-
-msgid ""
-"To start shopping right now, please install some sample data into your shop"
-msgstr "Ole hyvä ja asenna joitakin mallitietueita kauppaasi aloittaaksesi kaupankäynnin välittömästi."
 
 msgid "Service Providers"
 msgstr "Palveluntarjoajat"
@@ -1634,6 +1421,15 @@ msgstr "Lisää logo kaupallesi, jotta kauppasi erottuu"
 msgid "Add logo"
 msgstr "Lisää logo"
 
+msgid "Publish your store"
+msgstr "Julkaise kauppasi"
+
+msgid "Let customers browse your store and make purchases"
+msgstr "Salli asiakkaiden selata kauppaasi ja tehdä ostoksia"
+
+msgid "Publish shop"
+msgstr "Julkaise kauppa"
+
 msgid "Set \"{}\" as the active shop"
 msgstr "Aseta \"{}\" aktiiviseksi kaupaksi"
 
@@ -1726,12 +1522,12 @@ msgstr "Toimittajat"
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr "Valitse kaupat tälle toimittajalle. Jätä tyhjäksi, mikäli se jaetaan kaikkien kauppojen kesken."
 
-msgid "It is not possible to manage inventory when no module is selected."
-msgstr "Varastonhallintaa ei voi tehdä ilman moduulin valintaa."
-
 #, python-format
 msgid "No %s module"
 msgstr "Ei %s -moduulia"
+
+msgid "It is not possible to manage inventory when no module is selected."
+msgstr "Varastonhallintaa ei voi tehdä ilman moduulin valintaa."
 
 msgid "Module"
 msgstr "Moduuli"
@@ -1749,6 +1545,9 @@ msgid ""
 "Statistics will be periodically sent to Shuup.com after 24 hours. Click here"
 " for more information."
 msgstr "Statistiikat tullaan jaksoittain lähettämään Shuup.com:lle 24 tunnin jälkeen. Paina tästä saadaksesi lisäinformaatiota."
+
+msgid "Opt-in for telemetry"
+msgstr ""
 
 msgid "Customer Tax Groups"
 msgstr "Asiakasveroryhmät"
@@ -1972,6 +1771,9 @@ msgstr "Uusi attribuutti"
 msgid "Login"
 msgstr "Kirjaudu sisään"
 
+msgid "Welcome back"
+msgstr ""
+
 msgid "Forgot your password?"
 msgstr "Unohditko salasanasi?"
 
@@ -2013,23 +1815,20 @@ msgstr "Nollaa salasana"
 msgid "Send password recovery instructions"
 msgstr "Lähetä salasanan palautusohjeet"
 
+msgid "Dashboard"
+msgstr "Hallintapaneeli"
+
 msgid "Quicklinks"
 msgstr "Pikalinkit"
 
 msgid "Menu"
 msgstr "Valikko"
 
-msgid "Dashboard"
-msgstr "Hallintapaneeli"
-
-msgid "Go home"
-msgstr "Mene etusivulle"
-
 msgid "Search for"
 msgstr "Etsi"
 
-msgid "Support ID: "
-msgstr "Tukinumero: "
+msgid "Go home"
+msgstr "Mene etusivulle"
 
 msgid "Hello"
 msgstr "Hei"
@@ -3109,18 +2908,12 @@ msgstr "Käydään läpi joitakin juttuja, joita voit tehdä täällä. Klikkaa 
 msgid "Date"
 msgstr "Päivämäärä"
 
-msgid "Save and Exit"
-msgstr "Tallenna ja poistu"
-
-msgid "This action effects on all products."
-msgstr "Tämä vaikuttaa kaikkiin tuotteisiin."
+msgid "This action effects on all items."
+msgstr ""
 
 #, python-format
-msgid "This action effects %(item_count)s products."
-msgstr "Tämä vaikuttaa %(item_count)s tuotteeseen."
-
-msgid "Edit"
-msgstr "Muokkaa"
+msgid "This action affects %(item_count)s item(s)."
+msgstr ""
 
 msgid "Upload"
 msgstr "Lataa"
@@ -3149,8 +2942,47 @@ msgstr "Yhtään maksua ei ole vielä luotu."
 msgid "Are you sure you want to delete this payment?"
 msgstr "Oletko varma, että haluat poistaa tämän maksun?"
 
-msgid "Order Contents"
-msgstr "Tilauksen sisältö"
+msgid "Order Details"
+msgstr ""
+
+msgid "Order Number"
+msgstr "Tilausnumero"
+
+msgid "Reference"
+msgstr "Viite"
+
+msgid "Label"
+msgstr "Merkki"
+
+msgid "Payment Method"
+msgstr "Maksutapa"
+
+msgid "Shipping Method"
+msgstr "Toimitustapa"
+
+msgid "Ordered by"
+msgstr "Järjestä"
+
+msgid "Creator"
+msgstr "Laatija"
+
+msgid "Tax number"
+msgstr "veronumero"
+
+msgid "Total Price (taxless)"
+msgstr "Kokonaishinta (veroton)"
+
+msgid "Total Price"
+msgstr "Kokonaishinta"
+
+msgid "Customer Comment"
+msgstr "Asiakaskommentti"
+
+msgid "Tracking codes"
+msgstr "Seurantakoodit"
+
+msgid "Address Information"
+msgstr "Osoitetieto"
 
 msgid "Text"
 msgstr "Teksti"
@@ -3226,6 +3058,9 @@ msgstr "Oletko varma, että haluat tehdä kokonaishyvityksen?"
 msgid "Confirm Refund"
 msgstr "Vahvista hyvitys"
 
+msgid "Order Contents"
+msgstr "Tilauksen sisältö"
+
 msgid "Paid"
 msgstr "Maksettu"
 
@@ -3259,47 +3094,33 @@ msgstr "Aseta kaikki tuotteet lähetettäväksi"
 msgid "Ship All"
 msgstr "Lähetä kaikki"
 
-msgid "Details"
-msgstr "Tiedot"
+msgid "Select all permissions"
+msgstr ""
 
-msgid "Order Number"
-msgstr "Tilausnumero"
+msgid "Deselect all permissions"
+msgstr ""
 
-msgid "Reference"
-msgstr "Viite"
+msgid "(All permissions granted)"
+msgstr ""
 
-msgid "Label"
-msgstr "Merkki"
+msgid "(Partial permissions granted)"
+msgstr ""
 
-msgid "Ordered by"
-msgstr "Järjestä"
+msgid "Module permission"
+msgstr ""
 
-msgid "Creator"
-msgstr "Laatija"
+msgid "Select the following permission to enable users to access this module."
+msgstr ""
 
-msgid "Tax number"
-msgstr "veronumero"
+msgid "Select all permissions for this module"
+msgstr ""
 
-msgid "Total Price (taxless)"
-msgstr "Kokonaishinta (veroton)"
+msgid "Features permissions"
+msgstr ""
 
-msgid "Total Price"
-msgstr "Kokonaishinta"
-
-msgid "Customer Comment"
-msgstr "Asiakaskommentti"
-
-msgid "Payment Method"
-msgstr "Maksutapa"
-
-msgid "Shipping Method"
-msgstr "Toimitustapa"
-
-msgid "Tracking codes"
-msgstr "Seurantakoodit"
-
-msgid "Address Information"
-msgstr "Osoitetieto"
+msgid ""
+"Select the permissions to enable access to specific features of the module."
+msgstr ""
 
 msgid "Error!"
 msgstr "Virhe!"
@@ -3345,9 +3166,6 @@ msgstr "Pääkuva"
 msgid "Set as primary image"
 msgstr "Aseta pääkuvaksi"
 
-msgid "Advanced options"
-msgstr "Edistyneet asetukset"
-
 msgid "Product Images"
 msgstr "Tuotekuvat"
 
@@ -3359,6 +3177,9 @@ msgstr "Voit liittää tiedostoja kuten manuaaleja tuotteellesi."
 
 msgid "Showcase your merchandise here."
 msgstr "Esittele tuotettasi täällä."
+
+msgid "Drop files here or click to <a href=\"#\">browse</a>."
+msgstr ""
 
 msgid "All the orders that have this product."
 msgstr "Kaikki tilaukset, joissa tämä tuote on."
@@ -3472,14 +3293,17 @@ msgstr "Asiakkaat"
 msgid "Today"
 msgstr "Tänään"
 
-msgid "MTD"
-msgstr "MTD"
+msgid "Month to date (MTD)"
+msgstr ""
 
-msgid "YTD"
-msgstr "YTD"
+msgid "Year to date (YTD)"
+msgstr ""
 
 msgid "Totals"
 msgstr "Yhteensä"
+
+msgid "Consolidate Data"
+msgstr ""
 
 msgid ""
 "Your shop currently has some sample data installed. Select below which "
@@ -3678,9 +3502,6 @@ msgstr "Uusi %(model)s"
 msgid "Discard Changes"
 msgstr "Hylkää muutokset"
 
-msgid "Save and Create New"
-msgstr "Tallenna ja luo uusi"
-
 #, python-format
 msgid "Are you sure you wish to delete %s?"
 msgstr "Haluatko poistaa %s?"
@@ -3705,15 +3526,24 @@ msgstr "Sivua ei voida näyttää. %(reason)s"
 msgid "Log in with different credentials..."
 msgstr "Kirjaudu sisään toisilla tunnuksilla..."
 
-msgid "You must be logged in."
-msgstr "Sinun täytyy olla kirjautunut sisään."
+msgid "Sign in to continue"
+msgstr ""
 
 msgid "You must be a staff member."
 msgstr "Sinun tulee olla henkilökunnan jäsen."
 
+msgid "There is no active shop available. Contact support for more details."
+msgstr ""
+
 #, python-format
 msgid "You do not have the required permissions: %s"
 msgstr "Sinulla ei ole riittäviä käyttöoikeuksia: %s"
+
+#, python-brace-format
+msgid ""
+"Can't view this page. You do not have the required permission(s): "
+"{permissions}"
+msgstr ""
 
 msgid "Unnamed"
 msgstr "Nimetön"
@@ -3750,13 +3580,6 @@ msgstr "Virheellinen objekti."
 msgid "Invalid model."
 msgstr "Virheellinen malli."
 
-#, python-format
-msgid "You do not have the required permission(s): %s"
-msgstr "Sinulta puuttuu vaaditut oikeudet: %s"
-
-msgid "Unauthorized"
-msgstr "Luvaton"
-
 msgid "Object not found"
 msgstr "Objektia ei löytynyt"
 
@@ -3771,15 +3594,6 @@ msgstr "Lopeta velho"
 
 msgid "Complete the setup wizard"
 msgstr "Lopeta asennusvelho"
-
-msgid "Publish your store"
-msgstr "Julkaise kauppasi"
-
-msgid "Let customers browse your store and make purchases"
-msgstr "Salli asiakkaiden selata kauppaasi ja tehdä ostoksia"
-
-msgid "Publish shop"
-msgstr "Julkaise kauppa"
 
 msgid ""
 "A reset password email was sent. Please, follow the instructions to set a "
