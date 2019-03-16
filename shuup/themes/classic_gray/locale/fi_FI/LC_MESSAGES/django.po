@@ -5,7 +5,7 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne@shuup.com>, 2015
 # Janne Tammi <janne@shuup.com>, 2015
@@ -21,13 +21,13 @@
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tomi Järvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
-# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-13 17:48+0000\n"
-"PO-Revision-Date: 2018-07-14 09:35+0000\n"
+"POT-Creation-Date: 2019-02-21 23:09+0000\n"
+"PO-Revision-Date: 2019-02-22 07:18+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -35,9 +35,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid "Classic Gray"
-msgstr "Classic Gray"
 
 msgid "This theme has no special settings to configure."
 msgstr "Tällä teemalla ei ole muokattavia lisäasetuksia."
@@ -55,15 +52,6 @@ msgstr "Valikko"
 msgid "Products"
 msgstr "Tuotteet"
 
-msgid "Show Frontpage Welcome Text"
-msgstr "Näytä tervetulotoivotus etusivulla"
-
-msgid "Hide prices"
-msgstr "Piilota hinnat"
-
-msgid "Set shop in catalog mode"
-msgstr "Aseta kauppa katalogi tilaan"
-
 msgid "Default"
 msgstr "Oletus"
 
@@ -72,3 +60,6 @@ msgstr "Midnight Blue"
 
 msgid "Candy Pink"
 msgstr "Candy Pink"
+
+msgid "Show Frontpage Welcome Text"
+msgstr "Näytä tervetulotoivotus etusivulla"

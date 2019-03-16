@@ -5,7 +5,7 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Janne Tammi <janne@shuup.com>, 2015,2017
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
@@ -23,9 +23,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-04 16:19+0000\n"
-"PO-Revision-Date: 2018-09-28 21:15+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2018-11-21 19:51+0000\n"
+"PO-Revision-Date: 2018-12-07 17:35+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,6 +92,12 @@ msgstr "Tämän sisältöalueen sisältö näytetään vain tällä sivulla."
 #, python-format
 msgid "Content in this placeholder is shown for %(title)s only."
 msgstr "Tämä sisältöalue näytetään vain sivulle %(title)s."
+
+msgid "Website"
+msgstr ""
+
+msgid "Article"
+msgstr ""
 
 msgid "shop"
 msgstr "kauppa"
@@ -205,6 +211,50 @@ msgstr "sivut"
 msgid "Untitled"
 msgstr "Nimetön"
 
+msgid "Image"
+msgstr ""
+
+msgid "The image of your object."
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid ""
+"The title of your object as it should appear within the graph, e.g. The "
+"Rock."
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "A one to two sentence description of your object."
+msgstr ""
+
+msgid "Section"
+msgstr ""
+
+msgid ""
+"A high-level section name, e.g. Technology. Only applicable when type is "
+"Article."
+msgstr ""
+
+msgid "Tags"
+msgstr ""
+
+msgid ""
+"Tag words associated with this article. Only applicable when type is "
+"Article."
+msgstr ""
+
+msgid "Article author"
+msgstr ""
+
+msgid ""
+"The name of the author for the article. Only applicable when type is "
+"Article."
+msgstr ""
+
 msgid "CMS Page Links"
 msgstr "Sisällönhallinnan sivulinkit"
 
@@ -222,6 +272,11 @@ msgstr "Oletussivu"
 
 msgid "Page with sidebar"
 msgstr "Sisältösivu sivupalkilla"
+
+msgid ""
+"Fill the fields below to add extra OpenGraph information to the page meta.\n"
+"        If not informed, some values will be inferred from the page attributes."
+msgstr ""
 
 msgid "New Page"
 msgstr "Uusi sivu"
