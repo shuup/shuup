@@ -134,6 +134,7 @@ def test_xtheme_plugin_form_selected_language_pane(admin_user, browser, live_ser
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_xtheme_editor_form_picture(admin_user, browser, live_server, settings):
     """
     Test that is is possible to add image fron media browser
