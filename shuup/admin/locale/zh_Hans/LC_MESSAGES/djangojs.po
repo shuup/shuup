@@ -1,23 +1,23 @@
 # English translations for PROJECT.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-28 21:58+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2019-03-08 17:25+0000\n"
+"PO-Revision-Date: 2019-03-12 05:50+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Unexpected error while uploading files."
@@ -47,7 +47,7 @@ msgid "New folder"
 msgstr "新文件夹"
 
 msgid "current"
-msgstr ""
+msgstr "当前"
 
 msgid "Oldest first"
 msgstr "最老优先"
@@ -115,8 +115,14 @@ msgstr "数量"
 msgid "Unit Price"
 msgstr "单价"
 
+msgid "Discounted Unit Price"
+msgstr "已折扣的单价"
+
 msgid "Discount amount"
 msgstr "折扣金额"
+
+msgid "Discount percent"
+msgstr "折扣率"
 
 msgid "Total (excluding taxes)"
 msgstr "总共 (不含税)"
@@ -133,74 +139,34 @@ msgstr "账单地址"
 msgid "Shipping address"
 msgstr "收货地址"
 
-msgid "Full Name"
-msgstr ""
+#, javascript-format
+msgid "Customer with same %s already exists."
+msgstr "具有相同%s的客户已存在。"
 
-msgid "Phone"
-msgstr "电话"
-
-msgid "Email"
-msgstr "电子邮箱"
-
-msgid "Groups"
-msgstr ""
-
-msgid "Companies"
-msgstr ""
-
-msgid "Merchant Notes"
-msgstr ""
-
-msgid "Year"
-msgstr ""
-
-msgid "Total Sales"
-msgstr ""
-
-msgid "Shipment Status"
-msgstr ""
-
-msgid "Payment Status"
-msgstr ""
-
-msgid "Order Status"
-msgstr ""
-
-msgid "Customer Information"
-msgstr ""
-
-msgid "Order Summary"
-msgstr ""
-
-msgid "Recent Orders"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "A new customer will be created based on billing address."
-msgstr "根据账单地址建立新的顾客。"
-
-msgid "Customer"
-msgstr "顾客"
-
-msgid "Select Existing Customer"
-msgstr "选择现有的顾客"
-
-msgid "New Customer"
-msgstr "新顾客"
-
-msgid "View Details"
-msgstr ""
+#, javascript-format
+msgid "Click to select user %s."
+msgstr "单击此处可选择用户%s"
 
 msgid "Save customer details while creating order"
 msgstr "订单形成时保存顾客信息"
 
+msgid ""
+"Checking this box will save entered customer data to your contacts list."
+msgstr "选中此框会将输入的客户数据保存到您的联系人列表中"
+
 msgid "Ship to billing address"
 msgstr "发货至账单地址"
 
+msgid ""
+"Checking this will make the shipping address the same as the billing "
+"address."
+msgstr "选中此选项将使送货地址与帐单邮寄地址相同"
+
 msgid "Order for company"
 msgstr "为公司订购"
+
+msgid "Check this if the order is for a company or business with a tax ID."
+msgstr "选中此选项将使送货地址与帐单邮寄地址相同"
 
 msgid "Billing Address"
 msgstr "账单地址"
@@ -208,17 +174,89 @@ msgstr "账单地址"
 msgid "Shipping Address"
 msgstr "收货地址"
 
+msgid "Full Name"
+msgstr "全称"
+
+msgid "Phone"
+msgstr "电话"
+
+msgid "Email"
+msgstr "电子邮箱"
+
+msgid "Tax Number"
+msgstr "税号"
+
+msgid "Groups"
+msgstr "组"
+
+msgid "Companies"
+msgstr "公司"
+
+msgid "Merchant Notes"
+msgstr "贸易商说明"
+
+msgid "Year"
+msgstr "年"
+
+msgid "Total Sales"
+msgstr "总销售额"
+
+msgid "Shipment Status"
+msgstr "配送状态"
+
+msgid "Payment Status"
+msgstr "支付状态"
+
+msgid "Order Status"
+msgstr "订单状态"
+
+msgid "Search by name or email"
+msgstr "按名称或电子邮件搜索"
+
+msgid "Customer Search"
+msgstr "顾客搜索"
+
+msgid ""
+"Search for existing customers by searching by name or email or click the "
+"magnifying glass for more fine-grained filtering. Clear the search filter to"
+" create an order for a new customer."
+msgstr "通过按名称或电子邮件搜索来搜索现有客户，或单击放大镜以获得更细粒度的过滤。 清除搜索过滤器以为新客户创建订单。"
+
+msgid "Customer"
+msgstr "顾客"
+
+msgid "View Details"
+msgstr "查看详情"
+
+msgid "A new customer will be created based on billing address."
+msgstr "根据账单地址建立新的顾客。"
+
+msgid "Customer Information"
+msgstr "顾客信息"
+
+msgid "Order Summary"
+msgstr "订单摘要"
+
+msgid "Recent Orders"
+msgstr "最近订单"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Warning: No customer account is currently associated with this order."
+msgstr "警告：目前没有客户帐户与此订单相关联。"
+
 msgid "Back"
 msgstr "后退"
 
 msgid "Confirm"
 msgstr "确定"
 
-msgid "Discard Changes"
-msgstr ""
-
 msgid "Select Shop"
 msgstr "选择商店"
+
+msgid "Discard Changes"
+msgstr "放弃更改"
 
 msgid "Customer Details"
 msgstr "顾客详细信息"
@@ -241,10 +279,10 @@ msgid "Proceed"
 msgstr "进行"
 
 msgid "Logical Count"
-msgstr ""
+msgstr "逻辑盘点"
 
 msgid "Physical Count"
-msgstr ""
+msgstr "实物盘点"
 
 msgid "Select product"
 msgstr "选择产品"
@@ -252,44 +290,99 @@ msgstr "选择产品"
 msgid "Text/Comment"
 msgstr "文本/注释"
 
+msgid ""
+"Enter a comment or text note about the order. This could be anything from "
+"special order requests to special shipping needs."
+msgstr "输入有关订单的评论或文字说明。 这可以是从特殊订单请求到特殊运输需求的任何内容。"
+
 msgid "Qty"
 msgstr "数量"
+
+msgid "Enter the number of units of the product ordered."
+msgstr "输入订购产品的单位数量"
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings. Total price will be automatically calculated."
+msgstr "输入产品的单个单位的常规基本价格。 如果选择现有产品，则已在产品设置中确定价格。 总价将自动计算。"
 
 msgid "Total Price"
 msgstr "总价"
 
+msgid ""
+"Enter the total amount for the line item. Unit price will be automatically "
+"calculated."
+msgstr "输入行项的总金额，单价将自动计算。"
+
 msgid "Base Unit Price"
 msgstr "基本单价"
 
-msgid "Discounted Unit Price"
-msgstr "已折扣的单价"
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings."
+msgstr "输入产品单个单位的常规基本价格。如果选择了现有产品，则价格已在产品设置中确定。"
+
+msgid ""
+"Enter the total discounted price for a single product unit in the order. "
+"Discount percent, Total Discount Amount, and Line Total will be "
+"automatically calculated."
+msgstr "在订单中输入单个产品单位的总折扣价格。折扣百分比、折扣总额和行总数将自动计算。"
 
 msgid "Discount Percent"
 msgstr "折扣率"
 
+msgid ""
+"Enter the discount percentage (%) for the line item. Discounted Unit Price, "
+"Total Discount Amount, and Line Total will be automatically."
+msgstr "输入订单项的折扣百分比（％）。 折扣单价，总折扣金额和行总额将自动生效。"
+
 msgid "Total Discount Amount"
 msgstr "总折扣金额"
+
+msgid ""
+"Enter the total discount amount for the line item. Discounted Unit Price, "
+"Discount percent, and Line Total will be automatically calculated."
+msgstr "输入订单项的总折扣金额。 将自动计算折扣单价，折扣百分比和行总额。"
 
 msgid "Line Total"
 msgstr "总行"
 
+msgid ""
+"Enter the total amount for the line item. Discounted Unit Price, Discount "
+"percent, and Total Discount Amount will be automatically calculated."
+msgstr "输入订单项的总金额。 将自动计算折扣单价，折扣百分比和总折扣金额。"
+
 msgid "Orderline type"
 msgstr "订单行类型"
+
+msgid "Search product by name, SKU, or barcode"
+msgstr "按名称，SKU或条形码搜索产品"
 
 msgid ""
 "If your product prices vary based on customer, you might want to select "
 "customer first."
-msgstr ""
+msgstr "如果您的产品价格因客户而异，您可能需要先选择客户。"
 
 #, javascript-format
-msgid "All prices are in %s currency."
-msgstr ""
+msgid "All prices are in %s and include taxes."
+msgstr "所有价格均以%s为单位，含税。"
 
-msgid "All prices include taxes."
-msgstr "全部价格包含税。"
+#, javascript-format
+msgid "All prices are in %s. Taxes not included"
+msgstr "所有价格均以%s为单位，不含税。"
 
-msgid "Taxes not included."
-msgstr "不包含税。"
+msgid "Product Quick Adder"
+msgstr "产品快速加法器"
+
+msgid ""
+"Search for products to add to the order by searching by name, SKU, or "
+"barcode or click the magnifying glass for more fine-grained filtering."
+msgstr "通过按名称，SKU或条形码搜索来搜索要添加到订单中的产品，或单击放大镜以进行更细粒度的过滤。"
+
+msgid "Automatically add selected product"
+msgstr "自动添加所选产品"
 
 msgid "Add new line"
 msgstr "添加新行"
@@ -297,8 +390,18 @@ msgstr "添加新行"
 msgid "No shipping method"
 msgstr "无配送方式"
 
+msgid ""
+"Select a shipping method for the order. These methods are defined in "
+"shipping settings."
+msgstr "选择订单的送货方式， 这些方法在装运设置中定义。"
+
 msgid "No payment method"
 msgstr "无支付方式"
+
+msgid ""
+"Select a payment method for the order. These methods are defined in payment "
+"settings."
+msgstr "选择订单的付款方式， 这些方法在付款设置中定义。"
 
 msgid "Shop"
 msgstr "商店"
@@ -309,29 +412,78 @@ msgstr "产品"
 msgid "Other"
 msgstr "其他"
 
+msgid "billing"
+msgstr "账单"
+
+msgid "shipping"
+msgstr "配送"
+
+#, javascript-format
+msgid "Enter the name for the %s address."
+msgstr "输入%s地址的名称"
+
 msgid "Tax number"
 msgstr "税号"
+
+msgid "Enter the company tax (ID) number."
+msgstr "输入公司税（ID）编号"
+
+#, javascript-format
+msgid "Enter the best %s contact phone number."
+msgstr "输入最佳%s联系人电话号码"
+
+#, javascript-format
+msgid ""
+"Enter the %s email address for transaction receipts and communications."
+msgstr "输入交易收据和通信的%s电子邮件地址"
 
 msgid "Street"
 msgstr "街道"
 
+#, javascript-format
+msgid "Enter the %s street address."
+msgstr "输入%s街道地址"
+
 msgid "Street (2)"
 msgstr "街道 (2)"
+
+#, javascript-format
+msgid "Enter the %s street address (2)."
+msgstr "输入%s街道地址（2）"
 
 msgid "ZIP / Postal code"
 msgstr "邮政编码"
 
+#, javascript-format
+msgid "Enter the zip or postal code of the %s address."
+msgstr "输入%s地址的邮政编码或邮政编码"
+
 msgid "City"
 msgstr "城市"
+
+#, javascript-format
+msgid "Enter the city of the %s address."
+msgstr "输入%s地址的城市"
 
 msgid "Region"
 msgstr "区域"
 
+#, javascript-format
+msgid "Enter the region, state, or province of the %s address."
+msgstr "输入 %s地址的区域，州或省"
+
 msgid "Country"
 msgstr "国家"
 
+#, javascript-format
+msgid "Enter the country of the %s address."
+msgstr "输入%s地址的国家/地区"
+
 msgid "No records found."
-msgstr ""
+msgstr "没有找到记录"
+
+msgid "Missing JavaScript dependencies detected"
+msgstr "检测到缺少JavaScript依赖项"
 
 msgid "Identifier"
 msgstr "标识符"
@@ -355,11 +507,11 @@ msgstr "添加新值"
 msgid "Variable Name"
 msgstr "变量名"
 
-msgid "DELETE"
-msgstr "删除"
-
 msgid "Variable"
 msgstr "变量"
+
+msgid "Identifer"
+msgstr "识别码"
 
 msgid "Show identifier fields (for advanced users)"
 msgstr "显示标识符域 (供高级用户)"
@@ -373,37 +525,157 @@ msgstr "添加新变量"
 msgid "No browser URL for kind:"
 msgstr "无浏览器URL："
 
-msgid "Expand Editor"
-msgstr "展开编辑器"
+msgid "Clear"
+msgstr "清空"
+
+msgid "Drop files here or click to browse."
+msgstr "在此处删除文件或单击以浏览"
+
+msgid "only images can be uploaded!"
+msgstr "只能上传图片！"
 
 msgid "No results."
 msgstr "无搜索结果。"
 
 msgid "The results could not be loaded"
-msgstr ""
+msgstr "无法加载结果"
 
 #, javascript-format
 msgid "Please delete %s character"
 msgid_plural "Please delete %s characters"
-msgstr[0] ""
+msgstr[0] "请删除%s个字符"
 
 #, javascript-format
 msgid "Please enter %s or more characters"
-msgstr ""
+msgstr "请输入%s或更多字符"
 
 msgid "Loading more results..."
-msgstr ""
+msgstr "加载更多结果......"
 
 #, javascript-format
 msgid "You can only select %s item"
 msgid_plural "You can only select %s items"
-msgstr[0] ""
+msgstr[0] "您只能选择%s项目"
 
 msgid "No results found"
-msgstr ""
+msgstr "没有找到结果"
 
 msgid "Searching..."
-msgstr ""
+msgstr "搜索中..."
+
+msgid "Quick Links"
+msgstr "快速链接"
+
+msgid "Quick Links to your most used features."
+msgstr "快速链接到您最常用的功能"
+
+msgid "Orders"
+msgstr "订单"
+
+msgid "Track and filter your customers’ orders here."
+msgstr "在此处跟踪和过滤客户的订单"
+
+msgid "Products"
+msgstr "产品"
+
+msgid "All your exciting products and features are located here."
+msgstr "您所有令人兴奋的产品和功能都在这里"
+
+msgid "Contacts"
+msgstr "联系人"
+
+msgid ""
+"All your customer data is located here. Target and organize your clients "
+"details your way!"
+msgstr "您的所有客户数据都位于此处， 以您的方式定位和组织您的客户详细信息！"
+
+msgid "Campaigns"
+msgstr "活动"
+
+msgid ""
+"Great loyalty tool for creating marketing, campaigns, special offers and "
+"coupons to entice your shoppers!"
+msgstr "强大的忠诚度工具，用于创建营销、活动、特别优惠和优惠券，以吸引您的购物者！"
+
+msgid ""
+"Set offers based on their previous purchase behavior to up- and cross sale "
+"your inventory."
+msgstr "根据以前的购买行为设置优惠，以提升和交叉销售您的广告资源。"
+
+msgid "Content"
+msgstr "内容"
+
+msgid ""
+"The make-over tool to customize you site themes, add pages and product "
+"carousels. Incorporate any media to make your store pop!"
+msgstr "用于自定义网站主题，添加页面和产品轮播的修改工具。 整合任何媒体，让您的商店流行！"
+
+msgid "Reports"
+msgstr "报告"
+
+msgid ""
+"Your reporting tool to build and analyze your consumer behavior information "
+"that can assist with your business decisions."
+msgstr "您的报告工具，用于构建和分析可帮助您做出业务决策的消费者行为信息。"
+
+msgid "Shops"
+msgstr "商店"
+
+msgid ""
+"Place for your Shop specific settings. You can customize taxes, currencies, "
+"customer groups, and many other things in this menu."
+msgstr "适用于您的商店特定设置。 您可以在此菜单中自定义税金、货币、客户组和许多其他内容。"
+
+msgid "Addons"
+msgstr "插件"
+
+msgid ""
+"This is your connection interface. Addons and other systems you use can be "
+"attached to your store through powerful data connections."
+msgstr "这是您的连接界面。 您使用的插件和其他系统可以通过强大的数据连接附加到您的商店。"
+
+msgid ""
+"Supercharge your site and gather crazy amounts of data with integrations to "
+"CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of."
+msgstr "通过集成到CRM和ERP，POS和PIM，或者您能想到的任何其他首字母缩略词，为您的网站增加收集并收集大量数据。"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid ""
+"The nuts and bolts of your store are found here. From individual country "
+"tax-regulations to your contact details."
+msgstr "您的商店的螺母和螺栓在这里找到。 从各个国家的税收法规到您的联系方式。"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid ""
+"Lost and cannot find your way? No worries, you can search contacts, "
+"settings, add-ons and more features from here."
+msgstr "迷失了，找不到你的方向？ 不用担心，您可以从这里搜索联系人，设置，附加组件和更多功能。"
+
+msgid "View your storefront"
+msgstr "查看您的店面"
+
+msgid "Preview your shop and all the cool features you have created!"
+msgstr "预览您的商店以及您创建的所有炫酷功能！"
+
+msgid "We're done!"
+msgstr "我们完成了！"
+
+msgid "It was nice to show you around!"
+msgstr "很高兴为你到处展示！"
+
+msgid ""
+"If you need to run it again, fire it up from the menu in the top right."
+msgstr "如果您需要再次运行它，请从右上角的菜单中启动它。"
+
+msgid "Learn more at the Shuup Help Center"
+msgstr "在Shuup帮助中心了解更多信息"
+
+msgid "Mass actions"
+msgstr "群众行动"
 
 msgid "From"
 msgstr "从"
@@ -413,6 +685,9 @@ msgstr "至"
 
 msgid "Items per page"
 msgstr "每页物品"
+
+msgid "Page"
+msgstr "页面"
 
 msgid "Reset filters"
 msgstr "重置过滤器"
@@ -445,6 +720,51 @@ msgstr "按%s过滤"
 msgid "Filters"
 msgstr "过滤器"
 
+msgid "Show filters"
+msgstr "显示过滤器"
+
+msgid "Select Action"
+msgstr "选择行动"
+
+msgid "Clear Selections"
+msgstr "清楚选项"
+
+msgid "Select All"
+msgstr "全选"
+
+#, javascript-format
+msgid "Select All %s Items"
+msgstr "选择所有%s项目"
+
+#, javascript-format
+msgid "There are no %s to show"
+msgstr "没有%s要显示"
+
+msgid "There is no item to show"
+msgstr "没有项目要展示"
+
+msgid "with selected filters"
+msgstr "选择过滤器"
+
+msgid "How about creating a new entry?"
+msgstr "如何创建新条目？"
+
+msgid "Mass Action complete."
+msgstr "群众行动完成"
+
+msgid "Something went wrong."
+msgstr "出了点问题"
+
+#, javascript-format
+msgid "All %s Items Selected"
+msgstr "所有%s项目已选中"
+
+msgid "You haven't selected anything"
+msgstr "你没有选择任何东西"
+
+msgid "Confirm action by clicking OK!"
+msgstr "单击确定确认操作！"
+
 msgid "Are you sure you want to delete this media?"
 msgstr "您确定要删除该媒体吗？"
 
@@ -454,23 +774,8 @@ msgstr "设置为主要图像"
 msgid "Primary image"
 msgstr "主要图像"
 
-msgid "Bold"
-msgstr "粗体"
-
-msgid "Italic"
-msgstr "斜体"
-
-msgid "List"
-msgstr "列表"
-
-msgid "Ordered list"
-msgstr "订单列表"
-
-msgid "Link"
-msgstr "链接"
-
-msgid "Editor"
-msgstr "编辑器"
-
-msgid "Done"
+msgid "Finish"
 msgstr "完成"
+
+msgid "Skip"
+msgstr "跳跃"

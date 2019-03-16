@@ -1,30 +1,30 @@
 # English translations for PROJECT.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 20:11+0000\n"
-"PO-Revision-Date: 2016-06-08 08:56+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
+"POT-Creation-Date: 2018-11-20 19:05+0000\n"
+"PO-Revision-Date: 2019-03-14 07:06+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cmn\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#, c-format
+#, javascript-format
 msgid "Edit %s"
-msgstr ""
+msgstr "编辑%s"
 
-#, c-format
+#, javascript-format
 msgid "Error: Cannot add more than %s cells to one row."
 msgstr "出错：无法添加多于 %s单元格至同一行。"
 
@@ -37,13 +37,20 @@ msgstr "您确定要删除该单元格吗？"
 msgid "Are you sure you wish to publish changes made to this view?"
 msgstr "您确定要发布该视图的更改吗？"
 
+msgid "You have changed the form. Do you want to save them before publishing?"
+msgstr "您已经改变了形式。您想在发布之前保存它们吗？"
+
 msgid ""
 "Are you sure you wish to revert all changes made since the last published "
 "version?"
 msgstr "自从上一次版本发布后，您确定要复原所有更改吗？"
 
-msgid "Changing plugins will cause other changes made on this form to be lost."
+msgid ""
+"Changing plugins will cause other changes made on this form to be lost."
 msgstr "改变插件将导致该表格上其他更改的丢失。"
+
+msgid "Custom CSS/JS"
+msgstr "自定义 CSS/JS"
 
 msgid "Exit Edit"
 msgstr "退出编辑"

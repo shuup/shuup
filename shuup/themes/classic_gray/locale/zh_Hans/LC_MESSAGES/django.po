@@ -1,28 +1,48 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 20:16+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2019-02-21 23:09+0000\n"
+"PO-Revision-Date: 2019-03-14 05:52+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgid "This theme has no special settings to configure."
+msgstr "此主题没有要配置的特殊设置。"
+
 msgid "Home"
-msgstr ""
+msgstr "主页"
 
 #, python-format
 msgid "Welcome to %(shop_name)s!"
-msgstr ""
+msgstr "欢迎到 %(shop_name)s!"
+
+msgid "Menu"
+msgstr "菜单"
+
+msgid "Products"
+msgstr "产品"
+
+msgid "Default"
+msgstr "默认"
+
+msgid "Midnight Blue"
+msgstr "午夜蓝"
+
+msgid "Candy Pink"
+msgstr "糖果粉"
 
 msgid "Show Frontpage Welcome Text"
-msgstr ""
+msgstr "首页显示欢迎文本"

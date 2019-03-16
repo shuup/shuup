@@ -1,33 +1,295 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-28 21:59+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2019-02-12 17:40+0000\n"
+"PO-Revision-Date: 2019-03-13 03:06+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Mutable Address"
+msgstr "可变地址"
+
+msgid "Mutable Addressess can be fetched, created, updated and deleted."
+msgstr "可以获取、创建、更新和删除可变地址。"
+
+msgid "Attributes"
+msgstr "属性"
+
+msgid "Attributes can be listed, fetched, created, updated and deleted."
+msgstr "属性可以列出、获取、创建、更新和删除。"
+
+msgid "Product does not exist."
+msgstr "产品不存在"
+
+msgid "Basket"
+msgstr "购物篮"
+
+msgid ""
+"Basket items can be listed, added, removed and cleaned. Also campaign codes "
+"can be added."
+msgstr "购物篮项目可以列出、添加、删除和清理。此外，可以添加活动代码。"
+
+msgid "Category"
+msgstr "类别"
+
+msgid "Categories can be listed, fetched, created, updated and deleted."
+msgstr "可以列出、获取、创建、更新和删除类别"
+
+msgid "Contacts"
+msgstr "联系人"
+
+msgid "Contacts can be listed, fetched, created, updated and deleted."
+msgstr "可以列出、获取、创建、更新和删除联系人。"
+
+msgid "Person Contact"
+msgstr "人员联系"
+
+msgid "Person Contacts can be listed, fetched, created, updated and deleted."
+msgstr "可以列出、获取、创建、更新和删除人员联系人。"
+
+msgid "Front Orders"
+msgstr "前端订单"
+
+msgid "Retrieve and list the current users orders."
+msgstr "检索并列出当前用户的订单"
+
+msgid "Storefront Shop Products"
+msgstr "店面商店产品"
+
+msgid "Storefront shop products can be listed and fetched."
+msgstr "店面商店的产品可以列出和获取"
+
+msgid "Storefront Products"
+msgstr "店面产品"
+
+msgid "Storefront products can be listed and fetched."
+msgstr "店面产品可以列出和获取"
+
+msgid "Front Users"
+msgstr "前端用户"
+
+msgid ""
+"Users can register to the storefront and fetch and update their own user "
+"details."
+msgstr "用户可以在店面注册并获取和更新自己的用户详细信息"
+
+msgid "Manufacturer"
+msgstr "制造商"
+
+msgid "Manufacturers can be listed, fetched, created, updated and deleted."
+msgstr "制造商可以列出、获取、创建、更新和删除。"
+
+#, python-brace-format
+msgid "Order status changed: {from_status} to {to_status}"
+msgstr "顺序状态更改：{from_status}改为{to_status}"
+
+msgid "Orders"
+msgstr "订单"
+
+msgid "Orders can be listed, fetched, created, updated and canceled."
+msgstr "可以列出、获取、创建、更新和取消订单。"
+
+msgid "Order is already fully paid"
+msgstr "订单已经全部支付"
+
+msgid "Payment created"
+msgstr "创建付款"
+
+msgid "Product Media"
+msgstr "产品媒体"
+
+msgid "Products media can be fetched, updated and deleted."
+msgstr "产品媒体可以抓取、更新和删除"
+
+msgid "Product Variation Variable"
+msgstr "产品变化变量"
+
+msgid ""
+"Product variation variables can be listed, fetched, created, updated and "
+"deleted."
+msgstr "可以列出、获取、创建、更新和删除产品变化变量。"
+
+msgid "Product Variation Variable Value"
+msgstr "产品变化变量值"
+
+msgid ""
+"Product variation variable values can be listed, fetched, created, updated "
+"and deleted."
+msgstr "可以列出、获取、创建、更新和删除产品变化变量值。"
+
+msgid "Products"
+msgstr "产品"
+
+msgid "Products can be listed, fetched, created, updated and deleted."
+msgstr "可以列出、获取、创建、更新和删除产品。"
+
+msgid "Shop Products"
+msgstr "商店产品"
+
+msgid "Shop Products can be listed, fetched, created, updated and deleted."
+msgstr "商店产品可以列出、获取、创建、更新和删除。"
+
+msgid "Product type"
+msgstr "产品类型"
+
+msgid "Product types can be listed, fetched, created, updated and deleted."
+msgstr "可以列出、获取、创建、更新和删除产品类型。"
+
+msgid "Product Attribute"
+msgstr "产品属性"
+
+msgid "Products attributes can be fetched, updated and deleted."
+msgstr "可以获取、更新和删除产品属性。"
+
+msgid "Product Package Link"
+msgstr "产品包装链接"
+
+msgid "Products package links can be fetched, updated and deleted."
+msgstr "可以获取、更新和删除产品包链接。"
+
+msgid "Order can not be refunded at the moment."
+msgstr "目前订单不能退货"
+
+msgid "Can not refund line."
+msgstr "不能退货"
+
+msgid "Invalid refund amount."
+msgstr "无效退款额"
+
+msgid "Refund exceeds amount."
+msgstr "退款超过金额"
+
+msgid "Refund exceeds quantity."
+msgstr "退款超过数量"
+
+msgid "Refund created."
+msgstr "创建退款"
+
+msgid "It is not possible to create the refund."
+msgstr "无法创建退款"
+
+msgid "Shipments"
+msgstr "装运"
+
+msgid "Shipments can be listed and fetched."
+msgstr "可以列出和提取货件"
+
+msgid "Shop"
+msgstr "商店"
+
+msgid "Shops can be listed, fetched, created, updated and deleted."
+msgstr "商店可以列出、获取、创建、更新和删除。"
+
+msgid "Suppliers"
+msgstr "供货商"
+
+msgid ""
+"Suppliers can be listed, fetched, created, updated and deleted. Stocks can "
+"be updated."
+msgstr "可以列出、获取、创建、更新和删除供应商。库存可以更新。"
+
+msgid "Tax"
+msgstr "税收"
+
+msgid "Taxes can be listed, fetched, created, updated and deleted."
+msgstr "税收可以列出、获取、创建、更新和删除。"
+
+msgid "Tax Class"
+msgstr "税级"
+
+msgid "Tax classes can be listed, fetched, created, updated and deleted."
+msgstr "税务类可以列出、获取、创建、更新和删除。"
+
+msgid "Sales Unit"
+msgstr "销售单位"
+
+msgid "Sales units can be listed, fetched, created, updated and deleted."
+msgstr "销售单位可以列出、获取、创建、更新和删除。"
+
+msgid "Users"
+msgstr "用户"
+
+msgid "Users can be listed, fetched, created, updated and deleted."
+msgstr "可以列出、获取、创建、更新和删除用户。"
+
+#, python-format
+msgid "Invalid command %s"
+msgstr "无效命令%s"
+
+#, python-format
+msgid "The quantity %f is not allowed. Please use an integer value."
+msgstr "数量%f不允许，请使用整数值。"
+
+#, python-format
+msgid "The quantity %s is not valid."
+msgstr "数量%s无效"
+
+msgid "This variation is not available."
+msgstr "此变化是不可用"
+
+msgid "Customer is not active."
+msgstr "客户不活跃"
+
+msgid "Shop does not have permission for this customer."
+msgstr "商店没有这个顾客的权限"
+
+msgid "You don't have the required permission to assign this customer."
+msgstr "您没有分配该客户所需的权限"
+
+msgid "You must specify the order when customer is a company."
+msgstr "当客户是公司时，您必须指定订单"
+
+msgid "Invalid customer."
+msgstr "无效客户"
+
+msgid "Orderer is not member of the company."
+msgstr "订货人不是公司的成员"
+
+msgid "You are not member of the company."
+msgstr "你不是公司的成员"
+
+#, python-format
+msgid "Basket loading failed: Incompatible basket (%s)"
+msgstr "购物篮加载失败：不兼容的篮(%s)"
+
+msgid "Try to remove some products from the basket and order them separately."
+msgstr "请尝试清除购物篮里的一些产品，接着单独订购这些产品。"
+
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr "购物篮里的产品不能一起发货。%s"
+
+#, python-format
+msgid "Products in basket have no common payment method. %s"
+msgstr "购物篮里的产品没有共同的支付方式。%s"
 
 msgid "internal identifier"
 msgstr "内部标识符 "
 
-msgid "Do not change this value if you are not sure what you're doing."
-msgstr "如果您不确定请不要更改该值。"
+msgid "Do not change this value if you are not sure what you are doing."
+msgstr "如果您不确定正在做什么，请不要更改此值。"
+
+msgid "Invalid color"
+msgstr "无效颜色"
 
 msgid "Error"
 msgstr "错误"
+
+msgid "No shop!"
+msgstr "无商店！"
 
 msgid "shipping address"
 msgstr "收货地址"
@@ -44,50 +306,97 @@ msgstr "启用"
 msgid "name prefix"
 msgstr "名称前缀"
 
+msgid "The name prefix. For example, Mr, Mrs, Ms, Dr, etc."
+msgstr "名字前缀。例如，先生、夫人、女士、博士等。"
+
 msgid "name"
 msgstr "名称"
+
+msgid "The name for the address."
+msgstr "地址的名称"
 
 msgid "name suffix"
 msgstr "名称后缀"
 
+msgid "The name suffix. For example, Jr, Sr, etc."
+msgstr "名字后缀。例如，JR，Sr等。"
+
 msgid "name extension"
 msgstr "扩展名 "
+
+msgid ""
+"Any other text to display along with the address. This could be department "
+"names (for companies) or titles (for people)."
+msgstr "与地址一起显示的任何其他文本。这可以是部门名称(用于公司)或头衔(用于人员)。"
 
 msgid "company name"
 msgstr "公司名称"
 
+msgid "The company name for the address."
+msgstr "此地址的公司名称"
+
 msgid "tax number"
 msgstr "税号"
+
+msgid "The business tax number. For example, EIN in US or VAT code in Europe."
+msgstr "营业税号。例如，EIN在美国或增值税代码在欧洲。"
 
 msgid "phone"
 msgstr "电话"
 
+msgid "The primary phone number for the address."
+msgstr "此地址的主要电话号码"
+
 msgid "email"
 msgstr "邮箱"
+
+msgid "The primary email for the address."
+msgstr "此地址的主要电子邮件"
 
 msgid "street"
 msgstr "街道"
 
+msgid "The street address."
+msgstr "街道地址"
+
 msgid "street (2)"
 msgstr "街道 (2)"
+
+msgid "An additional street address line."
+msgstr "一个附加的街道地址线"
 
 msgid "street (3)"
 msgstr "街道 (3)"
 
+msgid "Any additional street address line."
+msgstr "任何附加的街道地址线"
+
 msgid "postal code"
 msgstr "邮政编码"
+
+msgid "The address postal/zip code."
+msgstr "地址邮编"
 
 msgid "city"
 msgstr "城市"
 
+msgid "The address city."
+msgstr "地址城市"
+
 msgid "region code"
 msgstr "区域代码"
+
+msgid "The address region, province, or state."
+msgstr "地址区域、省或州。"
 
 msgid "region"
 msgstr "区域"
 
 msgid "country"
 msgstr "国家"
+
+msgid "The address country."
+msgstr "地址国家"
 
 msgid "address"
 msgstr "地址"
@@ -152,11 +461,33 @@ msgstr "未译字符串"
 msgid "searchable"
 msgstr "可搜索"
 
+msgid ""
+"Searchable attributes will be used for product lookup when customers search "
+"your store."
+msgstr "当客户搜索您的商店时，可搜索属性将用于产品查找。"
+
 msgid "type"
 msgstr "类型"
 
+msgid ""
+"The attribute data type. Attribute values can be set on the product editor "
+"page."
+msgstr "属性数据类型。属性值可以在产品编辑器页面上设置。"
+
 msgid "visibility mode"
 msgstr "可见模式"
+
+msgid ""
+"Select the attribute visibility setting. Attributes can be shown on the "
+"product detail page or can be used to enhance product search results."
+msgstr "选择属性可见性设置。属性可以显示在产品详细信息页面上，也可以用于增强产品搜索结果。"
+
+msgid ""
+"The attribute name. Product attributes can be used to list the various "
+"features of a product and can be shown on the product detail page. The "
+"product attributes for a product are determined by the product type and can "
+"be set on the product editor page."
+msgstr "属性名。产品属性可用于列出产品的各种特性，并可显示在“产品详细信息”页面上。产品的产品属性由产品类型确定，可以在产品编辑器页面上设置。"
 
 msgid "attribute"
 msgstr "属性"
@@ -168,22 +499,76 @@ msgid "numeric value"
 msgstr "数值"
 
 msgid "datetime value"
-msgstr ""
+msgstr "日期时间值"
 
 msgid "untranslated value"
-msgstr ""
+msgstr "未译值"
 
 msgid "The following fields can not be changed"
 msgstr "以下字段无法改变"
+
+msgid "key"
+msgstr "键"
+
+msgid "shop"
+msgstr "商店"
+
+msgid "customer"
+msgstr "顾客"
+
+msgid "orderer"
+msgstr "订货人"
+
+msgid "creator"
+msgstr "创建人"
+
+msgid "created on"
+msgstr "创建"
+
+msgid "updated on"
+msgstr "更新"
+
+msgid "persistent"
+msgstr "持续存在"
+
+msgid "deleted"
+msgstr "已删除"
+
+msgid "finished"
+msgstr "完成"
+
+msgid "data"
+msgstr "数据"
+
+msgid "taxless total price"
+msgstr "免税总价"
+
+msgid "taxful total price"
+msgstr "税收总价"
+
+msgid "currency"
+msgstr "货币"
+
+msgid "prices include tax"
+msgstr "含税价"
+
+msgid "product_count"
+msgstr "产品计数"
+
+msgid "products"
+msgstr "产品"
+
+msgid "basket"
+msgstr "购物篮"
+
+msgid "baskets"
+msgstr "购物篮"
 
 msgid "invisible"
 msgstr "不可见"
 
 msgid "visible"
 msgstr "可见"
-
-msgid "deleted"
-msgstr "已删除"
 
 msgid "visible to all"
 msgstr "所有人可见"
@@ -197,38 +582,82 @@ msgstr "某顾客群组可见"
 msgid "parent category"
 msgstr "父分类"
 
+msgid ""
+"If your category is a sub-category of another category, you can link them "
+"here."
+msgstr "如果您的类别是另一个类别的子类别，则可以在此链接它们。"
+
 msgid "shops"
 msgstr "商店"
+
+msgid "You can select which shops the category is visible in."
+msgstr "您可以选择类别中可见的商店"
+
+msgid ""
+"Here you can choose whether or not you want the category to be visible in "
+"your store."
+msgstr "在这里，您可以选择是否希望该类别在您的商店中可见。"
 
 msgid "image"
 msgstr "图像"
 
+msgid "Category image. Will be shown at theme."
+msgstr "类别图像将在主题上展出"
+
 msgid "ordering"
 msgstr "订单"
+
+msgid "You can set the order of categories in your store numerically."
+msgstr "您可以在数字上设置商店中类别的顺序"
 
 msgid "visibility limitations"
 msgstr "可见限制"
 
+msgid ""
+"You can choose to limit who sees your category based on whether they are "
+"logged in or if they are  part of a customer group."
+msgstr "您可以根据是否登录或是否是客户组的一部分来限制查看您的类别的人。"
+
+msgid "visible in menu"
+msgstr "菜单中可见"
+
+msgid "Check this if this category should be visible in menu."
+msgstr "请检查此类别是否应在菜单中可见"
+
 msgid "visible for groups"
 msgstr "群组可见"
+
+msgid ""
+"Select the customer groups you would like to be able to see the category. "
+"These groups are defined in Contacts Settings - Contact Groups."
+msgstr "选择您希望能够看到类别的客户组，这些组在“联系人设置”中定义-联系人组。"
+
+msgid ""
+"Enter a descriptive name for your product category. Products can be found in"
+" menus and in search in your store under the category name."
+msgstr "输入产品类别的描述性名称。产品可以在菜单中找到，也可以在商店的类别名称下搜索。"
 
 msgid "description"
 msgstr "描述"
 
+msgid ""
+"Give your product category a detailed description. This will help shoppers "
+"find your products under that category in your store and on the web."
+msgstr "给你的产品类别一个详细的描述。这将帮助购物者在你的商店和网上找到你的产品。"
+
 msgid "slug"
 msgstr "slug"
+
+msgid ""
+"Enter a URL slug for your category. This is what your product category page "
+"URL will be. A default will be created using the category name."
+msgstr "为您的类别输入URL段塞。这就是您的产品类别页面URL。将使用类别名称创建默认值。"
 
 msgid "category"
 msgstr "分类"
 
 msgid "categories"
 msgstr "分类"
-
-msgid "shop"
-msgstr "商店"
-
-msgid "key"
-msgstr "键"
 
 msgid "value"
 msgstr "值"
@@ -247,17 +676,35 @@ msgstr "%(key)s 商店 %(shop)s"
 msgid "%(key)s (global)"
 msgstr "%(key)s (全局)"
 
-msgid "members"
-msgstr "成员"
-
 msgid "show as pricing option"
 msgstr "以定价选项显示"
 
 msgid "show prices including taxes"
-msgstr ""
+msgstr "显示含税的价格"
 
 msgid "hide prices"
-msgstr ""
+msgstr "隐藏价格"
+
+msgid "Unknown"
+msgstr "未知"
+
+#, python-format
+msgid "Price Display Options for Contact Group %s"
+msgstr "联系人组%s的价格显示选项"
+
+msgid "contact group price display"
+msgstr "联系人组定价显示"
+
+msgid "contact group price displays"
+msgstr "联系人组定价显示"
+
+msgid "members"
+msgstr "成员"
+
+msgid ""
+"The contact group name. Contact groups can be used to target sales and "
+"campaigns to specific set of users."
+msgstr "联络人组的名字。联络人组可用于针对特定用户群体的销售和活动。"
 
 msgid "contact group"
 msgstr "联系群组"
@@ -265,14 +712,29 @@ msgstr "联系群组"
 msgid "contact groups"
 msgstr "联系群组"
 
-msgid "Can't delete. This object is protected."
-msgstr ""
+msgid "Cannot set shop for default Contact Group."
+msgstr "无法为默认联系人组设置商店"
 
-msgid "created on"
-msgstr "创建"
+msgid "Contact Group requires a shop."
+msgstr "联络人组需要一家商店"
+
+msgid "Can't delete. This object is protected."
+msgstr "不能删除。此对象受到保护。"
+
+msgid "modified on"
+msgstr "修改"
 
 msgid "active"
 msgstr "活跃"
+
+msgid "Check this if the contact is an active customer."
+msgstr "如果联系人是活动客户，请检查此信息。"
+
+msgid "Inform which shops have access to this contact."
+msgstr "通知哪些商店可以访问此联系人"
+
+msgid "registration shop"
+msgstr "登记商店"
 
 msgid "default shipping method"
 msgstr "默认配送方式"
@@ -283,23 +745,68 @@ msgstr "默认支付方式"
 msgid "language"
 msgstr "语言"
 
+msgid ""
+"The primary language to be used in all communications with the contact."
+msgstr "在与联系人的所有通信中使用的主要语言"
+
 msgid "marketing permission"
 msgstr "营销许可 "
+
+msgid ""
+"Check this if the contact can receive marketing and promotional materials."
+msgstr "如果联络人能收到营销和宣传材料，请检查这一点。"
+
+msgid "The primary phone number of the contact."
+msgstr "联系人的主要电话号码"
 
 msgid "web address"
 msgstr "网址"
 
+msgid "The web address of the contact, if any."
+msgstr "联系人的网址，如果有的话。"
+
 msgid "time zone"
 msgstr "时区"
+
+msgid ""
+"The timezone in which the contact resides. This can be used to target the "
+"delivery of promotional materials at a particular time."
+msgstr "联系人所在的时区。这可用于在特定时间交付宣传材料。"
+
+msgid "The name prefix of the contact. For example, Mr, Mrs, Dr, etc."
+msgstr "联系人的名称前缀。例如，先生、夫人、博士等。"
+
+msgid "The contact name"
+msgstr "联系人名称"
+
+msgid "The name suffix of the contact. For example, Sr, Jr, etc."
+msgstr "联系人的名称后缀。例如，Sr，Jr，等等。"
+
+msgid ""
+"The email that will receive order confirmations and promotional materials "
+"(if permitted)."
+msgstr "收到订单确认和促销材料的电子邮件(如果允许的话)。"
 
 msgid "tax group"
 msgstr "税组"
 
+msgid ""
+"Select the contact tax group to use for this contact. Tax groups can be used"
+" to customize the tax rules the that apply to any of this contacts orders. "
+"Tax groups are defined in Settings - Customer Tax Groups and can be applied "
+"to tax rules in Settings - Tax Rules"
+msgstr "选择要用于此联系人的联系人纳税组。税务组可用于自定义适用于任何此联系人订单的税务规则。税组在设置-客户税组中定义，并可应用于设置中的税务规则-税收规则。"
+
 msgid "merchant notes"
-msgstr ""
+msgstr "贸易商说明"
+
+msgid ""
+"Enter any private notes for this customer that are only accessible in Shuup "
+"admin."
+msgstr "输入此客户的任何私人备注，只能在Shuup 管理员中访问。"
 
 msgid "account manager"
-msgstr ""
+msgstr "客户经理"
 
 msgid "contact"
 msgstr "联系"
@@ -308,7 +815,7 @@ msgid "contacts"
 msgstr "联系"
 
 msgid "Company Contacts"
-msgstr ""
+msgstr "公司联系人"
 
 msgid "e.g. EIN in US or VAT code in Europe"
 msgstr "例如美国的雇主识别号码EIN或者欧洲的增值税代码VAT"
@@ -320,19 +827,19 @@ msgid "companies"
 msgstr "公司"
 
 msgid "undisclosed"
-msgstr ""
+msgstr "未公开的"
 
 msgid "male"
-msgstr ""
+msgstr "男"
 
 msgid "female"
-msgstr ""
+msgstr "女"
 
 msgid "other"
 msgstr "其他"
 
 msgid "Person Contacts"
-msgstr ""
+msgstr "人员联系"
 
 msgid "user"
 msgstr "用户"
@@ -340,14 +847,26 @@ msgstr "用户"
 msgid "gender"
 msgstr "性别"
 
+msgid "The gender of the contact."
+msgstr "联系人性别"
+
 msgid "birth date"
 msgstr "出生日期"
 
+msgid "The birth date of the contact."
+msgstr "联系人出生日期"
+
 msgid "first name"
-msgstr ""
+msgstr "名"
+
+msgid "The first name of the contact."
+msgstr "联系人的名"
 
 msgid "last name"
-msgstr ""
+msgstr "姓"
+
+msgid "The last name of the contact."
+msgstr "联系人的姓"
 
 msgid "person"
 msgstr "人"
@@ -356,7 +875,7 @@ msgid "persons"
 msgstr "人"
 
 msgid "Anonymous Contacts"
-msgstr ""
+msgstr "匿名联系人"
 
 msgid "order reference"
 msgstr "订单参考"
@@ -370,17 +889,66 @@ msgstr "柜台"
 msgid "counters"
 msgstr "柜台"
 
+msgid "code"
+msgstr "代码"
+
+msgid "The ISO-4217 code of the currency"
+msgstr "货币的ISO-4217代码"
+
+msgid "decimal places"
+msgstr "小数位"
+
+msgid "The number of decimal places supported by this currency."
+msgstr "此货币支持的小数位数"
+
+msgid "Enter a valid ISO-4217 currency code"
+msgstr "输入有效的ISO-4217货币代码"
+
+msgid "currencies"
+msgstr "货币"
+
+msgid "label"
+msgstr "标签"
+
+msgid "labels"
+msgstr "标签"
+
 msgid "added"
 msgstr "已添加"
 
+msgid ""
+"Enter the manufacturer’s name. Products can be filtered by the manufacturer "
+"and can be useful for inventory and stock management."
+msgstr "输入制造商的名称。产品可由制造商过滤，可用于库存和库存管理。"
+
 msgid "URL"
 msgstr "URL"
+
+msgid ""
+"Enter the URL of the product manufacturer if you would like customers to be "
+"able to visit the manufacturer's website."
+msgstr "如果希望客户能够访问制造商的网站，请输入产品制造商的URL。"
+
+msgid "logo"
+msgstr "商标"
 
 msgid "manufacturer"
 msgstr "制造商"
 
 msgid "manufacturers"
 msgstr "制造商"
+
+msgid "file"
+msgstr "文件"
+
+msgid "Select which shops you would like the files to be visible in."
+msgstr "选择您希望文件在哪些商店中可见"
+
+msgid "folder"
+msgstr "文件夹"
+
+msgid "Select which shops you would like the folder to be visible in."
+msgstr "选择您希望文件夹中可见的商店"
 
 msgid "product"
 msgstr "产品"
@@ -395,10 +963,10 @@ msgid "discount"
 msgstr "折扣"
 
 msgid "refund"
-msgstr ""
+msgstr "退款"
 
-msgid "order"
-msgstr "订单"
+msgid "rounding"
+msgstr "舍入"
 
 msgid "supplier"
 msgstr "供应商"
@@ -442,6 +1010,9 @@ msgstr "订单行"
 msgid "order lines"
 msgstr "订单行"
 
+msgid "order"
+msgstr "订单"
+
 msgid "tax"
 msgstr "税收"
 
@@ -484,41 +1055,79 @@ msgstr "全发货"
 msgid "none"
 msgstr "无"
 
-msgid "initial"
+msgid "Initial"
 msgstr "最初"
 
-msgid "complete"
+msgid "Complete"
 msgstr "完成"
+
+msgid "Canceled"
+msgstr "取消"
+
+msgid "Processing"
+msgstr "处理"
+
+msgid "Received"
+msgstr "已接收"
+
+msgid "In Progress"
+msgstr "正在进行中"
+
+msgid ""
+"Internal identifier for status. This is used to identify the statuses in "
+"Shuup."
+msgstr "状态的内部标识符。这用于识别Shuup中的状态。"
+
+msgid "The processing order of statuses. Default is always processed first."
+msgstr "状态的处理顺序，默认总是先处理。"
+
+msgid "Role of status. One role can have multiple order statuses."
+msgstr "角色状态。一个角色可以有多个订单状态。"
 
 msgid "default"
 msgstr "默认"
 
-msgid "modified on"
-msgstr ""
+msgid "Defines if the status should be considered as default."
+msgstr "定义是否应将状态视为默认状态"
+
+msgid "is active"
+msgstr "正活跃"
+
+msgid "Define if the status is usable."
+msgstr "定义状态是否可用"
+
+msgid "Name of the order status"
+msgstr "订单状态的名称"
+
+msgid "public name"
+msgstr "公用名称"
+
+msgid "The name shown for customer in shop front."
+msgstr "店面上显示给顾客的名字"
+
+msgid "order status"
+msgstr "订单状态"
+
+msgid "order statuses"
+msgstr "订单状态"
 
 msgid "order identifier"
 msgstr "订单标识符"
 
-msgid "label"
-msgstr "标签"
-
 msgid "reference number"
 msgstr "参考号"
 
-msgid "customer"
-msgstr "顾客"
-
-msgid "orderer"
-msgstr "订货人"
-
 msgid "email address"
 msgstr "邮箱地址"
+
+msgid "customer groups"
+msgstr "顾客组"
 
 msgid "creating user"
 msgstr "创建用户"
 
 msgid "modifier user"
-msgstr ""
+msgstr "修改用户"
 
 msgid "payment status"
 msgstr "支付状态"
@@ -550,17 +1159,11 @@ msgstr "共计"
 msgid "taxless total"
 msgstr "免税合计"
 
-msgid "currency"
-msgstr "货币"
-
-msgid "prices include tax"
-msgstr "含税价"
-
 msgid "display currency"
-msgstr ""
+msgstr "显示货币"
 
 msgid "display currency rate"
-msgstr ""
+msgstr "显示货币汇率"
 
 msgid "IP address"
 msgstr "IP地址"
@@ -584,7 +1187,7 @@ msgid "all lines verified"
 msgstr "所有行已验证"
 
 msgid "codes"
-msgstr ""
+msgstr "代码"
 
 msgid "orders"
 msgstr "订单"
@@ -593,7 +1196,7 @@ msgid "Order marked as paid."
 msgstr "标记为已付的订单。"
 
 msgid "Order marked as partially paid."
-msgstr ""
+msgstr "标有部分付款的订单"
 
 #, python-format
 msgid "Shipment #%d created."
@@ -601,28 +1204,33 @@ msgstr "#%d 已发货。"
 
 #, python-format
 msgid "Refund for %s"
-msgstr ""
+msgstr "%s退款"
 
-msgid "Manual refund"
-msgstr ""
+msgid "Misc refund"
+msgstr "MISC退款"
 
 msgid "All rows requiring verification have been verified."
 msgstr "所有需要验证的行列已验证。"
 
-msgid "All products have been shipped. Fully Shipped status set."
-msgstr "所有产品已发货，全运状态。"
+#, python-format
+msgid "New shipping status set: %(shipping_status)s"
+msgstr "新的运输状态设置：%(shipping_status)s"
+
+#, python-format
+msgid "New payment status set: %(payment_status)s"
+msgstr "新的付款状态设置为：%(payment_status)s"
 
 msgid "gateway ID"
-msgstr ""
+msgstr "网关ID"
 
 msgid "amount"
 msgstr "合计"
 
 msgid "foreign amount"
-msgstr ""
+msgstr "外国金额"
 
 msgid "foreign amount currency"
-msgstr ""
+msgstr "外币"
 
 msgid "payments"
 msgstr "支付"
@@ -631,10 +1239,7 @@ msgid "module"
 msgstr "模块"
 
 msgid "time"
-msgstr ""
-
-msgid "data"
-msgstr "数据"
+msgstr "时间"
 
 msgid "cache entry"
 msgstr "高速缓存条目"
@@ -642,28 +1247,58 @@ msgstr "高速缓存条目"
 msgid "cache entries"
 msgstr "高速缓存条目"
 
-msgid "file"
-msgstr "文件"
-
 msgid "documentation"
 msgstr "文档"
 
 msgid "sample"
 msgstr "样品"
 
+msgid "Select which shops you would like the product media to be visible in."
+msgstr "选择您希望产品媒体在其中可见的商店"
+
 msgid "kind"
 msgstr "类"
+
+msgid ""
+"Select what type the media is. It can either be a normal file, part of the "
+"documentation, or a sample."
+msgstr "选择媒体的类型。它既可以是普通文件、文档的一部分，也可以是示例。"
 
 msgid ""
 "Enter URL to external file. If this field is filled, the selected media "
 "doesn't apply."
 msgstr "请输入URL至外部文件。如果该字段已填，则不适用于被选中的媒体。"
 
+msgid ""
+"You enter the numerical order that your image will be displayed on your "
+"product page."
+msgstr "您输入的数字顺序，您的图像将显示在您的产品页面。"
+
 msgid "public (shown on product page)"
 msgstr "公开 (在产品页面显示)"
 
+msgid ""
+"Check this if you would like the image shown on your product page. Checked "
+"by default."
+msgstr "如果您想要在您的产品页面上显示的图像，请检查此选项。默认检查。"
+
 msgid "purchased (shown for finished purchases)"
 msgstr "已购买 (显示已完成的订购)"
+
+msgid ""
+"Select this if you would like the product media shown for completed "
+"purchases."
+msgstr "如果希望为已完成的采购显示产品媒体，请选择此选项。"
+
+msgid ""
+"Choose a title for your product media. This will help it be found in your "
+"store and on the web."
+msgstr "为您的产品媒体选择一个标题。这将有助于在您的商店和网上找到它。"
+
+msgid ""
+"Write a description for your product media. This will help it be found in "
+"your store and on the web."
+msgstr "为您的产品媒体编写描述，这将有助于在您的商店和网上找到它。"
 
 msgid "product attachment"
 msgstr "产品附件"
@@ -680,44 +1315,185 @@ msgstr "父产品"
 msgid "child product"
 msgstr "子产品"
 
+msgid "not visible"
+msgstr "不可见"
+
+msgid "listed"
+msgstr "列举"
+
+msgid "always visible"
+msgstr "总是可见"
+
 msgid "suppliers"
 msgstr "供应商"
 
-msgid "listed"
-msgstr ""
+msgid ""
+"List your suppliers here. Suppliers can be found in Product Settings - "
+"Suppliers."
+msgstr "在这里列出你们的供应商。供应商可在“产品设置-供应商”中找到。"
+
+msgid "visibility"
+msgstr "可见性"
+
+msgid ""
+"Select if you want your product to be seen and found by customers. <p>Not "
+"visible: Product will not be shown in your store front or found in "
+"search.</p><p>Searchable: Product will be shown in search but not listed on "
+"any category page.</p><p>Listed: Product will be shown on category pages but"
+" not shown in search results.</p><p>Always Visible: Product will be shown in"
+" your store front and found in search.</p>"
+msgstr "选择是否希望客户看到和找到您的产品。 <p>不可见：产品不会显示在您的商店前面或在搜索中找到.</p><p>可搜索：产品将在搜索中显示但未在任何类别页面上列出.</p><p>列表：产品将显示在类别页面上但未显示在搜索结果中.</p><p>总是 可见：产品将显示在您的商店前面，并在搜索中找到。</p>"
 
 msgid "purchasable"
-msgstr ""
+msgstr "可购买的"
+
+msgid ""
+"Select whether you want your product to have special limitations on its "
+"visibility in your store. You can make products visible to all, visible to "
+"only logged in users, or visible only to certain customer groups."
+msgstr "选择是否希望产品在商店中的可见性受到特殊限制。您可以使产品对所有人可见，只对登录用户可见，或仅对某些用户组可见。"
+
+msgid ""
+"Select the groups you would like to make your product visible for. These "
+"groups are defined in Contacts Settings - Contact Groups."
+msgstr "选择要使产品可见的组。这些组在“联系人设置”中定义-联系人组。"
+
+msgid "backorder maximum"
+msgstr "最大订单"
+
+msgid ""
+"The number of units that can be purchased after the product is out of stock."
+" Set to blank for product to be purchasable without limits."
+msgstr "在产品缺货后可以购买的单位数量。设置为空白，产品可无限制地购买。"
 
 msgid "purchase multiple"
 msgstr "购买多个"
 
+msgid ""
+"Set this if the product needs to be purchased in multiples. For example, if "
+"the purchase multiple is set to 2, then customers are required to order the "
+"product in multiples of 2."
+msgstr "如果产品需要以倍数购买，请设置此选项。例如，如果购买倍数设置为2，则要求客户以2的倍数订购产品。"
+
 msgid "minimum purchase"
 msgstr "最低购买"
 
+msgid ""
+"Set a minimum number of products needed to be ordered for the purchase. This"
+" is useful for setting bulk orders and B2B purchases."
+msgstr "为购买设定最少需要订购的产品数量，这是有用的设置批量订单和B2B采购。"
+
 msgid "limited for shipping methods"
-msgstr ""
+msgstr "限制运输方式"
+
+msgid ""
+"Check this if you want to limit your product to use only select payment "
+"methods. You can select the payment method(s) in the field below."
+msgstr "如果您想限制您的产品仅使用选择支付方法，请检查此选项。您可以在下面的字段中选择付款方法(s) 。"
 
 msgid "limited for payment methods"
-msgstr ""
+msgstr "限制支付方式"
 
 msgid "shipping methods"
 msgstr "配送方式"
 
+msgid ""
+"Select the shipping methods you would like to limit the product to using. "
+"These are defined in Settings - Shipping Methods."
+msgstr "选择要将产品限制在使用范围内的发货方法。这些都是在“设置-传送方法”中定义的。"
+
 msgid "payment methods"
 msgstr "支付方式"
+
+msgid ""
+"Select the payment methods you would like to limit the product to using. "
+"These are defined in Settings - Payment Methods."
+msgstr "选择要限制产品使用的支付方法。这些都是在设置-支付方法中定义的。"
 
 msgid "primary category"
 msgstr "主分类"
 
+msgid ""
+"Choose the primary category for your product. This will be the main category"
+" for classification in the system. Your product can be found under this "
+"category in your store. Categories are defined in Products Settings - "
+"Categories."
+msgstr "选择产品的主要类别。这将是系统分类的主要类别。你的产品可以在你的商店里找到这个类别。类别在产品设置中定义-类别。"
+
+msgid ""
+"Add secondary categories for your product. These are other categories that "
+"your product fits under and that it can be found by in your store."
+msgstr "为您的产品添加次要类别。这些是您的产品适合的其他类别，可以在您的商店中找到。"
+
 msgid "primary image"
 msgstr "主要图像"
+
+msgid ""
+"Click this to set this image as the primary display image for your product."
+msgstr "单击此按钮可将此图像设置为产品的主显示图像。"
 
 msgid "default price"
 msgstr "默认价格"
 
+msgid ""
+"This is the default individual base unit (or multi-pack) price of the "
+"product. All discounts or coupons will be based off of this price."
+msgstr "这是产品的默认基本单位(或多包)价格。所有折扣或优惠券将以这个价格为基础。"
+
 msgid "minimum price"
 msgstr "最低价格"
+
+msgid ""
+"This is the default price that the product cannot go under in your store, "
+"despite coupons or discounts being applied. This is useful to make sure your"
+" product price stays above cost."
+msgstr "这是默认价格，产品不能在您的商店，尽管优惠券或折扣被应用。这对于确保您的产品价格保持在高于成本的水平是很有用的。"
+
+msgid "available until"
+msgstr "可供使用直到"
+
+msgid "After this date the product will be invisible."
+msgstr "在这个日期之后，产品将是不可见的。"
+
+msgid "display unit"
+msgstr "显示直到"
+
+msgid "Unit for displaying quantities of this product"
+msgstr "显示本产品数量的单位"
+
+msgid ""
+"Enter a descriptive name for your product. This will be its title in your "
+"store."
+msgstr "输入产品的描述性名称，这将是你商店的标题。"
+
+msgid ""
+"To make your product stand out, give it an awesome description. This is what"
+" will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr "为了使你的产品脱颖而出，给它一个很棒的描述。这将帮助你的购物者了解你的产品。它还将帮助购物者在商店和网上找到他们。"
+
+msgid "short description"
+msgstr "简短描述"
+
+msgid ""
+"Enter a short description for your product. The short description will be "
+"used to get the attention of your customer with a small but precise "
+"description of your product."
+msgstr "输入产品的简短说明。简短的描述将被用来吸引你的客户的注意力，一个小但精确的描述你的产品。"
+
+msgid "status text"
+msgstr "状态文本"
+
+msgid ""
+"This text will be shown alongside the product in the shop. It is useful for "
+"informing customers of special stock numbers or preorders. (Ex.: Available "
+"in a month)"
+msgstr "这个文本将显示在商店的产品旁边。这是有用的通知客户的特殊库存号码或预定。(前：一个月内可供使用)"
+
+msgid ""
+"Invalid display unit: Internal unit of the selected display unit does not "
+"match with the sales unit of the product"
+msgstr "无效显示单元：所选显示单元的内部单元与产品的销售单元不匹配。"
 
 msgid "This product has been deleted."
 msgstr "该产品已删除。"
@@ -725,35 +1501,43 @@ msgstr "该产品已删除。"
 msgid "This product is not visible."
 msgstr "无法显示该产品。"
 
+msgid "This product is not available."
+msgstr "此产品不可用"
+
 msgid "The Product is invisible to users not logged in."
 msgstr "对未登录用户隐藏该产品。"
 
 msgid "This product is not visible to your group."
 msgstr "该产品在您的群组里不可见。"
 
-msgid "The product has no supplier."
-msgstr "该产品没有供应商。"
+msgid "The product is not purchasable"
+msgstr "该产品不可购买"
 
 #, python-format
 msgid "The purchase quantity needs to be at least %d for this product."
 msgstr "该产品的购买数量至少为 %d。"
 
-#, python-format
-msgid "The product is not supplied by %s."
-msgstr "%s不供应该产品。"
-
 #, python-brace-format
 msgid ""
 "The product can only be ordered in multiples of {package_size}, for example "
 "{amount}"
-msgstr "该产品只可多个{package_size} 订购，例如 {amount}"
+msgstr "该产品只能以{package_size}的倍数进行排序，例如{amount}"
 
 #, python-brace-format
 msgid ""
 "The product can only be ordered in multiples of {package_size}, for example "
 "{smaller_amount} or {larger_amount}"
-msgstr ""
-"该产品只可多个{package_size}订购，例如{smaller_amount} 或者 {larger_amount}"
+msgstr "该产品只能以{package_size}的倍数进行排序，例如{smaller_amount}或{larger_amount}"
+
+msgid "The product has no supplier."
+msgstr "该产品没有供应商。"
+
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr "%s不供应该产品。"
+
+msgid "Product has no sellable children"
+msgstr "产品没有可销售的儿童款"
 
 msgid "variation variable"
 msgstr "变体变量"
@@ -768,7 +1552,7 @@ msgid "variation values"
 msgstr "变体值"
 
 msgid "combination hash"
-msgstr ""
+msgstr "组合散列"
 
 msgid "result"
 msgstr "结果"
@@ -794,6 +1578,9 @@ msgstr "父级变体 (变量)"
 msgid "variation child"
 msgstr "子级变体"
 
+msgid "subscription"
+msgstr "订购"
+
 msgid "visible to logged in"
 msgstr "登录可见"
 
@@ -816,10 +1603,13 @@ msgid "computed"
 msgstr "计算的"
 
 msgid "bought with"
-msgstr ""
+msgstr "买"
 
-msgid "shipped"
-msgstr "已发货"
+msgid "not shipped (non-deliverable)"
+msgstr "未发运(无交付)"
+
+msgid "shipped (deliverable)"
+msgstr "未发运(无交付)"
 
 msgid "no verification required"
 msgstr "无需验证"
@@ -829,6 +1619,16 @@ msgstr "要求管理验证"
 
 msgid "third party verification required"
 msgstr "要求第三方验证"
+
+msgid ""
+"Enter a descriptive name for your product type. Products and attributes for "
+"products of this type can be found under this name."
+msgstr "输入产品类型的描述性名称。此类型产品的产品和属性可在此名称下找到。"
+
+msgid ""
+"Select attributes that go with your product type. These are defined in "
+"Products Settings – Attributes."
+msgstr "选择与产品类型相匹配的属性。这些都是在产品设置-属性中定义的。"
 
 msgid "product type"
 msgstr "产品类型"
@@ -845,26 +1645,65 @@ msgstr "父级变体"
 msgid "stock"
 msgstr "库存"
 
+msgid "Set to stocked if inventory should be managed within Shuup."
+msgstr "如果库存应在Shuup内管理，则设置为库存。"
+
 msgid "shipping mode"
 msgstr "配送模式"
 
-msgid "unit"
-msgstr "单位"
+msgid "Set to shipped if the product requires shipment."
+msgstr "如果产品需要装运，则设置为发运。"
+
+msgid "sales unit"
+msgstr "销售单位"
+
+msgid ""
+"Select a sales unit for your product. This is shown in your store front and "
+"is used to determine whether the product can be purchased using fractional "
+"amounts. Sales units are defined in Products - Sales Units."
+msgstr "为您的产品选择销售单位。这是显示在您的商店前面，并用于确定产品是否可以购买使用部分金额。销售单位在产品-销售单位中定义。"
 
 msgid "tax class"
 msgstr "税种"
 
+msgid ""
+"Select a tax class for your product. The tax class is used to determine "
+"which taxes to apply to your product. Tax classes are defined in Settings - "
+"Tax Classes. The rules by which taxes are applied are defined in Settings - "
+"Tax Rules."
+msgstr "为您的产品选择纳税类别。税类用于确定对您的产品适用的税种。税类在“设置”中定义-“税类”。适用税收的规则在“设置-税收规则”中定义。"
+
+msgid ""
+"Select a product type for your product. These allow you to configure custom "
+"attributes to help with classification and analysis."
+msgstr "为您的产品选择产品类型。这些允许您配置自定义属性以帮助进行分类和分析。"
+
 msgid "SKU"
 msgstr "SKU"
+
+msgid ""
+"Enter a SKU (Stock Keeping Unit) number for your product. This is a product "
+"identification code that helps you track it through your inventory. People "
+"often use the number by the barcode on the product, but you can set up any "
+"numerical system you want to keep track of products."
+msgstr "输入您的产品的SKU(库存单位)编号。这是一个产品识别代码，帮助您通过库存跟踪它。人们经常使用条形码在产品上的数字，但你可以建立任何数字系统，你想要跟踪的产品。"
 
 msgid "GTIN"
 msgstr "全球贸易项目代码"
 
-msgid "Global Trade Item Number"
-msgstr "全球贸易项目代码"
+msgid ""
+"You can enter a Global Trade Item Number. This is typically a 14 digit "
+"identification number for all of your trade items. It can often be found by "
+"the barcode."
+msgstr "您可以输入全球贸易项目编号。这通常是您所有贸易项目的14位数字标识号。它通常可以通过条形码找到。"
 
 msgid "barcode"
 msgstr "条形码"
+
+msgid ""
+"You can enter the barcode number for your product. This is useful for "
+"inventory/stock tracking and analysis."
+msgstr "您可以输入产品的条形码。这对于库存/库存跟踪和分析非常有用。"
 
 msgid "bookkeeping account"
 msgstr "记账账号"
@@ -875,43 +1714,79 @@ msgstr "利润中心"
 msgid "cost center"
 msgstr "成本中心"
 
-msgid "only used for administration and reporting"
-msgstr "只用于管理和报告"
-
 msgid "width (mm)"
 msgstr "宽 (毫米)"
+
+msgid ""
+"Set the measured width of your product or product packaging. This will "
+"provide customers with your product size and help with calculating shipping "
+"costs."
+msgstr "设置产品或产品包装的测量宽度。这将为客户提供您的产品大小和帮助计算运输成本。"
 
 msgid "height (mm)"
 msgstr "高 (毫米)"
 
+msgid ""
+"Set the measured height of your product or product packaging. This will "
+"provide customers with your product size and help with calculating shipping "
+"costs."
+msgstr "设置产品或产品包装的测量高度。这将为客户提供您的产品大小和帮助计算运输成本。"
+
 msgid "depth (mm)"
 msgstr "深 (毫米)"
+
+msgid ""
+"Set the measured depth or length of your product or product packaging. This "
+"will provide customers with your product size and help with calculating "
+"shipping costs."
+msgstr "设置产品或产品包装的测量深度或长度。这将为客户提供您的产品大小和帮助计算运输成本。"
 
 msgid "net weight (g)"
 msgstr "净重 (克)"
 
+msgid ""
+"Set the measured weight of your product WITHOUT its packaging. This will "
+"provide customers with your product weight."
+msgstr "在没有包装的情况下，设定产品的测量重量。这将为客户提供您的产品重量。"
+
 msgid "gross weight (g)"
 msgstr "毛重 (克)"
+
+msgid ""
+"Set the measured gross Weight of your product WITH its packaging. This will "
+"help with calculating shipping costs."
+msgstr "设置您的产品与其包装测量的毛重。这将有助于计算运费。"
+
+msgid ""
+"Select a manufacturer for your product. These are defined in Products "
+"Settings - Manufacturers"
+msgstr "为您的产品选择制造商，这些都是在产品设置中定义的-制造商。"
+
+msgid ""
+"Enter a URL Slug for your product. This is what your product page URL will "
+"be. A default will be created using the product name."
+msgstr "输入您的产品的URL段塞。这就是您的产品页面URL。将使用产品名称创建默认设置。"
 
 msgid "keywords"
 msgstr "关键词"
 
-msgid "status text"
-msgstr "状态文本"
-
 msgid ""
-"This text will be shown alongside the product in the shop. (Ex.: \"Available "
-"in a month\")"
-msgstr "该文本将会在产品旁边显示。(例如 \"一个月后可供\")"
+"You can enter keywords that describe your product. This will help your "
+"shoppers learn about your products. It will also help shoppers find them in "
+"the store and on the web."
+msgstr "您可以输入描述产品的关键字。这将帮助您的购物者了解您的产品。它还将帮助购物者在商店和网上找到他们。"
 
 msgid "variation name"
 msgstr "变体名称"
 
-msgid "products"
-msgstr "产品"
+msgid ""
+"You can enter a name for the variation of your product. This could be for "
+"example different colors or versions."
+msgstr "您可以为您的产品的变化输入一个名称。例如，这可能是不同的颜色或版本。"
 
 msgid ""
-"Multilevel parentage hierarchies aren't supported (parent is a child already)"
+"Multilevel parentage hierarchies aren't supported (parent is a child "
+"already)"
 msgstr "不支持多级父子级操作 (父级已经是子级)"
 
 msgid "Parent is a variable variation parent, yet variables were not passed"
@@ -930,6 +1805,9 @@ msgstr "不支持多级父子级操作  (该产品为变量变体父产品)"
 msgid "Product is currently not a normal product, can't turn into package"
 msgstr "该产品目前不是一般产品，不能成为套装"
 
+msgid "Package can't contain itself"
+msgstr "包本身不能包含"
+
 msgid "Variation parents can not belong into a package"
 msgstr "父级变体不能归属到包。"
 
@@ -944,7 +1822,7 @@ msgid "primary product"
 msgstr "主要产品"
 
 msgid "secondary product"
-msgstr ""
+msgstr "二手产品"
 
 msgid "weight"
 msgstr "重量"
@@ -956,7 +1834,7 @@ msgid "cross sell links"
 msgstr "交叉销售链接"
 
 msgid "translated value"
-msgstr ""
+msgstr "已译值"
 
 msgid "product attribute"
 msgstr "产品属性"
@@ -964,52 +1842,86 @@ msgstr "产品属性"
 msgid "product attributes"
 msgstr "产品属性"
 
-msgid "logo"
-msgstr "商标"
+msgid "Check this if this service provider can be used when placing orders"
+msgstr "请检查此服务提供商是否可在下订单时使用"
+
+msgid "The service provider name."
+msgstr "服务提供者名称"
+
+msgid "Check this if this service is selectable on checkout."
+msgstr "检查此服务是否可在签出时选择"
+
+msgid "The shop for this service."
+msgstr "提供这种服务的商店"
 
 msgid "choice identifier"
-msgstr ""
+msgstr "选择标识符"
+
+msgid ""
+"The tax class to use for this service. Tax classes are defined in Settings -"
+" Tax Classes."
+msgstr "用于此服务的税类。税类在“设置”中定义-“税类”。"
 
 msgid "behavior components"
-msgstr ""
+msgstr "行为组件"
 
 #, python-format
 msgid "%s is disabled"
-msgstr ""
+msgstr "%s被关闭"
 
 #, python-format
 msgid "%s is for different shop"
-msgstr ""
+msgstr "%s适用于不同的商店"
 
 #, python-format
 msgid "%(service_name)s: %(sub_item)s"
-msgstr ""
+msgstr "%(service_name)s: %(sub_item)s"
 
 msgid "Fixed cost"
-msgstr ""
+msgstr "固定成本"
 
 msgid "Add fixed cost to price of the service."
-msgstr ""
+msgstr "将固定成本添加到服务价格中"
+
+msgid "The fixed cost to apply to this service."
+msgstr "适用于这项服务的固定费用"
+
+msgid "The order line text to display when this behavior is applied."
+msgstr "应用此行为时要显示的命令行文本"
 
 msgid "Waiving cost"
-msgstr ""
+msgstr "免收成本"
 
 msgid ""
 "Add cost to price of the service if total price of products is less than a "
 "waive limit."
-msgstr ""
+msgstr "如果产品总价低于免责限额，则在服务价格中加上成本。"
+
+msgid ""
+"The cost to apply to this service if the total price is below the waive "
+"limit."
+msgstr "如果总价格低于免责限额，则适用于本服务的费用。"
+
+msgid "The total price of products at which this service cost is waived."
+msgstr "免除此服务费用的产品总价"
 
 msgid "Weight limits"
-msgstr ""
+msgstr "重量限制"
 
 msgid "Limit availability of the service based on total weight of products."
-msgstr ""
+msgstr "根据产品的总重量限制服务的可用性"
 
 msgid "minimum weight"
 msgstr "最低重量"
 
+msgid "The minimum weight required for this service to be available."
+msgstr "此服务所需的最低重量"
+
 msgid "maximum weight"
 msgstr "最大重量"
+
+msgid "The maximum weight allowed by this service."
+msgstr "此服务允许的最大重量"
 
 msgid "Minimum weight not met."
 msgstr "没有达到最低重量。"
@@ -1017,100 +1929,164 @@ msgstr "没有达到最低重量。"
 msgid "Maximum weight exceeded."
 msgstr "最大重量已超过。"
 
-msgid "min weight"
-msgstr ""
+msgid "min weight (g)"
+msgstr "最小重量(G)"
 
-msgid "max weight"
-msgstr ""
+msgid "The minimum weight, in grams, for this price to apply."
+msgstr "这个价格适用的最小重量，以克为单位。"
+
+msgid "max weight (g)"
+msgstr "最大重量(G)"
+
+msgid "The maximum weight, in grams, before this price no longer applies."
+msgstr "这个价格之前的最大重量，克，不再适用。"
+
+msgid "The cost to apply to this service when the weight criteria is met."
+msgstr "当满足权重标准时，适用于此服务的成本。"
 
 msgid "Weight-based pricing"
-msgstr ""
+msgstr "权重定价"
 
 msgid ""
-"Define price based on basket weight. Range minimums is counted in range only "
-"as zero."
-msgstr ""
+"Define price based on basket weight. Range minimums is counted in range only"
+" as zero."
+msgstr "根据购物篮重量确定价格。范围最小值仅计算为零。"
 
 msgid "Weight does not match with any range."
-msgstr ""
+msgstr "重量与任何范围不匹配"
 
 msgid "Contact group availability"
-msgstr ""
+msgstr "联络人组可用性"
 
 msgid "Limit service availability for specific contact groups."
-msgstr ""
+msgstr "限制特定联络小组的服务可用性"
 
 msgid "groups"
-msgstr ""
+msgstr "组"
+
+msgid "The contact groups for which this service is available."
+msgstr "提供此服务的联络人组"
 
 msgid "Customer does not belong to any group."
-msgstr ""
+msgstr "顾客不属于任何组"
 
 msgid "Service is not available for any of the customers groups."
-msgstr ""
+msgstr "服务不适用于任何顾客组"
 
 msgid "Staff only availability"
-msgstr ""
+msgstr "仅工作人员可用"
 
 msgid "Limit service availability to staff only"
-msgstr ""
+msgstr "只向工作人员提供服务限制"
 
 msgid "Service is only available for staff"
-msgstr ""
+msgstr "服务只适用于工作人员"
+
+msgid "Order total limit"
+msgstr "订单总量限制"
+
+msgid "Limit service availability based on order total"
+msgstr "根据订单总数限制服务可用性"
+
+msgid "min price value"
+msgstr "最低价格值"
+
+msgid "max price value"
+msgstr "最高价格值"
+
+msgid "Order total does not match with service limits."
+msgstr "订单总数与服务限制不匹配"
+
+msgid "Country limit"
+msgstr "国家限制"
+
+msgid "Limit service availability based on countries selected"
+msgstr "根据所选国家/地区限制服务可用性"
+
+msgid "available in countries"
+msgstr "适用于各国"
+
+msgid "available in european countries"
+msgstr "适用于欧洲国家"
+
+msgid "unavailable in countries"
+msgstr "不适用于各国"
+
+msgid "unavailable in european countries"
+msgstr "不适用于欧洲国家"
+
+msgid "Service is not available without country."
+msgstr "没有国家/地区无法提供服务"
+
+msgid "Service is not available for this country."
+msgstr "此国家/地区不提供服务"
 
 msgid "round to nearest with ties going away from zero"
-msgstr ""
+msgstr "从零开始到四舍五入最接近的值"
 
 msgid "round to nearest with ties going towards zero"
-msgstr ""
+msgstr "四舍五入最接近零的值"
 
 msgid "round away from zero"
-msgstr ""
+msgstr "远离零"
 
 msgid "round towards zero"
-msgstr ""
-
-msgid "Rounding"
-msgstr ""
-
-msgid "Round total order price to the nearest quant."
-msgstr ""
-
-msgid "rounding quant"
-msgstr ""
-
-msgid "rounding mode"
-msgstr ""
-
-msgid "rounding"
-msgstr ""
+msgstr "向零舍去"
 
 msgid "payment processor"
-msgstr ""
+msgstr "付款处理器"
+
+msgid "The payment method name. This name is shown to customers on checkout."
+msgstr "付款方法名称，此名称在结帐时显示给客户。"
+
+msgid ""
+"The payment method description. This description is shown to customers on "
+"checkout."
+msgstr "付款方式说明。此描述在结帐时显示给客户。"
+
+msgid "rounding quantize"
+msgstr "舍入量化"
+
+msgid "Rounding quantize for cash payment."
+msgstr "舍入量化现金支付"
+
+msgid "rounding mode"
+msgstr "舍入模式"
+
+msgid "Rounding mode for cash payment."
+msgstr "现金支付的舍入模式"
 
 msgid "custom payment processor"
-msgstr ""
+msgstr "自定义付款处理器"
 
 msgid "custom payment processors"
-msgstr ""
+msgstr "自定义付款处理器"
 
 msgid "Manually processed payment"
-msgstr ""
+msgstr "人工处理付款"
 
 msgid "Cash payment"
-msgstr ""
+msgstr "现金支付"
 
 msgid "carrier"
-msgstr ""
+msgstr "运输者"
+
+msgid "The shipping method name. This name is shown to customers on checkout."
+msgstr "运输方法名称，此名称在结帐时显示给客户。"
+
+msgid ""
+"The shipping method description. This name is shown to customers on "
+"checkout."
+msgstr "运输方法描述，此名称在结帐时显示给客户。"
 
 msgid "custom carrier"
-msgstr ""
+msgstr "定制运营商"
 
 msgid "custom carriers"
-msgstr ""
+msgstr "定制运营商"
 
 msgid "Manually processed shipment"
-msgstr ""
+msgstr "人工处理装运"
 
 msgid "not sent"
 msgstr "未发送"
@@ -1124,11 +2100,17 @@ msgstr "已接收"
 msgid "error"
 msgstr "错误"
 
+msgid "outgoing"
+msgstr "支出"
+
+msgid "incoming"
+msgstr "收入"
+
 msgid "tracking code"
 msgstr "追踪编号"
 
 msgid "volume"
-msgstr ""
+msgstr "体积"
 
 msgid "shipment"
 msgstr "装运"
@@ -1137,7 +2119,7 @@ msgid "shipments"
 msgstr "装运"
 
 msgid "unit volume"
-msgstr ""
+msgstr "单位体积"
 
 msgid "unit weight"
 msgstr "单位重量"
@@ -1156,20 +2138,77 @@ msgstr "因为有该商店的现有订单，以下字段无法改变。"
 msgid "domain"
 msgstr "域名"
 
+msgid ""
+"Your shop domain name. Use this field to configure the URL that is used to "
+"visit your site. Note: this requires additional configuration through your "
+"internet domain registrar."
+msgstr "你的网店域名。使用此字段配置用于访问站点的URL。注：这需要通过您的互联网域名注册程序的额外配置。"
+
+msgid "Your shop status. Disable your shop if it is no longer in use."
+msgstr "你的商店状态。如果商店不再使用，就禁用它。"
+
 msgid "options"
 msgstr "选项"
+
+msgid ""
+"The primary shop currency. This is the currency used when selling your "
+"products."
+msgstr "主要的商店货币。这是销售您的产品时使用的货币。"
+
+msgid ""
+"This option defines whether product prices entered in admin include taxes. "
+"Note this behavior can be overridden with contact group pricing."
+msgstr "此选项定义在管理中输入的产品价格是否包括税收。注意，此行为可以通过联系人组定价来覆盖。"
+
+msgid "Shop logo. Will be shown at theme."
+msgstr "商店标志。将在主题上展出。"
+
+msgid "favicon"
+msgstr "图标"
+
+msgid "Shop favicon. Will be shown next to the address on browser."
+msgstr "商店图标。将显示在浏览器地址旁边。"
 
 msgid "maintenance mode"
 msgstr "维修模式"
 
+msgid ""
+"Check this if you would like to make your shop temporarily unavailable while"
+" you do some shop maintenance."
+msgstr "如果您想使您的商店暂时不可用，而您做一些商店维护，请检查此。"
+
 msgid "contact address"
 msgstr "联系地址"
 
-msgid "public name"
-msgstr "公用名称"
+msgid "staff members"
+msgstr "工作人员"
+
+msgid "The shop name. This name is displayed throughout admin."
+msgstr "商店名称。此名称显示在管理过程中。"
+
+msgid ""
+"The public shop name. This name is displayed in the store front and in any "
+"customer email correspondence."
+msgstr "公共商店名称。此名称显示在商店前面和任何客户电子邮件通信中。"
+
+msgid ""
+"To make your shop stand out, give it an awesome description. This is what "
+"will help your shoppers learn about your shop. It will also help shoppers "
+"find your store from the web."
+msgstr "为了使你的商店脱颖而出，给它一个很棒的描述。这将帮助你的购物者了解你的商店。它也将帮助购物者从网上找到你的商店。"
+
+msgid ""
+"Enter a short description for your shop. The short description will be used "
+"to get the attention of your customer with a small but precise description "
+"of your shop."
+msgstr "为您的商店输入一个简短的描述。简短的描述将被用来吸引你的顾客的注意，一个小但精确的描述你的商店。"
 
 msgid "maintenance message"
 msgstr "维修信息"
+
+msgid ""
+"The message to display to customers while your shop is in maintenance mode."
+msgstr "当您的商店处于维护模式时，要向客户显示的消息。"
 
 msgid "alert limit"
 msgstr "警告限制"
@@ -1181,25 +2220,62 @@ msgid "logical stock count"
 msgstr "逻辑库存盘点"
 
 msgid "internal"
-msgstr ""
+msgstr "内部"
 
 msgid "external"
-msgstr ""
+msgstr "外部"
+
+msgid ""
+"The product suppliers name. Suppliers can be used manage the inventory of "
+"stocked products."
+msgstr "产品供应商名称。供应商可以用来管理库存产品的库存。"
 
 msgid "supplier type"
 msgstr "供应商类型"
 
+msgid ""
+"The supplier type indicates whether the products are supplied through an "
+"internal supplier or an external supplier."
+msgstr "供应商类型表明产品是通过内部供应商还是通过外部供应商提供的。"
+
 msgid "stock managed"
-msgstr ""
+msgstr "库存管理"
+
+msgid ""
+"Check this if this supplier will be used to manage the inventory of stocked "
+"products."
+msgstr "检查此供应商是否将用于管理库存产品的库存。"
+
+msgid ""
+"Select the supplier module to use for this supplier. Supplier modules define"
+" the rules by which inventory is managed."
+msgstr "选择要用于此供应商的供应商模块。供应商模块定义库存管理的规则。"
 
 msgid "module data"
 msgstr "模块数据"
 
+msgid "You can select which shops the supplier is available to."
+msgstr "您可以选择供应商可以使用的商店。"
+
+msgid "Indicates whether this supplier is currently enabled."
+msgstr "指示此供应商当前是否已启用。"
+
+msgid "approved"
+msgstr "批准"
+
+msgid "Indicates whether this supplier is currently approved."
+msgstr "指示此供应商当前是否已被批准"
+
 msgid "Cannot change business critical fields of Tax that is in use"
 msgstr "无法改变使用中的税收业务关键字段"
 
-msgid "code"
-msgstr "代码"
+msgid "The abbreviated tax code name."
+msgstr "简称税号"
+
+msgid ""
+"The tax name. This is shown in order lines in order invoices and "
+"confirmations."
+msgstr "税号。这是显示在订单行，在订单发票和确认。"
 
 msgid "tax rate"
 msgstr "税率"
@@ -1216,6 +2292,9 @@ msgstr "税收固定金额。互斥于百分率。"
 msgid "currency of tax amount"
 msgstr "税额货币"
 
+msgid "Check this if this tax is valid and active."
+msgstr "如果此税有效且激活，请检查此选项。"
+
 msgid "Either rate or amount is required"
 msgstr "只需费率或金额"
 
@@ -1228,8 +2307,21 @@ msgstr "特定的金额要求货币选择"
 msgid "taxes"
 msgstr "税收"
 
+msgid ""
+"The tax class name. Tax classes are used to control how taxes are applied to"
+" products."
+msgstr "税级的名字。税类用于控制如何对产品征税。"
+
+msgid "Check this if this tax class is active and valid."
+msgstr "检查此税种是否有效。"
+
 msgid "tax classes"
 msgstr "税种"
+
+msgid ""
+"The customer tax group name. Customer tax groups can be used to control how "
+"taxes are applied to a set of customers. "
+msgstr "客户税组名称。客户税组可用于控制如何将税收应用于一组客户。"
 
 msgid "customer tax group"
 msgstr "顾客税组"
@@ -1243,21 +2335,109 @@ msgstr "零售客户"
 msgid "Company Customers"
 msgstr "公司客户"
 
-msgid "allowed decimals"
-msgstr "允许小数"
+msgid "allowed decimal places"
+msgstr "允许小数位"
 
-msgid "sales unit"
-msgstr "销售单位"
+msgid ""
+"The number of decimal places allowed by this sales unit.Set this to a value "
+"greater than zero if products with this sales unit can be sold in fractional"
+" quantities"
+msgstr "这个销售单位所允许的小数位数。如果这个销售单位的产品可以小数出售，请将这个值设为大于零。"
 
 msgid "sales units"
 msgstr "销售单位"
 
+msgid ""
+"The sales unit name to use for products (For example, 'pieces' or 'units'). "
+"Sales units can be set for each product through the product editor view."
+msgstr "用于产品的销售单位名称(例如，“部件”或“单位”)。可以通过“产品编辑器”视图为每个产品设置销售单位。"
+
+msgid "symbol"
+msgstr "标记"
+
+msgid ""
+"An abbreviated name for this sales unit that is shown throughout admin and "
+"order invoices."
+msgstr "此销售单位的缩写名称，显示在整个管理和订单发票中。"
+
+msgid "Value must be positive and non-zero"
+msgstr "值必须为正且非零"
+
+msgid "internal unit"
+msgstr "内部单位"
+
+msgid "The sales unit that this display unit is linked to."
+msgstr "此显示单元链接的销售单位"
+
+msgid "ratio"
+msgstr "比例"
+
+msgid ""
+"Size of the display unit in internal unit.  E.g. if internal unit is "
+"kilogram and display unit is gram, ratio is 0.001."
+msgstr "内部单位中显示单元的大小。例如：如果内部单位是公斤，显示单位是克，比率是0.001."
+
+msgid ""
+"The number of decimal places to use for values in the display unit.  The "
+"internal values are still rounded based on settings of the internal unit."
+msgstr "用于显示单元中值的小数位数。内部值仍然是根据内部单元的设置舍入的。"
+
+msgid "comparison value"
+msgstr "比较值"
+
+msgid ""
+"Value to use when displaying unit prices.  E.g. if the display unit is g and"
+" the comparison value is 100, then unit prices are shown per 100g, like: "
+"$2.95 per 100g."
+msgstr "在显示单价时使用的值。例如：如果显示单元为g，比较值为100，则每100 g显示单价，如：每100克2.95美元。"
+
+msgid "allow bare number"
+msgstr "允许裸号码"
+
+msgid ""
+"If true, values of this unit can be shown without the symbol occasionally.  "
+"Usually wanted if the unit is a piece, so that product listings can show "
+"just '$5.95' rather than '$5.95 per pc.'."
+msgstr "如果为真，则可以偶尔不使用符号来显示此单元的值。通常，如果该单位是一块，那么产品清单只显示‘5.95美元’，而不是‘每台电脑5.95美元。“"
+
+msgid "use by default"
+msgstr "默认使用"
+
+msgid ""
+"Use this display unit by default when displaying values of the internal "
+"unit."
+msgstr "默认情况下，在显示内部单元的值时使用此显示单元。"
+
+msgid "Name of the display unit, e.g. Grams."
+msgstr "显示单元的名称，例如克。"
+
+msgid "An abbreviated name of the display unit, e.g. 'g'."
+msgstr "显示单元的缩写名称，例如‘g’。"
+
+msgid "display units"
+msgstr "显示单位"
+
+msgid "Pieces"
+msgstr "部件"
+
+msgctxt "Symbol for pieces unit"
+msgid "pc."
+msgstr "计算机"
+
+#, python-brace-format
+msgctxt "Display value with unit symbol (with or without space)"
+msgid "{value}{symbol}"
+msgstr "{value}{symbol}"
+
 msgid "No Choice"
 msgstr "没有选项"
 
+msgid "The total should be greater than {} to be ordered."
+msgstr "总数应大于所订购的{}。"
+
 #, python-format
 msgid "%s not available in this shop"
-msgstr ""
+msgstr "%s在本店不可用"
 
 msgid "Default Pricing"
 msgstr "默认定价"
@@ -1265,11 +2445,44 @@ msgstr "默认定价"
 msgid "Insufficient stock"
 msgstr "库存不足"
 
+#, python-format
+msgid "%(name)s (physical stock: %(quantity)s)"
+msgstr "%(name)s(实物库存：%(quantity)s）"
+
+#, python-format
+msgid ""
+"Insufficient physical stock count for following products: %(product_counts)s"
+msgstr "以下产品的实物库存数量不足：%(product_counts)s"
+
+msgid "inventory"
+msgstr "存货清单"
+
+msgid "restock"
+msgstr "补货"
+
+msgid "restock logical"
+msgstr "补货逻辑"
+
 msgid "Untaxed"
 msgstr "未上税"
 
 msgid "This field cannot be changed since it is protected."
 msgstr "该字段为保护状态，无法改变。"
+
+msgid "Region"
+msgstr "区域"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Email"
+msgstr "电子邮件"
+
+msgid "Please provide either username or email, not both."
+msgstr "租赁提供用户名或电子邮件，而不是两者兼而有之。"
+
+msgid "Please provide either username or email."
+msgstr "请提供用户名或电子邮件。"
 
 msgid "First Last"
 msgstr "第一最后"

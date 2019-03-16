@@ -1,23 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-03-09 09:49+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2017-02-23 11:18+0000\n"
+"PO-Revision-Date: 2019-03-11 01:29+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Addons"
@@ -50,7 +50,7 @@ msgstr "重新加载应用程序"
 msgid ""
 "There are no viable reload methods available. Please contact your system "
 "administrator."
-msgstr ""
+msgstr "没有可行的重载方法， 请联系您的系统管理员。"
 
 msgid "Reload Method"
 msgstr "重新加载方式"
@@ -64,8 +64,8 @@ msgstr "附加组件文件 (ZIP)"
 msgid "Only upload addon files you trust."
 msgstr "只上传信任的附加组件文件。"
 
-msgid "Only ZIP files are supported"
-msgstr "只支持ZIP文件"
+msgid "Only wheel files are supported"
+msgstr "仅支持wheel文件"
 
 msgid "Upload"
 msgstr "上传"
@@ -91,42 +91,39 @@ msgstr "重新加载应用服务器"
 msgid ""
 "When you reload the application server, it may take some time for the new "
 "instance of your application to properly initialize."
-msgstr ""
-"当您重新加载应用服务器的时候，有可能需要一段时间正确初始化您应用的新实例。"
+msgstr "当您重新加载应用服务器的时候，有可能需要一段时间正确初始化您应用的新实例。"
 
 msgid ""
 "In addition, there is always a chance for the server to not properly "
 "initialize at all, in which case you may need to troubleshoot the problem "
 "yourself (or have a system administrator handy)."
-msgstr ""
-"此外，服务器有时会不能正确地初始化，在这种情况下，您需要自己排除故障 (或者请"
-"个系统管理员)。"
+msgstr "此外，服务器有时会不能正确地初始化，在这种情况下，您需要自己排除故障 (或者请个系统管理员)。"
 
 msgid "Reload steps"
-msgstr ""
+msgstr "重新加载步骤"
 
 msgid ""
 "Finalize installations for newly installed addons (migrate and collect "
 "static resources)"
-msgstr ""
+msgstr "为新安装的插件完成安装（迁移和收集静态资源）"
 
 msgid "Reload application server"
 msgstr "重新加载应用服务器"
 
 msgid "Reload initiated."
-msgstr ""
+msgstr "重新加载启动"
 
 msgid "Error while reloading application."
 msgstr "重新加载应用程序时出错。"
 
 msgid "Finalizing installations."
-msgstr ""
+msgstr "完成安装"
 
 msgid "Your Shuup seems to be back up!"
-msgstr ""
+msgstr "你的Shuup似乎已经恢复了！"
 
 msgid "Your Shuup is not up yet. Trying again soon."
-msgstr ""
+msgstr "你的Shuup还没有启动。 再试一次。"
 
 msgid "Select file"
 msgstr "选择文件"
@@ -142,10 +139,10 @@ msgstr "成功"
 
 #, python-format
 msgid ""
-"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
-"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
-"class=\"text-success\"><strong>reload your application server</strong></a>."
-msgstr ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
+" the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
+" class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr "接下来， <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>激活新安装的插件</strong></a><a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong> 并重新启动应用程序服务器</strong></a>。"
 
 msgid "Error"
 msgstr "错误"

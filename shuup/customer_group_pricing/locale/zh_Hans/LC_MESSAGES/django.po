@@ -2,53 +2,91 @@
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
-#
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/"
-"teams/55306/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2017-12-15 13:42+0000\n"
+"PO-Revision-Date: 2016-06-28 10:53+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Shuup Customer Group Pricing"
-msgstr ""
+msgstr "Shuup客户群定价"
 
 #, python-format
 msgid "Price (%(shop)s/%(group)s)"
-msgstr ""
+msgstr "价格（%(shop)s/%(group)s）"
+
+#, python-format
+msgid "Discount (%(shop)s/%(group)s)"
+msgstr "折扣 (%(shop)s/%(group)s)"
+
+msgid "Customer Group Price"
+msgstr "顾客群定价"
+
+msgid ""
+"Customer group prices can be listed, fetched, created, updated and deleted."
+msgstr "顾客群定价可以列出、获取、创建、更新和删除。"
 
 msgid "product"
-msgstr ""
+msgstr "产品"
 
 msgid "shop"
-msgstr ""
+msgstr "商店"
 
 msgid "contact group"
-msgstr ""
+msgstr "联系群组"
 
 msgid "price"
-msgstr ""
+msgstr "价格"
 
 msgid "product price"
-msgstr ""
+msgstr "产品价格"
 
 msgid "product prices"
-msgstr ""
+msgstr "产品价格"
+
+msgid "discount amount"
+msgstr "折扣金额"
+
+msgid "product discount"
+msgstr "产品折扣"
+
+msgid "product discounts"
+msgstr "产品折扣"
 
 msgid "Customer Group Pricing"
-msgstr ""
+msgstr "顾客群定价"
 
-msgid "Default price"
-msgstr ""
+msgid "Customer Group Discount"
+msgstr "顾客群折扣"
 
-msgid "Other shops"
-msgstr ""
+msgid "Contact Group Discount"
+msgstr "联系人组折扣"
+
+msgid ""
+"Here you can set individual discount amounts for different contact groups. "
+"The discount amount may be visible on storefront. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr "在这里，您可以为不同的联络人组设置个别折扣金额。折扣金额可以在店面上看到。这些组在联系人设置中定义-联系人组。"
+
+msgid "Contact Group Pricing"
+msgstr "联系人组定价"
+
+msgid ""
+"Here you can set individual pricing for different contact groups. This can "
+"be useful for special discounts or for B2B orders. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr "在这里，您可以为不同的联络小组设定个人定价。这可能是有用的特别折扣或B2B订单。这些组在联系人设置中定义-联系人组。"

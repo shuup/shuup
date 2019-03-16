@@ -1,27 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-04-14 09:11+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2018-07-16 20:50+0000\n"
+"PO-Revision-Date: 2019-03-14 07:06+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Shuup Utilities"
-msgstr "Shuup 实用程序"
+msgstr "Shuup 效用"
 
 msgid "other"
 msgstr "其他"
@@ -60,7 +60,7 @@ msgid "identifier"
 msgstr "标识符"
 
 msgid "log entry kind"
-msgstr ""
+msgstr "日志输入种类"
 
 msgid "extra data"
 msgstr "多余的数据"
@@ -71,15 +71,21 @@ msgstr "目标"
 #, python-format
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] ""
+msgstr[0] "%s 天"
 
 #, python-format
 msgid "%(min)s--%(max)s days"
-msgstr ""
+msgstr "%(min)s--%(max)s天"
+
+msgid "This field is required."
+msgstr "这个字段是必需的。"
 
 msgid ""
 "Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
 "marks to negate (A-Z,!G will not match G)."
-msgstr ""
-"被逗号隔开的值或范围，例如A-Z,10000-19000。用感叹号取消掉 (A-Z,!G不会与G匹"
-"配)。"
+msgstr "被逗号隔开的值或范围，例如A-Z,10000-19000。用感叹号取消掉 (A-Z,!G不会与G匹配)。"
+
+msgid ""
+"Could not create PDF since Weasyprint is not available. Please contact "
+"support."
+msgstr "无法创建PDF，因为Weasyprint不可用。请联系支援。"

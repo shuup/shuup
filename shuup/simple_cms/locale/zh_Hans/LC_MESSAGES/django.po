@@ -1,27 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-03-29 08:44+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2018-11-21 19:51+0000\n"
+"PO-Revision-Date: 2019-03-15 05:58+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Simple CMS"
-msgstr "简单内容管理系统"
+msgid "Content Pages"
+msgstr "内容页"
 
 msgid "Pages"
 msgstr "页面"
@@ -29,14 +29,26 @@ msgstr "页面"
 msgid "Show pages"
 msgstr "显示页面"
 
+msgid "Add a web page"
+msgstr "添加网页"
+
+msgid "New page"
+msgstr "新页面"
+
 msgid "Available from"
 msgstr "可从"
 
 msgid "Available to"
 msgstr "可供"
 
+msgid "Template"
+msgstr "模板"
+
 msgid "URL already exists."
 msgstr "URL已经存在。"
+
+msgid "URL must be unique"
+msgstr "URL必须是唯一的"
 
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
@@ -44,6 +56,9 @@ msgstr "填充任何 %(language)s 字段时 %(label)s 是必需的。"
 
 msgid "Please fill at least one language fully."
 msgstr "请至少以一种语言填完。"
+
+msgid "A page may not be made a child of itself."
+msgstr "一个页面本身不可能成为一个子页面。"
 
 msgid "Title"
 msgstr "名称"
@@ -57,23 +72,51 @@ msgstr "创建日期"
 msgid "Page"
 msgstr "页面"
 
+msgid "Content in this placeholder is shown for this page only."
+msgstr "此占位符中的内容仅为此页显示。"
+
+#, python-format
+msgid "Content in this placeholder is shown for %(title)s only."
+msgstr "此占位符中的内容仅显示为%(title)s。"
+
+msgid "Website"
+msgstr "网址"
+
+msgid "Article"
+msgstr "文章"
+
+msgid "shop"
+msgstr "商店"
+
 msgid "available from"
 msgstr "可从"
 
+msgid ""
+"Set an available from date to restrict the page to be available only after a"
+" certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr "将“可用日期”设置为“仅在某一日期和时间之后才可用”。这对于描述销售活动或其他对时间敏感的页面非常有用。"
+
 msgid "available to"
 msgstr "可供"
+
+msgid ""
+"Set an available to date to restrict the page to be available only after a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr "将“可用日期”设置为“仅在某一日期和时间之后才可用”。这对于描述销售活动或其他对时间敏感的页面非常有用。"
 
 msgid "created by"
 msgstr "创建于"
 
 msgid "modified by"
-msgstr ""
+msgstr "由...修改"
 
 msgid "created on"
 msgstr "创建"
 
 msgid "modified on"
-msgstr ""
+msgstr "修改"
 
 msgid "This identifier can be used in templates to create URLs"
 msgstr "该标识符可用于模板里创建URL"
@@ -81,20 +124,69 @@ msgstr "该标识符可用于模板里创建URL"
 msgid "visible in menu"
 msgstr "在菜单可见"
 
+msgid ""
+"Check this if this page should have a link in the top menu of the store "
+"front."
+msgstr "如果这个页面应该在商店正面的顶部菜单中有一个链接，请检查这个链接。"
+
 msgid "parent"
-msgstr ""
+msgstr "父类"
+
+msgid ""
+"Set this to a parent page if this page should be subcategorized under "
+"another page."
+msgstr "如果此页应在另一页下进行子分类，则将其设置为父页。"
 
 msgid "list children on page"
-msgstr ""
+msgstr "在页面上列出子页面"
+
+msgid "Check this if this page should list its children pages."
+msgstr "如果此页面应列出其子页面，请检查此选项。"
+
+msgid "show child page timestamps"
+msgstr "显示子页时间戳"
+
+msgid ""
+"Check this if you want to show timestamps on the child pages. Please note, "
+"that this requires the children to be listed on the page as well."
+msgstr "如果要在子页面上显示时间戳，请检查此选项。请注意，这要求孩子也被列在页面上。"
+
+msgid "deleted"
+msgstr "删除"
 
 msgid "title"
 msgstr "名称"
 
+msgid "The page title. This is shown anywhere links to your page are shown."
+msgstr "书页标题。这是显示在任何地方的链接到您的网页显示。"
+
 msgid "URL"
 msgstr "URL"
 
+msgid ""
+"The page url. Choose a descriptive url so that search engines can rank your "
+"page higher. Often the best url is simply the page title with spaces "
+"replaced with dashes."
+msgstr "网页网址。选择一个描述性的网址，这样搜索引擎就可以更高的排名你的页面。通常，最好的url只是页面标题，空格替换为破折号。"
+
 msgid "content"
 msgstr "内容"
+
+msgid ""
+"The page content. This is the text that is displayed when customers click on"
+" your page link.You can leave this empty and add all page content through "
+"placeholder editor in shop front.To edit the style of the page you can use "
+"the Snippet plugin which is in shop front editor."
+msgstr "页面内容。这是当客户点击您的页面链接时显示的文本，您可以将其保留为空，并通过商店前端的占位符编辑器添加所有页面内容。要编辑页面的样式，可以使用商店前端编辑器中的代码段插件。"
+
+msgid "Template path"
+msgstr "模板路径"
+
+msgid "render title"
+msgstr "渲染标题"
+
+msgid "Check this if this page should have a visible title"
+msgstr "如果这个页面应该有一个可见的标题，请检查这个。"
 
 msgid "page"
 msgstr "页面"
@@ -105,26 +197,75 @@ msgstr "页面"
 msgid "Untitled"
 msgstr "无标题"
 
+msgid "Image"
+msgstr "图片"
+
+msgid "The image of your object."
+msgstr "你的对象的图像。"
+
+msgid "type"
+msgstr "类型"
+
+msgid ""
+"The title of your object as it should appear within the graph, e.g. The "
+"Rock."
+msgstr "你的对象的标题，因为它应该出现在图表中，例如岩石。"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "A one to two sentence description of your object."
+msgstr "一到两个句子描述你的对象。"
+
+msgid "Section"
+msgstr "部分"
+
+msgid ""
+"A high-level section name, e.g. Technology. Only applicable when type is "
+"Article."
+msgstr "高级部分名称，例如 技术。 仅在类型为文章时适用。"
+
+msgid "Tags"
+msgstr "标签"
+
+msgid ""
+"Tag words associated with this article. Only applicable when type is "
+"Article."
+msgstr "与本文相关的标签词。只有当类型是文章时才适用。"
+
+msgid "Article author"
+msgstr "文章作者"
+
+msgid ""
+"The name of the author for the article. Only applicable when type is "
+"Article."
+msgstr "文章作者的姓名。只有当类型是文章时才适用。"
+
 msgid "CMS Page Links"
-msgstr ""
+msgstr "CMS 页面链接"
 
 msgid "Show all pages"
-msgstr ""
+msgstr "显示所有页面"
 
 msgid "All pages are shown, even if not selected"
-msgstr ""
+msgstr "即使未选中，也会显示所有页面。"
 
 msgid "Hide expired pages"
-msgstr ""
+msgstr "隐藏过期页"
+
+msgid "Default Page"
+msgstr "默认页面"
+
+msgid "Page with sidebar"
+msgstr "边栏页"
+
+msgid ""
+"Fill the fields below to add extra OpenGraph information to the page meta.\n"
+"        If not informed, some values will be inferred from the page attributes."
+msgstr "填写下面的字段以向页面元素添加额外的OpenGraph信息。如果未通知，将从页面属性推断出一些值。"
 
 msgid "New Page"
 msgstr "新页面"
 
-msgid "General Information"
-msgstr "基本信息"
-
-msgid "Availability"
-msgstr "可用性"
-
-msgid "Extras"
-msgstr "额外"
+msgid "Home"
+msgstr "主页"
