@@ -1,13 +1,55 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.1
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-03-16 13:30pm -0800.
+
+Admin
+~~~~~
+
+- Fix dropzone component and allow browsing local files
+- Remove missed message from product view that makes no sense
+- Introduce extra permissions for admin modules
+- Remove language column from picotable settings
+
+Core
+~~~~
+
+- Add managed stock flag in ProductStockStatus
+- Add database index for applied attributes fields
+
+Front
+~~~~~
+
+- Change templates to not render dashboard links when person is not available
+- Add option to explicitly override shop's list sort&filter config
+- Make the sort filter data contain the request and current category
+- Improve sort and filters to allow hidden fields
+- Only set sort & filters data when the form has changed
+- Bump sort & filters queryset cache
+- Fix custom checkbox rendering for required fields
+- Show available date in front template
+- Add mixin with fields for base template
+
+Reports
+~~~~~~~~
+
+- Fix max and min dates when values are set to None
+- Fix start and end date filtering
+
+Xtheme
+~~~~~~
+
+- Enable jinja template tags in Snippet plugin
+
+Miscellaneous
+~~~~~~~~~~~~~
+
+- Update getting started with development instructions
+- Allow all hosts at workbench settings
+
 
 Shuup 1.9.0
 -----------
