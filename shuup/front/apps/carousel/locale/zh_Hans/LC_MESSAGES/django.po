@@ -1,0 +1,261 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-22 23:06+0000\n"
+"PO-Revision-Date: 2019-03-13 07:20+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Carousels"
+msgstr "轮播"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s已被删除"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Filter by name..."
+msgstr "按名称过滤…"
+
+msgid "Carousel"
+msgstr "轮播"
+
+msgid "Active"
+msgstr "活跃"
+
+msgid "Slide"
+msgstr "幻灯片"
+
+msgid "Fade"
+msgstr "褪色"
+
+msgid "Current page"
+msgstr "当前页"
+
+msgid "New page"
+msgstr "新页面"
+
+msgid "shops"
+msgstr "商店"
+
+msgid "Select which shops you would like the carousel to be visible in."
+msgstr "选择您希望在哪个商店看到轮播。"
+
+msgid "name"
+msgstr "名称"
+
+msgid "The carousel name use for carousel configuration."
+msgstr "轮播名称用于轮播配置。"
+
+msgid "animation"
+msgstr "动画"
+
+msgid "Animation type for cycling slides."
+msgstr "骑行幻灯片的动画类型"
+
+msgid "interval"
+msgstr "间距"
+
+msgid "Slide interval in seconds."
+msgstr "以秒为单位滑动间隔"
+
+msgid "pause on hover"
+msgstr "暂停悬停"
+
+msgid "When checked, the carousel cycling pauses on mouse over."
+msgstr "当检查时，轮播在鼠标上暂停。"
+
+msgid "show navigation arrows"
+msgstr "显示导航箭头"
+
+msgid ""
+"When checked, navigational arrows are shown on the carousel allowing for "
+"customers to go back and forward."
+msgstr "当检查时，在轮播上显示导航箭头，允许客户返回和前进。"
+
+msgid "show navigation dots"
+msgstr "显示导航点"
+
+msgid "When checked, navigational indicator dots are shown."
+msgstr "当检查时，显示导航指示点。"
+
+msgid "image width"
+msgstr "图片宽度"
+
+msgid "Slide images will be cropped to this width."
+msgstr "幻灯片图像将被裁剪到此宽度。"
+
+msgid "image height"
+msgstr "图片高度"
+
+msgid "Slide images will be cropped to this height."
+msgstr "幻灯片图像将被裁剪到这个高度。"
+
+msgid "Arrows color"
+msgstr "箭头颜色"
+
+msgid "Set the custom color for the arrows."
+msgstr "为箭头设置自定义颜色"
+
+msgid "Name is only used to configure slides."
+msgstr "名称仅用于配置幻灯片"
+
+msgid "product link"
+msgstr "产品链接"
+
+msgid ""
+"Set the product detail page that should be shown when this slide is clicked,"
+" if any."
+msgstr "设置在单击此幻灯片时应显示的产品详细信息页，如果有的话。"
+
+msgid "category link"
+msgstr "类别链接"
+
+msgid ""
+"Set the product category page that should be shown when this slide is "
+"clicked, if any."
+msgstr "设置单击此幻灯片时应显示的产品类别页，如果有的话。"
+
+msgid "cms page link"
+msgstr "CMS页面链接"
+
+msgid ""
+"Set the web page that should be shown when the slide is clicked, if any."
+msgstr "设置单击幻灯片时应显示的网页，如果有的话。"
+
+msgid "ordering"
+msgstr "订单"
+
+msgid ""
+"Set the numeric order in which this slide should appear relative to other "
+"slides in this carousel."
+msgstr "设置此幻灯片相对于此轮播中其他幻灯片显示的数字顺序。"
+
+msgid "link target"
+msgstr "链接目标"
+
+msgid ""
+"Set this to current if clicking on this slide should open a new browser tab."
+msgstr "如果单击此幻灯片应打开一个新的浏览器选项卡，则将其设置为“当前”。"
+
+msgid "available from"
+msgstr "可从"
+
+msgid ""
+"Set the date and time from which this slide should be visible in the "
+"carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr "设置在轮播中可以看到此幻灯片的日期和时间。这是有用的广告销售活动或其他时间敏感的营销。"
+
+msgid "available to"
+msgstr "可供"
+
+msgid "Inactive dot border color"
+msgstr "非活动点边框颜色"
+
+msgid "Customize the dot border color when slide is not active."
+msgstr "当幻灯片不活动时，自定义点边框颜色。"
+
+msgid "Active dot color"
+msgstr "活动点颜色"
+
+msgid "Customize the dot color when slide is active."
+msgstr "当幻灯片处于活动状态时，自定义点颜色。"
+
+msgid "caption"
+msgstr "标题"
+
+msgid "Text that describes the image. Used for search engine purposes."
+msgstr "描述图像的文本，用于搜索引擎。"
+
+msgid "caption text"
+msgstr "标题文本"
+
+msgid "When displayed in banner box mode, caption text is shown as a tooltip"
+msgstr "当以横幅框模式显示时，标题文本显示为工具提示。"
+
+msgid "external link"
+msgstr "外部链接"
+
+msgid ""
+"Set the external site that should be shown when this slide is clicked, if "
+"any."
+msgstr "设置单击此幻灯片时应显示的外部站点，如果有的话。"
+
+msgid "image"
+msgstr "图片"
+
+msgid "The slide image to show."
+msgstr "要显示的幻灯片图像"
+
+msgid "Slides"
+msgstr "幻灯片"
+
+msgid "Carousel Plugin"
+msgstr "轮播插件"
+
+msgid "Banner Box"
+msgstr "横幅框"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Slides can be added after saving the Carousel."
+msgstr "保存轮播后可以添加幻灯片。"
+
+msgid ""
+"This form is also used to define banner boxes. Marked fields only apply to "
+"banner boxes."
+msgstr "此窗体还用于定义横幅框。标记字段仅适用于横幅框。"
+
+msgid "Adding the carousel to your site"
+msgstr "将轮播添加到您的站点"
+
+msgid ""
+"To add a carousel to your site, you must edit the page using the placeholder"
+" editor. To do this, go to your site and click the 'Edit page' on the page "
+"you want to add the carousel banner to. Then, select the placeholder to "
+"change and add a new plugin row and from the plugin dropdown and select "
+"'Carousel Plugin'. From 'Carousel' dropdown options choose the carousel you "
+"want to display. As a final step, save the plugin and publish changes."
+msgstr "若要向网站添加轮播，必须使用占位符编辑器编辑页面。要做到这一点，转到您的网站，并单击“编辑页”的网页，您想要添加轮播横幅。然后，选择要更改的占位符，添加一个新的插件行，并从插件下拉列表中选择“轮播插件”。从“轮播”下拉选项中选择要显示的轮播。作为最后一步，保存插件并发布更改。"
+
+msgid "Learn more."
+msgstr "了解更多"
+
+msgid "Basic details"
+msgstr "基本细节"
+
+msgid "Advanced options"
+msgstr "高级选项"
+
+msgid "Remove Slide"
+msgstr "删除幻灯片"
+
+msgid "Only image for default language is required."
+msgstr "默认语言只需要图像"
+
+msgid ""
+"If external link is not set link will fallback to product link, category "
+"link or cms page link in this order."
+msgstr "如果没有设置外部链接，链接将按此顺序退回到产品链接、类别链接或cms页面链接。"
+
+msgid "Add new slide"
+msgstr "添加新幻灯片"
+
+msgid "New Carousel"
+msgstr "新轮播"

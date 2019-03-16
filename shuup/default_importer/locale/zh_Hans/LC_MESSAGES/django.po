@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-25 10:46+0000\n"
+"PO-Revision-Date: 2019-03-13 08:49+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Contact Importer"
+msgstr "联系进口商"
+
+msgid "Company Contact Importer"
+msgstr "公司联系进口商"
+
+#, python-format
+msgid "Image '%s' not found, please check whether the image exists."
+msgstr "找不到'%s'，请检查图像是否存在。"
+
+msgid "Please add supplier to row before importing stock quantities."
+msgstr "在进口库存数量之前，请增加供应商。"
+
+msgid "No supplier found, please check the supplier exists."
+msgstr "没有找到供应商，请检查供应商是否存在。"
+
+msgid "This supplier doesn't handle stocks, please set Stock Managed on."
+msgstr "本供应商不处理库存，请设置库存管理。"
+
+msgid "Product Importer"
+msgstr "产品进口商"
+
+msgid "Quantities"
+msgstr "数量"
+
+msgid "If you are importing products with quantities, ensure the following:"
+msgstr "如果您正在进口具有数量的产品，请确保以下内容："
+
+#, python-format
+msgid ""
+"You have atleast one <a href=\"%(supplier_url)s\">supplier</a> with \"Stock "
+"Managed\" <strong>on</strong>."
+msgstr "您至少有一个 <a href=\"%(supplier_url)s\">供应商</a>与“库存管理”<strong>和</strong>。"
+
+#, python-format
+msgid ""
+"your <a href=\"%(supplier_url)s\">supplier</a> has \"Stock Managed\" "
+"<strong>on</strong>. (Currently <strong>off</strong>)"
+msgstr "你的<a href=\"%(supplier_url)s\">供应商</a>有“库存管理” <strong>on</strong>。 （目前<strong>off</strong>）"
+
+msgid "your import file has <strong>supplier</strong> field"
+msgstr "您的导入文件有<strong>供应商</strong> 字段"
+
+msgid "Images"
+msgstr "图片"
+
+msgid "If you are importing products with images, ensure the following:"
+msgstr "如果您要导入带有图像的产品，请确保以下内容："
+
+#, python-format
+msgid ""
+"Upload all product images using the <a href=\"%(media_browser_url)s\" "
+"target=\"_blank\">Media Browser</a>."
+msgstr "使用<a href=\"%(media_browser_url)s\" target=\"_blank\">媒体浏览器</a>上传所有产品图像。"
+
+msgid ""
+"Use the image file name on <strong>image</strong> and/or "
+"<strong>images</strong> column(s)."
+msgstr "在<strong>图片</strong> 和/或 <strong>图片</strong>列上使用图像文件名(s)。"
+
+msgid ""
+"<strong>images</strong> column can receive a comma-separated list of image "
+"names."
+msgstr "<strong>图片</strong> 列可以接收以逗号分隔的图像名称列表。"
+
+msgid ""
+"Image names can be the file name (e.g.: <em>product_001.png</em>) or the path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).\n"
+"        Using the full path will ensure that the correct image will be used when there is more than one image with the same name."
+msgstr "图像名称可以是文件名（例如： <em>产品_001.png</em>）或图像的路径（例如：<em>产品/图片/产品_001.jpeg</em>）.使用完整路径将确保在有更多图像时使用正确的图像 比一个同名的图像。"
+
+msgid "Related objects"
+msgstr "相关对象"
+
+msgid ""
+"Columns that are relations to other objects (like Category and Supplier) accept both the object ID number\n"
+"    and the object name. Make sure that when using the name, there should be only a single object for that given name."
+msgstr "与其他对象（如“类别”和“供应商”）关系的列同时接受对象ID号和对象名。 确保在使用名称时，该名称应该只有一个对象。"

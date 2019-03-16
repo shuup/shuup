@@ -1,0 +1,101 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-15 19:45+0000\n"
+"PO-Revision-Date: 2017-04-04 17:00+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "API"
+msgstr "应用程序界面"
+
+msgid "Disabled"
+msgstr "关闭"
+
+msgid "Admin Users"
+msgstr "管理用户"
+
+msgid "Authenticated Users - Read/Write"
+msgstr "经过身份验证的用户 - 读/写"
+
+msgid "Authenticated Users - Read only"
+msgstr "经过身份验证的用户 - 只读"
+
+msgid "Public Users - Read/Write"
+msgstr "公共用户 - 读/写"
+
+msgid "Public Users - Read only"
+msgstr "公共用户 - 只读"
+
+msgid "API permissions saved"
+msgstr "已保存API权限"
+
+msgid "API Permissions"
+msgstr "API权限"
+
+msgid "Configure API permissions"
+msgstr "配置API权限"
+
+msgid ""
+"Please, configure the API permission level for each service by selecting the"
+" level below."
+msgstr "请通过选择以下级别为每项服务配置API权限级别。"
+
+msgid "Note:"
+msgstr "注意："
+
+msgid "No one can make requests."
+msgstr "没有人可以提出要求"
+
+msgid "Admin users"
+msgstr "管理用户"
+
+msgid ""
+"Only administrators can make requests to the API to fetch, save, delete or "
+"update data."
+msgstr "只有管理员才能向API发出请求以获取、保存、删除或更新数据。"
+
+msgid "Authenticated users - Read/Write"
+msgstr "经过身份验证的用户-读/写"
+
+msgid "Any authenticated user can fetch, save, delete or update data."
+msgstr "任何经过身份验证的用户都可以获取、保存、删除或更新数据。"
+
+msgid "Authenticated users - Read"
+msgstr "认证用户-读"
+
+msgid "Any authenticated user can only fetch data."
+msgstr "任何经过身份验证的用户只能获取数据。"
+
+msgid "Public users - Read/Write"
+msgstr "公共用户 - 读/写"
+
+msgid ""
+"Any user (authenticated or not) can fetch, save, delete or update data."
+msgstr "任何用户(身份验证与否)都可以获取、保存、删除或更新数据。"
+
+msgid "Use this with caution."
+msgstr "请谨慎使用"
+
+msgid "Public users - Read"
+msgstr "公共用户-读"
+
+msgid "Any user (authenticated or not) can only fetch data."
+msgstr "任何用户(通过身份验证与否)都只能获取数据。"
+
+msgid "Save"
+msgstr "保存"

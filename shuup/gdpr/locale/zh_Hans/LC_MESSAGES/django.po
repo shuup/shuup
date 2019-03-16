@@ -1,0 +1,877 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-27 19:23+0000\n"
+"PO-Revision-Date: 2018-05-29 19:55+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "GDPR"
+msgstr "通用数据保护条例"
+
+msgid "Anonymize"
+msgstr "匿名化"
+
+msgid ""
+"This action will replace all contact personal data with random values making"
+" it impossible to be identified. The account will also be deactivated and "
+"any pending order(s) will be canceled. Are you sure?"
+msgstr "本行动将以随机值取代所有联系个人资料，使其无法识别。该帐户也将被停用，任何悬而未决的命令(s) 都将被取消。确定吗?"
+
+msgid "Download data"
+msgstr "下载数据"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "General Data Protection Regulation"
+msgstr "通用数据保护条例"
+
+msgid "Contact anonymized!"
+msgstr "匿名联系人！"
+
+msgid "My Data"
+msgstr "我的数据"
+
+msgid "Customer data"
+msgstr "顾客数据"
+
+msgid "enabled"
+msgstr "启用"
+
+msgid "Define if the GDPR is active."
+msgstr "定义GDPR是否处于活动状态。"
+
+msgid "privacy policy page"
+msgstr "隐私政策页面"
+
+msgid ""
+"Choose your privacy policy page here. If this page changes, customers will "
+"be prompted for new consent."
+msgstr "在这里选择您的隐私政策页面。如果此页面发生更改，将提示客户进行新的同意。"
+
+msgid "consent pages"
+msgstr "同意页面"
+
+msgid ""
+"Choose pages here which are being monitored for customer consent. If any of "
+"these pages change, the customer is being prompted for a new consent."
+msgstr "在此选择正在被监控的页面，以获得客户的同意。如果这些页面中的任何一个发生变化，将提示客户获得新的同意。"
+
+msgid "cookie banner content"
+msgstr "cookie横幅内容"
+
+msgid "The text to be presented to users in a pop-up warning."
+msgstr "在弹出警告中显示给用户的文本。"
+
+msgid "cookie privacy excerpt"
+msgstr "cookie隐私摘录"
+
+msgid "The summary text to be presented about cookie privacy."
+msgstr "关于cookie隐私的摘要文本。"
+
+msgid "GDPR settings"
+msgstr "GDPR设置"
+
+msgid "GDPR for {}"
+msgstr "GDPR 为了 {}"
+
+msgid "always active"
+msgstr "总是活跃"
+
+msgid "cookies used"
+msgstr "cookies已使用"
+
+msgid ""
+"Comma separated list of cookies names, prefix or suffix that will be "
+"included in this category, e.g. _ga, mysession, user_c_"
+msgstr "逗号分隔的cookie名称、前缀或后缀列表，这些名称或后缀将包括在此类别中，例如：_ga、mysession、user_c_"
+
+msgid "name"
+msgstr "名称"
+
+msgid "how we use"
+msgstr "怎么使用"
+
+msgid "Describe the purpose of this category of cookies and how it is used."
+msgstr "描述这类cookie的用途以及如何使用它。"
+
+msgid "GDPR cookie category"
+msgstr "GDPR Cookie类别"
+
+msgid "GDPR cookie categories"
+msgstr "GDPR Cookie类别"
+
+msgid "GDPR cookie category for {}"
+msgstr "{}的GDPR cookie类别"
+
+msgid "created on"
+msgstr "创建"
+
+msgid "consent documents"
+msgstr "同意书"
+
+msgid "GDPR user consent"
+msgstr "GDPR用户同意"
+
+msgid "GDPR user consents"
+msgstr "GDPR用户同意"
+
+msgid "GDPR user consent in {} for user {} in shop {}"
+msgstr "商店{}中GDPR用户{}的{}用户同意"
+
+msgid "GDPR user consent document for {} (Version: {})"
+msgstr "{}（版本：{}）的GDPR用户同意文档"
+
+msgid ""
+"I have read and accept the <a href='{}' target='_blank' "
+"class='gdpr_consent_doc_check'>{}</a>"
+msgstr ""
+"我已阅读并接受 <a href='{}' target='_blank' class='gdpr_consent_doc_check'>{}</a>"
+
+msgid "You must accept to this to register."
+msgstr "你必须接受这个来注册。"
+
+msgid "You must accept to this to order."
+msgstr "你必须接受这个来订购。"
+
+msgid "You must accept to this to authenticate."
+msgstr "您必须接受此身份验证。"
+
+msgid ""
+"<p>This website stores cookies on your computer. These cookies are used to "
+"collect information about how you interact with our website and allow us to "
+"remember you. We use this information in order to improve and customize your"
+" browsing experience and for analytics and metrics about our visitors both "
+"on this website and other media. To find out more about the cookies we use, "
+"see our Privacy Policy.</p>"
+msgstr ""
+"<p>这个网站在你的电脑上储存cookie。这些cookie用于收集有关您如何与我们的网站互动的信息，并允许我们记住您。我们使用这些信息，以改善和定制您的浏览体验，并分析和衡量我们的访问者，包括本网站和其他媒体。要了解有关我们使用的cookie的更多信息，请参见我们的隐私政策。</p>"
+
+msgid ""
+"<p>When you visit any website, it may store or retrieve information on "
+"yourbrowser, mostly in the form of cookies. This information might be about "
+"you, your preferences or your device and is mostly used to make the site "
+"work as you expect it to. The information does not usually directly identify"
+" you, but it can give you a more personalized web experience.</p><p>Because "
+"we respect your right to privacy, you can choose not to allow some types of "
+"cookies. Click on the different category headings to find out more and "
+"change our default settings. However, blocking some types of cookies may "
+"impact your experience of the site and the services we are able to "
+"offer.</p>"
+msgstr ""
+"<p>当您访问任何网站时，它可能会在您的浏览器上存储或检索信息，主要以cookie的形式出现。这些信息可能是关于您、您的首选项或您的设备的，并且主要用于使站点按您预期的方式工作。信息通常不会直接识别你，但它可以给你一个更个性化的网络体验。</p><p>由于我们尊重你的隐私权，你可以选择不允许某些类型的曲奇。点击不同的类别标题找出更多，并更改我们的默认设置。但是，阻止某些类型的cookie可能会影响您对站点的体验以及我们能够提供的服务。</p>"
+
+msgid "General Settings"
+msgstr "基本设置"
+
+msgid "Cookie Categories"
+msgstr "Cookie类别"
+
+msgid "Add new cookie category"
+msgstr "添加新的cookie类别"
+
+msgid "Use this form to create a new cookie category"
+msgstr "使用此表单创建新的cookie类别。"
+
+msgid "Privacy Policy"
+msgstr "隐私政策"
+
+msgid "Last updated"
+msgstr "最后更新"
+
+#, python-format
+msgid ""
+"%(company_name)s (“we” or “us” or “our”) respects the privacy of our users "
+"(“user” or “you”). This Privacy Policy explains how we collect, use, retain,"
+" disclose, and safeguard your information whenever you access or use in any "
+"manner any %(company_name)s application, product, service, feature, "
+"technology, content, or website (collectively, “Services”). By registering "
+"or signing up for a %(company_name)s account, including through a computer "
+"or mobile device, you accept the terms of this Privacy Policy. Please read "
+"this Privacy Policy carefully."
+msgstr ""
+"%(company_name)s(“我们”、“我们”或“我们”)尊重用户(“用户”或“您”)的隐私。本隐私政策解释了当您以任何方式访问或使用任何%(company_name)s的应用程序、产品、服务、功能、技术、内容或网站(统称“服务”)时，我们如何收集、使用、保留、披露和保护您的信息。通过注册或注册%(company_name)s帐户，包括通过计算机或移动设备注册，您将接受本隐私策略的条款。请仔细阅读本隐私政策。"
+
+msgid ""
+"IF YOU DO NOT AGREE WITH THE TERMS OF THIS PRIVACY POLICY, PLEASE DO NOT "
+"ACCESS THE SERVICES."
+msgstr "如果您不同意本隐私政策的条款，请不要访问该服务。"
+
+msgid ""
+"We reserve the right to make changes to this Privacy Policy at any time and "
+"for any reason. We will alert you about any changes by updating the “Last "
+"updated” date of this Privacy Policy."
+msgstr "我们保留在任何时间和任何原因修改本私隐政策的权利。我们会透过更新本私隐政策的“最后更新”日期，通知阁下任何更改。"
+
+msgid ""
+"You are encouraged to periodically review this Privacy Policy to stay "
+"informed of updates. You will be deemed to have been made aware of, will be "
+"subject to, and will be deemed to have accepted the changes in any revised "
+"Privacy Policy by your continued use of the Services after the date such "
+"revised Privacy Policy is posted."
+msgstr ""
+"我们鼓励您定期审查此隐私政策，以随时了解最新情况。你将被视为已被告知，将服从，并将被视为已接受任何修改后的隐私政策的变化，因为你继续使用该服务后，该修订的私隐政策已张贴。"
+
+msgid ""
+"This Privacy Policy does not apply to the third-party online/mobile store "
+"from which you install the Services or make payments, including any in-game "
+"virtual items, which may also collect and use data about you."
+msgstr "本隐私政策不适用于第三方在线/移动商店，您可以从该商店安装服务或付款，包括游戏中的任何虚拟项目，这些虚拟项目也可能收集和使用有关您的数据。"
+
+msgid ""
+"We are not responsible for any of the data collected by any such third "
+"party."
+msgstr "我们不对任何第三方收集的任何数据负责。"
+
+msgid "Important Information"
+msgstr "重要信息"
+
+msgid "Changes to this Privacy Policy"
+msgstr "对此隐私政策的更改"
+
+#, python-format
+msgid ""
+"We may update this Privacy Policy from time to time by posting a new version"
+" online. You should check this page occasionally to review any changes. If "
+"we make any material changes we will notify you by posting the revised "
+"Privacy Policy on our Online Store and, if you order from our store, "
+"providing notice through the Notification app in the %(company_name)s Store "
+"Admin. This helps you to always be aware of what information we collect, how"
+" we use it and under what circumstances, if any, it is disclosed. Your "
+"continued use of the Online Store, the online store services, and/or "
+"continued provision of Personal Information to us will be subject to the "
+"terms of the then-current Privacy Policy."
+msgstr ""
+"我们可不时更新本私隐政策，在网上张贴新版本。您应该偶尔检查此页面以检查任何更改。如果我们做了任何实质性的改变，我们将通知你通过张贴修订的隐私政策在我们的网上商店，如果你从我们的商店订购，提供通知应用程序%(company_name)s的商店管理。这有助于您始终了解我们收集的信息，我们如何使用它，以及在什么情况下，如果有的话，它是被披露的。您继续使用网上商店、网上商店服务和/或继续向我们提供个人信息将受当时的隐私政策的约束。"
+
+msgid "Contact Us"
+msgstr "联系我们"
+
+#, python-format
+msgid ""
+"If you have any questions about this Privacy Policy or our treatment of the "
+"information you provide us, please write to us by email at %(store_email)s "
+"or by mail to %(full_address)s, Attn: Privacy."
+msgstr ""
+"如果您对此隐私政策或我们对您提供给我们的信息的处理有任何疑问，请通过电子邮件%(store_email)s或将邮件发送到%(full_address)s，经办人：隐私。"
+
+#, python-format
+msgid "Use of the Online Store by %(company_name)s and our Customers"
+msgstr "%(company_name)s和我们的客户使用网上商店"
+
+#, python-format
+msgid "The %(company_name)s Online Store"
+msgstr "%(company_name)s的在线商店"
+
+#, python-format
+msgid ""
+"Our online store allows any company (or person) that uses it (our customers "
+"and %(company_name)s itself) to order the products available in the store."
+msgstr "我们的在线商店允许任何使用它的公司(或个人)(我们的客户和%(company_name)s本身)订购商店中可用的产品。"
+
+msgid "Customer has two ways of providing information to us:"
+msgstr "客户有两种方式向我们提供信息："
+
+msgid "Registering to our page"
+msgstr "册到我们的页面"
+
+msgid "Ordering products from us"
+msgstr "向我们订购产品"
+
+msgid ""
+"This, voluntarely given, information, which is stored and managed on our "
+"service providers' servers, is used to ensure the services can be run and "
+"ensures we are able to provide our service."
+msgstr "这是自愿提供的，信息存储和管理在我们服务提供商的服务器上，用于确保服务能够运行，并确保我们能够提供服务。"
+
+#, python-format
+msgid "Use by %(company_name)s"
+msgstr "%(company_name)s使用"
+
+msgid ""
+"Information that we collect and manage using this Online Store belongs to us"
+" and is used, disclosed and protected according to this Privacy Policy."
+msgstr "我们使用这个网上商店收集和管理的信息属于我们，并根据本隐私政策被使用、披露和保护。"
+
+msgid "Use by Our Customers"
+msgstr "客户使用"
+
+#, python-format
+msgid ""
+"%(company_name)s collects information under the direction of its customers, "
+"and has no direct relationship with the individuals whose Personal "
+"Information it processes. If you would no longer like to be contacted by us,"
+" please contact us directly at <a "
+"href=\"mailto:%(store_email)s\">%(store_email)s</a>. We may transfer "
+"Personal Information to companies that help us provide our service. "
+"Transfers to subsequent third parties are covered by the service agreements "
+"with them."
+msgstr ""
+"%(company_name)s在其客户的指导下收集信息，并且与其处理的个人信息的个人没有直接关系。 如果您不再希望我们与您联系，请直接通过<a "
+"href=\"mailto:%(store_email)s\"> %(store_email)s</a>.与我们联系。 "
+"我们可能会将个人信息传输给帮助我们提供服务的公司。 向其后的第三方转让的服务协议涵盖了对其的转让。"
+
+msgid "Sensitive Information"
+msgstr "敏感信息"
+
+msgid ""
+"This refers to credit or debit card numbers, personal financial account "
+"information, Social Security numbers, passport numbers, driver's license "
+"numbers or similar personal identifiers, racial or ethnic origin, physical "
+"or mental health condition or information, or other employment, financial or"
+" health information."
+msgstr ""
+"这是指信用卡或借记卡号码、个人金融账户信息、社会保险号码、护照号码、驾照号码或类似的个人识别资料、种族或族裔血统、身心健康状况或信息、或其他就业、财务或健康信息。"
+
+msgid "Information We Collect"
+msgstr "我们收集的信息"
+
+msgid "When You Visit our Online Store"
+msgstr "当您访问我们的网上商店时"
+
+msgid ""
+"You are free to explore the Online Store without providing any Personal "
+"Information about yourself. When you order from our Online Store or register"
+" to the Online Store, we request that you provide Personal Information about"
+" yourself, and we collect Navigational Information."
+msgstr ""
+"你可以自由地浏览网上商店，而不提供任何关于你自己的个人信息。当您从我们的在线商店订购或注册到在线商店时，我们要求您提供有关您自己的个人信息，我们收集导航信息。"
+
+msgid "Personal Information"
+msgstr "个人信息"
+
+msgid ""
+"This refers to any information that you voluntarily submit to us and that "
+"identifies you personally, including contact information, such as your name,"
+" e-mail address, company name, address, phone number, and other information "
+"about yourself or your business."
+msgstr ""
+"这是指你自愿向我们提交并确认你个人身份的任何信息，包括联系信息，如你的姓名、电子邮件地址、公司名称、地址、电话号码以及关于你自己或你的业务的其他信息。"
+
+msgid ""
+"Personal Information can also include information about any transactions, "
+"both free and paid, that you enter into on the Online Store, and information"
+" about you that is available on the internet, such as from Facebook, "
+"LinkedIn, Twitter and Google, or publicly available information that we "
+"acquire from service providers."
+msgstr ""
+"个人信息还可以包括关于您在网上商店中进行的任何免费和付费交易的信息，以及在互联网上可以获得的有关您的信息，如Facebook、LinkedIn、Twitter和Google，或者我们从服务提供商那里获得的公开信息。"
+
+msgid "Navigational Information"
+msgstr "导航信息"
+
+msgid ""
+"This refers to information about your computer and your visits to this "
+"website such as your IP address, geographical location, browser type, "
+"referral source, length of visit and pages viewed. Please see the "
+"\"Navigation Information\" section below."
+msgstr "这是指有关您的计算机和您访问本网站的信息，如您的IP地址、地理位置、浏览器类型、推荐源、访问时间和浏览页面。请参阅下面的“导航信息”一节。"
+
+msgid "Payment Information"
+msgstr "支付信息"
+
+msgid ""
+"We collect and process payment information from you when you order from the "
+"Online Store, including credit cards numbers and billing information, using "
+"third party PCI-compliant service providers. The payment card information is"
+" not saved into our servers."
+msgstr "我们收集和处理支付信息时，您从网上商店，包括信用卡号码和帐单信息，使用第三方PCI兼容服务提供商。支付卡信息没有保存到我们的服务器中。"
+
+msgid "Information About Children"
+msgstr "关于儿童的信息"
+
+#, python-format
+msgid ""
+"The Online Store are not intended for or targeted at children under 13, and "
+"we do not knowingly or intentionally collect information about children "
+"under 13. If you believe that we have collected information about a child "
+"under 13, please contact us at %(store_email)s, so that we may delete the "
+"information."
+msgstr ""
+"网上商店不是为13岁以下的儿童准备的，也不是以13岁以下的儿童为目标的，我们不知情或故意收集有关13岁以下儿童的信息。如果您认为我们收集了13岁以下儿童的信息，请在%(store_email)s与我们联系，以便我们可以删除这些信息。"
+
+msgid "How We Use Information We Collect"
+msgstr "我们如何使用我们收集的信息"
+
+msgid "Compliance with Our Privacy Policy"
+msgstr "遵守我们的私隐政策"
+
+msgid ""
+"We use the information we collect only in compliance with this Privacy "
+"Policy."
+msgstr "我们使用我们收集的信息只符合本隐私政策。"
+
+msgid "We Never Sell Personal Information"
+msgstr "我们从不出售个人信息"
+
+msgid "We will never sell your Personal Information to any third party."
+msgstr "我们永远不会将您的个人信息卖给任何第三方。"
+
+msgid "Use of Personal Information"
+msgstr "个人资料的使用"
+
+#, python-format
+msgid ""
+"In addition to the uses identified elsewhere in this Privacy Policy, we may "
+"use your Personal Information to: (a) improve your browsing experience by "
+"personalizing the Online Store and to improve the Online Store; (b) send "
+"information to you which we think may be of interest to you by post, email, "
+"or other means; (c) send you marketing communications relating to our "
+"business or the businesses of carefully-selected third parties which we "
+"think may be of interest to you, and (d) provide other companies with "
+"statistical information about our users -- but this information will not be "
+"used to identify any individual user. We may, from time to time, contact you"
+" on behalf of external business partners about a particular offering that "
+"may be of interest to you. In those cases, we do not transfer your unique "
+"Personal Information to the third party. In addition, we may share data with"
+" trusted partners to contact you based on your request to receive such "
+"communications, help us perform statistical analysis, or provide customer "
+"support. Such third parties are prohibited from using your Personal "
+"Information except for these purposes, and they are required to maintain the"
+" confidentiality of your information. If you do not want us to share your "
+"personal information with these companies, contact us at %(store_email)s."
+msgstr ""
+"除了本隐私政策中其他地方确定的用途外，我们还可以使用您的个人信息：（a）通过个性化在线商店和改进在线商店来改善您的浏览体验; "
+"（b）通过邮寄，电子邮件或其他方式向您发送我们认为您可能感兴趣的信息; "
+"（c）向您发送与我们的业务有关的营销通讯或我们认为您可能感兴趣的精心挑选的第三方的业务，以及（d）向其他公司提供有关我们用户的统计信息 - "
+"但此信息不会用于识别任何个人用户。我们可能会不时代表外部业务合作伙伴就您可能感兴趣的特定产品与您联系。在这些情况下，我们不会将您的独特个人信息转移给第三方。此外，我们可能会与可信赖的合作伙伴共享数据，以便根据您接收此类通信的请求与我们联系，帮助我们执行统计分析或提供客户支持。除此之外，此类第三方不得使用您的个人信息，并且要求他们对您的信息保密。如果您不希望我们与这些公司分享您的个人信息，请通过%(store_email)s与我们联系。"
+
+msgid "Use of Navigational Information"
+msgstr "导航信息的使用"
+
+#, python-format
+msgid ""
+"We use Navigational Information to operate and improve the Online Store. We "
+"may also use Navigational Information alone or in combination with Personal "
+"Information to provide you with personalized information about "
+"%(company_name)s."
+msgstr ""
+"我们使用导航信息来操作和改进网上商店。我们还可以单独使用导航信息，也可以结合个人信息向您提供关于%(company_name)s的个性化信息。"
+
+msgid "Customer Testimonials and Comments"
+msgstr "客户证明和评论"
+
+msgid ""
+"We post customer testimonials and comments on our Online Store, which may "
+"contain Personal Information. We obtain each customer's consent via email "
+"prior to posting the customer's name and testimonial."
+msgstr "我们会在我们的网上商店上发布客户推荐信和评论，其中可能包含个人信息。在张贴客户姓名和证明前，我们通过电子邮件获得每一位客户的同意。"
+
+msgid "Use of Credit Card Information"
+msgstr "信用卡信息的使用"
+
+msgid ""
+"We use a third-party service provider to manage credit card processing. This"
+" service provider is not permitted to store, retain, or use information you "
+"provide except for the sole purpose of credit card processing on our behalf."
+msgstr "我们使用第三方服务提供商来管理信用卡处理。该服务提供商不允许存储、保留或使用您提供的信息，除非是代表我们处理信用卡的唯一目的。"
+
+msgid "Service Providers"
+msgstr "服务提供者"
+
+msgid ""
+"We employ other companies and people to provide services to visitors to our "
+"Online Store, our customers, and users of the Online Store and may need to "
+"share your information with them to provide information, products or "
+"services to you. Examples may include removing repetitive information from "
+"prospect lists, analyzing data, providing marketing assistance, processing "
+"credit card payments, supplementing the information you provide us in order "
+"to provide you with better service, and providing customer service. In all "
+"cases where we share your information with such agents, we explicitly "
+"require the agent to acknowledge and adhere to our privacy and customer data"
+" handling policies."
+msgstr ""
+"我们雇用其他公司和人员为我们的在线商店的访问者、我们的客户和在线商店的用户提供服务，并可能需要与他们分享您的信息，以便向您提供信息、产品或服务。例如，从前景列表中删除重复信息，分析数据，提供营销帮助，处理信用卡支付，补充您提供给我们的信息，以便为您提供更好的服务，以及提供客户服务。在我们与这些代理共享您的信息的所有情况下，我们都明确要求代理承认并遵守我们的隐私和客户数据处理策略。"
+
+msgid "Security of your Personal Information"
+msgstr "个人资料的安全"
+
+msgid ""
+"We use a variety of security technologies and procedures to help protect "
+"your Personal Information from unauthorized access, use or disclosure. We "
+"secure the Personal Information you provide on computer servers in a "
+"controlled, secure environment, protected from unauthorized access, use or "
+"disclosure. When sensitive Personal Information (such as a credit card "
+"number and/or geo-location data) is collected on our Online Store and/or "
+"transmitted to other websites, it is protected through the use of "
+"encryption, such as the Secure Socket Layer (SSL) protocol."
+msgstr ""
+"我们使用各种安全技术和程序来帮助保护您的个人信息免受未经授权的访问、使用或泄露。我们在受控、安全的环境中保护您在计算机服务器上提供的个人信息，防止未经授权的访问、使用或泄露。当敏感的个人信息(如信用卡号码和/或地理位置数据)被收集到我们的在线商店和/或传输到其他网站时，就会通过加密来保护它，例如安全套接字层(SSL)协议。"
+
+#, python-format
+msgid ""
+"If you have any questions about the security of your Personal Information, "
+"you can contact us at %(store_email)s."
+msgstr "如果您对个人信息的安全性有任何疑问，您可以在%(store_email)s上与我们联系。"
+
+msgid "Social Media Features"
+msgstr "社交媒体特征"
+
+msgid ""
+"Our Online Store may include Social Media Features, such as the Facebook "
+"Like button and Widgets, such as the Share This button or interactive mini-"
+"programs that run on our sites. These features may collect your IP address, "
+"which page you are visiting on our sites, and may set a cookie to enable the"
+" feature to function properly. Social Media Features and Widgets are either "
+"hosted by a third party or hosted directly on our Online Store. This Privacy"
+" Policy does not apply to these features."
+msgstr ""
+"我们的在线商店可能包括社交媒体功能，如facebook喜欢按钮和小部件，如“共享此按钮”或运行在我们网站上的交互式迷你程序。这些功能可以收集您的IP地址，您在我们的网站上访问的页面，并可能设置一个cookie，以使该功能正常运行。社交媒体特性和小部件要么由第三方托管，要么直接托管在我们的在线商店中。本隐私政策不适用于这些功能。"
+
+msgid ""
+"Your interactions with these features are governed by the privacy policy and"
+" other policies of the companies providing them."
+msgstr "您与这些功能的交互受提供这些功能的公司的隐私策略和其他策略控制。"
+
+msgid "External Websites"
+msgstr "外部网站"
+
+msgid ""
+"Our Online Store provide links to other websites. We do not control, and are"
+" not responsible for, the content or practices of these other websites. Our "
+"provision of such links does not constitute our endorsement of these other "
+"websites, their content, their owners, or their practices. This Privacy "
+"Policy does not apply to these other websites, which are subject to any "
+"privacy and other policies they may have."
+msgstr ""
+"我们的在线商店提供其他网站的链接。我们不控制，也不负责这些其他网站的内容或做法。我们提供这些链接并不构成我们认可这些其他网站，他们的内容，他们的所有者，或他们的做法。本隐私政策不适用于这些其他网站，这些网站可能受到任何隐私和其他政策的限制。"
+
+msgid "Retention of Personal Information"
+msgstr "保留个人资料"
+
+msgid ""
+"We retain Personal Information that you provide us as long as we consider it"
+" potentially useful in contacting you about the Online Store or our other "
+"services, or as needed to comply with our legal obligations, resolve "
+"disputes and enforce our agreements, and then we securely delete the "
+"information. We will delete this information from the servers at an earlier "
+"date if you so request, as described in \"Opting Out and Unsubscribing\" "
+"below. If we terminate the use of the Online Store, then we will provide you"
+" with access to all information stored for the Online Store, including any "
+"Personal Information provided by you. After termination, we may, unless "
+"legally prohibited, delete all customer information, including your Personal"
+" Information, from the Online Store."
+msgstr ""
+"我们保留您提供的个人信息，只要我们认为它可能有助于联系您有关网上商店或我们的其他服务，或必要时遵守我们的法律义务，解决争端和执行我们的协议，然后我们安全地删除这些信息。如果您有此要求，我们将在较早的日期从服务器中删除此信息，如下面“选择退出和取消订阅”中所述。如果我们终止了在线商店的使用，那么我们将为您提供访问为在线商店存储的所有信息的权限，包括您提供的任何个人信息。终止后，我们可以，除非法律禁止，删除所有客户的信息，包括您的个人信息，从网上商店。"
+
+msgid "International Transfer of Information"
+msgstr "信息的国际转让"
+
+msgid ""
+"To facilitate our possible global operations, we may transfer and access "
+"Personal Information from around the world, including the United States. "
+"This Privacy Policy shall apply even if we transfer Personal Information to "
+"other countries."
+msgstr "为了促进我们可能的全球业务，我们可以从世界各地，包括美国转移和获取个人信息。即使我们将个人信息转移到其他国家，本隐私政策也将适用。"
+
+msgid "Corporate Events"
+msgstr "企业活动"
+
+#, python-format
+msgid ""
+"If we (or our assets) are acquired by another company, whether by merger, "
+"acquisition, bankruptcy or otherwise, that company would receive all "
+"information gathered by %(company_name)s on the Online Store. In this event,"
+" you will be notified via email and/or a prominent notice on our website, of"
+" any change in ownership, uses of your Personal Information, and choices you"
+" may have regarding your Personal Information."
+msgstr ""
+"如果我们(或我们的资产)被另一家公司收购，无论是通过合并、收购、破产还是其他方式，该公司将在网上商店中接收%(company_name)s收集的所有信息。在这种情况下，您将通过电子邮件和/或在我们的网站上一个突出的通知您的所有权的任何变化，您的个人信息的使用，以及您可能对您的个人信息的选择。"
+
+msgid "Compelled Disclosure"
+msgstr "强制披露"
+
+msgid ""
+"We reserve the right to use or disclose your Personal Information if "
+"required by law or if we reasonably believe that use or disclosure is "
+"necessary to protect our rights, protect your safety or the safety of "
+"others, investigate fraud, or comply with a law, court order, or legal "
+"process."
+msgstr ""
+"我们保留使用或披露个人信息的权利，如果法律要求，或者我们合理地认为，使用或披露是必要的，以保护我们的权利，保护您的安全或他人的安全，调查欺诈，或遵守法律，法庭命令，或法律程序。"
+
+msgid "Cookies"
+msgstr "储存在用户本地终端上的数据"
+
+#, python-format
+msgid ""
+"%(company_name)s and its partners use cookies or similar technologies to "
+"analyze trends, administer the website, track users’ movements around the "
+"website, and to gather demographic information about our user base as a "
+"whole."
+msgstr ""
+"%(company_name)s及其合作伙伴使用cookie或类似的技术来分析趋势、管理网站、跟踪用户在网站周围的移动，以及收集有关我们整个用户基础的人口统计信息。"
+
+msgid ""
+"We use \"cookies\" to help you personalize your online shopping experience. "
+"A cookie is a text file that is placed on your hard disk by a Web server. "
+"Cookies are not used to run programs or deliver viruses to your computer. "
+"Cookies are uniquely assigned to you, and can only be read by a Web server "
+"in the domain that issued the cookie to you. One of the primary purposes of "
+"cookies is to provide a convenience feature to save you time. The purpose of"
+" a cookie is to tell the Web server that you have returned to a specific "
+"page."
+msgstr ""
+"我们使用“cookie”帮助您个性化您的网上购物体验。cookie是Web服务器放置在硬盘上的文本文件。Cookie不用于运行程序或将病毒传递到计算机。Cookie是唯一分配给您的，并且只能由向您发出cookie的域中的Web服务器读取。cookie的主要目的之一是提供一个方便的特性，以节省您的时间。Cookie的目的是告诉Web服务器您已经返回到特定的页面。"
+
+msgid ""
+"For example, if you personalize pages on our Online Store, or register for "
+"the Online Store, a cookie helps us to recall your specific information on "
+"subsequent visits. When you return to the same Website, the information you "
+"previously provided can be retrieved, so you can easily use the customized "
+"features."
+msgstr ""
+"例如，如果您在我们的在线商店中个性化页面，或者为在线商店注册，Cookie将帮助我们回忆您在后续访问中的特定信息。当您返回同一网站时，您以前提供的信息可以检索，因此您可以轻松地使用自定义功能。"
+
+#, python-format
+msgid ""
+"You have the ability to accept or decline cookies. Most Web browsers "
+"automatically accept cookies, but you can usually modify your browser "
+"setting to decline cookies if you prefer. If you choose to decline cookies, "
+"you may not be able to fully experience the interactive features of the "
+"%(company_name)s Online Store you visit. %(company_name)s keeps track of the"
+" Online Store and pages you visit within %(company_name)s, in order to "
+"determine what portion of the %(company_name)s Online Store is the most "
+"popular or most used. This data is used to deliver customized content and "
+"promotions within the %(company_name)s Online Store to customers whose "
+"behavior indicates that they are interested in a particular subject area."
+msgstr ""
+"你有能力接受或拒绝cookie。大多数Web浏览器自动接受cookie，但如果愿意，通常可以修改浏览器设置以拒绝cookie。如果您选择拒绝cookie，您可能无法完全体验您访问的%(company_name)s在线商店的交互功能。%(company_name)s跟踪在%(company_name)s内访问的在线商店和页面，以确定%(company_name)s的在线商店中最受欢迎或最常用的部分。此数据用于将%(company_name)s在线商店中的自定义内容和促销传递给其行为表明对特定主题区域感兴趣的客户。"
+
+msgid "Log Files"
+msgstr "日志文件"
+
+#, python-format
+msgid ""
+"We may collect demographic information, such as your ZIP code, age, gender, "
+"preferences, interests and favorites using log files that are not associated"
+" with your name or other personal information. There is also information "
+"about your computer hardware and software that is automatically collected by"
+" us. This information can include: your IP address, browser type, domain "
+"names, internet service provider (ISP), the files viewed on our site (e.g., "
+"HTML pages, graphics, etc.), operating system, clickstream data, access "
+"times and referring website addresses. This information is used by "
+"%(company_name)s for the operation of the Online Store, to maintain quality "
+"of the Online Store, and to provide general statistics regarding use of the "
+"%(company_name)s Online Store. For these purposes, we do link this "
+"automatically-collected data to Personal Information such as name, email "
+"address, address, and phone number."
+msgstr ""
+"我们可以使用与您的姓名或其他个人信息无关的日志文件来收集人口统计信息，例如您的邮政编码、年龄、性别、偏好、兴趣和收藏夹。我们还会自动收集有关您的计算机硬件和软件的信息。这些信息可以包括：您的IP地址、浏览器类型、域名、互联网服务提供商(ISP)、在我们网站上查看的文件(例如HTML页面、图形等)、操作系统、点击流数据、访问时间和参考网站地址。%(company_name)s用于在线商店的操作，以维护在线商店的质量，并提供有关%(company_name)s在线商店使用情况的一般统计数据。为此，我们将自动收集的数据链接到个人信息，如姓名、电子邮件地址和电话号码。"
+
+msgid "Flash Cookies and Other Third Party Tracking Technologies"
+msgstr "Flash Cookies和其他第三方跟踪技术"
+
+#, python-format
+msgid ""
+"The Adobe Flash Player (and similar applications) use technology to remember"
+" settings, preferences and usage similar to browser cookies but these are "
+"managed through a different interface than the one provided by your Web "
+"browser. This technology creates locally stored objects that are often "
+"referred to as \"Flash cookies.\" %(company_name)s may create pages on the "
+"Online Store that employ Adobe Flash cookies. %(company_name)s does not have"
+" access or control over our customers' Flash cookies, but you may access "
+"your Flash management tools from Adobe's web site directly here."
+msgstr ""
+"AdobeFlashPlayer(和类似的应用程序)使用技术来记住与浏览器cookie类似的设置、首选项和用法，但它们是通过与Web浏览器提供的不同的界面来管理的。这种技术可以创建本地存储的对象，这些对象通常被称为“Flashcookie”。%(company_name)s可以在线商店中创建使用AdobeFlashcookie的页面。%(company_name)s不能访问或控制我们客户的Flashcookie，但是您可以直接从Adobe的网站访问Flash管理工具。"
+
+#, python-format
+msgid ""
+"Similarly, we may create pages using the %(company_name)s Online Store that "
+"use technology from tracking utility companies, such as cookies and web "
+"beacons. If we decide use these technologies, we will update this Privacy "
+"Policy to reflect these changes."
+msgstr ""
+"类似地，我们可以使用%(company_name)s的在线商店创建页面，使用跟踪公用事业公司，如cookie和Web信标的技术。如果我们决定使用这些技术，我们将更新这一隐私政策，以反映这些变化。"
+
+msgid "Opting Out and Unsubscribing"
+msgstr "选择退出和取消认购"
+
+msgid "Reviewing, Correcting and Removing Your Personal Information"
+msgstr "审查、更正和删除您的个人信息。"
+
+#, python-format
+msgid ""
+"Upon request %(company_name)s will provide you with information about "
+"whether we hold any of your Personal Information. If you provide us with "
+"your Personal Information, you have the following rights with respect to "
+"that information:"
+msgstr ""
+"应要求，%(company_name)s将向您提供有关我们是否持有您的任何个人信息的信息。如果您向我们提供您的个人信息，您对该信息拥有以下权利："
+
+msgid "To review the user information that you have supplied to us"
+msgstr "查看您提供给我们的用户信息"
+
+msgid ""
+"To request that your user information be removed from any solicitation list "
+"that we use"
+msgstr "请求将您的用户信息从我们使用的任何招标列表中删除。"
+
+msgid "To request that your user information be deleted from our records"
+msgstr "要求从我们的记录中删除您的用户信息"
+
+#, python-format
+msgid "To opt out of being solicited by %(company_name)s or third parties"
+msgstr "选择不接受%(company_name)s或第三方的邀请"
+
+#, python-format
+msgid ""
+"To exercise any of these rights, please contact us at %(store_email)s or by "
+"mail to %(full_address)s, Attention: Privacy. We will respond to your "
+"request to change, correct, or delete your information within a reasonable "
+"timeframe and notify you of the action we have taken."
+msgstr ""
+"若要行使任何这些权利，请联系我们的%(store_email)s或通过邮件到%(full_address)s的，注意：隐私。我们将响应您的要求，在合理的时间框架内更改、更正或删除您的信息，并将我们所采取的行动通知您。"
+
+msgid "Anti-Spam Policy"
+msgstr "反垃圾邮件策略"
+
+msgid ""
+"Our Acceptable Use Policy, applies to us and to our customers and, among "
+"other things, prohibits use of the Online Store to send unsolicited "
+"commercial email in violation of applicable laws, and requires the inclusion"
+" in every email sent using the Online Store of an \"opt-out\" mechanism and "
+"other required information. We require all of our customers to agree to "
+"adhere to the Acceptable Use Policy at all times, and any violations of the "
+"Acceptable Use Policy by a customer can result in immediate suspension or "
+"termination of the Online Store."
+msgstr ""
+"我们的可接受使用政策适用于我们和我们的客户，除其他外，禁止使用网上商店发送违反适用法律的非邀约商业电子邮件，并要求在使用在线商店发送的每一封电子邮件中包含“选择退出”机制和其他所需信息。我们要求我们的所有客户在任何时候都同意遵守可接受的使用政策，任何客户违反可接受使用政策的行为都可能导致在线商店立即停业或终止。"
+
+msgid "To Unsubscribe From Our Communications"
+msgstr "取消订阅我们的通信"
+
+#, python-format
+msgid ""
+"You may unsubscribe from our marketing communications by clicking on the "
+"\"unsubscribe\" link located on the bottom of our e-mails, or by sending us "
+"email us at %(store_email)s, or by sending us postal mail to "
+"%(full_address)s, Attention: Privacy. Customers cannot opt out of receiving "
+"transactional emails related to their account with us or the Online Store."
+msgstr ""
+"您可以通过单击位于电子邮件底部的“取消订阅”链接，或通过在%(store_email)s向我们发送电子邮件，或通过将邮件发送到%(full_address)s的“注意：隐私”来取消对我们的营销通信的订阅。客户不能选择不接收与他们在我们或在线商店的帐户相关的交易电子邮件。"
+
+msgid "Customer Data"
+msgstr "客户数据"
+
+msgid "Home"
+msgstr "主页"
+
+msgid "Dashboard"
+msgstr "控制面板"
+
+msgid "My data"
+msgstr "我的数据"
+
+msgid "Download your data"
+msgstr "下载您的数据"
+
+msgid "Download all my data"
+msgstr "下载我的所有数据"
+
+msgid ""
+"This action will collect all your personal data and order history and will "
+"serialize it in a JSON file."
+msgstr "此操作将收集所有个人数据并订购历史记录，并将其序列化为JSON文件。"
+
+msgid "Anonymize your account"
+msgstr "匿名化您的帐户"
+
+msgid "You have pending orders!"
+msgstr "你还有待定的命令！"
+
+msgid "If you anonymize your account now, all orders will be canceled."
+msgstr "如果您现在匿名帐户，所有订单将被取消。"
+
+msgid "Request Account Anonymization"
+msgstr "请求帐户匿名"
+
+msgid ""
+"This action will replace all your personal data with random values making it"
+" impossible to identify you. Your account will also be deactivated."
+msgstr "此操作将用随机值替换所有个人数据，从而无法识别您。您的帐户也将被停用。"
+
+msgid "This action is irreversible!"
+msgstr "这个操作是不可逆转的！"
+
+msgid "Are you sure? This cannot be undone."
+msgstr "确定吗?这是不能取消的。"
+
+msgid "Privacy Preferences"
+msgstr "隐私偏好"
+
+msgid "I Agree"
+msgstr "我同意"
+
+msgid "Privacy Preference Center"
+msgstr "隐私偏好中心"
+
+msgid "General"
+msgstr "基本的"
+
+msgid "Cookie Settings"
+msgstr "Cookie设置"
+
+msgid "Consent Management"
+msgstr "同意管理"
+
+msgid "You read and agreed to our {}"
+msgstr "你阅读并同意我们的{}"
+
+msgid "Read"
+msgstr "阅读"
+
+msgid "Always active"
+msgstr "总是活跃"
+
+msgid "Cookies: "
+msgstr "数据:"
+
+msgid "Save preferences"
+msgstr "保存首选项"
+
+#, python-format
+msgid ""
+"Our privacy policy has been updated since your last consent. Please read the"
+" updated version <a href=\"%(url)s\">here</a>. <a class=\"btn btn-primary\" "
+"href=\"%(accept_url)s\">Accept changes</a>"
+msgstr ""
+"我们的隐私政策在你上次同意后已经更新了。请阅读以下更新版本<a href=\"%(url)s\"></a>。<a class=\"btn btn-"
+"primary\" href=\"%(accept_url)s\">接受变更</a>"
+
+msgid "Required"
+msgstr "规定的"
+
+msgid ""
+"We use these cookies to ensure the correct language is being chosen for you "
+"based on your region as well as the overall site functionality."
+msgstr "我们使用这些cookie来确保根据您的区域以及站点的整体功能为您选择正确的语言。"
+
+msgid "GDPR: Anonymize"
+msgstr "GDPR：匿名"
+
+msgid "GDPR: Anonymize contact"
+msgstr "GDPR：匿名联系人"
+
+#, python-brace-format
+msgid "Customer ID {customer_id} requested to be anonymized."
+msgstr "客户ID{customer_id}请求匿名。"
+
+msgid "Anonymization requested."
+msgstr "匿名请求"

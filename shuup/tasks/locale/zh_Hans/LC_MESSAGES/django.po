@@ -1,0 +1,176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-05 20:21+0000\n"
+"PO-Revision-Date: 2018-06-01 17:37+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Tasks"
+msgstr "任务"
+
+msgid "Show Tasks"
+msgstr "显示任务"
+
+msgid "Task Types"
+msgstr "任务类型"
+
+msgid "Show Task Types"
+msgstr "显示任务类型"
+
+#, python-brace-format
+msgid "Changed assigment from {from_contact_name} to {to_contact_name}."
+msgstr "将分配从{from_contact_name}更改为{to_contact_name}。"
+
+msgid "Set In Progress"
+msgstr "设定正在进行中"
+
+msgid "Set Completed"
+msgstr "完成设置"
+
+msgid "Invalid status."
+msgstr "无效状态。"
+
+msgid "Status changed."
+msgstr "状态已改变"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Filter by name..."
+msgstr "按名称过滤…"
+
+msgid "Creator"
+msgstr "创建人"
+
+msgid "Filter by creator..."
+msgstr "按创建人过滤..."
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Priority"
+msgstr "优先"
+
+msgid "Comments"
+msgstr "评论"
+
+msgid "New"
+msgstr "新"
+
+msgid "In progress"
+msgstr "正在进行中"
+
+msgid "Completed"
+msgstr "完成"
+
+msgid "Deleted"
+msgstr "删除"
+
+msgid "Public"
+msgstr "公众"
+
+msgid "Staff Only"
+msgstr "仅限工作人员"
+
+msgid "Admins Only"
+msgstr "只限管理员"
+
+msgid "shop"
+msgstr "商店"
+
+msgid "name"
+msgstr "名称"
+
+msgid "task type"
+msgstr "任务类型"
+
+msgid "task types"
+msgstr "任务类型"
+
+msgid "status"
+msgstr "状态"
+
+msgid "priority"
+msgstr "优先"
+
+msgid "creator"
+msgstr "创建人"
+
+msgid "assigned to"
+msgstr "指派给"
+
+msgid "completed by"
+msgstr "完成于"
+
+msgid "completed on"
+msgstr "已完成"
+
+msgid "created on"
+msgstr "创建"
+
+msgid "modified on"
+msgstr "修改"
+
+msgid "task"
+msgstr "任务"
+
+msgid "author"
+msgstr "作者"
+
+msgid "visibility"
+msgstr "可见性"
+
+msgid "body"
+msgstr "身体"
+
+msgid "New Task"
+msgstr "新任务"
+
+msgid "General Information"
+msgstr "基本信息"
+
+msgid "Created on"
+msgstr "创建"
+
+msgid "Completed on"
+msgstr "完成"
+
+msgid "Completed by"
+msgstr "完成于"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Visibility"
+msgstr "可见性"
+
+msgid "Comment"
+msgstr "可见性"
+
+msgid "Post a new comment"
+msgstr "发表新的评论"
+
+msgid "New Task Type"
+msgstr "新任务类型"
+
+msgid "Last 10 pending tasks assigned for you"
+msgstr "最后10项为您分配的待定任务"
+
+msgid "Task"
+msgstr "任务"
