@@ -1,38 +1,121 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 19:12+0000\n"
-"PO-Revision-Date: 2016-02-05 12:24+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
+"POT-Creation-Date: 2018-06-26 18:06+0000\n"
+"PO-Revision-Date: 2019-03-13 08:00+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cmn\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#, fuzzy
-#| msgid "Account activation failed."
+msgid "Name of the company"
+msgstr "公司名称"
+
+msgid "Registration Received"
+msgstr "已收到注册"
+
+msgid "Customer"
+msgstr "顾客"
+
+msgid "Customer Email"
+msgstr "顾客邮件"
+
+msgid "Activation URL"
+msgstr "激活URL"
+
+msgid "Is User Active"
+msgstr "用户是否活跃"
+
+msgid "Company Registration Received"
+msgstr "收到公司注册"
+
+msgid "Company Approved"
+msgstr "公司批准"
+
+msgid "Company has been activated."
+msgstr "公司已被激活"
+
+msgid "Send Registration Received Email"
+msgstr "发送注册收到的电子邮件"
+
+msgid "Send email when a user registers."
+msgstr "当用户注册时发送电子邮件"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a user get registered."
+msgstr "此脚本将在用户注册后立即向用户发送电子邮件或任何已配置的电子邮件。"
+
+msgid "{{ order.shop }} - Welcome!"
+msgstr "{{订单.商店}} - 欢迎！"
+
+msgid "Send Company Registration Received Email"
+msgstr "发送公司登记收到电子邮件"
+
+msgid "Send email when a user registers as a company."
+msgstr "当用户注册为公司时，发送电子邮件。"
+
+msgid "Send Company Activated Email"
+msgstr "发送公司激活的电子邮件"
+
+msgid "Notify company's contact person that company account is activated"
+msgstr "通知公司联系人公司帐户已启动"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr "此脚本将发送电子邮件给用户或任何配置的电子邮件后，公司被激活。"
+
 msgid "Account activation"
-msgstr "账号激活失败。"
+msgstr "帐户激活"
 
 msgid "Account activation failed."
 msgstr "账号激活失败。"
+
+msgid "Register as a Company"
+msgstr "注册为公司"
+
+msgid "Company Registration"
+msgstr "公司注册"
+
+msgid "Company information"
+msgstr "公司信息"
+
+msgid "Company billing information"
+msgstr "公司账单信息"
+
+msgid "Contact person"
+msgstr "联系人"
+
+msgid "Contact information for primary company contact"
+msgstr "主要公司联系人信息"
+
+msgid "Login information"
+msgstr "登录信息"
+
+msgid "The information you will log in with."
+msgstr "您将登录的信息"
 
 msgid "Register"
 msgstr "注册"
 
 msgid "Registration"
 msgstr "注册"
+
+msgid "Register as a company."
+msgstr "注册为公司"
 
 msgid "Activation successful!"
 msgstr "激活成功！"

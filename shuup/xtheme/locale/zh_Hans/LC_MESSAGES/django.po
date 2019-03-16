@@ -1,25 +1,36 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 20:11+0000\n"
-"PO-Revision-Date: 2016-08-04 13:14-0700\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
+"POT-Creation-Date: 2019-01-18 22:57+0000\n"
+"PO-Revision-Date: 2019-03-14 06:29+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cmn\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.8\n"
+
+msgid "Theme identifier must match"
+msgstr "主题标识符必须匹配"
+
+msgid "Either theme_settings or shop should be informed"
+msgstr "应通知主题_设置或商店"
+
+msgid "Global plugins"
+msgstr "全局插件"
+
+msgid "Theme plugins"
+msgstr "主题插件"
 
 msgid "Shuup Extensible Theme Engine"
 msgstr "Shuup可扩展主题引擎"
@@ -27,26 +38,109 @@ msgstr "Shuup可扩展主题引擎"
 msgid "Themes"
 msgstr "主题"
 
+msgid "Customize the look and feel of your shop"
+msgstr "定制您商店的外观和感觉"
+
+msgid "Customize theme"
+msgstr "自定义主题"
+
 msgid "No theme is active. Click here to activate one."
 msgstr "没有有效的主题。点击这里激活。"
 
 msgid "Theming"
 msgstr "主题"
 
+msgid "Shuup Extensible Theme Engine Snippets"
+msgstr "Shuup可扩展主题引擎片段"
+
+msgid "Snippets"
+msgstr "片段"
+
+msgid "Theme Custom CSS/JS"
+msgstr "主题自定义CSS/JS"
+
+msgid ""
+"Select the themes that will have this snippet injected. Leave the field "
+"blank to inject in all themes."
+msgstr "选择将注入此片段的主题。将字段保留为空白，以插入所有主题。"
+
+msgid "Select the location of the page to inject the snippet."
+msgstr "选择要注入片段的页面位置。"
+
+msgid "Location"
+msgstr "位置"
+
+msgid "Filter by location..."
+msgstr "按位置过滤..."
+
+msgid "Type"
+msgstr "类型"
+
 msgid "activate"
 msgstr "激活"
+
+msgid "Theme"
+msgstr "主题"
+
+msgid "Choose a theme for your shop"
+msgstr "为你的商店选择一个主题"
 
 msgid "Theme activated."
 msgstr "主题已激活。"
 
+msgid "Custom CSS/JS"
+msgstr "自定义CSS / JS"
+
+msgid "Stylesheets"
+msgstr "样式表"
+
+msgid "The fonts, colors, and styles to use with your theme."
+msgstr "与主题一起使用的字体、颜色和样式。"
+
+msgid "Content in this placeholder is shown without limitations."
+msgstr "此占位符中的内容不受限制地显示"
+
+#, python-format
+msgid ""
+"Content in this placeholder is shown for %(category_name)s category only."
+msgstr "此占位符中的内容仅显示在%(category_name)s的类别中。"
+
+msgid "Content in this placeholder is shown for guests."
+msgstr "此占位符中的内容将显示给访客。"
+
+msgid "Content in this placeholder is shown for company contacts."
+msgstr "此占位符中的内容显示为公司联系人。"
+
+msgid "Content in this placeholder is shown for all logged in contacts."
+msgstr "此占位符中的内容显示在所有登录联系人中。"
+
+msgid "Content in this placeholder is shown for person contacts."
+msgstr "此占位符中的内容显示在人员联系人中。"
+
+#, python-format
+msgid "Content in this placeholder is shown for %(product_name)s only."
+msgstr "此占位符中的内容仅显示为%(product_name)s。"
+
+msgid "Shop '{}' has no active theme"
+msgstr "商店“{}”没有活动主题"
+
+msgid "Inline JavaScript"
+msgstr "内联JavaScript"
+
+msgid "Inline CSS"
+msgstr "内联CSS"
+
+msgid "Inline HTML"
+msgstr "内联 HTML"
+
 msgid "current draft"
-msgstr ""
+msgstr "目前的草案"
 
 msgid "old version"
-msgstr ""
+msgstr "旧版本"
 
 msgid "public"
-msgstr ""
+msgstr "公众"
 
 msgid "theme identifier"
 msgstr "主题标识符"
@@ -73,117 +167,184 @@ msgstr "数据"
 msgid "Theme configuration for %s"
 msgstr "%s 主题配置 "
 
+msgid "location"
+msgstr "位置"
+
+msgid "snippet type"
+msgstr "片段类型"
+
+msgid "snippet"
+msgstr "片段"
+
+msgid "themes"
+msgstr "主题"
+
+msgid "Snippet"
+msgstr "片段"
+
+msgid "Snippet for {} in {}"
+msgstr "{}in{}片段"
+
 msgid "Plugin"
 msgstr "插件"
 
+msgid "Categories"
+msgstr "类别"
+
 msgid "Category Links"
-msgstr ""
+msgstr "类别链接"
 
 msgid "Title"
-msgstr "名称"
+msgstr "标题"
 
 msgid "Show all categories"
-msgstr ""
+msgstr "显示所有类别"
 
 msgid "All categories are shown, even if not selected"
-msgstr ""
+msgstr "即使未选中，也会显示所有类别。"
 
 msgid "Image"
-msgstr ""
+msgstr "图片"
 
 msgid "Image Link URL"
-msgstr ""
+msgstr "图片链接URL"
 
 msgid "Full width"
-msgstr ""
+msgstr "全宽"
 
 msgid "Set image to full width of cell"
-msgstr ""
+msgstr "将图像设置为单元格的全宽度"
 
 msgid "Width (px)"
-msgstr ""
+msgstr "宽度(px)"
 
 msgid "Leave blank for default width"
-msgstr ""
+msgstr "留空默认宽度"
 
 msgid "Height (px)"
-msgstr ""
+msgstr "高度(px)"
+
+msgid "Newest"
+msgstr "新"
+
+msgid "Best Selling"
+msgstr "最佳销售"
+
+msgid "Random"
+msgstr "随机的"
 
 msgid "Product Highlights"
-msgstr "产品特点"
-
-msgid "Type"
-msgstr "类型"
+msgstr "产品亮点"
 
 msgid "Count"
 msgstr "总数"
 
 msgid "Only show in-stock and orderable items"
-msgstr ""
+msgstr "只显示库存和可订购物品"
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr "警告：产品的最终数量可能低于“计数”，因为它将从一组“计数”产品中筛选出无法订购的产品。"
 
 msgid "Product Cross Sells"
-msgstr ""
+msgstr "产品交叉销售"
 
-msgid "Snippets"
-msgstr ""
+msgid "Category"
+msgstr "类别"
+
+msgid "Category Products Highlight"
+msgstr "类别产品突出显示"
+
+msgid "Products"
+msgstr "产品"
+
+msgid "Select all products you want to show"
+msgstr "选择要显示的所有产品。"
+
+msgid "Product Selection"
+msgstr "产品选择"
 
 msgid "In-Place Snippet"
-msgstr ""
+msgstr "在广场上"
 
 msgid "Resource snippet for end of head"
-msgstr ""
+msgstr "头末端的资源片段"
 
 msgid "Resource snippet for beginning of body"
-msgstr ""
+msgstr "用于身体开头的资源片段"
 
 msgid "Resource for end of body"
-msgstr ""
+msgstr "身体末端资源"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 msgid "Ordering"
-msgstr ""
+msgstr "订单"
 
 msgid "Social Media Links"
-msgstr ""
+msgstr "社交媒体链接"
 
 msgid "Topic"
-msgstr ""
+msgstr "主题"
 
 msgid "Icon Size"
-msgstr ""
+msgstr "图标大小"
 
 msgid "Default"
-msgstr ""
+msgstr "默认"
 
 msgid "Large"
-msgstr ""
+msgstr "大的"
 
 msgid "Alignment"
-msgstr ""
+msgstr "对准"
 
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 msgid "Center"
-msgstr ""
+msgstr "中心"
 
 msgid "Right"
-msgstr ""
+msgstr "右"
 
 msgid "text"
 msgstr "文本"
-
-msgid "(Untranslated)"
-msgstr "(未翻译)"
 
 #, python-format
 msgid "Click to edit placeholder: %s"
 msgstr "点击编辑占位符：%s"
 
+msgid ""
+"This placeholder is global and content of this placeholder is shown on all "
+"pages."
+msgstr "此占位符是全局的，此占位符的内容显示在所有页面上。"
+
+msgid "End of head"
+msgstr "头末端"
+
+msgid "Start of head"
+msgstr "头开始"
+
+msgid "End of body"
+msgstr "身体末端"
+
+msgid "Start of body"
+msgstr "身体开始"
+
+msgid "Content start"
+msgstr "内容启动"
+
+msgid "Content end"
+msgstr "内容结束"
+
 msgid "Delete This Cell"
 msgstr "删除该单元格"
+
+msgid "Untranslated"
+msgstr "未翻译"
 
 msgid "There's nothing to configure in this plugin."
 msgstr "该插件无法配置。"
@@ -191,14 +352,28 @@ msgstr "该插件无法配置。"
 msgid "Save Plugin"
 msgstr "保存插件"
 
+msgid ""
+"Remember to publish your changes for this placeholder when you are done, by "
+"clicking the Publish Changes button at the top."
+msgstr "请记住，当您完成此占位符时，请单击顶部的“发布更改”按钮来发布对此占位符的更改。"
+
 msgid "Edit Placeholder"
 msgstr "占位符编辑"
+
+msgid ""
+"Edit plugins inside this placeholder. By saving the individual plugin, the "
+"changes are saved as a draft, and only you are able to see the changes. To "
+"make your changes Public, Click the Publish Changes button."
+msgstr "在这个占位符中编辑插件。通过保存单个插件，更改将作为草稿保存，并且只有您能够看到更改。要使更改公开，请单击“发布更改”按钮。"
 
 msgid "Add new cell"
 msgstr "添加新单元格"
 
 msgid "Delete row"
 msgstr "删除行"
+
+msgid "Move row"
+msgstr "移动行"
 
 msgid "Add new row"
 msgstr "添加新行"
@@ -209,30 +384,36 @@ msgstr "主题配置 "
 msgid "No themes are installed."
 msgstr "未安装主题。"
 
-msgid "Theme"
-msgstr "主题"
-
-msgid "Actions"
-msgstr "操作"
-
-msgid "Author"
-msgstr "作者"
-
-msgid "Currently active"
-msgstr "目前活跃"
-
-msgid "Activate"
-msgstr "激活"
-
-msgid "Configure"
-msgstr "配置"
-
 #, python-format
 msgid "Theme Configuration: %(name)s"
 msgstr "主题配置 ：%(name)s"
 
 msgid "There's nothing to configure in this theme."
 msgstr "该主题无法配置。"
+
+msgid "Select theme"
+msgstr "选择主题"
+
+msgid "Theme Guide"
+msgstr "主题指南"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Configure"
+msgstr "配置"
+
+msgid "Activate"
+msgstr "激活"
+
+msgid "Theme Name"
+msgstr "主题名称"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "Currently active"
+msgstr "目前活跃"
 
 msgid "Revert Changes"
 msgstr "还原改变"
@@ -241,28 +422,24 @@ msgid "Publish Changes"
 msgstr "发布更改"
 
 msgid "No access to editing"
-msgstr ""
+msgstr "无法编辑"
 
 #, python-format
 msgid "Unknown command %s"
-msgstr ""
+msgstr "未知命令%s"
 
 msgid "Unable to determine current theme."
-msgstr ""
+msgstr "无法确定当前主题。"
 
 #, python-format
 msgid "Cannot add more than %d cells in one row."
 msgstr "无法在同一行添加 %d 以上的单元格。"
 
-#, fuzzy
-#| msgid "Publish Changes"
 msgid "Published"
-msgstr "发布更改"
+msgstr "发行"
 
-#, fuzzy
-#| msgid "Revert Changes"
 msgid "Reverted"
-msgstr "还原改变"
+msgstr "回复"
 
 msgid "Full Width"
 msgstr "最大化"
@@ -282,8 +459,20 @@ msgstr "三分之一(1/3)"
 msgid "One Fourth (1/4)"
 msgstr "四分之一(1/4)"
 
+msgid "Auto"
+msgstr "自动"
+
 msgid "Cell width"
 msgstr "单元格宽度"
+
+msgid "Cell align"
+msgstr "单元对齐"
+
+msgid "Extra classes"
+msgstr "额外课程"
+
+msgid "Add extra CSS classes names to the cell"
+msgstr "向单元格中添加额外的css类名称。"
 
 msgid "No Plugin"
 msgstr "没有插件"

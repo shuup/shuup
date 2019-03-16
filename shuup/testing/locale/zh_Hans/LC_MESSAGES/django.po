@@ -1,24 +1,296 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-02-05 12:24+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2019-02-05 13:52+0000\n"
+"PO-Revision-Date: 2019-03-15 06:55+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "System"
-msgstr "系统"
+msgid "About Us"
+msgstr "关于我们"
+
+msgid "Privacy Policy"
+msgstr "隐私政策"
+
+msgid "Terms and Conditions"
+msgstr "条款和条件"
+
+msgid "Refund Policy"
+msgstr "退款政策"
+
+msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
+msgstr "{{order.shop}} - 已收到订单{{order.identifier}}"
+
+msgid "Send customer order confirmation email"
+msgstr "发送客户订单确认电子邮件"
+
+msgid ""
+"We will configure a notification to send the customer an email after a "
+"placed order. You can disable this option later or even change the layout of"
+" the email."
+msgstr "我们将配置一个通知，以便在下订单后发送给客户一封电子邮件。您以后可以禁用此选项，甚至可以更改电子邮件的布局。"
+
+msgid "Create About Us page"
+msgstr "创建关于我们的页面"
+
+msgid ""
+"We have already created an 'About Us' template for you based on your shop "
+"information. You must review the page and change it accordingly."
+msgstr "我们已经为您创建了一个基于您的商店信息的“关于我们”的模板。您必须检查该页并相应地更改它。"
+
+msgid ""
+"We will create an 'About Us' template for you. We will base content of the "
+"page on your shop information. After we are done, you must review the page "
+"and change it accordingly."
+msgstr "我们将为您创建一个“关于我们”的模板。我们将根据您的商店信息作为页面内容的基础。完成后，您必须检查该页并相应地更改它。"
+
+msgid "Create Privacy Policy page"
+msgstr "创建隐私政策页面"
+
+msgid ""
+"We have already created a 'Privacy Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr "我们已经为您创建了一个基于您的商店信息的“隐私政策”模板。您必须检查该页并相应地更改它。"
+
+msgid ""
+"We will create a 'Privacy Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr "我们将为您创建一个“隐私政策”模板。我们将根据您的商店信息作为页面内容的基础。完成后，您必须检查该页并相应地更改它。"
+
+msgid "Create Terms and Conditions page"
+msgstr "创建条款和条件页面"
+
+msgid ""
+"We have already created a 'Terms & Conditions' template for you based on "
+"your shop information. You must review the page and change it accordingly."
+msgstr "我们已经为您创建了一个基于您的商店信息的“条款和条件”模板。您必须检查该页并相应地更改它。"
+
+msgid ""
+"We will create an 'Terms & Conditions' template for you. We will base "
+"content of the page on your shop information. After we are done, you must "
+"review the page and change it accordingly."
+msgstr "我们将为您创建一个“条款和条件”模板。我们将根据您的商店信息作为页面内容的基础。完成后，您必须检查该页并相应地更改它。"
+
+msgid "Create Refund Policy page"
+msgstr "创建退款政策页面"
+
+msgid ""
+"We have already created a 'Refund Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr "我们已经为您创建了一个基于您的商店信息的“退款政策”模板。您必须检查该页并相应地更改它。"
+
+msgid ""
+"We will create an 'Refund Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr "我们将为您创建一个“退款政策”模板。我们将根据您的商店信息作为页面内容的基础。完成后，您必须检查该页并相应地更改它。"
+
+msgid "Configure the footer"
+msgstr "配置页脚"
+
+msgid ""
+"We will now configure your shop footer and fill it with some of your shop's "
+"information. Don't worry, you can change this at any time."
+msgstr "我们现在将配置您的商店页脚，并填充您的商店的一些信息。别担心，你随时都可以改变。"
+
+msgid "Content & Behavior"
+msgstr "内容与行为"
+
+msgid ""
+"Add the initial content and configure the customer notifications for your "
+"shop"
+msgstr "添加初始内容并为您的商店配置客户通知"
+
+msgid "Configure notifications for your shop"
+msgstr "为您的商店配置通知"
+
+msgid "Add the initial content"
+msgstr "添加初始内容"
+
+msgid "Configure the initial content pages"
+msgstr "配置初始内容页"
+
+msgid "Configure some notifications"
+msgstr "配置一些通知"
+
+msgid "Demo"
+msgstr "演示"
+
+msgid "Dummy Mass Action #1"
+msgstr "虚拟群众行动＃1"
+
+msgid "Dummy Mass Action #2"
+msgstr "虚拟群众行动＃2"
+
+msgid "mock section title"
+msgstr "模拟部分标题"
+
+msgid "Hello"
+msgstr "您好"
+
+#, python-format
+msgid "Hello %(name)s"
+msgstr "您好%(name)s"
+
+#, python-format
+msgid "This is %(sku)s"
+msgstr "这是%(sku)s"
+
+msgid ""
+"There is sample data installed. Access \"Settings > Sample Data\" for more "
+"information."
+msgstr "安装了示例数据。 访问“设置>示例数据”以获取更多信息。"
+
+msgid ""
+"There is sample data installed. Click here to consolidate or delete them."
+msgstr "已经安装了示例数据。单击此处可合并或删除它们。"
+
+msgid "Sample Data"
+msgstr "样本数据"
+
+msgid "Default"
+msgstr "默认"
+
+msgid "Cosmetics and perfumes"
+msgstr "化妆品和香水"
+
+msgid "USpicy Makeup Brushes"
+msgstr "USpicy化妆刷"
+
+msgid ""
+"Professional 10 pieces makeup brush set with soft oval toothbrush design"
+msgstr "专业10件化妆刷套，软椭圆形牙刷设计"
+
+msgid "Precision Eyelash Curler"
+msgstr "精密睫毛夹"
+
+msgid ""
+"Precision Eyelash Curler is the professional choice of makeup artists "
+"everywhere."
+msgstr "精准睫毛夹是各地化妆师的专业选择。"
+
+msgid "PureMoist Lipstick"
+msgstr "PureMoist口红"
+
+msgid ""
+"PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
+"and protect lips."
+msgstr "PureMoist口红有一个保湿配方，旨在淬火，舒缓和保护嘴唇。"
+
+msgid "Clinique Happy"
+msgstr "欢乐倩碧"
+
+msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
+msgstr "一丝柑橘味，丰富的鲜花， 情绪的混合。"
+
+msgid "Tommy Girld by Tommy Hilfiger Perfume"
+msgstr "汤米·吉尔德：汤米·希尔菲格·香水"
+
+msgid ""
+"A refreshing and energetic floral - with low notes of sandalwood and "
+"heather."
+msgstr "清新精力充沛的花朵，带有檀香和石楠的低沉气息。"
+
+msgid "Bvlgari Omnia Crystalline Eau de Toilette"
+msgstr "Bvlgari Omnia水晶淡香水"
+
+msgid ""
+"Give yourself over to this fragrance as intoxicating and pure as a woman's "
+"soul is fragile."
+msgstr "给自己这种香水，因为女人的灵魂是脆弱的，令人陶醉和纯净。"
+
+msgid "Still Jennifer Lopez Perfume"
+msgstr "珍妮弗·洛佩兹香水"
+
+msgid ""
+"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still"
+" fragrance."
+msgstr "充满活力和自信，因为你带着詹妮弗·洛佩兹的香水。"
+
+msgid "La Vie Est Belle"
+msgstr "兰蔻美丽人生香水"
+
+msgid "A captivating new scent joins the La vie est belle path to happiness."
+msgstr "迷人的新香味加入了La vie est belle的部分，走向幸福。"
+
+msgid "Smooth Viking Beard Brush"
+msgstr "光滑的维京胡须刷"
+
+msgid "Just a beard brush."
+msgstr "只是个胡须刷。"
+
+msgid "Beard & Stash Oil"
+msgstr "胡须及藏油"
+
+msgid "This oil is natural, and is made with the perfect combination of oils."
+msgstr "这种油是天然的，由油的完美组合制成。"
+
+msgid "Sample Carousel"
+msgstr "示例轮播"
+
+msgid "Business Segment"
+msgstr "业务细分"
+
+msgid "Select your business segment to install categories."
+msgstr "选择要安装类别的业务区段。"
+
+msgid "Install Categories"
+msgstr "安装类别"
+
+msgid "Check this to install sample categories."
+msgstr "请检查此选项以安装示例类别。"
+
+msgid "Install Products"
+msgstr "安装产品"
+
+msgid "Check this to install sample products."
+msgstr "请检查此选项以安装示例产品。"
+
+msgid "Install Carousel"
+msgstr "安装轮播"
+
+msgid "Check this to install a sample carousel."
+msgstr "请检查此选项以安装示例轮播。"
+
+msgid "Uninstall Categories"
+msgstr "卸载类别"
+
+msgid "Uninstall Products"
+msgstr "卸载产品"
+
+msgid "Uninstall Carousel"
+msgstr "卸载轮播"
+
+msgid "Sample data were consolidated"
+msgstr "样本数据合并"
+
+msgid ""
+"To start shopping right now, please install some sample data into your shop"
+msgstr "若要立即开始购物，请将一些样本数据安装到您的商店中。"
+
+msgid "Supplier Pricing"
+msgstr "供应商定价"
+
+msgid "Shuup Testing Theme"
+msgstr "Shuup测试主题"
+
+msgid "Shuup Testing Theme With Custom Base Template"
+msgstr "使用自定义基本模板的Shuup测试主题"
+
+msgid "Shuup Test Theme Product Highlights"
+msgstr "Shuup测试主题产品亮点"

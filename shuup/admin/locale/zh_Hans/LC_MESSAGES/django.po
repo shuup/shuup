@@ -1,39 +1,139 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-28 21:58+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2019-03-08 17:25+0000\n"
+"PO-Revision-Date: 2019-03-13 05:45+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Home"
 msgstr "主页"
 
-msgid "Browse"
-msgstr "浏览"
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr "请输入正确的%(username)s和密码。 两个地方都要注意大小写。 如果多个帐户使用相同的电子邮件，则只能使用用户名登录。"
 
-msgid "Clear"
-msgstr "清空"
+msgid "This account is inactive."
+msgstr "这个账号未激活"
+
+msgid "Username or email address"
+msgstr "用户名或邮箱地址"
+
+msgid "Create New"
+msgstr "新建"
+
+msgid "Monday"
+msgstr "星期一"
+
+msgid "Tuesday"
+msgstr "星期二"
+
+msgid "Wednesday"
+msgstr "星期三"
+
+msgid "Thursday"
+msgstr "星期四"
+
+msgid "Friday"
+msgstr "星期五"
+
+msgid "Saturday"
+msgstr "星期六"
+
+msgid "Sunday"
+msgstr "星期天"
 
 msgid "Select"
-msgstr ""
+msgstr "选择"
+
+msgid "Select Media"
+msgstr "选择媒体"
+
+msgid "Select Image"
+msgstr "选择图片"
+
+msgid "Select Product"
+msgstr "选择产品"
+
+msgid "Select Contact"
+msgstr "选择联系人"
+
+msgid "Orders"
+msgstr "订单"
+
+msgid "Products"
+msgstr "产品"
+
+msgid "Contacts"
+msgstr "通讯录"
+
+msgid "Campaigns"
+msgstr "活动"
+
+msgid "Content"
+msgstr "内容"
+
+msgid "Elements"
+msgstr "原理"
+
+msgid "Design"
+msgstr "设计"
+
+msgid "Other"
+msgstr "其他"
+
+msgid "Reports"
+msgstr "报告"
+
+msgid "Shops"
+msgstr "商店"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Payment & Shipping"
+msgstr "付款和运送"
+
+msgid "Currency"
+msgstr "货币"
 
 msgid "Attributes"
 msgstr "属性"
+
+msgid "Other settings"
+msgstr "其他设置"
+
+msgid "Addons"
+msgstr "插件"
+
+msgid "Data Transfer"
+msgstr "数据传输"
+
+msgid "Taxes"
+msgstr "税收"
+
+msgid "Permissions"
+msgstr "许可"
+
+msgid "Other Settings"
+msgstr "其他设置"
 
 msgid "Identifier"
 msgstr "标识符"
@@ -62,8 +162,46 @@ msgstr "使用在# 产品类型"
 msgid "Categories"
 msgstr "商品分类"
 
-msgid "Products"
-msgstr "产品"
+msgid "Add a product category to organize your products"
+msgstr "添加产品类别以组织您的产品"
+
+msgid "New category"
+msgstr "新分类"
+
+msgid "Can not use this category as parent for this shop."
+msgstr "不能用这个分类作为此商店的总类"
+
+msgid "Primary Category"
+msgstr "主分类"
+
+msgid "Set this category as a primary for selected products."
+msgstr "将此类别设置为所选产品的主要类别"
+
+msgid "Additional Category"
+msgstr "附加类别"
+
+msgid "Add selected products to this category"
+msgstr "将所选产品添加到此类别"
+
+msgid "Remove Products"
+msgstr "删除产品"
+
+msgid "Remove selected products from this category"
+msgstr "将所选产品从此类别中删除"
+
+msgid "Invalid category"
+msgstr "无效的类别"
+
+#, python-format
+msgid "Visibility settings copied to %d product(s)"
+msgstr "可见性设置已复制到%d个（产品）"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s已被删除"
+
+msgid "Image"
+msgstr "图片"
 
 msgid "Status"
 msgstr "状态"
@@ -71,57 +209,128 @@ msgstr "状态"
 msgid "Visibility"
 msgstr "可见性"
 
-msgid "Parent"
-msgstr "父类"
+msgid "Contact Group Pricing Display"
+msgstr "联系人组定价显示"
+
+msgid "unspecified"
+msgstr "不明"
+
+msgid "show prices with taxes included"
+msgstr "显示含税的价格"
+
+msgid "show pre-tax prices"
+msgstr " 显示税前价格"
+
+msgid "hide prices"
+msgstr "隐藏价格"
+
+msgid "shop"
+msgstr "商店"
+
+msgid "Price display mode"
+msgstr "价格显示模式"
+
+msgid "Set how prices are displayed to contacts in this group."
+msgstr "设置价格显示给该组中联系人的方式"
+
+msgid "Group"
+msgstr "组"
+
+msgid "Display Mode"
+msgstr "显示模式"
+
+msgid "Unspecified"
+msgstr "不明"
 
 msgid "Contact Groups"
 msgstr "联系群组"
 
-msgid "Contacts"
-msgstr "通讯录"
-
-msgid "Price display mode"
-msgstr ""
-
-msgid "unspecified"
-msgstr ""
-
-msgid "show prices with taxes included"
-msgstr ""
-
-msgid "show pre-tax prices"
-msgstr ""
-
-msgid "hide prices"
-msgstr ""
-
 msgid "member"
-msgstr ""
+msgstr "成员"
 
 msgid "Remove"
-msgstr ""
+msgstr "删除"
 
 #, python-format
 msgid "%(count)s member added"
 msgid_plural "%(count)s members added"
-msgstr[0] ""
+msgstr[0] "%(count)s添加成员"
 
 #, python-format
 msgid "%(count)s member removed"
 msgid_plural "%(count)s members removed"
-msgstr[0] ""
+msgstr[0] "%(count)s删除成员"
 
 msgid "Number of Members"
 msgstr "成员数量"
 
-msgid "Active customers"
-msgstr "活跃客户"
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr "用户%(bind_user)s已有联系信息"
 
-msgid "Based on orders within 30 days"
-msgstr "根据30天内的订单"
+msgid ""
+"The contact groups this contact belongs to. Contact groups are defined in "
+"Contacts - Contact Groups and are used to configure sales, campaigns, and "
+"product pricing tailored for a set of users."
+msgstr "此联系人所属的联系人组。 联系人组在联系人 - 联系人组中定义，用于配置为一组用户定制的销售，活动和产品定价。"
+
+msgid "The shops this contact belongs to"
+msgstr "这个联系人所属的商店"
+
+msgid "Language"
+msgstr "语言"
+
+msgid ""
+"The primary language to be used in all communications with the contact."
+msgstr "与联系人进行的所有通信中使用的主要语言"
+
+msgid "The company name."
+msgstr "公司名称"
+
+msgid "The contacts that are members of this company."
+msgstr "作为该公司成员的联系人"
+
+msgid "Gender"
+msgstr "性别"
+
+msgid "Merchant Notes"
+msgstr "贸易商说明"
+
+msgid "Website URL"
+msgstr "网址"
+
+msgid "Account Manager"
+msgstr "客户经理"
+
+msgid "Company: Tax Number"
+msgstr "公司：税号"
+
+msgid "Company: Members"
+msgstr "公司：成员"
+
+msgid "Select Language"
+msgstr "选择语言"
+
+msgid "Contact Group"
+msgstr "联系人组"
+
+msgid "Edit Contacts"
+msgstr "编辑联系人"
+
+msgid "Set Contact Groups"
+msgstr "设置联系人组"
+
+msgid "Basic Information"
+msgstr "基本信息"
+
+msgid "Addresses"
+msgstr "地址"
+
+msgid "Members"
+msgstr "成员"
 
 msgid "The Shuup frontend is not enabled."
-msgstr "Shuup前端未启用。"
+msgstr "Shuup前端未启用"
 
 msgid "Contact has no associated user."
 msgstr "该联系方式没有相对应的用户。"
@@ -143,22 +352,28 @@ msgid "New User"
 msgstr "新用户"
 
 msgid "Create a user for the contact."
-msgstr "为该联系人创建用户。"
+msgstr "为联系人创建用户"
 
 msgid "New Order"
-msgstr ""
+msgstr "新订单"
 
 msgid "Create an order for the contact."
-msgstr ""
+msgstr "为联系人创建订单"
 
 msgid "Deactivate Contact"
-msgstr ""
+msgstr "停用联系人"
 
 msgid "Activate Contact"
-msgstr ""
+msgstr "激活联系人"
 
-msgid "Edit..."
-msgstr "编辑……"
+msgid "Options"
+msgstr "选项"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "Edit"
+msgstr "编辑"
 
 msgid "You can not deactivate a superuser."
 msgstr "无法撤销超级用户。"
@@ -168,7 +383,7 @@ msgstr "无法撤销自己。"
 
 #, python-format
 msgid "%(contact)s is now %(state)s."
-msgstr ""
+msgstr "%(contact)s现在是%(state)s."
 
 msgid "active"
 msgstr "活跃"
@@ -176,15 +391,17 @@ msgstr "活跃"
 msgid "inactive"
 msgstr "不活跃"
 
+msgid "New Company"
+msgstr "新公司"
+
+msgid "New Contact"
+msgstr "新联系"
+
 msgid "Person"
 msgstr "人"
 
 msgid "Company"
 msgstr "公司"
-
-#, python-format
-msgid "User %(bind_user)s already has a contact"
-msgstr "用户%(bind_user)s已有联系信息"
 
 msgid "Email"
 msgstr "电子邮箱"
@@ -207,8 +424,17 @@ msgstr "# 订单"
 msgid "Groups"
 msgstr "群组"
 
+msgid "Registered in"
+msgstr "注册"
+
 msgid "Contact"
 msgstr "联系"
+
+msgid "No group"
+msgstr "无分组"
+
+msgid "No shops"
+msgstr "无商店"
 
 msgid "Inactive"
 msgstr "不活跃"
@@ -225,14 +451,63 @@ msgstr "电话：%s"
 msgid "%d orders"
 msgstr "%d 订单"
 
+msgid "Mass Edit: Contacts"
+msgstr "批量编辑：联系人"
+
+msgid "Contacts changed successfully"
+msgstr "联系人已成功更改"
+
+msgid "Mass Edit: Contact Groups"
+msgstr "批量编辑：联系人组"
+
+msgid "Contacts Groups changed successfully"
+msgstr "联系人组已成功更改"
+
 msgid "The contact does not have an associated user."
 msgstr "该联系方式没有相关联的用户。"
 
-msgid "Demo"
-msgstr "展示"
+msgid "Currencies"
+msgstr "货币"
+
+msgid "Code"
+msgstr "代码"
+
+msgid "Filter by code"
+msgstr "按代码过滤"
+
+msgid "Decimal places"
+msgstr "小数位"
+
+msgid "Customers Dashboard"
+msgstr "客户控制面板"
+
+msgid "Active customers"
+msgstr "活跃客户"
+
+msgid "Based on orders within 30 days"
+msgstr "根据30天内的订单"
+
+msgid "Labels"
+msgstr "标签"
+
+msgid "Created on"
+msgstr "创建"
+
+msgid "Modified on"
+msgstr "修改"
 
 msgid "Manufacturers"
 msgstr "厂商"
+
+msgid ""
+"Select shops for this manufacturer. Keep it blank to share with all shops."
+msgstr "选择此制造商的商店。 保持公开与所有商店分享。"
+
+msgid "You have no permission to change a shared Manufacturer."
+msgstr "您无权更改共享的制造商"
+
+msgid "Logo"
+msgstr "商标"
 
 msgid "Media"
 msgstr "媒体"
@@ -245,38 +520,53 @@ msgstr "根"
 
 #, python-brace-format
 msgid "{num} subfolders moved to {folder}."
-msgstr ""
+msgstr "{num}子文件夹已移至{folder}"
 
 #, python-brace-format
 msgid "{num} files moved to {folder}."
-msgstr ""
+msgstr "{num}个文件已移至{folder}"
 
 #, python-format
 msgid "Folder %s deleted."
 msgstr "文件夹 %s 已删除"
 
-#, python-format
-msgid "%(file)s uploaded to %(folder)s"
-msgstr "%(file)s 已上传至 %(folder)s"
+msgid "Browse Media"
+msgstr "浏览媒体"
+
+msgid "Can not rename shared folder."
+msgstr "无法重命名共享文件夹"
 
 msgid "Folder renamed."
 msgstr "文件夹已重命名。"
 
+msgid "Can not delete shared folder."
+msgstr "无法删除共享文件夹"
+
+msgid "Can not rename shared file."
+msgstr "无法重命名共享文件"
+
 msgid "File renamed."
 msgstr "文件已重命名。"
 
+msgid "Can not delete shared file."
+msgstr "无法删除共享文件"
+
 msgid "File deleted."
 msgstr "文件已删除。"
+
+msgid "Can not move shared file."
+msgstr "无法移动共享文件"
 
 #, python-format
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s 已转移从 %(old)s 至 %(new)s。"
 
-msgid "Orders"
-msgstr "订单"
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr "%(file)s 已上传至 %(folder)s"
 
 msgid "Show orders"
-msgstr ""
+msgstr "显示订单"
 
 msgid "Outstanding Orders"
 msgstr "未处理订单"
@@ -285,28 +575,14 @@ msgstr "未处理订单"
 msgid "%d outstanding orders"
 msgstr "%d 未处理订单"
 
-msgid "Sales per Month (last year)"
-msgstr "每月销售 ( 去年 )"
+msgid "New order"
+msgstr "新订单"
 
-#, python-format
-msgid "Sales (%(currency)s)"
-msgstr "销售 (%(currency)s)"
+msgid "Order Status"
+msgstr "订单状态"
 
-#, python-format
-msgid "Based on %d orders"
-msgstr "根据 %d 订单"
-
-msgid "Today's Sales"
-msgstr "今日销售"
-
-msgid "Lifetime Sales"
-msgstr "全部销售"
-
-msgid "Average Purchase"
-msgstr "平均购买"
-
-msgid "Open Orders Value"
-msgstr "未结订单价值"
+msgid "List Statuses"
+msgstr "列表状态"
 
 #, python-format
 msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
@@ -331,15 +607,8 @@ msgstr "该产品 %s 不存在。"
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr "该产品 %(product)s 在此商店 %(shop)s 无法找到。"
 
-#, python-format
-msgid "Product %(product)s is not orderable: %(error)s"
-msgstr ""
-
 msgid "Please add lines to the order."
 msgstr "请添加行至订单。"
-
-msgid "Name is required for customer"
-msgstr "顾客需提供姓名"
 
 msgid "Tax number is not set for company."
 msgstr "公司税号未设置。"
@@ -353,32 +622,35 @@ msgstr "请选择配送方式。"
 msgid "Please select payment method."
 msgstr "请选择支付方式。"
 
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Print Confirmation PDF(s)"
+msgstr "打印确认PDF（s）"
+
+msgid "Selecting all is not supported."
+msgstr "不支持全选"
+
+msgid "Print Delivery PDF(s)"
+msgstr "打印交付PDF（s）"
+
+msgid "Details"
+msgstr "详情"
+
 msgid "Payments"
 msgstr "支付"
 
-msgid "Order Contents"
-msgstr "订单内容"
+msgid "Shipments"
+msgstr "装运"
 
 msgid "Log Entries"
-msgstr ""
+msgstr "日志条目"
 
-msgid "Create Refund"
-msgstr ""
+msgid "Admin comment/notes"
+msgstr "管理员评论/备注"
 
-msgid "This order cannot be refunded"
-msgstr ""
-
-msgid "Create Payment"
-msgstr ""
-
-msgid "This order cannot be paid at this point"
-msgstr ""
-
-msgid "Create Shipment"
-msgstr "创建配送"
-
-msgid "There are no products to ship"
-msgstr "无发货产品。"
+msgid "Set Status"
+msgstr "设置状态"
 
 msgid "Set Complete"
 msgstr "完成设置"
@@ -387,23 +659,59 @@ msgid "This order can not be set as complete at this point"
 msgstr "该订单无法在此阶段设为完成"
 
 msgid "Cancel Order"
-msgstr ""
+msgstr "取消订单"
 
 msgid "Paid, shipped, or canceled orders cannot be canceled"
-msgstr ""
+msgstr "已付款，已发货或已取消的订单无法取消"
 
 msgid "Edit order"
-msgstr ""
+msgstr "编辑订单"
 
 msgid "This order cannot modified at this point"
-msgstr ""
+msgstr "此时此订单无法修改"
+
+msgid "Create Payment"
+msgstr "创建支付"
+
+msgid "Set Paid"
+msgstr "设置付费"
+
+msgid "Create Shipment"
+msgstr "创建配送"
+
+msgid "Create Refund"
+msgstr "创建退款"
+
+msgid "Edit Addresses"
+msgstr "编辑地址"
+
+msgid "Billing Address"
+msgstr "账单地址"
+
+msgid "Shipping Address"
+msgstr "收货地址"
+
+#, python-format
+msgid "%(field)s updated from: %(old_address)s"
+msgstr "%(field)s更新自：%(old_address)s"
+
+#, python-format
+msgid "%(field)s saved successfully."
+msgstr "%(field)s已成功保存"
+
+#, python-format
+msgid "Save -- %s"
+msgstr "保存 -- %s"
+
+msgid "Save"
+msgstr "保存"
 
 msgid "Unable to set order as completed at this point"
 msgstr "无法在该阶段设置订单为完成"
 
 #, python-brace-format
 msgid "Order status changed: {old_status} to {new_status}"
-msgstr ""
+msgstr "订单状态已更改：{old_status}更改为{new_status}"
 
 msgid "Create Order"
 msgstr "创建订单"
@@ -414,7 +722,7 @@ msgstr "该联系人%s不存在。"
 
 #, python-format
 msgid "Order %(identifier)s updated."
-msgstr ""
+msgstr "订单%(identifier)s已更新"
 
 #, python-format
 msgid "Order %(identifier)s created."
@@ -424,7 +732,7 @@ msgid "Could not proceed with order:"
 msgstr "无法处理订单："
 
 msgid "Could not finalize order:"
-msgstr ""
+msgstr "无法完成订单："
 
 msgid "Order"
 msgstr "订单"
@@ -446,64 +754,105 @@ msgstr "总共"
 
 #, python-format
 msgid "Create Payment -- %s"
-msgstr ""
+msgstr "创建支付-- %s"
 
 msgid "Payment amount"
-msgstr ""
+msgstr "付款金额"
 
 msgid "Payment amount cannot be 0"
-msgstr ""
+msgstr "付款金额不能为0"
 
 #, python-format
 msgid "Payment %s created."
-msgstr ""
+msgstr "已创建付款%s"
 
 msgid "Order has already been paid"
-msgstr ""
+msgstr "订单已支付"
 
-msgid "Line number"
-msgstr ""
+msgid "Only orders which are not paid or deferred can be set as paid."
+msgstr "只有未支付或延期的订单才能设置为已付款。"
+
+msgid "Only zero price orders can be set as paid without creating a payment."
+msgstr "只有免额订单可以在不创建付款的情况下设置为已付款。"
+
+msgid "Zero amount payment"
+msgstr "零金额付款"
+
+msgid "Order marked as paid."
+msgstr "订单标记为已付款"
+
+msgid "Payment doesn't exist."
+msgstr "付款不存在"
+
+msgid "Payment deleted."
+msgstr "删除付款"
+
+msgid "Line"
+msgstr "排"
+
+msgid ""
+"The line to refund. To refund an amount not associated with any line, select"
+" 'Refund arbitrary amount'."
+msgstr "退款进行中，要退还与任何行无关的金额，请选择“退款任意金额”。"
 
 msgid "Quantity"
 msgstr "数量"
 
+msgid "The number of units to refund."
+msgstr "要退款的单位数量"
+
+msgid "Line Text/Comment"
+msgstr "行文字/评论"
+
+msgid ""
+"The text describing the nature of the refund and/or the reason for the "
+"refund."
+msgstr "描述退款性质和/或退款原因的文字"
+
 msgid "Amount"
 msgstr "合计"
 
+msgid "The amount including tax to refund."
+msgstr "退款金额包括退税"
+
 msgid "Restock products"
-msgstr ""
+msgstr "重新储存产品"
+
+msgid ""
+"If checked, the quantity is adding back into the sellable product inventory."
+msgstr "如果选中，则数量将重新添加到可销售产品库存中。"
 
 #, python-format
 msgid "Create Refund -- %s"
-msgstr ""
+msgstr "创建退款--%s"
 
 msgid "Refund Entire Order"
-msgstr ""
+msgstr "退还整个订单"
 
 msgid "This order already has existing refunds"
-msgstr ""
+msgstr "此订单已有现有退款"
+
+msgid "Refund arbitrary amount"
+msgstr "退款任意金额"
 
 msgid "Refund amount exceeds order amount."
-msgstr ""
+msgstr "退款金额超过订单金额"
 
-msgid "Refund amount cannot be 0"
-msgstr ""
+msgid "Refund amounts should match sign on parent line."
+msgstr "退款金额应与原路线上的符号匹配"
 
 msgid "Refund created."
-msgstr ""
+msgstr "退款已创建"
 
 #, python-format
 msgid "Create Full Refund -- %s"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
+msgstr "创建全部退款 -- %s"
 
 msgid "Could not create full refund."
-msgstr ""
+msgstr "不能创建全部退款"
 
 msgid "Full refund created."
-msgstr ""
+msgstr "全部退款已创建"
 
 #, python-format
 msgid "Create Shipment -- %s"
@@ -512,32 +861,66 @@ msgstr "创建配送 -- %s"
 msgid "Supplier"
 msgstr "供应商"
 
+msgid ""
+"Select the shipment supplier. You can only ship the suppliers assigned to "
+"order lines."
+msgstr "选择货运供应商。 您只能运送分配给订单行的供应商。"
+
+#, python-format
+msgid "%(product_name)s (%(supplier)s)"
+msgstr "%(product_name)s (%(supplier)s)"
+
 msgid "No products to ship."
 msgstr "无发货产品。"
+
+msgid "Shipping address is not set."
+msgstr "收货地址未设置"
 
 #, python-format
 msgid "Shipment %s created."
 msgstr "配送 %s 已创建。"
 
+#, python-format
+msgid "Shipment %s has been deleted."
+msgstr "装运%s已被删除"
+
+msgid "Identifier already exists"
+msgstr "标识符已存在"
+
+msgid "Order Statuses"
+msgstr "订单状态"
+
+msgid "Public Name"
+msgstr "公用名称"
+
+msgid "Role"
+msgstr "任务"
+
+msgid "Default"
+msgstr "默认"
+
 msgid "Permission Groups"
-msgstr ""
+msgstr "权限组"
 
-msgid "Module Permissions"
-msgstr ""
+msgid "The permission group name."
+msgstr "权限组名称"
 
-msgid ""
-"Modules with the same permissions as selected modules will be added "
-"automatically."
-msgstr ""
+msgid "Set the users that belong to this permission group."
+msgstr "设置属于此权限组的用户"
 
-msgid "Members"
-msgstr ""
+msgid "Create new Permission Group"
+msgstr "创建新的权限组"
 
 msgid "Product Types"
 msgstr "产品类型"
 
 msgid "Product types"
 msgstr "产品类型"
+
+msgid ""
+"Select attributes that go with your product type. These are defined in "
+"Products Settings - Attributes."
+msgstr "选择与您的产品类型一致的属性。 这些在“产品设置 - 属性”中定义。"
 
 msgid "Number of Attributes"
 msgstr "属性数量"
@@ -550,12 +933,49 @@ msgstr "创建产品名为\"%s\""
 msgid "Create Product with SKU \"%s\""
 msgstr "创建带有SKU\"%s\"的产品"
 
+msgid "New product"
+msgstr "新产品"
+
+msgid "Import"
+msgstr "进口"
+
+msgid "Add a product to see it in your store"
+msgstr "Add a product to see it in your store"
+
+msgid "Primary Product Image"
+msgstr "产品主图"
+
+msgid ""
+"The main product image. You can add additional images on the Product Images "
+"tab."
+msgstr "产品主图， 您可以在“产品图像”选项卡上添加其他图像。"
+
+msgid "Select a manufacturer"
+msgstr "选择制造商"
+
+msgid "Product type"
+msgstr "产品类型"
+
+msgid "Given value is already in use, please use unique SKU and try again."
+msgstr "鉴于值已在使用中，请使用独特的SKU并重试。"
+
+msgid ""
+"Number of units that can be purchased after the product is out of stock. Set"
+" to blank for product to be purchasable without limits"
+msgstr "产品缺货后可以购买的单位数量。 设置为空白，以便可以无限制地购买产品。"
+
+msgid "Select a category"
+msgstr "选择一个分类"
+
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "最小购买数量必须大于0。"
 
+msgid "Backorder maximum must be greater than or equal to 0."
+msgstr "延期交货最大值必须大于或等于0"
+
 #, python-format
 msgid "Thumbnail generation of %(media)s failed: %(error)s"
-msgstr ""
+msgstr "%(media)s的缩略图生成失败：%(error)s"
 
 msgid "Use only URL or file, not both"
 msgstr "请只使用URL或文件其一"
@@ -568,7 +988,7 @@ msgstr "该字段只允许图像"
 
 #, python-format
 msgid "Unable to make package %(product)s: %(error)s"
-msgstr ""
+msgstr "无法生成包裹%(product)s：%(error)s"
 
 #, python-format
 msgid "New: %d"
@@ -580,7 +1000,7 @@ msgstr "已删除：%d"
 
 #, python-format
 msgid "Couldn't add product %s to own package"
-msgstr ""
+msgstr "无法将产品%s添加到自己的包裹中"
 
 msgid "child"
 msgstr "子"
@@ -590,10 +1010,22 @@ msgstr "断开链接"
 
 #, python-format
 msgid "Unable to link %(product)s: %(error)s"
-msgstr ""
+msgstr "无法链接%(product)s：%(error)s"
 
 msgid "variable combination"
 msgstr "变量组合"
+
+msgid "Set visible"
+msgstr "设置可见性"
+
+msgid "Set invisible"
+msgstr "设置不可见性"
+
+msgid "Export CSV"
+msgstr "导出CSV"
+
+msgid "Edit products"
+msgstr "编辑产品"
 
 #, python-format
 msgid "%s has been marked deleted."
@@ -616,9 +1048,6 @@ msgstr "产品"
 msgid "Edit Cross-Sell: %s"
 msgstr "交叉推销编辑：%s"
 
-msgid "Save"
-msgstr "保存"
-
 msgid "Changes saved."
 msgstr "更改已保存。"
 
@@ -626,18 +1055,21 @@ msgstr "更改已保存。"
 msgid "Edit Media: %s"
 msgstr "媒体编辑：%s"
 
-msgid "Are you sure? This will remove all products from package."
-msgstr ""
+msgid "Files added to product."
+msgstr "文件已添加到产品中"
 
 msgid "Clear package"
-msgstr ""
+msgstr "清理包裹"
+
+msgid "Are you sure? This will remove all products from package."
+msgstr "你确定吗？ 这将从包中删除所有产品。"
 
 #, python-format
 msgid "Edit Package: %s"
-msgstr ""
+msgstr "编辑包裹：%s"
 
 msgid "Package cleared."
-msgstr ""
+msgstr "包裹已清理"
 
 msgid ""
 "Are you sure? This will unlink all children and remove all variation "
@@ -665,32 +1097,41 @@ msgstr "变体已清除。"
 msgid "Variation simplified."
 msgstr "变体已简化。"
 
+msgid "Primary Image"
+msgstr "主图"
+
 msgid "SKU"
 msgstr "SKU"
 
-msgid "Filter by SKU..."
-msgstr "按SKU过滤……"
-
 msgid "Barcode"
-msgstr ""
+msgstr "条形码"
 
 msgid "Filter by barcode..."
-msgstr ""
+msgstr "按条形码过滤..."
 
 msgid "Mode"
 msgstr "模式"
 
-msgid "Primary Category"
-msgstr "主分类"
+msgid "Filter by category name..."
+msgstr "按分类名称过滤..."
+
+msgid "Additional Categories"
+msgstr "附加类别"
+
+msgid "Purchasable"
+msgstr "可购买的"
+
+msgid "Mass Edit: Products"
+msgstr "批量编辑：产品"
+
+msgid "Products changed successfully"
+msgstr "产品已成功更改"
 
 msgid "Manage Cross-Selling"
 msgstr "交叉销售管理"
 
 msgid "Cross-Selling"
 msgstr "交叉销售"
-
-msgid "Actions"
-msgstr "操作"
 
 #, python-format
 msgid "Child: %s"
@@ -711,109 +1152,383 @@ msgid "Manage Variations"
 msgstr "管理变体"
 
 msgid "Packages"
-msgstr ""
+msgstr "包裹"
 
 msgid "Manage Package"
 msgstr "管理包"
 
 msgid "Convert to Package Parent"
-msgstr ""
+msgstr "转换为父包"
 
 msgid "Convert to Variation Parent"
 msgstr "转换为父级变体"
 
+msgid "Save and Exit"
+msgstr "保存并退出"
+
+msgid "Save and Create New"
+msgstr "保存并创建新的"
+
+msgid "Save as a copy"
+msgstr "保存为副本"
+
+msgid "Sales Dashboard"
+msgstr "销售控制面板"
+
+msgid "Sales per Month (past 12 months)"
+msgstr "每月销售额（过去12个月）"
+
+msgid "Average Sales"
+msgstr "平均销售额"
+
+msgid "Sales"
+msgstr "销售"
+
+msgid "Cumulative Total Sales"
+msgstr "累计销售总额"
+
+#, python-format
+msgid "Based on %d orders"
+msgstr "根据 %d 订单"
+
+msgid "Today's Sales"
+msgstr "今日销售"
+
+msgid "Lifetime Sales"
+msgstr "全部销售"
+
+msgid "Average Purchase"
+msgstr "平均购买"
+
+msgid "Open Orders Value"
+msgstr "未结订单价值"
+
 msgid "Sales Units"
 msgstr "销售量"
+
+msgid "Display Units"
+msgstr "显示单位"
+
+msgid "Symbol"
+msgstr "标记"
 
 msgid "Allowed decimals"
 msgstr "允许小数"
 
 msgid "Service Providers"
-msgstr ""
+msgstr "服务供应商"
 
 msgid "Payment and Shipping"
-msgstr ""
+msgstr "付款和运送"
 
 #, python-format
 msgid "Edit %(model)s"
 msgstr "编辑%(model)s"
 
+msgid ""
+"The service provider type. This can be any of the shipping carriers or "
+"payment processors configured for your shop."
+msgstr "服务提供商类型。 这可以是为您的商店配置的任何运输公司或支付处理商。"
+
 #, python-brace-format
 msgid "Create {service_name}"
-msgstr ""
+msgstr "创建{service_name}"
+
+msgid "Provider"
+msgstr "供应商"
+
+#, python-format
+msgid "Please activate at least one %s."
+msgstr "请激活至少一个%s"
+
+msgid "Carrier"
+msgstr "运输者"
+
+msgid ""
+"To start shipping products right away, please add shipping methods for your "
+"shop"
+msgstr "要立即开始发货，请为您的商店添加送货方式"
+
+msgid "shipping method"
+msgstr "配送方式"
+
+msgid "Payment Provider"
+msgstr "支付供应商"
+
+msgid ""
+"To start accepting payments right away, please add payment methods for your "
+"shop"
+msgstr "要立即开始接受付款，请为您的商店添加付款方式"
+
+msgid "payment method"
+msgstr "支付方式"
+
+msgid "Service name"
+msgstr "服务名称"
+
+msgid "The name shown in the shop checkout process."
+msgstr "商店结账过程中显示的名称"
+
+msgid "Instructions"
+msgstr "说明"
+
+msgid "Additional instructions shown in the shop checkout process."
+msgstr "商店结账过程中显示的附加说明"
 
 msgid "Shipping Methods"
-msgstr ""
+msgstr "配送方式"
 
 msgid "Payment Methods"
-msgstr ""
+msgstr "支付方式"
 
 msgid "Service"
-msgstr ""
+msgstr "服务"
 
-msgid "Select carrier before filling other fields."
-msgstr ""
+msgid "Select a service to use for this service provider."
+msgstr "选择要用于此服务提供商的服务"
 
-msgid "Select payment processor before filling other fields."
-msgstr ""
+msgid ""
+"The carrier to use for this shipping method. Select a carrier before filling"
+" other fields."
+msgstr "用于此运输方式的承运人。 在填写其他字段之前选择运营商。"
+
+msgid ""
+"The payment processor to use for this payment method. Select a payment "
+"processor before filling out the other fields."
+msgstr "用于此付款方式的付款处理器。 在填写其他字段之前选择支付处理器。"
 
 msgid "Price"
-msgstr ""
+msgstr "价格"
 
 msgid "Waive limit"
-msgstr ""
+msgstr "减免限制"
+
+msgid "Available in countries"
+msgstr "适用于各国"
+
+msgid "Unavailable in countries"
+msgstr "在国家/地区不可用"
+
+msgid "Select accepted countries for this service."
+msgstr "为此服务选择接受的国家/地区"
+
+msgid "Select this to accept all countries in EU."
+msgstr "选择此项接受欧盟所有国家/地区"
+
+msgid "Select restricted countries for this service."
+msgstr "为此服务选择受限国家/地区"
+
+msgid "Select this to restrict this service for countries in EU"
+msgstr "选择此选项可限制欧盟国家/地区的此服务"
 
 msgid "Service choice"
-msgstr ""
+msgstr "服务选择"
 
 msgid "Enabled"
 msgstr "启用"
 
 msgid "Shop"
-msgstr ""
-
-msgid "Carrier"
-msgstr ""
-
-msgid "Payment Processor"
-msgstr ""
-
-msgid "Weight-based pricing range"
-msgstr ""
-
-msgid "Shops"
 msgstr "商店"
 
-msgid "System"
-msgstr "系统"
+msgid "Payment Processor"
+msgstr "付款处理器"
+
+msgid "Weight-based pricing range"
+msgstr "基于重量的定价范围"
+
+msgid "System Settings"
+msgstr "系统设置"
+
+msgid "unique"
+msgstr "独特"
+
+msgid "running"
+msgstr "运行"
+
+msgid "shop running"
+msgstr "商店运行"
+
+msgid "Reference number length"
+msgstr "参考编号长度"
+
+msgid ""
+"Length of the order reference number not including the checksum number. This"
+" can vary based on the country your shop is in. If you set the length to 19,"
+" the actual length is going to be 20 because the checksum is being added."
+msgstr "订单参考号的长度，不包括校验和编号。 这可能会因您的商店所在的国家/地区而异。如果您将长度设置为19，则实际长度将为20，因为正在添加校验和。"
+
+msgid "Reference number prefix"
+msgstr "参考编号前缀"
+
+msgid "Order minimum total"
+msgstr "订单最低总数"
+
+msgid "The minimum sum that an order needs to reach to be created."
+msgstr "订单需要创建的最小金额"
+
+msgid "Order Settings"
+msgstr "订单设置"
+
+msgid "Order Reference number method"
+msgstr "订单参考编号方法"
+
+msgid ""
+"This option defines how the reference numbers for orders are built. The "
+"options are:<br><br><b>Unique</b><br>Order reference number is unique system"
+" wide, regardless of the amount of shops.<br><br><b>Running</b><br>Order "
+"number is running system wide, regardless of the amount of "
+"shops.<br><br><b>Shop Running</b><br>Every shop has its own running numbers "
+"for reference."
+msgstr "此选项定义如何构建订单的参考号。 选项有：<br><br><b>独特</b><br>订单参考编号是系统范围内唯一的，无论商店数量多少。<br><br><b>运行</b><br>订单编号在系统范围内运行，无论商店数量多少.<br><br><b>商店运行</b><br>每个商店有自己的运行编号供参考。"
+
+msgid "Settings saved"
+msgstr "设置已保存"
+
+msgid "Reset Defaults"
+msgstr "重置默认值"
+
+msgid "Changes saved successfully"
+msgstr "更改已成功保存"
+
+msgid "No changes detected"
+msgstr "未检测到任何更改"
+
+msgid "Save system settings"
+msgstr "保存系统设置"
+
+msgid "Add a logo to make your store stand out"
+msgstr "添加徽标可使您的商店脱颖而出"
+
+msgid "Add logo"
+msgstr "添加标志"
+
+msgid "Publish your store"
+msgstr "发布您的商店"
+
+msgid "Let customers browse your store and make purchases"
+msgstr "让客户浏览您的商店并进行购买"
+
+msgid "Publish shop"
+msgstr "发布商店"
+
+msgid "Set \"{}\" as the active shop"
+msgstr "将“{}”设置为活动商店"
+
+msgid "Available Shops [currently active: {}]"
+msgstr "可用商店[当前有效：{}]"
 
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr "因为有该商店的现有订单，此字段无法更改。"
 
+msgid ""
+"The primary shop currency. This is the currency used when selling your "
+"products."
+msgstr "主要商店货币。 这是销售产品时使用的货币。"
+
+msgid "Staff"
+msgstr "员工"
+
+msgid "Select staff members for this shop."
+msgstr "选择这家商店的员工。"
+
+msgid "Domain is unique. Please enter a unique value."
+msgstr "域是独一无二的。 请输入唯一值。"
+
+msgid "Shop name"
+msgstr "商店名称"
+
+msgid "First name"
+msgstr "第一名称"
+
+msgid "Your first name."
+msgstr "你的名"
+
+msgid "Last name"
+msgstr "姓"
+
+msgid "Your last name."
+msgstr "你的姓"
+
+msgid "Zip/Postal code"
+msgstr "邮编/邮政编码"
+
+msgid "State/Province"
+msgstr "州/省"
+
+msgid "Address"
+msgstr "地址"
+
+msgid "Address (2)"
+msgstr "地址(2)"
+
+msgid ""
+"The shop street address. This may be used to provide estimated shipping "
+"costs."
+msgstr "商店街道地址。 这可用于提供估计的运输成本。"
+
+msgid "The shop zip/postal code."
+msgstr "商店邮政编码"
+
+msgid "The city in which your shop is located."
+msgstr "您的商店所在的城市"
+
+msgid "The country in which your shop is located."
+msgstr "您的商店所在的国家/地区"
+
+msgid "There are still some pending actions to complete!"
+msgstr "还有一些待完成的操作要完成！"
+
+msgid "Your store is now live!"
+msgstr "你的商店现在已入驻！"
+
+msgid "Shop {} is now active!"
+msgstr "商店{}现已激活！"
+
 msgid "Domain"
 msgstr "域名"
 
+msgid "Shop Details"
+msgstr "商店详情"
+
+msgid "Add an address so you can get paid"
+msgstr "添加地址以便获得付款"
+
+msgid "Default Tax Class"
+msgstr "默认税级"
+
 msgid "Suppliers"
 msgstr "供应商"
+
+msgid "Select shops for this supplier. Keep it blank to share with all shops."
+msgstr "选择此制造商的商店。 保持公开与所有商店分享。"
 
 #, python-format
 msgid "No %s module"
 msgstr "没有 %s 模块"
 
+msgid "It is not possible to manage inventory when no module is selected."
+msgstr "未选择模块时无法管理库存"
+
 msgid "Module"
 msgstr "模块"
+
+msgid "Shuup Support"
+msgstr "Shuup支持"
+
+msgid "System"
+msgstr "系统"
 
 msgid "Telemetry"
 msgstr "遥测"
 
 msgid ""
-"Statistics will be periodically sent to Shuup.com after 24 hours. Click here "
-"for more information."
-msgstr "24小时后，统计信息会定期地发送至Shuup.com。更多信息点击这里。"
+"Statistics will be periodically sent to Shuup.com after 24 hours. Click here"
+" for more information."
+msgstr "统计数据将在24小时后定期发送至Shuup.com。 点击这里查看更多信息。"
 
-msgid "Taxes"
-msgstr "税收"
+msgid "Opt-in for telemetry"
+msgstr "选择接入遥测"
 
 msgid "Customer Tax Groups"
 msgstr "顾客税组"
@@ -821,23 +1536,50 @@ msgstr "顾客税组"
 msgid "Tax Classes"
 msgstr "税种"
 
-msgid "Code"
-msgstr "代码"
-
 msgid "Rate"
 msgstr "费率"
 
 msgid "Users"
 msgstr "用户"
 
+msgid "Add some users to help manage your shop"
+msgstr "添加一些用户来帮助管理您的商店"
+
+msgid "New user"
+msgstr "新用户"
+
+#, python-format
+msgid ""
+"\n"
+"    Welcome %(first_name)s!\n"
+"\n"
+"    You've been added as an administrator to %(shop_url)s. Here are some details:\n"
+"        Shop url: %(shop_url)s\n"
+"        Login url: %(admin_url)s\n"
+"        Your username: %(username)s\n"
+"        Your password: Please contact your admin.\n"
+msgstr "\n欢迎%(first_name)s!\n\n您已被添加为%(shop_url)s的管理员。 以下是一些详细信息\n：商店网址：%(shop_url)s\n登录网址：%(admin_url)s您的用户名：%(username)s\n您的密码：请与您的管理员联系。\n"
+
 msgid "Password"
 msgstr "密码"
 
-msgid "Permissions"
-msgstr "许可"
+msgid "The user password."
+msgstr "用户密码"
 
 msgid "See the permissions view to change these."
 msgstr "查看权限视图并改变这些。"
+
+msgid "See Contacts - Permission Groups to change these."
+msgstr "请参阅联系人 - 权限组以更改这些"
+
+msgid "The user email address. Used for password resets."
+msgstr "用户电子邮件地址。 用于密码重置。"
+
+msgid "The first name of the user."
+msgstr "用户的名"
+
+msgid "The last name of the user."
+msgstr "用户的姓"
 
 msgid "staff"
 msgstr "员工"
@@ -849,7 +1591,18 @@ msgid "No special permissions"
 msgstr "没有特权"
 
 msgid "No permission groups"
-msgstr ""
+msgstr "无权限组"
+
+msgid "Send email confirmation"
+msgstr "发送电子邮件确认"
+
+msgid ""
+"Send an email to the user to let them know they've been added as a shop "
+"user. Applicable only for users with staff status."
+msgstr "发送电子邮件给用户，让他们知道他们已被添加为商店用户。 仅适用于具有员工身份的用户。"
+
+msgid "Please enter an email to send a confirmation"
+msgstr "请输入电子邮件以发送确认"
 
 msgid "Change Password"
 msgstr "更改密码"
@@ -866,9 +1619,6 @@ msgstr "权限编辑"
 msgid "Contact Details"
 msgstr "联系信息"
 
-msgid "New Contact"
-msgstr "新联系"
-
 msgid "Create a new contact and associate it with this user"
 msgstr "创建新联系并与该用户关联"
 
@@ -878,13 +1628,36 @@ msgstr "激活用户"
 msgid "Deactivate User"
 msgstr "撤销用户"
 
+msgid "Login as User"
+msgstr "以用户身份登录"
+
 #, python-format
 msgid "User bound to contact %(contact)s."
 msgstr "该用户与联系%(contact)s绑定。"
 
 #, python-format
+msgid "You've been added as an admin user to %s"
+msgstr "您已被添加为%s的管理员用户"
+
+msgid "User"
+msgstr "用户"
+
+#, python-format
 msgid "%(user)s is now %(state)s."
 msgstr "%(user)s 现在是 %(state)s。"
+
+msgid "No shop configured."
+msgstr "没有配置商店"
+
+msgid "You are already logged in."
+msgstr "您已登录"
+
+msgid "This user is not active."
+msgstr "此用户未激活"
+
+#, python-brace-format
+msgid "You're now logged in as {username}"
+msgstr "您现在以{username}身份登录"
 
 msgid "Username"
 msgstr "用户名"
@@ -894,9 +1667,6 @@ msgstr "名"
 
 msgid "Last Name"
 msgstr "姓"
-
-msgid "Staff"
-msgstr "员工"
 
 msgid "Superuser"
 msgstr "超级用户"
@@ -908,9 +1678,6 @@ msgstr "名：%s"
 #, python-format
 msgid "Last Name: %s"
 msgstr "姓：%s"
-
-msgid "User"
-msgstr "用户"
 
 msgid "The two password fields didn't match."
 msgstr "该两个密码字段不匹配。"
@@ -943,8 +1710,9 @@ msgstr "%s 密码已更改。"
 msgid "Reset User Password"
 msgstr "重置用户密码"
 
-msgid "The `shuup.front.apps.auth` app needs to be enabled for password reset."
-msgstr " 该`shuup.front.apps.auth` 应用需启用来进行密码重置。"
+msgid ""
+"The `shuup.front.apps.auth` app needs to be enabled for password reset."
+msgstr "需要启用`shuup.front.apps.auth`应用程序以进行密码重置。"
 
 #, python-format
 msgid "Password recovery email sent to %(email)s"
@@ -952,6 +1720,11 @@ msgstr "密码恢复邮件已发至%(email)s"
 
 msgid "Sending the password recovery email failed."
 msgstr "发送密码恢复邮件失败。"
+
+msgid ""
+"The permission groups that this user belongs to. Permission groups are "
+"configured through Contacts - Permission Groups."
+msgstr "此用户所属的权限组。 权限组通过“联系人 - 权限组”进行配置。"
 
 msgid "You can't unset this status for yourself."
 msgstr "自己无法取消该状态设置。"
@@ -967,17 +1740,29 @@ msgstr "更改权限：%s"
 msgid "Permissions changed for %s."
 msgstr "已更改 %s 的许可权限。"
 
+msgid "You must be a staff user"
+msgstr "您必须是员工用户"
+
+msgid "You are not a staff member of this shop"
+msgstr "您不是这家商店的工作人员"
+
 msgid "New Attribute"
 msgstr "新属性"
 
 msgid "Login"
 msgstr "登录"
 
+msgid "Welcome back"
+msgstr "欢迎回来"
+
+msgid "Forgot your password?"
+msgstr "忘记密码？"
+
 msgid "Logged out"
 msgstr "已退出"
 
-msgid "You have been logged out. Good bye!"
-msgstr "您已经退出。再见！"
+msgid "You have been securely logged out. Hope to see you soon!"
+msgstr "您已安全注销。 希望很快能见到您！"
 
 msgid "Log in again"
 msgstr "重新登录"
@@ -985,20 +1770,52 @@ msgstr "重新登录"
 msgid "Visit shop"
 msgstr "访问商店"
 
-msgid "Menu"
-msgstr "菜单"
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr "嗨%(fullname)s"
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr "如果您忘记了，您的用户名是%(username)s。"
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr "您收到此电子邮件是因为您要求在%(site_name)s处为您的用户帐户重置密码。"
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "请转到以下页面并选择一个新密码："
+
+msgid "Password Recovery"
+msgstr "密码恢复"
+
+msgid "Reset Password"
+msgstr "重置密码"
+
+msgid "Send password recovery instructions"
+msgstr "发送密码恢复说明"
 
 msgid "Dashboard"
 msgstr "控制面板"
 
+msgid "Quicklinks"
+msgstr "快速链接"
+
+msgid "Menu"
+msgstr "菜单"
+
 msgid "Search for"
 msgstr "搜索"
 
-msgid "Settings"
-msgstr "设置"
+msgid "Go home"
+msgstr "返回主页"
 
 msgid "Hello"
 msgstr "您好"
+
+msgid "Show Tour"
+msgstr "显示游览"
 
 msgid "Log out"
 msgstr "退出"
@@ -1006,32 +1823,49 @@ msgstr "退出"
 msgid "General Information"
 msgstr "基本信息"
 
+msgid "Copy visibility settings to products"
+msgstr "将可见性设置复制到产品"
+
 msgid "Category Image"
 msgstr "图像分类"
+
+msgid "* Products that has this category as a primary category."
+msgstr "*将此类别作为主要类别的产品。"
+
+msgid "Add a new product category"
+msgstr "添加新产品类别"
+
+msgid ""
+"You are adding a new product category. When people search your store, they "
+"can find your product under the category you choose for it, like the aisle "
+"signs at the supermarket."
+msgstr "您正在添加新的产品类别。 当人们搜索您的商店时，他们可以根据您选择的类别找到您的产品，例如超市的过道标志。"
+
+msgid ""
+"You can add a name, description, picture or anything you want to make it "
+"stand out."
+msgstr "您可以添加名称，描述，图片或任何您想要突出的东西。"
 
 msgid "General information"
 msgstr "基本信息"
 
 msgid "Add Members"
-msgstr ""
+msgstr "增加成员"
 
 msgid "Add more"
-msgstr ""
+msgstr "添加更多"
 
-msgid "Addresses"
-msgstr "地址"
-
-msgid "Billing Address"
+msgid "Billing address"
 msgstr "账单地址"
 
-msgid "Shipping Address"
+msgid "No billing address defined."
+msgstr "没有账单地址被定义。"
+
+msgid "Shipping address"
 msgstr "收货地址"
 
-msgid "Basic details"
-msgstr "基本详情"
-
-msgid "Basic Information"
-msgstr "基本信息"
+msgid "No shipping address defined."
+msgstr "收货地址未定义。"
 
 msgid "Full Name"
 msgstr "全名"
@@ -1043,28 +1877,917 @@ msgid "Bound User"
 msgstr "绑定用户"
 
 msgid "Companies"
-msgstr ""
-
-msgid "Account Manager"
-msgstr ""
-
-msgid "Merchant Notes"
-msgstr ""
-
-msgid "Shipping address"
-msgstr "收货地址"
-
-msgid "No shipping address defined."
-msgstr "收货地址未定义。"
-
-msgid "Billing address"
-msgstr "账单地址"
-
-msgid "No billing address defined."
-msgstr "没有账单地址被定义。"
+msgstr "公司"
 
 msgid "No members."
-msgstr ""
+msgstr "没有成员"
+
+msgid "Use billing address as shipping address"
+msgstr "使用帐单地址作为送货地址"
+
+msgid "Basic details"
+msgstr "基本详情"
+
+msgid "COMPANY NAME"
+msgstr "公司名称"
+
+#, python-format
+msgid ""
+"You can enter here the information about <strong>%(public_name)s</strong>."
+msgstr "您可以在此处输入有关 <strong>%(public_name)s</strong>的信息。"
+
+msgid ""
+"Your order has been received and will be processed as soon as possible."
+msgstr "您的订单已收到，将尽快处理。"
+
+msgid "For reference, here's a list of your order's contents."
+msgstr "作为参考，这是您的订单内容列表。"
+
+msgid "Please note that no record of your order being paid currently exists."
+msgstr "请注意，目前不存在您的订单记录。"
+
+msgid "Thank you for shopping with us!"
+msgstr "感谢您与我们购物！"
+
+msgid "YOUR E-MAIL HERE"
+msgstr "你的电子邮件在这里"
+
+msgid "YOUR ADDRESS HERE"
+msgstr "你的地址在这里"
+
+msgid "SECTION 1 - WHAT DO WE DO WITH YOUR INFORMATION?"
+msgstr "第1节 - 我们如何处理您的信息？"
+
+msgid ""
+"When you purchase something from our store, as part of the buying and "
+"selling process, we collect the personal information you give us such as "
+"your name, address and email address."
+msgstr "当您从我们的商店购买商品时，作为购买和销售过程的一部分，我们会收集您提供给我们的个人信息，例如您的姓名，地址和电子邮件地址。"
+
+msgid ""
+"When you browse our store, we also automatically receive your computer’s "
+"internet protocol (IP) address in order to provide us with information that "
+"helps us learn about your browser and operating system."
+msgstr "当您浏览我们的商店时，我们还会自动接收您计算机的互联网协议（IP）地址，以便向我们提供有助于我们了解您的浏览器和操作系统的信息。"
+
+msgid ""
+"Email marketing (if applicable): With your permission, we may send you "
+"emails about our store, new products and other updates."
+msgstr "电子邮件营销（如果适用）：经过您的许可，我们可能会向您发送有关我们的商店，新产品和其他更新的电子邮件。"
+
+msgid "SECTION 2 - CONSENT"
+msgstr "第2节 - 许可"
+
+msgid "How do you get my consent?"
+msgstr "我们怎样得到您的许可？"
+
+msgid ""
+"When you provide us with personal information to complete a transaction, "
+"verify your credit card, place an order, arrange for a delivery or return a "
+"purchase, we imply that you consent to our collecting it and using it for "
+"that specific reason only."
+msgstr "当您向我们提供个人信息以完成交易，验证您的信用卡，下订单，安排交货或退货时，我们暗示您同意我们收集它并仅出于特定原因使用它。"
+
+msgid ""
+"If we ask for your personal information for a secondary reason, like "
+"marketing, we will either ask you directly for your expressed consent, or "
+"provide you with an opportunity to say no."
+msgstr "如果我们出于次要原因，如营销，要求您提供个人信息，我们会直接询问您的明确同意，或者为您提供拒绝的机会。"
+
+msgid "How do I withdraw my consent?"
+msgstr "我该如何撤回同意？"
+
+#, python-format
+msgid ""
+"If after you opt-in, you change your mind, you may withdraw your consent for"
+" us to contact you, for the continued collection, use or disclosure of your "
+"information, at anytime, by contacting us at <strong>%(shop_email)s</strong>"
+" or mailing us at: <strong>%(shop_address)s</strong>"
+msgstr "如果您在选择加入后改变主意，您可以随时通过<strong>%(shop_email)s</strong>或邮寄方式联系我们，撤销您的同意，以便我们随时与您联系，继续收集，使用或披露您的信息。 我们在：<strong>%(shop_address)s</strong>"
+
+msgid "SECTION 3 - DISCLOSURE"
+msgstr "第3节 - 披露"
+
+msgid ""
+"We may disclose your personal information if we are required by law to do so"
+" or if you violate our Terms of Service."
+msgstr "如果法律要求我们或您违反我们的服务条款，我们可能会披露您的个人信息。"
+
+msgid "SECTION 4 - SHUUP"
+msgstr "第4节 - SHUUP"
+
+msgid ""
+"Our store is hosted on Shuup. They provide us with the online e-commerce "
+"platform that allows us to sell our products and services to you."
+msgstr "我们的商店以Shuup为主。 他们为我们提供在线电子商务平台，使我们能够向您销售我们的产品和服务。"
+
+msgid ""
+"Your data is stored through Shuup’s data storage, databases and the general "
+"Shuup application. They store your data on a secure server behind a "
+"firewall."
+msgstr "您的数据通过Shuup的数据存储，数据库和通用Shuup应用程序存储。 它们将您的数据存储在防火墙后面的安全服务器上。"
+
+msgid "Payment"
+msgstr "支付"
+
+msgid ""
+"If you choose a direct payment gateway to complete your purchase, then Shuup"
+" stores your credit card data. It is encrypted through the Payment Card "
+"Industry Data Security Standard (PCI-DSS). Your purchase transaction data is"
+" stored only as long as is necessary to complete your purchase transaction. "
+"After that is complete, your purchase transaction information is deleted."
+msgstr "如果您选择直接付款网关来完成购买，那么Shuup会存储您的信用卡数据。 它通过支付卡行业数据安全标准（PCI-DSS）加密。 只有在完成购买交易所需的时间内，才会存储您的购买交易数据。 完成后，您的购买交易信息将被删除。"
+
+msgid ""
+"All direct payment gateways adhere to the standards set by PCI-DSS as "
+"managed by the PCI Security Standards Council, which is a joint effort of "
+"brands like Visa, MasterCard, American Express and Discover."
+msgstr "所有直接支付网关都遵循由PCI安全标准委员会管理的PCI-DSS设定的标准，这是Visa，MasterCard，American Express和Discover等品牌的共同努力。"
+
+msgid ""
+"PCI-DSS requirements help ensure the secure handling of credit card "
+"information by our store and its service providers."
+msgstr "PCI-DSS要求有助于确保我们的商店及其服务提供商安全处理信用卡信息。"
+
+msgid ""
+"For more insight, you may also want to read Shuup’s Terms of Service here or"
+" Privacy Statement here."
+msgstr "如需更多见解，您可能还需要阅读Shuup的服务条款或隐私声明。"
+
+msgid "SECTION 5 - THIRD-PARTY SERVICES"
+msgstr "第5节 - 第三方服务"
+
+msgid ""
+"In general, the third-party providers used by us will only collect, use and "
+"disclose your information to the extent necessary to allow them to perform "
+"the services they provide to us."
+msgstr "一般而言，我们使用的第三方提供商仅在必要时收集，使用和披露您的信息，以允许他们执行他们向我们提供的服务。"
+
+msgid ""
+"However, certain third-party service providers, such as payment gateways and"
+" other payment transaction processors, have their own privacy policies in "
+"respect to the information we are required to provide to them for your "
+"purchase-related transactions."
+msgstr "但是，某些第三方服务提供商，如支付网关和其他支付交易处理商，对于我们需要为您的购买相关交易提供的信息有自己的隐私政策。"
+
+msgid ""
+"For these providers, we recommend that you read their privacy policies so "
+"you can understand the manner in which your personal information will be "
+"handled by these providers."
+msgstr "对于这些提供商，我们建议您阅读其隐私政策，以便了解这些提供商处理您的个人信息的方式。"
+
+msgid ""
+"In particular, remember that certain providers may be located in or have "
+"facilities that are located in a different jurisdiction than either you or "
+"us. So if you elect to proceed with a transaction that involves the services"
+" of a third-party service provider, then your information may become subject"
+" to the laws of the jurisdiction(s) in which that service provider or its "
+"facilities are located."
+msgstr "特别要记住，某些提供商可能位于或拥有与您或我们不同的辖区内的设施。 因此，如果您选择继续涉及第三方服务提供商服务的交易，那么您的信息可能会受到该服务提供商或其设施所在司法管辖区(s) 的法律的约束。"
+
+msgid ""
+"As an example, if you are located in Canada and your transaction is "
+"processed by a payment gateway located in the United States, then your "
+"personal information used in completing that transaction may be subject to "
+"disclosure under United States legislation, including the Patriot Act."
+msgstr "例如，如果您位于加拿大并且您的交易由位于美国的支付网关处理，那么您在完成该交易时使用的个人信息可能会根据美国法律，包括爱国者法案，进行披露。"
+
+msgid ""
+"Once you leave our store’s website or are redirected to a third-party "
+"website or application, you are no longer governed by this Privacy Policy or"
+" our website’s Terms of Service."
+msgstr "一旦您离开我们商店的网站或被重定向到第三方网站或应用程序，您将不再受本隐私政策或我们网站的服务条款的约束。"
+
+msgid "Links"
+msgstr "链接"
+
+msgid ""
+"When you click on links on our store, they may direct you away from our "
+"site. We are not responsible for the privacy practices of other sites and "
+"encourage you to read their privacy statements."
+msgstr "当您点击我们商店的链接时，他们可能会引导您离开我们的网站。 我们不对其他网站的隐私惯例负责，并鼓励您阅读其隐私声明。"
+
+msgid "SECTION 6 - SECURITY"
+msgstr "第6节 - 安全"
+
+msgid ""
+"To protect your personal information, we take reasonable precautions and "
+"follow industry best practices to make sure it is not inappropriately lost, "
+"misused, accessed, disclosed, altered or destroyed."
+msgstr "为了保护您的个人信息，我们采取合理的预防措施并遵循行业最佳实践，以确保其不会被错误地丢失，误用，访问，披露，更改或破坏。"
+
+#, python-format
+msgid ""
+"If you provide us with your credit card information, the information is "
+"encrypted using secure socket layer technology (SSL) and stored with a "
+"AES-256 encryption.  Although no method of transmission over the Internet or"
+" electronic storage is 100%% secure, we follow all PCI-DSS requirements and "
+"implement additional generally accepted industry standards."
+msgstr "如果您向我们提供您的信用卡信息，则使用安全套接字层技术（SSL）对信息进行加密，并使用AES-256加密进行存储。 虽然没有通过互联网或电子存储传输的方法是100%%安全的，但我们遵循所有PCI-DSS要求并实施其他普遍接受的行业标准。"
+
+msgid "COOKIES"
+msgstr "信息记录程序"
+
+msgid ""
+"Here is a list of cookies that we use. We’ve listed them here so you can "
+"choose if you want to opt-out of cookies or not."
+msgstr "这是我们使用的cookie列表。 我们已将它们列在此处，因此您可以选择是否要选择退出Cookie。"
+
+msgid ""
+"unique token, sessional, Allows Shuup to store information about your "
+"session (referrer, landing page, etc)."
+msgstr "唯一令牌，会话，允许Shuup存储有关您的会话的信息（推荐人，登录页面等）。"
+
+msgid "SECTION 7 - AGE OF CONSENT"
+msgstr "第7节 - 年龄许可"
+
+msgid ""
+"By using this site, you represent that you are at least the age of majority "
+"in your state or province of residence, or that you are the age of majority "
+"in your state or province of residence and you have given us your consent to"
+" allow any of your minor dependents to use this site."
+msgstr "使用本网站即表示您至少是您所在州或省的成年年龄，或者您是您所在州或省的多数年龄，并且您已经同意我们允许任何 您的未成年家属使用本网站。"
+
+msgid "SECTION 8 - CHANGES TO THIS PRIVACY POLICY"
+msgstr "第8节 - 本隐私政策的变更"
+
+msgid ""
+"We reserve the right to modify this privacy policy at any time, so please "
+"review it frequently. Changes and clarifications will take effect "
+"immediately upon their posting on the website. If we make material changes "
+"to this policy, we will notify you here that it has been updated, so that "
+"you are aware of what information we collect, how we use it, and under what "
+"circumstances, if any, we use and/or disclose it."
+msgstr "我们保留随时修改本隐私政策的权利，因此请经常查看。 变更和澄清将在网站上发布后立即生效。 如果我们对此政策进行重大更改，我们会在此通知您已更新，以便您了解我们收集的信息，我们如何使用以及在何种情况下，如果有，我们使用和/或披露它。"
+
+msgid ""
+"If our store is acquired or merged with another company, your information "
+"may be transferred to the new owners so that we may continue to sell "
+"products to you."
+msgstr "如果我们的商店被收购或与其他公司合并，您的信息可能会转移给新的所有者，以便我们继续向您销售产品。"
+
+msgid "QUESTIONS AND CONTACT INFORMATION"
+msgstr "问题和联系信息"
+
+#, python-format
+msgid ""
+"If you would like to: access, correct, amend or delete any personal "
+"information we have about you, register a complaint, or simply want more "
+"information contact our Privacy Compliance Officer at "
+"<strong>%(shop_email)s</strong> or by mail at "
+"<strong>%(shop_address)s</strong>."
+msgstr "如果您希望：访问，更正，修改或删除我们拥有的任何个人信息，注册投诉，或只是想了解更多信息，请联系我们的隐私合规官<strong>%(shop_email)s</strong>或邮寄<strong>%(shop_address)s</strong>。"
+
+msgid "YOUR COMPANY NAME HERE"
+msgstr "你的公司名称在这里"
+
+msgid ""
+"Our policy lasts 30 days. If 30 days have gone by since your purchase, "
+"unfortunately we can’t offer you a refund or exchange."
+msgstr "我们的政策持续30天。 如果您购买后已经过了30天，很遗憾，我们无法为您提供退款或换货服务。"
+
+msgid ""
+"To be eligible for a return, your item must be unused and in the same "
+"condition that you received it. It must also be in the original packaging."
+msgstr "要有资格获得退货，您的商品必须未使用且条件与您收到的相同。 它也必须是原始包装。"
+
+msgid ""
+"Several types of goods are exempt from being returned. Perishable goods such"
+" as food, flowers, newspapers or magazines cannot be returned. We also do "
+"not accept products that are intimate or sanitary goods, hazardous "
+"materials, or flammable liquids or gases."
+msgstr "几种类型的商品免于退回。 食品，鲜花，报纸或杂志等易腐烂物品不予退还。 我们也不接受私密或卫生用品，危险材料或易燃液体或气体的产品。"
+
+msgid "Additional non-returnable items:"
+msgstr "其他不可退货商品："
+
+msgid "Gift cards"
+msgstr "礼品卡"
+
+msgid "Downloadable software products"
+msgstr "可下载的软件产品"
+
+msgid "Some health and personal care items"
+msgstr "一些健康和个人护理用品"
+
+msgid "To complete your return, we require a receipt or proof of purchase."
+msgstr "要完成退货，我们需要收据或购买凭证。"
+
+msgid "Please do not send your purchase back to the manufacturer."
+msgstr "请不要将您的购买交还给制造商。"
+
+msgid ""
+"There are certain situations where only partial refunds are granted: (if "
+"applicable)"
+msgstr "在某些情况下，只授予部分退款:(如果适用）"
+
+msgid "Book with obvious signs of use"
+msgstr "预订有明显的使用迹象"
+
+msgid ""
+"CD, DVD, VHS tape, software, video game, cassette tape, or vinyl record that"
+" has been opened."
+msgstr "已打开的CD，DVD，VHS磁带，软件，视频游戏，盒式磁带或黑胶唱片。"
+
+msgid ""
+"Any item not in its original condition, is damaged or missing parts for "
+"reasons not due to our error."
+msgstr "任何不符合原始状态的物品，由于我们的错误而导致部件损坏或丢失。"
+
+msgid "Any item that is returned more than 30 days after delivery"
+msgstr "交货后30天以上退回的任何物品"
+
+msgid "Refunds (if applicable)"
+msgstr "退款（如适用）"
+
+msgid ""
+"Once your return is received and inspected, we will send you an email to "
+"notify you that we have received your returned item. We will also notify you"
+" of the approval or rejection of your refund."
+msgstr "收到并检查您的退货后，我们会向您发送一封电子邮件，通知您我们已收到您退回的物品。 我们还会通知您批准或拒绝退款。"
+
+msgid ""
+"If you are approved, then your refund will be processed, and a credit will "
+"automatically be applied to your credit card or original method of payment, "
+"within a certain amount of days."
+msgstr "如果您获得批准，那么我们将处理您的退款，并会在一定的天数内自动将信用卡应用到您的信用卡或原始付款方式。"
+
+msgid "Late or missing refunds (if applicable)"
+msgstr "延迟或遗失退款（如适用）"
+
+msgid ""
+"If you haven’t received a refund yet, first check your bank account again."
+msgstr "如果您尚未收到退款，请先重新检查您的银行帐户。"
+
+msgid ""
+"Then contact your credit card company, it may take some time before your "
+"refund is officially posted."
+msgstr "然后联系您的信用卡公司，可能需要一些时间才能正式发布退款。"
+
+msgid ""
+"Next contact your bank. There is often some processing time before a refund "
+"is posted."
+msgstr "接下来联系您的银行。 在退款发布之前，通常需要一些处理时间。"
+
+#, python-format
+msgid ""
+"If you’ve done all of this and you still have not received your refund yet, "
+"please contact us at <strong>%(shop_email)s</strong>."
+msgstr "如果您已经完成了所有这些并且仍未收到退款，请以<strong>%(shop_email)s</strong>与我们联系。"
+
+msgid "Sale items (if applicable)"
+msgstr "销售商品（如适用）"
+
+msgid ""
+"Only regular priced items may be refunded, unfortunately sale items cannot "
+"be refunded."
+msgstr "只有正价货品可以退款，遗憾的是，促销商品不能退款。"
+
+msgid "Exchanges (if applicable)"
+msgstr "交换（如适用）"
+
+#, python-format
+msgid ""
+"We only replace items if they are defective or damaged.  If you need to "
+"exchange it for the same item, send us an email at "
+"<strong>%(shop_email)s</strong> and send your item to: "
+"<strong>%(shop_address)s</strong>."
+msgstr "我们只更换有缺陷或损坏的物品。 如果您需要将其换成同一商品，请发送电子邮件至<strong>%(shop_email)s</strong>并将您的商品发送至：<strong>%(shop_address)s</strong>。"
+
+msgid "Gifts"
+msgstr "礼品"
+
+msgid ""
+"If the item was marked as a gift when purchased and shipped directly to you,"
+" you’ll receive a gift credit for the value of your return. Once the "
+"returned item is received, a gift certificate will be mailed to you."
+msgstr "如果物品在购买时被标记为礼品并直接发送给您，您将收到退货价值的礼品券。 收到退回的物品后，礼品券将邮寄给您。"
+
+msgid ""
+"If the item wasn’t marked as a gift when purchased, or the gift giver had "
+"the order shipped to themselves to give to you later, we will send a refund "
+"to the gift giver and he will find out about your return."
+msgstr "如果物品在购买时未被标记为礼品，或者礼品赠送者将订单发送给自己以后再送给您，我们将向礼品赠送者发送退款，他将告知您的退货。"
+
+msgid "Shipping"
+msgstr "配送"
+
+#, python-format
+msgid ""
+"To return your product, you should mail your product to: "
+"<strong>%(shop_address)s</strong>."
+msgstr "要退回产品，您应该将产品邮寄到：<strong>%(shop_address)s</strong>。"
+
+msgid ""
+"You will be responsible for paying for your own shipping costs for returning"
+" your item. Shipping costs are non-refundable. If you receive a refund, the "
+"cost of return shipping will be deducted from your refund."
+msgstr "您将负责支付退回物品的运费。 运费不予退还。 如果您收到退款，退货运费将从退款中扣除。"
+
+msgid ""
+"Depending on where you live, the time it may take for your exchanged product"
+" to reach you, may vary."
+msgstr "根据您居住的地方，您交换的产品可能需要的时间可能会有所不同。"
+
+msgid ""
+"If you are shipping an item over $75, you should consider using a trackable "
+"shipping service or purchasing shipping insurance. We don’t guarantee that "
+"we will receive your returned item."
+msgstr "如果您运送的物品超过75美元，您应该考虑使用可追踪的运输服务或购买运输保险。 我们不保证会收到您退回的商品。"
+
+msgid "OVERVIEW"
+msgstr "概述"
+
+#, python-format
+msgid ""
+"This website is operated by <strong>%(public_name)s</strong>. Throughout the"
+" site, the terms “we”, “us” and “our” refer to "
+"<strong>%(public_name)s</strong>. <strong>%(public_name)s</strong> offers "
+"this website, including all information, tools and services available from "
+"this site to you, the user, conditioned upon your acceptance of all terms, "
+"conditions, policies and notices stated here."
+msgstr "本网站由<strong>%(public_name)s</strong>运营。 在整个网站中，术语“我们”，“我们”和“我们的”指的是<strong>%(public_name)s</strong>。 <strong>%(public_name)s</strong>提供本网站，包括本网站向您，用户，提供的所有信息，工具和服务，条件是您接受此处所述的所有条款，条件，政策和通知。"
+
+msgid ""
+"By visiting our site and/ or purchasing something from us, you engage in our"
+" “Service” and agree to be bound by the following terms and conditions "
+"(“Terms of Service”, “Terms”), including those additional terms and "
+"conditions and policies referenced herein and/or available by hyperlink. "
+"These Terms of Service apply  to all users of the site, including without "
+"limitation users who are browsers, vendors, customers, merchants, and/ or "
+"contributors of content."
+msgstr "通过访问我们的网站和/或从我们这里购买东西，您可以参与我们的“服务”并同意遵守以下条款和条件（“服务条款”，“条款”），包括那些附加条款和条件和政策 在此引用和/或通过超链接提供。 这些服务条款适用于本网站的所有用户，包括但不限于浏览器，供应商，客户，商家和/或内容贡献者。"
+
+msgid ""
+"Please read these Terms of Service carefully before accessing or using our "
+"website. By accessing or using any part of the site, you agree to be bound "
+"by these Terms of Service. If you do not agree to all the terms and "
+"conditions of this agreement, then you may not access the website or use any"
+" services. If these Terms of Service are considered an offer, acceptance is "
+"expressly limited to these Terms of Service."
+msgstr "在访问或使用我们的网站之前，请仔细阅读这些服务条款。 访问或使用本网站的任何部分，即表示您同意遵守这些服务条款。 如果您不同意本协议的所有条款和条件，则您不得访问该网站或使用任何服务。 如果这些服务条款被视为要约，则接受明确限于这些服务条款。"
+
+msgid ""
+"Any new features or tools which are added to the current store shall also be"
+" subject to the Terms of Service. You can review the most current version of"
+" the Terms of Service at any time on this page. We reserve the right to "
+"update, change or replace any part of these Terms of Service by posting "
+"updates and/or changes to our website. It is your responsibility to check "
+"this page periodically for changes. Your continued use of or access to the "
+"website following the posting of any changes constitutes acceptance of those"
+" changes."
+msgstr "添加到当前商店的任何新功能或工具也应遵守服务条款。 您可以随时在此页面上查看最新版本的服务条款。 我们保留通过发布更新和/或更改我们网站来更新，更改或替换这些服务条款的任何部分的权利。 您有责任定期查看此页面以了解更改。 您在发布任何更改后继续使用或访问本网站即表示接受这些更改。"
+
+msgid "SECTION 1 - ONLINE STORE TERMS"
+msgstr "第1节 - 线上商店条款"
+
+msgid ""
+"By agreeing to these Terms of Service, you represent that you are at least "
+"the age of majority in your state or province of residence, or that you are "
+"the age of majority in your state or province of residence and you have "
+"given us your consent to allow any of your minor dependents to use this "
+"site."
+msgstr "同意这些服务条款，即表示您至少是您所在州或省的成年年龄，或者您是您所在州或省的多数年龄，并且您已经同意我们允许您的任何未成年家属使用本网站。"
+
+msgid ""
+"You may not use our products for any illegal or unauthorized purpose nor may"
+" you, in the use of the Service, violate any laws in your jurisdiction "
+"(including but not limited to copyright laws)."
+msgstr "您不得将我们的产品用于任何非法或未经授权的目的，也不得在使用本服务时违反您所在司法辖区的任何法律（包括但不限于版权法）。"
+
+msgid ""
+"You must not transmit any worms or viruses or any code of a destructive "
+"nature."
+msgstr "您不得传播任何蠕虫或病毒或任何具有破坏性的代码。"
+
+msgid ""
+"A breach or violation of any of the Terms will result in an immediate "
+"termination of your Services."
+msgstr "违反或违反任何条款将导致您的服务立即终止。"
+
+msgid "SECTION 2 - GENERAL CONDITIONS"
+msgstr "第2节 - 一般条件"
+
+msgid ""
+"We reserve the right to refuse service to anyone for any reason at any time."
+msgstr "我们保留随时以任何理由拒绝向任何人提供服务的权利。"
+
+msgid ""
+"You understand that your content (not including credit card information), "
+"may be transferred unencrypted and involve (a) transmissions over various "
+"networks; and (b) changes to conform and adapt to technical requirements of "
+"connecting networks or devices. Credit card information is always encrypted "
+"during transfer over networks."
+msgstr "您了解您的内容（不包括信用卡信息）可能未经加密转移，并涉及（a）通过各种网络传输; （b）改变以符合并适应连接网络或设备的技术要求。 在通过网络传输期间，信用卡信息始终是加密的。"
+
+msgid ""
+"You agree not to reproduce, duplicate, copy, sell, resell or exploit any "
+"portion of the Service, use of the Service, or access to the Service or any "
+"contact on the website through which the service is provided, without "
+"express written permission by us."
+msgstr "您同意，未经我们明确书面许可，不得复制，出售，转售或利用本服务的任何部分，使用本服务或访问本服务或提供服务的网站上的任何联系人。"
+
+msgid ""
+"The headings used in this agreement are included for convenience only and "
+"will not limit or otherwise affect these Terms."
+msgstr "本协议中使用的标题仅为方便起见，不会限制或以其他方式影响这些条款。"
+
+msgid "SECTION 3 - ACCURACY, COMPLETENESS AND TIMELINESS OF INFORMATION"
+msgstr "第3节 - 信息的准确性，完整性和及时性"
+
+msgid ""
+"We are not responsible if information made available on this site is not "
+"accurate, complete or current. The material on this site is provided for "
+"general information only and should not be relied upon or used as the sole "
+"basis for making decisions without consulting primary, more accurate, more "
+"complete or more timely sources of information. Any reliance on the material"
+" on this site is at your own risk."
+msgstr "如果本网站提供的信息不准确，完整或最新，我们概不负责。 本网站上的资料仅供一般参考，不应依赖或作为决策的唯一依据，无需咨询主要，更准确，更完整或更及时的信息来源。 任何依赖本网站资料的风险由您自行承担。"
+
+msgid ""
+"This site may contain certain historical information. Historical "
+"information, necessarily, is not current and is provided for your reference "
+"only. We reserve the right to modify the contents of this site at any time, "
+"but we have no obligation to update any information on our site. You agree "
+"that it is your responsibility to monitor changes to our site."
+msgstr "本网站可能包含某些历史信息。 历史信息必然不是最新信息，仅供参考。 我们保留随时修改本网站内容的权利，但我们没有义务更新我们网站上的任何信息。 您同意监控我们网站的变更是您的责任。"
+
+msgid "SECTION 4 - MODIFICATIONS TO THE SERVICE AND PRICES"
+msgstr "第4节 - 对服务和价格的修改"
+
+msgid "Prices for our products are subject to change without notice."
+msgstr "我们产品的价格如有变更，恕不另行通知。"
+
+msgid ""
+"We reserve the right at any time to modify or discontinue the Service (or "
+"any part or content thereof) without notice at any time."
+msgstr "我们保留随时修改或终止服务（或其任何部分或内容）的权利，恕不另行通知。"
+
+msgid ""
+"We shall not be liable to you or to any third-party for any modification, "
+"price change, suspension or discontinuance of the Service."
+msgstr "对于本服务的任何修改，价格更改，暂停或终止，我们不对您或任何第三方承担任何责任。"
+
+msgid "SECTION 5 - PRODUCTS OR SERVICES (if applicable)"
+msgstr "第5节 - 产品或服务（如适用）"
+
+msgid ""
+"Certain products or services may be available exclusively online through the"
+" website. These products or services may have limited quantities and are "
+"subject to return or exchange only according to our Return Policy."
+msgstr "某些产品或服务可通过网站在线独家提供。 这些产品或服务的数量有限，只能根据我们的退货政策退货或换货。"
+
+msgid ""
+"We have made every effort to display as accurately as possible the colors "
+"and images of our products that appear at the store. We cannot guarantee "
+"that your computer monitor's display of any color will be accurate."
+msgstr "我们尽一切努力尽可能准确地显示出现在商店的产品的颜色和图像。 我们无法保证您的计算机显示器的任何颜色显示都是准确的。"
+
+msgid ""
+"We reserve the right, but are not obligated, to limit the sales of our "
+"products or Services to any person, geographic region or jurisdiction. We "
+"may exercise this right on a case-by-case basis. We reserve the right to "
+"limit the quantities of any products or services that we offer. All "
+"descriptions of products or product pricing are subject to change at anytime"
+" without notice, at the sole discretion of us. We reserve the right to "
+"discontinue any product at any time. Any offer for any product or service "
+"made on this site is void where prohibited."
+msgstr "我们保留权利，但没有义务将我们的产品或服务的销售限制在任何人，地理区域或管辖区。 我们可以根据具体情况行使此权利。 我们保留限制我们提供的任何产品或服务的数量的权利。 产品或产品价格的所有描述可能随时更改，恕不另行通知，由我们自行决定。 我们保留随时终止任何产品的权利。 对本网站上的任何产品或服务的任何要约在禁止的情况下均无效。"
+
+msgid ""
+"We do not warrant that the quality of any products, services, information, "
+"or other material purchased or obtained by you will meet your expectations, "
+"or that any errors in the Service will be corrected."
+msgstr "我们不保证您购买或获得的任何产品，服务，信息或其他材料的质量符合您的期望，或者本服务中的任何错误都将得到纠正。"
+
+msgid "SECTION 6 - ACCURACY OF BILLING AND ACCOUNT INFORMATION"
+msgstr "第6节 - 账单和账户信息的准确性"
+
+msgid ""
+"We reserve the right to refuse any order you place with us. We may, in our "
+"sole discretion, limit or cancel quantities purchased per person, per "
+"household or per order. These restrictions may include orders placed by or "
+"under the same customer account, the same credit card, and/or orders that "
+"use the same billing and/or shipping address. In the event that we make a "
+"change to or cancel an order, we may attempt to notify you by contacting the"
+" e-mail and/or billing address/phone number provided at the time the order "
+"was made. We reserve the right to limit or prohibit orders that, in our sole"
+" judgment, appear to be placed by dealers, resellers or distributors."
+msgstr "我们保留拒绝您与我们订购的任何订单的权利。 我们可以自行决定限制或取消每人，每户或每个订单购买的数量。 这些限制可能包括由同一客户帐户或相同客户帐户下的订单，相同的信用卡和/或使用相同帐单和/或送货地址的订单。 如果我们更改或取消订单，我们可能会尝试通过联系订单时提供的电子邮件和/或帐单地址/电话号码来通知您。 我们保留限制或禁止经销商，经销商或分销商认可的订单的权利。"
+
+msgid ""
+"You agree to provide current, complete and accurate purchase and account "
+"information for all purchases made at our store. You agree to promptly "
+"update your account and other information, including your email address and "
+"credit card numbers and expiration dates, so that we can complete your "
+"transactions and contact you as needed."
+msgstr "您同意为我们在商店购买的所有商品提供最新，完整和准确的购买和帐户信息。 您同意及时更新您的帐户和其他信息，包括您的电子邮件地址和信用卡号码以及到期日期，以便我们完成您的交易并根据需要与您联系。"
+
+msgid "For more detail, please review our Returns Policy."
+msgstr "有关详细信息，请查看我们的退货政策。"
+
+msgid "SECTION 7 - OPTIONAL TOOLS"
+msgstr "第7节 - 可选工具"
+
+msgid ""
+"We may provide you with access to third-party tools over which we neither "
+"monitor nor have any control nor input."
+msgstr "我们可能会为您提供访问第三方工具的权限，我们既不监控也不控制或输入。"
+
+msgid ""
+"You acknowledge and agree that we provide access to such tools ”as is” and "
+"“as available” without any warranties, representations or conditions of any "
+"kind and without any endorsement. We shall have no liability whatsoever "
+"arising from or relating to your use of optional third-party tools."
+msgstr "您承认并同意我们“按现状”和“可用”提供对此类工具的访问，不附带任何形式的任何保证，陈述或条件且无任何认可。 对于您使用可选的第三方工具，我们不承担任何责任。"
+
+msgid ""
+"Any use by you of optional tools offered through the site is entirely at "
+"your own risk and discretion and you should ensure that you are familiar "
+"with and approve of the terms on which tools are provided by the relevant "
+"third-party provider(s)."
+msgstr "您通过本网站提供的可选工具的任何使用完全由您自行承担风险和自行决定，您应确保您熟悉并批准相关第三方提供商(s)提供工具的条款。"
+
+msgid ""
+"We may also, in the future, offer new services and/or features through the "
+"website (including, the release of new tools and resources). Such new "
+"features and/or services shall also be subject to these Terms of Service."
+msgstr "我们将来还可能通过网站提供新的服务和/或功能（包括新工具和资源的发布）。 此类新功能和/或服务还应遵守这些服务条款。"
+
+msgid "SECTION 8 - THIRD-PARTY LINKS"
+msgstr "第8节 - 第三方链接"
+
+msgid ""
+"Certain content, products and services available via our Service may include"
+" materials from third-parties."
+msgstr "通过我们的服务提供的某些内容，产品和服务可能包含来自第三方的材料。"
+
+msgid ""
+"Third-party links on this site may direct you to third-party websites that "
+"are not affiliated with us. We are not responsible for examining or "
+"evaluating the content or accuracy and we do not warrant and will not have "
+"any liability or responsibility for any third-party materials or websites, "
+"or for any other materials, products, or services of third-parties."
+msgstr "本网站上的第三方链接可能会将您引导至与我们无关的第三方网站。 我们不负责审查或评估内容或准确性，我们不保证也不对任何第三方材料或网站或第三方的任何其他材料，产品或服务承担任何责任或义务。"
+
+msgid ""
+"We are not liable for any harm or damages related to the purchase or use of "
+"goods, services, resources, content, or any other transactions made in "
+"connection with any third-party websites. Please review carefully the third-"
+"party's policies and practices and make sure you understand them before you "
+"engage in any transaction. Complaints, claims, concerns, or questions "
+"regarding third-party products should be directed to the third-party."
+msgstr "对于因购买或使用与任何第三方网站相关的商品，服务，资源，内容或任何其他交易而导致的任何损害或损害，我们概不负责。 请仔细阅读第三方的政策和做法，并确保在进行任何交易之前了解这些政策和做法。 有关第三方产品的投诉，声明，疑虑或问题应直接向第三方提出。"
+
+msgid "SECTION 9 - USER COMMENTS, FEEDBACK AND OTHER SUBMISSIONS"
+msgstr "第9节 - 用户评论，反馈和其他提交"
+
+msgid ""
+"If, at our request, you send certain specific submissions (for example "
+"contest entries) or without a request from us you send creative ideas, "
+"suggestions, proposals, plans, or other materials, whether online, by email,"
+" by postal mail, or otherwise (collectively, 'comments'), you agree that we "
+"may, at any time, without restriction, edit, copy, publish, distribute, "
+"translate and otherwise use in any medium any comments that you forward to "
+"us. We are and shall be under no obligation (1) to maintain any comments in "
+"confidence; (2) to pay compensation for any comments; or (3) to respond to "
+"any comments."
+msgstr "如果，根据我们的要求，您发送某些特定提交内容（例如参赛作品）或未经我们提出请求，您可以发送创意，建议，提案，计划或其他材料，无论是在线，通过电子邮件，通过邮寄还是其他方式 （统称“评论”），您同意我们可以在任何时间，无限制地编辑，复制，出版，分发，翻译和以其他方式在任何媒体中使用您转发给我们的任何评论。 我们现在并且没有义务（1）保密任何评论; （2）对任何意见支付赔偿金; 或（3）回应任何意见。"
+
+msgid ""
+"We may, but have no obligation to, monitor, edit or remove content that we "
+"determine in our sole discretion are unlawful, offensive, threatening, "
+"libelous, defamatory, pornographic, obscene or otherwise objectionable or "
+"violates any party’s intellectual property or these Terms of Service."
+msgstr "我们可以，但没有义务，监控、编辑或删除我们自行决定的内容，包括非法，攻击性，威胁性，诽谤性，诽谤性，色情内容，淫秽内容或其他令人反感的内容，或违反任何一方的知识产权或本服务条款。"
+
+msgid ""
+"You agree that your comments will not violate any right of any third-party, "
+"including copyright, trademark, privacy, personality or other personal or "
+"proprietary right. You further agree that your comments will not contain "
+"libelous or otherwise unlawful, abusive or obscene material, or contain any "
+"computer virus or other malware that could in any way affect the operation "
+"of the Service or any related website. You may not use a false e-mail "
+"address, pretend to be someone other than yourself, or otherwise mislead us "
+"or third-parties as to the origin of any comments. You are solely "
+"responsible for any comments you make and their accuracy. We take no "
+"responsibility and assume no liability for any comments posted by you or any"
+" third-party."
+msgstr "您同意您的意见不会侵犯任何第三方的任何权利，包括版权，商标，隐私，个性或其他个人或专有权利。 您进一步同意，您的评论不会包含诽谤或其他非法，侮辱性或淫秽内容，或包含任何可能以任何方式影响服务或任何相关网站运营的计算机病毒或其他恶意软件。 您不得使用虚假的电子邮件地址，假装是您以外的其他人，或以其他方式误导我们或第三方的任何评论的来源。 您对自己提出的任何意见及其准确性负全部责任。 对于您或任何第三方发布的任何评论，我们不承担任何责任。"
+
+msgid "SECTION 10 - PERSONAL INFORMATION"
+msgstr "第10节 - 个人信息"
+
+msgid ""
+"Your submission of personal information through the store is governed by our"
+" Privacy Policy. To view our Privacy Policy."
+msgstr "您通过商店提交的个人信息受我们的隐私政策约束。 查看我们的隐私政策。"
+
+msgid "SECTION 11 - ERRORS, INACCURACIES AND OMISSIONS"
+msgstr "第11节 - 错误，不准确和遗漏"
+
+msgid ""
+"Occasionally there may be information on our site or in the Service that "
+"contains typographical errors, inaccuracies or omissions that may relate to "
+"product descriptions, pricing, promotions, offers, product shipping charges,"
+" transit times and availability. We reserve the right to correct any errors,"
+" inaccuracies or omissions, and to change or update information or cancel "
+"orders if any information in the Service or on any related website is "
+"inaccurate at any time without prior notice (including after you have "
+"submitted your order)."
+msgstr "有时，我们网站或服务中可能包含与产品描述，定价，促销，优惠，产品运费，运输时间和可用性相关的印刷错误，不准确或遗漏的信息。 如果服务或任何相关网站上的任何信息在任何时候不准确，我们保留更正或更新信息或取消订单的权利，恕不另行通知（包括您提交订单后）。"
+
+msgid ""
+"We undertake no obligation to update, amend or clarify information in the "
+"Service or on any related website, including without limitation, pricing "
+"information, except as required by law. No specified update or refresh date "
+"applied in the Service or on any related website, should be taken to "
+"indicate that all information in the Service or on any related website has "
+"been modified or updated."
+msgstr "我们没有义务更新，修改或澄清服务或任何相关网站上的信息，包括但不限于定价信息，法律要求除外。 未在服务或任何相关网站上应用指定的更新或刷新日期，应表明服务或任何相关网站上的所有信息均已被修改或更新。"
+
+msgid "SECTION 12 - PROHIBITED USES"
+msgstr "第12节 - 禁止使用"
+
+msgid ""
+"In addition to other prohibitions as set forth in the Terms of Service, you "
+"are prohibited from using the site or its content: (a) for any unlawful "
+"purpose; (b) to solicit others to perform or participate in any unlawful "
+"acts; (c) to violate any international, federal, provincial or state "
+"regulations, rules, laws, or local ordinances; (d) to infringe upon or "
+"violate our intellectual property rights or the intellectual property rights"
+" of others; (e) to harass, abuse, insult, harm, defame, slander, disparage, "
+"intimidate, or discriminate based on gender, sexual orientation, religion, "
+"ethnicity, race, age, national origin, or disability; (f) to submit false or"
+" misleading information; (g) to upload or transmit viruses or any other type"
+" of malicious code that will or may be used in any way that will affect the "
+"functionality or operation of the Service or of any related website, other "
+"websites, or the Internet; (h) to collect or track the personal information "
+"of others; (i) to spam, phish, pharm, pretext, spider, crawl, or scrape; (j)"
+" for any obscene or immoral purpose; or (k) to interfere with or circumvent "
+"the security features of the Service or any related website, other websites,"
+" or the Internet. We reserve the right to terminate your use of the Service "
+"or any related website for violating any of the prohibited uses."
+msgstr "除了服务条款中规定的其他禁令外，您不得使用本网站或其内容：（a）出于任何非法目的; （b）要求他人进行或参与任何非法行为; （c）违反任何国际，联邦，省或州的法规，规则，法律或地方法令; （d）侵犯或侵犯我们的知识产权或他人的知识产权; （e）基于性别，性取向，宗教，种族，种族，年龄，国籍或残疾进行骚扰，虐待，侮辱，伤害，诽谤，诽谤，贬低，恐吓或歧视; （f）提交虚假或误导性资料; （g）上传或传播将以或可能以任何方式使用的病毒或任何其他类型的恶意代码，这些代码将影响服务或任何相关网站，其他网站或互联网的功能或操作; （h）收集或追踪他人的个人资料; （i）垃圾邮件，网络钓鱼，杀毒，借口，蜘蛛，爬行或刮擦; （j）任何淫亵或不道德的目的;或（k）干扰或规避服务或任何相关网站，其他网站或互联网的安全功能。我们保留因违反任何违禁用途而终止您使用服务或任何相关网站的权利。"
+
+msgid "SECTION 13 - DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY"
+msgstr "第13节 - 免责声明; 责任限制"
+
+msgid ""
+"We do not guarantee, represent or warrant that your use of our service will "
+"be uninterrupted, timely, secure or error-free."
+msgstr "我们不保证，声明或保证您对我们服务的使用不会中断，及时，安全或没有错误。"
+
+msgid ""
+"We do not warrant that the results that may be obtained from the use of the "
+"service will be accurate or reliable."
+msgstr "我们不保证从使用服务中获得的结果将是准确或可靠的。"
+
+msgid ""
+"You agree that from time to time we may remove the service for indefinite "
+"periods of time or cancel the service at any time, without notice to you."
+msgstr "您同意我们可能会不定期地删除服务或随时取消服务，恕不另行通知。"
+
+msgid ""
+"You expressly agree that your use of, or inability to use, the service is at"
+" your sole risk. The service and all products and services delivered to you "
+"through the service are (except as expressly stated by us) provided 'as is' "
+"and 'as available' for your use, without any representation, warranties or "
+"conditions of any kind, either express or implied, including all implied "
+"warranties or conditions of merchantability, merchantable quality, fitness "
+"for a particular purpose, durability, title, and non-infringement."
+msgstr "您明确同意，您自行承担使用或无法使用服务的风险。 通过服务向您提供的服务以及所有产品和服务（除非我们明确说明）以“原样”和“可用”的形式提供给您使用，不作任何陈述，保证或任何类型的条件，无论是快递还是 暗示，包括所有暗示的适销性、适销性，适用于特定用途、耐用性、所有权和非侵权的保证或条件。"
+
+#, python-format
+msgid ""
+"In no case shall <strong>%(public_name)s</strong>, our directors, officers, "
+"employees, affiliates, agents, contractors, interns, suppliers, service "
+"providers or licensors be liable for any injury, loss, claim, or any direct,"
+" indirect, incidental, punitive, special, or consequential damages of any "
+"kind, including, without limitation lost profits, lost revenue, lost "
+"savings, loss of data, replacement costs, or any similar damages, whether "
+"based in contract, tort (including negligence), strict liability or "
+"otherwise, arising from your use of any of the service or any products "
+"procured using the service, or for any other claim related in any way to "
+"your use of the service or any product, including, but not limited to, any "
+"errors or omissions in any content, or any loss or damage of any kind "
+"incurred as a result of the use of the service or any content (or product) "
+"posted, transmitted, or otherwise made available via the service, even if "
+"advised of their possibility. Because some states or jurisdictions do not "
+"allow the exclusion or the limitation of liability for consequential or "
+"incidental damages, in such states or jurisdictions, our liability shall be "
+"limited to the maximum extent permitted by law."
+msgstr "在任何情况下，<strong>%(public_name)s</strong>，我们的董事、高级职员、员工、关联公司、代理商、承包商、实习生、供应商、服务提供商或许可方均不对任何伤害，损失，索赔或任何直接，间接，偶然的，任何形式的惩罚性，特殊性或后果性损害，包括但不限于利润损失、收入损失、储蓄损失、数据丢失、重置成本或任何类似的损害，无论是基于合同，侵权（包括疏忽），严格责任还是否则，由于您使用任何服务或使用本服务获得的任何产品，或以任何方式与您使用服务或任何产品相关的任何其他声明，包括但不限于任何错误或遗漏任何内容，或由于使用服务或通过服务发布，传输或以其他方式提供的任何内容（或产品）而导致的任何形式的任何损失或损害，即使被告知其可能性。由于某些州或司法管辖区不允许排除或限制间接或附带损害的责任，因此在此类州或司法管辖区，我们的责任应限于法律允许的最大范围内。"
+
+msgid "SECTION 14 - INDEMNIFICATION"
+msgstr "第14节 - 赔偿"
+
+#, python-format
+msgid ""
+"You agree to indemnify, defend and hold harmless "
+"<strong>%(public_name)s</strong> and our parent, subsidiaries, affiliates, "
+"partners, officers, directors, agents, contractors, licensors, service "
+"providers, subcontractors, suppliers, interns and employees, harmless from "
+"any claim or demand, including reasonable attorneys’ fees, made by any "
+"third-party due to or arising out of your breach of these Terms of Service "
+"or the documents they incorporate by reference, or your violation of any law"
+" or the rights of a third-party."
+msgstr "您同意赔偿，捍卫并保护 <strong>%(public_name)s</strong>以及我们的母公司，子公司，附属公司，合作伙伴，高级职员，董事，代理商，承包商，许可人，服务提供商，分包商，供应商，实习生和员工免受任何索赔的伤害 由于您违反本服务条款或其引用的文件或您违反任何法律或第三方权利而导致的任何第三方提出的要求，包括合理的律师费。"
+
+msgid "SECTION 15 - SEVERABILITY"
+msgstr "第15节 - 可分割性"
+
+msgid ""
+"In the event that any provision of these Terms of Service is determined to "
+"be unlawful, void or unenforceable, such provision shall nonetheless be "
+"enforceable to the fullest extent permitted by applicable law, and the "
+"unenforceable portion shall be deemed to be severed from these Terms of "
+"Service, such determination shall not affect the validity and enforceability"
+" of any other remaining provisions."
+msgstr "如果本服务条款的任何规定被确定为非法，无效或无法执行，则此类规定仍应在适用法律允许的最大范围内强制执行，并且不可执行部分应被视为与本条款中的 服务，此类确定不得影响任何其他剩余条款的有效性和可执行性。"
+
+msgid "SECTION 16 - TERMINATION"
+msgstr "第16节 - 终止"
+
+msgid ""
+"The obligations and liabilities of the parties incurred prior to the "
+"termination date shall survive the termination of this agreement for all "
+"purposes."
+msgstr "在终止日期之前发生的双方的义务和责任在本协议终止后仍然有效。"
+
+msgid ""
+"These Terms of Service are effective unless and until terminated by either "
+"you or us. You may terminate these Terms of Service at any time by notifying"
+" us that you no longer wish to use our Services, or when you cease using our"
+" site."
+msgstr "除非您或我们终止，否则这些服务条款均有效。 您可以随时通知我们您不再希望使用我们的服务，或者当您停止使用我们的网站时终止这些服务条款。"
+
+msgid ""
+"If in our sole judgment you fail, or we suspect that you have failed, to "
+"comply with any term or provision of these Terms of Service, we also may "
+"terminate this agreement at any time without notice and you will remain "
+"liable for all amounts due up to and including the date of termination; "
+"and/or accordingly may deny you access to our Services (or any part "
+"thereof)."
+msgstr "如果我们单独判断您未能或我们怀疑您未能遵守本服务条款的任何条款或规定，我们也可以随时终止本协议，恕不另行通知，您仍将对所有应付金额负责 至终止日期; 和/或因此可能拒绝您访问我们的服务（或其任何部分）。"
+
+msgid "SECTION 17 - ENTIRE AGREEMENT"
+msgstr "第17节 - 完整协议"
+
+msgid ""
+"The failure of us to exercise or enforce any right or provision of these "
+"Terms of Service shall not constitute a waiver of such right or provision."
+msgstr "我们未能行使或执行本服务条款的任何权利或规定，并不构成对此类权利或规定的放弃。"
+
+msgid ""
+"These Terms of Service and any policies or operating rules posted by us on "
+"this site or in respect to The Service constitutes the entire agreement and "
+"understanding between you and us and govern your use of the Service, "
+"superseding any prior or contemporaneous agreements, communications and "
+"proposals, whether oral or written, between you and us (including, but not "
+"limited to, any prior versions of the Terms of Service)."
+msgstr "这些服务条款以及我们在本网站或本服务中发布的任何政策或操作规则构成您与我们之间的完整协议和理解，并管辖您对本服务的使用，取代任何先前或同期的协议，通信和提案 您和我们之间的口头或书面形式（包括但不限于任何先前版本的服务条款）。"
+
+msgid ""
+"Any ambiguities in the interpretation of these Terms of Service shall not be"
+" construed against the drafting party."
+msgstr "对本服务条款的解释中的任何含糊之处不得解释为起草方。"
+
+msgid "SECTION 18 - GOVERNING LAW"
+msgstr "第18节 - 管辖法律"
+
+#, python-format
+msgid ""
+"These Terms of Service and any separate agreements whereby we provide you "
+"Services shall be governed by and construed in accordance with the laws of "
+"<strong>%(shop_address)s</strong>."
+msgstr "这些服务条款以及我们为您提供服务的任何单独协议均受 <strong>%(shop_address)s</strong>法律管辖并按其解释。"
+
+msgid "SECTION 19 - CHANGES TO TERMS OF SERVICE"
+msgstr "第19节 - 服务条款的变更"
+
+msgid ""
+"You can review the most current version of the Terms of Service at any time "
+"at this page."
+msgstr "您可以随时在此页面查看最新版本的服务条款。"
+
+msgid ""
+"We reserve the right, at our sole discretion, to update, change or replace "
+"any part of these Terms of Service by posting updates and changes to our "
+"website. It is your responsibility to check our website periodically for "
+"changes. Your continued use of or access to our website or the Service "
+"following the posting of any changes to these Terms of Service constitutes "
+"acceptance of those changes."
+msgstr "我们保留自行决定通过向我们的网站发布更新和更改来更新，更改或替换这些服务条款的任何部分的权利。 您有责任定期查看我们的网站以了解更改。 您在发布对这些服务条款的任何更改后继续使用或访问我们的网站或服务即表示接受这些更改。"
+
+msgid "SECTION 20 - CONTACT INFORMATION"
+msgstr "第20节 - 联系信息"
+
+#, python-format
+msgid ""
+"Questions about the Terms of Service should be sent to us at "
+"<strong>%(shop_email)s</strong>."
+msgstr "有关服务条款的问题应以<strong>%(shop_email)s</strong>发送给我们。"
 
 msgid "Remove block"
 msgstr "清除区块"
@@ -1088,20 +2811,159 @@ msgstr "动态消息"
 msgid "Shuup %(version)s"
 msgstr "Shuup %(version)s"
 
+msgid ""
+"This is the dashboard for your store. It’s like the flight deck for your "
+"ecommerce spaceship. You can control everything from here."
+msgstr "这是您商店的控制面板。 这就像你的电子商务宇宙飞船的驾驶舱， 你可以从这里控制一切。"
+
+msgid ""
+"Check out your shoppers’ info, add more products or categories, setup "
+"marketing campaigns, see orders and sales stats, and track the money you’ve "
+"made."
+msgstr "查看购物者的信息，添加更多产品或类别，设置营销活动，查看订单和销售统计数据，并跟踪您的收入。"
+
+msgid "Every setting you could possibly need is in here."
+msgstr "您可能需要的每个设置都在这里。"
+
+msgid "Table Columns"
+msgstr "表列"
+
+msgid "Active headers"
+msgstr "活动标头"
+
+msgid "Selectable headers"
+msgstr "可选标头"
+
+msgid "Add"
+msgstr "增加"
+
+msgid "Bad Request"
+msgstr "错误请求"
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr "抱歉，服务器无法处理您的请求。"
+
+msgid "Permission Denied"
+msgstr "许可已拒绝"
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr "抱歉，您没有权限展示该页面。"
+
+msgid "Internal Server Error"
+msgstr "内部服务器错误"
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr "抱歉，内部服务器出错。请刷新页面或者稍后再试。"
+
+msgid "Edit the selected object"
+msgstr "编辑所选对象"
+
+#, python-brace-format
+msgid "Required. {field_help}"
+msgstr "需要 {field_help}"
+
+#, python-brace-format
+msgid "Optional. {field_help}"
+msgstr "可选的{field_help}"
+
+msgid "Welcome to Shuup!"
+msgstr "欢迎来到Shuup！"
+
+msgid ""
+"You're almost done! Complete the following steps to sell your products "
+"online"
+msgstr "你即将完成！完成以下步骤在网上销售您的产品"
+
+msgid "Hi, new shop owner!"
+msgstr "嗨，新店主！"
+
+msgid "Welcome to your store admin!"
+msgstr "欢迎来到您的商店管理员！"
+
+msgid ""
+"Let’s go through some of the things you can do here. Click next to begin."
+msgstr "让我们来看看你在这里可以做的一些事情。 单击“下一步”开始。"
+
 msgid "Date"
 msgstr "日期"
 
-msgid "Order Status"
-msgstr "订单状态"
+msgid "This action effects on all items."
+msgstr "此操作会影响所有项目。"
 
-msgid "Edit"
-msgstr "编辑"
+#, python-format
+msgid "This action affects %(item_count)s item(s)."
+msgstr "此操作会影响%(item_count)s个项目(s)。"
 
 msgid "Upload"
 msgstr "上传"
 
+msgid "Comment"
+msgstr "评论"
+
+msgid "Save comment"
+msgstr "保存评论"
+
+msgid "Comment saved."
+msgstr "评论已保存"
+
+msgid "There was an error updating the admin comment."
+msgstr "更新管理员评论时出错。"
+
 msgid "Description"
 msgstr "描述"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "No payments have been created yet."
+msgstr "尚未创建任何付款"
+
+msgid "Are you sure you want to delete this payment?"
+msgstr "您确定要删除此付款吗？"
+
+msgid "Order Details"
+msgstr "订单详情"
+
+msgid "Order Number"
+msgstr "订单号"
+
+msgid "Reference"
+msgstr "参考"
+
+msgid "Label"
+msgstr "标签"
+
+msgid "Payment Method"
+msgstr "支付方式"
+
+msgid "Shipping Method"
+msgstr "配送方式"
+
+msgid "Ordered by"
+msgstr "订单人为"
+
+msgid "Creator"
+msgstr "创建人"
+
+msgid "Tax number"
+msgstr "税号"
+
+msgid "Total Price (taxless)"
+msgstr "总价 (无税)"
+
+msgid "Total Price"
+msgstr "总价"
+
+msgid "Customer Comment"
+msgstr "顾客评论"
+
+msgid "Tracking codes"
+msgstr "追踪编号"
+
+msgid "Address Information"
+msgstr "地址信息"
 
 msgid "Text"
 msgstr "文本"
@@ -1111,6 +2973,9 @@ msgstr "无税单价"
 
 msgid "Taxless Discount"
 msgstr "免税优惠"
+
+msgid "Taxless Discount Percentage"
+msgstr "免税折扣百分比"
 
 msgid "Tax"
 msgstr "税收"
@@ -1128,43 +2993,69 @@ msgid "Taxless"
 msgstr "免税"
 
 msgid "Message"
-msgstr ""
+msgstr "信息"
 
 msgid "No log entries have been added yet."
-msgstr ""
+msgstr "还没有添加日志条目"
 
 msgid "Use the input below to add new log entries."
-msgstr ""
+msgstr "使用下面的输入添加新的日志条目"
 
 msgid "Add to Log"
-msgstr ""
+msgstr "添加到日志中"
+
+msgid "Log entry added."
+msgstr "添加日志条目"
 
 msgid "There was an error adding the log entry."
-msgstr ""
+msgstr "添加日志条目时出错"
+
+msgid "Tracking Code"
+msgstr "追踪编号"
+
+msgid "Created"
+msgstr "创建"
+
+msgid "No shipments have been created yet."
+msgstr "尚未创建任何货件"
+
+msgid ""
+"Shipped shipments should not be deleted. Deletion will affect products "
+"physical stock count. Delete anyway?"
+msgstr "不应删除已发货的货件。 删除将影响产品的实际库存数量。 删除无论如何？"
 
 msgid "Line #"
-msgstr ""
+msgstr "路线＃"
+
+msgid "Refunded Quantity"
+msgstr "退还数量"
 
 msgid "Refund Amount"
-msgstr ""
+msgstr "退款额"
 
 msgid "Are you sure you want to create a full refund?"
-msgstr ""
+msgstr "您确定要全额退款吗？"
 
 msgid "Confirm Refund"
-msgstr ""
+msgstr "确认退款"
+
+msgid "Order Contents"
+msgstr "订单内容"
 
 msgid "Paid"
-msgstr ""
+msgstr "付费"
 
 msgid "Remaining"
-msgstr ""
+msgstr "剩余"
 
 msgid "Refunded"
-msgstr ""
+msgstr "退款"
 
-msgid "Add More Refunds "
-msgstr ""
+msgid "Add Another Refund"
+msgstr "新增一次退款"
+
+msgid "Order Line"
+msgstr "订单行"
 
 msgid "To Ship"
 msgstr "需发货"
@@ -1184,50 +3075,63 @@ msgstr "设置所有产品至发货"
 msgid "Ship All"
 msgstr "全部发货"
 
-msgid "Details & Status"
-msgstr "详情 &状态"
+msgid "Select all permissions"
+msgstr "选择所有权限"
 
-msgid "Order Number"
-msgstr "订单号"
+msgid "Deselect all permissions"
+msgstr "取消选择所有权限"
 
-msgid "Reference"
-msgstr "参考"
+msgid "(All permissions granted)"
+msgstr "(授予所有权限)"
 
-msgid "Label"
-msgstr "标签"
+msgid "(Partial permissions granted)"
+msgstr "(部分授权)"
 
-msgid "Ordered by"
-msgstr "订单人为"
+msgid "Module permission"
+msgstr "模块权限"
 
-msgid "Creator"
-msgstr "创建人"
+msgid "Select the following permission to enable users to access this module."
+msgstr "选择以下权限使用户能够访问此模块。"
 
-msgid "Tax number"
-msgstr "税号"
+msgid "Select all permissions for this module"
+msgstr "选择此模块的所有权限"
 
-msgid "Total Price (taxless)"
-msgstr "总价 (无税)"
+msgid "Features permissions"
+msgstr "特性权限"
 
-msgid "Total Price"
-msgstr "总价"
-
-msgid "Tracking codes"
-msgstr ""
+msgid ""
+"Select the permissions to enable access to specific features of the module."
+msgstr "选择权限以启用对模块特定功能的访问。"
 
 msgid "Error!"
 msgstr "错误！"
 
+msgid "All the required product information."
+msgstr "所有所需的产品信息。"
+
 msgid "Additional Details"
 msgstr "内容补充"
 
-msgid "Accounting"
-msgstr "会计"
-
-msgid "Physical Properties"
-msgstr "物理特性"
+msgid "Product features such as size, weight and keywords are located here."
+msgstr "产品的特点，如大小，重量和关键字都位于这里。"
 
 msgid "Manufacturer"
 msgstr "厂商"
+
+msgid "If you know the manufacturer of the product select it here."
+msgstr "如果您知道产品的制造商，请在这里选择它。"
+
+msgid "Additional"
+msgstr "附加"
+
+msgid ""
+"Strictly shop related information. For example set the minimum price "
+"applicable in this shop."
+msgstr "严格的购物相关信息。例如，设定适用于这家商店的最低价格。"
+
+#, python-format
+msgid "These settings apply only for shop: <b>%(shop_name)s</b>."
+msgstr "这些设置仅适用于商店：<b>%(shop_name)s</b>"
 
 #, python-format
 msgid "Product image %(index)s"
@@ -1243,35 +3147,71 @@ msgstr "主要图像"
 msgid "Set as primary image"
 msgstr "设置为主要图像"
 
-msgid "No image"
-msgstr "没有图像"
-
-msgid "Delete"
-msgstr "删除"
-
-msgid "Advanced options"
-msgstr "高级选项"
-
 msgid "Product Images"
 msgstr "产品图像"
 
-msgid "Product Media"
-msgstr "产品媒体"
+msgid "Product Files"
+msgstr "产品文件"
 
-msgid "Add new image"
-msgstr "添加新图像"
+msgid "You can attach files such as manual to the merchandise(s) here."
+msgstr "您可以在此处将商品等手册附加到商品(s) 中。"
 
-msgid "Add new media"
-msgstr "添加新媒体"
+msgid "Showcase your merchandise here."
+msgstr "在这里展示你的商品"
 
-msgid "Purchasing"
-msgstr "采购"
+msgid "Drop files here or click to <a href=\"#\">browse</a>."
+msgstr "在此处删除文件或单击<a href=\"#\">浏览</a>"
 
-msgid "Shipping & Payment"
-msgstr "配送 & 支付"
+msgid "All the orders that have this product."
+msgstr "此产品的所有订单"
+
+msgid "No orders found"
+msgstr "找不到订单"
 
 msgid "This product is currently not orderable."
 msgstr "该产品目前无法订购。"
+
+msgid "Add a new product"
+msgstr "添加一个新产品"
+
+msgid "You are adding a product."
+msgstr "你正添加一个产品"
+
+msgid ""
+"To make it stand out, give it an awesome description and picture. This is "
+"what will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr "为了使它脱颖而出，给它一个很棒的描述和图片。 这将有助于您的购物者了解您的产品。 它还将帮助购物者在商店和网络上找到它们。"
+
+msgid ""
+"You can set its price or size and many other things in the option boxes for "
+"each product."
+msgstr "您可以在每个产品的选项框中设置其价格或尺寸以及许多其他内容。"
+
+msgid "If you know the product manufacturer, it can be set here."
+msgstr "如果您了解产品制造商，可以在此处进行设置。"
+
+msgid "Additional Information"
+msgstr "附加信息"
+
+msgid "Images"
+msgstr "图片"
+
+msgid "Contact Group Pricing"
+msgstr "联系人组定价"
+
+msgid ""
+"Set specific prices for your customer segments such as loyalty, tier status "
+"or season here."
+msgstr "为您的客户细分设置特定价格，例如忠诚度、等级或季节。"
+
+msgid "Contact Group Discounts"
+msgstr "联系人团购折扣"
+
+msgid ""
+"Here you can set individual discount amounts for different contact groups. \" +\n"
+"                    \"The discount amount may be visible on storefront. These groups are defined in"
+msgstr "您可以在此设置不同联系人组的个人折扣金额。 “+\n”折扣金额可能在店面上显示。 这些组定义于"
 
 msgid "Cross-sells"
 msgstr "交叉推销"
@@ -1282,14 +3222,22 @@ msgstr "交叉推销"
 msgid "File "
 msgstr "文件"
 
-msgid "Package Products"
-msgstr ""
+#, python-format
+msgid "Logical count: %(logical_count)s %(sales_unit)s"
+msgstr "逻辑计数：%(logical_count)s %(sales_unit)s"
+
+#, python-format
+msgid "Physical count: %(physical_count)s %(sales_unit)s"
+msgstr "物理数：%(physical_count)s %(sales_unit)s"
 
 msgid "This product is not yet a package."
-msgstr ""
+msgstr "此产品尚未打包"
 
 msgid "To create a package, choose products below."
-msgstr ""
+msgstr "要创建包，请选择以下产品。"
+
+msgid "Package Products"
+msgstr "包装产品"
 
 msgid "Simple Variation Children"
 msgstr "简单变体子级"
@@ -1314,51 +3262,148 @@ msgid ""
 "Variables tab and then link them to products here."
 msgstr "创建一个带有多个变量的变体，在变量栏创建变量，然后在这连结他们至产品。"
 
+msgid "Recent Orders"
+msgstr "最近订单"
+
+msgid "Store Overview"
+msgstr "商店概述"
+
+msgid "Customers"
+msgstr "顾客"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Month to date (MTD)"
+msgstr "月初至今（MTD）"
+
+msgid "Year to date (YTD)"
+msgstr "年初至今(YTD)"
+
+msgid "Totals"
+msgstr "总共"
+
+msgid "Consolidate Data"
+msgstr "汇总"
+
+msgid ""
+"Your shop currently has some sample data installed. Select below which "
+"objects you want to uninstall."
+msgstr "您的商店目前安装了一些示例数据。 选择下面要卸载的对象。"
+
+msgid ""
+"After the consolidation, preserved objects will lose their status of Sample "
+"Object and it will be no longer possible to distinguish them from the "
+"others."
+msgstr "合并后，保留的对象将失去其样本对象的状态，并且将无法再将它们与其他对象区分开来。"
+
+msgid "Caution: this action cannot be undone."
+msgstr "警告：此操作不能撤消。"
+
+msgid "Consolidate"
+msgstr "合并"
+
+msgid "Your shop has no sample data installed!"
+msgstr "您的商店没有安装样品数据！"
+
+msgid "Select the objects you want to install"
+msgstr "选择要安装的对象"
+
+msgid "Manually process payments"
+msgstr "手动处理付款"
+
+msgid "Manage payments outside of Shuup"
+msgstr "管理Shuup以外的付款"
+
+msgid "Manual"
+msgstr "手动的"
+
+msgid "Manual process shipping"
+msgstr "人工过程运输"
+
+msgid "Handle shipping outside of Shuup"
+msgstr "处理Shuup以外的运输"
+
+msgid "Deactivate"
+msgstr "停用"
+
+msgid "Activate"
+msgstr "激活"
+
 msgid ""
 "Define price based basket weight range. Range minimum is counted in range "
 "only as zero."
-msgstr ""
+msgstr "定义基于价格的篮子重量范围。 范围最小值仅在范围内计算为零。"
 
 msgid "Behavior"
-msgstr ""
+msgstr "行为"
 
 msgid "Behavior component type"
-msgstr ""
+msgstr "行为组件类型"
+
+msgid ""
+"The behaviors for this service. These behaviors can be used to add costs to "
+"the order or can be used to restrict availability of the service."
+msgstr "此服务的行为。 这些行为可用于增加订单成本或用于限制服务的可用性。"
 
 msgid "Add component"
-msgstr ""
+msgstr "添加组件"
 
-msgid "Shop Logo"
-msgstr "商店商标"
+msgid "Order Configuration"
+msgstr "订单配置"
+
+#, python-format
+msgid ""
+"The field \"Reference number prefix\" is disabled because the order "
+"reference number generation method doesn't support a prefix. You can edit "
+"this setting from <a href=\"%(url)s\">system settings</a>."
+msgstr "“参考编号前缀”字段被禁用，因为订单参考编号生成方法不支持前缀。 您可以从<a href=\"%(url)s\">系统设置</a>编辑此设置。"
+
+msgid "Shop Images"
+msgstr "商店图片"
 
 msgid "Maintenance Mode"
 msgstr "维护模式"
 
 msgid "Contact Address"
-msgstr ""
+msgstr "联系地址"
+
+msgid "News &amp; Updates"
+msgstr "新闻与报道；更新"
+
+msgid "Support"
+msgstr "支持"
+
+msgid "Community Links"
+msgstr "社区链接"
+
+msgid "Community Forums"
+msgstr "社区论坛"
+
+msgid "Shuup Blog"
+msgstr "Shuup博客"
+
+msgid "Contact Us"
+msgstr "联系我们"
 
 msgid "About Shuup Telemetry"
-msgstr "关于Shuup的遥测"
+msgstr "关于Shuup遥测"
 
 msgid "Shuup will occasionally send telemetry data to a Shuup.com server."
-msgstr "Shuup会偶尔发送遥测数据至Shuup.com服务器。"
+msgstr "Shuup偶尔会将遥测数据发送到Shuup.com服务器。"
 
 #, python-format
 msgid ""
-"The data contains an unique installation key, as well as the hostname of the "
-"installation (as sent by the visiting browser; currently <code>%(host)s</"
-"code>)."
-msgstr ""
-"该数据含有独特的安装钥匙 ，以及安装的主机名 (如访问的浏览器所发送; 目前 "
-"<code>%(host)s</code>)。"
+"The data contains an unique installation key, as well as the hostname of the"
+" installation (as sent by the visiting browser; currently "
+"<code>%(host)s</code>)."
+msgstr "该数据含有独特的安装钥匙 ，以及安装的主机名 (如访问的浏览器所发送; 目前 <code>%(host)s</code>)。"
 
 msgid ""
 "No business data or other customer information is ever sent. Shuup.com only "
 "uses the telemetry data for statistical purposes and for insights about the "
 "software's installation base."
-msgstr ""
-"不会发送业务数据和其他顾客信息。Shuup.com使用遥测数据是只为了统计和关于软件安"
-"装基础的洞察。"
+msgstr "不会发送任何业务数据或其他客户信息。 Shuup.com仅将遥测数据用于统计目的和有关软件安装基础的见解。"
 
 msgid "Opt-in / opt-out"
 msgstr "选择加入/选择退出"
@@ -1366,9 +3411,7 @@ msgstr "选择加入/选择退出"
 msgid ""
 "You are currently <span class=\"lead label label-success\">opted in</span> "
 "to send telemetry data to Shuup.com."
-msgstr ""
-"您目前<span class=\"lead label label-success\">选择加入</span>并发送遥测数据"
-"至Shuup.com."
+msgstr "您目前正在使用 <span class=\"lead label label-success\"></span>来向Shuup.com发送遥测数据。"
 
 msgid "Thank you for your valuable contribution."
 msgstr "感谢您的重大贡献。"
@@ -1379,7 +3422,7 @@ msgstr "选择退出"
 msgid ""
 "You are currently <span class=\"label label-warning\">opted out</span> of "
 "Shuup telemetry."
-msgstr "您目前<span class=\"label label-warning\">选择退出</span>Shuup的遥测。"
+msgstr "您目前正在使用Shuup遥测<span class=\"label label-warning\"></span> 。"
 
 msgid "Opt in"
 msgstr "选择加入"
@@ -1388,19 +3431,15 @@ msgid "Last Telemetry"
 msgstr "前一次遥测"
 
 msgid ""
-"Telemetry submission is currently suspended; data will only be sent 24 hours "
-"after installation if still opted in at that point."
-msgstr ""
-"遥测数据的提交目前已被暂停；如果在那阶段仍然选择加入，数据只会在安装24小时后"
-"发送。"
+"Telemetry submission is currently suspended; data will only be sent 24 hours"
+" after installation if still opted in at that point."
+msgstr "遥测数据的提交目前已被暂停；如果在那阶段仍然选择加入，数据只会在安装24小时后发送。"
 
 #, python-format
 msgid ""
 "Telemetry data was last submitted at %(submission_datetime)s - "
 "(%(submission_timesince)s) ago"
-msgstr ""
-"遥测数据最后一次提交是在%(submission_datetime)s - (%(submission_timesince)s) "
-"前"
+msgstr "遥测数据最后一次提交是在%(submission_datetime)s - (%(submission_timesince)s) 前"
 
 msgid "See the data that was submitted."
 msgstr "查看已提交的数据。"
@@ -1424,6 +3463,16 @@ msgstr "发送密码重置邮件至 %(email)s？"
 msgid "Send Reset Email"
 msgstr "发送重置邮件"
 
+msgid ""
+"Please fill out the following information to get your store up and running"
+msgstr "请填写以下信息以使您的商店正常运行"
+
+msgid "All information entered here can be edited later."
+msgstr "此处输入的所有信息都可以在以后编辑。"
+
+msgid "Click here for help"
+msgstr "点击这里寻求帮助"
+
 msgid "Create new"
 msgstr "创建新群组"
 
@@ -1433,12 +3482,6 @@ msgstr "新%(model)s"
 
 msgid "Discard Changes"
 msgstr "放弃修改"
-
-msgid "Save and Exit"
-msgstr "保存并退出"
-
-msgid "Save and Create New"
-msgstr "保存并创建新的"
 
 #, python-format
 msgid "Are you sure you wish to delete %s?"
@@ -1451,6 +3494,12 @@ msgstr "显示 %(n_items)s %(verbose_name_plural)s的%(per_page)s "
 msgid "objects"
 msgstr "对象"
 
+msgid "Unknown error"
+msgstr "未知错误"
+
+msgid "Mass Action"
+msgstr "群众行动"
+
 #, python-format
 msgid "Can't view this page. %(reason)s"
 msgstr "无法显示该页面。%(reason)s"
@@ -1458,15 +3507,30 @@ msgstr "无法显示该页面。%(reason)s"
 msgid "Log in with different credentials..."
 msgstr "其他方式登录……"
 
-msgid "You must be logged in."
-msgstr "您必须登录。"
+msgid "Sign in to continue"
+msgstr "继续登录"
 
 msgid "You must be a staff member."
 msgstr "您必须是工作人员。"
 
+msgid "There is no active shop available. Contact support for more details."
+msgstr "没有活跃的商店。 联系支持部门了解更多详情"
+
 #, python-format
-msgid "You do not have the required permissions: %r"
-msgstr "您没有许可：%r"
+msgid "You do not have the required permissions: %s"
+msgstr "您没有所需的权限：%s"
+
+#, python-brace-format
+msgid ""
+"Can't view this page. You do not have the required permission(s): "
+"{permissions}"
+msgstr "无法查看此页面。 您没有所需的权限(s)：{permissions}"
+
+msgid "Unnamed"
+msgstr "未命名"
+
+msgid "Item"
+msgstr "物品"
 
 #, python-format
 msgid "New %s created."
@@ -1488,12 +3552,41 @@ msgstr "未命名 %s"
 msgid "Only one %(model)s permitted."
 msgstr "只允许一个 %(model)s。"
 
+msgid "Mass Edit"
+msgstr "批量编辑"
+
+msgid "Invalid object."
+msgstr "对象无效"
+
+msgid "Invalid model."
+msgstr "模型无效"
+
+msgid "Object not found"
+msgstr "无法找到对象"
+
+msgid "Storefront"
+msgstr "店面"
+
+msgid "General"
+msgstr "一般"
+
+msgid "Complete wizard"
+msgstr "完成向导"
+
+msgid "Complete the setup wizard"
+msgstr "完成设置向导"
+
+msgid ""
+"A reset password email was sent. Please, follow the instructions to set a "
+"new password."
+msgstr "已发送重置密码电子邮件， 请按照说明设置新密码。"
+
+msgid "This recovery link is invalid."
+msgstr "此恢复链接无效"
+
+msgid "Password changed successfully!"
+msgstr "密码更改成功！"
+
 #, python-format
 msgid "Couldn't get selections for %s."
-msgstr ""
-
-msgid "not shipped (non-deliverable)"
-msgstr "未发货"
-
-msgid "shipped (deliverable)"
-msgstr "已发货"
+msgstr "无法获得%s的选择"

@@ -1,29 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jessica Wang <jessica.wang@shuup.com>, 2016
+# Jessica Wang <jessica.wang@shoop.io>, 2016
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-03-09 10:20+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shuup.com>\n"
-"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
-"language/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2019-03-06 13:55+0000\n"
+"PO-Revision-Date: 2019-03-15 06:17+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Stock management"
 msgstr "库存管理"
-
-msgid "Products"
-msgstr "产品"
 
 msgid "SKU"
 msgstr "SKU"
@@ -50,13 +47,17 @@ msgstr "调整库存"
 msgid ""
 "Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
 "(%(supplier_name)s)"
-msgstr ""
+msgstr "为产品%(product_name)s的库存（%(supplier_name)s）添加%(delta)s%(unit_symbol)s"
 
 #, python-format
 msgid ""
 "Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
 "(%(supplier_name)s)"
-msgstr ""
+msgstr "从产品%(product_name)s的库存(%(supplier_name)s)中删除%(delta)s%(unit_symbol)s"
+
+#, python-format
+msgid "Alert limit for product %(product_name)s set to %(value)s."
+msgstr "产品%(product_name)s设置为%(value)s的警报限制。"
 
 msgid "Not allowed"
 msgstr "不允许"
@@ -68,15 +69,26 @@ msgstr "错误，请查看所提交的值并重试。"
 msgid "Error, please check submitted values and try again (%(error)s)."
 msgstr "错误，请查看所提交的值并重试 (%(error)s)。"
 
+#, python-brace-format
+msgid "Stock management is now enabled for {product}"
+msgstr "现在启用了{product}的库存管理。"
+
+#, python-brace-format
+msgid "Stock management is now disabled for {product}"
+msgstr "库存管理现在禁用为{product}"
+
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
-msgstr ""
+msgstr "单位采购价格(%(currency_name)s)"
 
 msgid "Quantity"
 msgstr "数量"
 
 msgid "Only non-zero values can be added to stock."
 msgstr "只有非零值可加进库存。"
+
+msgid "Alert limit"
+msgstr "警告限制"
 
 msgid "product"
 msgstr "产品"
@@ -91,7 +103,19 @@ msgid "created by"
 msgstr "创建于"
 
 msgid "delta"
-msgstr ""
+msgstr "三角洲"
+
+msgid "type"
+msgstr "类型"
+
+msgid "alert limit"
+msgstr "警告限制"
+
+msgid "stock managed"
+msgstr "库存管理"
+
+msgid "Use this to override the supplier default stock behavior per product."
+msgstr "使用此方法可覆盖每个产品的供应商默认库存行为。"
 
 msgid "logical count"
 msgstr "逻辑盘点"
@@ -99,50 +123,112 @@ msgstr "逻辑盘点"
 msgid "physical count"
 msgstr "实物盘点"
 
+msgid "Alert Limit Reached"
+msgstr "达到警告限制"
+
+msgid "Product"
+msgstr "产品"
+
+msgid "Fired in the last 24 hours?"
+msgstr "在过去的24小时内被解除了？"
+
+msgid ""
+"This will be True if this event was already dispatched in the last 24 hours "
+"for the same product and supplier. This is useful to prevent sending "
+"identical notifications in a short period of time."
+msgstr "这将是真实的，如果这一事件已经派出在过去24小时，同一产品和供应商。这对于防止在短时间内发送相同的通知非常有用。"
+
+msgid "Send to?"
+msgstr "送到？"
+
+msgid "Send email to whom?"
+msgstr "给谁发邮件？"
+
+msgid "Do not send the same email within 24 hours."
+msgstr "不要在24小时内发送相同的电子邮件。"
+
+msgid ""
+"If enabled, avoids sending the same email for the same product and supplier "
+"within 24 hours."
+msgstr "如果启用，避免在24小时内为同一产品和供应商发送相同的电子邮件。"
+
+msgid "Send Stock Limit Alert Email"
+msgstr "发送库存限制警报电子邮件"
+
+msgid ""
+"Send me an email when a product stock is lower than the configured limit."
+msgstr "当产品库存低于配置限制时，请发送电子邮件给我。"
+
+msgid ""
+"This script will send an email to the configured destination alerting about "
+"the a product's low stock of a supplier. You can configure to not send the "
+"same email multiple times in a period of 24 hours. Every time a product's "
+"stock reach its configured limit, this notification will be fired and the "
+"email sent."
+msgstr "此脚本将发送一封电子邮件到配置的目的地，提醒产品供应商库存不足。您可以配置为在24小时内不多次发送相同的电子邮件。每当产品的库存达到其配置的限制时，此通知将被触发并发送电子邮件。"
+
+msgid "Low stock of: {{ product }} from {{ supplier }}"
+msgstr "来自 {{供应商}} 的低库存：{{产品}}"
+
+msgid ""
+"Hi!\n"
+"You are receiving this message because the product {{ product}} from {{ supplier }} has a low stock."
+msgstr "嗨！您收到此消息是因为来自{{供应商}}的产品{{产品}}库存较低。"
+
 msgid "Add stock"
 msgstr "添加库存"
 
 #, python-format
 msgid ""
-"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
-"does not have suppliers with %(module_name)s module."
-msgstr ""
+"Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
+"scripts</a> are executed when product stock falls below set quantity."
+msgstr "当产品库存低于规定数量时，通知限制<a href=\"%(notify_url)s\" target=\"_blank\">通知脚本</a>被执行。"
 
-msgid "Please set suppliers at Purchasing section."
-msgstr ""
+msgid "Change alert limit"
+msgstr "变更警告限制"
+
+msgid "Disable stock management"
+msgstr "停用库存管理"
+
+msgid "Enable stock management"
+msgstr "启用库存管理"
 
 #, python-format
 msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
-"is not stocked."
-msgstr ""
-"该产品<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a>无备"
-"有。"
+"does not have suppliers with %(module_name)s module."
+msgstr "产品<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a>没有供应商的%(module_name)s的模块。"
 
-msgid "Please set product stock behavior at Additional Details section."
-msgstr ""
+msgid "Please set suppliers at Purchasing section."
+msgstr "请在采购部门设置供应商。"
 
 #, python-format
 msgid "No suppliers with %(module_name)s available."
-msgstr ""
+msgstr "没有可用%(module_name)s的供应商。"
 
 #, python-format
 msgid ""
-"Please set %(module_name)s module for at least one of the <a href="
-"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
-msgstr ""
+"Please set %(module_name)s module for at least one of the <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr "请为至少一个<a href=\"%(supplier_url)s\" target=\"_blank\">供应商</a>设置%(module_name)s的模块。"
 
-msgid "Physical count"
-msgstr "实物盘点"
+#, python-brace-format
+msgid "Physical count ({sales_unit})"
+msgstr "物理计数({sales_unit})"
 
-msgid "Logical count"
-msgstr "逻辑盘点"
+#, python-brace-format
+msgid "Logical count ({sales_unit})"
+msgstr "逻辑计数({sales_unit})"
 
 msgid "Value per unit"
-msgstr ""
+msgstr "单位价值"
 
 msgid "Total value"
-msgstr ""
+msgstr "总价值"
+
+#, python-brace-format
+msgid "Alert limit ({sales_unit})"
+msgstr "警告限制({sales_unit})"
 
 msgid "No stock information available."
-msgstr ""
+msgstr "没有库存信息。"

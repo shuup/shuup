@@ -2,108 +2,166 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/"
-"teams/55306/cmn/)\n"
-"Language: cmn\n"
+"POT-Creation-Date: 2018-07-27 22:14+0000\n"
+"PO-Revision-Date: 2016-06-28 12:30+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Order printouts"
-msgstr ""
+msgid "To"
+msgstr "到"
 
-msgid "Print"
-msgstr ""
+msgid "Email Subject"
+msgstr "电子邮件主题"
+
+msgid "Email Body"
+msgstr "电子邮件体"
 
 #, python-format
-msgid "Get Delivery Slip (Shipment %(id)s)"
-msgstr ""
+msgid ""
+"Important information regarding your order, see attachment.\n"
+"\n"
+"Best Regards,\n"
+"%(shop)s"
+msgstr "关于您的订单的重要信息，见附件。最佳问候语，%(shop)s的"
 
-msgid "Get Order Confirmation"
-msgstr ""
+msgid "Printouts"
+msgstr "打印件"
+
+#, python-format
+msgid "%(shop)s: Order %(pk)s"
+msgstr "%(shop)s：订单%(pk)s"
+
+msgid "Not allowed"
+msgstr "不允许"
 
 msgid "Delivery slip"
-msgstr ""
+msgstr "送货单"
 
 msgid "Order"
-msgstr ""
+msgstr "订单"
 
 msgid "Order confirmation"
-msgstr ""
+msgstr "订单确认"
 
-msgid ""
-"Could not create PDF since Weasyprint is not available. Please contact "
-"support."
-msgstr ""
+msgid "Order printouts"
+msgstr "订单打印"
 
 msgid "Shipped products"
-msgstr ""
+msgstr "已装运产品"
 
 msgid "Payment and shipping methods"
-msgstr ""
+msgstr "付款和运输方法"
 
 msgid "Order number"
-msgstr ""
+msgstr "订单号"
 
 msgid "Total price"
-msgstr ""
+msgstr "总价"
 
 msgid "Payment status"
-msgstr ""
+msgstr "支付状态"
 
 msgid "Shipping status"
-msgstr ""
+msgstr "配送状态"
+
+#, python-format
+msgid "Tracking code #%(index)s"
+msgstr "跟踪代码#%(index)s"
 
 msgid "Order date"
-msgstr ""
+msgstr "订单日期"
 
 msgid "Comment"
-msgstr ""
+msgstr "评论"
 
 msgid "Identifier"
-msgstr ""
+msgstr "标识符"
 
 msgid "Shipment date"
-msgstr ""
+msgstr "配送日期"
+
+msgid "Tracking code"
+msgstr "追踪代码"
 
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 msgid "Text"
-msgstr ""
+msgstr "文本"
 
 msgid "Quantity"
-msgstr ""
+msgstr "数量"
 
 msgid "Tax"
-msgstr ""
+msgstr "税收"
 
 msgid "Taxful total"
-msgstr ""
+msgstr "税收总额"
 
 msgid "Taxless total"
-msgstr ""
+msgstr "免税总额"
 
 msgid "Tax percentage"
-msgstr ""
+msgstr "税收百分比"
 
 msgid "Based on amount"
-msgstr ""
+msgstr "根据金额"
 
 msgid "Amount of tax"
-msgstr ""
+msgstr "税额"
 
 msgid "Total including tax"
-msgstr ""
+msgstr "含税总计"
 
 msgid "Billing address"
-msgstr ""
+msgstr "账单地址"
+
+msgid "Confirmation"
+msgstr "确认"
+
+msgid "Get Order Confirmation PDF"
+msgstr "获得订单确认PDF"
+
+msgid "Get Order Confirmation HTML"
+msgstr "获得订单确认HTML"
+
+msgid "Shipments"
+msgstr "配送"
+
+#, python-format
+msgid "Get Delivery Slip PDF (Shipment %(id)s)"
+msgstr "取得送货单PDF(装运%(id)s)"
+
+#, python-format
+msgid "Get Delivery Slip HTML (Shipment %(id)s)"
+msgstr "获得发货单HTML(装运%(id)s)"
+
+msgid "Send Email"
+msgstr "发送电子邮件"
+
+msgid "Send Order Confirmation"
+msgstr "发送订单确认"
+
+#, python-format
+msgid "Send Delivery Slip (Shipment %(id)s)"
+msgstr "发送送货单(装运%(id)s)"
+
+msgid "Email sent successfully!"
+msgstr "电子邮件发送成功！"
+
+msgid "Could not sent the email, please try again."
+msgstr "无法发送电子邮件，请再试一次。"
