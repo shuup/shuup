@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-20 15:54+0000\n"
-"PO-Revision-Date: 2018-08-21 06:10+0000\n"
+"POT-Creation-Date: 2019-03-08 17:25+0000\n"
+"PO-Revision-Date: 2019-03-10 04:56+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -62,14 +62,20 @@ msgstr ""
 msgid "Sunday"
 msgstr ""
 
-msgid "Browse"
-msgstr "Найти"
-
-msgid "Clear"
-msgstr "Очистить"
-
 msgid "Select"
-msgstr "Выбрать"
+msgstr ""
+
+msgid "Select Media"
+msgstr ""
+
+msgid "Select Image"
+msgstr ""
+
+msgid "Select Product"
+msgstr ""
+
+msgid "Select Contact"
+msgstr ""
 
 msgid "Orders"
 msgstr "Заказы"
@@ -368,10 +374,13 @@ msgstr "Деактивировать контакт"
 msgid "Activate Contact"
 msgstr "Активировать контакт"
 
+msgid "Options"
+msgstr ""
+
 msgid "Actions"
 msgstr "Действия"
 
-msgid "Edit..."
+msgid "Edit"
 msgstr "Редактировать"
 
 msgid "You can not deactivate a superuser."
@@ -465,114 +474,6 @@ msgstr "Группы контактов изменены успешно"
 msgid "The contact does not have an associated user."
 msgstr "Данный контакт не зарегистрирован в системе пользователей"
 
-msgid "About Us"
-msgstr "О нас"
-
-msgid "Privacy Policy"
-msgstr "Политика конфиденциальности"
-
-msgid "Terms and Conditions"
-msgstr "Положения и условия"
-
-msgid "Refund Policy"
-msgstr "Правила возврата денежных средств"
-
-msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
-msgstr "{{ order.shop }} - заказ {{ order.identifier }} получен"
-
-msgid "Send customer order confirmation email"
-msgstr "Выслать пользователю электронное письмо с подтверждением заказа"
-
-msgid ""
-"We will configure a notification to send the customer an email after a "
-"placed order. You can disable this option later or even change the layout of"
-" the email."
-msgstr "Мы настроим уведомления для того, чтобы  выслать клиенту электронное письмо после оформления заказа. Вы можете отключить данную опцию позже, а также изменить само оформление электронного письма."
-
-msgid "Create About Us page"
-msgstr "Создать страницу \"О нас\""
-
-msgid ""
-"We have already created an 'About Us' template for you based on your shop "
-"information. You must review the page and change it accordingly."
-msgstr "Мы уже создали шаблон секции \"О нас\", основанный с учётом информации вашего магазина. Вам нужно проверить страницу и внести коррективы при необходимости."
-
-msgid ""
-"We will create an 'About Us' template for you. We will base content of the "
-"page on your shop information. After we are done, you must review the page "
-"and change it accordingly."
-msgstr "Мы создадим для вас шаблон секции \"О нас\", а также организуем контент страницы с учётом информации, предоставленной вашим магазином. После того, как мы завершим работу, вы должны проверить страницу и внести соответствующие коррективы при необходимости."
-
-msgid "Create Privacy Policy page"
-msgstr "Создать страницу \"Политика конфиденциальности\""
-
-msgid ""
-"We have already created a 'Privacy Policy' template for you based on your "
-"shop information. You must review the page and change it accordingly."
-msgstr "Мы уже создали для вас шаблон секции \"Политика конфиденциальности\" с учётом предоставленной информации о вашем магазине. Вам нужно проверить страницу и внести коррективы при необходимости."
-
-msgid ""
-"We will create a 'Privacy Policy' template for you. We will base content of "
-"the page on your shop information. After we are done, you must review the "
-"page and change it accordingly."
-msgstr "Мы создадим для вас шаблон секции \"Политика конфиденциальности\", а также организуем контент страницы с учётом информации, предоставленной вашим магазином. После того, как мы завершим работу, вы должны проверить страницу и внести соответствующие коррективы при необходимости."
-
-msgid "Create Terms and Conditions page"
-msgstr "Создать страницу \"Положения и условия\""
-
-msgid ""
-"We have already created a 'Terms & Conditions' template for you based on "
-"your shop information. You must review the page and change it accordingly."
-msgstr "Мы уже создали шаблон секции \"Положения и условия\", основанный с учётом информации вашего магазина. Вам нужно проверить страницу и внести коррективы при необходимости."
-
-msgid ""
-"We will create an 'Terms & Conditions' template for you. We will base "
-"content of the page on your shop information. After we are done, you must "
-"review the page and change it accordingly."
-msgstr "Мы создадим для вас шаблон секции \"Положения и условия\", а также организуем контент страницы с учётом информации, предоставленной вашим магазином. После того, как мы завершим работу, вы должны проверить страницу и внести соответствующие коррективы при необходимости."
-
-msgid "Create Refund Policy page"
-msgstr "Создать страницу \"Правила возврата денежных средств\""
-
-msgid ""
-"We have already created a 'Refund Policy' template for you based on your "
-"shop information. You must review the page and change it accordingly."
-msgstr "Мы уже создали для вас шаблон секции \"Правила возврата денежных средств\" с учётом предоставленной информации о вашем магазине. Вам нужно проверить страницу и внести коррективы при необходимости."
-
-msgid ""
-"We will create an 'Refund Policy' template for you. We will base content of "
-"the page on your shop information. After we are done, you must review the "
-"page and change it accordingly."
-msgstr "Мы создадим для вас шаблон секции \"Правила возврата денежных средств\", а также организуем контент страницы с учётом информации, предоставленной вашим магазином. После того, как мы завершим работу, вы должны проверить страницу и внести соответствующие коррективы при необходимости."
-
-msgid "Configure the footer"
-msgstr "Настроить нижний колонтитул"
-
-msgid ""
-"We will now configure your shop footer and fill it with some of your shop's "
-"information. Don't worry, you can change this at any time."
-msgstr "Мы настроим нижний колонтитул для вашего магазина и наполним его информацией, предоставленной вашим магазином. Не переживайте, т.к. изменения можно внести в любое время."
-
-msgid "Content & Behavior"
-msgstr "Контент и поведение"
-
-msgid ""
-"Add the initial content and configure the customer notifications for your "
-"shop"
-msgstr "Добавить изначальный контент и настроить уведомления клиентов для вашего магазина."
-
-msgid "Configure notifications for your shop"
-msgstr "Настроить уведомления для вашего магазина"
-
-msgid "Add the initial content"
-msgstr "Добавить изначальный контент"
-
-msgid "Configure the initial content pages"
-msgstr "Настроить страницы с исходным контентом"
-
-msgid "Configure some notifications"
-msgstr "Настроить уведомления"
-
 msgid "Currencies"
 msgstr "Валюты"
 
@@ -594,8 +495,14 @@ msgstr "Активные клиенты"
 msgid "Based on orders within 30 days"
 msgstr "Основано на заказах за последние 30 дней"
 
-msgid "Demo"
-msgstr "Демо"
+msgid "Labels"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Modified on"
+msgstr ""
 
 msgid "Manufacturers"
 msgstr "Производители"
@@ -605,6 +512,9 @@ msgid ""
 msgstr ""
 
 msgid "You have no permission to change a shared Manufacturer."
+msgstr ""
+
+msgid "Logo"
 msgstr ""
 
 msgid "Media"
@@ -630,10 +540,6 @@ msgstr "Папка %s удалена."
 
 msgid "Browse Media"
 msgstr "Просмотреть медиафайлы"
-
-#, python-format
-msgid "%(file)s uploaded to %(folder)s"
-msgstr "%(file)s загружены в %(folder)s"
 
 msgid "Can not rename shared folder."
 msgstr ""
@@ -663,14 +569,12 @@ msgstr ""
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s перемещены из %(old)s в %(new)s."
 
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr "%(file)s загружены в %(folder)s"
+
 msgid "Show orders"
 msgstr "Показать заказы."
-
-msgid "Order Status"
-msgstr "Статус заказа"
-
-msgid "List Statuses"
-msgstr "Показать статусы"
 
 msgid "Outstanding Orders"
 msgstr "Предварительные заказы"
@@ -681,6 +585,12 @@ msgstr "%d невыполненных заказов"
 
 msgid "New order"
 msgstr "Новый заказ"
+
+msgid "Order Status"
+msgstr "Статус заказа"
+
+msgid "List Statuses"
+msgstr "Показать статусы"
 
 #, python-format
 msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
@@ -731,6 +641,9 @@ msgstr "Выбрать все категории, которые не подде
 
 msgid "Print Delivery PDF(s)"
 msgstr "Распечатать PDF файл(ы) с информацией о доставке"
+
+msgid "Details"
+msgstr "Подробности"
 
 msgid "Payments"
 msgstr "Платежи"
@@ -795,8 +708,11 @@ msgid "%(field)s saved successfully."
 msgstr "%(field)s поля сохранены успешно."
 
 #, python-format
-msgid "Edit Addresses -- %s"
-msgstr "Редактировать адреса -- %s"
+msgid "Save -- %s"
+msgstr ""
+
+msgid "Save"
+msgstr "Сохранить"
 
 msgid "Unable to set order as completed at this point"
 msgstr "Невозможно завершить заказ в данный момент"
@@ -997,15 +913,6 @@ msgstr "Группы доступа"
 msgid "The permission group name."
 msgstr "Название группы доступа"
 
-msgid "Module Permissions"
-msgstr "Разрешения модуля"
-
-msgid ""
-"Select the modules that should be accessible by this permission group. "
-"Modules with the same permissions as selected modules will be added "
-"automatically."
-msgstr "Выберите модули, которые будут доступны данной группой доступа. Модули с одними и теми же разрешениями, как у выбранных модулей, добавятся автоматически."
-
 msgid "Set the users that belong to this permission group."
 msgstr "Выбрать пользователей, которые принадлежат к данной группе доступа."
 
@@ -1051,6 +958,12 @@ msgid ""
 "tab."
 msgstr "Главное изображение товара. Вы можете добавить дополнительные изображения в разделе \"Изображения товара\""
 
+msgid "Select a manufacturer"
+msgstr ""
+
+msgid "Product type"
+msgstr ""
+
 msgid "Given value is already in use, please use unique SKU and try again."
 msgstr "Данное значение уже используется, пожалуйста, используйте уникальный артикул и повторите попытку."
 
@@ -1058,6 +971,9 @@ msgid ""
 "Number of units that can be purchased after the product is out of stock. Set"
 " to blank for product to be purchasable without limits"
 msgstr "Количество товаров, доступных для продажи после того, как товар распродан. Оставьте пробел, если хотите, чтобы товар продавался без ограничений."
+
+msgid "Select a category"
+msgstr ""
 
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "Минимальное количество покупок должно быть больше 0."
@@ -1140,9 +1056,6 @@ msgstr "Товар"
 msgid "Edit Cross-Sell: %s"
 msgstr ""
 
-msgid "Save"
-msgstr "Сохранить"
-
 msgid "Changes saved."
 msgstr "Изменения сохранены."
 
@@ -1222,9 +1135,6 @@ msgstr "Массовое редактирование: Товары"
 msgid "Products changed successfully"
 msgstr "Товары изменены успешно."
 
-msgid "Save as a copy"
-msgstr "Сохранить, как копию"
-
 msgid "Manage Cross-Selling"
 msgstr "Управлять кросс-продажей"
 
@@ -1260,6 +1170,15 @@ msgstr ""
 
 msgid "Convert to Variation Parent"
 msgstr ""
+
+msgid "Save and Exit"
+msgstr "Сохранить и выйти"
+
+msgid "Save and Create New"
+msgstr "Сохранить и создать новый"
+
+msgid "Save as a copy"
+msgstr "Сохранить, как копию"
 
 msgid "Sales Dashboard"
 msgstr "Информационная панель продаж"
@@ -1303,135 +1222,6 @@ msgstr ""
 
 msgid "Allowed decimals"
 msgstr "Допустимые десятичные значения"
-
-msgid ""
-"There is sample data installed. Access \"Settings > Sample Data\" for more "
-"information."
-msgstr "Примеры данных добавлены. Перейдите в \"Настройки > Примеры данных\" для получения большей информации."
-
-msgid ""
-"There is sample data installed. Click here to consolidate or delete them."
-msgstr "Примеры данных добавлены. Нажмите здесь для их объединения или удаления."
-
-msgid "Sample Data"
-msgstr "Примеры данных"
-
-msgid "Cosmetics and perfumes"
-msgstr "Косметика и парфюмерия"
-
-msgid "USpicy Makeup Brushes"
-msgstr "Кисти для макияжа USpicy"
-
-msgid ""
-"Professional 10 pieces makeup brush set with soft oval toothbrush design"
-msgstr "Профессиональный набор кистей для макияжа из 10 единиц с мягкими овальными щёточками"
-
-msgid "Precision Eyelash Curler"
-msgstr "Щипчики для завивки ресниц"
-
-msgid ""
-"Precision Eyelash Curler is the professional choice of makeup artists "
-"everywhere."
-msgstr "Щипчики для завивки ресниц - профессиональный выбор визажистов во всём мире."
-
-msgid "PureMoist Lipstick"
-msgstr "Губная помада PureMoist"
-
-msgid ""
-"PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
-"and protect lips."
-msgstr "Губная помада PureMoist обладает увлажняющей формулой, созданой для смягчения, комфорта и защиты губ."
-
-msgid "Clinique Happy"
-msgstr "Парфюм Clinique Happy "
-
-msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
-msgstr "Нотки цитруса. Богатство цветочных оттенков. Обилие эмоций."
-
-msgid "Tommy Girld by Tommy Hilfiger Perfume"
-msgstr "Парфюм Tommy Girld от Tommy Hilfiger"
-
-msgid ""
-"A refreshing and energetic floral - with low notes of sandalwood and "
-"heather."
-msgstr "Освежающий и энергичный, с мягкими нотками вереска, сандалового дерева и цветов."
-
-msgid "Bvlgari Omnia Crystalline Eau de Toilette"
-msgstr "Туалетная вода Bvlgari Omnia Crystalline Eau de Toilette"
-
-msgid ""
-"Give yourself over to this fragrance as intoxicating and pure as a woman's "
-"soul is fragile."
-msgstr "Предайтесь этому аромату, такому же пленительному и чистому, как хрупкая женская душа."
-
-msgid "Still Jennifer Lopez Perfume"
-msgstr "Парфюм Still Jennifer Lopez"
-
-msgid ""
-"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still"
-" fragrance."
-msgstr "Наполнитесь живостью и уверенностью, когда с вами аромат Still от Jennifer Lopez"
-
-msgid "La Vie Est Belle"
-msgstr "Парфюм La Vie Est Belle от Lancôme"
-
-msgid "A captivating new scent joins the La vie est belle path to happiness."
-msgstr "Пленительный новый аромат La Vie est belle окутает вас на пути к счастью."
-
-msgid "Smooth Viking Beard Brush"
-msgstr "Расчёска для бороды Smooth Viking"
-
-msgid "Just a beard brush."
-msgstr "Просто расчёска для бороды"
-
-msgid "Beard & Stash Oil"
-msgstr "Масло для усов и бороды"
-
-msgid "This oil is natural, and is made with the perfect combination of oils."
-msgstr "Данное косметическое масло является полностью натуральным и состоит из отличного сочетания природных масел."
-
-msgid "Sample Carousel"
-msgstr "Карусель образцов"
-
-msgid "Business Segment"
-msgstr "Бизнес-сегмент"
-
-msgid "Select your business segment to install categories."
-msgstr "Выберите ваш бизнес-сегмент для того, чтобы добавить категорию."
-
-msgid "Install Categories"
-msgstr "Добавить категории"
-
-msgid "Check this to install sample categories."
-msgstr "Ознакомтесь с данной информацией для установки категорий образцов"
-
-msgid "Install Products"
-msgstr "Добавить товары"
-
-msgid "Check this to install sample products."
-msgstr "Ознакомтесь с данной информацией для установки товарных образцов"
-
-msgid "Install Carousel"
-msgstr "Добавить карусель"
-
-msgid "Check this to install a sample carousel."
-msgstr "Ознакомтесь с данной информацией для установки карусели образцов"
-
-msgid "Uninstall Categories"
-msgstr "Удалить категории"
-
-msgid "Uninstall Products"
-msgstr "Удалить товары"
-
-msgid "Uninstall Carousel"
-msgstr "Удалить карусель"
-
-msgid "Sample data were consolidated"
-msgstr "Примеры данных были объединены."
-
-msgid ""
-"To start shopping right now, please install some sample data into your shop"
-msgstr "Для того, чтобы позволить начать осуществлять покупки прямо сейчас, пожалуйста, добавьте примеры данных в ваш магазин."
 
 msgid "Service Providers"
 msgstr "Поставщики услуг"
@@ -1620,6 +1410,15 @@ msgstr "Добавьте логотип для того, чтобы ваш ма�
 msgid "Add logo"
 msgstr "Добавить логотип"
 
+msgid "Publish your store"
+msgstr "Опубликовать ваш магазин"
+
+msgid "Let customers browse your store and make purchases"
+msgstr "Позволить клиентам просматривать ваш магазин и совершать покупки"
+
+msgid "Publish shop"
+msgstr "Опубликовать магазин"
+
 msgid "Set \"{}\" as the active shop"
 msgstr ""
 
@@ -1694,9 +1493,6 @@ msgstr "Ваш магазин активирован"
 msgid "Shop {} is now active!"
 msgstr ""
 
-msgid "Logo"
-msgstr ""
-
 msgid "Domain"
 msgstr "Домен"
 
@@ -1719,6 +1515,9 @@ msgstr ""
 msgid "No %s module"
 msgstr ""
 
+msgid "It is not possible to manage inventory when no module is selected."
+msgstr ""
+
 msgid "Module"
 msgstr "Модуль"
 
@@ -1735,6 +1534,9 @@ msgid ""
 "Statistics will be periodically sent to Shuup.com after 24 hours. Click here"
 " for more information."
 msgstr "Статистика будет периодически высылаться в Shuup.com каждые 24 часа. Нажмите здесь для большей информации."
+
+msgid "Opt-in for telemetry"
+msgstr ""
 
 msgid "Customer Tax Groups"
 msgstr "Группы налогов клиентов"
@@ -1958,6 +1760,9 @@ msgstr "Новое свойство"
 msgid "Login"
 msgstr "Логин"
 
+msgid "Welcome back"
+msgstr ""
+
 msgid "Forgot your password?"
 msgstr "Забыли ваш пароль?"
 
@@ -1999,23 +1804,20 @@ msgstr ""
 msgid "Send password recovery instructions"
 msgstr ""
 
+msgid "Dashboard"
+msgstr "Панель информации"
+
 msgid "Quicklinks"
 msgstr "Быстрые ссылки"
 
 msgid "Menu"
 msgstr "Меню"
 
-msgid "Dashboard"
-msgstr "Панель информации"
-
-msgid "Go home"
-msgstr "На главную страницу"
-
 msgid "Search for"
 msgstr "Поиск"
 
-msgid "Support ID: "
-msgstr "Идентификатор поддержки:"
+msgid "Go home"
+msgstr "На главную страницу"
 
 msgid "Hello"
 msgstr "Привет"
@@ -3095,18 +2897,12 @@ msgstr "Давайте рассмотрим некоторые из вещей, 
 msgid "Date"
 msgstr "Дата"
 
-msgid "Save and Exit"
-msgstr "Сохранить и выйти"
-
-msgid "This action effects on all products."
-msgstr "Данное действие может повлиять на все товары."
-
-#, python-format
-msgid "This action effects %(item_count)s products."
+msgid "This action effects on all items."
 msgstr ""
 
-msgid "Edit"
-msgstr "Редактировать"
+#, python-format
+msgid "This action affects %(item_count)s item(s)."
+msgstr ""
 
 msgid "Upload"
 msgstr "Загрузить"
@@ -3135,8 +2931,47 @@ msgstr "Ни один платёж ещё не создан."
 msgid "Are you sure you want to delete this payment?"
 msgstr ""
 
-msgid "Order Contents"
-msgstr "Содержание заказа"
+msgid "Order Details"
+msgstr ""
+
+msgid "Order Number"
+msgstr "Номер заказа"
+
+msgid "Reference"
+msgstr "Справка"
+
+msgid "Label"
+msgstr "Ярлык"
+
+msgid "Payment Method"
+msgstr "Способ оплаты"
+
+msgid "Shipping Method"
+msgstr "Способ доставки"
+
+msgid "Ordered by"
+msgstr "Заказано"
+
+msgid "Creator"
+msgstr "Создатель"
+
+msgid "Tax number"
+msgstr "Налоговый номер"
+
+msgid "Total Price (taxless)"
+msgstr "Полная стоимость (без учёта налогов)"
+
+msgid "Total Price"
+msgstr "Полная стоимость"
+
+msgid "Customer Comment"
+msgstr "Комментарий клиента"
+
+msgid "Tracking codes"
+msgstr "Коды для отслеживания доставки"
+
+msgid "Address Information"
+msgstr "Адрес"
 
 msgid "Text"
 msgstr "Текст"
@@ -3212,6 +3047,9 @@ msgstr "Вы уверены, что хотите создать полное в�
 msgid "Confirm Refund"
 msgstr "Подтвердить возмещение"
 
+msgid "Order Contents"
+msgstr "Содержание заказа"
+
 msgid "Paid"
 msgstr "Оплачено"
 
@@ -3245,47 +3083,33 @@ msgstr "Выбрать все товары для отправки"
 msgid "Ship All"
 msgstr "Отправить всё"
 
-msgid "Details"
-msgstr "Подробности"
+msgid "Select all permissions"
+msgstr ""
 
-msgid "Order Number"
-msgstr "Номер заказа"
+msgid "Deselect all permissions"
+msgstr ""
 
-msgid "Reference"
-msgstr "Справка"
+msgid "(All permissions granted)"
+msgstr ""
 
-msgid "Label"
-msgstr "Ярлык"
+msgid "(Partial permissions granted)"
+msgstr ""
 
-msgid "Ordered by"
-msgstr "Заказано"
+msgid "Module permission"
+msgstr ""
 
-msgid "Creator"
-msgstr "Создатель"
+msgid "Select the following permission to enable users to access this module."
+msgstr ""
 
-msgid "Tax number"
-msgstr "Налоговый номер"
+msgid "Select all permissions for this module"
+msgstr ""
 
-msgid "Total Price (taxless)"
-msgstr "Полная стоимость (без учёта налогов)"
+msgid "Features permissions"
+msgstr ""
 
-msgid "Total Price"
-msgstr "Полная стоимость"
-
-msgid "Customer Comment"
-msgstr "Комментарий клиента"
-
-msgid "Payment Method"
-msgstr "Способ оплаты"
-
-msgid "Shipping Method"
-msgstr "Способ доставки"
-
-msgid "Tracking codes"
-msgstr "Коды для отслеживания доставки"
-
-msgid "Address Information"
-msgstr "Адрес"
+msgid ""
+"Select the permissions to enable access to specific features of the module."
+msgstr ""
 
 msgid "Error!"
 msgstr "Ошибка!"
@@ -3331,9 +3155,6 @@ msgstr "Основное изображение"
 msgid "Set as primary image"
 msgstr "Выбрать изображение основным"
 
-msgid "Advanced options"
-msgstr "Расширенные опции"
-
 msgid "Product Images"
 msgstr "Изображения товаров"
 
@@ -3345,6 +3166,9 @@ msgstr "Здесь вы можете прикреплять к товару(ам
 
 msgid "Showcase your merchandise here."
 msgstr "Выставьте свой товар здесь."
+
+msgid "Drop files here or click to <a href=\"#\">browse</a>."
+msgstr ""
 
 msgid "All the orders that have this product."
 msgstr "Все заказы с данным товаром."
@@ -3458,14 +3282,17 @@ msgstr "Клиенты"
 msgid "Today"
 msgstr "Сегодня"
 
-msgid "MTD"
-msgstr "С начала месяца на сегодняшний день"
+msgid "Month to date (MTD)"
+msgstr ""
 
-msgid "YTD"
-msgstr "C начала года на сегодняшний день"
+msgid "Year to date (YTD)"
+msgstr ""
 
 msgid "Totals"
 msgstr "Всего"
+
+msgid "Consolidate Data"
+msgstr ""
 
 msgid ""
 "Your shop currently has some sample data installed. Select below which "
@@ -3664,9 +3491,6 @@ msgstr ""
 msgid "Discard Changes"
 msgstr "Отменить изменения"
 
-msgid "Save and Create New"
-msgstr "Сохранить и создать новый"
-
 #, python-format
 msgid "Are you sure you wish to delete %s?"
 msgstr ""
@@ -3691,14 +3515,23 @@ msgstr ""
 msgid "Log in with different credentials..."
 msgstr "Войти с другими учётными данными..."
 
-msgid "You must be logged in."
-msgstr "Вы должны войти на сайт."
+msgid "Sign in to continue"
+msgstr ""
 
 msgid "You must be a staff member."
 msgstr "Вы должны быть сотрудником."
 
+msgid "There is no active shop available. Contact support for more details."
+msgstr ""
+
 #, python-format
 msgid "You do not have the required permissions: %s"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Can't view this page. You do not have the required permission(s): "
+"{permissions}"
 msgstr ""
 
 msgid "Unnamed"
@@ -3736,13 +3569,6 @@ msgstr ""
 msgid "Invalid model."
 msgstr ""
 
-#, python-format
-msgid "You do not have the required permission(s): %s"
-msgstr ""
-
-msgid "Unauthorized"
-msgstr ""
-
 msgid "Object not found"
 msgstr ""
 
@@ -3757,15 +3583,6 @@ msgstr "Закончите установку"
 
 msgid "Complete the setup wizard"
 msgstr "Завершитер работу мастера установки"
-
-msgid "Publish your store"
-msgstr "Опубликовать ваш магазин"
-
-msgid "Let customers browse your store and make purchases"
-msgstr "Позволить клиентам просматривать ваш магазин и совершать покупки"
-
-msgid "Publish shop"
-msgstr "Опубликовать магазин"
 
 msgid ""
 "A reset password email was sent. Please, follow the instructions to set a "
