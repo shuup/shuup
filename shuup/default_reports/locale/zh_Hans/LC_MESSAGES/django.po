@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-29 07:50+0000\n"
+"PO-Revision-Date: 2019-03-13 09:02+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Customer"
+msgstr "顾客"
+
+msgid "Filter report results by customer."
+msgstr "按客户筛选报告结果。"
+
+msgid "Orderer"
+msgstr "订货人"
+
+msgid "Filter report results by the person that made the order."
+msgstr "由订货人筛选报告结果。"
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Taxless Total"
+msgstr "免税合计"
+
+msgid "Taxful Total"
+msgstr "税收总额"
+
+msgid "Sort order"
+msgstr "分类订单"
+
+msgid "Year"
+msgstr "年"
+
+msgid "Year/Month"
+msgstr "年/月"
+
+msgid "Year/Month/Day"
+msgstr "年/月/日"
+
+msgid "Group by"
+msgstr "按组"
+
+msgid "Order Count"
+msgstr "订单计数"
+
+msgid "Average Sales"
+msgstr "平均销售额"
+
+msgid "Tax"
+msgstr "税收"
+
+msgid "Filter report results by tax."
+msgstr "通过税收过滤报告结果。"
+
+msgid "Tax Class"
+msgstr "税级"
+
+msgid "Filter report results by tax class."
+msgstr "按纳税类别筛选报告结果。"
+
+msgid "Shipping Method"
+msgstr "配送方式"
+
+msgid "Filter report results by shipping method."
+msgstr "通过传送方法筛选报告结果。"
+
+msgid "Carrier"
+msgstr "运输者"
+
+msgid "Filter report results by carrier."
+msgstr "按载体过滤报告结果。"
+
+msgid "Customer Sales"
+msgstr "客户销售"
+
+msgid "Orders"
+msgstr "订单"
+
+msgid "New Customers"
+msgstr "新顾客"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Persons"
+msgstr "人"
+
+msgid "Companies"
+msgstr "活动"
+
+msgid "Users"
+msgstr "用户"
+
+msgid "Product Total Sales"
+msgstr "产品销售总额"
+
+msgid "Product"
+msgstr "产品"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Refunded Sales"
+msgstr "退款销售"
+
+msgid "Refunded Orders"
+msgstr "退款订单"
+
+msgid "Total Refunded"
+msgstr "退款总额"
+
+msgid "Sales Report"
+msgstr "销售报告"
+
+msgid "Products"
+msgstr "产品"
+
+msgid "Sales Per Hour"
+msgstr "每小时销售额"
+
+msgid "Hour"
+msgstr "小时"
+
+msgid "Order Amount"
+msgstr "订购量"
+
+msgid "Total Sales"
+msgstr "销售总额"
+
+msgid "Shipping"
+msgstr "配送"
+
+msgid "Shipping method"
+msgstr "配送方式"
+
+msgid "Total Charged"
+msgstr "总费用"
+
+msgid "Taxes"
+msgstr "税"
+
+msgid "Rate (%)"
+msgstr "比率(%)"
+
+msgid "Pre-tax Total"
+msgstr "税前总计"
+
+msgid "Total Tax Amount"
+msgstr "总税额"
+
+msgid "Total"
+msgstr "总"
+
+msgid "Shop Name"
+msgstr "商店名称"
+
+msgid "Currency"
+msgstr "货币"
+
+msgid "Customers"
+msgstr "顾客"
+
+msgid "Customer Average Sale"
+msgstr "客户平均销售"

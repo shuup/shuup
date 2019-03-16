@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-22 08:36+0000\n"
+"PO-Revision-Date: 2017-01-06 15:35+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Reports"
+msgstr "报告"
+
+msgid "Type"
+msgstr "类型"
+
+msgid "Select the type of report to run."
+msgstr "选择要运行的报表类型。"
+
+msgid "Custom"
+msgstr "习惯"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Running Week (last 7 days)"
+msgstr "每周运行(最后7天)"
+
+msgid "Running Month (last 30 days)"
+msgstr "运行月(最后30天)"
+
+msgid "This Week"
+msgstr "本周"
+
+msgid "This Month"
+msgstr "本月"
+
+msgid "This Year"
+msgstr "本年"
+
+msgid "All Time"
+msgstr "所有时间"
+
+msgid "Shop"
+msgstr "商店"
+
+msgid "Filter report results by shop."
+msgstr "按商店过滤报告结果。"
+
+msgid "Date Range"
+msgstr "日期范围"
+
+msgid "Filter report results by a date range."
+msgstr "按日期范围筛选报表结果。"
+
+msgid "Start Date"
+msgstr "开始日期"
+
+msgid "For a custom date range."
+msgstr "用于自定义日期范围"
+
+msgid "End Date"
+msgstr "结束日期"
+
+msgid "Output Format"
+msgstr "输出格式"
+
+msgid "The format to show the report results."
+msgstr "显示报告结果的格式。"
+
+msgid "Download"
+msgstr "下载"
+
+msgid "Check this to download the report."
+msgstr "检查这个下载报告。"
+
+msgid "Toggle Filters"
+msgstr "切换过滤器"
+
+msgid "Get Report"
+msgstr "获得报告"
+
+msgid "No reports available"
+msgstr "没有可用的报告"

@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-09 21:39+0000\n"
+"PO-Revision-Date: 2017-03-30 06:49+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr " Shuup前端 - 保存的购物篮"
+
+msgid "Saved Carts"
+msgstr "保存购物车"
+
+msgid "Home"
+msgstr "主页"
+
+msgid "Dashboard"
+msgstr "控制面板"
+
+msgid "My Saved Carts"
+msgstr "我的已保存购物车"
+
+msgid "Product"
+msgstr "产品"
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Price"
+msgstr "价格"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Product Count"
+msgstr "产品数量"
+
+msgid "Details"
+msgstr "详情"
+
+msgid "You haven't saved any carts yet."
+msgstr "您还没有保存过任何购物车。"
+
+msgid "Add all products to cart"
+msgstr "将所有产品添加到购物车中"
+
+msgid "Delete cart"
+msgstr "删除购物车"
+
+msgid "Please enter a basket title."
+msgstr "请输入一个购物篮标题"
+
+msgid "Cannot save an empty basket."
+msgstr "无法保存空购物篮"
+
+msgid "Product not available in this shop"
+msgstr "本店不提供产品"
+
+msgid "Invalid supplier"
+msgstr "无效供应商"
+
+#, python-format
+msgid "%d product(s) added to cart"
+msgstr "%d产品(s)添加到购物车中"

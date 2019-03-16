@@ -1,0 +1,352 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-08 01:41+0000\n"
+"PO-Revision-Date: 2018-10-02 06:50+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Archive Product Discounts"
+msgstr "存档产品折扣"
+
+msgid "Unarchive Discounts"
+msgstr "未存档折扣"
+
+msgid "Delete Discounts"
+msgstr "删除折扣"
+
+msgid "Product Discounts Coupon Codes"
+msgstr "产品折扣券码"
+
+msgid "Discounts"
+msgstr "折扣"
+
+msgid "Product Discounts"
+msgstr "产品折扣"
+
+msgid "Archived Product Discounts"
+msgstr "存档产品折扣"
+
+msgid "Discounts Availability Exceptions"
+msgstr "折扣可用性例外情况"
+
+msgid "Product Discounts Availability Exceptions"
+msgstr "产品折扣可用性例外情况"
+
+msgid "Discounts Happy Hours"
+msgstr "折扣欢乐时光"
+
+msgid "Product Discounts Happy Hours"
+msgstr "产品折扣欢乐时光"
+
+msgid "Discount Name"
+msgstr "折扣名称"
+
+msgid "Filter by name..."
+msgstr "按名称过滤..."
+
+msgid "Product"
+msgstr "产品"
+
+msgid "Filter by product..."
+msgstr "按产品过滤..."
+
+msgid "Category"
+msgstr "类别"
+
+msgid "Filter by category..."
+msgstr "按类别过滤..."
+
+msgid "Contact Group"
+msgstr "联系人组"
+
+msgid "Filter by contact group..."
+msgstr "按联系人组过滤..."
+
+msgid "Contact"
+msgstr "联系人"
+
+msgid "Filter by contact..."
+msgstr "按联系人过滤..."
+
+msgid "Coupon code"
+msgstr "优惠券代码"
+
+msgid "Filter by coupon code..."
+msgstr "按优惠券代码过滤..."
+
+msgid "Effect"
+msgstr "效果"
+
+msgid "End Date and Time"
+msgstr "结束日期和时间"
+
+msgid "Code"
+msgstr "代码"
+
+msgid "Usages"
+msgstr "使用"
+
+msgid "Usages Limit per contact"
+msgstr "每次联系使用限制"
+
+msgid "Usage Limit"
+msgstr "使用限制"
+
+msgid "Active"
+msgstr "活跃"
+
+msgid "Created by"
+msgstr "创建由"
+
+msgid "Date created"
+msgstr "日期已创建"
+
+msgid "Select discounts linked to this coupon code."
+msgstr "选择链接到此优惠券代码的折扣。"
+
+msgid "Shops"
+msgstr "商店"
+
+msgid "Select shops for this discount. Keep it blank to share with all shops."
+msgstr "为这个折扣选择商店。保持公开，与所有商店分享。"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s已被删除。"
+
+msgid "Discount percentage"
+msgstr "折扣率"
+
+msgid "The discount percentage for this discount."
+msgstr "此折扣的折扣百分比。"
+
+msgid "Exception Name"
+msgstr "例外名称"
+
+msgid "Start Date and Time"
+msgstr "开始日期和时间"
+
+msgid "Select discounts to be ignored on given time frame."
+msgstr "选择要在给定时间范围内忽略的折扣。"
+
+msgid "Happy Hour Name"
+msgstr "欢乐时光名称"
+
+msgid "Select discounts for this happy hour."
+msgstr "为这个欢乐时光选择折扣。"
+
+msgid ""
+"12pm is considered noon and 12am as midnight. Start hour is included to the "
+"discount."
+msgstr "下午12点被认为是中午，凌晨12点是午夜。开始时间包括在折扣之内。"
+
+msgid ""
+"12pm is considered noon and 12am as midnight. End hours is included to the "
+"discount."
+msgstr "下午12点被认为是中午，凌晨12点是午夜。结束时间包括在折扣之内。"
+
+msgid "Weekdays the happy hour is active."
+msgstr "平日欢乐时光是活跃的。"
+
+msgid "shops"
+msgstr "商店"
+
+msgid "name"
+msgstr "名称"
+
+msgid ""
+"The name for this exception. Used internally with exception lists for "
+"filtering."
+msgstr "此异常的名称。与用于筛选的异常列表一起在内部使用。"
+
+msgid "start"
+msgstr "开始"
+
+msgid "end"
+msgstr "结束"
+
+msgid "availability exception"
+msgstr "可用性异常"
+
+msgid "availability exceptions"
+msgstr "可用性异常"
+
+msgid "created on"
+msgstr "创建"
+
+msgid "usage limit per customer"
+msgstr "每个客户的使用限制"
+
+msgid "Limit the amount of usages per a single customer."
+msgstr "限制每个客户的使用量。"
+
+msgid "usage limit"
+msgstr "使用限制"
+
+msgid ""
+"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
+"coupon cannot be used."
+msgstr "设置此优惠券的绝对使用限制。如果限制为零(0)，则不能使用优惠券。"
+
+msgid "active"
+msgstr "活跃"
+
+msgid "created by"
+msgstr "创建由"
+
+msgid "modified by"
+msgstr "由...修改"
+
+msgid "modified on"
+msgstr "修改"
+
+msgid ""
+"The name for this discount. Used internally with discount lists for "
+"filtering."
+msgstr "这个折扣的名字。与折扣列表一起使用，用于筛选。"
+
+msgid ""
+"Check this if the discount is currently active. Please also set a start and "
+"end date."
+msgstr "如果折扣当前处于活动状态，请检查此选项。也请设定一个开始和结束日期。"
+
+msgid "start date and time"
+msgstr "开始日期和时间"
+
+msgid ""
+"The date and time the discount starts. This is only applicable if the "
+"discount is marked as active."
+msgstr "折扣开始的日期和时间。这只适用于贴现标记为活动的情况。"
+
+msgid "end date and time"
+msgstr "结束日期和时间"
+
+msgid ""
+"The date and time the discount ends. This is only applicable if the discount"
+" is marked as active."
+msgstr "折扣结束的日期和时间。这只适用于贴现标记为活动的情况。"
+
+msgid "happy hours"
+msgstr "欢乐时光"
+
+msgid "Select happy hours for this discount."
+msgstr "为这个折扣选择欢乐时光。"
+
+msgid "Select availability for this discount."
+msgstr "选择此折扣的可用性。"
+
+msgid "product"
+msgstr "产品"
+
+msgid "Select product for this discount."
+msgstr "选择此折扣的产品。"
+
+msgid "exclude selected category"
+msgstr "排除选定类别"
+
+msgid "Exclude products in selected category from this discount."
+msgstr "此折扣不包括选定类别中的产品。"
+
+msgid "category"
+msgstr "类别"
+
+msgid "Select category for this discount."
+msgstr "选择此折扣的类别。"
+
+msgid "contact"
+msgstr "联系人"
+
+msgid "Select contact for this discount."
+msgstr "选择此折扣的联系人。"
+
+msgid "exclude selected contact group"
+msgstr "排除选定的联络人组"
+
+msgid "Exclude contacts in selected contact group from this discount."
+msgstr "此折扣不包括选定联系人组中的联系人。"
+
+msgid "contact group"
+msgstr "联系人组"
+
+msgid "Select contact group for this discount."
+msgstr "选择此折扣的联系人组"
+
+msgid "coupon code"
+msgstr "优惠券代码"
+
+msgid "Select coupon code for this discount."
+msgstr "选择此折扣的优惠券代码。"
+
+msgid "discounted price"
+msgstr "折扣价"
+
+msgid "Discounted product price for this discount."
+msgstr "此折扣的产品折扣价格。"
+
+msgid "discount amount"
+msgstr "折扣额"
+
+msgid "Discount amount value for this discount."
+msgstr "此折扣的折扣金额值。"
+
+msgid "discount percentage"
+msgstr "折扣率"
+
+msgid "Discount percentage for this discount."
+msgstr "这个折扣的折扣率。"
+
+msgid "product discount"
+msgstr "产品折扣"
+
+msgid "product discounts"
+msgstr "产品折扣"
+
+msgid ""
+"The name for this . Used internally with exception lists for filtering."
+msgstr "这个名字。与用于筛选的异常列表一起在内部使用。"
+
+msgid "happy hour"
+msgstr "欢乐时光"
+
+msgid "parent"
+msgstr "根源"
+
+msgid "from hour"
+msgstr "从小时开始"
+
+msgid "to hour"
+msgstr "到小时"
+
+msgid "weekdays"
+msgstr "工作日"
+
+msgid "time range"
+msgstr "时间范围"
+
+msgid "time ranges"
+msgstr "时间范围"
+
+msgid "To hour has to be after from hour"
+msgstr "到小时必须从小时开始"
+
+msgid "Availability"
+msgstr "可用性"
+
+msgid "Condition"
+msgstr "条件"

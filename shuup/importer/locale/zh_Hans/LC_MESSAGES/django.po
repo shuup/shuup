@@ -1,0 +1,249 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-25 12:09+0000\n"
+"PO-Revision-Date: 2017-03-01 14:19+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Data Import"
+msgstr "数据导入"
+
+msgid "Import mode"
+msgstr "进口模式"
+
+msgid "Importing language"
+msgstr "进口语言"
+
+msgid "The language of the data you would like to import."
+msgstr "要导入的数据的语言。"
+
+msgid "Shop"
+msgstr "商店"
+
+msgid "Select a shop you want import into"
+msgstr "选择要导入的商店"
+
+msgid "Importer"
+msgstr "进口商"
+
+msgid "Select a importer type matching the data you would like to import"
+msgstr "选择与要导入的数据匹配的导入程序类型。"
+
+msgid "File"
+msgstr "文件"
+
+#, python-format
+msgid "%s is not a file"
+msgstr "%s不是文件"
+
+msgid "File missing."
+msgstr "文件丢失"
+
+msgid "Failed to import the file."
+msgstr "导入文件失败。"
+
+#, python-format
+msgid "Failed while preparing the file: %s."
+msgstr "准备文件时失败：%s。"
+
+msgid "Invalid parameters"
+msgstr "无效参数"
+
+msgid "Invalid importer"
+msgstr "无效进口商"
+
+msgid "Invalid file name"
+msgstr "无效文件名"
+
+msgid "File not found"
+msgstr "找不到文件"
+
+msgid "Import"
+msgstr "进口"
+
+msgid "Row ignored (no existing item and creating new is not allowed)."
+msgstr "行被忽略(不允许任何现有项并创建新项)。"
+
+#, python-format
+msgid ""
+"Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
+msgstr "忽略行(对象已经存在(%(object_name)s具有id：%(object_id)s)。"
+
+#, python-format
+msgid "Error setting value for field %(field_name)s. (%(exception)s)"
+msgstr "字段%(field_name)s的设置值错误。(%(exception)s)"
+
+#, python-format
+msgid "Couldn't set value %(original_value)s for field %(field_name)s."
+msgstr "无法为字段%(field_name)s设置值%(original_value)s。"
+
+#, python-format
+msgid "Row import failed (%s)."
+msgstr "行导入失败(%s)。"
+
+msgid "Example files"
+msgstr "示例文件"
+
+msgid "This importer provides example files. Click below to download them:"
+msgstr "此导入程序提供示例文件。点击下面下载："
+
+msgid "Continue"
+msgstr "继续"
+
+msgid "Import Data - process"
+msgstr "导入数据-处理"
+
+msgid "Amount if items being imported"
+msgstr "进口物品的金额"
+
+msgid "The following fields were automatically mapped"
+msgstr "下列字段被自动映射"
+
+msgid ""
+"The following fields in the file are being used a s possible connection "
+"keys:"
+msgstr "正在使用文件中的下列字段作为可能的连接键："
+
+msgid "Not a single connection key was found, File cannot be imported."
+msgstr "找不到一个连接键，无法导入文件。"
+
+msgid "Connection Keys"
+msgstr "连接钥匙"
+
+msgid "Read only fields"
+msgstr "只读字段"
+
+msgid ""
+"The following fields are Read Only and changes for those fields will be "
+"ignored."
+msgstr "以下字段为只读字段，对这些字段的更改将被忽略。"
+
+msgid "Import method"
+msgstr "进口法"
+
+msgid "Automatically mapped"
+msgstr "自动映射"
+
+msgid "Original field"
+msgstr "原始场"
+
+msgid "Shuup field"
+msgstr "Shuup场"
+
+msgid "Sample values"
+msgstr "样本值"
+
+msgid "The following fields must be manually tied"
+msgstr "必须手动绑定下列字段"
+
+msgid "Don't import"
+msgstr "不要进口"
+
+msgid "Field name"
+msgstr "字段名"
+
+msgid "Target field"
+msgstr "目标场"
+
+msgid "We may not be able to import the file."
+msgstr "我们可能无法导入该文件。"
+
+msgid ""
+"File may not be imported because no connection keys were found. Connection "
+"keys are unique keys that are used to map results."
+msgstr "文件可能无法导入，因为没有找到连接键。连接键是用于映射结果的唯一键。"
+
+msgid ""
+"Please consider adding some of the following fields to your import file:"
+msgstr "请考虑将以下一些字段添加到导入文件中："
+
+msgid "Products"
+msgstr "产品"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Customers"
+msgstr "顾客"
+
+msgid "email"
+msgstr "电子邮件"
+
+msgid "Importer type"
+msgstr "进口商类型"
+
+msgid "Field(s) to add"
+msgstr "字段(s)添加"
+
+msgid "You can continue importing, but it might end up in error"
+msgstr "您可以继续导入，但最终可能会出错。"
+
+msgid ""
+"If you are importing customers this might be a false alarm if you have email"
+" key set"
+msgstr "如果您正在导入客户，如果您设置了电子邮件密钥，这可能是一个错误的警报。"
+
+msgid "Start Import"
+msgstr "启动导入"
+
+msgid "Import Data - Complete"
+msgstr "导入数据 - 完成"
+
+msgid "Import Complete!"
+msgstr "导入完成！"
+
+msgid "New items"
+msgstr "新项目"
+
+msgid "The following items were imported as new:"
+msgstr "下列项目是作为新进口的："
+
+msgid "Zero new items were created."
+msgstr "创建了零个新项目。"
+
+msgid "Updated items"
+msgstr "更新项目"
+
+msgid "The following items were updated:"
+msgstr "更新了下列项目："
+
+msgid "Zero items were updated."
+msgstr "没有更新任何项目。"
+
+msgid "Import log"
+msgstr "导入日志"
+
+msgid "Other messages"
+msgstr "其他讯息"
+
+msgid "Import errors"
+msgstr "导入错误"
+
+#, python-format
+msgid "Cannot import more than %s rows from one file."
+msgstr "不能从一个文件导入多个%s行。"
+
+msgid "Allow create and update"
+msgstr "允许创建和更新"
+
+msgid "Only create (no updates)"
+msgstr "只创建(没有更新)"
+
+msgid "Only update existing (no new ones are created)"
+msgstr "只更新现有的(没有创建新的)"
