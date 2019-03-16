@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-23 23:26+0000\n"
-"PO-Revision-Date: 2018-06-26 05:37+0000\n"
+"POT-Creation-Date: 2019-03-08 17:25+0000\n"
+"PO-Revision-Date: 2019-03-10 05:37+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -727,6 +727,9 @@ msgstr ""
 msgid "Filters"
 msgstr "Фильтры."
 
+msgid "Show filters"
+msgstr ""
+
 msgid "Select Action"
 msgstr "Выберите действие"
 
@@ -741,7 +744,16 @@ msgid "Select All %s Items"
 msgstr ""
 
 #, javascript-format
-msgid "All %s Items Selected"
+msgid "There are no %s to show"
+msgstr ""
+
+msgid "There is no item to show"
+msgstr ""
+
+msgid "with selected filters"
+msgstr ""
+
+msgid "How about creating a new entry?"
 msgstr ""
 
 msgid "Mass Action complete."
@@ -749,6 +761,10 @@ msgstr "Массовое действие завершено."
 
 msgid "Something went wrong."
 msgstr "Что-то пошло не так."
+
+#, javascript-format
+msgid "All %s Items Selected"
+msgstr ""
 
 msgid "You haven't selected anything"
 msgstr "Вы ничего не выбрали"

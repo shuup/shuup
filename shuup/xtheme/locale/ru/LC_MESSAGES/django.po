@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 03:36+0000\n"
-"PO-Revision-Date: 2018-07-15 01:03+0000\n"
+"POT-Creation-Date: 2019-01-18 22:57+0000\n"
+"PO-Revision-Date: 2019-01-22 22:56+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -50,6 +50,32 @@ msgstr "Нет активных тем. Кликните тут чтобы ак�
 msgid "Theming"
 msgstr "Применение тем"
 
+msgid "Shuup Extensible Theme Engine Snippets"
+msgstr ""
+
+msgid "Snippets"
+msgstr "Образцы"
+
+msgid "Theme Custom CSS/JS"
+msgstr ""
+
+msgid ""
+"Select the themes that will have this snippet injected. Leave the field "
+"blank to inject in all themes."
+msgstr ""
+
+msgid "Select the location of the page to inject the snippet."
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Filter by location..."
+msgstr ""
+
+msgid "Type"
+msgstr "Тип"
+
 msgid "activate"
 msgstr "активировать"
 
@@ -61,6 +87,9 @@ msgstr "Выберите тему оформления для вашего ма�
 
 msgid "Theme activated."
 msgstr "Тема активирована."
+
+msgid "Custom CSS/JS"
+msgstr ""
 
 msgid "Stylesheets"
 msgstr "Выбор стиля"
@@ -93,6 +122,15 @@ msgid "Content in this placeholder is shown for %(product_name)s only."
 msgstr ""
 
 msgid "Shop '{}' has no active theme"
+msgstr ""
+
+msgid "Inline JavaScript"
+msgstr ""
+
+msgid "Inline CSS"
+msgstr ""
+
+msgid "Inline HTML"
 msgstr ""
 
 msgid "current draft"
@@ -129,8 +167,29 @@ msgstr "дата"
 msgid "Theme configuration for %s"
 msgstr "Настройки темы %s"
 
+msgid "location"
+msgstr ""
+
+msgid "snippet type"
+msgstr ""
+
+msgid "snippet"
+msgstr ""
+
+msgid "themes"
+msgstr ""
+
+msgid "Snippet"
+msgstr ""
+
+msgid "Snippet for {} in {}"
+msgstr ""
+
 msgid "Plugin"
 msgstr "Плагин"
+
+msgid "Categories"
+msgstr ""
 
 msgid "Category Links"
 msgstr "Ссылки категорий"
@@ -177,32 +236,34 @@ msgstr ""
 msgid "Product Highlights"
 msgstr "Особенности продукта"
 
-msgid "Type"
-msgstr "Тип"
-
 msgid "Count"
 msgstr "Счёт"
-
-msgid "Only show sale items"
-msgstr ""
-
-msgid "Show only products that have discounts"
-msgstr ""
 
 msgid "Only show in-stock and orderable items"
 msgstr "Показать только товары в наличии и доступные для заказа"
 
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
+
 msgid "Product Cross Sells"
 msgstr "Кросс-продажи товара"
 
-msgid "category"
-msgstr "категория"
+msgid "Category"
+msgstr ""
 
 msgid "Category Products Highlight"
 msgstr "Особенности продукта категории"
 
-msgid "Snippets"
-msgstr "Образцы"
+msgid "Products"
+msgstr ""
+
+msgid "Select all products you want to show"
+msgstr ""
+
+msgid "Product Selection"
+msgstr ""
 
 msgid "In-Place Snippet"
 msgstr "Существующий образец"
@@ -261,6 +322,24 @@ msgid ""
 "pages."
 msgstr ""
 
+msgid "End of head"
+msgstr ""
+
+msgid "Start of head"
+msgstr ""
+
+msgid "End of body"
+msgstr ""
+
+msgid "Start of body"
+msgstr ""
+
+msgid "Content start"
+msgstr ""
+
+msgid "Content end"
+msgstr ""
+
 msgid "Delete This Cell"
 msgstr "Удалить данную ячейку"
 
@@ -315,38 +394,23 @@ msgstr "В данной теме нет настроек"
 msgid "Select theme"
 msgstr "Выбрать тему"
 
-msgid "Active"
+msgid "Theme Guide"
 msgstr ""
-
-msgid "Guide"
-msgstr "Путеводитель"
-
-msgid "Actions"
-msgstr "Действия"
 
 msgid "Author"
 msgstr "Автор"
 
-msgid "Show guide"
-msgstr "Показать путеводитель"
-
-msgid "Activate theme to show guide"
-msgstr "Активировать тему, чтобы показать путеводитель"
-
-msgid "No guide"
-msgstr "Путеводителя нет"
+msgid "Configure"
+msgstr ""
 
 msgid "Activate"
 msgstr "Активировать"
 
-msgid "Click here to configure the theme"
-msgstr ""
-
-msgid "Configure"
-msgstr "Настроить"
-
 msgid "Theme Name"
 msgstr "Название темы"
+
+msgid "Actions"
+msgstr "Действия"
 
 msgid "Currently active"
 msgstr "Доступен в настоящий момент"
@@ -403,6 +467,12 @@ msgstr "Ширина ячейки"
 
 msgid "Cell align"
 msgstr "Выравнивание ячейки"
+
+msgid "Extra classes"
+msgstr ""
+
+msgid "Add extra CSS classes names to the cell"
+msgstr ""
 
 msgid "No Plugin"
 msgstr "Нет плагина"

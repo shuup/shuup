@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-13 17:48+0000\n"
-"PO-Revision-Date: 2018-07-14 09:35+0000\n"
+"POT-Creation-Date: 2019-02-21 23:09+0000\n"
+"PO-Revision-Date: 2019-02-22 07:18+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -18,9 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
-
-msgid "Classic Gray"
-msgstr "Классическая серая"
 
 msgid "This theme has no special settings to configure."
 msgstr "В данный момент нет никаких специальных настроек."
@@ -38,15 +35,6 @@ msgstr "Меню"
 msgid "Products"
 msgstr "Товары"
 
-msgid "Show Frontpage Welcome Text"
-msgstr "Показать текст приветствия на главной странице"
-
-msgid "Hide prices"
-msgstr ""
-
-msgid "Set shop in catalog mode"
-msgstr ""
-
 msgid "Default"
 msgstr "По умолчанию"
 
@@ -55,3 +43,6 @@ msgstr "Тёмно-синий"
 
 msgid "Candy Pink"
 msgstr "Карамельный"
+
+msgid "Show Frontpage Welcome Text"
+msgstr "Показать текст приветствия на главной странице"

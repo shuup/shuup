@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-23 18:59+0000\n"
-"PO-Revision-Date: 2018-07-25 04:58+0000\n"
+"POT-Creation-Date: 2018-11-21 19:51+0000\n"
+"PO-Revision-Date: 2018-12-07 17:35+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,9 @@ msgstr "доступно с"
 
 msgid "Available to"
 msgstr "доступно до"
+
+msgid "Template"
+msgstr ""
 
 msgid "URL already exists."
 msgstr " URL адрес уже существует."
@@ -76,6 +79,12 @@ msgstr ""
 
 #, python-format
 msgid "Content in this placeholder is shown for %(title)s only."
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "Article"
 msgstr ""
 
 msgid "shop"
@@ -167,8 +176,19 @@ msgstr "Контент"
 
 msgid ""
 "The page content. This is the text that is displayed when customers click on"
-" your page link."
-msgstr "Содержание страницы. Этот текст отображается, когда клиенты нажимают на вашу ссылку на страницу."
+" your page link.You can leave this empty and add all page content through "
+"placeholder editor in shop front.To edit the style of the page you can use "
+"the Snippet plugin which is in shop front editor."
+msgstr ""
+
+msgid "Template path"
+msgstr ""
+
+msgid "render title"
+msgstr ""
+
+msgid "Check this if this page should have a visible title"
+msgstr ""
 
 msgid "page"
 msgstr "страница"
@@ -178,6 +198,50 @@ msgstr "страницы"
 
 msgid "Untitled"
 msgstr "Без имени"
+
+msgid "Image"
+msgstr ""
+
+msgid "The image of your object."
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid ""
+"The title of your object as it should appear within the graph, e.g. The "
+"Rock."
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "A one to two sentence description of your object."
+msgstr ""
+
+msgid "Section"
+msgstr ""
+
+msgid ""
+"A high-level section name, e.g. Technology. Only applicable when type is "
+"Article."
+msgstr ""
+
+msgid "Tags"
+msgstr ""
+
+msgid ""
+"Tag words associated with this article. Only applicable when type is "
+"Article."
+msgstr ""
+
+msgid "Article author"
+msgstr ""
+
+msgid ""
+"The name of the author for the article. Only applicable when type is "
+"Article."
+msgstr ""
 
 msgid "CMS Page Links"
 msgstr "Ссылки на страницу контент менеджмента"
@@ -190,6 +254,17 @@ msgstr "Все страницы показаны, даже если не выб�
 
 msgid "Hide expired pages"
 msgstr "Скрыть устаревшие страницы"
+
+msgid "Default Page"
+msgstr ""
+
+msgid "Page with sidebar"
+msgstr ""
+
+msgid ""
+"Fill the fields below to add extra OpenGraph information to the page meta.\n"
+"        If not informed, some values will be inferred from the page attributes."
+msgstr ""
 
 msgid "New Page"
 msgstr "Новая Страница"

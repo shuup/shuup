@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-16 20:05+0000\n"
-"PO-Revision-Date: 2018-07-17 04:28+0000\n"
+"POT-Creation-Date: 2019-02-05 13:52+0000\n"
+"PO-Revision-Date: 2019-02-07 04:25+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,123 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "About Us"
+msgstr ""
+
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Terms and Conditions"
+msgstr ""
+
+msgid "Refund Policy"
+msgstr ""
+
+msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
+msgstr ""
+
+msgid "Send customer order confirmation email"
+msgstr ""
+
+msgid ""
+"We will configure a notification to send the customer an email after a "
+"placed order. You can disable this option later or even change the layout of"
+" the email."
+msgstr ""
+
+msgid "Create About Us page"
+msgstr ""
+
+msgid ""
+"We have already created an 'About Us' template for you based on your shop "
+"information. You must review the page and change it accordingly."
+msgstr ""
+
+msgid ""
+"We will create an 'About Us' template for you. We will base content of the "
+"page on your shop information. After we are done, you must review the page "
+"and change it accordingly."
+msgstr ""
+
+msgid "Create Privacy Policy page"
+msgstr ""
+
+msgid ""
+"We have already created a 'Privacy Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr ""
+
+msgid ""
+"We will create a 'Privacy Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr ""
+
+msgid "Create Terms and Conditions page"
+msgstr ""
+
+msgid ""
+"We have already created a 'Terms & Conditions' template for you based on "
+"your shop information. You must review the page and change it accordingly."
+msgstr ""
+
+msgid ""
+"We will create an 'Terms & Conditions' template for you. We will base "
+"content of the page on your shop information. After we are done, you must "
+"review the page and change it accordingly."
+msgstr ""
+
+msgid "Create Refund Policy page"
+msgstr ""
+
+msgid ""
+"We have already created a 'Refund Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr ""
+
+msgid ""
+"We will create an 'Refund Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr ""
+
+msgid "Configure the footer"
+msgstr ""
+
+msgid ""
+"We will now configure your shop footer and fill it with some of your shop's "
+"information. Don't worry, you can change this at any time."
+msgstr ""
+
+msgid "Content & Behavior"
+msgstr ""
+
+msgid ""
+"Add the initial content and configure the customer notifications for your "
+"shop"
+msgstr ""
+
+msgid "Configure notifications for your shop"
+msgstr ""
+
+msgid "Add the initial content"
+msgstr ""
+
+msgid "Configure the initial content pages"
+msgstr ""
+
+msgid "Configure some notifications"
+msgstr ""
+
+msgid "Demo"
+msgstr ""
+
+msgid "Dummy Mass Action #1"
+msgstr ""
+
+msgid "Dummy Mass Action #2"
+msgstr ""
 
 msgid "mock section title"
 msgstr "Изменить заглавие раздела"
@@ -33,6 +150,141 @@ msgstr "Привет %(name)s"
 #, python-format
 msgid "This is %(sku)s"
 msgstr "Это %(sku)s"
+
+msgid ""
+"There is sample data installed. Access \"Settings > Sample Data\" for more "
+"information."
+msgstr ""
+
+msgid ""
+"There is sample data installed. Click here to consolidate or delete them."
+msgstr ""
+
+msgid "Sample Data"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Cosmetics and perfumes"
+msgstr ""
+
+msgid "USpicy Makeup Brushes"
+msgstr ""
+
+msgid ""
+"Professional 10 pieces makeup brush set with soft oval toothbrush design"
+msgstr ""
+
+msgid "Precision Eyelash Curler"
+msgstr ""
+
+msgid ""
+"Precision Eyelash Curler is the professional choice of makeup artists "
+"everywhere."
+msgstr ""
+
+msgid "PureMoist Lipstick"
+msgstr ""
+
+msgid ""
+"PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
+"and protect lips."
+msgstr ""
+
+msgid "Clinique Happy"
+msgstr ""
+
+msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
+msgstr ""
+
+msgid "Tommy Girld by Tommy Hilfiger Perfume"
+msgstr ""
+
+msgid ""
+"A refreshing and energetic floral - with low notes of sandalwood and "
+"heather."
+msgstr ""
+
+msgid "Bvlgari Omnia Crystalline Eau de Toilette"
+msgstr ""
+
+msgid ""
+"Give yourself over to this fragrance as intoxicating and pure as a woman's "
+"soul is fragile."
+msgstr ""
+
+msgid "Still Jennifer Lopez Perfume"
+msgstr ""
+
+msgid ""
+"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still"
+" fragrance."
+msgstr ""
+
+msgid "La Vie Est Belle"
+msgstr ""
+
+msgid "A captivating new scent joins the La vie est belle path to happiness."
+msgstr ""
+
+msgid "Smooth Viking Beard Brush"
+msgstr ""
+
+msgid "Just a beard brush."
+msgstr ""
+
+msgid "Beard & Stash Oil"
+msgstr ""
+
+msgid "This oil is natural, and is made with the perfect combination of oils."
+msgstr ""
+
+msgid "Sample Carousel"
+msgstr ""
+
+msgid "Business Segment"
+msgstr ""
+
+msgid "Select your business segment to install categories."
+msgstr ""
+
+msgid "Install Categories"
+msgstr ""
+
+msgid "Check this to install sample categories."
+msgstr ""
+
+msgid "Install Products"
+msgstr ""
+
+msgid "Check this to install sample products."
+msgstr ""
+
+msgid "Install Carousel"
+msgstr ""
+
+msgid "Check this to install a sample carousel."
+msgstr ""
+
+msgid "Uninstall Categories"
+msgstr ""
+
+msgid "Uninstall Products"
+msgstr ""
+
+msgid "Uninstall Carousel"
+msgstr ""
+
+msgid "Sample data were consolidated"
+msgstr ""
+
+msgid ""
+"To start shopping right now, please install some sample data into your shop"
+msgstr ""
+
+msgid "Supplier Pricing"
+msgstr ""
 
 msgid "Shuup Testing Theme"
 msgstr "Оформление тестового режима Shuup"
