@@ -1,23 +1,28 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:33+0000\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
-"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
-"language/sv_SE/)\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2019-01-18 22:57+0000\n"
+"PO-Revision-Date: 2019-01-22 22:56+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Theme identifier must match"
+msgstr ""
+
+msgid "Either theme_settings or shop should be informed"
+msgstr ""
 
 msgid "Global plugins"
 msgstr "Globala insticksmoduler"
@@ -43,6 +48,32 @@ msgstr "Inget aktiverat tema. Klicka här för att aktivera ett."
 msgid "Theming"
 msgstr "Ställ in tema"
 
+msgid "Shuup Extensible Theme Engine Snippets"
+msgstr ""
+
+msgid "Snippets"
+msgstr "Utdrag"
+
+msgid "Theme Custom CSS/JS"
+msgstr ""
+
+msgid ""
+"Select the themes that will have this snippet injected. Leave the field "
+"blank to inject in all themes."
+msgstr ""
+
+msgid "Select the location of the page to inject the snippet."
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Filter by location..."
+msgstr ""
+
+msgid "Type"
+msgstr "Typ"
+
 msgid "activate"
 msgstr "aktivera"
 
@@ -55,11 +86,50 @@ msgstr "Välj ett tema för din butik"
 msgid "Theme activated."
 msgstr "Tema aktiverat."
 
+msgid "Custom CSS/JS"
+msgstr ""
+
 msgid "Stylesheets"
 msgstr "Utseendemallar"
 
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Typsnitt, färger och annan styling för ditt tema."
+
+msgid "Content in this placeholder is shown without limitations."
+msgstr ""
+
+#, python-format
+msgid ""
+"Content in this placeholder is shown for %(category_name)s category only."
+msgstr ""
+
+msgid "Content in this placeholder is shown for guests."
+msgstr ""
+
+msgid "Content in this placeholder is shown for company contacts."
+msgstr ""
+
+msgid "Content in this placeholder is shown for all logged in contacts."
+msgstr ""
+
+msgid "Content in this placeholder is shown for person contacts."
+msgstr ""
+
+#, python-format
+msgid "Content in this placeholder is shown for %(product_name)s only."
+msgstr ""
+
+msgid "Shop '{}' has no active theme"
+msgstr ""
+
+msgid "Inline JavaScript"
+msgstr ""
+
+msgid "Inline CSS"
+msgstr ""
+
+msgid "Inline HTML"
+msgstr ""
 
 msgid "current draft"
 msgstr "nuvarande utkast"
@@ -95,8 +165,29 @@ msgstr "information"
 msgid "Theme configuration for %s"
 msgstr "Konfiguration för temat %s"
 
+msgid "location"
+msgstr ""
+
+msgid "snippet type"
+msgstr ""
+
+msgid "snippet"
+msgstr ""
+
+msgid "themes"
+msgstr ""
+
+msgid "Snippet"
+msgstr ""
+
+msgid "Snippet for {} in {}"
+msgstr ""
+
 msgid "Plugin"
 msgstr "Insticksmodul"
+
+msgid "Categories"
+msgstr ""
 
 msgid "Category Links"
 msgstr "Kategorilänkar"
@@ -131,11 +222,17 @@ msgstr "Lämna tomt för standardbredd"
 msgid "Height (px)"
 msgstr "Höjd (px)"
 
+msgid "Newest"
+msgstr ""
+
+msgid "Best Selling"
+msgstr ""
+
+msgid "Random"
+msgstr ""
+
 msgid "Product Highlights"
 msgstr "Produkthöjdpunkter"
-
-msgid "Type"
-msgstr "Typ"
 
 msgid "Count"
 msgstr "Antal"
@@ -143,17 +240,28 @@ msgstr "Antal"
 msgid "Only show in-stock and orderable items"
 msgstr "Visas endast produkter som finns i lager och är beställningsbara"
 
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
+
 msgid "Product Cross Sells"
 msgstr "Produkters korsförsäljningar"
 
-msgid "category"
-msgstr "kategori"
+msgid "Category"
+msgstr ""
 
 msgid "Category Products Highlight"
 msgstr "Höjdpunkter från produktkategorier"
 
-msgid "Snippets"
-msgstr "Utdrag"
+msgid "Products"
+msgstr ""
+
+msgid "Select all products you want to show"
+msgstr ""
+
+msgid "Product Selection"
+msgstr ""
 
 msgid "In-Place Snippet"
 msgstr "In-place utdrag"
@@ -207,6 +315,29 @@ msgstr "text"
 msgid "Click to edit placeholder: %s"
 msgstr "Klicka för att redigera platshållare: %s"
 
+msgid ""
+"This placeholder is global and content of this placeholder is shown on all "
+"pages."
+msgstr ""
+
+msgid "End of head"
+msgstr ""
+
+msgid "Start of head"
+msgstr ""
+
+msgid "End of body"
+msgstr ""
+
+msgid "Start of body"
+msgstr ""
+
+msgid "Content start"
+msgstr ""
+
+msgid "Content end"
+msgstr ""
+
 msgid "Delete This Cell"
 msgstr "Ta bort denna cell"
 
@@ -219,8 +350,19 @@ msgstr "Det finns inget att konfigurera i denna insticksmodul"
 msgid "Save Plugin"
 msgstr "Spara insticksmodul"
 
+msgid ""
+"Remember to publish your changes for this placeholder when you are done, by "
+"clicking the Publish Changes button at the top."
+msgstr ""
+
 msgid "Edit Placeholder"
 msgstr "Redigera platshållare"
+
+msgid ""
+"Edit plugins inside this placeholder. By saving the individual plugin, the "
+"changes are saved as a draft, and only you are able to see the changes. To "
+"make your changes Public, Click the Publish Changes button."
+msgstr ""
 
 msgid "Add new cell"
 msgstr "Lägg till ny cell"
@@ -250,35 +392,26 @@ msgstr "Det finns inget att konfigurera i detta tema."
 msgid "Select theme"
 msgstr "Välj tema"
 
-msgid "Guide"
-msgstr "Guide"
-
-msgid "Actions"
-msgstr "Åtgärder"
+msgid "Theme Guide"
+msgstr ""
 
 msgid "Author"
 msgstr "Skapare"
 
-msgid "Show guide"
-msgstr "Visa guide"
-
-msgid "Activate theme to show guide"
-msgstr "Aktivera tema för att visa guiden"
-
-msgid "No guide"
-msgstr "Ingen guide"
-
-msgid "Currently active"
-msgstr "Aktiv just nu"
+msgid "Configure"
+msgstr ""
 
 msgid "Activate"
 msgstr "Aktivera"
 
-msgid "Configure"
-msgstr "Konfigurera"
-
 msgid "Theme Name"
 msgstr "Temats namn"
+
+msgid "Actions"
+msgstr "Åtgärder"
+
+msgid "Currently active"
+msgstr "Aktiv just nu"
 
 msgid "Revert Changes"
 msgstr "Återställ ändringar"
@@ -332,6 +465,12 @@ msgstr "Cellbredd"
 
 msgid "Cell align"
 msgstr "Celljustering"
+
+msgid "Extra classes"
+msgstr ""
+
+msgid "Add extra CSS classes names to the cell"
+msgstr ""
 
 msgid "No Plugin"
 msgstr "Ingen insticksmodul"

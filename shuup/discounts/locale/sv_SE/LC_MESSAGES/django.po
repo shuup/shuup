@@ -1,0 +1,348 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-08 01:41+0000\n"
+"PO-Revision-Date: 2018-10-02 06:50+0000\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Archive Product Discounts"
+msgstr ""
+
+msgid "Unarchive Discounts"
+msgstr ""
+
+msgid "Delete Discounts"
+msgstr ""
+
+msgid "Product Discounts Coupon Codes"
+msgstr ""
+
+msgid "Discounts"
+msgstr ""
+
+msgid "Product Discounts"
+msgstr ""
+
+msgid "Archived Product Discounts"
+msgstr ""
+
+msgid "Discounts Availability Exceptions"
+msgstr ""
+
+msgid "Product Discounts Availability Exceptions"
+msgstr ""
+
+msgid "Discounts Happy Hours"
+msgstr ""
+
+msgid "Product Discounts Happy Hours"
+msgstr ""
+
+msgid "Discount Name"
+msgstr ""
+
+msgid "Filter by name..."
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Filter by product..."
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Filter by category..."
+msgstr ""
+
+msgid "Contact Group"
+msgstr ""
+
+msgid "Filter by contact group..."
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Filter by contact..."
+msgstr ""
+
+msgid "Coupon code"
+msgstr ""
+
+msgid "Filter by coupon code..."
+msgstr ""
+
+msgid "Effect"
+msgstr ""
+
+msgid "End Date and Time"
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "Usages"
+msgstr ""
+
+msgid "Usages Limit per contact"
+msgstr ""
+
+msgid "Usage Limit"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Created by"
+msgstr ""
+
+msgid "Date created"
+msgstr ""
+
+msgid "Select discounts linked to this coupon code."
+msgstr ""
+
+msgid "Shops"
+msgstr ""
+
+msgid "Select shops for this discount. Keep it blank to share with all shops."
+msgstr ""
+
+#, python-format
+msgid "%s has been deleted."
+msgstr ""
+
+msgid "Discount percentage"
+msgstr ""
+
+msgid "The discount percentage for this discount."
+msgstr ""
+
+msgid "Exception Name"
+msgstr ""
+
+msgid "Start Date and Time"
+msgstr ""
+
+msgid "Select discounts to be ignored on given time frame."
+msgstr ""
+
+msgid "Happy Hour Name"
+msgstr ""
+
+msgid "Select discounts for this happy hour."
+msgstr ""
+
+msgid ""
+"12pm is considered noon and 12am as midnight. Start hour is included to the "
+"discount."
+msgstr ""
+
+msgid ""
+"12pm is considered noon and 12am as midnight. End hours is included to the "
+"discount."
+msgstr ""
+
+msgid "Weekdays the happy hour is active."
+msgstr ""
+
+msgid "shops"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid ""
+"The name for this exception. Used internally with exception lists for "
+"filtering."
+msgstr ""
+
+msgid "start"
+msgstr ""
+
+msgid "end"
+msgstr ""
+
+msgid "availability exception"
+msgstr ""
+
+msgid "availability exceptions"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "usage limit per customer"
+msgstr ""
+
+msgid "Limit the amount of usages per a single customer."
+msgstr ""
+
+msgid "usage limit"
+msgstr ""
+
+msgid ""
+"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
+"coupon cannot be used."
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "created by"
+msgstr ""
+
+msgid "modified by"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid ""
+"The name for this discount. Used internally with discount lists for "
+"filtering."
+msgstr ""
+
+msgid ""
+"Check this if the discount is currently active. Please also set a start and "
+"end date."
+msgstr ""
+
+msgid "start date and time"
+msgstr ""
+
+msgid ""
+"The date and time the discount starts. This is only applicable if the "
+"discount is marked as active."
+msgstr ""
+
+msgid "end date and time"
+msgstr ""
+
+msgid ""
+"The date and time the discount ends. This is only applicable if the discount"
+" is marked as active."
+msgstr ""
+
+msgid "happy hours"
+msgstr ""
+
+msgid "Select happy hours for this discount."
+msgstr ""
+
+msgid "Select availability for this discount."
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "Select product for this discount."
+msgstr ""
+
+msgid "exclude selected category"
+msgstr ""
+
+msgid "Exclude products in selected category from this discount."
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid "Select category for this discount."
+msgstr ""
+
+msgid "contact"
+msgstr ""
+
+msgid "Select contact for this discount."
+msgstr ""
+
+msgid "exclude selected contact group"
+msgstr ""
+
+msgid "Exclude contacts in selected contact group from this discount."
+msgstr ""
+
+msgid "contact group"
+msgstr ""
+
+msgid "Select contact group for this discount."
+msgstr ""
+
+msgid "coupon code"
+msgstr ""
+
+msgid "Select coupon code for this discount."
+msgstr ""
+
+msgid "discounted price"
+msgstr ""
+
+msgid "Discounted product price for this discount."
+msgstr ""
+
+msgid "discount amount"
+msgstr ""
+
+msgid "Discount amount value for this discount."
+msgstr ""
+
+msgid "discount percentage"
+msgstr ""
+
+msgid "Discount percentage for this discount."
+msgstr ""
+
+msgid "product discount"
+msgstr ""
+
+msgid "product discounts"
+msgstr ""
+
+msgid ""
+"The name for this . Used internally with exception lists for filtering."
+msgstr ""
+
+msgid "happy hour"
+msgstr ""
+
+msgid "parent"
+msgstr ""
+
+msgid "from hour"
+msgstr ""
+
+msgid "to hour"
+msgstr ""
+
+msgid "weekdays"
+msgstr ""
+
+msgid "time range"
+msgstr ""
+
+msgid "time ranges"
+msgstr ""
+
+msgid "To hour has to be after from hour"
+msgstr ""
+
+msgid "Availability"
+msgstr ""
+
+msgid "Condition"
+msgstr ""

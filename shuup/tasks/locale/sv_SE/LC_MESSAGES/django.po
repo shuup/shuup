@@ -1,0 +1,172 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-05 20:21+0000\n"
+"PO-Revision-Date: 2018-06-01 17:37+0000\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Tasks"
+msgstr ""
+
+msgid "Show Tasks"
+msgstr ""
+
+msgid "Task Types"
+msgstr ""
+
+msgid "Show Task Types"
+msgstr ""
+
+#, python-brace-format
+msgid "Changed assigment from {from_contact_name} to {to_contact_name}."
+msgstr ""
+
+msgid "Set In Progress"
+msgstr ""
+
+msgid "Set Completed"
+msgstr ""
+
+msgid "Invalid status."
+msgstr ""
+
+msgid "Status changed."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Filter by name..."
+msgstr ""
+
+msgid "Creator"
+msgstr ""
+
+msgid "Filter by creator..."
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "In progress"
+msgstr ""
+
+msgid "Completed"
+msgstr ""
+
+msgid "Deleted"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Staff Only"
+msgstr ""
+
+msgid "Admins Only"
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "task type"
+msgstr ""
+
+msgid "task types"
+msgstr ""
+
+msgid "status"
+msgstr ""
+
+msgid "priority"
+msgstr ""
+
+msgid "creator"
+msgstr ""
+
+msgid "assigned to"
+msgstr ""
+
+msgid "completed by"
+msgstr ""
+
+msgid "completed on"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid "task"
+msgstr ""
+
+msgid "author"
+msgstr ""
+
+msgid "visibility"
+msgstr ""
+
+msgid "body"
+msgstr ""
+
+msgid "New Task"
+msgstr ""
+
+msgid "General Information"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Completed on"
+msgstr ""
+
+msgid "Completed by"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Visibility"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Post a new comment"
+msgstr ""
+
+msgid "New Task Type"
+msgstr ""
+
+msgid "Last 10 pending tasks assigned for you"
+msgstr ""
+
+msgid "Task"
+msgstr ""

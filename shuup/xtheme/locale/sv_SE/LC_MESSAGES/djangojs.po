@@ -1,22 +1,21 @@
 # English translations for PROJECT.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:33+0000\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
-"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
-"language/sv_SE/)\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2018-11-20 19:05+0000\n"
+"PO-Revision-Date: 2018-12-03 23:57+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, javascript-format
@@ -36,17 +35,20 @@ msgstr "Är du säker du vill ta bort cellen?"
 msgid "Are you sure you wish to publish changes made to this view?"
 msgstr "Är du säker på att du vill publicera ändringar i den här vyn?"
 
+msgid "You have changed the form. Do you want to save them before publishing?"
+msgstr ""
+
 msgid ""
 "Are you sure you wish to revert all changes made since the last published "
 "version?"
-msgstr ""
-"Är du säker på att du vill återställa alla ändringar som gjorts sedan den "
-"senast publicerade versionen?"
+msgstr "Är du säker på att du vill återställa alla ändringar som gjorts sedan den senast publicerade versionen?"
 
-msgid "Changing plugins will cause other changes made on this form to be lost."
+msgid ""
+"Changing plugins will cause other changes made on this form to be lost."
+msgstr "Ändringar i insticksmodulerna kommer att göra att ändringar i formuläret går förlorade."
+
+msgid "Custom CSS/JS"
 msgstr ""
-"Ändringar i insticksmodulerna kommer att göra att ändringar i formuläret går "
-"förlorade."
 
 msgid "Exit Edit"
 msgstr "Avsluta redigera"
