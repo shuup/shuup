@@ -1,0 +1,833 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-27 19:23+0000\n"
+"PO-Revision-Date: 2018-05-29 19:55+0000\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "GDPR"
+msgstr ""
+
+msgid "Anonymize"
+msgstr ""
+
+msgid ""
+"This action will replace all contact personal data with random values making"
+" it impossible to be identified. The account will also be deactivated and "
+"any pending order(s) will be canceled. Are you sure?"
+msgstr ""
+
+msgid "Download data"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "General Data Protection Regulation"
+msgstr ""
+
+msgid "Contact anonymized!"
+msgstr ""
+
+msgid "My Data"
+msgstr ""
+
+msgid "Customer data"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "Define if the GDPR is active."
+msgstr ""
+
+msgid "privacy policy page"
+msgstr ""
+
+msgid ""
+"Choose your privacy policy page here. If this page changes, customers will "
+"be prompted for new consent."
+msgstr ""
+
+msgid "consent pages"
+msgstr ""
+
+msgid ""
+"Choose pages here which are being monitored for customer consent. If any of "
+"these pages change, the customer is being prompted for a new consent."
+msgstr ""
+
+msgid "cookie banner content"
+msgstr ""
+
+msgid "The text to be presented to users in a pop-up warning."
+msgstr ""
+
+msgid "cookie privacy excerpt"
+msgstr ""
+
+msgid "The summary text to be presented about cookie privacy."
+msgstr ""
+
+msgid "GDPR settings"
+msgstr ""
+
+msgid "GDPR for {}"
+msgstr ""
+
+msgid "always active"
+msgstr ""
+
+msgid "cookies used"
+msgstr ""
+
+msgid ""
+"Comma separated list of cookies names, prefix or suffix that will be "
+"included in this category, e.g. _ga, mysession, user_c_"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "how we use"
+msgstr ""
+
+msgid "Describe the purpose of this category of cookies and how it is used."
+msgstr ""
+
+msgid "GDPR cookie category"
+msgstr ""
+
+msgid "GDPR cookie categories"
+msgstr ""
+
+msgid "GDPR cookie category for {}"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "consent documents"
+msgstr ""
+
+msgid "GDPR user consent"
+msgstr ""
+
+msgid "GDPR user consents"
+msgstr ""
+
+msgid "GDPR user consent in {} for user {} in shop {}"
+msgstr ""
+
+msgid "GDPR user consent document for {} (Version: {})"
+msgstr ""
+
+msgid ""
+"I have read and accept the <a href='{}' target='_blank' "
+"class='gdpr_consent_doc_check'>{}</a>"
+msgstr ""
+
+msgid "You must accept to this to register."
+msgstr ""
+
+msgid "You must accept to this to order."
+msgstr ""
+
+msgid "You must accept to this to authenticate."
+msgstr ""
+
+msgid ""
+"<p>This website stores cookies on your computer. These cookies are used to "
+"collect information about how you interact with our website and allow us to "
+"remember you. We use this information in order to improve and customize your"
+" browsing experience and for analytics and metrics about our visitors both "
+"on this website and other media. To find out more about the cookies we use, "
+"see our Privacy Policy.</p>"
+msgstr ""
+
+msgid ""
+"<p>When you visit any website, it may store or retrieve information on "
+"yourbrowser, mostly in the form of cookies. This information might be about "
+"you, your preferences or your device and is mostly used to make the site "
+"work as you expect it to. The information does not usually directly identify"
+" you, but it can give you a more personalized web experience.</p><p>Because "
+"we respect your right to privacy, you can choose not to allow some types of "
+"cookies. Click on the different category headings to find out more and "
+"change our default settings. However, blocking some types of cookies may "
+"impact your experience of the site and the services we are able to "
+"offer.</p>"
+msgstr ""
+
+msgid "General Settings"
+msgstr ""
+
+msgid "Cookie Categories"
+msgstr ""
+
+msgid "Add new cookie category"
+msgstr ""
+
+msgid "Use this form to create a new cookie category"
+msgstr ""
+
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Last updated"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(company_name)s (“we” or “us” or “our”) respects the privacy of our users "
+"(“user” or “you”). This Privacy Policy explains how we collect, use, retain,"
+" disclose, and safeguard your information whenever you access or use in any "
+"manner any %(company_name)s application, product, service, feature, "
+"technology, content, or website (collectively, “Services”). By registering "
+"or signing up for a %(company_name)s account, including through a computer "
+"or mobile device, you accept the terms of this Privacy Policy. Please read "
+"this Privacy Policy carefully."
+msgstr ""
+
+msgid ""
+"IF YOU DO NOT AGREE WITH THE TERMS OF THIS PRIVACY POLICY, PLEASE DO NOT "
+"ACCESS THE SERVICES."
+msgstr ""
+
+msgid ""
+"We reserve the right to make changes to this Privacy Policy at any time and "
+"for any reason. We will alert you about any changes by updating the “Last "
+"updated” date of this Privacy Policy."
+msgstr ""
+
+msgid ""
+"You are encouraged to periodically review this Privacy Policy to stay "
+"informed of updates. You will be deemed to have been made aware of, will be "
+"subject to, and will be deemed to have accepted the changes in any revised "
+"Privacy Policy by your continued use of the Services after the date such "
+"revised Privacy Policy is posted."
+msgstr ""
+
+msgid ""
+"This Privacy Policy does not apply to the third-party online/mobile store "
+"from which you install the Services or make payments, including any in-game "
+"virtual items, which may also collect and use data about you."
+msgstr ""
+
+msgid ""
+"We are not responsible for any of the data collected by any such third "
+"party."
+msgstr ""
+
+msgid "Important Information"
+msgstr ""
+
+msgid "Changes to this Privacy Policy"
+msgstr ""
+
+#, python-format
+msgid ""
+"We may update this Privacy Policy from time to time by posting a new version"
+" online. You should check this page occasionally to review any changes. If "
+"we make any material changes we will notify you by posting the revised "
+"Privacy Policy on our Online Store and, if you order from our store, "
+"providing notice through the Notification app in the %(company_name)s Store "
+"Admin. This helps you to always be aware of what information we collect, how"
+" we use it and under what circumstances, if any, it is disclosed. Your "
+"continued use of the Online Store, the online store services, and/or "
+"continued provision of Personal Information to us will be subject to the "
+"terms of the then-current Privacy Policy."
+msgstr ""
+
+msgid "Contact Us"
+msgstr ""
+
+#, python-format
+msgid ""
+"If you have any questions about this Privacy Policy or our treatment of the "
+"information you provide us, please write to us by email at %(store_email)s "
+"or by mail to %(full_address)s, Attn: Privacy."
+msgstr ""
+
+#, python-format
+msgid "Use of the Online Store by %(company_name)s and our Customers"
+msgstr ""
+
+#, python-format
+msgid "The %(company_name)s Online Store"
+msgstr ""
+
+#, python-format
+msgid ""
+"Our online store allows any company (or person) that uses it (our customers "
+"and %(company_name)s itself) to order the products available in the store."
+msgstr ""
+
+msgid "Customer has two ways of providing information to us:"
+msgstr ""
+
+msgid "Registering to our page"
+msgstr ""
+
+msgid "Ordering products from us"
+msgstr ""
+
+msgid ""
+"This, voluntarely given, information, which is stored and managed on our "
+"service providers' servers, is used to ensure the services can be run and "
+"ensures we are able to provide our service."
+msgstr ""
+
+#, python-format
+msgid "Use by %(company_name)s"
+msgstr ""
+
+msgid ""
+"Information that we collect and manage using this Online Store belongs to us"
+" and is used, disclosed and protected according to this Privacy Policy."
+msgstr ""
+
+msgid "Use by Our Customers"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(company_name)s collects information under the direction of its customers, "
+"and has no direct relationship with the individuals whose Personal "
+"Information it processes. If you would no longer like to be contacted by us,"
+" please contact us directly at <a "
+"href=\"mailto:%(store_email)s\">%(store_email)s</a>. We may transfer "
+"Personal Information to companies that help us provide our service. "
+"Transfers to subsequent third parties are covered by the service agreements "
+"with them."
+msgstr ""
+
+msgid "Sensitive Information"
+msgstr ""
+
+msgid ""
+"This refers to credit or debit card numbers, personal financial account "
+"information, Social Security numbers, passport numbers, driver's license "
+"numbers or similar personal identifiers, racial or ethnic origin, physical "
+"or mental health condition or information, or other employment, financial or"
+" health information."
+msgstr ""
+
+msgid "Information We Collect"
+msgstr ""
+
+msgid "When You Visit our Online Store"
+msgstr ""
+
+msgid ""
+"You are free to explore the Online Store without providing any Personal "
+"Information about yourself. When you order from our Online Store or register"
+" to the Online Store, we request that you provide Personal Information about"
+" yourself, and we collect Navigational Information."
+msgstr ""
+
+msgid "Personal Information"
+msgstr ""
+
+msgid ""
+"This refers to any information that you voluntarily submit to us and that "
+"identifies you personally, including contact information, such as your name,"
+" e-mail address, company name, address, phone number, and other information "
+"about yourself or your business."
+msgstr ""
+
+msgid ""
+"Personal Information can also include information about any transactions, "
+"both free and paid, that you enter into on the Online Store, and information"
+" about you that is available on the internet, such as from Facebook, "
+"LinkedIn, Twitter and Google, or publicly available information that we "
+"acquire from service providers."
+msgstr ""
+
+msgid "Navigational Information"
+msgstr ""
+
+msgid ""
+"This refers to information about your computer and your visits to this "
+"website such as your IP address, geographical location, browser type, "
+"referral source, length of visit and pages viewed. Please see the "
+"\"Navigation Information\" section below."
+msgstr ""
+
+msgid "Payment Information"
+msgstr ""
+
+msgid ""
+"We collect and process payment information from you when you order from the "
+"Online Store, including credit cards numbers and billing information, using "
+"third party PCI-compliant service providers. The payment card information is"
+" not saved into our servers."
+msgstr ""
+
+msgid "Information About Children"
+msgstr ""
+
+#, python-format
+msgid ""
+"The Online Store are not intended for or targeted at children under 13, and "
+"we do not knowingly or intentionally collect information about children "
+"under 13. If you believe that we have collected information about a child "
+"under 13, please contact us at %(store_email)s, so that we may delete the "
+"information."
+msgstr ""
+
+msgid "How We Use Information We Collect"
+msgstr ""
+
+msgid "Compliance with Our Privacy Policy"
+msgstr ""
+
+msgid ""
+"We use the information we collect only in compliance with this Privacy "
+"Policy."
+msgstr ""
+
+msgid "We Never Sell Personal Information"
+msgstr ""
+
+msgid "We will never sell your Personal Information to any third party."
+msgstr ""
+
+msgid "Use of Personal Information"
+msgstr ""
+
+#, python-format
+msgid ""
+"In addition to the uses identified elsewhere in this Privacy Policy, we may "
+"use your Personal Information to: (a) improve your browsing experience by "
+"personalizing the Online Store and to improve the Online Store; (b) send "
+"information to you which we think may be of interest to you by post, email, "
+"or other means; (c) send you marketing communications relating to our "
+"business or the businesses of carefully-selected third parties which we "
+"think may be of interest to you, and (d) provide other companies with "
+"statistical information about our users -- but this information will not be "
+"used to identify any individual user. We may, from time to time, contact you"
+" on behalf of external business partners about a particular offering that "
+"may be of interest to you. In those cases, we do not transfer your unique "
+"Personal Information to the third party. In addition, we may share data with"
+" trusted partners to contact you based on your request to receive such "
+"communications, help us perform statistical analysis, or provide customer "
+"support. Such third parties are prohibited from using your Personal "
+"Information except for these purposes, and they are required to maintain the"
+" confidentiality of your information. If you do not want us to share your "
+"personal information with these companies, contact us at %(store_email)s."
+msgstr ""
+
+msgid "Use of Navigational Information"
+msgstr ""
+
+#, python-format
+msgid ""
+"We use Navigational Information to operate and improve the Online Store. We "
+"may also use Navigational Information alone or in combination with Personal "
+"Information to provide you with personalized information about "
+"%(company_name)s."
+msgstr ""
+
+msgid "Customer Testimonials and Comments"
+msgstr ""
+
+msgid ""
+"We post customer testimonials and comments on our Online Store, which may "
+"contain Personal Information. We obtain each customer's consent via email "
+"prior to posting the customer's name and testimonial."
+msgstr ""
+
+msgid "Use of Credit Card Information"
+msgstr ""
+
+msgid ""
+"We use a third-party service provider to manage credit card processing. This"
+" service provider is not permitted to store, retain, or use information you "
+"provide except for the sole purpose of credit card processing on our behalf."
+msgstr ""
+
+msgid "Service Providers"
+msgstr ""
+
+msgid ""
+"We employ other companies and people to provide services to visitors to our "
+"Online Store, our customers, and users of the Online Store and may need to "
+"share your information with them to provide information, products or "
+"services to you. Examples may include removing repetitive information from "
+"prospect lists, analyzing data, providing marketing assistance, processing "
+"credit card payments, supplementing the information you provide us in order "
+"to provide you with better service, and providing customer service. In all "
+"cases where we share your information with such agents, we explicitly "
+"require the agent to acknowledge and adhere to our privacy and customer data"
+" handling policies."
+msgstr ""
+
+msgid "Security of your Personal Information"
+msgstr ""
+
+msgid ""
+"We use a variety of security technologies and procedures to help protect "
+"your Personal Information from unauthorized access, use or disclosure. We "
+"secure the Personal Information you provide on computer servers in a "
+"controlled, secure environment, protected from unauthorized access, use or "
+"disclosure. When sensitive Personal Information (such as a credit card "
+"number and/or geo-location data) is collected on our Online Store and/or "
+"transmitted to other websites, it is protected through the use of "
+"encryption, such as the Secure Socket Layer (SSL) protocol."
+msgstr ""
+
+#, python-format
+msgid ""
+"If you have any questions about the security of your Personal Information, "
+"you can contact us at %(store_email)s."
+msgstr ""
+
+msgid "Social Media Features"
+msgstr ""
+
+msgid ""
+"Our Online Store may include Social Media Features, such as the Facebook "
+"Like button and Widgets, such as the Share This button or interactive mini-"
+"programs that run on our sites. These features may collect your IP address, "
+"which page you are visiting on our sites, and may set a cookie to enable the"
+" feature to function properly. Social Media Features and Widgets are either "
+"hosted by a third party or hosted directly on our Online Store. This Privacy"
+" Policy does not apply to these features."
+msgstr ""
+
+msgid ""
+"Your interactions with these features are governed by the privacy policy and"
+" other policies of the companies providing them."
+msgstr ""
+
+msgid "External Websites"
+msgstr ""
+
+msgid ""
+"Our Online Store provide links to other websites. We do not control, and are"
+" not responsible for, the content or practices of these other websites. Our "
+"provision of such links does not constitute our endorsement of these other "
+"websites, their content, their owners, or their practices. This Privacy "
+"Policy does not apply to these other websites, which are subject to any "
+"privacy and other policies they may have."
+msgstr ""
+
+msgid "Retention of Personal Information"
+msgstr ""
+
+msgid ""
+"We retain Personal Information that you provide us as long as we consider it"
+" potentially useful in contacting you about the Online Store or our other "
+"services, or as needed to comply with our legal obligations, resolve "
+"disputes and enforce our agreements, and then we securely delete the "
+"information. We will delete this information from the servers at an earlier "
+"date if you so request, as described in \"Opting Out and Unsubscribing\" "
+"below. If we terminate the use of the Online Store, then we will provide you"
+" with access to all information stored for the Online Store, including any "
+"Personal Information provided by you. After termination, we may, unless "
+"legally prohibited, delete all customer information, including your Personal"
+" Information, from the Online Store."
+msgstr ""
+
+msgid "International Transfer of Information"
+msgstr ""
+
+msgid ""
+"To facilitate our possible global operations, we may transfer and access "
+"Personal Information from around the world, including the United States. "
+"This Privacy Policy shall apply even if we transfer Personal Information to "
+"other countries."
+msgstr ""
+
+msgid "Corporate Events"
+msgstr ""
+
+#, python-format
+msgid ""
+"If we (or our assets) are acquired by another company, whether by merger, "
+"acquisition, bankruptcy or otherwise, that company would receive all "
+"information gathered by %(company_name)s on the Online Store. In this event,"
+" you will be notified via email and/or a prominent notice on our website, of"
+" any change in ownership, uses of your Personal Information, and choices you"
+" may have regarding your Personal Information."
+msgstr ""
+
+msgid "Compelled Disclosure"
+msgstr ""
+
+msgid ""
+"We reserve the right to use or disclose your Personal Information if "
+"required by law or if we reasonably believe that use or disclosure is "
+"necessary to protect our rights, protect your safety or the safety of "
+"others, investigate fraud, or comply with a law, court order, or legal "
+"process."
+msgstr ""
+
+msgid "Cookies"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(company_name)s and its partners use cookies or similar technologies to "
+"analyze trends, administer the website, track users’ movements around the "
+"website, and to gather demographic information about our user base as a "
+"whole."
+msgstr ""
+
+msgid ""
+"We use \"cookies\" to help you personalize your online shopping experience. "
+"A cookie is a text file that is placed on your hard disk by a Web server. "
+"Cookies are not used to run programs or deliver viruses to your computer. "
+"Cookies are uniquely assigned to you, and can only be read by a Web server "
+"in the domain that issued the cookie to you. One of the primary purposes of "
+"cookies is to provide a convenience feature to save you time. The purpose of"
+" a cookie is to tell the Web server that you have returned to a specific "
+"page."
+msgstr ""
+
+msgid ""
+"For example, if you personalize pages on our Online Store, or register for "
+"the Online Store, a cookie helps us to recall your specific information on "
+"subsequent visits. When you return to the same Website, the information you "
+"previously provided can be retrieved, so you can easily use the customized "
+"features."
+msgstr ""
+
+#, python-format
+msgid ""
+"You have the ability to accept or decline cookies. Most Web browsers "
+"automatically accept cookies, but you can usually modify your browser "
+"setting to decline cookies if you prefer. If you choose to decline cookies, "
+"you may not be able to fully experience the interactive features of the "
+"%(company_name)s Online Store you visit. %(company_name)s keeps track of the"
+" Online Store and pages you visit within %(company_name)s, in order to "
+"determine what portion of the %(company_name)s Online Store is the most "
+"popular or most used. This data is used to deliver customized content and "
+"promotions within the %(company_name)s Online Store to customers whose "
+"behavior indicates that they are interested in a particular subject area."
+msgstr ""
+
+msgid "Log Files"
+msgstr ""
+
+#, python-format
+msgid ""
+"We may collect demographic information, such as your ZIP code, age, gender, "
+"preferences, interests and favorites using log files that are not associated"
+" with your name or other personal information. There is also information "
+"about your computer hardware and software that is automatically collected by"
+" us. This information can include: your IP address, browser type, domain "
+"names, internet service provider (ISP), the files viewed on our site (e.g., "
+"HTML pages, graphics, etc.), operating system, clickstream data, access "
+"times and referring website addresses. This information is used by "
+"%(company_name)s for the operation of the Online Store, to maintain quality "
+"of the Online Store, and to provide general statistics regarding use of the "
+"%(company_name)s Online Store. For these purposes, we do link this "
+"automatically-collected data to Personal Information such as name, email "
+"address, address, and phone number."
+msgstr ""
+
+msgid "Flash Cookies and Other Third Party Tracking Technologies"
+msgstr ""
+
+#, python-format
+msgid ""
+"The Adobe Flash Player (and similar applications) use technology to remember"
+" settings, preferences and usage similar to browser cookies but these are "
+"managed through a different interface than the one provided by your Web "
+"browser. This technology creates locally stored objects that are often "
+"referred to as \"Flash cookies.\" %(company_name)s may create pages on the "
+"Online Store that employ Adobe Flash cookies. %(company_name)s does not have"
+" access or control over our customers' Flash cookies, but you may access "
+"your Flash management tools from Adobe's web site directly here."
+msgstr ""
+
+#, python-format
+msgid ""
+"Similarly, we may create pages using the %(company_name)s Online Store that "
+"use technology from tracking utility companies, such as cookies and web "
+"beacons. If we decide use these technologies, we will update this Privacy "
+"Policy to reflect these changes."
+msgstr ""
+
+msgid "Opting Out and Unsubscribing"
+msgstr ""
+
+msgid "Reviewing, Correcting and Removing Your Personal Information"
+msgstr ""
+
+#, python-format
+msgid ""
+"Upon request %(company_name)s will provide you with information about "
+"whether we hold any of your Personal Information. If you provide us with "
+"your Personal Information, you have the following rights with respect to "
+"that information:"
+msgstr ""
+
+msgid "To review the user information that you have supplied to us"
+msgstr ""
+
+msgid ""
+"To request that your user information be removed from any solicitation list "
+"that we use"
+msgstr ""
+
+msgid "To request that your user information be deleted from our records"
+msgstr ""
+
+#, python-format
+msgid "To opt out of being solicited by %(company_name)s or third parties"
+msgstr ""
+
+#, python-format
+msgid ""
+"To exercise any of these rights, please contact us at %(store_email)s or by "
+"mail to %(full_address)s, Attention: Privacy. We will respond to your "
+"request to change, correct, or delete your information within a reasonable "
+"timeframe and notify you of the action we have taken."
+msgstr ""
+
+msgid "Anti-Spam Policy"
+msgstr ""
+
+msgid ""
+"Our Acceptable Use Policy, applies to us and to our customers and, among "
+"other things, prohibits use of the Online Store to send unsolicited "
+"commercial email in violation of applicable laws, and requires the inclusion"
+" in every email sent using the Online Store of an \"opt-out\" mechanism and "
+"other required information. We require all of our customers to agree to "
+"adhere to the Acceptable Use Policy at all times, and any violations of the "
+"Acceptable Use Policy by a customer can result in immediate suspension or "
+"termination of the Online Store."
+msgstr ""
+
+msgid "To Unsubscribe From Our Communications"
+msgstr ""
+
+#, python-format
+msgid ""
+"You may unsubscribe from our marketing communications by clicking on the "
+"\"unsubscribe\" link located on the bottom of our e-mails, or by sending us "
+"email us at %(store_email)s, or by sending us postal mail to "
+"%(full_address)s, Attention: Privacy. Customers cannot opt out of receiving "
+"transactional emails related to their account with us or the Online Store."
+msgstr ""
+
+msgid "Customer Data"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "My data"
+msgstr ""
+
+msgid "Download your data"
+msgstr ""
+
+msgid "Download all my data"
+msgstr ""
+
+msgid ""
+"This action will collect all your personal data and order history and will "
+"serialize it in a JSON file."
+msgstr ""
+
+msgid "Anonymize your account"
+msgstr ""
+
+msgid "You have pending orders!"
+msgstr ""
+
+msgid "If you anonymize your account now, all orders will be canceled."
+msgstr ""
+
+msgid "Request Account Anonymization"
+msgstr ""
+
+msgid ""
+"This action will replace all your personal data with random values making it"
+" impossible to identify you. Your account will also be deactivated."
+msgstr ""
+
+msgid "This action is irreversible!"
+msgstr ""
+
+msgid "Are you sure? This cannot be undone."
+msgstr ""
+
+msgid "Privacy Preferences"
+msgstr ""
+
+msgid "I Agree"
+msgstr ""
+
+msgid "Privacy Preference Center"
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Cookie Settings"
+msgstr ""
+
+msgid "Consent Management"
+msgstr ""
+
+msgid "You read and agreed to our {}"
+msgstr ""
+
+msgid "Read"
+msgstr ""
+
+msgid "Always active"
+msgstr ""
+
+msgid "Cookies: "
+msgstr ""
+
+msgid "Save preferences"
+msgstr ""
+
+#, python-format
+msgid ""
+"Our privacy policy has been updated since your last consent. Please read the"
+" updated version <a href=\"%(url)s\">here</a>. <a class=\"btn btn-primary\" "
+"href=\"%(accept_url)s\">Accept changes</a>"
+msgstr ""
+
+msgid "Required"
+msgstr ""
+
+msgid ""
+"We use these cookies to ensure the correct language is being chosen for you "
+"based on your region as well as the overall site functionality."
+msgstr ""
+
+msgid "GDPR: Anonymize"
+msgstr ""
+
+msgid "GDPR: Anonymize contact"
+msgstr ""
+
+#, python-brace-format
+msgid "Customer ID {customer_id} requested to be anonymized."
+msgstr ""
+
+msgid "Anonymization requested."
+msgstr ""
