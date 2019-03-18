@@ -49,6 +49,11 @@ select.form-control {
 fieldset[disabled] .form-control {
     background-color: $input-bg-color;
     opacity: 0.6;
+
+    &.datetime {
+        background-color: $white;
+        opacity: 1;
+    }
 }
 
 .input-group-addon {
