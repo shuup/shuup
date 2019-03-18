@@ -23,6 +23,7 @@ class AdminFieldRenderer(FieldRenderer):
             if not self.widget_class:
                 self.widget_class = "multiselect"
         if isinstance(field.field, DateTimeField):
+            field.field.widget.attrs["readonly"] = ""  # Make datetime fields readonly
             if not self.widget_class:
                 self.widget_class = "datetime"
         if isinstance(field.field, DateField):
