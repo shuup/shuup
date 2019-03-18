@@ -176,6 +176,13 @@ Core
     List of functions that resolve a model instance into an object URL.
     The first valid url returned by a provide will be used by the called.
 
+``browser_url_provider```
+    List of classes that implements a ``get_browser_urls(current_urls)`` class method
+    that returns a dictionary of urls names that should be exported into the browser.
+    The reversed urls can be accessed through the ``window.ShuupAdminConfig.browserUrls`` object.
+    The returned dictionary should have the url name as the value, which will be reversed when
+    rendering the templates.
+
 ``front_menu_extender``
     Additional menu items provided by addons. These should be subclassed from
     `~shuup.xtheme.extenders.FrontMenuExtender`.
