@@ -28,9 +28,10 @@ Inheritance order for product macors:
                 <span class="badge product-badge sale">{{ -(product|discount_rate(supplier=supplier))|percent }}</span>
             {% endif %}
             {% if show_image %}
-                {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
+                {% set product_image = shop_product.public_primary_image or shop_product.public_images.first() %}
+                {% set primary_image_thumb = product_image|thumbnail(size=thumbnail_size) %}
                 <div class="image-wrap">
-                    {% if product.primary_image and primary_image_thumb %}
+                    {% if product_image and primary_image_thumb %}
                         {% set image_url = primary_image_thumb %}
                     {% else %}
                         {% set image_url = STATIC_URL ~ "shuup/front/img/no_image.png" %}
