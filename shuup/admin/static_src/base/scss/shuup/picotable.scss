@@ -160,13 +160,13 @@
                 i.fa.fa-edit {
                     margin-bottom: auto;
                 }
-    
+
                 label {
                     margin-bottom: auto;
                 }
-    
+
                 input.row-selection {
-                    // display:none;
+                    display:none;
                     -webkit-appearance: none;
                     -moz-appearance: none;
                     appearance: none;
@@ -427,7 +427,7 @@
         }
 
         input.row-selection {
-            // display:none;
+            display:none;
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -459,4 +459,8 @@ nav.mobile-pagination {
     h3, p {
         opacity: 0.8;
     }
+}
+
+a.edit {
+    margin-bottom: 2px;
 }
