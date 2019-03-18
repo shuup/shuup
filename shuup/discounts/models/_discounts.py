@@ -102,6 +102,10 @@ class Discount(models.Model, MoneyPropped):
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("modified on"))
 
     shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_("shops"))
+    supplier = models.ForeignKey(
+        "shuup.Supplier", related_name="supplier_discounts", null=True, blank=True,
+        verbose_name=_("supplier"), help_text=_("Select supplier for this discount.")
+    )
     active = models.BooleanField(
         default=True, verbose_name=_("active"),
         help_text=_("Check this if the discount is currently active. Please also set a start and end date."))
