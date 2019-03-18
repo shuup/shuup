@@ -27,8 +27,9 @@
                                 {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
                             </div>
                         {% endif %}
-                        {% set image = product.primary_image|thumbnail(size=(360, 360), crop="scale", upscale=True) %}
-                        {% if image %}
+                        {% set product_image = shop_product.public_primary_image or shop_product.public_images.first() %}
+                        {% set image = product_image|thumbnail(size=(360, 360), crop="scale", upscale=True) %}
+                        {% if product_image and image %}
                             <img src="{{ image }}" class="primary-image" alt="{{ product.name }}">
                         {% else %}
                             <img src="{{ static("front/img/no_image.png") }}" class="no-image" alt="{{ product.name }}">
