@@ -19,7 +19,7 @@ from shuup.admin.forms.widgets import (
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
-from shuup.core.models import Category, ContactGroup
+from shuup.core.models import Category, ContactGroup, Supplier
 from shuup.discounts.admin.widgets import (
     QuickAddAvailabilityExceptionMultiSelect, QuickAddCouponCodeSelect,
     QuickAddHappyHourMultiSelect
@@ -58,6 +58,7 @@ class DiscountForm(forms.ModelForm):
         self.fields["coupon_code"].queryset = CouponCode.objects.filter(shops=self.shop)
         self.fields["happy_hours"].queryset = HappyHour.objects.filter(shops=self.shop)
         self.fields["product"].widget = ProductChoiceWidget(clearable=True)
+        self.fields["supplier"].queryset = Supplier.objects.enabled().filter(shops=self.shop)
 
     def save(self, commit=True):
         instance = super(DiscountForm, self).save(commit)
