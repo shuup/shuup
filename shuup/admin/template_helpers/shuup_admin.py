@@ -71,27 +71,20 @@ def get_support_id(context):
     return support_id
 
 
-# TODO: Figure out a more extensible way to deal with this
-BROWSER_URL_NAMES = {
-    "edit": "shuup_admin:edit",
-    "select": "shuup_admin:select",
-    "media": "shuup_admin:media.browse",
-    "product": "shuup_admin:shop_product.list",
-    "contact": "shuup_admin:contact.list",
-    "setLanguage": "shuup_admin:set-language",
-    "tour": "shuup_admin:tour",
-    "menu_toggle": "shuup_admin:menu_toggle"
-}
-
-
 def get_browser_urls():
     browser_urls = {}
-    for name, urlname in BROWSER_URL_NAMES.items():
+
+    for browser_url_provider in get_provide_objects("browser_url_provider"):
+        browser_urls.update(browser_url_provider.get_browser_urls(browser_urls))
+
+    reversed_browser_urls = {}
+    for name, urlname in browser_urls.items():
         try:
-            browser_urls[name] = reverse(urlname)
+            reversed_browser_urls[name] = reverse(urlname)
         except NoReverseMatch:  # This may occur when a module is not available.
-            browser_urls[name] = None
-    return browser_urls
+            reversed_browser_urls[name] = None
+
+    return reversed_browser_urls
 
 
 @contextfunction
