@@ -96,6 +96,9 @@ class ShuupAdminAppConfig(AppConfig):
         ],
         "admin_model_url_resolver": [
             "shuup.admin.utils.urls.get_model_url"
+        ],
+        "browser_url_provider": [
+            "shuup.admin.urls:DefaultBrowserUrlProvider"
         ]
     }
 
