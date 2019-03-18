@@ -37,6 +37,15 @@ def get_potential_discounts_for_product(context, product, available_only=True):
     # Product condition is always applied
     condition_query = (Q(product__isnull=True) | Q(product_id=product_id))
 
+    # Supplier condition is always applied
+    supplier = context.supplier
+    if supplier:
+        condition_query &= (Q(supplier=supplier) | Q(supplier__isnull=True))
+    else:
+        # No supplier in context means no discounts limited to specific
+        # suppliers
+        condition_query &= Q(supplier__isnull=True)
+
     # Apply category conditions
     if len(category_ids) == 1:
         condition_query &= (
