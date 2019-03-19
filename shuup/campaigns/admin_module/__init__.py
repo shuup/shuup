@@ -14,6 +14,8 @@ from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
+from shuup.campaigns.admin_module.utils import \
+    get_extra_permissions_for_admin_module
 from shuup.campaigns.models import BasketCampaign, Coupon
 
 
@@ -91,6 +93,9 @@ class CampaignAdminModule(AdminModule):
             return super(CampaignAdminModule, self).get_model_url(object, kind)
         admin_url = "shuup_admin:%s" % object.admin_url_suffix
         return derive_model_url(type(object), admin_url, object, kind)
+
+    def get_extra_permissions(self):
+        return get_extra_permissions_for_admin_module()
 
 
 def _show_catalog_campaigns_in_admin():

@@ -19,6 +19,7 @@ from shuup.campaigns.admin_module.form_parts import (
     CatalogFiltersFormPart
 )
 from shuup.campaigns.admin_module.forms import CouponForm
+from shuup.campaigns.admin_module.utils import get_formparts_for_provide_key
 from shuup.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
 )
@@ -42,11 +43,12 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
         if not object.pk:
             return form_parts
 
-        for form in get_provide_objects(self.condition_key):
+        user = self.request.user
+        for form in get_formparts_for_provide_key(user, self.condition_key):
             form_parts.append(self._get_rules_form_part(form, object))
 
         for provide_key, form_part_class in self.effects:
-            for form in get_provide_objects(provide_key):
+            for form in get_formparts_for_provide_key(user, provide_key):
                 form_parts.append(self._get_effects_form_part(form, object, form_part_class))
 
         return form_parts
