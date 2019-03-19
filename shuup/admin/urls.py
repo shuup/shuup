@@ -31,21 +31,6 @@ from shuup.admin.views.wizard import WizardView
 from shuup.utils.i18n import javascript_catalog_all
 
 
-class DefaultBrowserUrlProvider(object):
-    @classmethod
-    def get_browser_urls(cls, current_urls={}):
-        return {
-            "edit": "shuup_admin:edit",
-            "select": "shuup_admin:select",
-            "media": "shuup_admin:media.browse",
-            "product": "shuup_admin:shop_product.list",
-            "contact": "shuup_admin:contact.list",
-            "setLanguage": "shuup_admin:set-language",
-            "tour": "shuup_admin:tour",
-            "menu_toggle": "shuup_admin:menu_toggle"
-        }
-
-
 def login(request, **kwargs):
     if not request.user.is_anonymous() and request.method == "POST":  # We're logging in, so log out first
         do_logout(request)
