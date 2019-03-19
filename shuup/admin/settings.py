@@ -37,3 +37,7 @@ SHUUP_ADMIN_SHOP_PROVIDER_SPEC = ("shuup.admin.shop_provider.AdminShopProvider")
 #: The URL must end with a slash.
 #:
 SHUUP_ADMIN_MERCHANT_DOCS_PAGE = "https://shuup-guide.readthedocs.io/en/latest/"
+
+#: The minimum number of characters required to start a search
+#:
+SHUUP_ADMIN_MINIMUM_INPUT_LENGTH_SEARCH = 3

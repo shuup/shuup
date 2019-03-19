@@ -38,7 +38,7 @@ function activateSelect($select, model, searchMode, extraFilters = null, noExpan
 
     return $select.select2(Object.assign({
         language: "xx",
-        minimumInputLength: 3,
+        minimumInputLength: window.ShuupAdminConfig.settings.minSearchInputLength,
         ajax: {
             url: window.ShuupAdminConfig.browserUrls.select,
             dataType: "json",

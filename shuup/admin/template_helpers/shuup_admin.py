@@ -71,11 +71,11 @@ def get_support_id(context):
     return support_id
 
 
-def get_browser_urls():
+def get_browser_urls(request):
     browser_urls = {}
 
-    for browser_url_provider in get_provide_objects("browser_url_provider"):
-        browser_urls.update(browser_url_provider.get_browser_urls(browser_urls))
+    for admin_browser_config_provider in get_provide_objects("admin_browser_config_provider"):
+        browser_urls.update(admin_browser_config_provider.get_browser_urls(request))
 
     reversed_browser_urls = {}
     for name, urlname in browser_urls.items():
@@ -85,6 +85,13 @@ def get_browser_urls():
             reversed_browser_urls[name] = None
 
     return reversed_browser_urls
+
+
+def get_settings(request):
+    admin_settings = {}
+    for admin_browser_config_provider in get_provide_objects("admin_browser_config_provider"):
+        admin_settings.update(admin_browser_config_provider.get_gettings(request))
+    return admin_settings
 
 
 @contextfunction
@@ -99,10 +106,11 @@ def get_config(context):
     return {
         "searchUrl": manipulate_query_string(reverse("shuup_admin:search"), **qs),
         "menuUrl": manipulate_query_string(reverse("shuup_admin:menu"), **qs),
-        "browserUrls": get_browser_urls(),
+        "browserUrls": get_browser_urls(request),
         "csrf": get_token(request),
         "docsPage": settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE,
-        "menuOpen": is_menu_open(request)
+        "menuOpen": is_menu_open(request),
+        "settings": get_settings(request)
     }
 
 
