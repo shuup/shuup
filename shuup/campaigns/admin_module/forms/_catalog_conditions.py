@@ -32,9 +32,3 @@ class HourConditionForm(BaseRuleModelForm):
             "hour_start": TimeInput(),
             "hour_end": TimeInput(),
         }
-
-    def __init__(self, **kwargs):
-        super(HourConditionForm, self).__init__(**kwargs)
-
-        if self.instance:
-            self.fields["days"].initial = self.instance.days.split(",")

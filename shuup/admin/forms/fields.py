@@ -115,7 +115,16 @@ class Select2MultipleMainProductField(Select2MultipleField):
         return attrs
 
 
+class WeekdaysSelectMultiple(SelectMultiple):
+    def format_value(self, value):
+        if value is None and self.allow_multiple_selected:
+            return []
+        return ["%s" % v for v in value.split(",") if v]
+
+
 class WeekdayField(MultipleChoiceField):
+    widget = WeekdaysSelectMultiple
+
     DAYS_OF_THE_WEEK = [
         (0, _("Monday")),
         (1, _("Tuesday")),
