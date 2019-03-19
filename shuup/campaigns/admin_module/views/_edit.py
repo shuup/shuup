@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.breadcrumbs import BreadcrumbedView
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
+from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
@@ -64,6 +66,9 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
         save_form_id = self.get_save_form_id()
         return get_default_edit_toolbar(self, save_form_id)
 
+    def get_queryset(self):
+        return super(CampaignEditView, self).get_queryset().filter(shop=get_shop(self.request))
+
 
 class CatalogCampaignEditView(BreadcrumbedView, CampaignEditView):
     model = CatalogCampaign
@@ -104,6 +109,13 @@ class BasketCampaignEditView(BreadcrumbedView, CampaignEditView):
     parent_name = _("Basket Campaign")
     parent_url = "shuup_admin:basket_campaign.list"
 
+    def get_queryset(self):
+        queryset = super(BasketCampaignEditView, self).get_queryset()
+        supplier = get_supplier(self.request)
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
+        return queryset
+
 
 class CouponEditView(BreadcrumbedView, CreateOrUpdateView):
     model = Coupon
@@ -122,3 +134,11 @@ class CouponEditView(BreadcrumbedView, CreateOrUpdateView):
             initial["active"] = True
             kwargs["initial"] = initial
         return kwargs
+
+    def get_queryset(self):
+        # get coupons for this shop or for shared shops
+        queryset = super(CouponEditView, self).get_queryset().filter(shop=get_shop(self.request))
+        supplier = get_supplier(self.request)
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
+        return queryset

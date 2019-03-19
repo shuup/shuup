@@ -8,6 +8,8 @@ from babel.dates import format_datetime
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
@@ -31,8 +33,7 @@ class CampaignListView(PicotableListView):
     mass_actions_provider_key = "campaign_list_actions_provider"
 
     def get_queryset(self):
-        shop = self.request.shop
-        return self.model.objects.filter(shop=shop)
+        return self.model.objects.filter(shop=get_shop(self.request))
 
     def start_datetime(self, instance, *args, **kwargs):
         if not instance.start_datetime:
@@ -84,6 +85,14 @@ class BasketCampaignListView(CampaignListView):
         ], view=self)
         return context
 
+    def get_queryset(self):
+        queryset = super(BasketCampaignListView, self).get_queryset()
+        if not self.request.user.is_superuser:
+            supplier = get_supplier(self.request)
+            if supplier:
+                queryset = queryset.filter(supplier=supplier)
+        return queryset
+
 
 class CouponListView(PicotableListView):
     model = Coupon
@@ -114,3 +123,14 @@ class CouponListView(PicotableListView):
             settings_button
         ], view=self)
         return context
+
+    def get_queryset(self):
+        queryset = super(CouponListView, self).get_queryset()
+
+        if not self.request.user.is_superuser:
+            queryset = queryset.filter(shop=get_shop(self.request))
+
+            supplier = get_supplier(self.request)
+            if supplier:
+                queryset = queryset.filter(supplier=supplier)
+        return queryset

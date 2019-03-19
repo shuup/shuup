@@ -18,6 +18,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
+from shuup.admin.supplier_provider import get_supplier
 from shuup.core.models import (
     Carrier, Category, Contact, Product, ProductMode, Shop, ShopProduct,
     ShopProductVisibility, Supplier
@@ -91,7 +92,7 @@ class MultiselectAjaxView(TemplateView):
                 shop = query_shop
 
         search_mode = request.GET.get("searchMode")
-        qs = self._filter_query(cls, qs, shop, search_mode)
+        qs = self._filter_query(request, cls, qs, shop, search_mode)
         self.init_search_fields(cls)
         if not self.search_fields:
             return [{"id": None, "name": _("Couldn't get selections for %s.") % model_name}]
@@ -128,7 +129,11 @@ class MultiselectAjaxView(TemplateView):
         qs = qs.distinct()
         return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
 
-    def _filter_query(self, cls, qs, shop, search_mode=None):
+    def _filter_query(self, request, cls, qs, shop, search_mode=None):
+        # the supplier provider returned a valid supplier
+        # make sure to filter the search by the current supplier
+        supplier = get_supplier(request)
+
         if search_mode == "visible" and issubclass(cls, Category):
             qs = cls.objects.all_visible(self.request.customer, shop=self.request.shop)
         elif search_mode == "enabled" and issubclass(cls, Supplier):
@@ -141,10 +146,14 @@ class MultiselectAjaxView(TemplateView):
         if issubclass(cls, Product):
             qs = qs.filter(shop_products__shop=shop)
 
+            if supplier:
+                qs = qs.filter(shop_products__suppliers=supplier)
+
+        related_fields = [models.OneToOneField, models.ForeignKey, models.ManyToManyField]
+
         # Get all relation fields and check whether this models has
         # relation to Shop mode, if so, filter by the current shop
         allowed_shop_fields = ["shop", "shops"]
-        related_fields = [models.OneToOneField, models.ForeignKey, models.ManyToManyField]
         shop_related_fields = [
             field
             for field in cls._meta.get_fields()
@@ -152,6 +161,17 @@ class MultiselectAjaxView(TemplateView):
         ]
         for shop_field in shop_related_fields:
             qs = qs.filter(**{shop_field.name: shop})
+
+        if supplier:
+            allowed_supplier_fields = ["supplier", "suppliers"]
+            supplier_related_fields = [
+                field for field in cls._meta.get_fields()
+                if (type(field) in related_fields and
+                    field.related_model == Supplier and
+                    field.name in allowed_supplier_fields)
+            ]
+            for supplier_field in supplier_related_fields:
+                qs = qs.filter(**{supplier_field.name: supplier})
 
         return qs
 
