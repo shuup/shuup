@@ -3,7 +3,7 @@
 
 {% set attr_form = form[form_def.name] %}
 
-{% call content_block(_("Attributes"), "fa-tags", collapsed=True) %}
+{% call content_block(_("Attributes"), "fa-tags") %}
     {{ language_dependent_content_tabs(attr_form, tab_id_prefix="attributes") }}
     <div class="form-divider"></div>
     {{ render_monolingual_fields(attr_form) }}
