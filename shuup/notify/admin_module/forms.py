@@ -203,6 +203,8 @@ class ScriptItemEditForm(forms.Form):
 
     def save(self):
         new_data = {}
+        if "b_recipient_c" in self.cleaned_data and hasattr(self.cleaned_data["b_recipient_c"], "pk"):
+            self.cleaned_data['b_recipient_c'] = self.cleaned_data['b_recipient_c'].pk
         self._save_bindings(new_data)
         self._save_template(new_data)
         if self.errors:

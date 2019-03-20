@@ -91,9 +91,9 @@
             {% endif %}
             <input name="init_data" type="hidden" value="{{ init_data }}">
             <ul class="nav nav-tabs" id="main-tabs">
-                <li role="presentation" class="active"><a href="#variables">{% trans %}Variables{% endtrans %}</a></li>
+                <li role="presentation" class="nav-item"><a href="#variables" class="nav-link">{% trans %}Variables{% endtrans %}</a></li>
                 {% for language_code, language_name in form.template_languages %}
-                <li role="presentation"><a href="#template-{{ language_code }}">{{ language_name }}</a></li>
+                <li role="presentation" class="nav-item"><a href="#template-{{ language_code }}" class="nav-link">{{ language_name }}</a></li>
                 {% endfor %}
             </ul>
             <div id="variables" class="tab-pane">{{ binding_view(form) }}</div>
@@ -119,6 +119,7 @@
     }
     .iframe-content-block {
         background: #fff;
+        padding-top: 0px !important;
         padding: 30px;
     }
     .iframe-title {
@@ -127,6 +128,12 @@
     }
     .title { margin-bottom: 15px; }
     .nav-tabs { margin-bottom: 30px; }
+    .summernote-wrap {
+        width: 100%;
+    }
+    .btn-success {
+        margin: 10px;
+    }
 </style>
 {% endblock %}
 {% block extra_js %}

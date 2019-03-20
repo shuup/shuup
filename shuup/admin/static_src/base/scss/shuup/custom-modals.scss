@@ -22,6 +22,7 @@
     @include media-breakpoint-down(sm) {
         border-radius: 4px;
         margin: 15px auto;
+        height: 80%;
     }
 
     @include media-breakpoint-up(md) {
