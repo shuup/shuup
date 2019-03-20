@@ -93,7 +93,7 @@
             <ul class="nav nav-tabs" id="main-tabs">
                 <li role="presentation" class="active"><a href="#variables">{% trans %}Variables{% endtrans %}</a></li>
                 {% for language_code, language_name in form.template_languages %}
-                <li role="presentation"><a href="#template-{{ language_code }}">{{ language_name }}</a></li>
+                <li role="presentation" class="language"><a href="#template-{{ language_code }}">{{ language_name }}</a></li>
                 {% endfor %}
             </ul>
             <div id="variables" class="tab-pane">{{ binding_view(form) }}</div>
@@ -127,6 +127,12 @@
     }
     .title { margin-bottom: 15px; }
     .nav-tabs { margin-bottom: 30px; }
+    li.language {
+        padding: 0 5px;
+    }
+    .summernote-wrap {
+        width: 100%;
+    }
 </style>
 {% endblock %}
 {% block extra_js %}

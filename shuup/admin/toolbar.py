@@ -479,7 +479,7 @@ def get_discard_button(discard_url):
         url=discard_url,
         text=_(u"Discard Changes"),
         icon="fa fa-undo",
-        extra_css_class="dropdown-item"
+        extra_css_class="btn btn-inverse"
     )
 
 

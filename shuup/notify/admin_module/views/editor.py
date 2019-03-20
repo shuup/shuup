@@ -58,6 +58,8 @@ def script_item_editor(request):
         except ValidationError as verr:
             form.add_error(None, verr)
         else:
+            if "recipient" in form.script_item.data:
+                form.script_item.data['recipient']['constant'] = form.script_item.data['recipient']['constant'].pk
             context["post_message"] = {"new_data": form.script_item.data}
             # Unbind so we'll use the initial data
             form.is_bound = False
