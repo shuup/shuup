@@ -58,7 +58,7 @@ class FreeProductLine(BasketLineEffect):
         shop = order_source.shop
         for product in self.products.all():
             try:
-                shop_product = product.get_shop_instance(shop)
+                shop_product = product.get_shop_instance(shop, allow_cache=True)
             except ShopProduct.DoesNotExist:
                 continue
             supplier = shop_product.get_supplier(order_source.customer, self.quantity, order_source.shipping_address)
@@ -105,7 +105,12 @@ class DiscountFromProduct(BasketLineEffect):
 
     def get_discount_lines(self, order_source, original_lines):
         product_ids = self.products.values_list("pk", flat=True)
+        campaign = self.campaign
+        campaign_supplier = campaign.supplier if hasattr(campaign, "supplier") and campaign.supplier else None
+
         for line in original_lines:
+            if campaign_supplier and line.supplier != campaign_supplier:
+                continue
             if not line.type == OrderLineType.PRODUCT:
                 continue
             if line.product.pk not in product_ids:
@@ -147,12 +152,18 @@ class DiscountFromCategoryProducts(BasketLineEffect):
             'Select discount amount and category. '
             'Please note that the discount will be given to all matching products in basket.')
 
-    def get_discount_lines(self, order_source, original_lines):
+    def get_discount_lines(self, order_source, original_lines):     # noqa (C901)
         if not (self.discount_percentage or self.discount_amount):
             return []
 
+        campaign = self.campaign
+        campaign_supplier = campaign.supplier if hasattr(campaign, "supplier") and campaign.supplier else None
+
         product_ids = self.category.shop_products.values_list("product_id", flat=True)
         for line in original_lines:  # Use original lines since we don't want to discount free product lines
+            if campaign_supplier and line.supplier != campaign_supplier:
+                continue
+
             if not line.type == OrderLineType.PRODUCT:
                 continue
             if line.product.variation_parent:
@@ -195,7 +206,7 @@ def _limit_discount_amount_by_min_price(line, order_source):
 
     # make sure the discount respects the minimum price of the product, if set
     try:
-        shop_product = line.product.get_shop_instance(order_source.shop)
+        shop_product = line.product.get_shop_instance(order_source.shop, allow_cache=True)
 
         if shop_product.minimum_price:
             min_total = shop_product.minimum_price.value * line.quantity

@@ -8,6 +8,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.campaigns.models.campaigns import Coupon
 
 
@@ -20,7 +22,9 @@ class CouponForm(forms.ModelForm):
             'code',
             'usage_limit_customer',
             'usage_limit',
-            'active'
+            'active',
+            'shop',
+            'supplier'
         ]
 
     def __init__(self, *args, **kwargs):
@@ -34,6 +38,14 @@ class CouponForm(forms.ModelForm):
             self.fields["active"].disabled = True
             self.fields["active"].widget.disabled = True
 
+        if not self.request.user.is_superuser:
+            self.fields["shop"].widget = forms.HiddenInput()
+            self.fields["shop"].required = False
+
+        if get_supplier(self.request):
+            self.fields["supplier"].widget = forms.HiddenInput()
+            self.fields["supplier"].required = False
+
     def clean_code(self):
         code = self.cleaned_data["code"]
         qs = Coupon.objects.filter(code=code)
@@ -42,3 +54,9 @@ class CouponForm(forms.ModelForm):
         if qs.exists():
             raise ValidationError(_("Discount Code already in use."))
         return code
+
+    def clean_shop(self):
+        return self.cleaned_data.get("shop") or get_shop(self.request)
+
+    def clean_supplier(self):
+        return self.cleaned_data.get("supplier") or get_supplier(self.request)

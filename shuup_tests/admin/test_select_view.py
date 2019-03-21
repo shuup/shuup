@@ -9,6 +9,7 @@
 import json
 
 import pytest
+from django.test import override_settings
 from django.utils.translation import activate, get_language
 
 from shuup.admin.views.select import MultiselectAjaxView
@@ -400,3 +401,29 @@ def test_select_supplier(rf, admin_user):
     # only enabled
     results = _get_search_results(rf, view, "shuup.supplier", "supplier", admin_user, search_mode="enabled")
     assert len(results) == 1
+
+
+@pytest.mark.django_db
+def test_shop_products_with_supplier_filter(rf, admin_user):
+    shop = get_default_shop()
+    activate("en")
+    view = MultiselectAjaxView.as_view()
+
+    superuser1 = create_random_user(is_superuser=True, is_staff=True)
+    supplier1 = Supplier.objects.create(identifier=superuser1.username)
+    superuser2 = create_random_user(is_superuser=True, is_staff=True)
+    supplier2 = Supplier.objects.create(identifier=superuser2.username)
+
+    product_name_en = "ok"
+    product = create_product("test1", shop=shop, supplier=supplier1, **{"name": product_name_en})
+    shop_product = product.get_shop_instance(shop)
+    assert shop_product.suppliers.filter(pk=supplier1.pk).exists()
+    supplier_provider = "shuup.testing.supplier_provider.UsernameSupplierProvider"
+    with override_settings(SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC=supplier_provider):
+        results = _get_search_results(rf, view, "shuup.ShopProduct", "ok", superuser1)
+        assert len(results) == 1
+        assert results[0].get("id") == shop_product.id
+        assert results[0].get("name") == product_name_en
+
+        results = _get_search_results(rf, view, "shuup.ShopProduct", "ok", superuser2)
+        assert len(results) == 0

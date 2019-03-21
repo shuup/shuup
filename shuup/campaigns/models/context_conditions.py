@@ -4,7 +4,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.validators import validate_comma_separated_integer_list
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -87,7 +86,7 @@ class HourCondition(ContextCondition):
         verbose_name=_("end time"),
         help_text=_("12pm is considered noon and 12am as midnight. End time is not considered match.")
     )
-    days = models.CharField(max_length=255, verbose_name=_("days"), validators=[validate_comma_separated_integer_list])
+    days = models.CharField(max_length=255, verbose_name=_("days"))
 
     def matches(self, context):
         return is_in_time_range(timezone.now(), self.hour_start, self.hour_end, self.values)

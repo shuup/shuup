@@ -4,6 +4,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django import forms
+
 from shuup.admin.forms.fields import WeekdayField
 from shuup.admin.forms.widgets import TimeInput
 from shuup.campaigns.models.basket_conditions import (
@@ -37,6 +39,10 @@ class BasketTotalUndiscountedProductAmountConditionForm(BaseRuleModelForm):
 class ProductsInBasketConditionForm(BaseRuleModelForm):
     class Meta(BaseRuleModelForm.Meta):
         model = ProductsInBasketCondition
+
+    def __init__(self, *args, **kwargs):
+        super(ProductsInBasketConditionForm, self).__init__(*args, **kwargs)
+        self.fields["products"].widget = forms.SelectMultiple(attrs={"data-model": "shuup.product"})
 
 
 class ContactGroupBasketConditionForm(BaseRuleModelForm):
@@ -78,9 +84,3 @@ class HourBasketConditionForm(BaseRuleModelForm):
             "hour_start": TimeInput(),
             "hour_end": TimeInput(),
         }
-
-    def __init__(self, **kwargs):
-        super(HourBasketConditionForm, self).__init__(**kwargs)
-
-        if self.instance:
-            self.fields["days"].initial = self.instance.days.split(",")

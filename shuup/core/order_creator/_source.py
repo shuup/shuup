@@ -93,6 +93,13 @@ class _UnknownTaxesAsNone(object):
             return None
 
 
+def count_in_line(line):
+    truncated_qty = int(line.quantity)
+    if not line.unit.allow_bare_number or truncated_qty != line.quantity:
+        return 1  # Non-countables or non-integral values counted as 1
+    return truncated_qty
+
+
 class OrderSource(object):
     """
     A "provisional order" object.
@@ -396,11 +403,16 @@ class OrderSource(object):
 
         :rtype: int
         """
-        def count_in_line(line):
-            truncated_qty = int(line.quantity)
-            if not line.unit.allow_bare_number or truncated_qty != line.quantity:
-                return 1  # Non-countables or non-integral values counted as 1
-            return truncated_qty
+        return sum(count_in_line(line) for line in self.get_product_lines())
+
+    def count_products(self, supplier=None):
+        """
+        The same as `smart_product_count`` but accepts a supplier as a filter
+
+        :rtype: int
+        """
+        if supplier:
+            return sum(count_in_line(line) for line in self.get_product_lines() if line.supplier == supplier)
         return sum(count_in_line(line) for line in self.get_product_lines())
 
     @property

@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.breadcrumbs import BreadcrumbedView
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
+from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
@@ -19,6 +21,7 @@ from shuup.campaigns.admin_module.form_parts import (
     CatalogFiltersFormPart
 )
 from shuup.campaigns.admin_module.forms import CouponForm
+from shuup.campaigns.admin_module.utils import get_formparts_for_provide_key
 from shuup.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
 )
@@ -42,11 +45,12 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
         if not object.pk:
             return form_parts
 
-        for form in get_provide_objects(self.condition_key):
+        user = self.request.user
+        for form in get_formparts_for_provide_key(user, self.condition_key):
             form_parts.append(self._get_rules_form_part(form, object))
 
         for provide_key, form_part_class in self.effects:
-            for form in get_provide_objects(provide_key):
+            for form in get_formparts_for_provide_key(user, provide_key):
                 form_parts.append(self._get_effects_form_part(form, object, form_part_class))
 
         return form_parts
@@ -61,6 +65,9 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
     def get_toolbar(self):
         save_form_id = self.get_save_form_id()
         return get_default_edit_toolbar(self, save_form_id)
+
+    def get_queryset(self):
+        return super(CampaignEditView, self).get_queryset().filter(shop=get_shop(self.request))
 
 
 class CatalogCampaignEditView(BreadcrumbedView, CampaignEditView):
@@ -102,6 +109,13 @@ class BasketCampaignEditView(BreadcrumbedView, CampaignEditView):
     parent_name = _("Basket Campaign")
     parent_url = "shuup_admin:basket_campaign.list"
 
+    def get_queryset(self):
+        queryset = super(BasketCampaignEditView, self).get_queryset()
+        supplier = get_supplier(self.request)
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
+        return queryset
+
 
 class CouponEditView(BreadcrumbedView, CreateOrUpdateView):
     model = Coupon
@@ -120,3 +134,11 @@ class CouponEditView(BreadcrumbedView, CreateOrUpdateView):
             initial["active"] = True
             kwargs["initial"] = initial
         return kwargs
+
+    def get_queryset(self):
+        # get coupons for this shop or for shared shops
+        queryset = super(CouponEditView, self).get_queryset().filter(shop=get_shop(self.request))
+        supplier = get_supplier(self.request)
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
+        return queryset

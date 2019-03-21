@@ -9,6 +9,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import PercentageField
+from shuup.campaigns.utils.campaigns import get_total_price_of_products
 from shuup.core.fields import MoneyValueField
 from shuup.core.models import PolymorphicShuupModel
 from shuup.core.pricing import PricingContext
@@ -79,7 +80,8 @@ class BasketDiscountPercentage(BasketDiscountEffect):
         self.discount_percentage = value
 
     def apply_for_basket(self, order_source):
-        return (order_source.total_price_of_products * self.value)
+        total_price_of_products = get_total_price_of_products(order_source, self.campaign)
+        return (total_price_of_products * self.value)
 
 
 class DiscountPercentageFromUndiscounted(BasketDiscountEffect):
@@ -106,9 +108,15 @@ class DiscountPercentageFromUndiscounted(BasketDiscountEffect):
 
     def apply_for_basket(self, order_source):
         from shuup.campaigns.models import CatalogCampaign
-        discounted_base_amount = order_source.total_price_of_products
+        campaign = self.campaign
+        supplier = campaign.supplier if hasattr(campaign, "supplier") and campaign.supplier else None
+        discounted_base_amount = get_total_price_of_products(order_source, campaign)
+
         context = PricingContext(order_source.shop, order_source.customer)
         for line in order_source.get_product_lines():
+            if supplier and line.supplier != supplier:
+                continue
+
             product = line.product
             if CatalogCampaign.get_matching(context, product.get_shop_instance(order_source.shop)):
                 discounted_base_amount -= line.price

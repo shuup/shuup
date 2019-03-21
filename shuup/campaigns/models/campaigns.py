@@ -213,6 +213,16 @@ class BasketCampaign(Campaign):
 
     conditions = models.ManyToManyField('BasketCondition', blank=True, related_name='campaign')
     coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign', verbose_name=_("coupon"))
+    supplier = models.ForeignKey(
+        "shuup.Supplier",
+        null=True, blank=True,
+        related_name="basket_campaigns",
+        verbose_name=_("supplier"),
+        help_text=_(
+            "When set, this campaign will match only products from the selected supplier. "
+            "Rules and Effects will also be restricted to the products of this supplier."
+        )
+    )
 
     translations = TranslatedFields(
         public_name=models.CharField(max_length=120, verbose_name=_("public name"), help_text=_(
@@ -347,6 +357,19 @@ class Coupon(models.Model):
                     "If the limit is zero (0) coupon cannot be used."))
 
     active = models.BooleanField(default=False, verbose_name=_("is active"))
+    shop = models.ForeignKey(
+        "shuup.Shop",
+        verbose_name=_("shop"),
+        related_name="campaign_coupons",
+        null=True,
+        help_text=_("The shop where the coupon is active.")
+    )
+    supplier = models.ForeignKey(
+        "shuup.Supplier",
+        null=True, blank=True,
+        related_name="campaign_coupons",
+        verbose_name=_("supplier")
+    )
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True,

@@ -14,6 +14,8 @@
                 {{ bs3.field(form.usage_limit_customer) }}
                 {% set usage_limit_addon = "<small>%s</small>" % _("%(coupons)s used", coupons=coupon.usages.count()) %}
                 {{ bs3.field(form.usage_limit, addon_after=usage_limit_addon) }}
+                {{ bs3.field(form.shop) }}
+                {{ bs3.field(form.supplier) }}
                 {{ bs3.field(form.active) }}
             {% endcall %}
         </form>

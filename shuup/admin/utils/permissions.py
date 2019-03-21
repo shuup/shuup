@@ -82,6 +82,10 @@ def _get_permission_key_for_group(group_id):
     return "%s_admin_permissions" % group_id
 
 
+def get_permissions_for_user(user):
+    return get_permissions_from_groups(user.groups.values_list("pk", flat=True))
+
+
 def get_permissions_from_group(group):
     group_id = (group if isinstance(group, six.integer_types) else group.pk)
     return set(configuration.get(None, _get_permission_key_for_group(group_id), default=[]))

@@ -115,10 +115,11 @@ class BasketCampaignModule(OrderSourceModifierModule):
             price_so_far -= new_amount
             return self._get_campaign_line(campaign, new_amount, order_source)
 
-        best_discount = None
-        best_discount_campaign = None
+        best_discount_for_supplier = {}
         lines = []
         for campaign in matching_campaigns:
+            campaign_supplier = campaign.supplier if hasattr(campaign, "supplier") and campaign.supplier else None
+
             for effect in campaign.discount_effects.all():
                 discount_amount = min(price_so_far, effect.apply_for_basket(order_source=order_source))
 
@@ -126,12 +127,18 @@ class BasketCampaignModule(OrderSourceModifierModule):
                 if campaign.coupon:
                     # campaign was found because discount code matched. This line is always added
                     lines.append(get_discount_line(campaign, discount_amount, price_so_far))
-                elif best_discount is None or discount_amount > best_discount:
-                    best_discount = discount_amount
-                    best_discount_campaign = campaign
 
-        if best_discount is not None:
-            lines.append(get_discount_line(best_discount_campaign, best_discount, price_so_far))
+                else:
+                    best_discount = best_discount_for_supplier.get(campaign_supplier)
+                    if not best_discount or discount_amount > best_discount["discount_amount"]:
+                        best_discount_for_supplier[campaign_supplier] = dict(
+                            discount_amount=discount_amount,
+                            campaign=campaign
+                        )
+
+        for supplier, best_discount_info in best_discount_for_supplier.items():
+            lines.append(
+                get_discount_line(best_discount_info["campaign"], best_discount_info["discount_amount"], price_so_far))
         return lines
 
     def _handle_line_effects(self, matching_campaigns, order_source, original_lines):
