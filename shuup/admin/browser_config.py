@@ -35,5 +35,8 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
     @classmethod
     def get_gettings(cls, request, **kwargs):
         return {
-            "minSearchInputLength": settings.SHUUP_ADMIN_MINIMUM_INPUT_LENGTH_SEARCH or 1
+            "minSearchInputLength": settings.SHUUP_ADMIN_MINIMUM_INPUT_LENGTH_SEARCH or 1,
+            "dateInputFormat": settings.SHUUP_ADMIN_DATE_INPUT_FORMAT,
+            "datetimeInputFormat": settings.SHUUP_ADMIN_DATETIME_INPUT_FORMAT,
+            "timeInputFormat": settings.SHUUP_ADMIN_TIME_INPUT_FORMAT
         }
