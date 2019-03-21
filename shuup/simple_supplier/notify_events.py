@@ -43,5 +43,11 @@ class AlertLimitReached(Event):
 
     def run(self, shop):
         cache_key = self.cache_key_fmt % (self.variable_values["supplier"].pk, self.variable_values["product"].pk)
+
+        # do not run this if the last dispatch was < 1 minute
+        last_dispatch_time = cache.get(cache_key)
+        if last_dispatch_time and time() - last_dispatch_time < 60:
+            return
+
         cache.set(cache_key, time(), timeout=(60 * 60 * 24))
         super(AlertLimitReached, self).run(shop=shop)
