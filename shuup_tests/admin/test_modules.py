@@ -39,8 +39,8 @@ from shuup_tests.utils.templates import \
 TEMPLATES_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), "templates"))
 
 
-def test_admin_module_base(rf):
-    request = rf.get("/")
+def test_admin_module_base(rf, admin_user):
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     am = AdminModule()
     assert empty_iterable(am.get_urls())
     assert empty_iterable(am.get_menu_entries(request))
@@ -68,8 +68,8 @@ def test_modules_in_core_admin_work(rf, admin_user):
         assert get_menu_entry_categories(request)
 
 
-def test_search(rf):
-    request = rf.get("/")
+def test_search(rf, admin_user):
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     with replace_modules([ATestModule]):
         assert any(sr.to_json()["text"] == "yes" for sr in get_search_results(request, "yes"))
         assert any(sr.url == "/OK" for sr in get_search_results(request, "spooky"))  # Test aliases

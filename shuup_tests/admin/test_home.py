@@ -38,9 +38,9 @@ def test_home_wizard_block(rf, admin_user, settings):
     get_default_shop()
     assert has_block_with_text("wizard", rf, admin_user)
 
-    # no wizard spec defined so we shouldn't see the wizard block
+    # no wizard spec defined so we should see a info block that everything is configured
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
-    assert has_done_block_with_text("wizard", rf, admin_user)
+    assert not has_block_with_text("wizard", rf, admin_user)
 
 
 @pytest.mark.django_db
