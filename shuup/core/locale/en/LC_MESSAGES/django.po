@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-12 17:40+0000\n"
+"POT-Creation-Date: 2019-03-21 18:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1499,7 +1499,7 @@ msgstr ""
 msgid "This product is not visible."
 msgstr ""
 
-msgid "This product is not available."
+msgid "This product is not available to the current date."
 msgstr ""
 
 msgid "The Product is invisible to users not logged in."
@@ -1638,12 +1638,6 @@ msgid "mode"
 msgstr ""
 
 msgid "variation parent"
-msgstr ""
-
-msgid "stock"
-msgstr ""
-
-msgid "Set to stocked if inventory should be managed within Shuup."
 msgstr ""
 
 msgid "shipping mode"
