@@ -87,10 +87,9 @@ class BasketCampaignListView(CampaignListView):
 
     def get_queryset(self):
         queryset = super(BasketCampaignListView, self).get_queryset()
-        if not self.request.user.is_superuser:
-            supplier = get_supplier(self.request)
-            if supplier:
-                queryset = queryset.filter(supplier=supplier)
+        supplier = get_supplier(self.request)
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
         return queryset
 
 
@@ -126,11 +125,10 @@ class CouponListView(PicotableListView):
 
     def get_queryset(self):
         queryset = super(CouponListView, self).get_queryset()
-
         if not self.request.user.is_superuser:
             queryset = queryset.filter(shop=get_shop(self.request))
 
-            supplier = get_supplier(self.request)
-            if supplier:
-                queryset = queryset.filter(supplier=supplier)
+        supplier = get_supplier(self.request)
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
         return queryset

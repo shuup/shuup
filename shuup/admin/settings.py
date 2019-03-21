@@ -45,4 +45,3 @@ SHUUP_ADMIN_MINIMUM_INPUT_LENGTH_SEARCH = 3
 #:
 SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC = (
     "shuup.admin.supplier_provider.DefaultSupplierProvider")
-

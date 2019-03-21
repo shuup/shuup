@@ -42,6 +42,7 @@ class CouponForm(forms.ModelForm):
             self.fields["shop"].widget = forms.HiddenInput()
             self.fields["shop"].required = False
 
+        if get_supplier(self.request):
             self.fields["supplier"].widget = forms.HiddenInput()
             self.fields["supplier"].required = False
 

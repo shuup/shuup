@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('campaigns', '0013_hourconfition_fix'),
+        ('campaigns', '0015_set_coupon_shops'),
     ]
 
     operations = [
