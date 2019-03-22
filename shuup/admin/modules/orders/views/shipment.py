@@ -21,7 +21,7 @@ from shuup.admin.utils.urls import get_model_url
 from shuup.core.excs import (
     NoProductsToShipException, NoShippingAddressException
 )
-from shuup.core.models import Order, Product, Shipment, ShippingMode, Supplier
+from shuup.core.models import Order, Product, Shipment
 from shuup.utils.excs import Problem
 
 
@@ -56,28 +56,16 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         kwargs.pop("instance")
         return kwargs
 
+    def _get_supplier_id(self):
+        return int(self.kwargs["supplier_pk"])
+
     def get_form(self, form_class=None):
         default_field_keys = set()
         form = super(OrderCreateShipmentView, self).get_form(form_class)
         order = self.object
+        supplier_id = self._get_supplier_id()
 
-        # We only allow creating shipment for order line suppliers by default.
-        # This is what simple supplier expects. If we would create shipment
-        # for different supplier that is already selected for order line we
-        # end failing the stock calculations at the simple supplier.
-        suppliers = Supplier.objects.enabled().filter(
-            order_lines__product__shipping_mode=ShippingMode.SHIPPED,
-            order_lines__order=order
-        ).distinct()
-        form.fields["supplier"] = forms.ModelChoiceField(
-            queryset=suppliers,
-            initial=suppliers.first(),
-            label=_("Supplier")
-        )
-        form.fields["supplier"].help_text = _(
-            "Select the shipment supplier. You can only ship the suppliers assigned to order lines.")
-        default_field_keys.add("supplier")
-        form.product_summary = order.get_product_summary()
+        form.product_summary = order.get_product_summary(supplier=supplier_id)
         form.product_names = dict(
             (product_id, text)
             for (product_id, text)
@@ -131,6 +119,9 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             shipment=shipment
         )
 
+    def get_success_url(self):
+        return get_model_url(self.object)
+
     def form_valid(self, form):
         product_ids_to_quantities = dict(
             (int(key.replace("q_", "")), value)
@@ -139,6 +130,7 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             if key.startswith("q_") and (value > 0 if value else False)
         )
         order = self.object
+
         product_map = Product.objects.in_bulk(set(product_ids_to_quantities.keys()))
         products_to_quantities = dict(
             (product_map[product_id], quantity)
@@ -146,10 +138,11 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             in six.iteritems(product_ids_to_quantities)
         )
 
-        unsaved_shipment = Shipment(order=order,
-                                    supplier=form.cleaned_data["supplier"],
-                                    tracking_code=form.cleaned_data.get("tracking_code"),
-                                    description=form.cleaned_data.get("description"),)
+        unsaved_shipment = Shipment(
+            order=order,
+            supplier_id=self._get_supplier_id(),
+            tracking_code=form.cleaned_data.get("tracking_code"),
+            description=form.cleaned_data.get("description"))
         has_extension_errors = self.form_valid_hook(form, unsaved_shipment)
 
         if has_extension_errors:
@@ -171,19 +164,21 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             messages.error(self.request, _("Shipping address is not set."))
         else:
             messages.success(self.request, _("Shipment %s created.") % shipment.id)
-            return HttpResponseRedirect(get_model_url(order))
+            return HttpResponseRedirect(self.get_success_url())
 
 
 class ShipmentDeleteView(DetailView):
     model = Shipment
     context_object_name = "shipment"
 
+    def get_success_url(self):
+        return get_model_url(self.get_object().order)
+
     def get(self, request, *args, **kwargs):
-        shipment = self.get_object()
-        return HttpResponseRedirect(get_model_url(shipment.order))
+        return HttpResponseRedirect(self.get_success_url())
 
     def post(self, request, *args, **kwargs):
         shipment = self.get_object()
         shipment.soft_delete()
         messages.success(request, _("Shipment %s has been deleted.") % shipment.pk)
-        return HttpResponseRedirect(get_model_url(shipment.order))
+        return HttpResponseRedirect(self.get_success_url())

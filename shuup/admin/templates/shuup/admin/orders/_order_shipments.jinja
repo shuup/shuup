@@ -1,60 +1,120 @@
-<div id="order-shipments" class="table-responsive {% if not shipments %} hidden{% endif %}">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{% trans %}Supplier{% endtrans %}</th>
-                <th>{% trans %}Status{% endtrans %}</th>
-                <th>{% trans %}Tracking Code{% endtrans %}</th>
-                <th>{% trans %}Description{% endtrans %}</th>
-                <th>{% trans %}Created{% endtrans %}</th>
-                <th>{% trans %}Delete{% endtrans %}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for shipment in shipments %}
+{% macro render_products_cell(shipment) %}
+    {%- for shipment_product in shipment.products.all() -%}
+        {% set product = shipment_product.product %}
+        {% set unit = product.sales_unit %}
+        {{- product.name -}}&nbsp;({{- unit.round(shipment_product.quantity) -}})
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{% endmacro %}
+    
+{% macro render_supplier_info(supplier, create_urls, delete_urls) %}
+    {% set product_summary = order.get_product_summary(supplier) %}
+    {% set ordered_total = product_summary.values()|sum("ordered")|number %}
+    {% set shipped_total = product_summary.values()|sum("shipped")|number %}
+    {% set refunded_total = product_summary.values()|sum("refunded")|number %}
+    {% set unshipped_total = product_summary.values()|sum("unshipped")|number %}
+    <h2>{{ supplier.name }}</h2>
+
+    <div id="order-shipment-info-for-supplier" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>{{ shipment.supplier.name }}</td>
-                    <td>{{ shipment.status }}</td>
-                    <td>{{ shipment.tracking_code }}</td>
-                    <td>{{ shipment.description }}</td>
-                    <td>{{ shipment.created_on|datetime }}</td>
-                    <td>
-                        {% if not shipment.is_deleted() %}
-                        <a href="{{ url("shuup_admin:order.delete-shipment", pk=shipment.pk) }}" onclick="handleDelete(event, this)">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                        {% endif %}
-                    </td>
+                    <th>{% trans %}Product{% endtrans %}</th>
+                    <th class="text-center">{% trans %}Unshipped{% endtrans %}</th>
+                    <th class="text-center">{% trans %}Shipped{% endtrans %}</th>
+                    <th class="text-center">{% trans %}Ordered{% endtrans %}</th>
+                    <th class="text-center">{% trans %}Refunded{% endtrans %}</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th class="text-center">{{ unshipped_total }}</th>
+                    <th class="text-center">{{ shipped_total }}</th>
+                    <th class="text-center">{{ ordered_total }}</th>
+                    <th class="text-center">{{ refunded_total }}</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for product_id, info in product_summary.items() %}
+                <tr>
+                    <td>{{ info.line_text }}</td>
+                    <td class="text-center">{{ info.unshipped|number }}</td>
+                    <td class="text-center">{{ info.shipped|number }}</td>
+                    <td class="text-center">{{ info.ordered|number }}</td>
+                    <td class="text-center">{{ info.refunded|number }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% if not shipments %}
-    <div id="no-shipments-text">
-        <p>{% trans %}No shipments have been created yet.{% endtrans %}</p>
+            </tbody>
+        </table>
+        {% if create_urls.get(supplier.pk) and unshipped_total != "0" %}
+            <a href="{{ create_urls.get(supplier.pk) }}" class="btn btn-primary">{% trans supplier_name=supplier.name %}Create new shipment for {{ supplier_name }}{% endtrans %}</a>
+        {% endif %}
+        {% set shipments = supplier.shipments.all_except_deleted().filter(order=order) %}
+        {% if shipments %}
+            <div id="supplier-shipments" class="table-responsive">
+                <h3>{% trans %}Shipments{% endtrans %}</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">{% trans %}Products{% endtrans %}</th>
+                            <th class="text-center">{% trans %}Tracking Code{% endtrans %}</th>
+                            <th class="text-center">{% trans %}Description{% endtrans %}</th>
+                            <th class="text-center">{% trans %}Created{% endtrans %}</th>
+                            <th class="text-center">{% trans %}Delete{% endtrans %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for shipment in shipments %}
+                            <tr>
+                                <td class="text-center">{{ render_products_cell(shipment) }}</td>
+                                <td class="text-center">{{ shipment.tracking_code }}</td>
+                                <td class="text-center">{{ shipment.description }}</td>
+                                <td class="text-center">{{ shipment.created_on|datetime }}</td>
+                                <td class="text-center">
+                                    {% if delete_urls.get(shipment.id) and not shipment.is_deleted() %}
+                                    <a href="{{ delete_urls.get(shipment.id) }}" onclick="handleDelete(event, this)">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
-{% endif %}
+{% endmacro %}
+
+<div class="container">
+{% set create_urls = shipments_data.create_urls %}
+{% set delete_urls = shipments_data.delete_urls %}
+{% for supplier in shipments_data.suppliers %}
+    {{ render_supplier_info(supplier, create_urls, delete_urls) }}
+    {%- if not loop.last %}<hr>{% endif -%}
+{% endfor %}
+</div>
 
 {% block extra_js %}
-<script>
-    function handleDelete(event, link) {
-        event.preventDefault();
-        var warningMessage = "{% trans %}Shipped shipments should not be deleted. Deletion will affect products physical stock count. Delete anyway?{% endtrans %}";
-        if (confirm(warningMessage)) {
-            var form = document.createElement("form");
-            form.method = "POST";
-            form.action = $(link).attr("href");
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "csrfmiddlewaretoken";
-            input.id = "language-field";
-            input.value = "{{ csrf_token }}";
-            form.appendChild(input);
-            document.body.appendChild(form);
-            form.submit();
+    <script>
+        function handleDelete(event, link) {
+            event.preventDefault();
+            var warningMessage = "{% trans %}Shipped shipments should not be deleted. Deletion will affect products physical stock count. Delete anyway?{% endtrans %}";
+            if (confirm(warningMessage)) {
+                var form = document.createElement("form");
+                form.method = "POST";
+                form.action = $(link).attr("href");
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "csrfmiddlewaretoken";
+                input.id = "language-field";
+                input.value = "{{ csrf_token }}";
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+            return false;
         }
-        return false;
-    }
-</script>
+    </script>
 {% endblock %}

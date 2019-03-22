@@ -7,11 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from shuup.admin.base import Section
+from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import Shipment
+from shuup.core.models import Shipment, Supplier
 from shuup.core.models._orders import OrderLogEntry
 
 
@@ -56,7 +58,7 @@ class PaymentOrderSection(Section):
 
 
 class ShipmentSection(Section):
-    identifier = "shipments"
+    identifier = "shipments_data"
     name = _("Shipments")
     icon = "fa-truck"
     template = "shuup/admin/orders/_order_shipments.jinja"
@@ -64,11 +66,34 @@ class ShipmentSection(Section):
 
     @staticmethod
     def visible_for_object(order, request=None):
-        return Shipment.objects.filter(order=order).exists()
+        return (
+            order.has_products_requiring_shipment() or
+            Shipment.objects.filter(order=order).exists()
+        )
 
     @staticmethod
     def get_context_data(order, request=None):
-        return Shipment.objects.filter(order=order).order_by("-created_on").all()
+        suppliers = Supplier.objects.filter(order_lines__order=order).distinct()
+        create_permission = "order.create-shipment"
+        delete_permission = "order.delete-shipment"
+        missing_permissions = get_missing_permissions(request.user, [create_permission, delete_permission])
+        create_urls = {}
+        if create_permission not in missing_permissions:
+            for supplier in suppliers:
+                create_urls[supplier.pk] = reverse(
+                    "shuup_admin:order.create-shipment", kwargs={"pk": order.pk, "supplier_pk": supplier.pk})
+
+        delete_urls = {}
+        if delete_permission not in missing_permissions:
+            for shipment_id in order.shipments.all_except_deleted().values_list("id", flat=True):
+                delete_urls[shipment_id] = reverse(
+                    "shuup_admin:order.delete-shipment", kwargs={"pk": shipment_id})
+
+        return {
+            "suppliers": suppliers,
+            "create_urls": create_urls,
+            "delete_urls": delete_urls
+        }
 
 
 class LogEntriesOrderSection(Section):
