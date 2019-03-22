@@ -39,7 +39,8 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    {% for product_id, info in form.product_summary.items() %}
+                    {% for key, info in form.product_summary.items() %}
+                        {% set product_id = info["product_id"] %}
                         {% set field = form["q_" ~ product_id] %}
                         <tr>
                             <td>{{ field.label }}</td>

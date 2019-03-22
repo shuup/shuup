@@ -1049,50 +1049,117 @@ class Order(MoneyPropped, models.Model):
         return output
 
     def get_product_summary(self):
-        """Return a dict of product IDs -> {ordered, unshipped, refunded, shipped}"""
+        """Return a dict of product IDs -> {ordered, unshipped, refunded, shipped, suppliers}"""
 
         products = defaultdict(lambda: defaultdict(lambda: Decimal(0)))
+
+        def _append_supplier(product_id, supplier):
+            if not products[product_id]['suppliers']:
+                products[product_id]['suppliers'] = [supplier]
+            elif supplier not in products[product_id]['suppliers']:
+                products[product_id]['suppliers'].append(supplier)
+
+        # Quantity for all orders
+        # Note! This contains all product lines so we do not need to worry
+        # about suppliers after this.
         lines = (
             self.lines.filter(type=OrderLineType.PRODUCT)
-            .values_list("product_id", "quantity"))
-        for product_id, quantity in lines:
+            .values_list("product_id", "quantity", "supplier__name"))
+        for product_id, quantity, supplier in lines:
             products[product_id]['ordered'] += quantity
+            _append_supplier(product_id, supplier)
 
+        # Quantity to ship
         from ._products import ShippingMode
-
         lines_to_ship = (
             self.lines.filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED)
             .values_list("product_id", "quantity", "supplier__name"))
 
         for product_id, quantity, supplier in lines_to_ship:
             products[product_id]['unshipped'] += quantity
-            if not products[product_id]['suppliers']:
-                products[product_id]['suppliers'] = [supplier]
-            else:
-                products[product_id]['suppliers'].append(supplier)
 
+        # Quantity shipped
         from ._shipments import ShipmentProduct, ShipmentStatus
-
         shipment_prods = (
             ShipmentProduct.objects
             .filter(shipment__order=self)
             .exclude(shipment__status=ShipmentStatus.DELETED)
-            .values_list("product_id", "quantity"))
-        for product_id, quantity in shipment_prods:
+            .values_list("product_id", "quantity", "shipment__supplier__name"))
+        for product_id, quantity, supplier in shipment_prods:
             products[product_id]['shipped'] += quantity
             products[product_id]['unshipped'] -= quantity
 
+        # Quantity refunded
         refunded_prods = self.lines.refunds().filter(
             type=OrderLineType.REFUND,
             parent_line__type=OrderLineType.PRODUCT
-        ).distinct().values_list("parent_line__product_id", flat=True)
-        for product_id in refunded_prods:
+        ).distinct().values_list("parent_line__product_id", "supplier__name")
+        for product_id, supplier in refunded_prods:
             refunds = self.lines.refunds().filter(parent_line__product_id=product_id)
             refunded_quantity = refunds.aggregate(total=models.Sum("quantity"))["total"] or 0
             products[product_id]["refunded"] = refunded_quantity
             products[product_id]["unshipped"] = max(products[product_id]["unshipped"] - refunded_quantity, 0)
 
         return products
+
+    def get_supplier_product_summary(self):
+        """
+            Return a dict of unique key composed from supplier and product ids ->
+                {supplier_id, supplier_name, product_id, product_name, ordered, unshipped, refunded, shipped}
+        """
+        summary = defaultdict(lambda: defaultdict(lambda: Decimal(0)))
+
+        def _get_key_for_summary_item(supplier_id, product_id):
+            return "s-%s-p-%s" % (supplier_id, product_id)
+
+        # Quantity ordered for suppplier-product combination
+        lines = (
+            self.lines.filter(type=OrderLineType.PRODUCT)
+            .values_list("supplier_id", "supplier__name", "product_id", "product__translations__name", "quantity")
+        )
+        for supplier_id, supplier_name, product_id, product_name, quantity in lines:
+            key = _get_key_for_summary_item(supplier_id, product_id)
+            summary[key]['supplier_id'] = supplier_id
+            summary[key]['supplier_name'] = supplier_name
+            summary[key]['product_id'] = product_id
+            summary[key]['product_name'] = product_name
+            summary[key]['ordered'] += quantity
+
+        # Quantity to ship for supplier-product combination
+        from ._products import ShippingMode
+        lines_to_ship = (
+            self.lines.filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED)
+            .values_list("supplier_id", "product_id", "quantity"))
+
+        for supplier_id, product_id, quantity in lines_to_ship:
+            key = _get_key_for_summary_item(supplier_id, product_id)
+            summary[key]['unshipped'] += quantity
+
+        # Quantity shipped for supplier-product combination
+        from ._shipments import ShipmentProduct, ShipmentStatus
+        shipment_prods = (
+            ShipmentProduct.objects
+            .filter(shipment__order=self)
+            .exclude(shipment__status=ShipmentStatus.DELETED)
+            .values_list("shipment__supplier_id", "product_id", "quantity"))
+        for supplier_id, product_id, quantity in shipment_prods:
+            key = _get_key_for_summary_item(supplier_id, product_id)
+            summary[key]['shipped'] += quantity
+            summary[key]['unshipped'] -= quantity
+
+        # Quantity refunded for supplier-product combination
+        refunded_prods = self.lines.refunds().filter(
+            type=OrderLineType.REFUND,
+            parent_line__type=OrderLineType.PRODUCT
+        ).distinct().values_list("supplier_id", "parent_line__product_id")
+        for supplier_id, product_id in refunded_prods:
+            refunds = self.lines.refunds().filter(parent_line__product_id=product_id)
+            refunded_quantity = refunds.aggregate(total=models.Sum("quantity"))["total"] or 0
+            key = _get_key_for_summary_item(supplier_id, product_id)
+            summary[key]["refunded"] = refunded_quantity
+            summary[key]["unshipped"] = max(summary[key]["unshipped"] - refunded_quantity, 0)
+
+        return summary
 
     def get_unshipped_products(self):
         return dict(

@@ -77,16 +77,12 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         form.fields["supplier"].help_text = _(
             "Select the shipment supplier. You can only ship the suppliers assigned to order lines.")
         default_field_keys.add("supplier")
-        form.product_summary = order.get_product_summary()
-        form.product_names = dict(
-            (product_id, text)
-            for (product_id, text)
-            in order.lines.exclude(product=None).values_list("product_id", "text")
-        )
-        for product_id, info in sorted(six.iteritems(form.product_summary)):
+        form.product_summary = order.get_supplier_product_summary()
+        for key, info in sorted(six.iteritems(form.product_summary)):
+            product_id = info["product_id"]
             product_name = _("%(product_name)s (%(supplier)s)") % {
-                "product_name": form.product_names.get(product_id, "Product %s" % product_id),
-                "supplier": ", ".join(info["suppliers"])
+                "product_name": info["product_name"],
+                "supplier": info["supplier_name"]
             }
 
             unshipped_count = info["unshipped"]
