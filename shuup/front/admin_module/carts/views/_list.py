@@ -13,11 +13,13 @@ from django.utils.html import escape
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Shop
+from shuup.front.admin_module.carts.form_parts import get_cart_delay_hours
 from shuup.front.models import StoredBasket
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
@@ -58,8 +60,9 @@ class CartListView(PicotableListView):
         """
         Ignore potentially active carts, displaying only those not updated for at least 2 hours.
         """
-        cutoff = now() - datetime.timedelta(hours=2)
-        filters = {"updated_on__lt": cutoff, "product_count__gte": 0, "persistent": False}
+        shop = get_shop(self.request)
+        cutoff = now() - datetime.timedelta(hours=get_cart_delay_hours(shop))
+        filters = {"updated_on__lt": cutoff, "product_count__gte": 0, "persistent": False, "shop": shop}
         return super(CartListView, self).get_queryset().filter(**filters)
 
     def format_abandoned_status(self, instance, *args, **kwargs):
