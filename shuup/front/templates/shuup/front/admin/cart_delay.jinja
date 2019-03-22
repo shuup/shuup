@@ -1,0 +1,7 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% set cart_delay_form = form["cart_delay"] %}
+
+{% call content_block(_("Cart Inactivity Delay"), icon="fa-th-list") %}
+    {{ render_monolingual_fields(cart_delay_form) }}
+{% endcall %}

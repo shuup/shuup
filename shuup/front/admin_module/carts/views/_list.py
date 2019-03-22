@@ -13,6 +13,7 @@ from django.utils.html import escape
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter
 )
@@ -21,6 +22,7 @@ from shuup.core.models import Shop
 from shuup.front.models import StoredBasket
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
+CART_UPDATE_DELAY_CONF_KEY = "shuup_front_cart_update_delay"
 
 class CartListView(PicotableListView):
     model = StoredBasket
@@ -58,7 +60,8 @@ class CartListView(PicotableListView):
         """
         Ignore potentially active carts, displaying only those not updated for at least 2 hours.
         """
-        cutoff = now() - datetime.timedelta(hours=2)
+        hours = configuration.get(self.request.shop, CART_UPDATE_DELAY_CONF_KEY, 2)
+        cutoff = now() - datetime.timedelta(hours=hours)
         filters = {"updated_on__lt": cutoff, "product_count__gte": 0, "persistent": False}
         return super(CartListView, self).get_queryset().filter(**filters)
 
