@@ -60,13 +60,14 @@
     <input type="hidden" name="command" value="add_var">
     <input type="hidden" name="product_id" id="product_id" value="{{ shop_product.product.id }}">
     <div class="product-variations">
-        {% if xtheme.get("show_variation_buttons") %}
+        {% set show_variation_buttons = xtheme.get("show_variation_buttons") %}
+        {% if show_variation_buttons %}
             {% for var in variation_variables %}
                 {% set idx = loop.index %}
                 <h3>{{ var.name }}</h3>
                 {% for pvvv in orderable_variation_children[var] %}
                      <button
-                             class="btn btn-primary btn-variation {% if selected_child and selected_child == p.id or loop.first %} btn-active{% endif %}"
+                             class="btn btn-primary btn-variation {% if selected_child and selected_child == p.id or loop.first %} btn-active{% endif %} {{ var }} {{ pvvv }}"
                              data-target-product="{{ var.id }}"
                              data-primary-product="{{ product_id }}"
                              data-level="{{ idx }}"
@@ -75,35 +76,20 @@
                     </button>
                 {% endfor %}
             {% endfor %}
-
-            {% for var in variation_variables %}
-                <div class="form-group hidden">
-                    <label for="var_{{ var.pk }}">{% trans %}Select{% endtrans %} {{ var.name }}</label>
-                    <select name="var_{{ var.pk }}"
-                            id="var_{{ var.pk }}"
-                            class="form-control selectpicker variable-variation variable-variation-{{ product_id }}"
-                            onchange="updatePrice('{{ product_id }}')">
-                        {% for pvvv in orderable_variation_children[var] %}
-                            <option value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            {% endfor %}
-        {% else %}
-            {% for var in variation_variables %}
-                <div class="form-group">
-                    <label for="var_{{ var.pk }}">{% trans %}Select{% endtrans %} {{ var.name }}</label>
-                    <select name="var_{{ var.pk }}"
-                            id="var_{{ var.pk }}"
-                            class="form-control selectpicker variable-variation variable-variation-{{ product_id }}"
-                            onchange="updatePrice('{{ product_id }}')">
-                        {% for pvvv in orderable_variation_children[var] %}
-                            <option value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            {% endfor %}
         {% endif %}
+        {% for var in variation_variables %}
+            <div class="form-group {% if show_variation_buttons %} hidden {% endif %}">
+                <label for="var_{{ var.pk }}">{% trans %}Select{% endtrans %} {{ var.name }}</label>
+                <select name="var_{{ var.pk }}"
+                        id="var_{{ var.pk }}"
+                        class="form-control selectpicker variable-variation variable-variation-{{ product_id }}"
+                        onchange="updatePrice('{{ product_id }}')">
+                    {% for pvvv in orderable_variation_children[var] %}
+                        <option value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
         {{ product_order_section(shop_product, quantity, variation_orderable, supplier=supplier) }}
     </div>
 {% endmacro %}
