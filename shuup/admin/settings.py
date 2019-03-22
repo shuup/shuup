@@ -45,3 +45,15 @@ SHUUP_ADMIN_MINIMUM_INPUT_LENGTH_SEARCH = 3
 #:
 SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC = (
     "shuup.admin.supplier_provider.DefaultSupplierProvider")
+
+#: The input format to be used in date pickers
+#:
+SHUUP_ADMIN_DATE_INPUT_FORMAT = "Y-m-d"
+
+#: The input format to be used in datetime pickers
+#:
+SHUUP_ADMIN_DATETIME_INPUT_FORMAT = "Y-m-d H:i"
+
+#: The input format to be used in time pickers
+#:
+SHUUP_ADMIN_TIME_INPUT_FORMAT = "H:i"

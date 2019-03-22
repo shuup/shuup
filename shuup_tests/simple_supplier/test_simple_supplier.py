@@ -14,6 +14,7 @@ from django.test import override_settings
 
 from shuup.admin.modules.products.views.edit import ProductEditView
 from shuup.core import cache
+from shuup.core.models import ShippingMode
 from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
 from shuup.simple_supplier.admin_module.views import (
     process_alert_limit, process_stock_adjustment, process_stock_managed
@@ -45,13 +46,20 @@ def test_simple_supplier(rf):
     assert pss.logical_count == (num - quantities[product.pk])
     assert pss.physical_count == num
     # Create shipment ...
-    order.create_shipment_of_all_products(supplier)
+    shipment = order.create_shipment_of_all_products(supplier)
     pss = supplier.get_stock_status(product.pk)
     assert pss.physical_count == (num - quantities[product.pk])
     # Cancel order...
     order.set_canceled()
     pss = supplier.get_stock_status(product.pk)
     assert pss.logical_count == (num)
+    # physical stock still the same until shipment exists
+    assert pss.physical_count == (num - quantities[product.pk])
+
+    shipment.soft_delete()
+    pss = supplier.get_stock_status(product.pk)
+    assert pss.logical_count == num
+    assert pss.physical_count == num
 
 
 @pytest.mark.django_db
@@ -242,6 +250,17 @@ def test_alert_limit_notification(rf, admin_user):
         # stock should be 1, lower then the alert limit
         supplier.adjust_stock(product.pk, -5)
 
+        # test whether that runs inside a minute
+        event = AlertLimitReached(product=product, supplier=supplier)
+        event.run(shop)
+        # not updated, not ran
+        assert cache.get(cache_key) == last_run
+
+        last_run -= 1000
+        cache.set(cache_key, last_run)
+        event = AlertLimitReached(product=product, supplier=supplier)
+        event.run(shop)
+
         # last run should be updated
         assert cache.get(cache_key) != last_run
 
@@ -291,3 +310,50 @@ def test_process_stock_managed(rf, admin_user):
     sc = StockCount.objects.filter(
         supplier=supplier, product=product).first()
     assert sc.stock_managed == True
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("shipping_mode", [ShippingMode.NOT_SHIPPED, ShippingMode.SHIPPED])
+def test_supplier_non_shipped_products(rf, shipping_mode):
+    """
+    Test non shipped products - physical count should have the same as logical count
+    """
+    supplier = get_simple_supplier(stock_managed=True)
+    shop = get_default_shop()
+    product = create_product("shipped-product", shop, supplier, shipping_mode=shipping_mode)
+    quantity = random.randint(100, 600)
+
+    # Adjust
+    supplier.adjust_stock(product.pk, quantity)
+    stock_status = supplier.get_stock_status(product.id)
+
+    # Check that count is adjusted
+    assert stock_status.logical_count == quantity
+    assert stock_status.physical_count == quantity
+
+    # Create order ...
+    order = create_order_with_product(product, supplier, 10, 3, shop=shop)
+    quantities = order.get_product_ids_and_quantities()
+    stock_status = supplier.get_stock_status(product.id)
+
+    assert stock_status.logical_count == (quantity - quantities[product.pk])
+    if shipping_mode == ShippingMode.SHIPPED:
+        assert stock_status.physical_count == quantity
+
+        # Create shipment ...
+        shipment = order.create_shipment_of_all_products(supplier)
+        stock_status = supplier.get_stock_status(product.id)
+        assert stock_status.physical_count == (quantity - quantities[product.pk])
+
+    else:
+        assert stock_status.physical_count == stock_status.logical_count
+
+    # Cancel order...
+    order.set_canceled()
+
+    if shipping_mode == ShippingMode.SHIPPED:
+        shipment.soft_delete()
+
+    stock_status = supplier.get_stock_status(product.id)
+    assert stock_status.logical_count == quantity
+    assert stock_status.physical_count == stock_status.logical_count

@@ -87,18 +87,31 @@ class HomeView(TemplateView):
                     "no_redirect": True
                 })
 
-        blocks.append(
-            SimpleHelpBlock(
-                _("Complete the setup wizard"),
-                actions=wizard_actions,
-                icon_url="shuup_admin/img/configure.png",
-                priority=-1,
-                done=wizard_complete
+        if wizard_actions:
+            blocks.append(
+                SimpleHelpBlock(
+                    _("Complete the setup wizard"),
+                    actions=wizard_actions,
+                    icon_url="shuup_admin/img/configure.png",
+                    priority=-1,
+                    done=wizard_complete
+                )
             )
-        )
 
         for module in get_modules():
             if not get_missing_permissions(self.request.user, module.get_required_permissions()):
                 blocks.extend(module.get_help_blocks(request=self.request, kind="setup"))
         blocks.sort(key=lambda b: b.priority)
+
+        if not blocks:
+            blocks.append(
+                SimpleHelpBlock(
+                    _("All set. Nothing to be configured"),
+                    actions=[],
+                    icon_url="shuup_admin/img/configure.png",
+                    priority=-1,
+                    done=True
+                )
+            )
+
         return context

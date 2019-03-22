@@ -15,8 +15,8 @@ from django.template.loader import render_to_string
 
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.core.models import (
-    OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct, ShipmentStatus,
-    ShipmentType
+    OrderLine, OrderLineType, OrderStatusRole, Product, ShipmentProduct,
+    ShipmentStatus, ShipmentType, ShippingMode
 )
 from shuup.core.suppliers.base import StockAdjustmentType
 from shuup.simple_supplier.forms import (
@@ -56,20 +56,37 @@ def get_current_stock_value(supplier_id, product_id):
         StockAdjustment.objects
         .filter(supplier_id=supplier_id, product_id=product_id, type=StockAdjustmentType.RESTOCK_LOGICAL)
         .aggregate(total=Sum("delta"))["total"] or 0)
-    products_sent = (
-        ShipmentProduct.objects
-        .filter(shipment__supplier=supplier_id, shipment__type=ShipmentType.OUT, product_id=product_id)
-        .exclude(shipment__status=ShipmentStatus.DELETED)
-        .aggregate(total=Sum("quantity"))["total"] or 0)
     pending_incoming_shipments = (
         ShipmentProduct.objects
-        .filter(shipment__supplier=supplier_id, shipment__type=ShipmentType.IN, product_id=product_id)
+        .filter(
+            shipment__supplier=supplier_id,
+            shipment__type=ShipmentType.IN,
+            product_id=product_id,
+            product__shipping_mode=ShippingMode.SHIPPED
+        )
         .exclude(shipment__status__in=[ShipmentStatus.DELETED, ShipmentStatus.RECEIVED])
         .aggregate(total=Sum("quantity"))["total"] or 0)
 
+    logical_count = events - products_bought + products_refunded_before_shipment + pending_incoming_shipments
+
+    # check the product shipping mode
+    # if the product is shipped, it means it constrols the physical stock
+    # if that is not shipped, the physical stock should be equals to the logical count
+    product_shipping_mode = Product.objects.only("shipping_mode").get(pk=product_id).shipping_mode
+    if product_shipping_mode == ShippingMode.SHIPPED:
+        products_sent = (
+            ShipmentProduct.objects
+            .filter(shipment__supplier=supplier_id, shipment__type=ShipmentType.OUT, product_id=product_id)
+            .exclude(shipment__status=ShipmentStatus.DELETED)
+            .aggregate(total=Sum("quantity"))["total"] or 0)
+
+        physical_count = events - products_sent
+    else:
+        physical_count = logical_count
+
     return {
-        "logical_count": events - products_bought + products_refunded_before_shipment + pending_incoming_shipments,
-        "physical_count": events - products_sent
+        "logical_count": logical_count,
+        "physical_count": physical_count
     }
 
 

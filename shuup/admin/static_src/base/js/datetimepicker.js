@@ -8,16 +8,16 @@
  */
 $(function() {
     $(".form-control.datetime").datetimepicker({
-        format: "Y-m-d H:i"
+        format: window.ShuupAdminConfig.settings.datetimeInputFormat
     });
 
     $(".form-control.date").datetimepicker({
-        format: "Y-m-d",
+        format: window.ShuupAdminConfig.settings.dateInputFormat,
         timepicker: false
     });
 
     $(".form-control.time").datetimepicker({
-        format: "H:i",
+        format: window.ShuupAdminConfig.settings.timeInputFormat,
         datepicker: false
     });
 });
