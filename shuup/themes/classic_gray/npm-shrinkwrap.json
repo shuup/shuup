@@ -1869,8 +1869,9 @@
       "integrity": "sha1-aN/1++YMUes3cl6p4+0xDcwed24="
     },
     "bootstrap": {
-      "version": "https://github.com/shuup/bootstrap/tarball/852c02e",
-      "integrity": "sha512-rAk6+dVzPIlTdjBoKVDAk6Hj27ybVJJZ+iA0rFF6XfIsfovJAE+IcPstDk1ytzIgu2e2xQbq7W1HPT9zmcy44A=="
+      "version": "3.4.1",
+      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.4.1.tgz",
+      "integrity": "sha512-yN5oZVmRCwe5aKwzRj6736nSmKDX7pLYwsXiCj/EYmo16hODaBiT4En5btW/jhBF/seV+XMx3aYwukYC3A49DA=="
     },
     "bootstrap-select": {
       "version": "1.6.3",
