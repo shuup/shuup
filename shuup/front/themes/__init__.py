@@ -30,6 +30,10 @@ class BaseThemeFieldsMixin(object):
             required=False, initial=True, label=_("Show Product Details"),
             help_text=_("If you check this, extra information will be shown on product page in frontend.")
         )),
+        ("show_variation_buttons", forms.BooleanField(
+            required=False, initial=False, label=_("Show Variations as Buttons"),
+            help_text=_("If you check this, the variations will be shown as buttons instead of dropdowns.")
+        )),
         ("product_detail_extra_tab_title", forms.CharField(
             required=False,
             label=_("Product detail extra tab title"),
