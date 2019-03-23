@@ -25,7 +25,8 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.admin_module.sorts_and_filters.form_parts.ConfigurationShopFormPart",
             "shuup.front.admin_module.checkout.form_parts.CheckoutShopFormPart",
             "shuup.front.admin_module.companies.form_parts.RegistrationSettingsFormPart",
-            "shuup.front.admin_module.translation.form_parts.TranslationSettingsFormPart"
+            "shuup.front.admin_module.translation.form_parts.TranslationSettingsFormPart",
+            "shuup.front.admin_module.carts.form_parts.CartDelayFormPart"
         ],
         "notify_event": [
             "shuup.front.notify_events:OrderReceived",
