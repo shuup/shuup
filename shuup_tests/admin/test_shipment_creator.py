@@ -37,13 +37,12 @@ def test_shipment_creating_view_get(rf, admin_user):
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view = OrderCreateShipmentView.as_view()
-    response = view(request, pk=order.pk).render()
+    response = view(request, pk=order.pk, supplier_pk=supplier.pk).render()
     assert response.status_code == 200
 
     # Should contain supplier input and input for product
     soup = BeautifulSoup(response.content)
     assert soup.find("input", {"id": "id_q_%s" % product.pk})
-    assert soup.find("select", {"id": "id_supplier"})
 
 
 @pytest.mark.django_db
@@ -54,12 +53,11 @@ def test_shipment_creating_view_post(rf, admin_user):
     order = create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=1, shop=shop)
 
     data = {
-        "q_%s" % product.pk: 1,
-        "supplier": supplier.pk
+        "q_%s" % product.pk: 1
     }
     request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
     view = OrderCreateShipmentView.as_view()
-    response = view(request, pk=order.pk)
+    response = view(request, pk=order.pk, supplier_pk=supplier.pk)
     assert response.status_code == 302
 
     # Order should have shipment
@@ -83,13 +81,12 @@ def test_extending_shipment_with_extra_fields(rf, admin_user):
     with override_provides(ShipmentForm.form_modifier_provide_key, [extend_form_class]):
         request = apply_request_middleware(rf.get("/"), user=admin_user)
         view = OrderCreateShipmentView.as_view()
-        response = view(request, pk=order.pk).render()
+        response = view(request, pk=order.pk, supplier_pk=supplier.pk).render()
         assert response.status_code == 200
 
         # Should contain supplier input, input for product and input for phone
         soup = BeautifulSoup(response.content)
         assert soup.find("input", {"id": "id_q_%s" % product.pk})
-        assert soup.find("select", {"id": "id_supplier"})
         assert soup.find("input", {"id": "id_phone"})
 
 
@@ -106,12 +103,11 @@ def test_extending_shipment_clean_hook(rf, admin_user):
     with override_provides(ShipmentForm.form_modifier_provide_key, [extend_form_class]):
         data = {
             "q_%s" % product.pk: 1,
-            "supplier": supplier.pk,
             "phone": "911"
         }
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         view = OrderCreateShipmentView.as_view()
-        response = view(request, pk=order.pk).render()
+        response = view(request, pk=order.pk, supplier_pk=supplier.pk).render()
         assert response.status_code == 200
         soup = BeautifulSoup(response.content)
         assert soup.body.findAll(text=re.compile("Phone number should start with country code!"))
@@ -131,12 +127,11 @@ def test_extending_shipment_form_valid_hook(rf, admin_user):
         phone_number = "+358911"
         data = {
             "q_%s" % product.pk: 1,
-            "supplier": supplier.pk,
             "phone": phone_number
         }
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         view = OrderCreateShipmentView.as_view()
-        response = view(request, pk=order.pk)
+        response = view(request, pk=order.pk, supplier_pk=supplier.pk)
         assert response.status_code == 302
 
         # Order should now have shipment, but let's re fetch it first

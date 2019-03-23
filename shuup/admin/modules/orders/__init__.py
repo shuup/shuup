@@ -28,7 +28,7 @@ class OrderModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^orders/(?P<pk>\d+)/create-shipment/$",
+                "^orders/(?P<pk>\d+)/create-shipment/(?P<supplier_pk>\d+)/$",
                 "shuup.admin.modules.orders.views.OrderCreateShipmentView",
                 name="order.create-shipment"
             ),

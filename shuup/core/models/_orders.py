@@ -967,14 +967,27 @@ class Order(MoneyPropped, models.Model):
                 untaxed += line.taxless_price
         return taxing.TaxSummary.from_line_taxes(all_line_taxes, untaxed)
 
-    def get_product_ids_and_quantities(self):
+    def get_product_ids_and_quantities(self, supplier=None):
+        lines = self.lines.filter(type=OrderLineType.PRODUCT)
+        if supplier:
+            supplier_id = (supplier if isinstance(supplier, six.integer_types) else supplier.pk)
+            lines = lines.filter(supplier_id=supplier_id)
+
         quantities = defaultdict(lambda: 0)
-        for product_id, quantity in self.lines.filter(type=OrderLineType.PRODUCT).values_list("product_id", "quantity"):
+        for product_id, quantity in lines.values_list("product_id", "quantity"):
             quantities[product_id] += quantity
         return dict(quantities)
 
     def has_products(self):
         return self.lines.products().exists()
+
+    def has_products_requiring_shipment(self, supplier=None):
+        from ._products import ShippingMode
+        lines = self.lines.products().filter(product__shipping_mode=ShippingMode.SHIPPED)
+        if supplier:
+            supplier_id = (supplier if isinstance(supplier, six.integer_types) else supplier.pk)
+            lines = lines.filter(supplier_id=supplier_id)
+        return lines.exists()
 
     def is_complete(self):
         return (self.status.role == OrderStatusRole.COMPLETE)
@@ -1048,45 +1061,42 @@ class Order(MoneyPropped, models.Model):
                         output.append((force_text(display_name), data_dict[key]))
         return output
 
-    def get_product_summary(self):
-        """Return a dict of product IDs -> {ordered, unshipped, refunded, shipped}"""
+    def get_product_summary(self, supplier=None):
+        """Return a dict of product IDs -> {ordered, unshipped, refunded, shipped, line_text, suppliers}"""
+        supplier_id = ((supplier if isinstance(supplier, six.integer_types) else supplier.pk) if supplier else None)
 
         products = defaultdict(lambda: defaultdict(lambda: Decimal(0)))
-        lines = (
-            self.lines.filter(type=OrderLineType.PRODUCT)
-            .values_list("product_id", "quantity"))
-        for product_id, quantity in lines:
-            products[product_id]['ordered'] += quantity
 
-        from ._products import ShippingMode
-
-        lines_to_ship = (
-            self.lines.filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED)
-            .values_list("product_id", "quantity", "supplier__name"))
-
-        for product_id, quantity, supplier in lines_to_ship:
-            products[product_id]['unshipped'] += quantity
+        def _append_suppliers_info(product_id, supplier):
             if not products[product_id]['suppliers']:
                 products[product_id]['suppliers'] = [supplier]
-            else:
+            elif supplier not in products[product_id]['suppliers']:
                 products[product_id]['suppliers'].append(supplier)
 
-        from ._shipments import ShipmentProduct, ShipmentStatus
+        # Quantity for all orders
+        # Note! This contains all product lines so we do not need to worry
+        # about suppliers after this.
+        lines = self.lines.filter(type=OrderLineType.PRODUCT)
+        if supplier_id:
+            lines = lines.filter(supplier_id=supplier_id)
 
-        shipment_prods = (
-            ShipmentProduct.objects
-            .filter(shipment__order=self)
-            .exclude(shipment__status=ShipmentStatus.DELETED)
-            .values_list("product_id", "quantity"))
-        for product_id, quantity in shipment_prods:
+        lines_values = lines.values_list("product_id", "text", "quantity", "supplier__name")
+        for product_id, line_text, quantity, supplier_name in lines_values:
+            products[product_id]['line_text'] = line_text
+            products[product_id]['ordered'] += quantity
+            _append_suppliers_info(product_id, supplier_name)
+
+        # Quantity to ship
+        for product_id, quantity in self._get_to_ship_quantities(supplier_id):
+            products[product_id]['unshipped'] += quantity
+
+        # Quantity shipped
+        for product_id, quantity in self._get_shipped_quantities(supplier_id):
             products[product_id]['shipped'] += quantity
             products[product_id]['unshipped'] -= quantity
 
-        refunded_prods = self.lines.refunds().filter(
-            type=OrderLineType.REFUND,
-            parent_line__type=OrderLineType.PRODUCT
-        ).distinct().values_list("parent_line__product_id", flat=True)
-        for product_id in refunded_prods:
+        # Quantity refunded
+        for product_id in self._get_refunded_product_ids(supplier_id):
             refunds = self.lines.refunds().filter(parent_line__product_id=product_id)
             refunded_quantity = refunds.aggregate(total=models.Sum("quantity"))["total"] or 0
             products[product_id]["refunded"] = refunded_quantity
@@ -1094,10 +1104,36 @@ class Order(MoneyPropped, models.Model):
 
         return products
 
-    def get_unshipped_products(self):
+    def _get_to_ship_quantities(self, supplier_id):
+        from ._products import ShippingMode
+        lines_to_ship = (
+            self.lines.filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED))
+        if supplier_id:
+            lines_to_ship = lines_to_ship.filter(supplier_id=supplier_id)
+        return lines_to_ship.values_list("product_id", "quantity")
+
+    def _get_shipped_quantities(self, supplier_id):
+        from ._shipments import ShipmentProduct, ShipmentStatus
+        shipment_prods = (
+            ShipmentProduct.objects
+            .filter(shipment__order=self)
+            .exclude(shipment__status=ShipmentStatus.DELETED))
+        if supplier_id:
+            shipment_prods = shipment_prods.filter(shipment__supplier_id=supplier_id)
+        return shipment_prods.values_list("product_id", "quantity")
+
+    def _get_refunded_product_ids(self, supplier_id):
+        refunded_prods = self.lines.refunds().filter(
+            type=OrderLineType.REFUND,
+            parent_line__type=OrderLineType.PRODUCT)
+        if supplier_id:
+            refunded_prods = refunded_prods.filter(parent_line__supplier_id=supplier_id)
+        return refunded_prods.distinct().values_list("parent_line__product_id", flat=True)
+
+    def get_unshipped_products(self, supplier=None):
         return dict(
             (product, summary_datum)
-            for product, summary_datum in self.get_product_summary().items()
+            for product, summary_datum in self.get_product_summary(supplier=supplier).items()
             if summary_datum['unshipped']
         )
 
@@ -1115,6 +1151,7 @@ class Order(MoneyPropped, models.Model):
 
     def can_edit(self):
         return (
+            not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS and
             not self.has_refunds() and
             not self.is_canceled() and
             not self.is_complete() and

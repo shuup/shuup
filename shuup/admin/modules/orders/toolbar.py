@@ -143,18 +143,6 @@ class SetPaidAction(PostActionDropdownItem):
         return ((object.is_not_paid() or object.is_deferred()) and not object.taxful_total_price)
 
 
-class CreateShipmentAction(DropdownItem):
-    def __init__(self, object, **kwargs):
-        kwargs["url"] = reverse("shuup_admin:order.create-shipment", kwargs={"pk": object.pk})
-        kwargs["icon"] = "fa fa-truck"
-        kwargs["text"] = _("Create Shipment")
-        super(CreateShipmentAction, self).__init__(**kwargs)
-
-    @staticmethod
-    def visible_for_object(object):
-        return object.can_create_shipment()
-
-
 class CreateRefundAction(DropdownItem):
     def __init__(self, object, **kwargs):
         kwargs["url"] = reverse("shuup_admin:order.create-refund", kwargs={"pk": object.pk})
