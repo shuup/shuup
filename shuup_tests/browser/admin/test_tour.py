@@ -9,6 +9,8 @@ import os
 
 import pytest
 
+from selenium.common.exceptions import ElementNotInteractableException
+
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
@@ -154,10 +156,22 @@ def test_product_tour(browser, admin_user, live_server, settings):
             "a.shepherd-enabled[href='#contact-group-pricing-section']",
             "a.shepherd-enabled[href='#contact-group-discount-section']"
         ]
+
+        # Scroll top before starting to click. For some reason the first
+        # item is not found without this. For Firefox or Chrome the browser
+        # does not do any extra scroll which could hide the first item.
+        # Steps are scrollTo false on purpose since the scrollTo true is the
+        # config which does not work in real world.
+        browser.execute_script("window.scrollTo(0,0)")
         for target in category_targets:
-            wait_until_condition(browser, lambda x: x.is_element_present_by_css(target))
-            move_to_element(browser, ".shepherd-button.btn-primary")
-            browser.find_by_css(".shepherd-button.btn-primary").last.click()
+            try:
+                wait_until_condition(browser, lambda x: x.is_element_present_by_css(target))
+                browser.find_by_css(".shepherd-button.btn-primary").last.click()
+            except ElementNotInteractableException:
+                move_to_element(browser, ".shepherd-button.btn-primary")
+                wait_until_condition(browser, lambda x: x.is_element_present_by_css(target))
+                browser.find_by_css(".shepherd-button.btn-primary").last.click()
+
         wait_until_condition(browser, lambda x: is_tour_complete(shop, "product", user))
 
         # check whether the tour is shown again

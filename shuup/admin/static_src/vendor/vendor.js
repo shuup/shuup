@@ -22,7 +22,6 @@ window.Dropzone = require('dropzone');
 Dropzone.autoDiscover = false;
 
 window.OrderCreator = require('../../modules/orders/static_src/create/index.js');
-window.Shepherd = require('shepherd.js');
 
 const m = require('mithril');
 window.m = m;
@@ -43,7 +42,6 @@ require('jquery.easing');
 require('jquery.scrollbar');
 require('moment');
 require('outlayer');
-require('popper.js');
 require('summernote/dist/summernote-bs4.js');
 require('jquery-datetimepicker');
 require('bootstrap-colorpicker');

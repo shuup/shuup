@@ -84,15 +84,6 @@
             }());
         </script>
         {% endif %}
-        {% if tour_complete == False %}
-        <script>
-            $(document).ready(function() {
-                // 991px - 15px = Table breakpoint
-                if ($(window).width() > 976) {
-                    $.tour({ tourKey: "{{ tour_key }}", url: ShuupAdminConfig.browserUrls.tour });
-                }
-            });
-        </script>
-        {% endif %}
+        <script>$(function() {window.runTour();});</script>
     </body>
 </html>
