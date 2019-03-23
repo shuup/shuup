@@ -15,8 +15,8 @@
   "private": true,
   "dependencies": {
     "babel-preset-env": "^1.7.0",
-    "parcel-bundler": "^1.10.3",
-    "shuup-static-build-tools": "^1.0.2"
+    "parcel-bundler": "^1.12.3",
+    "shuup-static-build-tools": "^1.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.3"

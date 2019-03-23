@@ -23,7 +23,7 @@
     "less": "^3.0.4",
     "open-sans-all": "0.1.3",
     "owl.carousel": "^2.3.4",
-    "parcel-bundler": "^1.10.3",
+    "parcel-bundler": "^1.12.3",
     "postcss-modules": "^1.1.0",
     "sass": "^1.15.1",
     "shuup-static-build-tools": "^1.0.2",
