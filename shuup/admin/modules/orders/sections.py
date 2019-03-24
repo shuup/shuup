@@ -68,7 +68,7 @@ class ShipmentSection(Section):
     def visible_for_object(order, request=None):
         return (
             order.has_products_requiring_shipment() or
-            Shipment.objects.filter(order=order).exists()
+            Shipment.objects.all_except_deleted().filter(order=order).exists()
         )
 
     @staticmethod
