@@ -20,7 +20,6 @@ from django.forms import (
 from shuup import configuration
 from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
-from shuup.core.models import Product
 from shuup.core.utils import context_cache
 from shuup.xtheme import get_theme_cache_key
 
@@ -257,6 +256,25 @@ def bump_product_queryset_cache():
 
 
 def get_product_queryset(queryset, request, category, data):
+    # pass the request and category down to the `get_queryset` method
+    queryset_data = data.copy()
+    queryset_data.update({
+        "request": request,
+        "category": category
+    })
+    for extend_obj in _get_active_modifiers(request.shop, category):
+        new_queryset = extend_obj.get_queryset(queryset, queryset_data)
+        if new_queryset is not None:
+            queryset = new_queryset
+    return queryset
+
+
+def cached_product_queryset(queryset, request, category, data):
+    """
+    Returns the cached queryset or cache it when needed
+    Note: this method returns a list of Product instances
+    rtype: list[Product]
+    """
     key_data = OrderedDict()
     for k, v in data.items():
         if isinstance(v, list):
@@ -270,7 +288,7 @@ def get_product_queryset(queryset, request, category, data):
     if category:
         item = "%sC%s" % (item, category.pk)
 
-    key, product_ids = context_cache.get_cached_value(
+    key, products = context_cache.get_cached_value(
         identifier="product_queryset",
         item=item,
         allow_cache=True,
@@ -278,23 +296,12 @@ def get_product_queryset(queryset, request, category, data):
         data=key_data
     )
 
-    if product_ids is not None:
-        return Product.objects.filter(id__in=product_ids)
+    if products is not None:
+        return products
 
-    # pass the request and category down to the `get_queryset` method
-    queryset_data = data.copy()
-    queryset_data.update({
-        "request": request,
-        "category": category
-    })
-    for extend_obj in _get_active_modifiers(request.shop, category):
-        new_queryset = extend_obj.get_queryset(queryset, queryset_data)
-        if new_queryset is not None:
-            queryset = new_queryset
-
-    product_ids = list(queryset.values_list("id", flat=True))
-    context_cache.set_cached_value(key, product_ids)
-    return queryset
+    products = list(queryset)
+    context_cache.set_cached_value(key, products)
+    return products
 
 
 def _get_category_configuration_key(category):

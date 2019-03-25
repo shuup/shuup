@@ -36,7 +36,7 @@ class SearchView(ListView):
         if not (data and data.get("q")):  # pragma: no cover
             return Product.objects.none()
         products = Product.objects.filter(get_query_filters(self.request, None, data=data))
-        return get_product_queryset(products, self.request, None, data)
+        return get_product_queryset(products, self.request, None, data).distinct()
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
