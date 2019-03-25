@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import pytoml as toml
+import toml
 import six
 from jinja2.ext import Extension
 from jinja2.nodes import Const, EvalContext, ExprStmt, Impossible, Name, Output
@@ -332,8 +332,7 @@ class PluginExtension(_PlaceholderManagingExtension):
                 config = flatten_const_node_list(self.environment, body)
             except Unflattenable as uf:
                 raise NonConstant("A `plugin` block may only contain static layout (found: %r)" % uf.args[0])
-            config = toml.loads(config, "<%s.%s in %s>" % (layout.placeholder_name, name, parser.name))
-
+            config = toml.loads(config)
         layout.add_plugin(name, config)
         return noop_node(lineno)
 
