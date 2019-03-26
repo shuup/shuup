@@ -283,7 +283,7 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_dummy_script_template(browser, admin_user, live_server, settings):
+def test_dummy_script_editor(browser, admin_user, live_server, settings):
     initialize(browser, live_server, settings)
 
     with override_provides("notify_script_template", ["shuup.testing.notify_script_templates:DummyScriptTemplate"]):
@@ -321,3 +321,26 @@ def test_dummy_script_template(browser, admin_user, live_server, settings):
         # should exist only a single button to edit the script content
         assert len(browser.find_by_css(".shuup-toolbar a.btn.btn-primary")) == 1
         assert "Edit Script Contents" in browser.find_by_css(".shuup-toolbar a.btn.btn-primary").first.text
+        click_element(browser, ".shuup-toolbar a.btn.btn-primary")
+        wait_until_condition(browser, lambda b: b.is_text_present("New action"))
+
+        browser.find_by_css(".btn-primary")[1].click()
+        wait_until_condition(browser, lambda b: b.is_text_present("Send Email"))
+        browser.find_by_css(".item-option .item-name")[2].click()
+        with browser.get_iframe('step-item-frame') as iframe:
+            iframe.find_by_id("id_b_recipient_c").fill("random@gmail.com")
+            iframe.find_by_name("b_language_c").fill("English")
+            click_element(iframe, ".btn.btn-success")
+            wait_until_condition(iframe, lambda b: b.is_text_present("Please correct the errors below."))
+            browser.find_by_css(".nav-link")[1].click()
+            wait_until_condition(iframe, lambda b: b.is_text_present("This field is missing content"))  # Assert that only the default shop language requires fields
+            if(len(settings.LANGUAGES) > 1):
+                browser.find_by_css(".nav-link")[2].click()
+                assert not iframe.is_text_present("This field is missing content")  # Assert that another language doesn't contain content
+            browser.find_by_css(".nav-link")[1].click()
+            iframe.find_by_id("id_t_en_subject").fill("Random subject")
+            iframe.find_by_css(".note-editable.card-block").fill("<p>Lorem ipsum et cetera</p>")
+            click_element(iframe, ".btn.btn-success")
+            click_element(browser, ".btn.btn-success")
+        wait_until_condition(browser, lambda b: b.is_text_present("send_email"))  # Check if email step has been added
+

@@ -91,12 +91,14 @@
             {% endif %}
             <input name="init_data" type="hidden" value="{{ init_data }}">
             <ul class="nav nav-tabs" id="main-tabs">
-                <li role="presentation" class="nav-item"><a href="#variables" class="nav-link">{% trans %}Variables{% endtrans %}</a></li>
-                {% for language_code, language_name in form.template_languages %}
-                <li role="presentation" class="nav-item"><a href="#template-{{ language_code }}" class="nav-link">{{ language_name }}</a></li>
-                {% endfor %}
+                <li role="presentation" class="nav-item active"><a href="#variables" class="nav-link" data-toggle="tab" aria-selected="true">{% trans %}Variables{% endtrans %}</a></li>
+                <div class="language-dependent-content">
+                    {% for language_code, language_name in form.template_languages %}
+                        <li role="presentation" class="nav-item"><a href="#template-{{ language_code }}" class="nav-link" data-toggle="tab" aria-selected="false">{{ language_name }}</a></li>
+                    {% endfor %}
+                </div>
             </ul>
-            <div id="variables" class="tab-pane">{{ binding_view(form) }}</div>
+            <div id="variables" class="tab-pane active">{{ binding_view(form) }}</div>
             {% for language_code, language_name in form.template_languages %}
                 <div id="template-{{ language_code }}" class="tab-pane">
                     <div class="row">
@@ -120,7 +122,7 @@
     .iframe-content-block {
         background: #fff;
         padding-top: 0px !important;
-        padding: 30px;
+        padding-left: 30px;
     }
     .iframe-title {
         margin-top: 0;
@@ -133,6 +135,12 @@
     }
     .btn-success {
         margin: 10px;
+    }
+    .tab-pane {
+        padding-left: 30px;
+    }
+    .language-dependent-content {
+        display: flex;
     }
 </style>
 {% endblock %}
