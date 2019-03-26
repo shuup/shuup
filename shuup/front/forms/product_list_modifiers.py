@@ -49,6 +49,7 @@ class OneChoiceFilterWidget(forms.Select):
         choices_to_render = []
         for option_value, option_label in chain(self.choices, choices):
             choices_to_render.append((option_value, option_label))
+
         return mark_safe(
             render_to_string("shuup/front/product/filter_choice.jinja", {
                 "name": name, "values": value, "choices": choices_to_render, "one_choice": True})

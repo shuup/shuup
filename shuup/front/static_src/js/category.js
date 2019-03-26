@@ -6,10 +6,24 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+// CustomEvent polyfill
+// https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+if (typeof window.CustomEvent !== "function") {
+    function CustomEvent(event, params) {
+        params = params || { bubbles: false, cancelable: false, detail: null };
+        var evt = document.createEvent('CustomEvent');
+        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+        return evt;
+    }
+    CustomEvent.prototype = window.Event.prototype;
+    window.CustomEvent = CustomEvent;
+}
+
 window.refreshFilters = function refreshFilters(pageNumber) {
     var pagination = $("ul.pagination");
-    var state = {page: pageNumber ? pageNumber : 1};
-    $.each(window.PRODUCT_LIST_FILTERS, function(idx, key) {
+    var state = { page: pageNumber ? pageNumber : 1 };
+    $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
         var filterObj = $("#id_" + key);
         if (filterObj.is("select")) {  // Basic select, checkbox etc...
             state[key] = filterObj.val();
@@ -22,9 +36,9 @@ window.refreshFilters = function refreshFilters(pageNumber) {
         } else if (filterObj.is("input[type='checkbox']")) {
             state[key] = filterObj.prop("checked") ? 1 : 0;
         }
-         else if (filterObj.is("div")) {  // Should be filter widget
+        else if (filterObj.is("div")) {  // Should be filter widget
             var values = [];
-            filterObj.find("input:checked").each(function() {
+            filterObj.find("input:checked").each(function () {
                 values.push($(this).val());
             });
             state[key] = values;
@@ -48,28 +62,37 @@ window.refreshFilters = function refreshFilters(pageNumber) {
         window.PAGE_NUMBER = pageNumber;
     }
 
-
     reloadProducts(filterString);
 
     if (window.history && window.history.pushState) {
         history.pushState(state, null, filterString);
     }
+
+    const event = new CustomEvent("Shuup.FiltersRefreshed", {
+        detail: {
+            state,
+            filterString
+        }
+    });
+
+    window.dispatchEvent(event);
+
     // prevent scroll to page buttons
     return false;
 };
 
 function getFilterString(state) {
     var filterString = "";
-    if(state !== null) {
+    if (state !== null) {
         filterString = "?";
-        $.each(state, function(key, value) {
+        $.each(state, function (key, value) {
             if (value) {
-                var shouldAppendAmpersand = ("&?".indexOf(filterString[filterString.length-1]) > 0);
+                var shouldAppendAmpersand = ("&?".indexOf(filterString[filterString.length - 1]) > 0);
                 filterString += (shouldAppendAmpersand ? "" : "&");
                 if (value.constructor === Array) {
                     filterString += (value.length > 0 ? (key + "=" + value.join("&" + key + "=")) : "");
                 } else {
-                    filterString += (value ? key + "=" + value: "");
+                    filterString += (value ? key + "=" + value : "");
                 }
             }
         });
@@ -94,17 +117,17 @@ function reloadProducts(filterString) {
     $cont.load(location.pathname + filterString);
 }
 
-$(function() {
-    window.addEventListener("popstate", function(e) {
+$(function () {
+    window.addEventListener("popstate", function (e) {
         reloadProducts(getFilterString(e.state));
     });
 
-    $.each(window.PRODUCT_LIST_FILTERS, function(idx, key) {
-        if($("#id_" + key).parent(".form-group").hasClass("has-error")) {
+    $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
+        if ($("#id_" + key).parent(".form-group").hasClass("has-error")) {
             const host_str = '//' + location.host + location.pathname;
             window.location.href = host_str;
         }
-        $("#id_" + key).on("change", function() {
+        $("#id_" + key).on("change", function () {
             window.refreshFilters(window.PAGE_NUMBER);
         });
     });
