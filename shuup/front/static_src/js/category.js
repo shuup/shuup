@@ -25,6 +25,7 @@ window.refreshFilters = function refreshFilters(pageNumber) {
     var state = { page: pageNumber ? pageNumber : 1 };
     $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
         var filterObj = $("#id_" + key);
+
         if (filterObj.is("select")) {  // Basic select, checkbox etc...
             state[key] = filterObj.val();
         } else if (filterObj.is("input[type='text']")) {
@@ -82,22 +83,11 @@ window.refreshFilters = function refreshFilters(pageNumber) {
 };
 
 function getFilterString(state) {
-    var filterString = "";
-    if (state !== null) {
-        filterString = "?";
-        $.each(state, function (key, value) {
-            if (value) {
-                var shouldAppendAmpersand = ("&?".indexOf(filterString[filterString.length - 1]) > 0);
-                filterString += (shouldAppendAmpersand ? "" : "&");
-                if (value.constructor === Array) {
-                    filterString += (value.length > 0 ? (key + "=" + value.join("&" + key + "=")) : "");
-                } else {
-                    filterString += (value ? key + "=" + value : "");
-                }
-            }
-        });
-    }
-    return filterString;
+    const filters = {};
+    Object.keys(state).filter(key => state[key]).forEach((key) => {
+        filters[key] = state[key];
+    });
+    return "?" + $.param(filters);
 }
 
 function reloadProducts(filterString) {
@@ -123,12 +113,16 @@ $(function () {
     });
 
     $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
-        if ($("#id_" + key).parent(".form-group").hasClass("has-error")) {
+        const $field = $("#id_" + key);
+
+        if ($field.parent(".form-group").hasClass("has-error")) {
             const host_str = '//' + location.host + location.pathname;
             window.location.href = host_str;
         }
-        $("#id_" + key).on("change", function () {
-            window.refreshFilters(window.PAGE_NUMBER);
-        });
+        if (!$field.data("no-auto-update")) {
+            $field.on("change", function () {
+                window.refreshFilters(window.PAGE_NUMBER);
+            });
+        }
     });
 });
