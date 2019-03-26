@@ -38,6 +38,7 @@ idna==2.8
 imagesize==1.1.0
 itypes==1.1.0
 jdcal==1.4
+jeepney==0.4
 jinja2==2.8.1
 jsonfield==2.0.2
 keyring==17.1.1
@@ -51,13 +52,13 @@ pillow==5.4.1
 pygments==2.3.1
 pyjwt==1.7.1
 python-dateutil==2.8.0
-pytoml==0.1.20
 pytz==2018.9
 requests==2.21.0
 simplejson==3.16.0
 six==1.12.0
 snowballstemmer==1.2.1
 sphinx==1.5.6
+toml==0.10.0
 unicodecsv==0.14.1
 unidecode==1.0.23
 uritemplate==3.0.0
