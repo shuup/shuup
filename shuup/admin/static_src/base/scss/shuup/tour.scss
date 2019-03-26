@@ -4,14 +4,14 @@ body.shepherd-active {
         width: 100%;
         height: 100%;
         position: fixed;
-        z-index: 10000;
+        z-index: 9998;
         top: 0;
         left: 0;
         background: rgba(0, 0, 0, 0.5);
     }
 
     .main-menu {
-        z-index: 10000;
+        z-index: 9998;
 
         a {
             opacity: 0.3;
@@ -23,7 +23,7 @@ body.shepherd-active {
     }
 
     #top-header {
-        z-index: 10000;
+        z-index: 9998;
 
         & > * {
             opacity: 0.3;
@@ -36,7 +36,7 @@ body.shepherd-active {
     }
 
     a.shepherd-enabled {
-        z-index: 10002;
+        z-index: 10000;
     }
 
     div.sidebar-list {
@@ -49,18 +49,35 @@ body.shepherd-active {
 
 }
 
-body.shepherd-active > .shepherd-element {
-    z-index: 10001;
-    pointer-events: auto;
+.shepherd-element {
+    &.has-icon {
+        width: 550px;
+
+        .step-with-icon {
+            display: flex;
+        }
+
+        .icon {
+            min-width: 200px;
+        }
+    }
 
     &.has-banner {
-        header {
-            display: none;
+        width: 550px;
+
+        .banner {
+            min-width: 500px;
         }
 
-        .shepherd-text {
-            padding: 0;
+        .step-with-banner {
+            padding: 1rem !important;
         }
+    }
+}
+
+.shepherd-content {
+    .shepherd-text a {
+        border: none !important;
     }
 
     .btn-primary {
@@ -72,72 +89,6 @@ body.shepherd-active > .shepherd-element {
     .btn-primary:hover {
         border-color: darken($primary, 12%) !important;
         background-color:  darken($primary, 12%) !important;
-    }
-
-    .icon {
-        width: 200px;
-        height: 200px;
-    }
-
-    .step-with-banner {
-        padding: 1em;
-    }
-
-    .lead {
-        max-width: 400px;
-    }
-
-    @include media-breakpoint-down(sm) {
-        .pull-left {
-            display: block;
-            width: 100%;
-
-            .icon {
-                margin: 0 auto;
-            }
-        }
-    }
-}
-
-.shepherd-element .shepherd-content footer .shepherd-buttons li .shepherd-button {
-    text-transform: none;
-    letter-spacing: 0;
-    font-size: 0.9rem;
-    line-height: 1.42857143;
-    padding: 7px 15px;
-    border-radius: 4px;
-}
-
-.shepherd-element {
-    width: auto;
-}
-
-.shepherd-element .shepherd-content .shepherd-text p.lead {
-    font-size: 16px;
-    line-height: inherit;
-
-    @media (min-width: 768px) {
-        .lead {
-            font-size: 21px;
-        }
-    }
-}
-
-.shepherd-element {
-    z-index: 100001;
-    max-width: 450px;
-
-    &-wide {
-        max-width: none;
-    }
-
-    .pull-left {
-        width: 30%;
-    }
-    .step-with-icon {
-        float: left;
-        position: relative;
-        width: 70%;
     }
 }
 

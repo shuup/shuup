@@ -37,17 +37,20 @@
             });
         }
         (function() {
-            $.tour({
-                method: "setPageSteps",
-                steps: [{
+            window.tourConfig = {
+                tourComplete: ("{{ tour_complete }}" == "True" ? true : false),
+                tourKey: "{{ tour_key }}",
+                url: ShuupAdminConfig.browserUrls.tour,
+                initialSteps: [{
                     title: "{% trans %}Add a new product category{% endtrans %}",
                     icon: "{{ static('shuup_admin/img/category.png') }}",
+                    classes: "has-icon",
                     text: [
                         "{% trans %}You are adding a new product category. When people search your store, they can find your product under the category you choose for it, like the aisle signs at the supermarket.{% endtrans %}",
                         "{% trans %}You can add a name, description, picture or anything you want to make it stand out.{% endtrans %}"
                     ]
                 }]
-            });
+            };
         })();
     </script>
 {% endblock %}

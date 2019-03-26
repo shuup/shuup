@@ -113,9 +113,11 @@
     <script src="{{ static("shuup_admin/js/dashboard.js") }}"></script>
     <script>
         (function(){
-            $.tour({
-                method: "setPageSteps",
-                steps: [{
+            window.tourConfig = {
+                tourComplete: ("{{ tour_complete }}" == "True" ? true : false),
+                tourKey: "{{ tour_key }}",
+                url: ShuupAdminConfig.browserUrls.tour,
+                initialSteps: [{
                     title: "{{ _('Dashboard') }}",
                     text: [
                         "{% trans %}This is the dashboard for your store. It’s like the flight deck for your ecommerce spaceship. You can control everything from here.{% endtrans %}",
@@ -123,7 +125,7 @@
                         "{% trans %}Every setting you could possibly need is in here.{% endtrans %}"
                     ]
                 }]
-            });
+            };
         })();
     </script>
 {% endblock %}

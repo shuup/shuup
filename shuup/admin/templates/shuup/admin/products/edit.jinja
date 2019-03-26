@@ -57,18 +57,19 @@
                 title: "{% trans %}Add a new product{% endtrans %}",
                 icon: "{{ static('shuup_admin/img/product.png') }}",
                 helpPage: "products.html",
-                classes: 'shepherd-element-wide',
+                classes: 'has-icon has-help-button',
                 text: [
                     "{% trans %}You are adding a product.{% endtrans %}",
                     "{% trans %}To make it stand out, give it an awesome description and picture. This is what will help your shoppers learn about your products. It will also help shoppers find them in the store and on the web.{% endtrans %}",
                     "{% trans %}You can set its price or size and many other things in the option boxes for each product.{% endtrans %}"
-                ]
+                ],
+                scrollTo: false,
             });
             if ($("a[href='#basic-information-section']").length > 0) {
                 steps.push({
                     title: "{% trans %}Basic Information{% endtrans %}",
                     text: ["{% trans %}All the required product information.{% endtrans %}"],
-                    attachTo: "a[href='#basic-information-section'] bottom",
+                    attachTo: "a[href='#basic-information-section'] left",
                     scrollTo: false,
                 });
             }
@@ -76,7 +77,7 @@
                 steps.push({
                     title: "{% trans %}Additional Details{% endtrans %}",
                     text: ["{% trans %}Product features such as size, weight and keywords are located here.{% endtrans %}"],
-                    attachTo: "a[href='#additional-details-section'] bottom",
+                    attachTo: "a[href='#additional-details-section'] left",
                     scrollTo: false,
                 });
             }
@@ -84,7 +85,7 @@
                 steps.push({
                     title: "{% trans %}Manufacturer{% endtrans %}",
                     text: ["{% trans %}If you know the product manufacturer, it can be set here.{% endtrans %}"],
-                    attachTo: "a[href='#manufacturer-section'] bottom",
+                    attachTo: "a[href='#manufacturer-section'] left",
                     scrollTo: false,
                 });
             }
@@ -92,7 +93,7 @@
                 steps.push({
                     title: "{% trans %}Additional Information{% endtrans %}",
                     text: ["{% trans %}Strictly shop related information. For example set the minimum price applicable in this shop.{% endtrans %}"],
-                    attachTo: "a[href*='-additional-section'] bottom",
+                    attachTo: "a[href*='-additional-section'] left",
                     scrollTo: false,
                 });
             }
@@ -100,7 +101,7 @@
                 steps.push({
                     title: "{% trans %}Product Files{% endtrans %}",
                     text: ["{% trans %}You can attach files such as manual to the merchandise(s) here.{% endtrans %}"],
-                    attachTo: "a[href='#product-media-section'] bottom",
+                    attachTo: "a[href='#product-media-section'] left",
                     scrollTo: false,
                 });
             }
@@ -129,7 +130,12 @@
                     scrollTo: false,
                 });
             }
-            $.tour({ method: "setPageSteps", steps: steps });
+            window.tourConfig = {
+                tourComplete: ("{{ tour_complete }}" == "True" ? true : false),
+                tourKey: "{{ tour_key }}",
+                url: ShuupAdminConfig.browserUrls.tour,
+                initialSteps: steps
+            };
         });
     </script>
     {% for product_section in product_sections %}
