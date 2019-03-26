@@ -13,6 +13,7 @@ from django import forms
 from django.core.mail.message import EmailMessage
 from django.utils.translation import ugettext as _
 
+from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.notify.base import Action, Binding
 from shuup.notify.enums import ConstantUse, TemplateUse
 from shuup.notify.typology import Email, Language, Text
@@ -28,7 +29,7 @@ class SendEmail(Action):
     template_use = TemplateUse.MULTILINGUAL
     template_fields = {
         "subject": forms.CharField(required=True, label=_(u"Subject")),
-        "body": forms.CharField(required=True, label=_(u"Email Body"), widget=forms.Textarea()),
+        "body": forms.CharField(required=True, label=_(u"Email Body"), widget=TextEditorWidget()),
         "content_type": forms.ChoiceField(required=True,
                                           label=_(u"Content type"),
                                           choices=EMAIL_CONTENT_TYPE_CHOICES,

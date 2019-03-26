@@ -5,14 +5,14 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
+import pytest, json
 from django.http.response import Http404
 from django.test.utils import override_settings
 
 from shuup.admin.shop_provider import set_shop
 from shuup.notify.actions.email import SendEmail
 from shuup.notify.admin_module.forms import ScriptItemEditForm
-from shuup.notify.admin_module.views import ScriptEditView
+from shuup.notify.admin_module.views import ScriptEditView, script_item_editor
 from shuup.notify.models import Script
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -20,28 +20,36 @@ from shuup_tests.notify.fixtures import ATestEvent
 
 # TODO: Embetter the tests in this file
 
-def test_notify_item_admin_form():
+@pytest.mark.django_db
+def test_notify_item_admin_form(rf, admin_user):
     event_class = ATestEvent
     script_item = SendEmail({
         "send_identifier": {"constant": "hello"},
         "recipient": {"constant": "hello@shuup.local"},
         "language": {"constant": "en"},
     })
+    send_data = {
+            "b_recipient_c": "konnichiwa@jp.shuup.local",
+            "b_language_c": "en",
+            "b_message_c" : "Message",
+            "b_send_identifier_c": "hello",
+        }
     form = ScriptItemEditForm(
         event_class=event_class,
         script_item=script_item,
-        data={
-            "b_recipient_c": "konnichiwa@jp.shuup.local",
-            "b_language_c": "en",
-            "b_send_identifier_c": "hello",
-        }
+        data=send_data
     )
     initial = form.get_initial()
     assert initial["b_send_identifier_c"] == "hello"
     assert form.is_valid()
-
     form.save()
     assert script_item.data["recipient"] == {"constant": "konnichiwa@jp.shuup.local"}
+    send_data["b_recipient_c"] = admin_user.pk
+    send_data['init_data'] = json.dumps({"eventIdentifier":"order_received","itemType":"action","data":{"identifier":"add_notification"}})
+    view = script_item_editor
+    request = apply_request_middleware(rf.post("/", data=send_data), user=admin_user)
+    response = view(request)
+    assert response.status_code == 200 #  Assert no errors have occurred
 
 
 @pytest.mark.django_db

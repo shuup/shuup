@@ -15,7 +15,7 @@
                 <ul class="nav nav-tabs" id="main-tabs" role="tablist">
                     {% for f in form.forms %}
                         {% if f in languages %}
-                        <li role="presentation" {% if f==default_language %}class="active" {% endif %}><a href="#lang-{{ f }}" role="tab" data-toggle="tab">{{ languages[f] }}</a></li>
+                        <li role="presentation" class="nav-item" {% if f==default_language %}class="nav-item active" {% endif %}><a href="#lang-{{ f }}" role="tab" data-toggle="tab" class="nav-link">{{ languages[f] }}</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
