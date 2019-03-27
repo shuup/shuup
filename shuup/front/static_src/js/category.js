@@ -20,11 +20,31 @@ if (typeof window.CustomEvent !== "function") {
     window.CustomEvent = CustomEvent;
 }
 
-window.refreshFilters = function refreshFilters(pageNumber) {
+// https://davidwalsh.name/javascript-debounce-function
+function debounce(func, wait, immediate) {
+    let timeout;
+    return function () {
+        let context = this, args = arguments;
+        let later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        let callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
+
+window.refreshFilters = debounce(function refreshFilters(pageNumber) {
     var pagination = $("ul.pagination");
     var state = { page: pageNumber ? pageNumber : 1 };
     $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
         var filterObj = $("#id_" + key);
+
+        if (!filterObj || filterObj.data("exclude")) {
+            return;
+        }
 
         if (filterObj.is("select")) {  // Basic select, checkbox etc...
             state[key] = filterObj.val();
@@ -69,25 +89,36 @@ window.refreshFilters = function refreshFilters(pageNumber) {
         history.pushState(state, null, filterString);
     }
 
-    const event = new CustomEvent("Shuup.FiltersRefreshed", {
+    window.dispatchEvent(new CustomEvent("Shuup.FiltersRefreshed", {
         detail: {
             state,
             filterString
         }
-    });
-
-    window.dispatchEvent(event);
+    }));
 
     // prevent scroll to page buttons
     return false;
-};
+}, 150);
+
+function serializeParams(obj) {
+    const str = [];
+    for (const param in obj) {
+        if (obj.hasOwnProperty(param)) {
+            if (Array.isArray(obj[param]) && !obj[param].length) {
+                continue;
+            }
+            str.push(encodeURIComponent(param) + "=" + encodeURIComponent(obj[param]));
+        }
+    }
+    return str.join("&");
+}
 
 function getFilterString(state) {
     const filters = {};
     Object.keys(state).filter(key => state[key]).forEach((key) => {
         filters[key] = state[key];
     });
-    return "?" + $.param(filters);
+    return "?" + serializeParams(filters);
 }
 
 function reloadProducts(filterString) {
@@ -109,7 +140,14 @@ function reloadProducts(filterString) {
 
 $(function () {
     window.addEventListener("popstate", function (e) {
-        reloadProducts(getFilterString(e.state));
+        const filterString = getFilterString(e.state);
+        reloadProducts(filterString);
+        window.dispatchEvent(new CustomEvent("Shuup.FiltersRefreshed", {
+            detail: {
+                state: e.state,
+                filterString
+            }
+        }));
     });
 
     $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
