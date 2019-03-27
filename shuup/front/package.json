@@ -28,7 +28,7 @@
     "postcss-modules": "^1.1.0",
     "sass": "^1.15.1",
     "shuup-static-build-tools": "^1.0.3",
-    "simplelightbox": "^1.13.0"
+    "simplelightbox": "^1.17.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3"
