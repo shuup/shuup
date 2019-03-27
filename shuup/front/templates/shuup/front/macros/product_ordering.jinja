@@ -37,6 +37,19 @@
                 {{ simple_product_form(shop_product, quantity, supplier=supplier) }}
             {% endif %}
         </form>
+
+        <div id="product-image-sections" class="hidden">
+            {% if variation_variables or variation_children %}
+            {% for k in shop_product.product.variation_children.all() %}
+                <div class="variation-image-section" id="variation-images-{{ k.id }}">
+                    {% set product_images = k.get_shop_instance(request.shop).public_images.all() %}
+                    {{ render_product_image_section(k, product_images=product_images) }}
+                </div>
+            {% endfor %}
+
+            {% endif %}
+
+        </div>
     </div>
 {% endmacro %}
 
@@ -188,7 +201,7 @@
         {%- set product_id = shop_product.product.pk -%}
     {% endif %}
     {% set product = shop_product.product %}
-    <div class="price text-right product-price-div" id="product-price-div-{{ product_id }}">
+    <div class="price text-right product-price-div" id="product-price-div-{{ product_id }}" data-product-id="{{ shop_product.product.id }}">
         <h2>
             <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
             <span class="product-price"><strong>{{ product|price(quantity, supplier=supplier) }}</strong></span>
