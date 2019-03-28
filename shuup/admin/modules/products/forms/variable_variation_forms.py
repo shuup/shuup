@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import json
+import random
 
 import six
 from django import forms
@@ -18,7 +19,9 @@ from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.forms.widgets import ProductChoiceWidget
+from shuup.admin.shop_provider import get_shop
 from shuup.core.excs import ImpossibleProductModeException, Problem
 from shuup.core.models import (
     Product, ProductVariationVariable, ProductVariationVariableValue
@@ -80,10 +83,15 @@ class VariableVariationChildrenForm(forms.Form):
 
 
 class VariationVariablesDataForm(forms.Form):
+    configuration_key = "saved_variation_templates"
+
     data = forms.CharField(widget=forms.HiddenInput(), required=False)
+    save_template = forms.BooleanField(required=False)
+    template_name = forms.CharField(max_length=128, required=False)
 
     def __init__(self, **kwargs):
         self.parent_product = kwargs.pop("parent_product", None)
+        self.request = kwargs.pop("request", None)
         super(VariationVariablesDataForm, self).__init__(**kwargs)
 
     def get_variable_data(self):
@@ -134,6 +142,10 @@ class VariationVariablesDataForm(forms.Form):
 
         return sorted(variables.values(), key=lambda var: var["ordering"])
 
+    def get_variation_templates(self, **kwargs):
+        shop = get_shop(self.request)
+        return json.loads(configuration.get(shop, self.configuration_key, "[]"))
+
     def get_editor_args(self):
         return {
             "languages": [
@@ -143,7 +155,8 @@ class VariationVariablesDataForm(forms.Form):
                 } for code in to_language_codes(
                     settings.LANGUAGES, getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE", "en"))
                 ],
-            "variables": self.get_variable_data()
+            "variables": self.get_variable_data(),
+            "templates": self.get_variation_templates()
         }
 
     def process_var_datum(self, var_datum, ordering):
@@ -195,10 +208,28 @@ class VariationVariablesDataForm(forms.Form):
             val.value = text
         val.save_translations()
 
+    def _save_template(self, data):
+        if not self.cleaned_data.get("save_template", False):
+            return
+
+        shop = get_shop(self.request)
+
+        saved_templates = self.get_variation_templates()
+        template_name = self.cleaned_data.get("template_name", "Unnamed %s" % random.randint(1, 9999))
+        payload = {
+            "name": template_name,
+            "identifier": template_name.lower().replace(" ", "_"),
+            "data": data
+        }
+        saved_templates.append(payload)
+        configuration.set(shop, self.configuration_key, json.dumps(saved_templates))
+
     def save(self):
         var_data = self.cleaned_data.get("data")
+
         if not var_data:  # No data means the Mithril side hasn't been touched at all
             return
         var_data = json.loads(var_data)
+        self._save_template(var_data)
         for ordering, var_datum in enumerate(var_data):
             self.process_var_datum(var_datum, ordering)
