@@ -34,9 +34,6 @@ class OrderStatusForm(MultiLanguageModelForm):
         if self.instance.pk and OrderStatusManager().is_default(self.instance):
             data = self.cleaned_data
             data["identifier"] = self.instance.identifier
-            data["role"] = self.instance.role
-            data["ordering"] = self.instance.ordering
-            data["is_active"] = self.instance.is_active
             return data
 
         qs = OrderStatus.objects.filter(identifier=self.cleaned_data["identifier"])
