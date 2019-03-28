@@ -88,6 +88,7 @@ class ProductBaseForm(MultiLanguageModelForm):
         self.request = kwargs.pop('request', None)
         super(ProductBaseForm, self).__init__(**kwargs)
         self.fields["sales_unit"].required = True  # TODO: Move this to model
+        self.fields["type"].required = True
         if self.instance.pk:
             del self.fields["file"]
 

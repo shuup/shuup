@@ -178,7 +178,7 @@ class ProductQuerySet(TranslatableQuerySet):
                 qs = qs.filter(shop_products__visibility_limit=ProductVisibility.VISIBLE_TO_ALL)
 
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED).distinct()
-        return qs.exclude(deleted=True)
+        return qs.exclude(deleted=True).exclude(type__isnull=True)
 
     def _get_qs(self, shop, customer, language, visibility_type):
         qs = self._visible(shop=shop, customer=customer, language=language)
@@ -202,7 +202,7 @@ class ProductQuerySet(TranslatableQuerySet):
         return self._get_qs(shop, customer, language, ShopProductVisibility.SEARCHABLE)
 
     def all_except_deleted(self, language=None, shop=None):
-        qs = (self.language(language) if language else self).exclude(deleted=True)
+        qs = (self.language(language) if language else self).exclude(deleted=True).exclude(type__isnull=True)
         if shop:
             qs = qs.filter(shop_products__shop=shop)
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED)
@@ -246,8 +246,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     # Identification
     type = models.ForeignKey(
         "ProductType", related_name='products',
-        on_delete=models.PROTECT, db_index=True,
+        on_delete=models.SET_NULL, db_index=True,
         verbose_name=_('product type'),
+        null=True,
         help_text=_(
             "Select a product type for your product. "
             "These allow you to configure custom attributes to help with classification and analysis."
