@@ -31,6 +31,11 @@ class PicoContext(object):
     def __init__(self, request):
         self.request = request
 
+    def get_object_extra(self, instance):
+        return {
+            "extra": True
+        }
+
     def superuser_display(self, instance):  # Test indirect `display` callable
         return "very super" if instance.is_superuser else "-"
 
@@ -173,6 +178,12 @@ def test_picotable_no_mobile_link_for_missing_object_url(rf, admin_user, regular
     pico.get_object_url = None
     data = pico.get_data({"perPage": 100, "page": 1})
     assert not data["items"][0]["_linked_in_mobile"]
+
+
+@pytest.mark.django_db
+def test_picotable_get_object_extra(rf, admin_user):
+    pico = get_pico(rf, admin_user)
+    assert pico.get_object_extra(admin_user) == {"extra": True}
 
 
 @pytest.mark.django_db

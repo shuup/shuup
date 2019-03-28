@@ -388,6 +388,7 @@ class Picotable(object):
         self.columns_by_id = dict((c.id, c) for c in self.columns)
         self.get_object_url = maybe_callable("get_object_url", context=self.context)
         self.get_object_abstract = maybe_callable("get_object_abstract", context=self.context)
+        self.get_object_extra = maybe_callable("get_object_extra", context=self.context)
         self.default_filters = self._get_default_filters()
 
     def _get_default_filter(self, column):
@@ -454,10 +455,12 @@ class Picotable(object):
 
     def process_item(self, object):
         object_url = self.get_object_url(object) if callable(self.get_object_url) else None
+        object_extra = self.get_object_extra(object) if callable(self.get_object_extra) else None
         out = {
             "_id": object.id,
             "_url": object_url,
-            "_linked_in_mobile": True if object_url else False
+            "_linked_in_mobile": True if object_url else False,
+            "_extra": object_extra
         }
         for column in self.columns:
             out[column.id] = column.get_display_value(context=self.context, object=object)
@@ -561,6 +564,18 @@ class PicotableViewMixin(object):
         :param item: The item dict so far. Useful for reusing precalculated values.
         :return: Iterable of dicts to pass through to the picotable javascript
         :rtype: Iterable[dict]
+        """
+        return None
+
+    def get_object_extra(self, instance):
+        """
+        Returns extra information as a dictionary for each object.
+
+        The following special keys are used in picotable:
+
+        * class - add the class list (space separated) to each row/item class list
+
+        :rtype: None|dict
         """
         return None
 

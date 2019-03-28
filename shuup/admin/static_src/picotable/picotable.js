@@ -519,8 +519,13 @@ const Picotable = (function (m, storage) {
                     location.href = item._url;
                 }
             });
-            rowSettings.class = ctrl.isChecked(item) ? "active" : "";
-
+            rowSettings.class = "";
+            if (item._extra && item._extra.class) {
+                rowSettings.class += item._extra.class;
+            }
+            if (ctrl.isChecked(item)) {
+                rowSettings.class += " active";
+            }
             return m("tr", rowSettings, Util.map(data.columns, function (col, idx) {
                 var content;
                 if (idx === 0 && massActions.length) {
@@ -658,10 +663,14 @@ const Picotable = (function (m, storage) {
                     if (typeof line === "string") line = { text: line };
                     if (!line.text) return;
                     if (line.raw) line.text = m.trust(line.raw);
-                    var rowClass = "div.row.mobile-row." +
-                        (line.title ? "with-title" : "") +
-                        (line.class ? (line.title ? "." : "") + line.class : "");
-                    return m(rowClass, [
+
+                    const rowClasses = ["row", "mobile-row."];
+                    if (line.title) rowClasses.push("with-title");
+                    if (line.class) rowClasses.push(line.class);
+                    if (item._extra && item._extra.class) {
+                        rowClasses.push(...item._extra.class.split(" "));
+                    }
+                    return m("." + rowClasses.join("."), [
                         (line.class && massActions.length ?
                             m("div.input-checkbox", { onclick: preventSelect }, [
                                 m("input[type=checkbox]", {
