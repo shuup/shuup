@@ -4,6 +4,11 @@
 {% call content_block(_("Variables"), "fa-clone", id="variables-section") %}
     <div id="variation-variable-editor"></div>
     {{ var_form["data"]|safe }}
+    <div class="product-variable">
+    <h3>{% trans %}Template{% endtrans %}</h3>
+    {{ bs3.field(var_form["save_template"]) }}
+    {{ bs3.field(var_form["template_name"]) }}
+    </div>
     <script>
     window.addEventListener("load", function() {
         VariationVariableEditor.init({{ var_form.get_editor_args()|json }});
