@@ -1,7 +1,7 @@
 {% macro campaign_table(title, campaigns) %}
 <h3>{{ title }}</h3>
 <div class="table-responsive">
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>{% trans %}Name{% endtrans %}</th>
@@ -26,7 +26,5 @@
 
 <p class="section-description">{% trans %}This section shows all the <b>active</b> campaigns this product is in.{% endtrans %}</p>
 {% for shop, data in product_campaigns.items() %}
-    <h2>{% trans shop=shop %}Active campaings for shop: {{ shop }}{% endtrans %}</h2>
     {{ campaign_table(_("Basket Campaigns"), data["basket_campaigns"]) }}
-    {{ campaign_table(_("Catalog Campaigns"), data["catalog_campaigns"]) }}
 {% endfor %}
