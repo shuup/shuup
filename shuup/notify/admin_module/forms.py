@@ -150,7 +150,7 @@ class ScriptItemEditForm(forms.Form):
 
         return initial
 
-    def _save_binding(self, new_data, identifier, binding):
+    def _save_binding(self, new_data, identifier, binding):    # noqa (C901)
         field_info = self.binding_field_info.get(identifier)
         if not field_info:
             return
@@ -193,10 +193,11 @@ class ScriptItemEditForm(forms.Form):
             if not any(lang_vals.values()):  # Not worth saving
                 continue
             can_save = True
-            if lang_code == settings.LANGUAGE_CODE:
+
+            if lang_code == settings.PARLER_DEFAULT_LANGUAGE_CODE:
                 for t_field_name, content in lang_vals.items():
                     if not content:  # Add error only to default languages
-                        self.add_error(field_info[t_field_name], u"This field is missing content")
+                        self.add_error(field_info[t_field_name], _("This field is missing content"))
                         can_save = False
 
             if can_save:

@@ -321,7 +321,11 @@ function generateItemOptions(nameMap) {
 }
 
 function itemInfosToNameMap(itemInfos) {
-    return _(itemInfos).map(function (itemInfo, identifier){ return [identifier, itemInfo.name]; }).zipObject().value();
+    return Object.assign({},
+        ...Object.keys(itemInfos).map((key) => ({
+            [itemInfos[key].identifier]: itemInfos[key].name
+        }))
+    );
 }
 
 function init(iSettings) {
@@ -330,6 +334,7 @@ function init(iSettings) {
     infos.action = settings.actionInfos;
     names.condition = itemInfosToNameMap(infos.condition);
     names.action = itemInfosToNameMap(infos.action);
+
     optionLists.condOps = generateItemOptions(settings.condOps);
     optionLists.stepNexts = generateItemOptions(settings.stepNexts);
 
