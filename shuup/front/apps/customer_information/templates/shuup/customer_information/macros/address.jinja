@@ -29,20 +29,20 @@
                     {{ render_field(field, show_help_text=False) }}
                 {% endfor %}
             </fieldset>
-            <button class="btn btn-primary" type="button" onclick="copyAddress('billing', 'shipping')">
+            <button class="btn btn-primary btn-copy-address" type="button" onclick="copyAddress('billing', 'shipping')">
                 {% trans %}Copy to shipping information{% endtrans %}
             </button>
         </div>
         <div class="col-md-6">
-                <fieldset>
-                    <legend>{% trans %}Shipping information{% endtrans %}</legend>
-                    {% for field in shipping_form.visible_fields() %}
-                        {{ render_field(field, show_help_text=False) }}
-                    {% endfor %}
-                </fieldset>
-                <button class="btn btn-primary" type="button" onclick="copyAddress('shipping', 'billing')">
-                    {% trans %}Copy to billing information{% endtrans %}
-                </button>
+            <fieldset>
+                <legend>{% trans %}Shipping information{% endtrans %}</legend>
+                {% for field in shipping_form.visible_fields() %}
+                    {{ render_field(field, show_help_text=False) }}
+                {% endfor %}
+            </fieldset>
+            <button class="btn btn-primary btn-copy-address" type="button" onclick="copyAddress('shipping', 'billing')">
+                {% trans %}Copy to billing information{% endtrans %}
+            </button>
         </div>
     </div>
 {% endmacro %}
