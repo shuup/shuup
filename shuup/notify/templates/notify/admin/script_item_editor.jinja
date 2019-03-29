@@ -90,23 +90,39 @@
                 </div>
             {% endif %}
             <input name="init_data" type="hidden" value="{{ init_data }}">
-            <ul class="nav nav-tabs" id="main-tabs">
-                <li role="presentation" class="nav-item"><a href="#variables" class="nav-link">{% trans %}Variables{% endtrans %}</a></li>
-                {% for language_code, language_name in form.template_languages %}
-                <li role="presentation" class="nav-item"><a href="#template-{{ language_code }}" class="nav-link">{{ language_name }}</a></li>
-                {% endfor %}
-            </ul>
-            <div id="variables" class="tab-pane">{{ binding_view(form) }}</div>
-            {% for language_code, language_name in form.template_languages %}
-                <div id="template-{{ language_code }}" class="tab-pane">
-                    <div class="row">
-                        <div class="col-md-8">{{ template_field_view(form, language_code) }}</div>
-                        <div class="col-md-4">
-                            {{ template_variable_list() }}
-                        </div>
+            <div class="language-dependent-content">
+                <div class="row language-tabs">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs" id="main-tabs">
+                            <li role="presentation" class="nav-item">
+                                <a href="#variables" class="nav-link active" data-toggle="tab" aria-selected="true">
+                                    {% trans %}Variables{% endtrans %}
+                                </a>
+                            </li>
+                        {% for language_code, language_name in form.template_languages %}
+                            <li role="presentation" class="nav-item">
+                                <a href="#template-{{ language_code }}" class="nav-link" data-toggle="tab" aria-selected="false" data-lang="{{ language_code }}">
+                                    {{ language_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+            <div class="tab-content">
+                <div id="variables" class="tab-pane active">{{ binding_view(form) }}</div>
+                {% for language_code, language_name in form.template_languages %}
+                    <div id="template-{{ language_code }}" class="tab-pane" data-lang="{{ language_code }}">
+                        <div class="row">
+                            <div class="col-md-8">{{ template_field_view(form, language_code) }}</div>
+                            <div class="col-md-4">
+                                {{ template_variable_list() }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
             <input class="btn btn-success" type="submit" value="{% trans %}Save changes{% endtrans %}">
         </form>
     </div>
@@ -127,18 +143,23 @@
         margin-bottom: 20px;
     }
     .title { margin-bottom: 15px; }
-    .nav-tabs { margin-bottom: 30px; }
+    .nav-tabs { margin-bottom: 10px; }
     .summernote-wrap {
         width: 100%;
     }
     .btn-success {
-        margin: 10px;
+        margin-top: 10px;
+    }
+    .nav-tabs:after {
+        background: transparent;
     }
 </style>
 {% endblock %}
 {% block extra_js %}
     {% if post_message %}
-        <script>window.parent.postMessage({{ post_message|json }}, "*");</script>
+        <script>
+            window.parent.postMessage({{ post_message|json }}, "*");
+        </script>
     {% endif %}
     <script src="{{ static("notify/admin/script-item-editor.js") }}"></script>
 {% endblock %}

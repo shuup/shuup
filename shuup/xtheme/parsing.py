@@ -7,8 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import toml
 import six
+import toml
 from jinja2.ext import Extension
 from jinja2.nodes import Const, EvalContext, ExprStmt, Impossible, Name, Output
 from jinja2.utils import contextfunction

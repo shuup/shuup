@@ -150,7 +150,7 @@ class ScriptItemEditForm(forms.Form):
 
         return initial
 
-    def _save_binding(self, new_data, identifier, binding):
+    def _save_binding(self, new_data, identifier, binding):    # noqa (C901)
         field_info = self.binding_field_info.get(identifier)
         if not field_info:
             return
@@ -166,6 +166,8 @@ class ScriptItemEditForm(forms.Form):
             if constant_value:
                 if hasattr(constant_value, "value"):  # Might be an enum TODO: fixme
                     constant_value = constant_value.value
+                if hasattr(constant_value, "pk"):  # Might be a model instance TODO: fixme
+                    constant_value = constant_value.pk
                 new_data[identifier] = {"constant": constant_value}
                 return
 
@@ -190,12 +192,13 @@ class ScriptItemEditForm(forms.Form):
             )
             if not any(lang_vals.values()):  # Not worth saving
                 continue
-
             can_save = True
-            for t_field_name, content in lang_vals.items():
-                if not content:
-                    self.add_error(field_info[t_field_name], u"This field is missing content")
-                    can_save = False
+
+            if lang_code == settings.PARLER_DEFAULT_LANGUAGE_CODE:
+                for t_field_name, content in lang_vals.items():
+                    if not content:  # Add error only to default languages
+                        self.add_error(field_info[t_field_name], _("This field is missing content"))
+                        can_save = False
 
             if can_save:
                 template_data[lang_code] = lang_vals
@@ -203,8 +206,6 @@ class ScriptItemEditForm(forms.Form):
 
     def save(self):
         new_data = {}
-        if "b_recipient_c" in self.cleaned_data and hasattr(self.cleaned_data["b_recipient_c"], "pk"):
-            self.cleaned_data['b_recipient_c'] = self.cleaned_data['b_recipient_c'].pk
         self._save_bindings(new_data)
         self._save_template(new_data)
         if self.errors:
