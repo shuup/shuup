@@ -24,17 +24,17 @@
 {% endmacro %}
 
 {% macro company_account_button(request) %}
+{% if shuup.general.is_company_registration_allowed(request) %}
     <div class="btn-group" role="group">
-        {% if shuup.general.is_company_registration_allowed(request) %}
-            <a class="btn btn-primary" href="{{ url("shuup:company_edit") }}">
-                {% if request.is_company_member %}
-                    <i class="fa fa-users"></i> {% trans %}Edit company information{% endtrans %}
-                {% else %}
-                    <i class="fa fa-link"></i> {% trans %}Link account to company{% endtrans %}
-                {% endif %}
-            </a>
-        {% endif %}
+        <a class="btn btn-primary" href="{{ url("shuup:company_edit") }}">
+            {% if request.is_company_member %}
+                <i class="fa fa-users"></i> {% trans %}Edit company information{% endtrans %}
+            {% else %}
+                <i class="fa fa-link"></i> {% trans %}Link account to company{% endtrans %}
+            {% endif %}
+        </a>
     </div>
+{% endif %}
 {% endmacro %}
 
 {% macro change_password_button() %}
