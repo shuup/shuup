@@ -84,7 +84,8 @@ def test_product_type_api(admin_user):
     product_type = ProductType.objects.create(name="type")
     product = create_product("product with product_type", type=product_type)
 
-    # shouldn't be possible to delete a product type with a related product
+    # deleting product type should set product type to null
     response = client.delete("/api/shuup/product_type/%d/" % product_type.id)
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert "This object can not be deleted because it is referenced by" in response.content.decode("utf-8")
+    assert response.status_code == 204
+    product.refresh_from_db()
+    assert product.type is None

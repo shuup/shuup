@@ -8,9 +8,11 @@
 
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.toolbar import get_default_edit_toolbar, PostActionButton
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Attribute, ProductType
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
@@ -47,3 +49,22 @@ class ProductTypeEditView(CreateOrUpdateView):
     form_class = ProductTypeForm
     template_name = "shuup/admin/product_types/edit.jinja"
     context_object_name = "product_type"
+
+    def get_toolbar(self):
+        product_type = self.get_object()
+        save_form_id = self.get_save_form_id()
+        delete_url = reverse_lazy(
+            "shuup_admin:product_type.delete", kwargs={"pk": product_type.pk}
+        ) if product_type.pk else None
+        toolbar = get_default_edit_toolbar(self, save_form_id)
+        if not delete_url:
+            return toolbar
+        toolbar.append(PostActionButton(
+            post_url=delete_url,
+            text=_(u"Delete"),
+            icon="fa fa-trash",
+            extra_css_class="btn-danger",
+            confirm=_("Are you sure you wish to delete %s? Warrning: all related products will disappear from storefront until new value for product type is set!") % product_type,  # noqa
+            required_permissions=()
+        ))
+        return toolbar

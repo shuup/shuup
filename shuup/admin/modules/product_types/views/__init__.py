@@ -6,7 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from .delete import ProductTypeDeleteView
 from .edit import ProductTypeEditView
 from .list import ProductTypeListView
 
-__all__ = ["ProductTypeEditView", "ProductTypeListView"]
+__all__ = [
+    "ProductTypeEditView",
+    "ProductTypeListView",
+    "ProductTypeDeleteView"
+]
