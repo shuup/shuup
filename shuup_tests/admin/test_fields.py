@@ -6,8 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from bs4 import BeautifulSoup
+from django import forms
+from django.utils.encoding import force_text
 from django.utils.translation import activate
 
+from shuup.admin.forms.fields import WeekdayField, WeekdaysSelectMultiple
 from shuup.admin.modules.product_types.views import ProductTypeEditView
 from shuup.core.models import Attribute, AttributeType, ProductType
 from shuup.testing.utils import apply_request_middleware
@@ -35,3 +38,25 @@ def test_select2multiplefield(rf, admin_user):
     assert attr2.name in options_names
     assert attr1.id in options_values
     assert attr2.id in options_values
+
+
+@pytest.mark.django_db
+def test_WeekdayField(rf, admin_user):
+    activate("en")
+
+    class TestForm(forms.Form):
+        weekdays = WeekdayField()
+
+    form = TestForm(data={"weekdays": [1, 2, 3]})
+    assert form.is_valid()
+    assert form.fields["weekdays"].to_python([1, 2, 3]) == ["1", "2", "3"]
+
+    soup = BeautifulSoup(force_text(form), "lxml")
+    selected_options = soup.find_all("option", {"selected": True})
+    non_selected_options = soup.find_all("option", {"selected": False})
+    assert [opt.attrs["value"] for opt in selected_options] == ["1", "2", "3"]
+    assert [opt.attrs["value"] for opt in non_selected_options] == ["0", "4", "5", "6"]
+
+    assert WeekdaysSelectMultiple().format_value("1,2,3") == ["1", "2", "3"]
+    assert WeekdaysSelectMultiple().format_value("123") == ["123"]
+    assert WeekdaysSelectMultiple().format_value(1) == ["1"]

@@ -10,6 +10,7 @@ from numbers import Number
 from django.forms import (
     DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
 )
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -119,7 +120,14 @@ class WeekdaysSelectMultiple(SelectMultiple):
     def format_value(self, value):
         if value is None and self.allow_multiple_selected:
             return []
-        return ["%s" % v for v in value.split(",") if v]
+
+        if isinstance(value, str):
+            value = value.split(",")
+
+        if not isinstance(value, (tuple, list)):
+            value = [value]
+
+        return [force_text(v) if v is not None else '' for v in value]
 
 
 class WeekdayField(MultipleChoiceField):
