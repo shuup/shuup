@@ -1,13 +1,69 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.2
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-03-30 17:45pm -0800.
+
+Admin
+~~~~~~
+
+- Fix issue with saving default order status
+- Improve shipment creation order section and create view
+- Add setting to customize datetime pickers format
+- Do not collapse attributes product section by default
+- Add select2 search inputs min length configurable
+- Fix Picotable checkboxes for mobile Safari & improve style
+- Add option to extend browser urls through provides
+- Fix bug with datetime widgte by making datetime form fields readonly
+
+Campaigns
+~~~~~~~~~~
+
+- Add supplier to basket campaigns and to coupon codes
+- Enable admin permissions for conditions and effects
+
+Core
+~~~~
+
+- Add delete option for product type
+- Improve order methods for shipments
+
+Discounts
+~~~~~~~~~~
+
+- Add option to limit discounts based on supplier
+
+Front
+~~~~~
+
+- Improve sort & filters
+- Fix issue with gettext import when gettext is used by addons
+- Add option for variation buttons instead select
+- Fix bug with variation product orderability check at order detail
+- Do not require primary image for product
+
+Notify
+~~~~~~
+
+- Improve several issues with admin module styles and fix few issues with
+  serializing objects
+
+Simple Supplier
+~~~~~~~~~~~~~~~~
+
+- Do not spam spam alert notifications inside a minute
+- Make the physical stock be equal to logical when product is not shipped
+
+Miscellaneous
+~~~~~~~~~~~~~
+
+- Unlock lxml version limitation
+- Update pytoml to toml
+- Update Bootstrap outside admin to 3.4.1
+- Update Shepherd.js to latest
+- Update Parcel bundler to latest version
 
 
 Shuup 1.9.1
