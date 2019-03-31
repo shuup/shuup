@@ -51,14 +51,14 @@ pillow==5.4.1             # via easy-thumbnails
 pygments==2.3.1           # via sphinx
 pyjwt==1.7.1              # via djangorestframework-jwt
 python-dateutil==2.8.0    # via shuup
-pytoml==0.1.20            # via shuup
-pytz==2018.9              # via babel, django, django-timezone-field, shuup
+pytz==2018.9              # via babel, django, django-timezone-field
 requests==2.21.0          # via coreapi, shuup, sphinx
-shuup==1.9.1
+shuup==1.9.2
 simplejson==3.16.0        # via django-rest-swagger
 six==1.12.0               # via keyrings-alt, python-dateutil, shuup, sphinx
 snowballstemmer==1.2.1    # via sphinx
 sphinx==1.5.6
+toml==0.10.0              # via shuup
 unicodecsv==0.14.1        # via shuup
 unidecode==1.0.23         # via django-filer
 uritemplate==3.0.0        # via coreapi
