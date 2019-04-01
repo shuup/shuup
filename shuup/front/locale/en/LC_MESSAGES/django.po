@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-20 20:51+0000\n"
+"POT-Creation-Date: 2019-04-01 15:43+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -30,6 +30,14 @@ msgid "Carts"
 msgstr ""
 
 msgid "Show carts"
+msgstr ""
+
+msgid "Cart Inactivity Delay (hours)"
+msgstr ""
+
+msgid ""
+"Set the number of hours the cart must be inactive before it's displayed in "
+"Orders > Carts"
 msgstr ""
 
 msgid "Created on"
@@ -605,6 +613,9 @@ msgid ""
 "This script will send an email to customer or to any configured email right "
 "after an order is created. The order contents can be put on email body as "
 "well as other informations like shipping method and payment method."
+msgstr ""
+
+msgid "Cart Inactivity Delay"
 msgstr ""
 
 msgid "Checkout configuration"

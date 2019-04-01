@@ -264,7 +264,12 @@ def test_alert_limit_notification(rf, admin_user):
         # last run should be updated
         assert cache.get(cache_key) != last_run
 
-        event = AlertLimitReached(product=product, supplier=supplier)
+        event = AlertLimitReached(
+            product=product,
+            supplier=supplier,
+            supplier_email="supplier-no-break@email.com",
+            shop_email="shop-no-break@email.com"
+        )
         assert event.variable_values["dispatched_last_24hs"] is True
 
         # fake we have a cache with more than 24hrs
