@@ -99,7 +99,14 @@ class SimpleSupplierModule(BaseSupplierModule):
                 if product:
                     from .notify_events import AlertLimitReached
                     for shop in self.supplier.shops.all():
-                        AlertLimitReached(supplier=self.supplier, product=product).run(shop=shop)
+                        supplier_email = self.supplier.contact_address.email if self.supplier.contact_address else ""
+                        shop_email = shop.contact_address.email if shop.contact_address else ""
+                        AlertLimitReached(
+                            supplier=self.supplier,
+                            product=product,
+                            shop_email=shop_email,
+                            supplier_email=supplier_email
+                        ).run(shop=shop)
 
         sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))
         context_cache.bump_cache_for_product(Product.objects.get(id=product_id))

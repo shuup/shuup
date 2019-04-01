@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core import cache
 from shuup.notify.base import Event, Variable
-from shuup.notify.typology import Boolean, Model
+from shuup.notify.typology import Boolean, Email, Model
 
 
 class AlertLimitReached(Event):
@@ -22,12 +22,20 @@ class AlertLimitReached(Event):
 
     supplier = Variable(_("Supplier"), type=Model("shuup.Supplier"))
     product = Variable(_("Product"), type=Model("shuup.Product"))
-    dispatched_last_24hs = Variable(_("Fired in the last 24 hours?"),
-                                    type=Boolean,
-                                    help_text=_("This will be True if this event was already dispatched "
-                                                "in the last 24 hours for the same product and supplier. "
-                                                "This is useful to prevent sending identical notifications in a short "
-                                                "period of time."))
+
+    supplier_email = Variable(_("Supplier Email"), type=Email, required=False)
+    shop_email = Variable(_("Shop Email"), type=Email, required=False)
+
+    dispatched_last_24hs = Variable(
+        _("Fired in the last 24 hours?"),
+        type=Boolean,
+        help_text=_(
+            "This will be True if this event was already dispatched "
+            "in the last 24 hours for the same product and supplier. "
+            "This is useful to prevent sending identical notifications in a short "
+            "period of time."
+        )
+    )
 
     def __init__(self, **variable_values):
         cache_key = self.cache_key_fmt % (variable_values["supplier"].pk, variable_values["product"].pk)
