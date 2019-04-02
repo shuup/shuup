@@ -8,7 +8,8 @@
  */
 $(function() {
     $(".form-control.datetime").datetimepicker({
-        format: window.ShuupAdminConfig.settings.datetimeInputFormat
+        format: window.ShuupAdminConfig.settings.datetimeInputFormat,
+        step: window.ShuupAdminConfig.settings.datetimeInputStep
     });
 
     $(".form-control.date").datetimepicker({
@@ -18,7 +19,9 @@ $(function() {
 
     $(".form-control.time").datetimepicker({
         format: window.ShuupAdminConfig.settings.timeInputFormat,
-        datepicker: false
+        datepicker: false,
+        step: window.ShuupAdminConfig.settings.datetimeInputStep
     });
-});
 
+    jQuery.datetimepicker.setLocale(window.ShuupAdminConfig.settings.dateInputLocale);
+});

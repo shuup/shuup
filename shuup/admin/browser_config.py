@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 
+from shuup.utils.i18n import get_current_babel_locale
+
 
 class BaseBrowserConfigProvider(object):
     @classmethod
@@ -38,5 +40,7 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
             "minSearchInputLength": settings.SHUUP_ADMIN_MINIMUM_INPUT_LENGTH_SEARCH or 1,
             "dateInputFormat": settings.SHUUP_ADMIN_DATE_INPUT_FORMAT,
             "datetimeInputFormat": settings.SHUUP_ADMIN_DATETIME_INPUT_FORMAT,
-            "timeInputFormat": settings.SHUUP_ADMIN_TIME_INPUT_FORMAT
+            "timeInputFormat": settings.SHUUP_ADMIN_TIME_INPUT_FORMAT,
+            "datetimeInputStep": settings.SHUUP_ADMIN_DATETIME_INPUT_STEP,
+            "dateInputLocale": get_current_babel_locale().language
         }
