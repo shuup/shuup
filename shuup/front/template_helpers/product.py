@@ -44,19 +44,8 @@ def get_products_bought_with(context, product, count=5):
 @contextfunction
 def is_visible(context, product):
     request = context["request"]
-
-    key, val = context_cache.get_cached_value(identifier="is_visible", item=product, context=request)
-    if val is not None:
-        return val
-
-    try:
-        shop_product = product.get_shop_instance(shop=request.shop, allow_cache=True)
-        visible = shop_product.is_visible(request.customer)
-    except ShopProduct.DoesNotExist:
-        visible = False
-
-    context_cache.set_cached_value(key, visible)
-    return visible
+    shop_product = product.get_shop_instance(shop=request.shop, allow_cache=True)
+    return shop_product.is_visible(request.customer)
 
 
 @contextfunction
