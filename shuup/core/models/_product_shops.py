@@ -275,7 +275,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         if not self.visible:
             yield ValidationError(_('This product is not visible.'), code="product_not_visible")
 
-        if self.available_until and now() > self.available_until:
+        if self.available_until and self.available_until <= now():
             yield ValidationError(_('This product is not available to the current date.'), code="product_not_available")
 
         is_logged_in = (bool(customer) and not customer.is_anonymous)

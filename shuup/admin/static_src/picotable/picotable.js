@@ -1274,7 +1274,7 @@ const Picotable = (function (m, storage) {
                 }
 
                 $(el).datetimepicker({
-                    format: "Y-m-d H:i",
+                    format: window.ShuupAdminConfig.settings.datetimeInputFormat,
                 });
             };
         };
