@@ -23,7 +23,7 @@ class BasketLineEffect(PolymorphicShuupModel):
 
     campaign = models.ForeignKey("BasketCampaign", related_name='line_effects', verbose_name=_("campaign"))
 
-    def get_discount_lines(self, order_source, original_lines):
+    def get_discount_lines(self, order_source, original_lines, supplier):
         """
         Applies the effect based on given `order_source`
 
@@ -53,7 +53,7 @@ class FreeProductLine(BasketLineEffect):
     def values(self, values):
         self.products = values
 
-    def get_discount_lines(self, order_source, original_lines):
+    def get_discount_lines(self, order_source, original_lines, supplier):
         lines = []
         shop = order_source.shop
         for product in self.products.all():
@@ -61,7 +61,11 @@ class FreeProductLine(BasketLineEffect):
                 shop_product = product.get_shop_instance(shop, allow_cache=True)
             except ShopProduct.DoesNotExist:
                 continue
-            supplier = shop_product.get_supplier(order_source.customer, self.quantity, order_source.shipping_address)
+
+            if not supplier:
+                supplier = shop_product.get_supplier(
+                    order_source.customer, self.quantity, order_source.shipping_address)
+
             if not shop_product.is_orderable(
                     supplier=supplier, customer=order_source.customer,
                     quantity=self.quantity, allow_cache=False):
@@ -103,13 +107,14 @@ class DiscountFromProduct(BasketLineEffect):
     def description(self):
         return _("Select discount amount and products.")
 
-    def get_discount_lines(self, order_source, original_lines):
+    def get_discount_lines(self, order_source, original_lines, supplier):
         product_ids = self.products.values_list("pk", flat=True)
         campaign = self.campaign
-        campaign_supplier = campaign.supplier if hasattr(campaign, "supplier") and campaign.supplier else None
+        if not supplier:
+            supplier = getattr(campaign, "supplier", None)
 
         for line in original_lines:
-            if campaign_supplier and line.supplier != campaign_supplier:
+            if supplier and line.supplier != supplier:
                 continue
             if not line.type == OrderLineType.PRODUCT:
                 continue
@@ -152,16 +157,17 @@ class DiscountFromCategoryProducts(BasketLineEffect):
             'Select discount amount and category. '
             'Please note that the discount will be given to all matching products in basket.')
 
-    def get_discount_lines(self, order_source, original_lines):     # noqa (C901)
+    def get_discount_lines(self, order_source, original_lines, supplier):     # noqa (C901)
         if not (self.discount_percentage or self.discount_amount):
             return []
 
         campaign = self.campaign
-        campaign_supplier = campaign.supplier if hasattr(campaign, "supplier") and campaign.supplier else None
+        if not supplier:
+            supplier = getattr(campaign, "supplier", None)
 
         product_ids = self.category.shop_products.values_list("product_id", flat=True)
         for line in original_lines:  # Use original lines since we don't want to discount free product lines
-            if campaign_supplier and line.supplier != campaign_supplier:
+            if supplier and line.supplier != supplier:
                 continue
 
             if not line.type == OrderLineType.PRODUCT:

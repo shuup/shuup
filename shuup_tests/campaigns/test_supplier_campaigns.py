@@ -74,8 +74,12 @@ def test_basket_campaign_with_multiple_supppliers(rf):
         campaign=campaign, discount_amount=discount_amount_supplier1)
 
     basket.uncache()
-    assert len(basket.get_final_lines()) == 4
+    lines = basket.get_final_lines()
+    assert len(lines) == 4
     assert basket.total_price.value == 90  # 10d discount from the supplier1 product
+    line = _get_discount_line(lines, 10)
+    assert line.supplier == supplier1
+
 
     # Create campaign for supplier two
     basket_rule2 = ProductsInBasketCondition.objects.create(quantity=1)
@@ -89,8 +93,11 @@ def test_basket_campaign_with_multiple_supppliers(rf):
         campaign=campaign, discount_amount=discount_amount_supplier2)
 
     basket.uncache()
-    assert len(basket.get_final_lines()) == 5
+    lines = basket.get_final_lines()
+    assert len(lines) == 5
     assert basket.total_price.value == 50  # -10d - 40d from 100d
+    line = _get_discount_line(lines, 40)
+    assert line.supplier == supplier2
 
 
 @pytest.mark.django_db
@@ -176,3 +183,9 @@ def test_basket_campaign_with_multiple_supppliers_sharing_product(rf):
     assert len(basket.get_final_lines()) == 5  # +1 for discount line
     # No disocunt since not enough products in basket for supplier 1
     assert basket.total_price.value == 200
+
+
+def _get_discount_line(lines, discount_amount_value):
+    for line in lines:
+        if "discount" in line.line_id and line.discount_amount.value == Decimal(discount_amount_value):
+            return line
