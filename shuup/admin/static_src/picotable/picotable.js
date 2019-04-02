@@ -1275,7 +1275,9 @@ const Picotable = (function (m, storage) {
 
                 $(el).datetimepicker({
                     format: window.ShuupAdminConfig.settings.datetimeInputFormat,
+                    step: window.ShuupAdminConfig.settings.datetimeInputStep
                 });
+                jQuery.datetimepicker.setLocale(window.ShuupAdminConfig.settings.dateInputLocale);
             };
         };
         ctrl.loadSettings();

@@ -57,3 +57,8 @@ SHUUP_ADMIN_DATETIME_INPUT_FORMAT = "Y-m-d H:i"
 #: The input format to be used in time pickers
 #:
 SHUUP_ADMIN_TIME_INPUT_FORMAT = "H:i"
+
+
+#: The input step to be used for time pickers
+#:
+SHUUP_ADMIN_DATETIME_INPUT_STEP = 15

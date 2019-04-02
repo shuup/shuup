@@ -2663,11 +2663,6 @@
         "jquery": ">=2.1.0"
       }
     },
-    "bootstrap-datetime-picker": {
-      "version": "2.4.4",
-      "resolved": "https://registry.npmjs.org/bootstrap-datetime-picker/-/bootstrap-datetime-picker-2.4.4.tgz",
-      "integrity": "sha1-t8/oQ6PG0iHAMpPJpGSkzDXXOWg="
-    },
     "brace-expansion": {
       "version": "1.1.11",
       "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz",
