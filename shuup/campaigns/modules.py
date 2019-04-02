@@ -74,7 +74,7 @@ class BasketCampaignModule(OrderSourceModifierModule):
         for line in self._handle_total_discount_effects(matching_campaigns, order_source, lines):
             yield line
 
-    def _get_campaign_line(self, campaign, highest_discount, order_source):
+    def _get_campaign_line(self, campaign, highest_discount, order_source, supplier):
         text = campaign.public_name
 
         if campaign.coupon:
@@ -86,7 +86,8 @@ class BasketCampaignModule(OrderSourceModifierModule):
             quantity=1,
             discount_amount=campaign.shop.create_price(highest_discount),
             text=text,
-            line_source=LineSource.DISCOUNT_MODULE
+            line_source=LineSource.DISCOUNT_MODULE,
+            supplier=supplier
         )
 
     def can_use_code(self, order_source, code):
@@ -110,15 +111,15 @@ class BasketCampaignModule(OrderSourceModifierModule):
     def _handle_total_discount_effects(self, matching_campaigns, order_source, original_lines):
         price_so_far = sum((x.price for x in original_lines), order_source.zero_price)
 
-        def get_discount_line(campaign, amount, price_so_far):
+        def get_discount_line(campaign, amount, price_so_far, supplier):
             new_amount = min(amount, price_so_far)
             price_so_far -= new_amount
-            return self._get_campaign_line(campaign, new_amount, order_source)
+            return self._get_campaign_line(campaign, new_amount, order_source, supplier)
 
         best_discount_for_supplier = {}
         lines = []
         for campaign in matching_campaigns:
-            campaign_supplier = campaign.supplier if hasattr(campaign, "supplier") and campaign.supplier else None
+            campaign_supplier = getattr(campaign, "supplier", None)
 
             for effect in campaign.discount_effects.all():
                 discount_amount = min(price_so_far, effect.apply_for_basket(order_source=order_source))
@@ -126,7 +127,7 @@ class BasketCampaignModule(OrderSourceModifierModule):
                 # if campaign has coupon, match it to order_source.codes
                 if campaign.coupon:
                     # campaign was found because discount code matched. This line is always added
-                    lines.append(get_discount_line(campaign, discount_amount, price_so_far))
+                    lines.append(get_discount_line(campaign, discount_amount, price_so_far, campaign_supplier))
 
                 else:
                     best_discount = best_discount_for_supplier.get(campaign_supplier)
@@ -138,12 +139,18 @@ class BasketCampaignModule(OrderSourceModifierModule):
 
         for supplier, best_discount_info in best_discount_for_supplier.items():
             lines.append(
-                get_discount_line(best_discount_info["campaign"], best_discount_info["discount_amount"], price_so_far))
+                get_discount_line(
+                    best_discount_info["campaign"], best_discount_info["discount_amount"], price_so_far, supplier
+                )
+            )
         return lines
 
     def _handle_line_effects(self, matching_campaigns, order_source, original_lines):
         lines = []
         for campaign in matching_campaigns:
+            campaign_supplier = getattr(campaign, "supplier", None)
             for effect in campaign.line_effects.all():
-                lines += effect.get_discount_lines(order_source=order_source, original_lines=original_lines)
+                lines += effect.get_discount_lines(
+                    order_source=order_source, original_lines=original_lines, supplier=campaign_supplier
+                )
         return lines
