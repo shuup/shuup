@@ -92,8 +92,9 @@ class OrderDeliveryPdfAction(PicotableFileMassAction):
         shipment_ids = set(Shipment.objects.filter(order_id__in=ids).values_list("id", flat=True))
         if len(shipment_ids) == 1:
             try:
-                response = get_delivery_pdf(request, ids[0])
-                response['Content-Disposition'] = 'attachment; filename=shipment_%s_delivery.pdf' % ids[0]
+                shipment_id = shipment_ids.pop()
+                response = get_delivery_pdf(request, shipment_id)
+                response['Content-Disposition'] = 'attachment; filename=shipment_%s_delivery.pdf' % shipment_id
                 return response
             except Exception as e:
                 msg = e.message if hasattr(e, "message") else e
