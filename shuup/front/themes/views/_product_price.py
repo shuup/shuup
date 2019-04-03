@@ -9,6 +9,8 @@ from __future__ import unicode_literals
 
 import decimal
 
+from django.http import Http404
+
 from shuup.core.models import ProductVariationResult, Supplier
 from shuup.front.views.product import ProductDetailView
 from shuup.utils.numbers import parse_simple_decimal
@@ -23,6 +25,9 @@ class ProductPriceView(ProductDetailView):
         return (ProductVariationResult.resolve(product, vars) if vars else product)
 
     def get_context_data(self, **kwargs):
+        product = self.get_object()
+        if not product:
+            raise Http404
         context = super(ProductPriceView, self).get_context_data(**kwargs)
         shop_product = context["shop_product"]
 
