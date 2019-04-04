@@ -28,7 +28,7 @@ def check_children_content(request, page, children_content, children_visibility)
 def test_visible_children(rf):
     shop = get_default_shop()
     request = apply_request_middleware(rf.get("/"))
-    assert request.user.is_anonymous()
+    assert request.user.is_anonymous
 
     parent_content = "Parent content"
     page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content, shop=shop, url="test")

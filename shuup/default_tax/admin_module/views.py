@@ -8,8 +8,7 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import string_concat
-
+from django.utils.text import format_lazy
 from shuup.admin.utils.picotable import Column
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.default_tax.models import TaxRule
@@ -31,12 +30,12 @@ class TaxRuleForm(forms.ModelForm):
             "enabled",
         ]
         help_texts = {
-            "country_codes_pattern": string_concat(
+            "country_codes_pattern": format_lazy(
                 PATTERN_SYNTAX_HELP_TEXT,
                 " ",
                 _("Use ISO 3166-1 country codes (US, FI etc.)")
             ),
-            "region_codes_pattern": string_concat(
+            "region_codes_pattern": format_lazy(
                 PATTERN_SYNTAX_HELP_TEXT,
                 " ",
                 _("Use two letter state codes for the US")

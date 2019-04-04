@@ -116,7 +116,7 @@ class RelatedMapper(object):
                     setattr(obj, field.name, value)
 
         for field in obj._meta.local_fields:
-            if isinstance(field, ForeignKey) and isinstance(self.row_session.instance, field.rel.to):
+            if isinstance(field, ForeignKey) and isinstance(self.row_session.instance, field.remote_field.target_field):
                 setattr(obj, field.name, self.row_session.instance)
 
             elif field.name in ("name", "title"):

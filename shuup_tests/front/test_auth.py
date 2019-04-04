@@ -11,7 +11,7 @@ from django.contrib.auth import (
     get_user, get_user_model, logout, REDIRECT_FIELD_NAME
 )
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.apps.provides import override_provides
 from shuup.front.apps.auth.forms import EmailAuthenticationForm

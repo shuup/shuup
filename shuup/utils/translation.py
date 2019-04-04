@@ -34,7 +34,8 @@ def cache_translations(objects, languages=None, meta=None):
         for translation in xlate_model.objects.filter(master_id__in=master_ids, language_code__in=languages):
             master = object_map[translation.master_id]
             master._translations_cache[xlate_model][translation.language_code] = translation
-            setattr(translation, translation.__class__.master.cache_name, master)
+            # FIXME: following doesn't work
+            # setattr(translation, translation.__class__.master.cache_name, master)
     return objects
 
 

@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 import pytest
 from bs4 import BeautifulSoup
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import override_settings
 
 from shuup.core.models import Supplier

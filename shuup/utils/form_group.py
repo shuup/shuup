@@ -77,7 +77,8 @@ class FormGroup(object):
                 prefix=prefix,
                 data=self.data,
                 files=self.files,
-                group_initial=self.initial
+                group_initial=self.initial,
+                use_required_attribute=False,
             )
 
     @property

@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.home import HomeView

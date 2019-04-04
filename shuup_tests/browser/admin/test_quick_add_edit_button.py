@@ -10,7 +10,7 @@ import time
 
 import pytest
 from django.contrib.auth.models import Group, Permission
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import (

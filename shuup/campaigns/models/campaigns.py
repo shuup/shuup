@@ -54,7 +54,7 @@ class CampaignQueryset(models.QuerySet):
 class Campaign(MoneyPropped, TranslatableModel):
     admin_url_suffix = None
 
-    shop = models.ForeignKey(Shop, verbose_name=_("shop"), help_text=_("The shop where the campaign is active."))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to=Shop, verbose_name=_("shop"), help_text=_("The shop where the campaign is active."))
     name = models.CharField(max_length=120, verbose_name=_("name"), help_text=_("The name for this campaign."))
 
     # translations in subclass
@@ -212,7 +212,8 @@ class BasketCampaign(Campaign):
         max_length=120, verbose_name=_("basket line text"), help_text=_("This text will be shown in basket."))
 
     conditions = models.ManyToManyField('BasketCondition', blank=True, related_name='campaign')
-    coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign', verbose_name=_("coupon"))
+    coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign', verbose_name=_("coupon"),
+                                  on_delete=models.CASCADE)
     supplier = models.ForeignKey(
         "shuup.Supplier",
         null=True, blank=True,
@@ -221,7 +222,8 @@ class BasketCampaign(Campaign):
         help_text=_(
             "When set, this campaign will match only products from the selected supplier. "
             "Rules and Effects will also be restricted to the products of this supplier."
-        )
+        ),
+        on_delete=models.CASCADE,
     )
 
     translations = TranslatedFields(
@@ -319,8 +321,8 @@ class BasketCampaign(Campaign):
 
 
 class CouponUsage(models.Model):
-    coupon = models.ForeignKey('Coupon', related_name='usages')
-    order = models.ForeignKey(Order, related_name='coupon_usages')
+    coupon = models.ForeignKey(on_delete=models.CASCADE, to='Coupon', related_name='usages')
+    order = models.ForeignKey(on_delete=models.CASCADE, to=Order, related_name='coupon_usages')
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True,
@@ -357,7 +359,7 @@ class Coupon(models.Model):
                     "If the limit is zero (0) coupon cannot be used."))
 
     active = models.BooleanField(default=False, verbose_name=_("is active"))
-    shop = models.ForeignKey(
+    shop = models.ForeignKey(on_delete=models.CASCADE, to=
         "shuup.Shop",
         verbose_name=_("shop"),
         related_name="campaign_coupons",
@@ -368,7 +370,8 @@ class Coupon(models.Model):
         "shuup.Supplier",
         null=True, blank=True,
         related_name="campaign_coupons",
-        verbose_name=_("supplier")
+        verbose_name=_("supplier"),
+        on_delete=models.CASCADE,
     )
 
     created_by = models.ForeignKey(

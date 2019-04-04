@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.core.urlresolvers import NoReverseMatch, reverse
+from django.urls import NoReverseMatch, reverse
 from django.db import models
 from django.db.models import Q
 from django.utils.timezone import now
@@ -25,7 +25,7 @@ class NotificationManager(models.Manager):
         """
         :type user: django.contrib.auth.models.AbstractUser
         """
-        if not user or user.is_anonymous():
+        if not user or user.is_anonymous:
             return self.none()
 
         q = (Q(recipient_type=RecipientType.SPECIFIC_USER) & Q(recipient=user))
@@ -43,7 +43,7 @@ class Notification(models.Model):
     """
     A model for persistent notifications to be shown in the admin, etc.
     """
-    shop = models.ForeignKey("shuup.Shop", verbose_name=_("shop"))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"))
     recipient_type = EnumIntegerField(RecipientType, default=RecipientType.ADMINS, verbose_name=_('recipient type'))
     recipient = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL,

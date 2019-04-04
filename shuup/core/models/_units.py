@@ -119,7 +119,7 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
 
 
 class SalesUnitTranslation(_ShortNameToSymbol, TranslatedFieldsModel):
-    master = models.ForeignKey(
+    master = models.ForeignKey(on_delete=models.CASCADE, to=
         SalesUnit, related_name='translations', null=True, editable=False)
     name = models.CharField(
         max_length=128, verbose_name=_('name'), help_text=_(
@@ -147,7 +147,7 @@ def validate_positive_not_zero(value):
 
 
 class DisplayUnit(TranslatableShuupModel):
-    internal_unit = models.ForeignKey(
+    internal_unit = models.ForeignKey(on_delete=models.CASCADE, to=
         SalesUnit, related_name='display_units',
         verbose_name=_("internal unit"),
         help_text=_("The sales unit that this display unit is linked to."))

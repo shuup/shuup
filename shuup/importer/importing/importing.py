@@ -17,7 +17,7 @@ from django.db.models import AutoField, ForeignKey, Q
 from django.db.models.fields import BooleanField
 from django.db.models.fields.related import RelatedField
 from django.db.transaction import atomic
-from django.utils.text import force_text
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 
@@ -485,7 +485,7 @@ class DataImporter(object):
         :param field: Django Field object
         :return: Found value
         """
-        to = field.rel.to
+        to = field.remote_field.target_field
         mapper = self.relation_map_cache.get(to)
 
         if not mapper:

@@ -15,7 +15,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, load_backend, login
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
-from django.core.urlresolvers import NoReverseMatch, reverse
+from django.urls import NoReverseMatch, reverse
 from django.db.transaction import atomic
 from django.forms.models import modelform_factory
 from django.http.response import HttpResponseRedirect

@@ -35,7 +35,7 @@
 {% endmacro %}
 
 {% macro render_info_dropdown(show_quick_login=True) %}
-    {% if user.is_authenticated() or request.person %}
+    {% if user.is_authenticated or request.person %}
         {% call _render_info_for_authenticated_users() %}
             {% if request.person %}
                 {{ _render_dropdown_item(url("shuup:customer_edit"), "fa fa-user fa-fw", _("Edit account details")) }}
@@ -55,7 +55,7 @@
                     {{ _render_dropdown_item(url("shuup_admin:dashboard"), "fa fa-dashboard fa-fw", _("Admin panel")) }}
                 {% endif %}
             {% endif %}
-            {% if user.is_authenticated() and shuup.urls.has_url("shuup:logout") %}
+            {% if user.is_authenticated and shuup.urls.has_url("shuup:logout") %}
                 {{ _render_dropdown_item(url("shuup:logout"), "fa fa-sign-out fa-fw", _("Log out"), request.person == true) }}
             {% endif %}
         {% endcall %}

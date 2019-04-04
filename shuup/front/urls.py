@@ -99,7 +99,7 @@ urlpatterns = [
 def _get_extension_urlpatterns(provide_category):
     return chain(*get_provide_objects(provide_category))
 
-
+app_name="shuup"
 urlpatterns = list(chain(*(
     _get_extension_urlpatterns("front_urls_pre"),
     urlpatterns,

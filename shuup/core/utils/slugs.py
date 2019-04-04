@@ -7,7 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.text import force_text, slugify
+from django.utils.encoding import force_text
+from django.utils.text import slugify
 
 
 def generate_multilanguage_slugs(object, name_getter, slug_length=128):

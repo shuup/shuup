@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template import engines
 from django.utils.translation import ugettext_lazy as _
 from django_jinja.backend import Jinja2

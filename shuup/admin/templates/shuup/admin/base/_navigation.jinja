@@ -31,7 +31,7 @@
         {{ request.user }}
     </button>
     <div class="languages dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
-        {% if request.user.is_authenticated() %}
+        {% if request.user.is_authenticated %}
         <div class="username">
             <span class="icon"><i class="fa fa-user"></i></span>{% trans %}Hello{% endtrans %}, <span class="user">{{ request.user }}</span>!
         </div>

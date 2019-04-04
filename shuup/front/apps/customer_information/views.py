@@ -8,7 +8,7 @@
 import six
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.views import password_change
+from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
@@ -29,11 +29,11 @@ from .forms import CompanyContactForm, PersonContactForm, SavedAddressForm
 from .notify_events import CompanyAccountCreated
 
 
-class PasswordChangeView(DashboardViewMixin, TemplateView):
+class CustomPasswordChangeView(DashboardViewMixin, TemplateView):
     template_name = "shuup/customer_information/change_password.jinja"
 
     def post(self, *args, **kwargs):
-        response = password_change(
+        response = PasswordChangeView(
             self.request,
             post_change_redirect="shuup:customer_edit",
             template_name=self.template_name
@@ -43,7 +43,7 @@ class PasswordChangeView(DashboardViewMixin, TemplateView):
         return response
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordChangeView, self).get_context_data(**kwargs)
+        context = super(CustomPasswordChangeView, self).get_context_data(**kwargs)
         context["form"] = PasswordChangeForm(user=self.request.user)
         return context
 

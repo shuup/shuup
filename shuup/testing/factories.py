@@ -213,7 +213,7 @@ class ProductFactory(DjangoModelFactory):
             sp.shop_primary_image = image
             sp.save()
             sp.suppliers.add(get_default_supplier())
-            sp.categories = shop.categories.all()
+            sp.categories.set(shop.categories.all())
 
 
 def get_address(**overrides):

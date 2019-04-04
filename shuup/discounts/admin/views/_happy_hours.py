@@ -11,7 +11,7 @@ import datetime
 
 from django import forms
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text

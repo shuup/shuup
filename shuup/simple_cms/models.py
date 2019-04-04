@@ -62,7 +62,7 @@ class PageQuerySet(TranslatableQuerySet):
 @reversion.register(follow=["translations"])
 @python_2_unicode_compatible
 class Page(MPTTModel, TranslatableModel):
-    shop = models.ForeignKey("shuup.Shop", verbose_name=_('shop'))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_('shop'))
     available_from = models.DateTimeField(
         default=now, null=True, blank=True, db_index=True,
         verbose_name=_('available from'), help_text=_(
@@ -102,7 +102,7 @@ class Page(MPTTModel, TranslatableModel):
     parent = TreeForeignKey(
         "self", blank=True, null=True, related_name="children", verbose_name=_("parent"), help_text=_(
             "Set this to a parent page if this page should be subcategorized under another page."
-        ))
+        ), on_delete=models.CASCADE)
     list_children_on_page = models.BooleanField(verbose_name=_("list children on page"), default=False, help_text=_(
         "Check this if this page should list its children pages."
     ))
@@ -202,7 +202,7 @@ class PageOpenGraph(TranslatableModel):
     """
     Object that describes Open Graph extra meta attributes
     """
-    page = models.OneToOneField(Page, verbose_name=_('page'), related_name="open_graph")
+    page = models.OneToOneField(Page, verbose_name=_('page'), related_name="open_graph", on_delete=models.CASCADE)
 
     image = FilerImageField(
         verbose_name=_("Image"),

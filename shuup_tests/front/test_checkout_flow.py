@@ -8,7 +8,7 @@
 import random
 
 import pytest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.core import cache
 from shuup.core.models import Order, PaymentStatus, Product

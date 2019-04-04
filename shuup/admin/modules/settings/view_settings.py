@@ -123,7 +123,7 @@ class ViewSettings(object):
         for field in model._meta.local_many_to_many:
             if field.name in defaults:
                 continue
-            if field.rel.to in all_models:
+            if field.remote_field.target_field in all_models:
                 continue  # no need to have these...
 
             column = self._get_column(model, field, known_names, identifier)
@@ -137,7 +137,7 @@ class ViewSettings(object):
             if field.name == "id" and model != self.model:
                 continue
 
-            if isinstance(field, ForeignKey) and field.rel.to in all_models:
+            if isinstance(field, ForeignKey) and field.remote_field.target_field in all_models:
                 continue  # no need to have these...
 
             column = self._get_column(model, field, known_names, identifier)

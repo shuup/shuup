@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import Product

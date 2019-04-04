@@ -8,7 +8,7 @@ import os
 
 from django.conf.urls import url
 from django.core.handlers.base import BaseHandler
-from django.core.urlresolvers import get_resolver
+from django.urls import get_resolver
 from django.http import HttpResponse
 from django.http.response import Http404
 from django.test.utils import override_settings

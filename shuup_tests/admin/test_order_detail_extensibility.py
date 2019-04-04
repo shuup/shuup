@@ -9,7 +9,7 @@ import decimal
 import pytest
 
 from bs4 import BeautifulSoup
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.admin.modules.orders.utils import OrderInformation
 from shuup.admin.modules.orders.views.detail import OrderDetailView

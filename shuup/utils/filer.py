@@ -62,7 +62,7 @@ def _filer_file_from_upload(model, request, path, upload_data, sha1=None):
     upload_form = file_form_cls(
         data={
             'original_filename': upload_data.name,
-            'owner': (request.user.pk if (request and not request.user.is_anonymous()) else None)
+            'owner': (request.user.pk if (request and not request.user.is_anonymous) else None)
         },
         files={
             'file': upload_data

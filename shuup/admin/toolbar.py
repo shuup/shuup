@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 import json
 
-from django.core.urlresolvers import NoReverseMatch, reverse
+from django.urls import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html

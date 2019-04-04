@@ -47,7 +47,7 @@ class TaskCommentVisibility(Enum):
 @python_2_unicode_compatible
 class TaskType(TranslatableModel):
     identifier = InternalIdentifierField(unique=False, blank=True, null=True, editable=True)
-    shop = models.ForeignKey("shuup.Shop", verbose_name=_("shop"), related_name="task_types")
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="task_types")
     translations = TranslatedFields(
         name=models.TextField(verbose_name=_("name"))
     )
@@ -83,26 +83,26 @@ class TaskQuerySet(models.QuerySet):
 
 @python_2_unicode_compatible
 class Task(models.Model):
-    shop = models.ForeignKey("shuup.Shop", verbose_name=_("shop"), related_name="tasks")
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="tasks")
     name = models.CharField(verbose_name=_("name"), max_length=60)
-    type = models.ForeignKey(TaskType, verbose_name=_("task type"), related_name="tasks")
+    type = models.ForeignKey(on_delete=models.CASCADE, to=TaskType, verbose_name=_("task type"), related_name="tasks")
     status = EnumIntegerField(TaskStatus, default=TaskStatus.NEW, verbose_name=_("status"))
     priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"), db_index=True)
-    creator = models.ForeignKey(
+    creator = models.ForeignKey(on_delete=models.CASCADE, to=
         "shuup.Contact",
         blank=True,
         null=True,
         related_name="creted_tasks",
         verbose_name=_("creator")
     )
-    assigned_to = models.ForeignKey(
+    assigned_to = models.ForeignKey(on_delete=models.CASCADE, to=
         "shuup.Contact",
         blank=True,
         null=True,
         related_name="assigned_tasks",
         verbose_name=_("assigned to")
     )
-    completed_by = models.ForeignKey(
+    completed_by = models.ForeignKey(on_delete=models.CASCADE, to=
         "shuup.Contact",
         blank=True,
         null=True,
@@ -170,8 +170,8 @@ class TaskCommentQuerySet(models.QuerySet):
 
 
 class TaskComment(models.Model):
-    task = models.ForeignKey(Task, verbose_name=_("task"), related_name="comments")
-    author = models.ForeignKey(
+    task = models.ForeignKey(on_delete=models.CASCADE, to=Task, verbose_name=_("task"), related_name="comments")
+    author = models.ForeignKey(on_delete=models.CASCADE, to=
         "shuup.Contact",
         blank=True, null=True,
         related_name="task_comments",

@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.core.models import get_company_contact, get_person_contact, SavedAddress
 from shuup.testing.factories import get_address, get_default_shop
