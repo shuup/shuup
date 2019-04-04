@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 import json
 
 import six
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.forms import TimeInput as DjangoTimeInput
 from django.forms import HiddenInput, Textarea, TextInput, Widget
 from django.utils.encoding import force_text

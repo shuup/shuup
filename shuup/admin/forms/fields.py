@@ -146,7 +146,8 @@ class WeekdayField(MultipleChoiceField):
     def __init__(self, choices=(), required=True, widget=None, label=None, initial=None, help_text='', *args, **kwargs):
         if not choices:
             choices = self.DAYS_OF_THE_WEEK
-        super(WeekdayField, self).__init__(choices, required, widget, label, initial, help_text, *args, **kwargs)
+        # super(WeekdayField, self).__init__(choices, required, widget, label, initial, help_text, *args, **kwargs)
+        super(WeekdayField, self).__init__()
 
     def clean(self, value):
         return ",".join(super(WeekdayField, self).clean(value))

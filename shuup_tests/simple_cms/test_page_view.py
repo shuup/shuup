@@ -29,7 +29,7 @@ def test_anon_cant_see_invisible_page(rf):
     get_default_shop()
     view_func = PageView.as_view()
     request = apply_request_middleware(rf.get("/"))
-    assert request.user.is_anonymous()
+    assert request.user.is_anonymous
     with pytest.raises(Http404):
         response = view_func(request, url=page.url)
 
@@ -65,7 +65,7 @@ def test_visible_page_has_right_content(rf):
     page = create_page(available_from=datetime.date(1988, 1, 1), shop=get_default_shop())
     view_func = PageView.as_view()
     request = apply_request_middleware(rf.get("/"))
-    assert request.user.is_anonymous()
+    assert request.user.is_anonymous
     response = view_func(request, url=page.url)
     response.render()
     assert "<h1>Bacon ipsum" in response.rendered_content

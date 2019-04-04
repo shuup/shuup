@@ -11,12 +11,12 @@ import json
 import re
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.transaction import atomic
 from django.http import (
     HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 )
-from django.utils.text import force_text
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView, View
 
@@ -68,7 +68,7 @@ class GDPRCookieConsentView(View):
 class GDPRPolicyConsentView(View):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
-        if request.user.is_anonymous():
+        if request.user.is_anonymous:
             return HttpResponseNotFound()
 
         shop = request.shop

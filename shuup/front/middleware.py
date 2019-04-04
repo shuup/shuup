@@ -13,6 +13,7 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone, translation
+from django.utils.deprecation import MiddlewareMixin
 from django.utils.lru_cache import lru_cache
 from django.utils.translation import ugettext_lazy as _
 
@@ -32,7 +33,7 @@ __all__ = ["ProblemMiddleware", "ShuupFrontMiddleware"]
 ProblemMiddleware = ExceptionMiddleware  # This class is only an alias for ExceptionMiddleware.
 
 
-class ShuupFrontMiddleware(object):
+class ShuupFrontMiddleware(MiddlewareMixin):
     """
     Handle Shuup specific tasks for each request and response.
 

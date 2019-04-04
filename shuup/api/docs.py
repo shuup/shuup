@@ -14,8 +14,10 @@ from rest_framework import serializers
 from rest_framework.compat import coreapi
 from rest_framework.response import Response
 from rest_framework.schemas import (
-    formatting, header_regex, SchemaGenerator, types_lookup
+    SchemaGenerator
 )
+from rest_framework.schemas.inspectors import header_regex
+from rest_framework.utils import formatting
 from rest_framework.views import APIView, get_view_description
 from rest_framework_swagger import renderers
 
@@ -47,7 +49,9 @@ def guess_field_type(field):
         elif most_common == bool:
             return "boolean"
 
-    return types_lookup[field]
+    return None
+    # FIXME: looks like types_lookup is removed
+    # return types_lookup[field]
 
 
 class ShuupAPISchemaGenerator(SchemaGenerator):

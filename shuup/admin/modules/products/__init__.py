@@ -11,7 +11,7 @@ from collections import Counter
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q
 from django.db.models.signals import m2m_changed, post_save
 from django.utils.encoding import force_text

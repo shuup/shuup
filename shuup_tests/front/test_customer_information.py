@@ -12,7 +12,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import resolve_url
 from django.test import override_settings
 

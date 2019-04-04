@@ -28,15 +28,16 @@ from shuup.admin.views.select import MultiselectAjaxView
 from shuup.admin.views.tour import TourView
 from shuup.admin.views.wizard import WizardView
 from shuup.utils.i18n import javascript_catalog_all
+from shuup.front.apps.auth.views import LoginView
 from shuup.utils.importing import cached_load
 
 
+
 def login(request, **kwargs):
-    if not request.user.is_anonymous() and request.method == "POST":  # We're logging in, so log out first
+    if not request.user.is_anonymous and request.method == "POST":  # We're logging in, so log out first
         do_logout(request)
 
     kwargs.setdefault("extra_context", {})["error"] = request.GET.get("error")
-
     return auth_views.login(
         request=request,
         authentication_form=cached_load("SHUUP_ADMIN_AUTH_FORM_SPEC"),
@@ -68,7 +69,7 @@ def get_urls():
         ),
         admin_url(
             r'^logout/$',
-            auth_views.logout,
+            auth_views.LogoutView,
             kwargs={"template_name": "shuup/admin/auth/logout.jinja"},
             name='logout',
             require_authentication=False,
@@ -106,4 +107,5 @@ def get_urls():
     return tuple(urls)
 
 
+app_name = "shuup_admin"
 urlpatterns = get_urls()

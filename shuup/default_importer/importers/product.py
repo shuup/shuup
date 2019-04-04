@@ -10,7 +10,7 @@ import os
 
 import six
 from django.db.models import ForeignKey, ManyToManyField, Q
-from django.utils.text import force_text
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import (

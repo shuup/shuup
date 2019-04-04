@@ -9,7 +9,7 @@ import pytest
 
 from django.utils.html import escape
 from django.core import mail
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.testing import factories
 from shuup.testing.factories import get_default_shop

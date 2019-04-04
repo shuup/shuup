@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 

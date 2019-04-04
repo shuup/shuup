@@ -10,7 +10,7 @@ import os
 import selenium
 
 import pytest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from selenium.webdriver.common.keys import Keys
 
 from shuup.testing.browser_utils import (

@@ -8,7 +8,7 @@
 import base64
 import json
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from rest_framework.test import APIClient
 
 from shuup.testing.factories import get_default_shop

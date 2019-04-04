@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.http.response import JsonResponse
 from django.shortcuts import render
+from django.utils.deprecation import MiddlewareMixin
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,7 +18,7 @@ from shuup.core.shop_provider import get_shop
 from shuup.utils.excs import ExceptionalResponse, Problem
 
 
-class ExceptionMiddleware(object):
+class ExceptionMiddleware(MiddlewareMixin):
     def process_exception(self, request, exception):
         if isinstance(exception, ExceptionalResponse):
             return exception.response
@@ -56,7 +57,7 @@ class ExceptionMiddleware(object):
         return templates
 
 
-class ShuupMiddleware(object):
+class ShuupMiddleware(MiddlewareMixin):
     """
     Handle Shuup specific tasks for each request and response.
 

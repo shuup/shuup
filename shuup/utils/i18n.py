@@ -17,7 +17,7 @@ from django.utils.lru_cache import lru_cache
 from django.utils.timezone import localtime
 from django.utils.translation import get_language
 from django.views.decorators.cache import cache_page
-from django.views.i18n import javascript_catalog
+from django.views.i18n import JavaScriptCatalog
 
 
 @lru_cache()
@@ -150,7 +150,8 @@ def javascript_catalog_all(request, domain='djangojs'):
     Get JavaScript message catalog for all apps in INSTALLED_APPS.
     """
     all_apps = [x.name for x in apps.get_app_configs()]
-    return javascript_catalog(request, domain, all_apps)
+    js_catalog = JavaScriptCatalog(packages=all_apps, domain=domain)
+    return js_catalog.get(request)
 
 
 def get_currency_name(currency):

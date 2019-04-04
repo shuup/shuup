@@ -54,7 +54,7 @@ def add_gdpr_consent_resources(context, content):
     add_resource(context, "head_end", get_shuup_static_url("shuup-gdpr.css"))
 
     user = request.user
-    if not user.is_anonymous() and should_reconsent_privacy_policy(shop, user):
+    if not user.is_anonymous and should_reconsent_privacy_policy(shop, user):
         consent_page = get_privacy_policy_page(shop)
         render_context = {
             "request": request,

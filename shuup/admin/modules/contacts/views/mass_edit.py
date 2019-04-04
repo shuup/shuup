@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.contrib import messages
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _

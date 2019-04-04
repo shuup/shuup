@@ -10,7 +10,7 @@ from django.conf import settings
 from django.contrib.auth import (REDIRECT_FIELD_NAME, get_user, get_user_model,
                                  logout)
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.forms import ValidationError
 
 from shuup.apps.provides import override_provides

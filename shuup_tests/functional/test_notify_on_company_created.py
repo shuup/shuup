@@ -8,7 +8,7 @@
 import pytest
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup import configuration
 from shuup.core.models import get_company_contact, get_person_contact

@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.forms.formsets import formset_factory
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _

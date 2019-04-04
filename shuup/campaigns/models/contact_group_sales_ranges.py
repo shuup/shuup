@@ -28,7 +28,7 @@ class SalesRangeQuerySet(models.QuerySet):
 
 class ContactGroupSalesRange(models.Model):
     group = models.ForeignKey(ContactGroup, related_name="+", on_delete=models.CASCADE, verbose_name=_("group"))
-    shop = models.ForeignKey(Shop, related_name="+", verbose_name=_("shop"))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to=Shop, related_name="+", verbose_name=_("shop"))
     min_value = MoneyValueField(verbose_name=_("min amount"), blank=True, null=True)
     max_value = MoneyValueField(verbose_name=_("max amount"), blank=True, null=True)
 

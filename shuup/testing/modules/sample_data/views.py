@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.utils import translation

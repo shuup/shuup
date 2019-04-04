@@ -68,7 +68,7 @@ def test_carousel_plugin_form_get_context():
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
     assert plugin.get_context_data(context).get("carousel") == None
 
-    test_carousel.shops = [shop]
+    test_carousel.shop.set([shop])
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
     assert plugin.get_context_data(context).get("carousel") == test_carousel
 
@@ -78,7 +78,7 @@ def test_banner_box_plugin():
     shop = get_default_shop()
     context = get_jinja_context()
     test_carousel = Carousel.objects.create(name="test")
-    test_carousel.shops = [shop]
+    test_carousel.shops.set([shop])
     plugin = BannerBoxPlugin(config={"carousel": test_carousel.pk, "title": "Test"})
     data = plugin.get_context_data(context)
     assert data.get("carousel") == test_carousel
@@ -281,7 +281,7 @@ def test_carousel_custom_colors(rf):
     from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
     from shuup.xtheme.layout import Layout
     from shuup.xtheme._theme import get_current_theme
-    from django.core.urlresolvers import reverse
+    from django.urls import reverse
 
     shop = get_default_shop()
     shop.maintenance_mode = False

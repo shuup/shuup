@@ -45,10 +45,10 @@ class Migration(migrations.Migration):
                 ('target', enumfields.fields.EnumIntegerField(verbose_name='link target', enum=shuup.front.apps.carousel.models.LinkTargetType, default=0)),
                 ('available_from', models.DateTimeField(verbose_name='available from', blank=True, null=True)),
                 ('available_to', models.DateTimeField(verbose_name='available to', blank=True, null=True)),
-                ('carousel', models.ForeignKey(related_name='slides', to='carousel.Carousel')),
-                ('category_link', models.ForeignKey(to='shuup.Category', related_name='+', null=True, verbose_name='category link', blank=True)),
-                ('cms_page_link', models.ForeignKey(to='shuup_simple_cms.Page', related_name='+', null=True, verbose_name='cms page link', blank=True)),
-                ('product_link', models.ForeignKey(to='shuup.Product', related_name='+', null=True, verbose_name='product link', blank=True)),
+                ('carousel', models.ForeignKey(related_name='slides', to='carousel.Carousel', on_delete=models.CASCADE)),
+                ('category_link', models.ForeignKey(to='shuup.Category', related_name='+', null=True, verbose_name='category link', blank=True, on_delete=models.CASCADE)),
+                ('cms_page_link', models.ForeignKey(to='shuup_simple_cms.Page', related_name='+', null=True, verbose_name='cms page link', blank=True, on_delete=models.CASCADE)),
+                ('product_link', models.ForeignKey(to='shuup.Product', related_name='+', null=True, verbose_name='product link', blank=True, on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('ordering', 'id'),
@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
                 ('caption_text', models.TextField(help_text='When displayed in banner box mode, caption text is shown as a tooltip', blank=True, verbose_name='caption text', null=True)),
                 ('external_link', models.CharField(verbose_name='external link', blank=True, max_length=160, null=True)),
                 ('image', filer.fields.image.FilerImageField(on_delete=django.db.models.deletion.PROTECT, to='filer.Image', related_name='+', null=True, verbose_name='image', blank=True)),
-                ('master', models.ForeignKey(editable=False, related_name='translations', null=True, to='carousel.Slide')),
+                ('master', models.ForeignKey(editable=False, related_name='translations', null=True, to='carousel.Slide', on_delete=models.CASCADE)),
             ],
             options={
                 'managed': True,

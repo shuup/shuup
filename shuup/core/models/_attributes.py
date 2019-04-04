@@ -209,7 +209,7 @@ class Attribute(TranslatableModel):
 class AppliedAttribute(TranslatableModel):
     _applied_fk_field = None  # Used by the `repr` implementation
 
-    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, verbose_name=_("attribute"))
+    attribute = models.ForeignKey(on_delete=models.CASCADE, to=Attribute, verbose_name=_("attribute"))
 
     numeric_value = models.DecimalField(
         null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"), db_index=True)

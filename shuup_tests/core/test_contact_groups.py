@@ -28,7 +28,7 @@ def test_contact_groups(rf, regular_user):
     # default groups created for non shop and shop
     assert ContactGroupPriceDisplay.objects.count() == 2
 
-    assert request.user.is_anonymous()
+    assert request.user.is_anonymous
     user = request.user
     contact = get_person_contact(user)
     assert contact == AnonymousContact()
@@ -124,7 +124,7 @@ def test_multishop(rf):
     assert shop1.pk != shop2.pk
 
     request = apply_request_middleware(rf.get("/"))
-    assert request.user.is_anonymous()
+    assert request.user.is_anonymous
     user = request.user
     contact = get_person_contact(user)
     assert contact == AnonymousContact()

@@ -54,12 +54,12 @@ class ShuupAPIPermission(permissions.BasePermission):
         # safe requests: GET, HEAD, OPTIONS
         if request.method in permissions.SAFE_METHODS:
             # to READ, the permissions can be WRITE or READ
-            return ((request.user.is_authenticated() and permission <= PermissionLevel.AUTHENTICATED_WRITE) or
+            return ((request.user.is_authenticated and permission <= PermissionLevel.AUTHENTICATED_WRITE) or
                     permission <= PermissionLevel.PUBLIC_WRITE)
 
         # NOT safe: POST, PUT, DELETE
         else:
             # to change data, permission must be exactly WRITE
-            if request.user.is_authenticated():
+            if request.user.is_authenticated:
                 return permission in (PermissionLevel.AUTHENTICATED_WRITE, PermissionLevel.PUBLIC_WRITE)
             return (permission == PermissionLevel.PUBLIC_WRITE)

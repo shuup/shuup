@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 import json
 
 import six
-from django.core.urlresolvers import (
+from django.urls import (
     NoReverseMatch, resolve, Resolver404, reverse
 )
 from django.middleware.csrf import get_token

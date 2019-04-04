@@ -75,23 +75,23 @@ class Migration(migrations.Migration):
                     verbose_name='creator',
                     related_name='baskets_created',
                     blank=True,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
                 ('customer', models.ForeignKey(
                     to='shuup.Contact',
                     verbose_name='customer',
                     related_name='customer_baskets',
                     blank=True,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
                 ('orderer', models.ForeignKey(
                     to='shuup.PersonContact',
                     verbose_name='orderer',
                     related_name='orderer_baskets',
                     blank=True,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
                 ('products', models.ManyToManyField(
                     verbose_name='products', blank=True, to='shuup.Product')),
                 ('shop', models.ForeignKey(
-                    verbose_name='shop', to='shuup.Shop')),
+                    verbose_name='shop', to='shuup.Shop', on_delete=models.CASCADE)),
             ],
             bases=(shuup.utils.properties.MoneyPropped, models.Model), ),
         migrations.AlterModelOptions(
