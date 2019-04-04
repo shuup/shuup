@@ -206,6 +206,10 @@ class ResourceContainer(object):
 
         resource = force_text(resource)
 
+        for res in ["script", "link", "style"]:
+            if resource.startswith("<%s" % res):
+                return resource
+
         # TODO: should this be extensible?
 
         if resource.endswith(".js"):
