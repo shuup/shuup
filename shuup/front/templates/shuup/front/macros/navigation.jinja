@@ -35,7 +35,7 @@
 {% endmacro %}
 
 {% macro render_info_dropdown(show_quick_login=True) %}
-    {% if user.is_authenticated() or request.person %}
+    {% if user.is_authenticated or request.person %}
         {% call _render_info_for_authenticated_users() %}
             {% if request.person %}
                 {{ _render_dropdown_item(url("shuup:customer_edit"), "fa fa-user fa-fw", _("Edit account details")) }}

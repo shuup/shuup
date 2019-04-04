@@ -171,7 +171,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         "After this date the product will be invisible."
     ))
 
-    display_unit = models.ForeignKey(
+    display_unit = models.ForeignKey(on_delete=models.CASCADE, to=
         DisplayUnit, null=True, blank=True,
         verbose_name=_("display unit"),
         help_text=_("Unit for displaying quantities of this product"))

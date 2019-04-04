@@ -6,10 +6,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user_model, REDIRECT_FIELD_NAME
 from django.contrib.auth.models import AnonymousUser
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import override_settings
 from django.utils.translation import activate
 

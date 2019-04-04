@@ -87,7 +87,7 @@ class SetPasswordViewSet(GenericViewSet):
     serializer_class = serializers.BaseSerializer
 
     def create(self, request):
-        if not request.user.is_anonymous():
+        if not request.user.is_anonymous:
             serializer = SetAuthenticatedUserPasswordSerializer(data=request.data, context={'request': request})
         else:
             serializer = SetPasswordSerializer(data=request.data)

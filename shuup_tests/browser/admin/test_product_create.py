@@ -11,7 +11,7 @@ import pytest
 import selenium
 import time
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import activate
 
 from shuup.admin.signals import object_created

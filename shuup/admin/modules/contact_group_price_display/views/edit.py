@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from shuup.admin.modules.contact_group_price_display.views.forms import \
     ContactGroupPriceDisplayForm

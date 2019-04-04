@@ -55,7 +55,7 @@ class DataImporterRowSession(object):
     def _handle_postsave_objects(self):
         for obj in self.post_save_objects:
             for field in obj._meta.local_fields:
-                if isinstance(field, ForeignKey) and isinstance(self.instance, field.rel.to):
+                if isinstance(field, ForeignKey) and isinstance(self.instance, field.remote_field.target_field):
                     setattr(obj, field.name, self.instance)
             obj.save()
 

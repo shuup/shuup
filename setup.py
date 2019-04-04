@@ -84,21 +84,21 @@ utils.add_exclude_patters([
 
 REQUIRES = [
     'Babel==2.5.3',
-    'Django>=1.8,<2',
+    'Django==2.1.8',  # could go to 2.2 but django-filer still not support that
     'django-bootstrap3>=6.1,<10',
     'django-countries>=3.3,<5.3',
     'django-enumfields>=0.9,<0.10',
     'django-filer>=1.0,<2',
-    'django-filter>=1.0,<1.2',
+    'django-filter==1.4.4',
     'django-jinja>=1.4,<3',
     'django-mptt>=0.8.0,<0.10',  # Django-filer doesn't officially support 0.9.0
     'django-parler>=1.5,<2',
     'django-parler-rest>=1.3a1,<2',
     'django-polymorphic>=0.8,<2.1.0',  # For Django 1.8 and 1.9 use version lower 1
-    'django-registration-redux>=1.5,<1.9',
+    'django-registration-redux==2.6',  # updated to latest for Django 2.1
     'django-reversion>=2,<3',
     'django-timezone-field>=1.2,<3',
-    'djangorestframework>=3.5,<3.6',
+    'djangorestframework==3.9.2',  # updated to latest for Django 2.1
     'djangorestframework-jwt>=1.9,<2',
     'django_rest_swagger>=2.1.0,<2.2',
     'factory-boy==2.7.0',

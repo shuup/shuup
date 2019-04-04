@@ -11,7 +11,7 @@ import hashlib
 import warnings
 
 import six
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import override
 

@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import os
 import pytest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.testing.browser_utils import initialize_front_browser_test
 from shuup.testing.factories import (

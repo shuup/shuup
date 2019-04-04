@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.apps.provides import override_provides
 from shuup.testing import factories

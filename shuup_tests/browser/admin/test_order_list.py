@@ -8,7 +8,7 @@
 import os
 
 import pytest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.core.models import Order, OrderStatus
 from shuup.testing.browser_utils import (

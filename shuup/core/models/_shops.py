@@ -61,7 +61,7 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED, verbose_name=_("status"), help_text=_(
         "Your shop status. Disable your shop if it is no longer in use."
     ))
-    owner = models.ForeignKey("Contact", blank=True, null=True, on_delete=models.SET_NULL, verbose_name=_("contact"))
+    owner = models.ForeignKey(to="Contact", blank=True, null=True, on_delete=models.SET_NULL, verbose_name=_("contact"))
     options = JSONField(blank=True, null=True, verbose_name=_("options"))
     currency = CurrencyField(default=_get_default_currency, verbose_name=_("currency"), help_text=_(
         "The primary shop currency. This is the currency used when selling your products."

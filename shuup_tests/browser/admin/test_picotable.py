@@ -9,7 +9,7 @@ import os
 import time
 
 import pytest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.testing.browser_utils import (
     click_element, move_to_element, wait_until_appeared,

@@ -20,9 +20,9 @@ def real_user_or_none(user):
 
     If user is anonymous, return None, otherwise return the user as is.
     """
-    assert (user is None or user.is_anonymous() or
+    assert (user is None or user.is_anonymous or
             isinstance(user, get_user_model()))
-    return user if (user and not user.is_anonymous()) else None
+    return user if (user and not user.is_anonymous) else None
 
 
 def toggle_all_seeing_for_user(user):

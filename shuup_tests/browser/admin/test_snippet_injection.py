@@ -8,7 +8,7 @@
 import os
 
 import pytest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from shuup.testing import factories
 from shuup.testing.browser_utils import (

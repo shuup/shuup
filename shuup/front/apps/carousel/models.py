@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
@@ -122,15 +122,15 @@ class Slide(TranslatableShuupModel):
     product_link = models.ForeignKey(
         Product, related_name="+", blank=True, null=True, verbose_name=_("product link"), help_text=_(
             "Set the product detail page that should be shown when this slide is clicked, if any."
-        ))
+        ), on_delete=models.CASCADE)
     category_link = models.ForeignKey(
         Category, related_name="+", blank=True, null=True, verbose_name=_("category link"), help_text=_(
             "Set the product category page that should be shown when this slide is clicked, if any."
-        ))
+        ), on_delete=models.CASCADE)
     cms_page_link = models.ForeignKey(
         Page, related_name="+", verbose_name=_("cms page link"), blank=True, null=True, help_text=_(
             "Set the web page that should be shown when the slide is clicked, if any."
-        ))
+        ), on_delete=models.CASCADE)
     ordering = models.IntegerField(default=0, blank=True, null=True, verbose_name=_("ordering"), help_text=_(
         "Set the numeric order in which this slide should appear relative to other slides in this carousel."
     ))

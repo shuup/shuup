@@ -9,7 +9,7 @@ from decimal import Decimal
 from math import pow
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q, Sum
 from django.template.loader import render_to_string
 

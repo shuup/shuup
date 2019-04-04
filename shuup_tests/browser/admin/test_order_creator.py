@@ -9,7 +9,7 @@ import decimal
 import os
 
 import pytest
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from splinter.exceptions import ElementDoesNotExist
 
 from shuup.admin.signals import object_created

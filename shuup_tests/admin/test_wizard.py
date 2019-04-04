@@ -8,7 +8,7 @@
 
 import pytest
 from bs4 import BeautifulSoup
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test.utils import override_settings
 
 from shuup.core import cache

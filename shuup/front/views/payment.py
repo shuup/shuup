@@ -8,7 +8,7 @@
 from __future__ import unicode_literals, with_statement
 
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView
 

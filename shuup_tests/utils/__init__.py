@@ -14,7 +14,7 @@ import uuid
 
 import django.conf
 from bs4 import BeautifulSoup
-from django.core.urlresolvers import clear_url_caches, get_urlconf, set_urlconf
+from django.urls import clear_url_caches, get_urlconf, set_urlconf
 from django.test import Client, override_settings, TestCase
 from django.utils.crypto import get_random_string
 from django.utils.timezone import now

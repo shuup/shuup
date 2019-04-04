@@ -120,7 +120,7 @@ class FrontUserViewSet(PermissionHelperMixin, CreateModelMixin, UpdateModelMixin
         return _("Users can register to the storefront and fetch and update their own user details.")
 
     def get_object(self):
-        if self.request.user.is_anonymous():
+        if self.request.user.is_anonymous:
             raise Http404
         return get_person_contact(self.request.user)
 

@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import NoReverseMatch, reverse
+from django.urls import NoReverseMatch, reverse
 from jinja2 import contextfunction
 
 from shuup.apps.provides import get_provide_objects

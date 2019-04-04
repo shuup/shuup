@@ -8,7 +8,7 @@
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.utils.text import force_text
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm

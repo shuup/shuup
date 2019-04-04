@@ -13,7 +13,7 @@ This module is installed as the `shuup_admin` template function namespace.
 import itertools
 
 from django.conf import settings
-from django.core.urlresolvers import NoReverseMatch, reverse
+from django.urls import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 from jinja2.utils import contextfunction
 
@@ -173,7 +173,7 @@ def get_shop_count(context):
     Return the number of shops accessible by the currently logged in user
     """
     request = context["request"]
-    if not request or request.user.is_anonymous():
+    if not request or request.user.is_anonymous:
         return 0
     return Shop.objects.get_for_user(request.user).count()
 

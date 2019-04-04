@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http.response import Http404
 
 from shuup.admin.shop_provider import SHOP_SESSION_KEY
