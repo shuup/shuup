@@ -66,7 +66,11 @@ class TaxRuleListView(PicotableListView):
         Column("id", _("Tax Rule")),
         Column("tax", _("Tax")),
         Column("tax_classes", _("Tax Classes")),
-        Column("customer_tax_groups", _("Customer Tax Groups")),
+        Column(
+            "customer_tax_groups",
+            _("Customer Tax Groups"),
+            display="get_customer_tax_groups_display"
+        ),
         Column("country_codes_pattern", _("Countries")),
         Column("region_codes_pattern", _("Regions")),
         Column("postal_codes_pattern", _("Postal Codes")),
@@ -74,3 +78,7 @@ class TaxRuleListView(PicotableListView):
         Column("override_group", _(u"Override Group")),
         Column("enabled", _(u"Enabled")),
     ]
+
+    def get_customer_tax_groups_display(self, instance):
+        groups = instance.customer_tax_groups.values_list("translations__name", flat=True)
+        return ", ".join(groups) if groups else ""
