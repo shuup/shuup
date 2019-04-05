@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 17:25+0000\n"
+"POT-Creation-Date: 2019-04-05 15:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -514,6 +514,12 @@ msgid "Show identifier fields (for advanced users)"
 msgstr ""
 
 msgid "There are no variables defined."
+msgstr ""
+
+msgid "Variation Template"
+msgstr ""
+
+msgid "Select Template"
 msgstr ""
 
 msgid "Add new variable"

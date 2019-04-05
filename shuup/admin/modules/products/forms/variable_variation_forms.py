@@ -215,7 +215,7 @@ class VariationVariablesDataForm(forms.Form):
         shop = get_shop(self.request)
 
         saved_templates = self.get_variation_templates()
-        template_name = self.cleaned_data.get("template_name", "Unnamed %s" % random.randint(1, 9999))
+        template_name = self.cleaned_data.get("template_name", _("Unnamed %s") % random.randint(1, 9999))
         payload = {
             "name": template_name,
             "identifier": template_name.lower().replace(" ", "_"),

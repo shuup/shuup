@@ -225,7 +225,7 @@ window.VariationVariableEditor = (function(m, _) {
         }
 
         var templateSelector = templates.length ? m(".variable-templates", [
-            m("label", "Variation Template"),
+            m("label", gettext("Variation Template")),
             m("select.form-control", {
                 onchange(e) {
                     if (e.target.value) {
@@ -243,7 +243,7 @@ window.VariationVariableEditor = (function(m, _) {
             }, [
                 m("option", {
                     value: 0
-                }, "Select Template"),
+                }, gettext("Select Template")),
                 templates.map(template => (
                     m("option", {
                         value: template.identifier,
