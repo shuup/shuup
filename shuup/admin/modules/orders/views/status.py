@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.breadcrumbs import BreadcrumbedView
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.core.models import OrderStatus, OrderStatusManager, OrderStatusRole
@@ -50,13 +49,11 @@ class OrderStatusForm(MultiLanguageModelForm):
         return super(OrderStatusForm, self).save(commit)
 
 
-class OrderStatusEditView(BreadcrumbedView, CreateOrUpdateView):
+class OrderStatusEditView(CreateOrUpdateView):
     model = OrderStatus
     form_class = OrderStatusForm
     template_name = "shuup/admin/orders/status.jinja"
     context_object_name = "status"
-    parent_name = _("Order Statuses")
-    parent_url = "shuup_admin:order_status.list"
 
 
 class OrderStatusListView(PicotableListView):
