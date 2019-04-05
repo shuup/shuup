@@ -197,6 +197,18 @@ window.VariationVariableEditor = (function(m, _) {
 
     function view(ctrl) {
         var variablesDiv = null;
+        var newVariationTemplate = m("button.btn.btn-success", {   onclick: (event) => {
+                event.preventDefault();
+                document.getElementById("step-item-wrapper").style.display = "block";
+                var nameField = document.getElementById("id_variables-template_name")
+                nameField.required = true;
+                document.getElementById("template-cancel-btn").onclick = function () {
+                    document.getElementById("step-item-wrapper").style.display = "none";
+                    nameField.value = "";
+                    nameField.required = false;  // Remove required attribute from template name field
+                }
+                variablesDiv
+        }}, m("i.fa.fa-plus"), " " + gettext("New template"));
         var identifierFieldsCheckbox = m("p", [
             m("label.small", [
                 m("input", {
@@ -207,35 +219,38 @@ window.VariationVariableEditor = (function(m, _) {
                 " " + gettext("Show identifier fields (for advanced users)")
             ])
         ]);
+        try {
+            var usableVariables = (chosenVariables["variable_values"]) ? chosenVariables["variable_values"] : variables;
+        }
+        catch {
+            var usableVariables = variables;
+        }
 
-        var usableVariables = (chosenVariables) ? chosenVariables : variables;
         if (usableVariables.length)  {
             variablesDiv = m(
                 "div.product-variable-wrap", {id: "product-variable-wrap"},
                 _.map(_.reject(usableVariables, "DELETE"), _.partial(renderVariable, ctrl))
             );
         } else {
-            chosenVariables = variables;
             variablesDiv = m("p.text-info", [
                 m("i.fa.fa-exclamation-circle"), " " + gettext("There are no variables defined."),
                 m("hr")
             ]);
             identifierFieldsCheckbox = null;
-
         }
-
         var templateSelector = templates.length ? m(".variable-templates", [
-            m("label", "Variation Template"),
-            m("select.form-control", {
+            m("label", gettext("Variation Template")),
+            m("select.form-control.template", {
                 onchange(e) {
-                    if (e.target.value) {
+                    chosenVariables = {"variable_values" : variables};
+                    if (e.target.value && e.target.value != '0') {
                        templates.map(template => {
                             if (template.identifier === e.target.value) {
-                                chosenVariables = template.data;
+                                chosenVariables["variable_values"] = template.data;
+                                chosenVariables["template_identifier"] = template.identifier;
                             }
+
                         });
-                    } else {
-                        chosenVariables = variables;  // TODO: fix
                     }
                     refreshField();
 
@@ -243,24 +258,25 @@ window.VariationVariableEditor = (function(m, _) {
             }, [
                 m("option", {
                     value: 0
-                }, "Select Template"),
+                }, gettext("Select Template")),
                 templates.map(template => (
                     m("option", {
                         value: template.identifier,
                     }, template.name)
-                ))
-            ])
-        ]) : null;
-
+                )),
+            ]),
+            newVariationTemplate
+        ]) : newVariationTemplate;
         return m("div", {config: config}, [
             identifierFieldsCheckbox,
             templateSelector,
             m("hr"),
             variablesDiv,
             m("a.btn.btn-lg.btn-text", {href: "#", onclick: (event) => {
-                variables.push({pk: newPk(), identifier: "", names: {}, values: []});
+                usableVariables.push({pk: newPk(), identifier: "", names: {}, values: []}); // Enables addition of variables to templates
                 event.preventDefault();
-            }}, m("i.fa.fa-plus"), " " + gettext("Add new variable"))
+            }}, m("i.fa.fa-plus"), " " + gettext("Add new variable")),
+
         ]);
     }
 
@@ -273,8 +289,10 @@ window.VariationVariableEditor = (function(m, _) {
         templates = options.templates;
         window.VariationVariableEditor.ctrl = ctrlSingleton = m.mount(
             document.getElementById("variation-variable-editor"),
-            {controller: controller, view: view}
+            {controller: controller, view: view},
         );
+        chosenVariables = {"variable_values": variables};
+        refreshField();
     }
     return {init: init};
 }(window.m, window._));

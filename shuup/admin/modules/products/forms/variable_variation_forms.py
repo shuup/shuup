@@ -86,8 +86,12 @@ class VariationVariablesDataForm(forms.Form):
     configuration_key = "saved_variation_templates"
 
     data = forms.CharField(widget=forms.HiddenInput(), required=False)
-    save_template = forms.BooleanField(required=False)
-    template_name = forms.CharField(max_length=128, required=False)
+    activate_template = forms.BooleanField(required=False,
+                                           label=_("Activate template"),
+                                           help_text=_("Check this to activate a selected template. "
+                                                       "If no template is selected variation data "
+                                                       "will be saved without checking this."))
+    template_name = forms.CharField(max_length=128, required=False, widget=forms.TextInput(attrs={'pattern': '.*\S.*'}))
 
     def __init__(self, **kwargs):
         self.parent_product = kwargs.pop("parent_product", None)
@@ -144,7 +148,7 @@ class VariationVariablesDataForm(forms.Form):
 
     def get_variation_templates(self, **kwargs):
         shop = get_shop(self.request)
-        return json.loads(configuration.get(shop, self.configuration_key, "[]"))
+        return configuration.get(shop, self.configuration_key, [])
 
     def get_editor_args(self):
         return {
@@ -162,7 +166,7 @@ class VariationVariablesDataForm(forms.Form):
     def process_var_datum(self, var_datum, ordering):
         pk = str(var_datum["pk"])
         deleted = var_datum.get("DELETE")
-        if pk.startswith("$"):  # New variable.
+        if pk.startswith("$") or self.change_template:  # New value.
             var = ProductVariationVariable(product=self.parent_product)
         else:
             var = ProductVariationVariable.objects.get(product=self.parent_product, pk=pk)
@@ -192,7 +196,7 @@ class VariationVariablesDataForm(forms.Form):
         """
         pk = str(val_datum["pk"])
         deleted = val_datum.get("DELETE")
-        if pk.startswith("$"):  # New value.
+        if pk.startswith("$") or self.change_template:  # New value.
             val = ProductVariationVariableValue(variable=var)
         else:
             val = var.values.get(pk=pk)
@@ -208,28 +212,46 @@ class VariationVariablesDataForm(forms.Form):
             val.value = text
         val.save_translations()
 
-    def _save_template(self, data):
-        if not self.cleaned_data.get("save_template", False):
-            return
-
+    def _save_template(self, data, identifier=None):
         shop = get_shop(self.request)
-
         saved_templates = self.get_variation_templates()
-        template_name = self.cleaned_data.get("template_name", "Unnamed %s" % random.randint(1, 9999))
-        payload = {
-            "name": template_name,
-            "identifier": template_name.lower().replace(" ", "_"),
-            "data": data
-        }
-        saved_templates.append(payload)
-        configuration.set(shop, self.configuration_key, json.dumps(saved_templates))
+        if identifier:
+            for template in saved_templates:
+                if(template["identifier"] == identifier):
+                    template["data"] = data  # Edit tempalte
+        else:
+            template_name = self.cleaned_data.get("template_name", _("Unnamed %s") % random.randint(1, 9999))
+            payload = {
+                "name": template_name,
+                "identifier": template_name.lower().replace(" ", "_") + ("%s" % random.randint(1, 9999)),
+                "data": data
+            }
+            saved_templates.append(payload)
+        configuration.set(shop, self.configuration_key, saved_templates)
 
-    def save(self):
-        var_data = self.cleaned_data.get("data")
-
-        if not var_data:  # No data means the Mithril side hasn't been touched at all
-            return
-        var_data = json.loads(var_data)
-        self._save_template(var_data)
+    def _activate_template(self, var_data, identifier):
+        if self.change_template:
+            ProductVariationVariable.objects.filter(
+                product=self.parent_product).delete()  # former PVV objects need to be deleted!
+        self.parent_product.clear_variation()
         for ordering, var_datum in enumerate(var_data):
             self.process_var_datum(var_datum, ordering)
+
+    def save(self):
+        template_data = json.loads(self.cleaned_data.get("data"))
+        template_name = self.cleaned_data.get("template_name", "").strip()
+        if not template_data:  # No data means the Mithril side hasn't been touched at all
+            return
+        self.change_template = False
+        identifier = template_data.get("template_identifier", False)
+        var_data = template_data.get("variable_values")
+        activate_template = self.cleaned_data.get("activate_template", False)
+        if template_name != "":
+            var_data = []  # New template name is added so var data is empty
+            identifier = False
+            activate_template = False
+        if identifier or template_name != "":
+            self._save_template(var_data, identifier)
+        if activate_template:
+            self.change_template = True
+            self._activate_template(var_data, identifier)
