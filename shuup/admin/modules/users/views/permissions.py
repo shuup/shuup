@@ -54,6 +54,7 @@ class PermissionChangeFormBase(forms.ModelForm):
             )
         )
         initial_groups = self._get_initial_groups()
+        permission_groups_field.initial = [group.pk for group in initial_groups]
         permission_groups_field.widget.choices = [(group.pk, force_text(group)) for group in initial_groups]
         self.fields["permission_groups"] = permission_groups_field
 
