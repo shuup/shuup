@@ -8,14 +8,16 @@
 import pytest
 
 from django.test import override_settings
+from django.core.exceptions import ValidationError
 
 from shuup.apps.provides import override_provides
 from shuup.campaigns.admin_module.form_parts import BasketBaseFormPart
+from shuup.campaigns.admin_module.forms import FreeProductLineForm
 from shuup.campaigns.admin_module.views import BasketCampaignEditView
 from shuup.campaigns.models.campaigns import BasketCampaign
 from shuup.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
 from shuup.campaigns.models.basket_effects import BasketDiscountAmount
-from shuup.testing.factories import get_default_shop
+from shuup.testing.factories import get_default_shop, get_default_product
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -192,3 +194,19 @@ def get_free_product_data(object):
     data["effects_%s-0-%s" % (effect_name, "campaign")] = object.pk
     data["effects_%s-0-%s" % (effect_name, "discount_amount")] = 20
     return data
+
+@pytest.mark.django_db
+def test_free_product_line_form(rf, admin_user):
+    with override_settings(LANGUAGES=[("en", "en")]):
+        shop = get_default_shop()
+        prod = get_default_product()
+        object = BasketCampaign.objects.create(name="test campaign", active=True, shop=shop)
+        object.save()
+        data = {'campaign' : object, 'quantity' : 0, 'products' : [prod.pk]}
+        form = FreeProductLineForm()
+        form.cleaned_data = data
+        with pytest.raises(ValidationError):
+            form.clean()
+        data['quantity'] = 1
+        form.cleaned_data = data
+        form.clean()

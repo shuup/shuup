@@ -64,8 +64,7 @@ class FreeProductLineForm(BaseEffectModelForm):
                     "product": product.name,
                     "shop": campaign.shop.name
                 })
-
-            for error in shop_product.get_quantity_errors(self.cleaned_data["quantity"]):
+            for error in shop_product.get_quantity_errors(self.cleaned_data["quantity"], False):
                 raise ValidationError({'quantity': error.message})
 
 
