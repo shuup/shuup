@@ -40,7 +40,7 @@
                         {% if show_supplier_info %}{{ render_supplier_info(supplier, render_link=False) }}{% endif %}
                         {% if product.short_description %}
                             <p class="description">
-                                {{ product.short_description|safe }}
+                                {{ product.short_description }}
                             </p>
                         {% endif %}
                         {% if show_prices() and not xtheme.get("hide_prices") %}

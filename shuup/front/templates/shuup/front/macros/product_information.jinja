@@ -7,7 +7,7 @@
     {%  if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
     <p class="text-muted product-sku"><small>{{ product.sku }}</small></p>
     {% if product.short_description %}
-        <p class="product-short-description">{{ product.short_description|safe }}</p>
+        <p class="product-short-description">{{ product.short_description }}</p>
     {% endif %}
     {% if show_prices() and not xtheme.get("hide_prices") %}
         <div class="product-price">
@@ -69,7 +69,7 @@
             {% if xtheme.should_render_product_detail_tab("description") %}
                 <div role="tabpanel" class="product-description tab-pane fade in {% if active_tab == 'description' %}in active{% endif %}" id="description">
                     {% if product.description or package_children %}
-                        {{ product.description|safe }}
+                        {{ product.description }}
                         {% if package_children %}
                             {% set quantity_map = product.get_package_child_to_quantity_map() %}
                             <p><strong>{% trans %}Includes these products{% endtrans %}</strong></p>
