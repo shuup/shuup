@@ -34,6 +34,7 @@ def test_product_descriptions(browser, live_server, settings):
                              description="<b>My HTML description</b>",
                              short_description="some short of description instead",
                              supplier=get_default_supplier())
+    sanitized_description = "&lt;b&gt;My HTML description&lt;/b&gt;"
     sp = ShopProduct.objects.get(product=product, shop=shop)
     sp.primary_category = get_default_category()
     sp.categories.add(get_default_category())
@@ -46,7 +47,7 @@ def test_product_descriptions(browser, live_server, settings):
     url = reverse("shuup:product", kwargs={"pk": product.pk, "slug": product.slug})
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, lambda x: x.is_text_present(product.short_description))
-    assert product.description in browser.html
+    assert sanitized_description in browser.html
 
     # product preview
     url = reverse("shuup:xtheme_extra_view", kwargs={"view": "products"})
