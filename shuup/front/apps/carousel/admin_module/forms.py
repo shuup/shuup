@@ -12,7 +12,8 @@ from django.forms import BaseModelFormSet, ModelForm
 from django.utils.timezone import now
 
 from shuup.admin.forms.widgets import (
-    FileDnDUploaderWidget, HexColorWidget, ProductChoiceWidget
+    FileDnDUploaderWidget, HexColorWidget, ProductChoiceWidget,
+    QuickAddCategorySelect
 )
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import Category
@@ -38,17 +39,18 @@ class SlideForm(MultiLanguageModelForm):
         exclude = ("carousel",)
         widgets = {
             "active_dot_color": HexColorWidget(),
-            "inactive_dot_color": HexColorWidget()
+            "inactive_dot_color": HexColorWidget(),
+            "category_link": QuickAddCategorySelect(editable_model="shuup.Category"),
         }
 
     def __init__(self, **kwargs):
         self.carousel = kwargs.pop("carousel")
         self.request = kwargs.pop("request")
         super(SlideForm, self).__init__(**kwargs)
-
         self.empty_permitted = False
         shop = get_shop(self.request)
-        self.fields["category_link"].queryset = Category.objects.filter(shops=shop)
+        self.fields["category_link"].queryset = Category.objects.all_except_deleted(
+            shop=self.request.shop).prefetch_related('translations')
         self.fields["cms_page_link"].queryset = Page.objects.filter(shop=shop)
         self.fields["product_link"].widget = ProductChoiceWidget(clearable=True)
         for lang in self.languages:
