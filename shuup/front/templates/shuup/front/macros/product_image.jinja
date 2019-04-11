@@ -1,20 +1,24 @@
 {# See shuup/front/macros/macros.jinja for inheritance ordering #}
 {% extends "shuup/front/macros/product_information.jinja" %}
 
-{% macro render_product_image_section(product) %}
+{% macro render_product_image_section(product, product_images=[]) %}
     {% if product|is_discounted %}
         <div class="badge product-badge sale">
             {% set discount_percent = product|discount_percent %}
             {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
         </div>
     {% endif %}
+    {% set image_medias = product_images if product_images else images %}
+    {% set sp = product.get_shop_instance(request.shop) %}
+    {% set rel = "gallery%s" % product.id %}
+    {% set product_primary_image = product.primary_image %}
     <div id="carousel_product_{{ product.id }}" class="product-carousel carousel fade" data-ride="carousel" data-interval="false">
         <div class="carousel-inner">
-            {% for product_image in images %}
-                <div class="item{% if ((not primary_image and loop.index == 1) or product_image == primary_image) %} active{% endif %}">
+            {% for product_image in image_medias %}
+                <div class="item{% if ((not product_primary_image and loop.index == 1) or product_image == product_primary_image) %} active{% endif %}">
                     {% set product_image_cropped = product_image|thumbnail(size=(700, 700)) %}
                     {% if loop|count > 1 %}
-                        <a data-imagelightbox="image-multiple" href="{{ product_image.url }}" rel="gallery" class="thumbnail">
+                        <a data-imagelightbox="image-multiple" href="{{ product_image.url }}" rel="{{ rel }}" class="thumbnail">
                             <div class="image"
                                  style="background-image:url('{{ product_image_cropped }}')"
                                  data-title="{% if product_image.title %}{{ product_image.title }}{% endif %}"
@@ -22,7 +26,7 @@
                             </div>
                         </a>
                     {% else %}
-                        <a data-imagelightbox="image" href="{{ product_image.url }}" rel="gallery" class="thumbnail">
+                        <a data-imagelightbox="image" href="{{ product_image.url }}" rel="{{ rel }}" class="thumbnail">
                             <div class="image"
                                  style="background-image:url('{{ product_image_cropped }}')"
                                  data-title="{% if product_image.title %}{{ product_image.title }}{% endif %}"
@@ -33,7 +37,7 @@
                 </div>
             {% else %}
                 <div class="item active">
-                    <div class="thumbnail" rel="gallery1">
+                    <div class="thumbnail" rel="{{ rel }}1">
                         <img class="img-responsive no-image"
                              alt="{{ product.name }}"
                              src="{{ STATIC_URL }}shuup/front/img/no_image.png">
@@ -44,7 +48,7 @@
     </div>
     <div class="wrap-thumbnails">
         <div class="carousel-thumbnails owl-carousel">
-            {% for product_image in images %}
+            {% for product_image in image_medias %}
                 {% if loop|count > 1 %}
                     {% set product_image_thumbnail = product_image|thumbnail(size=(300, 300)) %}
                     <a href="#carousel_product_{{ product.id }}" class="thumbnail" data-slide-to="{{ loop.index0 }}">

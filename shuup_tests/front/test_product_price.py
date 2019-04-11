@@ -128,8 +128,9 @@ def test_variation_product_price_more_complex(client):
         had_at_least_one_not_orderable_in_this_test = False
         for combination in parent.get_all_available_combinations():
             product_result_pk = combination["result_product_pk"]
+            status_code = 200
             if not product_result_pk:  # we can skip combinations without products
-                continue
+                status_code = 404
 
             variable_string = ""
             for key, value in six.iteritems(combination["variable_to_value"]):
@@ -141,16 +142,18 @@ def test_variation_product_price_more_complex(client):
                     }
                 ) + "?id=%s&quantity=%s&%ssupplier=%s" % (parent.pk, 1, variable_string, supplier_id)
             )
-            assert response.context_data["product"] == Product.objects.filter(id=product_result_pk).first()
-            content = response.content.decode("utf-8")
+            assert response.status_code == status_code
+            if not status_code == 404:
+                assert response.context_data["product"] == Product.objects.filter(id=product_result_pk).first()
+                content = response.content.decode("utf-8")
 
-            is_orderable = combination["text_description"] in available_combinations
-            if is_orderable:
-                actual_orderable_count += 1
-                assert "form" in content
-            else:
-                had_at_least_one_not_orderable_in_this_test = True
-                assert "Combination not available" in content
+                is_orderable = combination["text_description"] in available_combinations
+                if is_orderable:
+                    actual_orderable_count += 1
+                    assert "form" in content
+                else:
+                    had_at_least_one_not_orderable_in_this_test = True
+                    assert "Combination not available" in content
 
         assert actual_orderable_count == expected_orderable_count
         assert had_at_least_one_not_orderable_in_this_test
