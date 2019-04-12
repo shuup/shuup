@@ -6,12 +6,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils import translation
 from django.utils.encoding import force_text
 
 from shuup.admin.utils.bs3_renderers import AdminFieldRenderer
 
+User = get_user_model()
 
 def test_field_title_quoting():
     with translation.override("en"):

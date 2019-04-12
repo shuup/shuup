@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import override_settings
 from django.utils.translation import activate
@@ -22,6 +22,7 @@ from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
 
+User = get_user_model()
 
 @pytest.mark.django_db
 def test_authenticate_form(client):

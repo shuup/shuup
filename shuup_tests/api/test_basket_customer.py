@@ -12,7 +12,7 @@ from decimal import Decimal
 
 import pytest
 import six
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.test import override_settings
 from pytest_django.fixtures import django_user_model, django_username_field
 from rest_framework import status
@@ -34,6 +34,8 @@ from shuup.testing.factories import (
 from shuup_tests.campaigns.test_discount_codes import (
     Coupon, get_default_campaign
 )
+
+User = get_user_model()
 
 REQUIRED_SETTINGS = dict(
     SHUUP_ENABLE_MULTIPLE_SHOPS=True,

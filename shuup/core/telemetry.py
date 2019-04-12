@@ -12,7 +12,7 @@ from datetime import date, datetime, time, timedelta
 
 import requests
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q, Sum
@@ -25,6 +25,8 @@ from shuup import configuration
 from shuup.core.models import (
     Contact, Order, Payment, PersistentCacheEntry, Product
 )
+
+User = get_user_model()
 
 OPT_OUT_KWARGS = dict(module="telemetry", key="opt_out")
 INSTALLATION_KEY_KWARGS = dict(module="telemetry", key="installation_key")

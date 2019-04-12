@@ -5,7 +5,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 
 from shuup.core.models import get_company_contact, get_person_contact, SavedAddress
@@ -14,6 +14,8 @@ from shuup_tests.utils import SmartClient
 from shuup_tests.utils.fixtures import (
     regular_user, REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME
 )
+
+User = get_user_model()
 
 regular_user = regular_user  # noqa
 

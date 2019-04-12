@@ -11,7 +11,6 @@ import uuid
 import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
@@ -35,6 +34,8 @@ from shuup_tests.front.utils import (
     change_company_signal, change_username_signal, FieldTestProvider,
     FormDefTestProvider
 )
+
+User = get_user_model()
 
 username = "u-%d" % uuid.uuid4().time
 email = "%s@shuup.local" % username
