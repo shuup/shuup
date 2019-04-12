@@ -140,14 +140,16 @@ function reloadProducts(filterString) {
 
 $(function () {
     window.addEventListener("popstate", function (e) {
-        const filterString = getFilterString(e.state);
-        reloadProducts(filterString);
-        window.dispatchEvent(new CustomEvent("Shuup.FiltersRefreshed", {
-            detail: {
-                state: e.state,
-                filterString
-            }
-        }));
+        if (e.state) {
+            const filterString = getFilterString(e.state);
+            reloadProducts(filterString);
+            window.dispatchEvent(new CustomEvent("Shuup.FiltersRefreshed", {
+                detail: {
+                    state: e.state,
+                    filterString
+                }
+            }));
+        }
     });
 
     $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
