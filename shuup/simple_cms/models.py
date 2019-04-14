@@ -63,6 +63,7 @@ class PageQuerySet(TranslatableQuerySet):
 @python_2_unicode_compatible
 class Page(MPTTModel, TranslatableModel):
     shop = models.ForeignKey("shuup.Shop", verbose_name=_('shop'))
+    supplier = models.ForeignKey("shuup.Supplier", null=True, blank=True, verbose_name=_('supplier'))
     available_from = models.DateTimeField(
         default=now, null=True, blank=True, db_index=True,
         verbose_name=_('available from'), help_text=_(
