@@ -5,7 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.http import HttpResponseRedirect
+from django.contrib.auth import logout
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 
 from shuup.core.models import get_company_contact_for_shop_staff
 from shuup.core.utils.users import (
@@ -57,3 +59,12 @@ def force_company_contact(request):
 
     get_company_contact_for_shop_staff(request.shop, user)
     return HttpResponseRedirect(return_url)
+
+
+def stop_impersonating(request):
+    if "impersonator_user_id" not in request.session:
+        return HttpResponseForbidden()
+
+    del request.session["impersonator_user_id"]
+    logout(request)
+    return HttpResponseRedirect(reverse("shuup_admin:contact.list"))
