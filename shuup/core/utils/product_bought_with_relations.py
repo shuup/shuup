@@ -5,7 +5,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from django.db.models import Sum
+from django.db.models import Q, Sum
 
 from shuup.core.models import (
     OrderLine, OrderLineType, ProductCrossSell, ProductCrossSellType
@@ -25,7 +25,8 @@ def add_bought_with_relations_for_product(product_id, max_quantity=10):
     :type max_quantity: int
     """
     order_ids_to_check = OrderLine.objects.filter(
-        product_id=product_id
+        Q(product_id=product_id) |
+        Q(product__variation_parent_id=product_id)
     ).values_list(
         "order_id", flat=True
     )
@@ -38,7 +39,8 @@ def add_bought_with_relations_for_product(product_id, max_quantity=10):
         type=OrderLineType.PRODUCT,
         order_id__in=set(order_ids_to_check)
     ).values(
-        "product_id"
+        "product_id",
+        "product__variation_parent_id"
     ).annotate(
         total_quantity=Sum("quantity")
     ).order_by(
@@ -47,9 +49,22 @@ def add_bought_with_relations_for_product(product_id, max_quantity=10):
 
     # Add the actual cross-sells products
     for product_data in related_product_ids_and_quantities:
-        ProductCrossSell.objects.create(
-            product1_id=product_id,
-            product2_id=product_data["product_id"],
-            weight=product_data["total_quantity"],
-            type=ProductCrossSellType.BOUGHT_WITH
-        )
+        # If product ordered has variation parent then link
+        # relation to to the parent since variation children
+        # is not shown on product list on default or have
+        # their own detail
+        variation_parent_id = product_data.get("product__variation_parent_id")
+        if variation_parent_id and variation_parent_id != product_id:
+            ProductCrossSell.objects.create(
+                product1_id=product_id,
+                product2_id=variation_parent_id,
+                weight=product_data["total_quantity"],
+                type=ProductCrossSellType.BOUGHT_WITH
+            )
+        elif not variation_parent_id:
+            ProductCrossSell.objects.create(
+                product1_id=product_id,
+                product2_id=product_data["product_id"],
+                weight=product_data["total_quantity"],
+                type=ProductCrossSellType.BOUGHT_WITH
+            )
