@@ -22,11 +22,20 @@ class Command(BaseCommand):
         # Clear all existing ProductCrossSell objects
         ProductCrossSell.objects.filter(type=ProductCrossSellType.BOUGHT_WITH).delete()
 
-        # Handle all ordered products
-        ordered_product_ids = OrderLine.objects.filter(type=OrderLineType.PRODUCT).values_list("product_id", flat=True)
+        queryset = OrderLine.objects.filter(type=OrderLineType.PRODUCT)
         seen_product_ids = set()
-        for product_id in ordered_product_ids:
+
+        # Handle all ordered normal products
+        ordered_normal_prduct_ids = set(
+            queryset.filter(product__variation_parent__isnull=True).values_list("product_id", flat=True))
+
+        # Handle all ordered variation parents
+        ordered_variation_parent_ids = set(
+            queryset.values_list("product__variation_parent_id", flat=True))
+
+        for product_id in set(ordered_normal_prduct_ids).union(set(ordered_variation_parent_ids)):
             if product_id in seen_product_ids:
                 continue
+
             seen_product_ids.add(product_id)
             add_bought_with_relations_for_product(product_id)
