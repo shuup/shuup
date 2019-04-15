@@ -16,7 +16,9 @@ from bs4 import BeautifulSoup
 from shuup.core.models import ShopStatus
 from shuup.simple_cms.models import Page
 from shuup.simple_cms.views import PageView
-from shuup.testing.factories import get_default_shop, get_shop
+from shuup.testing.factories import (
+        create_random_user, get_default_shop, get_shop
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.simple_cms.utils import create_multilanguage_page, create_page
 
@@ -34,9 +36,25 @@ def test_anon_cant_see_invisible_page(rf):
 
 @pytest.mark.django_db
 def test_superuser_can_see_invisible_page(rf, admin_user):
-    page = create_page(shop=get_default_shop())
+    page = create_page(shop=get_default_shop(), available_from=None)
     view_func = PageView.as_view()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
+    response = view_func(request, url=page.url)
+    response.render()
+    assert "<h1>Bacon ipsum" in response.rendered_content
+
+
+@pytest.mark.django_db
+def test_owner_can_see_invisible_page(rf):
+    user = create_random_user()
+    page = create_page(shop=get_default_shop(), available_from=None)
+    view_func = PageView.as_view()
+    request = apply_request_middleware(rf.get("/"), user=user)
+    with pytest.raises(Http404):
+        response = view_func(request, url=page.url)
+
+    page.created_by = user
+    page.save()
     response = view_func(request, url=page.url)
     response.render()
     assert "<h1>Bacon ipsum" in response.rendered_content
