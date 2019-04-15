@@ -61,6 +61,10 @@ def test_mass_action_cache(rf, admin_user):
     cache.clear()
     product = create_product(printable_gibberish(), shop=shop, default_price=50)
     product2 = create_product(printable_gibberish(), shop=shop, default_price=100)
+
+    shop_product = product.get_shop_instance(shop)
+    shop_product2 = product2.get_shop_instance(shop)
+
     set_bump_cache_for_shop_product = mock.Mock(wraps=context_cache.bump_cache_for_shop_product)
 
     def bump_cache_for_shop_product(item):
@@ -70,10 +74,10 @@ def test_mass_action_cache(rf, admin_user):
 
     with mock.patch.object(context_cache, "bump_cache_for_shop_product", new=bump_cache_for_shop_product):
         assert set_bump_cache_for_shop_product.call_count == 0
-        InvisibleMassAction().process(request, [product.id, product2.id])
+        InvisibleMassAction().process(request, [shop_product.id, shop_product2.id])
         assert set_bump_cache_for_shop_product.call_count == 2
 
-        VisibleMassAction().process(request, [product.id, product2.id])
+        VisibleMassAction().process(request, [shop_product.id, shop_product2.id])
         assert set_bump_cache_for_shop_product.call_count == 4
 
 

@@ -62,7 +62,7 @@ def test_mass_edit_products2(rf, admin_user):
     assert shop_product2.primary_category is None
     payload = {
         "action": InvisibleMassAction().identifier,
-        "values": [product1.pk, product2.pk]
+        "values": [shop_product1.pk, shop_product2.pk]
     }
     request = apply_request_middleware(rf.post("/"), user=admin_user)
     request._body = json.dumps(payload).encode("UTF-8")
