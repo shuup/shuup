@@ -70,3 +70,15 @@ def has_url(url, *args, **kwargs):
     :rtype: bool
     """
     return bool(get_url(url, *args, **kwargs))
+
+
+@contextfunction
+def get_logout_url(context, *args, **kwargs):
+    request = context["request"]
+    if "impersonator_user_id" in request.session:
+        logout_url = get_url("shuup:stop-impersonating", *args, **kwargs)
+        if logout_url:
+                return logout_url
+
+    logout_url = get_url("shuup:logout", *args, **kwargs)
+    return (logout_url if logout_url else "/logout")

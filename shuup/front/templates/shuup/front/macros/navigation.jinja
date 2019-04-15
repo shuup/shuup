@@ -56,7 +56,8 @@
                 {% endif %}
             {% endif %}
             {% if user.is_authenticated() and shuup.urls.has_url("shuup:logout") %}
-                {{ _render_dropdown_item(url("shuup:logout"), "fa fa-sign-out fa-fw", _("Log out"), request.person == true) }}
+
+                {{ _render_dropdown_item(shuup.urls.get_logout_url(), "fa fa-sign-out fa-fw", _("Log out"), request.person == true) }}
             {% endif %}
         {% endcall %}
     {% elif show_quick_login %} {# Checking if the login dropdown should be shown #}
