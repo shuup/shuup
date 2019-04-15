@@ -6,7 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.utils.translation import ugettext_lazy as _
 from registration.forms import RegistrationForm
 
@@ -20,6 +21,11 @@ from shuup.front.utils.companies import (
 )
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
+
+
+class UserCreationForm(BaseUserCreationForm):
+    class Meta(BaseUserCreationForm.Meta):
+        model = get_user_model()
 
 
 class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
