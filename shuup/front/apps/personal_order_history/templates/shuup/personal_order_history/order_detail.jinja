@@ -18,15 +18,25 @@
 {% block dashboard_content %}
     <h2 class="page-header">{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{{ render_action_buttons(order) }}</h2>
     <div class="row order-dashboard-container">
-        <div class="col-sm-12">
+        <div>
             {{ basic_info() }}
         </div>
-        <div class="col-sm-6 col-md-3">
-            {{ shipping_address() }}
-        </div>
-        <div class="col-sm-6 col-md-3">
-            {{ billing_address() }}
-        </div>
+        {% if order.shipping_address_id and order.billing_address_id %}
+            <div class="col-sm-6 col-md-3">
+                {{ shipping_address() }}
+            </div>
+            <div class="col-sm-6 col-md-3">
+                {{ billing_address() }}
+            </div>
+        {% elif order.shipping_address_id %}
+            <div class="col-md-6">
+                {{ shipping_address() }}
+            </div>
+        {% elif order.billing_address_id %}
+            <div class="col-md-6">
+                {{ billing_address() }}
+            </div>
+        {% endif %}
         <div class="col-sm-12 col-md-6">
             {{ status() }}
         </div>

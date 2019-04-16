@@ -117,8 +117,8 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
         return True
 
     def process(self):
-        shipping_method = ShippingMethod.objects.filter(pk=self.storage["shipping_method_id"]).first()
-        payment_method = PaymentMethod.objects.filter(pk=self.storage["payment_method_id"]).first()
+        shipping_method = ShippingMethod.objects.filter(pk=self.storage.get("shipping_method_id")).first()
+        payment_method = PaymentMethod.objects.filter(pk=self.storage.get("payment_method_id")).first()
 
         self.basket.shipping_method_id = shipping_method.pk if shipping_method else None
         self.basket.payment_method_id = payment_method.pk if payment_method else None

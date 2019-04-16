@@ -34,23 +34,19 @@
 {% endmacro %}
 
 {% macro shipping_address() %}
-    {% if order.shipping_address_id %}
-        {% call content_block(_("Shipping Address")) %}
-            {% for line in order.shipping_address %}
-                {{ line }}<br>
-            {% endfor %}
-        {% endcall %}
-    {% endif %}
+    {% call content_block(_("Shipping Address")) %}
+        {% for line in order.shipping_address %}
+            {{ line }}<br>
+        {% endfor %}
+    {% endcall %}
 {% endmacro %}
 
 {% macro billing_address() %}
-    {% if order.billing_address_id %}
-        {% call content_block(_("Billing Address")) %}
-            {% for line in order.billing_address %}
-                {{ line }}<br>
-            {% endfor %}
-        {% endcall %}
-    {% endif %}
+    {% call content_block(_("Billing Address")) %}
+        {% for line in order.billing_address %}
+            {{ line }}<br>
+        {% endfor %}
+    {% endcall %}
 {% endmacro %}
 
 {% macro order_contents() %}
