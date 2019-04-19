@@ -5,23 +5,28 @@
 {% else %}
     {% extends "shuup/front/base.jinja" %}
     {% block extrameta %}
-    {{ macros.render_metadata(category, category.name, category.description, "category") }}
+    {% if category %}
+        {{ macros.render_metadata(category, category.name, category.description, "category") }}
+    {% endif %}
     {% endblock %}
-    {% block title %}{{ category.name }}{% endblock %}
+    {% block title %}{{ (category.name if category else _("Categories")) }}{% endblock %}
 
-    {% block content_title %}{{ category.name }}{% endblock %}
+    {% block content_title %}{{ (category.name if category else "") }}{% endblock %}
 
     {% block breadcrumb %}
-        {% call macros.breadcrumb() %}
-            {{ macros.render_breadcrumb_item("/", _("Home")) }}
-            {% for c in category.get_ancestors() if c.is_visible(customer=request.customer) %}
-                {{ macros.render_breadcrumb_item(shuup.urls.model_url(c), c.name) }}
-            {% endfor %}
-            {{ macros.render_breadcrumb_item(None, category.name, True) }}
-        {% endcall %}
+        {% if category %}
+            {% call macros.breadcrumb() %}
+                {{ macros.render_breadcrumb_item("/", _("Home")) }}
+                {% for c in category.get_ancestors() if c.is_visible(customer=request.customer) %}
+                    {{ macros.render_breadcrumb_item(shuup.urls.model_url(c), c.name) }}
+                {% endfor %}
+                {{ macros.render_breadcrumb_item(None, category.name, True) }}
+            {% endcall %}
+        {% endif %}
     {% endblock %}
 
     {% block content %}
+        {% placeholder "category_top" %}{% endplaceholder %}
         <script>window.PRODUCT_LIST_FILTERS = {{ form.fields.keys()|list|json }};</script>
         {{ category_macros.render_information() }}
         {{ category_macros.render_products_section(supplier) }}
