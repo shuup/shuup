@@ -1,16 +1,21 @@
-FROM node:0.12.5
-MAINTAINER Aarni Koskela <aarni.koskela@shuup.com>
-EXPOSE 8080
-ADD . /var/www/shuup/working_copy
+FROM node:11.14-slim
+LABEL maintainer="apiotrowski312 <apiotrowski312@gmail.com>"
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3-minimal python3-virtualenv python3-pip python3-dev python3-pil && \
+    apt-get -y install python3 python3-pip python3-dev python3-pil && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-RUN echo '{ "allow_root": true }' > /root/.bowerrc
-RUN python3 -m virtualenv -p /usr/bin/python3 --system-site-packages /var/www/shuup/venv && \
-    /var/www/shuup/venv/bin/pip install -U pip setuptools
-RUN /var/www/shuup/venv/bin/pip install /var/www/shuup/working_copy
-RUN /var/www/shuup/venv/bin/python -m shuup_workbench migrate
-RUN /var/www/shuup/venv/bin/python -m shuup_workbench shuup_populate_mock --with-superuser=admin
-CMD /var/www/shuup/venv/bin/python -m shuup_workbench runserver 0:8080
+
+COPY . /app
+
+WORKDIR /app
+
+RUN pip3 install -e .[everything]
+
+RUN python3 -m shuup_workbench migrate
+RUN python3 -m shuup_workbench shuup_init
+RUN python3 setup.py build_resources
+RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@admin.com', 'admin')" | python3 -m shuup_workbench shell
+
+EXPOSE 8000
+CMD python3 -m shuup_workbench runserver 0.0.0.0:8000
