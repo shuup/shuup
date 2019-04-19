@@ -7,7 +7,7 @@
         <div class="pages">
             <ul class="nav-collapse">
                 <li{% if request.path == "/" %} class="current"{% endif %}><a href="/">{% trans %}Home{% endtrans %}</a></li>
-                {% set products_url = url('shuup:xtheme_extra_view', view='products') %}
+                {% set products_url = url('shuup:all-categories') %}
                 <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
                 {% if shuup.simple_cms %}
                     {% for link in xtheme.get_cms_navigation_links(request) %}

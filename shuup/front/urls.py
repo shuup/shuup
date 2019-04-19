@@ -18,7 +18,7 @@ from django.views.i18n import set_language
 from shuup.apps.provides import get_provide_objects
 
 from .views.basket import BasketView
-from .views.category import CategoryView
+from .views.category import AllCategoriesView, CategoryView
 from .views.checkout import get_checkout_view
 from .views.dashboard import DashboardView
 from .views.index import IndexView
@@ -89,6 +89,9 @@ urlpatterns = [
     url(r'^s/(?P<supplier_pk>\d+)-(?P<pk>\d+)-(?P<slug>.*)/$',
         csrf_exempt(ProductDetailView.as_view()),
         name='supplier-product'),
+    url(r'^c/$',
+        csrf_exempt(AllCategoriesView.as_view()),
+        name='all-categories'),
     url(r'^c/(?P<pk>\d+)-(?P<slug>.*)/$',
         csrf_exempt(CategoryView.as_view()),
         name='category'),
