@@ -85,9 +85,13 @@
     // Enable lightbox for products with multiple images. Uses arrows to
     // navigate through images.
     var selector_multiple = "a[data-imagelightbox='image-multiple']";
-    var instance_multiple = $(selector_multiple).simpleLightbox();
+    if ($(selector).length > 0) {
+        var instance_multiple = $(selector_multiple).simpleLightbox();
+    }
 
     // Enable lightbox for products with only one image.
     var selector = "a[data-imagelightbox='image']";
-    var instance = $(selector).simpleLightbox();
+    if ($(selector).length > 0) {
+        var instance = $(selector).simpleLightbox();
+    }
 {% endmacro %}
