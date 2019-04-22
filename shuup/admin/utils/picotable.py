@@ -333,7 +333,7 @@ class Column(object):
             value = getattr(value, bit, None)
 
         return_value = self.check_different_types(value)
-        if return_value:
+        if return_value is not None:
             return return_value
 
         if not value:

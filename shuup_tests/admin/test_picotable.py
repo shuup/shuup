@@ -9,6 +9,7 @@ import datetime
 
 import pytest
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 
 from shuup.admin.modules.products.views import ProductListView
 from shuup.admin.modules.settings.view_settings import ViewSettings
@@ -96,6 +97,28 @@ def test_picotable_display(rf, admin_user, regular_user):
             assert item["is_superuser"] == "very super"
         if item["id"] == regular_user.pk:
             assert item["is_superuser"] == "-"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_picotable_display_related(rf, admin_user, regular_user):
+    group_1 = Group.objects.create(name='group 1')
+    group_2 = Group.objects.create(name='group 2')
+    groups = (group_1, group_2)
+    admin_user.groups.add(*groups)
+
+    columns = (
+        Column("id", "Id", filter_config=Filter(), display=instance_id),
+        Column("groups", "Groups", filter_config=Filter()),
+    )
+    pico = get_pico(rf, admin_user, columns=columns)
+    data = pico.get_data({"perPage": 100, "page": 1})
+
+    for item in data["items"]:
+        if item["id"] == admin_user.pk:
+            assert item["groups"] == ", ".join(str(g) for g in groups)
+        if item["id"] == regular_user.pk:
+            assert item["groups"] == ""
 
 
 @pytest.mark.django_db
