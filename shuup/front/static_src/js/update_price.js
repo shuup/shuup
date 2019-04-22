@@ -48,11 +48,14 @@ window.updatePrice = function updatePrice(productId) {
         $(priceDiv).replaceWith($content.find(priceDiv));
 
         // ensure images are updated
-        var combinationProductId = $(priceDiv).data("product-id");
-        var id = "#carousel_product_" + combinationProductId;
+        const combinationCarouselID = "#carousel_product_" + $(priceDiv).data("product-id");
+        const combinationImages = $(combinationCarouselID).parent("div").html()
         $(".product-image").empty();
-        $(".product-image").append($(id).parent("div").html());
-        $(".product-image .product-carousel a").simpleLightbox();
+        $(".product-image").append(combinationImages);
+        const imagesSelector = ".product-image .product-carousel a";
+        if ($(imagesSelector).length > 0) {
+            $(imagesSelector).simpleLightbox();
+        }
         $(".product-image .owl-carousel.carousel-thumbnails").owlCarousel({
             margin: 10,
             nav: $(".carousel-thumbnails .thumbnail").length > 4,
