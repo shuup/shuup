@@ -1,15 +1,56 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.3
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-04-22 10:45am -0800.
+
+Admin
+~~~~~
+
+- Fix issue with picotable column values 
+- Add option to control time step for datetime pickers
+
+Campaigns
+~~~~~~~~~
+
+- Fix bug in Campaign free product effect 
+- Add campaign supplier to discount lines. When lines causes new lines to 
+  basket it is important that those discount lines are linked to correct
+  supplier based on campaign.
+
+Core
+~~~~
+
+- Fix issues with custom Django User-model
+- Include variation parents to bought with calculations
+
+Docker
+~~~~~~
 
 - Add new Dockerfile for shuup_workbench
+
+Front
+~~~~~
+
+- Fix issue with product images and Simple Lightbox
+- Add new products page which shows products for all visible categories. This
+  suites fronts that does not have most typical category based navigation
+  required.
+- Add option to customize customer information forms
+- Improve logout when impersonating user
+- Make category select for carousel async
+- Fix styles for product quantity field at basket
+- Improve caches
+
+
+Simple CMS
+~~~~~~~~~~
+
+- Allow page owner see invisible CMS page 
+- Add supplier for CMS page
+
 
 Shuup 1.9.2
 -----------
