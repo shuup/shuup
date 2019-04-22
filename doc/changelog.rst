@@ -9,6 +9,7 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+- Add new Dockerfile for shuup_workbench
 
 Shuup 1.9.2
 -----------
