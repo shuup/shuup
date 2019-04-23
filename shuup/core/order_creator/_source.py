@@ -738,7 +738,11 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
     def get(self, key, default=None):
         if key in self._FIELDSET:
             return getattr(self, key, default)
-        return self._data.get(key, default)
+        return self.data.get(key, default)
+
+    @property
+    def data(self):
+        return self._data or {}
 
     @property
     def parent_line(self):
