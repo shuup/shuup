@@ -12,3 +12,9 @@ class UsernameSupplierProvider(object):
     @classmethod
     def get_supplier(cls, request, **kwargs):
         return Supplier.objects.filter(identifier=request.user.username).first()
+
+
+class RequestSupplierProvider(object):
+    @classmethod
+    def get_supplier(cls, request, **kwargs):
+        return request.supplier
