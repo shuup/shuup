@@ -72,7 +72,10 @@ class OrderProcessor(object):
         order_line.verified = (not order_line.require_verification)
         order_line.source_line = source_line
         order_line.parent_source_line = source_line.parent_line
-        order_line.extra_data = {"source_line_id": source_line.line_id}
+        extra_data = source_line.data.get("extra", {}) if hasattr(source_line, "data") else {}
+        extra_data.update({"source_line_id": source_line.line_id})
+
+        order_line.extra_data = extra_data
         self._check_orderability(order_line)
 
         yield order_line
