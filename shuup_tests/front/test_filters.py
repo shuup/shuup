@@ -8,6 +8,7 @@
 import pytest
 from django.core.urlresolvers import reverse
 
+from shuup.core.models import Category
 from shuup.front.utils.sorts_and_filters import set_configuration
 from shuup.testing import factories
 from shuup_tests.utils import SmartClient
@@ -66,3 +67,51 @@ def test_product_price_range_filter():
     assert soup.find(id="product-%d" % product.id)
     price_range_select = soup.find(id="id_price_range")
     assert price_range_select is None
+
+
+@pytest.mark.django_db
+def test_category_filter():
+    shop = factories.get_default_shop()
+
+    category1 = Category.objects.create(name="Category 1")
+    category1.shops.add(shop)
+    product1 = factories.create_product("p1", shop, factories.get_default_supplier(), "10")
+    shop_product1 = product1.get_shop_instance(shop)
+    shop_product1.categories.add(category1)
+
+    category2 = Category.objects.create(name="Category 2")
+    category2.shops.add(shop)
+    product2 = factories.create_product("p2", shop, factories.get_default_supplier(), "20")
+    shop_product2 = product2.get_shop_instance(shop)
+    shop_product2.categories.add(category2)
+
+    client = SmartClient()
+    config = {"filter_products_by_category": True}
+    set_configuration(shop=shop, data=config)
+
+    url = reverse('shuup:all-categories')
+
+    # 1) go to all categories view and list products
+    # no filters being applied should list all products
+    response, soup = client.response_and_soup(url)
+    assert response.status_code == 200
+    assert soup.find(id="product-%d" % product1.id)
+    assert soup.find(id="product-%d" % product2.id)
+
+    # 2) filter by category2 id only
+    response, soup = client.response_and_soup("{}?categories={}".format(url, category2.pk))
+    assert response.status_code == 200
+    assert not soup.find(id="product-%d" % product1.id)
+    assert soup.find(id="product-%d" % product2.id)
+
+    # 3) filter by category1 and category2 id
+    response, soup = client.response_and_soup("{}?categories={},{}".format(url, category1.pk, category2.pk))
+    assert response.status_code == 200
+    assert soup.find(id="product-%d" % product1.id)
+    assert soup.find(id="product-%d" % product2.id)
+
+    # 4) filter by blank value, it shouldn't break
+    response, soup = client.response_and_soup("{}?categories=".format(url))
+    assert response.status_code == 200
+    assert soup.find(id="product-%d" % product1.id)
+    assert soup.find(id="product-%d" % product2.id)

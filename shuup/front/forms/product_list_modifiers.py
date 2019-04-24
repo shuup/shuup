@@ -56,6 +56,20 @@ class OneChoiceFilterWidget(forms.Select):
         )
 
 
+class CommaSeparatedListField(forms.CharField):
+    def to_python(self, value):
+        if isinstance(value, (list, tuple)) and len(value) == 1:
+            value = value[0].split(",")
+        else:
+            value = super(CommaSeparatedListField, self).to_python(value)
+        return value
+
+    def prepare_value(self, value):
+        if isinstance(value, (list, tuple)) and len(value) == 1:
+            value = value[0].split(",")
+        return value
+
+
 class SimpleProductListModifier(ProductListFormModifier):
     is_active_key = ""
     is_active_label = ""
@@ -339,21 +353,27 @@ class CategoryProductListFilter(SimpleProductListModifier):
         data = [
             (
                 "categories",
-                forms.MultipleChoiceField(
-                    choices=[(cat.pk, cat.name) for cat in queryset],
+                CommaSeparatedListField(
                     required=False,
                     label=get_form_field_label("categories", _('Categories')),
-                    widget=FilterWidget()
+                    widget=FilterWidget(choices=[(cat.pk, cat.name) for cat in queryset])
                 )
-            ),
+            )
         ]
         context_cache.set_cached_value(key, data)
         return data
 
     def get_filters(self, request, data):
         categories = data.get("categories")
+        if not categories:
+            return
+
+        if not isinstance(categories, (list, tuple)):
+            categories = list(categories)
+
+        categories = [cat.strip() for cat in categories if cat]
         if categories:
-            return Q(shop_products__categories__in=list(categories))
+            return Q(shop_products__categories__in=categories)
 
     def get_admin_fields(self):
         default_fields = super(CategoryProductListFilter, self).get_admin_fields()
