@@ -5,7 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.contrib.auth import logout
+from django.conf import settings as django_settings
+from django.contrib.auth import get_user_model, load_backend, login, logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 
@@ -65,6 +66,15 @@ def stop_impersonating(request):
     if "impersonator_user_id" not in request.session:
         return HttpResponseForbidden()
 
+    impersonator_user_id = request.session["impersonator_user_id"]
     del request.session["impersonator_user_id"]
     logout(request)
+
+    user = get_user_model().objects.get(pk=impersonator_user_id)
+    for backend in django_settings.AUTHENTICATION_BACKENDS:
+        if user == load_backend(backend).get_user(user.pk):
+            user.backend = backend
+            break
+
+    login(request, user)
     return HttpResponseRedirect(reverse("shuup_admin:contact.list"))
