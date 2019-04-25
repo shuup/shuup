@@ -118,6 +118,46 @@ def test_order_creator(rf, admin_user):
     assert order.pk
 
 
+# Testing OrderProcessor.source_line_to_order_lines --> source_line.extra_data
+@pytest.mark.django_db
+def test_order_processor_source_line_w_extra_data(rf, admin_user):
+    source = seed_source(admin_user)
+    extra_data = {"xkey":"xdata"}
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(10),
+        extra= extra_data
+    )
+   
+
+    creator = OrderCreator()
+    order = creator.create_order(source)
+    test_order_line = order.lines[0]
+    assert hasattr(test_order_line, "extra_data")
+
+# Testing OrderProcessor.source_line_to_order_lines --> !source_line.extra_data
+@pytest.mark.django_db
+def test_order_processor_source_line_wo_extra_data(rf, admin_user):
+    source = seed_source(admin_user)
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(10),
+    )
+   
+
+    creator = OrderCreator()
+    order = creator.create_order(source)
+    test_order_line = order.lines[0]
+    assert not hasattr(test_order_line, "extra_data")
+    
+
+
 @pytest.mark.django_db
 def test_order_creator_with_package_product(rf, admin_user):
     if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
