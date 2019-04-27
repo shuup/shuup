@@ -1,0 +1,151 @@
+{% extends "shuup/admin/base.jinja" %}
+
+{% block title %}
+    {% trans %}Customize admin menu{% endtrans %}
+{% endblock %}
+
+{% block action_buttons %}
+    <div class="btn-toolbar" role="toolbar">
+        <button class="btn btn-success" onclick="saveMenus()">
+            <i class="fa fa-save"></i>&nbsp;{% trans %}Save{% endtrans %}
+        </button>
+        <a href="{{ url("shuup_admin:admin_menu.reset") }}" class="btn btn-danger">
+            <i class="fa fa-save"></i>&nbsp;{% trans %}Reset{% endtrans %}
+        </a>
+    </div>
+{% endblock %}
+
+{% macro render_menu_items(menu_items, id) %}
+    <div class="list-group menu-items" id="menu-items-{{ id }}">
+        {% for menu_item in menu_items %}
+            <div class="list-group-item list-group-item-action">
+                {{ render_menu_item(menu_item) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro render_menu_item(menu_item) %}
+    <div class="menu-item loading" data-identifier="{{ menu_item.identifier }}">
+        {% if menu_item.icon %}
+            <i class="{{ menu_item.icon }}"></i>
+        {% else %}
+            <i class="fa"></i>
+        {% endif %}
+        <div class="name" contenteditable="true">{{ menu_item.name }}</div>
+
+        <div class="entries">
+            {% if menu_item.entries|length %}
+                &nbsp;(
+                    {% for entry in menu_item.entries %}
+                        {{ entry.text }}{% if not loop.last %};{% endif %}
+                    {% endfor %}
+                )
+            {% endif %}
+        </div>
+
+        <div class="menu-actions">
+            <div class="input-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input is-visible-control" id="isVisible_{{ menu_item.identifier }}" {% if not menu_item.is_hidden %}checked{% endif %}>
+                    <label class="custom-control-label" for="isVisible_{{ menu_item.identifier }}"></label>
+                </div>
+                <div class="input-group-append">
+                    <i class="fa fa-arrows sortable-handler" title="{% trans %}Drag me{% endtrans %}"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ render_menu_items(menu_item.children, menu_item.identifier) }}
+{% endmacro %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 admin-menus">
+                {{ render_menu_items(admin_menus, 'admin-menus') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+
+        function saveMenus(callback) {
+            $.post("{{ url("shuup_admin:admin_menu.arrange") }}", {
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                menus: serializeAdminMenus(),
+            }, callback);
+        }
+
+        function serializeAdminMenus() {
+            function elementData (item) {
+                const id = $(item).data('identifier');
+                const data = {
+                    'identifier': id,
+                    'name': $(item).find('.name').text().trim(),
+                    'is_hidden': !$(item).find('.is-visible-control').is(':checked'),
+                };
+                const children = $(item).find('+.menu-items > .list-group-item > .menu-item').map(function (index, childItem) {
+                    return elementData(childItem);
+                });
+                if (children.length) {
+                  data['children'] = children.get();
+                }
+                return data;
+            }
+
+            const menuItems = $('.admin-menus > .menu-items > .list-group-item > .menu-item');
+            const data = menuItems.map(function (index, item) {
+                return elementData(item);
+            }).get();
+            return JSON.stringify(data);
+        }
+
+        function sortStart(e) {
+            const menuItem = $(e.detail.item);
+            // mark if element has children
+            const hasChildren = menuItem.find('.menu-item').length > 1;
+            menuItem.parent().toggleClass('has-children', hasChildren);
+        }
+
+        function sortUpdate(e) {
+            const menuItem = $(e.detail.item);
+            // update parent and item menu-items sorter
+            connectSortable(menuItem.parent());
+            connectSortable(menuItem.find('> .menu-items'));
+        }
+
+        function connectSortable(menuItems) {
+            const id = menuItems.attr('id');
+            const parentsLength = menuItems.parents('.menu-items').length;
+
+            let acceptFrom = '.menu-items';
+            if (parentsLength === 0) {
+                menuItems.find('> .list-group-item > .menu-items').removeClass('disabled');
+            } else {
+                // above the first level do not accept drop elements with children
+                acceptFrom += ':not(.has-children)';
+                menuItems.find('> .list-group-item > .menu-items').addClass('disabled');
+            }
+
+            // use id instead of class to avoid bug with nested elements
+            const sortable = window.html5sortable('#' + id + ':not(.disabled)', {
+                forcePlaceholderSize: true,
+                handle: '.sortable-handler',
+                acceptFrom: acceptFrom,
+            })[0];
+
+            if (sortable) {
+              sortable.addEventListener('sortstart', sortStart);
+              sortable.addEventListener('sortupdate', sortUpdate);
+            }
+        }
+
+        $('.menu-items').each(function (index, element) {
+            connectSortable($(element));
+        });
+    </script>
+{% endblock %}

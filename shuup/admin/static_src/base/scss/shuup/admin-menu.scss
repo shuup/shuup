@@ -1,0 +1,91 @@
+/*!
+ * This file is part of Shuup.
+ *
+ * Copyright (c) 2012-2019, Shoop Commerce Ltd. All rights reserved.
+ *
+ * This source code is licensed under the OSL-3.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+.menu-items {
+
+    .menu-items {
+        margin-top: 10px;
+        min-height: 20px;
+        background-color: #c8d3d9;
+
+        &.disabled {
+            display: none;
+        }
+
+        .list-group-item {
+            &:first-child {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+            &:last-child {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    }
+
+    .list-group-item {
+        display: flex;
+        flex-direction: column;
+
+        .menu-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            .name {
+                margin-left: 15px;
+            }
+
+            .entries {
+                font-size: 80%;
+            }
+
+            .menu-actions {
+                margin-left: auto;
+
+                .custom-control-input {
+                    ~.custom-control-label {
+                        width: 10px;
+                        height: 10px;
+                    }
+
+                    &:checked {
+                        ~.custom-control-label {
+                            &:before {
+                                background-color: $primary;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .sortable-placeholder {
+            background-color: rgba($primary, 0.1);
+        }
+
+        .sortable-handler {
+            cursor: pointer;
+        }
+
+        .fa {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 2.4em;
+            height: 2.4em;
+            background-color: rgba($primary, 0.1);
+            color: $primary;
+            border-radius: 20px;
+        }
+    }
+
+}

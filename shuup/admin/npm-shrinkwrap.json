@@ -5662,9 +5662,9 @@
       "integrity": "sha1-x43mW1Zjqll5id0rerSSANfk25g="
     },
     "html5sortable": {
-      "version": "0.9.4",
-      "resolved": "https://registry.npmjs.org/html5sortable/-/html5sortable-0.9.4.tgz",
-      "integrity": "sha512-WoHXrJjSsWc0nrW1Y1TWnkn+kspEDtvZzqizGk9XVbWSa+i4oUMmeJJmBnF5GjSP1BaohKl13ErntLNYoiVkWQ=="
+      "version": "0.9.10",
+      "resolved": "https://registry.npmjs.org/html5sortable/-/html5sortable-0.9.10.tgz",
+      "integrity": "sha512-VLKNQQbpOqA9b0v4XNAt/6bhonGdDo2I23kquencNC0S8n894u3/19LH/puaSead55r2lMqLTVsd0x8TZYZROQ=="
     },
     "htmlnano": {
       "version": "0.2.3",

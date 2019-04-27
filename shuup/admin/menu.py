@@ -10,6 +10,7 @@ from django.utils.datastructures import OrderedDict
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.views.home import QUICKLINK_ORDER
@@ -139,6 +140,10 @@ MAIN_MENU = [
                 "identifier": "other_settings",
                 "title": _("Other Settings")
             },
+            {
+                "identifier": "admin_menu",
+                "title": _("Admin menu")
+            },
         ]
     }
 ]
@@ -154,6 +159,7 @@ class _MenuCategory(object):
         self.icon = icon
         self.children = []
         self.entries = []
+        self.is_hidden = False
 
     def __iter__(self):
         return iter(sorted(self.entries, key=lambda e: e.ordering))
@@ -233,7 +239,46 @@ def get_menu_entry_categories(request): # noqa (C901)
         if not cat.entries and not cat.children:
             continue
         categories.append(cat)
-    return [c for menu_identifier, c in six.iteritems(menu_categories) if c in categories]
+    clean_categories = [c for menu_identifier, c in six.iteritems(menu_categories) if c in categories]
+
+    def pop_category(identifier):
+        for index, clean_category in enumerate(clean_categories):
+            if clean_category.identifier == identifier:
+                category = clean_categories.pop(index)
+                return category
+            else:
+                for sub_index, sub_category in enumerate(clean_category.children):
+                    if sub_category.identifier == identifier:
+                        category = clean_category.children.pop(sub_index)
+                        return category
+
+    customized_admin_menu = configuration.get(None, "admin_menu_user_{}".format(request.user.pk))
+    if customized_admin_menu:
+        customized_categories = []
+        # override default values from admin_menu configuration
+        for admin_menu in customized_admin_menu:
+            category = pop_category(admin_menu["identifier"])
+            if category:
+                category.name = admin_menu.get("name", category.name)
+                category.is_hidden = admin_menu.get("is_hidden", False)
+
+                for sub_admin_menu in admin_menu.get("children", []):
+                    sub_category = pop_category(sub_admin_menu["identifier"])
+                    if not sub_category:
+                        for sub_index, clean_category in enumerate(category.children):
+                            if clean_category.identifier == sub_admin_menu["identifier"]:
+                                sub_category = category.children.pop(sub_index)
+
+                    if sub_category:
+                        sub_category.name = sub_admin_menu.get("name", sub_category.name)
+                        sub_category.is_hidden = sub_admin_menu.get("is_hidden", False)
+                        category.children.append(sub_category)
+
+                customized_categories.append(category)
+
+        return customized_categories + clean_categories
+    else:
+        return clean_categories
 
 
 def get_quicklinks(request):
