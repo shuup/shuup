@@ -581,7 +581,8 @@ class Order(MoneyPropped, models.Model):
         return max(difference, Money(0, self.currency))
 
     def can_create_payment(self):
-        return not(self.is_paid() or self.is_canceled())
+        zero = Money(0, self.currency)
+        return not(self.is_paid() or self.is_canceled()) and self.get_total_unpaid_amount() > zero
 
     def create_payment(self, amount, payment_identifier=None, description=''):
         """
