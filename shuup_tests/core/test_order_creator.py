@@ -30,6 +30,8 @@ from shuup.testing.factories import (
 )
 from shuup.utils.models import get_data_dict
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
+from shuup.utils.money import Money
+from shuup.core.excs import NoPaymentToCreateException
 
 
 def test_invalid_order_source_updating():
@@ -104,6 +106,24 @@ def test_order_creator(rf, admin_user):
 
     creator = OrderCreator()
     order = creator.create_order(source)
+    zero = Money(0, order.currency)
+    assert order.can_create_payment()
+    assert order.get_total_unpaid_amount() > zero
+    assert not order.is_paid()
+    order.create_payment(order.get_total_unpaid_amount())
+    assert order.is_paid()
+    assert not order.can_create_payment()
+    assert not order.get_total_unpaid_amount() > zero
+    assert order.get_total_unpaid_amount() == zero
+
+    order_two = creator.create_order(source)
+    order_two.create_payment(order.get_total_unpaid_amount() + Money(10, order.currency))
+    assert order.is_paid()
+    assert not order.can_create_payment()
+    assert order.get_total_unpaid_amount() == zero
+    with pytest.raises(NoPaymentToCreateException):
+        order.create_payment(order.get_total_unpaid_amount())
+
     assert get_data_dict(source.billing_address) == get_data_dict(order.billing_address)
     assert get_data_dict(source.shipping_address) == get_data_dict(order.shipping_address)
     customer = source.customer
