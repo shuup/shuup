@@ -135,7 +135,7 @@ def test_order_processor_source_line_w_extra_data(rf, admin_user):
 
     creator = OrderCreator()
     order = creator.create_order(source)
-    test_order_line = order.lines[0]
+    test_order_line = order.lines.first()
     assert hasattr(test_order_line, "extra_data")
 
 # Testing OrderProcessor.source_line_to_order_lines --> !source_line.extra_data
@@ -153,7 +153,7 @@ def test_order_processor_source_line_wo_extra_data(rf, admin_user):
 
     creator = OrderCreator()
     order = creator.create_order(source)
-    test_order_line = order.lines[0]
+    test_order_line = order.lines.first()
     assert not hasattr(test_order_line, "extra_data")
     
 
