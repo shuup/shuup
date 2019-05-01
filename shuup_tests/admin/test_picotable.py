@@ -206,6 +206,10 @@ def test_picotable_no_mobile_link_for_missing_object_url(rf, admin_user, regular
 @pytest.mark.django_db
 def test_picotable_get_object_extra(rf, admin_user):
     pico = get_pico(rf, admin_user)
+    query = {"perPage": 100, "page": 1, "sort": "+id"}
+    data = pico.get_data(query)
+    for item in data["items"]:
+        assert item["_extra"]["extra"]  # Assert extra is True
     assert pico.get_object_extra(admin_user) == {"extra": True}
 
 
