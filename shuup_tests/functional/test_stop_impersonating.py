@@ -41,7 +41,8 @@ def test_stop_impersonating(rf, admin_user, regular_user):
     response = stop_impersonating(request)
     assert response.status_code in [301, 302]  # redirect
     assert "impersonator_user_id" not in request.session
-    assert not is_authenticated(get_user(request))
+    assert is_authenticated(get_user(request))
+    assert request.user == admin_user
 
 
 @pytest.mark.django_db
