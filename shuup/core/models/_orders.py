@@ -692,10 +692,14 @@ class Order(MoneyPropped, models.Model):
         shipment_created_and_processed.send(sender=type(self), order=self, shipment=shipment)
         return shipment
 
-    def can_create_refund(self):
+    def can_create_refund(self, supplier=None):
+        unrefunded_amount = self.get_total_unrefunded_amount(supplier)
+        unrefunded_quantity = self.get_total_unrefunded_quantity(supplier)
         return (
-            (self.taxful_total_price.amount.value > 0 or self.get_total_unrefunded_quantity() > 0) and
-            not self.can_edit()
+            (unrefunded_amount.value > 0 or unrefunded_quantity > 0) and
+            not self.is_canceled() and
+            not self.is_complete() and
+            (self.payment_status != PaymentStatus.NOT_PAID)
         )
 
     def _get_tax_class_proportions(self):
@@ -719,7 +723,7 @@ class Order(MoneyPropped, models.Model):
             for (tax_class, tax_class_total) in total_by_tax_class.items()
         ]
 
-    def _refund_amount(self, index, text, amount, tax_proportions):
+    def _refund_amount(self, index, text, amount, tax_proportions, supplier=None):
         taxmod = taxing.get_tax_module()
         ctx = taxmod.get_context_from_order_source(self)
         taxes = (list(chain.from_iterable(
@@ -736,6 +740,7 @@ class Order(MoneyPropped, models.Model):
             ordering=index,
             base_unit_price_value=-base_amount,
             quantity=1,
+            supplier=supplier
         )
         for line_tax in taxes:
             refund_line.taxes.create(
@@ -748,7 +753,7 @@ class Order(MoneyPropped, models.Model):
         return refund_line
 
     @atomic    # noqa (C901) FIXME: simply this
-    def create_refund(self, refund_data, created_by=None):
+    def create_refund(self, refund_data, created_by=None, supplier=None):
         """
         Create a refund if passed a list of refund line data.
 
@@ -767,13 +772,17 @@ class Order(MoneyPropped, models.Model):
                            adjusting supplier stock.
         :type created_by: django.contrib.auth.User|None
         """
-        index = self.lines.all().aggregate(models.Max("ordering"))["ordering__max"]
+        lines = self.lines.all()
+        if supplier:
+            lines = lines.filter(supplier=supplier)
+
+        index = lines.aggregate(models.Max("ordering"))["ordering__max"]
         tax_proportions = self._get_tax_class_proportions()
         zero = Money(0, self.currency)
         refund_lines = []
         total_refund_amount = zero
-        order_total = self.taxful_total_price.amount
-        product_summary = self.get_product_summary()
+        available_for_refund = self.get_total_unrefunded_amount(supplier=supplier)
+        product_summary = self.get_product_summary(supplier)
 
         for refund in refund_data:
             index += 1
@@ -787,7 +796,8 @@ class Order(MoneyPropped, models.Model):
             assert quantity
 
             if parent_line == "amount":
-                refund_line = self._refund_amount(index, refund.get("text", _("Misc refund")), amount, tax_proportions)
+                refund_line = self._refund_amount(
+                    index, refund.get("text", _("Misc refund")), amount, tax_proportions, supplier=supplier)
             else:
                 # ensure the amount to refund and the order line amount have the same signs
                 if ((amount > zero and parent_line.taxful_price.amount < zero) or
@@ -851,7 +861,8 @@ class Order(MoneyPropped, models.Model):
 
             total_refund_amount += refund_line.taxful_price.amount
             refund_lines.append(refund_line)
-        if abs(total_refund_amount) > order_total:
+
+        if abs(total_refund_amount) > available_for_refund:
             raise RefundExceedsAmountException
         self.cache_prices()
         self.save()
@@ -880,15 +891,26 @@ class Order(MoneyPropped, models.Model):
         } for line in self.lines.all() if line.type != OrderLineType.REFUND]
         self.create_refund(line_data, created_by)
 
-    def get_total_refunded_amount(self):
-        total = sum([line.taxful_price.amount.value for line in self.lines.refunds()])
+    def get_total_refunded_amount(self, supplier=None):
+        refunds = self.lines.refunds()
+        if supplier:
+            refunds = refunds.filter(
+                Q(parent_line__supplier=supplier) | Q(supplier=supplier)
+            )
+        total = sum([line.taxful_price.amount.value for line in refunds])
         return Money(-total, self.currency)
 
-    def get_total_unrefunded_amount(self):
+    def get_total_unrefunded_amount(self, supplier=None):
+        if supplier:
+            total = sum([line.max_refundable_amount.value for line in self.lines.filter(supplier=supplier)])
+            return (Money(total, self.currency) if total else Money(0, self.currency))
         return max(self.taxful_total_price.amount, Money(0, self.currency))
 
-    def get_total_unrefunded_quantity(self):
-        return sum([line.max_refundable_quantity for line in self.lines.all()])
+    def get_total_unrefunded_quantity(self, supplier=None):
+        queryset = self.lines.all()
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
+        return sum([line.max_refundable_quantity for line in queryset])
 
     def get_total_tax_amount(self):
         return sum(
@@ -1033,7 +1055,7 @@ class Order(MoneyPropped, models.Model):
             self.payment_status = PaymentStatus.FULLY_PAID
         elif self.get_total_paid_amount().value > 0:
             self.payment_status = PaymentStatus.PARTIALLY_PAID
-        else:
+        elif self.payment_status != PaymentStatus.DEFERRED:   # Do not make deferred here not paid
             self.payment_status = PaymentStatus.NOT_PAID
         if status_before_update != self.payment_status:
             self.add_log_entry(

@@ -771,6 +771,7 @@ def test_can_create_refund():
     )
 
     order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    order.payment_status = PaymentStatus.DEFERRED
     order.cache_prices()
     assert order.can_create_payment()
 
