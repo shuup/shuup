@@ -22,6 +22,7 @@ from shuup.core.excs import (
 )
 from shuup.core.models import Order, OrderLineType
 from shuup.utils.money import Money
+from shuup.admin.supplier_provider import get_supplier
 
 
 class RefundForm(forms.Form):
@@ -67,6 +68,13 @@ class OrderCreateRefundView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(OrderCreateRefundView, self).get_context_data(**kwargs)
         context["title"] = _("Create Refund -- %s") % context["order"]
+        full_url = "shuup_admin:order.create-full-refund"
+        supplier = get_supplier(self.request)
+        lines = self.object.lines.all()
+        if supplier:
+            full_url = "shuup_admin:shuup_multivendor.create-full-refund"
+            lines = lines.filter(supplier=supplier)
+
         context["toolbar"] = Toolbar([
             PostActionButton(
                 icon="fa fa-check-circle",
@@ -75,7 +83,7 @@ class OrderCreateRefundView(UpdateView):
                 extra_css_class="btn-success",
             ),
             URLActionButton(
-                url=reverse("shuup_admin:order.create-full-refund", kwargs={"pk": self.object.pk}),
+                url=reverse("{}".format(full_url), kwargs={"pk": self.object.pk}),
                 icon="fa fa-dollar",
                 text=_("Refund Entire Order"),
                 extra_css_class="btn-info",
@@ -85,8 +93,8 @@ class OrderCreateRefundView(UpdateView):
 
         # Setting the line_numbers choices dynamically creates issues with the blank formset,
         # So adding that to the context to be rendered manually
-        context["line_number_choices"] = self._get_line_number_choices()
-        context["json_line_data"] = [self._get_line_data(self.object, line) for line in self.object.lines.all()]
+        context["line_number_choices"] = self._get_line_number_choices(lines)
+        context["json_line_data"] = [self._get_line_data(self.object, line) for line in lines]
         return context
 
     def _get_line_data(self, order, line):
@@ -134,12 +142,13 @@ class OrderCreateRefundView(UpdateView):
             text += " (SKU %s)" % (line.sku)
         return text
 
-    def _get_line_number_choices(self):
+    def _get_line_number_choices(self, lines):
+        refundable_lines_count = sum([int(line.max_refundable_quantity) for line in lines])
         line_number_choices = [("", "---")]
-        if self.object.get_total_unrefunded_amount().value > 0:
+        if self.object.get_total_unrefunded_amount().value > 0 and refundable_lines_count > 0:
             line_number_choices += [("amount", _("Refund arbitrary amount"))]
         return line_number_choices + [
-            (line.ordering, self._get_line_text(line)) for line in self.object.lines.all()
+            (line.ordering, self._get_line_text(line)) for line in lines
             if (line.type == OrderLineType.PRODUCT and line.max_refundable_quantity > 0) or
             (line.type != OrderLineType.PRODUCT and
              line.max_refundable_amount.value > 0 and
@@ -149,9 +158,13 @@ class OrderCreateRefundView(UpdateView):
 
     def get_form(self, form_class=None):
         formset = super(OrderCreateRefundView, self).get_form(form_class)
+        supplier = get_supplier(self.request)
+        lines = self.object.lines.all()
+        if supplier:
+            lines = lines.filter(supplier=supplier)
 
         # Line orderings are zero-indexed, but shouldn't display that way
-        choices = self._get_line_number_choices()
+        choices = self._get_line_number_choices(lines)
         for form in formset.forms:
             form.fields["line_number"].choices = choices
         formset.empty_form.fields["line_number"].choices = choices
@@ -183,6 +196,7 @@ class OrderCreateRefundView(UpdateView):
     def form_valid(self, form):
         order = self.object
         refund_lines = []
+        supplier = get_supplier(self.request)
 
         for refund in form.cleaned_data:
             line = self._get_refund_line_info(order, refund)
@@ -198,6 +212,11 @@ class OrderCreateRefundView(UpdateView):
             messages.error(self.request, _("Refund amounts should match sign on parent line."))
             return self.form_invalid(form)
         messages.success(self.request, _("Refund created."))
+
+        if supplier:
+            return HttpResponseRedirect(
+                reverse("shuup_admin:shuup_multivendor.order_line_list", kwargs={"pk": order.pk})
+            )
         return HttpResponseRedirect(get_model_url(order))
 
 
@@ -213,10 +232,15 @@ class OrderCreateFullRefundView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(OrderCreateFullRefundView, self).get_context_data(**kwargs)
+        supplier = get_supplier(self.request)
+        full_url = "shuup_admin:order.create-refund"
+        if supplier:
+            full_url = "shuup_admin:shuup_multivendor.create-refund"
+
         context["title"] = _("Create Full Refund -- %s") % context["order"]
         context["toolbar"] = Toolbar([
             URLActionButton(
-                url=reverse("shuup_admin:order.create-refund", kwargs={"pk": self.object.pk}),
+                url=reverse("{}".format(full_url), kwargs={"pk": self.object.pk}),
                 icon="fa fa-check-circle",
                 text=_("Cancel"),
                 extra_css_class="btn-danger",
@@ -230,14 +254,30 @@ class OrderCreateFullRefundView(UpdateView):
         return kwargs
 
     def form_valid(self, form):
+        supplier = get_supplier(self.request)
         order = self.object
         restock_products = bool(form.cleaned_data.get("restock_products"))
 
         try:
-            order.create_full_refund(restock_products)
+            if not supplier:
+                order.create_full_refund(restock_products)
+            else:
+                lines = order.lines.filter(supplier=supplier).all()
+                line_data = [{
+                    "line": line,
+                    "quantity": line.quantity,
+                    "amount": line.taxful_price.amount,
+                    "restock_products": restock_products
+                } for line in lines if line.type != OrderLineType.REFUND]
+                order.create_refund(line_data, self.request.user)
         except NoRefundToCreateException:
             messages.error(self.request, _("Could not create full refund."))
             return self.form_invalid(form)
 
         messages.success(self.request, _("Full refund created."))
+        if supplier:
+            return HttpResponseRedirect(
+                reverse("shuup_admin:shuup_multivendor.order_line_list", kwargs={"pk": order.pk})
+            )
+
         return HttpResponseRedirect(get_model_url(order))
