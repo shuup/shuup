@@ -31,120 +31,46 @@ MAIN_MENU = [
         "identifier": ORDERS_MENU_CATEGORY,
         "title": _("Orders"),
         "icon": "fa fa-inbox",
-        "children": [
-            {
-                "identifier": "orders",
-                "title": _("Orders")
-            },
-        ]
     },
     {
         "identifier": PRODUCTS_MENU_CATEGORY,
         "title": _("Products"),
         "icon": "fa fa-cube",
-        "children": [
-            {
-                "identifier": "products",
-                "title": _("Products")
-            },
-        ]
     },
     {
         "identifier": CONTACTS_MENU_CATEGORY,
         "title": _("Contacts"),
         "icon": "fa fa-users",
-        "children": []
     },
     {
         "identifier": CAMPAIGNS_MENU_CATEGORY,
         "title": _("Campaigns"),
         "icon": "fa fa-bullhorn",
-        "children": []
     },
     {
         "identifier": CONTENT_MENU_CATEGORY,
         "title": _("Content"),
         "icon": "fa fa-columns",
-        "children": [
-            {
-                "identifier": "elements",
-                "title": _("Elements")
-            },
-            {
-                "identifier": "design",
-                "title": _("Design")
-            },
-            {
-                "identifier": "other",
-                "title": _("Other"),
-            }
-        ]
     },
     {
         "identifier": REPORTS_MENU_CATEGORY,
         "title": _("Reports"),
         "icon": "fa fa-bar-chart",
-        "children": []
     },
     {
         "identifier": STOREFRONT_MENU_CATEGORY,
         "title": _("Shops"),
         "icon": "fa fa-shopping-basket",
-        "children": [
-            {
-                "identifier": "settings",
-                "title": _("Settings")
-            },
-            {
-                "identifier": "payment_shipping",
-                "title": _("Payment & Shipping")
-            },
-            {
-                "identifier": "currency",
-                "title": _("Currency")
-            },
-            {
-                "identifier": "attributes",
-                "title": _("Attributes")
-            },
-            {
-                "identifier": "other_settings",
-                "title": _("Other settings")
-            },
-        ]
     },
     {
         "identifier": ADDONS_MENU_CATEGORY,
         "title": _("Addons"),
         "icon": "fa fa-puzzle-piece",
-        "children": []
     },
     {
         "identifier": SETTINGS_MENU_CATEGORY,
         "title": _("Settings"),
         "icon": "fa fa-tachometer",
-        "children": [
-            {
-                "identifier": "data_transfer",
-                "title": _("Data Transfer")
-            },
-            {
-                "identifier": "taxes",
-                "title": _("Taxes")
-            },
-            {
-                "identifier": "permissions",
-                "title": _("Permissions")
-            },
-            {
-                "identifier": "other_settings",
-                "title": _("Other Settings")
-            },
-            {
-                "identifier": "admin_menu",
-                "title": _("Admin menu")
-            },
-        ]
     }
 ]
 
@@ -173,7 +99,6 @@ def extend_main_menu(menu):
 
 def get_menu_entry_categories(request): # noqa (C901)
     menu_categories = OrderedDict()
-    menu_children = OrderedDict()
 
     # Update main menu from provides
     main_menu = extend_main_menu(MAIN_MENU)
@@ -187,12 +112,6 @@ def get_menu_entry_categories(request): # noqa (C901)
             name=menu_item["title"],
             icon=icon,
         )
-        for child in menu_item["children"]:
-            child_identifier = "%s:%s" % (identifier, child["identifier"])
-            child_category = _MenuCategory(child["identifier"], child["title"], None)
-            menu_children[child_identifier] = child_category
-            menu_categories[identifier].children.append(child_category)
-
         menu_category_icons[identifier] = icon
 
     modules = list(get_modules())
@@ -209,34 +128,24 @@ def get_menu_entry_categories(request): # noqa (C901)
             continue
 
         for entry in (module.get_menu_entries(request=request) or ()):
-            category_identifier = entry.category
-            subcategory = entry.subcategory
-
-            entry_identifier = "%s:%s" % (category_identifier, subcategory) if subcategory else category_identifier
-            menu_items = menu_children if subcategory else menu_categories
-
-            category = menu_items.get(entry_identifier)
+            entry_identifier = entry.url
+            category = menu_categories.get(entry.category)
             if not category:
-                category_identifier = force_text(category_identifier or module.name)
-                category = menu_items.get(category_identifier)
+                category_identifier = force_text(entry.category or module.name)
+                category = menu_categories.get(category_identifier)
                 if not category:
-                    menu_items[category_identifier] = category = _MenuCategory(
+                    menu_categories[category_identifier] = category = _MenuCategory(
                         identifier=category_identifier,
                         name=category_identifier,
                         icon=menu_category_icons.get(category_identifier, "fa fa-circle")
                     )
             category.entries.append(entry)
-            if subcategory:
-                parent = menu_categories.get(category_identifier)
-                all_categories.add(parent)
-            else:
-                all_categories.add(category)
+            all_categories.add(category)
 
     # clean categories that eventually have no children or entries
     categories = []
     for cat in all_categories:
-        cat.children = [c for c in cat.children if c.entries or c.children]
-        if not cat.entries and not cat.children:
+        if not cat.entries:
             continue
         categories.append(cat)
     clean_categories = [c for menu_identifier, c in six.iteritems(menu_categories) if c in categories]
