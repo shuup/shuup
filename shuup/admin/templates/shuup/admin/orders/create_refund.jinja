@@ -29,8 +29,8 @@
                 {% csrf_token %}
                 {% for mf in form.management_form %}{{ mf|safe }}{% endfor %}
                 <div class="text-right">
-                    <h3>{% trans %}Refunded{% endtrans %}: {{ order.get_total_refunded_amount()|money }}</h3>
-                    <h3>{% trans %}Remaining{% endtrans %}: {{ order.get_total_unrefunded_amount()|money }}</h3>
+                    <h3>{% trans %}Refunded{% endtrans %}: {{ order.get_total_refunded_amount(supplier)|money }}</h3>
+                    <h3>{% trans %}Remaining{% endtrans %}: {{ order.get_total_unrefunded_amount(supplier)|money }}</h3>
                 </div>
                 <hr>
                 <div id="empty-form" class="refund-line hidden">

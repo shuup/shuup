@@ -17,4 +17,4 @@ class UsernameSupplierProvider(object):
 class RequestSupplierProvider(object):
     @classmethod
     def get_supplier(cls, request, **kwargs):
-        return request.supplier
+        return getattr(request, "supplier", None)
