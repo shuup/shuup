@@ -11,6 +11,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
+from shuup.admin.base import BaseMenuEntry
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.views.home import QUICKLINK_ORDER
@@ -75,7 +76,7 @@ MAIN_MENU = [
 ]
 
 
-class _MenuCategory(object):
+class _MenuCategory(BaseMenuEntry):
     """
     Internal menu category object.
     """
@@ -85,16 +86,99 @@ class _MenuCategory(object):
         self.icon = icon
         self.children = []
         self.entries = []
-        self.is_hidden = False
-
-    def __iter__(self):
-        return iter(sorted(self.entries, key=lambda e: e.ordering))
 
 
 def extend_main_menu(menu):
     for menu_updater in get_provide_objects("admin_main_menu_updater"):
         menu = menu_updater(menu).update()
     return menu
+
+
+def customize_menu(entries, user):  # noqa (C901)
+    """
+    Merge system menu with customized admin menu
+    """
+    customized_admin_menu = configuration.get(None, "admin_menu_user_{}".format(user.pk))
+    if customized_admin_menu:
+
+        def unset_mismatched(menu):
+            """
+            find and remove unmatched entries from customized menu tree
+            it can be when menu entry was removed from system
+            """
+            indexes = []
+            for index, entry in enumerate(menu.get('entries', [])):
+                unset_mismatched(entry)
+                if isinstance(entry, dict):
+                    indexes.append(index)
+            for index in indexes[::-1]:
+                del menu['entries'][index]
+
+        def find_entry(menu, entry):
+            """
+            find recursively entry in menu
+            """
+            if menu['id'] == entry.id:
+                return menu
+            for node in menu.get('entries', []):
+                n = find_entry(node, entry)
+                if n:
+                    return n
+
+        def assign_entry(customized_menu, entry):
+            """
+            Find and replace customized entry with system menu entry
+            set entry name, hidden flag from customized menu entry
+            """
+            custom_entries = customized_menu.get('entries', [])
+            for index, node in enumerate(custom_entries):
+                if node['id'] == entry.id:
+                    custom_entry = custom_entries[index]
+                    entry.name = custom_entry['name']
+                    entry.is_hidden = custom_entry['is_hidden']
+                    entry.entries = custom_entry.get('entries', [])
+                    entry.ordering = index
+                    custom_entries[index] = entry
+                    return custom_entries[index]
+                else:
+                    return_entry = assign_entry(custom_entries[index], entry)
+                    if return_entry:
+                        return return_entry
+
+        def transform_menu(customized_menu, menu):
+            """
+            Recursively sort system menu entries and assign it to the customized menu
+            """
+            indexes = []
+            for index, entry in enumerate(menu.entries):
+                transform_menu(customized_menu, entry)
+                custom_entry = assign_entry(customized_menu, entry)
+                if not custom_entry:
+                    parent_menu = find_entry(customized_menu, menu)
+                    if parent_menu:
+                        parent_menu.get('entries', []).append(entry)
+                        indexes.append(index)
+                else:
+                    indexes.append(index)
+            # remove assigned entries from system menu
+            for index in indexes[::-1]:
+                del menu.entries[index]
+            return menu
+
+        customized_menu = {
+            'id': 'root',
+            'name': 'root',
+            'entries': customized_admin_menu,
+        }
+        system_menu = BaseMenuEntry()
+        system_menu.identifier = 'root'
+        system_menu.entries = entries
+        transform_menu(customized_menu, system_menu)
+        unset_mismatched(customized_menu)
+
+        return customized_menu['entries'] + system_menu['entries']
+    else:
+        return entries
 
 
 def get_menu_entry_categories(request): # noqa (C901)
@@ -128,7 +212,6 @@ def get_menu_entry_categories(request): # noqa (C901)
             continue
 
         for entry in (module.get_menu_entries(request=request) or ()):
-            entry_identifier = entry.url
             category = menu_categories.get(entry.category)
             if not category:
                 category_identifier = force_text(entry.category or module.name)
@@ -150,44 +233,7 @@ def get_menu_entry_categories(request): # noqa (C901)
         categories.append(cat)
     clean_categories = [c for menu_identifier, c in six.iteritems(menu_categories) if c in categories]
 
-    def pop_category(identifier):
-        for index, clean_category in enumerate(clean_categories):
-            if clean_category.identifier == identifier:
-                category = clean_categories.pop(index)
-                return category
-            else:
-                for sub_index, sub_category in enumerate(clean_category.children):
-                    if sub_category.identifier == identifier:
-                        category = clean_category.children.pop(sub_index)
-                        return category
-
-    customized_admin_menu = configuration.get(None, "admin_menu_user_{}".format(request.user.pk))
-    if customized_admin_menu:
-        customized_categories = []
-        # override default values from admin_menu configuration
-        for admin_menu in customized_admin_menu:
-            category = pop_category(admin_menu["identifier"])
-            if category:
-                category.name = admin_menu.get("name", category.name)
-                category.is_hidden = admin_menu.get("is_hidden", False)
-
-                for sub_admin_menu in admin_menu.get("children", []):
-                    sub_category = pop_category(sub_admin_menu["identifier"])
-                    if not sub_category:
-                        for sub_index, clean_category in enumerate(category.children):
-                            if clean_category.identifier == sub_admin_menu["identifier"]:
-                                sub_category = category.children.pop(sub_index)
-
-                    if sub_category:
-                        sub_category.name = sub_admin_menu.get("name", sub_category.name)
-                        sub_category.is_hidden = sub_admin_menu.get("is_hidden", False)
-                        category.children.append(sub_category)
-
-                customized_categories.append(category)
-
-        return customized_categories + clean_categories
-    else:
-        return clean_categories
+    return customize_menu(clean_categories, request.user)
 
 
 def get_quicklinks(request):

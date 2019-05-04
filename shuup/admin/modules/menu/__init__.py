@@ -19,19 +19,19 @@ class AdminMenuModule(AdminModule):
     Module that customizes dashboard admin menu
     """
     name = _("Admin menu")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:admin_menu.arrange")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:menu.arrange")
 
     def get_urls(self):
         return [
             admin_url(
-                r"^admin_menu/$",
-                "shuup.admin.modules.admin_menu.views.AdminMenuArrangeView",
-                name="admin_menu.arrange"
+                r"^menu/$",
+                "shuup.admin.modules.menu.views.AdminMenuArrangeView",
+                name="menu.arrange"
             ),
             admin_url(
-                r"^admin_menu/reset/$",
-                "shuup.admin.modules.admin_menu.views.AdminMenuResetView",
-                name="admin_menu.reset"
+                r"^menu/reset/$",
+                "shuup.admin.modules.menu.views.AdminMenuResetView",
+                name="menu.reset"
             ),
         ]
 
@@ -41,9 +41,9 @@ class AdminMenuModule(AdminModule):
             MenuEntry(
                 text=_("Admin menu"),
                 icon="fa fa-list-alt",
-                url="shuup_admin:admin_menu.arrange",
+                url="shuup_admin:menu.arrange",
                 category=category,
-                subcategory="admin_menu",
+                subcategory="menu",
                 ordering=1
             ),
         ]

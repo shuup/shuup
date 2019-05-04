@@ -145,7 +145,44 @@ class Resolvable(object):
         return self._url
 
 
-class MenuEntry(Resolvable):
+class BaseMenuEntry(Resolvable):
+    identifier = None
+    name = None
+    icon = ''
+    is_hidden = False
+    ordering = -1
+    entries = []
+
+    @property
+    def id(self):
+        """ value containing only hexadecimal digits, we can use this safely in html code """
+        return hashlib.md5(str(self.identifier).encode('utf8')).hexdigest()
+
+    @property
+    def has_entries(self):
+        return len(self.entries) > 0
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'url': self.url,
+            'name': str(self.name),
+            'icon': self.icon,
+            'is_hidden': self.is_hidden,
+            'entries': [e.to_dict() for e in self.entries],
+        }
+
+    def get(self, item, default=None):
+        return getattr(self, item, default)
+
+    def __getitem__(self, item):
+        return self.get(item)
+
+    def __iter__(self):
+        return iter(sorted(self.entries, key=lambda e: e.ordering))
+
+
+class MenuEntry(BaseMenuEntry):
     def __init__(self, text, url, icon=None, category=None, subcategory=None, ordering=99999, aliases=()):
         self.text = text
         self._url = url
@@ -154,6 +191,18 @@ class MenuEntry(Resolvable):
         self.subcategory = subcategory
         self.ordering = ordering
         self.aliases = tuple(aliases)
+
+    @property
+    def identifier(self):
+        return self._url
+
+    @property
+    def name(self):
+        return str(self.text)
+
+    @name.setter
+    def name(self, value):
+        self.text = value
 
     def get_search_query_texts(self):
         yield self.text

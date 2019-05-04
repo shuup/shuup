@@ -8,9 +8,9 @@
  *
  */
 
-.menu-items {
+.menu-entries {
 
-    .menu-items {
+    .menu-entries {
         margin-top: 10px;
         min-height: 20px;
         background-color: #c8d3d9;
@@ -19,7 +19,12 @@
             display: none;
         }
 
+        .menu-entries {
+            display: none;
+        }
+
         .list-group-item {
+
             &:first-child {
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
@@ -35,17 +40,13 @@
         display: flex;
         flex-direction: column;
 
-        .menu-item {
+        .menu-entry {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
 
             .name {
                 margin-left: 15px;
-            }
-
-            .entries {
-                font-size: 80%;
             }
 
             .menu-actions {

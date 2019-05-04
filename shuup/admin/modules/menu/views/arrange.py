@@ -9,9 +9,12 @@ from __future__ import unicode_literals
 
 import json
 
-from django.http import HttpResponse
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, RedirectView
+from django.contrib import messages
+from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.views.generic import RedirectView, TemplateView
+
+from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
 from shuup.admin.menu import get_menu_entry_categories
@@ -21,20 +24,14 @@ class AdminMenuArrangeView(TemplateView):
     """
     Retrieve menus from configuration or display default
     """
-    template_name = "shuup/admin/admin_menu/arrange.jinja"
+    template_name = "shuup/admin/menu/arrange.jinja"
 
     def get_context_data(self, **kwargs):
         """
         Populate context with admin_menus
         """
         context = super(AdminMenuArrangeView, self).get_context_data(**kwargs)
-        context["admin_menus"] = [{
-            "identifier": menu_item.identifier,
-            "icon": menu_item.icon,
-            "name": menu_item.name,
-            "is_hidden": menu_item.is_hidden,
-            "children": menu_item.children,
-        } for menu_item in get_menu_entry_categories(self.request)]
+        context["admin_menus"] = get_menu_entry_categories(self.request)
         return context
 
     def post(self, request):
@@ -43,15 +40,18 @@ class AdminMenuArrangeView(TemplateView):
         """
         menus = json.loads(request.POST.get('menus'))
         configuration.set(None, 'admin_menu_user_{}'.format(request.user.pk), menus)
-        return HttpResponse(json.dumps({"success": True}), content_type="application/json")
+        messages.add_message(request, messages.SUCCESS, _('Menu saved'))
+        return HttpResponseRedirect(reverse_lazy('shuup_admin:menu.arrange'))
 
 
 class AdminMenuResetView(RedirectView):
     """
     Reset admin menu to default values
     """
-    url = reverse_lazy('shuup_admin:admin_menu.arrange')
+    permanent = False
+    url = reverse_lazy('shuup_admin:menu.arrange')
 
     def get(self, request, *args, **kwargs):
         configuration.set(None, 'admin_menu_user_{}'.format(request.user.pk), None)
+        messages.add_message(request, messages.SUCCESS, _('Menu reset'))
         return super(AdminMenuResetView, self).get(request, *args, **kwargs)
