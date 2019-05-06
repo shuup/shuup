@@ -343,7 +343,7 @@ Simple CMS Provide Categories
 List of objects that have provides key as attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some objects have attributes that contain a provide key which are used to load provides dunamically.
+Some objects have attributes that contain a provide key which are used to load provides dynamically.
 They are specially used in mixins when they can be attached to some class which overrides the attribute
 with its own provide key name, making it easier to extend provides related to class. Here is the list
 of objects that have this attribute which can be overrided on a specialization:
