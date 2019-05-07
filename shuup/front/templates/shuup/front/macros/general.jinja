@@ -32,9 +32,10 @@
         {% set widget_name = field.field.widget.__class__.__name__|lower %}
         {% if widget_name == "checkboxinput" %}
             <div class="custom-checkbox {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                {# Force required=False for hidden fields, otherwise it crashes in browser while trying to focus it #}
                 {{ (field|replace_field_attrs(required=false)).as_widget()|safe }}
                 {% if render_label %}
-                <label for="{{ field.auto_id }}">
+                <label class="control-label" for="{{ field.auto_id }}">
                     {{ field.label }}
                 </label>
                 {% endif %}
@@ -49,11 +50,38 @@
                     <p class="help-block">{{ field.help_text|safe }}</p>
                 {% endif %}
             </div>
+
+        {% elif widget_name == "checkboxselectmultiple" %}
+            <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                {% if render_label %}
+                <label class="control-label">{{ field.label }}</label>
+                {% endif %}
+                {% for subwidget in field.subwidgets %}
+                    {% set option = subwidget.data %}
+                    <div class="custom-checkbox">
+                        <input type="{{ option.type }}" value="{{ option.value }}" name="{{ option.name }}" {% if option.attrs.checked %}checked{% endif %} id="{{ option.attrs.id }}">
+                        <label for="{{ option.attrs.id }}">
+                            {{ option.label }}
+                        </label>
+                    </div>
+                {% endfor %}
+                {% if field.help_text and show_help_text %}
+                    <p class="help-block">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    <p class="help-block">
+                        {% for error in field.errors %}
+                            {{ error}}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+
         {% elif widget_name == "radio" %}
             <div class="custom-radio {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
                 {{ field.as_widget()|safe }}
                 {% if render_label %}
-                <label for="{{ field.auto_id }}">
+                <label class="control-label" for="{{ field.auto_id }}">
                     {{ field.label }}
                 </label>
                 {% endif %}
@@ -66,7 +94,8 @@
                 {% if layout == "horizontal" %}
                     <div class="col-md-9">
                 {% endif %}
-                {{ field.as_widget(attrs={"class": "form-control selectpicker"})|safe }}
+                {# Force required=False for hidden fields, otherwise it crashes in browser while trying to focus it #}
+                {{ (field|replace_field_attrs(required=false)).as_widget(attrs={"class": "form-control selectpicker"})|safe }}
                 {% if field.help_text and show_help_text %}
                     <p class="help-block">{{ field.help_text }}</p>
                 {% endif %}
