@@ -188,9 +188,9 @@
                                         {% set line_url = shuup.urls.model_url(line.product) %}
                                         {{ line.unit.render_quantity(line.quantity) }} &times;
                                         {% if line_url %}
-                                            <a href="{{ line_url }}">{{ line.text }}</a>
+                                            <a href="{{ line_url }}">{{ line.text|truncate(40, False) }}</a>
                                         {% else %}
-                                            {{ line.text }}
+                                            {{ line.text|truncate(40, False) }}
                                         {% endif %}
                                     </td>
                                     {% if show_prices() and not xtheme.get("hide_prices") %}
