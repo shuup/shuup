@@ -14,6 +14,7 @@ from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
 
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.excs import (
@@ -73,20 +74,31 @@ class OrderCreateRefundView(UpdateView):
                 form_id="create_refund",
                 text=_("Create Refund"),
                 extra_css_class="btn-success",
-            ),
-            URLActionButton(
-                url=reverse("shuup_admin:order.create-full-refund", kwargs={"pk": self.object.pk}),
-                icon="fa fa-dollar",
-                text=_("Refund Entire Order"),
-                extra_css_class="btn-info",
-                disable_reason=_("This order already has existing refunds") if self.object.has_refunds() else None
-            ),
+            )
         ], view=self)
+
+        # Allowing full refunds for suppliers would block the refunds for
+        # rest of the suppliers since full refund can only be created once
+        supplier = context["supplier"] = get_supplier(self.request)
+        if not supplier:
+            context["toolbar"].append(
+                URLActionButton(
+                    url=reverse("shuup_admin:order.create-full-refund", kwargs={"pk": self.object.pk}),
+                    icon="fa fa-dollar",
+                    text=_("Refund Entire Order"),
+                    extra_css_class="btn-info",
+                    disable_reason=_("This order already has existing refunds") if self.object.has_refunds() else None
+                )
+            )
 
         # Setting the line_numbers choices dynamically creates issues with the blank formset,
         # So adding that to the context to be rendered manually
-        context["line_number_choices"] = self._get_line_number_choices()
-        context["json_line_data"] = [self._get_line_data(self.object, line) for line in self.object.lines.all()]
+        context["line_number_choices"] = self._get_line_number_choices(supplier)
+
+        lines = lines = self.object.lines.all()
+        if supplier:
+            lines = lines.filter(supplier=supplier)
+        context["json_line_data"] = [self._get_line_data(self.object, line) for line in lines]
         return context
 
     def _get_line_data(self, order, line):
@@ -134,12 +146,16 @@ class OrderCreateRefundView(UpdateView):
             text += " (SKU %s)" % (line.sku)
         return text
 
-    def _get_line_number_choices(self):
+    def _get_line_number_choices(self, supplier):
+        lines = self.object.lines.all()
+        if supplier:
+            lines = lines.filter(supplier=supplier)
+
         line_number_choices = [("", "---")]
-        if self.object.get_total_unrefunded_amount().value > 0:
+        if self.object.get_total_unrefunded_amount(supplier).value > 0:
             line_number_choices += [("amount", _("Refund arbitrary amount"))]
         return line_number_choices + [
-            (line.ordering, self._get_line_text(line)) for line in self.object.lines.all()
+            (line.ordering, self._get_line_text(line)) for line in lines
             if (line.type == OrderLineType.PRODUCT and line.max_refundable_quantity > 0) or
             (line.type != OrderLineType.PRODUCT and
              line.max_refundable_amount.value > 0 and
@@ -151,14 +167,14 @@ class OrderCreateRefundView(UpdateView):
         formset = super(OrderCreateRefundView, self).get_form(form_class)
 
         # Line orderings are zero-indexed, but shouldn't display that way
-        choices = self._get_line_number_choices()
+        choices = self._get_line_number_choices(get_supplier(self.request))
         for form in formset.forms:
             form.fields["line_number"].choices = choices
         formset.empty_form.fields["line_number"].choices = choices
 
         return formset
 
-    def _get_refund_line_info(self, order, data):
+    def _get_refund_line_info(self, order, data, supplier):
         refund_line_info = {}
         amount_value = data.get("amount", 0) or 0
         line_number = data.get("line_number")
@@ -166,7 +182,11 @@ class OrderCreateRefundView(UpdateView):
         restock_products = data.get("restock_products")
 
         if line_number != "amount":
-            line = order.lines.filter(ordering=line_number).first()
+            lines = order.lines.filter(ordering=line_number)
+            if supplier:
+                lines = lines.filter(supplier=supplier)
+
+            line = lines.first()
 
             if not line:
                 return None
@@ -182,15 +202,16 @@ class OrderCreateRefundView(UpdateView):
 
     def form_valid(self, form):
         order = self.object
+        supplier = get_supplier(self.request)
         refund_lines = []
 
         for refund in form.cleaned_data:
-            line = self._get_refund_line_info(order, refund)
+            line = self._get_refund_line_info(order, refund, supplier)
             if line:
                 refund_lines.append(line)
 
         try:
-            order.create_refund(refund_lines, created_by=self.request.user)
+            order.create_refund(refund_lines, created_by=self.request.user, supplier=supplier)
         except RefundExceedsAmountException:
             messages.error(self.request, _("Refund amount exceeds order amount."))
             return self.form_invalid(form)
