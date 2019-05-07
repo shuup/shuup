@@ -140,12 +140,14 @@ class UserDetailToolbar(Toolbar):
         user = self.user
         change_password_button = DropdownItem(
             url=reverse("shuup_admin:user.change-password", kwargs={"pk": user.pk}),
-            text=_(u"Change Password"), icon="fa fa-exchange"
+            text=_(u"Change Password"), icon="fa fa-exchange",
+            required_permissions=["user.change-password"]
         )
         reset_password_button = DropdownItem(
             url=reverse("shuup_admin:user.reset-password", kwargs={"pk": user.pk}),
             disable_reason=(_("User has no email address") if not getattr(user, 'email', '') else None),
-            text=_(u"Send Password Reset Email"), icon="fa fa-envelope"
+            text=_(u"Send Password Reset Email"), icon="fa fa-envelope",
+            required_permissions=["user.reset-password"]
         )
         permissions_button = DropdownItem(
             url=reverse("shuup_admin:user.change-permissions", kwargs={"pk": user.pk}),
@@ -164,7 +166,8 @@ class UserDetailToolbar(Toolbar):
             menu_items.append(DropdownItem(
                 url=contact_url,
                 icon="fa fa-search",
-                text=_(u"Contact Details"),
+                text=_("Contact Details"),
+                required_permissions=["contact.detail"]
             ))
         else:
             contact_url = reverse("shuup_admin:contact.new") + "?type=person&user_id=%s" % user.pk
@@ -172,7 +175,8 @@ class UserDetailToolbar(Toolbar):
                 url=contact_url,
                 icon="fa fa-plus",
                 text=_(u"New Contact"),
-                tooltip=_("Create a new contact and associate it with this user")
+                tooltip=_("Create a new contact and associate it with this user"),
+                required_permissions=["contact.new"]
             ))
         self.append(DropdownActionButton(
             menu_items,
