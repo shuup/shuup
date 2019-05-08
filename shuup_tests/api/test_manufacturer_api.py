@@ -8,13 +8,14 @@
 from __future__ import unicode_literals
 
 import json
-
+import base64
+import os
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
 from shuup.core.models import Manufacturer
-from shuup.testing.factories import get_default_shop, create_product
+from shuup.testing.factories import get_default_shop, create_product, get_random_filer_image
 
 
 def setup_function(fn):
@@ -25,10 +26,15 @@ def test_manufacturer_api(admin_user):
     get_default_shop()
     client = APIClient()
     client.force_authenticate(user=admin_user)
-
+    image = get_random_filer_image()
+    with open(image.path, 'rb') as f:
+        img_base64 = base64.b64encode(os.urandom(50)).decode()
+        uri = "data:application/octet-stream;base64,{}".format(img_base64)
     manufacturer_data = {
         "name": "manu 1",
-        "url": "http://www.google.com"
+        "url": "http://www.google.com",
+        "path" : "/this/not/needed",
+        "logo" : uri
     }
     response = client.post("/api/shuup/manufacturer/",
                            content_type="application/json",
@@ -48,7 +54,9 @@ def test_manufacturer_api(admin_user):
     manufacturer = Manufacturer.objects.first()
     assert manufacturer.name == manufacturer_data["name"]
     assert manufacturer.url == manufacturer_data["url"]
-
+    assert manufacturer.logo.folder.pretty_logical_path == manufacturer_data["path"]
+    with open(manufacturer.logo.path, 'rb') as f:
+        assert img_base64 == base64.b64encode(f.read()).decode()
     response = client.get("/api/shuup/manufacturer/%d/" % manufacturer.id)
     assert response.status_code == status.HTTP_200_OK
     data = json.loads(response.content.decode("utf-8"))
