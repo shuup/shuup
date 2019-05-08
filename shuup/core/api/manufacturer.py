@@ -11,16 +11,42 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
 
+from shuup.api.fields import Base64FileField
 from shuup.api.mixins import (
     PermissionHelperMixin, ProtectedModelViewSetMixin, SearchableMixin
 )
 from shuup.core.models import Manufacturer
 from shuup.core.shop_provider import get_shop
+from shuup.utils.filer import filer_image_from_upload
 
 
 class ManufacturerSerializer(serializers.ModelSerializer):
 
-    logo = serializers.SerializerMethodField()
+    def __init__(self, *args, **kwargs):
+        super(ManufacturerSerializer, self).__init__(*args, **kwargs)
+        request = self.context.get("request")
+        if request.method in ["POST"]:
+            self.fields["logo"] = Base64FileField(required=False, write_only=True)
+            self.fields["logo_path"] = serializers.CharField(required=False, write_only=True)
+        else:
+            self.fields["logo"] = serializers.SerializerMethodField()
+
+    def create(self, validated_data):
+        if "logo_path" in validated_data:
+            validated_data.pop("logo_path")
+        return super(ManufacturerSerializer, self).create(validated_data)
+
+    def validate(self, data):
+        if data.get("logo") and data.get("logo_path"):
+            data["logo"] = filer_image_from_upload(
+                self.context["request"], path=data["logo_path"], upload_data=data["logo"])
+        elif data.get("logo"):
+            raise serializers.ValidationError("Path is required when sending a manufacturer logo.")
+        return data
+
+    def get_logo(self, manufacturer):
+        if manufacturer.logo:
+            return self.context["request"].build_absolute_uri(manufacturer.logo.url)
 
     class Meta:
         model = Manufacturer
@@ -28,10 +54,6 @@ class ManufacturerSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "created_on": {"read_only": True}
         }
-
-    def get_logo(self, manufacturer):
-        if manufacturer.logo:
-            return self.context["request"].build_absolute_uri(manufacturer.logo.url)
 
 
 class ManufacturerViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, SearchableMixin, ModelViewSet):
