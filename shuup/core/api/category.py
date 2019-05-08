@@ -29,7 +29,7 @@ class CategorySerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Category
-        exclude = ("shops",)
+        fields = '__all__'
 
     def get_image(self, category):
         if category.image:

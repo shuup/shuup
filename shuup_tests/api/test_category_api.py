@@ -46,6 +46,7 @@ def test_category_api(admin_user):
     assert category.ordering == category_data["ordering"]
     assert category.visibility.value == category_data["visibility"]
     assert category.visible_in_menu == category_data["visible_in_menu"]
+    assert category.shops.first().pk == shop.pk
 
     category_data["translations"]["en"]["name"] = "name 2"
     category_data["ordering"] = 3
