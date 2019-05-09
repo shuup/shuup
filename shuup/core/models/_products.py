@@ -154,7 +154,11 @@ class ProductQuerySet(TranslatableQuerySet):
 
     def _visible(self, shop, customer, language=None):
         root = (self.language(language) if language else self)
-        qs = root.all().filter(shop_products__shop=shop)
+        qs = root.all().filter(
+            shop_products__shop=shop,
+            shop_products__suppliers__enabled=True,
+            shop_products__suppliers__is_approved=True
+        )
 
         if customer and customer.is_all_seeing:
             qs = qs.exclude(mode=ProductMode.VARIATION_CHILD)
