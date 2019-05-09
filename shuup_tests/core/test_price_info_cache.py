@@ -145,3 +145,10 @@ def test_many_price_info_cache_bump(rf):
     shop_product.categories.add(category)
     assert_nothing_is_cached()
     assert_cache_products()
+
+    # cache bumped - the cache should be dropped - then, cache again
+    supplier = shop_product.suppliers.first()
+    supplier.enabled = False
+    supplier.save()
+    assert_nothing_is_cached()
+    assert_cache_products()
