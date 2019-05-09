@@ -136,7 +136,7 @@
 {% macro simple_product_form(shop_product, quantity, command="add", show_quantity=True, show_price=True, button_text=None, supplier=None) %}
     <input type="hidden" name="command" value="{{ command }}">
     <input type="hidden" name="product_id" value="{{ shop_product.product.id }}">
-    {% set is_orderable = shop_product.is_orderable(supplier=None, customer=request.customer, quantity=quantity, allow_cache=True) %}
+    {% set is_orderable = shop_product.is_orderable(supplier=supplier, customer=request.customer, quantity=quantity, allow_cache=True) %}
     <div class="prices">
         {{ product_order_section(shop_product, quantity, is_orderable, show_quantity=show_quantity, show_price=show_price, button_text=button_text, supplier=supplier) }}
     </div>
