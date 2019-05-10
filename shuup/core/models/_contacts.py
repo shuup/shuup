@@ -14,6 +14,7 @@ from django.db.models import QuerySet
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
+from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 from timezone_field.fields import TimeZoneField
@@ -233,7 +234,6 @@ class Contact(PolymorphicShuupModel):
     email = models.EmailField(max_length=256, blank=True, verbose_name=_('email'), help_text=_(
         "The email that will receive order confirmations and promotional materials (if permitted)."
     ))
-
     tax_group = models.ForeignKey(
         "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group'),
         help_text=_(
@@ -247,6 +247,7 @@ class Contact(PolymorphicShuupModel):
         "Enter any private notes for this customer that are only accessible in Shuup admin."
     ))
     account_manager = models.ForeignKey("PersonContact", blank=True, null=True, verbose_name=_('account manager'))
+    options = JSONField(blank=True, null=True, verbose_name=_("options"))
 
     def __str__(self):
         return self.full_name
