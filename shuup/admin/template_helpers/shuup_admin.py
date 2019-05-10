@@ -21,6 +21,7 @@ from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.menu import is_menu_open
 from shuup.admin.utils.urls import manipulate_query_string, NoModelUrl
 from shuup.apps.provides import get_provide_objects
@@ -191,3 +192,13 @@ def is_multishop_enabled(context):
 def get_current_language(context):
     from django.utils.translation import get_language
     return get_language()
+
+
+@contextfunction
+def get_admin_supplier(context):
+    return get_supplier(context["request"])
+
+
+@contextfunction
+def is_multiple_suppliers_enabled(context):
+    return settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS is True

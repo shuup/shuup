@@ -36,11 +36,17 @@
         {% endblock %}
         {% block support_content %}
             <div class="support-nav-wrap{% if iframe_mode %} iframe-mode{% endif %}">
+                <div class="flex-wrapper active-shop-and-supplier-info">
                 {% if shuup_admin.is_multishop_enabled() %}
-                <div class="flex-wrapper">
-                    <h3>Active shop: <strong>{{ shuup_admin.get_admin_shop().name }}</strong></h3>
-                </div>
+                    <h3>{% trans %}Active shop:{% endtrans %} <strong>{{ shuup_admin.get_admin_shop().name }}</strong></h3>
                 {% endif %}
+                {% if shuup_admin.is_multiple_suppliers_enabled() %}
+                    {% set supplier = shuup_admin.get_admin_supplier() %}
+                    {% if supplier %}
+                        <h3>{% trans %}Active vendor:{% endtrans %} <strong>{{ supplier.name }}</strong></h3>
+                    {% endif %}
+                {% endif %}
+                </div>
                 <div class="support-nav">
                     {% block breadcrumbs -%}
                         {% if not iframe_mode %}
