@@ -19,6 +19,16 @@ const RegionsMap = {
         {"code": "VB", "name": "Vorarlberg"},
         {"code": "WI", "name": "Wien"},
     ],
+    "AU": [
+        {"code": "AU-NSW", "name": "New South Wales"},
+        {"code": "AU-QLD", "name": "Queensland"},
+        {"code": "AU-SA", "name": "South Australia"},
+        {"code": "AU-TAS", "name": "Tasmania"},
+        {"code": "AU-VIC", "name": "Victoria"},
+        {"code": "AU-WA", "name": "Western Australia"},
+        {"code": "AU-ACT", "name": "Australian Capital Territory"},
+        {"code": "AU-NT", "name": "Northern Territory"}
+    ],
     "BR": [
         {"code": "AC", "name": "Acre"},
         {"code": "AL", "name": "Alagoas"},
