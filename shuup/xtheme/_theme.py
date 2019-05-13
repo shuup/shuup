@@ -272,7 +272,7 @@ class Theme(object):
                 plugin.identifier,
                 getattr(plugin, "name", None) or plugin.identifier
             ))
-        choices.sort()
+        choices.sort(key=lambda v: v[1])
         return choices
 
     def get_global_plugin_choices(self, empty_label=None):
@@ -296,7 +296,7 @@ class Theme(object):
                     plugin.identifier,
                     getattr(plugin, "name", None) or plugin.identifier
                 ))
-        choices.sort()
+        choices.sort(key=lambda v: v[1])
         return choices
 
     def has_stylesheets(self):
