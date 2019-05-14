@@ -11,7 +11,7 @@
     {% endif %}
     {% if show_prices() and not xtheme.get("hide_prices") %}
         <div class="product-price">
-            {{ render_product_price(product) }}
+            {{ render_product_price(product, supplier=supplier) }}
         </div>
         <hr>
     {% endif %}
