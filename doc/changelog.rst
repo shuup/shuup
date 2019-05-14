@@ -1,13 +1,45 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.4
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-05-14 4:15pm -0800.
+
+Admin
+~~~~~
+
+- Add option to setup auto reload for page
+- Show name for active supplier at all times when multiple suppliers are
+  enabled for Shuup project (refs to `shuup.admin.supplier_provider:get_supplier`.
+- Bump shop product cache on supplier save
+- Enable manufacturer logo for APIs
+- Adjust refund view for supplier
+
+Core
+~~~~
+
+- Add options JSON field for `shuup.core.models.Contact`.
+- Do not allow creating payment when the not paid amount is not valid
+- Expose data from `shuup.core.order_creator.SourceLine`
+
+Front
+~~~~~
+
+- Pass down the supplier in product macros
+- Fix issues with supplier in product detail context.
+- Pass supplier to orderability check on order form macro
+- Improve bootstrap field renderer around multiple checkbox options
+- Extend order refund utils for supplier
+- Truncate product name to 40 characters in basket partial dropdown
+- Go back to old staff user when stop impersonating
+- Fix categories product list filter
+
+Miscellaneous
+~~~~~~~~~~~~~
+
+- Regions: add Australia to data
+- Xtheme: sort plugins by name
 
 
 Shuup 1.9.3
