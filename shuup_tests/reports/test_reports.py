@@ -21,8 +21,10 @@ from django.utils.safestring import SafeText
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.apps.provides import override_provides
-from shuup.core.models import Order
-from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.core.order_creator import OrderCreator
+
+from shuup.core.models import Order, AnonymousContact, OrderLineType, ShippingStatus, FixedCostBehaviorComponent
+from shuup.core.pricing import TaxfulPrice, TaxlessPrice, get_pricing_module
 from shuup.reports.admin_module.views import ReportView
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.report import ShuupReportBase
@@ -33,10 +35,16 @@ from shuup.reports.writer import (
 )
 from shuup.testing.factories import (
     create_order_with_product, get_default_product, get_default_shop,
-    get_default_supplier
+    get_default_supplier, get_default_shipping_method, create_empty_order, add_product_to_order, get_shop,
+    get_initial_order_status, create_product, get_default_tax_class, get_default_category, get_address,
+    get_shipping_method
 )
+from shuup.default_reports.reports import ShippingReport
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.simple_supplier.utils import get_simple_supplier
+from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 from shuup.utils.i18n import get_current_babel_locale
+from shuup.utils.money import Money
 
 
 def initialize_report_test(product_price, product_count, tax_rate, line_count):
@@ -56,6 +64,64 @@ def initialize_report_test(product_price, product_count, tax_rate, line_count):
     order2.set_canceled()  # Shouldn't affect reports
     return expected_taxful_total, expected_taxless_total, shop, order
 
+
+def _get_product_data(identifier="0"):
+    return [
+        {
+            "sku": "sku1" + identifier,
+            "default_price": Decimal("14.756"),
+            "quantity": Decimal("2")
+        },
+        {
+            "sku": "sku2" + identifier,
+            "default_price": Decimal("10"),
+            "quantity": Decimal("2")
+        },
+        {
+            "sku": "sku3" + identifier,
+            "default_price": Decimal("14.756"),
+            "quantity": Decimal("2")
+        }
+    ]
+
+def _get_order(prices_include_tax=False, include_basket_campaign=False, include_catalog_campaign=False, identifier="0"):
+    shop = get_default_shop()
+    shop.prices_include_tax = prices_include_tax
+    shop.save()
+    supplier = get_simple_supplier()
+    source = BasketishOrderSource(shop)
+    sm = get_shipping_method(shop = shop, name="PostExpressRS", price=100)
+    sm.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=10))
+    sm.save()
+    source.shipping_method = sm
+    source.status = get_initial_order_status()
+    ctx = get_pricing_module().get_context_from_data(shop, AnonymousContact())
+    products = []
+    for product_data in _get_product_data(identifier):
+        quantity = product_data.pop("quantity")
+        product = create_product(
+            sku=product_data.pop("sku"),
+            shop=shop,
+            supplier=supplier,
+            tax_class=get_default_tax_class(),
+            **product_data)
+        shop_product = product.get_shop_instance(shop)
+        shop_product.categories.add(get_default_category())
+        shop_product.save()
+        supplier.adjust_stock(product.id, 10)
+        pi = product.get_price_info(ctx)
+        source.add_line(
+            type=OrderLineType.PRODUCT,
+            product=product,
+            supplier=supplier,
+            quantity=quantity,
+            base_unit_price=pi.base_unit_price,
+            discount_amount=pi.discount_amount
+        )
+        products.append(product)
+    oc = OrderCreator()
+    order = oc.create_order(source)
+    return order, products
 
 class SalesTestReport(ShuupReportBase):
     identifier = "test_sales_report"
@@ -106,14 +172,14 @@ class SalesTestReport(ShuupReportBase):
         return self.get_return_data(data)
 
 
-class SalesTestReportForRequestTets(SalesTestReport):
+class SalesTestReportForRequestTest(SalesTestReport):
     def get_objects(self):
         assert self.request
-        return super(SalesTestReportForRequestTets, self).get_objects()
+        return super(SalesTestReportForRequestTest, self).get_objects()
 
     def get_data(self):
         assert self.request
-        return super(SalesTestReportForRequestTets, self).get_data()
+        return super(SalesTestReportForRequestTest, self).get_data()
 
 
 @pytest.mark.django_db
@@ -129,7 +195,7 @@ def test_reporting(rf, admin_user):
                                                                                         tax_rate,
                                                                                         line_count)
 
-    with override_provides("reports", [__name__ + ":SalesTestReportForRequestTets"]):
+    with override_provides("reports", [__name__ + ":SalesTestReportForRequestTest"]):
         data = {
             "report": SalesTestReport.get_name(),
             "shop": shop.pk,
@@ -326,3 +392,47 @@ def test_none_dates(start_date, end_date):
             report = SalesTestReport(**data)
             data = report.get_data()
             assert data["data"]
+
+
+@pytest.mark.django_db
+def test_shipping_report():
+    supplier = get_simple_supplier()
+    order, products = _get_order(False, True, True)
+    shipping_address = get_address(name="Shippy Doge").to_immutable()
+    shipping_address.save()
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
+    order.shipping_address = shipping_address
+
+    total_charged = Money(0, 'EUR')
+
+    order.create_payment(order.get_total_unpaid_amount())
+    order.save()
+    assert order.shipping_address
+    order.create_shipment({x : Decimal("2") for x in products}, supplier=supplier) # create shipment for order 1
+    order.save()
+    for line in order.lines.filter(type=OrderLineType.SHIPPING):
+        total_charged += line.taxful_price.amount
+    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
+    supplier = get_simple_supplier()
+    order_two, products = _get_order(False, True, True, identifier="1")
+    order_two.shipping_address = shipping_address
+    order_two.prices_include_tax = True
+    order_two.save()
+    assert order_two.shipping_status == ShippingStatus.NOT_SHIPPED
+    order_two.create_shipment({x : Decimal("2") for x in products}, supplier=supplier) # create shipment for order 2
+
+    for line in order_two.lines.filter(type=OrderLineType.SHIPPING):
+        total_charged += line.taxless_price.amount
+    order_two.create_payment(order_two.get_total_unpaid_amount()) # make sure shipment is paid
+    order_two.save()
+    assert order_two.is_paid()
+    assert order_two.shipping_status == ShippingStatus.FULLY_SHIPPED
+    assert not order.prices_include_tax # assert first order doesn't include taxes
+
+    assert order_two.prices_include_tax # assert second order includes taxes
+    assert order.shop == order_two.shop
+    report = ShippingReport()
+    report.shop = order.shop
+    report.get_data()
+    assert report.get_data()
+    assert total_charged == report.get_data().get('data')[0].get('total_charged')
