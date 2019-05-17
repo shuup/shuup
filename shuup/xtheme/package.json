@@ -29,7 +29,7 @@
     "select2": "^4.0.6-rc.1",
     "shuup-static-build-tools": "^1.0.3",
     "sortablejs": "^1.7.0",
-    "summernote": "0.8.10"
+    "summernote": "0.8.12"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
