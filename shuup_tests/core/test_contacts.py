@@ -446,3 +446,23 @@ def test_price_displays(regular_user):
     obj.save()
     options = cg.get_price_display_options()
     assert options.show_prices
+
+
+@pytest.mark.django_db
+def test_contact_options():
+    contact = PersonContact.objects.create(name="randon name")
+    contact.options = dict(var=1, xpto=2)
+    contact.save()
+
+    contact = PersonContact.objects.get(pk=contact.pk)
+    assert isinstance(contact.options, dict)
+    assert contact.options["var"] == 1
+    assert contact.options["xpto"] == 2
+
+    contact = PersonContact.objects.get(pk=contact.pk)
+    contact.options["vaca"] = "cow"
+    contact.save()
+
+    contact = PersonContact.objects.get(pk=contact.pk)
+    assert isinstance(contact.options, dict)
+    assert contact.options["vaca"] == "cow"
