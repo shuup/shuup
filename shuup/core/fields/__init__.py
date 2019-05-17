@@ -8,12 +8,13 @@
 from __future__ import unicode_literals
 
 import decimal
+import json
 import numbers
 
 import babel
 import six
 from django import forms
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import BLANK_CHOICE_DASH
@@ -242,3 +243,35 @@ class SeparatedValuesField(models.TextField):
     def value_to_string(self, obj):
         value = self._get_val_from_obj(obj)
         return self.get_db_prep_value(value)
+
+
+def polymorphic_has_pk(obj):
+    if getattr(obj, 'polymorphic_primary_key_name', None):
+        if getattr(obj, obj.polymorphic_primary_key_name, None):
+            return True
+    return False
+
+
+class PolymorphicJSONField(JSONField):
+    """
+    Use this field when using JSONField inside a polumorphic model
+    https://github.com/dmkoch/django-jsonfield/pull/193
+    """
+    def pre_init(self, value, obj):
+        try:
+            if obj._state.adding:
+                # Make sure the primary key actually exists on the object before
+                # checking if it's empty. This is a special case for South datamigrations
+                # see: https://github.com/bradjasper/django-jsonfield/issues/52
+                if getattr(obj, "pk", None) is not None or polymorphic_has_pk(obj):
+                    if isinstance(value, six.string_types):
+                        try:
+                            return json.loads(value, **self.load_kwargs)
+                        except ValueError:
+                            raise ValidationError(_("Enter valid JSON"))
+        except AttributeError:
+            # south fake meta class doesn't create proper attributes
+            # see this:
+            # https://github.com/bradjasper/django-jsonfield/issues/52
+            pass
+        return value

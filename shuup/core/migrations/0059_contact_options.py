@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import jsonfield.fields
+import shuup.core.fields
 
 
 class Migration(migrations.Migration):
@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contact',
             name='options',
-            field=jsonfield.fields.JSONField(blank=True, null=True, verbose_name='options'),
+            field=shuup.core.fields.PolymorphicJSONField(blank=True, null=True, verbose_name='options'),
         ),
     ]

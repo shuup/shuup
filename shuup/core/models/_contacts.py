@@ -14,13 +14,14 @@ from django.db.models import QuerySet
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
-from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 from timezone_field.fields import TimeZoneField
 
 from shuup import configuration
-from shuup.core.fields import InternalIdentifierField, LanguageField
+from shuup.core.fields import (
+    InternalIdentifierField, LanguageField, PolymorphicJSONField
+)
 from shuup.core.pricing import PriceDisplayOptions
 from shuup.core.utils.users import (
     is_user_all_seeing, should_force_anonymous_contact,
@@ -247,7 +248,7 @@ class Contact(PolymorphicShuupModel):
         "Enter any private notes for this customer that are only accessible in Shuup admin."
     ))
     account_manager = models.ForeignKey("PersonContact", blank=True, null=True, verbose_name=_('account manager'))
-    options = JSONField(blank=True, null=True, verbose_name=_("options"))
+    options = PolymorphicJSONField(blank=True, null=True, verbose_name=_("options"))
 
     def __str__(self):
         return self.full_name
