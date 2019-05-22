@@ -67,7 +67,7 @@
                     {% csrf_token %}
                     {% if request.resolver_match.url_name == "logout" %}{% set next="/" %}{% endif %}
                     <input type="hidden" name="next" value="{{ next or request.path }}">
-                    {% set form = shuup.general.get_login_form(request) %}
+                    {% set form = shuup.general.get_login_form(request, form_prefix="quick-auth") %}
                     {% for f in form.hidden_fields() %}{{ f }}{% endfor %}
                     {% for f in form.visible_fields() %}{{ render_field(f, show_help_text=False) }}{% endfor %}
 

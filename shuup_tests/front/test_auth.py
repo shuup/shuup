@@ -40,8 +40,8 @@ def test_login_logs_the_user_in(client, regular_user, rf):
     prepare_user(regular_user)
     redirect_target = "/redirect-success/"
     response = client.post(reverse("shuup:login"), data={
-        "username": regular_user.username,
-        "password": REGULAR_USER_PASSWORD,
+        "auth-username": regular_user.username,
+        "auth-password": REGULAR_USER_PASSWORD,
         REDIRECT_FIELD_NAME: redirect_target
     })
 
@@ -59,8 +59,8 @@ def test_login_fails_without_valid_password(client, regular_user, rf):
     prepare_user(regular_user)
     get_default_shop()
     client.post(reverse("shuup:login"), data={
-        "username": regular_user.username,
-        "password": "x%s" % REGULAR_USER_PASSWORD,
+        "auth-username": regular_user.username,
+        "auth-password": "x%s" % REGULAR_USER_PASSWORD,
     })
     request = rf.get("/")
     request.session = client.session
@@ -74,8 +74,8 @@ def test_login_with_email_1(client, regular_user, rf):
     prepare_user(regular_user)
     redirect_target = "/redirect-success/"
     response = client.post(reverse("shuup:login"), data={
-        "username": regular_user.email,
-        "password": REGULAR_USER_PASSWORD,
+        "auth-username": regular_user.email,
+        "auth-password": REGULAR_USER_PASSWORD,
         REDIRECT_FIELD_NAME: redirect_target
     })
 
@@ -101,8 +101,8 @@ def test_login_with_email_2(client, regular_user, rf):
     prepare_user(regular_user)
     redirect_target = "/redirect-success/"
     client.post(reverse("shuup:login"), data={
-        "username": regular_user.email,
-        "password": REGULAR_USER_PASSWORD,
+        "auth-username": regular_user.email,
+        "auth-password": REGULAR_USER_PASSWORD,
         REDIRECT_FIELD_NAME: redirect_target
     })
 
@@ -112,8 +112,8 @@ def test_login_with_email_2(client, regular_user, rf):
 
     # Login with unknown email
     client.post(reverse("shuup:login"), data={
-        "username": "unknown@example.com",
-        "password": REGULAR_USER_PASSWORD,
+        "auth-username": "unknown@example.com",
+        "auth-password": REGULAR_USER_PASSWORD,
         REDIRECT_FIELD_NAME: redirect_target
     })
 
@@ -123,8 +123,8 @@ def test_login_with_email_2(client, regular_user, rf):
 
     # Login with username should work normally
     response = client.post(reverse("shuup:login"), data={
-        "username": regular_user.username,
-        "password": REGULAR_USER_PASSWORD,
+        "auth-username": regular_user.username,
+        "auth-password": REGULAR_USER_PASSWORD,
         REDIRECT_FIELD_NAME: redirect_target
     })
 
@@ -152,8 +152,8 @@ def test_login_with_email_3(client, regular_user, rf):
 
     # Login with new_user username should work even if there is users with same email
     response = client.post(reverse("shuup:login"), data={
-        "username": regular_user.email,
-        "password": new_user_password,
+        "auth-username": regular_user.email,
+        "auth-password": new_user_password,
         REDIRECT_FIELD_NAME: redirect_target
     })
 
@@ -172,8 +172,8 @@ def test_login_inactive_user_fails(client, regular_user, rf):
     prepare_user(regular_user)
 
     client.post(reverse("shuup:login"), data={
-        "username": regular_user.username,
-        "password": REGULAR_USER_PASSWORD,
+        "auth-username": regular_user.username,
+        "auth-password": REGULAR_USER_PASSWORD,
     })
 
     request = rf.get("/")
@@ -191,8 +191,8 @@ def test_login_inactive_user_fails(client, regular_user, rf):
     user_contact.save()
 
     client.post(reverse("shuup:login"), data={
-        "username": regular_user.username,
-        "password": REGULAR_USER_PASSWORD,
+        "auth-username": regular_user.username,
+        "auth-password": REGULAR_USER_PASSWORD,
     })
 
     request = rf.get("/")
@@ -214,8 +214,8 @@ def test_email_auth_form(rf, regular_user):
     shop = get_default_shop()
     prepare_user(regular_user)
     payload = {
-        "username": regular_user.username,
-        "password": REGULAR_USER_PASSWORD,
+        "auth-username": regular_user.username,
+        "auth-password": REGULAR_USER_PASSWORD,
     }
     request = apply_request_middleware(rf.get("/"), shop=shop)
     with override_provides("front_auth_form_field_provider", ["shuup_tests.front.utils.FieldTestProvider"]):
@@ -226,8 +226,8 @@ def test_email_auth_form(rf, regular_user):
         assert form.errors[FieldTestProvider.key][0] == FieldTestProvider.error_msg
 
         # accept terms
-        payload.update({FieldTestProvider.key: True})
-        form = EmailAuthenticationForm(request=request, data=payload)
+        payload.update({"auth-%s" % FieldTestProvider.key: True})
+        form = EmailAuthenticationForm(request=request, data=payload, prefix="auth")
         assert FieldTestProvider.key in form.fields
         assert form.is_valid()
 

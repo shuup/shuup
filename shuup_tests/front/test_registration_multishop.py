@@ -33,10 +33,10 @@ def test_registration_person_multiple_shops(django_user_model, client):
         email = "%s@shuup.local" % username
 
         client.post(reverse("shuup:registration_register"), data={
-            "username": username,
-            "email": email,
-            "password1": "password",
-            "password2": "password",
+            "registration-username": username,
+            "registration-email": email,
+            "registration-password1": "password",
+            "registration-password2": "password",
         }, HTTP_HOST="shop2.shuup.com")
 
         user = django_user_model.objects.get(username=username)
@@ -67,26 +67,26 @@ def test_registration_company_multiple_shops(django_user_model, client):
     ):
         url = reverse("shuup:registration_register_company")
         client.post(url, data={
-            'company-name': "Test company",
-            'company-name_ext': "test",
-            'company-tax_number': "12345",
-            'company-email': "test@example.com",
-            'company-phone': "123123",
-            'company-www': "",
-            'billing-street': "testa tesat",
-            'billing-street2': "",
-            'billing-postal_code': "12345",
-            'billing-city': "test test",
-            'billing-region': "",
-            'billing-region_code': "",
-            'billing-country': "FI",
-            'contact_person-first_name': "Test",
-            'contact_person-last_name': "Tester",
-            'contact_person-email': email,
-            'contact_person-phone': "123",
-            'user_account-username': username,
-            'user_account-password1': "password",
-            'user_account-password2': "password",
+            'registration_company-name': "Test company",
+            'registration_company-name_ext': "test",
+            'registration_company-tax_number': "12345",
+            'registration_company-email': "test@example.com",
+            'registration_company-phone': "123123",
+            'registration_company-www': "",
+            'registration_billing-street': "testa tesat",
+            'registration_billing-street2': "",
+            'registration_billing-postal_code': "12345",
+            'registration_billing-city': "test test",
+            'registration_billing-region': "",
+            'registration_billing-region_code': "",
+            'registration_billing-country': "FI",
+            'registration_contact_person-first_name': "Test",
+            'registration_contact_person-last_name': "Tester",
+            'registration_contact_person-email': email,
+            'registration_contact_person-phone': "123",
+            'registration_user_account-username': username,
+            'registration_user_account-password1': "password",
+            'registration_user_account-password2': "password",
         }, HTTP_HOST="shop1.shuup.com")
         user = django_user_model.objects.get(username=username)
         contact = PersonContact.objects.get(user=user)

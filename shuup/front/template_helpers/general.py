@@ -28,9 +28,14 @@ from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree
 
 
-def get_login_form(request):
-    # Getting the form from the Login view
-    form = cached_load("SHUUP_LOGIN_VIEW")(request=request).get_form()
+def get_login_form(request, form_prefix="login"):
+    """
+    Get a login form from the Login view. Use different prefixes when using the
+    same form in the same template to prevent duplicated fields ID
+    """
+    login_view = cached_load("SHUUP_LOGIN_VIEW")(request=request)
+    login_view.prefix = form_prefix
+    form = login_view.get_form()
     return form
 
 

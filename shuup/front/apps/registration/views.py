@@ -38,6 +38,7 @@ def registration_complete(request):
 
 class RegistrationViewMixin(object):
     template_name = "shuup/registration/register.jinja"
+    prefix = "registration"
 
     def get_success_url(self, *args, **kwargs):
         url = self.request.POST.get(REDIRECT_FIELD_NAME)

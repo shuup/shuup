@@ -45,17 +45,17 @@ def test_authenticate_form(client):
 
     # user didn't check the privacy policy agreement
     response = client.post(reverse("shuup:login"), data={
-        "username": user.email,
-        "password": "1234",
+        "auth-username": user.email,
+        "auth-password": "1234",
         REDIRECT_FIELD_NAME: redirect_target
     })
     assert response.status_code == 200
     assert "You must accept to this to authenticate." in response.content.decode("utf-8")
 
     response = client.post(reverse("shuup:login"), data={
-        "username": user.email,
-        "password": "1234",
-        "accept_%d" % privacy_policy.id: "on",
+        "auth-username": user.email,
+        "auth-password": "1234",
+        "auth-accept_%d" % privacy_policy.id: "on",
         REDIRECT_FIELD_NAME: redirect_target
     })
     assert response.status_code == 302
@@ -80,21 +80,21 @@ def test_register_form(client):
 
     # user didn't checked the privacy policy agreement
     response = client.post(reverse("shuup:registration_register"), data={
-        "username": "user",
-        "email": "user@admin.com",
-        "password1": "1234",
-        "password2": "1234",
+        "registration-username": "user",
+        "registration-email": "user@admin.com",
+        "registration-password1": "1234",
+        "registration-password2": "1234",
         REDIRECT_FIELD_NAME: redirect_target
     })
     assert response.status_code == 200
     assert "You must accept to this to register." in response.content.decode("utf-8")
 
     response = client.post(reverse("shuup:registration_register"), data={
-        "username": "user",
-        "email": "user@admin.com",
-        "password1": "1234",
-        "password2": "1234",
-        "accept_%d" % privacy_policy.id: "on",
+        "registration-username": "user",
+        "registration-email": "user@admin.com",
+        "registration-password1": "1234",
+        "registration-password2": "1234",
+        "registration-accept_%d" % privacy_policy.id: "on",
         REDIRECT_FIELD_NAME: redirect_target
     })
     assert response.status_code == 302
