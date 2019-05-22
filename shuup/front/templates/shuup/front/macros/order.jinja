@@ -19,7 +19,7 @@
         <table class="table">
             {% for attachment in attachments %}
                 <tr>
-                    <td><a href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a></td>
+                    <td><a href="{{ attachment.url }}" target="_blank">{{ attachment.title if attachment.title else attachment.product.name }} {% if attachment.file %}({{ (attachment.file.size / 1024 / 1024)|int }} MB){% endif %}</a></td>
                     <td>
                         {% if attachment.description %}
                             {{ attachment.description|linebreaksbr }}
