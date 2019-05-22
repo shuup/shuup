@@ -36,6 +36,7 @@ class GDPRSettingsForm(MultiLanguageModelForm):
         exclude = ("shop",)
         model = GDPRSettings
         widgets = {
+            "auth_consent_text": TextEditorWidget(),
             "cookie_banner_content": TextEditorWidget(),
             "cookie_privacy_excerpt": TextEditorWidget(),
             "privacy_policy_page": QuickAddPageSelect(editable_model="shuup_simple_cms.Page"),

@@ -20,6 +20,11 @@ from shuup.gdpr.utils import get_active_consent_pages
 from shuup.utils.djangoenv import has_installed
 
 
+class TextOnlyWidget(forms.Widget):
+    def render(self, name, value, attrs=None, renderer=None):
+        return mark_safe(self.attrs.get("value", ""))
+
+
 class GDPRFormDefProvider(FormDefProvider):
 
     def get_definitions(self, **kwargs):
@@ -29,17 +34,21 @@ class GDPRFormDefProvider(FormDefProvider):
         return [FormDefinition('agreement', CompanyAgreementForm, required=True)]
 
 
+def get_gdpr_settings(request):
+    if not has_installed("shuup.gdpr") or not request:
+        return None
+
+    gdpr_settings = GDPRSettings.get_for_shop(request.shop)
+    return (gdpr_settings if gdpr_settings.enabled else None)
+
+
 class GDPRFieldProvider(FormFieldProvider):
     error_message = ""
 
     def get_fields(self, **kwargs):
         request = kwargs.get("request", None)
-
-        if not has_installed("shuup.gdpr") or not request:
-            return []
-
-        gdpr_settings = GDPRSettings.get_for_shop(request.shop)
-        if not gdpr_settings.enabled:
+        gdpr_settings = get_gdpr_settings(request)
+        if not gdpr_settings:
             return []
 
         fields = []
@@ -67,3 +76,25 @@ class GDPRCheckoutFieldProvider(GDPRFieldProvider):
 
 class GDPRAuthFieldProvider(GDPRFieldProvider):
     error_message = _("You must accept to this to authenticate.")
+
+    def get_fields(self, **kwargs):
+        request = kwargs.get("request", None)
+        gdpr_settings = get_gdpr_settings(request)
+        if not gdpr_settings:
+            return []
+
+        if gdpr_settings.skip_consent_on_auth:
+            auth_consent_text = gdpr_settings.safe_translation_getter("auth_consent_text")
+            return [
+                FormFieldDefinition(
+                    name="auth_consent_text",
+                    field=forms.CharField(
+                        label="",
+                        initial="",
+                        required=False,
+                        widget=TextOnlyWidget(attrs={"value": auth_consent_text})
+                    )
+                )
+            ]
+        else:
+            return super(GDPRAuthFieldProvider, self).get_fields(**kwargs)

@@ -7,5 +7,6 @@
     {{ bs3.field(base_form.enabled) }}
     {{ bs3.field(base_form.privacy_policy_page) }}
     {{ bs3.field(base_form.consent_pages) }}
-    {{ language_dependent_content_tabs(base_form, ["cookie_banner_content", "cookie_privacy_excerpt"]) }}
+    {{ bs3.field(base_form.skip_consent_on_auth) }}
+    {{ language_dependent_content_tabs(base_form, ["cookie_banner_content", "cookie_privacy_excerpt", "auth_consent_text"]) }}
 {% endcall %}

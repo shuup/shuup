@@ -6,8 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth import get_user_model
+from bs4 import BeautifulSoup
+from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
 from django.core.urlresolvers import reverse
 from django.test import override_settings
 from django.utils.translation import activate
@@ -20,7 +20,7 @@ from shuup.simple_cms.admin_module.views import PageForm
 from shuup.simple_cms.models import Page
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.utils import SmartClient
+from shuup_tests.utils import printable_gibberish, SmartClient
 
 User = get_user_model()
 
@@ -43,6 +43,12 @@ def test_authenticate_form(client):
     redirect_target = "/redirect-success/"
     client = SmartClient()
 
+    login_url = reverse("shuup:login")
+    response = client.get(login_url)
+    soup = BeautifulSoup(response.content)
+    login_form = soup.find("form", {"action": "/login/"})
+    assert len(login_form.findAll("input")) == 5  # 4 + privacy policy checkbox
+
     # user didn't check the privacy policy agreement
     response = client.post(reverse("shuup:login"), data={
         "username": user.email,
@@ -61,6 +67,44 @@ def test_authenticate_form(client):
     assert response.status_code == 302
     assert response.get("location")
     assert response.get("location").endswith(redirect_target)
+
+
+@pytest.mark.django_db
+def test_authenticate_form_without_consent_checkboxes(client):
+    activate("en")
+    shop = factories.get_default_shop()
+    user = factories.create_random_user("en")
+    user.email = "admin@admin.com"
+    user.set_password("1234")
+    user.save()
+
+    consent_text = printable_gibberish()
+    gdpr_settings = GDPRSettings.get_for_shop(shop)
+    gdpr_settings.enabled = True
+    gdpr_settings.skip_consent_on_auth = True
+    gdpr_settings.auth_consent_text = consent_text
+    gdpr_settings.save()
+
+    # create privacy policy GDPR document
+    privacy_policy = ensure_gdpr_privacy_policy(shop)
+
+    redirect_target = "/redirect-success/"
+    client = SmartClient()
+
+    login_url = reverse("shuup:login")
+    response = client.get(login_url)
+    soup = BeautifulSoup(response.content)
+    login_form = soup.find("form", {"action": "/login/"})
+    assert len(login_form.findAll("input")) == 4
+    assert consent_text in login_form.text
+
+    # user didn't check the privacy policy agreement
+    response = client.post(login_url, data={
+        "username": user.email,
+        "password": "1234",
+        REDIRECT_FIELD_NAME: redirect_target
+    })
+    assert response.status_code == 302
 
 
 @pytest.mark.django_db
