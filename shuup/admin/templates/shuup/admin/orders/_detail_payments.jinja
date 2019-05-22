@@ -13,7 +13,13 @@
         {% for payment in payments %}
             <tr>
                 <td>{{ payment.created_on|datetime }}</td>
-                <td>{{ payment.payment_identifier }}</td>
+                {% if has_installed("shuup_stripe") and payment.payment_identifier and payment.payment_identifier.startswith("Stripe-") %}
+                    {% set stripe_id = payment.payment_identifier.split("-", 1)[1] %}
+                    {% set stripe_url =  "https://dashboard.stripe.com/payments/%s" % stripe_id %}
+                    <td><a href="{{ stripe_url }}" target="_blank">{{ payment.payment_identifier }}</a></td>
+                {% else %}
+                    <td>{{ payment.payment_identifier }}</td>
+                {% endif %}
                 <td>{{ payment.description }}</td>
                 <td class="text-right">{{ payment.amount|money }}</td>
                 <td>

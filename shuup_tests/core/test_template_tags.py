@@ -15,7 +15,8 @@ from jinja2 import Template
 
 from shuup.core.models import Shop
 from shuup.core.templatetags.shuup_common import (
-    get_global_configuration, get_shop_configuration, money, number, percent
+    get_global_configuration, get_shop_configuration, has_installed,
+    money, number, percent
 )
 from shuup.utils.money import Money
 
@@ -213,3 +214,8 @@ def test_get_global_configuration(conf_get_mock, rf):
 def test_get_global_configuration_with_default(conf_get_mock, rf):
     get_global_configuration('some_variable', 'default')
     conf_get_mock.assert_called_once_with(None, 'some_variable', 'default')
+
+
+def test_has_installed():
+    assert has_installed("shuup.core")
+    assert not has_installed("shuup_stripe")

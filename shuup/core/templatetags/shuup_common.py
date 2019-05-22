@@ -29,6 +29,7 @@ from django_jinja import library
 from jinja2.runtime import Undefined
 from jinja2.utils import contextfunction
 
+from shuup.utils import djangoenv
 from shuup.utils.i18n import (
     format_money, format_percent, get_current_babel_locale
 )
@@ -163,3 +164,8 @@ def get_global_configuration(name, default=None):
     """
     from shuup import configuration
     return configuration.get(None, name, default)
+
+
+@library.global_function
+def has_installed(app_name):
+    return djangoenv.has_installed(app_name)
