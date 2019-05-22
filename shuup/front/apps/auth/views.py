@@ -39,8 +39,14 @@ class LoginView(FormView):
         kwargs['request'] = self.request
         return kwargs
 
-    def get_form(self, form_class=None):
-        form = super(LoginView, self).get_form(form_class)
+    def get_form(self, form_class=None, id_prefix="auth"):
+        if form_class is None:
+            form_class = self.get_form_class()
+
+        kwargs = self.get_form_kwargs()
+        kwargs['auto_id'] = "id_{}_for_%s".format(id_prefix)
+
+        form = form_class(**kwargs)
         form.fields[REDIRECT_FIELD_NAME] = forms.CharField(
             widget=forms.HiddenInput,
             required=False,

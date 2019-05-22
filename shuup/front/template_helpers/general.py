@@ -28,9 +28,9 @@ from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree
 
 
-def get_login_form(request):
+def get_login_form(request, id_prefix="quick-login"):
     # Getting the form from the Login view
-    form = cached_load("SHUUP_LOGIN_VIEW")(request=request).get_form()
+    form = cached_load("SHUUP_LOGIN_VIEW")(request=request).get_form(id_prefix=id_prefix)
     return form
 
 
