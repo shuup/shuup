@@ -29,6 +29,11 @@ class GDPRSettings(TranslatableModel):
         verbose_name=_('enabled'),
         help_text=_("Define if the GDPR is active.")
     )
+    skip_consent_on_auth = models.BooleanField(
+        default=False,
+        verbose_name=_("skip consent on login"),
+        help_text=_("Do not require consent on login when GDPR is activated.")
+    )
     privacy_policy_page = models.ForeignKey(
         "shuup_simple_cms.Page",
         null=True,
@@ -51,6 +56,12 @@ class GDPRSettings(TranslatableModel):
             blank=True,
             verbose_name=_("cookie privacy excerpt"),
             help_text=_("The summary text to be presented about cookie privacy.")
+        ),
+        auth_consent_text=models.TextField(
+            blank=True,
+            verbose_name=_("login consent text"),
+            help_text=_("Shown in login page between the form and the button. "
+                        "Optional but should be considered when the consent on login is disabled.")
         )
     )
 
@@ -69,6 +80,8 @@ class GDPRSettings(TranslatableModel):
             self.cookie_banner_content = settings.SHUUP_GDPR_DEFAULT_BANNER_STRING
             self.cookie_privacy_excerpt = settings.SHUUP_GDPR_DEFAULT_EXCERPT_STRING
             self.save()
+
+        self.set_current_language(language)
         activate(language)
 
     @classmethod
