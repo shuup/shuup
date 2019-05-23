@@ -655,20 +655,27 @@ def test_product_variations_cache(admin_user):
     assert products_data[0]["variations"][0]["product"]["is_orderable"]
 
 
-def add_product_image(product):
-    media1 = ProductMedia.objects.create(product=product,
-                                         kind=ProductMediaKind.IMAGE,
-                                         file=get_random_filer_image(),
-                                         enabled=True,
-                                         public=True)
-    media2 = ProductMedia.objects.create(product=product,
-                                         kind=ProductMediaKind.IMAGE,
-                                         file=get_random_filer_image(),
-                                         enabled=True,
-                                         public=True)
+def add_product_image(product, purchased=False):
+    media1 = ProductMedia.objects.create(
+        product=product,
+        kind=ProductMediaKind.IMAGE,
+        file=get_random_filer_image(),
+        enabled=True,
+        public=True,
+        purchased=purchased
+    )
+    media2 = ProductMedia.objects.create(
+        product=product,
+        kind=ProductMediaKind.IMAGE,
+        file=get_random_filer_image(),
+        enabled=True,
+        public=True,
+        purchased=purchased
+    )
     product.primary_image = media1
     product.media.add(media2)
     product.save()
+    return (media1, media2)
 
 
 @pytest.mark.parametrize("prices_include_tax, product_price, discount, tax_rate, taxful_price, taxless_price", [
