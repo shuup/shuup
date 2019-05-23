@@ -152,15 +152,15 @@ def register_test(browser, live_server, test_username, test_email, test_password
     click_element(browser, "div.clearfix button.btn.btn-primary.btn-lg.pull-right")
     wait_until_condition(browser, lambda x: x.is_text_present("Register"))
 
-    browser.find_by_id("id_username").fill(test_username)
-    browser.find_by_id("id_email").fill(test_email)
-    browser.find_by_id("id_password1").fill(test_password)
-    browser.find_by_id("id_password2").fill("typo-%s" % test_password)
+    browser.find_by_id("id_registration_for_username").fill(test_username)
+    browser.find_by_id("id_registration_for_email").fill(test_email)
+    browser.find_by_id("id_registration_for_password1").fill(test_password)
+    browser.find_by_id("id_registration_for_password2").fill("typo-%s" % test_password)
     click_element(browser, "div.clearfix button.btn.btn-primary.btn-lg.pull-right")
     wait_until_appeared(browser, "div.form-group.passwordinput.required.has-error")
 
-    browser.find_by_id("id_password1").fill(test_password)
-    browser.find_by_id("id_password2").fill(test_password)
+    browser.find_by_id("id_registration_for_password1").fill(test_password)
+    browser.find_by_id("id_registration_for_password2").fill(test_password)
     click_element(browser, "div.clearfix button.btn.btn-primary.btn-lg.pull-right")
 
     wait_until_condition(browser, lambda x: x.is_text_present("Addresses"))
