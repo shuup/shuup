@@ -60,14 +60,14 @@ class ShippingReport(OrderReportMixin, ShuupReportBase):
 
         for key, group in itertools.groupby(self.get_objects(), get_group_func):
             orders = set()
-            zero_price = total_charged = self.shop.create_price(0)
+            zero_price = total_charged = self.shop.create_price(0).amount
 
             # keep track the last one
             order_line = None
 
             for order_line in group:
                 orders.add(order_line.order_id)
-                total_charged += order_line.taxful_price
+                total_charged += order_line.taxful_price.amount
 
             if total_charged > zero_price:
                 data.append({

@@ -39,7 +39,7 @@ from shuup.testing.factories import (
     get_default_payment_method, get_default_product,
     get_default_shipping_method, get_default_shop, get_default_supplier,
     get_default_tax_class, get_initial_order_status, get_test_tax,
-    OrderLineType, UserFactory
+    OrderLineType, UserFactory, get_shop, get_payment_method
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.i18n import get_current_babel_locale
@@ -761,15 +761,17 @@ def test_taxes_report(rf):
         assert tax["total"] == str(expected_result[ix]["total"])
 
 
-def seed_source(shipping_method=None, produce_price=10):
-    source = BasketishOrderSource(get_default_shop())
+def seed_source(shipping_method=None, produce_price=10, shop=None):
+    if not shop:
+        shop = get_default_shop()
+    source = BasketishOrderSource(shop)
     billing_address = get_address()
     shipping_address = get_address(name="Shippy Doge")
     source.status = get_initial_order_status()
     source.billing_address = billing_address
     source.shipping_address = shipping_address
     source.customer = create_random_person()
-    source.payment_method = get_default_payment_method()
+    source.payment_method = get_payment_method(shop=shop)
     source.shipping_method = shipping_method if shipping_method else get_default_shipping_method()
     source.add_line(
         type=OrderLineType.PRODUCT,
@@ -781,27 +783,28 @@ def seed_source(shipping_method=None, produce_price=10):
     return source
 
 
+@pytest.mark.parametrize("prices_include_tax", (False, True))
 @pytest.mark.django_db
-def test_shipping_report(rf):
-    shop = get_default_shop()
+def test_shipping_report(rf, prices_include_tax):
+    shop = get_shop(prices_include_tax=prices_include_tax)
     tax_class = get_default_tax_class()
     creator = OrderCreator()
 
     carrier1 = CustomCarrier.objects.create(name="Carrier1")
-    sm1 = carrier1.create_service(None, shop=get_default_shop(), enabled=True, tax_class=tax_class, name="SM #1")
+    sm1 = carrier1.create_service(None, shop=shop, enabled=True, tax_class=tax_class, name="SM #1")
     sm1.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=Decimal(10)))
-    sm2 = carrier1.create_service(None, shop=get_default_shop(), enabled=True, tax_class=tax_class, name="SM #2")
+    sm2 = carrier1.create_service(None, shop=shop, enabled=True, tax_class=tax_class, name="SM #2")
     sm2.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=Decimal(99)))
     sm2.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=Decimal(4)))
 
     carrier2 = CustomCarrier.objects.create(name="Carrier2")
-    sm3 = carrier2.create_service(None, shop=get_default_shop(), enabled=True, tax_class=tax_class, name="SM #3")
+    sm3 = carrier2.create_service(None, shop=shop, enabled=True, tax_class=tax_class, name="SM #3")
     sm3.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=Decimal(5)))
 
-    source1 = seed_source(sm1)
-    source2 = seed_source(sm1)
-    source3 = seed_source(sm2)
-    source4 = seed_source(sm3)
+    source1 = seed_source(sm1, shop=shop)
+    source2 = seed_source(sm1, shop=shop)
+    source3 = seed_source(sm2, shop=shop)
+    source4 = seed_source(sm3, shop=shop)
 
     creator.create_order(source1)
     creator.create_order(source2)
