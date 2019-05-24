@@ -20,14 +20,14 @@ from shuup.core.excs import (
 )
 from shuup.core.models import (
     AnonymousContact, Order, OrderLine, OrderLineTax, OrderLineType,
-    OrderStatus, PaymentStatus, ShippingStatus
+    OrderStatus, PaymentStatus, ProductMedia, ProductMediaKind, ShippingStatus
 )
 from shuup.core.pricing import get_pricing_module, TaxfulPrice, TaxlessPrice
 from shuup.testing.factories import (
-    _get_pricing_context, add_product_to_order, create_empty_order,
+    add_product_to_order, create_empty_order,
     create_order_with_product, create_product, get_address,
     get_default_product, get_default_shop, get_default_supplier,
-    get_default_tax, get_initial_order_status
+    get_default_tax, get_initial_order_status, get_random_filer_image
 )
 from shuup.utils.money import Money
 from shuup_tests.simple_supplier.utils import get_simple_supplier
@@ -834,3 +834,54 @@ def test_product_summary():
     assert all(product_summary.keys())
     summary = product_summary[product.id]
     assert_defaultdict_values(summary, ordered=2, shipped=1, refunded=2, unshipped=0)
+
+
+def add_product_image(product, purchased=False):
+    media1 = ProductMedia.objects.create(
+        product=product,
+        kind=ProductMediaKind.IMAGE,
+        file=get_random_filer_image(),
+        enabled=True,
+        public=True,
+        purchased=purchased
+    )
+    media2 = ProductMedia.objects.create(
+        product=product,
+        kind=ProductMediaKind.IMAGE,
+        file=get_random_filer_image(),
+        enabled=True,
+        public=True,
+        purchased=purchased
+    )
+    product.primary_image = media1
+    product.media.add(media2)
+    product.save()
+    return (media1, media2)
+
+
+@pytest.mark.django_db
+def test_product_purchasable_media():
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+    )
+    medias = add_product_image(product, True)
+    supplier.adjust_stock(product.id, 5)
+
+    # Order with 2 unshipped, non-refunded items and a shipping cost
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+
+    order.create_shipment_of_all_products(supplier=supplier)
+    order.shipping_status = ShippingStatus.FULLY_SHIPPED
+    order.create_payment(order.taxful_total_price)
+    currency = order.currency
+    assert order.payments.exists(), "A payment was created"
+    with pytest.raises(NoPaymentToCreateException):
+        order.create_payment(Money(6, currency))
+
+    order.save()
+    assert order.is_paid()
+    assert order.get_purchased_attachments().count() == len(medias)
