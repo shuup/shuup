@@ -36,33 +36,63 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-(function(){
-    var shouldCopyFields = false;
-
-    function copyFieldValue() {
-        if(!shouldCopyFields) {
-            return;
+<script type="text/javascript">
+    $(function(){
+        var shouldCopyFields = false;
+        function toggleAndCopyFields() {
+            shouldCopyFields = $("#billing-to-shipping").is(":checked");
+            if (shouldCopyFields) {
+                // copy all billing fields values to shipping fields
+                $(".billing-address :input").each(function (index, element) {
+                    copyFieldValue(this);
+                });
+            }
+            $(".shipping-address :input")
+                .attr("readonly", shouldCopyFields)
+                .toggleClass("disabled", shouldCopyFields)
+                .trigger("change");
+            // copy all billing fields values to shipping fields AGAIN
+            // this is required when region app is enabled
+            // as we can't guarantee the order fields are copied.
+            // the region code could be copied before the country and when country
+            // is changed, the region code field can be replaced by a select and
+            // have options created. this way, we should copy values
+            // before the `change` event trigged above and once again after
+            // all fields get changed
+            if (shouldCopyFields) {
+                $(".billing-address :input").each(function (index, element) {
+                    copyFieldValue(this);
+                });
+            }
         }
-        var targetName = $(this).attr("id").split("-")[1];
-        var $target = $("#id_shipping_address-"+targetName);
-        $target.val($(this).val());
-        if($target.is('select')) {
-            $target.select2().val($(this).select2().val())
+        function copyFieldValue(element) {
+            if(!shouldCopyFields || !element)
+                return;
+            var targetName = $(element).attr("id").split("-")[1];
+            var $target = $("#id_shipping_address-" + targetName);
+            $target.val(element.value);
+            $target.trigger("change");
         }
-    }
-
-    $('#billing-to-shipping').click(function(){
-        if($(this).is(':checked')){
-            shouldCopyFields = true;
-            $('.billing-address :input').change();
-        } else {
-            shouldCopyFields = false;
+        function activateCheckoutAddressCopy() {
+            $("#id_shipping-country").attr("readonly", true);
+            toggleAndCopyFields();
+            $("#billing :input").on("input change", function (evt) {
+                copyFieldValue(evt.target);
+            });
+            $("#billing-to-shipping").on("change", toggleAndCopyFields);
         }
+        activateCheckoutAddressCopy();
+        // we detectec that a field could be replaced by any other input
+        // in cases like regions module is injected
+        // this way, we must attach the event again
+        document.addEventListener("regionFieldInitialized", function (evt) {
+            if ($(evt.detail.field).attr("name").indexOf("billing") >= 0) {
+                $(evt.detail.field).on("input change", function (evt) {
+                    copyFieldValue(evt.target)
+                });
+            }
+        });
     });
-
-    $('.billing-address :input').on("input change", copyFieldValue);
-}());
 </script>
 {% endblock %}
 
