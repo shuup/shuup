@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import MutableAddress, Shop, Supplier
 
@@ -23,7 +24,8 @@ class SupplierBaseForm(ShuupAdminForm):
         model = Supplier
         exclude = ("module_data", "options", "contact_address")
         widgets = {
-            "module_identifier": forms.Select
+            "module_identifier": forms.Select,
+            "description": TextEditorWidget()
         }
 
     def __init__(self, *args, **kwargs):
