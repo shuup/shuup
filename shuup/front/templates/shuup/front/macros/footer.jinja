@@ -25,12 +25,11 @@
 
         <div class="footer-bottom">
             <div class="container">
-                    {% placeholder "footer-bottom" global %}{% endplaceholder %}
-                    {% set powered_by_content = shuup.general.get_powered_by_content() %}
-                    {% if powered_by_content %}
-                        {{ powered_by_content|safe }}
-                    {% endif %}
-                </div>
+                {% placeholder "footer-bottom" global %}{% endplaceholder %}
+                {% set powered_by_content = shuup.general.get_powered_by_content() %}
+                {% if powered_by_content %}
+                    {{ powered_by_content|safe }}
+                {% endif %}
             </div>
         </div>
     </footer>
