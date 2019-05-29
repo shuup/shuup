@@ -83,9 +83,9 @@ def change_addresses(live_server, browser, order):
     # Now update both same time
     browser.visit("%s%s" % (live_server, edit_url))
     wait_until_condition(browser, condition=lambda x: x.is_text_present(edit_address_title))
-    click_element(browser, "#billing-to-shipping")
     new_name = "%s (edited)" % order.billing_address.name
     browser.fill("billing_address-name", new_name)
+    click_element(browser, "#billing-to-shipping")
     click_element(browser, "button[form='edit-addresses']")
     check_log_entries_count(browser, order, order_edited_log_entries + 4)
     order.refresh_from_db()
