@@ -89,6 +89,11 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("type", ProductCrossSell.type.field.formfield()),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
+        ("use_variation_parents", forms.BooleanField(
+            label=_("Show variation parents"),
+            help_text=_("Render variation parents instead of the children."),
+            initial=False, required=False
+        )),
         ("orderable_only", forms.BooleanField(
             label=_("Only show in-stock and orderable items"),
             initial=True, required=False,
@@ -122,6 +127,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         return {
             "request": context["request"],
             "title": self.get_translated_value("title"),
+            "use_variation_parents": self.config.get("use_variation_parents", False),
             "product": product,
             "type": type,
             "count": count,

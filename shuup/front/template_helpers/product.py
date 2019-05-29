@@ -12,7 +12,7 @@ from jinja2.utils import contextfunction
 
 from shuup.core.models import (
     AttributeVisibility, get_person_contact, Product, ProductAttribute,
-    ProductCrossSell, ProductCrossSellType, ShopProduct, Supplier
+    ProductCrossSell, ProductCrossSellType, ProductMode, ShopProduct, Supplier
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils import cache as cache_utils
@@ -48,10 +48,10 @@ def is_visible(context, product):
     return shop_product.is_visible(request.customer)
 
 
-@contextfunction
+@contextfunction    # noqa (C901)
 def get_product_cross_sells(
         context, product, relation_type=ProductCrossSellType.RELATED,
-        count=4, orderable_only=True):
+        count=4, orderable_only=True, use_variation_parents=False):
     request = context["request"]
 
     key, products = context_cache.get_cached_value(
@@ -61,21 +61,36 @@ def get_product_cross_sells(
         product=product,
         relation_type=relation_type,
         count=count,
-        orderable_only=orderable_only
+        orderable_only=orderable_only,
+        use_variation_parents=use_variation_parents
     )
 
     if products is not None:
         return products
 
     rtype = map_relation_type(relation_type)
-    related_product_ids = list((
-        ProductCrossSell.objects
-        .filter(product1=product, type=rtype)
-        .order_by("weight")[:(count * 4)]).values_list("product2_id", flat=True)
+
+    # if this product is parent, then use all children instead
+    if product.mode in [ProductMode.VARIABLE_VARIATION_PARENT, ProductMode.SIMPLE_VARIATION_PARENT]:
+        cross_sell_products = ProductCrossSell.objects.filter(
+            product1__in=product.variation_children.all(),
+            type=rtype
+        )
+    else:
+        cross_sell_products = ProductCrossSell.objects.filter(product1=product, type=rtype)
+
+    related_product_ids = list(
+        cross_sell_products.order_by("weight")[:(count * 4)].values_list("product2_id", flat=True)
     )
 
-    related_products = []
+    sorted_related_products = []
     for product in Product.objects.filter(id__in=related_product_ids):
+        sort_order = related_product_ids.index(product.pk)
+
+        # use the variation parent when configured
+        if use_variation_parents and product.variation_parent:
+            product = product.variation_parent
+
         try:
             shop_product = product.get_shop_instance(request.shop, allow_cache=True)
         except ShopProduct.DoesNotExist:
@@ -84,15 +99,20 @@ def get_product_cross_sells(
             for supplier in Supplier.objects.enabled():
                 if shop_product.is_orderable(
                         supplier, request.customer, shop_product.minimum_purchase_quantity, allow_cache=True):
-                    related_products.append(product)
+                    sorted_related_products.append((sort_order, product))
                     break
         elif shop_product.is_visible(request.customer):
-            related_products.append(product)
+            sorted_related_products.append((sort_order, product))
 
     # Order related products by weight. Related product ids is in weight order.
     # If same related product is linked twice to product then lowest weight stands.
-    related_products.sort(key=lambda prod: list(related_product_ids).index(prod.id))
-    products = related_products[:count]
+    sorted_related_products.sort(key=lambda pair: pair[0])
+    products = []
+
+    for sort_order, product in sorted_related_products[:count]:
+        if product not in products:
+            products.append(product)
+
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 

@@ -9,10 +9,13 @@ from django.core.management.base import BaseCommand
 from django.db.transaction import atomic
 
 from shuup.core.models import (
-    OrderLine, OrderLineType, ProductCrossSell, ProductCrossSellType
+    OrderLine, OrderLineType, ProductCrossSell, ProductCrossSellType, Shop
 )
-from shuup.core.utils.product_bought_with_relations import \
+from shuup.core.utils import context_cache
+from shuup.core.utils.product_bought_with_relations import (
     add_bought_with_relations_for_product
+)
+from shuup.front.utils import cache as cache_utils
 
 
 class Command(BaseCommand):
@@ -22,20 +25,14 @@ class Command(BaseCommand):
         # Clear all existing ProductCrossSell objects
         ProductCrossSell.objects.filter(type=ProductCrossSellType.BOUGHT_WITH).delete()
 
-        queryset = OrderLine.objects.filter(type=OrderLineType.PRODUCT)
+        # Handle all ordered products
+        ordered_product_ids = OrderLine.objects.filter(type=OrderLineType.PRODUCT).values_list("product_id", flat=True)
         seen_product_ids = set()
-
-        # Handle all ordered normal products
-        ordered_normal_prduct_ids = set(
-            queryset.filter(product__variation_parent__isnull=True).values_list("product_id", flat=True))
-
-        # Handle all ordered variation parents
-        ordered_variation_parent_ids = set(
-            queryset.values_list("product__variation_parent_id", flat=True))
-
-        for product_id in set(ordered_normal_prduct_ids).union(set(ordered_variation_parent_ids)):
+        for product_id in ordered_product_ids:
             if product_id in seen_product_ids:
                 continue
-
             seen_product_ids.add(product_id)
             add_bought_with_relations_for_product(product_id)
+
+        for shop in Shop.objects.all():
+            context_cache.bump_cache_for_item(cache_utils.get_cross_sells_cache_item(shop))
