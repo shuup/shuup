@@ -9,13 +9,13 @@
 
 // CustomEvent polyfill
 // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+function CustomEvent(event, params) {
+    params = params || { bubbles: false, cancelable: false, detail: null };
+    const evt = document.createEvent("CustomEvent");
+    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+    return evt;
+}
 if (typeof window.CustomEvent !== "function") {
-    function CustomEvent(event, params) {
-        params = params || { bubbles: false, cancelable: false, detail: null };
-        var evt = document.createEvent('CustomEvent');
-        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-        return evt;
-    }
     CustomEvent.prototype = window.Event.prototype;
     window.CustomEvent = CustomEvent;
 }
@@ -24,21 +24,25 @@ if (typeof window.CustomEvent !== "function") {
 function debounce(func, wait, immediate) {
     let timeout;
     return function () {
-        let context = this, args = arguments;
-        let later = function () {
+        const context = this, args = arguments;
+        const later = function () {
             timeout = null;
-            if (!immediate) func.apply(context, args);
+            if (!immediate) {
+                func.apply(context, args);
+            }
         };
-        let callNow = immediate && !timeout;
+        const callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
+        if (callNow) {
+            func.apply(context, args);
+        }
     };
-};
+}
 
-window.refreshFilters = debounce(function refreshFilters(pageNumber) {
+window.refreshFilters = debounce(function refreshFilters(pageNumber = 1) {
     var pagination = $("ul.pagination");
-    var state = { page: pageNumber ? pageNumber : 1 };
+    var state = { page: pageNumber || 1 };
     $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
         var filterObj = $("#id_" + key);
 
@@ -83,7 +87,9 @@ window.refreshFilters = debounce(function refreshFilters(pageNumber) {
         window.PAGE_NUMBER = pageNumber;
     }
 
-    reloadProducts(filterString);
+    reloadProducts(filterString, () => {
+        pagination.prop("disabled", false);
+    });
 
     if (window.history && window.history.pushState) {
         history.pushState(state, null, filterString);
@@ -121,9 +127,10 @@ function getFilterString(state) {
     return "?" + serializeParams(filters);
 }
 
-function reloadProducts(filterString) {
+function reloadProducts(filterString, onComplete = null) {
     const $cont = $("#ajax_content");
     if ($cont.length === 0) {
+        onComplete();
         return;
     }
     const $prods = $(".products-wrap");
@@ -135,7 +142,7 @@ function reloadProducts(filterString) {
     // this is to ensure browser back/forward from different domain does a full refresh
     filterString += (filterString === "") ? "?" : "&";
     filterString += "ajax=1";
-    $cont.load(location.pathname + filterString);
+    $cont.load(location.pathname + filterString, onComplete);
 }
 
 $(function () {
@@ -156,8 +163,8 @@ $(function () {
         const $field = $("#id_" + key);
 
         if ($field.parent(".form-group").hasClass("has-error")) {
-            const host_str = '//' + location.host + location.pathname;
-            window.location.href = host_str;
+            const hostStr = "//" + location.host + location.pathname;
+            window.location.href = hostStr;
         }
         if (!$field.data("no-auto-update")) {
             $field.on("change", function () {
