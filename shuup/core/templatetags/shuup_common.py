@@ -163,3 +163,15 @@ def get_global_configuration(name, default=None):
     """
     from shuup import configuration
     return configuration.get(None, name, default)
+
+
+@library.global_function
+def get_shuup_version():
+    from shuup import __version__
+    return __version__
+
+
+@library.global_function
+def shuup_static(path):
+    from shuup.core.utils.static import get_shuup_static_url
+    return get_shuup_static_url(path)

@@ -10,6 +10,7 @@
     {% if not quantity %}
         {%- set quantity = shop_product.rounded_minimum_purchase_quantity -%}
     {% endif %}
+
     <div id="product-price-section">
         {% if request.is_ajax() %}
             <script type="text/javascript">
@@ -69,7 +70,6 @@
     {% else %}
         {%- set product_id = shop_product.product.pk -%}
     {% endif %}
-
     <input type="hidden" name="command" value="add_var">
     <input type="hidden" name="product_id" id="product_id" value="{{ shop_product.product.id }}">
     <div class="product-variations">

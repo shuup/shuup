@@ -11,13 +11,13 @@
         {% if request.GET.autoRefresh %}
             <meta http-equiv="refresh" content="{{ request.GET.autoRefresh }}"/>
         {% endif %}
-        <link href="{{ static("shuup_admin/img/favicon.ico") }}" rel="icon" type="image/x-icon">
-        <link href="{{ static("shuup_admin/css/base.css") }}" rel="stylesheet" type="text/css">
+        <link href="{{ shuup_static("shuup_admin/img/favicon.ico") }}" rel="icon" type="image/x-icon">
+        <link href="{{ shuup_static("shuup_admin/css/base.css") }}" rel="stylesheet" type="text/css">
         {% block extra_css %}{% endblock -%}
         {% block extra_head %}{% endblock -%}
         {% set conf = shuup_admin.get_config() %}
         <script>var ShuupAdminConfig = {{ conf|json }};</script>
-        <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
+        <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}&v={{ get_shuup_version() }}"></script>
     </head>
     <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}{% if not conf["menuOpen"] %} desktop-menu-closed{% endif %}">
         {% if iframe_close %}
@@ -79,8 +79,8 @@
         {% endblock %}
         {% block post_content %}{% endblock %}
         {% endif %}
-        <script src="{{ static("shuup_admin/js/vendor.js") }}"></script>
-        <script src="{{ static("shuup_admin/js/base.js") }}"></script>
+        <script src="{{ shuup_static("shuup_admin/js/vendor.js") }}"></script>
+        <script src="{{ shuup_static("shuup_admin/js/base.js") }}"></script>
         {% block extra_js %}{% endblock %}
         {% if messages %}
         <script>

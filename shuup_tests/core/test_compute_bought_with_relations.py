@@ -69,7 +69,6 @@ def test_product_relations_max_quantity(rf):
     assert ProductCrossSell.objects.filter(weight=11).exists()
 
 
-
 def _init_test_with_variations():
     shop = get_default_shop()
     supplier = get_default_supplier()
@@ -101,7 +100,7 @@ def _init_test_with_variations():
     order = create_order_with_product(black_t_shirt, supplier, quantity=1, taxless_base_unit_price=6, shop=shop)
     add_product_to_order(order, supplier, black_hoodie, quantity=1, taxless_base_unit_price=6)
 
-    return black_t_shirt.variation_parent, black_hoodie.variation_parent
+    return black_t_shirt, black_hoodie
 
 
 @pytest.mark.django_db
@@ -119,7 +118,7 @@ def test_product_relations_variation_products(rf):
     add_bought_with_relations_for_product(hoodie.pk)
     assert ProductCrossSell.objects.count() == 2
 
-    # Hoodie should be related to t-shirt parent product
+    # Hoodie should be related to t-shirt product
     hoodie_relation = ProductCrossSell.objects.filter(product2=t_shirt).first()
     assert hoodie_relation
     assert hoodie_relation.product1 == hoodie

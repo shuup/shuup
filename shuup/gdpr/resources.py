@@ -7,10 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 from django.template import loader
-from django.templatetags.static import static
 from rest_framework.reverse import reverse
 
 from shuup.core.shop_provider import get_shop
+from shuup.core.utils.static import get_shuup_static_url
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.gdpr.utils import (
     get_active_consent_pages, get_privacy_policy_page,
@@ -51,7 +51,7 @@ def add_gdpr_consent_resources(context, content):
         return
 
     # always add styles
-    add_resource(context, "head_end", static("shuup-gdpr.css"))
+    add_resource(context, "head_end", get_shuup_static_url("shuup-gdpr.css"))
 
     user = request.user
     if not user.is_anonymous() and should_reconsent_privacy_policy(shop, user):
@@ -86,4 +86,4 @@ def add_gdpr_consent_resources(context, content):
         loader.render_to_string("shuup/gdpr/gdpr_consent.jinja", context=render_context)
     )
     add_resource(context, "body_end", html_resource)
-    add_resource(context, "body_end", static("shuup-gdpr.js"))
+    add_resource(context, "body_end", get_shuup_static_url("shuup-gdpr.js"))

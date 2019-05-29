@@ -110,7 +110,7 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{{ static("shuup_admin/js/dashboard.js") }}"></script>
+    <script src="{{ shuup_static("shuup_admin/js/dashboard.js") }}"></script>
     <script>
         (function(){
             window.tourConfig = {
@@ -130,5 +130,5 @@
     </script>
 {% endblock %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{{ static("shuup_admin/css/dashboard.css") }}">
+    <link rel="stylesheet" href="{{ shuup_static("shuup_admin/css/dashboard.css") }}">
 {% endblock %}

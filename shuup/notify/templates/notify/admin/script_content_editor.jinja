@@ -23,11 +23,11 @@
 {% endblock %}
 
 {% block extra_css %}
-<link href="{{ static("notify/admin/script-editor.css") }}" rel="stylesheet" type="text/css">
+<link href="{{ shuup_static("notify/admin/script-editor.css") }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ static("notify/admin/script-editor.js") }}"></script>
+<script src="{{ shuup_static("notify/admin/script-editor.js") }}"></script>
 <script>
 window.ScriptEditor.init({
     eventIdentifier: {{ script.event_class.identifier|json }},

@@ -74,13 +74,13 @@
     {% endcall %}
 {% endblock %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{{ static("xtheme/admin/xtheme_admin.css") }}">
+    <link rel="stylesheet" href="{{ shuup_static("xtheme/admin/xtheme_admin.css") }}">
     {% if theme.extra_config_extra_css %}
         {% include theme.extra_config_extra_css %}
     {% endif %}
 {% endblock %}
 {% block extra_js %}
-    <script src="{{ static("xtheme/admin/script.js") }}"></script>
+    <script src="{{ shuup_static("xtheme/admin/script.js") }}"></script>
     {% if theme.extra_config_extra_js %}
         {% include theme.extra_config_extra_js %}
     {% endif %}

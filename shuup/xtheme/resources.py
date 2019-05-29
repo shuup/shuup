@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import os
 import re
 from logging import getLogger
 
@@ -206,12 +207,14 @@ class ResourceContainer(object):
 
         resource = force_text(resource)
 
-        # TODO: should this be extensible?
+        from six.moves.urllib.parse import urlparse
+        file_path = urlparse(resource)
+        file_name = os.path.basename(file_path.path)
 
-        if resource.endswith(".js"):
+        if file_name.endswith(".js"):
             return "<script%s></script>" % get_html_attrs({"src": resource})
 
-        if resource.endswith(".css"):
+        if file_name.endswith(".css"):
             return "<link%s>" % get_html_attrs({"href": resource, "rel": "stylesheet"})
 
         return "<!-- (unknown resource type: %s) -->" % escape(resource)

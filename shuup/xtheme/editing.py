@@ -5,12 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 
 from shuup.front.utils.user import is_admin_user
 from shuup.xtheme.resources import add_resource, InlineScriptResource
+from shuup.core.utils.static import get_shuup_static_url
 
 from ._theme import get_current_theme
 
@@ -112,5 +112,5 @@ def add_edit_resources(context):
         "edit": is_edit_mode(request),
         "csrfToken": get_token(request),
     }))
-    add_resource(context, "head_end", staticfiles_storage.url("xtheme/editor-injection.css"))
-    add_resource(context, "body_end", staticfiles_storage.url("xtheme/editor-injection.js"))
+    add_resource(context, "head_end", get_shuup_static_url("xtheme/editor-injection.css"))
+    add_resource(context, "body_end", get_shuup_static_url("xtheme/editor-injection.js"))
