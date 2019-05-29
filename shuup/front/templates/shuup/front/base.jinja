@@ -24,14 +24,14 @@
     {# Include Fonts #}
     {# Include Styles #}
     {% if xtheme.get("stylesheet") %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}{{ xtheme.get("stylesheet") }}">
+        <link rel="stylesheet" href="{{ shuup_static(xtheme.get('stylesheet')) }}">
     {% else %}
-        <link rel="stylesheet" href="{{ static("shuup/front/css/style.css") }}">
+        <link rel="stylesheet" href="{{ shuup_static("shuup/front/css/style.css") }}">
     {% endif %}
     {% if shuup.general.is_shop_admin() %}
-        <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
+        <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}&v={{ get_shuup_version() }}"></script>
     {% endif %}
-    <script type="text/javascript" src="{{ url("shuup:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
+    <script type="text/javascript" src="{{ url("shuup:js-catalog") }}?lang={{ LANGUAGE_CODE }}&v={{ get_shuup_version() }}"></script>
 </head>
 <body {% if shuup.general.is_shop_admin() %} class="admin-tools-visible" {% endif %}>
     {{ macros.render_admin_tools() }}
@@ -61,8 +61,8 @@
     {{ render_footer() }}
 
     {# Include JavaScript libraries #}
-    <script src="{{ static("shuup/front/js/vendor.js") }}"></script>
-    <script src="{{ static("shuup/front/js/scripts.js") }}"></script>
+    <script src="{{ shuup_static("shuup/front/js/vendor.js") }}"></script>
+    <script src="{{ shuup_static("shuup/front/js/scripts.js") }}"></script>
     {# Include all Extra JavaScript #}
     {% block extrajs %}{% endblock %}
     {# Enable adding products to basket with ajax #}

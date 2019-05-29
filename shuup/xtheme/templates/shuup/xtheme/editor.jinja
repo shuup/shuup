@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ static("xtheme/editor.css") }}">
+    <link rel="stylesheet" href="{{ shuup_static("xtheme/editor.css") }}">
     <script>var CSRF_TOKEN = "{{ csrf_token_str }}";</script>
     <script>var ShuupAdminConfig = {{ shuup_admin.get_config()|json }};</script>
-    <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}"></script>
-    <script src="{{ static('xtheme/vendor.js') }}"></script>
-    <script src="{{ static('xtheme/editor.js') }}"></script>
+    <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?v={{ get_shuup_version() }}"></script>
+    <script src="{{ shuup_static('xtheme/vendor.js') }}"></script>
+    <script src="{{ shuup_static('xtheme/editor.js') }}"></script>
 </head>
 <body>
 <div id="window-toolbar">

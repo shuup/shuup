@@ -4,7 +4,7 @@
     {% trans %}Welcome!{% endtrans %}
 {%- endblock %}
 {% block extra_css %}
-<link href="{{ static("shuup_admin/css/wizard.css") }}" rel="stylesheet" type="text/css">
+<link href="{{ shuup_static("shuup_admin/css/wizard.css") }}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block top %}{% endblock %}
 {% block support_content %}{% endblock %}
@@ -58,7 +58,7 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ static("shuup_admin/js/wizard.js") }}"></script>
+<script src="{{ shuup_static("shuup_admin/js/wizard.js") }}"></script>
 <script>
     (function(){
         $($(".help-popover-btn .btn")[0]).append(" {% trans %}Click here for help{% endtrans %}")
