@@ -26,12 +26,9 @@ class Command(BaseCommand):
         ProductCrossSell.objects.filter(type=ProductCrossSellType.BOUGHT_WITH).delete()
 
         # Handle all ordered products
-        ordered_product_ids = OrderLine.objects.filter(type=OrderLineType.PRODUCT).values_list("product_id", flat=True)
-        seen_product_ids = set()
-        for product_id in ordered_product_ids:
-            if product_id in seen_product_ids:
-                continue
-            seen_product_ids.add(product_id)
+        ordered_product_ids = OrderLine.objects.filter(
+            type=OrderLineType.PRODUCT).values_list("product_id", flat=True).distinct()
+        for product_id in ordered_product_ids.distinct():
             add_bought_with_relations_for_product(product_id)
 
         for shop in Shop.objects.all():
