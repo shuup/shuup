@@ -8,13 +8,14 @@
 import pytest
 import six
 from django.forms import formset_factory
+from django.core.urlresolvers import reverse
 
 from shuup.admin.modules.products.forms import (
     SimpleVariationChildForm, SimpleVariationChildFormSet,
     VariableVariationChildrenForm
 )
 from shuup.core.excs import ImpossibleProductModeException
-from shuup.testing.factories import create_product
+from shuup.testing.factories import create_product, get_default_shop
 from shuup.utils.excs import Problem
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.utils.forms import get_form_data
@@ -43,6 +44,40 @@ def test_simple_children_formset():
     formset = FormSet(parent_product=parent, data=data)
     formset.save()
     assert not parent.variation_children.exists()  # Got unlinked
+
+
+@pytest.mark.django_db
+def test_simple_children_redirect(client):
+    """
+    view should redirect from child url to parent url
+    with selected variation as param
+    """
+    shop = get_default_shop()
+    parent = create_product(printable_gibberish(), shop)
+    child = create_product(printable_gibberish(), shop)
+
+    children_url = reverse(
+        'shuup:product',
+        kwargs=dict(pk=child.pk, slug=child.slug)
+    )
+    response = client.get(children_url)
+    assert response.status_code == 200
+
+    child.link_to_parent(parent)
+    response = client.get(children_url, follow=True)
+    assert response.status_code == 200
+
+    last_url, status_code = response.redirect_chain[-1]
+    assert status_code == 302
+
+    expected_url = '{}?variation={}'.format(reverse(
+        'shuup:product',
+        kwargs=dict(pk=parent.pk, slug=parent.slug)
+    ), child.sku)
+    if last_url.startswith('http'):
+        assert last_url.endswith(expected_url)
+    else:
+        assert last_url == expected_url
 
 
 @pytest.mark.django_db
