@@ -9,12 +9,10 @@ from shuup.utils import update_module_attributes
 from ._basket import basket_partial
 from ._product_preview import product_preview
 from ._product_price import product_price
-from ._products_view import products
 
 __all__ = [
     "basket_partial",
     "product_preview",
-    "products",
     "product_price"
 ]
 

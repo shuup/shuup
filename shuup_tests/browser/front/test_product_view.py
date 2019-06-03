@@ -49,7 +49,7 @@ def test_product_descriptions(browser, live_server, settings):
     assert product.description in browser.html
 
     # product preview
-    url = reverse("shuup:xtheme_extra_view", kwargs={"view": "products"})
+    url = reverse("shuup:all-categories")
     browser.visit("%s%s" % (live_server, url))
     product_div_name = "product-{}".format(product.pk)
     wait_until_condition(browser, lambda x: x.find_by_css("#{} button.btn".format(product_div_name)))
