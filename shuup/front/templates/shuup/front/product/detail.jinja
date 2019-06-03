@@ -17,7 +17,7 @@
                 {{ macros.render_breadcrumb_item(shuup.urls.model_url(c), c.name) }}
             {% endfor %}
         {% else %}
-            {{ macros.render_breadcrumb_item(url('shuup:xtheme_extra_view', view='products'), _("Products")) }}
+            {{ macros.render_breadcrumb_item(url('shuup:all-categories'), _("Products")) }}
         {% endif %}
         {{ macros.render_breadcrumb_item(None, product.name, True) }}
     {% endcall %}
