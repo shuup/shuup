@@ -70,5 +70,7 @@ def test_jinja_resource():
     container.add_resource("body_end", JinjaMarkupResource("1+1={{ 1+1|float }}", context))
     container.add_resource("body_end", JinjaMarkupResource("{{ 1|thisdoesnwork }}", context))
     container.add_resource("body_end", JinjaMarkupResource("", context))
-
+    rendered_resource = container._render_resource("://example.com/js.js?random_text")
+    assert "unknown resource type" not in rendered_resource
+    assert rendered_resource == '<script src="://example.com/js.js?random_text"></script>'
     assert container.render_resources("body_end") == "1+1=2.0(Error while rendering)"
