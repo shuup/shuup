@@ -142,7 +142,16 @@ function reloadProducts(filterString, onComplete = null) {
     // this is to ensure browser back/forward from different domain does a full refresh
     filterString += (filterString === "") ? "?" : "&";
     filterString += "ajax=1";
-    $cont.load(location.pathname + filterString, onComplete);
+    $cont.load(location.pathname + filterString, () => {
+        if (onComplete) {
+            onComplete();
+        }
+        window.dispatchEvent(new CustomEvent("Shuup.ProductListLoaded", {
+            detail: {
+                filterString
+            }
+        }));
+    });
 }
 
 $(function () {
