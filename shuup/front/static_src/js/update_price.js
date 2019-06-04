@@ -49,13 +49,16 @@ window.updatePrice = function updatePrice(productId) {
 
         // ensure images are updated
         const combinationCarouselID = "#carousel_product_" + $(priceDiv).data("product-id");
-        const combinationImages = $(combinationCarouselID).parent("div").html()
+        const combinationImages = $(combinationCarouselID).parent("div").html();
+
         $(".product-image").empty();
         $(".product-image").append(combinationImages);
+
         const imagesSelector = ".product-image .product-carousel a";
         if ($(imagesSelector).length > 0) {
             $(imagesSelector).simpleLightbox();
         }
+
         $(".product-image .owl-carousel.carousel-thumbnails").owlCarousel({
             margin: 10,
             nav: $(".carousel-thumbnails .thumbnail").length > 4,

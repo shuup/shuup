@@ -3,7 +3,7 @@
 {% else %}
     {%- set product_id = product.pk -%}
 {% endif %}
-<div class="price text-right product-price-div" id="product-price-div-{{ product_id }}">
+<div class="price text-right product-price-div" id="product-price-div-{{ product_id }}" data-product-id="{{ product.pk }}">
     <h2 id="no-price-{{ product_id }}">
         {% if show_prices() and not xtheme.get("hide_prices") %}
         <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
