@@ -80,7 +80,8 @@
                 <h3>{{ var.name }}</h3>
                 {% for pvvv in orderable_variation_children[var] %}
                      <button
-                             class="btn btn-primary btn-variation {% if loop.first %} btn-active{% endif %} {{ var }} {{ pvvv }}"
+                             class="btn btn-primary btn-variation {% if (not selected_variation and loop.first) or
+                                (pvvv.pk in selected_variation_values) %}btn-active{% endif %} {{ var }} {{ pvvv }}"
                              data-target-product="{{ var.id }}"
                              data-primary-product="{{ product_id }}"
                              data-level="{{ idx }}"
@@ -98,7 +99,8 @@
                         class="form-control selectpicker variable-variation variable-variation-{{ product_id }}"
                         onchange="updatePrice('{{ product_id }}')">
                     {% for pvvv in orderable_variation_children[var] %}
-                        <option value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
+                        <option {% if pvvv.pk in selected_variation_values %}selected{% endif %}
+                                value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -114,7 +116,6 @@
     {% else %}
         {%- set product_id = shop_product.product.pk -%}
     {% endif %}
-    {% set selected_child_sku = request and request.GET.get("variation") %}
     <div class="product-variations">
         <input type="hidden" name="command" value="add">
         <div class="form-group">
@@ -124,7 +125,7 @@
                     class="form-control selectpicker"
                     onchange="updatePrice('{{ product_id }}')">
                 {% for p in orderable_variation_children %}
-                    <option value="{{ p.id }}"{% if selected_child_sku and selected_child_sku == p.sku %} selected{% endif %}>
+                    <option value="{{ p.id }}"{% if selected_variation and selected_variation.sku == p.sku %} selected{% endif %}>
                         {{ p.variation_name or p.name }}
                     </option>
                 {% endfor %}

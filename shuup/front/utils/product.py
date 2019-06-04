@@ -8,13 +8,15 @@
 from collections import OrderedDict
 
 import six
+from django.http import Http404
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
     AttributeVisibility, ProductMode, ProductVariationResult,
-    ProductVariationVariable, ProductVariationVariableValue, ShopProduct
+    ProductVariationVariable, ProductVariationVariableValue, ShopProduct,
+    Product
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils.views import cache_product_things
@@ -40,6 +42,16 @@ def get_product_context(request, product, language=None, supplier=None):   # noq
     context["orderability_errors"] = list(shop_product.get_orderability_errors(
         supplier=supplier, quantity=1, customer=request.customer, ignore_minimum=True))
     context["variation_children"] = []
+
+    selected_variation = None
+    variation_sku = request.GET.get("variation")
+    if variation_sku:
+        try:
+            selected_variation = product.variation_children.get(sku=variation_sku)
+            context["selected_variation"] = selected_variation
+        except Product.DoesNotExist:
+            raise Http404
+
     if product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
         context["variation_children"] = cache_product_things(
             request,
@@ -65,6 +77,13 @@ def get_product_context(request, product, language=None, supplier=None):   # noq
         context["orderable_variation_children"] = orderable_children
         context["variation_orderable"] = is_orderable
         context["variation_variables"] = variation_variables
+
+        if selected_variation:
+            for combination in product.get_all_available_combinations():
+                if combination['result_product_pk'] == selected_variation.pk:
+                    values = [v.pk for v in combination['variable_to_value'].values()]
+                    context['selected_variation_values'] = values
+                    break
     elif product.is_container():
         children = product.get_all_package_children().translated().order_by("translations__name")
         context["package_children"] = cache_product_things(request, children)
