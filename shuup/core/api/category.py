@@ -14,11 +14,12 @@ from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import serializers, viewsets
 
-from shuup.api.fields import EnumField
+from shuup.api.fields import Base64FileField, EnumField
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.models import (
     Category, CategoryStatus, CategoryVisibility, Shop
 )
+from shuup.utils.filer import filer_image_from_upload
 
 
 class CategorySerializer(TranslatableModelSerializer):
@@ -27,13 +28,35 @@ class CategorySerializer(TranslatableModelSerializer):
     visibility = EnumField(CategoryVisibility)
     image = serializers.SerializerMethodField()
 
-    class Meta:
-        model = Category
-        exclude = ("shops",)
+    def __init__(self, *args, **kwargs):
+        super(CategorySerializer, self).__init__(*args, **kwargs)
+        request = self.context.get("request")
+        if request.method == "POST":
+            self.fields["image"] = Base64FileField(required=False, write_only=True)
+            self.fields["image_path"] = serializers.CharField(required=False, write_only=True)
+        elif request.method == "GET":
+            self.fields["image"] = serializers.SerializerMethodField()
+
+    def create(self, validated_data):
+        if "image_path" in validated_data:
+            validated_data.pop("image_path")
+        return super(CategorySerializer, self).create(validated_data)
+
+    def validate(self, data):
+        if data.get("image") and data.get("image_path"):
+            data["image"] = filer_image_from_upload(
+                self.context["request"], path=data["image_path"], upload_data=data["image"])
+        elif data.get("image"):
+            raise serializers.ValidationError("Path is required when sending a Category image.")
+        return data
 
     def get_image(self, category):
         if category.image:
             return self.context["request"].build_absolute_uri(category.image.url)
+
+    class Meta:
+        model = Category
+        fields = '__all__'
 
 
 class CategoryFilter(FilterSet):

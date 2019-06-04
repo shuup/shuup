@@ -8,14 +8,15 @@
 from __future__ import unicode_literals
 
 import json
-
+import base64
+import os
 from django.utils.translation import activate
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
 from shuup.core.models import Category, CategoryStatus, CategoryVisibility
-from shuup.testing.factories import get_default_shop
+from shuup.testing.factories import get_default_shop, get_random_filer_image
 
 
 def setup_function(fn):
@@ -27,14 +28,19 @@ def test_category_api(admin_user):
     shop = get_default_shop()
     client = APIClient()
     client.force_authenticate(user=admin_user)
-
+    image = get_random_filer_image()
+    with open(image.path, 'rb') as f:
+        img_base64 = base64.b64encode(os.urandom(50)).decode()
+        uri = "data:application/octet-stream;base64,{}".format(img_base64)
     category_data = {
         "shops": [shop.pk],
         "status": CategoryStatus.VISIBLE.value,
         "ordering": 1,
         "visibility": CategoryVisibility.VISIBLE_TO_ALL.value,
         "visible_in_menu": True,
-        "translations": {"en": {"name": "Category 1"}}
+        "translations": {"en": {"name": "Category 1"}},
+        "image_path" : "/didnt/choose/path",
+        "image" : uri
     }
     response = client.post("/api/shuup/category/",
                            content_type="application/json",
@@ -46,7 +52,21 @@ def test_category_api(admin_user):
     assert category.ordering == category_data["ordering"]
     assert category.visibility.value == category_data["visibility"]
     assert category.visible_in_menu == category_data["visible_in_menu"]
+    assert category.shops.first().pk == shop.pk
+    assert category.image.folder.pretty_logical_path == category_data["image_path"]
 
+    with open(category.image.path, 'rb') as f:
+        assert img_base64 == base64.b64encode(f.read()).decode()
+
+    category_data.pop("image_path") # Test error when not sending a path
+    response = client.post("/api/shuup/category/",
+                           content_type="application/json",
+                           data=json.dumps(category_data))
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["non_field_errors"][0] == "Path is required when sending a Category image."
+
+    category_data["image_path"] = "/path/chose/me"
     category_data["translations"]["en"]["name"] = "name 2"
     category_data["ordering"] = 3
 
