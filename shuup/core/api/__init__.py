@@ -10,6 +10,10 @@ from shuup.core.api.attribute import AttributeViewSet
 from shuup.core.api.basket import BasketViewSet
 from shuup.core.api.category import CategoryViewSet
 from shuup.core.api.contacts import ContactViewSet, PersonContactViewSet
+from shuup.core.api.contact_group import ContactGroupViewSet
+from shuup.core.api.contact_group_price_display import (
+    ContactGroupPriceDisplayViewSet
+)
 from shuup.core.api.front_orders import FrontOrderViewSet
 from shuup.core.api.front_passwords import (
     PasswordResetViewSet, SetPasswordViewSet
@@ -46,6 +50,8 @@ def populate_core_api(router):
     router.register("shuup/attribute", AttributeViewSet)
     router.register("shuup/category", CategoryViewSet)
     router.register("shuup/contact", ContactViewSet)
+    router.register("shuup/contact_group", ContactGroupViewSet)
+    router.register("shuup/contact_group_price_display", ContactGroupPriceDisplayViewSet)
     router.register("shuup/order", OrderViewSet)
     router.register("shuup/person_contact", PersonContactViewSet)
     router.register("shuup/product", ProductViewSet)
