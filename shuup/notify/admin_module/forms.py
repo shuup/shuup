@@ -120,7 +120,7 @@ class ScriptItemEditForm(forms.Form):
                 if binding.accepts_any_type or binding.type.is_coercible_from(var.type)
             ]
             if variables:
-                choices = [("", "")] + variables
+                choices = [("", "---------")] + variables
                 field_name = "b_%s_v" % binding_identifier
                 self.fields[field_name] = forms.ChoiceField(
                     choices=choices,
