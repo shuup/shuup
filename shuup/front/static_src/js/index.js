@@ -14,3 +14,4 @@ import "./carousel.js";
 import "./product_preview.js";
 import "./update_price.js";
 import "./custom.js";
+import "./utils";
