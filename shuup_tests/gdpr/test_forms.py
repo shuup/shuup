@@ -7,14 +7,17 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from bs4 import BeautifulSoup
-from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
+from django.contrib.auth import get_user_model, REDIRECT_FIELD_NAME
+from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
 from django.test import override_settings
 from django.utils.translation import activate
 
 from shuup.gdpr.models import GDPRSettings
+from shuup.gdpr.providers import GDPRFieldProvider
 from shuup.gdpr.utils import (
-    ensure_gdpr_privacy_policy, is_documents_consent_in_sync
+    create_user_consent_for_all_documents, ensure_gdpr_privacy_policy,
+    is_documents_consent_in_sync
 )
 from shuup.simple_cms.admin_module.views import PageForm
 from shuup.simple_cms.models import Page
@@ -190,3 +193,38 @@ def test_pageform_urls(rf, admin_user):
         assert form.is_valid()
         assert form.is_url_valid("en", "url__en", "new-url")
         assert form.is_url_valid("fi", "url__fi", fi_url)
+
+
+@pytest.mark.django_db
+def test_field_provider(rf, admin_user):
+    activate("en")
+    shop = factories.get_default_shop()
+    gdpr_settings = GDPRSettings.get_for_shop(shop)
+    gdpr_settings.enabled = True
+    gdpr_settings.save()
+    # create privacy policy GDPR document
+    privacy_policy = ensure_gdpr_privacy_policy(shop)
+    page_consent_key = "accept_%d" % privacy_policy.pk
+
+    request = apply_request_middleware(rf.post("/"), shop=shop, user=admin_user)
+    field_provider = GDPRFieldProvider()
+
+    # call twice.. the field should be there while the user hasn't consented to the page
+    for test in range(2):
+        fields = field_provider.get_fields(request=request)
+        assert page_consent_key in [f.name for f in fields]
+
+    # consent to the page, the field shouldn't be there
+    create_user_consent_for_all_documents(shop, admin_user)
+    fields = field_provider.get_fields(request=request)
+    assert page_consent_key not in [f.name for f in fields]
+
+    # change the document version - field must be there again
+    privacy_policy.save()
+    fields = field_provider.get_fields(request=request)
+    assert page_consent_key in [f.name for f in fields]
+
+    # check if the field is shown for anonymous
+    request = apply_request_middleware(rf.post("/"), shop=shop, user=AnonymousUser())
+    fields = field_provider.get_fields(request=request)
+    assert page_consent_key in [f.name for f in fields]
