@@ -34,6 +34,13 @@ class ConfirmForm(forms.Form):
         self.current_product_ids = kwargs.pop("current_product_ids", "")
         super(ConfirmForm, self).__init__(*args, **kwargs)
 
+        # check whether we already asked for marketing permissions before
+        # if so, make the field hidden and set the initial value
+        customer = self.request.customer
+        if customer.options and customer.options.get("marketing_permission_asked"):
+            self.fields["marketing"].widget = forms.HiddenInput()
+            self.fields["marketing"].initial = customer.marketing_permission
+
         for provider_cls in get_provide_objects("checkout_confirm_form_field_provider"):
             provider = provider_cls()
             for definition in provider.get_fields(request=self.request):
@@ -96,6 +103,13 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         self.process()
         order = self.create_order()
         self.checkout_process.complete()  # Inform the checkout process it's completed
+
+        # make sure to set marketing permission asked once
+        if "marketing" in form.fields and order.customer:
+            if not order.customer.options or not order.customer.options.get("marketing_permission_asked"):
+                order.customer.options = order.customer.options or {}
+                order.customer.options["marketing_permission_asked"] = True
+                order.customer.save(update_fields=["options"])
 
         if order.require_verification:
             response = redirect("shuup:order_requires_verification", pk=order.pk, key=order.key)
