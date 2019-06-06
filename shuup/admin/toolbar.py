@@ -9,7 +9,12 @@ from __future__ import unicode_literals
 
 import json
 
-from django.core.urlresolvers import NoReverseMatch, reverse
+try:
+    from urllib.parse import urlparse
+except ImportError:  # Py2 fallback
+    from urlparse import urlparse
+
+from django.core.urlresolvers import NoReverseMatch, reverse, resolve, Resolver404
 from django.middleware.csrf import get_token
 from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
@@ -112,6 +117,14 @@ class URLActionButton(BaseActionButton):
             except NoReverseMatch:
                 pass
         self.url = url
+
+        if "required_permissions" not in kwargs:
+            try:
+                permission = resolve(urlparse(url).path).url_name
+                kwargs["required_permissions"] = (permission,)
+            except Resolver404:
+                pass
+
         super(URLActionButton, self).__init__(**kwargs)
 
     def render(self, request):
@@ -167,6 +180,7 @@ class NewActionButton(URLActionButton):
         kwargs.setdefault("icon", "fa fa-plus")
         kwargs.setdefault("text", _("Create new"))
         kwargs.setdefault("extra_css_class", "btn-primary")
+
         super(NewActionButton, self).__init__(url, **kwargs)
 
     @classmethod
@@ -184,6 +198,7 @@ class NewActionButton(URLActionButton):
             except NoModelUrl:
                 return None
             kwargs["url"] = url
+
         kwargs.setdefault("text", _("New %(model)s") % {"model": model._meta.verbose_name})
         return cls(**kwargs)
 
