@@ -6,6 +6,7 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { debounce } from "./utils";
 
 // CustomEvent polyfill
 // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
@@ -20,25 +21,10 @@ if (typeof window.CustomEvent !== "function") {
     window.CustomEvent = CustomEvent;
 }
 
-// https://davidwalsh.name/javascript-debounce-function
-function debounce(func, wait, immediate) {
-    let timeout;
-    return function () {
-        const context = this, args = arguments;
-        const later = function () {
-            timeout = null;
-            if (!immediate) {
-                func.apply(context, args);
-            }
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) {
-            func.apply(context, args);
-        }
-    };
-}
+// This is the target selector of the element that will be used
+// to scroll the page to when the the list gets loaded
+// Set this to `null` to not auto scroll when products are loaded
+window.ProductListScrollTarget = ".products-wrap";
 
 window.refreshFilters = debounce(function refreshFilters(pageNumber = 1) {
     var pagination = $("ul.pagination");
@@ -133,24 +119,36 @@ function reloadProducts(filterString, onComplete = null) {
         onComplete();
         return;
     }
-    const $prods = $(".products-wrap");
-    const $adminMenu = $("#admin-tools-menu");
-    const adminMenuHeight = ($adminMenu.length > 0) ? $adminMenu.height() : 0;
-    const top = ($prods.length > 0) ? $prods.offset().top : $cont.offset().top;
-    window.scrollTo(0, top - adminMenuHeight);
-
     // this is to ensure browser back/forward from different domain does a full refresh
     filterString += (filterString === "") ? "?" : "&";
     filterString += "ajax=1";
-    $cont.load(location.pathname + filterString, () => {
-        if (onComplete) {
-            onComplete();
+
+    // warn that the product list will be loaded
+    window.dispatchEvent(new CustomEvent("Shuup.LoadProductList", {
+        detail: {
+            filterString
+        }
+    }));
+
+    $.get(location.pathname + filterString, function (data) {
+        $cont.replaceWith(data);
+
+        if (window.ProductListScrollTarget) {
+            const $prods = $(window.ProductListScrollTarget);
+            const $adminMenu = $("#admin-tools-menu");
+            const adminMenuHeight = ($adminMenu.length > 0) ? $adminMenu.height() : 0;
+            const top = ($prods.length > 0) ? $prods.offset().top : $cont.offset().top;
+            $("html, body").stop().animate({ scrollTop: top - adminMenuHeight }, 300, "swing");
         }
         window.dispatchEvent(new CustomEvent("Shuup.ProductListLoaded", {
             detail: {
-                filterString
+                filterString,
+                data
             }
         }));
+        if (onComplete) {
+            onComplete();
+        }
     });
 }
 
