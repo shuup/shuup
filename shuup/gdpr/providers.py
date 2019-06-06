@@ -15,7 +15,7 @@ from shuup.front.providers import (
     FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
 )
 from shuup.gdpr.forms import CompanyAgreementForm
-from shuup.gdpr.models import GDPRSettings
+from shuup.gdpr.models import GDPRSettings, GDPRUserConsent
 from shuup.gdpr.utils import get_active_consent_pages
 from shuup.utils.djangoenv import has_installed
 
@@ -51,8 +51,16 @@ class GDPRFieldProvider(FormFieldProvider):
         if not gdpr_settings:
             return []
 
+        user_consent = None
+        if request.user.is_authenticated():
+            user_consent = GDPRUserConsent.get_for_user(request.user, request.shop)
+
         fields = []
         for page in get_active_consent_pages(request.shop):
+            # user already has consented to this page, ignore it
+            if user_consent and not user_consent.should_reconsent_to_page(page):
+                continue
+
             key = "accept_{}".format(page.id)
             field = forms.BooleanField(
                 label=mark_safe(ugettext(

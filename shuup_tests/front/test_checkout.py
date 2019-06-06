@@ -11,7 +11,7 @@ from django.test import override_settings
 
 from shuup import configuration
 from shuup.apps.provides import override_provides
-from shuup.core.models import get_person_contact
+from shuup.core.models import get_person_contact, AnonymousContact
 from shuup.core.utils.forms import MutableAddressForm
 from shuup.front.checkout.addresses import AddressesPhase
 from shuup.front.checkout.confirm import ConfirmForm
@@ -105,3 +105,35 @@ def test_confirm_form_field_provides(rf):
         assert FieldTestProvider.key in form.fields
         assert not form.is_valid()
         assert form.errors[FieldTestProvider.key][0] == FieldTestProvider.error_msg
+
+
+@pytest.mark.django_db
+def test_save_marketing_check(rf, admin_user):
+    admin_contact = get_person_contact(admin_user)
+    shop = get_default_shop()
+
+    with override_settings(SHUUP_CHECKOUT_CONFIRM_FORM_PROPERTIES={}):
+        request = apply_request_middleware(rf.get("/"), shop=shop, user=admin_user, customer=admin_contact)
+        form = ConfirmForm(request=request)
+        assert form.fields["marketing"].initial is False
+        assert form.fields["marketing"].widget.__class__ == forms.CheckboxInput
+
+        admin_contact.options = {}
+        admin_contact.options["marketing_permission_asked"] = True
+        admin_contact.save()
+
+        form = ConfirmForm(request=request)
+        assert form.fields["marketing"].initial is False
+        assert form.fields["marketing"].widget.__class__ == forms.HiddenInput
+
+        admin_contact.marketing_permission = True
+        admin_contact.save()
+        form = ConfirmForm(request=request)
+        assert form.fields["marketing"].initial is True
+        assert form.fields["marketing"].widget.__class__ == forms.HiddenInput
+
+        # test with anonymous
+        request = apply_request_middleware(rf.get("/"), shop=shop, user=admin_user, customer=AnonymousContact())
+        form = ConfirmForm(request=request)
+        assert form.fields["marketing"].initial is False
+        assert form.fields["marketing"].widget.__class__ == forms.CheckboxInput
