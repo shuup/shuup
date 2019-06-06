@@ -43,14 +43,14 @@ class DiscountModule(AdminModule):
         return [
             MenuEntry(
                 text=_("Product Discounts"),
-                icon="fa fa-percentage",
+                icon="fa fa-percent",
                 url="shuup_admin:discounts.list",
                 category=CAMPAIGNS_MENU_CATEGORY,
                 ordering=4
             ),
             MenuEntry(
                 text=_("Archived Product Discounts"),
-                icon="fa fa-percentage",
+                icon="fa fa-percent",
                 url="shuup_admin:discounts.archive",
                 category=CAMPAIGNS_MENU_CATEGORY,
                 ordering=5

@@ -37,7 +37,7 @@ class CouponCodeModule(AdminModule):
         return [
             MenuEntry(
                 text=_("Product Discounts Coupon Codes"),
-                icon="fa fa-percentage",
+                icon="fa fa-percent",
                 url="shuup_admin:discounts_coupon_codes.list",
                 category=CAMPAIGNS_MENU_CATEGORY,
                 ordering=8

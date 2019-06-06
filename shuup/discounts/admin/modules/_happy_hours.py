@@ -37,7 +37,7 @@ class HappyHourModule(AdminModule):
         return [
             MenuEntry(
                 text=_("Product Discounts Happy Hours"),
-                icon="fa fa-percentage",
+                icon="fa fa-percent",
                 url="shuup_admin:discounts_happy_hour.list",
                 category=CAMPAIGNS_MENU_CATEGORY,
                 ordering=7

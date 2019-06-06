@@ -28,6 +28,7 @@ class ServiceModule(AdminModule):
     menu_entry_url = None
     menu_ordering = 999999
     url_name_prefix = None
+    icon = None
 
     def get_urls(self):
         return [
@@ -48,7 +49,8 @@ class ServiceModule(AdminModule):
                 text=self.name,
                 url=self.menu_entry_url,
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=self.menu_ordering
+                ordering=self.menu_ordering,
+                icon=self.icon
             )
         ]
 
@@ -65,6 +67,7 @@ class ShippingMethodModule(ServiceModule):
     menu_entry_url = "shuup_admin:shipping_method.list"
     menu_ordering = 4
     url_name_prefix = "shuup_admin:shipping_method"
+    icon = "fa fa-truck"
 
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:shipping_method.list")
 
@@ -78,5 +81,6 @@ class PaymentMethodModule(ServiceModule):
     menu_entry_url = "shuup_admin:payment_method.list"
     menu_ordering = 5
     url_name_prefix = "shuup_admin:payment_method"
+    icon = "fa fa-money"
 
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:payment_method.list")
