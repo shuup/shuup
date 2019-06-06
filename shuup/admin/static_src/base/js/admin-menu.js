@@ -43,16 +43,16 @@ const sortStart = (e) => {
   // mark if element has children
   const hasChildren = menuEntry.find(".menu-entry").length > 1;
   menuEntry.parent().toggleClass("has-children", hasChildren);
-}
+};
 
 const sortUpdate = (e) => {
   const menuEntry = $(e.detail.item);
-  // update parent and entrye menu-entries sorter
+  // update parent and menu-entries sorter
   connectSortable(menuEntry.parent());
   connectSortable(menuEntry.find("> .menu-entries"));
-}
+};
 
-const connectSortable  = (menuEntries) => {
+const connectSortable = (menuEntries) => {
   let menuSubEntries;
   let sortable;
   const id = menuEntries.attr("id");

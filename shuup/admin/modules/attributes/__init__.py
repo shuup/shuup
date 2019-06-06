@@ -36,7 +36,6 @@ class AttributeModule(AdminModule):
                 icon="fa fa-tags",
                 url="shuup_admin:attribute.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="attributes",
                 ordering=8
             )
         ]

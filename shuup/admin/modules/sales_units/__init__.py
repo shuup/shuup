@@ -33,7 +33,6 @@ class SalesUnitModule(AdminModule):
                 icon="fa fa-asterisk",
                 url="shuup_admin:sales_unit.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
                 ordering=5
             ),
         ]
@@ -60,7 +59,6 @@ class DisplayUnitModule(AdminModule):
                 icon="fa fa-asterisk",
                 url="shuup_admin:display_unit.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
                 ordering=5
             ),
         ]

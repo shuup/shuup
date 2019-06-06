@@ -33,6 +33,5 @@ class APIModule(AdminModule):
                 icon="fa fa-code",
                 url="shuup_admin:api_permission",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="permissions",
             )
         ]

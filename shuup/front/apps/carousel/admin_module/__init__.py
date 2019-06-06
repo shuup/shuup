@@ -40,7 +40,6 @@ class CarouselModule(AdminModule):
                 icon="fa fa-image",
                 url="shuup_admin:carousel.list",
                 category=CONTENT_MENU_CATEGORY,
-                subcategory="elements"
             )
         ]
 

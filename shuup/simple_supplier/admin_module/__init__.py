@@ -53,7 +53,6 @@ class StocksAdminModule(AdminModule):
                 icon="fa fa-cubes",
                 url="shuup_admin:simple_supplier.stocks",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
                 ordering=6
             )
         ]

@@ -37,7 +37,6 @@ class SampleDataAdminModule(AdminModule):
             MenuEntry(
                 text="Sample Data",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="data_transfer",
                 url="shuup_admin:sample_data",
                 icon="fa fa-star"
             )

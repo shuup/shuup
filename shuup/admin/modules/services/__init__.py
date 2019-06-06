@@ -48,7 +48,6 @@ class ServiceModule(AdminModule):
                 text=self.name,
                 url=self.menu_entry_url,
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="payment_shipping",
                 ordering=self.menu_ordering
             )
         ]

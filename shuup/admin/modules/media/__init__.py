@@ -41,7 +41,6 @@ class MediaModule(AdminModule):
                 icon="fa fa-folder-open",
                 url="shuup_admin:media.browse",
                 category=CONTENT_MENU_CATEGORY,
-                subcategory="other",
                 ordering=2
             ),
         ]

@@ -43,7 +43,6 @@ class AdminMenuModule(AdminModule):
                 icon="fa fa-list-alt",
                 url="shuup_admin:menu.arrange",
                 category=category,
-                subcategory="menu",
                 ordering=1
             ),
         ]

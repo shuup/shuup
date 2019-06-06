@@ -33,7 +33,6 @@ class SupplierModule(AdminModule):
                 icon="fa fa-truck",
                 url="shuup_admin:supplier.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
                 ordering=7
             ),
         ]

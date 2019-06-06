@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import hashlib
+import warnings
 
 import six
 from django.core.urlresolvers import reverse
@@ -183,14 +184,19 @@ class BaseMenuEntry(Resolvable):
 
 
 class MenuEntry(BaseMenuEntry):
-    def __init__(self, text, url, icon=None, category=None, subcategory=None, ordering=99999, aliases=()):
+    def __init__(self, text, url, icon=None, category=None, ordering=99999, aliases=(), **kwargs):
         self.text = text
         self._url = url
         self.icon = icon
         self.category = category
-        self.subcategory = subcategory
         self.ordering = ordering
         self.aliases = tuple(aliases)
+
+        if "subcategory" in kwargs:
+            warnings.warn(
+                "subcategory attribute will be deprecated in Shuup 2.0 as unused for this util.",
+                DeprecationWarning
+            )
 
     @property
     def identifier(self):

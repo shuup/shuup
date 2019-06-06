@@ -40,7 +40,6 @@ class LabelsModule(AdminModule):
                 icon="fa fa-sitemap",
                 url="shuup_admin:label.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
                 ordering=5
             )
         ]

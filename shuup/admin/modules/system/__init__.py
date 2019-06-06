@@ -36,7 +36,6 @@ class SystemModule(AdminModule):
                 icon="fa fa-tachometer",
                 url="shuup_admin:telemetry",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="other_settings",
             ) if is_telemetry_enabled() else None,
         ] if e]
 

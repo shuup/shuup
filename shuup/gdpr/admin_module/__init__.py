@@ -43,6 +43,5 @@ class GDPRModule(AdminModule):
                 icon="fa fa-shield",
                 url="shuup_admin:gdpr.settings",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="other_settings",
             ),
         ]

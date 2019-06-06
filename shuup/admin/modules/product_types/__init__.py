@@ -41,7 +41,6 @@ class ProductTypeModule(AdminModule):
                 icon="fa fa-asterisk",
                 url="shuup_admin:product_type.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="attributes",
                 ordering=3
             )
         ]
