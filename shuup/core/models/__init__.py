@@ -47,6 +47,7 @@ from ._product_shops import (
     ProductVisibility, ShopProduct, ShopProductVisibility
 )
 from ._product_variation import (
+    get_all_available_combinations,
     ProductVariationLinkStatus, ProductVariationResult,
     ProductVariationVariable, ProductVariationVariableValue
 )
@@ -105,6 +106,7 @@ __all__ = [
     "DefaultOrderStatus",
     "DisplayUnit",
     "FixedCostBehaviorComponent",
+    "get_all_available_combinations",
     "get_company_contact",
     "get_company_contact_for_shop_staff",
     "get_currency_precision",

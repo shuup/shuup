@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.shortcuts import redirect
-from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+from django.http.response import HttpResponseRedirect
 from django.utils.translation import get_language
+from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 
 from shuup.core.models import Product, ProductMode, ShopProduct, Supplier
@@ -43,7 +44,12 @@ class ProductDetailView(DetailView):
         product = self.object = self.get_object()
 
         if product.mode == ProductMode.VARIATION_CHILD:
-            return redirect("shuup:product", pk=product.variation_parent.pk, slug=product.variation_parent.slug)
+            # redirect to parent url with child pre-selected
+            parent_url = reverse(
+                "shuup:product",
+                kwargs=dict(pk=product.variation_parent.pk, slug=product.variation_parent.slug)
+            )
+            return HttpResponseRedirect("{}?variation={}".format(parent_url, product.sku))
 
         try:
             shop_product = self.shop_product = product.get_shop_instance(request.shop, allow_cache=True)

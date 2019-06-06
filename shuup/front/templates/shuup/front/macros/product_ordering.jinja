@@ -78,7 +78,8 @@
                 <h3>{{ var.name }}</h3>
                 {% for pvvv in orderable_variation_children[var] %}
                      <button
-                             class="btn btn-primary btn-variation {% if selected_child and selected_child == p.id or loop.first %} btn-active{% endif %} {{ var }} {{ pvvv }}"
+                             class="btn btn-primary btn-variation {% if (not selected_variation and loop.first) or
+                                (pvvv.pk in selected_variation_values) %}btn-active{% endif %} {{ var }} {{ pvvv }}"
                              data-target-product="{{ var.id }}"
                              data-primary-product="{{ product_id }}"
                              data-level="{{ idx }}"
@@ -96,7 +97,8 @@
                         class="form-control selectpicker variable-variation variable-variation-{{ product_id }}"
                         onchange="updatePrice('{{ product_id }}')">
                     {% for pvvv in orderable_variation_children[var] %}
-                        <option value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
+                        <option {% if pvvv.pk in selected_variation_values %}selected{% endif %}
+                                value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -121,7 +123,7 @@
                     class="form-control selectpicker"
                     onchange="updatePrice('{{ product_id }}')">
                 {% for p in orderable_variation_children %}
-                    <option value="{{ p.id }}"{% if selected_child and selected_child == p.id %} selected{% endif %}>
+                    <option value="{{ p.id }}"{% if selected_variation and selected_variation.sku == p.sku %} selected{% endif %}>
                         {{ p.variation_name or p.name }}
                     </option>
                 {% endfor %}
