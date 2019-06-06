@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 import six
+from django.contrib.auth.models import AbstractUser
+from django.core.urlresolvers import reverse
 
 from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.modules.customers_dashboard import CustomersDashboardModule
@@ -14,13 +16,13 @@ from shuup.admin.modules.sales_dashboard import SalesDashboardModule
 from shuup.admin.module_registry import get_modules, replace_modules
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownItem, JavaScriptActionButton,
-    PostActionButton, URLActionButton
-)
+    PostActionButton, URLActionButton,
+    NewActionButton, SettingsActionButton)
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permission_object_from_string,
     get_permissions_from_urls, set_permissions_for_group
 )
-from shuup.core.models import Product
+from shuup.core.models import Product, ShopProduct
 from shuup.testing import factories
 from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule
 from shuup_tests.utils.faux_users import StaffUser
@@ -100,3 +102,26 @@ def test_toolbar_button_permissions(rf, button_class, kwargs):
     set_permissions_for_group(request.user.groups.first(), permissions)
     rendered_button = "".join(bit for bit in button.render(request))
     assert rendered_button
+
+
+@pytest.mark.parametrize("button, permission, instance", [
+    (URLActionButton(url=reverse("shuup_admin:shop_product.new")), "shop_product.new", URLActionButton),
+
+    (NewActionButton.for_model(ShopProduct), "shop_product.new", URLActionButton),
+    (SettingsActionButton.for_model(ShopProduct, return_url="/"), "shop_product.list_settings", URLActionButton),
+
+    # for_model without shuup_admin url returns None
+    (NewActionButton.for_model(AbstractUser), "abstract_user.new", type(None)),
+    (SettingsActionButton.for_model(AbstractUser), "abstract_user.list_settings", type(None)),
+])
+def test_url_buttons_permission(rf, button, permission, instance):
+    request = rf.get("/")
+
+    assert isinstance(button, instance)
+
+    if button is not None:
+        request.user = factories.get_default_staff_user()
+        assert not "".join(bit for bit in button.render(request))
+
+        set_permissions_for_group(request.user.groups.first(), (permission,))
+        assert "".join(bit for bit in button.render(request))
