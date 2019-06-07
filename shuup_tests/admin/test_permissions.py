@@ -8,7 +8,7 @@
 import pytest
 import six
 from django.contrib.auth.models import AbstractUser
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 
 from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.modules.customers_dashboard import CustomersDashboardModule
@@ -106,6 +106,7 @@ def test_toolbar_button_permissions(rf, button_class, kwargs):
 
 @pytest.mark.parametrize("button, permission, instance", [
     (URLActionButton(url=reverse("shuup_admin:shop_product.new")), "shop_product.new", URLActionButton),
+    (URLActionButton(url=reverse_lazy("shuup_admin:shop_product.new")), "shop_product.new", URLActionButton),
 
     (NewActionButton.for_model(ShopProduct), "shop_product.new", URLActionButton),
     (SettingsActionButton.for_model(ShopProduct, return_url="/"), "shop_product.list_settings", URLActionButton),

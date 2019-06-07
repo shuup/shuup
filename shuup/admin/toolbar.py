@@ -9,12 +9,10 @@ from __future__ import unicode_literals
 
 import json
 
-try:
-    from urllib.parse import urlparse
-except ImportError:  # Py2 fallback
-    from urlparse import urlparse
-
-from django.core.urlresolvers import NoReverseMatch, reverse, resolve, Resolver404
+import six
+from django.core.urlresolvers import (
+    NoReverseMatch, resolve, Resolver404, reverse
+)
 from django.middleware.csrf import get_token
 from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
@@ -120,7 +118,7 @@ class URLActionButton(BaseActionButton):
 
         if "required_permissions" not in kwargs:
             try:
-                permission = resolve(urlparse(url).path).url_name
+                permission = resolve(six.moves.urllib.parse.urlparse(force_text(url)).path).url_name
                 kwargs["required_permissions"] = (permission,)
             except Resolver404:
                 pass
