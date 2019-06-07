@@ -75,7 +75,7 @@ def get_product_cross_sells(
         cross_sell_products = ProductCrossSell.objects.filter(
             product1__in=product.variation_children.all(),
             type=rtype
-        )
+        ).exclude(product2__in=product.variation_children.all())    # exclude relations with the same parent
     else:
         cross_sell_products = ProductCrossSell.objects.filter(product1=product, type=rtype)
 
