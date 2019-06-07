@@ -1,14 +1,16 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.6
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-06-07 11:40am -0800.
 
+Admin
+~~~~~
+
+- Fix action button url parse (related to:
+  Add default required_permissions to the URLActionButton from url_name)
 
 Shuup 1.9.5
 -----------
