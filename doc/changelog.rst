@@ -1,13 +1,60 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.5
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-06-07 10:00am -0800.
+
+Admin
+~~~~~
+
+- Add default required_permissions to the URLActionButton from url_name
+- Fix contact & order address form breaking on region copy
+- Edit Supplier description as HTML-field. This requires that you mark
+  supplier description safe when rendering.
+
+Core
+~~~~
+- Enable image upload for Categories through REST API
+- Add basic REST API to for contact groups and contact group display options
+- Add custom template tag to render static source urls. The template tag adds
+  the Shuup version as a suffix to burst caches
+- Fix compute bought with relation algorithm. Relate products directly and
+  render parents in cross sell plugins when configured to
+- Fix Contact field to use a field that considers django polymorphic.
+  Original JSONField has a bug that doesn't consider Django polymorphic
+  environment and fail to deserialize the value.
+
+Front
+~~~~~
+
+- Do not render bought with relations with siblings
+- Only show marketing permissions check on first checkout. Save a
+  configuration for each customer inside the options field
+- Add selected for complex variations and tests
+- Improve front filters JS customisation
+- Add missing data- attribute with the product ID. When product was not
+  orderable, the template rendered didn't contain the correct product id
+  making the product images disappear.
+- Add custom event to warn that product list has been loaded
+- Replace Xtheme products view with all category view
+- Make sure to get unique product ids when computing relations. Without that
+  the same product could run many times wasting time and resources
+- Select variation children in product detail view. Make the simple variation
+  option selected in parent product detail view
+- Fix pagination by adding default page number and clearing the loading state
+- Remove extra div tag
+- Fix rendering problem with purchased files
+- Add custom field ids format to prevent duplicates 
+
+GDPR
+~~~~
+
+- Do not ask to consent documents already consented
+- Make consent checkboxes optional for auth. This is choice the merchant can
+  make from admin panel. By default all consent checkboxes are enabled.
+
 
 Shuup 1.9.4
 -----------
