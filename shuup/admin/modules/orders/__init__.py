@@ -117,7 +117,6 @@ class OrderModule(AdminModule):
                 icon="fa fa-inbox",
                 url="shuup_admin:order.list",
                 category=ORDERS_MENU_CATEGORY,
-                subcategory="orders",
                 ordering=1,
                 aliases=[_("Show orders")]
             )
@@ -196,7 +195,6 @@ class OrderStatusModule(AdminModule):
                 icon="fa fa-inbox",
                 url="shuup_admin:order_status.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
                 ordering=1,
                 aliases=[_("List Statuses")]
             ),

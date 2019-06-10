@@ -33,7 +33,6 @@ class ManufacturerModule(AdminModule):
                 icon="fa fa-building",
                 url="shuup_admin:manufacturer.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
                 ordering=4
             ),
         ]

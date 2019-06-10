@@ -28,6 +28,9 @@ class MainMenuUpdater(object):
         """
         for item in self.menu:
             for child in self.updates.get(item["identifier"], []):
-                if child not in item["children"]:
-                    item["children"].append(child)
+                try:
+                    if child not in item["entries"]:
+                        item["entries"].append(child)
+                except KeyError:
+                    item["entries"] = [child]
         return self.menu

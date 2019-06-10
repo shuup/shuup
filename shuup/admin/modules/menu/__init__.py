@@ -14,34 +14,35 @@ from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.urls import admin_url
 
 
-class GDPRModule(AdminModule):
-    name = _("GDPR")
+class AdminMenuModule(AdminModule):
+    """
+    Module that customizes dashboard admin menu
+    """
+    name = _("Admin menu")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:menu.arrange")
 
     def get_urls(self):
         return [
             admin_url(
-                "^gdpr/$",
-                "shuup.gdpr.admin_module.views.GDPRView",
-                name="gdpr.settings"
+                r"^menu/$",
+                "shuup.admin.modules.menu.views.AdminMenuArrangeView",
+                name="menu.arrange"
             ),
             admin_url(
-                "^gdpr/contact/(?P<pk>\d+)/anonymize/$",
-                "shuup.gdpr.admin_module.views.GDPRAnonymizeView",
-                name="gdpr.anonymize"
+                r"^menu/reset/$",
+                "shuup.admin.modules.menu.views.AdminMenuResetView",
+                name="menu.reset"
             ),
-            admin_url(
-                "^gdpr/contact/(?P<pk>\d+)/download/$",
-                "shuup.gdpr.admin_module.views.GDPRDownloadDataView",
-                name="gdpr.download_data"
-            )
         ]
 
     def get_menu_entries(self, request):
+        category = SETTINGS_MENU_CATEGORY
         return [
             MenuEntry(
-                text=_("GDPR"),
-                icon="fa fa-shield",
-                url="shuup_admin:gdpr.settings",
-                category=SETTINGS_MENU_CATEGORY,
+                text=_("Admin menu"),
+                icon="fa fa-list-alt",
+                url="shuup_admin:menu.arrange",
+                category=category,
+                ordering=1
             ),
         ]

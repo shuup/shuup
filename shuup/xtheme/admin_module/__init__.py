@@ -57,7 +57,6 @@ class XthemeAdminModule(AdminModule):
                 text=_("Themes"), icon="fa fa-paint-brush",
                 url="shuup_admin:xtheme.config",
                 category=CONTENT_MENU_CATEGORY,
-                subcategory="design",
                 ordering=1
             )
         ]
@@ -121,7 +120,6 @@ class XthemeSnippetsAdminModule(AdminModule):
                 icon="fa fa-magic",
                 url="shuup_admin:xtheme_snippet.list",
                 category=CONTENT_MENU_CATEGORY,
-                subcategory="design",
                 ordering=2
             )
         ]

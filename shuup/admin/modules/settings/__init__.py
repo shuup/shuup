@@ -31,10 +31,9 @@ class SettingsModule(AdminModule):
         return [
             MenuEntry(
                 text=self.name,
-                icon="fa fa-house",
+                icon="fa fa-home",
                 url="shuup_admin:settings.list",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="other_settings",
                 ordering=4
             )
         ]

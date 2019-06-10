@@ -33,7 +33,6 @@ class SimpleCMSAdminModule(AdminModule):
                 text=_("Pages"), icon="fa fa-file-text",
                 url="shuup_admin:simple_cms.page.list",
                 category=CONTENT_MENU_CATEGORY,
-                subcategory="elements",
                 ordering=3,
                 aliases=[_("Show pages")]
             )

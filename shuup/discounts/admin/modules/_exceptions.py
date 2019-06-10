@@ -37,7 +37,7 @@ class AvailabilityExceptionModule(AdminModule):
         return [
             MenuEntry(
                 text=_("Product Discounts Availability Exceptions"),
-                icon="fa fa-percentage",
+                icon="fa fa-percent",
                 url="shuup_admin:discounts_availability_exception.list",
                 category=CAMPAIGNS_MENU_CATEGORY,
                 ordering=6

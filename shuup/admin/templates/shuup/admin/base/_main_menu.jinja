@@ -41,28 +41,28 @@
                 </li>
             {% endif %}
             {% for category in categories %}
-                {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
-                <li>
-                    <a class="{% if not only_entry %}item-category {% endif %} d-flex align-items-center mt-3 mb-3" href="{% if not only_entry %}#{% else %}{{ only_entry.url }}{% endif %}" data-target-id="category-{{ category.identifier }}">
-                        <i class="item-icon {{ category.icon }}"></i>
-                        <span class="item-name parent">{{ category.name }}</span>
-                        {% if not only_entry %}
-                            <i class="ml-auto item-arrow fa fa-chevron-down"></i>
-                        {% endif %}
-                    </a>
-                    <ul class="submenu">
-                        {% for child in category.children %}
-                            {% for entry in child %}
-                                <li><a class="item-submenu" href="{{ entry.url }}">{{ entry.text }}</a></li>
-                            {% endfor %}
-                        {% endfor %}
-                        {% if not only_entry %}
-                            {% for entry in category %}
-                                <li><a class="item-submenu" href="{{ entry.url }}">{{ entry.text }}</a></li>
-                            {% endfor %}
-                        {% endif %}
-                    </ul>
-                </li>
+                {% if not category.is_hidden %}
+                    {% set only_entry = (category.entries|first if (category.entries|length == 1 and not category.url and category.entries[0].name == category.name) else None) %}
+                    {% set has_children = not only_entry and category.has_entries %}
+                    <li>
+                        <a class="{% if has_children %}item-category {% endif %} d-flex align-items-center mt-3 mb-3" href="{% if only_entry %}{{ only_entry.url }}{% else %}{{ category.url if category.url != None else '#' }}{% endif %}" data-target-id="category-{{ category.identifier }}">
+                            <i class="item-icon {{ category.icon }}"></i>
+                            <span class="item-name parent">{{ category.name }}</span>
+                            {% if has_children %}
+                                <i class="ml-auto item-arrow fa fa-chevron-down"></i>
+                            {% endif %}
+                        </a>
+                        <ul class="submenu">
+                            {% if not only_entry %}
+                                {% for entry in category %}
+                                    {% if not entry.is_hidden %}
+                                        <li><a class="item-submenu" href="{{ entry.url }}">{{ entry.text }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>

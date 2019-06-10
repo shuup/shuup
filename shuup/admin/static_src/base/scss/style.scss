@@ -1,3 +1,6 @@
+@import "shuup/defaults";
+
+// fonts and plugins
 @import "vendor";
 @import "base/typography";
 
@@ -31,3 +34,4 @@
 @import "shuup/loader";
 @import "shuup/summernote";
 @import "shuup/shipments";
+@import "shuup/admin-menu";

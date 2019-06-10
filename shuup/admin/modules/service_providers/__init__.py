@@ -45,7 +45,6 @@ class ServiceProviderModule(AdminModule):
                 icon="fa fa-truck",
                 url="shuup_admin:service_provider.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="payment_shipping",
                 ordering=3
             )
         ]

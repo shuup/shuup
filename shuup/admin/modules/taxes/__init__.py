@@ -45,7 +45,6 @@ class TaxModule(AdminModule):
                 icon="fa fa-pie-chart",
                 url="shuup_admin:tax.list",
                 category=category,
-                subcategory="taxes",
                 ordering=1
             ),
             MenuEntry(
@@ -53,7 +52,6 @@ class TaxModule(AdminModule):
                 icon="fa fa-pie-chart",
                 url="shuup_admin:customer_tax_group.list",
                 category=category,
-                subcategory="taxes",
                 ordering=2
             ),
             MenuEntry(
@@ -61,7 +59,6 @@ class TaxModule(AdminModule):
                 icon="fa fa-pie-chart",
                 url="shuup_admin:tax_class.list",
                 category=category,
-                subcategory="taxes",
                 ordering=3
             )
         ]

@@ -31,7 +31,6 @@ class PermissionGroupModule(AdminModule):
                 icon="fa fa-users",
                 url="shuup_admin:permission_group.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="other_settings",
                 ordering=3
             )
         ]

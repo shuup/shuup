@@ -1,0 +1,65 @@
+{% extends "shuup/admin/base.jinja" %}
+
+{% block title %}
+    {% trans %}Customize admin menu{% endtrans %}
+{% endblock %}
+
+{% block action_buttons %}
+    <div class="btn-toolbar" role="toolbar">
+        <form action="{{ url("shuup_admin:menu.arrange") }}" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <input type="hidden" name="menus" value="">
+            <a href="{{ url("shuup_admin:menu.reset") }}" class="btn btn-danger">
+                <i class="fa fa-save"></i>&nbsp;{% trans %}Reset{% endtrans %}
+            </a>
+            <button class="btn btn-success" onclick="saveMenus()">
+                <i class="fa fa-save"></i>&nbsp;{% trans %}Save{% endtrans %}
+            </button>
+        </form>
+    </div>
+{% endblock %}
+
+{% macro render_menu_entries(entries, id) %}
+    <div class="list-group menu-entries" id="menu-entries-{{ id }}">
+        {% for entry in entries %}
+            <div class="list-group-item list-group-item-action">
+                {{ render_menu_entry(entry) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro render_menu_entry(entry) %}
+    <div class="menu-entry loading" data-id="{{ entry.id }}">
+        {% if entry.icon %}
+            <i class="{{ entry.icon }}"></i>
+        {% else %}
+            <i class="fa"></i>
+        {% endif %}
+        <div class="name" contenteditable="true">
+            {{ entry.name }}
+        </div>
+        <div class="menu-actions">
+            <div class="input-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input is-visible-control" id="isVisible_{{ entry.id }}" {% if not entry.is_hidden %}checked{% endif %}>
+                    <label class="custom-control-label" for="isVisible_{{ entry.id }}"></label>
+                </div>
+                <div class="input-group-append">
+                    <i class="fa fa-arrows sortable-handler" title="{% trans %}Drag me{% endtrans %}"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ render_menu_entries(entry.entries, entry.id) }}
+{% endmacro %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 admin-menus">
+                {{ render_menu_entries(admin_menus, 'admin-menus') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

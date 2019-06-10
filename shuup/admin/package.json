@@ -31,7 +31,7 @@
     "fizzy-ui-utils": "^2.0.7",
     "font-awesome": "^4.7.0",
     "get-size": "^2.0.3",
-    "html5sortable": "^0.9.4",
+    "html5sortable": "^0.9.10",
     "imagelightbox": "^0.10.0",
     "jquery": ">=1.0.0",
     "jquery-datetimepicker": "^2.5.20",

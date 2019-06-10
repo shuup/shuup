@@ -47,10 +47,9 @@ class ShopModule(AdminModule):
         return [
             MenuEntry(
                 text=self.name,
-                icon="fa fa-house",
+                icon="fa fa-home",
                 url="shuup_admin:shop.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                subcategory="settings",
                 ordering=4
             ),
         ]
