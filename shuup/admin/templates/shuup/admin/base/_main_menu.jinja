@@ -42,7 +42,7 @@
             {% endif %}
             {% for category in categories %}
                 {% if not category.is_hidden %}
-                    {% set only_entry = (category.entries|first if (category.entries|length == 1 and not category.url) else None) %}
+                    {% set only_entry = (category.entries|first if (category.entries|length == 1 and not category.url and category.entries[0].name == category.name) else None) %}
                     {% set has_children = not only_entry and category.has_entries %}
                     <li>
                         <a class="{% if has_children %}item-category {% endif %} d-flex align-items-center mt-3 mb-3" href="{% if only_entry %}{{ only_entry.url }}{% else %}{{ category.url if category.url != None else '#' }}{% endif %}" data-target-id="category-{{ category.identifier }}">
