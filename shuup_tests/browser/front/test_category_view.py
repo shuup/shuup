@@ -106,7 +106,6 @@ def test_category_product_filters_2(browser, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_category_product_filters_3(browser, live_server, settings):
     cache.clear()  # Avoid cache from past tests
     shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
@@ -135,7 +134,6 @@ def test_category_product_filters_3(browser, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_category_product_filters_4(browser, live_server, settings):
     """
     Do not show manufacturer option if there is any product
