@@ -10,10 +10,13 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import ShopProduct, ShopProductVisibility, Supplier
-from shuup.front.utils.sorts_and_filters import get_form_field_label
+from shuup.front.utils.sorts_and_filters import (
+    get_configuration, get_form_field_label
+)
 
 from .product_list_modifiers import (
-    OneChoiceFilterWidget, SimpleProductListModifier
+    CommaSeparatedListField, FilterWidget, OneChoiceFilterWidget,
+    SimpleProductListModifier
 )
 
 
@@ -23,6 +26,7 @@ class SupplierProductListFilter(SimpleProductListModifier):
     ordering_key = "filter_products_by_supplier_ordering"
     ordering_label = _("Ordering for filter by supplier")
     label_key = "filter_products_by_supplier_label"
+    enable_multiselect_key = "filter_products_by_supplier_multiselect_enabled"
 
     def get_fields(self, request, category=None):
         shop_products_qs = ShopProduct.objects.filter(
@@ -34,10 +38,23 @@ class SupplierProductListFilter(SimpleProductListModifier):
 
         queryset = Supplier.objects.enabled().filter(
             Q(shop_products__in=shop_products_qs),
-            shops=request.shop
+            Q(shops=request.shop)
         ).distinct()
         if not queryset.exists():
             return
+
+        configuration = get_configuration(request.shop, category)
+        multiselect_enabled = configuration.get(self.enable_multiselect_key)
+        if multiselect_enabled:
+            return [
+                (
+                    "suppliers",
+                    CommaSeparatedListField(
+                        required=False, label=get_form_field_label("supplier", _('Suppliers')),
+                        widget=FilterWidget(choices=[(supplier.pk, supplier.name) for supplier in queryset])
+                    )
+                ),
+            ]
 
         return [
             (
@@ -57,6 +74,10 @@ class SupplierProductListFilter(SimpleProductListModifier):
         if supplier:
             return Q(shop_products__suppliers=supplier)
 
+        suppliers = data.get("suppliers")
+        if suppliers:
+            return Q(shop_products__suppliers__in=suppliers)
+
     def get_admin_fields(self):
         default_fields = super(SupplierProductListFilter, self).get_admin_fields()
         default_fields[0][1].help_text = _(
@@ -65,4 +86,11 @@ class SupplierProductListFilter(SimpleProductListModifier):
         default_fields[1][1].help_text = _(
             "Use a numeric value to set the order in which the supplier filters will appear."
         )
-        return default_fields
+        multiselect_enabled_field = forms.BooleanField(
+            label=_("Allow multiselect suppliers"), required=False,
+            help_text=_("Filter by multiple suppliers at a time.")
+        )
+
+        return default_fields + [
+            (self.enable_multiselect_key, multiselect_enabled_field),
+        ]

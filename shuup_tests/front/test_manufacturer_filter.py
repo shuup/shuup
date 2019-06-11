@@ -8,6 +8,7 @@ import pytest
 
 from django.test import override_settings
 
+from shuup.core import cache
 from shuup.core.models import Manufacturer
 from shuup.front.forms.product_list_modifiers import (
     ManufacturerProductListFilter
@@ -19,6 +20,8 @@ from shuup.testing.utils import apply_request_middleware
 
 @pytest.mark.django_db
 def test_manufacturer_filter_get_fields(rf):
+    cache.clear()
+
     shop = factories.get_default_shop()
 
     request = apply_request_middleware(rf.get("/"))
@@ -42,10 +45,8 @@ def test_manufacturer_filter_get_fields(rf):
     form_field = ManufacturerProductListFilter().get_fields(request, category)[0][1]
     assert form_field is not None
     assert form_field.label == "Manufacturers"
-    assert len(form_field.queryset) == 1
 
     with override_settings(SHUUP_FRONT_OVERRIDE_SORTS_AND_FILTERS_LABELS_LOGIC={"manufacturers": "Brands"}):
         form_field = ManufacturerProductListFilter().get_fields(request, category)[0][1]
         assert form_field is not None
         assert form_field.label == "Brands"
-        assert len(form_field.queryset) == 1

@@ -297,11 +297,10 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
         return [
             (
                 "manufacturers",
-                forms.ModelMultipleChoiceField(
-                    queryset=queryset,
+                CommaSeparatedListField(
                     required=False,
                     label=get_form_field_label("manufacturers", _('Manufacturers')),
-                    widget=FilterWidget()
+                    widget=FilterWidget(choices=[(mfgr.pk, mfgr.name) for mfgr in queryset])
                 )
             ),
         ]
@@ -447,8 +446,9 @@ class ProductVariationFilter(SimpleProductListModifier):
         for variation_key, choices in six.iteritems(variation_values):
             fields.append((
                 "variation_%s" % variation_key,
-                forms.MultipleChoiceField(
-                    choices=choices, required=False, label=capfirst(variation_key), widget=FilterWidget())
+                CommaSeparatedListField(
+                    required=False, label=capfirst(variation_key), widget=FilterWidget(choices=choices)
+                )
             ))
         context_cache.set_cached_value(key, fields)
         return fields

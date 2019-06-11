@@ -49,7 +49,7 @@ def test_supplier_filter_get_fields(rf):
     form_field = SupplierProductListFilter().get_fields(request, category)[0][1]
     assert form_field is not None
     assert form_field.label == "Suppliers"
-    assert len(form_field.queryset) == 1
+    assert len(form_field.widget.choices) == 1
 
     # Add second supplier for new product
     supplier2 = Supplier.objects.create(name="K Inc")
@@ -61,23 +61,23 @@ def test_supplier_filter_get_fields(rf):
     # Still one with category since shop product not linked to category
     form_field = SupplierProductListFilter().get_fields(request, category)[0][1]
     assert form_field is not None
-    assert len(form_field.queryset) == 1
+    assert len(form_field.widget.choices) == 1
 
     # Without category we get two results
     form_field = SupplierProductListFilter().get_fields(request, None)[0][1]
     assert form_field is not None
-    assert len(form_field.queryset) == 2
+    assert len(form_field.widget.choices) == 2
 
     new_shop_product.categories.add(category)  # primary category shouldn't be required
 
     # Now with or without category we get 2 results
     form_field = SupplierProductListFilter().get_fields(request, category)[0][1]
     assert form_field is not None
-    assert len(form_field.queryset) == 2
+    assert len(form_field.widget.choices) == 2
 
     form_field = SupplierProductListFilter().get_fields(request, None)[0][1]
     assert form_field is not None
-    assert len(form_field.queryset) == 2
+    assert len(form_field.widget.choices) == 2
 
 
 @pytest.mark.django_db
@@ -170,9 +170,80 @@ def test_category_detail_filters(client):
             _assert_product_url(mouse_product_box, simon_supplier, mouse)
 
 
+@pytest.mark.django_db
+def test_category_detail_multiselect_supplier_filters(client):
+    shop = factories.get_default_shop()
+
+    # Activate show supplier info for front
+    assert ThemeSettings.objects.count() == 1
+    theme_settings = ThemeSettings.objects.first()
+    theme_settings.update_settings({"show_supplier_info": True})
+
+    category = factories.get_default_category()
+
+    # Important! Activate supplier filter.
+    set_configuration(
+        shop=shop,
+        data={
+            "filter_products_by_supplier": True,
+            "filter_products_by_supplier_ordering": 1,
+            "filter_products_by_supplier_multiselect_enabled": True
+        }
+    )
+
+    supplier_data = [
+        ("Johnny Inc", 0.5),
+        ("Mike Inc", 0.9),
+        ("Simon Inc", 0.8),
+    ]
+
+    for name, percentage_from_original_price in supplier_data:
+        supplier = Supplier.objects.create(name=name)
+        supplier.shops.add(shop)
+        sku = name
+        price_value = 10
+        product = factories.create_product(sku, shop=shop, default_price=price_value)
+        shop_product = product.get_shop_instance(shop)
+        shop_product.suppliers.add(supplier)
+        shop_product.primary_category = category
+        shop_product.categories.add(category)
+        shop_product.save()
+
+        supplier_price = (percentage_from_original_price * price_value)
+        SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
+
+    strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
+    with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
+        with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
+            johnny_supplier = Supplier.objects.filter(name="Johnny Inc").first()
+            mike_supplier = Supplier.objects.filter(name="Mike Inc").first()
+            simon_supplier = Supplier.objects.filter(name="Simon Inc").first()
+
+            soup = _get_category_detail_soup_multiselect(
+                client, category, [johnny_supplier.pk]
+            )
+            assert len(soup.findAll("div", {"class": "single-product"})) == 1
+
+            soup = _get_category_detail_soup_multiselect(
+                client, category, [johnny_supplier.pk, mike_supplier.pk]
+            )
+            assert len(soup.findAll("div", {"class": "single-product"})) == 2
+
+            soup = _get_category_detail_soup_multiselect(
+                client, category, [johnny_supplier.pk, mike_supplier.pk, simon_supplier.pk]
+            )
+            assert len(soup.findAll("div", {"class": "single-product"})) == 3
+
+
 def _get_category_detail_soup(client, category, supplier_id):
     url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
     response = client.get(url, data={"supplier": supplier_id})
+    return BeautifulSoup(response.content)
+
+
+def _get_category_detail_soup_multiselect(client, category, supplier_ids):
+    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    response = client.get(url, data={"suppliers": ",".join(["%s" % sid for sid in supplier_ids])})
     return BeautifulSoup(response.content)
 
 
