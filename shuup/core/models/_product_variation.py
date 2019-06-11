@@ -50,7 +50,7 @@ class ProductVariationVariable(TranslatableModel, SortableMixin):
         ordering = ('ordering', )
 
     def __str__(self):
-        return self.safe_translation_getter("name") or self.identifier or repr(self)
+        return force_text(self.safe_translation_getter("name") or self.identifier or repr(self))
 
 
 @python_2_unicode_compatible
@@ -70,7 +70,7 @@ class ProductVariationVariableValue(TranslatableModel, SortableMixin):
         ordering = ('ordering', )
 
     def __str__(self):
-        return self.safe_translation_getter("value") or self.identifier or repr(self)
+        return force_text(self.safe_translation_getter("value") or self.identifier or repr(self))
 
 
 class ProductVariationResult(models.Model):
