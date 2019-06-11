@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
+from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
@@ -32,4 +32,4 @@ class Label(TranslatableShuupModel):
         verbose_name_plural = _('labels')
 
     def __str__(self):
-        return self.safe_translation_getter("name", default=self.identifier)
+        return force_text(self.safe_translation_getter("name", default=self.identifier))

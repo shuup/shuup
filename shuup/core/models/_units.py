@@ -15,8 +15,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext
+from django.utils.translation import ugettext_lazy as _
 from parler.models import (
     TranslatedField, TranslatedFields, TranslatedFieldsModel
 )
@@ -68,7 +68,7 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
         verbose_name_plural = _('sales units')
 
     def __str__(self):
-        return self.safe_translation_getter("name", default=self.identifier) or ""
+        return force_text(self.safe_translation_getter("name", default=self.identifier) or "")
 
     @property
     def allow_fractions(self):
