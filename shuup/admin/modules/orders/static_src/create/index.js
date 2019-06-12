@@ -34,7 +34,7 @@ export function init(config = {}) {
         return;
     }
     const persistor = persistStore(store, {
-        keyPrefix: interpolate("order_creator_shop-%s:", [config.shops[0].id])
+        keyPrefix: interpolate("order_creator_shop-%s-%s:", [config.shops[0].id, config.orderId])
     }, () => {
         var countryDefault = config.countryDefault;
         if (!countryDefault && config.countries.length > 0) {
