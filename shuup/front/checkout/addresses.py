@@ -72,10 +72,18 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
     template_name = "shuup/front/checkout/addresses.jinja"
 
     # When adding to this, you'll naturally have to edit the template too
-    address_kinds = ("shipping", "billing")
+    _address_kinds = ("shipping", "billing")
     address_form_classes = {}  # Override by `address_kind` if required
     company_form_class = CompanyForm
     saved_address_form_class = SavedAddressForm
+
+    @property
+    def address_kinds(self):
+        # remove shipping address if there is shipable line
+        kinds = list(self._address_kinds)
+        if not self.basket.has_shippable_lines():
+            kinds.remove("shipping")
+        return kinds
 
     def get_form(self, form_class=None):
         fg = FormGroup(**self.get_form_kwargs())
@@ -136,9 +144,11 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         self._process_addresses(basket)
         if self.storage.get("company"):
             basket.customer = self.storage.get("company")
-            for address in (basket.shipping_address, basket.billing_address):
-                address.company_name = basket.customer.name
-                address.tax_number = basket.customer.tax_number
+            for address_kind in self.address_kinds:
+                address = getattr(basket, "{}_address".format(address_kind), None)
+                if address:
+                    address.company_name = basket.customer.name
+                    address.tax_number = basket.customer.tax_number
 
     def get_context_data(self, **kwargs):
         context = super(AddressesPhase, self).get_context_data(**kwargs)

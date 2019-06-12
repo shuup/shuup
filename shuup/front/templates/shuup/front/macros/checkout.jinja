@@ -247,18 +247,28 @@
     </div>
 {% endmacro %}
 
+{% macro render_shipping_address(basket, column_class="col-sm-6") %}
+    <div class="{{ column_class }}">
+        {{ service_panel(_("Delivery"), _("Delivery method"), _("Shipping address"), basket.shipping_method, basket.shipping_address) }}
+    </div>
+{% endmacro %}
+
+{% macro render_billing_address(basket, column_class="col-sm-6") %}
+    <div class="{{ column_class }}">
+        {{ service_panel(_("Billing"), _("Payment method"), _("Billing address"), basket.payment_method, basket.billing_address) }}
+    </div>
+{% endmacro %}
+
 {% macro confirm_phase_address_information(basket) %}
     <div class="row">
-        <div class="col-sm-6">
-            {{ service_panel(
-                _("Delivery"), _("Delivery method"), _("Shipping address"),
-                basket.shipping_method, basket.shipping_address) }}
-        </div>
-        <div class="col-sm-6">
-            {{ service_panel(
-                _("Billing"), _("Payment method"), _("Billing address"),
-                basket.payment_method, basket.billing_address) }}
-        </div>
+        {% if basket.shipping_address and basket.billing_address %}
+            {{ render_shipping_address(basket) }}
+            {{ render_billing_address(basket) }}
+        {% elif basket.billing_address %}
+            {{ render_billing_address(basket, "col-sm-12") }}
+        {% elif basket.shipping_address %}
+            {{ render_shipping_address(basket, "col-sm-12") }}
+        {% endif %}
     </div>
 {% endmacro %}
 
