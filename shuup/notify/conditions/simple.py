@@ -62,6 +62,15 @@ class CaseInsensitiveStringEqual(Condition):
         return (value1 == value2)
 
 
+class BooleanValuesEqual(Condition):
+    identifier_suffix = "equal"
+
+    def test(self, context):
+        value1 = bool(self.get_value(context, "v1"))
+        value2 = bool(self.get_value(context, "v2"))
+        return (value1 == value2)
+
+
 def construct_simple(base, var_type):
     identifier = "%s_%s" % (var_type.identifier, base.identifier_suffix)
     class_name = str(camel_case(identifier))
@@ -79,4 +88,4 @@ def construct_simple(base, var_type):
 LanguageEqual = construct_simple(CaseInsensitiveStringEqual, Language)
 TextEqual = construct_simple(CaseInsensitiveStringEqual, Text)
 IntegerEqual = construct_simple(BaseEqual, Integer)
-BooleanEqual = construct_simple(BaseEqual, Boolean)
+BooleanEqual = construct_simple(BooleanValuesEqual, Boolean)
