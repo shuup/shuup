@@ -162,6 +162,7 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             return self.form_invalid(form)
         except NoShippingAddressException:
             messages.error(self.request, _("Shipping address is not set."))
+            return self.form_invalid(form)
         else:
             messages.success(self.request, _("Shipment %s created.") % shipment.id)
             return HttpResponseRedirect(self.get_success_url())
