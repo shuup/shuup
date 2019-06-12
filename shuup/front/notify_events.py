@@ -11,10 +11,11 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import PaymentStatus, ShipmentStatus, ShippingStatus
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import (
-    payment_created, refund_created, shipment_created_and_processed,
-    shipment_deleted
+    order_status_changed, payment_created, refund_created,
+    shipment_created_and_processed, shipment_deleted
 )
 from shuup.notify.base import Event, Variable
+from shuup.notify.models import Script
 from shuup.notify.typology import Email, Enum, Language, Model, Phone
 
 
@@ -27,6 +28,20 @@ class OrderReceived(Event):
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     shop_email = Variable(_("Shop Email"), type=Email)
     shop_phone = Variable(_("Shop Phone"), type=Phone)
+    language = Variable(_("Language"), type=Language)
+
+
+class OrderStatusChanged(Event):
+    identifier = "order_status_changed"
+    name = _("Order Status Changed")
+
+    order = Variable(_("Order"), type=Model("shuup.Order"))
+    customer_email = Variable(_("Customer Email"), type=Email)
+    customer_phone = Variable(_("Customer Phone"), type=Phone)
+    shop_email = Variable(_("Shop Email"), type=Email)
+    shop_phone = Variable(_("Shop Phone"), type=Phone)
+    old_status = Variable(_("Old Status"), type=Model("shuup.OrderStatus"))
+    new_status = Variable(_("New Status"), type=Model("shuup.OrderStatus"))
     language = Variable(_("Language"), type=Language)
 
 
@@ -148,3 +163,34 @@ def send_refund_created_notification(order, refund_lines, **kwargs):
         language=order.language,
         payment_status=order.payment_status
     ).run(shop=order.shop)
+
+
+@receiver(order_status_changed)
+def send_order_status_changed_notification(order, old_status, new_status, **kwargs):
+    # no script for this event configured
+    enabled_scripts = Script.objects.filter(
+        shop=order.shop,
+        event_identifier=OrderStatusChanged.identifier,
+        enabled=True
+    )
+    if not enabled_scripts.exists():
+        return
+
+    params = dict(
+        order=order,
+        customer_email=order.email,
+        customer_phone=order.phone,
+        shop_email=None,
+        shop_phone=None,
+        language=order.language,
+        old_status=old_status,
+        new_status=new_status
+    )
+
+    if order.shop.contact_address:
+        params.update(dict(
+            shop_email=order.shop.contact_address.email,
+            shop_phone=order.shop.contact_address.phone
+        ))
+
+    OrderStatusChanged(**params).run(shop=order.shop)
