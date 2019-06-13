@@ -4,8 +4,12 @@
     <form role="form" method="post" action="" id="addresses">
         {% set forms = form.forms %}
         {% csrf_token %}
-        {{ checkout_macros.address_phase_billing_well(forms.billing, forms.company, forms.saved_billing) }}
-        {{ checkout_macros.address_phase_shipping_well(forms.shipping, saved_address_form=forms.saved_shipping) }}
+        {% if forms.billing %}
+            {{ checkout_macros.address_phase_billing_well(forms.billing, forms.company, forms.saved_billing) }}
+        {% endif %}
+        {% if forms.shipping %}
+            {{ checkout_macros.address_phase_shipping_well(forms.shipping, saved_address_form=forms.saved_shipping) }}
+        {% endif %}
         {{ checkout_macros.default_buttons() }}
     </form>
 {% endblock %}

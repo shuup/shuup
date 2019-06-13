@@ -215,18 +215,28 @@
     </table>
 {% endmacro %}
 
+{% macro render_shipping_address(order, column_class="col-sm-6") %}
+    <div class="{{ column_class }}">
+        {{ service_panel(_("Delivery"), _("Delivery method"), _("Shipping address"), order.shipping_method, order.shipping_address) }}
+    </div>
+{% endmacro %}
+
+{% macro render_billing_address(order, column_class="col-sm-6") %}
+    <div class="{{ column_class }}">
+        {{ service_panel( _("Billing"), _("Payment method"), _("Billing address"), order.payment_method, order.billing_address) }}
+    </div>
+{% endmacro %}
+
 {% macro render_service_information(order) %}
     <div class="row">
-        <div class="col-sm-6">
-            {{ service_panel(
-                _("Delivery"), _("Delivery method"), _("Shipping address"),
-                order.shipping_method, order.shipping_address) }}
-        </div>
-        <div class="col-sm-6">
-            {{ service_panel(
-                _("Billing"), _("Payment method"), _("Billing address"),
-                order.payment_method, order.billing_address) }}
-        </div>
+        {% if order.shipping_address and order.billing_address %}
+            {{ render_shipping_address(order) }}
+            {{ render_billing_address(order) }}
+        {% elif order.billing_address %}
+            {{ render_billing_address(order, "col-sm-12") }}
+        {% elif order.shipping_address %}
+            {{ render_shipping_address(order, "col-sm-12") }}
+        {% endif %}
     </div>
 {% endmacro %}
 
