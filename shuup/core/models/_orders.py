@@ -40,7 +40,7 @@ from shuup.core.fields import (
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.core.settings_provider import ShuupSettings
 from shuup.core.signals import (
-    payment_created, refund_created, shipment_created,
+    order_status_changed, payment_created, refund_created, shipment_created,
     shipment_created_and_processed
 )
 from shuup.utils.analog import define_log_model, LogEntryKind
@@ -527,13 +527,22 @@ class Order(MoneyPropped, models.Model):
                     "when SHUUP_ALLOW_ANONYMOUS_ORDERS is not enabled.")
         self._cache_values()
         first_save = (not self.pk)
+        old_status = self.status
+
+        if not first_save:
+            old_status = Order.objects.only("status").get(pk=self.pk).status
+
         super(Order, self).save(*args, **kwargs)
+
         if first_save:  # Have to do a double save the first time around to be able to save identifiers
             self._save_identifiers()
             self._cache_contact_values_post_create()
 
         for line in self.lines.exclude(product_id=None):
             line.supplier.module.update_stock(line.product_id)
+
+        if self.status != old_status:
+            order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
 
     def delete(self, using=None):
         if not self.deleted:
