@@ -20,6 +20,8 @@ def test_variation_template_creation(rf):
     request = apply_request_middleware(rf.get("/"), user=user, shop=shop)
     form = VariationVariablesDataForm()
     form.request = request
+    form.cleaned_data = {'data' : "{}"}
+    form.save()
     assert form.get_variation_templates() == []
     form.cleaned_data = {'data': '{"variable_values": []}', 'activate_template': False, 'template_name': 'Test'}
     form.save()

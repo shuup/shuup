@@ -8,16 +8,22 @@
 import os
 import json
 import pytest
+
 from django.core.urlresolvers import reverse
+
 from shuup import configuration
-from shuup.core.models import ProductVariationVariable, ProductVariationVariableValue
+from shuup.core import cache
+from shuup.core.models import (
+    ProductMode, ProductVariationVariable, ProductVariationVariableValue
+)
+from shuup.testing.browser_utils import (
+    click_element, initialize_admin_browser_test, wait_until_condition
+)
+from shuup.testing.factories import create_product, get_default_shop
+
 
 from shuup_tests.utils import printable_gibberish
 
-from shuup.testing.browser_utils import click_element, wait_until_condition
-from shuup.testing.factories import create_product, get_default_shop
-from shuup.testing.browser_utils import initialize_admin_browser_test
-from shuup.core.models._products import ProductMode
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -25,9 +31,10 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_variation_templates(browser, admin_user, live_server, settings):
+    cache.clear()  # Avoid cache from past tests
     shop = get_default_shop()
     configuration_key = "saved_variation_templates"
-    assert configuration.get(shop, configuration_key, []) == []
+    assert configuration.get(shop, configuration_key, None) is None
     product = create_product("test_sku", shop, default_price=10, mode=ProductMode.VARIABLE_VARIATION_PARENT)
     assert product.is_variation_parent()
     initialize_admin_browser_test(browser, live_server, settings)
@@ -40,11 +47,12 @@ def test_variation_templates(browser, admin_user, live_server, settings):
     assert len(ProductVariationVariable.objects.filter(product=product)) == 0 # Size
     assert len(ProductVariationVariableValue.objects.all()) == 0  # Assert no variations are active
     click_element(browser, '.fa.fa-plus')
-    # variables-template_name
-    browser.fill("variables-template_name", printable_gibberish())
-    click_element(browser, '#save_template_name')
-    assert len(configuration.get(shop, configuration_key, [])) == 1
 
+    wait_until_condition(browser, lambda x: x.is_text_present("New template"))
+    browser.fill("variables-template_name", printable_gibberish())  # variables-template_name
+    click_element(browser, '#save_template_name')
+    wait_until_condition(browser, lambda x: not x.is_text_present("New template"))
+    assert len(configuration.get(shop, configuration_key, [])) == 1
     click_element(browser, '#variables-section > div:nth-child(1) > a:nth-child(2)')
     click_element(browser, "#variation-variable-editor")
     browser.find_by_xpath('//*[@id="variation-variable-editor"]/div/div/select/option[2]').first.click()
@@ -61,11 +69,10 @@ def test_variation_templates(browser, admin_user, live_server, settings):
 
     click_element(browser, '#variables-section > div:nth-child(1) > a:nth-child(2)')
     click_element(browser, "#variation-variable-editor") # id_variables-data
-
+    cache.clear()  # Avoid cache from past tests
     assert len(configuration.get(shop, configuration_key, [])) == 1
 
     browser.find_by_xpath('//*[@id="variation-variable-editor"]/div/div/select/option[2]').first.click()
     template_data = configuration.get(shop, configuration_key, [])[0].get('data')[0]
     browser_data = json.loads(browser.find_by_css("#id_variables-data").value).get('variable_values')[0]
     assert browser_data == template_data  # assert shown template data matches template data in the db
-

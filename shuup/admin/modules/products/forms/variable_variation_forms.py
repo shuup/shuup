@@ -164,12 +164,8 @@ class VariationVariablesDataForm(forms.Form):
         }
 
     def process_var_datum(self, var_datum, ordering):
-        pk = str(var_datum["pk"])
         deleted = var_datum.get("DELETE")
-        if pk.startswith("$") or self.change_template:  # New value.
-            var = ProductVariationVariable(product=self.parent_product)
-        else:
-            var = ProductVariationVariable.objects.get(product=self.parent_product, pk=pk)
+        var = ProductVariationVariable(product=self.parent_product)
         if deleted:
             if var.pk:
                 var.delete()
@@ -194,12 +190,8 @@ class VariationVariablesDataForm(forms.Form):
         :type var: ProductVariationVariable
         :type val_datum: dict
         """
-        pk = str(val_datum["pk"])
         deleted = val_datum.get("DELETE")
-        if pk.startswith("$") or self.change_template:  # New value.
-            val = ProductVariationVariableValue(variable=var)
-        else:
-            val = var.values.get(pk=pk)
+        val = ProductVariationVariableValue(variable=var)
         if deleted:
             if val.pk:
                 val.delete()
