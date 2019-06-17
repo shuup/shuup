@@ -43,6 +43,24 @@ def test_bound_file_dnd_uploader_widget():
     assert soup.select("[data-upload_path]")[0]["data-upload_path"] == "/test"
     assert soup.select("[data-dropzone]")[0]["data-dropzone"] == "true"
     assert soup.select("[data-kind]")[0]["data-kind"] == "foo"
-    assert soup.select("[data-id]")[0]["data-id"] == str(f.pk)
-    assert soup.select("[data-name]")[0]["data-name"] == f.name
-    assert not soup.select("[data-thumbnail]")
+    assert soup.select("[data-file0_id]")[0]["data-file0_id"] == str(f.pk)
+    assert soup.select("[data-file0_name]")[0]["data-file0_name"] == f.name
+    assert not soup.select("[data-file0_thumbnail]")
+
+    f2 = File.objects.create(name="file2")
+    widget_html = FileDnDUploaderWidget(upload_path="/test", kind="foo", max_files=2).render(
+        name="foo", value=[f.pk, f2.pk]
+    )
+    soup = BeautifulSoup(widget_html)
+    assert soup.select("#dropzone-dropzone"), "widget has id"
+    assert soup.select("input")[0]["name"] == "foo"
+    assert soup.select("input")[0]["value"] == str(f.pk) + ";" + str(f2.pk)
+    assert soup.select("[data-upload_path]")[0]["data-upload_path"] == "/test"
+    assert soup.select("[data-dropzone]")[0]["data-dropzone"] == "true"
+    assert soup.select("[data-kind]")[0]["data-kind"] == "foo"
+    assert soup.select("[data-file0_id]")[0]["data-file0_id"] == str(f.pk)
+    assert soup.select("[data-file0_name]")[0]["data-file0_name"] == f.name
+    assert not soup.select("[data-file0_thumbnail]")
+    assert soup.select("[data-file1_id]")[0]["data-file1_id"] == str(f2.pk)
+    assert soup.select("[data-file1_name]")[0]["data-file1_name"] == f2.name
+    assert not soup.select("[data-file1_thumbnail]")

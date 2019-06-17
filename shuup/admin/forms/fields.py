@@ -7,8 +7,10 @@
 from decimal import Decimal
 from numbers import Number
 
+import six
 from django.forms import (
-    DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
+    DecimalField, Field, ModelMultipleChoiceField, MultipleChoiceField, Select,
+    SelectMultiple
 )
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
@@ -150,3 +152,22 @@ class WeekdayField(MultipleChoiceField):
 
     def clean(self, value):
         return ",".join(super(WeekdayField, self).clean(value))
+
+
+class ImageMultipleField(ModelMultipleChoiceField):
+    def __init__(self, queryset=None, required=True, widget=None,
+                 label=None, initial=None, help_text='', *args, **kwargs):
+
+        if not queryset:
+            from filer.models import Image
+            queryset = Image.objects.all()
+
+        super(ImageMultipleField, self).__init__(
+            queryset, required, widget, label, initial, help_text, *args, **kwargs
+        )
+
+    def prepare_value(self, value):
+        if (hasattr(value, '__iter__') and not isinstance(value, six.text_type) and not hasattr(value, '_meta')):
+            return [super(ImageMultipleField, self).prepare_value(v) for v in value if v]
+
+        return super(ImageMultipleField, self).prepare_value(value)

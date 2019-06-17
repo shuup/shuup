@@ -114,7 +114,13 @@ class BasePopupChoiceWidget(Widget):
 
 
 class FileDnDUploaderWidget(Widget):
-    def __init__(self, attrs=None, kind=None, upload_path="/", clearable=False, browsable=True, upload_url=None):
+    """
+    Widget to setup drag and drop of files
+
+    For multiple images support, use shuup.admin.forms.ImageMultipleField field too
+    """
+    def __init__(self, attrs=None, kind=None, upload_path="/", clearable=False,
+                 browsable=True, upload_url=None, max_files=1):
         self.kind = kind
         self.upload_path = upload_path
         self.clearable = clearable
@@ -122,45 +128,74 @@ class FileDnDUploaderWidget(Widget):
         if not upload_url:
             upload_url = reverse_lazy("shuup_admin:media.upload")
         self.upload_url = upload_url
+        self.max_files = max_files
+        self.multiple_mode = (max_files > 1)
         super(FileDnDUploaderWidget, self).__init__(attrs)
 
-    def _get_file_attrs(self, file):
-        if not file:
+    def _get_file_attrs(self, files):
+        if not files:
             return []
-        try:
-            thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
-                'size': (120, 120),
-                'crop': True,
-                'upscale': True,
-                'subject_location': file.subject_location
+
+        images = []
+        for file in files:
+            try:
+                thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
+                    'size': (120, 120),
+                    'crop': True,
+                    'upscale': True,
+                    'subject_location': file.subject_location
+                })
+
+            except Exception:
+                thumbnail = None
+
+            images.append({
+                "id": file.id,
+                "name": file.label,
+                "size": file.size,
+                "url": file.url,
+                "thumbnail": (thumbnail.url if thumbnail else None),
+                "date": file.uploaded_at.isoformat()
             })
-        except Exception:
-            thumbnail = None
-        data = {
-            "id": file.id,
-            "name": file.label,
-            "size": file.size,
-            "url": file.url,
-            "thumbnail": (thumbnail.url if thumbnail else None),
-            "date": file.uploaded_at.isoformat()
-        }
-        return ["data-%s='%s'" % (key, val) for key, val in six.iteritems(data) if val is not None]
+
+        attrs = [
+            "data-initial-files='%d'" % len(images),
+        ]
+        for index, image_data in enumerate(images):
+            attrs.extend([
+                "data-file%d_%s='%s'" % (index, key, val)
+                for key, val in six.iteritems(image_data)
+                if val is not None
+            ])
+        return attrs
 
     def render(self, name, value, attrs={}, renderer=None):
-        pk_input = HiddenInput().render(name, value, attrs)
+        value = value or None   # prevent blank strings
+        input_value = value
+
+        if self.multiple_mode and value:
+            attrs["multiple"] = True
+            input_value = ";".join([str(v) for v in value])
+
+        pk_input = HiddenInput().render(name, input_value, attrs)
         file_attrs = [
             "data-upload_path='%s'" % self.upload_path,
             "data-add_remove_links='%s'" % self.clearable,
             "data-dropzone='true'",
             "data-browsable='%s'" % self.browsable,
+            "data-max-files='%d'" % self.max_files
         ]
         if self.upload_url:
             file_attrs.append("data-upload_url='%s'" % self.upload_url)
         if self.kind:
             file_attrs.append("data-kind='%s'" % self.kind)
         if value:
-            file = File.objects.filter(pk=value).first()
-            file_attrs += self._get_file_attrs(file)
+            if not isinstance(value, (list, tuple)):
+                value = [value]
+            value = [v for v in value if v]
+            if value:
+                files = File.objects.filter(pk__in=value)
+                file_attrs += self._get_file_attrs(files)
         return (
             mark_safe("<div id='%s-dropzone' class='dropzone %s' %s>%s</div>" % (
                 attrs.get("id", "dropzone"),
@@ -169,6 +204,14 @@ class FileDnDUploaderWidget(Widget):
                 pk_input
             ))
         )
+
+    def value_from_datadict(self, data, files, name):
+        value = data.get(name)
+
+        if self.multiple_mode:
+            value = value.split(";")
+
+        return value
 
 
 class TextEditorWidget(Textarea):
