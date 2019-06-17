@@ -1,30 +1,24 @@
 include README.rst
 include LICENSE
 include VENDOR-LICENSES.md
-
 include tox.ini
 
-recursive-include shuup \
-    *.jinja *.txt *.js *.css *.json *.less *.map \
-    *.ico *.png *.svg *.jpg \
-    *.woff *.woff2 *.eot *.otf *.ttf *.po *.mo
-
+recursive-include shuup *.jinja *.txt *.po *.mo
 recursive-include shuup/default_importer *.xls *.xlsx *.csv
-
 recursive-include shuup_tests *.jinja
-
-# No extra extensions to include from shuup_workbench, but it will be
-# included still, since it's a Python package.
-# recursive-include shuup_workbench ...
-
-prune shuup/*/bower_components
-prune shuup/*/*/bower_components
-prune shuup/*/*/*/bower_components
-prune shuup/*/*/*/*/bower_components
-prune shuup/*/*/*/*/node_modules
-prune shuup/*/*/*/node_modules
-prune shuup/*/*/node_modules
-prune shuup/*/node_modules
-prune shuup/**/.cache
-
 recursive-include doc *.rst *.py *.LICENSE Makefile make.bat
+
+# Shuup static files
+recursive-include shuup/admin/static *
+recursive-include shuup/campaigns/static *
+recursive-include shuup/front/static *
+recursive-include shuup/front/apps/recently_viewed_products/static *
+recursive-include shuup/gdpr/static *
+recursive-include shuup/notify/static *
+recursive-include shuup/order_printouts/static *
+recursive-include shuup/regions/static *
+recursive-include shuup/simple_cms/static *
+recursive-include shuup/themes/classic_gray/static *
+recursive-include shuup/xtheme/static *
+
+prune shuup/**/.cache
