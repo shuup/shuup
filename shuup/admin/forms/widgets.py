@@ -206,7 +206,7 @@ class FileDnDUploaderWidget(Widget):
         )
 
     def value_from_datadict(self, data, files, name):
-        value = data.get(name)
+        value = data.get(name) or ""
 
         if self.multiple_mode:
             value = value.split(";")

@@ -1,0 +1,7 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+
+{% set shop_config_form = form[form_def.name] %}
+
+{% call content_block(_("Shop Extra Configuration"), "fa-info-circle") %}
+    {{ bs3.field(shop_config_form.images) }}
+{% endcall %}

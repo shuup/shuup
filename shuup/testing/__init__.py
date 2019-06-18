@@ -61,6 +61,9 @@ class ShuupTestingAppConfig(AppConfig):
         "pricing_module": [
             "shuup.testing.supplier_pricing.pricing:SupplierPricingModule"
         ],
+        "admin_shop_form_part": [
+            "shuup.testing.admin_module.form_parts.TestShopFormPart"
+        ]
     }
 
     def ready(self):
