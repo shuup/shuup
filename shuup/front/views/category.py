@@ -9,7 +9,7 @@ from __future__ import with_statement
 
 from django.views.generic import DetailView, TemplateView
 
-from shuup.core.models import Category, Product
+from shuup.core.models import Category, Product, Supplier
 from shuup.front.utils.sorts_and_filters import (
     get_product_queryset, get_query_filters, post_filter_products,
     ProductListForm, sort_products
@@ -64,6 +64,7 @@ class CategoryView(DetailView):
             "shop_products__shop": self.request.shop,
             "variation_parent__isnull": True,
             "shop_products__categories": self.object,
+            "shop_products__suppliers__in": Supplier.objects.enabled()
         }
 
     def get_context_data(self, **kwargs):
@@ -82,7 +83,8 @@ class AllCategoriesView(TemplateView):
         return {
             "shop_products__shop": self.request.shop,
             "variation_parent__isnull": True,
-            "shop_products__categories__id__in": category_ids
+            "shop_products__categories__id__in": category_ids,
+            "shop_products__suppliers__in": Supplier.objects.enabled()
         }
 
     def get_context_data(self, **kwargs):
