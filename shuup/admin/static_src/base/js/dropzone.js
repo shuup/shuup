@@ -110,6 +110,7 @@ window.activateDropzones = function() {
         }
     });
 };
+window.activateDropzone = activateDropzone;
 
 $(function(){
     window.activateDropzones();
