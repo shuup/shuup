@@ -1,13 +1,33 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.7
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-06-19 11:15am -0800.
+
+Admin
+~~~~~
+
+- Expose dropzone activation to the world 
+- Fix boolean test when a false constant is needed
+- Fix state issue with order editing
+- Customize admin menu with nested levels
+- Drop subcategories from admin menu as unused
+- Customize admin menu with first level categories
+
+Core
+~~~~
+
+- Add signal and notify event when order status changes
+- Use force_text in models __str__ method to make sure to return strings
+
+Front
+~~~~~
+
+- Filter out invalid suppliers from category list
+- Make shipping address optional in checkout phase
+- Fix manufacturer, supplier and variation filters
 
 
 Shuup 1.9.6
