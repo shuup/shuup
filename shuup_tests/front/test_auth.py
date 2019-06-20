@@ -7,11 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from django.contrib.auth import (
-    get_user, get_user_model, logout, REDIRECT_FIELD_NAME
-)
+from django.contrib.auth import (REDIRECT_FIELD_NAME, get_user, get_user_model,
+                                 logout)
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.forms import ValidationError
 
 from shuup.apps.provides import override_provides
 from shuup.front.apps.auth.forms import EmailAuthenticationForm
@@ -19,7 +19,7 @@ from shuup.front.signals import login_allowed
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.utils import FieldTestProvider, login_allowed_signal
-from shuup_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD
+from shuup_tests.utils.fixtures import REGULAR_USER_PASSWORD, regular_user
 
 regular_user = regular_user  # noqa
 
@@ -208,6 +208,45 @@ def test_recover_password_form_with_invalid_email():
 
     assert (len(form.errors) == 1) and form.errors["email"]
 
+@pytest.mark.django_db
+def test_email_auth_form_with_inactive_user(client, regular_user, rf):
+    shop = get_default_shop()
+    prepare_user(regular_user)
+
+    client.post(reverse("shuup:login"), data={
+        "username": regular_user.username,
+        "password": REGULAR_USER_PASSWORD,
+    })
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request) == regular_user, "User is logged in"
+
+    request = rf.get("/")
+    request.session = client.session
+    logout(request)
+
+    user_contact = regular_user.contact
+    assert user_contact.is_active
+
+    user_contact.is_active = False
+    user_contact.save()
+
+    payload = {
+        "username": regular_user.username,
+        "password": REGULAR_USER_PASSWORD,
+    }
+
+    request = apply_request_middleware(rf.get("/"), shop=shop)
+
+    form = EmailAuthenticationForm(request=request, data=payload)
+    assert not form.is_valid()
+
+    with pytest.raises(ValidationError) as e:
+        form.confirm_login_allowed(regular_user)
+    
+    assert str(e.value) == "['This account is inactive.']"
+    
 
 @pytest.mark.django_db
 def test_email_auth_form(rf, regular_user):

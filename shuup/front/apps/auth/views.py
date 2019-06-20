@@ -56,7 +56,8 @@ class LoginView(FormView):
 
     def form_valid(self, form):
         user = form.get_user()
-        login(self.request, user)
+        if user is not None:
+            login(self.request, user)
         return super(LoginView, self).form_valid(form)
 
     def get_success_url(self):

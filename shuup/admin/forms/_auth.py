@@ -5,7 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.contrib.auth import get_user_model
+from django import forms
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
@@ -47,6 +48,29 @@ class EmailAuthenticationForm(AuthenticationForm):
             return getattr(user_by_email, user_model.USERNAME_FIELD)
 
         return username
+
+    def clean(self):
+        username = self.cleaned_data.get("username")
+        password = self.cleaned_data.get("password")
+
+        if username is not None and password:
+            self.user_cache = authenticate(
+                self.request, username=username, password=password
+            )
+
+            try:
+                user_temp = get_user_model().objects.get(username=username)
+            except ObjectDoesNotExist:
+                user_temp = None
+
+            if user_temp is not None:
+                self.confirm_login_allowed(user_temp)
+            else:
+                raise forms.ValidationError(
+                    self.error_messages["invalid_login"],
+                    code="invalid_login",
+                    params={"username": self.username_field.verbose_name},
+                )
 
 
 class RequestPasswordForm(RecoverPasswordForm):
