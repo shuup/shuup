@@ -8,7 +8,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.utils.djangoenv import has_installed
 
 
@@ -38,11 +37,6 @@ class BaseThemeFieldsMixin(object):
             required=False,
             label=_("Product detail extra tab title"),
             help_text=_("Enter the title for the product detail extra tab.")
-        )),
-        ("product_detail_extra_tab_content", forms.CharField(
-            widget=TextEditorWidget(),
-            required=False, label=_("Product detail extra tab content"),
-            help_text=_("Enter the content for the product detail extra tab.")
         ))
     ]
 
@@ -58,9 +52,15 @@ class BaseThemeFieldsMixin(object):
         return product_detail_tabs
 
     def get_base_fields(self):
+        from shuup.admin.forms.widgets import TextEditorWidget
         fields = self._base_fields
         product_detail_tabs = self.get_product_tabs_options()
         fields.extend([
+            ("product_detail_extra_tab_content", forms.CharField(
+                widget=TextEditorWidget(),
+                required=False, label=_("Product detail extra tab content"),
+                help_text=_("Enter the content for the product detail extra tab.")
+            )),
             ("product_detail_tabs", forms.MultipleChoiceField(
                 required=False,
                 initial=[tab[0] for tab in product_detail_tabs],
