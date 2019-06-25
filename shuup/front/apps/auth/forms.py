@@ -58,9 +58,9 @@ class EmailAuthenticationForm(AuthenticationForm):
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
 
-        if username is not None and password:
+        if username and password:
             self.user_cache = authenticate(
-                self.request, username=username, password=password
+                request=self.request, username=username, password=password
             )
 
             try:
@@ -76,7 +76,6 @@ class EmailAuthenticationForm(AuthenticationForm):
                     code="invalid_login",
                     params={"username": self.username_field.verbose_name},
                 )
-                
 
     def confirm_login_allowed(self, user):
         """

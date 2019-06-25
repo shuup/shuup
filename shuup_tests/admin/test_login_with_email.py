@@ -79,11 +79,16 @@ def test_login_with_email_2(client, regular_user, rf):
     assert get_user(request).is_anonymous(), "User is still anonymous"
 
     # Login with username should work normally
-    response = client.post(reverse("shuup_admin:login"), data={
-        "username": regular_user.username,
-        "password": REGULAR_USER_PASSWORD,
-        REDIRECT_FIELD_NAME: redirect_target
-    })
+    payload = {REDIRECT_FIELD_NAME: redirect_target}
+    response = client.post(reverse("shuup_admin:login"), data=payload)
+    assert response.get("location") is None
+
+    payload.update({"username": regular_user.username})
+    response = client.post(reverse("shuup_admin:login"), data=payload)
+    assert response.get("location") is None
+
+    payload.update({"password": REGULAR_USER_PASSWORD})
+    response = client.post(reverse("shuup_admin:login"), data=payload)
 
     assert response.get("location")
     assert response.get("location").endswith(redirect_target)

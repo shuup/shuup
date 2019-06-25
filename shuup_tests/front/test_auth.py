@@ -245,20 +245,28 @@ def test_email_auth_form_with_inactive_user(client, regular_user, rf):
     with pytest.raises(ValidationError) as e:
         form.confirm_login_allowed(regular_user)
     
-    assert str(e.value) == "['This account is inactive.']"
-    
+    assert list(e.value)[0] == "This account is inactive."
+
 
 @pytest.mark.django_db
 def test_email_auth_form(rf, regular_user):
     shop = get_default_shop()
     prepare_user(regular_user)
-    payload = {
-        "username": regular_user.username,
-        "password": REGULAR_USER_PASSWORD,
-    }
     request = apply_request_middleware(rf.get("/"), shop=shop)
     with override_provides("front_auth_form_field_provider", ["shuup_tests.front.utils.FieldTestProvider"]):
-
+        payload = {}
+        form = EmailAuthenticationForm(request=request, data=payload)
+        assert not form.is_valid()
+        assert form.errors["username"][0] == "This field is required."
+        assert form.errors["password"][0] == "This field is required."
+        
+        payload.update({"username": regular_user.username})
+        form = EmailAuthenticationForm(request=request, data=payload)
+        assert not form.is_valid()
+        assert "username" not in list(form.errors)
+        assert form.errors["password"][0] == "This field is required."
+        
+        payload.update({"password": REGULAR_USER_PASSWORD})
         form = EmailAuthenticationForm(request=request, data=payload)
         assert FieldTestProvider.key in form.fields
         assert not form.is_valid()

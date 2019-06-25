@@ -53,9 +53,9 @@ class EmailAuthenticationForm(AuthenticationForm):
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
 
-        if username is not None and password:
+        if username and password:
             self.user_cache = authenticate(
-                self.request, username=username, password=password
+                request=self.request, username=username, password=password
             )
 
             try:
