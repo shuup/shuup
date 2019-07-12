@@ -67,6 +67,7 @@ def stop_impersonating(request):
         return HttpResponseForbidden()
 
     impersonator_user_id = request.session["impersonator_user_id"]
+    auth_user_id = request.session["_auth_user_id"]
     del request.session["impersonator_user_id"]
     logout(request)
 
@@ -77,4 +78,4 @@ def stop_impersonating(request):
             break
 
     login(request, user)
-    return HttpResponseRedirect(reverse("shuup_admin:contact.list"))
+    return HttpResponseRedirect(reverse("shuup_admin:user.detail", args=[auth_user_id]))
