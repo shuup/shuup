@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import json
+import random
 
 import six
 from django import forms
@@ -18,7 +19,9 @@ from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.forms.widgets import ProductChoiceWidget
+from shuup.admin.shop_provider import get_shop
 from shuup.core.excs import ImpossibleProductModeException, Problem
 from shuup.core.models import (
     Product, ProductVariationVariable, ProductVariationVariableValue
@@ -80,10 +83,19 @@ class VariableVariationChildrenForm(forms.Form):
 
 
 class VariationVariablesDataForm(forms.Form):
+    configuration_key = "saved_variation_templates"
+
     data = forms.CharField(widget=forms.HiddenInput(), required=False)
+    activate_template = forms.BooleanField(required=False,
+                                           label=_("Activate template"),
+                                           help_text=_("Check this to activate a selected template. "
+                                                       "If no template is selected variation data "
+                                                       "will be saved without checking this."))
+    template_name = forms.CharField(max_length=128, required=False, widget=forms.TextInput(attrs={'pattern': '.*\S.*'}))
 
     def __init__(self, **kwargs):
         self.parent_product = kwargs.pop("parent_product", None)
+        self.request = kwargs.pop("request", None)
         super(VariationVariablesDataForm, self).__init__(**kwargs)
 
     def get_variable_data(self):
@@ -134,6 +146,10 @@ class VariationVariablesDataForm(forms.Form):
 
         return sorted(variables.values(), key=lambda var: var["ordering"])
 
+    def get_variation_templates(self, **kwargs):
+        shop = get_shop(self.request)
+        return configuration.get(shop, self.configuration_key, [])
+
     def get_editor_args(self):
         return {
             "languages": [
@@ -143,16 +159,13 @@ class VariationVariablesDataForm(forms.Form):
                 } for code in to_language_codes(
                     settings.LANGUAGES, getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE", "en"))
                 ],
-            "variables": self.get_variable_data()
+            "variables": self.get_variable_data(),
+            "templates": self.get_variation_templates()
         }
 
     def process_var_datum(self, var_datum, ordering):
-        pk = str(var_datum["pk"])
         deleted = var_datum.get("DELETE")
-        if pk.startswith("$"):  # New variable.
-            var = ProductVariationVariable(product=self.parent_product)
-        else:
-            var = ProductVariationVariable.objects.get(product=self.parent_product, pk=pk)
+        var = ProductVariationVariable(product=self.parent_product)
         if deleted:
             if var.pk:
                 var.delete()
@@ -177,12 +190,8 @@ class VariationVariablesDataForm(forms.Form):
         :type var: ProductVariationVariable
         :type val_datum: dict
         """
-        pk = str(val_datum["pk"])
         deleted = val_datum.get("DELETE")
-        if pk.startswith("$"):  # New value.
-            val = ProductVariationVariableValue(variable=var)
-        else:
-            val = var.values.get(pk=pk)
+        val = ProductVariationVariableValue(variable=var)
         if deleted:
             if val.pk:
                 val.delete()
@@ -195,10 +204,46 @@ class VariationVariablesDataForm(forms.Form):
             val.value = text
         val.save_translations()
 
-    def save(self):
-        var_data = self.cleaned_data.get("data")
-        if not var_data:  # No data means the Mithril side hasn't been touched at all
-            return
-        var_data = json.loads(var_data)
+    def _save_template(self, data, identifier=None):
+        shop = get_shop(self.request)
+        saved_templates = self.get_variation_templates()
+        if identifier:
+            for template in saved_templates:
+                if(template["identifier"] == identifier):
+                    template["data"] = data  # Edit tempalte
+        else:
+            template_name = self.cleaned_data.get("template_name", _("Unnamed %s") % random.randint(1, 9999))
+            payload = {
+                "name": template_name,
+                "identifier": template_name.lower().replace(" ", "_") + ("%s" % random.randint(1, 9999)),
+                "data": data
+            }
+            saved_templates.append(payload)
+        configuration.set(shop, self.configuration_key, saved_templates)
+
+    def _activate_template(self, var_data, identifier):
+        if self.change_template:
+            ProductVariationVariable.objects.filter(
+                product=self.parent_product).delete()  # former PVV objects need to be deleted!
+        self.parent_product.clear_variation()
         for ordering, var_datum in enumerate(var_data):
             self.process_var_datum(var_datum, ordering)
+
+    def save(self):
+        template_data = json.loads(self.cleaned_data.get("data"))
+        template_name = self.cleaned_data.get("template_name", "").strip()
+        if not template_data:  # No data means the Mithril side hasn't been touched at all
+            return
+        self.change_template = False
+        identifier = template_data.get("template_identifier", False)
+        var_data = template_data.get("variable_values")
+        activate_template = self.cleaned_data.get("activate_template", False)
+        if template_name != "":
+            var_data = []  # New template name is added so var data is empty
+            identifier = False
+            activate_template = False
+        if identifier or template_name != "":
+            self._save_template(var_data, identifier)
+        if activate_template:
+            self.change_template = True
+            self._activate_template(var_data, identifier)

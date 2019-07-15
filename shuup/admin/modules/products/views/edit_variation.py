@@ -58,7 +58,7 @@ class VariationVariablesFormPart(FormPart):
             VariationVariablesDataForm,
             template_name="shuup/admin/products/variation/_variation_variables.jinja",
             required=False,
-            kwargs={"parent_product": self.object}
+            kwargs={"parent_product": self.object, "request": self.request}
         )
 
     def form_valid(self, form):

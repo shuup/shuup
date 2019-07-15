@@ -1,6 +1,12 @@
 $input-border-color: #D9D9D9;
 $input-bg-color: #F3F3F3;
 
+
+.variable-templates {
+    label {
+        display: block;
+    }
+}
 .form-control {
     border-color: $border-color;
     font-weight: normal;
@@ -11,6 +17,12 @@ $input-bg-color: #F3F3F3;
     &:focus {
         border-color: $primary;
         box-shadow: 0 0 0 0.2rem rgba($primary, 0.15);
+    }
+
+    &.template {
+        width: 80%;
+        display: inline-block;
+        margin-right: 10px;
     }
 }
 
@@ -247,4 +259,93 @@ fieldset[disabled] .form-control {
     input {
         margin-right: 0.2rem;
     }
+}
+
+.modal{
+    opacity: 1;
+
+   // This is modal bg
+   &:before{
+     content: "";
+     //display: none;
+     background: rgba(0,0,0,.6);
+     position: fixed;
+     top: 0; left: 0; right: 0; bottom: 0;
+     z-index: 10;
+   }
+}
+
+.template-modal-container {
+    background: #fff;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
+    animation: fadeInAnim 0.6s;
+    position: relative;
+    top: 30%;
+
+    @include media-breakpoint-down(sm) {
+        border-radius: 4px;
+        margin: 15px auto;
+        height: 40%;
+    }
+
+    @include media-breakpoint-up(md) {
+        overflow: auto;
+        margin-top: 70px;
+        width: 30%;
+        margin: auto;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+}
+
+.template-modal-header {
+    @include clearfix;
+    padding: 15px;
+    border-bottom: 1px solid $border-color;
+    background: $gray-bg;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+
+    @include media-breakpoint-up(md) {
+        padding: 15px 30px;
+        z-index: 10;
+        width: 30%;
+        margin: auto;
+        position: fixed;
+        height: 70px;
+    }
+
+    .btn + .btn {
+        margin-right: 5px;
+    }
+
+    .btn i {
+        margin-right: 5px;
+    }
+    h2 {
+        @include media-breakpoint-down(md) {
+            font-size: 1.5rem;
+        }
+
+    }
+    h4 {
+        line-height: 38px;
+        margin: 0;
+        i {
+            margin-right: 7px;
+            line-height: inherit;
+            color: $primary;
+        }
+    }
+}
+.template-form-wrapper {
+    @include media-breakpoint-up(md) {
+        padding-top:60px;
+    }
+    padding-left: 25px;
+}
+
+#save_template_name {
+    margin: 10px;
+    margin-top: 0px;
 }

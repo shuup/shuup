@@ -14,6 +14,8 @@ window.VariationVariableEditor = (function(m, _) {
     "use strict";
     var languages = null;
     var variables = null;
+    var templates = null;
+    var chosenVariables = null;
     var ctrlSingleton = null;
 
     /**
@@ -36,7 +38,7 @@ window.VariationVariableEditor = (function(m, _) {
     }
 
     function refreshField() {
-        document.getElementById("id_variables-data").value = JSON.stringify(variables);
+        document.getElementById("id_variables-data").value = JSON.stringify(chosenVariables);
     }
 
     function newPk() {
@@ -96,7 +98,7 @@ window.VariationVariableEditor = (function(m, _) {
      * Sets up Sortable on the variation values
      */
     function valueSortableSetup(index) {
-        const valuesTables = document.getElementsByClassName('product-variable-values');
+        const valuesTables = document.getElementsByClassName("product-variable-values");
         var index = 0;
         [].forEach.call(valuesTables, function (el) {
             window.Sortable.create(el, {
@@ -106,7 +108,7 @@ window.VariationVariableEditor = (function(m, _) {
                     // The event.oldIndex is unreliable, it seems to be an
                     // issue with nested sortables. The oldIndex is the one
                     // from the parent sortable.
-                    const itemId = event.item.getAttribute('data-id');
+                    const itemId = event.item.getAttribute("data-id");
                     const newIndex = event.newIndex;
                     var currentVariable = null;
                     var currentValue = null;
@@ -114,7 +116,7 @@ window.VariationVariableEditor = (function(m, _) {
                         currentVariable = variables[varIndex];
                         for(var valIndex=0; valIndex < currentVariable.values.length; valIndex++) {
                             currentValue = currentVariable.values[valIndex];
-                            if(currentValue.pk == itemId) {
+                            if(currentValue.pk === itemId) {
                                 variables[varIndex].values.reindex(valIndex, newIndex);
                             }
                         }
@@ -136,7 +138,7 @@ window.VariationVariableEditor = (function(m, _) {
     function valueTr(ctrl, value, index) {
         const showIdentifierFields = ctrl.showIdentifierFields();
         const rowLabel = interpolate(gettext("Value %s Name"), [(index + 1)]);
-        return m("tr", {'data-id': value.pk},
+        return m("tr", {"data-id": value.pk},
             m("th", [sortingHandle("value-sort-handle"), rowLabel]),
             getIdfrAndLanguagesCells("td", value, "texts", "", showIdentifierFields),
             m("td", m("a.btn.text-danger.btn-xs", {href: "#", onclick: () => {
@@ -194,10 +196,19 @@ window.VariationVariableEditor = (function(m, _) {
     }
 
     function view(ctrl) {
-        var variablesDiv = m(
-            "div.product-variable-wrap", {id: "product-variable-wrap"},
-            _.map(_.reject(variables, "DELETE"), _.partial(renderVariable, ctrl))
-        );
+        var variablesDiv = null;
+        var newVariationTemplate = m("button.btn.btn-success", {   onclick: (event) => {
+                event.preventDefault();
+                document.getElementById("step-item-wrapper").style.display = "block";
+                var nameField = document.getElementById("id_variables-template_name")
+                nameField.required = true;
+                document.getElementById("template-cancel-btn").onclick = function () {
+                    document.getElementById("step-item-wrapper").style.display = "none";
+                    nameField.value = "";
+                    nameField.required = false;  // Remove required attribute from template name field
+                }
+                variablesDiv
+        }}, m("i.fa.fa-plus"), " " + gettext("New template"));
         var identifierFieldsCheckbox = m("p", [
             m("label.small", [
                 m("input", {
@@ -208,21 +219,64 @@ window.VariationVariableEditor = (function(m, _) {
                 " " + gettext("Show identifier fields (for advanced users)")
             ])
         ]);
-        if (!variables.length) {
+        try {
+            var usableVariables = (chosenVariables["variable_values"]) ? chosenVariables["variable_values"] : variables;
+        }
+        catch {
+            var usableVariables = variables;
+        }
+
+        if (usableVariables.length)  {
+            variablesDiv = m(
+                "div.product-variable-wrap", {id: "product-variable-wrap"},
+                _.map(_.reject(usableVariables, "DELETE"), _.partial(renderVariable, ctrl))
+            );
+        } else {
             variablesDiv = m("p.text-info", [
                 m("i.fa.fa-exclamation-circle"), " " + gettext("There are no variables defined."),
                 m("hr")
             ]);
             identifierFieldsCheckbox = null;
         }
+        var templateSelector = templates.length ? m(".variable-templates", [
+            m("label", gettext("Variation Template")),
+            m("select.form-control.template", {
+                onchange(e) {
+                    chosenVariables = {"variable_values" : variables};
+                    if (e.target.value && e.target.value != '0') {
+                       templates.map(template => {
+                            if (template.identifier === e.target.value) {
+                                chosenVariables["variable_values"] = template.data;
+                                chosenVariables["template_identifier"] = template.identifier;
+                            }
+
+                        });
+                    }
+                    refreshField();
+
+                }
+            }, [
+                m("option", {
+                    value: 0
+                }, gettext("Select Template")),
+                templates.map(template => (
+                    m("option", {
+                        value: template.identifier,
+                    }, template.name)
+                )),
+            ]),
+            newVariationTemplate
+        ]) : newVariationTemplate;
         return m("div", {config: config}, [
             identifierFieldsCheckbox,
+            templateSelector,
             m("hr"),
             variablesDiv,
             m("a.btn.btn-lg.btn-text", {href: "#", onclick: (event) => {
-                variables.push({pk: newPk(), identifier: "", names: {}, values: []});
+                usableVariables.push({pk: newPk(), identifier: "", names: {}, values: []}); // Enables addition of variables to templates
                 event.preventDefault();
-            }}, m("i.fa.fa-plus"), " " + gettext("Add new variable"))
+            }}, m("i.fa.fa-plus"), " " + gettext("Add new variable")),
+
         ]);
     }
 
@@ -232,11 +286,13 @@ window.VariationVariableEditor = (function(m, _) {
         }
         languages = options.languages;
         variables = options.variables;
+        templates = options.templates;
         window.VariationVariableEditor.ctrl = ctrlSingleton = m.mount(
             document.getElementById("variation-variable-editor"),
-            {controller: controller, view: view}
+            {controller: controller, view: view},
         );
+        chosenVariables = {"variable_values": variables};
+        refreshField();
     }
     return {init: init};
 }(window.m, window._));
-

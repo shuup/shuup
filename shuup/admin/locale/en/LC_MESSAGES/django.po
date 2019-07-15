@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-21 18:16+0000\n"
+"POT-Creation-Date: 2019-04-30 20:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -676,9 +676,6 @@ msgstr ""
 msgid "Set Paid"
 msgstr ""
 
-msgid "Create Shipment"
-msgstr ""
-
 msgid "Create Refund"
 msgstr ""
 
@@ -858,12 +855,7 @@ msgstr ""
 msgid "Create Shipment -- %s"
 msgstr ""
 
-msgid "Supplier"
-msgstr ""
-
-msgid ""
-"Select the shipment supplier. You can only ship the suppliers assigned to "
-"order lines."
+msgid "Create Shipment"
 msgstr ""
 
 #, python-format
@@ -1013,6 +1005,18 @@ msgid "Unable to link %(product)s: %(error)s"
 msgstr ""
 
 msgid "variable combination"
+msgstr ""
+
+msgid "Activate template"
+msgstr ""
+
+msgid ""
+"Check this to activate a selected template.If no template is selected "
+"variation data will be saved without checking this."
+msgstr ""
+
+#, python-format
+msgid "Unnamed %s"
 msgstr ""
 
 msgid "Set visible"
@@ -3003,13 +3007,26 @@ msgstr ""
 msgid "There was an error adding the log entry."
 msgstr ""
 
+msgid "Unshipped"
+msgstr ""
+
+msgid "Shipped"
+msgstr ""
+
+msgid "Ordered"
+msgstr ""
+
+msgid "Refunded"
+msgstr ""
+
+#, python-format
+msgid "Create new shipment for %(supplier_name)s"
+msgstr ""
+
 msgid "Tracking Code"
 msgstr ""
 
 msgid "Created"
-msgstr ""
-
-msgid "No shipments have been created yet."
 msgstr ""
 
 msgid ""
@@ -3041,9 +3058,6 @@ msgstr ""
 msgid "Remaining"
 msgstr ""
 
-msgid "Refunded"
-msgstr ""
-
 msgid "Add Another Refund"
 msgstr ""
 
@@ -3051,15 +3065,6 @@ msgid "Order Line"
 msgstr ""
 
 msgid "To Ship"
-msgstr ""
-
-msgid "Ordered"
-msgstr ""
-
-msgid "Shipped"
-msgstr ""
-
-msgid "Unshipped"
 msgstr ""
 
 msgid "Set All Products To Ship"
@@ -3244,6 +3249,9 @@ msgid "Combination"
 msgstr ""
 
 msgid "Variables"
+msgstr ""
+
+msgid "Template"
 msgstr ""
 
 msgid "This product is not yet a variation."
@@ -3536,10 +3544,6 @@ msgstr ""
 
 #, python-format
 msgid "New %s"
-msgstr ""
-
-#, python-format
-msgid "Unnamed %s"
 msgstr ""
 
 #, python-format
