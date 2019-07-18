@@ -53,7 +53,7 @@
     "shepherd.js": "^2.5.0",
     "shuup-static-build-tools": "^1.0.3",
     "sortablejs": "^1.7.0",
-    "summernote": "^0.8.10",
+    "summernote": "^0.8.12",
     "tooltip.js": "^1.2.0",
     "vinyl-source-stream": "^2.0.0"
   },
