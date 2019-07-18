@@ -17,7 +17,7 @@ function activateDropzone($dropzone, attrs={}) {
     const uploadPath = attrs.uploadPath || $data.upload_path;
     const addRemoveLinks = $data.add_remove_links;
     const uploadUrl = $data.upload_url || window.ShuupAdminConfig.browserUrls.media;
-    const browsable = ($data.browsable && $data.browsable !== "False");
+    const browsable = (window.ShuupAdminConfig.browserUrls["media"] && $data.browsable && $data.browsable !== "False");
     const params = $.extend(true, {
         url: uploadUrl + "?action=upload&path=" + uploadPath,
         uploadUrl,

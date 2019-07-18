@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 
+from shuup.admin.utils.permissions import has_permission
 from shuup.utils.i18n import get_current_babel_locale
 
 
@@ -26,7 +27,7 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
         return {
             "edit": "shuup_admin:edit",
             "select": "shuup_admin:select",
-            "media": "shuup_admin:media.browse",
+            "media": ("shuup_admin:media.browse" if has_permission(request.user, "shuup_admin:media.browse") else None),
             "product": "shuup_admin:shop_product.list",
             "contact": "shuup_admin:contact.list",
             "setLanguage": "shuup_admin:set-language",
@@ -42,5 +43,6 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
             "datetimeInputFormat": settings.SHUUP_ADMIN_DATETIME_INPUT_FORMAT,
             "timeInputFormat": settings.SHUUP_ADMIN_TIME_INPUT_FORMAT,
             "datetimeInputStep": settings.SHUUP_ADMIN_DATETIME_INPUT_STEP,
-            "dateInputLocale": get_current_babel_locale().language
+            "dateInputLocale": get_current_babel_locale().language,
+            "staticPrefix": settings.STATIC_URL,
         }

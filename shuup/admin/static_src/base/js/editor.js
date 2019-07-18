@@ -8,21 +8,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const getMediaButton = ($editor) => context => (
-  $.summernote.ui.button({
-    contents: $.summernote.ui.icon($.summernote.options.icons.picture),
-    // tooltip: $.summernote.lang[$.summernote.options.lang].image.image, //Temporarily disabled
-    click() {
-            window.BrowseAPI.openBrowseWindow({
-                kind: "media",
-                clearable: true,
-                onSelect: (obj) => {
-                    $editor.summernote("insertImage", obj.url);
-                }
-            });
-        }
-    }).render()
-);
+const getMediaButton = ($editor) => context => {
+    if (!window.ShuupAdminConfig.browserUrls["media"]) {
+        return null;
+    }
+
+    return (
+        $.summernote.ui.button({
+            contents: "<i class=\"fa fa-file-image-o\"/>",
+            tooltip: gettext("Browse media"),
+            click() {
+                window.BrowseAPI.openBrowseWindow({
+                    kind: "media",
+                    clearable: true,
+                    onSelect: (obj) => {
+                        $editor.summernote("insertImage", obj.url);
+                    }
+                });
+            }
+        }).render()
+    );
+};
 
 function activateEditor($editor, attrs = {}) {
     function cancelEvent(event) {
@@ -31,13 +37,15 @@ function activateEditor($editor, attrs = {}) {
     }
 
     const toolbar = [
-      ["style", ["style", "bold", "italic", "underline", "clear"]],
-      ["color", ["color"]],
-      ["para", ["ul", "ol", "paragraph"]],
+      ["style", ["style", "clear"]],
+      ["font", ["fontname", "fontsize"]],
+      ["style2", ["bold", "italic", "underline", "strikethrough", "superscript", "subscript"]],
+      ["color", ["forecolor", "backcolor"]],
+      ["para", ["ul", "ol", "paragraph", "height"]],
       ["table", ["table"]],
-      ["insert", ["link", "media", "video", "codeview"]],
+      ["insert", ["link", "media", "picture", "video", "codeview"]],
       [$.summernote.options.toolbar.filter((option => option[0] !== "insert")).concat([
-        ["insert", ["link", "media", "video"]]
+        ["insert", ["link", "media", "picture", "video"]]
       ])],
     ];
 

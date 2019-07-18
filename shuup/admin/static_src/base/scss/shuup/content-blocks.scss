@@ -277,6 +277,10 @@
     border-radius: $border-radius-lg;
 }
 
+.note-editor .modal .modal-dialog {
+    z-index: 1050;
+}
+
 .note-toolbar {
     background-color: rgba($border-color, 0.12);
     border-bottom: 1px solid $border-color;
