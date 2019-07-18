@@ -8,21 +8,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const getMediaButton = ($editor) => context => (
-  $.summernote.ui.button({
-    contents: $.summernote.ui.icon($.summernote.options.icons.picture),
-    // tooltip: $.summernote.lang[$.summernote.options.lang].image.image, //Temporarily disabled
-    click() {
-            window.BrowseAPI.openBrowseWindow({
-                kind: "media",
-                clearable: true,
-                onSelect: (obj) => {
-                    $editor.summernote("insertImage", obj.url);
+const getMediaButton = ($editor) => context => {
+    if (!window.ShuupAdminConfig.browserUrls["media"]) {
+        return null;
+    }
+
+    return (
+        $.summernote.ui.button({
+            contents: $.summernote.ui.icon($.summernote.options.icons.picture),
+            // tooltip: $.summernote.lang[$.summernote.options.lang].image.image, //Temporarily disabled
+            click() {
+                    window.BrowseAPI.openBrowseWindow({
+                        kind: "media",
+                        clearable: true,
+                        onSelect: (obj) => {
+                            $editor.summernote("insertImage", obj.url);
+                        }
+                    });
                 }
-            });
-        }
-    }).render()
-);
+            }
+        ).render()
+    );
+}
 
 function activateEditor($editor, attrs = {}) {
     function cancelEvent(event) {
@@ -35,9 +42,9 @@ function activateEditor($editor, attrs = {}) {
       ["color", ["color"]],
       ["para", ["ul", "ol", "paragraph"]],
       ["table", ["table"]],
-      ["insert", ["link", "media", "video", "codeview"]],
+      ["insert", ["link", "media", "picture", "video", "codeview"]],
       [$.summernote.options.toolbar.filter((option => option[0] !== "insert")).concat([
-        ["insert", ["link", "media", "video"]]
+        ["insert", ["link", "media", "picture", "video"]]
       ])],
     ];
 
