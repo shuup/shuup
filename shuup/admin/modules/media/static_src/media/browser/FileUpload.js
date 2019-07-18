@@ -19,8 +19,7 @@ function queueView() {
     var className = "empty";
     if (queue.length >= 0) {
         className = (
-            _.all(queue, (file) => (file.status === "done" || file.status === "error")) ?
-                "done" : "busy"
+            _.every(queue, (file) => (file.status === "done" || file.status === "error")) ? "done" : "busy"
         );
     }
 

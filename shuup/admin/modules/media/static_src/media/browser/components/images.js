@@ -6,5 +6,5 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-export const uploadIndicator = require("./file-icons.svg");
-export const defaultThumbnail = require("./default-thumbnail.svg");
+export const uploadIndicator = `${window.ShuupAdminConfig.settings.staticPrefix}shuup_admin/img/file-icons.svg`;
+export const defaultThumbnail = `${window.ShuupAdminConfig.settings.staticPrefix}shuup_admin/img/default-thumbnail`;

@@ -42,5 +42,6 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
             "datetimeInputFormat": settings.SHUUP_ADMIN_DATETIME_INPUT_FORMAT,
             "timeInputFormat": settings.SHUUP_ADMIN_TIME_INPUT_FORMAT,
             "datetimeInputStep": settings.SHUUP_ADMIN_DATETIME_INPUT_STEP,
-            "dateInputLocale": get_current_babel_locale().language
+            "dateInputLocale": get_current_babel_locale().language,
+            "staticPrefix": settings.STATIC_URL,
         }
