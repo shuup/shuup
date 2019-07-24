@@ -23,7 +23,7 @@
     "babel-plugin-wildcard": "^5.0.0",
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^4.3.1",
-    "bootstrap-colorpicker": "^3.0.3",
+    "bootstrap-colorpicker": "^3.1.2",
     "chart.js": "^2.7.2",
     "desandro-matches-selector": "^2.0.2",
     "dropzone": "^5.5.1",
