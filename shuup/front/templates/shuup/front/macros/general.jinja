@@ -383,8 +383,16 @@
     {% if text %}
         <meta property="og:description" content="{{ text|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
     {% endif %}
-    {% if primary_image %}
-        <meta property="og:image" content="{{ request.build_absolute_uri(primary_image.url) }}">
+    {% if content_type == "product" %}
+        {% set object_image = object.primary_image or object.media.filter(shops=request.shop, kind=2).order_by("ordering").first() %}
+    {% else %}
+        {% set object_image = object.image %}
+    {% endif %}
+    {% if object_image %}
+        {% set thumbnail = object_image|thumbnail(size=(850, 850), crop="smart", upscale=False) %}
+        <meta property="og:image" content="{{ request.build_absolute_uri(thumbnail) }}">
+        <meta property="og:image:width" content="850" />
+        <meta property="og:image:height" content="850" />
     {% endif %}
 {% endmacro %}
 
