@@ -7,10 +7,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+var inputChangeTimeout;
 function activateColorPicker(el) {
     $(el).colorpicker({
         format: "hex",
-        horizontal: true
+        horizontal: true,
+        autoInputFallback: false,
+    }).unbind("keyup").on("keyup", function(event) {
+        window.clearTimeout(inputChangeTimeout);
+        inputChangeTimeout = window.setTimeout(function () {
+            $(event.target).trigger("change");
+        }, 1000);
     });
 }
 window.activateColorPicker = activateColorPicker;
