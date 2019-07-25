@@ -24,7 +24,7 @@ class AdminModule(object):
 
     def get_urls(self):
         """
-        :rtype: list[django.core.urlresolvers.RegexURLPattern]
+        :rtype: list[django.urls.RegexURLPattern]
         """
         return ()
 
