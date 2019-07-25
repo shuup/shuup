@@ -55,8 +55,7 @@
                     {{ _render_dropdown_item(url("shuup_admin:dashboard"), "fa fa-dashboard fa-fw", _("Admin panel")) }}
                 {% endif %}
             {% endif %}
-            {% if user.is_authenticated() and shuup.urls.has_url("shuup:logout") %}
-
+            {% if user.is_authenticated and shuup.urls.has_url("shuup:logout") %}
                 {{ _render_dropdown_item(shuup.urls.get_logout_url(), "fa fa-sign-out fa-fw", _("Log out"), request.person == true) }}
             {% endif %}
         {% endcall %}

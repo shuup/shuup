@@ -2655,11 +2655,11 @@
       "integrity": "sha512-rXqOmH1VilAt2DyPzluTi2blhk17bO7ef+zLLPlWvG494pDxcM234pJ8wTc/6R40UWizAIIMgxjvxZg5kmsbag=="
     },
     "bootstrap-colorpicker": {
-      "version": "3.0.3",
-      "resolved": "https://registry.npmjs.org/bootstrap-colorpicker/-/bootstrap-colorpicker-3.0.3.tgz",
-      "integrity": "sha512-xDVuG5ZLDKLoYdBodnrKo417eqFlNwpk6gNbv1mAFdFno0p0xnkYm9KQTiUqR4kva9t+hlJJc2UURZnD6fvn+Q==",
+      "version": "3.1.2",
+      "resolved": "https://registry.npmjs.org/bootstrap-colorpicker/-/bootstrap-colorpicker-3.1.2.tgz",
+      "integrity": "sha512-yUWegXox8GYoXVtYdrEIN3QMOeEFbcSFGDadZu2pWmmMgTaw4ECX9T8GvYQzJkRusvK9uzi39FjE0W2k8lQECA==",
       "requires": {
-        "bootstrap": "^4.0",
+        "bootstrap": ">=4.0",
         "jquery": ">=2.1.0"
       }
     },

@@ -38,7 +38,7 @@ class MethodWidget(forms.Widget):
         self.basket = None
         self.request = None
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         return mark_safe(
             render_to_string("shuup/front/checkout/method_choice.jinja", {
                 "field_name": self.field_name,
