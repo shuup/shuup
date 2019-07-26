@@ -28,6 +28,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     browser = initialize_admin_browser_test(browser, live_server, settings)  # Login to admin as admin user
     browser.visit(live_server + "/")
@@ -108,6 +109,7 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_xtheme_edit_product(admin_user, browser, live_server, settings):
     shop = factories.get_default_shop()
     supplier = factories.get_default_supplier()
