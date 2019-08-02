@@ -27,7 +27,7 @@ jobs:
     - {stage: development, env: TOXENV=migrations, name: "Migrations"}
     - {stage: development, python: 2.7, env: TOXENV=py27-django19-nomigrations}
     - {stage: development, python: 3.6, env: TOXENV=py36-django111-nomigrations}
-    - {stage: development, python: 3.4, env: TOXENV=py34-django18-nomigrations}
+    - {stage: development, python: 3.5, env: TOXENV=py35-django18-nomigrations}
     - {stage: deploy, python: 2.7, env: TOXENV=py27-django18-nomigrations}
     - {stage: deploy, python: 3.5, env: TOXENV=py35-django19-nomigrations}
     - {stage: deploy, python: 3.6, env: TOXENV=py36-django19-nomigrations}
