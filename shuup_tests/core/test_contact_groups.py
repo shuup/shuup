@@ -105,10 +105,6 @@ def test_plain_contact_group():
         ContactGroup.objects.create(identifier=AnonymousContact.default_contact_group_identifier, shop=shop)
         assert exc_info.value == "Cannot set shop for default Contact Group."
 
-    with pytest.raises(ValidationError) as exc_info:
-        ContactGroup.objects.create(identifier="derp")
-        assert exc_info.value == "Contact Group requires a shop."
-
     cg = ContactGroup.objects.create(identifier="test", shop=shop).set_price_display_options(hide_prices=True)
     assert isinstance(cg, ContactGroup)
 

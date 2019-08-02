@@ -412,14 +412,6 @@ def test_cannot_add_shop(regular_user):
 
 
 @pytest.mark.django_db
-def test_cannot_add_without_shop(regular_user):
-    shop = get_default_shop()
-    with pytest.raises(ValidationError):
-        ContactGroup.objects.create(identifier="adsf")
-    ContactGroup.objects.create(identifier="adsf", shop=shop)
-
-
-@pytest.mark.django_db
 def test_price_displays(regular_user):
     shop = get_default_shop()
     cg = ContactGroup.objects.create(shop=shop).set_price_display_options(hide_prices=True)
