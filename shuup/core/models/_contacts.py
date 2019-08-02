@@ -115,8 +115,6 @@ class ContactGroup(TranslatableShuupModel):
         is_default = (self.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS)
         if is_default and shop:
             raise ValidationError(_("Cannot set shop for default Contact Group."), code="contact_group_default_shop")
-        elif not is_default and not shop:
-            raise ValidationError(_("Contact Group requires a shop."), code="contact_group_no_shop")
 
     def save(self, **kwargs):
         self.clean()
