@@ -58,6 +58,9 @@ class EmailAuthenticationForm(AuthenticationForm):
                 request=self.request, username=username, password=password
             )
 
+            # So here even with invalid login and user cache being None
+            # we would like to check whether the user we are trying to
+            # login is inactive or not.
             try:
                 user_temp = get_user_model().objects.get(username=username)
             except ObjectDoesNotExist:
@@ -65,7 +68,10 @@ class EmailAuthenticationForm(AuthenticationForm):
 
             if user_temp is not None:
                 self.confirm_login_allowed(user_temp)
-            else:
+
+            # Back to default behavior. Meaning that we want to always
+            # raise for invalid login incase the authenticate 
+            if self.user_cache is None:
                 raise forms.ValidationError(
                     self.error_messages["invalid_login"],
                     code="invalid_login",
