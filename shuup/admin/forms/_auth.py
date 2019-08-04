@@ -70,7 +70,7 @@ class EmailAuthenticationForm(AuthenticationForm):
                 self.confirm_login_allowed(user_temp)
 
             # Back to default behavior. Meaning that we want to always
-            # raise for invalid login incase the authenticate 
+            # raise for invalid login incase the authenticate
             if self.user_cache is None:
                 raise forms.ValidationError(
                     self.error_messages["invalid_login"],

@@ -35,6 +35,25 @@ def prepare_user(user):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
+def test_login_with_invalid_password(client, regular_user, rf):
+    get_default_shop()
+    prepare_user(regular_user)
+    redirect_target = "/redirect-success/"
+    response = client.post(reverse("shuup:login"), data={
+        "username": regular_user.email,
+        "password": "hello",
+        REDIRECT_FIELD_NAME: redirect_target
+    })
+
+    assert not response.get("location")  # No redirect since errors
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request).is_anonymous(), "User is still anonymous"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
 def test_login_logs_the_user_in(client, regular_user, rf):
     get_default_shop()
     prepare_user(regular_user)
