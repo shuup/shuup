@@ -56,7 +56,9 @@ def get_product_context(request, product, language=None, supplier=None):   # noq
         context["variation_children"] = cache_product_things(
             request,
             sorted(
-                product.variation_children.language(language).all(),
+                product.variation_children.language(language).visible(
+                    shop=request.shop, customer=request.customer
+                ),
                 key=lambda p: get_string_sort_order(p.variation_name or p.name)
             )
         )

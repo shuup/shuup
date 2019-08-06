@@ -418,7 +418,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     def get_orderability_errors_for_simple_variation_parent(self, supplier, customer):
         sellable = False
-        for child_product in self.product.variation_children.all():
+        for child_product in self.product.variation_children.visible(shop=self.shop, customer=customer):
             try:
                 child_shop_product = child_product.get_shop_instance(self.shop)
             except ShopProduct.DoesNotExist:
