@@ -72,10 +72,11 @@ def get_product_cross_sells(
 
     # if this product is parent, then use all children instead
     if product.mode in [ProductMode.VARIABLE_VARIATION_PARENT, ProductMode.SIMPLE_VARIATION_PARENT]:
+        # Remember to exclude relations with the same parent
         cross_sell_products = ProductCrossSell.objects.filter(
-            product1__in=product.variation_children.all(),
+            product1__in=product.variation_children.visible(request.shop, customer=request.customer),
             type=rtype
-        ).exclude(product2__in=product.variation_children.all())    # exclude relations with the same parent
+        ).exclude(product2__in=product.variation_children.visible(request.shop, customer=request.customer))
     else:
         cross_sell_products = ProductCrossSell.objects.filter(product1=product, type=rtype)
 

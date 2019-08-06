@@ -132,7 +132,6 @@ class ProductType(TranslatableModel):
 
 
 class ProductQuerySet(TranslatableQuerySet):
-    _invisible_modes = [ProductMode.VARIATION_CHILD]
 
     def _select_related(self):
         return self.select_related(
@@ -152,19 +151,22 @@ class ProductQuerySet(TranslatableQuerySet):
             "primary_image__file"
         )
 
-    def _visible(self, shop, customer, language=None):
+    def _visible(self, shop, customer, language=None, invisible_modes=[ProductMode.VARIATION_CHILD]):
         root = (self.language(language) if language else self)
         qs = root.all().filter(shop_products__shop=shop)
 
         if customer and customer.is_all_seeing:
-            qs = qs.exclude(mode=ProductMode.VARIATION_CHILD)
+            if invisible_modes:
+                qs = qs.exclude(mode__in=invisible_modes)
         else:
             from ._product_shops import ShopProductVisibility
             qs = qs.exclude(
                 Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE) |
-                Q(mode__in=self._invisible_modes) |
                 Q(shop_products__available_until__lte=now())
             )
+            if invisible_modes:
+                qs = qs.exclude(mode__in=invisible_modes)
+
             if customer and not customer.is_anonymous:
                 visible_to_logged_in_q = Q(shop_products__visibility_limit__in=(
                     ProductVisibility.VISIBLE_TO_ALL, ProductVisibility.VISIBLE_TO_LOGGED_IN
@@ -200,6 +202,9 @@ class ProductQuerySet(TranslatableQuerySet):
     def searchable(self, shop, customer=None, language=None):
         from ._product_shops import ShopProductVisibility
         return self._get_qs(shop, customer, language, ShopProductVisibility.SEARCHABLE)
+
+    def visible(self, shop, customer=None, language=None):
+        return self._visible(shop, customer=customer, language=language, invisible_modes=[])
 
     def all_except_deleted(self, language=None, shop=None):
         qs = (self.language(language) if language else self).exclude(deleted=True).exclude(type__isnull=True)
@@ -414,8 +419,10 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         priced_children = []
         shop_product_query = Q(
             shop=context.shop,
-            product_id__in=self.variation_children.all().values_list("id", flat=True)
+            product_id__in=self.variation_children.visible(
+                shop=context.shop, customer=context.customer).values_list("id", flat=True)
         )
+
         for shop_product in ShopProduct.objects.filter(shop_product_query):
             if shop_product.is_orderable(supplier=None, customer=context.customer, quantity=1):
                 child = shop_product.product
@@ -442,7 +449,10 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         :return: a tuple of prices
         :rtype: (shuup.core.pricing.Price, shuup.core.pricing.Price)
         """
-        items = [c.get_price_info(context, quantity=quantity) for c in self.variation_children.all()]
+        items = []
+        for child in self.variation_children.visible(shop=context.shop, customer=context.customer):
+            items.append(child.get_price_info(context, quantity=quantity))
+
         if not items:
             return (None, None)
 
@@ -461,7 +471,10 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         :type context: shuup.core.pricing.PricingContextable
         :rtype: shuup.core.pricing.PriceInfo
         """
-        items = [c.get_price_info(context, quantity=quantity) for c in self.variation_children.all()]
+        items = []
+        for child in self.variation_children.visible(shop=context.shop, customer=context.customer):
+            items.append(child.get_price_info(context, quantity=quantity))
+
         if not items:
             return None
 
