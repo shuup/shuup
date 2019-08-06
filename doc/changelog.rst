@@ -1,13 +1,37 @@
 Shuup Change Log
 ================
 
-Unrealeased
+Shuup 1.9.8
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-08-06 9:00am -0800.
+
+Admin
+~~~~~
+
+- Preserve selected section on object edit views
+- Update bootstrap colorpicker and change color validation after 1 second
+- Update summernote version to latest and enable more editor features
+- Fix issues with media browser script
+- Fix issue with media dropzone
+- Go back to user page after stop impersonating
+- Refactor clean method and add test case for inactive user message
+
+Core
+~~~~
+
+- Set that contact group shop field can be empty
+
+Front
+~~~~~
+
+- Include product image dimensions in Open graph tags
+- Refactor clean method and add test case for inactive user message
+
+XTheme
+~~~~~~
+
+- Update summernote version to latest and enable more editor features
 
 
 Shuup 1.9.7
