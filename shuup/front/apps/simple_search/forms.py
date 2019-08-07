@@ -60,12 +60,13 @@ def get_product_ids_for_query_str(request, query_str, limit, product_ids=[]):
         return []
 
     entry_query = get_compiled_query(query_str, settings.SHUUP_SIMPLE_SEARCH_FIELDS)
-    return list(Product.objects.searchable(
+    query = Product.objects.searchable(
         shop=request.shop,
         customer=request.customer
     ).exclude(
         id__in=product_ids
-    ).filter(entry_query).distinct().values_list("pk", flat=True))[:(limit-len(product_ids))]
+    ).filter(entry_query).distinct().values_list("pk", flat=True)[:(limit-len(product_ids))]
+    return list(query)
 
 
 def get_search_product_ids(request, query, limit=settings.SHUUP_SIMPLE_SEARCH_LIMIT):
