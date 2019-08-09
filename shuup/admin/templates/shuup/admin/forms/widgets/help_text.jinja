@@ -1,5 +1,5 @@
 {% if field.field_help %}
-    {% if field.field.required %}
+    {% if field.field.field.required %}
         {% set help_text = _("Required. {field_help}").format(field_help=field.field_help) %}
     {% else %}
         {% set help_text = _("Optional. {field_help}").format(field_help=field.field_help) %}
