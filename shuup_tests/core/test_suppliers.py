@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
+from shuup.core.models import Supplier
 from shuup.testing.factories import (
     create_random_person, get_default_shop, get_default_shop_product,
     get_default_supplier
@@ -65,3 +66,20 @@ def test_suppliers_disabled():
     supplier.save()
     assert shop_product.get_supplier() is None
     assert len(list(supplier.get_suppliable_products(shop, customer=customer))) == 0
+
+
+@pytest.mark.django_db
+def test_suppliers_manager():
+    supplier = get_default_supplier()
+    assert Supplier.objects.enabled().count() == 1
+
+    supplier.enabled = False
+    supplier.save()
+    assert Supplier.objects.enabled().count() == 0
+
+
+@pytest.mark.django_db
+def test_suppliers_deleted():
+    supplier = get_default_supplier()
+    supplier.soft_delete()
+    assert supplier.deleted is True

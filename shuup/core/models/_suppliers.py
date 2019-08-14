@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from jsonfield import JSONField
-from parler.managers import TranslatableQuerySet
+from parler.managers import TranslatableManager
 from parler.models import TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
@@ -30,7 +30,12 @@ class SupplierType(Enum):
         EXTERNAL = _('external')
 
 
-class SupplierQueryset(TranslatableQuerySet):
+class SupplierManager(TranslatableManager):
+
+    def get_queryset(self):
+        queryset = super(SupplierManager, self).get_queryset()
+        return queryset.filter(deleted=False)
+
     def enabled(self):
         return self.filter(enabled=True, is_approved=True)
 
@@ -83,9 +88,10 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     translations = TranslatedFields(
         description=models.TextField(blank=True, verbose_name=_("description"))
     )
+    deleted = models.BooleanField(default=False, verbose_name=_("deleted"))
 
     search_fields = ["name"]
-    objects = SupplierQueryset.as_manager()
+    objects = SupplierManager()
 
     def __str__(self):
         return self.name
@@ -143,6 +149,12 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
 
     def update_stocks(self, product_ids):
         return self.module.update_stocks(product_ids)
+
+    def soft_delete(self):
+        if not self.deleted:
+            self.deleted = True
+            # Bypassing local `save()` on purpose.
+            super(Supplier, self).save(update_fields=("deleted",))
 
 
 SupplierLogEntry = define_log_model(Supplier)
