@@ -12,10 +12,11 @@ from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
 from shuup.admin.modules.suppliers.views import (
-    SupplierEditView, SupplierListView
-)
+    SupplierEditView, SupplierListView,
+    SupplierDeleteView)
 from shuup.core.models import Supplier, SupplierType
 from shuup.testing import factories
+from shuup.testing.factories import get_default_supplier
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -86,3 +87,31 @@ def test_suppliers_edit(rf, admin_user):
             assert sup.enabled
             assert sup.is_approved
             assert sup.contact_address.name == payload["address-name"]
+
+
+@pytest.mark.django_db
+def test_suppliers_delete(rf, admin_user):
+    supplier = get_default_supplier()
+
+    delete_view = SupplierDeleteView.as_view(**{"pk": supplier.pk})
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    response = delete_view(request)
+    assert response.status_code == 302
+    assert response.url == reverse("shuup_admin:supplier.list")
+
+
+@pytest.mark.django_db
+def test_suppliers_ensure_deleted_inlist(rf, admin_user):
+    supplier = get_default_supplier()
+
+    list_view = SupplierListView.as_view()
+    request = apply_request_middleware(rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user)
+
+    response = list_view(request)
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["pagination"]["nItems"] == 1
+
+    supplier.soft_delete()
+    response = list_view(request)
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["pagination"]["nItems"] == 0

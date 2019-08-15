@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db.models import Q
 from django.db.transaction import atomic
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
@@ -18,6 +19,7 @@ from shuup.admin.modules.suppliers.forms import (
     SupplierBaseForm, SupplierContactAddressForm
 )
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.toolbar import try_reverse, PostActionButton
 from shuup.admin.utils.views import (
     check_and_raise_if_only_one_allowed, CreateOrUpdateView
 )
@@ -75,6 +77,25 @@ class SupplierEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
     context_object_name = "supplier"
     base_form_part_classes = [SupplierBaseFormPart, SupplierContactAddressFormPart]
     form_part_class_provide_key = "admin_supplier_form_part"
+
+    def get_toolbar(self):
+        toolbar = super(SupplierEditView, self).get_toolbar()
+        object = self.get_object()
+        if object and object.pk:
+            delete_url = try_reverse("shuup_admin:supplier.delete", pk=object.pk)
+            if delete_url:
+                required_permissions = (
+                    "supplier.delete",
+                )
+                toolbar.append(PostActionButton(
+                    post_url=delete_url,
+                    text=_(u"Delete"),
+                    icon="fa fa-trash",
+                    extra_css_class="btn-danger",
+                    confirm=_("Are you sure you wish to delete %s?") % object,
+                    required_permissions=required_permissions,
+                ))
+        return toolbar
 
     def get_object(self, queryset=None):
         obj = super(SupplierEditView, self).get_object(queryset)
