@@ -79,25 +79,43 @@ def test_suppliers_edit(rf, admin_user):
             request = apply_request_middleware(rf.post("/", payload), user=user)
             response = edit_view(request)
             assert response.status_code == 302
-            sup = Supplier.objects.last()
-            assert response.url == reverse("shuup_admin:supplier.edit", kwargs=dict(pk=sup.pk))
-            assert sup.name == payload["base-name"]
-            assert sup.description == payload["base-description__en"]
-            assert sup.shops.count() == 1
-            assert sup.enabled
-            assert sup.is_approved
-            assert sup.contact_address.name == payload["address-name"]
+
+            supplier = Supplier.objects.last()
+            assert response.url == reverse("shuup_admin:supplier.edit", kwargs=dict(pk=supplier.pk))
+            assert supplier.name == payload["base-name"]
+            assert supplier.description == payload["base-description__en"]
+            assert supplier.shops.count() == 1
+            assert supplier.enabled
+            assert supplier.is_approved
+            assert supplier.contact_address.name == payload["address-name"]
+
+            request = apply_request_middleware(rf.get("/"), user=user)
+            response = edit_view(request, **{"pk": supplier.pk})
+            assert response.status_code == 200
 
 
 @pytest.mark.django_db
 def test_suppliers_delete(rf, admin_user):
-    supplier = get_default_supplier()
+    delete_view = SupplierDeleteView.as_view()
 
-    delete_view = SupplierDeleteView.as_view(**{"pk": supplier.pk})
-    request = apply_request_middleware(rf.post("/"), user=admin_user)
-    response = delete_view(request)
+    supplier = get_default_supplier()
+    request_admin = apply_request_middleware(rf.post("/"), user=admin_user)
+    response = delete_view(request_admin, **{"pk": supplier.pk})
     assert response.status_code == 302
     assert response.url == reverse("shuup_admin:supplier.list")
+    assert Supplier.objects.filter(pk=supplier.pk).not_deleted().exists() is False
+
+    supplier.deleted = False
+    supplier.save()
+
+    request_supplier = apply_request_middleware(rf.post("/"), user=admin_user)
+    with override_settings(
+        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"
+    ):
+        response = delete_view(request_supplier, **{"pk": supplier.pk})
+        assert response.status_code == 302
+        assert response.url == reverse("shuup_admin:supplier.list")
+        assert Supplier.objects.filter(pk=supplier.pk).not_deleted().exists() is False
 
 
 @pytest.mark.django_db

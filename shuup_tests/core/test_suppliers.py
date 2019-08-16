@@ -69,7 +69,7 @@ def test_suppliers_disabled():
 
 
 @pytest.mark.django_db
-def test_suppliers_manager():
+def test_suppliers_queryset():
     supplier = get_default_supplier()
     assert Supplier.objects.enabled().count() == 1
 

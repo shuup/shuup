@@ -34,6 +34,10 @@ class PageOpenGraphType(Enum):
 
 
 class PageQuerySet(TranslatableQuerySet):
+
+    def not_deleted(self):
+        return self.filter(deleted=False)
+
     def visible(self, shop, dt=None, user=None):
         """
         Get pages that should be publicly visible.
@@ -48,13 +52,12 @@ class PageQuerySet(TranslatableQuerySet):
         if not dt:
             dt = now()
         q = Q(
-            Q(deleted=False) &
             Q(available_from__lte=dt) &
             (Q(available_to__gte=dt) | Q(available_to__isnull=True))
         )
         if user and not user.is_anonymous():
             q |= Q(created_by=user)
-        qs = self.for_shop(shop).filter(q)
+        qs = self.not_deleted().for_shop(shop).filter(q)
         return qs
 
     def for_shop(self, shop):

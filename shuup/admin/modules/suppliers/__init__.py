@@ -20,20 +20,16 @@ class SupplierModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:supplier.list")
 
     def get_urls(self):
-        urls = get_edit_and_list_urls(
+        return get_edit_and_list_urls(
             url_prefix="^suppliers",
             view_template="shuup.admin.modules.suppliers.views.Supplier%sView",
             name_template="supplier.%s"
-        )
-        urls = urls + [
-            admin_url(
-                "^suppliers/delete/(?P<pk>\d+)/$",
-                "shuup.admin.modules.suppliers.views.SupplierDeleteView",
-                name="supplier.delete",
-                permissions=("supplier.delete",)
-            ),
-        ]
-        return urls
+        ) + [admin_url(
+            "^suppliers/delete/(?P<pk>\d+)/$",
+            "shuup.admin.modules.suppliers.views.SupplierDeleteView",
+            name="supplier.delete",
+            permissions=("supplier.delete",)
+        ), ]
 
     def get_menu_entries(self, request):
         return [
