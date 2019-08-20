@@ -43,8 +43,8 @@ class PersonContactLogEntrySerializer(ContactLogEntrySerializer):
 
 class GDPRConsentDocumentSerializer(serializers.Serializer):
     id = serializers.IntegerField()
-    title = serializers.CharField(source="page.title")
-    modified_on = serializers.DateTimeField(source="page.modified_on")
+    title = serializers.CharField(source="page.title", default="")
+    modified_on = serializers.DateTimeField(source="page.modified_on", default=None)
 
 
 class GDPRConsentCookieCategorySerializer(serializers.ModelSerializer):

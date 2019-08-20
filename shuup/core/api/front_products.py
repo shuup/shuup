@@ -13,7 +13,7 @@ from django.db.models.expressions import RawSQL
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import filters, mixins, serializers, viewsets
-from rest_framework.decorators import list_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
@@ -472,7 +472,7 @@ class FrontShopProductViewSet(PermissionHelperMixin,
     def get_queryset(self):
         return get_shop_product_queryset()
 
-    @list_route(methods=['get'])
+    @action(detail=False, methods=['get'])
     def best_selling(self, request):
         best_selling_products = get_best_selling_product_info(
             shop_ids=[request.GET.get("shop", Shop.objects.first().pk)])

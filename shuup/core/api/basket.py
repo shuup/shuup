@@ -17,7 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import exceptions, serializers, status, viewsets
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
@@ -124,7 +124,7 @@ class BasketBaseLineSerializer(BaseLineSerializerMixin, serializers.Serializer):
     sku = serializers.CharField()
     can_delete = serializers.BooleanField()
     can_change_quantity = serializers.BooleanField()
-    supplier = serializers.IntegerField(source="supplier.id")
+    supplier = serializers.IntegerField(source="supplier.pk", default=None)
 
     type = EnumField(OrderLineType)
     shop = serializers.SerializerMethodField()
@@ -440,7 +440,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
                 raise exceptions.ValidationError(exc.message)
 
     @schema_serializer_class(NewBasketSerializer)
-    @list_route(methods=['post'])
+    @action(detail=False, methods=['post'])
     def new(self, request, *args, **kwargs):
         """
         Create a brand new basket object
@@ -484,7 +484,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         return cmd_dispatcher.postprocess_response(command, cmd_kwargs, response)
 
     @schema_serializer_class(BasketRequestAbandonedSerializer)
-    @list_route(methods=['get'])
+    @action(detail=False, methods=['get'])
     def abandoned(self, request, *args, **kwargs):
         if settings.SHUUP_BASKET_STORAGE_CLASS_SPEC != "shuup.core.basket.storage:DatabaseBasketStorage":
             raise exceptions.NotAcceptable("Invalid basket storage for this route.")
@@ -516,7 +516,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         return Response(self.get_serializer(stored_baskets, many=True).data)
 
     @schema_serializer_class(ProductAddBasketSerializer)
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def add(self, request, *args, **kwargs):
         """
         Adds a product to the basket
@@ -525,7 +525,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         return self._add_product(request, *args, **kwargs)
 
     @schema_serializer_class(RemoveBasketSerializer)
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def remove(self, request, *args, **kwargs):
         """
         Removes a basket line
@@ -549,7 +549,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def clear(self, request, *args, **kwargs):
         """
         Clear basket contents
@@ -567,7 +567,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         else:
             return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def update_quantity(self, request, *args, **kwargs):
         self.process_request()
         serializer = LineQuantitySerializer(data=request.data)
@@ -587,7 +587,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
     @schema_serializer_class(BasketCampaignCodeSerializer)
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def add_code(self, request, *args, **kwargs):
         """
         Add a campaign code to the basket
@@ -608,7 +608,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             return Response({"code_invalid": "Invalid code"}, status=status.HTTP_400_BAD_REQUEST)
 
     @schema_serializer_class(BasketCampaignCodeSerializer)
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def remove_code(self, request, *args, **kwargs):
         """
         Remove a campaign code from the basket
@@ -629,7 +629,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         else:
             return Response({"code_invalid": "Invalid code"}, status=status.HTTP_400_BAD_REQUEST)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def clear_codes(self, request, *args, **kwargs):
         """
         Remove all campaign codes from the basket
@@ -651,7 +651,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             return Response({"invalid_command": "Invalid command"}, status=status.HTTP_400_BAD_REQUEST)
 
     @schema_serializer_class(BasketSetCustomerSerializer)
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def set_customer(self, request, *args, **kwargs):
         """
         Set the basket customer
@@ -670,12 +670,12 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
     @schema_serializer_class(AddressSerializer)
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def set_shipping_address(self, request, *args, **kwargs):
         return self._handle_setting_address(request, "shipping_address")
 
     @schema_serializer_class(AddressSerializer)
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def set_billing_address(self, request, *args, **kwargs):
         return self._handle_setting_address(request, "billing_address")
 
@@ -708,11 +708,11 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         else:
             return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def set_shipping_method(self, request, *args, **kwargs):
         return self._handle_setting_method(request, ShippingMethod, "shipping_method")
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def set_payment_method(self, request, *args, **kwargs):
         return self._handle_setting_method(request, PaymentMethod, "payment_method")
 
@@ -729,7 +729,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
 
         return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def create_order(self, request, *args, **kwargs):
         self.process_request()
         request.basket.status = OrderStatus.objects.get_default_initial()
@@ -744,7 +744,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         request.basket.finalize()
         return Response(data=OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def add_from_order(self, request, *args, **kwargs):
         """
         Add multiple products to the basket
@@ -820,7 +820,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
         except Exception as exc:
             return Response({"error": str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    @detail_route(methods=['get'])
+    @action(detail=True, methods=['get'])
     def taxes(self, request, *args, **kwargs):
         """
         Get taxes for basket

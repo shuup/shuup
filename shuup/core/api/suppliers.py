@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from shuup.api.decorators import schema_serializer_class
@@ -21,7 +21,7 @@ from shuup.core.suppliers.enums import StockAdjustmentType
 
 class ProductStockStatusSerializer(serializers.Serializer):
     product = serializers.IntegerField(source="product_id")
-    sku = serializers.CharField(source="product.sku")
+    sku = serializers.CharField(source="product.sku", default="")
     logical_count = FormattedDecimalField(coerce_to_string=False)
     physical_count = FormattedDecimalField(coerce_to_string=False)
     message = serializers.CharField()
@@ -87,7 +87,7 @@ class SupplierViewSet(SearchableMixin, PermissionHelperMixin, ProtectedModelView
         return super(SupplierViewSet, self).get_serializer_class()
 
     @schema_serializer_class(StockAdjustmentSerializer)
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def adjust_stock(self, request, pk=None):
         supplier = self.get_object()
         serializer = self.get_serializer(data=request.data)
@@ -106,7 +106,7 @@ class SupplierViewSet(SearchableMixin, PermissionHelperMixin, ProtectedModelView
         return Response(ProductStockStatusSerializer(status).data)
 
     @schema_serializer_class(SupplierProductsSerialzier)
-    @detail_route(methods=["post"])
+    @action(detail=True, methods=["post"])
     def update_stocks(self, request, pk=None):
         supplier = self.get_object()
         serializer = self.get_serializer(data=request.data)
@@ -123,7 +123,7 @@ class SupplierViewSet(SearchableMixin, PermissionHelperMixin, ProtectedModelView
         return Response()
 
     @schema_serializer_class(SupplierProductsSerialzier)
-    @detail_route(methods=["get"])
+    @action(detail=True, methods=["get"])
     def stock_statuses(self, request, pk=None):
         supplier = self.get_object()
         serializer = self.get_serializer(data=request.query_params)

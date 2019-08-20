@@ -207,7 +207,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'shuup.api.permissions.ShuupAPIPermission',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'shuup.api.docs.ShuupAPISchema'
 }
 
 JWT_AUTH = {

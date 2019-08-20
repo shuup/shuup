@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import exceptions, serializers, status
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from shuup.api.fields import FormattedDecimalField
@@ -36,7 +36,7 @@ class FullRefundSerializer(serializers.Serializer):
 
 
 class RefundMixin(object):
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def create_refund(self, request, pk=None):
         order = self.get_object()
 
@@ -72,7 +72,7 @@ class RefundMixin(object):
 
         return Response({'success': _("Refund created.")}, status=status.HTTP_201_CREATED)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def create_full_refund(self, request, pk=None):
         order = self.get_object()
 

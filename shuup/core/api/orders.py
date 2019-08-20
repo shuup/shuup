@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_filters import DateTimeFilter
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import serializers, status
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.fields import JSONField
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -109,19 +109,19 @@ class OrderStatusChangeMixin(object):
         order.add_log_entry(message, user=self.request.user, identifier="status_change")
         return Response({"status": str(to_status)}, status=status.HTTP_200_OK)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def complete(self, request, pk=None):
         """ Set the order as Completed. """
         return self.change_order_status(OrderStatus.objects.get_default_complete())
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def cancel(self, request, pk=None):
         """ Set the order as Canceled. """
         return self.change_order_status(OrderStatus.objects.get_default_canceled())
 
 
 class OrderTaxesMixin(object):
-    @detail_route(methods=['get'])
+    @action(detail=True, methods=['get'])
     def taxes(self, request, pk=None):
         """
         Get taxes for order
@@ -260,12 +260,12 @@ class OrderViewSet(PermissionHelperMixin,
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def create_payment(self, request, pk=None):
         """ Creates a payment for the order. """
         return _handle_payment_creation(request, self.get_object())
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def set_fully_paid(self, request, pk=None):
         """ Set the order as Fully Paid. """
         order = self.get_object()
