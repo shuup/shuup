@@ -18,7 +18,16 @@ function activateDropzone($dropzone, attrs={}) {
     const addRemoveLinks = $data.add_remove_links;
     const uploadUrl = $data.upload_url || window.ShuupAdminConfig.browserUrls.media;
     const browsable = (window.ShuupAdminConfig.browserUrls["media"] && $data.browsable && $data.browsable !== "False");
-    const params = $.extend(true, {
+
+    // Load attributes encoded in attributes with `data-dz-` prefixes
+    // e.g.: data-dz-maxFilesize="10000"
+    const extraAttrs = {};
+    Object.keys($data).filter(attr => attr.startsWith("dz_")).forEach((attr) => {
+        const attrKey = attr.replace("dz_", "");
+        extraAttrs[attrKey] = $data[attr];
+    });
+
+    const params = Object.assign({
         url: uploadUrl + "?action=upload&path=" + uploadPath,
         uploadUrl,
         params: {
@@ -39,7 +48,7 @@ function activateDropzone($dropzone, attrs={}) {
                 done();
             }
         }
-    }, attrs);
+    }, extraAttrs, attrs);
     const dropzone = new Dropzone(selector, params);
 
     dropzone.on("addedfile", attrs.onAddedFile || function(file) {
