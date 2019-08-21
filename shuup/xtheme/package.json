@@ -15,7 +15,7 @@
   "private": true,
   "license": "OSL-3.0",
   "dependencies": {
-    "autoprefixer": "^8.6.5",
+    "autoprefixer": "^9.6.1",
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^3.4.1",
     "codemirror": "^5.40.0",

@@ -13,7 +13,7 @@
   "author": "Shuup Team <shuup@shuup.com>",
   "license": "OSL-3.0",
   "dependencies": {
-    "autoprefixer": "^8.6.4",
+    "autoprefixer": "^9.6.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^3.4.1",
