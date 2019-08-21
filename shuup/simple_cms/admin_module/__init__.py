@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
+from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls, admin_url
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.simple_cms.models import Page
 
@@ -21,11 +21,19 @@ class SimpleCMSAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, "shuup_admin:simple_cms.page.list")
 
     def get_urls(self):
+        url_prefix = "^cms/page"
+        view_template = "shuup.simple_cms.admin_module.views.Page%sView"
+        name_template = "simple_cms.page.%s"
         return get_edit_and_list_urls(
-            url_prefix="^cms/page",
-            view_template="shuup.simple_cms.admin_module.views.Page%sView",
-            name_template="simple_cms.page.%s"
-        )
+            url_prefix=url_prefix,
+            view_template=view_template,
+            name_template=name_template,
+        ) + [admin_url(
+            r"%s/delete/(?P<pk>\d+)/" % url_prefix,
+            view_template % "Delete",
+            name=name_template % "delete",
+            permissions=(name_template % "delete",)
+        ), ]
 
     def get_menu_entries(self, request):
         return [

@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db.models import Q
 from django.db.transaction import atomic
+from django.core.urlresolvers import reverse
 
 from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
@@ -18,6 +19,7 @@ from shuup.admin.modules.suppliers.forms import (
     SupplierBaseForm, SupplierContactAddressForm
 )
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import (
     check_and_raise_if_only_one_allowed, CreateOrUpdateView
 )
@@ -76,6 +78,13 @@ class SupplierEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
     base_form_part_classes = [SupplierBaseFormPart, SupplierContactAddressFormPart]
     form_part_class_provide_key = "admin_supplier_form_part"
 
+    def get_toolbar(self):
+        save_form_id = self.get_save_form_id()
+        delete_url = None
+        if self.get_object():
+            delete_url = reverse("shuup_admin:supplier.delete", kwargs={"pk": self.get_object().pk})
+        return get_default_edit_toolbar(self, save_form_id, delete_url=delete_url)
+
     def get_object(self, queryset=None):
         obj = super(SupplierEditView, self).get_object(queryset)
         check_and_raise_if_only_one_allowed("SHUUP_ENABLE_MULTIPLE_SUPPLIERS", obj)
@@ -83,8 +92,8 @@ class SupplierEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
 
     def get_queryset(self):
         if getattr(self.request.user, "is_superuser", False):
-            return Supplier.objects.all()
-        return Supplier.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True))
+            return Supplier.objects.not_deleted()
+        return Supplier.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True)).not_deleted()
 
     @atomic
     def form_valid(self, form):

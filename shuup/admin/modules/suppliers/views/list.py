@@ -38,7 +38,7 @@ class SupplierListView(PicotableListView):
     mass_actions_provider_key = "supplier_list_mass_actions_provider"
 
     def get_queryset(self):
-        return Supplier.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True))
+        return Supplier.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True)).not_deleted()
 
     def get_module_display(self, instance):
         return instance.module.name or _("No %s module") % self.model._meta.verbose_name
