@@ -14,7 +14,7 @@
   "license": "OSL-3.0",
   "private": true,
   "dependencies": {
-    "autoprefixer": "^8.6.5",
+    "autoprefixer": "^9.6.1",
     "babel-preset-env": "^1.7.0",
     "less": "^3.0.4",
     "parcel-bundler": "^1.12.3",
