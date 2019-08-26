@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 import os
+import selenium
 
 import pytest
 from django.core.urlresolvers import reverse
@@ -84,8 +85,17 @@ def _test_refund_view(browser, live_server, order):
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, lambda x: x.is_text_present("Refunded: %s" % format_money(order.shop.create_price("0.00"))))
     assert len(browser.find_by_css("#id_form-0-line_number option")) == 12 # blank + arbitrary amount + num lines
-    click_element(browser, "#select2-id_form-0-line_number-container")
-    wait_until_appeared(browser, "input.select2-search__field")
+
+    try:
+        click_element(browser, "#select2-id_form-0-line_number-container")
+        wait_until_appeared(browser, "input.select2-search__field")
+    except selenium.common.exceptions.TimeoutException as e:
+        # For some reason first click happen before the element is not ready so
+        # let's re-click when timeout happens. The actual functionality seem
+        # to work nicely.
+        click_element(browser, "#select2-id_form-0-line_number-container")
+        wait_until_appeared(browser, "input.select2-search__field")
+
     wait_until_appeared(browser, ".select2-results__option[aria-selected='false']")
     browser.execute_script('$($(".select2-results__option")[1]).trigger({type: "mouseup"})') # select arbitrary amount
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_form-0-text")))
