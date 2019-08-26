@@ -32,7 +32,7 @@ window.Sortable = require('sortablejs');  // TODO: Deprecate and merge to html5s
 window.html5sortable = require('html5sortable/dist/html5sortable.cjs');
 
 require('bootstrap');
-require('chart.js');
+require('../../node_modules/chart.js/dist/Chart.js');
 require('imagelightbox');
 require('get-size');
 require('desandro-matches-selector');
