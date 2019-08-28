@@ -7,15 +7,21 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms import ChoiceField, DateTimeField
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
+from django_jinja.views.generic import DetailView
 
 from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 )
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
+from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.apps.provides import get_provide_objects
@@ -186,8 +192,18 @@ class PageEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     form_part_class_provide_key = "admin_page_form_part"
     add_form_errors_as_messages = True
 
+    def get_toolbar(self):
+        save_form_id = self.get_save_form_id()
+        return get_default_edit_toolbar(self, save_form_id, delete_url=self.get_delete_url())
+
+    def get_delete_url(self):
+        url = None
+        if self.object.pk:
+            url = reverse_lazy("shuup_admin:simple_cms.page.delete", kwargs={"pk": self.object.pk})
+        return url
+
     def get_queryset(self):
-        return super(PageEditView, self).get_queryset().for_shop(get_shop(self.request)).filter(deleted=False)
+        return super(PageEditView, self).get_queryset().for_shop(get_shop(self.request)).not_deleted()
 
     def form_valid(self, form):
         return self.save_form_parts(form)
@@ -222,4 +238,27 @@ class PageListView(PicotableListView):
         ]
 
     def get_queryset(self):
-        return super(PageListView, self).get_queryset().for_shop(get_shop(self.request)).filter(deleted=False)
+        return super(PageListView, self).get_queryset().for_shop(get_shop(self.request)).not_deleted()
+
+
+class PageDeleteView(DetailView):
+    queryset = Page.objects.all()
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse("shuup_admin:simple_cms.page.list")
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super(PageDeleteView, self).get_queryset()
+        queryset = queryset.for_shop(get_shop(self.request)).not_deleted()
+
+        supplier = get_supplier(self.request)
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
+
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        page = self.get_object()
+        page.soft_delete(user=request.user)
+        messages.success(request, _(u"%s has been marked deleted.") % page)
+        return HttpResponseRedirect(self.get_success_url())

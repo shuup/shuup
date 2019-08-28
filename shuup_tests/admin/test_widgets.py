@@ -35,7 +35,15 @@ def test_unbound_file_dnd_uploader_widget():
 @pytest.mark.django_db
 def test_bound_file_dnd_uploader_widget():
     f = File.objects.create(name="file")
-    widget_html = FileDnDUploaderWidget(upload_path="/test", kind="foo").render(name="foo", value=f.pk)
+    widget_html = FileDnDUploaderWidget(
+        upload_path="/test",
+        kind="foo",
+        dropzone_attrs={
+            "max-filesize": 10,
+            "retry-chunks-limit": 100,
+            "clickable": "false",
+        }
+    ).render(name="foo", value=f.pk)
     soup = BeautifulSoup(widget_html)
     assert soup.select("#dropzone-dropzone"), "widget has id"
     assert soup.select("input")[0]["name"] == "foo"
@@ -45,4 +53,7 @@ def test_bound_file_dnd_uploader_widget():
     assert soup.select("[data-kind]")[0]["data-kind"] == "foo"
     assert soup.select("[data-id]")[0]["data-id"] == str(f.pk)
     assert soup.select("[data-name]")[0]["data-name"] == f.name
+    assert soup.select("[data-dz_max-filesize]")[0]["data-dz_max-filesize"] == "10"
+    assert soup.select("[data-dz_retry-chunks-limit]")[0]["data-dz_retry-chunks-limit"] == "100"
+    assert soup.select("[data-dz_clickable]")[0]["data-dz_clickable"] == "false"
     assert not soup.select("[data-thumbnail]")

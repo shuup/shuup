@@ -10,6 +10,27 @@ Unrealeased
   with appropriate version header and this help text will be removed.
 
 
+Shuup 1.9.9
+-----------
+
+Released on 2019-08-21 9:30pm +0300.
+
+Admin
+~~~~~
+
+- Add option to pass extra dropzone configurations to widget
+- Add option to soft delete CMS pages
+- Add option to soft delete suppliers
+- Add option to pass extra dropzone configurations to widget
+- Fix field help text 
+
+Core
+~~~~
+
+- Add option to soft delete suppliers
+- Improve filtering for variation children
+
+
 Shuup 1.9.8
 -----------
 

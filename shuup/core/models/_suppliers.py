@@ -31,8 +31,11 @@ class SupplierType(Enum):
 
 
 class SupplierQueryset(TranslatableQuerySet):
+    def not_deleted(self):
+        return self.filter(deleted=False)
+
     def enabled(self):
-        return self.filter(enabled=True, is_approved=True)
+        return self.filter(enabled=True, is_approved=True).not_deleted()
 
 
 @python_2_unicode_compatible
@@ -83,6 +86,7 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     translations = TranslatedFields(
         description=models.TextField(blank=True, verbose_name=_("description"))
     )
+    deleted = models.BooleanField(default=False, verbose_name=_("deleted"))
 
     search_fields = ["name"]
     objects = SupplierQueryset.as_manager()
@@ -143,6 +147,11 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
 
     def update_stocks(self, product_ids):
         return self.module.update_stocks(product_ids)
+
+    def soft_delete(self):
+        if not self.deleted:
+            self.deleted = True
+            self.save(update_fields=("deleted",))
 
 
 SupplierLogEntry = define_log_model(Supplier)
