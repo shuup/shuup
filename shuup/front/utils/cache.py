@@ -5,7 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-LSITED_PRODUCTS_CACHE_ITEM_FMT = "listed_products_objs-{shop_id}"
+LISTED_PRODUCTS_CACHE_ITEM_FMT = "listed_products_objs-{shop_id}"
 BEST_SELLING_PRODUCTS_CACHE_ITEM_FMT = "best_selling_products_objs-{shop_id}"
 NEWEST_PRODUCTS_CACHE_ITEM_FMT = "newest_products_objs-{shop_id}"
 RANDOM_PRODUCTS_CACHE_ITEM_FMT = "random_products_objs-{shop_id}"
@@ -15,7 +15,7 @@ CROSS_SELLS_CACHE_ITEM_FMT = "cross_sells_objs-{shop_id}"
 
 
 def get_listed_products_cache_item(shop):
-    return LSITED_PRODUCTS_CACHE_ITEM_FMT.format(shop_id=shop.pk)
+    return LISTED_PRODUCTS_CACHE_ITEM_FMT.format(shop_id=shop.pk)
 
 
 def get_best_selling_products_cache_item(shop):
