@@ -120,6 +120,7 @@ OS Addons
 * `Shuup Mailchimp <https://github.com/shuup/shuup-mailchimp>`__. Mailchimp integration for Shuup (New v0.7.8 released).
 * `Shuup Xtheme Layouts <https://github.com/shuup/shuup-xtheme-extra-layouts>`__. Xtheme layouts for Shuup.
 * `Shuup Category Organizer <https://github.com/shuup/shuup-category-organizer>`__. Shuup Category Organizer.
+* `Shuup Logging <https://github.com/shuup/shuup-logging>`__. Shuup Logging.
 
 The purpose of these addons, is to demonstrate how to build
 other simple addons to extend Shuup. To learn more, here are

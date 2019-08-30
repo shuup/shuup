@@ -26,6 +26,7 @@ STOREFRONT_MENU_CATEGORY = 6
 ADDONS_MENU_CATEGORY = 7
 SETTINGS_MENU_CATEGORY = 8
 CONTENT_MENU_CATEGORY = 9
+LOG_MENU_CATEGORY = 10
 
 MAIN_MENU = [
     {
@@ -72,7 +73,12 @@ MAIN_MENU = [
         "identifier": SETTINGS_MENU_CATEGORY,
         "title": _("Settings"),
         "icon": "fa fa-tachometer",
-    }
+    },
+    {
+        "identifier": LOG_MENU_CATEGORY,
+        "title": _("Logs"),
+        "icon": "fa fa-archive",
+    },
 ]
 
 

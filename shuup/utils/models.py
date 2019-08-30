@@ -10,6 +10,7 @@ from __future__ import unicode_literals, with_statement
 from functools import reduce
 
 from django.db import models
+from django.utils.text import force_text
 from django_countries.fields import Country
 
 __all__ = [
@@ -18,14 +19,14 @@ __all__ = [
 ]
 
 
-def get_data_dict(obj):
+def get_data_dict(obj, force_text_for_value=False):
     data = {}
     for f in obj._meta.fields:
         if not isinstance(f, models.AutoField) and f not in obj._meta.parents.values():
             value = getattr(obj, f.name)
             if isinstance(value, Country):
                 value = value.code
-            data[f.name] = value
+            data[f.name] = (force_text(value) if force_text_for_value else value)
 
     return data
 
