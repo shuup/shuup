@@ -20,6 +20,7 @@ from shuup.notify.enums import (
     ConstantUse, TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
 )
 from shuup.notify.template import render_in_context, Template
+from shuup.utils.importing import cached_load
 from shuup.utils.text import snake_case, space_case
 
 from .typology import Type
@@ -176,7 +177,7 @@ class Event(Base):
                 raise ValueError("Required variable %r missing for event %s" % (name, self.identifier))
 
     def run(self, shop):
-        from .runner import run_event
+        run_event = cached_load("SHUUP_NOTIFY_SCRIPT_RUNNER")
         run_event(event=self, shop=shop)
 
 
