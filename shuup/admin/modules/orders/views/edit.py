@@ -25,7 +25,7 @@ from django.views.generic import View
 from django_countries import countries
 
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
-from shuup.admin.signals import object_created
+from shuup.admin.signals import object_created, object_saved
 from shuup.admin.toolbar import Toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
@@ -418,6 +418,8 @@ class OrderEditView(CreateOrUpdateView):
             )
             object_created.send(sender=Order, object=order, request=request)
             messages.success(request, _("Order %(identifier)s created.") % vars(order))
+
+        object_saved.send(sender=Order, object=order, request=request)
         return JsonResponse({
             "success": True,
             "orderIdentifier": order.identifier,
