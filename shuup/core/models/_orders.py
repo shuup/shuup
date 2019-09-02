@@ -897,7 +897,7 @@ class Order(MoneyPropped, models.Model):
             "quantity": line.quantity,
             "amount": line.taxful_price.amount,
             "restock_products": restock_products
-        } for line in self.lines.all() if line.type != OrderLineType.REFUND]
+        } for line in self.lines.filter(quantity__gt=0) if line.type != OrderLineType.REFUND]
         self.create_refund(line_data, created_by)
 
     def get_total_refunded_amount(self, supplier=None):
