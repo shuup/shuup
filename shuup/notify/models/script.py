@@ -15,6 +15,7 @@ from jsonfield.fields import JSONField
 from shuup.core.fields import InternalIdentifierField
 from shuup.notify.base import Event
 from shuup.notify.enums import StepNext
+from shuup.utils.analog import define_log_model
 
 
 @python_2_unicode_compatible
@@ -70,3 +71,6 @@ class Script(models.Model):
         for step in self.get_steps():
             if step.execute(context) == StepNext.STOP:
                 break
+
+
+ScriptLogEntry = define_log_model(Script)
