@@ -452,3 +452,31 @@ def test_order_creator_account_manager():
     assert order.account_manager == person.account_manager
     with pytest.raises(ProtectedError):
         person.account_manager.delete()
+
+
+@pytest.mark.django_db
+def test_order_copy_by_updating_order_source_from_order(admin_user):
+    shop = get_default_shop()
+
+    line_data = {
+        "type": OrderLineType.PRODUCT,
+        "product": get_default_product(),
+        "supplier": get_default_supplier(),
+        "quantity": 1,
+        "base_unit_price": shop.create_price(10),
+    }
+    source = seed_source(admin_user)
+    source.add_line(**line_data)
+    source.payment_data = None
+
+    creator = OrderCreator()
+    order = creator.create_order(source)
+
+    new_source = OrderSource(shop)
+    new_source.update_from_order(order)
+    new_source.add_line(**line_data)
+
+    new_order = creator.create_order(new_source)
+    assert new_order
+    assert order.billing_address == new_order.billing_address
+    assert order.taxful_total_price == new_order.taxful_total_price

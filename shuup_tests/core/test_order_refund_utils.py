@@ -66,6 +66,12 @@ def test_order_refunds_with_multiple_suppliers():
         for product, quantity in six.iteritems(product_data):
             add_product_to_order(order, supplier, product, quantity, 5)
 
+    # Lines without quantity shouldn't affect refunds
+    other_line = OrderLine(
+        order=order, type=OrderLineType.OTHER, text="This random line for textual information", quantity=0)
+    other_line.save()
+    order.lines.add(other_line)
+
     order.cache_prices()
     order.create_payment(order.taxful_total_price)
     assert order.is_paid()
