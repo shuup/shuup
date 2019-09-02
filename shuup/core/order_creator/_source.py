@@ -152,7 +152,7 @@ class OrderSource(object):
         for key, value in values.items():
             if not hasattr(self, key):
                 raise ValueError("Can't update %r with key %r, it's not a pre-existing attribute" % (self, key))
-            if isinstance(getattr(self, key), dict):  # (Shallowly) merge dicts
+            if isinstance(getattr(self, key), dict) and value:  # (Shallowly) merge dicts
                 getattr(self, key).update(value)
             else:
                 setattr(self, key, value)
