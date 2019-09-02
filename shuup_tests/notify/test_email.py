@@ -29,6 +29,7 @@ def test_email_action():
     ctx.set("name", "Luke Warm")  # This variable isn't published by the event, but it's used by the template
     se = SendEmail({
         "template_data": TEST_TEMPLATE_DATA,
+        "from_email": {"constant": "from@shuup.local"},
         "recipient": {"constant": "someone@shuup.local"},
         "language": {"constant": "ja"},
         "send_identifier": {"constant": "hello, hello, hello"}
@@ -38,4 +39,5 @@ def test_email_action():
     assert len(mail.outbox) == 1  # 'send_identifier' should ensure this is true
     msg = mail.outbox[0]
     assert msg.to == ['someone@shuup.local']
+    assert msg.from_email == 'from@shuup.local'
     assert ctx.get("name").upper() in msg.subject  # The Japanese template upper-cases the name

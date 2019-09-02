@@ -36,6 +36,16 @@ class SendEmail(Action):
                                           initial=EMAIL_CONTENT_TYPE_CHOICES[0][0])
     }
 
+    from_email = Binding(
+        _("From email"),
+        type=Email,
+        constant_use=ConstantUse.VARIABLE_OR_CONSTANT,
+        required=False,
+        help_text=_(
+            'The from email to be used. It can either be binded to a variable or be a constant like '
+            'support@store.com or even "Store Support" <support@store.com>.'
+        )
+    )
     recipient = Binding(_("Recipient"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
     reply_to_address = Binding(_("Reply-To"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT)
     language = Binding(_("Language"), type=Language, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
@@ -91,8 +101,9 @@ class SendEmail(Action):
         reply_to = self.get_value(context, "reply_to_address")
         reply_to = [reply_to] if reply_to else None  # Push email to a list, unless it is None
 
+        from_email = self.get_value(context, "from_email") or None
         subject = " ".join(subject.splitlines())  # Email headers may not contain newlines
-        message = EmailMessage(subject=subject, body=body, to=[recipient], reply_to=reply_to)
+        message = EmailMessage(subject=subject, body=body, to=[recipient], reply_to=reply_to, from_email=from_email)
         message.content_subtype = content_type
         message.send()
         context.log(logging.INFO, "%s: Mail sent to %s :)", self.identifier, recipient)
