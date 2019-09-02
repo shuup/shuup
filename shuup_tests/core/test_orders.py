@@ -580,6 +580,12 @@ def test_refunds_for_discounted_order_lines():
     discount_line.save()
     order.lines.add(discount_line)
 
+    # Lines without quantity shouldn't affect refunds
+    other_line = OrderLine(
+        order=order, type=OrderLineType.OTHER, text="This random line for textual information", quantity=0)
+    other_line.save()
+    order.lines.add(other_line)
+
     product_line = order.lines.filter(type=OrderLineType.PRODUCT).first()
     product_line.discount_amount = TaxfulPrice(100, order.currency)
     product_line.save()
@@ -617,6 +623,13 @@ def test_refunds_for_discounted_order_lines():
     product_line = order.lines.filter(type=OrderLineType.PRODUCT).first()
     product_line.discount_amount = TaxfulPrice(100, order.currency)
     product_line.save()
+
+    # Lines without quantity shouldn't affect refunds
+    other_line = OrderLine(
+        order=order, type=OrderLineType.OTHER, text="This random line for textual information", quantity=0)
+    other_line.save()
+    order.lines.add(other_line)
+
     order.cache_prices()
     order.save()
 
