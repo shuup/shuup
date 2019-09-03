@@ -240,3 +240,8 @@ SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY = (
 #: Spec which provides the current shop for a given request and set of parameters.
 SHUUP_REQUEST_SHOP_PROVIDER_SPEC = (
     "shuup.core.shop_provider.DefaultShopProvider")
+
+#: Whether to allow to create arbitrary refunds. Set this False when it is
+#: required that all refunds are linked to actual order lines.
+#:
+ALLOW_ARBITRARY_REFUNDS = True

@@ -28,6 +28,10 @@ class NoRefundToCreateException(Exception):
     pass
 
 
+class RefundArbitraryRefundsNotAllowedException(Exception):
+    pass
+
+
 class RefundExceedsAmountException(Exception):
     pass
 
