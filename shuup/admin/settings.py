@@ -62,3 +62,8 @@ SHUUP_ADMIN_TIME_INPUT_FORMAT = "H:i"
 #: The input step to be used for time pickers
 #:
 SHUUP_ADMIN_DATETIME_INPUT_STEP = 15
+
+#: Menu category identifiers that should always activate the
+#: menu item. Useful in case there is need to always open some
+#: certain menus.
+ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS = []
