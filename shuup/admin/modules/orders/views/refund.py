@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
@@ -152,7 +153,7 @@ class OrderCreateRefundView(UpdateView):
             lines = lines.filter(supplier=supplier)
 
         line_number_choices = [("", "---")]
-        if self.object.get_total_unrefunded_amount(supplier).value > 0:
+        if settings.ALLOW_ARBITRARY_REFUNDS and self.object.get_total_unrefunded_amount(supplier).value > 0:
             line_number_choices += [("amount", _("Refund arbitrary amount"))]
         return line_number_choices + [
             (line.ordering, self._get_line_text(line)) for line in lines

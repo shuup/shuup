@@ -30,8 +30,8 @@ from shuup.core import taxing
 from shuup.core.excs import (
     InvalidRefundAmountException, NoPaymentToCreateException,
     NoProductsToShipException, NoRefundToCreateException,
-    NoShippingAddressException, RefundExceedsAmountException,
-    RefundExceedsQuantityException
+    NoShippingAddressException, RefundArbitraryRefundsNotAllowedException,
+    RefundExceedsAmountException, RefundExceedsQuantityException
 )
 from shuup.core.fields import (
     CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
@@ -797,7 +797,10 @@ class Order(MoneyPropped, models.Model):
             index += 1
             amount = refund.get("amount", zero)
             quantity = refund.get("quantity", 0)
-            parent_line = refund.get("line")
+            parent_line = refund.get("line", "amount")
+            if not settings.ALLOW_ARBITRARY_REFUNDS and (not parent_line or parent_line == "amount"):
+                raise RefundArbitraryRefundsNotAllowedException
+
             restock_products = refund.get("restock_products")
             refund_line = None
 

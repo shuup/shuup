@@ -200,6 +200,11 @@ a.item-submenu {
         background-color: $primary;
         transform: scale(1);
     }
+
+    &.active-menu {
+        font-weight: bold !important;
+        color: #007bff !important;
+    }
 }
 
 .logo-wrap {
