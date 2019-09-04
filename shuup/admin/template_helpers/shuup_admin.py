@@ -15,6 +15,7 @@ import itertools
 from django.conf import settings
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
+from django.utils.text import force_text
 from jinja2.utils import contextfunction
 
 from shuup import configuration
@@ -42,6 +43,17 @@ def get_quicklinks(context):
 @contextfunction
 def get_menu_entry_categories(context):
     return menu.get_menu_entry_categories(request=context["request"])
+
+
+def is_menu_category_active(category, target_url):
+    def does_identifier_match(always_active_identifier):
+        return (force_text(category.identifier) == force_text(always_active_identifier))
+
+    identifiers = settings.SHUUP_ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS
+    if any([identifier for identifier in identifiers if does_identifier_match(identifier)]):
+        return True
+
+    return any([entry for entry in category.entries if entry.url == target_url])
 
 
 @contextfunction

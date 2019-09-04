@@ -8,6 +8,9 @@
 
 import pytest
 
+from django.test import override_settings
+from django.utils.text import force_text
+
 from shuup.admin.modules.orders.views.refund import (
     OrderCreateFullRefundView, OrderCreateRefundView
 )
@@ -85,3 +88,27 @@ def test_create_full_refund_view(rf, admin_user):
     refund_line = order.lines.filter(type=OrderLineType.REFUND).last()
     assert refund_line
     assert refund_line.taxful_price == -original_total_price
+
+
+@pytest.mark.django_db
+def test_arbitrary_refund_availability(rf, admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(sku="test-sku", shop=shop, supplier=supplier, default_price=3.33)
+    order = create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=1, shop=shop)
+    order.cache_prices()
+    order.save()
+
+    assert not order.has_refunds()
+    assert len(order.lines.all()) == 1
+
+    def get_refund_view_content():
+        request = apply_request_middleware(rf.get("/"), user=admin_user)
+        view = OrderCreateRefundView.as_view()
+        response = view(request, pk=order.pk)
+        return force_text(response.render().content)
+
+    refund_option_str = '<option value="amount">Refund arbitrary amount</option>'
+    assert refund_option_str in get_refund_view_content()
+    with override_settings(SHUUP_ALLOW_ARBITRARY_REFUNDS=False):
+        assert refund_option_str not in get_refund_view_content()

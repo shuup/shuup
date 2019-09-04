@@ -11,9 +11,15 @@ import json
 
 import pytest
 from django.core.urlresolvers import reverse
+from django.test import override_settings
 
-from shuup.admin.menu import get_menu_entry_categories
-from shuup.admin.modules.menu.views import AdminMenuArrangeView, AdminMenuResetView
+from shuup.admin.menu import (
+    get_menu_entry_categories, PRODUCTS_MENU_CATEGORY, SETTINGS_MENU_CATEGORY
+)
+from shuup.admin.modules.menu.views import (
+    AdminMenuArrangeView, AdminMenuResetView
+)
+from shuup.admin.template_helpers.shuup_admin import is_menu_category_active
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -128,3 +134,19 @@ def test_menu_flip_parent_child(rf, admin_user):
 
     admin_menu_after_save = [m.to_dict() for m in get_menu_entry_categories(menu_request)]
     assert admin_menu_after_save[-1]['entries'][0]['id'] == entry_parent['id']
+
+
+@pytest.mark.django_db
+def test_is_menu_category_active(rf, admin_user):
+    url = reverse('shuup_admin:shop_product.list')
+    menu_request = apply_request_middleware(rf.get(url), user=admin_user)
+    menu_categories = get_menu_entry_categories(menu_request)
+
+    product_category = [category for category in menu_categories if category.identifier == PRODUCTS_MENU_CATEGORY][0]
+    assert is_menu_category_active(product_category, menu_request.path)
+
+    shop_category = [category for category in menu_categories if category.identifier == SETTINGS_MENU_CATEGORY][0]
+    assert not is_menu_category_active(shop_category, menu_request.path)
+
+    with override_settings(SHUUP_ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS=[SETTINGS_MENU_CATEGORY]):
+        assert is_menu_category_active(shop_category, menu_request.path)
