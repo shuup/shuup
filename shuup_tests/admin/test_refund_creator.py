@@ -110,5 +110,5 @@ def test_arbitrary_refund_availability(rf, admin_user):
 
     refund_option_str = '<option value="amount">Refund arbitrary amount</option>'
     assert refund_option_str in get_refund_view_content()
-    with override_settings(ALLOW_ARBITRARY_REFUNDS=False):
+    with override_settings(SHUUP_ALLOW_ARBITRARY_REFUNDS=False):
         assert refund_option_str not in get_refund_view_content()
