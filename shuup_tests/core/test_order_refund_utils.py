@@ -128,7 +128,7 @@ def test_order_refunds_with_multiple_suppliers():
     assert order.get_total_unrefunded_amount(supplier3).value == Decimal("255")  # 51 * 5
     assert order.get_total_unrefunded_quantity(supplier3) == Decimal("51")  # 3 x product1 and 13 x product2
 
-    with override_settings(ALLOW_ARBITRARY_REFUNDS=False):
+    with override_settings(SHUUP_ALLOW_ARBITRARY_REFUNDS=False):
         with pytest.raises(RefundArbitraryRefundsNotAllowedException):
             order.create_refund([{
                 "line": "amount",

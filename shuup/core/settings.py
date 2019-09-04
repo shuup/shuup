@@ -244,4 +244,4 @@ SHUUP_REQUEST_SHOP_PROVIDER_SPEC = (
 #: Whether to allow to create arbitrary refunds. Set this False when it is
 #: required that all refunds are linked to actual order lines.
 #:
-ALLOW_ARBITRARY_REFUNDS = True
+SHUUP_ALLOW_ARBITRARY_REFUNDS = True

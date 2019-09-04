@@ -49,7 +49,7 @@ def is_menu_category_active(category, target_url):
     def does_identifier_match(always_active_identifier):
         return (force_text(category.identifier) == force_text(always_active_identifier))
 
-    identifiers = settings.ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS
+    identifiers = settings.SHUUP_ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS
     if any([identifier for identifier in identifiers if does_identifier_match(identifier)]):
         return True
 

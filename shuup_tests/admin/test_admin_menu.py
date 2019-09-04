@@ -148,5 +148,5 @@ def test_is_menu_category_active(rf, admin_user):
     shop_category = [category for category in menu_categories if category.identifier == SETTINGS_MENU_CATEGORY][0]
     assert not is_menu_category_active(shop_category, menu_request.path)
 
-    with override_settings(ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS=[SETTINGS_MENU_CATEGORY]):
+    with override_settings(SHUUP_ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS=[SETTINGS_MENU_CATEGORY]):
         assert is_menu_category_active(shop_category, menu_request.path)

@@ -798,7 +798,7 @@ class Order(MoneyPropped, models.Model):
             amount = refund.get("amount", zero)
             quantity = refund.get("quantity", 0)
             parent_line = refund.get("line", "amount")
-            if not settings.ALLOW_ARBITRARY_REFUNDS and (not parent_line or parent_line == "amount"):
+            if not settings.SHUUP_ALLOW_ARBITRARY_REFUNDS and (not parent_line or parent_line == "amount"):
                 raise RefundArbitraryRefundsNotAllowedException
 
             restock_products = refund.get("restock_products")
