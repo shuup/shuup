@@ -245,3 +245,10 @@ SHUUP_REQUEST_SHOP_PROVIDER_SPEC = (
 #: required that all refunds are linked to actual order lines.
 #:
 SHUUP_ALLOW_ARBITRARY_REFUNDS = True
+
+
+#: Spec which defines the helper class that handles price info cache
+#: This class is responsible for caching and bumping the cached prices
+#:
+SHUUP_PRICE_CACHE_HELPER_SPEC = (
+    "shuup.core.utils.price_cache.DefaultPriceCacheHelper")

@@ -19,37 +19,34 @@ from shuup.core.utils.context_cache import (
     bump_shop_product_signal_handler
 )
 from shuup.core.utils.db import extend_sqlite_functions
-from shuup.core.utils.price_cache import (
-    bump_all_price_caches, bump_prices_for_product,
-    bump_prices_for_shop_product
-)
+from shuup.core.utils.price_cache import get_price_cache_helper
 
 
 def handle_post_save_bump_all_prices_caches(sender, instance, **kwargs):
     # bump all the prices for all the shops, as it is impossible to know
     # from which shop things have changed
-    bump_all_price_caches()
+    get_price_cache_helper().bump_all_price_caches()
 
 
 def handle_product_post_save(sender, instance, **kwargs):
     bump_product_signal_handler(sender, instance, **kwargs)
-    bump_prices_for_product(instance)
+    get_price_cache_helper().bump_prices_for_product(instance)
 
 
 def handle_shop_product_post_save(sender, instance, **kwargs):
     if isinstance(instance, Category):
         for shop_product in instance.shop_products.all():
             bump_shop_product_signal_handler(sender, shop_product, **kwargs)
-            bump_prices_for_shop_product(shop_product)
+            get_price_cache_helper().bump_prices_for_shop_product(shop_product)
     else:
         bump_shop_product_signal_handler(sender, instance, **kwargs)
-        bump_prices_for_shop_product(instance)
+        get_price_cache_helper().bump_prices_for_shop_product(instance)
 
 
 def handle_supplier_post_save(sender, instance, **kwargs):
     for shop_product in instance.shop_products.all():
         bump_shop_product_signal_handler(sender, shop_product, **kwargs)
-        bump_prices_for_shop_product(shop_product)
+        get_price_cache_helper().bump_prices_for_shop_product(shop_product)
 
 
 def handle_contact_post_save(sender, instance, **kwargs):

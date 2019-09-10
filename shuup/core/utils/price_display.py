@@ -22,10 +22,8 @@ import jinja2
 
 from shuup.core.pricing import PriceDisplayOptions, Priceful
 from shuup.core.templatetags.shuup_common import money, percent
-from shuup.core.utils.price_cache import (
-    cache_many_price_info, cache_price_info, get_cached_price_info,
-    get_many_cached_price_info
-)
+from shuup.core.utils.price_cache import get_price_cache_helper
+
 from shuup.core.utils.prices import convert_taxness
 
 PRICED_CHILDREN_CACHE_KEY = "%s-%s_priced_children"
@@ -85,7 +83,7 @@ class PriceDisplayFilter(_ContextFilter):
             include_taxes = options.include_taxes
 
         request = context.get('request')
-        price_info = get_cached_price_info(
+        price_info = get_price_cache_helper().get_cached_price_info(
             request,
             item,
             quantity,
@@ -101,7 +99,14 @@ class PriceDisplayFilter(_ContextFilter):
 
             price_info = convert_taxness(request, item, price_info, include_taxes)
             if allow_cache:
-                cache_price_info(request, item, quantity, price_info, include_taxes=include_taxes, supplier=supplier)
+                get_price_cache_helper().cache_price_info(
+                    request,
+                    item,
+                    quantity,
+                    price_info,
+                    include_taxes=include_taxes,
+                    supplier=supplier
+                )
 
         return money(getattr(price_info, self.property_name))
 
@@ -109,7 +114,12 @@ class PriceDisplayFilter(_ContextFilter):
 class PricePropertyFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, allow_cache=True, supplier=None):
         request = context.get('request')
-        price_info = get_cached_price_info(request, item, quantity, supplier=supplier) if allow_cache else None
+        price_info = get_price_cache_helper().get_cached_price_info(
+            request,
+            item,
+            quantity,
+            supplier=supplier
+        ) if allow_cache else None
 
         if not price_info:
             price_info = _get_priceful(request, item, quantity, supplier)
@@ -117,7 +127,13 @@ class PricePropertyFilter(_ContextFilter):
             if not price_info:
                 return ""
             if allow_cache:
-                cache_price_info(request, item, quantity, price_info, supplier=supplier)
+                get_price_cache_helper().cache_price_info(
+                    request,
+                    item,
+                    quantity,
+                    price_info,
+                    supplier=supplier
+                )
 
         return getattr(price_info, self.property_name)
 
@@ -125,7 +141,12 @@ class PricePropertyFilter(_ContextFilter):
 class PricePercentPropertyFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, allow_cache=True, supplier=None):
         request = context.get('request')
-        price_info = get_cached_price_info(request, item, quantity, supplier=supplier) if allow_cache else None
+        price_info = get_price_cache_helper().get_cached_price_info(
+            request,
+            item,
+            quantity,
+            supplier=supplier
+        ) if allow_cache else None
 
         if not price_info:
             price_info = _get_priceful(request, item, quantity, supplier)
@@ -133,7 +154,13 @@ class PricePercentPropertyFilter(_ContextFilter):
             if not price_info:
                 return ""
             if allow_cache:
-                cache_price_info(request, item, quantity, price_info, supplier=supplier)
+                get_price_cache_helper().cache_price_info(
+                    request,
+                    item,
+                    quantity,
+                    price_info,
+                    supplier=supplier
+                )
 
         return percent(getattr(price_info, self.property_name))
 
@@ -171,7 +198,7 @@ class PriceRangeDisplayFilter(_ContextFilter):
             return ("", "")
 
         request = context.get('request')
-        priced_products = get_many_cached_price_info(
+        priced_products = get_price_cache_helper().get_many_cached_price_info(
             request,
             product,
             quantity,
@@ -199,7 +226,7 @@ class PriceRangeDisplayFilter(_ContextFilter):
                 priced_products.append(priceful)
 
             if priced_products and allow_cache:
-                cache_many_price_info(
+                get_price_cache_helper().cache_many_price_info(
                     request,
                     product,
                     quantity,

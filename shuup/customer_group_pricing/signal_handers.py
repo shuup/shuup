@@ -10,26 +10,26 @@ from __future__ import unicode_literals
 from django.db.models.signals import m2m_changed, post_save, pre_delete
 
 from shuup.core.models import Contact, ContactGroup
-from shuup.core.utils.price_cache import bump_all_price_caches
+from shuup.core.utils.price_cache import get_price_cache_helper
 from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 
 
 def handle_cgp_discount_post_save(sender, instance, **kwargs):
-    bump_all_price_caches([instance.shop_id])
+    get_price_cache_helper().bump_all_price_caches([instance.shop_id])
 
 
 def handle_cgp_price_post_save(sender, instance, **kwargs):
-    bump_all_price_caches([instance.shop_id])
+    get_price_cache_helper().bump_all_price_caches([instance.shop_id])
 
 
 def handle_contact_group_m2m_changed(sender, instance, **kwargs):
     if isinstance(instance, Contact):
-        bump_all_price_caches(set(instance.shops.values_list("pk", flat=True)))
+        get_price_cache_helper().bump_all_price_caches(set(instance.shops.values_list("pk", flat=True)))
     elif isinstance(instance, ContactGroup):
         if instance.shop_id:
-            bump_all_price_caches([instance.shop_id])
+            get_price_cache_helper().bump_all_price_caches([instance.shop_id])
         else:
-            bump_all_price_caches()
+            get_price_cache_helper().bump_all_price_caches()
 
 
 # Bump prices cache when CgpDiscount is changed or deleted

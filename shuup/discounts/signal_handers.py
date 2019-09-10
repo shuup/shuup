@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from django.db.models.signals import m2m_changed, post_save, pre_delete
 
 from shuup.core.models import Category, ShopProduct
-from shuup.core.utils.price_cache import bump_all_price_caches
+from shuup.core.utils.price_cache import get_price_cache_helper
 from shuup.discounts.exceptions import DiscountM2MChangeError
 from shuup.discounts.models import (
     AvailabilityException, CouponCode, Discount, HappyHour, TimeRange
@@ -21,7 +21,7 @@ from shuup.discounts.utils import bump_price_expiration
 def handle_discount_post_save(sender, instance, **kwargs):
     shops = set(instance.shops.values_list("pk", flat=True))
     bump_price_expiration(shops)
-    bump_all_price_caches(shops)
+    get_price_cache_helper().bump_all_price_caches(shops)
 
 
 def handle_happy_hour_post_save(sender, instance, **kwargs):
@@ -30,7 +30,7 @@ def handle_happy_hour_post_save(sender, instance, **kwargs):
     if instance.discounts.exists():
         shops = set(instance.discounts.values_list("shops__pk", flat=True))
         bump_price_expiration(shops)
-        bump_all_price_caches(shops)
+        get_price_cache_helper().bump_all_price_caches(shops)
 
 
 def handle_time_range_post_save(sender, instance, **kwargs):
@@ -39,7 +39,7 @@ def handle_time_range_post_save(sender, instance, **kwargs):
     if instance.happy_hour.discounts.exists():
         shops = set(instance.happy_hour.discounts.values_list("shops__pk", flat=True))
         bump_price_expiration(shops)
-        bump_all_price_caches(shops)
+        get_price_cache_helper().bump_all_price_caches(shops)
 
 
 def handle_availability_exception_post_save(sender, instance, **kwargs):
@@ -48,7 +48,7 @@ def handle_availability_exception_post_save(sender, instance, **kwargs):
     if instance.discounts.exists():
         shops = set(instance.discounts.values_list("shops__pk", flat=True))
         bump_price_expiration(shops)
-        bump_all_price_caches(shops)
+        get_price_cache_helper().bump_all_price_caches(shops)
 
 
 def handle_coupon_post_save(sender, instance, **kwargs):
@@ -57,7 +57,7 @@ def handle_coupon_post_save(sender, instance, **kwargs):
     if instance.coupon_code_discounts.exists():
         shops = set(instance.coupon_code_discounts.values_list("shops__pk", flat=True))
         bump_price_expiration(shops)
-        bump_all_price_caches(shops)
+        get_price_cache_helper().bump_all_price_caches(shops)
 
 
 def handle_generic_m2m_changed(sender, instance, **kwargs):
@@ -67,11 +67,11 @@ def handle_generic_m2m_changed(sender, instance, **kwargs):
     """
     if isinstance(instance, ShopProduct):
         bump_price_expiration([instance.shop_id])
-        bump_all_price_caches([instance.shop_id])
+        get_price_cache_helper().bump_all_price_caches([instance.shop_id])
     elif isinstance(instance, Category):
         for shop_id in set(instance.shop_products.all().values_list("shop_id", flat=True)):
             bump_price_expiration([shop_id])
-            bump_all_price_caches([shop_id])
+            get_price_cache_helper().bump_all_price_caches([shop_id])
     elif isinstance(instance, Discount):
         handle_discount_post_save(sender, instance, **kwargs)
     elif isinstance(instance, HappyHour):
