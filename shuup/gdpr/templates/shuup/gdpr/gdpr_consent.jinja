@@ -70,7 +70,13 @@
                                         {% else %}
                                             <div class="gdpr-switch">
                                                 <label>
-                                                    <input type="checkbox" name="cookie_category_{{ gdpr_cookie.id }}" />
+                                                    <input
+                                                        type="checkbox"
+                                                        name="cookie_category_{{ gdpr_cookie.id }}"
+                                                        {% if gdpr_cookie.default_active %}
+                                                        checked
+                                                        {% endif %}
+                                                    />
                                                     <div class="switch-slider round"></div>
                                                 </label>
                                             </div>
