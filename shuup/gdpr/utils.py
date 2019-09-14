@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from datetime import timedelta
 import json
 
 from django.conf import settings
@@ -24,7 +25,8 @@ def add_consent_to_response_cookie(response, cookie_data):
         key=settings.SHUUP_GDPR_CONSENT_COOKIE_NAME,
         value=json.dumps(cookie_data),
         domain=settings.SESSION_COOKIE_DOMAIN,
-        secure=settings.SESSION_COOKIE_SECURE or None
+        secure=settings.SESSION_COOKIE_SECURE or None,
+        expires=now() + timedelta(days=365 * 3)
     )
 
 
