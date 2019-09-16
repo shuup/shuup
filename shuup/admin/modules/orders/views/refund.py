@@ -157,11 +157,17 @@ class OrderCreateRefundView(UpdateView):
             line_number_choices += [("amount", _("Refund arbitrary amount"))]
         return line_number_choices + [
             (line.ordering, self._get_line_text(line)) for line in lines
-            if (line.type == OrderLineType.PRODUCT and line.max_refundable_quantity > 0) or
-            (line.type != OrderLineType.PRODUCT and
-             line.max_refundable_amount.value > 0 and
-             line.max_refundable_quantity > 0) and
-            line.type != OrderLineType.REFUND
+            if (
+                (
+                    (line.type == OrderLineType.PRODUCT and line.max_refundable_quantity > 0) or
+                    (
+                        line.type != OrderLineType.PRODUCT and
+                        line.max_refundable_amount.value > 0 and
+                        line.max_refundable_quantity > 0
+                    )
+                ) and
+                line.type != OrderLineType.REFUND
+            )
         ]
 
     def get_form(self, form_class=None):

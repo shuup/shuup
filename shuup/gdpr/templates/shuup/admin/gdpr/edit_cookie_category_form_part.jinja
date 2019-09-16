@@ -21,6 +21,7 @@
             </div>
             <div class="panel-body">
                 {{ bs3.field(f.always_active) }}
+                {{ bs3.field(f.default_active) }}
                 {% set tab_id = loop.index|safe + "-additional-language" %}
                 {% call(form, language, map) language_dependent_content_tabs(f, tab_id_prefix=tab_id) %}
                     {{ bs3.field(f[map.name]) }}
