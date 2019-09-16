@@ -28,6 +28,12 @@ class OrderDetailView(DetailView):
     def get_toolbar(self):
         return OrderDetailToolbar(self.object)
 
+    def get_queryset(self):
+        qs = super(OrderDetailView, self).get_queryset().exclude(deleted=True)
+        if not self.request.user.is_superuser:
+            qs = qs.filter(shop=self.request.shop)
+        return qs
+
     def get_context_data(self, **kwargs):
         context = super(OrderDetailView, self).get_context_data(**kwargs)
         context["toolbar"] = self.get_toolbar()

@@ -64,7 +64,10 @@ class OrderListView(PicotableListView):
         return toolbar
 
     def get_queryset(self):
-        return super(OrderListView, self).get_queryset().exclude(deleted=True).filter(shop=self.request.shop)
+        qs = super(OrderListView, self).get_queryset().exclude(deleted=True)
+        if not self.request.user.is_superuser:
+            qs = qs.filter(shop=self.request.shop)
+        return qs
 
     def format_customer_name(self, instance, *args, **kwargs):
         return instance.get_customer_name() or ""
