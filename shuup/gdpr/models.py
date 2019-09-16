@@ -96,6 +96,11 @@ class GDPRSettings(TranslatableModel):
 class GDPRCookieCategory(TranslatableModel):
     shop = models.ForeignKey("shuup.Shop", related_name="gdpr_cookie_categories")
     always_active = models.BooleanField(default=False, verbose_name=_('always active'))
+    default_active = models.BooleanField(
+        verbose_name=_('active by default'),
+        default=False,
+        help_text=_('whether this cookie category is active by default')
+    )
     cookies = models.TextField(
         verbose_name=_("cookies used"),
         help_text=_(
