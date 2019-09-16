@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
@@ -17,6 +18,7 @@ from shuup.admin.utils.picotable import (
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import ProductMode, Shop, ShopProduct
+from shuup.utils.iterables import first
 
 
 class ProductPicotable(Picotable):
@@ -103,8 +105,33 @@ class ProductListView(PicotableListView):
     toolbar_buttons_provider_key = "product_list_toolbar_provider"
     mass_actions_provider_key = "product_list_mass_actions_provider"
 
+    def __init__(self):
+        def get_suppliers_column(iterable):
+            return first([col for col in iterable if col.id in ["suppliers", "shopproduct_suppliers"]], default=None)
+
+        def get_suppliers_filter():
+            return TextFilter(filter_field="suppliers__name", placeholder=_("Filter by supplier name..."))
+
+        if settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS and not get_suppliers_column(self.default_columns):
+            self.default_columns.append(
+                Column(
+                    "suppliers",
+                    _("Suppliers"),
+                    display="format_suppliers",
+                    ordering=8,
+                    filter_config=get_suppliers_filter(),
+                )
+            )
+        super(ProductListView, self).__init__()
+        suppliers_column = get_suppliers_column(self.columns)
+        if suppliers_column:
+            suppliers_column.filter_config = get_suppliers_filter()
+
     def format_categories(self, instance):
         return ", ".join(list(instance.categories.values_list("translations__name", flat=True)))
+
+    def format_suppliers(self, instance):
+        return ", ".join(list(instance.suppliers.values_list("name", flat=True)))
 
     def get_columns(self):
         for column in self.columns:
