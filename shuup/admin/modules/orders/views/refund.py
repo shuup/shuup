@@ -99,7 +99,10 @@ class OrderCreateRefundView(UpdateView):
         lines = lines = self.object.lines.all()
         if supplier:
             lines = lines.filter(supplier=supplier)
-        context["json_line_data"] = [self._get_line_data(self.object, line) for line in lines]
+        context["json_line_data"] = {
+            line.ordering: self._get_line_data(self.object, line)
+            for line in lines
+        }
         return context
 
     def _get_line_data(self, order, line):
