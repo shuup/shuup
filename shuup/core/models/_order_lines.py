@@ -129,7 +129,7 @@ class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
 
     @property
     def max_refundable_quantity(self):
-        if self.type != OrderLineType.PRODUCT:
+        if self.type == OrderLineType.REFUND:
             return 0
         return self.quantity - self.refunded_quantity
 

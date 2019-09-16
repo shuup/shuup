@@ -153,6 +153,46 @@ def test_order_refunds_with_multiple_suppliers():
     assert not order.can_create_refund()
 
 
+@pytest.mark.django_db
+def test_order_refunds_with_other_lines():
+    shop = get_default_shop()
+    supplier = Supplier.objects.create(identifier="1", name="supplier1")
+    supplier.shops.add(shop)
+
+    product = create_product("sku", shop=shop, default_price=10)
+    shop_product = product.get_shop_instance(shop=shop)
+    shop_product.suppliers = [supplier]
+
+    order = create_empty_order(shop=shop)
+    order.full_clean()
+    order.save()
+
+    add_product_to_order(order, supplier, product, 4, 5)
+
+    # Lines without quantity shouldn't affect refunds
+    other_line = OrderLine(
+        order=order, type=OrderLineType.OTHER, text="This random line for textual information", quantity=0)
+    other_line.save()
+    order.lines.add(other_line)
+
+    # Lines with quantity again should be able to be refunded normally.
+    other_line_with_quantity = OrderLine(
+        order=order, type=OrderLineType.OTHER, text="Special service 100$/h", quantity=1, base_unit_price_value=100)
+    other_line_with_quantity.save()
+    order.lines.add(other_line_with_quantity)
+
+    assert other_line_with_quantity.max_refundable_quantity == 1
+    assert other_line_with_quantity.max_refundable_amount.value == 100
+
+    order.cache_prices()
+    order.create_payment(order.taxful_total_price)
+    assert order.is_paid()
+    assert order.taxful_total_price_value == 120 # 100 + 4 * 20
+
+    order.create_full_refund()
+    assert order.taxful_total_price_value == 0
+
+
 def _get_refund_data(order, supplier):
     return [
         {
