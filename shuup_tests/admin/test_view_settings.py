@@ -34,9 +34,10 @@ def test_view_default_columns(rf, admin_user):
     column_names = [c.id for c in sorted(listview.columns, key=lambda x: x.id)]
     default_column_names = [c.id for c in sorted(listview.default_columns, key=lambda x: x.id)]
     assert column_names == default_column_names
-    assert configuration.get(None, "view_configuration_shopproduct_name")  # name is configured
+    assert configuration.get(None, "view_configuration_shopproduct_product_name")  # name is configured
     assert listview.settings.view_configured()
-    assert listview.settings.get_settings_key("name") == "view_configuration_shopproduct_name"  # we are attached to product view
+    assert listview.settings.get_settings_key(
+        "product_name") == "view_configuration_shopproduct_product_name"  # we are attached to product view
 
     settings_view = ListSettingsView.as_view()
     view_data = {"model": "ShopProduct", "module": "shuup.core.models", "return_url": "shop_product"}
@@ -45,18 +46,19 @@ def test_view_default_columns(rf, admin_user):
     assert 200 <= response.status_code < 300
 
     # Change configuration by posting form
-    request = rf.post("/?" + urlencode(view_data), {"view_configuration_shopproduct_name": False})
+    request = rf.post("/?" + urlencode(view_data), {"view_configuration_shopproduct_product_name": False})
     response = settings_view(request)
     assert response.status_code == 302
 
-    assert listview.settings.get_config("name") == configuration.get(None, "view_configuration_shopproduct_name")
-    assert not configuration.get(None, "view_configuration_shopproduct_name").get("active")
+    assert listview.settings.get_config(
+        "product_name") == configuration.get(None, "view_configuration_shopproduct_product_name")
+    assert not configuration.get(None, "view_configuration_shopproduct_product_name").get("active")
 
 
 @pytest.mark.django_db
 def test_view_saved_columns(rf):
     shop = get_default_shop()
-    visible_fields = sorted(["shopproduct_id", "name", "select"])
+    visible_fields = sorted(["shopproduct_id", "product_name", "select"])
     configuration.set(None, "view_configuration_shopproduct_saved", True)
     for field in visible_fields:
         configuration.set(None, "view_configuration_shopproduct_%s" % field, {"active": True, "ordering": 999})

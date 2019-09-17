@@ -65,6 +65,7 @@ class FileResponseAction(PicotableFileMassAction):
             query = Q(shop=shop)
         else:
             query = Q(pk__in=ids, shop=shop)
+
         view_settings = ViewSettings(ShopProduct, ProductListView.default_columns, ProductListView)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="products.csv"'
@@ -78,7 +79,7 @@ class FileResponseAction(PicotableFileMassAction):
                 elif dr.startswith("product_"):
                     row.append(getattr(shop_product.product, dr.replace("product_", "")))
                 else:
-                    row.append(getattr(shop_product.product, dr))
+                    row.append(getattr(shop_product, dr))
             writer.writerow(row)
         return response
 

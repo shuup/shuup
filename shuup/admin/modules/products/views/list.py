@@ -45,7 +45,7 @@ class ProductListView(PicotableListView):
             ordering=1,
             sortable=False),
         Column(
-            "name",
+            "product_name",
             _(u"Name"),
             sort_field="product__translations__name",
             display="product__name",
@@ -55,19 +55,19 @@ class ProductListView(PicotableListView):
             ),
             ordering=2),
         Column(
-            "sku",
+            "product_sku",
             _(u"SKU"),
             display="product__sku",
             filter_config=RangeFilter(filter_field="product__sku"),
             ordering=3),
         Column(
-            "barcode",
+            "product_barcode",
             _(u"Barcode"),
             display="product__barcode",
             filter_config=TextFilter(placeholder=_("Filter by barcode...")),
             ordering=4),
         Column(
-            "mode",
+            "product_mode",
             _(u"Mode"),
             display="product__mode",
             filter_config=ChoicesFilter(ProductMode.choices),
