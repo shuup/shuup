@@ -7,10 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import datetime
+import random
+
 from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.utils.encoding import force_text
+from django.utils.timezone import now
 from django.views.generic import FormView
 
 from shuup.testing.factories import (
@@ -27,9 +31,54 @@ class Mockers(object):
     """
 
     def mock_order(self, **kwargs):
-        """ Create a random order """
+        """ Create a random order (randomly completed)"""
         shop = kwargs.pop("shop")
-        return create_random_order(completion_probability=0.8, shop=shop)
+
+        try:
+            return create_random_order(
+                completion_probability=0.6, shop=shop)
+        except Exception as e:
+            pass
+
+    def mock_order_6h(self, **kwargs):
+        """ Create a random order for past 6h (20% chance for completion)"""
+        shop = kwargs.pop("shop")
+
+        try:
+            return create_random_order(
+                completion_probability=0.2, shop=shop)
+        except Exception as e:
+            pass
+
+    def mock_fully_paid_order(self, **kwargs):
+        """ Create a random order (complete and fully paid)"""
+        shop = kwargs.pop("shop")
+
+        try:
+            return create_random_order(
+                completion_probability=1, shop=shop, create_payment_for_order_total=True)
+        except Exception as e:
+            pass
+
+    def mock_fully_paid_order_6h(self, **kwargs):
+        """ Create a random order for past 6h (complete and fully paid)"""
+        shop = kwargs.pop("shop")
+        order_date = now() - datetime.timedelta(minutes=random.uniform(0, 360))
+        try:
+            return create_random_order(
+                completion_probability=1, shop=shop, create_payment_for_order_total=True, order_date=order_date)
+        except Exception as e:
+            pass
+
+    def mock_fully_paid_order_30d(self, **kwargs):
+        """ Create a random order for past 30 days (complete and fully paid)"""
+        shop = kwargs.pop("shop")
+        order_date = now() - datetime.timedelta(hours=random.uniform(0, 720))
+        try:
+            return create_random_order(
+                completion_probability=1, shop=shop, create_payment_for_order_total=True, order_date=order_date)
+        except Exception as e:
+            pass
 
     def mock_person(self, **kwargs):
         """ Create a random person """

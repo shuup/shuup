@@ -795,7 +795,9 @@ def create_random_company(shop=None):
     return contact
 
 
-def create_random_order(customer=None, products=(), completion_probability=0, shop=None, random_products=True):
+def create_random_order(  # noqa
+        customer=None, products=(), completion_probability=0, shop=None, random_products=True,
+        create_payment_for_order_total=False, order_date=None):
     if not customer:
         customer = Contact.objects.all().order_by("?").first()
 
@@ -817,7 +819,7 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
     else:
         source.billing_address = create_random_address()
         source.shipping_address = create_random_address()
-    source.order_date = now() - datetime.timedelta(days=random.uniform(0, 400))
+    source.order_date = order_date or (now() - datetime.timedelta(days=random.uniform(0, 400)))
 
     source.status = get_initial_order_status()
 
@@ -855,7 +857,13 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
         oc = OrderCreator()
         order = oc.create_order(source)
         if random.random() < completion_probability:
-            order.create_shipment_of_all_products()
+            suppliers = set([line.supplier for line in order.lines.filter(supplier__isnull=False, quantity__gt=0)])
+            for supplier in suppliers:
+                order.create_shipment_of_all_products(supplier=supplier)
+
+            if create_payment_for_order_total:
+                order.create_payment(order.taxful_total_price)
+
             # also set complete
             order.status = OrderStatus.objects.get_default_complete()
             order.save(update_fields=("status",))
