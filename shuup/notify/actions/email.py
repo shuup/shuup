@@ -29,7 +29,7 @@ class SendEmail(Action):
     template_use = TemplateUse.MULTILINGUAL
     template_fields = {
         "subject": forms.CharField(required=True, label=_(u"Subject")),
-        "body": forms.CharField(required=True, label=_(u"Email Body"), widget=TextEditorWidget()),
+        "body": forms.CharField(required=True, label=_(u"Email Body"), widget=forms.Textarea()),
         "content_type": forms.ChoiceField(required=True,
                                           label=_(u"Content type"),
                                           choices=EMAIL_CONTENT_TYPE_CHOICES,
