@@ -90,7 +90,11 @@ class ScriptItemEditForm(forms.Form):
             for t_field_name, base_field in ordered_fields:
                 field = copy.deepcopy(base_field)
                 field.label = "%s (%s)" % (field.label, lang_name)
-                field.required = False
+
+                if lang_code == settings.PARLER_DEFAULT_LANGUAGE_CODE:  # Only default language is required
+                    field.required = getattr(base_field, "required", False)
+                else:
+                    field.required = False
                 field_name = "t_%s_%s" % (lang_code, t_field_name)
                 self.fields[field_name] = field
                 self.template_field_info[lang_code][t_field_name] = field_name
@@ -185,6 +189,7 @@ class ScriptItemEditForm(forms.Form):
     def _save_template(self, new_data):
         template_data = {}
         for lang_code, field_info in self.template_field_info.items():
+            t_field_name_to_field_name = dict(field_info.items())
             lang_vals = dict(
                 (t_field_name, (self.cleaned_data.get(field_name) or "").strip())
                 for (t_field_name, field_name)
@@ -193,10 +198,10 @@ class ScriptItemEditForm(forms.Form):
             if not any(lang_vals.values()):  # Not worth saving
                 continue
             can_save = True
-
             if lang_code == settings.PARLER_DEFAULT_LANGUAGE_CODE:
                 for t_field_name, content in lang_vals.items():
-                    if not content:  # Add error only to default languages
+                    actual_field_name = t_field_name_to_field_name[t_field_name]
+                    if self.fields[actual_field_name].required and not content:  # Add error only to default languages
                         self.add_error(field_info[t_field_name], _("This field is missing content"))
                         can_save = False
 

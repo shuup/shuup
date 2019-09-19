@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import sys
 
 import six
+from django.conf import settings
 from jinja2.environment import Environment, Template
 from jinja2.utils import concat, internalcode
 
@@ -37,6 +38,9 @@ class XthemeTemplate(Template):
         ctx = self.new_context(vars)
         try:
             content = concat(self.root_render_func(ctx))
+            if ctx and ctx.name and ctx.name in settings.SHUUP_XTHEME_EXCLUDE_TEMPLATES_FROM_RESOUCE_INJECTION:
+                return content
+
             return self._postprocess(ctx, content)
         except Exception:
             exc_info = sys.exc_info()
