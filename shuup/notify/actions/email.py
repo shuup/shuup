@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import logging
 
 from django import forms
+from django.conf import settings
 from django.core.mail.message import EmailMessage
 from django.utils.translation import ugettext as _
 
@@ -29,11 +30,20 @@ class SendEmail(Action):
     template_use = TemplateUse.MULTILINGUAL
     template_fields = {
         "subject": forms.CharField(required=True, label=_(u"Subject")),
-        "body": forms.CharField(required=True, label=_(u"Email Body"), widget=TextEditorWidget()),
-        "content_type": forms.ChoiceField(required=True,
-                                          label=_(u"Content type"),
-                                          choices=EMAIL_CONTENT_TYPE_CHOICES,
-                                          initial=EMAIL_CONTENT_TYPE_CHOICES[0][0])
+        "body_template": forms.CharField(
+            required=False,
+            label=_("Body Template"),
+            help_text=_(
+                "You can use this template to wrap the HTML body with your custom static template."
+                "Mark the spot for the HTML body with %(html_body)s."
+            ),
+            widget=forms.Textarea()
+        ),
+        "body": forms.CharField(required=True, label=_("Email Body"), widget=TextEditorWidget()),
+        "content_type": forms.ChoiceField(
+            required=True, label=_(u"Content type"),
+            choices=EMAIL_CONTENT_TYPE_CHOICES, initial=EMAIL_CONTENT_TYPE_CHOICES[0][0]
+        )
     }
 
     from_email = Binding(
@@ -50,7 +60,8 @@ class SendEmail(Action):
     reply_to_address = Binding(_("Reply-To"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT)
     language = Binding(_("Language"), type=Language, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
     fallback_language = Binding(
-        _("Fallback language"), type=Language, constant_use=ConstantUse.CONSTANT_ONLY, default="en"
+        _("Fallback language"), type=Language, constant_use=ConstantUse.CONSTANT_ONLY,
+        default=settings.PARLER_DEFAULT_LANGUAGE_CODE
     )
     send_identifier = Binding(
         _("Send Identifier"), type=Text, constant_use=ConstantUse.CONSTANT_ONLY, required=False,
@@ -83,11 +94,20 @@ class SendEmail(Action):
         languages = [language for language in [
             self.get_value(context, "language"),
             self.get_value(context, "fallback_language"),
-        ] if language]
+        ] if language and language in dict(settings.LANGUAGES).keys()]
+
+        if not languages:
+            languages = [settings.PARLER_DEFAULT_LANGUAGE_CODE]
+
         strings = self.get_template_values(context, languages)
 
         subject = strings.get("subject")
         body = strings.get("body")
+        body_template = strings.get("body_template")
+
+        if body_template and "%(html_body)s" in body_template:
+            body = body_template % {"html_body": body}
+
         content_type = strings.get("content_type")
         if not (subject and body):
             context.log(
