@@ -35,7 +35,7 @@ class SendEmail(Action):
             label=_("Body Template"),
             help_text=_(
                 "You can use this template to wrap the HTML body with your custom static template."
-                "Mark the spot for the HTML body with %(html_body)s."
+                "Mark the spot for the HTML body with %html_body%."
             ),
             widget=forms.Textarea()
         ),
@@ -105,8 +105,8 @@ class SendEmail(Action):
         body = strings.get("body")
         body_template = strings.get("body_template")
 
-        if body_template and "%(html_body)s" in body_template:
-            body = body_template % {"html_body": body}
+        if body_template and "%html_body%" in body_template:
+            body = body_template.replace("%html_body%", body)
 
         content_type = strings.get("content_type")
         if not (subject and body):
