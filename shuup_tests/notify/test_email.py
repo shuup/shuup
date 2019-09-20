@@ -52,7 +52,7 @@ def test_email_action_with_template_body():
             "en": {
                 # English
                 "subject": "Hello, {{ name }}!",
-                "body_template": "<html><style>.dog-color { color: red; }</style><body>%(html_body)s</body></html>",
+                "body_template": "<html><style>.dog-color { color: red; }</style><body>%html_body%</body></html>",
                 "body": "Hi, {{ name }}. This is a test.",
                 "content_type": "plain"
             }
