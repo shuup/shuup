@@ -10,9 +10,28 @@ from __future__ import unicode_literals
 from django.utils.encoding import force_text
 from jinja2.sandbox import SandboxedEnvironment
 
+from shuup.utils.importing import cached_load
+
 
 class NoLanguageMatches(Exception):
     pass
+
+
+def get_sandboxed_template_environment(context, **kwargs):
+    """
+    Returns a Jinja2 enviroment for rendering templates in notifications
+
+    :param context: Script context.
+    :type context: shuup.notify.script.Context
+    :param kwargs: extra args
+    :type kwargs: dict
+    :return: The environment used to render
+    :rtype: jinja2.environment.Environment
+    """
+    env_kwargs = dict()
+    if "html_intent" in kwargs:
+        env_kwargs = dict(autoescape=kwargs["html_intent"])
+    return SandboxedEnvironment(**env_kwargs)
 
 
 def render_in_context(context, template_text, html_intent=False):
@@ -30,8 +49,9 @@ def render_in_context(context, template_text, html_intent=False):
     :rtype: str
     :raises: Whatever Jinja2 might happen to raise
     """
-    # TODO: Add some filters/globals into this environment?
-    env = SandboxedEnvironment(autoescape=html_intent)
+
+    environment_provider = cached_load("SHUUP_NOTIFY_TEMPLATE_ENVIRONMENT_PROVIDER")
+    env = environment_provider(context=context, html_intent=html_intent)
     template = env.from_string(template_text)
     return template.render(context.get_variables())
 
