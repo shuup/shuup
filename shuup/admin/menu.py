@@ -27,6 +27,7 @@ ADDONS_MENU_CATEGORY = 7
 SETTINGS_MENU_CATEGORY = 8
 CONTENT_MENU_CATEGORY = 9
 LOG_MENU_CATEGORY = 10
+MESSAGES_MENU_CATEGORY = 11
 
 MAIN_MENU = [
     {
@@ -78,6 +79,11 @@ MAIN_MENU = [
         "identifier": LOG_MENU_CATEGORY,
         "title": _("Logs"),
         "icon": "fa fa-archive",
+    },
+    {
+        "identifier": MESSAGES_MENU_CATEGORY,
+        "title": _("Messages"),
+        "icon": "fa fa-envelope",
     },
 ]
 
