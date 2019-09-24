@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 
 from shuup.admin.modules.orders.toolbar import OrderDetailToolbar
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Order, OrderStatus, OrderStatusRole
@@ -27,6 +28,9 @@ class OrderDetailView(DetailView):
 
     def get_toolbar(self):
         return OrderDetailToolbar(self.object)
+
+    def get_queryset(self):
+        return super(OrderDetailView, self).get_queryset().exclude(deleted=True).filter(shop=get_shop(self.request))
 
     def get_context_data(self, **kwargs):
         context = super(OrderDetailView, self).get_context_data(**kwargs)

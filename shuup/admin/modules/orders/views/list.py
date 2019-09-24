@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
@@ -64,7 +65,7 @@ class OrderListView(PicotableListView):
         return toolbar
 
     def get_queryset(self):
-        return super(OrderListView, self).get_queryset().exclude(deleted=True).filter(shop=self.request.shop)
+        return super(OrderListView, self).get_queryset().exclude(deleted=True).filter(shop=get_shop(self.request))
 
     def format_customer_name(self, instance, *args, **kwargs):
         return instance.get_customer_name() or ""
