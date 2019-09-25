@@ -100,6 +100,9 @@ class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
     base_unit_price_value = MoneyValueField(verbose_name=_('unit price amount (undiscounted)'), default=0)
     discount_amount_value = MoneyValueField(verbose_name=_('total amount of discount'), default=0)
 
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on'))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_('modified on'))
+
     objects = OrderLineManager()
 
     class Meta:
