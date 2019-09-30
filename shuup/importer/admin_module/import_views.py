@@ -52,6 +52,8 @@ class ImportProcessView(TemplateView):
                 mode = "xlsx"
             if filename.endswith("csv"):
                 mode = "csv"
+            if self.importer_cls.custom_file_transformer:
+                return self.importer_cls.transform_file(mode, filename)
             return transform_file(mode, filename)
         except (Exception, RuntimeError) as e:
             messages.error(self.request, e)
