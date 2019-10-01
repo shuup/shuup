@@ -93,12 +93,11 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         taxed_lines = []
         for (idx, line) in enumerate(lines):
             assert line.source == source
-            if not line.parent_line_id:
-                if line.tax_class is None:
-                    lines_without_tax_class.append(line)
-                else:
-                    line.taxes = self._get_line_taxes(context, line)
-                    taxed_lines.append(line)
+            if line.tax_class is None:
+                lines_without_tax_class.append(line)
+            else:
+                line.taxes = self._get_line_taxes(context, line)
+                taxed_lines.append(line)
 
         if lines_without_tax_class:
             tax_class_proportions = get_tax_class_proportions(taxed_lines)

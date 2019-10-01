@@ -5,7 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
+from __future__ import unicode_literals
 from decimal import Decimal
 
 import pytest
@@ -15,18 +15,18 @@ from django.db.models import ProtectedError
 from django.test import override_settings
 
 from shuup import configuration
-from shuup.core.models import (
-    get_person_contact, Order, OrderLineType, Shop
-)
+from shuup.core.defaults.order_statuses import create_default_order_statuses
+from shuup.core.models import get_person_contact, Order, OrderLineType, Shop
 from shuup.core.order_creator import OrderCreator, OrderSource, SourceLine
 from shuup.core.order_creator._creator import OrderProcessor
 from shuup.core.order_creator.constants import ORDER_MIN_TOTAL_CONFIG_KEY
 from shuup.testing.factories import (
-    create_package_product, create_product, create_random_company,
-    create_random_person, create_random_user, get_address, get_default_product,
-    get_default_shop, get_default_supplier, get_initial_order_status,
-    get_payment_method, get_shipping_method, get_shop, get_default_customer_group,
-    create_random_contact_group
+    create_default_tax_rule, create_package_product, create_product,
+    create_random_company, create_random_contact_group, create_random_person,
+    create_random_user, get_address, get_default_customer_group,
+    get_default_product, get_default_shop, get_default_supplier,
+    get_initial_order_status, get_payment_method, get_shipping_method,
+    get_shop, get_tax
 )
 from shuup.utils.models import get_data_dict
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
@@ -480,3 +480,38 @@ def test_order_copy_by_updating_order_source_from_order(admin_user):
     assert new_order
     assert order.billing_address == new_order.billing_address
     assert order.taxful_total_price == new_order.taxful_total_price
+
+
+@pytest.mark.parametrize("include_tax", [True, False])
+@pytest.mark.django_db
+def test_order_creator_taxes(admin_user, include_tax):
+    shop = get_shop(include_tax)
+    source = OrderSource(shop)
+    source.status = get_initial_order_status()
+    create_default_order_statuses()
+    tax = get_tax("sales-tax", "Sales Tax", Decimal(0.2)) # 20%
+    create_default_tax_rule(tax)
+    product = get_default_product()
+
+    line = source.add_line(
+        line_id="product-line",
+        type=OrderLineType.PRODUCT,
+        product=product,
+        supplier=get_default_supplier(),
+        quantity=1,
+        shop=shop,
+        base_unit_price=source.create_price(100),
+    )
+    discount_line = source.add_line(
+        line_id="discount-line",
+        type=OrderLineType.DISCOUNT,
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(0),
+        discount_amount=source.create_price(100),
+        parent_line_id=line.line_id
+    )
+    assert source.taxful_total_price.value == Decimal()
+    creator = OrderCreator()
+    order = creator.create_order(source)
+    assert order.taxful_total_price.value == Decimal()
