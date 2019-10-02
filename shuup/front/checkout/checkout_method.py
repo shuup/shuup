@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 
 from shuup.front.apps.auth.views import LoginView
-from shuup.front.apps.registration.views import RegistrationNoActivationView
+from shuup.front.apps.registration.views import RegistrationNoActivationView, RegistrationView
 from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.utils.form_group import FormGroup
 
@@ -90,8 +90,7 @@ class CheckoutMethodPhase(CheckoutPhaseViewMixin, LoginView):
         return kwargs
 
 
-class RegisterPhase(CheckoutPhaseViewMixin, RegistrationNoActivationView):
-    identifier = "register"
+class RegisterPhaseMixin:
     title = _("Register")
     template_name = "shuup/front/checkout/register.jinja"
 
@@ -108,3 +107,11 @@ class RegisterPhase(CheckoutPhaseViewMixin, RegistrationNoActivationView):
 
     def process(self):
         return
+
+
+class RegisterPhase(RegisterPhaseMixin, CheckoutPhaseViewMixin, RegistrationNoActivationView):
+    identifier = "register"
+
+
+class RegisterWithActivationPhase(RegisterPhaseMixin, CheckoutPhaseViewMixin, RegistrationView):
+    identifier = "register_activate"
