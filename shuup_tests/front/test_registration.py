@@ -23,9 +23,11 @@ from shuup.front.apps.customer_information.views import CompanyEditView
 from shuup.front.apps.registration.forms import (
     CompanyRegistrationForm, PersonRegistrationForm
 )
+from shuup.front.checkout.checkout_method import CHECKOUT_CHOICE_STORAGE_KEY, CheckoutMethodChoices
 from shuup.front.signals import (
     company_registration_save, person_registration_save
 )
+from shuup.front.views.checkout import BaseCheckoutView
 from shuup.notify.models import Script
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
@@ -40,6 +42,58 @@ User = get_user_model()
 username = "u-%d" % uuid.uuid4().time
 email = "%s@shuup.local" % username
 
+
+class CheckoutRegistrationWithActivationSpec(BaseCheckoutView):
+    phase_specs = [
+        "shuup.front.checkout.checkout_method:RegisterWithActivationPhase",
+    ]
+
+class CheckoutRegistrationWithoutActivationSpec(BaseCheckoutView):
+    phase_specs = [
+        "shuup.front.checkout.checkout_method:RegisterPhase",
+    ]
+
+@pytest.fixture
+def email_script():
+    shop = get_default_shop()
+    Script.objects.create(
+        event_identifier="registration_received",
+        name="Send User Activation URL Email",
+        enabled=True,
+        shop=shop,
+        template="registration_received_email",
+        _step_data=[
+            {
+                'conditions': [
+                    {
+                        "template_data": {},
+                        "v1": {"variable": "user_is_active"},
+                        "identifier": "boolean_equal",
+                        "v2": {"constant": False}
+                    }
+                ],
+                'next': 'stop',
+                'cond_op': 'all',
+                'actions': [
+                    {
+                        'fallback_language': {'constant': 'en'},
+                        'template_data': {
+                            'pt-br': {'content_type': 'html', 'subject': '', 'body': ''},
+                            'en': {
+                                'content_type': 'html',
+                                'subject': 'User Activation Link',
+                                'body': '{{activation_url}}'
+                            },
+                        },
+                        'recipient': {'variable': 'customer_email'},
+                        'language': {'variable': 'language'},
+                        'identifier': 'send_email'
+                    },
+                ],
+                'enabled': True
+            }
+        ],
+    )
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requiring_activation", (False, True))
@@ -188,7 +242,7 @@ def test_password_recovery_user_with_no_email(client):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requiring_activation", (False, True))
-def test_user_will_be_redirected_to_user_account_page_after_activation(client, requiring_activation):
+def test_user_will_be_redirected_to_user_account_page_after_activation(client, requiring_activation, email_script):
     """
     1. Register user
     2. Dig out the urls from the email
@@ -201,45 +255,6 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client, r
     if "shuup.front.apps.customer_information" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.customer_information required in installed apps")
 
-    shop = get_default_shop()
-    Script.objects.create(
-        event_identifier="registration_received",
-        name="Send User Activation URL Email",
-        enabled=True,
-        shop=shop,
-        template="registration_received_email",
-        _step_data=[
-            {
-                'conditions': [
-                    {
-                        "template_data": {},
-                        "v1": {"variable": "user_is_active"},
-                        "identifier": "boolean_equal",
-                        "v2": {"constant": False}
-                    }
-                ],
-                'next': 'stop',
-                'cond_op': 'all',
-                'actions': [
-                    {
-                        'fallback_language': {'constant': 'en'},
-                        'template_data': {
-                            'pt-br': {'content_type': 'html', 'subject': '', 'body': ''},
-                            'en': {
-                                'content_type': 'html',
-                                'subject': 'User Activation Link',
-                                'body': '{{activation_url}}'
-                            },
-                        },
-                        'recipient': {'variable': 'customer_email'},
-                        'language': {'variable': 'language'},
-                        'identifier': 'send_email'
-                    },
-                ],
-                'enabled': True
-            }
-        ],
-    )
     with override_settings(
         SHUUP_REGISTRATION_REQUIRES_ACTIVATION=requiring_activation,
     ):
@@ -263,6 +278,36 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client, r
             assert user.is_active
             assert reverse('shuup:index') == response.request['PATH_INFO']
 
+@pytest.mark.django_db
+@pytest.mark.parametrize("requiring_activation", (True, False))
+def test_registration_during_checkout(rf, django_user_model, email_script, requiring_activation):
+    if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
+        pytest.skip("shuup.front.apps.registration required in installed apps")
+
+    request = apply_request_middleware(rf.post("/", data={
+        "username": username,
+        "email": email,
+        "password1": "password",
+        "password2": "password",
+    }), shop=get_default_shop())
+    phase = "register_activate" if requiring_activation else "register"
+    view_func = (
+        CheckoutRegistrationWithActivationSpec.as_view()
+        if requiring_activation
+        else CheckoutRegistrationWithoutActivationSpec.as_view()
+    )
+    request.session["checkout_{}:{}".format(phase, CHECKOUT_CHOICE_STORAGE_KEY)] = (
+        CheckoutMethodChoices.REGISTER.value
+    )
+    response = view_func(request, phase=phase)
+    user = django_user_model.objects.get(username=username)
+    assert response.status_code == 302
+    if requiring_activation:
+        assert not user.is_active
+        assert len(mail.outbox) == 1
+    else:
+        assert user.is_active
+        assert len(mail.outbox) == 0
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("allow_company_registration", (False, True))
