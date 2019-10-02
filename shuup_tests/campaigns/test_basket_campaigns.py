@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 from decimal import Decimal
 
 import pytest
@@ -23,15 +24,19 @@ from shuup.campaigns.models.basket_line_effects import (
 from shuup.campaigns.models.campaigns import (
     BasketCampaign, Coupon, CouponUsage
 )
+from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     Category, OrderLineType, Shop, ShopProduct, ShopStatus
 )
 from shuup.core.order_creator import OrderCreator
 from shuup.front.basket import get_basket
-from shuup.front.basket.commands import handle_add_campaign_code, handle_remove_campaign_code
+from shuup.front.basket.commands import (
+    handle_add_campaign_code, handle_remove_campaign_code
+)
 from shuup.testing.factories import (
-    CategoryFactory, create_product, get_default_product, get_default_shop,
-    get_default_supplier, get_shipping_method
+    CategoryFactory, create_default_tax_rule, create_product,
+    get_default_product, get_default_shop, get_default_supplier,
+    get_default_tax, get_initial_order_status, get_shipping_method, get_tax
 )
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.core.test_order_creator import seed_source
@@ -453,3 +458,33 @@ def test_product_basket_campaigns2():
     campaign.save()
     assert BasketCampaign.get_for_product(shop_product).count() == 0
     assert BasketCampaign.get_for_product(sp).count() == 1
+
+
+@pytest.mark.parametrize("include_tax", [True, False])
+@pytest.mark.django_db
+def test_percentage_campaign_full_discount(rf, include_tax):
+    request, shop, group = initialize_test(rf, include_tax)
+    create_default_order_statuses()
+    tax = get_tax("sales-tax", "Sales Tax", Decimal(0.2)) # 20%
+    create_default_tax_rule(tax)
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=200)
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
+    basket.status = get_initial_order_status()
+
+    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
+    # 100% of discount
+    BasketDiscountPercentage.objects.create(campaign=campaign, discount_percentage=Decimal(1))
+
+    assert len(basket.get_final_lines()) == 3
+    assert basket.product_count == 1
+    assert basket.total_price.value == Decimal()
+
+    order_creator = OrderCreator()
+    order = order_creator.create_order(basket)
+    order.create_payment(order.taxful_total_price)
+    assert order.taxful_total_price.value == Decimal()
