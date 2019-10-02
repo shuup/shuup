@@ -1,13 +1,64 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+Shuup 1.9.10
+------------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-10-02 5:00pm +0300.
+
+Admin
+~~~~~
+
+- Add option to add messages menu entries
+- Orders, fixed `self.request.shop` to `get_shop(self.request)`
+- Fix issues with product list mass actions
+- Fix /sa/ products mass-actions
+- Make the refund lines data be an object instead of an array
+- Add tests around refund view
+- Add suppliers to product list by default
+- Hide arbitrary refund option when disabled
+- Highlight active items on menu
+- Add object saved signal with request for logging
+- Add option to register log menu entries
+
+Core
+~~~~
+
+- Add order line creation and modification dates
+- Allow refunding other than product lines 
+- Add the parent line supplier in the refund supplier line
+- Add SHUUP_ prefix to settings
+- Add SHUUP_ prefix to ALLOW_ARBITRARY_REFUNDS-setting
+- Add option to disable arbitrary refunds
+- Do not try to refund lines without quantity
+- Fix issue with order source update from order
+
+GDPR
+~~~~
+
+- Add 3 years on GDPR consent cookie expiration date
+- Add templatetag function to return all the cookies consented
+- Add default active field to allow default checked cookies
+
+Notify
+~~~~~~
+
+- Create environment provider method set through settings
+- Fix the email template variable name
+- Add option to wrap HTML body
+- Define script log entry
+- Make it possible to change the event runner 
+- Make it possible to use from_email when sending emails
+
+Utils
+~~~~~
+
+- Add force text for value to models get data dict
+
+XTheme
+~~~~~~
+
+- Add option to skip resource injection 
 
 
 Shuup 1.9.9
