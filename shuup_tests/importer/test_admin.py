@@ -4,12 +4,14 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import mock
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import Product
+from shuup.default_importer.importers import ProductImporter
 from shuup.importer.utils.importer import ImportMode
 from shuup.testing.factories import (
     get_default_product_type, get_default_sales_unit, get_default_shop,
@@ -399,3 +401,44 @@ def test_import_error(admin_user):
     response = client.post(process_submit_path, data=data)
     assert response.status_code == 302
     assert "Failed to import the file." == list(response.wsgi_request._messages)[0].message
+
+
+@pytest.mark.django_db
+def test_custom_file_transformer_import(admin_user):
+    shop = get_default_shop()
+    shop.staff_members.add(admin_user)
+    get_default_tax_class()
+    get_default_product_type()
+    get_default_sales_unit()
+
+    client = SmartClient()
+    client.login(username="admin", password="password")
+
+    import_path = reverse("shuup_admin:importer.import")
+    process_path = reverse("shuup_admin:importer.import_process")
+
+    client = SmartClient()
+    client.login(username="admin", password="password")
+    csv_content = str.encode("sku;name\n123;Teste")
+    data = {
+        "importer": "product_importer",
+        "shop": shop.pk,
+        "language": "en",
+        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv"),
+    }
+    response = client.post(import_path, data=data)
+    assert response.status_code == 302
+    with mock.patch.object(ProductImporter, "custom_file_transformer", True):
+        assert ProductImporter.custom_file_transformer is True
+        query_string = urlparse(response["location"]).query
+        process_submit_path = "%s?%s" % (process_path, query_string)
+        query = parse_qs(query_string)
+        data = {
+            "importer": "product_importer",
+            "shop": shop.pk,
+            "language": "en",
+            "n": query.get("n"),
+        }
+        response = client.post(process_submit_path, data=data)
+        assert response.status_code == 302
+        assert "Implement `transform_file`" in list(response.wsgi_request._messages)[0].message

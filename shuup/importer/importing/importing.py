@@ -44,6 +44,7 @@ class DataImporter(object):
     meta_class_getter_name = "get_import_meta"
     meta_base_class = ImportMetaBase
     extra_matches = {}
+    custom_file_transformer = False
 
     unique_fields = {}
     unmatched_fields = set()
@@ -65,6 +66,13 @@ class DataImporter(object):
         self._meta = (meta_class(self, self.model) if meta_class else None)
 
         self.field_defaults = self._meta.get_import_defaults()
+
+    @classmethod
+    def transform_file(cls, mode, filename, data=None):
+        """
+        That method will be called if `cls.custom_file_transformer` is True
+        """
+        raise NotImplementedError("Implement `transform_file` function or set `custom_file_transformer` to False")
 
     def process_data(self):
         mapping = self.create_mapping()
