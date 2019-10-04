@@ -510,14 +510,22 @@ class ProductImageMediaFormSet(ProductMediaFormSet):
         In addition add the first saved image as primary image for the
         product if none is selected as such.
         """
+
         super(ProductImageMediaFormSet, self).save(commit)
 
-        has_primary = any(form.cleaned_data.get("is_primary") for form in (self.forms or []))
-        eligible_forms = [form for form in (self.forms or []) if
-                          (form.cleaned_data.get("file") and not form.cleaned_data.get("DELETE"))]
+        eligible_forms = [
+            form for form in (self.forms or [])
+            if (form.cleaned_data.get("file") and not form.cleaned_data.get("DELETE"))
+        ]
+        has_primary = any(form.cleaned_data.get("is_primary") for form in eligible_forms)
 
-        if eligible_forms and not has_primary and not self.forms[0].product.primary_image:
+        if eligible_forms and not has_primary:
             # make first form be the primary image as well
-            form_instance = self.forms[0]
+            form_instance = eligible_forms[0]
             form_instance.product.primary_image = form_instance.instance
             form_instance.product.save()
+
+        # removed all images, then, clear the primary image
+        if not eligible_forms and not has_primary:
+            self.product.primary_image = None
+            self.product.save()

@@ -48,13 +48,25 @@ $(function() {
 
     function addMediaPanel($section, file) {
         const section = $section.attr("id");
-        const panelCount = $("#" + section + " .panel").length;
+        const maxPanelId = $("#" + section + " .panel")
+            .map((v, el) => $(el).data("idx")).toArray()
+            .filter(value => value !== "__prefix_name__");
+        const panelCount = maxPanelId.length ? Math.max(...maxPanelId) : 0;
         const $source = $("#" + section + "-placeholder-panel");
-        const $html = $($source.html().replace(/__prefix__/g, panelCount - 1).replace(/__prefix_name__/g, panelCount));
+
+        let html = $source.html().replace(/__prefix__/g, panelCount).replace(/__prefix_name__/g, panelCount + 1);
+        if (file) {
+            html = html.replace(/__file_id__/g, file.id);
+        }
+        const $html = $(html);
+
         let targetId = "id_images";
         if (section.indexOf("media") > 0) {
             targetId = "id_media";
         }
+
+        $("#" + targetId + "-TOTAL_FORMS").val($("#" + section + " .panel").length);
+        $("#" + targetId + "-INITIAL_FORMS").val($("#" + section + " .panel").length);
         if (file) {
             let $contents = $("<a class='thumbnail-image' href='" + file.url + "' target='_blank'></a>");
             let $name = "<h4>" + file.name + "</h4>";
@@ -97,7 +109,18 @@ $(function() {
             },
             traditional: true,
             success: function(data) {
-                window.Messages.enqueue({tags: "success", text: data.message});
+                if (data.added) {
+                    data.added.forEach((addedMedia) => {
+                        const filePanel = $(".panel[data-file='" + addedMedia.file + "']");
+                        const idx = parseInt(filePanel.data("idx"), 10) - 1;
+                        $("#id_" + kind + "-" + idx + "-file").prop("value", addedMedia.file);
+                        $("#id_" + kind + "-" + idx + "-id").prop("value", addedMedia.product_media);
+                    });
+                }
+                window.Messages.enqueue({
+                    tags: "success",
+                    text: data.message
+                });
             },
             error: function(data) {
                 alert("ERROR");
