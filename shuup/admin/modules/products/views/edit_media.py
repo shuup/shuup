@@ -160,13 +160,28 @@ class ProductMediaBulkAdderView(View):
             if not File.objects.filter(id=file_id).exists():
                 return JsonResponse({"response": "error", "message": "invalid file id: %s" % file_id}, status=400)
 
+        added = []
+
         for file_id in ids:
             if not ProductMedia.objects.filter(
-                    product_id=shop_product.product_id, file_id=file_id, kind=kind, shops__in=[shop_id]).exists():
+                    product_id=shop_product.product_id,
+                    file_id=file_id,
+                    kind=kind,
+                    shops__in=[shop_id]).exists():
                 image = ProductMedia.objects.create(
                     product_id=shop_product.product_id,
                     file_id=file_id,
                     kind=kind,
                 )
                 image.shops.add(shop_id)
-        return JsonResponse({"response": "success", "message": force_text(_("Files added to product."))})
+                added.append({
+                    "product": image.product_id,
+                    "file": int(file_id),
+                    "kind": kind.value,
+                    "product_media": image.pk
+                })
+        return JsonResponse({
+            "response": "success",
+            "added": added,
+            "message": force_text(_("Files added to product."))
+        })

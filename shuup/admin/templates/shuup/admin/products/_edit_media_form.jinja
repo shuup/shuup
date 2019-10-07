@@ -7,7 +7,16 @@
         {{ h|safe }}
     {% endfor %}
     {%- set is_primary = f.is_primary.value() if is_image_form else None %}
-    <div class="panel{% if is_primary %} panel-selected{% else %} panel-default{% endif %} pt-4" data-prefix="{{ f.prefix }}">
+    <div
+        class="panel{% if is_primary %} panel-selected{% else %} panel-default{% endif %} pt-4"
+        data-prefix="{{ f.prefix }}"
+        data-idx="{{ idx }}"
+        {% if f.instance and f.instance.pk %}
+        data-media="{{ f.instance.pk }}"
+        {% else %}
+        data-file="__file_id__"
+        {% endif %}
+    >
         <div class="panel-heading d-flex align-items-center pb-1">
           <h4 class="panel-title mr-auto">
               {%- if is_image_form -%}
