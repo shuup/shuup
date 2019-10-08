@@ -169,7 +169,7 @@ class Slide(TranslatableShuupModel):
             help_text=_("When displayed in banner box mode, caption text is shown as a tooltip"),
         ),
         external_link=models.CharField(
-            max_length=160, blank=True, null=True, verbose_name=_("external link"), help_text=_(
+            max_length=800, blank=True, null=True, verbose_name=_("external link"), help_text=_(
                 "Set the external site that should be shown when this slide is clicked, if any."
             )),
         image=FilerImageField(
