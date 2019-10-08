@@ -53,6 +53,29 @@ class CheckoutRegistrationWithoutActivationSpec(BaseCheckoutView):
         "shuup.front.checkout.checkout_method:RegisterPhase",
     ]
 
+def _register_user_in_checkout(rf, requiring_activation, modify_request=None):
+    """Helper function that registers a user in a checkout phase."""
+    request = apply_request_middleware(rf.post("/", data={
+        "username": username,
+        "email": email,
+        "password1": "password",
+        "password2": "password",
+    }), shop=get_default_shop())
+    if modify_request:
+        request = modify_request(request)
+    phase = "register_activate" if requiring_activation else "register"
+    view_func = (
+        CheckoutRegistrationWithActivationSpec.as_view()
+        if requiring_activation
+        else CheckoutRegistrationWithoutActivationSpec.as_view()
+    )
+    request.session["checkout_{}:{}".format(phase, CHECKOUT_CHOICE_STORAGE_KEY)] = (
+        CheckoutMethodChoices.REGISTER.value
+    )
+    response = view_func(request, phase=phase)
+    return response
+
+
 @pytest.fixture
 def email_script():
     shop = get_default_shop()
@@ -284,22 +307,8 @@ def test_registration_during_checkout(rf, django_user_model, email_script, requi
     if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.registration required in installed apps")
 
-    request = apply_request_middleware(rf.post("/", data={
-        "username": username,
-        "email": email,
-        "password1": "password",
-        "password2": "password",
-    }), shop=get_default_shop())
-    phase = "register_activate" if requiring_activation else "register"
-    view_func = (
-        CheckoutRegistrationWithActivationSpec.as_view()
-        if requiring_activation
-        else CheckoutRegistrationWithoutActivationSpec.as_view()
-    )
-    request.session["checkout_{}:{}".format(phase, CHECKOUT_CHOICE_STORAGE_KEY)] = (
-        CheckoutMethodChoices.REGISTER.value
-    )
-    response = view_func(request, phase=phase)
+    response = _register_user_in_checkout(rf, requiring_activation)
+
     user = django_user_model.objects.get(username=username)
     assert response.status_code == 302
     if requiring_activation:
