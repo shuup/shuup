@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
@@ -86,6 +87,13 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     translations = TranslatedFields(
         description=models.TextField(blank=True, verbose_name=_("description"))
     )
+    slug = models.SlugField(
+        verbose_name=_('slug'), max_length=255, blank=True, null=True,
+        help_text=_(
+            "Enter a URL Slug for your supplier. This is what your supplier page URL will be. "
+            "A default will be created using the supplier name."
+        )
+    )
     deleted = models.BooleanField(default=False, verbose_name=_("deleted"))
 
     search_fields = ["name"]
@@ -93,6 +101,11 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super(Supplier, self).save(*args, **kwargs)
 
     def get_orderability_errors(self, shop_product, quantity, customer):
         """

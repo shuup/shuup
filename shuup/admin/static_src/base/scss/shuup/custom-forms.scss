@@ -261,11 +261,11 @@ fieldset[disabled] .form-control {
     }
 }
 
-.modal{
+.modal {
     opacity: 1;
 
    // This is modal bg
-   &:before{
+   &:before {
      content: "";
      //display: none;
      background: rgba(0,0,0,.6);
@@ -273,7 +273,8 @@ fieldset[disabled] .form-control {
      top: 0; left: 0; right: 0; bottom: 0;
      z-index: 10;
    }
-   .modal-dialog{
+
+   .modal-dialog {
        z-index: 10;
    }
 }

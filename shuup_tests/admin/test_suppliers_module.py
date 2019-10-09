@@ -10,6 +10,7 @@ import json
 import pytest
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
+from django.utils.text import slugify
 
 from shuup.admin.modules.suppliers.views import (
     SupplierEditView, SupplierListView,
@@ -83,6 +84,7 @@ def test_suppliers_edit(rf, admin_user):
             supplier = Supplier.objects.last()
             assert response.url == reverse("shuup_admin:supplier.edit", kwargs=dict(pk=supplier.pk))
             assert supplier.name == payload["base-name"]
+            assert supplier.slug == slugify(supplier.name)
             assert supplier.description == payload["base-description__en"]
             assert supplier.shops.count() == 1
             assert supplier.enabled
