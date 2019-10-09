@@ -273,6 +273,9 @@ fieldset[disabled] .form-control {
      top: 0; left: 0; right: 0; bottom: 0;
      z-index: 10;
    }
+   .modal-dialog{
+       z-index: 10;
+   }
 }
 
 .template-modal-container {
