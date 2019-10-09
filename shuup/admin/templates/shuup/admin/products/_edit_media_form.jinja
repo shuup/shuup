@@ -12,7 +12,7 @@
         data-prefix="{{ f.prefix }}"
         data-idx="{{ idx }}"
         {% if f.instance and f.instance.pk %}
-        data-media="{{ f.instance.pk }}"
+        data-file="{{ f.instance.pk }}"
         {% else %}
         data-file="__file_id__"
         {% endif %}
