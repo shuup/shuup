@@ -62,20 +62,30 @@
 {% endmacro %}
 
 {% macro template_variable_list() %}
-    <ul class="list-group">
-        {% for variable_identifier, variable_info in form.variables|dictsort %}
-        <li class="list-group-item">
-            <a href="#"
-               onclick="insertTemplateVariableExpression(this.dataset.var);return false"
-               data-var="{{ variable_identifier }}"
-            >
-                {{ variable_info.name }}
-            </a>
-            <br><code>{{ '{{ ' ~ variable_identifier ~ ' }}' }}</code>
-            <br>{{ variable_info.help_text|default("") }}
-        </li>
-        {% endfor %}
-    </ul>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-available-variable-tab" data-toggle="tab" href="#nav-available-variable" role="tab" aria-controls="nav-home" aria-selected="true">{{ _("Variables") }}</a>
+            <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-profile" aria-selected="false">{{ _("Preview") }}</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-available-variable" role="tabpanel" aria-labelledby="nav-available-variable-tab">
+            <ul class="list-group">
+                {% for variable_identifier, variable_info in form.variables|dictsort %}
+                <li class="list-group-item">
+                    <span class="text-info">{{ variable_info.name }}</span>
+                    <br><code>{{ '{{ ' ~ variable_identifier ~ ' }}' }}</code>
+                    <br>{{ variable_info.help_text|default("") }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+            <div class="card">
+                <div id="preview" class="card-body"></div>
+            </div>
+        </div>
+    </div>
 {% endmacro %}
 
 {% block content_wrap %}

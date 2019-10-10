@@ -30,36 +30,10 @@
                             {% for field in form.forms[f] %}
                                 {{ bs3.field(field) }}
                             {% endfor %}
-                            {% if script_template.event.variables %}
-                            <div class="form-group">
-                                <label></label>
-                                <span class="text-info">
-                                    <i class="fa fa-info-circle"></i> <a data-toggle="modal" data-target="#variablesModal" href="#">{{ _("Show available variables") }}</a>
-                                </span>
-                            </div>
-                            {% endif %}
                         </div>
                         {% endif %}
                     {% endfor %}
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal" id="variablesModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <ul class="list-group">
-                {% for variable_identifier, variable_info in script_template.event.variables|dictsort %}
-                <li class="list-group-item">
-                    <span class="text-info">{{ variable_info.name }}</span>
-                    <br><code>{{ '{{ ' ~ variable_identifier ~ ' }}' }}</code>
-                    <br>{{ variable_info.help_text|default("") }}
-                </li>
-                {% endfor %}
-            </ul>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ _("Close") }}</button>
             </div>
         </div>
     </div>
