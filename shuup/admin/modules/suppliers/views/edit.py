@@ -81,8 +81,9 @@ class SupplierEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
     def get_toolbar(self):
         save_form_id = self.get_save_form_id()
         delete_url = None
-        if self.get_object():
-            delete_url = reverse("shuup_admin:supplier.delete", kwargs={"pk": self.get_object().pk})
+        supplier = self.get_object()
+        if supplier and supplier.pk:
+            delete_url = reverse("shuup_admin:supplier.delete", kwargs={"pk": supplier.pk})
         return get_default_edit_toolbar(self, save_form_id, delete_url=delete_url)
 
     def get_object(self, queryset=None):

@@ -97,6 +97,15 @@ def test_suppliers_edit(rf, admin_user):
 
 
 @pytest.mark.django_db
+def test_supplier_create(rf, admin_user):
+    shop = factories.get_default_shop()
+    edit_view = SupplierEditView.as_view()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    response = edit_view(request, **{"pk": None})
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
 def test_suppliers_delete(rf, admin_user):
     delete_view = SupplierDeleteView.as_view()
 
