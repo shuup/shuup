@@ -27,6 +27,23 @@ class MockContactToolbarButton(URLActionButton):
         super(MockContactToolbarButton, self).__init__(**kwargs)
 
 
+class MockShopToolbarButton(URLActionButton):
+    def __init__(self, shop, **kwargs):
+
+        kwargs["icon"] = "fa fa-user"
+        kwargs["text"] = _("Hello") + shop.name
+        kwargs["extra_css_class"] = "btn-info"
+        kwargs["url"] = "/#mocktoolbarbuttonforshop"
+
+        self.shop = shop
+
+        super(MockShopToolbarButton, self).__init__(**kwargs)
+
+    @staticmethod
+    def visible_for_object(shop):
+        return shop.pk
+
+
 class MockContactToolbarActionItem(DropdownItem):
     def __init__(self, object, **kwargs):
         kwargs["icon"] = "fa fa-hand-peace-o"

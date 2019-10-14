@@ -131,6 +131,12 @@ Core
 ``admin_product_toolbar_action_item``
     Additional ``DropdownItem`` subclass for Product edit action buttons.
 
+``admin_shop_edit_toolbar_button``
+    Additional ``BaseActionButton`` subclasses for Shop edit.
+    Subclass init should take current shop as a parameter. Current shop is
+    passed to static method ``visible_for_object`` to check whether to actually
+    show the item.
+
 ``admin_shop_form_part``
     Additional ``FormPart`` classes for Shop editing. See :doc:`example <../howto/new_tab>`.
 
