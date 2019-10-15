@@ -25,6 +25,7 @@ from shuup.admin.utils.views import (
     check_and_raise_if_only_one_allowed, CreateOrUpdateView
 )
 from shuup.admin.utils.wizard import onboarding_complete
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
 from shuup.core.settings_provider import ShuupSettings
 
@@ -100,7 +101,14 @@ class ShopEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     def get_toolbar(self):
         save_form_id = self.get_save_form_id()
         with_split_save = ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS")
-        return get_default_edit_toolbar(self, save_form_id, with_split_save=with_split_save)
+        toolbar = get_default_edit_toolbar(
+            self, save_form_id, with_split_save=with_split_save)
+
+        for button in get_provide_objects("admin_shop_edit_toolbar_button"):
+            if button.visible_for_object(self.object):
+                toolbar.append(button(self.object))
+
+        return toolbar
 
     @atomic
     def form_valid(self, form):

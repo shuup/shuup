@@ -44,6 +44,9 @@ class ShuupTestingAppConfig(AppConfig):
         "admin_contact_edit_toolbar_button": [
             "shuup.testing.modules.mocker.toolbar:MockContactToolbarButton",
         ],
+        "admin_shop_edit_toolbar_button": [
+            "shuup.testing.modules.mocker.toolbar:MockShopToolbarButton",
+        ],
         "admin_product_toolbar_action_item": [
             "shuup.testing.modules.mocker.toolbar:MockProductToolbarActionItem",
         ],
