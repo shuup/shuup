@@ -208,6 +208,9 @@ class ShopProductForm(MultiLanguageModelForm):
         if self.instance.pk:
             initial_suppliers = self.instance.suppliers.all()
             initial_categories = self.instance.categories.all()
+        elif not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
+            supplier = Supplier.objects.first()
+            initial_suppliers = ([supplier] if supplier else [])
 
         self.fields["suppliers"] = Select2ModelMultipleField(
             initial=initial_suppliers,
