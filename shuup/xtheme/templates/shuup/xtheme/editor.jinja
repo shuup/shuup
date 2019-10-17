@@ -86,6 +86,24 @@
                                 }
                             }
                         }
+                    },
+                    onImageUpload: function(image) {
+                        var maxUploadFileSize = 256;
+                        var imageSizeKb = image[0]['size'] / 1000;
+                        if (imageSizeKb > 256){
+                            alert(interpolate(
+                                gettext("For images greater than %s kb, use the media browser instead."),
+                                [maxUploadFileSize]
+                            ));
+                        } else {
+                            var file = image[0];
+                            var reader = new FileReader();
+                            reader.onloadend = function() {
+                                var image = $('<img>').attr('src',  reader.result);
+                                $editor.summernote("insertNode", image[0]);
+                            }
+                            reader.readAsDataURL(file);
+                        }
                     }
                 }
             });
