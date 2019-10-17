@@ -96,11 +96,16 @@ def test_order_creator(rf, admin_user):
         base_unit_price=source.create_price(10),
     )
     source.add_line(
+        accounting_identifier="strawberries",
         type=OrderLineType.OTHER,
         quantity=1,
         base_unit_price=source.create_price(10),
         require_verification=True,
+        extra={"runner": "runner"}
     )
+
+    the_line = [sl for sl in source.get_lines() if sl.accounting_identifier == "strawberries"]
+    assert the_line[0].data["extra"]["runner"] == "runner"
 
     creator = OrderCreator()
     order = creator.create_order(source)
@@ -116,6 +121,7 @@ def test_order_creator(rf, admin_user):
     assert source.payment_method == order.payment_method
     assert source.shipping_method == order.shipping_method
     assert order.pk
+    assert order.lines.filter(accounting_identifier="strawberries").first().extra_data["runner"] == "runner"
 
 
 @pytest.mark.django_db
