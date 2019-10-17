@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 15:43+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -50,6 +50,14 @@ msgid "Address Type"
 msgstr ""
 
 msgid "Address Status"
+msgstr ""
+
+msgid "Company information saved successfully."
+msgstr ""
+
+msgid ""
+"Company information saved successfully. Please follow the instructions sent "
+"to your email address."
 msgstr ""
 
 msgid "Customer Email"
@@ -204,14 +212,6 @@ msgid "Password successfully changed."
 msgstr ""
 
 msgid "Account information saved successfully."
-msgstr ""
-
-msgid "Company information saved successfully."
-msgstr ""
-
-msgid ""
-"Company information saved successfully. Please follow the instructions sent "
-"to your email address."
 msgstr ""
 
 msgid "Address information saved successfully."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-27 19:23+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,6 +53,12 @@ msgstr ""
 msgid "Define if the GDPR is active."
 msgstr ""
 
+msgid "skip consent on login"
+msgstr ""
+
+msgid "Do not require consent on login when GDPR is activated."
+msgstr ""
+
 msgid "privacy policy page"
 msgstr ""
 
@@ -81,6 +87,14 @@ msgstr ""
 msgid "The summary text to be presented about cookie privacy."
 msgstr ""
 
+msgid "login consent text"
+msgstr ""
+
+msgid ""
+"Shown in login page between the form and the button. Optional but should be "
+"considered when the consent on login is disabled."
+msgstr ""
+
 msgid "GDPR settings"
 msgstr ""
 
@@ -88,6 +102,12 @@ msgid "GDPR for {}"
 msgstr ""
 
 msgid "always active"
+msgstr ""
+
+msgid "active by default"
+msgstr ""
+
+msgid "whether this cookie category is active by default"
 msgstr ""
 
 msgid "cookies used"

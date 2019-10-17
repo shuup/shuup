@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-18 22:57+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -249,6 +249,12 @@ msgstr ""
 msgid "Product Cross Sells"
 msgstr ""
 
+msgid "Show variation parents"
+msgstr ""
+
+msgid "Render variation parents instead of the children."
+msgstr ""
+
 msgid "Category"
 msgstr ""
 
@@ -337,6 +343,9 @@ msgid "Content start"
 msgstr ""
 
 msgid "Content end"
+msgstr ""
+
+msgid "(Error while rendering)"
 msgstr ""
 
 msgid "Delete This Cell"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 17:01+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -28,10 +28,27 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
+msgid "Body Template"
+msgstr ""
+
+msgid ""
+"You can use this template to wrap the HTML body with your custom static "
+"template.Mark the spot for the HTML body with %html_body%."
+msgstr ""
+
 msgid "Email Body"
 msgstr ""
 
 msgid "Content type"
+msgstr ""
+
+msgid "From email"
+msgstr ""
+
+msgid ""
+"The from email to be used. It can either be binded to a variable or be a "
+"constant like support@store.com or even \"Store Support\" <support@store."
+"com>."
 msgstr ""
 
 msgid "Recipient"

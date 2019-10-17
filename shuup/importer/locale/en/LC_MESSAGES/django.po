@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 12:09+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,12 +29,6 @@ msgstr ""
 msgid "The language of the data you would like to import."
 msgstr ""
 
-msgid "Shop"
-msgstr ""
-
-msgid "Select a shop you want import into"
-msgstr ""
-
 msgid "Importer"
 msgstr ""
 
@@ -52,10 +46,6 @@ msgid "File missing."
 msgstr ""
 
 msgid "Failed to import the file."
-msgstr ""
-
-#, python-format
-msgid "Failed while preparing the file: %s."
 msgstr ""
 
 msgid "Invalid parameters"
