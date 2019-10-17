@@ -17,11 +17,13 @@ export function activateSelect($select, model, searchMode, extraFilters = null, 
         $select.width("100%");
     }
 
-    if (model === undefined) {
-        return $select.select2(Object.assign({
+    if (!model) {
+        return $select.select2({
             language: "xx",
-        }, attrs));
+            ...attrs
+        });
     }
+
     return $select.select2(Object.assign({
         language: "xx",
         minimumInputLength: window.ShuupAdminConfig.settings.minSearchInputLength,

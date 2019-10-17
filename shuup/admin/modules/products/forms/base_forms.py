@@ -15,13 +15,14 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from filer.models import Image
 
 from shuup.admin.forms.fields import (
     Select2ModelField, Select2ModelMultipleField
 )
+from shuup.admin.forms.quick_select import NoModel
 from shuup.admin.forms.widgets import (
     FileDnDUploaderWidget, QuickAddCategoryMultiSelect, QuickAddCategorySelect,
     QuickAddDisplayUnitSelect, QuickAddManufacturerSelect,
@@ -29,6 +30,7 @@ from shuup.admin.forms.widgets import (
     QuickAddSalesUnitSelect, QuickAddShippingMethodsSelect,
     QuickAddSupplierMultiSelect, QuickAddTaxClassSelect, TextEditorWidget
 )
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.signals import form_post_clean, form_pre_clean
 from shuup.core.models import (
     Attribute, AttributeType, Category, Manufacturer, PaymentMethod, Product,
@@ -202,41 +204,71 @@ class ShopProductForm(MultiLanguageModelForm):
         self.fields["shipping_methods"].queryset = shipping_methods_qs
         self.fields["default_price_value"].required = True
 
-        initial_suppliers = []
         initial_categories = []
+        initial_suppliers = []
 
         if self.instance.pk:
-            initial_suppliers = self.instance.suppliers.all()
             initial_categories = self.instance.categories.all()
+            initial_suppliers = self.instance.suppliers.all()
         elif not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
             supplier = Supplier.objects.first()
             initial_suppliers = ([supplier] if supplier else [])
 
-        self.fields["suppliers"] = Select2ModelMultipleField(
-            initial=initial_suppliers,
-            model=Supplier,
-            widget=QuickAddSupplierMultiSelect(
+        if settings.SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC.get("suppliers"):
+            self.fields["suppliers"] = Select2ModelMultipleField(
                 initial=initial_suppliers,
-                attrs={"data-search-mode": "enabled"}
-            ),
-            required=False
-        )
-        self.fields["primary_category"] = Select2ModelField(
-            initial=(self.instance.primary_category if self.instance.pk else None),
-            model=Category,
-            widget=QuickAddCategorySelect(
-                editable_model="shuup.Category",
+                model=Supplier,
+                widget=QuickAddSupplierMultiSelect(
+                    initial=initial_suppliers,
+                    attrs={"data-search-mode": "enabled"}
+                ),
+                required=False
+            )
+        else:
+            self.fields["suppliers"].widget = QuickAddSupplierMultiSelect(initial=initial_suppliers)
+
+        if settings.SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC.get("categories"):
+            self.fields["primary_category"] = Select2ModelField(
                 initial=(self.instance.primary_category if self.instance.pk else None),
-                attrs={"data-placeholder": ugettext("Select a category")}
-            ),
-            required=False
-        )
-        self.fields["categories"] = Select2ModelMultipleField(
-            initial=initial_categories,
-            model=Category,
-            widget=QuickAddCategoryMultiSelect(initial=initial_categories),
-            required=False
-        )
+                model=Category,
+                widget=QuickAddCategorySelect(
+                    editable_model="shuup.Category",
+                    initial=(self.instance.primary_category if self.instance.pk else None),
+                    attrs={"data-placeholder": ugettext("Select a category")}
+                ),
+                required=False
+            )
+            self.fields["categories"] = Select2ModelMultipleField(
+                initial=initial_categories,
+                model=Category,
+                widget=QuickAddCategoryMultiSelect(
+                    initial=(
+                        [self.instance.primary_category]
+                        if self.instance.pk and self.instance.primary_category else None
+                    ),
+                ),
+                required=False
+            )
+        else:
+            categories_choices = [
+                (cat.pk, cat.name)
+                for cat in Category.objects.all_except_deleted(shop=get_shop(self.request))
+            ]
+            self.fields["primary_category"].widget = QuickAddCategorySelect(
+                initial=(
+                    [self.instance.primary_category]
+                    if self.instance.pk and self.instance.primary_category else None
+                ),
+                editable_model="shuup.Category",
+                attrs={"data-placeholder": ugettext("Select a category")},
+                choices=categories_choices,
+                model=NoModel()
+            )
+            self.fields["categories"].widget = QuickAddCategoryMultiSelect(
+                initial=initial_categories,
+                choices=categories_choices,
+                model=NoModel()
+            )
 
     # TODO: Move this to model
     def clean_minimum_purchase_quantity(self):
