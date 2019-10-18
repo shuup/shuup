@@ -84,7 +84,7 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     contact_address = models.ForeignKey(
         "MutableAddress", verbose_name=_("contact address"), blank=True, null=True, on_delete=models.SET_NULL)
     staff_members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, blank=True, related_name="+", verbose_name=_('staff members'))
+        settings.AUTH_USER_MODEL, blank=True, related_name="shops", verbose_name=_('staff members'))
     labels = models.ManyToManyField("Label", blank=True, related_name="shops", verbose_name=_("labels"))
 
     translations = TranslatedFields(

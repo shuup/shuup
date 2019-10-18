@@ -9,7 +9,9 @@ import pytest
 from filer.models import Folder, Image
 
 from shuup.core.models import Shop, ShopStatus
-from shuup.testing.factories import DEFAULT_IDENTIFIER, DEFAULT_NAME
+from shuup.testing.factories import (
+    create_random_user, get_shop, DEFAULT_IDENTIFIER, DEFAULT_NAME,
+)
 
 
 caching_was_enabled = None
@@ -79,3 +81,15 @@ def test_shop_translations_manager():
 
     found = Shop.objects.translated('en', name="Store").get(pk=shop.pk)
     assert found == shop
+
+
+@pytest.mark.django_db
+def test_shop_staff_members():
+    shop1 = get_shop(True)
+    shop2 = get_shop(True)
+    staff = create_random_user()
+    shop1.staff_members.add(staff)
+    assert staff.shops.count() == 1
+    staff.shops = Shop.objects.all()
+    assert staff in shop2.staff_members.all()
+    assert staff.shops.count() == 2 
