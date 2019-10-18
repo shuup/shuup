@@ -14,10 +14,9 @@ from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 
 from shuup.admin.modules.orders.toolbar import OrderDetailToolbar
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import Order, OrderStatus, OrderStatusRole
+from shuup.core.models import Order, OrderStatus, OrderStatusRole, Shop
 from shuup.utils.excs import Problem
 
 
@@ -30,7 +29,8 @@ class OrderDetailView(DetailView):
         return OrderDetailToolbar(self.object)
 
     def get_queryset(self):
-        return super(OrderDetailView, self).get_queryset().exclude(deleted=True).filter(shop=get_shop(self.request))
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Order.objects.exclude(deleted=True).filter(shop_id__in=shop_ids)
 
     def get_context_data(self, **kwargs):
         context = super(OrderDetailView, self).get_context_data(**kwargs)
@@ -52,6 +52,10 @@ class OrderDetailView(DetailView):
 
 class OrderSetStatusView(DetailView):
     model = Order
+
+    def get_queryset(self):
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Order.objects.exclude(deleted=True).filter(shop_id__in=shop_ids)
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(get_model_url(self.get_object()))

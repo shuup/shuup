@@ -6,11 +6,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth import get_user_model
-from django.http.response import JsonResponse
+from django.http.response import Http404, JsonResponse
 from django.utils.encoding import force_text
 from django.views.generic import View
 
-from shuup.core.models import Order, OrderLogEntry
+from shuup.core.models import Order, OrderLogEntry, Shop
 from shuup.utils.analog import LogEntryKind
 from shuup.utils.i18n import get_locally_formatted_datetime
 
@@ -20,7 +20,11 @@ class NewLogEntryView(View):
     Create a log `note` item associated with a particular order.
     """
     def post(self, request, *args, **kwargs):
-        order = Order.objects.get(pk=kwargs["pk"])
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        order = Order.objects.filter(pk=kwargs["pk"], shop_id__in=shop_ids).first()
+        if not order:
+            raise Http404()
+
         message = request.POST["message"]
         entry = OrderLogEntry.objects.create(
             target=order,

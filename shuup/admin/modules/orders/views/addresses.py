@@ -12,7 +12,7 @@ from django.views.generic import UpdateView
 
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import get_model_url
-from shuup.core.models import Order
+from shuup.core.models import Order, Shop
 from shuup.utils.analog import LogEntryKind
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
@@ -25,6 +25,10 @@ class OrderAddressEditView(UpdateView):
     model = Order
     context_object_name = "order"
     template_name = "shuup/admin/orders/_address_edit.jinja"
+
+    def get_queryset(self):
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Order.objects.exclude(deleted=True).filter(shop_id__in=shop_ids)
 
     def get_form(self, form_class=None):
         order = self.get_object()

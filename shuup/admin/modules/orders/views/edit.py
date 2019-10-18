@@ -18,7 +18,7 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Sum
-from django.http.response import HttpResponse, JsonResponse
+from django.http.response import Http404, HttpResponse, JsonResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import View
@@ -438,7 +438,11 @@ class UpdateAdminCommentView(View):
     Update order's admin comment
     """
     def post(self, request, *args, **kwargs):
-        order = Order.objects.get(pk=kwargs["pk"])
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        order = Order.objects.filter(pk=kwargs["pk"], shop_id__in=shop_ids).first()
+        if not order:
+            raise Http404()
+
         comment = request.POST["comment"]
         order.admin_comment = comment
         order.save()
