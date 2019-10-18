@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2019-10-21 13:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -2438,6 +2438,15 @@ msgid "{value}{symbol}"
 msgstr ""
 
 msgid "No Choice"
+msgstr ""
+
+msgid "inherit"
+msgstr ""
+
+msgid "skip"
+msgstr ""
+
+msgid "delete"
 msgstr ""
 
 msgid "The total should be greater than {} to be ordered."

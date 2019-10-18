@@ -14,6 +14,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from six import iteritems
 
@@ -32,6 +33,17 @@ from shuup.utils.money import Money
 
 from ._source_modifier import get_order_source_modifier_modules
 from .signals import post_compute_source_lines
+
+
+class OrderLineBehavior(Enum):
+    INHERIT = 1  # Inherits the quantity of the parent line if parent exists
+    SKIP = 2  # Skips quantity change upon parent line quantity change
+    DELETE = 3  # Removes the line upon parent line quantity change
+
+    class Labels:
+        INHERIT = _("inherit")
+        SKIP = _("skip")
+        DELETE = _("delete")
 
 
 class TaxesNotCalculated(TypeError):
@@ -538,7 +550,7 @@ class OrderSource(object):
                 yield error
 
     def _get_suppliers(self):
-            return set([l.supplier for l in self.get_lines() if l.supplier])
+        return set([l.supplier for l in self.get_lines() if l.supplier])
 
     def _get_products_and_quantities(self, supplier=None):
         q_counter = Counter()
@@ -631,13 +643,14 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
     quantity = None  # override property from Priceful
     base_unit_price = None  # override property from Priceful
     discount_amount = None  # override property from Priceful
+    on_parent_change_behavior = OrderLineBehavior.INHERIT
 
     _FIELDS = [
         "line_id", "parent_line_id", "type",
         "shop", "product", "supplier", "tax_class",
         "quantity", "base_unit_price", "discount_amount",
         "sku", "text",
-        "require_verification", "accounting_identifier",
+        "require_verification", "accounting_identifier", "on_parent_change_behavior"
     ]
     _FIELDSET = set(_FIELDS)
     _OBJECT_FIELDS = {
@@ -678,7 +691,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
         self.text = kwargs.pop("text", "")
         self.require_verification = kwargs.pop("require_verification", False)
         self.accounting_identifier = kwargs.pop("accounting_identifier", "")
-
+        self.on_parent_change_behavior = kwargs.pop("on_parent_change_behavior", OrderLineBehavior.INHERIT)
         self.line_source = kwargs.pop("line_source", LineSource.CUSTOMER)
 
         self._taxes = None

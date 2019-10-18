@@ -17,8 +17,13 @@ from shuup.core.basket.update_methods import BasketUpdateMethods
 from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import (
     ProductMode, ProductVariationVariable, ProductVariationVariableValue,
-    SalesUnit, ShopProductVisibility
+    SalesUnit, ShopProductVisibility, OrderLineType
 )
+from shuup.core.order_creator import OrderLineBehavior
+from shuup.campaigns.models.basket_conditions import BasketTotalAmountCondition
+from shuup.campaigns.models.campaigns import BasketCampaign
+from shuup.campaigns.models.basket_effects import BasketDiscountAmount
+
 from shuup.front.basket import commands as basket_commands
 from shuup.front.basket import get_basket, get_basket_command_dispatcher
 from shuup.front.basket.command_dispatcher import BasketCommandDispatcher
@@ -448,3 +453,62 @@ def test_parallel_baskets(rf):
 
     assert basket_one.product_count == 1
     assert basket_two.product_count == 3.5
+
+
+@pytest.mark.django_db
+def test_basket_update_with_discount():
+    supplier = get_default_supplier()
+    request = get_request_with_basket()
+    basket = request.basket
+    default_price = 10
+    product = create_product('fractionable', fractional=True, default_price=default_price, shop=basket.shop, supplier=supplier)
+    discount_amount_value = 4
+    basket_rule1 = BasketTotalAmountCondition.objects.create(value="2")
+    campaign = BasketCampaign.objects.create(
+        shop=basket.shop, public_name="test", name="test", active=True)
+    campaign.conditions.add(basket_rule1)
+    campaign.save()
+    BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount_value)
+    #basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1)
+    basket.add_line(
+        line_id="product-line",
+        type=OrderLineType.PRODUCT,
+        product=product,
+        supplier=supplier,
+        quantity=1,
+        shop=basket.shop,
+    )
+    line_id = basket.get_lines()[0].line_id
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "2"})
+    basket.uncache()
+    assert basket.product_count == 2
+    assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
+    basket.clear_all()
+    basket.add_line(
+        line_id="product-line",
+        type=OrderLineType.PRODUCT,
+        product=product,
+        supplier=supplier,
+        quantity=1,
+        shop=basket.shop,
+        on_parent_change_behavior=OrderLineBehavior.SKIP
+    )
+    line_id = basket.get_lines()[0].line_id
+
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "3"})
+    assert basket.product_count == 1
+
+    basket.clear_all()
+    basket.add_line(
+        line_id="product-line",
+        type=OrderLineType.PRODUCT,
+        product=product,
+        supplier=supplier,
+        quantity=1,
+        shop=basket.shop,
+        on_parent_change_behavior=OrderLineBehavior.DELETE
+    )
+    line_id = basket.get_lines()[0].line_id
+
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "4"})
+    assert basket.product_count == 0
