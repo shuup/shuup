@@ -7,11 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.utils.translation import ugettext_lazy as _
+
 from shuup.admin.base import AdminModule
 from shuup.admin.utils.urls import admin_url
 
 
 class PrintoutsAdminModule(AdminModule):
+    name = _("Printouts")
+
     def get_urls(self):
         return [
             admin_url(

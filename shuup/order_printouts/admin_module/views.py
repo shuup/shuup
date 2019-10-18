@@ -12,32 +12,43 @@ from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.shop_provider import get_shop
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Order, OrderLine, OrderLineType, Shipment
+from shuup.utils.excs import Problem
 from shuup.utils.pdf import html_to_pdf, render_html_to_pdf
 
 from .forms import PrintoutsEmailForm
 
 
+def validate_shop_for_order(request, order):
+    if get_shop(request) != order.shop:
+        raise Problem(_("Current shop does not match with order shop. Please change currently active shop."))
+
+
 def get_delivery_pdf(request, shipment_pk):
     shipment = Shipment.objects.get(pk=shipment_pk)
+    validate_shop_for_order(request, shipment.order)
     html = _get_delivery_html(request, shipment.order, shipment)
     return render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
 
 
 def get_confirmation_pdf(request, order_pk):
     order = Order.objects.get(pk=order_pk)
+    validate_shop_for_order(request, order)
     html = _get_confirmation_html(request, order)
     return render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
 
 
 def get_delivery_html(request, shipment_pk):
     shipment = Shipment.objects.get(pk=shipment_pk)
+    validate_shop_for_order(request, shipment.order)
     return HttpResponse(_get_delivery_html(request, shipment.order, shipment, True))
 
 
 def get_confirmation_html(request, order_pk):
     order = Order.objects.get(pk=order_pk)
+    validate_shop_for_order(request, order)
     return HttpResponse(_get_confirmation_html(request, order, True))
 
 
@@ -45,6 +56,7 @@ def send_delivery_email(request, shipment_pk):
     if request.method != "POST":
         raise Exception(_("Not allowed"))
     shipment = Shipment.objects.get(pk=shipment_pk)
+    validate_shop_for_order(request, shipment.order)
     form = PrintoutsEmailForm(request.POST)
     if form.is_valid():
         data = form.cleaned_data
@@ -58,6 +70,7 @@ def send_confirmation_email(request, order_pk):
     if request.method != "POST":
         raise Exception(_("Not allowed"))
     order = Order.objects.get(pk=order_pk)
+    validate_shop_for_order(request, order)
     form = PrintoutsEmailForm(request.POST)
     if form.is_valid():
         data = form.cleaned_data
