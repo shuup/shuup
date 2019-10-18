@@ -27,7 +27,7 @@
                     {% for line in order.lines.order_by("ordering") %}
                     <tr>
                         <td>{{ line.sku }}</td>
-                        <td>{{ line.text }}</td>
+                        <td>{{ line.text }}{% if line.supplier and order_details and order_details.multiple_suppliers_enabled %} - {% trans supplier=line.supplier.name %}Supplied by {{ supplier }}{% endtrans %}{% endif %}</td>
                         <td class="text-right">{{ line.taxless_base_unit_price|money }}</td>
                         <td class="text-right">{{ line.unit.render_quantity(line.quantity) }}</td>
                         <td class="text-right">{% if line.taxless_discount_amount %}{{ line.taxless_discount_amount|money }}{% else %}-{% endif %}</td>

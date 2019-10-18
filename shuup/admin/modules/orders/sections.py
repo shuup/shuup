@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
@@ -36,7 +37,9 @@ class BasicDetailsOrderSection(Section):
             if info.provides_info():
                 provided_information.append((info.title, info.information))
         return {
-            "provided_information": provided_information
+            "provided_information": provided_information,
+            "multiple_shops_enabled": settings.SHUUP_ENABLE_MULTIPLE_SHOPS,
+            "multiple_suppliers_enabled": settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS
         }
 
 
