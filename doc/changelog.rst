@@ -1,13 +1,39 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+Shuup 1.9.11
+------------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-10-18 12:57pm +0300.
+
+Admin
+~~~~~
+
+- Init shop product suppliers with only supplier 
+- Add option to extend shop edit actions
+- Fix bug with supplier create
+- Fix the product images management form part
+
+Carousel
+~~~~~~~~
+
+- Update max-length for slide external URL
+
+Core
+~~~~
+
+- Add slugfield for supplier
+- Allow taxes on order source children lines
+
+Importer
+~~~~~~~~
+
+- Allow to use custom file_transformer
+
+Notify
+~~~~~~
+
+- Fix z-index on the modal-dialog
 
 
 Shuup 1.9.10
