@@ -14,12 +14,11 @@ from django.utils.translation import ugettext as _
 from django.views.generic import DetailView, UpdateView
 from django.views.generic.edit import BaseDeleteView
 
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.excs import NoPaymentToCreateException
-from shuup.core.models import Order, PaymentStatus
+from shuup.core.models import Order, PaymentStatus, Shop
 from shuup.utils.money import Money
 
 
@@ -28,6 +27,10 @@ class OrderCreatePaymentView(UpdateView):
     template_name = "shuup/admin/orders/create_payment.jinja"
     context_object_name = "order"
     form_class = forms.Form  # Augmented manually
+
+    def get_queryset(self):
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Order.objects.exclude(deleted=True).filter(shop_id__in=shop_ids)
 
     def get_context_data(self, **kwargs):
         context = super(OrderCreatePaymentView, self).get_context_data(**kwargs)
@@ -78,12 +81,13 @@ class OrderCreatePaymentView(UpdateView):
         else:
             return HttpResponseRedirect(get_model_url(order))
 
-    def get_queryset(self):
-        return Order.objects.filter(shop=get_shop(self.request))
-
 
 class OrderSetPaidView(DetailView):
     model = Order
+
+    def get_queryset(self):
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Order.objects.exclude(deleted=True).filter(shop_id__in=shop_ids)
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(get_model_url(self.get_object()))
@@ -103,15 +107,13 @@ class OrderSetPaidView(DetailView):
             messages.success(self.request, _("Order marked as paid."))
         return HttpResponseRedirect(get_model_url(self.get_object()))
 
-    def get_queryset(self):
-        return Order.objects.filter(shop=get_shop(self.request))
-
 
 class OrderDeletePaymentView(BaseDeleteView):
     model = Order
 
     def get_queryset(self):
-        return Order.objects.incomplete().filter(shop=get_shop(self.request))
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Order.objects.incomplete().filter(shop_id__in=shop_ids)
 
     def delete(self, request, *args, **kwargs):
         order = self.get_object()

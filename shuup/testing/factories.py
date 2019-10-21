@@ -932,6 +932,8 @@ def get_default_staff_user(shop=None):
     if not shop:
         shop = get_default_shop()
     user = create_random_user()
+    user.is_staff = True
+    user.save()
     user.groups.add(get_default_permission_group())
     shop.staff_members.add(user)
     return user

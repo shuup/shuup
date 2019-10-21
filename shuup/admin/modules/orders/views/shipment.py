@@ -21,7 +21,7 @@ from shuup.admin.utils.urls import get_model_url
 from shuup.core.excs import (
     NoProductsToShipException, NoShippingAddressException
 )
-from shuup.core.models import Order, Product, Shipment
+from shuup.core.models import Order, Product, Shipment, Shop
 from shuup.utils.excs import Problem
 
 
@@ -37,6 +37,10 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
     template_name = "shuup/admin/orders/create_shipment.jinja"
     context_object_name = "order"
     form_class = ShipmentForm  # Augmented manually
+
+    def get_queryset(self):
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Order.objects.exclude(deleted=True).filter(shop_id__in=shop_ids)
 
     def get_context_data(self, **kwargs):
         context = super(OrderCreateShipmentView, self).get_context_data(**kwargs)
@@ -171,6 +175,10 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
 class ShipmentDeleteView(DetailView):
     model = Shipment
     context_object_name = "shipment"
+
+    def get_queryset(self):
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Shipment.objects.filter(order__shop_id__in=shop_ids)
 
     def get_success_url(self):
         return get_model_url(self.get_object().order)
