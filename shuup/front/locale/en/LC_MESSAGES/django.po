@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 15:43+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -409,6 +409,12 @@ msgid ""
 "appear."
 msgstr ""
 
+msgid "Allow multiselect suppliers"
+msgstr ""
+
+msgid "Filter by multiple suppliers at a time."
+msgstr ""
+
 msgid "Logged out since this account is inactive."
 msgstr ""
 
@@ -491,6 +497,15 @@ msgid "Shop Phone"
 msgstr ""
 
 msgid "Language"
+msgstr ""
+
+msgid "Order Status Changed"
+msgstr ""
+
+msgid "Old Status"
+msgstr ""
+
+msgid "New Status"
 msgstr ""
 
 msgid "Shipment Created"
@@ -1102,9 +1117,6 @@ msgid "Combination not available"
 msgstr ""
 
 msgid "Open product page"
-msgstr ""
-
-msgid "Newest products"
 msgstr ""
 
 msgid "Hide prices"

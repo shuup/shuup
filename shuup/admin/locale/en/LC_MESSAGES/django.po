@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-30 20:45+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -89,49 +89,25 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-msgid "Elements"
-msgstr ""
-
-msgid "Design"
-msgstr ""
-
-msgid "Other"
-msgstr ""
-
 msgid "Reports"
 msgstr ""
 
 msgid "Shops"
 msgstr ""
 
-msgid "Settings"
-msgstr ""
-
-msgid "Payment & Shipping"
-msgstr ""
-
-msgid "Currency"
-msgstr ""
-
-msgid "Attributes"
-msgstr ""
-
-msgid "Other settings"
-msgstr ""
-
 msgid "Addons"
 msgstr ""
 
-msgid "Data Transfer"
+msgid "Settings"
 msgstr ""
 
-msgid "Taxes"
+msgid "Logs"
 msgstr ""
 
-msgid "Permissions"
+msgid "Messages"
 msgstr ""
 
-msgid "Other Settings"
+msgid "Attributes"
 msgstr ""
 
 msgid "Identifier"
@@ -565,6 +541,15 @@ msgstr ""
 msgid "%(file)s uploaded to %(folder)s"
 msgstr ""
 
+msgid "Admin menu"
+msgstr ""
+
+msgid "Menu saved"
+msgstr ""
+
+msgid "Menu reset"
+msgstr ""
+
 msgid "Show orders"
 msgstr ""
 
@@ -879,9 +864,6 @@ msgstr ""
 msgid "Identifier already exists"
 msgstr ""
 
-msgid "Order Statuses"
-msgstr ""
-
 msgid "Public Name"
 msgstr ""
 
@@ -909,9 +891,22 @@ msgstr ""
 msgid "Product types"
 msgstr ""
 
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
 msgid ""
 "Select attributes that go with your product type. These are defined in "
 "Products Settings - Attributes."
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+#, python-format
+msgid ""
+"Are you sure you wish to delete %s? Warrning: all related products will "
+"disappear from storefront until new value for product type is set!"
 msgstr ""
 
 msgid "Number of Attributes"
@@ -1011,7 +1006,7 @@ msgid "Activate template"
 msgstr ""
 
 msgid ""
-"Check this to activate a selected template.If no template is selected "
+"Check this to activate a selected template. If no template is selected "
 "variation data will be saved without checking this."
 msgstr ""
 
@@ -1029,10 +1024,6 @@ msgid "Export CSV"
 msgstr ""
 
 msgid "Edit products"
-msgstr ""
-
-#, python-format
-msgid "%s has been marked deleted."
 msgstr ""
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
@@ -1119,6 +1110,12 @@ msgstr ""
 msgid "Filter by category name..."
 msgstr ""
 
+msgid "Filter by supplier name..."
+msgstr ""
+
+msgid "Suppliers"
+msgstr ""
+
 msgid "Additional Categories"
 msgstr ""
 
@@ -1135,6 +1132,9 @@ msgid "Manage Cross-Selling"
 msgstr ""
 
 msgid "Cross-Selling"
+msgstr ""
+
+msgid "Other"
 msgstr ""
 
 #, python-format
@@ -1425,6 +1425,9 @@ msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr ""
 
+msgid "Currency"
+msgstr ""
+
 msgid ""
 "The primary shop currency. This is the currency used when selling your "
 "products."
@@ -1501,9 +1504,6 @@ msgstr ""
 msgid "Default Tax Class"
 msgstr ""
 
-msgid "Suppliers"
-msgstr ""
-
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr ""
 
@@ -1532,6 +1532,9 @@ msgid ""
 msgstr ""
 
 msgid "Opt-in for telemetry"
+msgstr ""
+
+msgid "Taxes"
 msgstr ""
 
 msgid "Customer Tax Groups"
@@ -1569,6 +1572,9 @@ msgid "Password"
 msgstr ""
 
 msgid "The user password."
+msgstr ""
+
+msgid "Permissions"
 msgstr ""
 
 msgid "See the permissions view to change these."
@@ -1800,6 +1806,12 @@ msgstr ""
 msgid "Send password recovery instructions"
 msgstr ""
 
+msgid "Active shop:"
+msgstr ""
+
+msgid "Active vendor:"
+msgstr ""
+
 msgid "Dashboard"
 msgstr ""
 
@@ -1816,6 +1828,12 @@ msgid "Go home"
 msgstr ""
 
 msgid "Hello"
+msgstr ""
+
+msgid "Stop Auto Refresh"
+msgstr ""
+
+msgid "Auto Refresh Every 30s"
 msgstr ""
 
 msgid "Show Tour"
@@ -2896,6 +2914,15 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
+msgid "Customize admin menu"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Drag me"
+msgstr ""
+
 msgid "Comment"
 msgstr ""
 
@@ -2909,9 +2936,6 @@ msgid "There was an error updating the admin comment."
 msgstr ""
 
 msgid "Description"
-msgstr ""
-
-msgid "Delete"
 msgstr ""
 
 msgid "No payments have been created yet."
@@ -3252,6 +3276,12 @@ msgid "Variables"
 msgstr ""
 
 msgid "Template"
+msgstr ""
+
+msgid "New template"
+msgstr ""
+
+msgid " Cancel "
 msgstr ""
 
 msgid "This product is not yet a variation."

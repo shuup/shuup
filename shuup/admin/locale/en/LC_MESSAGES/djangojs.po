@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 15:48+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -510,6 +510,9 @@ msgstr ""
 msgid "Identifer"
 msgstr ""
 
+msgid "New template"
+msgstr ""
+
 msgid "Show identifier fields (for advanced users)"
 msgstr ""
 
@@ -535,6 +538,13 @@ msgid "Drop files here or click to browse."
 msgstr ""
 
 msgid "only images can be uploaded!"
+msgstr ""
+
+msgid "Browse media"
+msgstr ""
+
+#, javascript-format
+msgid "For images greater than %s kb, use the media browser instead."
 msgstr ""
 
 msgid "No results."

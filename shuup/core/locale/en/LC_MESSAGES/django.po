@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-21 18:31+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -45,6 +45,20 @@ msgid "Category"
 msgstr ""
 
 msgid "Categories can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Contact group"
+msgstr ""
+
+msgid "Contact group can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Contact group price display"
+msgstr ""
+
+msgid ""
+"Contact group price display can be listed, fetched, created, updated and "
+"deleted."
 msgstr ""
 
 msgid "Contacts"
@@ -282,6 +296,9 @@ msgid "Do not change this value if you are not sure what you are doing."
 msgstr ""
 
 msgid "Invalid color"
+msgstr ""
+
+msgid "Enter valid JSON"
 msgstr ""
 
 msgid "Error"
@@ -714,9 +731,6 @@ msgstr ""
 msgid "Cannot set shop for default Contact Group."
 msgstr ""
 
-msgid "Contact Group requires a shop."
-msgstr ""
-
 msgid "Can't delete. This object is protected."
 msgstr ""
 
@@ -804,6 +818,9 @@ msgid ""
 msgstr ""
 
 msgid "account manager"
+msgstr ""
+
+msgid "options"
 msgstr ""
 
 msgid "contact"
@@ -2137,9 +2154,6 @@ msgstr ""
 msgid "Your shop status. Disable your shop if it is no longer in use."
 msgstr ""
 
-msgid "options"
-msgstr ""
-
 msgid ""
 "The primary shop currency. This is the currency used when selling your "
 "products."
@@ -2254,6 +2268,11 @@ msgid "approved"
 msgstr ""
 
 msgid "Indicates whether this supplier is currently approved."
+msgstr ""
+
+msgid ""
+"Enter a URL Slug for your supplier. This is what your supplier page URL will "
+"be. A default will be created using the supplier name."
 msgstr ""
 
 msgid "Cannot change business critical fields of Tax that is in use"

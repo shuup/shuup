@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-20 18:06+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,7 +83,7 @@ msgstr ""
 msgid "Discount Code already in use."
 msgstr ""
 
-msgid "Active Campaigns"
+msgid "Active Basket Campaigns"
 msgstr ""
 
 msgid "Catalog Campaign"
@@ -521,10 +521,6 @@ msgid "No campaigns found"
 msgstr ""
 
 msgid "This section shows all the <b>active</b> campaigns this product is in."
-msgstr ""
-
-#, python-format
-msgid "Active campaings for shop: %(shop)s"
 msgstr ""
 
 msgid "Rules"

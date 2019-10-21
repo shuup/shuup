@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 01:41+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,12 +116,6 @@ msgstr ""
 msgid "Select discounts linked to this coupon code."
 msgstr ""
 
-msgid "Shops"
-msgstr ""
-
-msgid "Select shops for this discount. Keep it blank to share with all shops."
-msgstr ""
-
 #, python-format
 msgid "%s has been deleted."
 msgstr ""
@@ -215,6 +209,12 @@ msgstr ""
 msgid ""
 "The name for this discount. Used internally with discount lists for "
 "filtering."
+msgstr ""
+
+msgid "supplier"
+msgstr ""
+
+msgid "Select supplier for this discount."
 msgstr ""
 
 msgid ""
@@ -328,7 +328,7 @@ msgstr ""
 msgid "to hour"
 msgstr ""
 
-msgid "weekdays"
+msgid "weekday"
 msgstr ""
 
 msgid "time range"
@@ -338,6 +338,28 @@ msgid "time ranges"
 msgstr ""
 
 msgid "To hour has to be after from hour"
+msgstr ""
+
+msgid ""
+"Select all discounts to render products from. Only active discounts that "
+"have product or category linked are available."
+msgstr ""
+
+msgid "Discounted Products"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
 msgstr ""
 
 msgid "Availability"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-21 19:51+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -71,6 +71,10 @@ msgstr ""
 msgid "Page"
 msgstr ""
 
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
 msgid "Content in this placeholder is shown for this page only."
 msgstr ""
 
@@ -85,6 +89,9 @@ msgid "Article"
 msgstr ""
 
 msgid "shop"
+msgstr ""
+
+msgid "supplier"
 msgstr ""
 
 msgid "available from"

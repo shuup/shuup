@@ -68,6 +68,24 @@ function activateEditor($editor, attrs = {}) {
                         }
                     }
                 }
+            },
+            onImageUpload: function(image) {
+                const maxUploadFileSize = attrs.maxUploadFileSize || 256;
+                const imageSizeKb = image[0]['size'] / 1000;
+                if (imageSizeKb > maxUploadFileSize){
+                    alert(interpolate(
+                        gettext("For images greater than %s kb, use the media browser instead."),
+                        [maxUploadFileSize]
+                    ));
+                } else {
+                    const file = image[0];
+                    const reader = new FileReader();
+                    reader.onloadend = function() {
+                        const image = $('<img>').attr('src',  reader.result);
+                        $editor.summernote("insertNode", image[0]);
+                    }
+                    reader.readAsDataURL(file);
+                }
             }
         },
         toolbar: toolbar,

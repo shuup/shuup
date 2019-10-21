@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 13:55+0000\n"
+"POT-Creation-Date: 2019-10-17 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,6 +125,12 @@ msgid "Alert Limit Reached"
 msgstr ""
 
 msgid "Product"
+msgstr ""
+
+msgid "Supplier Email"
+msgstr ""
+
+msgid "Shop Email"
 msgstr ""
 
 msgid "Fired in the last 24 hours?"
