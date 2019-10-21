@@ -11,6 +11,7 @@ import six
 from django.core.exceptions import ValidationError
 
 from shuup.core.models import ShopProduct
+from shuup.core.order_creator import OrderLineBehavior
 from shuup.utils.numbers import parse_decimal_string
 
 
@@ -122,10 +123,20 @@ class BasketUpdateMethods(object):
 
         for linked_line in linked_lines:
             orderable_line = orderable_lines.get(linked_line["line_id"])
+            # Use default OrderLineBehaviour
+            if "on_parent_change_behavior" in linked_line:
+                line_behavior = linked_line["on_parent_change_behavior"]
+            else:
+                line_behavior = OrderLineBehavior.INHERIT
             if not orderable_line:
                 # Customer can change quantity in non-orderable lines regardless
                 linked_line["quantity"] = new_quantity
                 changed = True
+            elif line_behavior == OrderLineBehavior.DELETE:
+                linked_line["quantity"] = 0
+                changed = True
+            elif line_behavior == OrderLineBehavior.SKIP:
+                continue
             else:
                 product = orderable_line.product
                 supplier = orderable_line.supplier
