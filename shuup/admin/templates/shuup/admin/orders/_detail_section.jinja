@@ -48,6 +48,9 @@
 <div class="row">
     <div class="col-md-6">
         <div class="list-group">
+            {% if order_details.multiple_shops_enabled %}
+                {{ info_row(_("Order Shop"), order.shop.name) }}
+            {% endif %}
             {{ info_row(_("Order Number"), order.identifier) }}
             {{ info_row(_("Order Date"), order.order_date|datetime) }}
             {{ info_row(_("Reference"), order.reference_number) }}
