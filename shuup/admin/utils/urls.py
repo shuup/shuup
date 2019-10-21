@@ -327,3 +327,20 @@ def get_model_front_url(request, object):
         except (ValueError, NoReverseMatch):
             pass
     return None
+
+
+def get_front_url(context):
+    """
+    Get front URL for admin navigation
+
+    1. Use front URL from view context if passed
+    2. Fallback to index
+
+    """
+    front_url = context.get("front_url")
+    if not front_url:
+        try:
+            front_url = reverse("shuup:index")
+        except NoReverseMatch:
+            front_url = None
+    return front_url

@@ -67,3 +67,8 @@ SHUUP_ADMIN_DATETIME_INPUT_STEP = 15
 #: menu item. Useful in case there is need to always open some
 #: certain menus.
 SHUUP_ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS = []
+
+#: Get front URL for admin panel navigation bar. Override
+#: for example for custom domain logic when admin panel is used
+#: from shared marketplace URL.
+SHUUP_ADMIN_NAVIGATION_GET_FRONT_URL_SPEC = ("shuup.admin.utils.urls.get_front_url")
