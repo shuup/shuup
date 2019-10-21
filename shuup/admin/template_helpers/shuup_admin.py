@@ -28,6 +28,7 @@ from shuup.admin.utils.urls import manipulate_query_string, NoModelUrl
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
 from shuup.core.telemetry import is_telemetry_enabled
+from shuup.utils.importing import cached_load
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
 
@@ -67,13 +68,7 @@ def get_menu_entries(context):
 
 @contextfunction
 def get_front_url(context):
-    front_url = context.get("front_url")
-    if not front_url:
-        try:
-            front_url = reverse("shuup:index")
-        except NoReverseMatch:
-            front_url = None
-    return front_url
+    return cached_load("SHUUP_ADMIN_NAVIGATION_GET_FRONT_URL_SPEC")(context)
 
 
 @contextfunction

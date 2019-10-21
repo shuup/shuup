@@ -21,6 +21,7 @@
 </div>
 
 <div class="site-links d-none d-lg-block mr-3">
+    <a class="nav-btn shop-btn" href="{{ url("shuup_admin:dashboard") }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Go to dashboard{% endtrans %}"><i class="fa fa-dashboard"></i></a>
     <a class="nav-btn shop-btn" href="{{ url("shuup_admin:home") }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Go home{% endtrans %}"><i class="fa fa-home"></i></a>
 
     {% set front_url=shuup_admin.get_front_url() %}
