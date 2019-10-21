@@ -26,14 +26,16 @@ function post(args) {
 }
 
 function activateSelect($select, model, searchMode, extraFilters = null, noExpand = false, attrs = {}) {
-    if (model === undefined) {
-        // for now, just select with models will be converted into select2
-        return;
-    }
-
     if (!noExpand) {
         // make sure to expand the select2 to use all the available space
         $select.width("100%");
+    }
+
+    if (!model) {
+        return $select.select2({
+            language: "xx",
+            ...attrs
+        });
     }
 
     return $select.select2(Object.assign({
@@ -73,7 +75,7 @@ function activateSelects() {
             const model = select.data("model");
             const searchMode = select.data("search-mode");
             const noExpand = select.data("no-expand");
-            activateSelect(select, model, searchMode, noExpand);
+            activateSelect(select, model, searchMode, noExpand, sync);
         }
     });
 }

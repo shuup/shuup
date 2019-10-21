@@ -14,8 +14,15 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
+class NoModel(object):
+    def __nonzero__(self):
+        return False
+
+    __bool__ = __nonzero__
+
+
 class QuickAddRelatedObjectBaseMixin(object):
-    model = None
+    model = NoModel()
     url = None
 
     def __init__(self, attrs=None, choices=(), editable_model=None):
@@ -27,23 +34,31 @@ class QuickAddRelatedObjectBaseMixin(object):
 
 
 class QuickAddRelatedObjectSelectMixin(QuickAddRelatedObjectBaseMixin):
-    def __init__(self, attrs=None, choices=(), editable_model=None, initial=None):
+    def __init__(self, attrs=None, choices=(), editable_model=None, initial=None, model=None):
         """
         :param initial int: primary key of the object that is initially selected
         """
+        if model is not None:
+            self.model = model
+
         if self.model and initial:
             choices = [(initial.pk, force_text(initial))]
+
         super(QuickAddRelatedObjectSelectMixin, self).__init__(attrs, choices, editable_model)
 
 
 class QuickAddRelatedObjectMultipleSelectMixin(QuickAddRelatedObjectBaseMixin):
-    def __init__(self, attrs=None, choices=(), editable_model=None, initial=None):
+    def __init__(self, attrs=None, choices=(), editable_model=None, initial=None, model=None):
         """
         :param initial list[int]: list of primary keys of the objects that
             are initially selected
         """
+        if model is not None:
+            self.model = model
+
         if self.model and initial:
             choices = [(instance.pk, force_text(instance)) for instance in initial]
+
         super(QuickAddRelatedObjectMultipleSelectMixin, self).__init__(attrs, choices, editable_model)
 
 
