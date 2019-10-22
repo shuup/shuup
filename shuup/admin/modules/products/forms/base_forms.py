@@ -241,23 +241,17 @@ class ShopProductForm(MultiLanguageModelForm):
             self.fields["categories"] = Select2ModelMultipleField(
                 initial=initial_categories,
                 model=Category,
-                widget=QuickAddCategoryMultiSelect(
-                    initial=(
-                        [self.instance.primary_category]
-                        if self.instance.pk and self.instance.primary_category else None
-                    ),
-                ),
+                widget=QuickAddCategoryMultiSelect(initial=initial_categories),
                 required=False
             )
         else:
             categories_choices = [
-                (cat.pk, cat.name)
+                (cat.pk, cat.get_hierarchy())
                 for cat in Category.objects.all_except_deleted(shop=get_shop(self.request))
             ]
             self.fields["primary_category"].widget = QuickAddCategorySelect(
                 initial=(
-                    [self.instance.primary_category]
-                    if self.instance.pk and self.instance.primary_category else None
+                    self.instance.primary_category if self.instance.pk and self.instance.primary_category else None
                 ),
                 editable_model="shuup.Category",
                 attrs={"data-placeholder": ugettext("Select a category")},
