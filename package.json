@@ -24,7 +24,7 @@
   },
   "homepage": "https://shuup.com/",
   "devDependencies": {
-    "eslint": "^1.6.0",
+    "eslint": "^6.5.1",
     "jscs": "^2.3.0"
   }
 }
