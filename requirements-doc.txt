@@ -47,7 +47,7 @@ markdown==2.6.11          # via shuup
 markupsafe==1.1.1         # via jinja2
 openapi-codec==1.3.2      # via django-rest-swagger
 openpyxl==2.5.14          # via shuup
-pillow==5.4.1             # via easy-thumbnails
+pillow==6.2.0             # via easy-thumbnails
 pygments==2.3.1           # via sphinx
 pyjwt==1.7.1              # via djangorestframework-jwt
 python-dateutil==2.8.0    # via shuup
