@@ -98,7 +98,7 @@ REQUIRES = [
     'django-registration-redux>=1.5,<1.9',
     'django-reversion>=2,<3',
     'django-timezone-field>=1.2,<3',
-    'djangorestframework>=3.5,<3.6',
+    'djangorestframework>=3.5,<4',
     'djangorestframework-jwt>=1.9,<2',
     'django_rest_swagger>=2.1.0,<2.2',
     'factory-boy==2.7.0',
