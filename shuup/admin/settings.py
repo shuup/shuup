@@ -84,3 +84,7 @@ SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC = {
     "categories": True,
     "suppliers": True
 }
+
+#: Indicates the authentication form class that should be used in login views inside Admin
+#:
+SHUUP_ADMIN_AUTH_FORM_SPEC = ("shuup.admin.forms.EmailAuthenticationForm")

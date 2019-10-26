@@ -16,7 +16,6 @@ from django.contrib.auth import logout as do_logout
 from django.views.decorators.csrf import csrf_exempt
 from django.views.i18n import set_language
 
-from shuup.admin.forms import EmailAuthenticationForm
 from shuup.admin.module_registry import get_module_urls
 from shuup.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shuup.admin.views.dashboard import DashboardView
@@ -29,13 +28,20 @@ from shuup.admin.views.select import MultiselectAjaxView
 from shuup.admin.views.tour import TourView
 from shuup.admin.views.wizard import WizardView
 from shuup.utils.i18n import javascript_catalog_all
+from shuup.utils.importing import cached_load
 
 
 def login(request, **kwargs):
     if not request.user.is_anonymous() and request.method == "POST":  # We're logging in, so log out first
         do_logout(request)
+
     kwargs.setdefault("extra_context", {})["error"] = request.GET.get("error")
-    return auth_views.login(request, authentication_form=EmailAuthenticationForm, **kwargs)
+
+    return auth_views.login(
+        request=request,
+        authentication_form=cached_load("SHUUP_ADMIN_AUTH_FORM_SPEC"),
+        **kwargs
+    )
 
 
 def get_urls():
