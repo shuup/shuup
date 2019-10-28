@@ -21,13 +21,13 @@ from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView
 
 from shuup.core.utils.forms import RecoverPasswordForm
-from shuup.front.apps.auth.forms import EmailAuthenticationForm
 from shuup.utils.excs import Problem
+from shuup.utils.importing import cached_load
 
 
 class LoginView(FormView):
     template_name = 'shuup/user/login.jinja'
-    form_class = EmailAuthenticationForm
+    form_class = cached_load("SHUUP_AUTH_LOGIN_FORM_SPEC")
 
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
