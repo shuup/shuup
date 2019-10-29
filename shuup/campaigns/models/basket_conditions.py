@@ -10,6 +10,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from polymorphic.models import PolymorphicModel
+from shuup.core.models import ProductMode
 
 from shuup.campaigns.utils.campaigns import (
     get_product_ids_and_quantities, get_total_price_of_products
@@ -328,3 +329,40 @@ class HourBasketCondition(BasketCondition):
     @property
     def values(self):
         return [v for v in map(int, self.days.split(","))]
+
+
+class ChildrenProductCondition(BasketCondition):
+    identifier = "is_product_child_condition"
+    name = _("Product Variation Child")
+
+    model = Product
+    product = models.ForeignKey(
+        Product,
+        limit_choices_to={
+            'mode__in': [
+                ProductMode.SIMPLE_VARIATION_PARENT,
+                ProductMode.VARIABLE_VARIATION_PARENT
+            ]
+        },
+        null=True
+    )
+
+    def matches(self, basket, lines):
+        for line in basket.get_lines():
+            if not line.product:
+                continue
+            if line.product.variation_parent == self.product:
+                return True
+        return False
+
+    @property
+    def description(self):
+        return _("Limit the campaign to match only variation children of the selected product.")
+
+    @property
+    def values(self):
+        return self.product
+
+    @values.setter
+    def values(self, value):
+        self.product = value
