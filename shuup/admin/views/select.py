@@ -108,19 +108,23 @@ class MultiselectAjaxView(TemplateView):
 
             qs = qs.filter(query)
 
-        if search_mode and search_mode == "main" and issubclass(cls, Product):
-            qs = qs.filter(mode__in=[
-                ProductMode.SIMPLE_VARIATION_PARENT,
-                ProductMode.VARIABLE_VARIATION_PARENT,
-                ProductMode.NORMAL
-            ])
-
-        if search_mode and search_mode == "sellable_mode_only" and issubclass(cls, Product):
-            qs = qs.exclude(
-                Q(mode__in=[ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT]) |
-                Q(deleted=True) |
-                Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)
-            ).filter(shop_products__purchasable=True)
+        if search_mode and issubclass(cls, Product):
+            if search_mode == "main":
+                qs = qs.filter(mode__in=[
+                    ProductMode.SIMPLE_VARIATION_PARENT,
+                    ProductMode.VARIABLE_VARIATION_PARENT,
+                    ProductMode.NORMAL
+                ])
+            elif search_mode == "parent_product":
+                qs = qs.filter(mode__in=[
+                    ProductMode.SIMPLE_VARIATION_PARENT,
+                    ProductMode.VARIABLE_VARIATION_PARENT])
+            elif search_mode == "sellable_mode_only":
+                qs = qs.exclude(
+                    Q(mode__in=[ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT]) |
+                    Q(deleted=True) |
+                    Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)
+                ).filter(shop_products__purchasable=True)
 
         sales_units = request.GET.get("salesUnits")
         if sales_units and issubclass(cls, Product):

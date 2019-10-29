@@ -12,7 +12,7 @@ from ._basket_conditions import (
     BasketTotalUndiscountedProductAmountConditionForm,
     CategoryProductsBasketConditionForm, ContactBasketConditionForm,
     ContactGroupBasketConditionForm, HourBasketConditionForm,
-    ProductsInBasketConditionForm
+    ProductsInBasketConditionForm, ChildrenProductConditionForm
 )
 from ._basket_effects import (
     BasketDiscountAmountForm, BasketDiscountPercentageForm,
@@ -59,4 +59,5 @@ __all__ = [
     "ProductFilterForm",
     "ProductsInBasketConditionForm",
     "ProductTypeFilterForm",
+    "ChildrenProductConditionForm"
 ]

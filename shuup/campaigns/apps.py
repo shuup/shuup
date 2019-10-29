@@ -39,6 +39,7 @@ class CampaignAppConfig(AppConfig):
             "shuup.campaigns.admin_module.forms:ContactBasketConditionForm",
             "shuup.campaigns.admin_module.forms:CategoryProductsBasketConditionForm",
             "shuup.campaigns.admin_module.forms:HourBasketConditionForm",
+            "shuup.campaigns.admin_module.forms:ChildrenProductConditionForm",
         ],
         "campaign_basket_discount_effect_form": [
             "shuup.campaigns.admin_module.forms:BasketDiscountAmountForm",

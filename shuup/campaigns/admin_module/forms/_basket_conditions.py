@@ -12,8 +12,8 @@ from shuup.campaigns.models.basket_conditions import (
     BasketMaxTotalAmountCondition, BasketMaxTotalProductAmountCondition,
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
     BasketTotalUndiscountedProductAmountCondition,
-    CategoryProductsBasketCondition, ContactBasketCondition,
-    ContactGroupBasketCondition, HourBasketCondition,
+    CategoryProductsBasketCondition, ChildrenProductCondition,
+    ContactBasketCondition, ContactGroupBasketCondition, HourBasketCondition,
     ProductsInBasketCondition
 )
 from shuup.core.models import Category
@@ -63,6 +63,16 @@ class BasketMaxTotalProductAmountConditionForm(BaseRuleModelForm):
 class BasketMaxTotalAmountConditionForm(BaseRuleModelForm):
     class Meta(BaseRuleModelForm.Meta):
         model = BasketMaxTotalAmountCondition
+
+
+class ChildrenProductConditionForm(BaseRuleModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ChildrenProductConditionForm, self).__init__(*args, **kwargs)
+        self.fields["product"].widget = forms.Select(
+            attrs={"data-model": "shuup.product", "data-search-mode": "parent_product"})
+
+    class Meta(BaseRuleModelForm.Meta):
+        model = ChildrenProductCondition
 
 
 class CategoryProductsBasketConditionForm(BaseRuleModelForm):

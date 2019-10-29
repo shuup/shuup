@@ -96,6 +96,20 @@ def test_ajax_select_view_with_products(rf, admin_user):
     product.soft_delete()
     results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
     assert len(results) == 0
+    supplier1 = Supplier.objects.create(name="supplier1", enabled=True)
+    supplier1.shops.add(shop)
+    product = create_product(
+        "test-product", shop, default_price="200", supplier=supplier1, mode=ProductMode.SIMPLE_VARIATION_PARENT)
+    results = _get_search_results(rf, view, "shuup.Product", "  product  ", admin_user, "parent_product")
+    assert len(results) == 1
+
+    shop2 = get_shop(identifier="shop2")
+    supplier2 = Supplier.objects.create(name="supplier2", enabled=False)
+    supplier2.shops.add(shop2)
+    product2 = create_product(
+        "test-product-two", shop2, default_price="200", supplier=supplier2, mode=ProductMode.SIMPLE_VARIATION_PARENT)
+    results = _get_search_results(rf, view, "shuup.Product", "  product  ", admin_user, "parent_product")
+    assert len(results) == 1
 
 
 @pytest.mark.django_db
