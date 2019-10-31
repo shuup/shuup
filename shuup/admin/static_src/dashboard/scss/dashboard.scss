@@ -117,7 +117,7 @@ $block-columns: 12;
     }
 
     .block-inner {
-        padding: 5px;
+        padding: 0px;
         background-color: $white;
         border-radius: 4px;
         box-shadow: $shadow-md;
@@ -149,6 +149,9 @@ $block-columns: 12;
                 padding: 0.5em 1em;
                 font-size: 1.1rem;
                 font-weight: 500;
+                text-transform: uppercase;
+                padding-bottom: 0.2em;
+                background-color: gainsboro;
             }
 
             .icon-wrap {
@@ -245,10 +248,7 @@ $block-columns: 12;
     // Mixin for changing block header background colors
     @mixin block-bg-color($color) {
         .block-header {
-            .text-wrap > span {
-                border-bottom: 4px solid $color;
-                padding-bottom: 2px;
-            }
+            border-bottom: 2.5px solid $color;
         }
     }
 
