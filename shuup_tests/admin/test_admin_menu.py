@@ -12,6 +12,8 @@ import json
 import pytest
 from django.core.urlresolvers import reverse
 from django.test import override_settings
+from jinja2 import Environment
+from jinja2.runtime import Context
 
 from shuup.admin.menu import (
     get_menu_entry_categories, PRODUCTS_MENU_CATEGORY, SETTINGS_MENU_CATEGORY
@@ -19,7 +21,9 @@ from shuup.admin.menu import (
 from shuup.admin.modules.menu.views import (
     AdminMenuArrangeView, AdminMenuResetView
 )
-from shuup.admin.template_helpers.shuup_admin import is_menu_category_active
+from shuup.admin.template_helpers.shuup_admin import (
+    is_menu_category_active, is_menu_item_active
+)
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -142,11 +146,16 @@ def test_is_menu_category_active(rf, admin_user):
     menu_request = apply_request_middleware(rf.get(url), user=admin_user)
     menu_categories = get_menu_entry_categories(menu_request)
 
+    env = Environment()
+    context = Context(environment=env, parent=None, name="FauxContext", blocks={})
+    context.vars.update({"request": menu_request})
+
     product_category = [category for category in menu_categories if category.identifier == PRODUCTS_MENU_CATEGORY][0]
-    assert is_menu_category_active(product_category, menu_request.path)
+    assert is_menu_category_active(context, product_category, menu_request.path)
+    assert is_menu_item_active(context, url, menu_request.path)
 
     shop_category = [category for category in menu_categories if category.identifier == SETTINGS_MENU_CATEGORY][0]
-    assert not is_menu_category_active(shop_category, menu_request.path)
+    assert not is_menu_category_active(context, shop_category, menu_request.path)
 
     with override_settings(SHUUP_ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS=[SETTINGS_MENU_CATEGORY]):
-        assert is_menu_category_active(shop_category, menu_request.path)
+        assert is_menu_category_active(context, shop_category, menu_request.path)
