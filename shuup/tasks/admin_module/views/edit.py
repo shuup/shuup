@@ -21,7 +21,7 @@ from shuup.admin.forms.widgets import QuickAddRelatedObjectSelect
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar, PostActionButton
 from shuup.admin.utils.views import CreateOrUpdateView
-from shuup.core.models import Contact, get_person_contact
+from shuup.core.models import Contact, get_person_contact, PersonContact
 from shuup.tasks.models import Task, TaskComment, TaskStatus, TaskType
 from shuup.utils.analog import LogEntryKind
 from shuup.utils.form_group import FormGroup
@@ -101,8 +101,14 @@ class TaskCommentForm(ModelForm):
 
     def save(self, **kwargs):
         if not self.instance.pk:
+            defaults = {
+                'is_active': self.request.user.is_active,
+                'first_name': getattr(self.request.user, 'first_name', ''),
+                'last_name': getattr(self.request.user, 'last_name', ''),
+                'email': getattr(self.request.user, 'email', ''),
+            }
             self.instance.task = self.task
-            self.instance.author = get_person_contact(self.request.user)
+            self.instance.creator = PersonContact.objects.get_or_create(user=self.request.user, defaults=defaults)[0]
         return super(TaskCommentForm, self).save(**kwargs)
 
 
@@ -198,8 +204,17 @@ class TaskEditView(BaseTaskViewMixin, CreateOrUpdateView):
         context = super(TaskEditView, self).get_context_data(**kwargs)
         comments = []
         task = self.get_object()
+        defaults = {
+            'is_active': self.request.user.is_active,
+            'first_name': getattr(self.request.user, 'first_name', ''),
+            'last_name': getattr(self.request.user, 'last_name', ''),
+            'email': getattr(self.request.user, 'email', ''),
+        }
         if task:
-            comments = task.comments.for_contact(get_person_contact(self.request.user)).order_by("created_on")
+            # We don't use get_person_contact here since it can give anonymized users which breaks things in admin side
+            comments = task.comments.for_contact(
+                PersonContact.objects.get_or_create(user=self.request.user, defaults=defaults)[0]
+            ).order_by("created_on")
         context["comments"] = comments
         return context
 

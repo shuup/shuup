@@ -534,6 +534,9 @@ def get_person_contact(user):
     """
     Get PersonContact of given user.
 
+    Warning: This should never be called from the admin module, as it will
+    save None objects for contacts which can break modules.
+
     If given user is non-zero (evaluates true as bool) and not
     anonymous, return the PersonContact of the user.  If there is no
     PersonContact for the user yet, create it first.  When this creation

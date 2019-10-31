@@ -52,6 +52,8 @@ class TaskListView(PicotableListView):
         return Task.objects.for_shop(get_shop(self.request))
 
     def get_creator_name_display(self, instance, **kwargs):
+        if not instance.creator:
+            return "Creator does not exist"
         if not len(instance.creator.name):
             return "No name set (id: %d)" % instance.creator.id
         return instance.creator.name
