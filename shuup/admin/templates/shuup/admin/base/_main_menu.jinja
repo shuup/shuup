@@ -44,7 +44,8 @@
                 {% if not category.is_hidden %}
                     {% set only_entry = (category.entries|first if (category.entries|length == 1 and not category.url and category.entries[0].name == category.name) else None) %}
                     {% set has_children = not only_entry and category.has_entries %}
-                    {% set is_menu_category_active = shuup_admin.is_menu_category_active(category, request.path) %}
+                    {% set breadcrumbs = (breadcrumbs or shuup_admin.get_breadcrumbs()) %}
+                    {% set is_menu_category_active = shuup_admin.is_menu_category_active(category, request.path, breadcrumbs) %}
                     <li>
                         <a
                                 class="{% if has_children %}item-category {% endif %} d-flex align-items-center mt-3 mb-3{% if is_menu_category_active %} active-item{% endif %}"
@@ -61,7 +62,7 @@
                             {% if not only_entry %}
                                 {% for entry in category %}
                                     {% if not entry.is_hidden %}
-                                        {% set is_active = entry.url == request.path %}
+                                        {% set is_active = shuup_admin.is_menu_item_active(entry.url, request.path, breadcrumbs) %}
                                         <li><a class="item-submenu {{ 'active-menu' if is_active else '' }}" href="{{ entry.url }}">{{ entry.text }}</a></li>
                                     {% endif %}
                                 {% endfor %}
