@@ -17,8 +17,13 @@ from django.utils.lru_cache import lru_cache
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.middleware import ExceptionMiddleware
-from shuup.core.models import Contact, get_company_contact, get_person_contact
+from shuup.core.models import (
+    AnonymousContact, Contact, get_company_contact, get_person_contact
+)
 from shuup.core.shop_provider import get_shop
+from shuup.core.utils.users import (
+    should_force_anonymous_contact, should_force_person_contact
+)
 from shuup.front.basket import get_basket
 from shuup.front.utils.user import is_admin_user
 
@@ -78,17 +83,24 @@ class ShuupFrontMiddleware(object):
         request.shop = get_shop(request)
 
     def _set_person(self, request):
-        request.person = get_person_contact(request.user)
-        if not request.person.is_active:
-            messages.add_message(request, messages.INFO, _("Logged out since this account is inactive."))
-            logout(request)
-            # Usually logout is connected to the `refresh_on_logout`
-            # method via a signal and that already sets request.person
-            # to anonymous, but set it explicitly too, just to be sure
-            request.person = get_person_contact(None)
+        if should_force_anonymous_contact(request.user):
+            request.person = AnonymousContact()
+        else:
+            request.person = get_person_contact(request.user)
+            if not request.person.is_active:
+                messages.add_message(request, messages.INFO, _("Logged out since this account is inactive."))
+                logout(request)
+                # Usually logout is connected to the `refresh_on_logout`
+                # method via a signal and that already sets request.person
+                # to anonymous, but set it explicitly too, just to be sure
+                request.person = get_person_contact(None)
 
     def _set_customer(self, request):
-        company = get_company_contact(request.user)
+        if not request.person or should_force_person_contact(request.user):
+            company = None
+        else:
+            company = get_company_contact(request.user)
+
         request.customer = (company or request.person)
         request.is_company_member = bool(company)
         request.customer_groups = (company or request.person).groups.all()

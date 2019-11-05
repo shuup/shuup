@@ -23,10 +23,7 @@ from shuup.core.fields import (
     InternalIdentifierField, LanguageField, PolymorphicJSONField
 )
 from shuup.core.pricing import PriceDisplayOptions
-from shuup.core.utils.users import (
-    is_user_all_seeing, should_force_anonymous_contact,
-    should_force_person_contact
-)
+from shuup.core.utils.users import is_user_all_seeing
 from shuup.utils.analog import define_log_model
 
 from ._base import PolymorphicShuupModel, TranslatableShuupModel
@@ -550,9 +547,6 @@ def get_person_contact(user):
     if not user or user.is_anonymous():
         return AnonymousContact()
 
-    if should_force_anonymous_contact(user):
-        return AnonymousContact()
-
     defaults = {
         'is_active': user.is_active,
         'first_name': getattr(user, 'first_name', ''),
@@ -575,9 +569,6 @@ def get_company_contact(user):
       CompanyContact (or none) of which user's PersonContact is a member
     :rtype: CompanyContact|None
     """
-    if should_force_person_contact(user):
-        return None
-
     contact = get_person_contact(user)
     if not contact:
         return None
