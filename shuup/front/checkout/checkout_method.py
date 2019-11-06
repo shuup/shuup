@@ -114,4 +114,4 @@ class RegisterPhase(RegisterPhaseMixin, CheckoutPhaseViewMixin, RegistrationNoAc
 
 
 class RegisterWithActivationPhase(RegisterPhaseMixin, CheckoutPhaseViewMixin, RegistrationView):
-    identifier = "register_activate"
+    identifier = "register"

@@ -10,6 +10,7 @@ import uuid
 
 import pytest
 from django.conf import settings
+from django.conf.urls import url, include
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.urlresolvers import reverse
@@ -23,13 +24,13 @@ from shuup.front.apps.customer_information.views import CompanyEditView
 from shuup.front.apps.registration.forms import (
     CompanyRegistrationForm, PersonRegistrationForm
 )
-from shuup.front.checkout.checkout_method import CHECKOUT_CHOICE_STORAGE_KEY, CheckoutMethodChoices
 from shuup.front.signals import (
     company_registration_save, person_registration_save
 )
+from shuup.front.urls import urlpatterns as front_urlpatterns
 from shuup.front.views.checkout import BaseCheckoutView
 from shuup.notify.models import Script
-from shuup.testing.factories import get_default_shop
+from shuup.testing.factories import get_default_shop, get_default_supplier, create_product
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import cached_load
 from shuup_tests.front.utils import (
@@ -42,37 +43,42 @@ User = get_user_model()
 username = "u-%d" % uuid.uuid4().time
 email = "%s@shuup.local" % username
 
-
-class CheckoutRegistrationWithActivationSpec(BaseCheckoutView):
-    phase_specs = [
-        "shuup.front.checkout.checkout_method:RegisterWithActivationPhase",
-    ]
-
-class CheckoutRegistrationWithoutActivationSpec(BaseCheckoutView):
-    phase_specs = [
-        "shuup.front.checkout.checkout_method:RegisterPhase",
-    ]
-
-def _register_user_in_checkout(rf, requiring_activation, modify_request=None):
+def _register_user_in_checkout(client, checkout_view):
     """Helper function that registers a user in a checkout phase."""
-    request = apply_request_middleware(rf.post("/", data={
-        "username": username,
-        "email": email,
-        "password1": "password",
-        "password2": "password",
-    }), shop=get_default_shop())
-    if modify_request:
-        request = modify_request(request)
-    phase = "register_activate" if requiring_activation else "register"
-    view_func = (
-        CheckoutRegistrationWithActivationSpec.as_view()
-        if requiring_activation
-        else CheckoutRegistrationWithoutActivationSpec.as_view()
-    )
-    request.session["checkout_{}:{}".format(phase, CHECKOUT_CHOICE_STORAGE_KEY)] = (
-        CheckoutMethodChoices.REGISTER.value
-    )
-    response = view_func(request, phase=phase)
+    class TempUrls:
+        front_patterns = [
+            url(r'^checkout/$', checkout_view, name='checkout'),
+            url(r'^checkout/(?P<phase>.+)/$', checkout_view, name='checkout'),
+        ] + front_urlpatterns
+        urlpatterns = [
+            url(r'^', include(front_patterns, namespace="shuup", app_name="shuup"))
+        ]
+
+    with override_settings(ROOT_URLCONF=TempUrls):
+        # Populate basket
+        supplier = get_default_supplier()
+        shop = get_default_shop()
+        product = create_product("test-sku", shop, supplier, 50)
+        client.post(reverse("shuup:basket"), data={
+            "command": "add",
+            "product_id": product.pk,
+            "quantity": 1,
+        })
+
+        # Begin checkout, select registering
+        response = client.get(reverse("shuup:checkout"))
+        response = client.post(response.url, data={
+            "checkout_method_choice-register": 1,
+        }, follow=True)
+
+        # Register
+        register_url = response.redirect_chain[-1][0]
+        response = client.post(register_url, data={
+            "username": username,
+            "email": email,
+            "password1": "password",
+            "password2": "password",
+        })
     return response
 
 
@@ -302,13 +308,23 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client, r
             assert reverse('shuup:index') == response.request['PATH_INFO']
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("requiring_activation", (True, False))
-def test_registration_during_checkout(rf, django_user_model, email_script, requiring_activation):
+@pytest.mark.parametrize("requiring_activation", (False, True))
+def test_registration_during_checkout(client, django_user_model, email_script, requiring_activation):
     if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.registration required in installed apps")
 
-    response = _register_user_in_checkout(rf, requiring_activation)
+    class CheckoutSpec(BaseCheckoutView):
+        phase_specs = [
+            "shuup.front.checkout.checkout_method:CheckoutMethodPhase",
+            "shuup.front.checkout.checkout_method:" + (
+                "RegisterWithActivationPhase"
+                if requiring_activation
+                else "RegisterPhase"
+            ),
+            "shuup.front.checkout.addresses:AddressesPhase",
+        ]
 
+    response = _register_user_in_checkout(client, CheckoutSpec.as_view())
     user = django_user_model.objects.get(username=username)
     assert response.status_code == 302
     if requiring_activation:
