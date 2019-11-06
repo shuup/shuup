@@ -29,7 +29,6 @@ def test_force_contact_views(rf):
     # Re-process middlewares so we check the force contact
     request = apply_request_middleware(rf.get("/"), user=user)
     assert request.customer.is_anonymous
-    assert get_person_contact(user).is_anonymous
     assert_all_good_with_random_user()
 
     # Force contact to person contact
@@ -37,7 +36,6 @@ def test_force_contact_views(rf):
 
     request = apply_request_middleware(rf.get("/"), user=user)
     assert request.customer == person_contact
-    assert get_person_contact(user) == person_contact
     assert_all_good_with_random_user()
 
     # Force contact to company contact. This also ensures
@@ -59,7 +57,6 @@ def test_force_contact_views(rf):
     request = apply_request_middleware(rf.get("/"), user=user)
     assert request.customer == person_contact
     assert get_person_contact(user) == person_contact
-    assert get_company_contact(user) is None
     assert_all_good_with_random_user()
 
 
