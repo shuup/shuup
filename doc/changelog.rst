@@ -1,13 +1,37 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+Shuup 1.9.12
+------------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-11-07 2:40pm +0200.
+
+Admin
+~~~~~
+
+- Include breadcrumbs to is active menu check
+- Modernize dashboard blocks
+- Temp disable home view progress balls as broken
+- Fix the initial categories for product edit view 
+- Add settings to make select2 fields to load data asynchronously
+- Add signal that is triggered when form is valid in views
+- Make front url for nav customizable per project
+- Show dashboard link at navigation
+- Add shop and supplier info to order detail
+- Fix issues with order querysets
+
+Core
+~~~~
+
+- Move force anons and person contacts to front
+- Add orderline behaviour attribute 
+- Add related name for shop staff members
+
+General
+~~~~~~~
+
+- Move admin and front login forms to settings spec 
+- Add shop validation for order printouts
 
 
 Shuup 1.9.11
