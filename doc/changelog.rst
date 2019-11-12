@@ -1,13 +1,25 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+Shuup 1.9.13
+------------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2019-11-12 11:15am +0200.
+
+Core
+~~~~
+
+- Add default to order line modified on migration
+
+General
+~~~~~~~
+
+- Adjust django-filer version for Django 1.8 and 1.9
+
+Tasks
+~~~~~
+
+- Fix issue with broken div in dashboard item
 
 
 Shuup 1.9.12
