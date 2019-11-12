@@ -27,7 +27,6 @@ from shuup.admin.views.search import SearchView
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.admin.views.tour import TourView
 from shuup.admin.views.wizard import WizardView
-from shuup.front.apps.auth.views import LoginView
 from shuup.utils.i18n import javascript_catalog_all
 from shuup.utils.importing import cached_load
 

@@ -8,9 +8,9 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.db.transaction import atomic
-from django.core.urlresolvers import reverse
 
 from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef

@@ -37,7 +37,7 @@ class Mockers(object):
         try:
             return create_random_order(
                 completion_probability=0.6, shop=shop)
-        except Exception as e:
+        except Exception:
             pass
 
     def mock_order_6h(self, **kwargs):
@@ -47,7 +47,7 @@ class Mockers(object):
         try:
             return create_random_order(
                 completion_probability=0.2, shop=shop)
-        except Exception as e:
+        except Exception:
             pass
 
     def mock_fully_paid_order(self, **kwargs):
@@ -57,7 +57,7 @@ class Mockers(object):
         try:
             return create_random_order(
                 completion_probability=1, shop=shop, create_payment_for_order_total=True)
-        except Exception as e:
+        except Exception:
             pass
 
     def mock_fully_paid_order_6h(self, **kwargs):
@@ -67,7 +67,7 @@ class Mockers(object):
         try:
             return create_random_order(
                 completion_probability=1, shop=shop, create_payment_for_order_total=True, order_date=order_date)
-        except Exception as e:
+        except Exception:
             pass
 
     def mock_fully_paid_order_30d(self, **kwargs):
@@ -77,7 +77,7 @@ class Mockers(object):
         try:
             return create_random_order(
                 completion_probability=1, shop=shop, create_payment_for_order_total=True, order_date=order_date)
-        except Exception as e:
+        except Exception:
             pass
 
     def mock_person(self, **kwargs):
