@@ -54,7 +54,9 @@ class CampaignQueryset(models.QuerySet):
 class Campaign(MoneyPropped, TranslatableModel):
     admin_url_suffix = None
 
-    shop = models.ForeignKey(on_delete=models.CASCADE, to=Shop, verbose_name=_("shop"), help_text=_("The shop where the campaign is active."))
+    shop = models.ForeignKey(
+        on_delete=models.CASCADE, to=Shop, verbose_name=_("shop"),
+        help_text=_("The shop where the campaign is active."))
     name = models.CharField(max_length=120, verbose_name=_("name"), help_text=_("The name for this campaign."))
 
     # translations in subclass
@@ -359,12 +361,9 @@ class Coupon(models.Model):
                     "If the limit is zero (0) coupon cannot be used."))
 
     active = models.BooleanField(default=False, verbose_name=_("is active"))
-    shop = models.ForeignKey(on_delete=models.CASCADE, to=
-        "shuup.Shop",
-        verbose_name=_("shop"),
-        related_name="campaign_coupons",
-        null=True,
-        help_text=_("The shop where the coupon is active.")
+    shop = models.ForeignKey(
+        on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="campaign_coupons",
+        null=True, help_text=_("The shop where the coupon is active.")
     )
     supplier = models.ForeignKey(
         "shuup.Supplier",

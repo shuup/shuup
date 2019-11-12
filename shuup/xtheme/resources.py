@@ -108,7 +108,7 @@ class JinjaMarkupResource(object):
             engine = engines[engine_name]
             try:
                 return engine.env.from_string(template).render(self.context)
-            except:
+            except Exception:
                 LOGGER.exception("Failed to render Jinja string in Snippet plugin")
                 return force_text(_("(Error while rendering)"))
 

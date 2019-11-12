@@ -8,8 +8,8 @@
 
 from __future__ import unicode_literals
 
-from django.urls import reverse_lazy
 from django.db.transaction import atomic
+from django.urls import reverse_lazy
 
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.toolbar import get_default_edit_toolbar

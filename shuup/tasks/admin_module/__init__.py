@@ -32,12 +32,12 @@ class TaskAdminModule(AdminModule):
             name_template="task.%s"
         ) + [
             admin_url(
-                "^tasks/(?P<pk>\d+)/delete/$",
+                r"^tasks/(?P<pk>\d+)/delete/$",
                 "shuup.tasks.admin_module.views.TaskDeleteView",
                 name="task.delete"
             ),
             admin_url(
-                "^tasks/(?P<pk>\d+)/set_status/$",
+                r"^tasks/(?P<pk>\d+)/set_status/$",
                 "shuup.tasks.admin_module.views.TaskSetStatusView",
                 name="task.set_status"
             ),

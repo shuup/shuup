@@ -8,9 +8,9 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.urls import NoReverseMatch, reverse
 from django.db import models
 from django.db.models import Q
+from django.urls import NoReverseMatch, reverse
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField

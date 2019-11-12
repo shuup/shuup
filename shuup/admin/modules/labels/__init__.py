@@ -22,7 +22,7 @@ class LabelsModule(AdminModule):
     def get_urls(self):
         from shuup.admin.urls import admin_url
         delete = admin_url(
-            "^labels/(?P<pk>\d+)/delete/$",
+            r"^labels/(?P<pk>\d+)/delete/$",
             "shuup.admin.modules.labels.views.LabelDeleteView",
             name="label.delete"
         )

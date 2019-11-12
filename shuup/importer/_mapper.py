@@ -58,7 +58,7 @@ class RelatedMapper(object):
             if field:
                 try:
                     arg = field.get_prep_value(arg)
-                except:
+                except Exception:
                     continue
                 if self.is_translated and name in self.translated_field_names:
                     name = "translations__%s" % name
@@ -66,7 +66,7 @@ class RelatedMapper(object):
         try:
             int(arg)
             qs.append(Q(pk=arg))
-        except:
+        except Exception:
             pass
 
         if not qs:

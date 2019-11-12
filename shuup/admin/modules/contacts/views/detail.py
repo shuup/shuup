@@ -11,8 +11,8 @@ import warnings
 
 from django.conf import settings
 from django.contrib import messages
-from django.urls import reverse
 from django.http.response import HttpResponseRedirect
+from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView

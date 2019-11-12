@@ -25,7 +25,7 @@ class ServiceProviderModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^service_provider/(?P<pk>\d+)/delete/$",
+                r"^service_provider/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.service_providers.views.ServiceProviderDeleteView",
                 name="service_provider.delete"
             )

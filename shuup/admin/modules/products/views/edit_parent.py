@@ -6,8 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.views.generic import UpdateView
 
 from shuup.admin.base import MenuEntry

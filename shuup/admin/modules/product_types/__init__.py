@@ -24,7 +24,7 @@ class ProductTypeModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^product-types/(?P<pk>\d+)/delete/$",
+                r"^product-types/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.product_types.views.ProductTypeDeleteView",
                 name="product_type.delete"
             )

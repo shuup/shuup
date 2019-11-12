@@ -10,8 +10,8 @@ from __future__ import unicode_literals
 from django import forms
 from django.conf import settings
 from django.contrib import messages
-from django.urls import reverse
 from django.http.response import HttpResponseRedirect
+from django.urls import reverse
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView

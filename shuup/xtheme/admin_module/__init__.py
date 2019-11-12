@@ -7,8 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.urls import reverse
 from django.template import engines
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django_jinja.backend import Jinja2
 
@@ -35,17 +35,17 @@ class XthemeAdminModule(AdminModule):
     def get_urls(self):  # doccov: ignore
         return [
             admin_url(
-                "^xtheme/guide/(?P<theme_identifier>.+?)/",
+                r"^xtheme/guide/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeGuideTemplateView",
                 name="xtheme.guide"
             ),
             admin_url(
-                "^xtheme/configure/(?P<theme_identifier>.+?)/",
+                r"^xtheme/configure/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeConfigDetailView",
                 name="xtheme.config_detail"
             ),
             admin_url(
-                "^xtheme/theme",
+                r"^xtheme/theme",
                 "shuup.xtheme.admin_module.views.ThemeConfigView",
                 name="xtheme.config"
             )
@@ -102,12 +102,12 @@ class XthemeSnippetsAdminModule(AdminModule):
 
     def get_urls(self):
         return get_edit_and_list_urls(
-            url_prefix="^xtheme/snippet",
+            url_prefix=r"^xtheme/snippet",
             view_template="shuup.xtheme.admin_module.views.Snippet%sView",
             name_template="xtheme_snippet.%s"
         ) + [
             admin_url(
-                "^xtheme/snippet/(?P<pk>\d+)/delete/$",
+                r"^xtheme/snippet/(?P<pk>\d+)/delete/$",
                 "shuup.xtheme.admin_module.views.SnippetDeleteView",
                 name="xtheme_snippet.delete"
             )

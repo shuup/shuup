@@ -119,8 +119,8 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
 
 
 class SalesUnitTranslation(_ShortNameToSymbol, TranslatedFieldsModel):
-    master = models.ForeignKey(on_delete=models.CASCADE, to=
-        SalesUnit, related_name='translations', null=True, editable=False)
+    master = models.ForeignKey(
+        on_delete=models.CASCADE, to=SalesUnit, related_name='translations', null=True, editable=False)
     name = models.CharField(
         max_length=128, verbose_name=_('name'), help_text=_(
             "The sales unit name to use for products (For example, "
@@ -147,10 +147,9 @@ def validate_positive_not_zero(value):
 
 
 class DisplayUnit(TranslatableShuupModel):
-    internal_unit = models.ForeignKey(on_delete=models.CASCADE, to=
-        SalesUnit, related_name='display_units',
-        verbose_name=_("internal unit"),
-        help_text=_("The sales unit that this display unit is linked to."))
+    internal_unit = models.ForeignKey(
+        on_delete=models.CASCADE, to=SalesUnit, related_name='display_units',
+        verbose_name=_("internal unit"), help_text=_("The sales unit that this display unit is linked to."))
     ratio = QuantityField(
         default=1, validators=[validate_positive_not_zero],
         verbose_name=_("ratio"),

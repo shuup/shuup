@@ -21,8 +21,8 @@ from django.template.defaultfilters import yesno
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timesince import timesince
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
@@ -308,7 +308,7 @@ class AppliedAttribute(TranslatableModel):
             self.translated_string_value = new_value
         try:
             self.numeric_value = int(self.string_value, 10)
-        except:
+        except Exception:
             self.numeric_value = None
         self.datetime_value = None
         return
@@ -373,7 +373,7 @@ class AppliedAttribute(TranslatableModel):
                 return timesince(a, b)
             if self.attribute.type in (AttributeType.DATETIME, AttributeType.DATE):
                 return format_datetime(self.value)
-        except:  # If formatting fails, fall back to string formatting.
+        except Exception:  # If formatting fails, fall back to string formatting.
             pass
         return six.text_type(self.value)
 

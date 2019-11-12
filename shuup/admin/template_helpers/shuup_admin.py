@@ -13,10 +13,10 @@ This module is installed as the `shuup_admin` template function namespace.
 import itertools
 
 from django.conf import settings
-from django.urls import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 from django.utils.lru_cache import lru_cache
 from django.utils.text import force_text
+from django.urls import NoReverseMatch, reverse
 from jinja2.utils import contextfunction
 
 from shuup import configuration

@@ -10,10 +10,8 @@ from __future__ import unicode_literals
 import json
 
 import six
-from django.urls import (
-    NoReverseMatch, resolve, Resolver404, reverse
-)
 from django.middleware.csrf import get_token
+from django.urls import NoReverseMatch, resolve, Resolver404, reverse
 from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
 from django.utils.safestring import mark_safe

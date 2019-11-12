@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 
-
 # This file is part of Shuup.
 #
 # Copyright (c) 2012-2019, Shoop Commerce Ltd. All rights reserved.

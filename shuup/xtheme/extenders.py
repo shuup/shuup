@@ -4,8 +4,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.urls import reverse
 from django.template.loader import get_template
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from enumfields import Enum
 
@@ -27,7 +27,7 @@ class FrontMenuExtender(object):
         try:
             template_name = path_template % (theme.template_dir, self.menu_item_template)
             return get_template(template_name)
-        except:
+        except Exception:
             template_name = path_template % ("xtheme", "menu_extension.jinja")  # super safe fallback
             return get_template(template_name)
 
@@ -37,7 +37,7 @@ class FrontMenuExtender(object):
         for item in self.items:
             try:
                 item["url"] = reverse(item["url"])
-            except:
+            except Exception:
                 pass  # pass if the url is something like "#"
 
             rendered_template = template.render(item, request=request)

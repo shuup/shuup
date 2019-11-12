@@ -11,10 +11,10 @@ import os
 from datetime import datetime
 
 from django.contrib import messages
-from django.urls import reverse
 from django.db.transaction import atomic
 from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView, View
 
@@ -44,7 +44,7 @@ class ImportProcessView(TemplateView):
             filename = get_import_file_path(self.request.GET.get("n"))
             if not os.path.isfile(filename):
                 raise ValueError(_("%s is not a file") % self.request.GET.get("n"))
-        except:
+        except Exception:
             raise Problem(_("File missing."))
         try:
             mode = "xls"

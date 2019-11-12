@@ -27,7 +27,7 @@ class CarouselModule(AdminModule):
             name_template="carousel.%s"
         ) + [
             admin_url(
-                "^carousel/(?P<pk>\d+)/delete/$",
+                r"^carousel/(?P<pk>\d+)/delete/$",
                 "shuup.front.apps.carousel.admin_module.views.CarouselDeleteView",
                 name="carousel.delete"
             ),

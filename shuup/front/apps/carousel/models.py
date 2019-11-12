@@ -6,9 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from django.urls import reverse
 from django.db import models
 from django.db.models import Q
+from django.urls import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -258,7 +258,7 @@ class Slide(TranslatableShuupModel):
             return get_thumbnailer(image)
         except ValueError:
             return get_thumbnailer(image.filer_image_file)
-        except:
+        except Exception:
             return None
 
     def get_thumbnail(self, **kwargs):

@@ -9,9 +9,9 @@ import json
 
 from django.conf import settings
 from django.contrib import messages
-from django.urls import reverse, reverse_lazy
 from django.db.transaction import atomic
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View

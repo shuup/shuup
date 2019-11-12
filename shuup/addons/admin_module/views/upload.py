@@ -14,8 +14,8 @@ import traceback
 import zipfile
 
 from django import forms
-from django.urls import reverse
 from django.http.response import HttpResponseRedirect
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 

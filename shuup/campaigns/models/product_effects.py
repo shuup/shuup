@@ -17,7 +17,8 @@ class ProductDiscountEffect(PolymorphicShuupModel):
     model = None
     admin_form_class = None
 
-    campaign = models.ForeignKey(on_delete=models.CASCADE, to="CatalogCampaign", related_name='effects', verbose_name=_("campaign"))
+    campaign = models.ForeignKey(
+        on_delete=models.CASCADE, to="CatalogCampaign", related_name='effects', verbose_name=_("campaign"))
 
     def apply_for_product(self, context, product, price_info):
         """

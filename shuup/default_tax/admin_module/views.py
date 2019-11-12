@@ -7,8 +7,9 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 from django.utils.text import format_lazy
+from django.utils.translation import ugettext_lazy as _
+
 from shuup.admin.utils.picotable import Column
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.default_tax.models import TaxRule

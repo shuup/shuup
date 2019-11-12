@@ -50,7 +50,7 @@ class ViewSettings(object):
                 # backwards compatibility
                 int(config)
                 old_mode = True
-            except:
+            except Exception:
                 old_mode = False
 
             column.ordering = config.get("ordering", 9999) if not old_mode else 9999

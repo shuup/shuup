@@ -8,8 +8,8 @@
 from django import forms
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.front.providers import (
     FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider

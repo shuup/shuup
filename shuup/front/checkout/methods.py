@@ -84,7 +84,7 @@ class MethodsForm(forms.Form):
         self.limit_method_fields()
 
     def limit_method_fields(self):
-        basket = self.basket  # type: shuup.front.basket.objects.BaseBasket
+        basket = self.basket  # noqa (F821) type: shuup.front.basket.objects.BaseBasket
         for field_name, methods in (
             ("shipping_method", basket.get_available_shipping_methods()),
             ("payment_method", basket.get_available_payment_methods()),

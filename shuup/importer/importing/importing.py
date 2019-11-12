@@ -190,7 +190,7 @@ class DataImporter(object):
         try:
             value = int(value)
             return cls.objects.get(pk=value)
-        except:
+        except Exception:
             name_fields = ["name", "title"]
             query = Q()
 
@@ -448,7 +448,7 @@ class DataImporter(object):
 
             try:
                 return self.model.objects.get(and_query)
-            except:  # Found multiple or zero -- not okay
+            except Exception:  # Found multiple or zero -- not okay
                 pass
 
             return self.model.objects.filter(or_query).first()

@@ -5,8 +5,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.urls import reverse_lazy
 from django.db.models import ManyToManyField
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm

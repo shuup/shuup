@@ -8,8 +8,8 @@
 from __future__ import unicode_literals
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
 from django.http.response import JsonResponse
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 
@@ -33,32 +33,32 @@ class NotifyAdminModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "notify/script-item-editor/",
+                r"notify/script-item-editor/",
                 "shuup.notify.admin_module.views.script_item_editor",
                 name="notify.script-item-editor"
             ),
             admin_url(
-                "notify/script/content/(?P<pk>\d+)/",
+                r"notify/script/content/(?P<pk>\d+)/",
                 "shuup.notify.admin_module.views.EditScriptContentView",
                 name="notify.script.edit-content"
             ),
             admin_url(
-                "notify/mark-read/(?P<pk>\d+)/$",
+                r"notify/mark-read/(?P<pk>\d+)/$",
                 self.mark_notification_read_view,
                 name="notify.mark-read"
             ),
             admin_url(
-                "notify/script-template/",
+                r"notify/script-template/",
                 "shuup.notify.admin_module.views.ScriptTemplateView",
                 name="notify.script-template"
             ),
             admin_url(
-                "notify/script-template-config/(?P<id>.+)/",
+                r"notify/script-template-config/(?P<id>.+)/",
                 "shuup.notify.admin_module.views.ScriptTemplateConfigView",
                 name="notify.script-template-config"
             ),
             admin_url(
-                "notify/script-template-edit/(?P<pk>.+)/",
+                r"notify/script-template-edit/(?P<pk>.+)/",
                 "shuup.notify.admin_module.views.ScriptTemplateEditView",
                 name="notify.script-template-edit"
             ),

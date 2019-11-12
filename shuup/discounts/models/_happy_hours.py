@@ -30,7 +30,8 @@ class HappyHour(models.Model):
 
 @python_2_unicode_compatible
 class TimeRange(models.Model):
-    happy_hour = models.ForeignKey(on_delete=models.CASCADE, to="discounts.HappyHour", related_name="time_ranges", verbose_name=_("happy hour"))
+    happy_hour = models.ForeignKey(
+        on_delete=models.CASCADE, to="discounts.HappyHour", related_name="time_ranges", verbose_name=_("happy hour"))
     parent = models.ForeignKey(
         "self", blank=True, null=True, related_name="children", on_delete=models.CASCADE, verbose_name=_("parent"))
     from_hour = models.TimeField(verbose_name=_("from hour"), db_index=True)

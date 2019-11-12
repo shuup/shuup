@@ -23,43 +23,43 @@ class UserModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^users/(?P<pk>\d+)/change-password/$",
+                r"^users/(?P<pk>\d+)/change-password/$",
                 "shuup.admin.modules.users.views.UserChangePasswordView",
                 name="user.change-password"
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/reset-password/$",
+                r"^users/(?P<pk>\d+)/reset-password/$",
                 "shuup.admin.modules.users.views.UserResetPasswordView",
                 name="user.reset-password"
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/change-permissions/$",
+                r"^users/(?P<pk>\d+)/change-permissions/$",
                 "shuup.admin.modules.users.views.UserChangePermissionsView",
                 name="user.change-permissions"
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/$",
+                r"^users/(?P<pk>\d+)/$",
                 "shuup.admin.modules.users.views.UserDetailView",
                 name="user.detail"
             ),
             admin_url(
-                "^users/new/$",
+                r"^users/new/$",
                 "shuup.admin.modules.users.views.UserDetailView",
                 kwargs={"pk": None},
                 name="user.new"
             ),
             admin_url(
-                "^users/$",
+                r"^users/$",
                 "shuup.admin.modules.users.views.UserListView",
                 name="user.list"
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/login/$",
+                r"^users/(?P<pk>\d+)/login/$",
                 "shuup.admin.modules.users.views.LoginAsUserView",
                 name="user.login-as"
             ),
             admin_url(
-                "^contacts/list-settings/",
+                r"^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="user.list_settings"
             )

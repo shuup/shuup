@@ -28,12 +28,12 @@ class ShopModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^shops/(?P<pk>\d+)/enable/$",
+                r"^shops/(?P<pk>\d+)/enable/$",
                 "shuup.admin.modules.shops.views.ShopEnablerView",
                 name="shop.enable"
             ),
             admin_url(
-                "^shops/(?P<pk>\d+)/select/$",
+                r"^shops/(?P<pk>\d+)/select/$",
                 "shuup.admin.modules.shops.views.ShopSelectView",
                 name="shop.select"
             ),

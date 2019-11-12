@@ -98,7 +98,7 @@ class AddressBookEditView(DashboardViewMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         try:
             self.instance = SavedAddress.objects.get(pk=kwargs.get("pk", 0), owner=self.request.customer)
-        except:
+        except Exception:
             self.instance = None
         return super(AddressBookEditView, self).dispatch(request, *args, **kwargs)
 

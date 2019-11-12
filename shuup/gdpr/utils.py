@@ -12,8 +12,8 @@ from django.conf import settings
 from django.template import loader
 from django.utils.encoding import force_text
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language
+from django.utils.translation import ugettext_lazy as _
 from reversion import create_revision
 
 from shuup.simple_cms.models import Page

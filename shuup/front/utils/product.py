@@ -14,9 +14,8 @@ from django.utils.translation import get_language
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
-    AttributeVisibility, ProductMode, ProductVariationResult,
-    ProductVariationVariable, ProductVariationVariableValue, ShopProduct,
-    Product
+    AttributeVisibility, Product, ProductMode, ProductVariationResult,
+    ProductVariationVariable, ProductVariationVariableValue, ShopProduct
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils.views import cache_product_things

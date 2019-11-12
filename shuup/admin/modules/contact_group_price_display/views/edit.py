@@ -9,8 +9,9 @@ from __future__ import unicode_literals
 
 from django.urls import reverse_lazy
 
-from shuup.admin.modules.contact_group_price_display.views.forms import \
+from shuup.admin.modules.contact_group_price_display.views.forms import (
     ContactGroupPriceDisplayForm
+)
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import ContactGroupPriceDisplay
 

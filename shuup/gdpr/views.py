@@ -11,11 +11,11 @@ import json
 import re
 
 from django.contrib import messages
-from django.urls import reverse
 from django.db.transaction import atomic
 from django.http import (
     HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 )
+from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView, View

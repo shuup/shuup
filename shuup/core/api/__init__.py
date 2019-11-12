@@ -9,11 +9,11 @@ from shuup.core.api.address import MutableAddressViewSet
 from shuup.core.api.attribute import AttributeViewSet
 from shuup.core.api.basket import BasketViewSet
 from shuup.core.api.category import CategoryViewSet
-from shuup.core.api.contacts import ContactViewSet, PersonContactViewSet
 from shuup.core.api.contact_group import ContactGroupViewSet
 from shuup.core.api.contact_group_price_display import (
     ContactGroupPriceDisplayViewSet
 )
+from shuup.core.api.contacts import ContactViewSet, PersonContactViewSet
 from shuup.core.api.front_orders import FrontOrderViewSet
 from shuup.core.api.front_passwords import (
     PasswordResetViewSet, SetPasswordViewSet

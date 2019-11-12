@@ -13,9 +13,9 @@ from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import REDIRECT_FIELD_NAME
-from django.urls import reverse_lazy
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView

@@ -30,7 +30,6 @@ from .views.order import OrderCompleteView
 from .views.payment import ProcessPaymentView
 from .views.product import ProductDetailView
 
-
 # TODO: Check _not_here_yet URLs in this file
 
 
@@ -103,7 +102,8 @@ urlpatterns = [
 def _get_extension_urlpatterns(provide_category):
     return chain(*get_provide_objects(provide_category))
 
-app_name="shuup"
+
+app_name = "shuup"
 urlpatterns = list(chain(*(
     _get_extension_urlpatterns("front_urls_pre"),
     urlpatterns,

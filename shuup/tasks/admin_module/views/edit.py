@@ -8,11 +8,11 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.urls import reverse_lazy
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.forms.models import ModelForm
 from django.http.response import HttpResponseNotAllowed, HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DeleteView
 from django.views.generic.detail import BaseDetailView

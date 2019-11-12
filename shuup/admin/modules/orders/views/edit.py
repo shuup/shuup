@@ -15,10 +15,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.core import serializers
 from django.core.exceptions import ValidationError
-from django.urls import reverse
 from django.db import transaction
 from django.db.models import Sum
 from django.http.response import Http404, HttpResponse, JsonResponse
+from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import View

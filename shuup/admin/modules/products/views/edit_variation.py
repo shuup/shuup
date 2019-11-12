@@ -8,9 +8,9 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.urls import reverse
 from django.forms.formsets import formset_factory
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef

@@ -6,9 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import unicodecsv as csv
-from django.urls import reverse
 from django.db.models import Q
 from django.http import HttpResponse
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from six import string_types
 

@@ -78,7 +78,7 @@ def get_logout_url(context, *args, **kwargs):
     if "impersonator_user_id" in request.session:
         logout_url = get_url("shuup:stop-impersonating", *args, **kwargs)
         if logout_url:
-                return logout_url
+            return logout_url
 
     logout_url = get_url("shuup:logout", *args, **kwargs)
     return (logout_url if logout_url else "/logout")

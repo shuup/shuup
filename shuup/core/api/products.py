@@ -59,7 +59,7 @@ class ShopProductSerializer(TranslatableModelSerializer):
         supplier = shop_product.get_supplier(customer, quantity)
         try:
             return shop_product.is_orderable(supplier=supplier, customer=customer, quantity=quantity)
-        except:
+        except Exception:
             return False
 
 
@@ -181,7 +181,7 @@ class ProductSerializer(TranslatableModelSerializer):
                 self._handle_shop_product(product, shop_product_data)
 
     def _handle_attribute_value(self, product, data):
-        attr = data["attribute"]  # type: shuup.core.models.Attribute
+        attr = data["attribute"]  # noqa (F821) type: shuup.core.models.Attribute
         if attr.is_stringy and attr.is_translated:
             translations = data.get('translations')
             if not self.partial or translations is None:

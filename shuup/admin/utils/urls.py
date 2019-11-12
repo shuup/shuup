@@ -16,8 +16,9 @@ from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
 from django.http.response import HttpResponseForbidden
-from django.urls import (NoReverseMatch, URLPattern, get_callable, re_path,
-                         reverse)
+from django.urls import (
+    get_callable, NoReverseMatch, re_path, reverse, URLPattern
+)
 from django.utils.encoding import force_str, force_text
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _

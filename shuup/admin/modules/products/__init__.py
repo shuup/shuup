@@ -11,9 +11,9 @@ from collections import Counter
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
 from django.db.models import Q
 from django.db.models.signals import m2m_changed, post_save
+from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
@@ -38,36 +38,36 @@ class ProductModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^products/(?P<pk>\d+)/delete/$",
+                r"^products/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.products.views.ProductDeleteView",
                 name="shop_product.delete"
             ),
             admin_url(
-                "^products/(?P<pk>\d+)/media/$",
+                r"^products/(?P<pk>\d+)/media/$",
                 "shuup.admin.modules.products.views.ProductMediaEditView",
                 name="shop_product.edit_media"
             ),
             admin_url(
-                "^products/(?P<pk>\d+)/media/add/$",
+                r"^products/(?P<pk>\d+)/media/add/$",
                 "shuup.admin.modules.products.views.ProductMediaBulkAdderView",
                 name="shop_product.add_media"
             ),
             admin_url(
-                "^products/(?P<pk>\d+)/crosssell/$",
+                r"^products/(?P<pk>\d+)/crosssell/$",
                 "shuup.admin.modules.products.views.ProductCrossSellEditView",
                 name="shop_product.edit_cross_sell"
             ),
             admin_url(
-                "^products/(?P<pk>\d+)/variation/$",
+                r"^products/(?P<pk>\d+)/variation/$",
                 "shuup.admin.modules.products.views.ProductVariationView",
                 name="shop_product.edit_variation"
             ),
             admin_url(
-                "^products/(?P<pk>\d+)/package/$", "shuup.admin.modules.products.views.ProductPackageView",
+                r"^products/(?P<pk>\d+)/package/$", "shuup.admin.modules.products.views.ProductPackageView",
                 name="shop_product.edit_package"
             ),
             admin_url(
-                "^products/mass-edit/$",
+                r"^products/mass-edit/$",
                 "shuup.admin.modules.products.views.ProductMassEditView",
                 name="shop_product.mass_edit"
             ),

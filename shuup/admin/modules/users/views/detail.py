@@ -15,10 +15,10 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, load_backend, login
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
-from django.urls import NoReverseMatch, reverse
 from django.db.transaction import atomic
 from django.forms.models import modelform_factory
 from django.http.response import HttpResponseRedirect
+from django.urls import NoReverseMatch, reverse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.detail import DetailView
@@ -32,7 +32,6 @@ from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
 from shuup.utils.excs import Problem
 from shuup.utils.text import flatten
-
 
 NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _("""
     Welcome %(first_name)s!

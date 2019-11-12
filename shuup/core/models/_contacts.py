@@ -90,7 +90,8 @@ class ContactGroupQuerySet(TranslatableQuerySet):
 
 class ContactGroup(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
-    shop = models.ForeignKey(on_delete=models.CASCADE, to="Shop", related_name="contact_groups", verbose_name=_("shop"), null=True)
+    shop = models.ForeignKey(
+        on_delete=models.CASCADE, to="Shop", related_name="contact_groups", verbose_name=_("shop"), null=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
 
     translations = TranslatedFields(
