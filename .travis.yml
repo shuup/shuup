@@ -25,17 +25,17 @@ jobs:
     - {stage: development, env: TOXENV=flake8, name: "Code Style"}
     - {stage: development, env: TOXENV=license_headers, name: "License Headers"}
     - {stage: development, env: TOXENV=migrations, name: "Migrations"}
-    - {stage: development, python: 2.7, env: TOXENV=py27-django19-nomigrations}
     - {stage: development, python: 3.6, env: TOXENV=py36-django111-nomigrations}
-    - {stage: development, python: 3.5, env: TOXENV=py35-django18-nomigrations}
+    - {stage: development, python: 3.6, env: TOXENV=py35-django22-nomigrations}
     - {stage: deploy, python: 2.7, env: TOXENV=py27-django18-nomigrations}
+    - {stage: deploye, python: 2.7, env: TOXENV=py27-django19-nomigrations}
     - {stage: deploy, python: 3.5, env: TOXENV=py35-django19-nomigrations}
     - {stage: deploy, python: 3.6, env: TOXENV=py36-django19-nomigrations}
     - {stage: deploy, python: 2.7, env: TOXENV=py27-django111-nomigrations}
     - {stage: deploy, python: 3.5, env: TOXENV=py35-django111-nomigrations}
     - stage: development
       python: 3.6
-      env: TOXENV=py36-django111-nomigrations-nocoverage-browser-travis-admin
+      env: TOXENV=py36-django22-nomigrations-nocoverage-browser-travis-admin
       addons:
         firefox: "latest"
       services:
@@ -53,7 +53,7 @@ jobs:
         - "selenium-standalone start &"
     - stage: development
       python: 3.6
-      env: TOXENV=py36-django111-nomigrations-nocoverage-browser-travis-front
+      env: TOXENV=py36-django22-nomigrations-nocoverage-browser-travis-front
       addons:
         firefox: "latest"
       services:
