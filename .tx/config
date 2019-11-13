@@ -17,11 +17,6 @@ file_filter = shuup/admin/locale/<lang>/LC_MESSAGES/djangojs.po
 source_lang = en
 type = PO
 
-[shuup.api]
-source_lang = en
-file_filter = shuup/api/locale/<lang>/LC_MESSAGES/django.po
-type = PO
-
 [shuup.campaigns]
 file_filter = shuup/campaigns/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en

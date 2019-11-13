@@ -122,9 +122,6 @@ several sub-applications that may be used to toggle functionality on and off.
 
 ``shuup.addons`` can be used to install and manage Shuup addons.
 
-``shuup.api`` exposes SHUUP APIs as RESTful url endpoints. See the
-:doc:`web API documentation <../web_api>` for details.
-
 ``shuup.campaigns`` provides a highly customizable promotion and discount
 management system.
 

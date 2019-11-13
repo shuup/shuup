@@ -12,14 +12,6 @@ shuup.customer\_group\_pricing.admin\_form\_part module
     :undoc-members:
     :show-inheritance:
 
-shuup.customer\_group\_pricing.api module
------------------------------------------
-
-.. automodule:: shuup.customer_group_pricing.api
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 shuup.customer\_group\_pricing.models module
 --------------------------------------------
 

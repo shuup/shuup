@@ -6,7 +6,6 @@ Subpackages
 
 .. toctree::
 
-    shuup.core.api
     shuup.core.basket
     shuup.core.cache
     shuup.core.defaults
