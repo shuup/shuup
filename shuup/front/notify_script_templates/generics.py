@@ -14,13 +14,14 @@ from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.testing.modules.content.data import ORDER_CONFIRMATION
 from shuup.front.notify_events import (
     OrderReceived, PaymentCreated, RefundCreated, ShipmentCreated,
     ShipmentDeleted
 )
-from shuup.notify.script_template.factory import \
+from shuup.notify.script_template.factory import (
     generic_send_email_script_template_factory
+)
+from shuup.testing.modules.content.data import ORDER_CONFIRMATION
 
 mark_safe_lazy = lazy(mark_safe, six.text_type)
 

@@ -9,7 +9,7 @@ import datetime
 
 import pytest
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.simple_cms.layout import PageLayout
 from shuup.testing import factories

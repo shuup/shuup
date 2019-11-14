@@ -8,11 +8,12 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
+from shuup.utils.django_compat import force_text
 
 from ._base import TranslatableShuupModel
 

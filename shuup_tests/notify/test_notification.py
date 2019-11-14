@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth.models import AnonymousUser
-from django.core.urlresolvers import reverse, set_urlconf
+from shuup.utils.django_compat import reverse, set_urlconf
 
 from shuup.notify.actions.notification import AddNotification
 from shuup.notify.enums import Priority, RecipientType

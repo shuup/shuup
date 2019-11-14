@@ -11,7 +11,8 @@ import re
 import unicodedata
 
 from django.db import models
-from django.utils.encoding import force_text
+
+from shuup.utils.django_compat import force_text
 
 
 def get_model_unique_fields(model):

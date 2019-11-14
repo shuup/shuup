@@ -8,7 +8,7 @@
 import pytest
 
 from bs4 import BeautifulSoup
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.testing import factories
 from shuup.themes.classic_gray.theme import ClassicGrayTheme

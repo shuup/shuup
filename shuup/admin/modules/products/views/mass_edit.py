@@ -7,7 +7,6 @@
 import six
 from django import forms
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -18,6 +17,7 @@ from shuup.admin.forms.widgets import (
 )
 from shuup.admin.utils.views import MassEditMixin
 from shuup.core.models import Category, Product, ShopProductVisibility
+from shuup.utils.django_compat import reverse
 
 
 class MassEditForm(forms.Form):

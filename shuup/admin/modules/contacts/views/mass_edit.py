@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -15,6 +14,7 @@ from django.views.generic import FormView
 from shuup.admin.modules.contacts.forms import GroupMassEditForm, MassEditForm
 from shuup.admin.utils.views import MassEditMixin
 from shuup.core.models import Contact
+from shuup.utils.django_compat import reverse
 
 
 class ContactMassEditView(MassEditMixin, FormView):

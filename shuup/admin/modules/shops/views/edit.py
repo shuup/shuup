@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
@@ -28,6 +27,7 @@ from shuup.admin.utils.wizard import onboarding_complete
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
 from shuup.core.settings_provider import ShuupSettings
+from shuup.utils.django_compat import reverse
 
 
 class ShopBaseFormPart(FormPart):

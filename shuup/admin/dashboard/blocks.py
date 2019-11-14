@@ -7,8 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from babel.numbers import format_currency, format_number
 from django.template import loader
-from django.utils.encoding import force_text
 
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import get_current_babel_locale
 from shuup.utils.numbers import parse_decimal_string
 

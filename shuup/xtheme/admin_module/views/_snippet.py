@@ -7,9 +7,7 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponseNotAllowed
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import BaseDeleteView
 
@@ -19,6 +17,7 @@ from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
+from shuup.utils.django_compat import force_text, reverse_lazy
 from shuup.xtheme.admin_module.widgets import CodeEditorWidget
 from shuup.xtheme.models import Snippet
 from shuup.xtheme.resources import GLOBAL_SNIPPETS_CACHE_KEY

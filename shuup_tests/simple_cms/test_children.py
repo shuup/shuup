@@ -10,6 +10,7 @@ import pytest
 from django.utils.encoding import force_text
 
 from shuup.simple_cms.views import PageView
+from shuup.utils.django_compat import is_anonymous
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.simple_cms.utils import create_page
@@ -28,7 +29,7 @@ def check_children_content(request, page, children_content, children_visibility)
 def test_visible_children(rf):
     shop = get_default_shop()
     request = apply_request_middleware(rf.get("/"))
-    assert request.user.is_anonymous()
+    assert is_anonymous(request.user)
 
     parent_content = "Parent content"
     page = create_page(available_from=datetime.date(1988, 1, 1), content=parent_content, shop=shop, url="test")

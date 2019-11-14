@@ -5,8 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.urlresolvers import reverse_lazy
-
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.modules.categories.form_parts import (
     CategoryBaseFormPart, CategoryProductFormPart
@@ -16,6 +14,7 @@ from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Category
+from shuup.utils.django_compat import reverse_lazy
 
 
 class CategoryEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):

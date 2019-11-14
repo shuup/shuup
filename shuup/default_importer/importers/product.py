@@ -10,7 +10,6 @@ import os
 
 import six
 from django.db.models import ForeignKey, ManyToManyField, Q
-from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import (
@@ -22,6 +21,7 @@ from shuup.importer.importing import (
     DataImporter, ImporterExampleFile, ImportMetaBase
 )
 from shuup.importer.utils import fold_mapping_name
+from shuup.utils.django_compat import force_text
 from shuup.utils.properties import PriceProperty
 
 
@@ -223,7 +223,7 @@ class ProductMetaBase(ImportMetaBase):
             if isinstance(related_field, ForeignKey):
                 try:
                     value = int(value)  # this is because xlrd causes 1 to be 1.0
-                except:
+                except Exception:
                     pass
                 value = relmapper.fk_cache.get(str(value))
                 break

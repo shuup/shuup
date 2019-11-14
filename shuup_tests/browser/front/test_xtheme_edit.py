@@ -10,7 +10,7 @@ import pytest
 import selenium
 import time
 
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.core.models import get_person_contact
 from shuup.testing import factories

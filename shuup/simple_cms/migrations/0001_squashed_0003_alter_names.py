@@ -76,7 +76,7 @@ class Migration(migrations.Migration):
                     to='shuup_simple_cms.Page',
                     verbose_name='parent',
                     null=True,
-                    related_name='children')),
+                    related_name='children', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name_plural': 'pages',
@@ -108,7 +108,7 @@ class Migration(migrations.Migration):
                     editable=False,
                     to='shuup_simple_cms.Page',
                     null=True,
-                    related_name='translations')),
+                    related_name='translations', on_delete=models.CASCADE)),
             ],
             options={
                 'default_permissions': (),
@@ -161,6 +161,7 @@ class Migration(migrations.Migration):
                 verbose_name='parent',
                 null=True,
                 related_name='children',
+                on_delete=models.CASCADE,
                 help_text=(
                     'Set this to a parent page if this page should be '
                     'subcategorized under another page.')

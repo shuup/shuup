@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from django import forms
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
@@ -23,6 +22,7 @@ from shuup.core.excs import (
     RefundExceedsAmountException
 )
 from shuup.core.models import Order, OrderLineType, Shop
+from shuup.utils.django_compat import reverse
 from shuup.utils.money import Money
 
 

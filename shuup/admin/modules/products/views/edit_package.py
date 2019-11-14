@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.forms.formsets import formset_factory
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -19,6 +18,7 @@ from shuup.admin.modules.products.forms import (
 from shuup.admin.modules.products.utils import clear_existing_package
 from shuup.admin.toolbar import PostActionButton
 from shuup.core.models import ProductMode
+from shuup.utils.django_compat import reverse
 from shuup.utils.excs import Problem
 
 from .edit_parent import (

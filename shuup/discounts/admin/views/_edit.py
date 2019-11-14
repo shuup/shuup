@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import PercentageField
@@ -27,6 +26,7 @@ from shuup.discounts.admin.widgets import (
 from shuup.discounts.models import (
     AvailabilityException, CouponCode, Discount, HappyHour
 )
+from shuup.utils.django_compat import reverse_lazy
 
 
 class DiscountForm(forms.ModelForm):

@@ -10,8 +10,9 @@ from __future__ import unicode_literals, with_statement
 from functools import reduce
 
 from django.db import models
-from django.utils.text import force_text
 from django_countries.fields import Country
+
+from shuup.utils.django_compat import force_text
 
 __all__ = [
     "copy_model_instance",

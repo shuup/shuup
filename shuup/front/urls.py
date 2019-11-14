@@ -30,7 +30,6 @@ from .views.order import OrderCompleteView
 from .views.payment import ProcessPaymentView
 from .views.product import ProductDetailView
 
-
 # TODO: Check _not_here_yet URLs in this file
 
 

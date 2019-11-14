@@ -23,43 +23,43 @@ class ContactModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^contacts/new/$",
+                r"^contacts/new/$",
                 "shuup.admin.modules.contacts.views.ContactEditView",
                 kwargs={"pk": None},
                 name="contact.new"
             ),
             admin_url(
-                "^contacts/(?P<pk>\d+)/edit/$",
+                r"^contacts/(?P<pk>\d+)/edit/$",
                 "shuup.admin.modules.contacts.views.ContactEditView",
                 name="contact.edit"
             ),
             admin_url(
-                "^contacts/(?P<pk>\d+)/$",
+                r"^contacts/(?P<pk>\d+)/$",
                 "shuup.admin.modules.contacts.views.ContactDetailView",
                 name="contact.detail"
             ),
             admin_url(
-                "^contacts/reset-password/(?P<pk>\d+)/$",
+                r"^contacts/reset-password/(?P<pk>\d+)/$",
                 "shuup.admin.modules.contacts.views.ContactResetPasswordView",
                 name="contact.reset_password"
             ),
             admin_url(
-                "^contacts/$",
+                r"^contacts/$",
                 "shuup.admin.modules.contacts.views.ContactListView",
                 name="contact.list"
             ),
             admin_url(
-                "^contacts/list-settings/",
+                r"^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="contact.list_settings"
             ),
             admin_url(
-                "^contacts/mass-edit/$",
+                r"^contacts/mass-edit/$",
                 "shuup.admin.modules.contacts.views.ContactMassEditView",
                 name="contact.mass_edit"
             ),
             admin_url(
-                "^contacts/mass-edit-group/$",
+                r"^contacts/mass-edit-group/$",
                 "shuup.admin.modules.contacts.views.ContactGroupMassEditView",
                 name="contact.mass_edit_group"
             )

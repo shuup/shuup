@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import re
 
-from django.utils.encoding import force_text
+from shuup.utils.django_compat import force_text
 
 
 class FuzzyMatcher(object):

@@ -13,7 +13,6 @@ from django.db.transaction import atomic
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.forms.models import BaseModelFormSet
 from django.http import HttpResponseRedirect, JsonResponse
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import UpdateView, View
 from filer.models import File
@@ -25,6 +24,7 @@ from shuup.admin.utils.urls import get_model_url
 from shuup.core.models import (
     Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
 )
+from shuup.utils.django_compat import force_text
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

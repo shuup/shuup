@@ -14,7 +14,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as PermissionGroup
 from django.forms.models import modelform_factory
 from django.http.response import HttpResponseRedirect
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 
@@ -22,6 +21,7 @@ from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
+from shuup.utils.django_compat import force_text
 
 
 class PermissionChangeFormBase(forms.ModelForm):

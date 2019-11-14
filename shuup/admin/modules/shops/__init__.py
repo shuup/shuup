@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
@@ -19,6 +18,7 @@ from shuup.admin.utils.urls import (
 )
 from shuup.admin.views.home import SimpleHelpBlock
 from shuup.core.models import Shop, ShopStatus
+from shuup.utils.django_compat import reverse
 
 
 class ShopModule(AdminModule):
@@ -28,12 +28,12 @@ class ShopModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^shops/(?P<pk>\d+)/enable/$",
+                r"^shops/(?P<pk>\d+)/enable/$",
                 "shuup.admin.modules.shops.views.ShopEnablerView",
                 name="shop.enable"
             ),
             admin_url(
-                "^shops/(?P<pk>\d+)/select/$",
+                r"^shops/(?P<pk>\d+)/select/$",
                 "shuup.admin.modules.shops.views.ShopSelectView",
                 name="shop.select"
             ),

@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import unicodecsv as csv
-from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
@@ -20,6 +19,7 @@ from shuup.admin.utils.picotable import (
 )
 from shuup.core.models import ShopProduct, ShopProductVisibility
 from shuup.core.utils import context_cache
+from shuup.utils.django_compat import reverse
 
 
 class VisibleMassAction(PicotableMassAction):

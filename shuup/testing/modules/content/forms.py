@@ -14,11 +14,11 @@ from django import forms
 from django.conf import settings
 from django.template import loader as template_loader
 from django.utils import translation
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration as config
 from shuup.utils import djangoenv
+from shuup.utils.django_compat import force_text
 
 from . import data as content_data
 
@@ -38,14 +38,16 @@ CONTENT_FOOTER_KEY = "content_footer_pk"
 
 
 class BehaviorWizardForm(forms.Form):
-    order_confirm_notification = forms.BooleanField(label=_("Send customer order confirmation email"),
-                                                    required=False,
-                                                    initial=True,
-                                                    help_text=_("We will configure a notification "
-                                                                "to send the customer an email "
-                                                                "after a placed order. "
-                                                                "You can disable this option later "
-                                                                "or even change the layout of the email."))
+    order_confirm_notification = forms.BooleanField(
+        label=_("Send customer order confirmation email"), required=False, initial=True,
+        help_text=_(
+            "We will configure a notification "
+            "to send the customer an email "
+            "after a placed order. "
+            "You can disable this option later "
+            "or even change the layout of the email."
+        )
+    )
 
     def __init__(self, **kwargs):
         self.shop = kwargs.pop("shop")
@@ -81,7 +83,7 @@ class BehaviorWizardForm(forms.Form):
                     "body": template_loader.render_to_string(content_data.ORDER_CONFIRMATION["body_template"]).strip()
                 }
 
-            except:
+            except Exception:
                 logger.exception("Failed to translate language %s" % language)
 
                 action_data["template_data"][language] = {

@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 
 import warnings
 
+import django
 import django.contrib.auth.views as auth_views
 from django.conf.urls import url
 from django.contrib.auth import logout as do_logout
@@ -27,12 +28,13 @@ from shuup.admin.views.search import SearchView
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.admin.views.tour import TourView
 from shuup.admin.views.wizard import WizardView
+from shuup.utils.django_compat import is_anonymous
 from shuup.utils.i18n import javascript_catalog_all
 from shuup.utils.importing import cached_load
 
 
 def login(request, **kwargs):
-    if not request.user.is_anonymous() and request.method == "POST":  # We're logging in, so log out first
+    if not is_anonymous(request.user) and request.method == "POST":  # We're logging in, so log out first
         do_logout(request)
 
     kwargs.setdefault("extra_context", {})["error"] = request.GET.get("error")

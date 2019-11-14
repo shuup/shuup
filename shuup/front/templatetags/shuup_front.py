@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from django.utils.encoding import force_text
 from django.utils.functional import SimpleLazyObject
 from django.utils.lru_cache import lru_cache
 from django.utils.safestring import mark_safe
@@ -14,6 +13,7 @@ from django_jinja import library
 from markdown import Markdown
 
 from shuup.apps.provides import get_provide_objects
+from shuup.utils.django_compat import force_text
 
 
 class HelpersNamespace(object):

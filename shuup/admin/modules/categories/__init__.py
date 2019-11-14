@@ -27,12 +27,12 @@ class CategoryModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^categories/(?P<pk>\d+)/copy-visibility/$",
+                r"^categories/(?P<pk>\d+)/copy-visibility/$",
                 "shuup.admin.modules.categories.views.CategoryCopyVisibilityView",
                 name="category.copy_visibility"
             ),
             admin_url(
-                "^categories/(?P<pk>\d+)/delete/$",
+                r"^categories/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.categories.views.CategoryDeleteView",
                 name="category.delete"
             )

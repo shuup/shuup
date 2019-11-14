@@ -10,9 +10,10 @@ from django.conf import settings
 from django.contrib.auth import (
     get_user, get_user_model, REDIRECT_FIELD_NAME
 )
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.testing.factories import get_default_shop
+from shuup.utils.django_compat import is_anonymous
 from shuup_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD
 
 regular_user = regular_user  # noqa
@@ -40,7 +41,7 @@ def test_login_with_invalid_password(client, regular_user, rf):
 
     request = rf.get("/")
     request.session = client.session
-    assert get_user(request).is_anonymous(), "User is still anonymous"
+    assert is_anonymous(get_user(request)), "User is still anonymous"
 
 
 @pytest.mark.django_db
@@ -84,7 +85,7 @@ def test_login_with_email_2(client, regular_user, rf):
 
     request = rf.get("/")
     request.session = client.session
-    assert get_user(request).is_anonymous(), "User is still anonymous"
+    assert is_anonymous(get_user(request)), "User is still anonymous"
 
     # Login with unknown email
     client.post(reverse("shuup_admin:login"), data={
@@ -95,7 +96,7 @@ def test_login_with_email_2(client, regular_user, rf):
 
     request = rf.get("/")
     request.session = client.session
-    assert get_user(request).is_anonymous(), "User is still anonymous"
+    assert is_anonymous(get_user(request)), "User is still anonymous"
 
     # Login with username should work normally
     payload = {REDIRECT_FIELD_NAME: redirect_target}

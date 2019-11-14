@@ -7,10 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.toolbar import PostActionButton
+from shuup.utils.django_compat import reverse
 
 
 class AnonymizeContactToolbarButton(PostActionButton):

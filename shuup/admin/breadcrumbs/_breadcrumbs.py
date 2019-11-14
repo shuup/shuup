@@ -7,11 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import MenuEntry
 from shuup.admin.module_registry import get_modules
+from shuup.utils.django_compat import force_text
 
 
 def _get_admin_module_for_url(url_names):

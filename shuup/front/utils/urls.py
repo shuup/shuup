@@ -7,9 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import with_statement
 
-from django.core.urlresolvers import reverse
-
 from shuup.core.models import Category, Product
+from shuup.utils.django_compat import reverse
 
 
 def model_url(context, model, absolute=False, **kwargs):

@@ -19,11 +19,18 @@ def test_analog():
     # Behavior changs in Django 1.9
     if VERSION >= (1, 9):
         related_field_name = "rel"
+    
+    if VERSION > (2, 0):
+        relation_manager = getattr(PseudoPaymentProcessorLogEntry._meta.get_field("target"), "remote_field")
+    else:
+        relation_manager = getattr(PseudoPaymentProcessorLogEntry._meta.get_field("target"), related_field_name)
+    
+    if VERSION < (2, 0):   
+        assert relation_manager.to is PseudoPaymentProcessor
+    else:
+        assert relation_manager.model is PseudoPaymentProcessor
 
-    relation_manager = getattr(PseudoPaymentProcessorLogEntry._meta.get_field("target"), related_field_name)
-    assert relation_manager.to is PseudoPaymentProcessor
-
-    relation_manager = getattr(PseudoPaymentProcessor.log_entries, related_field_name)
+    relation_manager = getattr(PseudoPaymentProcessor.log_entries, "rel")
     assert relation_manager.model is PseudoPaymentProcessor
     assert relation_manager.related_model is PseudoPaymentProcessorLogEntry
 

@@ -20,27 +20,27 @@ class StocksAdminModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^adjust-stock/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
+                r"^adjust-stock/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
                 "shuup.simple_supplier.admin_module.views.process_stock_adjustment",
                 name="simple_supplier.stocks"
             ),
             admin_url(
-                "^alert-limit/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
+                r"^alert-limit/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
                 "shuup.simple_supplier.admin_module.views.process_alert_limit",
                 name="simple_supplier.alert_limits"
             ),
             admin_url(
-                "^manage-stock/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
+                r"^manage-stock/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
                 "shuup.simple_supplier.admin_module.views.process_stock_managed",
                 name="simple_supplier.stock_managed"
             ),
             admin_url(
-                "^stocks/",
+                r"^stocks/",
                 "shuup.simple_supplier.admin_module.views.StocksListView",
                 name="simple_supplier.stocks"
             ),
             admin_url(
-                "^list-settings/",
+                r"^list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="simple_supplier.list_settings"
             )

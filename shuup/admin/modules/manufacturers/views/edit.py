@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from django import forms
 from django.conf import settings
 from django.db.models import Q
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminFormNoTranslation
@@ -18,6 +17,7 @@ from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Manufacturer, Shop
+from shuup.utils.django_compat import force_text
 
 
 class ManufacturerForm(ShuupAdminFormNoTranslation):

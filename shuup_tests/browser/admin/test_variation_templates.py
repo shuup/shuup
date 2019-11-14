@@ -9,7 +9,6 @@ import os
 import json
 import pytest
 
-from django.core.urlresolvers import reverse
 
 from shuup import configuration
 from shuup.core import cache
@@ -20,7 +19,7 @@ from shuup.testing.browser_utils import (
     click_element, initialize_admin_browser_test, wait_until_condition
 )
 from shuup.testing.factories import create_product, get_default_shop
-
+from shuup.utils.django_compat import reverse
 
 from shuup_tests.utils import printable_gibberish
 

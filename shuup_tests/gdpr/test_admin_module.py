@@ -8,7 +8,7 @@
 
 import pytest
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.utils.timezone import now
 from django.utils.translation import activate
 

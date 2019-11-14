@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
@@ -19,6 +18,7 @@ from shuup.admin.utils.urls import (
 )
 from shuup.core.models import get_person_contact
 from shuup.tasks.models import Task, TaskStatus, TaskType
+from shuup.utils.django_compat import force_text
 
 
 class TaskAdminModule(AdminModule):
@@ -32,12 +32,12 @@ class TaskAdminModule(AdminModule):
             name_template="task.%s"
         ) + [
             admin_url(
-                "^tasks/(?P<pk>\d+)/delete/$",
+                r"^tasks/(?P<pk>\d+)/delete/$",
                 "shuup.tasks.admin_module.views.TaskDeleteView",
                 name="task.delete"
             ),
             admin_url(
-                "^tasks/(?P<pk>\d+)/set_status/$",
+                r"^tasks/(?P<pk>\d+)/set_status/$",
                 "shuup.tasks.admin_module.views.TaskSetStatusView",
                 name="task.set_status"
             ),

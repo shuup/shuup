@@ -7,13 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.forms import ChoiceField, DateTimeField, HiddenInput
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 
 from shuup.core.models import Shop
 from shuup.reports.utils import parse_date_range
 from shuup.reports.writer import get_writer_names
+from shuup.utils.django_compat import force_text
 
 
 class DateRangeChoices(Enum):

@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.admin.modules.labels.views import LabelEditView, LabelDeleteView

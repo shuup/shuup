@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
@@ -20,6 +19,7 @@ from shuup.admin.utils.picotable import (
 from shuup.admin.utils.views import PicotableListView
 from shuup.notify.admin_module.utils import get_name_map
 from shuup.notify.models.script import Script
+from shuup.utils.django_compat import reverse
 
 
 class ScriptListView(PicotableListView):

@@ -8,7 +8,7 @@
 import random
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.core import cache
 from shuup.core.models import Order, PaymentStatus, Product

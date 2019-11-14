@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as PermissionGroup
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import Select2MultipleField
@@ -20,6 +19,7 @@ from shuup.admin.utils.permissions import (
     set_permissions_for_group
 )
 from shuup.admin.utils.views import CreateOrUpdateView
+from shuup.utils.django_compat import force_text
 
 
 class PermissionGroupForm(forms.ModelForm):

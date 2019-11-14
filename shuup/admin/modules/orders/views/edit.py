@@ -15,11 +15,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.core import serializers
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Sum
 from django.http.response import Http404, HttpResponse, JsonResponse
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django_countries import countries
@@ -35,6 +33,7 @@ from shuup.core.models import (
     ShopStatus
 )
 from shuup.core.pricing import get_pricing_module
+from shuup.utils.django_compat import force_text, reverse
 from shuup.utils.i18n import (
     format_money, format_percent, get_current_babel_locale,
     get_locally_formatted_datetime

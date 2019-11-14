@@ -10,10 +10,9 @@ from __future__ import unicode_literals
 import json
 
 import six
-from django.core.urlresolvers import reverse_lazy
+from django.forms import HiddenInput, Textarea, TextInput
 from django.forms import TimeInput as DjangoTimeInput
-from django.forms import HiddenInput, Textarea, TextInput, Widget
-from django.utils.encoding import force_text
+from django.forms import Widget
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -27,6 +26,7 @@ from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.core.models import (
     Contact, PersonContact, Product, ProductMode, ShopProduct
 )
+from shuup.utils.django_compat import force_text, reverse_lazy
 
 
 class BasePopupChoiceWidget(Widget):

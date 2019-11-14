@@ -13,10 +13,8 @@ This module is installed as the `shuup_admin` template function namespace.
 import itertools
 
 from django.conf import settings
-from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 from django.utils.lru_cache import lru_cache
-from django.utils.text import force_text
 from jinja2.utils import contextfunction
 
 from shuup import configuration
@@ -29,6 +27,8 @@ from shuup.admin.utils.urls import manipulate_query_string, NoModelUrl
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
 from shuup.core.telemetry import is_telemetry_enabled
+from shuup.utils import django_compat
+from shuup.utils.django_compat import force_text, NoReverseMatch, reverse
 from shuup.utils.importing import cached_load
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
@@ -194,7 +194,7 @@ def get_shop_count(context):
     Return the number of shops accessible by the currently logged in user
     """
     request = context["request"]
-    if not request or request.user.is_anonymous():
+    if not (request and not django_compat.is_anonymous(request.user)):
         return 0
     return Shop.objects.get_for_user(request.user).count()
 
@@ -223,3 +223,7 @@ def get_admin_supplier(context):
 @contextfunction
 def is_multiple_suppliers_enabled(context):
     return settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS is True
+
+
+def is_authenticated(user):
+    return django_compat.is_authenticated(user)

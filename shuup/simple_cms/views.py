@@ -5,13 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import get_language
 from django.views.generic.detail import DetailView
 
 from shuup.simple_cms.models import Page
+from shuup.utils.django_compat import reverse
 
 
 class PageView(DetailView):

@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms import ChoiceField, DateTimeField
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -26,6 +25,7 @@ from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.apps.provides import get_provide_objects
 from shuup.simple_cms.models import Page
+from shuup.utils.django_compat import reverse, reverse_lazy
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 

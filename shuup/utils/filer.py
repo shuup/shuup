@@ -14,6 +14,8 @@ from django.core.files.base import ContentFile
 from django.forms.models import modelform_factory
 from filer.models import File, Folder, Image
 
+from .django_compat import is_anonymous
+
 
 def filer_folder_from_path(path):
     """
@@ -62,7 +64,7 @@ def _filer_file_from_upload(model, request, path, upload_data, sha1=None):
     upload_form = file_form_cls(
         data={
             'original_filename': upload_data.name,
-            'owner': (request.user.pk if (request and not request.user.is_anonymous()) else None)
+            'owner': (request.user.pk if (request and not is_anonymous(request.user)) else None)
         },
         files={
             'file': upload_data

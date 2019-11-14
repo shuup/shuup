@@ -8,10 +8,11 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
+
+from shuup.utils.django_compat import force_text
 
 
 class LogEntryKind(Enum):
@@ -38,7 +39,7 @@ class LogEntryKind(Enum):
 class BaseLogEntry(models.Model):
     target = None  # This will be overridden dynamically
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT, verbose_name=_("user"))
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT, verbose_name=_("user"))
     message = models.CharField(max_length=256, verbose_name=_("message"))
     identifier = models.CharField(max_length=64, blank=True, verbose_name=_("identifier"))
     kind = EnumIntegerField(LogEntryKind, default=LogEntryKind.OTHER, verbose_name=_("log entry kind"))

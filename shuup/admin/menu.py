@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.utils.datastructures import OrderedDict
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
@@ -16,6 +15,7 @@ from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.views.home import QUICKLINK_ORDER
 from shuup.apps.provides import get_provide_objects
+from shuup.utils.django_compat import force_text
 
 ORDERS_MENU_CATEGORY = 1
 PRODUCTS_MENU_CATEGORY = 2

@@ -7,10 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import NoReverseMatch, reverse
 from jinja2 import contextfunction
 
 from shuup.apps.provides import get_provide_objects
+from shuup.utils.django_compat import NoReverseMatch, reverse
 
 
 @contextfunction
@@ -78,7 +78,7 @@ def get_logout_url(context, *args, **kwargs):
     if "impersonator_user_id" in request.session:
         logout_url = get_url("shuup:stop-impersonating", *args, **kwargs)
         if logout_url:
-                return logout_url
+            return logout_url
 
     logout_url = get_url("shuup:logout", *args, **kwargs)
     return (logout_url if logout_url else "/logout")

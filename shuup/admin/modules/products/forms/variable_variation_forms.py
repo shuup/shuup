@@ -86,12 +86,15 @@ class VariationVariablesDataForm(forms.Form):
     configuration_key = "saved_variation_templates"
 
     data = forms.CharField(widget=forms.HiddenInput(), required=False)
-    activate_template = forms.BooleanField(required=False,
-                                           label=_("Activate template"),
-                                           help_text=_("Check this to activate a selected template. "
-                                                       "If no template is selected variation data "
-                                                       "will be saved without checking this."))
-    template_name = forms.CharField(max_length=128, required=False, widget=forms.TextInput(attrs={'pattern': '.*\S.*'}))
+    activate_template = forms.BooleanField(
+        required=False, label=_("Activate template"),
+        help_text=_(
+            "Check this to activate a selected template. "
+            "If no template is selected variation data "
+            "will be saved without checking this."
+        ))
+    template_name = forms.CharField(
+        max_length=128, required=False, widget=forms.TextInput(attrs={'pattern': r'.*\S.*'}))
 
     def __init__(self, **kwargs):
         self.parent_product = kwargs.pop("parent_product", None)
