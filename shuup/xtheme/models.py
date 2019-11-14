@@ -100,7 +100,7 @@ class SavedViewConfigStatus(Enum):
 
 class SavedViewConfig(models.Model):
     theme_identifier = models.CharField(max_length=64, db_index=True, verbose_name=_("theme identifier"))
-    shop = models.ForeignKey("shuup.Shop", related_name="saved_views_config", null=True)
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="saved_views_config", null=True)
     view_name = models.CharField(max_length=64, db_index=True, verbose_name=_("view name"))
     created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created on"))
     status = EnumIntegerField(SavedViewConfigStatus, db_index=True, verbose_name=_("status"))
@@ -150,7 +150,7 @@ class SavedViewConfig(models.Model):
 
 class ThemeSettings(models.Model):
     theme_identifier = models.CharField(max_length=64, db_index=True, verbose_name=_("theme identifier"))
-    shop = models.ForeignKey("shuup.Shop", related_name="themes_settings", null=True)
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="themes_settings", null=True)
     active = models.BooleanField(db_index=True, default=False, verbose_name=_("active"))
     data = TaggedJSONField(db_column="data", default=dict, verbose_name=_("data"))
 
@@ -180,7 +180,7 @@ class Snippet(models.Model):
     """
     Inject snippet code globally filtering by themes if configured.
     """
-    shop = models.ForeignKey("shuup.Shop", related_name="snippets")
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="snippets")
     location = models.CharField(max_length=64, verbose_name=_("location"))
     snippet_type = models.CharField(max_length=20, verbose_name=_("snippet type"), choices=SnippetTypeChoices)
     snippet = models.TextField(verbose_name=_("snippet"))

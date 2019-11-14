@@ -282,10 +282,10 @@ def test_slide_admin_form(rf, admin_user):
 @pytest.mark.django_db
 def test_carousel_custom_colors(rf):
     from shuup.front.apps.carousel.plugins import CarouselPlugin
+    from shuup.utils.django_compat import reverse
     from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
     from shuup.xtheme.layout import Layout
     from shuup.xtheme._theme import get_current_theme
-    from django.core.urlresolvers import reverse
 
     shop = get_default_shop()
     shop.maintenance_mode = False

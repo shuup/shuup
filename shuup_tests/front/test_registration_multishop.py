@@ -9,7 +9,7 @@ import uuid
 
 import pytest
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.test.utils import override_settings
 
 from shuup import configuration

@@ -17,7 +17,7 @@ from django.db import models
 from django.http import HttpResponse
 from django.template.defaultfilters import floatformat
 from django.template.loader import render_to_string
-from django.utils.encoding import force_text, smart_text
+from django.utils.encoding import smart_text
 from django.utils.functional import Promise
 from django.utils.html import conditional_escape, escape
 from django.utils.safestring import mark_safe
@@ -26,6 +26,7 @@ from six import BytesIO
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import get_current_babel_locale
 from shuup.utils.pdf import render_html_to_pdf
 

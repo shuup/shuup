@@ -8,7 +8,6 @@
 import pytest
 import six
 from django.contrib.auth.models import AbstractUser
-from django.core.urlresolvers import reverse, reverse_lazy
 
 from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.modules.customers_dashboard import CustomersDashboardModule
@@ -24,6 +23,7 @@ from shuup.admin.utils.permissions import (
 )
 from shuup.core.models import Product, ShopProduct
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse, reverse_lazy
 from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule
 from shuup_tests.utils.faux_users import StaffUser
 

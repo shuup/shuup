@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 from django.db import models
 from django.utils import timezone
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from polymorphic.models import PolymorphicModel
@@ -21,6 +20,7 @@ from shuup.core.models import (
     Category, Contact, ContactGroup, Product, ShopProduct
 )
 from shuup.core.pricing import PricingContext
+from shuup.utils.django_compat import force_text
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 

@@ -6,10 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.front.providers import (
     FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
@@ -17,6 +16,7 @@ from shuup.front.providers import (
 from shuup.gdpr.forms import CompanyAgreementForm
 from shuup.gdpr.models import GDPRSettings, GDPRUserConsent
 from shuup.gdpr.utils import get_active_consent_pages
+from shuup.utils.django_compat import is_authenticated, reverse
 from shuup.utils.djangoenv import has_installed
 
 
@@ -52,7 +52,7 @@ class GDPRFieldProvider(FormFieldProvider):
             return []
 
         user_consent = None
-        if request.user.is_authenticated():
+        if is_authenticated(request.user):
             user_consent = GDPRUserConsent.get_for_user(request.user, request.shop)
 
         fields = []

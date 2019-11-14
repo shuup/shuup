@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 from django.http.response import HttpResponseRedirect, JsonResponse
 from django.utils.decorators import method_decorator
@@ -19,6 +18,7 @@ from shuup.admin.utils.wizard import (
     load_setup_wizard_pane, load_setup_wizard_panes
 )
 from shuup.core.models import Shop
+from shuup.utils.django_compat import reverse
 from shuup.utils.form_group import FormDef, FormGroup
 from shuup.utils.iterables import first
 

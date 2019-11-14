@@ -20,7 +20,6 @@ from shuup.core.models import (
 )
 from shuup.utils.excs import Problem
 
-
 HTML_TEMPLATE = u"""
 <!DOCTYPE html>
 <html>

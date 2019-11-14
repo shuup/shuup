@@ -9,7 +9,6 @@ from decimal import Decimal
 from math import pow
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.db.models import Q, Sum
 from django.template.loader import render_to_string
 
@@ -23,6 +22,7 @@ from shuup.simple_supplier.forms import (
     AlertLimitForm, StockAdjustmentForm, StockManagedForm
 )
 from shuup.simple_supplier.models import StockAdjustment, StockCount
+from shuup.utils.django_compat import reverse
 
 
 def get_current_stock_value(supplier_id, product_id):

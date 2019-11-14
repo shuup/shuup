@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from enumfields import Enum
 
@@ -17,6 +16,7 @@ from shuup.admin.toolbar import (
 )
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
+from shuup.utils.django_compat import reverse
 
 
 class ProductActionCategory(Enum):

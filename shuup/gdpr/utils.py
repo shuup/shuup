@@ -5,18 +5,18 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from datetime import timedelta
 import json
+from datetime import timedelta
 
 from django.conf import settings
 from django.template import loader
-from django.utils.encoding import force_text
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language
+from django.utils.translation import ugettext_lazy as _
 from reversion import create_revision
 
 from shuup.simple_cms.models import Page
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import format_datetime
 
 

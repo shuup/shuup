@@ -13,7 +13,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import pgettext
 from django.utils.translation import ugettext_lazy as _
@@ -23,6 +23,7 @@ from parler.models import (
 
 from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField, QuantityField
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import format_number
 from shuup.utils.numbers import bankers_round, parse_decimal_string
 
@@ -120,7 +121,7 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
 
 class SalesUnitTranslation(_ShortNameToSymbol, TranslatedFieldsModel):
     master = models.ForeignKey(
-        SalesUnit, related_name='translations', null=True, editable=False)
+        on_delete=models.CASCADE, to=SalesUnit, related_name='translations', null=True, editable=False)
     name = models.CharField(
         max_length=128, verbose_name=_('name'), help_text=_(
             "The sales unit name to use for products (e.g. "
@@ -148,9 +149,8 @@ def validate_positive_not_zero(value):
 
 class DisplayUnit(TranslatableShuupModel):
     internal_unit = models.ForeignKey(
-        SalesUnit, related_name='display_units',
-        verbose_name=_("internal unit"),
-        help_text=_("The sales unit that this display unit is linked to."))
+        on_delete=models.CASCADE, to=SalesUnit, related_name='display_units',
+        verbose_name=_("internal unit"), help_text=_("The sales unit that this display unit is linked to."))
     ratio = QuantityField(
         default=1, validators=[validate_positive_not_zero],
         verbose_name=_("ratio"),

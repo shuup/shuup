@@ -11,13 +11,13 @@ import datetime
 import itertools
 from operator import iand, ior
 
+import django
 import six
 import xlrd
 from django.db.models import AutoField, ForeignKey, Q
 from django.db.models.fields import BooleanField
 from django.db.models.fields.related import RelatedField
 from django.db.transaction import atomic
-from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 
@@ -27,6 +27,7 @@ from shuup.importer.importing.meta import ImportMetaBase
 from shuup.importer.importing.session import DataImporterRowSession
 from shuup.importer.utils import copy_update, fold_mapping_name
 from shuup.importer.utils.importer import ImportMode
+from shuup.utils.django_compat import force_text
 
 
 class ImporterExampleFile(object):
@@ -192,7 +193,7 @@ class DataImporter(object):
         try:
             value = int(value)
             return cls.objects.get(pk=value)
-        except:
+        except Exception:
             name_fields = ["name", "title"]
             query = Q()
 
@@ -450,7 +451,7 @@ class DataImporter(object):
 
             try:
                 return self.model.objects.get(and_query)
-            except:  # Found multiple or zero -- not okay
+            except Exception:  # Found multiple or zero -- not okay
                 pass
 
             return self.model.objects.filter(or_query).first()
@@ -495,7 +496,11 @@ class DataImporter(object):
         :param field: Django Field object.
         :return: Found value
         """
-        to = field.rel.to
+        if django.VERSION < (1, 9):
+            to = field.rel.to
+        else:
+            to = field.remote_field.target_field
+
         mapper = self.relation_map_cache.get(to)
 
         if not mapper:

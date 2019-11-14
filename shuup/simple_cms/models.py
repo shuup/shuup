@@ -10,7 +10,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
@@ -22,6 +22,7 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.django_compat import force_text, is_anonymous
 
 
 class PageOpenGraphType(Enum):
@@ -55,7 +56,7 @@ class PageQuerySet(TranslatableQuerySet):
             Q(available_from__lte=dt)
             & (Q(available_to__gte=dt) | Q(available_to__isnull=True))
         )
-        if user and not user.is_anonymous():
+        if user and not is_anonymous(user):
             q |= Q(created_by=user)
         qs = self.not_deleted().for_shop(shop).filter(q)
         return qs
@@ -67,8 +68,9 @@ class PageQuerySet(TranslatableQuerySet):
 @reversion.register(follow=["translations"])
 @python_2_unicode_compatible
 class Page(MPTTModel, TranslatableModel):
-    shop = models.ForeignKey("shuup.Shop", verbose_name=_('shop'))
-    supplier = models.ForeignKey("shuup.Supplier", null=True, blank=True, verbose_name=_('supplier'))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_('shop'))
+    supplier = models.ForeignKey(
+        on_delete=models.CASCADE, to="shuup.Supplier", null=True, blank=True, verbose_name=_('supplier'))
     available_from = models.DateTimeField(
         default=now, null=True, blank=True, db_index=True,
         verbose_name=_('available since'), help_text=_(
@@ -106,12 +108,22 @@ class Page(MPTTModel, TranslatableModel):
         "Enable this if this page should have a visible link in the top menu of the store front."
     ))
     parent = TreeForeignKey(
-        "self", blank=True, null=True, related_name="children", verbose_name=_("parent"), help_text=_(
+        "self",
+        blank=True, null=True,
+        related_name="children",
+        on_delete=models.CASCADE,
+        verbose_name=_("parent"),
+        help_text=_(
             "Set this to a parent page if this page should be subcategorized (sub-menu) under another page."
-        ))
-    list_children_on_page = models.BooleanField(verbose_name=_("display children on page"), default=False, help_text=_(
-        "Enable this if this page should display all of its children pages."
-    ))
+        )
+    )
+    list_children_on_page = models.BooleanField(
+        verbose_name=_("display children on page"),
+        default=False,
+        help_text=_(
+            "Enable this if this page should display all of its children pages."
+        )
+    )
     show_child_timestamps = models.BooleanField(verbose_name=_("show child page timestamps"), default=True, help_text=_(
         "Enable this if you want to show timestamps on the child pages. Please note, that this "
         "requires the children to be listed on the page as well."
@@ -208,7 +220,7 @@ class PageOpenGraph(TranslatableModel):
     """
     Object that describes Open Graph extra meta attributes.
     """
-    page = models.OneToOneField(Page, verbose_name=_('page'), related_name="open_graph")
+    page = models.OneToOneField(Page, verbose_name=_('page'), related_name="open_graph", on_delete=models.CASCADE)
 
     image = FilerImageField(
         verbose_name=_("Image"),

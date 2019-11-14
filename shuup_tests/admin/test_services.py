@@ -12,8 +12,7 @@ from django import forms
 from django.conf import settings
 from django.db.models import ProtectedError
 from django.test import override_settings
-from django.utils.text import force_text
-
+from django.utils.encoding import force_text
 from shuup.admin.modules.services.base_form_part import ServiceBaseFormPart
 from shuup.admin.modules.services.forms import PaymentMethodForm, ShippingMethodForm
 from shuup.admin.modules.services.views import (

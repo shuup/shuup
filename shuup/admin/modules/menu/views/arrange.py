@@ -10,14 +10,13 @@ from __future__ import unicode_literals
 import json
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
-from django.views.generic import RedirectView, TemplateView
-
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import RedirectView, TemplateView
 
 from shuup import configuration
 from shuup.admin.menu import get_menu_entry_categories
+from shuup.utils.django_compat import reverse_lazy
 
 
 class AdminMenuArrangeView(TemplateView):

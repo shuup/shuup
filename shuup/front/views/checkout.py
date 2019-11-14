@@ -5,12 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import View
 from six.moves import urllib
 
 from shuup.front.checkout import CheckoutProcess, VerticalCheckoutProcess
+from shuup.utils.django_compat import reverse
 from shuup.utils.importing import cached_load
 
 __all__ = ["BaseCheckoutView"]

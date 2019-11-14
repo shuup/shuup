@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings as django_settings
 from django.contrib.auth import get_user_model, load_backend, login, logout
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 
 from shuup.core.models import get_company_contact_for_shop_staff
@@ -16,6 +15,7 @@ from shuup.core.utils.users import (
     toggle_all_seeing_for_user
 )
 from shuup.front.utils.user import is_admin_user
+from shuup.utils.django_compat import reverse
 
 
 def toggle_all_seeing(request):

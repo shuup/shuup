@@ -5,12 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.core.exceptions import ValidationError
+from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 
-from django.db.transaction import atomic
 from shuup.admin.signals import object_created, object_saved, view_form_valid
 from shuup.admin.utils.urls import get_model_url
-from django.core.exceptions import ValidationError
 from shuup.admin.utils.views import add_create_or_change_message
 from shuup.apps.provides import get_provide_objects
 from shuup.utils.form_group import FormDef, FormGroup

@@ -42,7 +42,7 @@ class PriceDisplayOptions(object):
         options = context.get('price_display_options')
 
         if options is None:
-            request = context.get('request')  # type: django.http.HttpRequest
+            request = context.get('request')  # noqa (F821) type: django.http.HttpRequest
             options = getattr(request, 'price_display_options', None)
 
         if options is None:

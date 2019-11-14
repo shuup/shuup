@@ -11,7 +11,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
@@ -31,6 +31,7 @@ from shuup.core.fields import InternalIdentifierField
 from shuup.core.models import Category, Order, Shop
 from shuup.core.utils import context_cache
 from shuup.utils.analog import define_log_model
+from shuup.utils.django_compat import force_text
 from shuup.utils.properties import MoneyPropped
 
 
@@ -54,7 +55,9 @@ class CampaignQueryset(models.QuerySet):
 class Campaign(MoneyPropped, TranslatableModel):
     admin_url_suffix = None
 
-    shop = models.ForeignKey(Shop, verbose_name=_("shop"), help_text=_("The shop where the campaign is active."))
+    shop = models.ForeignKey(
+        on_delete=models.CASCADE, to=Shop, verbose_name=_("shop"),
+        help_text=_("The shop where the campaign is active."))
     name = models.CharField(max_length=120, verbose_name=_("name"), help_text=_("The name for this campaign."))
 
     # translations in subclass
@@ -212,7 +215,8 @@ class BasketCampaign(Campaign):
         max_length=120, verbose_name=_("basket line text"), help_text=_("This text will be shown in a basket."))
 
     conditions = models.ManyToManyField('BasketCondition', blank=True, related_name='campaign')
-    coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign', verbose_name=_("coupon"))
+    coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign', verbose_name=_("coupon"),
+                                  on_delete=models.CASCADE)
     supplier = models.ForeignKey(
         "shuup.Supplier",
         null=True, blank=True,
@@ -221,7 +225,8 @@ class BasketCampaign(Campaign):
         help_text=_(
             "When set, this campaign will match only products from the selected supplier. "
             "Rules and Effects will also be restricted to include only the products of this supplier."
-        )
+        ),
+        on_delete=models.CASCADE,
     )
 
     translations = TranslatedFields(
@@ -319,8 +324,8 @@ class BasketCampaign(Campaign):
 
 
 class CouponUsage(models.Model):
-    coupon = models.ForeignKey('Coupon', related_name='usages')
-    order = models.ForeignKey(Order, related_name='coupon_usages')
+    coupon = models.ForeignKey(on_delete=models.CASCADE, to='Coupon', related_name='usages')
+    order = models.ForeignKey(on_delete=models.CASCADE, to=Order, related_name='coupon_usages')
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True,
@@ -358,17 +363,15 @@ class Coupon(models.Model):
 
     active = models.BooleanField(default=False, verbose_name=_("is active"))
     shop = models.ForeignKey(
-        "shuup.Shop",
-        verbose_name=_("shop"),
-        related_name="campaign_coupons",
-        null=True,
-        help_text=_("The shop where the coupon is active.")
+        on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="campaign_coupons",
+        null=True, help_text=_("The shop where the coupon is active.")
     )
     supplier = models.ForeignKey(
         "shuup.Supplier",
         null=True, blank=True,
         related_name="campaign_coupons",
-        verbose_name=_("supplier")
+        verbose_name=_("supplier"),
+        on_delete=models.CASCADE,
     )
 
     created_by = models.ForeignKey(

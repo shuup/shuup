@@ -21,7 +21,8 @@ class BasketLineEffect(PolymorphicShuupModel):
     model = None
     admin_form_class = None
 
-    campaign = models.ForeignKey("BasketCampaign", related_name='line_effects', verbose_name=_("campaign"))
+    campaign = models.ForeignKey(
+        on_delete=models.CASCADE, to="BasketCampaign", related_name='line_effects', verbose_name=_("campaign"))
 
     def get_discount_lines(self, order_source, original_lines, supplier):
         """
@@ -149,7 +150,7 @@ class DiscountFromCategoryProducts(BasketLineEffect):
         max_digits=6, decimal_places=5, blank=True, null=True,
         verbose_name=_("discount percentage"),
         help_text=_("The discount percentage for this campaign."))
-    category = models.ForeignKey(Category, verbose_name=_("category"))
+    category = models.ForeignKey(on_delete=models.CASCADE, to=Category, verbose_name=_("category"))
 
     @property
     def description(self):

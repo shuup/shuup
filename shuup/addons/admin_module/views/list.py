@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from django import forms
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -22,6 +21,7 @@ from shuup.addons.manager import (
 from shuup.admin.toolbar import (
     NewActionButton, PostActionButton, Toolbar, URLActionButton
 )
+from shuup.utils.django_compat import reverse
 
 
 class AddonEnableDisableForm(forms.Form):

@@ -10,8 +10,8 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language
+from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 from reversion.models import Version
 
@@ -23,7 +23,7 @@ GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER = "gdpr_anonymize"
 
 @python_2_unicode_compatible
 class GDPRSettings(TranslatableModel):
-    shop = models.OneToOneField("shuup.Shop", related_name="gdpr_settings")
+    shop = models.OneToOneField("shuup.Shop", related_name="gdpr_settings", on_delete=models.CASCADE)
     enabled = models.BooleanField(
         default=False,
         verbose_name=_('enabled'),
@@ -35,7 +35,8 @@ class GDPRSettings(TranslatableModel):
         help_text=_("Do not require consent on login when GDPR is activated.")
     )
     privacy_policy_page = models.ForeignKey(
-        "shuup_simple_cms.Page",
+        on_delete=models.CASCADE,
+        to="shuup_simple_cms.Page",
         null=True,
         verbose_name=_("privacy policy page"),
         help_text=_("Choose your privacy policy page here. If this page changes, customers will be "
@@ -94,7 +95,7 @@ class GDPRSettings(TranslatableModel):
 
 @python_2_unicode_compatible
 class GDPRCookieCategory(TranslatableModel):
-    shop = models.ForeignKey("shuup.Shop", related_name="gdpr_cookie_categories")
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="gdpr_cookie_categories")
     always_active = models.BooleanField(default=False, verbose_name=_('always active'))
     default_active = models.BooleanField(
         verbose_name=_('active by default'),
@@ -135,7 +136,8 @@ class GDPRUserConsent(models.Model):
         verbose_name=_("created on")
     )
     shop = models.ForeignKey(
-        "shuup.Shop",
+        on_delete=models.CASCADE,
+        to="shuup.Shop",
         related_name="gdpr_consents",
         editable=False
     )
@@ -143,7 +145,7 @@ class GDPRUserConsent(models.Model):
         settings.AUTH_USER_MODEL,
         related_name='gdpr_consents',
         on_delete=models.PROTECT,
-        editable=False
+        editable=False,
     )
     documents = models.ManyToManyField(
         "GDPRUserConsentDocument",
@@ -210,8 +212,8 @@ class GDPRUserConsent(models.Model):
 
 @python_2_unicode_compatible
 class GDPRUserConsentDocument(models.Model):
-    page = models.ForeignKey("shuup_simple_cms.Page")
-    version = models.ForeignKey(Version)
+    page = models.ForeignKey(on_delete=models.CASCADE, to="shuup_simple_cms.Page")
+    version = models.ForeignKey(on_delete=models.CASCADE, to=Version)
 
     def __str__(self):
         return _("GDPR user consent document for {} (Version: {})").format(self.page, self.version)

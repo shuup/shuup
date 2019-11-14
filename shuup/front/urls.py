@@ -31,7 +31,6 @@ from .views.payment import ProcessPaymentView
 from .views.product import ProductDetailView
 from .views.upload import media_upload
 
-
 # TODO: Check _not_here_yet URLs in this file
 
 

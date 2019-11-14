@@ -7,19 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import absolute_import
 
-import django
 import hashlib
 
+import django
 import six
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
-from django.utils.translation import ugettext as _
 from django.forms.models import modelform_factory
+from django.utils.translation import ugettext as _
 from filer.models import File, Folder, Image
 
 from shuup.core.models import MediaFile, MediaFolder
+from shuup.utils.django_compat import is_anonymous
 
 
 def file_size_validator(value):
@@ -48,6 +49,7 @@ else:
 
 class UploadImageForm(forms.Form):
     file = forms.ImageField(validators=[file_size_validator])
+
 
 
 def filer_folder_from_path(path):
@@ -98,7 +100,7 @@ def _filer_file_from_upload(model, request, path, upload_data, sha1=None):
     upload_form = file_form_cls(
         data={
             'original_filename': upload_data.name,
-            'owner': (request.user.pk if (request and not request.user.is_anonymous()) else None)
+            'owner': (request.user.pk if (request and not is_anonymous(request.user)) else None)
         },
         files={
             'file': upload_data

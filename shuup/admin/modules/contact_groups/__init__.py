@@ -24,7 +24,7 @@ class ContactGroupModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^contact_group/(?P<pk>\d+)/delete/$",
+                r"^contact_group/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.contact_groups.views.ContactGroupDeleteView",
                 name="contact_group.delete"
             )

@@ -20,7 +20,7 @@ from shuup.utils.analog import define_log_model
 
 @python_2_unicode_compatible
 class Script(models.Model):
-    shop = models.ForeignKey("shuup.Shop", verbose_name=_("shop"))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"))
     event_identifier = models.CharField(max_length=64, blank=False, db_index=True, verbose_name=_('event identifier'))
     identifier = InternalIdentifierField(unique=True)
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))

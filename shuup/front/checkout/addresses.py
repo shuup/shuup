@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from django import forms
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.forms.models import model_to_dict
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
 
@@ -21,6 +20,7 @@ from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.front.utils.companies import (
     allow_company_registration, TaxNumberCleanMixin
 )
+from shuup.utils.django_compat import force_text
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
 

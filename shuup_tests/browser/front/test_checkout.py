@@ -8,7 +8,7 @@
 import os
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import OrderStatus, OrderStatusRole

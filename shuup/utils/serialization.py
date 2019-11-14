@@ -7,8 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 
 import django.core.serializers.json
-from django.utils.encoding import force_text
 from django.utils.functional import Promise
+
+from shuup.utils.django_compat import force_text
 
 
 class ExtendedJSONEncoder(django.core.serializers.json.DjangoJSONEncoder):

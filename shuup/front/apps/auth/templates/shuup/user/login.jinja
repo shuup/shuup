@@ -12,7 +12,7 @@
 
 
 {% block content %}
-    {% if user.is_authenticated() %}
+    {% if shuup.general.is_authenticated(user) %}
         <h1 class="page-header">
             {% trans %}Log in{% endtrans %}
         </h1>

@@ -10,11 +10,7 @@ from __future__ import unicode_literals
 import json
 
 import six
-from django.core.urlresolvers import (
-    NoReverseMatch, resolve, Resolver404, reverse
-)
 from django.middleware.csrf import get_token
-from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -24,6 +20,9 @@ from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.str_utils import camelcase_to_snakecase
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.apps.provides import get_provide_objects
+from shuup.utils.django_compat import (
+    force_text, NoReverseMatch, resolve, Resolver404, reverse
+)
 
 
 class BaseToolbarButtonProvider(object):

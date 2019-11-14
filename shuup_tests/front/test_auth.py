@@ -10,7 +10,7 @@ from django.conf import settings
 from django.contrib.auth import (REDIRECT_FIELD_NAME, get_user, get_user_model,
                                  logout)
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.forms import ValidationError
 
 from shuup.apps.provides import override_provides
@@ -18,6 +18,7 @@ from shuup.front.apps.auth.forms import EmailAuthenticationForm
 from shuup.front.signals import login_allowed
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import is_anonymous
 from shuup_tests.front.utils import FieldTestProvider, login_allowed_signal
 from shuup_tests.utils.fixtures import REGULAR_USER_PASSWORD, regular_user
 
@@ -50,7 +51,7 @@ def test_login_with_invalid_password(client, regular_user, rf):
 
     request = rf.get("/")
     request.session = client.session
-    assert get_user(request).is_anonymous(), "User is still anonymous"
+    assert is_anonymous(get_user(request)), "User is still anonymous"
 
 
 @pytest.mark.django_db
@@ -84,7 +85,7 @@ def test_login_fails_without_valid_password(client, regular_user, rf):
     })
     request = rf.get("/")
     request.session = client.session
-    assert get_user(request).is_anonymous(), "User is still anonymous"
+    assert is_anonymous(get_user(request)), "User is still anonymous"
 
 
 @pytest.mark.django_db
@@ -128,7 +129,7 @@ def test_login_with_email_2(client, regular_user, rf):
 
     request = rf.get("/")
     request.session = client.session
-    assert get_user(request).is_anonymous(), "User is still anonymous"
+    assert is_anonymous(get_user(request)), "User is still anonymous"
 
     # Login with unknown email
     client.post(reverse("shuup:login"), data={
@@ -139,7 +140,7 @@ def test_login_with_email_2(client, regular_user, rf):
 
     request = rf.get("/")
     request.session = client.session
-    assert get_user(request).is_anonymous(), "User is still anonymous"
+    assert is_anonymous(get_user(request)), "User is still anonymous"
 
     # Login with username should work normally
     response = client.post(reverse("shuup:login"), data={
@@ -217,7 +218,7 @@ def test_login_inactive_user_fails(client, regular_user, rf):
 
     request = rf.get("/")
     request.session = client.session
-    assert get_user(request).is_anonymous(), "User is still anonymous"
+    assert is_anonymous(get_user(request)), "User is still anonymous"
 
 
 @pytest.mark.django_db

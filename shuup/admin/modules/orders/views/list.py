@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
@@ -19,6 +18,7 @@ from shuup.admin.utils.picotable import (
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
+from shuup.utils.django_compat import reverse
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
 

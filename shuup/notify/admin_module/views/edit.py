@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
@@ -20,6 +19,7 @@ from shuup.apps.provides import get_identifier_to_object_map
 from shuup.notify.admin_module import SCRIPT_TEMPLATES_PROVIDE_CATEGORY
 from shuup.notify.admin_module.forms import ScriptForm
 from shuup.notify.models.script import Script
+from shuup.utils.django_compat import reverse
 
 
 class ScriptEditView(CreateOrUpdateView):

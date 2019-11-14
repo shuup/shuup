@@ -57,7 +57,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Attribute')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Attribute', on_delete=models.CASCADE)),  # noqa
             ],
             options={
                 'db_table': 'shuup_attribute_translation',
@@ -80,7 +80,7 @@ class Migration(migrations.Migration):
                 ('tree_id', models.PositiveIntegerField(db_index=True, editable=False)),
                 ('level', models.PositiveIntegerField(db_index=True, editable=False)),
                 ('image', filer.fields.image.FilerImageField(null=True, on_delete=django.db.models.deletion.SET_NULL, blank=True, verbose_name='image', to='filer.Image')),
-                ('parent', mptt.fields.TreeForeignKey(related_name='children', null=True, blank=True, verbose_name='parent category', to='shuup.Category')),
+                ('parent', mptt.fields.TreeForeignKey(related_name='children', null=True, blank=True, verbose_name='parent category', to='shuup.Category', on_delete=models.CASCADE)),  # noqa
             ],
             options={
                 'verbose_name': 'category',
@@ -98,7 +98,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(max_length=64, blank=True, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, verbose_name='extra data', null=True)),
-                ('target', models.ForeignKey(related_name='log_entries', to='shuup.Category', verbose_name='target')),
+                ('target', models.ForeignKey(related_name='log_entries', to='shuup.Category', verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, verbose_name='user', to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -113,7 +113,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=128, verbose_name='name')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('slug', models.SlugField(blank=True, verbose_name='slug', null=True)),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Category')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Category', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_category_translation',
@@ -180,7 +180,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ContactGroup')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ContactGroup', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_contactgroup_translation',
@@ -220,7 +220,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=100, verbose_name='name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.CustomerTaxGroup')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.CustomerTaxGroup', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_customertaxgroup_translation',
@@ -410,7 +410,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(max_length=64, blank=True, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, verbose_name='extra data', null=True)),
-                ('target', models.ForeignKey(related_name='log_entries', to='shuup.Order', verbose_name='target')),
+                ('target', models.ForeignKey(related_name='log_entries', to='shuup.Order', verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, verbose_name='user', to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -437,7 +437,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.OrderStatus')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.OrderStatus', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_orderstatus_translation',
@@ -489,7 +489,7 @@ class Migration(migrations.Migration):
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=100, verbose_name='name')),
                 ('description', models.CharField(max_length=500, blank=True, verbose_name='description')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.PaymentMethod')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.PaymentMethod', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_paymentmethod_translation',
@@ -551,8 +551,8 @@ class Migration(migrations.Migration):
                 ('numeric_value', models.DecimalField(max_digits=36, blank=True, verbose_name='numeric value', null=True, decimal_places=9)),
                 ('datetime_value', models.DateTimeField(blank=True, verbose_name='datetime value', null=True)),
                 ('untranslated_string_value', models.TextField(blank=True, verbose_name='untranslated value')),
-                ('attribute', models.ForeignKey(verbose_name='attribute', to='shuup.Attribute')),
-                ('product', models.ForeignKey(related_name='attributes', to='shuup.Product', verbose_name='product')),
+                ('attribute', models.ForeignKey(verbose_name='attribute', to='shuup.Attribute', on_delete=models.CASCADE)),
+                ('product', models.ForeignKey(related_name='attributes', to='shuup.Product', verbose_name='product', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'product attribute',
@@ -567,7 +567,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('translated_string_value', models.TextField(blank=True, verbose_name='translated value')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductAttribute')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductAttribute', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_productattribute_translation',
@@ -583,8 +583,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('weight', models.IntegerField(default=0, verbose_name='weight')),
                 ('type', enumfields.fields.EnumIntegerField(verbose_name='type', enum=shuup.core.models.ProductCrossSellType)),
-                ('product1', models.ForeignKey(related_name='cross_sell_1', to='shuup.Product', verbose_name='primary product')),
-                ('product2', models.ForeignKey(related_name='cross_sell_2', to='shuup.Product', verbose_name='secondary product')),
+                ('product1', models.ForeignKey(related_name='cross_sell_1', to='shuup.Product', verbose_name='primary product', on_delete=models.CASCADE)),
+                ('product2', models.ForeignKey(related_name='cross_sell_2', to='shuup.Product', verbose_name='secondary product', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'cross sell link',
@@ -600,7 +600,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(max_length=64, blank=True, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, verbose_name='extra data', null=True)),
-                ('target', models.ForeignKey(related_name='log_entries', to='shuup.Product', verbose_name='target')),
+                ('target', models.ForeignKey(related_name='log_entries', to='shuup.Product', verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, verbose_name='user', to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -618,8 +618,8 @@ class Migration(migrations.Migration):
                 ('enabled', models.BooleanField(default=True, verbose_name='enabled', db_index=True)),
                 ('public', models.BooleanField(default=True, verbose_name='public (shown on product page)')),
                 ('purchased', models.BooleanField(default=False, verbose_name='purchased (shown for finished purchases)')),
-                ('file', filer.fields.file.FilerFileField(null=True, blank=True, verbose_name='file', to='filer.File')),
-                ('product', models.ForeignKey(related_name='media', to='shuup.Product', verbose_name='product')),
+                ('file', filer.fields.file.FilerFileField(null=True, blank=True, verbose_name='file', to='filer.File', on_delete=models.CASCADE)),
+                ('product', models.ForeignKey(related_name='media', to='shuup.Product', verbose_name='product', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'product attachment',
@@ -635,7 +635,7 @@ class Migration(migrations.Migration):
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('title', models.CharField(max_length=128, blank=True, verbose_name='title')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductMedia')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductMedia', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_productmedia_translation',
@@ -650,8 +650,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('quantity', shuup.core.fields.QuantityField(default=1, max_digits=36, verbose_name='quantity', decimal_places=9)),
-                ('child', models.ForeignKey(related_name='+', to='shuup.Product', verbose_name='child product')),
-                ('parent', models.ForeignKey(related_name='+', to='shuup.Product', verbose_name='parent product')),
+                ('child', models.ForeignKey(related_name='+', to='shuup.Product', verbose_name='child product', on_delete=models.CASCADE)),
+                ('parent', models.ForeignKey(related_name='+', to='shuup.Product', verbose_name='parent product', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -665,7 +665,7 @@ class Migration(migrations.Migration):
                 ('keywords', models.TextField(blank=True, verbose_name='keywords')),
                 ('status_text', models.CharField(max_length=128, blank=True, verbose_name='status text', help_text='This text will be shown alongside the product in the shop. (Ex.: "Available in a month")')),
                 ('variation_name', models.CharField(max_length=128, blank=True, verbose_name='variation name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Product')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Product', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_product_translation',
@@ -694,7 +694,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductType')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductType', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_producttype_translation',
@@ -710,8 +710,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('combination_hash', models.CharField(max_length=40, unique=True, verbose_name='combination hash', db_index=True)),
                 ('status', enumfields.fields.EnumIntegerField(default=1, enum=shuup.core.models.ProductVariationLinkStatus, verbose_name='status', db_index=True)),
-                ('product', models.ForeignKey(related_name='variation_result_supers', to='shuup.Product', verbose_name='product')),
-                ('result', models.ForeignKey(related_name='variation_result_subs', to='shuup.Product', verbose_name='result')),
+                ('product', models.ForeignKey(related_name='variation_result_supers', to='shuup.Product', verbose_name='product', on_delete=models.CASCADE)),
+                ('result', models.ForeignKey(related_name='variation_result_subs', to='shuup.Product', verbose_name='result', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'variation result',
@@ -723,7 +723,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('identifier', shuup.core.fields.InternalIdentifierField(null=True, editable=False, max_length=64, blank=True, unique=False)),
-                ('product', models.ForeignKey(related_name='variation_variables', to='shuup.Product', verbose_name='product')),
+                ('product', models.ForeignKey(related_name='variation_variables', to='shuup.Product', verbose_name='product', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'variation variable',
@@ -737,7 +737,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=128, verbose_name='name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductVariationVariable')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductVariationVariable', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_productvariationvariable_translation',
@@ -752,7 +752,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('identifier', shuup.core.fields.InternalIdentifierField(null=True, editable=False, max_length=64, blank=True, unique=False)),
-                ('variable', models.ForeignKey(related_name='values', to='shuup.ProductVariationVariable', verbose_name='variation variable')),
+                ('variable', models.ForeignKey(related_name='values', to='shuup.ProductVariationVariable', verbose_name='variation variable', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'variation value',
@@ -766,7 +766,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('value', models.CharField(max_length=128, verbose_name='value')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductVariationVariableValue')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ProductVariationVariableValue', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_productvariationvariablevalue_translation',
@@ -796,7 +796,7 @@ class Migration(migrations.Migration):
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=128, verbose_name='name')),
                 ('short_name', models.CharField(max_length=128, verbose_name='short name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.SalesUnit')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.SalesUnit', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_salesunit_translation',
@@ -813,7 +813,7 @@ class Migration(migrations.Migration):
                 ('role', enumfields.fields.EnumIntegerField(default=1, verbose_name='role', enum=shuup.core.models.SavedAddressRole)),
                 ('status', enumfields.fields.EnumIntegerField(default=1, verbose_name='status', enum=shuup.core.models.SavedAddressStatus)),
                 ('title', models.CharField(max_length=255, blank=True, verbose_name='title')),
-                ('address', models.ForeignKey(related_name='saved_addresses', to='shuup.MutableAddress', verbose_name='address')),
+                ('address', models.ForeignKey(related_name='saved_addresses', to='shuup.MutableAddress', verbose_name='address', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'saved address',
@@ -882,7 +882,7 @@ class Migration(migrations.Migration):
                 ('quantity', shuup.core.fields.QuantityField(default=0, max_digits=36, verbose_name='quantity', decimal_places=9)),
                 ('unit_volume', shuup.core.fields.MeasurementField(default=0, max_digits=36, verbose_name='unit volume', decimal_places=9, unit='m3')),
                 ('unit_weight', shuup.core.fields.MeasurementField(default=0, max_digits=36, verbose_name='unit weight', decimal_places=9, unit='g')),
-                ('product', models.ForeignKey(related_name='shipments', to='shuup.Product', verbose_name='product')),
+                ('product', models.ForeignKey(related_name='shipments', to='shuup.Product', verbose_name='product', on_delete=models.CASCADE)),
                 ('shipment', models.ForeignKey(related_name='products', to='shuup.Shipment', on_delete=django.db.models.deletion.PROTECT, verbose_name='shipment')),
             ],
             options={
@@ -913,7 +913,7 @@ class Migration(migrations.Migration):
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=100, verbose_name='name')),
                 ('description', models.CharField(max_length=500, blank=True, verbose_name='description')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ShippingMethod')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.ShippingMethod', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_shippingmethod_translation',
@@ -960,9 +960,9 @@ class Migration(migrations.Migration):
                 ('categories', models.ManyToManyField(related_name='shop_products', blank=True, verbose_name='categories', to='shuup.Category')),
                 ('payment_methods', models.ManyToManyField(related_name='payment_products', blank=True, verbose_name='payment methods', to='shuup.PaymentMethod')),
                 ('primary_category', models.ForeignKey(related_name='primary_shop_products', null=True, on_delete=django.db.models.deletion.PROTECT, blank=True, verbose_name='primary category', to='shuup.Category')),
-                ('product', shuup.core.fields.UnsavedForeignKey(related_name='shop_products', to='shuup.Product', verbose_name='product')),
+                ('product', shuup.core.fields.UnsavedForeignKey(related_name='shop_products', to='shuup.Product', verbose_name='product', on_delete=models.CASCADE)),
                 ('shipping_methods', models.ManyToManyField(related_name='shipping_products', blank=True, verbose_name='shipping methods', to='shuup.ShippingMethod')),
-                ('shop', models.ForeignKey(related_name='shop_products', to='shuup.Shop', verbose_name='shop')),
+                ('shop', models.ForeignKey(related_name='shop_products', to='shuup.Shop', verbose_name='shop', on_delete=models.CASCADE)),
                 ('shop_primary_image', models.ForeignKey(related_name='primary_image_for_shop_products', null=True, on_delete=django.db.models.deletion.SET_NULL, blank=True, verbose_name='primary image', to='shuup.ProductMedia')),
             ],
             bases=(shuup.utils.properties.MoneyPropped, models.Model),
@@ -975,7 +975,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=64, verbose_name='name')),
                 ('public_name', models.CharField(max_length=64, verbose_name='public name')),
                 ('maintenance_message', models.CharField(max_length=300, blank=True, verbose_name='maintenance message')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Shop')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Shop', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_shop_translation',
@@ -993,7 +993,7 @@ class Migration(migrations.Migration):
                 ('alert_limit', models.IntegerField(default=0, verbose_name='alert limit')),
                 ('physical_count', shuup.core.fields.QuantityField(default=0, max_digits=36, verbose_name='physical stock count', decimal_places=9, editable=False)),
                 ('logical_count', shuup.core.fields.QuantityField(default=0, max_digits=36, verbose_name='logical stock count', decimal_places=9, editable=False)),
-                ('product', models.ForeignKey(verbose_name='product', to='shuup.Product')),
+                ('product', models.ForeignKey(verbose_name='product', to='shuup.Product', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -1047,7 +1047,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=100, verbose_name='name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.TaxClass')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.TaxClass', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_taxclass_translation',
@@ -1063,7 +1063,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Tax')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.Tax', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_tax_translation',
@@ -1107,7 +1107,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('language_code', models.CharField(max_length=15, verbose_name='Language', db_index=True)),
                 ('description', models.CharField(max_length=100, blank=True, verbose_name='description')),
-                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.WeightBasedPriceRange')),
+                ('master', models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.WeightBasedPriceRange', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_weightbasedpricerange_translation',
@@ -1120,7 +1120,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AnonymousContact',
             fields=[
-                ('contact_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.Contact')),
+                ('contact_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.Contact', on_delete=models.CASCADE)),
             ],
             options={
                 'managed': False,
@@ -1130,7 +1130,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Carrier',
             fields=[
-                ('serviceprovider_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceProvider')),
+                ('serviceprovider_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceProvider', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -1140,7 +1140,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CompanyContact',
             fields=[
-                ('contact_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.Contact')),
+                ('contact_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.Contact', on_delete=models.CASCADE)),
                 ('tax_number', models.CharField(max_length=32, blank=True, verbose_name='tax number', help_text='e.g. EIN in US or VAT code in Europe')),
             ],
             options={
@@ -1152,7 +1152,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FixedCostBehaviorComponent',
             fields=[
-                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent')),
+                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent', on_delete=models.CASCADE)),
                 ('price_value', shuup.core.fields.MoneyValueField(max_digits=36, decimal_places=9)),
             ],
             options={
@@ -1163,7 +1163,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GroupAvailabilityBehaviorComponent',
             fields=[
-                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent')),
+                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -1173,7 +1173,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PaymentProcessor',
             fields=[
-                ('serviceprovider_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceProvider')),
+                ('serviceprovider_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceProvider', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -1183,12 +1183,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PersonContact',
             fields=[
-                ('contact_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.Contact')),
+                ('contact_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.Contact', on_delete=models.CASCADE)),
                 ('gender', enumfields.fields.EnumField(default='u', max_length=4, verbose_name='gender', enum=shuup.core.models.Gender)),
                 ('birth_date', models.DateField(blank=True, verbose_name='birth date', null=True)),
                 ('first_name', models.CharField(max_length=30, blank=True, verbose_name='first name')),
                 ('last_name', models.CharField(max_length=50, blank=True, verbose_name='last name')),
-                ('user', models.OneToOneField(related_name='contact', blank=True, null=True, verbose_name='user', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(related_name='contact', blank=True, null=True, verbose_name='user', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'person',
@@ -1199,7 +1199,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='RoundingBehaviorComponent',
             fields=[
-                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent')),
+                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent', on_delete=models.CASCADE)),
                 ('quant', models.DecimalField(default=Decimal('0.05'), max_digits=36, verbose_name='rounding quant', decimal_places=9)),
                 ('mode', enumfields.fields.EnumField(default='ROUND_HALF_UP', max_length=50, verbose_name='rounding mode', enum=shuup.core.models.RoundingMode)),
             ],
@@ -1211,7 +1211,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='StaffOnlyBehaviorComponent',
             fields=[
-                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent')),
+                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -1221,7 +1221,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='WaivingCostBehaviorComponent',
             fields=[
-                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent')),
+                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent', on_delete=models.CASCADE)),
                 ('price_value', shuup.core.fields.MoneyValueField(max_digits=36, decimal_places=9)),
                 ('waive_limit_value', shuup.core.fields.MoneyValueField(max_digits=36, decimal_places=9)),
             ],
@@ -1233,7 +1233,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='WeightBasedPricingBehaviorComponent',
             fields=[
-                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent')),
+                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -1243,7 +1243,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='WeightLimitsBehaviorComponent',
             fields=[
-                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent')),
+                ('servicebehaviorcomponent_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.ServiceBehaviorComponent', on_delete=models.CASCADE)),
                 ('min_weight', models.DecimalField(max_digits=36, blank=True, verbose_name='minimum weight', null=True, decimal_places=6)),
                 ('max_weight', models.DecimalField(max_digits=36, blank=True, verbose_name='maximum weight', null=True, decimal_places=6)),
             ],
@@ -1255,7 +1255,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='suppliedproduct',
             name='supplier',
-            field=models.ForeignKey(verbose_name='supplier', to='shuup.Supplier'),
+            field=models.ForeignKey(verbose_name='supplier', to='shuup.Supplier', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='shopproduct',
@@ -1285,7 +1285,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='shippingmethod',
             name='shop',
-            field=models.ForeignKey(verbose_name='shop', to='shuup.Shop'),
+            field=models.ForeignKey(verbose_name='shop', to='shuup.Shop', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='shippingmethod',
@@ -1300,7 +1300,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='serviceprovidertranslation',
             name='master',
-            field=models.ForeignKey(related_name='base_translations', null=True, editable=False, to='shuup.ServiceProvider'),
+            field=models.ForeignKey(related_name='base_translations', null=True, editable=False, to='shuup.ServiceProvider', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='serviceprovider',
@@ -1310,17 +1310,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='serviceprovider',
             name='polymorphic_ctype',
-            field=models.ForeignKey(related_name='polymorphic_shuup.serviceprovider_set+', null=True, editable=False, to='contenttypes.ContentType'),
+            field=models.ForeignKey(related_name='polymorphic_shuup.serviceprovider_set+', null=True, editable=False, to='contenttypes.ContentType', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='servicebehaviorcomponent',
             name='polymorphic_ctype',
-            field=models.ForeignKey(related_name='polymorphic_shuup.servicebehaviorcomponent_set+', null=True, editable=False, to='contenttypes.ContentType'),
+            field=models.ForeignKey(related_name='polymorphic_shuup.servicebehaviorcomponent_set+', null=True, editable=False, to='contenttypes.ContentType', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='savedaddress',
             name='owner',
-            field=models.ForeignKey(verbose_name='owner', to='shuup.Contact'),
+            field=models.ForeignKey(verbose_name='owner', to='shuup.Contact', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='productmedia',
@@ -1369,7 +1369,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='paymentmethod',
             name='shop',
-            field=models.ForeignKey(verbose_name='shop', to='shuup.Shop'),
+            field=models.ForeignKey(verbose_name='shop', to='shuup.Shop', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='paymentmethod',
@@ -1454,7 +1454,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contact',
             name='polymorphic_ctype',
-            field=models.ForeignKey(related_name='polymorphic_shuup.contact_set+', null=True, editable=False, to='contenttypes.ContentType'),
+            field=models.ForeignKey(related_name='polymorphic_shuup.contact_set+', null=True, editable=False, to='contenttypes.ContentType', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='contact',
@@ -1464,7 +1464,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='configurationitem',
             name='shop',
-            field=models.ForeignKey(related_name='+', null=True, blank=True, verbose_name='shop', to='shuup.Shop'),
+            field=models.ForeignKey(related_name='+', null=True, blank=True, verbose_name='shop', to='shuup.Shop', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='category',
@@ -1479,7 +1479,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CustomCarrier',
             fields=[
-                ('carrier_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.Carrier')),
+                ('carrier_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.Carrier', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'custom carrier',
@@ -1490,7 +1490,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CustomPaymentProcessor',
             fields=[
-                ('paymentprocessor_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.PaymentProcessor')),
+                ('paymentprocessor_ptr', models.OneToOneField(auto_created=True, primary_key=True, serialize=False, parent_link=True, to='shuup.PaymentProcessor', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'custom payment processor',
@@ -1505,12 +1505,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='weightbasedpricerange',
             name='component',
-            field=models.ForeignKey(related_name='ranges', to='shuup.WeightBasedPricingBehaviorComponent'),
+            field=models.ForeignKey(related_name='ranges', to='shuup.WeightBasedPricingBehaviorComponent', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='waivingcostbehaviorcomponenttranslation',
             name='master',
-            field=models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.WaivingCostBehaviorComponent'),
+            field=models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.WaivingCostBehaviorComponent', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='taxtranslation',
@@ -1611,7 +1611,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='fixedcostbehaviorcomponenttranslation',
             name='master',
-            field=models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.FixedCostBehaviorComponent'),
+            field=models.ForeignKey(related_name='translations', null=True, editable=False, to='shuup.FixedCostBehaviorComponent', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='customertaxgrouptranslation',
@@ -1624,7 +1624,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contact',
             name='account_manager',
-            field=models.ForeignKey(null=True, blank=True, verbose_name='account manager', to='shuup.PersonContact'),
+            field=models.ForeignKey(null=True, blank=True, verbose_name='account manager', to='shuup.PersonContact', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='configurationitem',

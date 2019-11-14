@@ -15,8 +15,8 @@ from django.utils.translation import ugettext_lazy as _
 
 @python_2_unicode_compatible
 class CouponUsage(models.Model):
-    coupon = models.ForeignKey("discounts.CouponCode", related_name="usages")
-    order = models.ForeignKey("shuup.Order", related_name="discounts_coupon_usages")
+    coupon = models.ForeignKey(on_delete=models.CASCADE, to="discounts.CouponCode", related_name="usages")
+    order = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Order", related_name="discounts_coupon_usages")
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
 
     def __str__(self):

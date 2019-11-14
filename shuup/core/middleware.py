@@ -10,10 +10,10 @@ from __future__ import unicode_literals
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.http.response import JsonResponse
 from django.shortcuts import render
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.shop_provider import get_shop
+from shuup.utils.django_compat import force_text, MiddlewareMixin
 from shuup.utils.excs import ExceptionalResponse, Problem
 
 try:
