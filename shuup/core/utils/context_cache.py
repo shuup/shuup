@@ -61,35 +61,56 @@ def set_cached_value(key, value, timeout=None):
     cache.set(key, value, timeout=timeout)
 
 
-def bump_cache_for_shop_product(shop_product):
+def bump_cache_for_shop_product(shop_product, shop=None):
     """
     Bump cache for given shop product
 
     Clear cache for shop product, product linked to it and
     all the children.
 
-    :param shop_product: shop product object
+    :param shop_product: shop product object or shop product object id
     :type shop_product: shuup.core.models.ShopProduct
     """
-    from shuup.core.models import ShopProduct
-    bump_cache_for_item(shop_product)
-    bump_cache_for_item(shop_product.product)
+    from shuup.core.models import ShopProduct, ProductPackageLink, Product
 
-    q = Q()
-    q |= Q(product__variation_parent_id=shop_product.product)
-    if shop_product.product.variation_parent:
-        q |= Q(product_id=shop_product.product.variation_parent.id)
+    if not isinstance(shop_product, ShopProduct):
+        shop_product_id = shop_product
+    else:
+        shop_product_id = shop_product.id
 
-    for child in ShopProduct.objects.filter(q).select_related("product"):
-        bump_cache_for_item(child)
-        bump_cache_for_item(child.product)
+    # Get all normal products linked to passed
+    # shop product id
+    product_ids = Product.objects.filter(
+        shop_products__id=shop_product_id
+    ).values_list("id", flat=True)
 
-    # Bump all package parents
-    if shop_product.product.is_package_child():
-        for package_parent in shop_product.product.get_all_package_parents():
-            for sp in ShopProduct.objects.filter(product_id=package_parent.id):
-                bump_cache_for_item(sp)
-                bump_cache_for_item(sp.product)
+    # Get all affect variation parent ids just in
+    # case passed shop product ids includes child
+    # products we need to bump simplings
+    variation_parent_ids = Product.objects.filter(
+        id__in=product_ids
+    ).values_list("variation_parent_id", flat=True)
+
+    # Get all packages or products in any package
+    package_product_ids = ProductPackageLink.objects.filter(
+        Q(parent_id__in=product_ids) | Q(child_id__in=product_ids)
+    ).values_list("child_id", "parent_id")
+
+    # All above querysets should in theory be lazy and executed once
+    # here
+    product_ids_to_bump = Product.objects.filter(
+        Q(id__in=product_ids) |
+        Q(variation_parent_id__in=product_ids) |
+        Q(variation_parent_id__in=variation_parent_ids) |
+        Q(id__in=set(value for pair_of_values in package_product_ids for value in pair_of_values)
+          )).values_list("id", flat=True)
+    # One extra query should be better what we have now
+    shop_product_ids_to_bump = ShopProduct.objects.filter(
+        product_id__in=product_ids_to_bump
+    ).values_list("id", flat=True)
+
+    bump_cache_for_item_ids(shop_product_ids_to_bump, "shuup-shopproduct", ShopProduct, shop)
+    bump_cache_for_item_ids(product_ids_to_bump, "shuup-product", Product, shop)
 
 
 def bump_cache_for_product(product, shop=None):
@@ -99,21 +120,37 @@ def bump_cache_for_product(product, shop=None):
     In case shop is not given all the shop products
     for the product is bumped.
 
-    :param product: product object
+    :param product: product object or product object id or a list of product object id's
     :type product: shuup.core.models.Product
     :param shop: shop object
     :type shop: shuup.core.models.Shop|None
     """
     from shuup.core.models import ShopProduct
-    if not shop:
-        for sp in ShopProduct.objects.filter(product_id=product.id):
-            bump_cache_for_shop_product(sp)
+
+    if not isinstance(product, list):
+        product_id = (product.id if hasattr(product, "id") else product)
+        products = [product_id]
     else:
-        try:
-            shop_product = product.get_shop_instance(shop=shop, allow_cache=False)
-            bump_cache_for_shop_product(shop_product)
-        except ShopProduct.DoesNotExist:
-            bump_cache_for_item(product)
+        products = product
+
+    shop_product_ids = ShopProduct.objects.filter(product_id__in=products).values_list("pk", flat=True)
+    for shop_product_id in shop_product_ids:
+        bump_cache_for_shop_product(shop_product_id, shop)
+
+
+def bump_cache_for_item_ids(item_ids, namespace, object_class, shop=None):
+    """
+    Bump cache for given item ids
+
+    Use this only for non product items. For products
+    and shop_products use `bump_cache_for_product` and
+    `bump_cache_for_shop_product` for those.
+
+    :param ids: list of cached object id's
+    """
+    for item_id in item_ids:
+        cache.bump_version("{}-{}".format(namespace, item_id))
+        context_cache_item_bumped.send(object_class, item=item_id, shop=shop)
 
 
 def bump_cache_for_item(item):
