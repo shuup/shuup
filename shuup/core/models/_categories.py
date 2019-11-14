@@ -132,7 +132,7 @@ class Category(MPTTModel, TranslatableModel):
     )
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=128, verbose_name=_('name'), help_text=_(
+        name=models.CharField(max_length=128, verbose_name=_('name'), db_index=True, help_text=_(
                 "Enter a descriptive name for your product category. "
                 "Products can be found in menus and in search in your store under the category name."
             )
