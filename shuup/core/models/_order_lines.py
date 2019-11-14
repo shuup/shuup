@@ -12,6 +12,7 @@ from django.db import models
 from django.db.models import Sum
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 
@@ -101,7 +102,9 @@ class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
     discount_amount_value = MoneyValueField(verbose_name=_('total amount of discount'), default=0)
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on'))
-    modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_('modified on'))
+    modified_on = models.DateTimeField(
+        default=timezone.now, editable=False, db_index=True, verbose_name=_('modified on')
+    )
 
     objects = OrderLineManager()
 
