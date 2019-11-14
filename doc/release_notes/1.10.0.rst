@@ -1,0 +1,7 @@
+Shuup 1.10.0 Release Notes
+==========================
+
+Released on 2019-11-14 7:15am +0200.
+
+List of changes see `Git commit log
+<https://github.com/shuup/shuup/commits/v1.10.0>`__.

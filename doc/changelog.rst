@@ -4,10 +4,14 @@ Shuup Change Log
 Unrealeased
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Shuup 1.10.0
+------------
+
+Released on 2019-11-14 7:15am +0200.
+
+Remove API code and move to separated repositories Shuup API and
+Shuup REST API both available through PyPI and still included in
+default installation.
 
 
 Shuup 1.9.13

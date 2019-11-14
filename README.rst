@@ -123,7 +123,6 @@ OS Addons
 * `Shuup Xtheme Layouts <https://github.com/shuup/shuup-xtheme-extra-layouts>`__. Xtheme layouts for Shuup.
 * `Shuup Category Organizer <https://github.com/shuup/shuup-category-organizer>`__. Shuup Category Organizer.
 * `Shuup Logging <https://github.com/shuup/shuup-logging>`__. Shuup Logging.
-* `Shuup REST API <https://github.com/shuup/shuup-rest-api>`__. Shuup REST API.
 
 The purpose of these addons, is to demonstrate how to build
 other simple addons to extend Shuup. To learn more, here are
