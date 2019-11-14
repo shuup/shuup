@@ -94,7 +94,7 @@ class ContactGroup(TranslatableShuupModel):
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64, verbose_name=_('name'), help_text=_(
+        name=models.CharField(max_length=256, verbose_name=_('name'), help_text=_(
             "The contact group name. "
             "Contact groups can be used to target sales and campaigns to specific set of users."
         )),
