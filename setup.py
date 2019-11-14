@@ -99,8 +99,6 @@ REQUIRES = [
     'django-reversion>=2,<3',
     'django-timezone-field>=1.2,<3',
     'djangorestframework>=3.5,<3.6',
-    'djangorestframework-jwt>=1.9,<2',
-    'django_rest_swagger>=2.1.0,<2.2',
     'factory-boy==2.7.0',
     'fake-factory>=0.5.0,<0.5.4',
     'Jinja2==2.8.1',
@@ -114,6 +112,8 @@ REQUIRES = [
     'toml>=0.10.0, <1'
     'pytz>=2015.4',
     'requests>=2.7,<3',
+    'shuup-api>=1.0,<2',
+    'shuup-rest-api>=1.0,<2',
     'six>=1.9,<2',
     'unicodecsv==0.14.1',
     'xlrd>=1'

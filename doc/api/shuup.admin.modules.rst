@@ -16,6 +16,7 @@ Subpackages
     shuup.admin.modules.labels
     shuup.admin.modules.manufacturers
     shuup.admin.modules.media
+    shuup.admin.modules.menu
     shuup.admin.modules.orders
     shuup.admin.modules.permission_groups
     shuup.admin.modules.product_types

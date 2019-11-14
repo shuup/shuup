@@ -156,6 +156,14 @@ shuup.core.utils.slugs module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.utils.static module
+------------------------------
+
+.. automodule:: shuup.core.utils.static
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.utils.tax\_numbers module
 ------------------------------------
 

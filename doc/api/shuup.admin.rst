@@ -26,6 +26,14 @@ shuup.admin.base module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.browser\_config module
+----------------------------------
+
+.. automodule:: shuup.admin.browser_config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.currencybound module
 --------------------------------
 
@@ -102,6 +110,14 @@ shuup.admin.signals module
 --------------------------
 
 .. automodule:: shuup.admin.signals
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.admin.supplier\_provider module
+-------------------------------------
+
+.. automodule:: shuup.admin.supplier_provider
     :members:
     :undoc-members:
     :show-inheritance:

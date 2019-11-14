@@ -26,9 +26,6 @@ class CustomerGroupPricingAppConfig(shuup.apps.AppConfig):
             __name__ + ".admin_form_part:CustomerGroupPricingFormPart",
             __name__ + ".admin_form_part:CustomerGroupPricingDiscountFormPart"
         ],
-        "api_populator": [
-            __name__ + ".api:populate_customer_group_pricing_api"
-        ]
     }
 
     def ready(self):
