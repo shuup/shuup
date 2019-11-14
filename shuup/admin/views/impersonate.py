@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 from django.contrib.auth import get_user_model, load_backend, login, logout
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 
 from shuup.admin.utils.permissions import has_permission

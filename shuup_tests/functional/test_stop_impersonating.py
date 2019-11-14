@@ -8,7 +8,6 @@
 import pytest
 
 from django.contrib.auth import get_user
-from django.core.urlresolvers import reverse
 
 from shuup.admin.modules.users.views import LoginAsUserView
 from shuup.core.models import get_person_contact
@@ -16,6 +15,7 @@ from shuup.front.template_helpers.urls import get_logout_url
 from shuup.front.views.misc import stop_impersonating
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils.fixtures import regular_user
 
 

@@ -83,11 +83,11 @@ def _parse_date_str(value):
     for fmt in _date_formats:
         try:
             return datetime.datetime.strptime(value, fmt).date()
-        except:
+        except Exception:
             pass
     try:
         return datetime.datetime.strptime(value, "%Y-%m-%d %H:%M:%S.%f").date()
-    except:
+    except Exception:
         pass
 
 
@@ -96,11 +96,11 @@ def _parse_datetime_str(value):
     for fmt in itertools.chain.from_iterable((_datetime_formats, _date_formats)):
         try:
             return datetime.datetime.strptime(value, fmt)
-        except:
+        except Exception:
             pass
     try:
         return datetime.datetime.strptime(value, "%Y-%m-%d %H:%M:%S.%f")
-    except:
+    except Exception:
         pass
 
 
@@ -109,7 +109,7 @@ def _parse_time_str(value):
     for fmt in _time_formats:
         try:
             return datetime.datetime.strptime(value, fmt).time()
-        except:
+        except Exception:
             pass
     return None
 

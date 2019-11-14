@@ -10,6 +10,7 @@ import logging
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Shop
+from shuup.utils.django_compat import MiddlewareMixin
 from shuup.xtheme import get_current_theme
 
 try:

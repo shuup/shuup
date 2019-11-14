@@ -5,13 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.urlresolvers import NoReverseMatch
 from django.forms import Select, SelectMultiple
 from django.forms.utils import flatatt
-from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+
+from shuup.utils.django_compat import force_text, NoReverseMatch
 
 
 class NoModel(object):

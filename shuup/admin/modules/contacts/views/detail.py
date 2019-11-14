@@ -12,9 +12,8 @@ import warnings
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from django.http.response import HttpResponseRedirect
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
@@ -31,6 +30,7 @@ from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, Contact
 from shuup.front.apps.registration.signals import company_contact_activated
 from shuup.utils.deprecation import RemovedFromShuupWarning
+from shuup.utils.django_compat import force_text, reverse
 from shuup.utils.excs import Problem
 
 

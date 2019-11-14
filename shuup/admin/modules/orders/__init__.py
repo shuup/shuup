@@ -28,83 +28,83 @@ class OrderModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^orders/(?P<pk>\d+)/create-shipment/(?P<supplier_pk>\d+)/$",
+                r"^orders/(?P<pk>\d+)/create-shipment/(?P<supplier_pk>\d+)/$",
                 "shuup.admin.modules.orders.views.OrderCreateShipmentView",
                 name="order.create-shipment"
             ),
             admin_url(
-                "^shipments/(?P<pk>\d+)/delete/$",
+                r"^shipments/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.orders.views.ShipmentDeleteView",
                 name="order.delete-shipment"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/create-payment/$",
+                r"^orders/(?P<pk>\d+)/create-payment/$",
                 "shuup.admin.modules.orders.views.OrderCreatePaymentView",
                 name="order.create-payment"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/delete-payment/$",
+                r"^orders/(?P<pk>\d+)/delete-payment/$",
                 "shuup.admin.modules.orders.views.OrderDeletePaymentView",
                 name="order.delete-payment"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/set-paid/$",
+                r"^orders/(?P<pk>\d+)/set-paid/$",
                 "shuup.admin.modules.orders.views.OrderSetPaidView",
                 name="order.set-paid"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/set-status/$",
+                r"^orders/(?P<pk>\d+)/set-status/$",
                 "shuup.admin.modules.orders.views.OrderSetStatusView",
                 name="order.set-status"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/new-log-entry/$",
+                r"^orders/(?P<pk>\d+)/new-log-entry/$",
                 "shuup.admin.modules.orders.views.NewLogEntryView",
                 name="order.new-log-entry"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/update-admin-comment/$",
+                r"^orders/(?P<pk>\d+)/update-admin-comment/$",
                 "shuup.admin.modules.orders.views.UpdateAdminCommentView",
                 name="order.update-admin-comment"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/create-refund/$",
+                r"^orders/(?P<pk>\d+)/create-refund/$",
                 "shuup.admin.modules.orders.views.OrderCreateRefundView",
                 name="order.create-refund"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/create-refund/full-refund$",
+                r"^orders/(?P<pk>\d+)/create-refund/full-refund$",
                 "shuup.admin.modules.orders.views.OrderCreateFullRefundView",
                 name="order.create-full-refund"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/$",
+                r"^orders/(?P<pk>\d+)/$",
                 "shuup.admin.modules.orders.views.OrderDetailView",
                 name="order.detail"
             ),
             admin_url(
-                "^orders/new/$",
+                r"^orders/new/$",
                 "shuup.admin.modules.orders.views.OrderEditView",
                 name="order.new"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/edit/$",
+                r"^orders/(?P<pk>\d+)/edit/$",
                 "shuup.admin.modules.orders.views.OrderEditView",
                 name="order.edit"
             ),
             admin_url(
-                "^orders/$",
+                r"^orders/$",
                 "shuup.admin.modules.orders.views.OrderListView",
                 name="order.list"
 
             ),
             admin_url(
-                "^orders/list-settings/",
+                r"^orders/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="order.list_settings"
             ),
             admin_url(
-                "^orders/(?P<pk>\d+)/edit-addresses/$",
+                r"^orders/(?P<pk>\d+)/edit-addresses/$",
                 "shuup.admin.modules.orders.views.OrderAddressEditView",
                 name="order.edit-addresses"
             ),

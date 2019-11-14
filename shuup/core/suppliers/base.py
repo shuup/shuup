@@ -6,13 +6,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.core.exceptions import ValidationError
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Product
 from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.utils import context_cache
+from shuup.utils.django_compat import force_text
 from shuup.utils.excs import Problem
 
 from .enums import StockAdjustmentType

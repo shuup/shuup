@@ -12,7 +12,6 @@ from collections import Counter
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
-from django.utils.encoding import force_text
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
@@ -28,6 +27,7 @@ from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
 from shuup.core.utils.line_unit_mixin import LineWithUnit
 from shuup.utils.decorators import non_reentrant
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import is_existing_language
 from shuup.utils.money import Money
 

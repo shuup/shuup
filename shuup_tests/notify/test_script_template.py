@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.template.defaultfilters import linebreaksbr
 from django.utils.translation import activate
 

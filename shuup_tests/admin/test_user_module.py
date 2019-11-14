@@ -13,7 +13,7 @@ from django.contrib.auth import get_user, get_user_model
 from django.contrib.auth.models import Group as PermissionGroup
 from django.core import mail
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.forms.models import modelform_factory
 from django.http.response import Http404
 from django.test import override_settings

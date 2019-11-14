@@ -8,7 +8,7 @@ import os
 
 from django.conf.urls import url
 from django.core.handlers.base import BaseHandler
-from django.core.urlresolvers import get_resolver
+
 from django.http import HttpResponse
 from django.http.response import Http404
 from django.test.utils import override_settings
@@ -19,6 +19,7 @@ from shuup.admin.views.dashboard import DashboardView
 from shuup.core.error_handling import install_error_handlers
 from shuup.front.error_handlers import FrontPageErrorHandler
 from shuup.front.views.index import IndexView
+from shuup.utils.django_compat import get_resolver
 from shuup_tests.utils import replace_urls
 
 
@@ -51,7 +52,8 @@ def test_front_error_handlers(rf):
     with override_settings(
         DEBUG=False,
         SHUUP_ERROR_PAGE_HANDLERS_SPEC=["shuup.front.error_handlers.FrontPageErrorHandler"],
-        MIDDLEWARE_CLASSES=[],
+        MIDDLEWARE_CLASSES=[],  # For Django < 2
+        MIDDLEWARE=[],
         TEMPLATES=[  # Overriden to be sure about the contents of our 500.jinja
             {
                 "BACKEND": "django_jinja.backend.Jinja2",
@@ -141,7 +143,8 @@ def test_admin_error_handlers(rf):
     with override_settings(
         DEBUG=False,
         SHUUP_ERROR_PAGE_HANDLERS_SPEC=["shuup.admin.error_handlers.AdminPageErrorHandler"],
-        MIDDLEWARE_CLASSES=[],
+        MIDDLEWARE_CLASSES=[],  # For Django 2
+        MIDDLEWARE=[],
         TEMPLATES=[  # Overriden to be sure about the contents of our 500.jinja
             {
                 "BACKEND": "django_jinja.backend.Jinja2",
@@ -228,7 +231,9 @@ def test_admin_error_handlers(rf):
 
 def test_install_error_handlers(rf):
     # no error handler set
-    with override_settings(DEBUG=False, SHUUP_ERROR_PAGE_HANDLERS_SPEC=[], MIDDLEWARE_CLASSES=[]):
+    with override_settings(
+        DEBUG=False, SHUUP_ERROR_PAGE_HANDLERS_SPEC=[], MIDDLEWARE_CLASSES=[], MIDDLEWARE=[]
+    ):
 
         def intact_view(request, *args, **kwargs):
             return HttpResponse("OK")

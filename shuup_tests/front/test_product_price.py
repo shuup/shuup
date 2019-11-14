@@ -11,7 +11,7 @@ from decimal import Decimal
 
 import pytest
 import six
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.core.models import Product, ShopProduct, Supplier
 from shuup.front.themes.views._product_price import ProductPriceView

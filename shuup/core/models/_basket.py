@@ -26,23 +26,23 @@ class Basket(MoneyPropped, models.Model):
     # A combination of the PK and key is used to retrieve a basket for session situations.
     key = models.CharField(max_length=32, default=generate_key, verbose_name=_('key'), unique=True, db_index=True)
 
-    shop = models.ForeignKey("Shop", on_delete=models.CASCADE, verbose_name=_('shop'))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="Shop", verbose_name=_('shop'))
 
     customer = models.ForeignKey(
-        "Contact", blank=True, null=True,
         on_delete=models.CASCADE,
+        to="Contact", blank=True, null=True,
         related_name="customer_core_baskets",
         verbose_name=_('customer')
     )
     orderer = models.ForeignKey(
-        "PersonContact", blank=True, null=True,
         on_delete=models.CASCADE,
+        to="PersonContact", blank=True, null=True,
         related_name="orderer_core_baskets",
         verbose_name=_('orderer')
     )
     creator = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True,
         on_delete=models.CASCADE,
+        to=settings.AUTH_USER_MODEL, blank=True, null=True,
         related_name="core_baskets_created",
         verbose_name=_('creator')
     )

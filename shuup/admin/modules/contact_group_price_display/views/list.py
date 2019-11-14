@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.modules.contact_group_price_display.views.forms import (
@@ -21,6 +20,7 @@ from shuup.core.models import (
     ContactGroupPriceDisplay, get_groups_for_price_display_create,
     get_price_displays_for_shop
 )
+from shuup.utils.django_compat import force_text
 
 
 class ContactGroupPriceDisplayListView(PicotableListView):

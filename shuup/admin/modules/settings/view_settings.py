@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import django
 import six
 from django.apps import apps
 from django.conf import settings
@@ -50,7 +51,7 @@ class ViewSettings(object):
                 # backwards compatibility
                 int(config)
                 old_mode = True
-            except:
+            except Exception:
                 old_mode = False
 
             column.ordering = config.get("ordering", 9999) if not old_mode else 9999
@@ -124,7 +125,13 @@ class ViewSettings(object):
         for field in model._meta.local_many_to_many:
             if field.name in defaults:
                 continue
-            if field.rel.to in models_from_all_models:
+
+            if django.VERSION < (1, 9):
+                to = field.rel.to
+            else:
+                to = field.remote_field.target_field
+
+            if to in models_from_all_models:
                 continue  # no need to have these...
 
             column = self._get_column(model, field, known_names, identifier)
@@ -138,8 +145,13 @@ class ViewSettings(object):
                 continue
             if field.name == "id" and model != self.model:
                 continue
-            if isinstance(field, ForeignKey) and field.rel.to in models_from_all_models:
-                continue  # no need to have these...
+
+            if django.VERSION < (1, 9):
+                if isinstance(field, ForeignKey) and field.rel.to in models_from_all_models:
+                    continue  # no need to have these...
+            else:
+                if isinstance(field, ForeignKey) and field.remote_field.target_field in models_from_all_models:
+                    continue  # no need to have these...
 
             column = self._get_column(model, field, known_names, identifier)
             if column:

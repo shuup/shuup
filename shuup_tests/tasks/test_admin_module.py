@@ -8,7 +8,7 @@
 import json
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import AnonymousContact, get_person_contact

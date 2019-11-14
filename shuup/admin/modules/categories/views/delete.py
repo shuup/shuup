@@ -9,13 +9,13 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.models import Category
+from shuup.utils.django_compat import reverse
 
 
 class CategoryDeleteView(DetailView):

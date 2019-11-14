@@ -10,7 +10,6 @@ import pytest
 
 from bs4 import BeautifulSoup
 from django.test import override_settings
-from django.utils.text import force_text
 
 from shuup.admin.modules.orders.views.refund import (
     OrderCreateFullRefundView, OrderCreateRefundView
@@ -21,6 +20,7 @@ from shuup.testing.factories import (
     create_product, get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import force_text
 
 
 @pytest.mark.django_db

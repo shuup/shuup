@@ -154,7 +154,8 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Attribute',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target',
+                    on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -183,7 +184,8 @@ class Migration(migrations.Migration):
                     to='shuup.Attribute',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True,
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'attribute Translation',
@@ -248,7 +250,8 @@ class Migration(migrations.Migration):
                     to=settings.AUTH_USER_MODEL,
                     blank=True,
                     verbose_name='creator',
-                    null=True)),
+                    null=True,
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'basket',
@@ -344,7 +347,8 @@ class Migration(migrations.Migration):
                     to='shuup.Category',
                     blank=True,
                     verbose_name='parent category',
-                    null=True)),
+                    null=True,
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'category',
@@ -375,7 +379,8 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Category',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target',
+                    on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -415,7 +420,8 @@ class Migration(migrations.Migration):
                     to='shuup.Category',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True,
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'category Translation',
@@ -607,7 +613,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.ContactGroup',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -636,7 +642,7 @@ class Migration(migrations.Migration):
                     to='shuup.ContactGroup',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'contact group Translation',
@@ -709,7 +715,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Currency',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -764,7 +770,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.CustomerTaxGroup',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -793,7 +799,7 @@ class Migration(migrations.Migration):
                     to='shuup.CustomerTaxGroup',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'customer tax group Translation',
@@ -874,7 +880,7 @@ class Migration(migrations.Migration):
                     to='shuup.DisplayUnit',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'display unit Translation',
@@ -1062,7 +1068,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Manufacturer',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -1390,7 +1396,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.OrderLine',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -1454,7 +1460,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.OrderLineTax',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -1487,7 +1493,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Order',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -1564,7 +1570,7 @@ class Migration(migrations.Migration):
                     to='shuup.OrderStatus',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'order status Translation',
@@ -1638,7 +1644,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Payment',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -1704,7 +1710,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.PaymentMethod',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -1739,7 +1745,7 @@ class Migration(migrations.Migration):
                     to='shuup.PaymentMethod',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'payment method Translation',
@@ -1963,11 +1969,11 @@ class Migration(migrations.Migration):
                 ('untranslated_string_value', models.TextField(
                     verbose_name='untranslated value', blank=True)),
                 ('attribute', models.ForeignKey(
-                    verbose_name='attribute', to='shuup.Attribute')),
+                    verbose_name='attribute', to='shuup.Attribute', on_delete=models.CASCADE),),
                 ('product', models.ForeignKey(
                     to='shuup.Product',
                     related_name='attributes',
-                    verbose_name='product')),
+                    verbose_name='product', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'product attribute',
@@ -1991,7 +1997,7 @@ class Migration(migrations.Migration):
                     to='shuup.ProductAttribute',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'product attribute Translation',
@@ -2016,11 +2022,11 @@ class Migration(migrations.Migration):
                 ('product1', models.ForeignKey(
                     to='shuup.Product',
                     related_name='cross_sell_1',
-                    verbose_name='primary product')),
+                    verbose_name='primary product', on_delete=models.CASCADE)),
                 ('product2', models.ForeignKey(
                     to='shuup.Product',
                     related_name='cross_sell_2',
-                    verbose_name='secondary product')),
+                    verbose_name='secondary product', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'cross sell link',
@@ -2049,7 +2055,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Product',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -2107,11 +2113,11 @@ class Migration(migrations.Migration):
                     to='filer.File',
                     blank=True,
                     verbose_name='file',
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
                 ('product', models.ForeignKey(
                     to='shuup.Product',
                     related_name='media',
-                    verbose_name='product')),
+                    verbose_name='product', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'product attachment',
@@ -2142,7 +2148,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.ProductMedia',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -2177,7 +2183,7 @@ class Migration(migrations.Migration):
                     to='shuup.ProductMedia',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'product attachment Translation',
@@ -2202,11 +2208,11 @@ class Migration(migrations.Migration):
                 ('child', models.ForeignKey(
                     to='shuup.Product',
                     related_name='+',
-                    verbose_name='child product')),
+                    verbose_name='child product', on_delete=models.CASCADE)),
                 ('parent', models.ForeignKey(
                     to='shuup.Product',
                     related_name='+',
-                    verbose_name='parent product')),
+                    verbose_name='parent product', on_delete=models.CASCADE)),
             ],),
         migrations.CreateModel(
             name='ProductTranslation',
@@ -2262,7 +2268,7 @@ class Migration(migrations.Migration):
                     to='shuup.Product',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'product Translation',
@@ -2317,7 +2323,7 @@ class Migration(migrations.Migration):
                     to='shuup.ProductType',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'product type Translation',
@@ -2347,11 +2353,11 @@ class Migration(migrations.Migration):
                 ('product', models.ForeignKey(
                     to='shuup.Product',
                     related_name='variation_result_supers',
-                    verbose_name='product')),
+                    verbose_name='product', on_delete=models.CASCADE)),
                 ('result', models.ForeignKey(
                     to='shuup.Product',
                     related_name='variation_result_subs',
-                    verbose_name='result')),
+                    verbose_name='result', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'variation result',
@@ -2376,7 +2382,7 @@ class Migration(migrations.Migration):
                 ('product', models.ForeignKey(
                     to='shuup.Product',
                     related_name='variation_variables',
-                    verbose_name='product')),
+                    verbose_name='product', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'variation variable',
@@ -2400,7 +2406,7 @@ class Migration(migrations.Migration):
                     to='shuup.ProductVariationVariable',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'variation variable Translation',
@@ -2428,7 +2434,7 @@ class Migration(migrations.Migration):
                 ('variable', models.ForeignKey(
                     to='shuup.ProductVariationVariable',
                     related_name='values',
-                    verbose_name='variation variable')),
+                    verbose_name='variation variable', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'variation value',
@@ -2452,7 +2458,7 @@ class Migration(migrations.Migration):
                     to='shuup.ProductVariationVariableValue',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'variation value Translation',
@@ -2511,7 +2517,7 @@ class Migration(migrations.Migration):
                     to='shuup.SalesUnit',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'sales unit Translation',
@@ -2543,7 +2549,7 @@ class Migration(migrations.Migration):
                 ('address', models.ForeignKey(
                     to='shuup.MutableAddress',
                     related_name='saved_addresses',
-                    verbose_name='address')),
+                    verbose_name='address', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'saved address',
@@ -2573,7 +2579,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.SavedAddress',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -2718,7 +2724,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Shipment',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -2756,7 +2762,7 @@ class Migration(migrations.Migration):
                 ('product', models.ForeignKey(
                     to='shuup.Product',
                     related_name='shipments',
-                    verbose_name='product')),
+                    verbose_name='product', on_delete=models.CASCADE)),
                 ('shipment', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to='shuup.Shipment',
@@ -2790,7 +2796,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.ShipmentProduct',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -2856,7 +2862,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.ShippingMethod',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -2887,7 +2893,7 @@ class Migration(migrations.Migration):
                     to='shuup.ShippingMethod',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'shipping method Translation',
@@ -2999,7 +3005,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Shop',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -3094,7 +3100,7 @@ class Migration(migrations.Migration):
                     to='shuup.DisplayUnit',
                     blank=True,
                     verbose_name='display unit',
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
                 ('payment_methods', models.ManyToManyField(
                     help_text=
                     'Select the payment methods you would like to limit the product to using. These are defined in Settings - Payment Methods.',
@@ -3114,7 +3120,7 @@ class Migration(migrations.Migration):
                 ('product', shuup.core.fields.UnsavedForeignKey(
                     to='shuup.Product',
                     related_name='shop_products',
-                    verbose_name='product')),
+                    verbose_name='product', on_delete=models.CASCADE)),
                 ('shipping_methods', models.ManyToManyField(
                     help_text=
                     'Select the shipping methods you would like to limit the product to using. These are defined in Settings - Shipping Methods.',
@@ -3125,7 +3131,7 @@ class Migration(migrations.Migration):
                 ('shop', models.ForeignKey(
                     to='shuup.Shop',
                     related_name='shop_products',
-                    verbose_name='shop')),
+                    verbose_name='shop', on_delete=models.CASCADE)),
                 ('shop_primary_image', models.ForeignKey(
                     help_text=
                     'Click this to set this image as the primary display image for your product.',
@@ -3161,7 +3167,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.ShopProduct',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -3205,7 +3211,7 @@ class Migration(migrations.Migration):
                     to='shuup.ShopProduct',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'shop product Translation',
@@ -3244,7 +3250,7 @@ class Migration(migrations.Migration):
                     to='shuup.Shop',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'shop Translation',
@@ -3278,7 +3284,7 @@ class Migration(migrations.Migration):
                     max_digits=36,
                     default=0)),
                 ('product', models.ForeignKey(
-                    verbose_name='product', to='shuup.Product')),
+                    verbose_name='product', to='shuup.Product', on_delete=models.CASCADE)),
             ],),
         migrations.CreateModel(
             name='SuppliedProductLogEntry',
@@ -3303,7 +3309,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.SuppliedProduct',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -3387,7 +3393,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Supplier',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -3493,7 +3499,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.TaxClass',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -3522,7 +3528,7 @@ class Migration(migrations.Migration):
                     to='shuup.TaxClass',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'tax class Translation',
@@ -3554,7 +3560,7 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(
                     to='shuup.Tax',
                     related_name='log_entries',
-                    verbose_name='target')),
+                    verbose_name='target', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(
                     on_delete=django.db.models.deletion.PROTECT,
                     to=settings.AUTH_USER_MODEL,
@@ -3583,7 +3589,7 @@ class Migration(migrations.Migration):
                     to='shuup.Tax',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'tax Translation',
@@ -3674,7 +3680,7 @@ class Migration(migrations.Migration):
                     to='shuup.WeightBasedPriceRange',
                     related_name='translations',
                     editable=False,
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'weight based price range Translation',
@@ -3691,7 +3697,8 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.Contact',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False,
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'managed': False,
@@ -3705,7 +3712,8 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceProvider',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False,
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -3721,7 +3729,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.Contact',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
                 ('tax_number', models.CharField(
                     help_text='e.g. EIN in US or VAT code in Europe',
                     verbose_name='tax number',
@@ -3741,7 +3749,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceBehaviorComponent',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
                 ('available_in_countries', jsonfield.fields.JSONField(
                     verbose_name='available in countries',
                     null=True,
@@ -3769,7 +3777,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceBehaviorComponent',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
                 ('price_value', shuup.core.fields.MoneyValueField(
                     help_text='The fixed cost to apply to this service.',
                     decimal_places=9,
@@ -3788,7 +3796,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceBehaviorComponent',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -3802,7 +3810,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceBehaviorComponent',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
                 ('min_price_value', shuup.core.fields.MoneyValueField(
                     verbose_name='min price value',
                     decimal_places=9,
@@ -3828,7 +3836,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceProvider',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -3844,7 +3852,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.Contact',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
                 ('gender', enumfields.fields.EnumField(
                     help_text='The gender of the contact.',
                     verbose_name='gender',
@@ -3871,7 +3879,7 @@ class Migration(migrations.Migration):
                     to=settings.AUTH_USER_MODEL,
                     blank=True,
                     verbose_name='user',
-                    null=True)),
+                    null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'person',
@@ -3886,7 +3894,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceBehaviorComponent',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -3900,7 +3908,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceBehaviorComponent',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
                 ('price_value', shuup.core.fields.MoneyValueField(
                     help_text=
                     'The cost to apply to this service if the total price is below the waive limit.',
@@ -3925,7 +3933,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceBehaviorComponent',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -3939,7 +3947,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.ServiceBehaviorComponent',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
                 ('min_weight', models.DecimalField(
                     help_text=
                     'The minimum weight required for this service to be available.',
@@ -3964,7 +3972,7 @@ class Migration(migrations.Migration):
             model_name='suppliedproduct',
             name='supplier',
             field=models.ForeignKey(
-                verbose_name='supplier', to='shuup.Supplier'),),
+                verbose_name='supplier', to='shuup.Supplier', on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='shopproduct',
             name='suppliers',
@@ -4023,7 +4031,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 help_text='The shop for this service.',
                 to='shuup.Shop',
-                verbose_name='shop'),),
+                verbose_name='shop', on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='shippingmethod',
             name='tax_class',
@@ -4048,7 +4056,7 @@ class Migration(migrations.Migration):
                 to='shuup.ServiceProvider',
                 related_name='base_translations',
                 editable=False,
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='serviceprovider',
             name='logo',
@@ -4065,7 +4073,7 @@ class Migration(migrations.Migration):
                 to='contenttypes.ContentType',
                 related_name='polymorphic_shuup.serviceprovider_set+',
                 editable=False,
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='servicebehaviorcomponent',
             name='polymorphic_ctype',
@@ -4073,11 +4081,11 @@ class Migration(migrations.Migration):
                 to='contenttypes.ContentType',
                 related_name='polymorphic_shuup.servicebehaviorcomponent_set+',
                 editable=False,
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='savedaddress',
             name='owner',
-            field=models.ForeignKey(verbose_name='owner', to='shuup.Contact'),
+            field=models.ForeignKey(verbose_name='owner', to='shuup.Contact', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='productmedia',
@@ -4162,7 +4170,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 help_text='The shop for this service.',
                 to='shuup.Shop',
-                verbose_name='shop'),),
+                verbose_name='shop', on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='paymentmethod',
             name='tax_class',
@@ -4277,7 +4285,7 @@ class Migration(migrations.Migration):
                 'The sales unit that this display unit is linked to.',
                 related_name='display_units',
                 to='shuup.SalesUnit',
-                verbose_name='internal unit'),),
+                verbose_name='internal unit', on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='contactgroup',
             name='members',
@@ -4331,7 +4339,7 @@ class Migration(migrations.Migration):
                 to='contenttypes.ContentType',
                 related_name='polymorphic_shuup.contact_set+',
                 editable=False,
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='contact',
             name='shops',
@@ -4359,7 +4367,7 @@ class Migration(migrations.Migration):
                 to='shuup.Shop',
                 blank=True,
                 verbose_name='shop',
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='category',
             name='shops',
@@ -4390,7 +4398,7 @@ class Migration(migrations.Migration):
                 to='shuup.Contact',
                 blank=True,
                 verbose_name='customer',
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='basket',
             name='products',
@@ -4399,7 +4407,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='basket',
             name='shop',
-            field=models.ForeignKey(verbose_name='shop', to='shuup.Shop'),),
+            field=models.ForeignKey(verbose_name='shop', to='shuup.Shop', on_delete=models.CASCADE),),
         migrations.CreateModel(
             name='CustomCarrier',
             fields=[
@@ -4408,7 +4416,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.Carrier',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'custom carrier',
@@ -4425,7 +4433,7 @@ class Migration(migrations.Migration):
                     parent_link=True,
                     to='shuup.PaymentProcessor',
                     primary_key=True,
-                    serialize=False)),
+                    serialize=False, on_delete=models.CASCADE)),
                 ('rounding_quantize', models.DecimalField(
                     help_text='Rounding quantize for cash payment.',
                     verbose_name='rounding quantize',
@@ -4454,7 +4462,7 @@ class Migration(migrations.Migration):
             name='component',
             field=models.ForeignKey(
                 to='shuup.WeightBasedPricingBehaviorComponent',
-                related_name='ranges'),),
+                related_name='ranges', on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='waivingcostbehaviorcomponenttranslation',
             name='master',
@@ -4462,7 +4470,7 @@ class Migration(migrations.Migration):
                 to='shuup.WaivingCostBehaviorComponent',
                 related_name='translations',
                 editable=False,
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AlterUniqueTogether(
             name='taxtranslation',
             unique_together=set([('language_code', 'master')]),),
@@ -4533,14 +4541,14 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 to='shuup.PersonContact',
                 related_name='log_entries',
-                verbose_name='target'),),
+                verbose_name='target', on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='paymentprocessorlogentry',
             name='target',
             field=models.ForeignKey(
                 to='shuup.PaymentProcessor',
                 related_name='log_entries',
-                verbose_name='target'),),
+                verbose_name='target', on_delete=models.CASCADE),),
         migrations.AlterUniqueTogether(
             name='paymentmethodtranslation',
             unique_together=set([('language_code', 'master')]),),
@@ -4581,7 +4589,7 @@ class Migration(migrations.Migration):
                 to='shuup.FixedCostBehaviorComponent',
                 related_name='translations',
                 editable=False,
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AlterUniqueTogether(
             name='displayunittranslation',
             unique_together=set([('language_code', 'master')]),),
@@ -4598,7 +4606,7 @@ class Migration(migrations.Migration):
                 to='shuup.PersonContact',
                 blank=True,
                 verbose_name='account manager',
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AlterUniqueTogether(
             name='configurationitem',
             unique_together=set([('shop', 'key')]),),
@@ -4608,7 +4616,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 to='shuup.CompanyContact',
                 related_name='log_entries',
-                verbose_name='target'),),
+                verbose_name='target', on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='companycontact',
             name='members',
@@ -4626,7 +4634,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 to='shuup.Carrier',
                 related_name='log_entries',
-                verbose_name='target'),),
+                verbose_name='target', on_delete=models.CASCADE),),
         migrations.AddField(
             model_name='basket',
             name='orderer',
@@ -4635,7 +4643,7 @@ class Migration(migrations.Migration):
                 to='shuup.PersonContact',
                 blank=True,
                 verbose_name='orderer',
-                null=True),),
+                null=True, on_delete=models.CASCADE),),
         migrations.AlterUniqueTogether(
             name='attributetranslation',
             unique_together=set([('language_code', 'master')]),),

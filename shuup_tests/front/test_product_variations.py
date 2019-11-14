@@ -7,10 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
-from django.core.urlresolvers import reverse
 
 from shuup.core.models import ProductVariationVariable, ProductVariationVariableValue, ProductMode
 from shuup.testing.factories import create_product, get_default_shop
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import printable_gibberish
 
 

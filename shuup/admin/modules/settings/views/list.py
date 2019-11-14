@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.contrib import messages
-from django.core.urlresolvers import resolve, reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -16,6 +15,7 @@ from shuup.admin.modules.settings.view_settings import ViewSettings
 from shuup.admin.toolbar import (
     JavaScriptActionButton, PostActionButton, Toolbar
 )
+from shuup.utils.django_compat import resolve, reverse
 from shuup.utils.importing import load
 
 

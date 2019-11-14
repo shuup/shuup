@@ -8,7 +8,7 @@
 import os
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.testing.browser_utils import (
     click_element, wait_until_condition, wait_until_appeared

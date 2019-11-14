@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.db.transaction import atomic
 
@@ -24,6 +23,7 @@ from shuup.admin.utils.views import (
     check_and_raise_if_only_one_allowed, CreateOrUpdateView
 )
 from shuup.core.models import Supplier
+from shuup.utils.django_compat import reverse
 
 
 class SupplierBaseFormPart(FormPart):

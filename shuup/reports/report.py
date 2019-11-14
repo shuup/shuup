@@ -12,7 +12,6 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 
 import six
-from django.utils.encoding import force_text
 from django.utils.functional import Promise
 from django.utils.timezone import get_current_timezone, make_aware
 
@@ -21,6 +20,7 @@ from shuup.core.models import Shop
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.reports.forms import BaseReportForm
 from shuup.reports.utils import parse_date_range
+from shuup.utils.django_compat import force_text
 
 
 class ShuupReportBase(object):

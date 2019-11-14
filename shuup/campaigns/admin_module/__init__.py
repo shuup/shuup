@@ -14,8 +14,9 @@ from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
-from shuup.campaigns.admin_module.utils import \
+from shuup.campaigns.admin_module.utils import (
     get_extra_permissions_for_admin_module
+)
 from shuup.campaigns.models import BasketCampaign, Coupon
 
 

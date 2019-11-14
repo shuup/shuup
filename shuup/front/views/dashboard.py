@@ -32,8 +32,8 @@ class DashboardViewMixin(object):
     def dispatch(self, request, *args, **kwargs):
         # these views can only be visible when a contact is available
         if not getattr(request, "person", None):
-            from django.core.urlresolvers import reverse
             from django.http.response import HttpResponseRedirect
+            from shuup.utils.django_compat import reverse
             return HttpResponseRedirect(reverse("shuup:index"))
         return super(DashboardViewMixin, self).dispatch(request, *args, **kwargs)
 

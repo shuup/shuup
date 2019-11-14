@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.utils import translation
@@ -27,6 +26,7 @@ from shuup.testing.modules.sample_data.factories import (
 from shuup.testing.modules.sample_data.forms import (
     ConsolidateObjectsForm, SampleObjectsWizardForm
 )
+from shuup.utils.django_compat import reverse
 
 
 class ConsolidateSampleObjectsView(FormView):

@@ -6,12 +6,12 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from django.core.urlresolvers import reverse
 from django.test import override_settings
 from django.utils.translation import activate
 
 from shuup.core.models import ShopStatus
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 

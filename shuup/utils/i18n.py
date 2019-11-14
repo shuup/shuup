@@ -8,6 +8,7 @@
 
 import babel
 import babel.numbers
+import django
 from babel import UnknownLocaleError
 from babel.dates import format_datetime
 from babel.numbers import format_currency, format_decimal, parse_pattern
@@ -17,7 +18,6 @@ from django.utils.lru_cache import lru_cache
 from django.utils.timezone import localtime
 from django.utils.translation import get_language
 from django.views.decorators.cache import cache_page
-from django.views.i18n import javascript_catalog
 
 
 @lru_cache()
@@ -150,7 +150,14 @@ def javascript_catalog_all(request, domain='djangojs'):
     Get JavaScript message catalog for all apps in `INSTALLED_APPS`.
     """
     all_apps = [x.name for x in apps.get_app_configs()]
-    return javascript_catalog(request, domain, all_apps)
+
+    if django.VERSION < (1, 11):
+        from django.views.i18n import javascript_catalog
+        return javascript_catalog(request, domain, all_apps)
+    else:
+        from django.views.i18n import JavaScriptCatalog
+        js_catalog = JavaScriptCatalog(packages=all_apps, domain=domain)
+        return js_catalog.get(request)
 
 
 def get_currency_name(currency):

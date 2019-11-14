@@ -27,7 +27,7 @@ class SupplierModule(AdminModule):
             view_template="shuup.admin.modules.suppliers.views.Supplier%sView",
             name_template="supplier.%s"
         ) + [admin_url(
-            "^suppliers/delete/(?P<pk>\d+)/$",
+            r"^suppliers/delete/(?P<pk>\d+)/$",
             "shuup.admin.modules.suppliers.views.SupplierDeleteView",
             name="supplier.delete",
             permissions=("supplier.delete",)

@@ -31,6 +31,7 @@ class Migration(migrations.Migration):
                     serialize=False,
                     verbose_name='ID')),
                 ('shop', models.ForeignKey(
+                    on_delete=models.CASCADE,
                     to='shuup.Shop',
                     null=True,
                     related_name='saved_views_config')),
@@ -60,6 +61,7 @@ class Migration(migrations.Migration):
                     serialize=False,
                     verbose_name='ID')),
                 ('shop', models.ForeignKey(
+                    on_delete=models.CASCADE,
                     to='shuup.Shop', null=True,
                     related_name='themes_settings')),
                 ('theme_identifier', models.CharField(

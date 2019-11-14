@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.Attribute', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.Attribute', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.Carrier', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.Carrier', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.CompanyContact', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.CompanyContact', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.ContactGroup', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.ContactGroup', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -90,7 +90,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.CustomerTaxGroup', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.CustomerTaxGroup', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -106,7 +106,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.Manufacturer', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.Manufacturer', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -122,7 +122,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.OrderLine', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.OrderLine', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -138,7 +138,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.OrderLineTax', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.OrderLineTax', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -154,7 +154,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.Payment', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.Payment', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -170,7 +170,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.PaymentMethod', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.PaymentMethod', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -186,7 +186,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.PaymentProcessor', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.PaymentProcessor', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -202,7 +202,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.PersonContact', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.PersonContact', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -218,7 +218,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.ProductMedia', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.ProductMedia', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -234,7 +234,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.SavedAddress', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.SavedAddress', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -250,7 +250,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.Shipment', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.Shipment', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -266,7 +266,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.ShipmentProduct', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.ShipmentProduct', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -282,7 +282,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.ShippingMethod', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.ShippingMethod', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -298,7 +298,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.Shop', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.Shop', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -314,7 +314,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.ShopProduct', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.ShopProduct', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -330,7 +330,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.SuppliedProduct', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.SuppliedProduct', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -346,7 +346,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.Supplier', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.Supplier', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -362,7 +362,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.TaxClass', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.TaxClass', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
@@ -378,7 +378,7 @@ class Migration(migrations.Migration):
                 ('identifier', models.CharField(blank=True, max_length=64, verbose_name='identifier')),
                 ('kind', enumfields.fields.EnumIntegerField(default=0, verbose_name='log entry kind', enum=shuup.utils.analog.LogEntryKind)),
                 ('extra', jsonfield.fields.JSONField(blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(verbose_name='target', to='shuup.Tax', related_name='log_entries')),
+                ('target', models.ForeignKey(verbose_name='target', to='shuup.Tax', related_name='log_entries', on_delete=models.CASCADE)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={

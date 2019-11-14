@@ -7,12 +7,12 @@
 import json
 
 import pytest
-from django.core.urlresolvers import reverse
 
 from shuup.simple_cms.admin_module.views import PageDeleteView, PageListView
 from shuup.simple_cms.models import Page
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 from shuup_tests.simple_cms.utils import create_page
 
 

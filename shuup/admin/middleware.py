@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from shuup.admin.shop_provider import get_shop
+from shuup.utils.django_compat import MiddlewareMixin
 
 try:
     from django.utils.deprecation import MiddlewareMixin
