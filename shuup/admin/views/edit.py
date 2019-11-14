@@ -58,7 +58,7 @@ class EditObjectView(View):
                     except NoModelUrl:
                         pass
             except PermissionDenied as exception:
-                from django.utils.encoding import force_text
+                from shuup.utils.django_compat import force_text
                 raise Problem(force_text(exception))
 
             if url:

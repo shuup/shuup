@@ -8,13 +8,13 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.toolbar import get_default_edit_toolbar, PostActionButton
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Attribute, ProductType
+from shuup.utils.django_compat import reverse_lazy
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

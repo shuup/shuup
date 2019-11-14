@@ -20,6 +20,7 @@ from shuup.testing.factories import (
         create_random_user, get_default_shop, get_shop
 )
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import is_anonymous
 from shuup_tests.simple_cms.utils import create_multilanguage_page, create_page
 
 
@@ -29,7 +30,7 @@ def test_anon_cant_see_invisible_page(rf):
     get_default_shop()
     view_func = PageView.as_view()
     request = apply_request_middleware(rf.get("/"))
-    assert request.user.is_anonymous()
+    assert is_anonymous(request.user)
     with pytest.raises(Http404):
         response = view_func(request, url=page.url)
 
@@ -65,7 +66,7 @@ def test_visible_page_has_right_content(rf):
     page = create_page(available_from=datetime.date(1988, 1, 1), shop=get_default_shop())
     view_func = PageView.as_view()
     request = apply_request_middleware(rf.get("/"))
-    assert request.user.is_anonymous()
+    assert is_anonymous(request.user)
     response = view_func(request, url=page.url)
     response.render()
     assert "<h1>Bacon ipsum" in response.rendered_content

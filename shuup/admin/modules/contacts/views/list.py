@@ -7,9 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.db.models import Count, Q
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.modules.contacts.utils import request_limited
@@ -22,6 +20,7 @@ from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import (
     CompanyContact, Contact, ContactGroup, PersonContact, Shop
 )
+from shuup.utils.django_compat import force_text, reverse
 
 
 class ContactTypeFilter(ChoicesFilter):

@@ -7,10 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.utils.django_compat import force_text
 from shuup.xtheme.plugins._base import Plugin
 
 

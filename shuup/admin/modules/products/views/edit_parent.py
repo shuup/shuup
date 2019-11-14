@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import UpdateView
 
@@ -17,6 +16,7 @@ from shuup.admin.form_part import (
 from shuup.admin.toolbar import get_default_edit_toolbar, Toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.models import Product
+from shuup.utils.django_compat import reverse
 
 
 class ProductChildrenBaseFormPart(FormPart):

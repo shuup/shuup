@@ -22,13 +22,13 @@ class DiscountModule(AdminModule):
     def get_urls(self):
         from shuup.admin.urls import admin_url
         archive = admin_url(
-            "^archived_discounts",
+            r"^archived_discounts",
             "shuup.discounts.admin.views.ArchivedDiscountListView",
             name="discounts.archive"
         )
 
         delete = admin_url(
-            "^discounts/(?P<pk>\d+)/delete/$",
+            r"^discounts/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.DiscountDeleteView",
             name="discounts.delete"
         )

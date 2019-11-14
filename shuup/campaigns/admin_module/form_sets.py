@@ -41,7 +41,7 @@ class BaseFormset(BaseModelFormSet):
         return self.form_class._meta.model
 
     def get_queryset(self):
-        raise NotImplemented("Override this in subclass")
+        raise NotImplementedError("Override this in subclass")
 
     def form(self, **kwargs):
         if issubclass(self.form_class, TranslatableModelForm):

@@ -9,7 +9,7 @@ import os
 
 import pytest
 
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.campaigns.models import BasketCampaign, Coupon

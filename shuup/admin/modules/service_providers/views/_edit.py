@@ -8,8 +8,6 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.core.urlresolvers import reverse, reverse_lazy
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import MenuEntry
@@ -19,6 +17,7 @@ from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import ServiceProvider
 from shuup.core.utils.forms import FormInfoMap
+from shuup.utils.django_compat import force_text, reverse, reverse_lazy
 
 
 class ServiceProviderEditView(CreateOrUpdateView):

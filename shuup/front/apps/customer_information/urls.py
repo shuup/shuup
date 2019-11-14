@@ -21,7 +21,7 @@ urlpatterns = [
         name='address_book_delete'),
     url(r'^customer/$', login_required(views.CustomerEditView.as_view()),
         name='customer_edit'),
-    url(r'^customer/change-password/$', login_required(views.PasswordChangeView.as_view()),
+    url(r'^customer/change-password/$', login_required(views.CustomPasswordChangeView.as_view()),
         name='change_password'),
     url(r'^company/$', login_required(views.CompanyEditView.as_view()),
         name='company_edit'),

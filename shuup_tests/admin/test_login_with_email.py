@@ -10,7 +10,7 @@ from django.conf import settings
 from django.contrib.auth import (
     get_user, get_user_model, REDIRECT_FIELD_NAME
 )
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.testing.factories import get_default_shop
 from shuup_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD

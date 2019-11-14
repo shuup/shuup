@@ -14,7 +14,6 @@ from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.db.transaction import atomic
 from django.forms import BaseFormSet
 from django.http import HttpResponseRedirect
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
 
@@ -31,6 +30,7 @@ from shuup.admin.utils.urls import (
     get_model_front_url, get_model_url, NoModelUrl
 )
 from shuup.core.settings_provider import ShuupSettings
+from shuup.utils.django_compat import force_text
 from shuup.utils.excs import Problem
 from shuup.utils.form_group import FormGroup
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm

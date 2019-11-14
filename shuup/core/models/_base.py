@@ -11,7 +11,7 @@ import parler.models
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from parler.managers import TranslatableManager, TranslatableQuerySet
 from polymorphic.base import PolymorphicModelBase
@@ -19,6 +19,7 @@ from polymorphic.managers import PolymorphicManager, PolymorphicQuerySet
 from polymorphic.models import PolymorphicModel
 
 from shuup.utils import text
+from shuup.utils.django_compat import force_text
 
 
 class ShuupModel(models.Model):

@@ -5,8 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.utils.encoding import force_text
-
+from shuup.utils.django_compat import force_text
 from shuup.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shuup.xtheme.layout import Layout
 from shuup.xtheme.layout.utils import get_layout_data_key, get_provided_layouts

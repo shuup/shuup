@@ -19,7 +19,7 @@ from django.db import models
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
@@ -45,6 +45,7 @@ from shuup.core.signals import (
 )
 from shuup.utils.analog import define_log_model, LogEntryKind
 from shuup.utils.dates import local_now, to_aware
+from shuup.utils.django_compat import force_text
 from shuup.utils.money import Money
 from shuup.utils.properties import (
     MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty

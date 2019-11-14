@@ -39,7 +39,7 @@ class Setup(object):
         setup = cls()
         try:
             configure(setup)
-        except:  # pragma: no cover
+        except Exception:  # pragma: no cover
             print("@" * 80)  # noqa
             import traceback
             import sys

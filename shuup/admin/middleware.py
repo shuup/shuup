@@ -8,9 +8,10 @@
 from __future__ import unicode_literals
 
 from shuup.admin.shop_provider import get_shop
+from shuup.utils.django_compat import MiddlewareMixin
 
 
-class ShuupAdminMiddleware(object):
+class ShuupAdminMiddleware(MiddlewareMixin):
     """
     Handle Shuup Admin specific tasks for each request and response.
 

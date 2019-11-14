@@ -23,6 +23,7 @@ from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.translation import get_language_choices
 from shuup.front.utils.user import is_admin_user
 from shuup.front.utils.views import cache_product_things
+from shuup.utils import django_compat
 from shuup.utils.importing import cached_load
 from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree
@@ -431,3 +432,7 @@ def get_admin_edit_url(context, intance_or_model):
 @contextfunction
 def get_powered_by_content(context):
     return settings.SHUUP_FRONT_POWERED_BY_CONTENT
+
+
+def is_authenticated(user):
+    return django_compat.is_authenticated(user)

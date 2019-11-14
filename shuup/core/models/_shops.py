@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
@@ -20,6 +20,7 @@ from parler.models import TranslatedFields
 from shuup.core.fields import CurrencyField, InternalIdentifierField
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.utils.analog import define_log_model
+from shuup.utils.django_compat import force_text
 
 from ._base import ChangeProtected, TranslatableShuupModel
 from ._orders import Order
@@ -61,7 +62,7 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED, verbose_name=_("status"), help_text=_(
         "Your shop status. Disable your shop if it is no longer in use."
     ))
-    owner = models.ForeignKey("Contact", blank=True, null=True, on_delete=models.SET_NULL, verbose_name=_("contact"))
+    owner = models.ForeignKey(to="Contact", blank=True, null=True, on_delete=models.SET_NULL, verbose_name=_("contact"))
     options = JSONField(blank=True, null=True, verbose_name=_("options"))
     currency = CurrencyField(default=_get_default_currency, verbose_name=_("currency"), help_text=_(
         "The primary shop currency. This is the currency used when selling your products."

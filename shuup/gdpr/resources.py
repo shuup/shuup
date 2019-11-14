@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.template import loader
 
 from shuup.core.shop_provider import get_shop
@@ -16,6 +15,7 @@ from shuup.gdpr.utils import (
     get_active_consent_pages, get_privacy_policy_page,
     should_reconsent_privacy_policy
 )
+from shuup.utils.django_compat import is_anonymous, reverse
 from shuup.utils.djangoenv import has_installed
 from shuup.xtheme.resources import add_resource, InlineMarkupResource
 
@@ -54,7 +54,7 @@ def add_gdpr_consent_resources(context, content):
     add_resource(context, "head_end", get_shuup_static_url("shuup-gdpr.css"))
 
     user = request.user
-    if not user.is_anonymous() and should_reconsent_privacy_policy(shop, user):
+    if not is_anonymous(user) and should_reconsent_privacy_policy(shop, user):
         consent_page = get_privacy_policy_page(shop)
         render_context = {
             "request": request,

@@ -7,11 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from markupsafe import Markup
 
 from shuup.core.fields.tagged_json import TaggedJSONEncoder
+from shuup.utils.django_compat import force_text
 from shuup.xtheme._theme import get_current_theme
 from shuup.xtheme.editing import is_edit_mode, may_inject
 from shuup.xtheme.layout.utils import get_layout_data_key

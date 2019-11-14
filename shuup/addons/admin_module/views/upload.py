@@ -14,7 +14,6 @@ import traceback
 import zipfile
 
 from django import forms
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -22,6 +21,7 @@ from django.views.generic import FormView
 from shuup.addons.installer import PackageInstaller
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import manipulate_query_string
+from shuup.utils.django_compat import reverse
 from shuup.utils.excs import Problem
 from shuup.utils.iterables import first
 

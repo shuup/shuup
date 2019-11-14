@@ -11,12 +11,10 @@ import json
 import re
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 from django.http import (
     HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 )
-from django.utils.text import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView, View
 
@@ -32,6 +30,7 @@ from shuup.gdpr.utils import (
 )
 from shuup.simple_cms.models import Page
 from shuup.utils.analog import LogEntryKind
+from shuup.utils.django_compat import force_text, is_anonymous, reverse
 from shuup.utils.djangoenv import has_installed
 
 COOKIE_CONSENT_RE = r"cookie_category_(\d+)"
@@ -68,7 +67,7 @@ class GDPRCookieConsentView(View):
 class GDPRPolicyConsentView(View):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
-        if request.user.is_anonymous():
+        if is_anonymous(request.user):
             return HttpResponseNotFound()
 
         shop = request.shop

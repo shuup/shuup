@@ -12,7 +12,6 @@ import re
 from logging import getLogger
 
 import six
-from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -21,6 +20,7 @@ from jinja2.utils import contextfunction
 from shuup.core import cache
 from shuup.core.fields import TaggedJSONEncoder
 from shuup.core.shop_provider import get_shop
+from shuup.utils.django_compat import force_text
 from shuup.xtheme.utils import get_html_attrs
 
 LOGGER = getLogger(__name__)
@@ -108,7 +108,7 @@ class JinjaMarkupResource(object):
             engine = engines[engine_name]
             try:
                 return engine.env.from_string(template).render(self.context)
-            except:
+            except Exception:
                 LOGGER.exception("Failed to render Jinja string in Snippet plugin")
                 return force_text(_("(Error while rendering)"))
 

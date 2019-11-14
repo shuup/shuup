@@ -7,8 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 
 from django.contrib.auth import get_user_model
-from rest_framework import serializers
 from enumfields.drf.fields import EnumField
+from rest_framework import serializers
 
 from shuup.core.models import (
     Basket, CompanyContact, CompanyContactLogEntry, Contact,

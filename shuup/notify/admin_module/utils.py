@@ -6,9 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from django.utils.encoding import force_text
-
 from shuup.apps.provides import get_provide_objects
+from shuup.utils.django_compat import force_text
 
 
 def get_name_map(category_key):

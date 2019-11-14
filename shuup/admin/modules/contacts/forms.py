@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django_countries import countries
 from django_countries.fields import LazyTypedChoiceField
@@ -22,6 +21,7 @@ from shuup.core.fields import LanguageFormField
 from shuup.core.models import (
     CompanyContact, Contact, ContactGroup, Gender, PersonContact, Shop
 )
+from shuup.utils.django_compat import force_text
 
 FIELDS_BY_MODEL_NAME = {
     "Contact": (

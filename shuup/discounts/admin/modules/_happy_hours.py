@@ -22,7 +22,7 @@ class HappyHourModule(AdminModule):
     def get_urls(self):
         from shuup.admin.urls import admin_url
         delete = admin_url(
-            "^discounts_happy_hour/(?P<pk>\d+)/delete/$",
+            r"^discounts_happy_hour/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.HappyHourDeleteView",
             name="discounts_happy_hour.delete"
         )

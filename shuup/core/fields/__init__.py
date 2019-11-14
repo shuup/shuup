@@ -19,11 +19,11 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import BLANK_CHOICE_DASH
 from django.forms.widgets import NumberInput
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from jsonfield.fields import JSONField
 
 from shuup.core.fields.tagged_json import tag_registry, TaggedJSONEncoder
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import get_current_babel_locale, remove_extinct_languages
 
 IdentifierValidator = RegexValidator("[a-z][a-z_]+")

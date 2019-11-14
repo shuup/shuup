@@ -7,9 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.utils.encoding import force_text
 from jinja2.sandbox import SandboxedEnvironment
 
+from shuup.utils.django_compat import force_text
 from shuup.utils.importing import cached_load
 
 

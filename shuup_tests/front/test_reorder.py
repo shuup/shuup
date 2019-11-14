@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.test.client import Client
 from shuup.simple_supplier.module import SimpleSupplierModule
 

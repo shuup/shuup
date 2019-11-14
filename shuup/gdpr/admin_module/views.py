@@ -9,7 +9,6 @@ import json
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.transaction import atomic
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.timezone import now
@@ -31,6 +30,7 @@ from shuup.gdpr.utils import (
     create_initial_required_cookie_category, ensure_gdpr_privacy_policy
 )
 from shuup.utils.analog import LogEntryKind
+from shuup.utils.django_compat import reverse, reverse_lazy
 
 
 class GDPRView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):

@@ -8,7 +8,6 @@
 
 from __future__ import unicode_literals
 
-from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.picotable import (
@@ -16,6 +15,7 @@ from shuup.admin.utils.picotable import (
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import PaymentMethod, ShippingMethod
+from shuup.utils.django_compat import force_text
 
 
 class ServiceListView(PicotableListView):

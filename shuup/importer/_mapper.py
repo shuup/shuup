@@ -8,6 +8,7 @@
 import itertools
 from operator import ior
 
+import django
 import six
 from django.db.models import ForeignKey, Q
 from parler.models import TranslatableModel
@@ -58,7 +59,7 @@ class RelatedMapper(object):
             if field:
                 try:
                     arg = field.get_prep_value(arg)
-                except:
+                except Exception:
                     continue
                 if self.is_translated and name in self.translated_field_names:
                     name = "translations__%s" % name
@@ -66,7 +67,7 @@ class RelatedMapper(object):
         try:
             int(arg)
             qs.append(Q(pk=arg))
-        except:
+        except Exception:
             pass
 
         if not qs:
@@ -116,9 +117,18 @@ class RelatedMapper(object):
                     setattr(obj, field.name, value)
 
         for field in obj._meta.local_fields:
-            if isinstance(field, ForeignKey) and isinstance(self.row_session.instance, field.rel.to):
+            if (
+                django.VERSION < (2, 0) and
+                isinstance(field, ForeignKey) and
+                isinstance(self.row_session.instance, field.rel.to)
+            ):
                 setattr(obj, field.name, self.row_session.instance)
-
+            elif (
+                django.VERSION > (2, 0) and
+                isinstance(field, ForeignKey) and
+                isinstance(self.row_session.instance, field.remote_field.target_field)
+            ):
+                setattr(obj, field.name, self.row_session.instance)
             elif field.name in ("name", "title"):
                 setattr(obj, field.name, value)
 

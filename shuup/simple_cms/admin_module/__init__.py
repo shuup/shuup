@@ -11,7 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls, admin_url
+from shuup.admin.utils.urls import (
+    admin_url, derive_model_url, get_edit_and_list_urls
+)
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.simple_cms.models import Page
 

@@ -7,7 +7,6 @@
 from django.db.transaction import atomic
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView, ListView, View
 from django.views.generic.detail import SingleObjectMixin
@@ -17,6 +16,7 @@ from shuup.core.models import OrderLineType, Product, ShopProduct
 from shuup.core.utils.users import real_user_or_none
 from shuup.front.models import StoredBasket
 from shuup.front.views.dashboard import DashboardViewMixin
+from shuup.utils.django_compat import force_text
 
 
 class CartViewMixin(object):

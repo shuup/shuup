@@ -13,6 +13,7 @@ from shuup.core.models import (
     get_person_contact, get_price_display_for_group_and_shop, PersonContact
 )
 from shuup.core.pricing import PriceDisplayOptions
+from shuup.utils.django_compat import is_anonymous
 from shuup.testing.factories import get_default_shop, get_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
@@ -28,7 +29,7 @@ def test_contact_groups(rf, regular_user):
     # default groups created for non shop and shop
     assert ContactGroupPriceDisplay.objects.count() == 2
 
-    assert request.user.is_anonymous()
+    assert is_anonymous(request.user)
     user = request.user
     contact = get_person_contact(user)
     assert contact == AnonymousContact()
@@ -124,7 +125,7 @@ def test_multishop(rf):
     assert shop1.pk != shop2.pk
 
     request = apply_request_middleware(rf.get("/"))
-    assert request.user.is_anonymous()
+    assert is_anonymous(request.user)
     user = request.user
     contact = get_person_contact(user)
     assert contact == AnonymousContact()

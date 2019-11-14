@@ -11,10 +11,8 @@ import datetime
 
 from django import forms
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
 from django.http import HttpResponseRedirect
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
@@ -25,6 +23,7 @@ from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.discounts.models import Discount, HappyHour, TimeRange
+from shuup.utils.django_compat import force_text, reverse_lazy
 
 
 class HappyHourListView(PicotableListView):

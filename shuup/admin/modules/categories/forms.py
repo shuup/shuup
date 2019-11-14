@@ -9,7 +9,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.db.transaction import atomic
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
@@ -20,6 +19,7 @@ from shuup.admin.utils.forms import filter_form_field_choices
 from shuup.core.models import (
     Category, CategoryStatus, Product, ShopProduct, ShopProductVisibility
 )
+from shuup.utils.django_compat import force_text
 
 
 class CategoryBaseForm(ShuupAdminForm):

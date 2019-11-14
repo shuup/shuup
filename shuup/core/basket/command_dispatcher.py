@@ -11,11 +11,11 @@ import six
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.basket import commands
 from shuup.core.signals import get_basket_command_handler
+from shuup.utils.django_compat import force_text
 from shuup.utils.excs import Problem
 
 

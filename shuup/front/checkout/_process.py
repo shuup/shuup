@@ -9,10 +9,10 @@ from __future__ import unicode_literals
 from collections import OrderedDict
 
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
 from django.http.response import Http404
 
 from shuup.front.basket import get_basket
+from shuup.utils.django_compat import reverse
 from shuup.utils.importing import load
 
 
