@@ -15,10 +15,10 @@ Subpackages
 Submodules
 ----------
 
-shuup.testing.basket\_helpers module
-------------------------------------
+shuup.testing.admin\_main\_menu\_updater module
+-----------------------------------------------
 
-.. automodule:: shuup.testing.basket_helpers
+.. automodule:: shuup.testing.admin_main_menu_updater
     :members:
     :undoc-members:
     :show-inheritance:
@@ -131,6 +131,14 @@ shuup.testing.soup\_utils module
 --------------------------------
 
 .. automodule:: shuup.testing.soup_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.testing.supplier\_provider module
+---------------------------------------
+
+.. automodule:: shuup.testing.supplier_provider
     :members:
     :undoc-members:
     :show-inheritance:

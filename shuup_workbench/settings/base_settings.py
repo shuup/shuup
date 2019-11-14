@@ -36,7 +36,6 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     # shuup
     'shuup.core',
     'shuup.admin',
-    'shuup.api',
     'shuup.addons',
     'shuup.default_tax',
     'shuup.front',
@@ -65,6 +64,10 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.gdpr',
     'shuup.tasks',
     'shuup.discounts',
+
+    # External Shuup addons
+    'shuup_api',
+    'shuup_rest_api',
 
     # external apps
     'bootstrap3',
@@ -206,7 +209,7 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'shuup.api.permissions.ShuupAPIPermission',
+        'shuup_api.permissions.ShuupAPIPermission',
     )
 }
 

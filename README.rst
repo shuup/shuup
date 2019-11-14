@@ -112,6 +112,8 @@ OS Addons
 
 * `Django-project template <https://github.com/shuup/shuup-project-template>`__. Django-project template.
 
+* `Shuup API <https://github.com/shuup/shuup-api>`__. Shuup API.
+* `Shuup REST API <https://github.com/shuup/shuup-rest-api>`__. Shuup REST API.
 * `Shuup Product Reviews <https://github.com/shuup/shuup-product-reviews>`__. Shuup Product Reviews.
 * `Shuup Stripe <https://github.com/shuup/shuup-stripe>`__. Stripe Payment Processor Addon for Shuup.
 * `Shuup Wishlist <https://github.com/shuup/shuup-wishlist>`__. Shuup Wishlist Addon.
@@ -121,6 +123,7 @@ OS Addons
 * `Shuup Xtheme Layouts <https://github.com/shuup/shuup-xtheme-extra-layouts>`__. Xtheme layouts for Shuup.
 * `Shuup Category Organizer <https://github.com/shuup/shuup-category-organizer>`__. Shuup Category Organizer.
 * `Shuup Logging <https://github.com/shuup/shuup-logging>`__. Shuup Logging.
+* `Shuup REST API <https://github.com/shuup/shuup-rest-api>`__. Shuup REST API.
 
 The purpose of these addons, is to demonstrate how to build
 other simple addons to extend Shuup. To learn more, here are

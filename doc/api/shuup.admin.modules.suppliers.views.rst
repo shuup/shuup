@@ -4,6 +4,14 @@ shuup.admin.modules.suppliers.views package
 Submodules
 ----------
 
+shuup.admin.modules.suppliers.views.delete module
+-------------------------------------------------
+
+.. automodule:: shuup.admin.modules.suppliers.views.delete
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.modules.suppliers.views.edit module
 -----------------------------------------------
 

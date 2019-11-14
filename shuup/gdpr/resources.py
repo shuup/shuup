@@ -6,8 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.template import loader
-from rest_framework.reverse import reverse
 
 from shuup.core.shop_provider import get_shop
 from shuup.core.utils.static import get_shuup_static_url

@@ -4,6 +4,14 @@ shuup.admin.modules.product\_types.views package
 Submodules
 ----------
 
+shuup.admin.modules.product\_types.views.delete module
+------------------------------------------------------
+
+.. automodule:: shuup.admin.modules.product_types.views.delete
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.modules.product\_types.views.edit module
 ----------------------------------------------------
 

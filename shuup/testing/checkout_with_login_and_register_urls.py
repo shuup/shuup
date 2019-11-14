@@ -16,6 +16,5 @@ urlpatterns = [
     url(r'^checkout/(?P<phase>.+)/$', CheckoutViewWithLoginAndRegister.as_view(), name='checkout'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^sa/', include('shuup.admin.urls', namespace="shuup_admin", app_name="shuup_admin")),
-    url(r'^api/', include('shuup.api.urls')),
     url(r'^', include('shuup.front.urls', namespace="shuup", app_name="shuup")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

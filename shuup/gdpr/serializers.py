@@ -8,8 +8,8 @@
 
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from enumfields.drf.fields import EnumField
 
-from shuup.api.fields import EnumField
 from shuup.core.models import (
     Basket, CompanyContact, CompanyContactLogEntry, Contact,
     ContactGroupLogEntry, Gender, MutableAddress, Order, OrderLine,

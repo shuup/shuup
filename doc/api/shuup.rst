@@ -8,7 +8,6 @@ Subpackages
 
     shuup.addons
     shuup.admin
-    shuup.api
     shuup.apps
     shuup.campaigns
     shuup.core

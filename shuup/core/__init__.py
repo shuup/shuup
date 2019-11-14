@@ -23,9 +23,6 @@ class ShuupCoreAppConfig(AppConfig):
         "filer",
     )
     provides = {
-        "api_populator": [
-            "shuup.core.api:populate_core_api"
-        ],
         "pricing_module": [
             "shuup.core.pricing.default_pricing:DefaultPricingModule"
         ],

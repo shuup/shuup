@@ -34,7 +34,6 @@ Developing Shuup
 * :doc:`ref/campaigns`
 * :doc:`ref/units`
 * :doc:`ref/formpart`
-* :doc:`web_api`
 * :doc:`howto/basic_admin_tasks`
 * :doc:`howto/dev_tools`
 * :doc:`ref/performance_optimizations`

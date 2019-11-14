@@ -36,6 +36,14 @@ shuup.campaigns.admin\_module.sections module
     :undoc-members:
     :show-inheritance:
 
+shuup.campaigns.admin\_module.utils module
+------------------------------------------
+
+.. automodule:: shuup.campaigns.admin_module.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
