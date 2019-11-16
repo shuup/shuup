@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import abc
 
+import django
 import six
 
 from shuup.core.models import Basket
@@ -123,7 +124,11 @@ class BaseDatabaseBasketStorage(BasketStorage):
         stored_basket.orderer = (basket.orderer or None)
         stored_basket.creator = real_user_or_none(basket.creator)
         stored_basket.save()
-        stored_basket.products = set(basket.product_ids)
+
+        if django.VERSION < (2, 0):
+            stored_basket.products = set(basket.product_ids)
+        else:
+            stored_basket.products.set(set(basket.product_ids))
         return stored_basket
 
     def delete(self, basket):

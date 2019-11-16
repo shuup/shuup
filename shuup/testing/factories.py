@@ -12,6 +12,7 @@ import random
 import uuid
 from decimal import Decimal
 
+import django
 import factory
 import factory.fuzzy as fuzzy
 import faker
@@ -213,7 +214,10 @@ class ProductFactory(DjangoModelFactory):
             sp.shop_primary_image = image
             sp.save()
             sp.suppliers.add(get_default_supplier())
-            sp.categories = shop.categories.all()
+            if django.VERSION < (2, 0):
+                sp.categories = shop.categories.all()
+            else:
+                sp.categories.set(shop.categories.all())
 
 
 def get_address(**overrides):

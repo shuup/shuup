@@ -12,6 +12,7 @@ from collections import defaultdict
 from decimal import Decimal
 from itertools import chain
 
+import django
 import six
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -479,7 +480,10 @@ class Order(MoneyPropped, models.Model):
         if self.customer:
             # These fields is used for reporting and should not
             # change after create even if empty on moment of ordering.
-            self.customer_groups = self.customer.groups.all()
+            if django.VERSION < (2, 0):
+                self.customer_groups = self.customer.groups.all()
+            else:
+                self.customer_groups.set(self.customer.groups.all())
 
     def _cache_values(self):
         self._cache_contact_values()

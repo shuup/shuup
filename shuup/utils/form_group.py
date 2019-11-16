@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import OrderedDict
 
+import django
 import six
 from django.forms import BaseFormSet
 
@@ -73,12 +74,22 @@ class FormGroup(object):
                 prefix = "%s_%s" % (self.prefix, name)
             else:
                 prefix = name
-            self._forms[name] = form_def.instantiate(
-                prefix=prefix,
-                data=self.data,
-                files=self.files,
-                group_initial=self.initial
-            )
+
+            if django.VERSION < (2, 0):
+                self._forms[name] = form_def.instantiate(
+                    prefix=prefix,
+                    data=self.data,
+                    files=self.files,
+                    group_initial=self.initial
+                )
+            else:
+                self._forms[name] = form_def.instantiate(
+                    prefix=prefix,
+                    data=self.data,
+                    files=self.files,
+                    group_initial=self.initial,
+                    use_required_attribute=False,
+                )
 
     @property
     def forms(self):

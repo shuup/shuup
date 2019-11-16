@@ -12,6 +12,7 @@ import os
 import random
 from datetime import datetime, timedelta
 
+import django
 import factory.fuzzy as fuzzy
 from django.conf import settings
 from PIL import Image
@@ -83,7 +84,10 @@ def create_sample_product(name, description, business_segment, image_file, shop)
         shop=shop,
         shop_primary_image=media
     )
-    sp.categories = shop.categories.all()
+    if django.VERSION < (2, 0):
+        sp.categories = shop.categories.all()
+    else:
+        sp.categories.set(shop.categories.all())
     sp.suppliers.add(get_default_supplier())
 
     # configure prices
@@ -110,7 +114,10 @@ def create_sample_carousel(carousel_data, business_segment, shop):
         image_width=carousel_data["width"],
         image_height=carousel_data["height"],
     )
-    carousel.shops = [shop]
+    if django.VERSION < (2, 0):
+        carousel.shops = [shop]
+    else:
+        carousel.shops.set([shop])
 
     # available for 365 days
     available_from = datetime.now() - timedelta(days=1)

@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from datetime import datetime, timedelta
 
+import django
 import pytest
 from bs4 import BeautifulSoup
 from django.conf import settings
@@ -68,7 +69,10 @@ def test_carousel_plugin_form_get_context():
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
     assert plugin.get_context_data(context).get("carousel") == None
 
-    test_carousel.shops = [shop]
+    if django.VERSION < (2, 0):
+        test_carousel.shops = [shop]
+    else:
+        test_carousel.shops.set([shop])
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
     assert plugin.get_context_data(context).get("carousel") == test_carousel
 
@@ -78,7 +82,10 @@ def test_banner_box_plugin():
     shop = get_default_shop()
     context = get_jinja_context()
     test_carousel = Carousel.objects.create(name="test")
-    test_carousel.shops = [shop]
+    if django.VERSION < (2, 0):
+        test_carousel.shops = [shop]
+    else:
+        test_carousel.shops.set([shop])
     plugin = BannerBoxPlugin(config={"carousel": test_carousel.pk, "title": "Test"})
     data = plugin.get_context_data(context)
     assert data.get("carousel") == test_carousel
