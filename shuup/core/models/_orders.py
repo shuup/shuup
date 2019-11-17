@@ -479,7 +479,7 @@ class Order(MoneyPropped, models.Model):
         if self.customer:
             # These fields is used for reporting and should not
             # change after create even if empty on moment of ordering.
-            self.customer_groups = self.customer.groups.all()
+            self.customer_groups.set(self.customer.groups.all())
 
     def _cache_values(self):
         self._cache_contact_values()

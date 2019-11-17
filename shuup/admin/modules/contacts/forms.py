@@ -84,7 +84,7 @@ class ContactBaseFormMixin(object):
             self.instance.is_active = True
         obj = super(ContactBaseFormMixin, self).save(commit)
         shop = get_shop(self.request)
-        obj.groups = [obj.get_default_group()] + list(self.cleaned_data["groups"])
+        obj.groups.set([obj.get_default_group()] + list(self.cleaned_data["groups"]))
         obj.add_to_shops(shop, list(self.cleaned_data["shops"]))
         return obj
 

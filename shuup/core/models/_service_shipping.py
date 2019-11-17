@@ -91,7 +91,7 @@ class Carrier(ServiceProvider):
         service = ShippingMethod.objects.create(
             carrier=self, choice_identifier=choice_identifier, **kwargs)
         if labels:
-            service.labels = labels
+            service.labels.set(labels)
         return service
 
 

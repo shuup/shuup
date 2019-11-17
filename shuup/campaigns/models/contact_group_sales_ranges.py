@@ -42,7 +42,7 @@ class ContactGroupSalesRange(models.Model):
         super(ContactGroupSalesRange, self).save(*args, **kwargs)
         if self.is_active():  # Update group members only if the range is still active
             contact_ids = get_contacts_in_sales_range(self.shop, self.min_value, self.max_value)
-            self.group.members = contact_ids
+            self.group.members.set(contact_ids)
 
     def clean(self):
         super(ContactGroupSalesRange, self).clean()

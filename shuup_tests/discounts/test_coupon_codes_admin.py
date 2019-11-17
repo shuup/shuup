@@ -107,7 +107,7 @@ def test_coupon_codes_admin_edit_form_set_discount(rf, staff_user, admin_user):
     discount = Discount.objects.first()
     assert discount.coupon_code is None  # discount is missing shop so this shouldn't be set
 
-    discount.shops = [shop]
+    discount.shops.add(shop)
     request = apply_request_middleware(rf.post("/", data=data), user=staff_user, shop=shop)
     view_func = CouponCodeEditView.as_view()
     response = view_func(request, pk=coupon1.pk)
@@ -125,7 +125,7 @@ def _test_coupon_code_list_view(rf, index):
     shop.staff_members.add(staff_user)
 
     coupon_code = CouponCode.objects.create(code="%s" % index)
-    coupon_code.shops = [shop]
+    coupon_code.shops.add(shop)
 
     view_func = CouponCodeListView.as_view()
     request = apply_request_middleware(
@@ -178,9 +178,9 @@ def _test_coupon_code_delete_view(rf, index):
     shop.staff_members.add(staff_user)
     code = "code-%s" % index
     coupon = CouponCode.objects.create(code=code)
-    coupon.shops = [shop]
+    coupon.shops.add(shop)
     extra_coupon = CouponCode.objects.create(code="extra-coupon-%s" % index)
-    extra_coupon.shops = [shop]
+    extra_coupon.shops.add(shop)
 
     assert CouponCode.objects.filter(code=code).exists()
     view_func = CouponCodeDeleteView.as_view()

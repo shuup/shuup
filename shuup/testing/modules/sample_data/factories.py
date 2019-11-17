@@ -83,7 +83,7 @@ def create_sample_product(name, description, business_segment, image_file, shop)
         shop=shop,
         shop_primary_image=media
     )
-    sp.categories = shop.categories.all()
+    sp.categories.set(shop.categories.all())
     sp.suppliers.add(get_default_supplier())
 
     # configure prices
@@ -110,7 +110,7 @@ def create_sample_carousel(carousel_data, business_segment, shop):
         image_width=carousel_data["width"],
         image_height=carousel_data["height"],
     )
-    carousel.shops = [shop]
+    carousel.shops.set([shop])
 
     # available for 365 days
     available_from = datetime.now() - timedelta(days=1)

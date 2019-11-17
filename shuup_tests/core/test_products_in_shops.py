@@ -322,7 +322,7 @@ def test_product_categories(settings):
         category_one = CategoryFactory()
         category_two = CategoryFactory()
 
-        shop_product.categories = Category.objects.all()
+        shop_product.categories.set(Category.objects.all())
 
         assert shop_product.primary_category  # this was automatically populated
         assert shop_product.primary_category.pk == category_one.pk  # it's the first one also
@@ -355,7 +355,7 @@ def test_product_categories(settings):
         category_one = CategoryFactory()
         category_two = CategoryFactory()
 
-        shop_product.categories = Category.objects.all()
+        shop_product.categories.set(Category.objects.all())
 
         assert not shop_product.primary_category  # this was NOT automatically populated
 

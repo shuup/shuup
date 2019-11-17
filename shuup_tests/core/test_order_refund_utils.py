@@ -161,7 +161,7 @@ def test_order_refunds_with_other_lines():
 
     product = create_product("sku", shop=shop, default_price=10)
     shop_product = product.get_shop_instance(shop=shop)
-    shop_product.suppliers = [supplier]
+    shop_product.suppliers.set([supplier])
 
     order = create_empty_order(shop=shop)
     order.full_clean()

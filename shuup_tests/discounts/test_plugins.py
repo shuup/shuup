@@ -61,7 +61,7 @@ def test_product_selection_plugin(rf):
         product=p5,
         category=category1
     )
-    discount1.shops = [shop]
+    discount1.shops.add(shop)
 
     # this discount should show products: p1, p3 and p4
     discount2 = Discount.objects.create(
@@ -71,7 +71,7 @@ def test_product_selection_plugin(rf):
         end_datetime=now() + timedelta(days=1),
         category=category2
     )
-    discount2.shops = [shop]
+    discount2.shops.add(shop)
 
     # this discount shouldn't be available for this shop
     discount3 = Discount.objects.create(

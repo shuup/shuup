@@ -29,7 +29,7 @@ def test_availability_simple():
     # Add shop and availability with shop should return the one and
     # only discount
     product_discount = Discount.objects.available().first()
-    product_discount.shops = [shop]
+    product_discount.shops.add(shop)
     assert Discount.objects.available(shop).count() == 1
 
     # Test simple date ranges
@@ -126,7 +126,7 @@ def test_with_multiple_exceptions():
     # Add shop and availability with shop should return the one and
     # only discount
     product_discount = Discount.objects.available().first()
-    product_discount.shops = [shop]
+    product_discount.shops.add(shop)
     assert Discount.objects.available(shop).count() == 1
 
     for day in [10, 13, 21]:

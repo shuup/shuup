@@ -67,8 +67,7 @@ def test_carousel_plugin_form_get_context():
     test_carousel = Carousel.objects.create(name="test")
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
     assert plugin.get_context_data(context).get("carousel") == None
-
-    test_carousel.shops = [shop]
+    test_carousel.shops.add(shop)
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
     assert plugin.get_context_data(context).get("carousel") == test_carousel
 
@@ -78,7 +77,7 @@ def test_banner_box_plugin():
     shop = get_default_shop()
     context = get_jinja_context()
     test_carousel = Carousel.objects.create(name="test")
-    test_carousel.shops = [shop]
+    test_carousel.shops.add(shop)
     plugin = BannerBoxPlugin(config={"carousel": test_carousel.pk, "title": "Test"})
     data = plugin.get_context_data(context)
     assert data.get("carousel") == test_carousel
@@ -261,7 +260,7 @@ def test_slide_admin_form(rf, admin_user):
     assert options[1]["value"] == "%s" % page.pk
 
     new_shop = get_shop(identifier="second-shop")
-    category.shops = [new_shop]
+    category.shops.add(new_shop)
     page.shop = new_shop
     page.save()
 

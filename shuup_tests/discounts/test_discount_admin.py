@@ -89,27 +89,27 @@ def _test_discount_list_view(rf, index):
     shop.staff_members.add(staff_user)
 
     discount1 = Discount.objects.create(identifier="discount_without_effects_%s" % index)
-    discount1.shops = [shop]
+    discount1.shops.add(shop)
     discount2 = Discount.objects.create(
         identifier="discount_with_amount_value_only_%s" % index,
         discount_amount_value=20,
         start_datetime=now(),
         end_datetime=now() + datetime.timedelta(days=2))
-    discount2.shops = [shop]
+    discount2.shops.add(shop)
     discount3 = Discount.objects.create(
         identifier="discount_with_amount_and_discounted_price_%s" % index,
         discount_amount_value=20,
         discounted_price_value=4,
         start_datetime=now(),
         end_datetime=now() + datetime.timedelta(days=2))
-    discount3.shops = [shop]
+    discount3.shops.add(shop)
     discount4 = Discount.objects.create(
         identifier="test_with_discounted_price_and_percentage_%s" % index,
         discounted_price_value=4,
         discount_percentage=0.20,
         start_datetime=now(),
         end_datetime=now() + datetime.timedelta(days=2))
-    discount4.shops = [shop]
+    discount4.shops.add(shop)
 
     view_func = DiscountListView.as_view()
     request = apply_request_middleware(
@@ -294,9 +294,9 @@ def _test_discount_delete_view(rf, index):
     shop.staff_members.add(staff_user)
     discount_identifier = "discount%s" % index
     discount = Discount.objects.create(identifier=discount_identifier)
-    discount.shops = [shop]
+    discount.shops.add(shop)
     extra_discount = Discount.objects.create(identifier="extra_discount%s" % index)
-    extra_discount.shops = [shop]
+    extra_discount.shops.add(shop)
 
     assert Discount.objects.filter(identifier=discount_identifier).exists()
     view_func = DiscountDeleteView.as_view()

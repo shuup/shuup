@@ -20,9 +20,9 @@ def test_supplier_price_without_selected_supplier(rf):
     shop = factories.get_shop()
 
     supplier1 = Supplier.objects.create(name="Test 1")
-    supplier1.shops = [shop]
+    supplier1.shops.add(shop)
     supplier2 = Supplier.objects.create(name="Test 2")
-    supplier2.shops = [shop]
+    supplier2.shops.add(shop)
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
     with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
