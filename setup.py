@@ -84,21 +84,21 @@ utils.add_exclude_patters([
 
 REQUIRES = [
     'Babel==2.5.3',
-    'Django>=1.8,<2',
+    'django>=1.8,<2.3',
     'django-bootstrap3>=6.1,<10',
     'django-countries>=3.3,<5.3',
     'django-enumfields>=0.9,<0.10',
     'django-filer>=1.0,<2',
-    'django-filter>=1.0,<1.2',
+    'django-filter>=1.0,<3',
     'django-jinja>=1.4,<3',
     'django-mptt>=0.8.0,<0.10',  # Django-filer doesn't officially support 0.9.0
-    'django-parler>=1.5,<2',
+    'django-parler>=1.5,<3',
     'django-parler-rest>=1.3a1,<2',
     'django-polymorphic>=0.8,<2.1.0',  # For Django 1.8 and 1.9 use version lower 1
-    'django-registration-redux>=1.5,<1.9',
+    'django-registration-redux>=1.5,<3',
     'django-reversion>=2,<3',
     'django-timezone-field>=1.2,<3',
-    'djangorestframework>=3.5,<3.6',
+    'djangorestframework>=3.5,<4',
     'factory-boy==2.7.0',
     'fake-factory>=0.5.0,<0.5.4',
     'Jinja2==2.8.1',
@@ -109,11 +109,9 @@ REQUIRES = [
     'Markdown>=2.6,<3',
     'openpyxl>=2.3,<2.6',
     'python-dateutil>=2.5',
-    'toml>=0.10.0, <1'
+    'toml>=0.10.0,<1'
     'pytz>=2015.4',
     'requests>=2.7,<3',
-    'shuup-api>=1.0,<2',
-    'shuup-rest-api>=1.0,<2',
     'six>=1.9,<2',
     'unicodecsv==0.14.1',
     'xlrd>=1'

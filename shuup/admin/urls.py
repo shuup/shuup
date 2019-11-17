@@ -38,12 +38,17 @@ def login(request, **kwargs):
         do_logout(request)
 
     kwargs.setdefault("extra_context", {})["error"] = request.GET.get("error")
-
-    return auth_views.login(
-        request=request,
-        authentication_form=cached_load("SHUUP_ADMIN_AUTH_FORM_SPEC"),
-        **kwargs
-    )
+    if django.VERSION < (2, 0):
+        return auth_views.login(
+            request=request,
+            authentication_form=cached_load("SHUUP_ADMIN_AUTH_FORM_SPEC"),
+            **kwargs
+        )
+    else:
+        return auth_views.LoginView.as_view(
+            form_class=cached_load("SHUUP_ADMIN_AUTH_FORM_SPEC"),
+            **kwargs
+        )(request)
 
 
 def get_urls():
@@ -70,7 +75,7 @@ def get_urls():
         ),
         admin_url(
             r'^logout/$',
-            auth_views.logout,
+            (auth_views.logout if django.VERSION < (2, 0) else auth_views.LogoutView),
             kwargs={"template_name": "shuup/admin/auth/logout.jinja"},
             name='logout',
             require_authentication=False,
@@ -108,4 +113,5 @@ def get_urls():
     return tuple(urls)
 
 
+app_name = "shuup_admin"
 urlpatterns = get_urls()

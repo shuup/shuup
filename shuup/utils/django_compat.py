@@ -11,7 +11,7 @@ try:
     from django.urls import (
         clear_url_caches, get_callable, get_resolver, get_urlconf,
         NoReverseMatch, resolve, Resolver404, reverse,
-        reverse_lazy, set_urlconf, URLResolver
+        reverse_lazy, set_urlconf, URLPattern, URLResolver
     )
 except ImportError:
     from django.core.urlresolvers import (  # noqa (F401)

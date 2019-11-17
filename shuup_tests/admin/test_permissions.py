@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import django
 import pytest
 import six
 from django.contrib.auth.models import AbstractUser
@@ -35,7 +36,10 @@ migrated_permissions = {
 
 
 def test_default_model_permissions():
-    permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
+    if django.VERSION < (2, 0):
+        permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
+    else:
+        permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product", "shuup.view_product"])
 
     assert get_default_model_permissions(Product) == permissions
 
