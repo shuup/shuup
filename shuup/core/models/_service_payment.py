@@ -120,7 +120,7 @@ class PaymentProcessor(ServiceProvider):
         service = PaymentMethod.objects.create(
             payment_processor=self, choice_identifier=choice_identifier, **kwargs)
         if labels:
-            service.labels = labels
+            service.labels.set(labels)
         return service
 
 

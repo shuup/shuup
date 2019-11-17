@@ -120,7 +120,7 @@ class PermissionChangeFormBase(forms.ModelForm):
     def save(self):
         obj = super(PermissionChangeFormBase, self).save()
         obj.groups.clear()
-        obj.groups = self.cleaned_data["permission_groups"]
+        obj.groups.set(self.cleaned_data["permission_groups"])
 
 
 class UserChangePermissionsView(UpdateView):

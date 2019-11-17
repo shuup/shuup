@@ -145,7 +145,7 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
 
 def _create_category_product_discount(category, shop, discount_amount):
     discount = Discount.objects.create(category=category, discount_amount_value=discount_amount)
-    discount.shops = [shop]
+    discount.shops.add(shop)
 
 
 def _activate_basket_campaign_through_coupon(browser, category, shop):

@@ -110,7 +110,7 @@ class PermissionGroupForm(forms.ModelForm):
 
     def save(self):
         obj = super(PermissionGroupForm, self).save()
-        obj.user_set = set(self.cleaned_data["members"])
+        obj.user_set.set(set(self.cleaned_data["members"]))
         set_permissions_for_group(obj.pk, self.cleaned_data["permissions"])
         return obj
 

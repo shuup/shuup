@@ -64,7 +64,7 @@ class DiscountForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super(DiscountForm, self).save(commit)
-        instance.shops = [self.shop]
+        instance.shops.set([self.shop])
         return instance
 
 

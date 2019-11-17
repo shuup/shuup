@@ -54,7 +54,7 @@ class ProductTypeFilter(CatalogFilter):
 
     @values.setter
     def values(self, values):
-        self.product_types = values
+        self.product_types.set(values)
 
 
 class ProductFilter(CatalogFilter):
@@ -87,7 +87,7 @@ class ProductFilter(CatalogFilter):
 
     @values.setter
     def values(self, values):
-        self.products = values
+        self.products.set(values)
 
 
 class CategoryFilter(CatalogFilter):
@@ -145,4 +145,4 @@ class CategoryFilter(CatalogFilter):
 
     @values.setter
     def values(self, values):
-        self.categories = values
+        self.categories.set(values)

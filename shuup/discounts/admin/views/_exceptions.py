@@ -75,12 +75,14 @@ class AvailabilityExceptionForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super(AvailabilityExceptionForm, self).save(commit)
-        instance.shops = [self.shop]
+        instance.shops.set([self.shop])
 
         if "discounts" in self.fields:
             data = self.cleaned_data
             discount_ids = data.get("discounts", [])
-            instance.discounts = Discount.objects.filter(shops=self.shop, id__in=discount_ids)
+            instance.discounts.set(
+                Discount.objects.filter(shops=self.shop, id__in=discount_ids)
+            )
 
         return instance
 

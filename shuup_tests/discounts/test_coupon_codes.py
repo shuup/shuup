@@ -56,7 +56,7 @@ def test_matching_coupon_code(rf):
 
     discount_amount = 4
     coupon_code = CouponCode.objects.create(code="HORSESHOW2018", active=True)
-    coupon_code.shops = [request.shop]
+    coupon_code.shops.add(request.shop)
     discount = Discount.objects.create(
         active=True, product=product, coupon_code=coupon_code, discount_amount_value=discount_amount)
     discount.shops.add(request.shop)
@@ -112,7 +112,7 @@ def test_customer_usage_limit_for_anons(rf):
 
     discounted_price = 4
     coupon = CouponCode.objects.create(code="sUpErAle 123", active=True, usage_limit_customer=1)
-    coupon.shops = [request.shop]
+    coupon.shops.add(request.shop)
     discount = Discount.objects.create(
         active=True, product=product, coupon_code=coupon, discounted_price_value=discounted_price)
     discount.shops.add(request.shop)
@@ -169,7 +169,7 @@ def test_customer_usage_limit(rf):
 
     discount_percentage = 0.20
     coupon = CouponCode.objects.create(code="sUpErAle", active=True, usage_limit_customer=2)
-    coupon.shops = [request.shop]
+    coupon.shops.add(request.shop)
     discount = Discount.objects.create(
         active=True, product=product, coupon_code=coupon, discount_percentage=discount_percentage)
     discount.shops.add(request.shop)
@@ -224,7 +224,7 @@ def test_usage_limit(rf):
     coupon_code = "TEST!2"
     shop = request.shop
     coupon = CouponCode.objects.create(code=coupon_code, active=True)
-    coupon.shops = [shop]
+    coupon.shops.add(shop)
     discount = Discount.objects.create(
         active=True, product=product, coupon_code=coupon, discounted_price_value=discounted_price)
     discount.shops.add(request.shop)
@@ -266,7 +266,7 @@ def test_usage_limit(rf):
     coupon.shops.clear()
     assert not CouponCode.is_usable(shop, coupon_code, basket.customer)
     assert not coupon.can_use_code(shop, basket.customer)
-    coupon.shops = [shop]
+    coupon.shops.add(shop)
     assert CouponCode.is_usable(shop, coupon_code, basket.customer)
     assert coupon.can_use_code(shop, basket.customer)
 

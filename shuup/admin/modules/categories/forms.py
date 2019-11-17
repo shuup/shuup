@@ -107,7 +107,7 @@ class CategoryProductForm(forms.Form):
                 ShopProductVisibility.ALWAYS_VISIBLE if is_visible else ShopProductVisibility.NOT_VISIBLE
             )
             shop_product.visibility_limit = self.category.visibility.value
-            shop_product.visibility_groups = visibility_groups
+            shop_product.visibility_groups.set(visibility_groups)
             shop_product.save()
             shop_product.categories.add(self.category)
 
