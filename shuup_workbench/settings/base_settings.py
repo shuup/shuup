@@ -6,6 +6,8 @@
 # LICENSE file in the root directory of this source tree.
 import os
 
+import django
+
 from shuup.addons import add_enabled_addons
 
 BASE_DIR = os.getenv("SHUUP_WORKBENCH_BASE_DIR") or (
@@ -65,10 +67,6 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.tasks',
     'shuup.discounts',
 
-    # External Shuup addons
-    'shuup_api',
-    'shuup_rest_api',
-
     # external apps
     'bootstrap3',
     'django_countries',
@@ -78,16 +76,14 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'reversion',
     'registration',
     'rest_framework',
-    'rest_framework_swagger'
 ])
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'shuup.front.middleware.ProblemMiddleware',
@@ -96,6 +92,24 @@ MIDDLEWARE_CLASSES = [
     'shuup.xtheme.middleware.XthemeMiddleware',
     'shuup.admin.middleware.ShuupAdminMiddleware'
 ]
+
+if django.VERSION < (2, 0):
+    MIDDLEWARE_CLASSES = [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'shuup.front.middleware.ProblemMiddleware',
+        'shuup.core.middleware.ShuupMiddleware',
+        'shuup.front.middleware.ShuupFrontMiddleware',
+        'shuup.xtheme.middleware.XthemeMiddleware',
+        'shuup.admin.middleware.ShuupAdminMiddleware'
+    ]
+
 
 ROOT_URLCONF = 'shuup_workbench.urls'
 WSGI_APPLICATION = 'shuup_workbench.wsgi.application'

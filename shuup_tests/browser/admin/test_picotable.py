@@ -49,7 +49,7 @@ list_view_settings = {
     "shop_product": {
         "page_header": "Shop Products",
         "default_column_count": 7,
-        "addable_fields": [(21, "Product Gtin"), (3, "Default Price")],
+        "addable_fields": [(22, "Product Gtin"), (3, "Default Price")],
         "creator": create_products,
         "test_pagination": False
     },

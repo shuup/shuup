@@ -19,7 +19,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http.response import HttpResponseForbidden
 from django.utils.encoding import force_str, force_text
 from django.utils.http import urlencode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.shop_provider import get_shop
@@ -47,7 +47,7 @@ class AdminRegexURLPattern(URLPattern):
             super(AdminRegexURLPattern, self).__init__(regex, callback, default_args, name)
         else:
             from django.urls import re_path
-            repath = re_path(regex, callback)
+            repath = re_path(regex, callback, default_args, name)
             pattern = repath.pattern
             super(AdminRegexURLPattern, self).__init__(pattern, callback, default_args, name)
 
@@ -133,7 +133,6 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
 
         view = importing.load(view)
 
-    print(view)
     return AdminRegexURLPattern(
         regex, view, kwargs, name,
         require_authentication=require_authentication,

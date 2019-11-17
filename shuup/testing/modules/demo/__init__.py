@@ -52,7 +52,7 @@ class DemoModule(AdminModule):
 
     def get_menu_entries(self, request):
         if not self.check_demo_optin(request):
-            return
+            return []
         return [
             MenuEntry(
                 text=random_title(),
