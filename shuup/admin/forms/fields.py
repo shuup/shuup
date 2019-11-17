@@ -7,6 +7,7 @@
 from decimal import Decimal
 from numbers import Number
 
+import django
 from django.forms import (
     DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
 )
@@ -147,7 +148,11 @@ class WeekdayField(MultipleChoiceField):
     def __init__(self, choices=(), required=True, widget=None, label=None, initial=None, help_text='', *args, **kwargs):
         if not choices:
             choices = self.DAYS_OF_THE_WEEK
-        super(WeekdayField, self).__init__(choices, required, widget, label, initial, help_text, *args, **kwargs)
+
+        if django.VERSION < (2, 0):
+            super(WeekdayField, self).__init__(choices, required, widget, label, initial, help_text, *args, **kwargs)
+        else:
+            super(WeekdayField, self).__init__()
 
     def clean(self, value):
         return ",".join(super(WeekdayField, self).clean(value))
