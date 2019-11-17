@@ -30,11 +30,11 @@ def test_order_shipment_section(rf, admin_user):
 
     product1 = create_product("sku1", shop=shop, default_price=10)
     shop_product1 = product1.get_shop_instance(shop=shop)
-    shop_product1.suppliers = [supplier1]
+    shop_product1.suppliers.set([supplier1])
 
     product2 = create_product("sku3", shop=shop, default_price=10, shipping_mode=ShippingMode.NOT_SHIPPED)
     shop_product2 = product1.get_shop_instance(shop=shop)
-    shop_product2.suppliers = [supplier2]
+    shop_product2.suppliers.set([supplier2])
 
     product_quantities = {
         supplier1.pk: {

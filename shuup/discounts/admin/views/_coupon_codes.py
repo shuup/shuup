@@ -71,12 +71,14 @@ class CouponCodeForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super(CouponCodeForm, self).save(commit)
-        instance.shops = [self.shop]
+        instance.shops.set([self.shop])
 
         if "coupon_code_discounts" in self.fields:
             data = self.cleaned_data
             coupon_code_discount_ids = data.get("coupon_code_discounts", [])
-            instance.coupon_code_discounts = Discount.objects.filter(shops=self.shop, id__in=coupon_code_discount_ids)
+            instance.coupon_code_discounts.set(
+                Discount.objects.filter(shops=self.shop, id__in=coupon_code_discount_ids)
+            )
 
         return instance
 

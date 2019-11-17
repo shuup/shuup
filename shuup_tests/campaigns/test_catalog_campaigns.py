@@ -45,12 +45,12 @@ def test_campaign_creation():
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
     condition = ContactGroupCondition.objects.create()
-    condition.contact_groups = request.customer.groups.all()
+    condition.contact_groups.set(request.customer.groups.all())
     condition.save()
 
     assert condition.values.first() == request.customer.groups.first()
 
-    condition.values = request.customer.groups.all()
+    condition.values.set(request.customer.groups.all())
     condition.save()
     assert condition.values.first() == request.customer.groups.first()
 
@@ -80,7 +80,7 @@ def test_condition_doesnt_match():
     activate("en")
     request, shop, group = initialize_test(rf, False)
     condition = ContactGroupCondition.objects.create()
-    condition.contact_groups = [get_default_customer_group()]
+    condition.contact_groups.set([get_default_customer_group()])
     condition.save()
 
     request.customer = None
@@ -96,7 +96,7 @@ def test_condition_affects_price():
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
     contact_condition = ContactGroupCondition.objects.create()
-    contact_condition.contact_groups = request.customer.groups.all()
+    contact_condition.contact_groups.set(request.customer.groups.all())
     contact_condition.save()
 
     campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
@@ -148,7 +148,7 @@ def test_campaign_all_rules_must_match1():
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
     rule1 = ContactGroupCondition.objects.create()
-    rule1.contact_groups = request.customer.groups.all()
+    rule1.contact_groups.set(request.customer.groups.all())
     rule1.save()
 
     rule2 = CategoryFilter.objects.create()
@@ -186,7 +186,7 @@ def test_percentage_campaigns():
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
     rule1 = ContactGroupCondition.objects.create()
-    rule1.contact_groups = request.customer.groups.all()
+    rule1.contact_groups.set(request.customer.groups.all())
     rule1.save()
 
     rule2 = CategoryFilter.objects.create()
@@ -322,7 +322,7 @@ def test_price_cannot_be_under_zero():
 
 def create_condition_and_filter(cat, request):
     rule1 = ContactGroupCondition.objects.create()
-    rule1.contact_groups = request.customer.groups.all()
+    rule1.contact_groups.set(request.customer.groups.all())
     rule1.save()
     rule2 = CategoryFilter.objects.create()
     rule2.categories.add(cat)

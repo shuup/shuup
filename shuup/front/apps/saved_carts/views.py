@@ -82,7 +82,7 @@ class CartSaveView(View):
             data=basket.storage.load(basket=basket),
             product_count=basket.smart_product_count)
         saved_basket.save()
-        saved_basket.products = set(basket.product_ids)
+        saved_basket.products.set(set(basket.product_ids))
         return JsonResponse({"ok": True}, status=200)
 
 

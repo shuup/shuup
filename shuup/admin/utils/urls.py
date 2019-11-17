@@ -133,6 +133,7 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
 
         view = importing.load(view)
 
+    print(view)
     return AdminRegexURLPattern(
         regex, view, kwargs, name,
         require_authentication=require_authentication,

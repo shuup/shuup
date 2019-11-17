@@ -181,7 +181,7 @@ class GDPRUserConsent(models.Model):
         else:
             consent = cls.objects.create(shop=shop, user=user)
 
-        consent.documents = documents
+        consent.documents.set(documents)
         return consent
 
     @classmethod

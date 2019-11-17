@@ -118,7 +118,7 @@ def test_exceptions_admin_edit_form_set_discount(rf, staff_user, admin_user):
     discount = Discount.objects.first()
     assert discount.coupon_code is None  # discount is missing shop so this shouldn't be set
 
-    discount.shops = [shop]
+    discount.shops.add(shop)
     request = apply_request_middleware(rf.post("/", data=data), user=staff_user, shop=shop)
     view_func = AvailabilityExceptionEditView.as_view()
     response = view_func(request, pk=exception1.pk)
@@ -138,7 +138,7 @@ def _test_exception_list_view(rf, index):
 
     exception = AvailabilityException.objects.create(
         name="Exception %s" % index, start_datetime=now(), end_datetime=now())
-    exception.shops = [shop]
+    exception.shops.add(shop)
 
     view_func = AvailabilityExceptionListView.as_view()
     request = apply_request_middleware(
@@ -190,10 +190,10 @@ def _test_exception_delete_view(rf, index):
     exception_name = "Exception %s" % index
     exception = AvailabilityException.objects.create(
         name=exception_name, start_datetime=now(), end_datetime=now())
-    exception.shops = [shop]
+    exception.shops.add(shop)
     extra_exception = AvailabilityException.objects.create(
         name="Extra Exception %s" % index, start_datetime=now(), end_datetime=now())
-    extra_exception.shops = [shop]
+    extra_exception.shops.add(shop)
 
     assert AvailabilityException.objects.filter(name=exception_name).exists()
     view_func = AvailabilityExceptionDeleteView.as_view()

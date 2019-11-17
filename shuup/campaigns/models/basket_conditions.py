@@ -218,7 +218,7 @@ class ProductsInBasketCondition(BasketCondition):
 
     @values.setter
     def values(self, value):
-        self.products = value
+        self.products.set(value)
 
 
 class ContactGroupBasketCondition(BasketCondition):
