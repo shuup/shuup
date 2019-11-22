@@ -332,7 +332,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     translations = TranslatedFields(
         name=models.CharField(
-            max_length=256, verbose_name=_('name'),
+            max_length=256, verbose_name=_('name'), db_index=True,
             help_text=_("Enter a descriptive name for your product. This will be its title in your store.")),
         description=models.TextField(
             blank=True, verbose_name=_('description'),
@@ -357,7 +357,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
                 "A default will be created using the product name."
             )
         ),
-        keywords=models.TextField(blank=True, verbose_name=_('keywords'), help_text=_(
+        keywords=models.TextField(blank=True, verbose_name=_('keywords'), db_index=True, help_text=_(
                 "You can enter keywords that describe your product. "
                 "This will help your shoppers learn about your products. "
                 "It will also help shoppers find them in the store and on the web."
