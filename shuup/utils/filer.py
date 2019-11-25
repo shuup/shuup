@@ -7,12 +7,47 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import absolute_import
 
+import django
 import hashlib
 
 import six
+from django import forms
+from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
+from django.utils.translation import ugettext as _
 from django.forms.models import modelform_factory
 from filer.models import File, Folder, Image
+
+from shuup.core.models import MediaFile, MediaFolder
+
+
+def file_size_validator(value):
+    size = getattr(value, "size", None)
+    if size and settings.SHUUP_MAX_UPLOAD_SIZE and settings.SHUUP_MAX_UPLOAD_SIZE < size:
+        raise ValidationError(
+            _("Maximum file size reached (%(size)s MB)") % {"size": settings.SHUUP_MAX_UPLOAD_SIZE / 1000 / 1000},
+            code="file_max_size_reached"
+        )
+
+    return value
+
+
+if django.VERSION < (1, 11):
+    class UploadFileForm(forms.Form):
+        file = forms.FileField(validators=[file_size_validator])
+else:
+    from django.core.validators import FileExtensionValidator
+
+    class UploadFileForm(forms.Form):
+        file = forms.FileField(validators=[
+            FileExtensionValidator(allowed_extensions=settings.SHUUP_ALLOWED_UPLOAD_EXTENSIONS),
+            file_size_validator
+        ])
+
+
+class UploadImageForm(forms.Form):
+    file = forms.ImageField(validators=[file_size_validator])
 
 
 def filer_folder_from_path(path):
@@ -141,3 +176,57 @@ def filer_image_from_data(request, path, file_name, file_data, sha1=None):
         sha1 = hashlib.sha1(file_data).hexdigest()
     upload_data = ContentFile(file_data, file_name)
     return _filer_file_from_upload(model=Image, request=request, path=path, upload_data=upload_data, sha1=sha1)
+
+
+def filer_file_to_json_dict(file):
+    """
+    :type file: filer.models.File
+    :rtype: dict
+    """
+    assert file.is_public
+
+    try:
+        thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
+            'size': (128, 128),
+            'crop': True,
+            'upscale': True,
+            'subject_location': file.subject_location
+        })
+    except Exception:
+        thumbnail = None
+    return {
+        "id": file.id,
+        "name": file.label,
+        "size": file.size,
+        "url": file.url,
+        "thumbnail": (thumbnail.url if thumbnail else None),
+        "date": file.uploaded_at.isoformat()
+    }
+
+
+def filer_folder_to_json_dict(folder, children=None):
+    """
+    :type file: filer.models.Folder|None
+    :type children: list(filer.models.Folder)
+    :rtype: dict
+    """
+    if folder and children is None:
+        # This allows us to pass `None` as a pseudo root folder
+        children = folder.get_children()
+    return {
+        "id": folder.pk if folder else 0,
+        "name": folder.name if folder else _("Root"),
+        "children": [filer_folder_to_json_dict(child) for child in children]
+    }
+
+
+def ensure_media_folder(shop, folder):
+    media_folder, created = MediaFolder.objects.get_or_create(folder=folder)
+    if not media_folder.shops.filter(id=shop.id).exists():
+        media_folder.shops.add(shop)
+
+
+def ensure_media_file(shop, file):
+    media_file, created = MediaFile.objects.get_or_create(file=file)
+    if not media_file.shops.filter(id=shop.id).exists():
+        media_file.shops.add(shop)

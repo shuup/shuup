@@ -181,7 +181,7 @@ def _mbv_command(shop, user, payload, method="post"):
 
 def _mbv_upload(shop, user, **extra_data):
     content = ("42" * 42).encode("UTF-8")
-    imuf = InMemoryUploadedFile(BytesIO(content), "file", "424242.txt", "text/plain", len(content), "UTF-8")
+    imuf = InMemoryUploadedFile(BytesIO(content), "file", "424242.pdf", "application/pdf", len(content), "UTF-8")
     request = RequestFactory().post("/", dict({"action": "upload", "file": imuf}, **extra_data))
     request.user = user
     request.session = {}

@@ -4,18 +4,22 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import django
 import json
+import tempfile
 
 import pytest
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.urlresolvers import reverse
 from django.http import JsonResponse
+from django.test import override_settings
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
 from filer.models import File, Folder, Image
 from six import BytesIO
 
 from shuup.admin.modules.media.views import MediaBrowserView
-from shuup.testing.factories import get_default_shop
+from shuup.testing.factories import generate_image, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
 
@@ -53,7 +57,7 @@ def mbv_command(user, payload, method="post"):
 
 def mbv_upload(user, **extra_data):
     content = ("42" * 42).encode("UTF-8")
-    imuf = InMemoryUploadedFile(BytesIO(content), "file", "424242.txt", "text/plain", len(content), "UTF-8")
+    imuf = InMemoryUploadedFile(BytesIO(content), "file", "424242.pdf", "application/pdf", len(content), "UTF-8")
     request = RequestFactory().post("/", dict({"action": "upload", "file": imuf}, **extra_data))
     request.user = user
     view = MediaBrowserView.as_view()
@@ -154,6 +158,21 @@ def test_upload(rf, admin_user):
 
 
 @pytest.mark.django_db
+@pytest.mark.skipif(django.VERSION < (1, 11), reason="Disable when run for Django < 1.11.")
+def test_upload_invalid_filetype(rf, admin_user):
+    assert File.objects.count() == 0
+    content = ("42" * 42).encode("UTF-8")
+    imuf = InMemoryUploadedFile(BytesIO(content), "file", "424242.exe", "text/plain", len(content), "UTF-8")
+    request = RequestFactory().post("/", dict({"action": "upload", "file": imuf}))
+    request.user = admin_user
+    view = MediaBrowserView.as_view()
+    response = view(request)
+    error_message = json.loads(response.content.decode("UTF-8"))
+    assert "extension 'exe' is not allowed" in error_message["error"]["file"][0]
+    assert File.objects.count() == 0
+
+
+@pytest.mark.django_db
 def test_upload_into_new_folder(rf, admin_user):
     assert Folder.objects.count() == 0
     # no folder
@@ -221,3 +240,56 @@ def test_deleting_mid_folder(rf, admin_user):
     assert tree[folder1.pk] == {folder3.pk: {}}
     folder1 = Folder.objects.get(pk=folder1.pk)
     assert list(folder1.get_children()) == [folder3]
+
+
+@pytest.mark.django_db
+def test_upload_invalid_image(rf, admin_user):
+    assert File.objects.count() == 0
+    content = ("32" * 32).encode("UTF-8")
+    imuf = InMemoryUploadedFile(BytesIO(content), "file", "424242.png", "image/png", len(content), "UTF-8")
+    request = RequestFactory().post("/", dict({"action": "upload", "file": imuf}))
+    request.user = admin_user
+    view = MediaBrowserView.as_view()
+    response = view(request)
+    error_message = json.loads(response.content.decode("UTF-8"))
+    assert "not an image or a corrupted image." in error_message["error"]["file"][0]
+    assert File.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_upload_valid_image(client, rf, admin_user):
+    assert File.objects.count() == 0
+
+    tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+    generate_image(120, 120).save(tmp_file)
+    #tmp_file.seek(0)
+    client.login(username="admin", password="password")
+    with open(tmp_file.name, 'rb') as data:
+        response = client.post(
+            reverse("shuup_admin:media.upload"),
+            data=dict({"action": "upload", "file": data}),
+            format="multipart"
+        )
+
+    assert File.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_large_image(client, rf, admin_user):
+    assert File.objects.count() == 0
+    with override_settings(SHUUP_MAX_UPLOAD_SIZE = 10):
+        tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+        generate_image(120, 120).save(tmp_file)
+        #tmp_file.seek(0)
+        client.login(username="admin", password="password")
+        with open(tmp_file.name, 'rb') as data:
+            response = client.post(
+                reverse("shuup_admin:media.upload"),
+                data=dict({"action": "upload", "file": data}),
+                format="multipart"
+            )
+            assert response.status_code == 400
+            data = json.loads(response.content.decode("utf-8"))
+            assert "Maximum file size reached" in data["error"]["file"][0]
+
+    assert File.objects.count() == 0
