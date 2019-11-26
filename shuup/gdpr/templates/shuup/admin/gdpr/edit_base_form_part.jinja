@@ -5,6 +5,8 @@
 
 {% call content_block(_("General Settings"), "fa-info-circle") %}
     {{ bs3.field(base_form.enabled) }}
+    <p class="help-block">{% trans %} When the GDPR module is turned on, ordering as a guest will create a contact in Shuup.
+    This ensures that all personal details can be easily found and anonymized when required. {% endtrans %}</p>
     {{ bs3.field(base_form.privacy_policy_page) }}
     {{ bs3.field(base_form.consent_pages) }}
     {{ bs3.field(base_form.skip_consent_on_auth) }}
