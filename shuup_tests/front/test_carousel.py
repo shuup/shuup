@@ -34,19 +34,23 @@ def test_carousel_plugin_form(rf):
     checks = [
         (
             {},
-            {"carousel": None, "active": False}
+            {"carousel": None, "active": False, 'render_image_text': False}
         ),
         (
             {"carousel": test_carousel.pk},
-            {"carousel": test_carousel.pk, "active": False}
+            {"carousel": test_carousel.pk, "active": False, 'render_image_text': False}
         ),
         (
             {"carousel": test_carousel.pk, "active": False},
-            {"carousel": test_carousel.pk, "active": False}
+            {"carousel": test_carousel.pk, "active": False, 'render_image_text': False}
         ),
         (
-            {"carousel": test_carousel.pk, "active": True},
-            {"carousel": test_carousel.pk, "active": True}
+            {"carousel": test_carousel.pk, "active": True, 'render_image_text': False},
+            {"carousel": test_carousel.pk, "active": True, 'render_image_text': False}
+        ),
+        (
+            {"carousel": test_carousel.pk, "active": True, 'render_image_text': True},
+            {"carousel": test_carousel.pk, "active": True, 'render_image_text': True}
         )
     ]
 

@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django import forms
+
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.front.apps.carousel.models import Carousel
@@ -18,7 +20,15 @@ class CarouselPlugin(TemplatedPlugin):
     identifier = "shuup.front.apps.carousel.carousel"
     name = _("Carousel Plugin")
     template_name = "shuup/carousel/carousel.jinja"
-    fields = [("carousel", None)]
+    fields = [
+        ("carousel", None),
+        ("render_image_text", forms.BooleanField(
+            label=_("Render image text"),
+            required=False,
+            initial=True,
+            help_text=_("Display the text on top of the image."),
+        )),
+    ]
     editor_form_class = CarouselConfigForm
 
     def get_defaults(self):
@@ -54,6 +64,12 @@ class BannerBoxPlugin(CarouselPlugin):
     editor_form_class = CarouselConfigForm
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
+        ("render_image_text", forms.BooleanField(
+            label=_("Render image text"),
+            required=False,
+            initial=True,
+            help_text=_("Display the text on top of the image."),
+        )),
     ]
 
     def get_context_data(self, context):

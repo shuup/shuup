@@ -24,6 +24,21 @@
     }
     {% endif %}
 {% endfor %}
+.carousel-title-text {
+    padding: 4rem;
+    font-size: 3.25rem;
+    color: white;
+    text-shadow: -1px 1px 2px #000, 1px 1px 2px #000, 1px -1px 0 #000, -1px -1px 0 #000;
+    text-align: center;
+}
+.carousel-text {
+    padding: 1rem 5rem;
+    font-size: 1.65rem;
+    color: white;
+    text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+    text-align: center;
+    white-space: break-spaces;
+}
 </style>
 
 {% if slides|length %}
@@ -50,9 +65,19 @@
     {% for slide in slides %}
         {% set link = slide.get_link_url() %}
         {% set cropped_slide = slide|thumbnail(size=(carousel.image_width, carousel.image_height), crop="smart", upscale=True) %}
+        {% set caption = slide.get_translated_field("caption") or "" %}
         {% set caption_text = slide.get_translated_field("caption_text") or "" %}
-        {% if link %}<a href="{{ link }}" target="{{ slide.get_link_target() }}" class="col-inner" data-toggle="tooltip" title="{{ caption_text }}">{% endif %}
-            <img src="{{ cropped_slide }}" alt="{{ caption_text }}">
+
+        {% if link %}<a href="{{ link }}" target="{{ slide.get_link_target() }}" class="col-inner" style="text-decoration: none;" data-toggle="tooltip" title="{{ caption_text }}">{% endif %}
+            <div style="background-image: url({{ cropped_slide }}); height: {{carousel.image_height}}px; color: white;" alt="{{ caption }}" title="{{ caption }}. {{ caption_text }}">
+            {% if type == "carousel" %}
+                <div class="carousel-title-text" style="">{{ caption }}</div>
+                <p class="carousel-text" style="">{{ caption_text }}</p>
+            {% elif type == "banner_box" %}
+                <div class="carousel-title-text"
+                    style="display: flex; align-items: center; height: 100%">{{ caption }}</div>
+            {% endif %}
+            </div>
         {% if link %}</a>{% endif %}
     {% endfor %}
     </div>

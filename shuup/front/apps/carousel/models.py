@@ -161,12 +161,16 @@ class Slide(TranslatableShuupModel):
     translations = TranslatedFields(
         caption=models.CharField(
             max_length=80, blank=True, null=True, verbose_name=_("caption"), help_text=_(
-                "Text that describes the image. Used for search engine purposes."
+                "Text that describes the image. It is displayed on top of the image if 'Render "
+                "image text' box is enabled in front-end. Also used for search engine purposes."
             )
         ),
         caption_text=models.TextField(
-            blank=True, null=True, verbose_name=_("caption text"),
-            help_text=_("When displayed in banner box mode, caption text is shown as a tooltip"),
+            blank=True, null=True, verbose_name=_("caption text"), help_text=_(
+                "Caption text is displayed as secondary text on top of the image if "
+                "'Render image text' box is enabled in front-end for 'Carousel plugin' type "
+                "(disabled for 'Banner box' type). It is also shown as a tooltip."
+            ),
         ),
         external_link=models.CharField(
             max_length=800, blank=True, null=True, verbose_name=_("external link"), help_text=_(
