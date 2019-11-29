@@ -14,6 +14,7 @@ from django.db.models import QuerySet
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
+from filer.fields.image import FilerImageField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 from timezone_field.fields import TimeZoneField
@@ -244,6 +245,12 @@ class Contact(PolymorphicShuupModel):
     ))
     account_manager = models.ForeignKey("PersonContact", blank=True, null=True, verbose_name=_('account manager'))
     options = PolymorphicJSONField(blank=True, null=True, verbose_name=_("options"))
+    picture = FilerImageField(
+        verbose_name=_("picture"), blank=True, null=True, related_name="picture", on_delete=models.SET_NULL,
+        help_text=_(
+            "Contact picture. Can be used alongside contact profile, reviews and messages for example."
+        )
+    )
 
     def __str__(self):
         return self.full_name
