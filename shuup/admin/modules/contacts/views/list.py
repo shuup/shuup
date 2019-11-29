@@ -64,6 +64,12 @@ class ContactListView(PicotableListView):
     toolbar_buttons_provider_key = "contact_list_toolbar_provider"
     mass_actions_provider_key = "contact_list_mass_actions_provider"
 
+    def __init__(self):
+        super(ContactListView, self).__init__()
+        picture_column = [column for column in self.columns if column.id == "contact_picture"]
+        if picture_column:
+            picture_column[0].raw = True
+
     def get_shops(self):
         return Shop.objects.get_for_user(self.request.user)
 

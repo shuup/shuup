@@ -14,8 +14,8 @@ from enumfields import EnumField
 
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import (
-    PersonContactChoiceWidget, QuickAddContactGroupMultiSelect,
-    QuickAddTaxGroupSelect
+    FileDnDUploaderWidget, PersonContactChoiceWidget,
+    QuickAddContactGroupMultiSelect, QuickAddTaxGroupSelect
 )
 from shuup.admin.shop_provider import get_shop
 from shuup.core.fields import LanguageFormField
@@ -27,7 +27,7 @@ FIELDS_BY_MODEL_NAME = {
     "Contact": (
         "is_active", "marketing_permission", "phone", "www",
         "timezone", "prefix", "suffix", "name_ext", "email", "tax_group",
-        "merchant_notes", "account_manager"
+        "merchant_notes", "account_manager", "picture"
     ),
     "PersonContact": (
         "first_name", "last_name", "gender", "language", "birth_date"
@@ -57,6 +57,10 @@ class ContactBaseFormMixin(object):
         )
         if "account_manager" in self.fields:
             self.fields["account_manager"].widget = PersonContactChoiceWidget(clearable=True)
+
+        if "picture" in self.fields:
+            self.fields["picture"].widget = FileDnDUploaderWidget(
+                upload_path="/contacts", kind="images", clearable=True)
 
         if not self.request or (self.request and self.request.user.is_superuser):
             shops_qs = Shop.objects.all()
