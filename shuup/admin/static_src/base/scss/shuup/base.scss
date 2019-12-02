@@ -287,3 +287,24 @@ pre {
         padding: 10px;
     }
 }
+
+body {
+    .show-icons  {
+        position: fixed;
+        color: $primary;
+        top: 50%;
+        left: 0;
+        font-size: 15px;
+        padding: 10px 5px;
+        background-color: gainsboro;
+    }
+
+    &:not(.desktop-menu-closed)  {
+        .show-icons  {
+            @include media-breakpoint-up(sm) { // Menu width is 100% on mobile so no need to even show the arrow for resizing the menu
+                left: $main-menu-width;
+                transform: rotate(-180deg);
+            }
+        }
+    }
+}

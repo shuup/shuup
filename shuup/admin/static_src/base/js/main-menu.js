@@ -49,6 +49,7 @@ const handleMainMenu = () => {
   });
 
   const toggleBtn = document.getElementById('menu-button');
+  const toggleArrow = document.getElementById('menu-arrow');
   const mainMenu = document.getElementById('js-main-menu');
   const closeBtn = document.getElementById('js-menu-close');
 
@@ -58,10 +59,9 @@ const handleMainMenu = () => {
       mainMenu.classList.remove('open');
     });
   };
-
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      $("body").toggleClass("desktop-menu-closed");
+   
+  const toggleMenu = () => {
+    $("body").toggleClass("desktop-menu-closed");
       const menuOpen = ($("body").hasClass("desktop-menu-closed")) ? 0 : 1;
       $.post(window.ShuupAdminConfig.browserUrls.menu_toggle, { "csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, menuOpen });
       if (mainMenu.classList.contains('open')) {
@@ -70,7 +70,13 @@ const handleMainMenu = () => {
         mainMenu.classList.add('open');
         hideMainMenu();
       }
-    });
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', toggleMenu);
+  }
+  if (toggleArrow) {
+    toggleArrow.addEventListener('click', toggleMenu);
   }
 };
 
