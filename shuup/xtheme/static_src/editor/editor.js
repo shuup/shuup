@@ -75,7 +75,7 @@ function activateSelects() {
             const model = select.data("model");
             const searchMode = select.data("search-mode");
             const noExpand = select.data("no-expand");
-            activateSelect(select, model, searchMode, noExpand, sync);
+            activateSelect(select, model, searchMode, noExpand);
         }
     });
 }
