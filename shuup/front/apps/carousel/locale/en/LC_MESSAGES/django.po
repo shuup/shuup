@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-22 23:06+0000\n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,13 +178,19 @@ msgstr ""
 msgid "caption"
 msgstr ""
 
-msgid "Text that describes the image. Used for search engine purposes."
+msgid ""
+"Text that describes the image. It is displayed on top of the image if "
+"'Render image text' box is enabled in front-end. Also used for search engine "
+"purposes."
 msgstr ""
 
 msgid "caption text"
 msgstr ""
 
-msgid "When displayed in banner box mode, caption text is shown as a tooltip"
+msgid ""
+"Caption text is displayed as secondary text on top of the image if 'Render "
+"image text' box is enabled in front-end for 'Carousel plugin' type (disabled "
+"for 'Banner box' type). It is also shown as a tooltip."
 msgstr ""
 
 msgid "external link"
@@ -205,6 +211,12 @@ msgid "Slides"
 msgstr ""
 
 msgid "Carousel Plugin"
+msgstr ""
+
+msgid "Render image text"
+msgstr ""
+
+msgid "Display the text on top of the image."
 msgstr ""
 
 msgid "Banner Box"

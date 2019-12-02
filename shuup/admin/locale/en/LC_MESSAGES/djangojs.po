@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -725,58 +725,6 @@ msgid "Previous"
 msgstr ""
 
 msgid "Next"
-msgstr ""
-
-#, javascript-format
-msgid "Filter by %s"
-msgstr ""
-
-msgid "Filters"
-msgstr ""
-
-msgid "Show filters"
-msgstr ""
-
-msgid "Select Action"
-msgstr ""
-
-msgid "Clear Selections"
-msgstr ""
-
-msgid "Select All"
-msgstr ""
-
-#, javascript-format
-msgid "Select All %s Items"
-msgstr ""
-
-#, javascript-format
-msgid "There are no %s to show"
-msgstr ""
-
-msgid "There is no item to show"
-msgstr ""
-
-msgid "with selected filters"
-msgstr ""
-
-msgid "How about creating a new entry?"
-msgstr ""
-
-msgid "Mass Action complete."
-msgstr ""
-
-msgid "Something went wrong."
-msgstr ""
-
-#, javascript-format
-msgid "All %s Items Selected"
-msgstr ""
-
-msgid "You haven't selected anything"
-msgstr ""
-
-msgid "Confirm action by clicking OK!"
 msgstr ""
 
 msgid "Are you sure you want to delete this media?"

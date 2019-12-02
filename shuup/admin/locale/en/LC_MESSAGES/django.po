@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1824,6 +1824,9 @@ msgstr ""
 msgid "Search for"
 msgstr ""
 
+msgid "Go to dashboard"
+msgstr ""
+
 msgid "Go home"
 msgstr ""
 
@@ -2947,6 +2950,9 @@ msgstr ""
 msgid "Order Details"
 msgstr ""
 
+msgid "Order Shop"
+msgstr ""
+
 msgid "Order Number"
 msgstr ""
 
@@ -3005,6 +3011,10 @@ msgid "Taxless Total"
 msgstr ""
 
 msgid "Total incl. Tax"
+msgstr ""
+
+#, python-format
+msgid "Supplied by %(supplier)s"
 msgstr ""
 
 msgid "Discount"
