@@ -8,6 +8,10 @@
     left: $main-menu-width;
     z-index: 1000;
 
+    &.resized {
+        width: calc(100% - #{$closed-menu-width});
+        left: $closed-menu-width;
+    }
     @include media-breakpoint-down(md) {
         left: 0;
         right: 0;

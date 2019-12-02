@@ -31,11 +31,19 @@ const handleMainMenu = () => {
     submenu.classList.add('active');
     categoryArrow.classList.add('rotate');
   };
-
+  const toggleBtn = document.getElementById('menu-button');
+  const mainMenu = document.getElementById('js-main-menu');
+  const closeBtn = document.getElementById('js-menu-close');
+  const resizeBtn = document.getElementById('js-menu-resize');
+  const header = document.getElementById('top-header');
+  const content = document.getElementById('main-content');
+  const supportNav = document.getElementsByClassName('support-nav-wrap')[0];
+  const logoIcon = document.getElementById('logo-icon');
   [...categoryLink].forEach((item) => {
     item.addEventListener('click', (event) => {
-      event.preventDefault();
-
+      if (!(resizeBtn.classList.contains('active'))) {
+        event.preventDefault();
+      }
       const currentItem = event.currentTarget;
       const isActive = currentItem.classList.contains('item-active');
 
@@ -48,9 +56,6 @@ const handleMainMenu = () => {
     });
   });
 
-  const toggleBtn = document.getElementById('menu-button');
-  const mainMenu = document.getElementById('js-main-menu');
-  const closeBtn = document.getElementById('js-menu-close');
 
   const hideMainMenu = () => {
     closeBtn.addEventListener('click', event => {
@@ -58,20 +63,53 @@ const handleMainMenu = () => {
       mainMenu.classList.remove('open');
     });
   };
-
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      $("body").toggleClass("desktop-menu-closed");
-      const menuOpen = ($("body").hasClass("desktop-menu-closed")) ? 0 : 1;
-      $.post(window.ShuupAdminConfig.browserUrls.menu_toggle, { "csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, menuOpen });
-      if (mainMenu.classList.contains('open')) {
-        mainMenu.classList.remove('open');
-      } else {
-        mainMenu.classList.add('open');
-        hideMainMenu();
-      }
-    });
+  const resizeMenu = () => {
+    if(resizeBtn.classList.contains('active')) {
+      mainMenu.classList.remove('resized');
+      header.classList.remove('resized');
+      content.classList.remove('resized');
+      resizeBtn.classList.remove('active');
+      supportNav.classList.remove('resized');
+      mainMenu.classList.add('open');
+      logoIcon.classList.add('hidden');
+    } else {
+      mainMenu.classList.remove('open');
+      mainMenu.classList.add('resized');
+      header.classList.add('resized');
+      content.classList.add('resized');
+      resizeBtn.classList.add('active');
+      supportNav.classList.add('resized');
+      logoIcon.classList.remove('hidden');
+    }
   }
+
+  const resizeMainMenu = () => {
+    resizeBtn.addEventListener('click', event => {
+      toggleMenu();
+    });
+  };
+  resizeMainMenu();
+
+  let menuOpen = ($("body").hasClass("desktop-menu-closed")) ? 0 : 1;
+  if (!(menuOpen)) {
+    resizeMenu();
+  }
+
+  function toggleMenu(){
+    $("body").toggleClass("desktop-menu-closed");
+    menuOpen = ($("body").hasClass("desktop-menu-closed")) ? 0 : 1;
+    $.post(window.ShuupAdminConfig.browserUrls.menu_toggle, { "csrfmiddlewaretoken": window.ShuupAdminConfig.csrf, menuOpen });
+    if (mainMenu.classList.contains('open')) {
+      mainMenu.classList.remove('open');
+    } else {
+      mainMenu.classList.add('open');
+      hideMainMenu();
+    }
+    resizeMenu();
+  }
+  toggleBtn.addEventListener('click', () => {
+    toggleMenu();
+  });
 };
 
 handleMainMenu();

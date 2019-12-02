@@ -8,7 +8,9 @@
     &.iframe-mode {
         padding-left: 30px;
     }
-
+    &.resized {
+        padding-left: calc(#{$closed-menu-width} + 30px);
+    }
     @include media-breakpoint-down(md) {
         padding-left: 30px;
     }

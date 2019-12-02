@@ -30,25 +30,7 @@ body {
     }
 
     @include media-breakpoint-up(lg) {
-        &.desktop-menu-closed {
-             #top-header {
-                 left: 0;
-                 width: 100%;
-             }
 
-             .support-nav-wrap {
-                 left: 30px;
-                 padding-left: 30px;
-             }
-
-             #main-content {
-                 margin-left: 0;
-             }
-
-             #js-main-menu {
-                 display: none;
-             }
-        }
 
         &:not(.desktop-menu-closed)  {
             #top-header .toggler span {
@@ -126,7 +108,9 @@ img {
     &.iframe-mode {
         margin-left: 0;
     }
-
+    &.resized {
+        margin-left: calc(#{$main-menu-width} - 180px);
+    }
     @include media-breakpoint-down(md) {
         margin-left: 0;
     }
