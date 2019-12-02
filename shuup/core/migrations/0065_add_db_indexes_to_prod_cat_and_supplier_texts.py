@@ -19,11 +19,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='producttranslation',
-            name='keywords',
-            field=models.TextField(blank=True, db_index=True, help_text='You can enter keywords that describe your product. This will help your shoppers learn about your products. It will also help shoppers find them in the store and on the web.', verbose_name='keywords'),
-        ),
-        migrations.AlterField(
-            model_name='producttranslation',
             name='name',
             field=models.CharField(db_index=True, help_text='Enter a descriptive name for your product. This will be its title in your store.', max_length=256, verbose_name='name'),
         ),
