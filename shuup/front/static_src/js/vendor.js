@@ -14,3 +14,5 @@ require("bootstrap-select/dist/js/bootstrap-select.js");
 require("jquery.easing");
 require("owl.carousel");
 require("simplelightbox");
+window.Dropzone = require('dropzone');
+Dropzone.autoDiscover = false;

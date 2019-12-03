@@ -182,3 +182,47 @@ label {
         }
     }
 }
+
+.dropzone {
+    background-color: rgba(@border-color, 0.12);
+    border: 2px dashed @border-color;
+    border-radius: @input-border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+
+    .dz-message {
+        margin: 0;
+        margin-top: 2rem;
+        transition: opacity 0.2s ease-in-out;
+
+        &::before {
+            content: '\f0ee';
+            font-family: 'FontAwesome';
+            font-size: 2.4rem;
+            color: @border-color;
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        span a {
+            text-decoration: none;
+            border-bottom: 1px solid @brand-primary;
+        }
+    }
+
+    &.dz-drag-hover {
+        border-color: @brand-primary;
+        border-style: dashed;
+        box-shadow: 0 8px 30px -4px rgba(@brand-primary, 0.12);
+    }
+
+    span {
+        color: @text-color;
+    }
+}

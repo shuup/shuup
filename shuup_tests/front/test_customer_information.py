@@ -7,7 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import json
 import pytest
+import tempfile
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -23,7 +25,9 @@ from shuup.core.models import (
 from shuup.core.utils.users import force_anonymous_contact_for_user
 from shuup.front.apps.customer_information.forms import PersonContactForm
 from shuup.front.views.dashboard import DashboardView
-from shuup.testing.factories import get_default_shop, create_random_user
+from shuup.testing.factories import (
+    generate_image, get_default_shop, create_random_user
+)
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
@@ -64,45 +68,70 @@ def default_address_data(address_type):
 
 
 @pytest.mark.django_db
-def test_new_user_information_edit():
-    client = SmartClient()
-    get_default_shop()
-    # create new user
-    user_password = "niilo"
-    user = get_user_model().objects.create_user(
-        username="Niilo_Nyyppa",
-        email="niilo@example.shuup.com",
-        password=user_password,
-        first_name="Niilo",
-        last_name="Nyyppä",
-    )
+@pytest.mark.parametrize("allow_image_uploads", (False, True))
+def test_new_user_information_edit(allow_image_uploads):
+    with override_settings(SHUUP_CUSTOMER_INFORMATION_ALLOW_PICTURE_UPLOAD=allow_image_uploads):
+        client = SmartClient()
+        get_default_shop()
+        # create new user
+        user_password = "niilo"
+        user = get_user_model().objects.create_user(
+            username="Niilo_Nyyppa",
+            email="niilo@example.shuup.com",
+            password=user_password,
+            first_name="Niilo",
+            last_name="Nyyppä",
+        )
 
-    client.login(username=user.username, password=user_password)
+        client.login(username=user.username, password=user_password)
 
-    # make sure all information matches in form
-    customer_edit_url = reverse("shuup:customer_edit")
-    soup = client.soup(customer_edit_url)
+        # make sure all information matches in form
+        customer_edit_url = reverse("shuup:customer_edit")
+        soup = client.soup(customer_edit_url)
 
-    assert soup.find(attrs={"name": "contact-email"})["value"] == user.email
-    assert soup.find(attrs={"name": "contact-first_name"})["value"] == user.first_name
-    assert soup.find(attrs={"name": "contact-last_name"})["value"] == user.last_name
+        assert soup.find(attrs={"name": "contact-email"})["value"] == user.email
+        assert soup.find(attrs={"name": "contact-first_name"})["value"] == user.first_name
+        assert soup.find(attrs={"name": "contact-last_name"})["value"] == user.last_name
 
-    # Test POSTing
-    form = extract_form_fields(soup)
-    new_email = "nyyppa@example.shuup.com"
-    form["contact-email"] = new_email
-    form["contact-country"] = "FI"
+        # Test POSTing
+        form = extract_form_fields(soup)
+        new_email = "nyyppa@example.shuup.com"
+        form["contact-email"] = new_email
+        form["contact-country"] = "FI"
 
-    for prefix in ("billing", "shipping"):
-        form["%s-city" % prefix] = "test-city"
-        form["%s-email" % prefix] = new_email
-        form["%s-street" % prefix] = "test-street"
-        form["%s-country" % prefix] = "FI"
+        for prefix in ("billing", "shipping"):
+            form["%s-city" % prefix] = "test-city"
+            form["%s-email" % prefix] = new_email
+            form["%s-street" % prefix] = "test-street"
+            form["%s-country" % prefix] = "FI"
 
-    response, soup = client.response_and_soup(customer_edit_url, form, "post")
+        if allow_image_uploads:
+            tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+            generate_image(120, 120).save(tmp_file)
+            with open(tmp_file.name, 'rb') as data:
+                response = client.post(
+                    reverse("shuup:media-upload"), data=dict({"file": data}), format="multipart")
+            assert response.status_code == 200
+            data = json.loads(response.content.decode("utf-8"))
+            file_id = data["file"]["id"]
+            form["contact-picture"] = file_id
 
-    assert response.status_code == 302
-    assert get_user_model().objects.get(pk=user.pk).email == new_email
+        response, soup = client.response_and_soup(customer_edit_url, form, "post")
+        assert response.status_code == 302
+        user = get_user_model().objects.get(pk=user.pk)
+        assert user.email == new_email
+        contact = get_person_contact(user)
+
+        if allow_image_uploads:
+            assert contact.picture.id == file_id
+
+            # Fetch page and check that the picture rendered there
+            customer_edit_url = reverse("shuup:customer_edit")
+            soup = client.soup(customer_edit_url)
+            assert int(soup.find(attrs={"id": "id_contact-picture-dropzone"})["data-id"]) == file_id
+        else:
+            assert contact.picture is None
+            
 
 
 @pytest.mark.django_db

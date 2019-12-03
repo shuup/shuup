@@ -19,6 +19,7 @@ from shuup.core.models import (
     CompanyContact, get_company_contact, get_person_contact, MutableAddress,
     PersonContact, SavedAddress, SavedAddressRole, SavedAddressStatus
 )
+from shuup.front.forms.widget import PictureDnDUploaderWidget
 from shuup.front.utils.companies import company_registration_requires_approval
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
@@ -31,13 +32,21 @@ class PersonContactForm(forms.ModelForm):
 
     class Meta:
         model = PersonContact
-        fields = ("first_name", "last_name", "phone", "email", "gender", "language", "marketing_permission")
+        fields = (
+            "first_name", "last_name", "phone", "email", "gender", "language",
+            "marketing_permission", "picture"
+        )
 
     def __init__(self, *args, **kwargs):
         super(PersonContactForm, self).__init__(*args, **kwargs)
         for field in ("first_name", "last_name", "email"):
             self.fields[field].required = True
         self.initial["language"] = self.instance.language
+
+        if settings.SHUUP_CUSTOMER_INFORMATION_ALLOW_PICTURE_UPLOAD:
+            self.fields["picture"].widget = PictureDnDUploaderWidget(clearable=True)
+        else:
+            self.fields.pop("picture")
 
         field_properties = settings.SHUUP_PERSON_CONTACT_FIELD_PROPERTIES
         for field, properties in field_properties.items():
@@ -52,10 +61,18 @@ class PersonContactForm(forms.ModelForm):
 class CompanyContactForm(forms.ModelForm):
     class Meta:
         model = CompanyContact
-        fields = ("name", "tax_number", "phone", "email", "marketing_permission")
+        fields = (
+            "name", "tax_number", "phone", "email", "marketing_permission", "picture"
+        )
 
     def __init__(self, *args, **kwargs):
         super(CompanyContactForm, self).__init__(*args, **kwargs)
+
+        if settings.SHUUP_CUSTOMER_INFORMATION_ALLOW_PICTURE_UPLOAD:
+            self.fields["picture"].widget = PictureDnDUploaderWidget(clearable=True)
+        else:
+            self.fields.pop("picture")
+
         for field in ("name", "tax_number", "email"):
             self.fields[field].required = True
         if not kwargs.get("instance"):
