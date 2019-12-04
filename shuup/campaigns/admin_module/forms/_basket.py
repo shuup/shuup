@@ -30,7 +30,7 @@ class BasketCampaignForm(BaseCampaignForm):
         if supplier:
             coupons = coupons.filter(supplier=supplier)
 
-        coupon_code_choices = [('', '')] + list(coupons.values_list("pk", "code"))
+        coupon_code_choices = [('', '---------')] + list(coupons.values_list("pk", "code"))
         field_kwargs = dict(choices=coupon_code_choices, required=False)
         field_kwargs["help_text"] = _("Define the required coupon for this campaign.")
         field_kwargs["label"] = _("Coupon")
