@@ -91,6 +91,11 @@ function updateModelChoiceWidgetURL(select) {
 domready(() => {
     let changesMade = false;
     $(".layout-cell").on("click", function() {
+        if(changesMade) {
+            if(!confirm(gettext("Changing plugin cells without saving will cause changes made to this cell to be lost."))) {
+                return;
+            }
+        }
         const {x, y} = this.dataset;
         const newQs = mutate({x, y});
         location.href = "?" + newQs;
