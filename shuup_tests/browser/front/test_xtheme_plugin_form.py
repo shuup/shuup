@@ -72,7 +72,12 @@ def test_xtheme_plugin_form_language_order(admin_user, browser, live_server, set
 
             # select the TextPlugin
             wait_until_appeared(iframe, "select[name='general-plugin']")
-            iframe.select("general-plugin", "text")
+            click_element(iframe, "#select2-id_general-plugin-container")
+            wait_until_appeared(iframe, "input.select2-search__field")
+            iframe.find_by_css("input.select2-search__field").first.value = "Text"
+            wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
+            iframe.execute_script('$($(".select2-results__option")[1]).trigger({type: "mouseup"})')
+
             time.sleep(1)
             wait_until_condition(iframe, lambda x: page_has_loaded(x), timeout=20)
             wait_until_appeared(iframe, "ul.editor-tabs")
@@ -123,7 +128,11 @@ def test_xtheme_plugin_form_selected_language_pane(admin_user, browser, live_ser
 
         # select the TextPlugin
         wait_until_appeared(iframe, "select[name='general-plugin']")
-        iframe.select("general-plugin", "text")
+        click_element(iframe, "#select2-id_general-plugin-container")
+        wait_until_appeared(iframe, "input.select2-search__field")
+        iframe.find_by_css("input.select2-search__field").first.value = "Text"
+        wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
+        iframe.execute_script('$($(".select2-results__option")[1]).trigger({type: "mouseup"})')
         time.sleep(1)
         wait_until_condition(iframe, lambda x: page_has_loaded(x), timeout=20)
         wait_until_appeared(iframe, "ul.editor-tabs")
