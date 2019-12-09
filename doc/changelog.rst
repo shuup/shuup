@@ -1,16 +1,37 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+Shuup 1.10.1
+------------
 
-Unrealeased
------------
+Released on 2019-12-09 8:15pm +0200.
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Admin
+~~~~~
+
+- Fix bug with coupon codes
+
+Campaigns
+~~~~~~~~~
+
+- Add a variation parent basket condition. This condition will match on each
+  child in basket of a chosen product.
+
+Core
+~~~~
+
+- Change contactgroup name length to 256 so it is better in line with other
+  name fields
+
+Xtheme
+~~~~~~
+
+- Fix bug with Select2 in plugin
+
+General
+~~~~~~~
+
+- Add ability to display text on top of carousel
 
 
 Shuup 1.10.0
