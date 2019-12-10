@@ -10,6 +10,8 @@ from collections import defaultdict
 import six
 from django.conf import settings
 from django.core.paginator import Paginator
+from django.core.urlresolvers import reverse
+from django.middleware.csrf import get_token
 from django.utils.translation import get_language
 from jinja2.utils import contextfunction
 
@@ -431,3 +433,13 @@ def get_admin_edit_url(context, intance_or_model):
 @contextfunction
 def get_powered_by_content(context):
     return settings.SHUUP_FRONT_POWERED_BY_CONTENT
+
+
+@contextfunction
+def get_config(context):
+    request = context["request"]
+    is_authenticated = request.user.is_authenticated
+    return {
+        "uploadUrl": (reverse("shuup:media-upload") if is_authenticated else None),
+        "csrf": get_token(request),
+    }

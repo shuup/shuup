@@ -245,3 +245,13 @@ SHUUP_REQUEST_SHOP_PROVIDER_SPEC = (
 #: required that all refunds are linked to actual order lines.
 #:
 SHUUP_ALLOW_ARBITRARY_REFUNDS = True
+
+#: Allowed extensions for file uploads when using `shuup.utils.filer.UploadFileForm` or
+#: `shuup.utils.filer.UploadImageForm`
+#:
+SHUUP_ALLOWED_UPLOAD_EXTENSIONS = ["pdf"]
+
+#: Maximum allowed file size (bytes) for uploads when using `shuup.utils.filer.UploadFileForm` or
+#: `shuup.utils.filer.UploadImageForm`.
+#:
+SHUUP_MAX_UPLOAD_SIZE = 5000000

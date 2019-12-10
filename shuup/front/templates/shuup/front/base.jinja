@@ -28,6 +28,8 @@
     {% else %}
         <link rel="stylesheet" href="{{ shuup_static("shuup/front/css/style.css") }}">
     {% endif %}
+    {% set conf = shuup.general.get_config() %}
+    <script>var ShuupFrontConfig = {{ conf|json }};</script>
     {% if shuup.general.is_shop_admin() %}
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}&v={{ get_shuup_version() }}"></script>
     {% endif %}

@@ -116,3 +116,9 @@ SHUUP_FRONT_POWERED_BY_CONTENT = """
 #: }
 #:
 SHUUP_FRONT_OVERRIDE_SORTS_AND_FILTERS_LABELS_LOGIC = {}
+
+
+#: Maximum allowed file size (bytes) for uploads when posting to
+#: `shuup.front.views.upload.media_upload`
+#:
+SHUUP_FRONT_MAX_UPLOAD_SIZE = 500000

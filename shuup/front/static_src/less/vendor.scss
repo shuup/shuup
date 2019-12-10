@@ -3,3 +3,8 @@ $owl-image-path: "../../node_modules/owl.carousel/src/img/";
 
 @import "~owl.carousel/src/scss/owl.carousel.scss";
 @import "~owl.carousel/src/scss/owl.theme.default.scss";
+
+// --- DropZone Styles ---
+$dropzone-path: "../../node_modules/dropzone/dist";
+
+@import "../../node_modules/dropzone/dist/dropzone.css";

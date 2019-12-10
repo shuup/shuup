@@ -25,56 +25,12 @@ from shuup.admin.modules.media.utils import delete_folder
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import MediaFile, MediaFolder
 from shuup.utils.excs import Problem
-from shuup.utils.filer import filer_file_from_upload, filer_image_from_upload
+from shuup.utils.filer import (
+    filer_file_from_upload, filer_file_to_json_dict, filer_folder_to_json_dict,
+    filer_image_from_upload, ensure_media_file, ensure_media_folder,
+    UploadFileForm, UploadImageForm
+)
 from shuup.utils.mptt import get_cached_trees
-
-
-def _filer_file_to_json_dict(file):
-    """
-    :type file: filer.models.File
-    :rtype: dict
-    """
-    assert file.is_public
-
-    try:
-        thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
-            'size': (128, 128),
-            'crop': True,
-            'upscale': True,
-            'subject_location': file.subject_location
-        })
-    except Exception:
-        thumbnail = None
-    return {
-        "id": file.id,
-        "name": file.label,
-        "size": file.size,
-        "url": file.url,
-        "thumbnail": (thumbnail.url if thumbnail else None),
-        "date": file.uploaded_at.isoformat()
-    }
-
-
-def _filer_folder_to_json_dict(folder, children=None):
-    """
-    :type file: filer.models.Folder|None
-    :type children: list(filer.models.Folder)
-    :rtype: dict
-    """
-    if folder and children is None:
-        # This allows us to pass `None` as a pseudo root folder
-        children = folder.get_children()
-    return {
-        "id": folder.pk if folder else 0,
-        "name": folder.name if folder else _("Root"),
-        "children": [_filer_folder_to_json_dict(child) for child in children]
-    }
-
-
-def _ensure_media_folder(shop, folder):
-    media_folder, created = MediaFolder.objects.get_or_create(folder=folder)
-    if not media_folder.shops.filter(id=shop.id).exists():
-        media_folder.shops.add(shop)
 
 
 def _is_folder_shared(folder):
@@ -96,12 +52,6 @@ def _get_folder_query(shop, folder=None):
     if folder:
         queryset = queryset.filter(id=folder.id)
     return queryset
-
-
-def _ensure_media_file(shop, file):
-    media_file, created = MediaFile.objects.get_or_create(file=file)
-    if not media_file.shops.filter(id=shop.id).exists():
-        media_file.shops.add(shop)
 
 
 def _is_file_shared(file):
@@ -135,7 +85,7 @@ def get_or_create_folder(shop, path):
     for folder in folders:
         if folder != "":
             child, created = Folder.objects.get_or_create(parent=parent, name=folder)
-            _ensure_media_folder(shop, child)
+            ensure_media_folder(shop, child)
             parent = child
     return child
 
@@ -192,7 +142,7 @@ class MediaBrowserView(TemplateView):
     def handle_get_folders(self, data):
         shop = get_shop(self.request)
         root_folders = get_cached_trees(Folder._tree_manager.filter(_get_folder_query_filter(shop)))
-        return JsonResponse({"rootFolder": _filer_folder_to_json_dict(None, root_folders)})
+        return JsonResponse({"rootFolder": filer_folder_to_json_dict(None, root_folders)})
 
     def handle_post_new_folder(self, data):
         shop = get_shop(self.request)
@@ -208,8 +158,8 @@ class MediaBrowserView(TemplateView):
             folder.move_to(parent, "last-child")
             folder.save()
 
-        _ensure_media_folder(shop, folder)
-        return JsonResponse({"success": True, "folder": _filer_folder_to_json_dict(folder, ())})
+        ensure_media_folder(shop, folder)
+        return JsonResponse({"success": True, "folder": filer_folder_to_json_dict(folder, ())})
 
     def handle_get_folder(self, data):
         shop = get_shop(self.request)
@@ -235,10 +185,10 @@ class MediaBrowserView(TemplateView):
         return JsonResponse({"folder": {
             "id": folder.id if folder else 0,
             "name": get_folder_name(folder),
-            "files": [_filer_file_to_json_dict(file) for file in files if file.is_public],
+            "files": [filer_file_to_json_dict(file) for file in files if file.is_public],
             "folders": [
                 # Explicitly pass empty list of children to avoid recursion
-                _filer_folder_to_json_dict(subfolder, children=())
+                filer_folder_to_json_dict(subfolder, children=())
                 for subfolder in subfolders.order_by("name")
             ]
         }})
@@ -314,6 +264,32 @@ class MediaBrowserView(TemplateView):
         })
 
 
+def _process_form(request, folder):
+    try:
+        form = UploadImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            filer_file = filer_image_from_upload(request, path=folder, upload_data=request.FILES['file'])
+        elif not request.FILES["file"].content_type.startswith("image/"):
+            form = UploadFileForm(request.POST, request.FILES)
+            if form.is_valid():
+                filer_file = filer_file_from_upload(request, path=folder, upload_data=request.FILES['file'])
+
+        if not form.is_valid():
+            return JsonResponse({"error": form.errors}, status=400)
+
+        ensure_media_file(get_shop(request), filer_file)
+    except Exception as exc:
+        return JsonResponse({"error": force_text(exc)}, status=500)
+
+    return JsonResponse({
+        "file": filer_file_to_json_dict(filer_file),
+        "message": _("%(file)s uploaded to %(folder)s") % {
+            "file": filer_file.label,
+            "folder": get_folder_name(folder)
+        }
+    })
+
+
 def media_upload(request, *args, **kwargs):
     shop = get_shop(request)
     try:
@@ -326,24 +302,6 @@ def media_upload(request, *args, **kwargs):
         else:
             folder = None  # Root folder upload. How bold!
     except Exception as exc:
-        return JsonResponse({"error": "Invalid folder: %s" % force_text(exc)})
+        return JsonResponse({"error": "Invalid folder: %s" % force_text(exc)}, status=400)
 
-    try:
-        upload_file = request.FILES["file"]
-
-        if upload_file.content_type.startswith("image/"):
-            filer_file = filer_image_from_upload(request, path=folder, upload_data=upload_file)
-        else:
-            filer_file = filer_file_from_upload(request, path=folder, upload_data=upload_file)
-
-        _ensure_media_file(shop, filer_file)
-    except Exception as exc:
-        return JsonResponse({"error": force_text(exc)})
-
-    return JsonResponse({
-        "file": _filer_file_to_json_dict(filer_file),
-        "message": _("%(file)s uploaded to %(folder)s") % {
-            "file": filer_file.label,
-            "folder": get_folder_name(folder)
-        }
-    })
+    return _process_form(request, folder)
