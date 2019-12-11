@@ -20,7 +20,8 @@ def test_url_uniqueness(rf):
     page = create_page(url='bacon', shop=get_default_shop())
     with pytest.raises(ValidationError):
         page = create_page(url='bacon', shop=get_default_shop())
-
+    page.soft_delete()
+    page_two = create_page(url='bacon', shop=get_default_shop())
     with transaction.atomic():
         mpage = create_multilanguage_page(url="cheese", shop=get_default_shop())
         with pytest.raises(ValidationError):
@@ -110,3 +111,10 @@ def test_page_form(rf, admin_user):
     error_data = form.errors["url__fi"].as_data()
     assert error_data[0].code == "invalid_url"
     assert error_data[1].code == "invalid_unique_url"
+    page.soft_delete()
+
+    data["url__fi"] = "suomi"
+    form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data))
+    form.full_clean()
+    assert len(form.errors) == 0
+    page = form.save()

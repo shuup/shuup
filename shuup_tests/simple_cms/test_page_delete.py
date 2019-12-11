@@ -30,6 +30,8 @@ def test_page_delete(rf, admin_user):
 
     assert Page.objects.filter(pk=page.pk).not_deleted().exists() is False
 
+    page_two = create_page(url="bacon", shop=get_default_shop())
+    assert Page.objects.filter(pk=page_two.pk).exists()
 
 @pytest.mark.django_db
 def test_ensure_deleted_inlist(rf, admin_user):

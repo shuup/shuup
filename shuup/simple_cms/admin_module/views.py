@@ -139,7 +139,7 @@ class PageForm(MultiLanguageModelForm):
         * URL (other than owned by existing page) exists
         * URL exists in other languages of existing page
         """
-        pages_ids = Page.objects.for_shop(get_shop(self.request)).values_list("id", flat=True)
+        pages_ids = Page.objects.for_shop(get_shop(self.request)).exclude(deleted=True).values_list("id", flat=True)
         qs = self._get_translation_model().objects.filter(url=url, master_id__in=pages_ids)
         if not self.instance.pk and qs.exists():
             return False

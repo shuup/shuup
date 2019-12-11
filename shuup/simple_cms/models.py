@@ -169,7 +169,7 @@ class Page(MPTTModel, TranslatableModel):
         url = getattr(self, "url", None)
         if url:
             page_translation = self._meta.model._parler_meta.root_model
-            shop_pages = Page.objects.for_shop(self.shop).values_list("id", flat=True)
+            shop_pages = Page.objects.for_shop(self.shop).exclude(deleted=True).values_list("id", flat=True)
             url_checker = page_translation.objects.filter(url=url, master_id__in=shop_pages)
             if self.pk:
                 url_checker = url_checker.exclude(master_id=self.pk)
