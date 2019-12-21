@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 
 import six
+from django.conf import settings
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 from django.utils.timezone import get_current_timezone, make_aware
@@ -30,7 +31,7 @@ class ShuupReportBase(object):
 
     filename_template = None
     icon = "fa-money"
-
+    queryset_row_limit = settings.DEFAULT_REPORTS_ITEM_LIMIT
     form_class = BaseReportForm
 
     def __init__(self, **kwargs):

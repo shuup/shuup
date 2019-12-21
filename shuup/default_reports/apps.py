@@ -20,5 +20,7 @@ class AppConfig(shuup.apps.AppConfig):
             "shuup.default_reports.reports.taxes:TaxesReport",
             "shuup.default_reports.reports.shipping:ShippingReport",
             "shuup.default_reports.reports.refunds.RefundedSalesReport",
+            "shuup.default_reports.reports.orders.OrdersReport",
+            "shuup.default_reports.reports.orders.OrderLineReport",
         ],
     }

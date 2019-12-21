@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2019, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2020, Shoop Commerce Ltd. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -36,7 +36,7 @@ class CustomerSalesReport(OrderReportMixin, ShuupReportBase):
             average_sales=Avg("customer_orders__taxful_total_price_value"),
             taxless_total=Sum("customer_orders__taxless_total_price_value"),
             taxful_total=Sum("customer_orders__taxful_total_price_value")
-        ).filter(order_count__gt=0).order_by("-%s" % self.options["order_by"]).values(
+        ).filter(order_count__gt=0).order_by("-%s" % self.options["order_by"])[:self.queryset_row_limit].values(
             "name", "order_count", "average_sales", "taxless_total", "taxful_total"
         )
 

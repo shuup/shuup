@@ -60,7 +60,7 @@ class TaxesReport(OrderReportMixin, ShuupReportBase):
         data = []
         tax_map = {}
 
-        for tax_total in self.get_objects():
+        for tax_total in self.get_objects()[:self.queryset_row_limit]:
             # load tax on-demand
             if not tax_total["tax"] in tax_map:
                 tax_map[tax_total["tax"]] = Tax.objects.get(pk=tax_total["tax"])

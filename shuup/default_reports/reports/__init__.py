@@ -14,6 +14,7 @@ from .sales_per_hour import SalesPerHour
 from .shipping import ShippingReport
 from .taxes import TaxesReport
 from .total_sales import TotalSales
+from .orders import OrdersReport, OrderLineReport
 
 __all__ = [
     "CustomerSalesReport",
@@ -25,4 +26,6 @@ __all__ = [
     "ShippingReport",
     "TaxesReport",
     "TotalSales",
+    "OrdersReport",
+    "OrderLineReport"
 ]

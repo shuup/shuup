@@ -10,7 +10,10 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.core.models import Carrier, Contact, ShippingMethod, Tax, TaxClass
+from shuup.core.models import (
+    Carrier, Contact, OrderLineType, OrderStatus, ShippingMethod, Supplier,
+    Tax, TaxClass
+)
 from shuup.reports.forms import BaseReportForm
 
 
@@ -42,6 +45,45 @@ class OrderReportForm(BaseReportForm):
     def initial_contacts(self, key):
         if self.data and key in self.data:
             return Contact.objects.filter(pk__in=self.data.getlist(key))
+        return []
+
+
+class OrderLineReportForm(BaseReportForm):
+
+    order_line_type = forms.MultipleChoiceField(
+        label=_("Order Line Type"),
+        required=False,
+        initial=[OrderLineType.PRODUCT.value],
+        choices=[
+            (line_type.value, line_type.name.capitalize())
+            for line_type in OrderLineType
+        ],
+    )  # Because value of OrderLineType.PRODUCT is 1
+
+    def __init__(self, *args, **kwargs):
+        super(OrderLineReportForm, self).__init__(*args, **kwargs)
+
+        supplier = Select2MultipleField(label=_("Suppliers"),
+                                        model=Supplier,
+                                        required=False,
+                                        help_text=_("Filter order lines by suppliers."))
+        order_status = forms.ModelMultipleChoiceField(label=_("Order status"),
+                                                      required=False,
+                                                      queryset=OrderStatus.objects.all(),
+                                                      help_text=_("Filter order lines by status of their order."))
+
+        suppliers = self.get_initial_suppliers("supplier")
+
+        if suppliers:
+            supplier.initial = suppliers
+            supplier.widget.choices = [(obj.pk, obj.name) for obj in suppliers]
+
+        self.fields["supplier"] = supplier
+        self.fields["order_status"] = order_status
+
+    def get_initial_suppliers(self, key):
+        if self.data and key in self.data:
+            return Supplier.objects.filter(pk__in=self.data.getlist(key))
         return []
 
 
