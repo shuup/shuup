@@ -11,7 +11,7 @@ import uuid
 import pytest
 from django.conf import settings
 from django.conf.urls import url, include
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, get_user
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
@@ -327,12 +327,38 @@ def test_registration_during_checkout(client, django_user_model, email_script, r
     response = _register_user_in_checkout(client, CheckoutSpec.as_view())
     user = django_user_model.objects.get(username=username)
     assert response.status_code == 302
+
     if requiring_activation:
+        # User is not active, email received, redirects to shuup:registration_complete
         assert not user.is_active
         assert len(mail.outbox) == 1
+        assert response.url == reverse("shuup:registration_complete")
     else:
+        # User active, no email sent, redirects to next checkout phase
         assert user.is_active
         assert len(mail.outbox) == 0
+        assert response.url == reverse("shuup:checkout", kwargs={"phase": "addresses"})
+
+@pytest.mark.django_db
+def test_registration_during_checkout_activation_deferred(client):
+    if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
+        pytest.skip("shuup.front.apps.registration required in installed apps")
+
+    class CheckoutSpec(BaseCheckoutView):
+        phase_specs = [
+            "shuup.front.checkout.checkout_method:CheckoutMethodPhase",
+            "shuup.front.checkout.checkout_method:RegisterWithDeferredActivationPhase",
+            "shuup.front.checkout.addresses:AddressesPhase",
+        ]
+
+    with override_settings(AUTHENTICATION_BACKENDS=[
+            "django.contrib.auth.backends.AllowAllUsersModelBackend"
+    ]):
+        response = _register_user_in_checkout(client, CheckoutSpec.as_view())
+        user = get_user(client)
+    assert response.url == reverse("shuup:checkout", kwargs={"phase": "addresses"})
+    assert user.is_authenticated
+    assert not user.is_active
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("allow_company_registration", (False, True))
