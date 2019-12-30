@@ -130,6 +130,7 @@ class SavedViewConfig(models.Model):
 
     def set_layout_data(self, layout_data_key, layout):
         if not layout:  # pragma: no cover
+            self._data.setdefault("layouts", {}).pop(layout_data_key, None)
             return None
         if not self.draft:
             raise ValueError("Unable to save things in non-draft mode!")
