@@ -7,9 +7,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 const ScrollToTopButton = {
-    controller() {
+
+    oninit() {
+        var prop = require("mithril/stream");
+
         const ctrl = {
-            visible: m.prop(false)
+            visible: prop(false)
         };
         $(window).on("scroll", () => {
             const scrolled = (window.scrollY > 50);
@@ -27,7 +30,7 @@ const ScrollToTopButton = {
         return ctrl;
     },
     view(ctrl) {
-        if (!ctrl.visible()) {
+        if (!ctrl.visible) {
             return m(".");
         }
         return (

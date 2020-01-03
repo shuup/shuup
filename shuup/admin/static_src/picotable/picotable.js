@@ -13,6 +13,7 @@
 const Picotable = (function (m, storage) {
     "use strict";
     m = m || require("mithril");
+    var prop = require("mithril/stream");
 
     const Util = (function () {
         function property(propertyName) {
@@ -74,7 +75,6 @@ const Picotable = (function (m, storage) {
                 timestamp = new Date().getTime();
 
                 if (!timeout) {
-                    m.startComputation();
 
                     timeout = setTimeout(later, wait);
 
@@ -98,7 +98,6 @@ const Picotable = (function (m, storage) {
                         result = func.apply(context, args);
                         context = args = null;
                     }
-                    m.endComputation();
                 }
             }
 
@@ -190,8 +189,9 @@ const Picotable = (function (m, storage) {
 
     function paginator(paginationData, setPage, extraClass) {
         if (paginationData.nItems === 0) return m("nav");
-
-        var callback = m.withAttr("rel", setPage);
+        var callback = function (e) {
+            setPage(e.target.rel);
+        }
         var currentPage = paginationData.pageNum;
         var pageLinks = [];
         var pageLink = function (page, title) {
@@ -228,10 +228,8 @@ const Picotable = (function (m, storage) {
     }
 
     function debounceChangeConfig(timeout) {
-        return function (el, isInit, context) {
-            if (!isInit) {
+        return function (el) {
                 el.oninput = context.debouncedOnInput = Util.debounce(el.onchange, timeout);
-            }
         };
     }
 
@@ -241,24 +239,21 @@ const Picotable = (function (m, storage) {
             ctrl.setFilterValue(col.id, valueJS);
         };
         var select2Config = function () {
-            return function (el, isInit) {
-                if (!isInit) {
-                    $(el).select2({
-                        dropdownParent: $(el).parent()
-                    });
+            return function (vnode) {
+                $(el).select2({
+                    dropdownParent: $(el).parent()
+                });
+                const body = $('body').find('.select2-search-input');
+                const select2Span = $(el).next();
+                const elements = [select2Span, body];
 
-                    const body = $('body').find('.select2-search-input');
-                    const select2Span = $(el).next();
-                    const elements = [select2Span, body];
+                elements.map(el => el.on('click', e => preventSelect(e)));
 
-                    elements.map(el => el.on('click', e => preventSelect(e)));
-
-                }
             };
         };
 
         var select = m("select.form-control", {
-            config: (col.filter.select2) ? select2Config() : null,
+            oninit: (col.filter.select2) ? select2Config() : null,
             value: JSON.stringify(value),
             onchange: setFilterValueFromSelect,
             onclick: preventSelect,
@@ -328,7 +323,7 @@ const Picotable = (function (m, storage) {
                     setFilterValueFromInput.call(this, "min");
                 }
             },
-            config: useDatepicker ? ctrl.datePicker() : debounceChangeConfig(500)
+            oninit: useDatepicker ? ctrl.datePicker() : debounceChangeConfig(500)
         }));
 
         var maxInput = m("input.form-control", Util.extend({}, attrs, {
@@ -340,7 +335,7 @@ const Picotable = (function (m, storage) {
                     setFilterValueFromInput.call(this, "max");
                 }
             },
-            config: useDatepicker ? ctrl.datePicker() : debounceChangeConfig(500)
+            oninit: useDatepicker ? ctrl.datePicker() : debounceChangeConfig(500)
         }));
 
         const label = m("h6", col.title);
@@ -363,7 +358,7 @@ const Picotable = (function (m, storage) {
             value: Util.stringValue(value),
             placeholder: col.filter.placeholder || interpolate(gettext("Filter by %s"), [col.title]),
             onchange: setFilterValueFromInput,
-            config: debounceChangeConfig(500)
+            oninit: debounceChangeConfig(500)
         });
         return m("div.text-filter", [label, input]);
     }
@@ -393,7 +388,7 @@ const Picotable = (function (m, storage) {
                 value: Util.stringValue(value),
                 placeholder: col.filter.placeholder || interpolate(gettext("Filter by %s"), [col.title]),
                 onchange: setFilterValueFromInput,
-                config: debounceChangeConfig(500)
+                oninit: debounceChangeConfig(500)
             });
 
             return m('div.picotable-filter-name', input);
@@ -462,10 +457,10 @@ const Picotable = (function (m, storage) {
                                 {
                                     href: "#",
                                     "data-value": value,
-                                    onclick: m.withAttr("data-value", function (value) {
-                                        ctrl.vm.perPage(value);
+                                    onclick: function (e) {
+                                        ctrl.vm.perPage(e.target.data-value);
                                         ctrl.refresh(true);
-                                    })
+                                    }
                                 }, `${value} / ${lang.PAGE}`);
                         })
                     )
@@ -481,9 +476,9 @@ const Picotable = (function (m, storage) {
 
         const selectoClasses = "d-flex pt-2 pb-2 justify-content-between align-items-center";
         return m("div", { class: selectoClasses }, [
-            m.component(PageSizeSelector),
+            m(PageSizeSelector),
             m("div.picotable-item-info", itemInfo),
-            m.component(FootCell),
+            m(FootCell),
         ]);
     }
 
@@ -634,10 +629,10 @@ const Picotable = (function (m, storage) {
             {
                 id: "mobile-sort-select",
                 value: (ctrl.vm.sort() || ""),
-                onchange: m.withAttr("value", function (value) {
-                    ctrl.setSortColumn(value);
+                onchange: function (e) {
+                    ctrl.setSortColumn(e.target.value);
                     ctrl.refresh();
-                })
+                }
             },
             Util.map(sortOptions, function (so) {
                 return m("option", { value: so.value }, so.text);
@@ -747,7 +742,8 @@ const Picotable = (function (m, storage) {
         ]);
     }
 
-    function renderMassActions(ctrl) {
+    function renderMassActions(vnode) {
+        let ctrl = vnode.state;
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
         if (massActions.length === 0) {
             return "";
@@ -758,11 +754,12 @@ const Picotable = (function (m, storage) {
             return "";
         }
         var select2Config = function () {
-            return function (el, isInit) {
-                if (!isInit) {
-                    $(el).select2().data('select2').$dropdown.addClass('mass-action-dropdown');
+            return function () {
+                if(vnode.dom != null) {
+                    $(vnode.dom).select2().data('select2').$dropdown.addClass('mass-action-dropdown');
                 }
-            };
+             };
+
         };
 
 
@@ -784,11 +781,11 @@ const Picotable = (function (m, storage) {
             m("select.picotable-mass-action-select",
                 {
                     id: "mass-action-select" + ctrl.id,
-                    config: select2Config(),
+                    oninit: select2Config(),
                     value: 0,
-                    onchange: m.withAttr("value", function (value) {
-                        ctrl.doMassAction(value);
-                    }),
+                    onchange: function (e) {
+                        ctrl.doMassAction(e.target.value);
+                    }
                 },
                 Util.map(massActions, function (obj) {
                     const defaultKeys = ["key", "value"];
@@ -841,7 +838,10 @@ const Picotable = (function (m, storage) {
                     }
                 }) : null
         );
-
+        /* var filtered = array.filter(function (el) {
+            return el != null;
+          });
+          Filters still do not work*/
         function initSelect() {
             const filter = ctrl.vm.filterValues();
             return filter;
@@ -876,11 +876,12 @@ const Picotable = (function (m, storage) {
         );
     }
 
-    function renderHeader(ctrl) {
+    function renderHeader(vnode) {
+        let ctrl = vnode.state;
         return m("div.picotable-header", [
-            renderMassActions(ctrl),
+            renderMassActions(vnode),
             buildNameFilter(ctrl),
-            renderFilter(ctrl)
+            //renderFilter(ctrl) <-- breaks
         ]);
     }
 
@@ -936,7 +937,8 @@ const Picotable = (function (m, storage) {
         ]);
     }
 
-    function PicotableView(ctrl) {
+    function PicotableView(vnode) {
+        let ctrl = vnode.state;
         const data = ctrl.vm.data();
         if (data === null) return;
 
@@ -952,33 +954,33 @@ const Picotable = (function (m, storage) {
         };
 
         return m("div.table-view", [
-            (ctrl.vm.showHeader() ? renderHeader(ctrl) : null),
+            (ctrl.vm.showHeader() ? renderHeader(vnode) : null),
             (showEmptyState(ctrl)),
         ]);
     }
 
-    function renderPicotable(ctrl) {
-        return (ctrl.vm.isLoading) ? renderLoader() : PicotableView(ctrl);
+    function renderPicotable(vnode) {
+        let ctrl = vnode.state;
+        return (ctrl.vm.isLoading) ? renderLoader() : PicotableView(vnode);
     }
 
     function PicotableController(ctrl) {
-        var ctrl = this;
         ctrl.id = "" + 0 | (Math.random() * 0x7FFFFFF);
         ctrl.vm = {
-            url: m.prop(null),
-            sort: m.prop(null),
-            filterEnabled: m.prop({}),
-            filterValues: m.prop({}),
-            checkboxes: m.prop([]),
-            allItemsSelected: m.prop(false),
-            page: m.prop(1),
-            perPage: m.prop(20),
-            perPageChoices: m.prop([20, 50, 100, 200]),
-            showHeader: m.prop(true),
-            data: m.prop(null),
-            renderMode: m.prop("normal"),
-            showMobileFilterSettings: m.prop(false),
-            pickId: m.prop(null),
+            url: prop(null),
+            sort: prop(null),
+            filterEnabled: prop({}),
+            filterValues: prop({}),
+            checkboxes: prop([]),
+            allItemsSelected: prop(false),
+            page: prop(1),
+            perPage: prop(20),
+            perPageChoices: prop([20, 50, 100, 200]),
+            showHeader: prop(true),
+            data: prop(null),
+            renderMode: prop("normal"),
+            showMobileFilterSettings: prop(false),
+            pickId: prop(null),
             isLoading: true
         };
         ctrl.setRenderMode = function (mode) {
@@ -1176,7 +1178,7 @@ const Picotable = (function (m, storage) {
                 m.request({
                     method: "POST",
                     url: window.location.pathname,
-                    data: payload,
+                    body: payload,
                     extract: ctrl.getMassActionResponse,
                     config: xhrConfig
                 });
@@ -1212,12 +1214,12 @@ const Picotable = (function (m, storage) {
                 filters: ctrl.vm.filterValues()
             };
 
-            const params = m.route.parseQueryString(decodeURI(location.search));
+            const params = m.parseQueryString(decodeURI(location.search));
             params.jq = JSON.stringify(data);
             m.request({
                 method: "GET",
                 url: url,
-                data: params
+                params: params
             }).then(ctrl.vm.data, function () {
                 alert("An error occurred.");
             }).then(function () {
@@ -1284,19 +1286,25 @@ const Picotable = (function (m, storage) {
         ctrl.adaptRenderMode();
         window.addEventListener("resize", Util.debounce(ctrl.adaptRenderMode, 100));
 
-        // Replace Mithril's deferred error monitor with one that can ignore JSON-parsing syntax errors.
-        // See https://lhorie.github.io/mithril/mithril.deferred.html#the-exception-monitor
-        m.deferred.onerror = function (e) {
-            if (e.toString().match(/^SyntaxError/)) return;
-
-            // Original onerror behavior below.
-            if ({}.toString.call(e) === "[object Error]" && !e.constructor.toString().match(/ Error/)) throw e;
-        };
     }
 
     var generator = function (container, dataSourceUrl) {
-        this.ctrl = m.mount(container, { view: renderPicotable, controller: PicotableController });
-        this.ctrl.setSource(dataSourceUrl);
+        m.mount(container, {
+            oninit: function(vnode) {
+                PicotableController(vnode.state);
+                vnode.state.setSource(dataSourceUrl);
+            },
+            view: function(vnode) {
+
+
+                return renderPicotable(vnode);
+            },
+            oncreate: function(vnode) {
+                state = vnode.state;
+                return renderPicotable(vnode);   // Some methods use vnode.dom which only becomes available after oncreate, hence it is run again.
+            }
+
+        })
     };
     generator.lang = lang;
     return generator;

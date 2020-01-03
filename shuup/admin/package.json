@@ -39,7 +39,7 @@
     "jquery.scrollbar": "^0.2.11",
     "lodash": "^4.17.14",
     "masonry-layout": "^4.2.2",
-    "mithril": "^0.2.0",
+    "mithril": "^2.0.4",
     "npm-font-open-sans": "^1.1.0",
     "outlayer": "^2.1.1",
     "parcel-bundler": "^1.12.3",
