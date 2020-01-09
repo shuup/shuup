@@ -11,11 +11,13 @@ from shuup.core import cache
 from shuup.core.models import Product, ShopProduct, ProductVariationVariable, ProductVariationVariableValue
 from shuup.front.utils.sorts_and_filters import get_product_queryset
 from shuup.front.utils.product import get_orderable_variation_children
+from shuup.front.utils.user import is_admin_user
 from shuup.testing.factories import (
     create_product, get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_jinja_context
+from shuup_tests.utils.fixtures import regular_user
 
 
 @pytest.mark.django_db
@@ -69,3 +71,21 @@ def test_get_orderable_variation_children(rf):
             assert var_variable == variation_variable
             assert red_value in var_values
             assert blue_value in var_values
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_is_admin_user_func(rf, admin_user, regular_user):
+    get_default_shop()
+    regular_user.is_staff = True
+    request = apply_request_middleware(rf.post("/"), user=regular_user)
+    assert not is_admin_user(request)
+    assert not request.is_admin_user
+    assert not is_admin_user(request)
+
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    assert is_admin_user(request)
+    assert request.is_admin_user
+    assert is_admin_user(request)
+
+    request = apply_request_middleware(rf.post("/"))
+    assert not is_admin_user(request)
