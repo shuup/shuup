@@ -25,9 +25,10 @@
     "less": "^3.0.4",
     "open-sans-all": "0.1.3",
     "owl.carousel": "^2.3.4",
-    "parcel-bundler": "^1.12.3",
+    "parcel-bundler": "^1.12.4",
     "postcss-modules": "^1.1.0",
     "sass": "^1.15.1",
+    "select2": "^4.0.12",
     "shuup-static-build-tools": "^1.0.3",
     "simplelightbox": "^1.17.0"
   },
