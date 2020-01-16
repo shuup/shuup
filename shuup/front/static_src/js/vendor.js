@@ -13,6 +13,8 @@ require("bootstrap");
 require("bootstrap-select/dist/js/bootstrap-select.js");
 require("jquery.easing");
 require("owl.carousel");
+const select2 = require("select2");
+select2(window.$);
 require("simplelightbox");
 window.Dropzone = require('dropzone');
 Dropzone.autoDiscover = false;
