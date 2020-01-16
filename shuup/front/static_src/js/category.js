@@ -29,6 +29,9 @@ window.ProductListScrollTarget = ".products-wrap";
 window.refreshFilters = debounce(function refreshFilters(pageNumber = 1) {
     var pagination = $("ul.pagination");
     var state = { page: pageNumber || 1 };
+    if (!window.PRODUCT_LIST_FILTERS) {
+        return;
+    }
     $.each(window.PRODUCT_LIST_FILTERS, function (idx, key) {
         var filterObj = $("#id_" + key);
 
