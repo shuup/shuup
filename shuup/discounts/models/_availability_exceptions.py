@@ -18,8 +18,14 @@ class AvailabilityException(models.Model):
     name = models.CharField(
         max_length=120, verbose_name=_("name"),
         help_text=_("The name for this exception. Used internally with exception lists for filtering."))
-    start_datetime = models.DateTimeField(verbose_name=_("start"))
-    end_datetime = models.DateTimeField(_("end"))
+    start_datetime = models.DateTimeField(
+        verbose_name=_("start since"),
+        help_text=_('Set to restrict the availability exception to be available only after a certain date and time.'),
+    )
+    end_datetime = models.DateTimeField(
+        _("end until"),
+        help_text=_('Set to restrict the availability exception to be available only until a certain date and time.'),
+    )
 
     def __str__(self):
         return self.name
