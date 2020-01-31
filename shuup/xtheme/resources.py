@@ -78,9 +78,9 @@ class InlineScriptResource(six.text_type):
         Aside from ``var_name`` the signature of this function is similar to that of ``dict``.
         Useful for configuration options, etc.
 
-        :param var_name: The variable to add into global scope
+        :param var_name: The variable to add into global scope.
         :type var_name: str
-        :return: An `InlineScriptResource` object
+        :return: An `InlineScriptResource` object.
         :rtype: InlineScriptResource
         """
         ns = dict(*args, **kwargs)
@@ -109,8 +109,8 @@ class JinjaMarkupResource(object):
             try:
                 return engine.env.from_string(template).render(self.context)
             except:
-                LOGGER.exception("Failed to render Jinja string in Snippet plugin")
-                return force_text(_("(Error while rendering)"))
+                LOGGER.exception("Error! Failed to render Jinja string in Snippet plugin.")
+                return force_text(_("(Error while rendering.)"))
 
     def __eq__(self, other):
         return (self.render() == other)
@@ -157,7 +157,7 @@ class ResourceContainer(object):
         if not resource:
             return False
         if location not in KNOWN_LOCATIONS:
-            raise ValueError("%r is not a known xtheme resource location" % location)
+            raise ValueError("Error! `%r` is not a known xtheme resource location." % location)
         lst = self.resources.setdefault(location, [])
         if resource not in lst:
             lst.append(resource)
@@ -168,11 +168,11 @@ class ResourceContainer(object):
         """
         Render the resources for the given location, then (by default) clean that list of resources.
 
-        :param location: The name of the location. See KNOWN_LOCATIONS.
+        :param location: The name of the location. See `KNOWN_LOCATIONS`.
         :type location: str
         :param clean: Whether or not to clean up the list of resources.
         :type clean: bool
-        :return: String of HTML
+        :return: String of HTML.
         """
         lst = self.resources.get(location)
         if not lst:
@@ -188,7 +188,7 @@ class ResourceContainer(object):
 
         :param resource: The resource.
         :type resource: str|InlineMarkupResource|InlineScriptResource
-        :return: String of HTML
+        :return: String of HTML.
         """
         if not resource:  # pragma: no cover
             return ""
@@ -223,15 +223,15 @@ class ResourceContainer(object):
 @contextfunction
 def inject_resources(context, content, clean=True):
     """
-    Inject all the resources in the context's ResourceContainer into appropriate places in the content given.
+    Inject all the resources in the context's `ResourceContainer` into appropriate places in the content given.
 
-    :param context: Rendering context
+    :param context: Rendering context.
     :type context: jinja2.runtime.Context
-    :param content: HTML content
+    :param content: HTML content.
     :type content: str
     :param clean: Clean the resource container as we go?
     :type clean: bool
-    :return: Possibly modified HTML content
+    :return: Possibly modified HTML content.
     :rtype: str
     """
     rc = get_resource_container(context)
@@ -259,7 +259,7 @@ def inject_resources(context, content, clean=True):
         elif placement == "post":
             content = content[:end] + injection + content[end:]
         else:  # pragma: no cover
-            raise ValueError("Unknown placement %s" % placement)
+            raise ValueError("Error! Unknown placement `%s`." % placement)
 
     return content
 
@@ -268,9 +268,9 @@ def get_resource_container(context):
     """
     Get a `ResourceContainer` from a rendering context.
 
-    :param context: Context
+    :param context: Context.
     :type context: jinja2.runtime.Context
-    :return: Resource Container
+    :return: Resource Container.
     :rtype: shuup.xtheme.resources.ResourceContainer|None
     """
     return context.get(RESOURCE_CONTAINER_VAR_NAME)
@@ -281,13 +281,13 @@ def add_resource(context, location, resource):
     """
     Add an Xtheme resource into the given context.
 
-    :param context: Context
+    :param context: Context.
     :type context: jinja2.runtime.Context
-    :param location: Location string (see KNOWN_LOCATIONS)
+    :param location: Location string (see `KNOWN_LOCATIONS`).
     :type location: str
-    :param resource: Resource descriptor (URL or inline markup object)
+    :param resource: Resource descriptor (URL or inline markup object).
     :type resource: str|InlineMarkupResource|InlineScriptResource
-    :return: Success flag
+    :return: Success flag.
     :rtype: bool
     """
     rc = get_resource_container(context)
@@ -298,7 +298,7 @@ def add_resource(context, location, resource):
 
 def valid_view(context):
     """
-    Prevent adding the global snippet in admin views and in editor view
+    Prevent adding the global snippet in admin views and in editor view.
     """
     view_class = getattr(context["view"], "__class__", None) if context.get("view") else None
     if not view_class or not context.get("request"):

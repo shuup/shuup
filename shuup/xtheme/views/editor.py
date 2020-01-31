@@ -52,7 +52,7 @@ class EditorView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):  # doccov: ignore
         if not could_edit(request):
-            raise Problem(_("No access to editing"))
+            raise Problem(_("No access to editing."))
         self._populate_vars()
         if self.default_layout:
             self.view_config.save_default_placeholder_layout(self.placeholder_name, self.default_layout)
@@ -71,7 +71,7 @@ class EditorView(TemplateView):
         if command:
             dispatcher = getattr(self, "dispatch_%s" % command, None)
             if not callable(dispatcher):
-                raise Problem(_("Unknown command %s") % command)
+                raise Problem(_("Unknown command: `%s`.") % command)
             dispatch_kwargs = dict(request.POST.items())
             rv = dispatcher(**dispatch_kwargs)
             if rv:
@@ -96,7 +96,7 @@ class EditorView(TemplateView):
     def _populate_vars(self):
         theme = get_theme_by_identifier(self.request.GET["theme"], self.request.shop)
         if not theme:
-            raise Problem(_("Unable to determine current theme."))
+            raise Problem(_("Unable to determine the current theme."))
         view_name = self.request.GET["view"]
         global_type = self.request.GET.get("global_type", None)
         self.view_config = ViewConfig(
@@ -157,7 +157,7 @@ class EditorView(TemplateView):
     def dispatch_add_cell(self, y, **kwargs):
         y = int(y)
         if len(self.layout.rows[y].cells) >= ROW_CELL_LIMIT:
-            raise ValueError(_("Cannot add more than %d cells in one row.") % ROW_CELL_LIMIT)
+            raise ValueError(_("Can't add more than %d cells in one row.") % ROW_CELL_LIMIT)
 
         if not (0 <= y < len(self.layout.rows)):
             # No need to raise an exception, really.
