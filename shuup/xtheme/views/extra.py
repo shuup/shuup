@@ -26,7 +26,7 @@ def _get_view_by_name(theme, view_name):
     if hasattr(view, "as_view"):  # Handle CBVs
         view = view.as_view()
     if view and not callable(view):
-        raise ImproperlyConfigured("View %r not callable" % view)
+        raise ImproperlyConfigured("Error! View `%r` is not callable." % view)
     return view
 
 
@@ -46,16 +46,16 @@ def extra_view_dispatch(request, view):
     """
     Dispatch to an Xtheme extra view.
 
-    :param request: A request
+    :param request: A request.
     :type request: django.http.HttpRequest
-    :param view: View name
+    :param view: View name.
     :type view: str
-    :return: A response of some ilk
+    :return: A response of some kind.
     :rtype: django.http.HttpResponse
     """
     theme = get_current_theme(request.shop)
     view_func = get_view_by_name(theme, view)
     if not view_func:
-        msg = "%s/%s: Not found" % (getattr(theme, "identifier", None), view)
+        msg = "Error! %s/%s: Not found." % (getattr(theme, "identifier", None), view)
         return HttpResponseNotFound(msg)
     return view_func(request)

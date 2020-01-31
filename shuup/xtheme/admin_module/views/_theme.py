@@ -130,7 +130,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         """
         Get the theme object to configure.
 
-        :return: Theme object
+        :return: Theme object.
         :rtype: shuup.xtheme.Theme
         """
         return get_theme_by_identifier(

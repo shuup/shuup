@@ -18,7 +18,7 @@ from shuup.xtheme.plugins.forms import TranslatableField
 class ImagePluginChoiceWidget(ImageChoiceWidget):
     """
     Subclass of ImageChoiceWidget that will not raise an exception if
-    given an invalid initial image ID (in case the image has been deleted)
+    given an invalid initial image ID (in case the image has been deleted).
     """
     def get_object(self, value):
         return File.objects.filter(pk=value).first()
@@ -27,7 +27,7 @@ class ImagePluginChoiceWidget(ImageChoiceWidget):
 class ImageIDField(forms.IntegerField):
     """
     A custom field that stores the ID value of a Filer image and presents
-    Shuup admin's image popup widget
+    Shuup admin's image popup widget.
     """
     widget = ImagePluginChoiceWidget(clearable=True)
 
@@ -35,13 +35,13 @@ class ImageIDField(forms.IntegerField):
         try:
             value = super(ImageIDField, self).clean(value)
         except ValidationError:
-            raise ValidationError("Invalid image ID", code="invalid")
+            raise ValidationError("Error! Invalid image ID.", code="invalid")
         return value
 
 
 class ImagePlugin(TemplatedPlugin):
     """
-    A linkable image plugin
+    A linkable image plugin.
     """
     identifier = "images"
     name = _("Image")
@@ -54,23 +54,23 @@ class ImagePlugin(TemplatedPlugin):
             label=_("Full width"),
             required=False,
             initial=True,
-            help_text=_("Set image to full width of cell")
+            help_text=_("Set image to the full width of cell.")
         )),
         ("width", forms.IntegerField(
             label=_("Width (px)"),
             required=False,
-            help_text=_("Leave blank for default width"),
+            help_text=_("Leave blank for default width."),
         )),
         ("height", forms.IntegerField(
             label=_("Height (px)"),
             required=False,
-            help_text=_("Leave blank for default width"),
+            help_text=_("Leave blank for default width."),
         )),
     ]
 
     def get_context_data(self, context):
         """
-        A custom get_context_data that returns the matching filer File
+        A custom get_context_data that returns the matching filer File.
         """
         image = None
         image_id = self.config.get("image_id", None)
