@@ -51,7 +51,7 @@
     function reloadApplication() {
         stopCheckReload();
         reloadCheckTimer = setInterval(checkReload, 2000);
-        Messages.enqueue({tags: "info", text: "{% trans %}Reload initiated.{% endtrans %}"});
+        Messages.enqueue({tags: "info", text: "{% trans %}Reload was initiated.{% endtrans %}"});
         $.ajax({type: "POST", url: reloadUrl, data: $("#addon_reload_form").serialize()});
     }
 
@@ -70,7 +70,7 @@
                 next();
             },
             error: function (response) {
-                Messages.enqueue({tags: "error", text: "{% trans %}Error while reloading application.{% endtrans %}"});
+                Messages.enqueue({tags: "error", text: "{% trans %}Reloading application failed.{% endtrans %}"});
                 $("#reload-log").append("<pre><code>" + response.responseJSON.message + "</code></pre>");
             }
         });
