@@ -53,11 +53,11 @@ class SampleDataAdminModule(AdminModule):
             shop = get_shop(request)
 
             if sample_manager.has_installed_samples(shop):
-                messages.warning(request, _('There is sample data installed. '
-                                            'Access "Settings > Sample Data" for more information.'))
+                messages.warning(request, _("There is a sample data installed. "
+                                            "Search `Sample Data` for more information."))
 
                 yield Notification(
-                    _("There is sample data installed. Click here to consolidate or delete them."),
+                    _("There is a sample data installed. Click here to consolidate or delete them."),
                     title=_("Sample Data"),
                     kind="warning",
                     url="shuup_admin:sample_data"

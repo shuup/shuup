@@ -709,11 +709,11 @@ def create_random_person(locale=None, minimum_name_comp_len=0, shop=None):
     The minimum length for name components can be given, to work around
     possible issues with components expecting a long-enough string.
 
-    :param locale: Locale name
+    :param locale: Locale name.
     :type locale: str|None
-    :param minimum_name_comp_len: Minimum name component length
+    :param minimum_name_comp_len: Minimum name component length.
     :type minimum_name_comp_len: int
-    :return: Person contact
+    :return: Person contact.
     :rtype: PersonContact
     """
     fake = get_faker(["person", "internet", "address"], locale=locale)
@@ -802,7 +802,7 @@ def create_random_order(  # noqa
         customer = Contact.objects.all().order_by("?").first()
 
     if not customer:
-        raise ValueError("No valid contacts")
+        raise ValueError("Error! No valid contacts.")
 
     if shop is None:
         shop = get_default_shop()
