@@ -28,7 +28,7 @@ from ._service_base import (
 
 class FixedCostBehaviorComponent(TranslatableServiceBehaviorComponent):
     name = _("Fixed cost")
-    help_text = _("Add fixed cost to price of the service.")
+    help_text = _("Add a fixed cost to the price of the service.")
 
     price_value = MoneyValueField(help_text=_("The fixed cost to apply to this service."))
     description = TranslatedField(any_language=True)
@@ -48,13 +48,13 @@ class FixedCostBehaviorComponent(TranslatableServiceBehaviorComponent):
 class WaivingCostBehaviorComponent(TranslatableServiceBehaviorComponent):
     name = _("Waiving cost")
     help_text = _(
-        "Add cost to price of the service if total price "
-        "of products is less than a waive limit.")
+        "If the total price of the products is less than a waive limit "
+        "add cost to the price of the service.")
 
     price_value = MoneyValueField(
         help_text=_("The cost to apply to this service if the total price is below the waive limit."))
     waive_limit_value = MoneyValueField(help_text=_(
-        "The total price of products at which this service cost is waived."
+        "The total price of products limit, at which this service cost is waived."
     ))
     description = TranslatedField(any_language=True)
 
@@ -80,7 +80,7 @@ class WeightLimitsBehaviorComponent(ServiceBehaviorComponent):
     name = _("Weight limits")
     help_text = _(
         "Limit availability of the service based on "
-        "total weight of products.")
+        "total weight of the products.")
 
     min_weight = models.DecimalField(
         max_digits=36, decimal_places=6, blank=True, null=True,
@@ -110,10 +110,10 @@ class WeightBasedPriceRange(TranslatableModel):
         on_delete=models.CASCADE
     )
     min_value = MeasurementField(unit="g", verbose_name=_("min weight (g)"), blank=True, null=True, help_text=_(
-        "The minimum weight, in grams, for this price to apply."
+        "The minimum weight (grams) for this price to apply."
     ))
     max_value = MeasurementField(unit="g", verbose_name=_("max weight (g)"), blank=True, null=True, help_text=_(
-        "The maximum weight, in grams, before this price no longer applies."
+        "The maximum weight (grams) before this price no longer applies."
     ))
     price_value = MoneyValueField(help_text=_("The cost to apply to this service when the weight criteria is met."))
     description = TranslatedField(any_language=True)
@@ -132,7 +132,9 @@ class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
     name = _("Weight-based pricing")
     help_text = _(
         "Define price based on basket weight. "
-        "Range minimums is counted in range only as zero.")
+        "Range minimums are counted in range only as zero e.g. if there are 2 ranges "
+        "(range1 = min 0, max 5; range2 = min 5, max 10), only range1's 'min 0' is going "
+        "to be counted, but not range2's 'min 5'.")
 
     def _get_matching_range_with_lowest_price(self, source):
         total_gross_weight = source.total_gross_weight
@@ -156,7 +158,7 @@ class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
 
 class GroupAvailabilityBehaviorComponent(ServiceBehaviorComponent):
     name = _("Contact group availability")
-    help_text = _("Limit service availability for specific contact groups.")
+    help_text = _("Make service available only for specific contact groups.")
 
     groups = models.ManyToManyField("ContactGroup", verbose_name=_("groups"), help_text=_(
         "The contact groups for which this service is available."
@@ -170,21 +172,23 @@ class GroupAvailabilityBehaviorComponent(ServiceBehaviorComponent):
         customer_groups = set(source.customer.groups.all().values_list("pk", flat=True))
         groups_to_match = set(self.groups.all().values_list("pk", flat=True))
         if not bool(customer_groups & groups_to_match):
-            yield ValidationError(_("Service is not available for any of the customers groups."))
+            yield ValidationError(_("Service is not available for any of the customer's groups."))
 
 
 class StaffOnlyBehaviorComponent(ServiceBehaviorComponent):
-    name = _("Staff only availability")
-    help_text = _("Limit service availability to staff only")
+    name = _("Access to Admin Panel only availability")
+    help_text = _("Make service available only for people with `Access to Admin Panel` rights.")
 
     def get_unavailability_reasons(self, service, source):
         if not source.creator or not source.creator.is_staff:
-            yield ValidationError(_("Service is only available for staff"))
+            yield ValidationError(
+                _("Service is only available for people with `Access to Admin Panel` (`is_staff`) rights.")
+            )
 
 
 class OrderTotalLimitBehaviorComponent(ServiceBehaviorComponent):
-    name = _("Order total limit")
-    help_text = _("Limit service availability based on order total")
+    name = _("Order total price limit")
+    help_text = _("Limit service availability based on order's total price.")
 
     min_price_value = MoneyValueField(blank=True, null=True, verbose_name=_("min price value"))
     max_price_value = MoneyValueField(blank=True, null=True, verbose_name=_("max price value"))
@@ -194,12 +198,15 @@ class OrderTotalLimitBehaviorComponent(ServiceBehaviorComponent):
             source.taxful_total_price.value if source.shop.prices_include_tax else source.taxless_total_price.value)
         is_in_range = _is_in_range(total, self.min_price_value, self.max_price_value)
         if not is_in_range:
-            yield ValidationError(_("Order total does not match with service limits."), code="order_total_out_of_range")
+            yield ValidationError(
+                _("Order's total price is not within the defined service limits."),
+                code="order_total_out_of_range"
+            )
 
 
 class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
     name = _("Country limit")
-    help_text = _("Limit service availability based on countries selected")
+    help_text = _("Limit service availability based on countries selected.")
 
     available_in_countries = JSONField(blank=True, null=True, verbose_name=_("available in countries"))
     available_in_european_countries = models.BooleanField(
@@ -212,7 +219,7 @@ class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
         address = (source.shipping_address if hasattr(service, "carrier") else source.billing_address)
         country = (address.country if address else settings.SHUUP_ADDRESS_HOME_COUNTRY)
         if not (address or country):
-            yield ValidationError(_("Service is not available without country."), code="no_country")
+            yield ValidationError(_("Service is not available without a defined country."), code="no_country")
 
         allowed_countries = self.available_in_countries or []
         if self.available_in_european_countries:
@@ -238,15 +245,15 @@ class RoundingMode(Enum):
     ROUND_DOWN = decimal.ROUND_DOWN
 
     class Labels:
-        ROUND_HALF_UP = _("round to nearest with ties going away from zero")
-        ROUND_HALF_DOWN = _("round to nearest with ties going towards zero")
-        ROUND_UP = _("round away from zero")
-        ROUND_DOWN = _("round towards zero")
+        ROUND_HALF_UP = _("round up to the nearest number with ties going up, away from zero")
+        ROUND_HALF_DOWN = _("round to the nearest number with ties going down, towards zero")
+        ROUND_UP = _("round up, away from zero, towards the farther round number")
+        ROUND_DOWN = _("round down, towards zero, towards the closest round number")
 
 
 def _is_in_range(value, min_value, max_value):
     """
-    Help function to check if the range matches with value
+    Help function to check if the range matches with value.
 
     If min_value is None the max_value determines if the range matches.
     None as a max_value represents infinity. Min value is counted in

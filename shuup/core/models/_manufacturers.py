@@ -26,7 +26,7 @@ class Manufacturer(models.Model):
     shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_("shops"))
     name = models.CharField(max_length=128, verbose_name=_('name'), help_text=_(
         "Enter the manufacturer’s name. "
-        "Products can be filtered by the manufacturer and can be useful for inventory and stock management."
+        "Products can be filtered by the manufacturer and this can be useful for inventory and stock management."
     ))
     url = models.CharField(null=True, blank=True, max_length=128, verbose_name=_('URL'), help_text=_(
         "Enter the URL of the product manufacturer if you would like customers to be able to visit the manufacturer's "

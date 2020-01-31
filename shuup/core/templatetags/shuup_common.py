@@ -41,8 +41,8 @@ def get_language_choices():
     Get language choices as code and text in two languages.
 
     :return:
-      Available language codes as tuples (code, name, local_name)
-      where name is in the currently active language, and local_name
+      Available language codes as tuples (`code`, `name`, `local_name`)
+      where `name` is in the currently active language, and `local_name`
       is in the language of the item.
     :rtype: Iterable[tuple[str,str,str]]
     """
@@ -56,15 +56,15 @@ def get_language_choices():
 @library.filter
 def money(amount, digits=None, widen=0):
     """
-    Format money amount according to current locale settings.
+    Format money amount according to the current locale settings.
 
-    :param amount: Money or Price object to format
+    :param amount: Money or Price object to format.
     :type amount: shuup.utils.money.Money
-    :param digits: Number of digits to use, by default use locale's default
+    :param digits: Number of digits to use, by default use locale's default.
     :type digits: int|None
     :param widen:
       Number of extra digits to add; for formatting with additional
-      precision, e.g. ``widen=3`` will use 5 digits instead of 2
+      precision, e.g. ``widen=3`` will use 5 digits instead of the default 2.
     :type widen: int
     :return: Formatted string representing the given amount
     :rtype: str
@@ -85,38 +85,38 @@ def number(value):
 @library.filter
 def datetime(value, kind="datetime", format="medium", tz=True):
     """
-    Format a datetime for human consumption.
+    Format a `datetime` for human consumption.
 
-    The currently active locale's formatting rules are used.  The output
+    The currently active locale's formatting rules are used. The output
     of this function is probably not machine-parseable.
 
     :param value: datetime object to format
     :type value: datetime.datetime
 
-    :param kind: Format as 'datetime', 'date' or 'time'
+    :param kind: Format as 'datetime', 'date' or 'time'.
     :type kind: str
 
     :param format:
-      Format specifier or one of 'full', 'long', 'medium' or 'short'
+      Format specifier or one of 'full', 'long', 'medium' or 'short'.
     :type format: str
 
     :param tz:
       Convert to current or given timezone. Accepted values are:
 
          True (default)
-             convert to currently active timezone (as reported by
+             convert to the currently active timezone (as reported by
              :func:`django.utils.timezone.get_current_timezone`)
          False (or other false value like empty string)
              do no convert to any timezone (use UTC)
          Other values (as str)
-             convert to given timezone (e.g. ``"US/Hawaii"``)
+             convert to a given timezone (e.g. ``"US/Hawaii"``)
     :type tz: bool|str
     """
 
     locale = get_current_babel_locale()
 
     if type(value) is date:  # Not using isinstance, since `datetime`s are `date` too.
-        # We can't do any TZ manipulation for dates, so just use `format_date` always
+        # We can't do any TZ manipulation for dates, so just always use `format_date`
         return format_date(value, format=format, locale=locale)
 
     if tz:
@@ -129,7 +129,7 @@ def datetime(value, kind="datetime", format="medium", tz=True):
     elif kind == "time":
         return format_time(value, format=format, locale=locale)
     else:
-        raise ValueError("Unknown `datetime` kind: %r" % kind)
+        raise ValueError("Error! Unknown `datetime` kind: %r." % kind)
 
 
 @library.filter(name="json")

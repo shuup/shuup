@@ -26,10 +26,10 @@ def update_order_line_from_product(
     """
 
     if order_line.pk:  # pragma: no cover
-        raise Exception("set_from_product may not be used on saved lines")
+        raise Exception("Error! `set_from_product` may not be used on saved lines.")
 
     if not product:  # pragma: no cover
-        raise Exception("set_from_product may not be used without product")
+        raise Exception("Error! `set_from_product` may not be used without product.")
 
     order_line.supplier = supplier
     order_line.type = OrderLineType.PRODUCT

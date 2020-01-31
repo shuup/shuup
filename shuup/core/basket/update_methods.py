@@ -54,7 +54,7 @@ class BasketUpdateMethods(object):
             shop_product = product.get_shop_instance(shop=self.request.shop)
         except ShopProduct.DoesNotExist:
             return [
-                ValidationError("%s not available in %s" % (product, self.request.shop),
+                ValidationError("Error! %s is not available in %s." % (product, self.request.shop),
                                 code="product_not_available_in_shop")
             ]
 
@@ -72,7 +72,7 @@ class BasketUpdateMethods(object):
                 except ShopProduct.DoesNotExist:
                     child_errors = [
                         ValidationError(
-                            "%s not available in %s" % (child_product, self.request.shop),
+                            "Error! %s is not available in %s." % (child_product, self.request.shop),
                             code="product_not_available_in_shop"
                         )
                     ]

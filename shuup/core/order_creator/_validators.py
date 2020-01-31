@@ -33,7 +33,7 @@ class OrderSourceMinTotalValidator(object):
 
         if total < min_total:
             min_total_price = format_money(order_source.shop.create_price(min_total))
-            msg = _("The total should be greater than {} to be ordered.").format(min_total_price)
+            msg = _("The total price should be greater than {} to be ordered.").format(min_total_price)
             yield ValidationError(msg, code="order_total_too_low")
 
 
@@ -60,7 +60,7 @@ class OrderSourceSupplierValidator(object):
                 try:
                     shop_product = product.get_shop_instance(shop=order_source.shop)
                 except ShopProduct.DoesNotExist:
-                    msg = _("%s not available in this shop") % product.name
+                    msg = _("%s is not available in this shop.") % product.name
                     yield ValidationError(msg, code="product_not_available_in_shop")
                     continue
 

@@ -57,7 +57,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         "Product", related_name="shop_products", on_delete=models.CASCADE, verbose_name=_("product"))
     suppliers = models.ManyToManyField(
         "Supplier", related_name="shop_products", blank=True, verbose_name=_("suppliers"), help_text=_(
-            "List your suppliers here. Suppliers can be found in Product Settings - Suppliers."
+            "List your suppliers here. Suppliers can be found by searching for `Suppliers`."
         )
     )
 
@@ -67,10 +67,10 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         db_index=True,
         verbose_name=_("visibility"),
         help_text=mark_safe_lazy(_(
-            "Select if you want your product to be seen and found by customers. "
-            "<p>Not visible: Product will not be shown in your store front or found in search.</p>"
-            "<p>Searchable: Product will be shown in search but not listed on any category page.</p>"
-            "<p>Listed: Product will be shown on category pages but not shown in search results.</p>"
+            "Choose how you want your product to be seen and found by the customers. "
+            "<p>Not visible: Product will not be shown in your store front nor found in search.</p>"
+            "<p>Searchable: Product will be shown in search, but not listed on any category page.</p>"
+            "<p>Listed: Product will be shown on category pages, but not shown in search results.</p>"
             "<p>Always Visible: Product will be shown in your store front and found in search.</p>"
         ))
     )
@@ -79,63 +79,67 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         ProductVisibility, db_index=True, default=ProductVisibility.VISIBLE_TO_ALL,
         verbose_name=_('visibility limitations'), help_text=_(
             "Select whether you want your product to have special limitations on its visibility in your store. "
-            "You can make products visible to all, visible to only logged in users, or visible only to certain "
+            "You can make products visible to all, visible to only logged-in users, or visible only to certain "
             "customer groups."
         )
     )
     visibility_groups = models.ManyToManyField(
         "ContactGroup", related_name='visible_products', verbose_name=_('visible for groups'), blank=True, help_text=_(
-            u"Select the groups you would like to make your product visible for. "
+            u"Select the groups you want to make your product visible for. "
             u"These groups are defined in Contacts Settings - Contact Groups."
         )
     )
     backorder_maximum = QuantityField(
         default=0, blank=True, null=True, verbose_name=_('backorder maximum'), help_text=_(
-            "The number of units that can be purchased after the product is out of stock. "
+            "The number of units that can be purchased after the product is already sold out (out of stock). "
             "Set to blank for product to be purchasable without limits."
         ))
     purchase_multiple = QuantityField(default=0, verbose_name=_('purchase multiple'), help_text=_(
-            "Set this if the product needs to be purchased in multiples. "
+            "Set this to other than 0 if the product needs to be purchased in multiples. "
             "For example, if the purchase multiple is set to 2, then customers are required to order the product "
-            "in multiples of 2."
+            "in multiples of 2. Not to be confused with the Minimum Purchase Quantity."
         )
     )
-    minimum_purchase_quantity = QuantityField(default=1, verbose_name=_('minimum purchase'), help_text=_(
+    minimum_purchase_quantity = QuantityField(default=1, verbose_name=_('minimum purchase quantity'), help_text=_(
             "Set a minimum number of products needed to be ordered for the purchase. "
             "This is useful for setting bulk orders and B2B purchases."
         )
     )
     limit_shipping_methods = models.BooleanField(
-        default=False, verbose_name=_("limited for shipping methods"), help_text=_(
-            "Check this if you want to limit your product to use only select payment methods. "
-            "You can select the payment method(s) in the field below."
+        default=False, verbose_name=_("limit the shipping methods"), help_text=_(
+            "Enable this if you want to limit your product to use only the select payment methods. "
+            "You can select the allowed payment method(s) in the field below - all the rest "
+            "are disallowed."
         )
     )
     limit_payment_methods = models.BooleanField(
-        default=False, verbose_name=_("limited for payment methods"), help_text=_(
-            "Check this if you want to limit your product to use only select payment methods. "
-            "You can select the payment method(s) in the field below."
+        default=False, verbose_name=_("limit the payment methods"), help_text=_(
+            "Enable this if you want to limit your product to use only the select payment methods. "
+            "You can select the allowed payment method(s) in the field below - all the rest "
+            "are disallowed."
         )
     )
     shipping_methods = models.ManyToManyField(
         "ShippingMethod", related_name='shipping_products', verbose_name=_('shipping methods'), blank=True, help_text=_(
-            "Select the shipping methods you would like to limit the product to using. "
-            "These are defined in Settings - Shipping Methods."
+            "If you enabled the `Limit the payment methods` choice above, then here you can select the "
+            "individual shipping methods you want to ALLOW for this product. The ones not mentioned are "
+            "disabled. To change this, search for `Shipping Methods`."
         )
     )
     payment_methods = models.ManyToManyField(
         "PaymentMethod", related_name='payment_products', verbose_name=_('payment methods'), blank=True, help_text=_(
-            "Select the payment methods you would like to limit the product to using. "
-            "These are defined in Settings - Payment Methods."
+            "If you enabled the `Limit the payment methods` choice above, then here you can select the "
+            "individuals payment methods you want to ALLOW for this product. The ones not mentioned are "
+            "disabled. To change this, search for `Payment Methods`."
         )
     )
     primary_category = models.ForeignKey(
         "Category", related_name='primary_shop_products', verbose_name=_('primary category'), blank=True, null=True,
         on_delete=models.PROTECT, help_text=_(
-            "Choose the primary category for your product. "
+            "Choose the primary category for the product. "
             "This will be the main category for classification in the system. "
-            "Your product can be found under this category in your store. "
-            "Categories are defined in Products Settings - Categories."
+            "The product will be found under this category in your store. "
+            "To change this, search for `Categories`."
         )
     )
     categories = models.ManyToManyField(
@@ -148,7 +152,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         "ProductMedia", null=True, blank=True,
         related_name="primary_image_for_shop_products", on_delete=models.SET_NULL,
         verbose_name=_("primary image"), help_text=_(
-            "Click this to set this image as the primary display image for your product."
+            "Click this to set this image as the primary display image for the product."
         )
     )
 
@@ -156,7 +160,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
     default_price = PriceProperty('default_price_value', 'shop.currency', 'shop.prices_include_tax')
     default_price_value = MoneyValueField(verbose_name=_("default price"), null=True, blank=True, help_text=_(
             "This is the default individual base unit (or multi-pack) price of the product. "
-            "All discounts or coupons will be based off of this price."
+            "All discounts or coupons will be calculated based off of this price."
         )
     )
 
@@ -164,26 +168,26 @@ class ShopProduct(MoneyPropped, TranslatableModel):
     minimum_price_value = MoneyValueField(verbose_name=_("minimum price"), null=True, blank=True, help_text=_(
             "This is the default price that the product cannot go under in your store, "
             "despite coupons or discounts being applied. "
-            "This is useful to make sure your product price stays above cost."
+            "This is useful to make sure your product price stays above the cost."
         )
     )
     available_until = models.DateTimeField(verbose_name=_("available until"), null=True, blank=True, help_text=_(
-        "After this date the product will be invisible."
+        "After this date this product will be invisible in store front."
     ))
 
     display_unit = models.ForeignKey(
         DisplayUnit, null=True, blank=True,
         verbose_name=_("display unit"),
-        help_text=_("Unit for displaying quantities of this product"))
+        help_text=_("Unit for displaying quantities of this product."))
 
     translations = TranslatedFields(
         name=models.CharField(
             blank=True, null=True, max_length=256, verbose_name=_('name'),
-            help_text=_("Enter a descriptive name for your product. This will be its title in your store.")),
+            help_text=_("Enter a descriptive name for your product. This will be its title in your store front.")),
         description=models.TextField(
             blank=True, null=True, verbose_name=_('description'),
             help_text=_(
-                "To make your product stand out, give it an awesome description. "
+                "To make your product stands out, give it an awesome description. "
                 "This is what will help your shoppers learn about your products. "
                 "It will also help shoppers find them in the store and on the web."
             )
@@ -191,9 +195,10 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         short_description=models.CharField(
             blank=True, null=True, max_length=150, verbose_name=_('short description'),
             help_text=_(
-                "Enter a short description for your product. "
-                "The short description will be used to get the attention of your "
-                "customer with a small but precise description of your product."
+                "Enter a short description for your product. The short description will "
+                "be used to get the attention of your customer with a small, but "
+                "precise description of your product. It also helps with getting more "
+                "traffic via search engines."
             )
         ),
         status_text=models.CharField(
@@ -222,15 +227,16 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         if self.display_unit:
             if self.display_unit.internal_unit != self.product.sales_unit:
                 raise ValidationError({'display_unit': _(
-                    "Invalid display unit: Internal unit of "
+                    "Error! Invalid display unit: Internal unit of "
                     "the selected display unit does not match "
-                    "with the sales unit of the product")})
+                    "with the sales unit of the product.")})
         post_clean.send(type(self), instance=self)
 
     def is_list_visible(self):
         """
         Return True if this product should be visible in listings in general,
         without taking into account any other visibility limitations.
+
         :rtype: bool
         """
         if self.product.deleted:
@@ -267,22 +273,25 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     def get_visibility_errors(self, customer):
         if self.product.deleted:
-            yield ValidationError(_('This product has been deleted.'), code="product_deleted")
+            yield ValidationError(_("This product has been deleted."), code="product_deleted")
 
         if customer and customer.is_all_seeing:  # None of the further conditions matter for omniscient customers.
             return
 
         if not self.visible:
-            yield ValidationError(_('This product is not visible.'), code="product_not_visible")
+            yield ValidationError(_("This product is not visible."), code="product_not_visible")
 
         if self.available_until and self.available_until <= now():
-            yield ValidationError(_('This product is not available to the current date.'), code="product_not_available")
+            yield ValidationError(
+                _("Error! This product is not available until the current date."),
+                code="product_not_available"
+            )
 
         is_logged_in = (bool(customer) and not customer.is_anonymous)
 
         if not is_logged_in and self.visibility_limit != ProductVisibility.VISIBLE_TO_ALL:
             yield ValidationError(
-                _('The Product is invisible to users not logged in.'),
+                _("The Product is invisible to users not logged in."),
                 code="product_not_visible_to_anonymous")
 
         if is_logged_in and self.visibility_limit == ProductVisibility.VISIBLE_TO_GROUPS:
@@ -291,13 +300,13 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             my_groups = set(self.visibility_groups.values_list("pk", flat=True))
             if not bool(user_groups & my_groups):
                 yield ValidationError(
-                    _('This product is not visible to your group.'),
+                    _("This product is not visible to your group."),
                     code="product_not_visible_to_group"
                 )
 
         # TODO: Remove from Shuup 2.0
         for receiver, response in get_visibility_errors.send(ShopProduct, shop_product=self, customer=customer):
-            warnings.warn("Visibility errors through signals are deprecated", DeprecationWarning)
+            warnings.warn("Warning! Visibility errors through signals are deprecated.", DeprecationWarning)
             for error in response:
                 yield error
 
@@ -305,7 +314,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         """
         Yield ValidationErrors that would cause this product to not be orderable.
 
-        Shop product to be orderable it needs to be visible visible and purchasable
+        Shop product to be orderable it needs to be visible visible and purchasable.
 
         :param supplier: Supplier to order this product from. May be None.
         :type supplier: shuup.core.models.Supplier
@@ -341,7 +350,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         :return: Iterable[ValidationError]
         """
         if not self.purchasable:
-            yield ValidationError(_('The product is not purchasable'), code="not_purchasable")
+            yield ValidationError(_("The product is not purchasable."), code="not_purchasable")
 
         for error in self.get_quantity_errors(quantity, ignore_minimum):
             yield error
@@ -353,14 +362,15 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         for receiver, response in get_orderability_errors.send(
             ShopProduct, shop_product=self, customer=customer, supplier=supplier, quantity=quantity
         ):
-            warnings.warn("Orderability errors through signals are deprecated", DeprecationWarning)
+            warnings.warn("Warning! Orderability errors through signals are deprecated.", DeprecationWarning)
             for error in response:
                 yield error
 
     def get_quantity_errors(self, quantity, ignore_minimum):
         if not ignore_minimum and quantity < self.minimum_purchase_quantity:
             yield ValidationError(
-                _('The purchase quantity needs to be at least %d for this product.') % self.minimum_purchase_quantity,
+                _("The purchase quantity needs to be at least %d for this product.")
+                % self.minimum_purchase_quantity,
                 code="purchase_quantity_not_met"
             )
 
@@ -373,14 +383,14 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             if larger_p == smaller_p:
                 message = _(
                     "The product can only be ordered in multiples of "
-                    "{package_size}, for example {amount}").format(
+                    "{package_size}, for example {amount}.").format(
                         package_size=render_qty(purchase_multiple),
                         amount=render_qty(smaller_p))
             else:
                 message = _(
                     "The product can only be ordered in multiples of "
                     "{package_size}, for example {smaller_amount} or "
-                    "{larger_amount}").format(
+                    "{larger_amount}.").format(
                         package_size=render_qty(purchase_multiple),
                         smaller_amount=render_qty(smaller_p),
                         larger_amount=render_qty(larger_p))
@@ -393,13 +403,13 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             # If supplier is not given and the `ShopProduct` itself
             # doesn't have suppliers we cannot sell this product.
             yield ValidationError(
-                _('The product has no supplier.'),
+                _("The product has no supplier."),
                 code="no_supplier"
             )
 
         if supplier and supplier.pk not in enabled_supplier_pks:
             yield ValidationError(
-                _('The product is not supplied by %s.') % supplier,
+                _("The product is not supplied by %s.") % supplier,
                 code="invalid_supplier"
             )
 
@@ -434,7 +444,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                 break
 
         if not sellable:
-            yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
+            yield ValidationError(_("Product has no sellable children."), code="no_sellable_children")
 
     def get_orderability_errors_for_variable_variation_parent(self, supplier, customer):
         from shuup.core.models import ProductVariationResult
@@ -457,14 +467,15 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                 sellable = True
                 break
         if not sellable:
-            yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
+            yield ValidationError(_("Product has no sellable children."), code="no_sellable_children")
 
     def get_orderability_errors_for_package_parent(self, supplier, customer, quantity, ignore_minimum):
         for child_product, child_quantity in six.iteritems(self.product.get_package_child_to_quantity_map()):
             try:
                 child_shop_product = child_product.get_shop_instance(shop=self.shop, allow_cache=False)
             except ShopProduct.DoesNotExist:
-                yield ValidationError("%s: Not available in %s" % (child_product, self.shop), code="invalid_shop")
+                yield ValidationError(
+                    "Error! %s is not available in %s." % (child_product, self.shop), code="invalid_shop")
             else:
                 for error in child_shop_product.get_orderability_errors(
                         supplier=supplier,
@@ -474,7 +485,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                 ):
                     message = getattr(error, "message", "")
                     code = getattr(error, "code", None)
-                    yield ValidationError("%s: %s" % (child_product, message), code=code)
+                    yield ValidationError("Error! %s: %s" % (child_product, message), code=code)
 
     def raise_if_not_orderable(self, supplier, customer, quantity, ignore_minimum=False):
         for message in self.get_orderability_errors(
@@ -488,7 +499,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     def is_orderable(self, supplier, customer, quantity, allow_cache=True):
         """
-        Product to be orderable it needs to be visible and purchasable
+        Product to be orderable it needs to be visible and purchasable.
         """
         key, val = context_cache.get_cached_value(
             identifier="is_orderable", item=self, context={"customer": customer},
@@ -511,8 +522,8 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     def is_visible(self, customer):
         """
-        Visible products is shown in store front based on customer
-        or customer group limitations
+        Visible products are shown in store front based on customer
+        or customer group limitations.
         """
         for message in self.get_visibility_errors(customer=customer):
             return False
@@ -520,7 +531,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     def is_purchasable(self, supplier, customer, quantity):
         """
-        Whether product can be purchasable
+        Whether product can be purchased.
         """
         for message in self.get_purchasability_errors(supplier, customer, quantity):
             return False
@@ -621,8 +632,8 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     def _safe_get_string(self, key):
         return (
-            self.safe_translation_getter(key, any_language=True) or
-            self.product.safe_translation_getter(key, any_language=True)
+            self.safe_translation_getter(key, any_language=True)
+            or self.product.safe_translation_getter(key, any_language=True)
         )
 
 

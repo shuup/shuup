@@ -159,13 +159,13 @@ class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
         if not self.sku:
             self.sku = u""
         if self.type == OrderLineType.PRODUCT and not self.product_id:
-            raise ValidationError("Product-type order line can not be saved without a set product")
+            raise ValidationError("Error! Product-type order line can not be saved without a set product.")
 
         if self.product_id and self.type != OrderLineType.PRODUCT:
-            raise ValidationError("Order line has product but is not of Product type")
+            raise ValidationError("Error! Order line has product but is not of Product-type.")
 
         if self.product_id and not self.supplier_id:
-            raise ValidationError("Order line has product but no supplier")
+            raise ValidationError("Error! Order line has product, but no supplier.")
 
         super(AbstractOrderLine, self).save(*args, **kwargs)
         if self.product_id:
@@ -198,7 +198,7 @@ class OrderLineTax(MoneyPropped, ShuupModel, LineTax):
     amount_value = MoneyValueField(verbose_name=_('tax amount'))
     base_amount_value = MoneyValueField(
         verbose_name=_('base amount'),
-        help_text=_('Amount that this tax is calculated from'))
+        help_text=_('Amount that this tax is calculated from.'))
 
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'))
 

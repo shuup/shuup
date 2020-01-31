@@ -97,7 +97,7 @@ class ContactGroup(TranslatableShuupModel):
     translations = TranslatedFields(
         name=models.CharField(max_length=256, verbose_name=_('name'), help_text=_(
             "The contact group name. "
-            "Contact groups can be used to target sales and campaigns to specific set of users."
+            "Contact groups can be used to target sales and campaigns to a specific set of users."
         )),
     )
 
@@ -179,7 +179,7 @@ class Contact(PolymorphicShuupModel):
         auto_now=True, editable=False, db_index=True, null=True, verbose_name=_('modified on'))
     identifier = InternalIdentifierField(unique=True, null=True, blank=True)
     is_active = models.BooleanField(default=True, db_index=True, verbose_name=_('active'), help_text=_(
-        "Check this if the contact is an active customer."
+        "Enable this if the contact is an active customer."
     ))
     shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_('shops'), help_text=_(
         "Inform which shops have access to this contact."
@@ -208,7 +208,7 @@ class Contact(PolymorphicShuupModel):
         "The primary language to be used in all communications with the contact."
     ))
     marketing_permission = models.BooleanField(default=False, verbose_name=_('marketing permission'), help_text=_(
-        "Check this if the contact can receive marketing and promotional materials."
+        "Enable this if the contact can receive marketing and promotional materials."
     ))
     phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'), help_text=_(
         "The primary phone number of the contact."
@@ -235,9 +235,9 @@ class Contact(PolymorphicShuupModel):
         "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group'),
         help_text=_(
             "Select the contact tax group to use for this contact. "
-            "Tax groups can be used to customize the tax rules the that apply to any of this contacts orders. "
-            "Tax groups are defined in Settings - Customer Tax Groups and can be applied to tax rules in "
-            "Settings - Tax Rules"
+            "Tax groups can be used to customize the tax rules the that apply to any of this contact's "
+            "orders. Tax groups are defined in `Customer Tax Groups` and can be applied to tax rules "
+            "in `Tax Rules`."
         )
     )
     merchant_notes = models.TextField(blank=True, verbose_name=_('merchant notes'), help_text=_(
@@ -346,9 +346,9 @@ class Contact(PolymorphicShuupModel):
         """
         Add contact to multiple shops
 
-        :param registration_shop: Shop where contact registers
+        :param registration_shop: Shop where contact registers.
         :type registration_shop: core.models.Shop
-        :param shops: A list of shops
+        :param shops: A list of shops.
         :type shops: list
         :return:
         """
@@ -502,10 +502,16 @@ class AnonymousContact(Contact):
         return type(self) == type(other)
 
     def save(self, *args, **kwargs):
-        raise NotImplementedError("Not implemented: AnonymousContacts aren't saveable, silly")
+        raise NotImplementedError(
+            "Error! Not implemented: `AnonymousContact` -> `save()`. "
+            "AnonymousContacts aren't saveable, silly."
+        )
 
     def delete(self, *args, **kwargs):
-        raise NotImplementedError("Not implemented: AnonymousContacts don't exist in the database, silly")
+        raise NotImplementedError(
+            "Error! Not implemented: `AnonymousContact` -> `delete()`. "
+            "AnonymousContacts don't exist in the database, silly."
+        )
 
     @property
     def groups(self):

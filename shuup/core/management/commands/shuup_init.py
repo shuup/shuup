@@ -91,7 +91,7 @@ class Initializer(object):
                 if resp.json().get("support_id"):
                     configuration.set(None, "shuup_support_id", resp.json().get("support_id"))
             except Exception:
-                print_("Failed to get support id")
+                print_("Failed to get support id.")
         print_("Initialization done.")
 
 

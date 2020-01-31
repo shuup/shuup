@@ -26,11 +26,11 @@ class ShippingMethod(Service):
 
     translations = TranslatedFields(
         name=models.CharField(max_length=100, verbose_name=_("name"), help_text=_(
-                "The shipping method name. This name is shown to customers on checkout."
+                "The shipping method name. This name is shown to the customers on checkout."
             )),
         description=models.CharField(
             max_length=500, blank=True, verbose_name=_("description")), help_text=_(
-                "The shipping method description. This name is shown to customers on checkout."
+                "The description of the shipping method. This name is shown to the customers on checkout."
             )
     )
 
@@ -66,17 +66,17 @@ class ShippingMethod(Service):
 
 class Carrier(ServiceProvider):
     """
-    Service provider interface for shipment processing.
+    Service provider' interface for shipment processing.
 
     Services provided by a carrier are `shipping methods
     <ShippingMethod>`.  To create a new shipping method for a carrier,
     use the `create_service` method.
 
-    Implementers of this interface will provide provide a list of
+    Implementers of this interface will provide a list of
     shipping service choices and each related shipping method should
     have one of those service choices assigned to it.
 
-    Note: `Carrier` objects should never be created on their own but
+    Note: `Carrier` objects should never be created on their own, but
     rather through a concrete subclass.
     """
 

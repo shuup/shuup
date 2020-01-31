@@ -49,7 +49,7 @@ class _ShortNameToSymbol(object):
 
     def _issue_deprecation_warning(self):
         warnings.warn(
-            "short_name is deprecated, use symbol instead", DeprecationWarning)
+            "Warning! `short_name` is deprecated, use `symbol` instead.", DeprecationWarning)
 
 
 @python_2_unicode_compatible
@@ -57,7 +57,7 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
     decimals = models.PositiveSmallIntegerField(default=0, verbose_name=_(u"allowed decimal places"), help_text=_(
         "The number of decimal places allowed by this sales unit."
-        "Set this to a value greater than zero if products with this sales unit can be sold in fractional quantities"
+        "Set this to a value greater than zero if products with this sales unit can be sold in fractional quantities."
     ))
 
     name = TranslatedField()
@@ -79,9 +79,9 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
         """
         Get the quantity increment for the amount of decimals this unit allows.
 
-        For 0 decimals, this will be 1; for 1 decimal, 0.1; etc.
+        For zero decimals, this will be 1; for one decimal, 0.1; etc.
 
-        :return: Decimal in (0..1]
+        :return: Decimal in (0..1].
         :rtype: Decimal
         """
 
@@ -123,11 +123,11 @@ class SalesUnitTranslation(_ShortNameToSymbol, TranslatedFieldsModel):
         SalesUnit, related_name='translations', null=True, editable=False)
     name = models.CharField(
         max_length=128, verbose_name=_('name'), help_text=_(
-            "The sales unit name to use for products (For example, "
-            "'pieces' or 'units'). Sales units can be set for each "
+            "The sales unit name to use for products (e.g. "
+            "'pieces' or 'units'). Sales units can be set individually for each "
             "product through the product editor view."))
     symbol = models.CharField(
-        max_length=128, verbose_name=_("symbol"), help_text=_(
+        max_length=128, verbose_name=_("unit symbol"), help_text=_(
             "An abbreviated name for this sales unit that is shown "
             "throughout admin and order invoices."))
 
@@ -143,7 +143,7 @@ class SalesUnitTranslation(_ShortNameToSymbol, TranslatedFieldsModel):
 
 def validate_positive_not_zero(value):
     if value <= 0:
-        raise ValidationError(_("Value must be positive and non-zero"))
+        raise ValidationError(_("Value must be positive and non-zero."))
 
 
 class DisplayUnit(TranslatableShuupModel):
@@ -155,7 +155,7 @@ class DisplayUnit(TranslatableShuupModel):
         default=1, validators=[validate_positive_not_zero],
         verbose_name=_("ratio"),
         help_text=_(
-            "Size of the display unit in internal unit.  E.g. if "
+            "Size of the display unit in internal unit. E.g. if "
             "internal unit is kilogram and display unit is gram, "
             "ratio is 0.001."))
     decimals = models.PositiveSmallIntegerField(
@@ -163,22 +163,22 @@ class DisplayUnit(TranslatableShuupModel):
         verbose_name=_("decimal places"),
         help_text=_(
             "The number of decimal places to use for values in the "
-            "display unit.  The internal values are still rounded "
-            "based on settings of the internal unit."))
+            "display unit. The internal values are still rounded "
+            "based on the settings of the internal unit."))
     comparison_value = QuantityField(
         default=1, validators=[validate_positive_not_zero],
         verbose_name=_("comparison value"),
         help_text=_(
-            "Value to use when displaying unit prices.  E.g. if the "
-            "display unit is g and the comparison value is 100, then "
+            "Value to use when displaying unit prices. E.g. if the "
+            "display unit is a gram and the comparison value is 100, then "
             "unit prices are shown per 100g, like: $2.95 per 100g."))
     allow_bare_number = models.BooleanField(
         default=False, verbose_name=_("allow bare number"),
         help_text=_(
-            "If true, values of this unit can be shown without the "
-            "symbol occasionally.  Usually wanted if the unit is a "
-            "piece, so that product listings can show just '$5.95' "
-            "rather than '$5.95 per pc.'."))
+            "If true, values of this unit can occasionally be shown "
+            "without the symbol attached to it. E.g. if the unit is a "
+            "`piece`, then you might want for the product listings to "
+            "only show '$5.95' rather than '$5.95 per pc.'."))
     default = models.BooleanField(
         default=False, verbose_name=_("use by default"), help_text=_(
             "Use this display unit by default when displaying "
@@ -186,7 +186,7 @@ class DisplayUnit(TranslatableShuupModel):
     translations = TranslatedFields(
         name=models.CharField(
             max_length=150, verbose_name=_("name"), help_text=_(
-                "Name of the display unit, e.g. Grams.")),
+                "Name of the display unit, e.g. grams.")),
         symbol=models.CharField(
             max_length=50, verbose_name=_("symbol"), help_text=_(
                 "An abbreviated name of the display unit, e.g. 'g'.")),
@@ -225,7 +225,7 @@ class SalesUnitAsDisplayUnit(DisplayUnit):
 @python_2_unicode_compatible
 class PiecesSalesUnit(SalesUnit):
     """
-    Object representing Pieces sales unit.
+    An object representing `Pieces` sales unit.
 
     Has same API as SalesUnit, but isn't a real model.
     """
@@ -256,7 +256,7 @@ class UnitInterface(object):
     Interface to unit functions.
 
     Provides methods for rounding, rendering and converting product
-    quantities in display unit or internal unit.
+    quantities in display or internal units.
     """
     def __init__(self, internal_unit=None, display_unit=None):
         """
@@ -287,7 +287,7 @@ class UnitInterface(object):
 
     def get_symbol(self, allow_empty=True):
         """
-        Get symbol of the display unit or empty if it is not needed.
+        Returns symbol of the display unit or empty if it is not needed.
 
         :rtype: str
         """
@@ -326,13 +326,13 @@ class UnitInterface(object):
         Render (internal unit) quantity in the display unit.
 
         The value is converted from the internal unit to the display
-        unit and then localized.  The display unit symbol is added if
+        unit and then localized. The display unit symbol is added if
         needed.
 
         :type quantity: Decimal
-        :param quantity: Quantity to render, in internal unit
+        :param quantity: Quantity to render, in internal unit.
         :type force_symbol: bool
-        :param force_symbol: Make sure that the symbol is rendered
+        :param force_symbol: Make sure that the symbol is rendered.
         :rtype: str
         :return: Rendered quantity in display unit.
         """
@@ -345,15 +345,15 @@ class UnitInterface(object):
 
     def render_quantity_internal(self, quantity, force_symbol=False):
         """
-        Render quantity (in internal unit) in the internal unit.
+        Render quantity in the internal unit.
 
         The value is rounded, localized and the internal unit symbol is
         added if needed.
 
         :type quantity: Decimal
-        :param quantity: Quantity to render, in internal unit
+        :param quantity: Quantity to render, in internal unit.
         :type force_symbol: bool
-        :param force_symbol: Make sure that the symbol is rendered
+        :param force_symbol: Make sure that the symbol is rendered.
         :rtype: str
         :return: Rendered quantity in internal unit.
         """
@@ -370,9 +370,9 @@ class UnitInterface(object):
         Convert quantity from internal unit to display unit.
 
         :type quantity: Decimal
-        :param quantity: Quantity to convert, in internal unit
+        :param quantity: Quantity to convert, in internal unit.
         :rtype: Decimal
-        :return: Converted quantity, in display unit
+        :return: Converted quantity, in display unit.
         """
         value = Decimal(quantity) / self.display_unit.ratio
         return _round_to_digits(value, self.display_unit.decimals, rounding)
@@ -382,9 +382,9 @@ class UnitInterface(object):
         Convert quantity from display unit to internal unit.
 
         :type quantity: Decimal
-        :param quantity: Quantity to convert, in display unit
+        :param quantity: Quantity to convert, in display unit.
         :rtype: Decimal
-        :return: Converted quantity, in internal unit
+        :return: Converted quantity, in internal unit.
         """
         value = Decimal(display_quantity) * self.display_unit.ratio
         return _round_to_digits(value, self.internal_unit.decimals, rounding)
@@ -403,7 +403,7 @@ class UnitInterface(object):
         :rtype: (Decimal, str)
         :return:
           Quantity (in internal unit) and text to use as the unit in
-          unit prices
+          unit prices.
         """
         symbol = self.get_symbol(allow_empty=(not force_symbol))
         without_value = (self.display_unit.comparison_value == 1)
@@ -414,17 +414,17 @@ class UnitInterface(object):
     @property
     def comparison_quantity(self):
         """
-        Quantity (in internal unit) to use as the unit in unit prices.
+        Quantity (in internal units) to use as the unit in unit prices.
 
         :rtype: Decimal
-        :return: Quantity, in internal unit
+        :return: Quantity, in internal unit.
         """
         return self.from_display(self.display_unit.comparison_value)
 
 
 def _get_value_symbol_template():
     return pgettext(
-        "Display value with unit symbol (with or without space)",
+        "Display the value with the unit symbol (with or without space) ",
         "{value}{symbol}")
 
 
