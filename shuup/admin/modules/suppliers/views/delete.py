@@ -33,5 +33,5 @@ class SupplierDeleteView(DetailView):
     def post(self, request, *args, **kwargs):
         supplier = self.get_object()
         supplier.soft_delete()
-        messages.success(request, _(u"%s has been marked deleted.") % supplier)
+        messages.success(request, _(u"Success! %s has been marked deleted.") % supplier)
         return HttpResponseRedirect(self.get_success_url())

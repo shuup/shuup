@@ -61,7 +61,7 @@ class PasswordChangeForm(forms.Form):
 
     def clean_old_password(self):
         """
-        Validates that the old_password field is correct.
+        Validates that the `old_password` field is correct.
         """
         old_password = self.cleaned_data["old_password"]
         if not self.changing_user.check_password(old_password):
@@ -126,15 +126,15 @@ class UserResetPasswordView(DetailView):
 
     def process_user(self, user):
         if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
-            raise Problem(_(u"The `shuup.front.apps.auth` app needs to be enabled for password reset."))
+            raise Problem(_(u"Error! The `shuup.front.apps.auth` app needs to be enabled for password reset."))
 
         r = RecoverPasswordForm()
         r.request = self.request
         if r.process_user(user):
-            messages.success(self.request, _(u"Password recovery email sent to %(email)s") %
+            messages.success(self.request, _(u"Success! Password recovery email sent to %(email)s.") %
                              {"email": getattr(user, 'email', '')})
         else:
-            raise Problem(_(u"Sending the password recovery email failed."))
+            raise Problem(_(u"Error! Sending the password recovery email failed."))
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()

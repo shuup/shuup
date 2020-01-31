@@ -137,7 +137,7 @@ class MediaBrowserView(TemplateView):
             except Problem as prob:
                 return JsonResponse({"error": force_text(prob)})
         else:
-            return JsonResponse({"error": "unknown action %s" % action})
+            return JsonResponse({"error": "Error! Unknown action `%s`." % action})
 
     def handle_get_folders(self, data):
         shop = get_shop(self.request)
@@ -176,7 +176,7 @@ class MediaBrowserView(TemplateView):
         except ObjectDoesNotExist:
             return JsonResponse({
                 "folder": None,
-                "error": "Folder does not exist"
+                "error": "Error! Folder does not exist."
             })
 
         if self.filter == "images":
@@ -197,18 +197,18 @@ class MediaBrowserView(TemplateView):
         shop = get_shop(self.request)
         folder = _get_folder_query(shop).get(pk=data["id"])
         if _is_folder_shared(folder):
-            message = _("Can not rename shared folder.")
+            message = _("Can't rename a shared folder.")
             return JsonResponse({"success": False, "message": message})
 
         folder.name = data["name"]
         folder.save(update_fields=("name",))
-        return JsonResponse({"success": True, "message": _("Folder renamed.")})
+        return JsonResponse({"success": True, "message": _("Folder was renamed.")})
 
     def handle_post_delete_folder(self, data):
         shop = get_shop(self.request)
         folder = _get_folder_query(shop).get(pk=data["id"])
         if _is_folder_shared(folder):
-            message = _("Can not delete shared folder.")
+            message = _("Can't delete a shared folder.")
             return JsonResponse({"success": False, "message": message})
 
         new_selected_folder_id = folder.parent_id
@@ -219,31 +219,31 @@ class MediaBrowserView(TemplateView):
         shop = get_shop(self.request)
         file = _get_file_query(shop).get(pk=data["id"])
         if _is_file_shared(file):
-            message = _("Can not rename shared file.")
+            message = _("Can not rename a shared file.")
             return JsonResponse({"success": False, "message": message})
 
         file.name = data["name"]
         file.save(update_fields=("name",))
-        return JsonResponse({"success": True, "message": _("File renamed.")})
+        return JsonResponse({"success": True, "message": _("File was renamed.")})
 
     def handle_post_delete_file(self, data):
         shop = get_shop(self.request)
         file = _get_file_query(shop).get(pk=data["id"])
         if _is_file_shared(file):
-            message = _("Can not delete shared file.")
+            message = _("Can not delete a shared file.")
             return JsonResponse({"success": False, "message": message})
 
         try:
             file.delete()
         except IntegrityError as ie:
             raise Problem(str(ie))
-        return JsonResponse({"success": True, "message": _("File deleted.")})
+        return JsonResponse({"success": True, "message": _("File was deleted.")})
 
     def handle_post_move_file(self, data):
         shop = get_shop(self.request)
         file = _get_file_query(shop).get(pk=data["file_id"])
         if _is_file_shared(file):
-            message = _("Can not move shared file.")
+            message = _("Can't move a shared file.")
             return JsonResponse({"success": False, "message": message})
 
         folder_id = int(data["folder_id"])
@@ -283,7 +283,7 @@ def _process_form(request, folder):
 
     return JsonResponse({
         "file": filer_file_to_json_dict(filer_file),
-        "message": _("%(file)s uploaded to %(folder)s") % {
+        "message": _("%(file)s uploaded to %(folder)s.") % {
             "file": filer_file.label,
             "folder": get_folder_name(folder)
         }
@@ -302,6 +302,6 @@ def media_upload(request, *args, **kwargs):
         else:
             folder = None  # Root folder upload. How bold!
     except Exception as exc:
-        return JsonResponse({"error": "Invalid folder: %s" % force_text(exc)}, status=400)
+        return JsonResponse({"error": "Error! Invalid folder `%s`." % force_text(exc)}, status=400)
 
     return _process_form(request, folder)

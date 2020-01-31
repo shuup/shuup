@@ -65,7 +65,7 @@ class ListSettingsView(FormView):
             }
             self.settings.set_config(col, col_data, use_key=True)
 
-        messages.success(self.request, _("Settings saved"), fail_silently=True)
+        messages.success(self.request, _("Settings saved."), fail_silently=True)
         return HttpResponseRedirect(self.return_url)
 
     def get_context_data(self, **kwargs):

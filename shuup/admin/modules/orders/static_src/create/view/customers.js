@@ -181,7 +181,7 @@ function renderCustomerAddressView(store, shop, customer) {
                     " " + gettext("Order for company")
                 ]),
                 m.component(HelpPopover, {
-                    content: gettext("Check this if the order is for a company or business with a tax ID.")
+                    content: gettext("Enable this if the order is for a company or business with a tax ID.")
                 })
             ])
         ]),

@@ -125,7 +125,7 @@ class ShopProductFormPart(FormPart):
 
         shop_product_form.instance.minimum_purchase_quantity = rounded_quantity
         inst = shop_product_form.save()
-        messages.success(self.request, _("Changes to shop instance for %s saved") % inst.shop)
+        messages.success(self.request, _("Changes to shop instance for %s saved.") % inst.shop)
 
     def get_initial(self):
         if not self.object.pk:
@@ -235,7 +235,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
                         quantity=shop_product.minimum_purchase_quantity,
                         customer=None)])
             except ObjectDoesNotExist:
-                orderability_errors.extend(["%s: %s" % (shop.name, _("Product is not available."))])
+                orderability_errors.extend(["Error! %s: %s" % (shop.name, _("Product is not available."))])
         context["orderability_errors"] = orderability_errors
         context["product_sections"] = []
         context["tour_key"] = "product"

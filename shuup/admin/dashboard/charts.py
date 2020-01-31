@@ -78,7 +78,8 @@ class Chart(six.with_metaclass(abc.ABCMeta)):
 
     def add_data(self, name, data, chart_type):
         """
-        Add data to this chart
+        Add data to this chart.
+
         :param name: the name of the dataset
         :type name: str
         :param data: the list of data
@@ -127,7 +128,7 @@ class BarChart(Chart):
 
 class MixedChart(Chart):
     """
-    This chart supports both Bars and Lines
+    This chart supports both Bars and Lines.
     """
     supported_chart_types = [ChartType.BAR, ChartType.LINE]
 

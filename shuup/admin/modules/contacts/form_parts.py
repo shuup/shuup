@@ -44,7 +44,7 @@ class PersonContactBaseFormPart(FormPart):
         if bind_user_id:
             bind_user = get_user_model().objects.get(pk=bind_user_id)
             if PersonContact.objects.filter(user=bind_user).exists():
-                raise Problem(_("User %(bind_user)s already has a contact", bind_user=bind_user))
+                raise Problem(_("User `%(bind_user)s` already has a contact.", bind_user=bind_user))
         else:
             bind_user = None
         return bind_user

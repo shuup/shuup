@@ -45,9 +45,9 @@ class SystemSettingsView(FormPartsViewMixin, FormView):
                 has_changed = form_part.save(saved_form)
 
         if has_changed:
-            messages.success(self.request, _("Changes saved successfully"))
+            messages.success(self.request, _("Changes saved."))
         else:
-            messages.info(self.request, _("No changes detected"))
+            messages.info(self.request, _("No changes detected."))
         return redirect("shuup_admin:settings.list")
 
     def get_context_data(self, **kwargs):

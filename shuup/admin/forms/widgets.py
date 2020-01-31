@@ -87,7 +87,7 @@ class BasePopupChoiceWidget(Widget):
             })
 
     def get_object(self, value):
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError("Error! Not implemented: `BasePopupChoiceWidget` -> `get_object()`.")
 
     def render(self, name, value, attrs=None, renderer=None):
         if value:

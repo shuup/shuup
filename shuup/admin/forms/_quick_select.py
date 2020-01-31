@@ -140,8 +140,8 @@ class QuickAddRelatedObjectSelectWithoutTemplate(QuickAddRelatedObjectSelectMixi
 
 class QuickAddRelatedObjectMultiSelectWithoutTemplate(QuickAddRelatedObjectMultipleSelectMixin, SelectMultiple):
     """
-    Old implementation for Django 1.9 and 1.8 where the select
-    still has the render.
+    Old implementation for Django 1.9 and 1.8 where the `select`
+    still has the `render`.
     """
     url = ""
 

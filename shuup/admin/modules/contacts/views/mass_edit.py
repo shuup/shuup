@@ -33,7 +33,7 @@ class ContactMassEditView(MassEditMixin, FormView):
                     setattr(contact, k, v)
             contact.save()
 
-        messages.success(self.request, _("Contacts changed successfully"))
+        messages.success(self.request, _("Contacts were changed."))
         self.request.session["mass_action_ids"] = []
         return HttpResponseRedirect(reverse("shuup_admin:contact.list"))
 
@@ -50,6 +50,6 @@ class ContactGroupMassEditView(MassEditMixin, FormView):
         for group in groups:
             group.members.add(*ids)
 
-        messages.success(self.request, _("Contacts Groups changed successfully"))
+        messages.success(self.request, _("Contacts Groups were changed."))
         self.request.session["mass_action_ids"] = []
         return HttpResponseRedirect(reverse("shuup_admin:contact.list"))

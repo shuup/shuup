@@ -8,7 +8,7 @@
  */
 function activateDropzone($dropzone, attrs={}) {
     if(!$dropzone.length) {
-        console.error("[dropzone.js] Unable to find requested element ", $dropzone);
+        console.error("Error! [dropzone.js] Unable to find requested element ", $dropzone);
         return;
     }
 

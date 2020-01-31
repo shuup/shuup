@@ -132,7 +132,8 @@ class ContactDetailToolbar(Toolbar):
 
         for button in get_provide_objects("admin_contact_toolbar_button"):
             warnings.warn(
-                "admin_contact_toolbar_button provider is deprecated, use admin_contact_toolbar_action_item instead",
+                "`admin_contact_toolbar_button` provider is deprecated, "
+                "use `admin_contact_toolbar_action_item` instead.",
                 RemovedFromShuupWarning)
             self.append(button(self.contact))
 
@@ -222,11 +223,12 @@ class ContactDetailView(DetailView):
         old_state = self.object.is_active
         state = bool(int(self.request.POST["set_is_active"]))
         if not state and hasattr(self.object, "user"):
-            if (getattr(self.object.user, 'is_superuser', False) and
-                    not getattr(self.request.user, 'is_superuser', False)):
-                raise Problem(_("You can not deactivate a superuser."))
+            if (getattr(self.object.user, 'is_superuser', False) and not getattr(
+                self.request.user, 'is_superuser', False
+            )):
+                raise Problem(_("You can not deactivate a superuser. Remove superuser permission first."))
             if self.object.user == self.request.user:
-                raise Problem(_("You can not deactivate yourself."))
+                raise Problem(_("You can not deactivate yourself. Use another account to deactivate the current one."))
 
         self.object.is_active = state
         self.object.save(update_fields=("is_active",))

@@ -150,7 +150,7 @@ function handleFinalizeResponse(dispatch, data) {
             location.href = url;
         } else {
             // Very, very unlikely that we'd ever get here
-            alert(interpolate(gettext("Order %s created."), [orderIdentifier]));
+            alert(interpolate(gettext("Success! Order %s was created."), [orderIdentifier]));
         }
         return;
     }
@@ -165,7 +165,7 @@ function handleFinalizeResponse(dispatch, data) {
         }
         return;
     }
-    alert(gettext("An unspecified error occurred.\n") + data);
+    alert(gettext("Error! An unspecified error occurred.\n") + data);
 }
 
 export const beginFinalizingOrder = function () {

@@ -126,7 +126,7 @@ class ProductMediaEditView(UpdateView):
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, _("Changes saved."))
+        messages.success(self.request, _("Changes were saved."))
         return HttpResponseRedirect(self.request.path)
 
 
@@ -142,23 +142,25 @@ class ProductMediaBulkAdderView(View):
         shop = self.request.shop
         shop_id = self.request.POST.get("shop_id", shop.pk)
         if not ids or not shop_product_id:
-            return JsonResponse({"response": "error", "message": "bad request"}, status=400)
+            return JsonResponse({"response": "error", "message": "Error! Bad request."}, status=400)
         if not Shop.objects.filter(pk=shop_id).exists():
-            return JsonResponse({"response": "error", "message": "invalid shop id: %s" % shop_id}, status=400)
+            return JsonResponse({"response": "error", "message": "Error! Invalid shop id `%s`." % shop_id}, status=400)
 
         shop_product = ShopProduct.objects.filter(pk=shop_product_id, shop_id=shop_id).first()
         if not shop_product:
             return JsonResponse(
-                {"response": "error", "message": "invalid shop product id: %s" % shop_product_id}, status=400)
+                {"response": "error", "message": "Error! Invalid shop product id `%s`." % shop_product_id}, status=400)
         if kind == "images":
             kind = ProductMediaKind.IMAGE
         elif kind == "media":
             kind = ProductMediaKind.GENERIC_FILE
         else:
-            return JsonResponse({"response": "error", "message": "invalid file kind: %s" % kind}, status=400)
+            return JsonResponse({"response": "error", "message": "Error! Invalid file kind `%s`." % kind}, status=400)
         for file_id in ids:
             if not File.objects.filter(id=file_id).exists():
-                return JsonResponse({"response": "error", "message": "invalid file id: %s" % file_id}, status=400)
+                return JsonResponse(
+                    {"response": "error", "message": "Error! Invalid file id `%s`." % file_id}, status=400
+                )
 
         added = []
 
@@ -183,5 +185,5 @@ class ProductMediaBulkAdderView(View):
         return JsonResponse({
             "response": "success",
             "added": added,
-            "message": force_text(_("Files added to product."))
+            "message": force_text(_("Files added to the product."))
         })

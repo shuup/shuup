@@ -72,7 +72,7 @@ class CategoryModule(AdminModule):
         from shuup.admin.utils.permissions import has_permission
         if has_permission(request.user, "category.new"):
             yield SimpleHelpBlock(
-                text=_("Add a product category to organize your products"),
+                text=_("Add a product category to organize your products."),
                 actions=[{
                     "text": _("New category"),
                     "url": get_model_url(Category, "new")

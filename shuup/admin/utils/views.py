@@ -171,9 +171,9 @@ def add_create_or_change_message(request, instance, is_new):
         msg = _("Item")  # instance is not always present. For example when saving configurations.
 
     if is_new:
-        msg = _(u"New %s created.") % msg
+        msg = _(u"Success! New %s was created.") % msg
     else:
-        msg = _(u"%s edited.") % msg
+        msg = _(u"Success! %s was edited.") % msg
 
     messages.success(request,  msg)
 
@@ -182,13 +182,13 @@ def get_create_or_change_title(request, instance, name_field=None):
     """
     Get a title suitable for an create-or-update view.
 
-    :param request: Request
+    :param request: Request.
     :type request: HttpRequest
-    :param instance: Model instance
+    :param instance: Model instance.
     :type instance: django.db.models.Model
-    :param name_field: Which property to try to read the name from. If None, use `str`
+    :param name_field: Which property to try to read the name from. If None, use `str`.
     :type name_field: str
-    :return: Title
+    :return: Title.
     :rtype: str
     """
     if not instance.pk:

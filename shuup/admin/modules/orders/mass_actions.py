@@ -46,7 +46,7 @@ class OrderConfirmationPdfAction(PicotableFileMassAction):
 
     def process(self, request, ids):
         if isinstance(ids, six.string_types) and ids == "all":
-            return JsonResponse({"error": ugettext("Selecting all is not supported.")}, status=400)
+            return JsonResponse({"error": ugettext("Error! Selecting all is not supported.")}, status=400)
         if len(ids) == 1:
             try:
                 response = get_confirmation_pdf(request, ids[0])
@@ -88,7 +88,7 @@ class OrderDeliveryPdfAction(PicotableFileMassAction):
 
     def process(self, request, ids):
         if isinstance(ids, six.string_types) and ids == "all":
-            return JsonResponse({"error": ugettext("Selecting all is not supported.")})
+            return JsonResponse({"error": ugettext("Error! Selecting all is not supported.")})
         shipment_ids = set(Shipment.objects.filter(order_id__in=ids).values_list("id", flat=True))
         if len(shipment_ids) == 1:
             try:

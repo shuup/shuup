@@ -74,7 +74,7 @@ function activateEditor($editor, attrs = {}) {
                 const imageSizeKb = image[0]['size'] / 1000;
                 if (imageSizeKb > maxUploadFileSize){
                     alert(interpolate(
-                        gettext("For images greater than %s kb, use the media browser instead."),
+                        gettext("Error! For images greater than %s kb, use the media browser instead."),
                         [maxUploadFileSize]
                     ));
                 } else {

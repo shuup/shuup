@@ -56,16 +56,16 @@ class SimpleVariationChildFormSet(ProductChildBaseFormSet):
                 except ImpossibleProductModeException as ipme:
                     six.raise_from(
                         Problem(
-                            _("Unable to link %(product)s: %(error)s") %
+                            _("Unable to link %(product)s: %(error)s.") %
                             {"product": child_product, "error": ipme}
                         ), ipme
                     )
 
         message_parts = []
         if products_to_add:
-            message_parts.append(_("New: %d") % len(products_to_add))
+            message_parts.append(_("New products: %d.") % len(products_to_add))
         if products_to_remove:
-            message_parts.append(_("Removed: %d") % len(products_to_remove))
+            message_parts.append(_("Removed products: %d.") % len(products_to_remove))
         if message_parts and self.request:
             messages.success(self.request, ", ".join(message_parts))
 

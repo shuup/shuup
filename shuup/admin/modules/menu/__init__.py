@@ -16,7 +16,7 @@ from shuup.admin.utils.urls import admin_url
 
 class AdminMenuModule(AdminModule):
     """
-    Module that customizes dashboard admin menu
+    Module that customizes dashboard admin menu.
     """
     name = _("Admin menu")
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:menu.arrange")
@@ -39,7 +39,7 @@ class AdminMenuModule(AdminModule):
         category = SETTINGS_MENU_CATEGORY
         return [
             MenuEntry(
-                text=_("Admin menu"),
+                text=_("Customize Admin Menu"),
                 icon="fa fa-list-alt",
                 url="shuup_admin:menu.arrange",
                 category=category,
