@@ -107,7 +107,7 @@ class GDPRDownloadDataView(View):
             return HttpResponseNotFound()
 
         self.request.person.add_log_entry(
-            "User personal data download requested", kind=LogEntryKind.NOTE, user=self.request.user)
+            "Info! User personal data download requested.", kind=LogEntryKind.NOTE, user=self.request.user)
 
         from shuup.gdpr.utils import get_all_contact_data
         data = json.dumps(get_all_contact_data(self.request.person))
@@ -122,7 +122,7 @@ class GDPRAnonymizeView(View):
             return HttpResponseNotFound()
 
         self.request.person.add_log_entry(
-            "User anonymization requested", kind=LogEntryKind.NOTE, user=request.user)
+            "Info! User anonymization requested.", kind=LogEntryKind.NOTE, user=request.user)
 
         with atomic():
             from shuup.tasks.models import TaskType
