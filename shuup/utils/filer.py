@@ -26,7 +26,7 @@ def file_size_validator(value):
     size = getattr(value, "size", None)
     if size and settings.SHUUP_MAX_UPLOAD_SIZE and settings.SHUUP_MAX_UPLOAD_SIZE < size:
         raise ValidationError(
-            _("Maximum file size reached (%(size)s MB)") % {"size": settings.SHUUP_MAX_UPLOAD_SIZE / 1000 / 1000},
+            _("Maximum file size reached (%(size)s MB).") % {"size": settings.SHUUP_MAX_UPLOAD_SIZE / 1000 / 1000},
             code="file_max_size_reached"
         )
 
@@ -57,9 +57,9 @@ def filer_folder_from_path(path):
 
     The empty string (and `None`) are handled as "no folder", i.e. root folder.
 
-    :param path: Pathname or None
+    :param path: Pathname or None.
     :type path: str|None
-    :return: Folder
+    :return: Folder.
     :rtype: filer.models.Folder
     """
     if path is None:
@@ -73,19 +73,20 @@ def filer_folder_from_path(path):
 
 def _filer_file_from_upload(model, request, path, upload_data, sha1=None):
     """
-    Create some sort of Filer file (either File or Image, really) from the given upload data (ContentFile or UploadFile)
+    Create some sort of Filer file (either File or Image, really) from the given
+    upload data (ContentFile or UploadFile).
 
-    :param model: Model class
-    :param request: Request, to figure out the owner for this file
+    :param model: Model class.
+    :param request: Request, to figure out the owner for this file.
     :type request: django.http.request.HttpRequest|None
     :param path: Pathname string (see `filer_folder_from_path`) or a Filer Folder.
     :type path: basestring|filer.models.Folder
-    :param upload_data: Upload data
+    :param upload_data: Upload data.
     :type upload_data: django.core.files.base.File
     :param sha1: SHA1 checksum. If given and a matching `model` with the SHA1 is found, it is returned instead.
     :type sha1: basestring
 
-    :return: Filer file
+    :return: Filer file.
     """
     if sha1:
         upload = model.objects.filter(sha1=sha1).first()
@@ -118,11 +119,11 @@ def filer_file_from_upload(request, path, upload_data, sha1=None):
     Create a filer.models.filemodels.File from an upload (UploadedFile or such).
     If the `sha1` parameter is passed and a file with said SHA1 is found, it will be returned instead.
 
-    :param request: Request, to figure out the owner for this file
+    :param request: Request, to figure out the owner for this file.
     :type request: django.http.request.HttpRequest|None
     :param path: Pathname string (see `filer_folder_from_path`) or a Filer Folder.
     :type path: basestring|filer.models.Folder
-    :param upload_data: Upload data
+    :param upload_data: Upload data.
     :type upload_data: django.core.files.base.File
     :param sha1: SHA1 checksum. If given and a matching `model` with the SHA1 is found, it is returned instead.
     :type sha1: basestring
@@ -137,13 +138,13 @@ def filer_image_from_upload(request, path, upload_data, sha1=None):
     Create a Filer Image from an upload (UploadedFile or such).
     If the `sha1` parameter is passed and an Image with said SHA1 is found, it will be returned instead.
 
-    :param request: Request, to figure out the owner for this file
+    :param request: Request, to figure out the owner for this file.
     :type request: django.http.request.HttpRequest|None
     :param path: Pathname string (see `filer_folder_from_path`) or a Filer Folder.
     :type path: basestring|filer.models.Folder
-    :param upload_data: Upload data
+    :param upload_data: Upload data.
     :type upload_data: django.core.files.base.File
-    :param sha1: SHA-1 checksum of the data, if available, to do deduplication
+    :param sha1: SHA-1 checksum of the data, if available, to do deduplication.
     :type sha1: basestring
 
     :rtype: filer.models.imagemodels.Image
@@ -158,13 +159,13 @@ def filer_image_from_data(request, path, file_name, file_data, sha1=None):
     is calculated and passed to the underlying creation function.
     If the `sha1` parameter is truthy (generally the SHA-1 hex string), it's passed directly to the creation function.
 
-    :param request: Request, to figure out the owner for this file
+    :param request: Request, to figure out the owner for this file.
     :type request: django.http.request.HttpRequest|None
     :param path: Pathname string (see `filer_folder_from_path`) or a Filer Folder.
     :type path: basestring|filer.models.Folder
-    :param file_name: File name
+    :param file_name: File name.
     :type file_data: basestring
-    :param file_data: Upload data
+    :param file_data: Upload data.
     :type file_data: bytes
     :param sha1: SHA-1 checksum of the data, if available, to do deduplication.
                  May also be `True` to calculate the SHA-1 first.

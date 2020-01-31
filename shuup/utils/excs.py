@@ -11,7 +11,7 @@ from django.utils.encoding import force_text
 
 
 class Problem(Exception):
-    """ User-visible exception """
+    """ User-visible exception. """
 
     message = property(lambda self: self.args[0] if self.args else None)
 
@@ -29,11 +29,11 @@ class Problem(Exception):
 
             raise Problem("Oops").with_link("...", "...")
 
-        :param url: URL string
+        :param url: URL string.
         :type url: str
-        :param title: Title text
+        :param title: Title text.
         :type title: str
-        :return: This same Problem
+        :return: This same Problem.
         :rtype: shuup.utils.excs.Problem
         """
         self.links.append({"url": url, "title": title})

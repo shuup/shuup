@@ -83,8 +83,8 @@ def parse_simple_decimal(value, error=raise_exception):
     Parse simple decimal value from string.
 
     Simple decimal is basically a string of digits with optional sign
-    and decimal point.  Anything fancy, such as exponent forms, NaN or
-    Infinity is an error.  So are other unallowed characters.  There is
+    and decimal point. Anything fancy, such as exponent forms, NaN or
+    Infinity is an error. So are other unallowed characters. There is
     also a length limit of 50 digits before and after the decimal point.
 
     >>> assert parse_simple_decimal('42') == Decimal(42)
@@ -110,7 +110,7 @@ def parse_simple_decimal(value, error=raise_exception):
     if not isinstance(decoded_value, six.text_type) or (
             not _simple_decimal_rx.match(decoded_value)):
         if error is raise_exception:
-            raise ValueError('Cannot parse as simple decimal: %r' % (value,))
+            raise ValueError("Error! Value `%r` can't be parsed as a simple decimal." % (value,))
         return error
     return Decimal(value)
 
