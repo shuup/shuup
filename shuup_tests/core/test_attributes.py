@@ -111,7 +111,7 @@ def _populate_applied_attribute(aa):
         assert aa.untranslated_string_value == dt.isoformat(), "Datetimes are saved as strings too"
         return
 
-    raise NotImplementedError("Not implemented: populating %s" % aa.attribute.type)  # pragma: no cover
+    raise NotImplementedError("Error! Not implemented: populating %s" % aa.attribute.type)  # pragma: no cover
 
 
 @pytest.mark.django_db

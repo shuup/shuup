@@ -167,7 +167,7 @@ def test_invalid_files(rf, admin_user):
     }
     response, soup = client.response_and_soup(process_path, data=data)
     assert response.status_code == 400
-    assert "File missing." in str(soup)
+    assert "File is missing." in str(soup)
 
 
 def test_invalid_file_type(rf, admin_user):
@@ -441,4 +441,4 @@ def test_custom_file_transformer_import(admin_user):
         }
         response = client.post(process_submit_path, data=data)
         assert response.status_code == 302
-        assert "Implement `transform_file`" in list(response.wsgi_request._messages)[0].message
+        assert "Error! Not implemented: `DataImporter` -> `transform_file()`." in list(response.wsgi_request._messages)[0].message

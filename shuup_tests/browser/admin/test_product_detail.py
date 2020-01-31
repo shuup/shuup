@@ -15,6 +15,7 @@ from shuup.testing.browser_utils import (
 )
 from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.browser_utils import initialize_admin_browser_test
+import time
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -34,11 +35,12 @@ def test_product_detail(browser, admin_user, live_server, settings):
     new_sku = "some-new-sku"
     browser.find_by_id("id_base-sku").fill(new_sku)
     browser.execute_script("window.scrollTo(0,0)")
+    time.sleep(0.5)     # Otherwise other elements are still in the way, obscuring
     click_element(browser, "button[form='product_form']")
 
     # Here saving the product seems to take some time occasionally so it
     # should be worth to wait until the save goes through
-    wait_until_condition(browser, condition=lambda x: x.is_text_present("Product edited"), timeout=50)
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Product was edited"), timeout=50)
 
     product.refresh_from_db()
     check_product_name(browser, product, new_sku)
@@ -52,11 +54,11 @@ def test_product_detail(browser, admin_user, live_server, settings):
     wait_until_appeared(browser, "a[href='#%s']" % product.sku)
     click_element(browser, "a[href='#%s']" % product.sku)
 
-    # Make sure that the tabs is clickable in small devices
+    # Make sure that the tabs are clickable in small devices
     browser.driver.set_window_size(480, 960)
-
-    click_element(browser, "#product-images-section", header_height=320)
-    click_element(browser, "#additional-details-section", header_height=320)
+    time.sleep(0.5)     # Otherwise other elements are still in the way, obscuring
+    click_element(browser, "#product-images-section", header_height=960)
+    click_element(browser, "#additional-details-section", header_height=960)
 
 
 def check_product_name(browser, product, target_name):

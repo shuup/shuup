@@ -161,7 +161,7 @@ def test_edit_button_no_permission(browser, admin_user, live_server, settings):
 
     # no permission to edit category
     with browser.get_iframe('create-object-iframe') as iframe:
-        error = "Can't view this page. You do not have the required permission(s): category.edit"
+        error = "Can't view this page. You do not have the required permission(s): `category.edit`."
         wait_until_condition(iframe, condition=lambda x: x.is_text_present(error))
 
     # close iframe

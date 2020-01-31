@@ -196,7 +196,7 @@ def test_unit_interface_render_quantity_translations():
     with translation.override('en'):
         assert gram.render_quantity(qty) == '4,321,123.4567g'
     with translation.override('fi'):
-        assert gram.render_quantity(qty) == nbsp('4 321 123,4567 g')
+        assert gram.render_quantity(qty) == nbsp('4 321 123,4567g')
     with translation.override('pt-br'):
         assert gram.render_quantity(qty) == '4.321.123,4567g'
     with translation.override('hi'):

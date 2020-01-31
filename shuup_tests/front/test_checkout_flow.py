@@ -57,7 +57,7 @@ def _populate_client_basket(client):
     index = client.soup("/")
     product_links = index.find_all("a", rel="product-detail")
     assert product_links
-    for i in range(3): # add three different products
+    for i in range(3):        # add three different products
         product_detail_path = product_links[i]["href"]
         assert product_detail_path
         product_detail_soup = client.soup(product_detail_path)
@@ -74,6 +74,7 @@ def _populate_client_basket(client):
     basket_soup = client.soup(basket_path)
     assert b'no such element' not in basket_soup.renderContents(), 'All product details are not rendered correctly'
     return product_ids
+
 
 def _get_payment_method_with_phase():
     processor = PaymentWithCheckoutPhase.objects.create(

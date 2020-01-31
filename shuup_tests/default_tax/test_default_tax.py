@@ -294,7 +294,7 @@ def test_rules_with_anonymous():
 @pytest.mark.django_db
 def test_rules_with_disabled_tax():
     """
-    Test whether rules match when tax is disabled
+    Test whether rules match when tax is disabled.
     """
     tax_class = TaxClass.objects.create(name="test")
 
@@ -332,7 +332,7 @@ def create_tax_from_string(string):
         return create_tax(name, amount=Money(spec[1:], 'USD'))
     elif spec.endswith('%'):
         return create_tax(name, rate=(Decimal(spec[:-1]) / 100))
-    raise ValueError('Unknown tax string: %r' % (string,))
+    raise ValueError('Error! Unknown tax string: %r.' % (string,))
 
 
 def create_tax(code, rate=None, amount=None):

@@ -112,7 +112,7 @@ def test_thumbnailing_with_str_size():
 def test_thumbnailing_with_invalid_size():
     with pytest.raises(ValueError) as exc_info:
         do_thumbnailing(TEST_PNG, 'test.png', size='foobar')
-    assert '{}'.format(exc_info.value) == '%r is not a valid size.' % 'foobar'
+    assert '{}'.format(exc_info.value) == 'Error! %r is not a valid size.' % 'foobar'
 
 
 def test_thumbnailing_carbage():
@@ -122,7 +122,7 @@ def test_thumbnailing_carbage():
 def test_thumbnailing_nonseekable_svg_file():
     class DummyFile(BytesIO):
         def tell(self):
-            raise IOError('DummyFile does not support tell/seek')
+            raise IOError('Error! DummyFile does not support tell/seek.')
         seek = tell
 
     source = Thumbnailer(file=DummyFile(TEST_SVG), name='test.svg')
