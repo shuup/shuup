@@ -15,15 +15,21 @@ from shuup.importer.utils.importer import ImportMode
 
 
 class ImportSettingsForm(forms.Form):
-    import_mode = EnumField(ImportMode).formfield(initial=ImportMode.CREATE_UPDATE, label=_("Import mode"))
+    import_mode = EnumField(ImportMode).formfield(
+        initial=ImportMode.CREATE_UPDATE, label=_("Import mode")
+    )
 
 
 class ImportForm(forms.Form):
-    language = forms.ChoiceField(label=_("Importing language"), choices=settings.LANGUAGES, help_text=_(
-        "The language of the data you would like to import."
-    ))
-    importer = forms.ChoiceField(label=_("Importer"), help_text=_(
-        "Select a importer type matching the data you would like to import"))
+    language = forms.ChoiceField(
+        label=_("Importing language"),
+        choices=settings.LANGUAGES,
+        help_text=_("The language of the data you want to import."),
+    )
+    importer = forms.ChoiceField(
+        label=_("Importer"),
+        help_text=_("Select a importer type matching the data you want to import"),
+    )
     file = forms.FileField(label=_("File"))
 
     def __init__(self, **kwargs):

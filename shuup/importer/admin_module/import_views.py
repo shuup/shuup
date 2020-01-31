@@ -43,9 +43,9 @@ class ImportProcessView(TemplateView):
         try:
             filename = get_import_file_path(self.request.GET.get("n"))
             if not os.path.isfile(filename):
-                raise ValueError(_("%s is not a file") % self.request.GET.get("n"))
+                raise ValueError(_("%s is not a file.") % self.request.GET.get("n"))
         except:
-            raise Problem(_("File missing."))
+            raise Problem(_("File is missing."))
         try:
             mode = "xls"
             if filename.endswith("xlsx"):
@@ -88,7 +88,7 @@ class ImportProcessView(TemplateView):
             with atomic():
                 self.importer.do_import(self.settings_form.cleaned_data["import_mode"])
         except Exception:
-            logger.exception("Failed to import data")
+            logger.exception("Error! Failed to import data.")
             messages.error(request, _("Failed to import the file."))
             return redirect(reverse("shuup_admin:importer.import"))
 
@@ -169,15 +169,15 @@ class ExampleFileDownloadView(View):
         importer = request.GET.get("importer")
         file_name = request.GET.get("file_name")
         if not importer or not file_name:
-            return HttpResponseBadRequest(_("Invalid parameters"))
+            return HttpResponseBadRequest(_("Invalid parameters."))
 
         importer_cls = get_importer(importer)
         if not importer_cls or not importer_cls.has_example_file():
-            raise Http404(_("Invalid importer"))
+            raise Http404(_("Invalid importer."))
 
         example_file = importer_cls.get_example_file(file_name)
         if not example_file:
-            raise Http404(_("Invalid file name"))
+            raise Http404(_("Invalid file name."))
 
         response = HttpResponse(content_type=example_file.content_type)
         response['Content-Disposition'] = 'attachment; filename=%s' % example_file.file_name
@@ -185,7 +185,7 @@ class ExampleFileDownloadView(View):
         data = importer_cls.get_example_file_content(example_file, request)
 
         if not data:
-            raise Http404(_("File not found"))
+            raise Http404(_("File was not found."))
 
         data.seek(0)
         response.write(data.getvalue())
