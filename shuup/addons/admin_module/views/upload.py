@@ -29,7 +29,7 @@ from shuup.utils.iterables import first
 class AddonUploadForm(forms.Form):
     file = forms.FileField(
         label=_("Addon file (ZIP)"),
-        help_text=_("Only upload addon files you trust.")
+        help_text=_("Only upload the addon files you trust.")
     )
 
 
@@ -41,7 +41,7 @@ class AddonUploadView(FormView):
     def form_valid(self, form):
         file = form.cleaned_data["file"]
         if not file.name.lower().endswith(".whl"):
-            raise Problem(_("Only wheel files are supported"))
+            raise Problem(_("Only wheel files (`.whl`) are supported."))
         # TODO: Maybe verify the file before saving?
         tmp_dir = tempfile.mkdtemp(prefix='shuup')
         tmp_token = os.path.basename(tmp_dir)
@@ -80,9 +80,9 @@ class AddonUploadConfirmView(FormView):
         tmp_token = self.request.GET.get('token')
         path = os.path.join(tempfile.gettempdir(), tmp_token, filename)
         if not os.path.isfile(path):
-            raise ValueError("File not found")
+            raise ValueError("Error! File not found.")
         if hasattr(os, "geteuid") and os.stat(path).st_uid != os.geteuid():
-            raise ValueError("File not owned by current user")
+            raise ValueError("Error! The file is not owned by the current user.")
         return path
 
     def get_context_data(self, **kwargs):
