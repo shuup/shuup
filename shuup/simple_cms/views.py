@@ -26,11 +26,11 @@ class PageView(DetailView):
         Override normal get method to return correct page based on the active language and slug
 
         Cases:
-            1. Page is not found: `raise Http404()` like django would
-            2. No translation in active language for the page: `raise Http404()`
+            1. Page is not found: `raise Http404()` like django would.
+            2. No translation in active language for the page: `raise Http404()`.
             3. Translation was found for active language, but the url doesn't match given url:
-                `return HttpResponseRedirect` to the active languages url
-            4. If none of the upper matches: render page normally
+                `return HttpResponseRedirect` to the active languages url.
+            4. If none of the upper matches: render page normally.
         """
 
         # get currently active language

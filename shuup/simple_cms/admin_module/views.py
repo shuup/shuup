@@ -31,8 +31,8 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 class PageForm(MultiLanguageModelForm):
-    available_from = DateTimeField(label=_("Available from"), required=False, localize=True)
-    available_to = DateTimeField(label=_("Available to"), required=False, localize=True)
+    available_from = DateTimeField(label=_("Available since"), required=False, localize=True)
+    available_to = DateTimeField(label=_("Available until"), required=False, localize=True)
 
     class Meta:
         model = Page
@@ -95,7 +95,7 @@ class PageForm(MultiLanguageModelForm):
                             self.add_error(field_name, ValidationError(_("URL already exists."), code="invalid_url"))
                         if value in urls:
                             self.add_error(
-                                field_name, ValidationError(_("URL must be unique"), code="invalid_unique_url"))
+                                field_name, ValidationError(_("URL must be unique."), code="invalid_unique_url"))
                         urls.append(value)
                     continue
                 self.add_error(
@@ -132,12 +132,12 @@ class PageForm(MultiLanguageModelForm):
         sure that the url given doesn't already exist.
 
         Possible failure cases:
-        for new page:
-        * URL already exists
+        * for new page:
+        1. URL already exists
 
-        for existing page:
-        * URL (other than owned by existing page) exists
-        * URL exists in other languages of existing page
+        * or existing page:
+        1. URL (other than owned by existing page) exists
+        2. URL exists in other languages of existing page
         """
         pages_ids = Page.objects.for_shop(get_shop(self.request)).exclude(deleted=True).values_list("id", flat=True)
         qs = self._get_translation_model().objects.filter(url=url, master_id__in=pages_ids)
@@ -224,8 +224,8 @@ class PageListView(PicotableListView):
                 filter_field="translations__title"
             )
         ),
-        Column("available_from", _(u"Available from")),
-        Column("available_to", _(u"Available to")),
+        Column("available_from", _(u"Available since")),
+        Column("available_to", _(u"Available until")),
         Column("created_by", _(u"Created by")),
         Column("created_on", _(u"Date created")),
     ]
@@ -233,8 +233,8 @@ class PageListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % (instance or _("Page")), "class": "header"},
-            {"title": _(u"Available from"), "text": item.get("available_from")},
-            {"title": _(u"Available to"), "text": item.get("available_to")} if instance.available_to else None
+            {"title": _(u"Available since"), "text": item.get("available_from")},
+            {"title": _(u"Available until"), "text": item.get("available_to")} if instance.available_to else None
         ]
 
     def get_queryset(self):
@@ -260,5 +260,5 @@ class PageDeleteView(DetailView):
     def post(self, request, *args, **kwargs):
         page = self.get_object()
         page.soft_delete(user=request.user)
-        messages.success(request, _(u"%s has been marked deleted.") % page)
+        messages.success(request, _(u"Success! %s has been marked deleted.") % page)
         return HttpResponseRedirect(self.get_success_url())
