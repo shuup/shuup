@@ -105,7 +105,7 @@ class PolymorphicTranslatableShuupModel(six.with_metaclass(
 class ChangeProtected(object):
     protected_fields = None
     unprotected_fields = []
-    change_protect_message = _("The following fields can not be changed")
+    change_protect_message = _("The following fields are protected and can not be changed.")
 
     def clean(self, *args, **kwargs):
         super(ChangeProtected, self).clean(*args, **kwargs)

@@ -33,13 +33,13 @@ class OrderProcessor(object):
         """
         Convert a source line into one or more order lines.
 
-        Normally each source line will yield just one order line, but
-        package products will yield a parent line and its child lines.
+        Normally each source line will yield just one order line, but package
+        products will yield lines for both the parent and its children products.
 
         :type order: shuup.core.models.Order
-        :param order: The order
+        :param order: The order.
         :type source_line: shuup.core.order_creator.SourceLine
-        :param source_line: The SourceLine
+        :param source_line: The SourceLine.
         :rtype: Iterable[OrderLine]
         """
         order_line = OrderLine(order=order)
@@ -50,7 +50,7 @@ class OrderProcessor(object):
             if product.sales_unit:
                 quantized_quantity = bankers_round(quantity, product.sales_unit.decimals)
                 if quantized_quantity != quantity:
-                    raise ValueError("Sales unit decimal conversion causes precision loss!")
+                    raise ValueError("Error! Sales unit decimal conversion causes precision loss.")
         else:
             order_line.product = None
 
@@ -111,12 +111,15 @@ class OrderProcessor(object):
         if not order_line.product:
             return
         if not order_line.supplier:
-            raise ValueError("Order line has no supplier")
+            raise ValueError("Error! Order line has no supplier.")
         order = order_line.order
         try:
             shop_product = order_line.product.get_shop_instance(order.shop)
         except ShopProduct.DoesNotExist:
-            raise ValidationError("%s: Not available in %s" % (order_line.product, order.shop), code="invalid_shop")
+            raise ValidationError(
+                "Error! %s is not available in %s." % (order_line.product, order.shop),
+                code="invalid_shop"
+            )
 
         shop_product.raise_if_not_orderable(
             supplier=order_line.supplier,
@@ -126,7 +129,9 @@ class OrderProcessor(object):
 
     def process_saved_order_line(self, order, order_line):
         """
-        Called in sequence for all order lines to be saved into the order. These have all been saved, so they have PKs.
+        Called in sequence for all order lines to be saved into the order.
+        These have all been saved, so they have PKs.
+
         :type order: Order
         :type order_line: OrderLine
         """
@@ -298,12 +303,12 @@ class OrderCreator(OrderProcessor):
 
         :type request: django.http.HttpRequest|None
         :param request:
-          Optional request object for backward compatibility.  Passing
+          Optional request object for backward compatibility. Passing
           non-None value is DEPRECATED.
         """
         if request is not None:
             warnings.warn(
-                "Initializing OrderCreator with a request is deprecated",
+                "Warning! Initializing `OrderCreator` with a `request` is deprecated.",
                 RemovedFromShuupWarning, stacklevel=2)
 
     def create_order(self, order_source):

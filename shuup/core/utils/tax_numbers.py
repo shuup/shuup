@@ -15,7 +15,7 @@ def validate(tax_number):
     """
     Validate a tax number.
 
-    :param tax_number: Tax number to validate
+    :param tax_number: Tax number to validate.
     :type tax_number: str
     :return:
       Type identifier of the tax number, if detected.  Possible
@@ -32,7 +32,7 @@ def validate(tax_number):
         prefix, code_parts = verify_vat(tax_number)
         return "vat" if prefix and code_parts else "unknown"
     except VatCannotIdentifyValidationError:
-        # Was not a VAT code, maybe it's some other tax number
+        # Was not a VAT code, maybe it's some other tax number?
         #
         # Note: verify_vat may raise also VatInvalidValidationError
         # which we intentionally don't catch here, since then it was a

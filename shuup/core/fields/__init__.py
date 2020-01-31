@@ -37,7 +37,7 @@ class InternalIdentifierField(models.CharField):
 
     def __init__(self, **kwargs):
         if "unique" not in kwargs:
-            raise ValueError("You must explicitly set the `unique` flag for `InternalIdentifierField`s.")
+            raise ValueError("Error! You must explicitly set the `unique` flag for `InternalIdentifierField`s.")
         kwargs.setdefault("max_length", 64)
         kwargs.setdefault("blank", True)
         kwargs.setdefault("null", bool(kwargs.get("blank")))  # If it's allowed to be blank, it should be null
@@ -102,11 +102,11 @@ class FormattedDecimalField(models.DecimalField):
         val = value.normalize()
         (sign, digits, exponent) = val.as_tuple()
         if exponent > exponent_limit:
-            raise ValueError('Exponent too large for formatting: %r' % value)
+            raise ValueError('Error! Exponent is too large for formatting: %r.' % value)
         elif exponent < -exponent_limit:
-            raise ValueError('Exponent too small for formatting: %r' % value)
+            raise ValueError('Error! Exponent is too small for formatting: %r.' % value)
         if len(digits) > max_digits:
-            raise ValueError('Too many digits for formatting: %r' % value)
+            raise ValueError('Error! Too many digits for formatting: %r.' % value)
         return format(val, 'f')
 
     def formfield(self, **kwargs):
@@ -134,7 +134,7 @@ class MeasurementField(FormattedDecimalField):
 
     def __init__(self, unit, **kwargs):
         if unit not in self.KNOWN_UNITS:
-            raise ImproperlyConfigured("Unit %r is not a known unit." % unit)
+            raise ImproperlyConfigured("Error! Provided unit `%r` is not a known unit. Configure it properly." % unit)
         self.unit = unit
         kwargs.setdefault("decimal_places", FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
         kwargs.setdefault("max_digits", FORMATTED_DECIMAL_FIELD_MAX_DIGITS)
@@ -211,7 +211,7 @@ class TaggedJSONField(JSONField):
 
 class HexColorField(models.CharField):
     """
-    Supports hexadecimal color values: #ABC, #AABBCC, #001122AA
+    Supports hexadecimal color values: #ABC, #AABBCC, #001122AA.
     """
     def __init__(self, **kwargs):
         kwargs["max_length"] = 9
@@ -254,7 +254,7 @@ def polymorphic_has_pk(obj):
 
 class PolymorphicJSONField(JSONField):
     """
-    Use this field when using JSONField inside a polumorphic model
+    Use this field when using JSONField inside a polumorphic model.
     https://github.com/dmkoch/django-jsonfield/pull/193
     """
     def pre_init(self, value, obj):
@@ -268,7 +268,7 @@ class PolymorphicJSONField(JSONField):
                         try:
                             return json.loads(value, **self.load_kwargs)
                         except ValueError:
-                            raise ValidationError(_("Enter valid JSON"))
+                            raise ValidationError(_("Enter a valid JSON."))
         except AttributeError:
             # south fake meta class doesn't create proper attributes
             # see this:

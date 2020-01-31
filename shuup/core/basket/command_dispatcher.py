@@ -53,11 +53,11 @@ class BasketCommandDispatcher(object):
         """
         Dispatch and handle processing of the given command.
 
-        :param command: Name of command to run
+        :param command: Name of command to run.
         :type command: unicode
         :param kwargs: Arguments to pass to the command handler. If empty, `request.POST` is used.
         :type kwargs: dict
-        :return: response
+        :return: response.
         :rtype: HttpResponse
         """
 
@@ -65,7 +65,7 @@ class BasketCommandDispatcher(object):
         try:
             handler = self.get_command_handler(command)
             if not handler or not callable(handler):
-                raise Problem(_(u"Invalid command %s") % command)
+                raise Problem(_(u"Error! Invalid command `%s`.") % command)
             kwargs.pop("csrfmiddlewaretoken", None)  # The CSRF token should never be passed as a kwarg
             kwargs.pop("command", None)  # Nor the command
             kwargs.update(request=self.request, basket=self.basket)
@@ -95,9 +95,9 @@ class BasketCommandDispatcher(object):
         Useful for subclassing. Must return the new `kwargs`, even if it wasn't
         mutated.
 
-        :param command: The name of the command about to be run
-        :param kwargs: dict of arguments
-        :return: dict of arguments
+        :param command: The name of the command about to be run.
+        :param kwargs: dict of arguments.
+        :return: dict of arguments.
         """
         return kwargs
 

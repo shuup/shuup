@@ -26,7 +26,7 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
     identifier_attr = 'code'
 
     change_protect_message = _(
-        "Cannot change business critical fields of Tax that is in use")
+        "Can't change the business critical fields of the Tax that is in use.")
     unprotected_fields = ['enabled']
 
     code = InternalIdentifierField(
@@ -34,7 +34,7 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
 
     translations = TranslatedFields(
         name=models.CharField(max_length=124, verbose_name=_("name"), help_text=_(
-                "The tax name. This is shown in order lines in order invoices and confirmations."
+                "The name of the tax. It is shown in order lines, in order invoices and confirmations."
             )
         ),
     )
@@ -42,34 +42,36 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
     rate = models.DecimalField(
         max_digits=6, decimal_places=5, blank=True, null=True,
         verbose_name=_("tax rate"), help_text=_(
-            "The percentage rate of the tax."))
+            "The percentage rate of the tax. "
+            "Mutually exclusive with the flat amount tax (flat tax is rarely used "
+            "and the option is therefore hidden by default; contact Shuup to enable)."))
     amount = MoneyProperty('amount_value', 'currency')
     amount_value = MoneyValueField(
         default=None, blank=True, null=True,
         verbose_name=_("tax amount value"), help_text=_(
             "The flat amount of the tax. "
-            "Mutually exclusive with percentage rates."))
+            "Mutually exclusive with percentage rates tax."))
     currency = CurrencyField(
         default=None, blank=True, null=True,
-        verbose_name=_("currency of tax amount"))
+        verbose_name=_("currency of the amount tax"))
 
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'), help_text=_(
-        "Check this if this tax is valid and active."
+        "Enable if this tax is valid and should be active."
     ))
 
     def clean(self):
         super(Tax, self).clean()
         if self.rate is None and self.amount is None:
-            raise ValidationError(_('Either rate or amount is required'))
+            raise ValidationError(_("Either rate or amount tax is required."))
         if self.amount is not None and self.rate is not None:
-            raise ValidationError(_('Cannot have both rate and amount'))
+            raise ValidationError(_("Can't have both rate and amount taxes. They are mutually exclusive."))
         if self.amount is not None and not self.currency:
             raise ValidationError(
-                _("Currency is required if amount is specified"))
+                _("Currency is required if the amount tax value is specified."))
 
     def calculate_amount(self, base_amount):
         """
-        Calculate tax amount with this tax for given base amount.
+        Calculate tax amount with this tax for a given base amount.
 
         :type base_amount: shuup.utils.money.Money
         :rtype: shuup.utils.money.Money
@@ -78,7 +80,7 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
             return self.amount
         if self.rate is not None:
             return self.rate * base_amount
-        raise ValueError("Improperly configured tax: %s" % self)
+        raise ValueError("Error! Calculations of the tax amount failed. Improperly configured tax: %s." % self)
 
     def __str__(self):
         text = super(Tax, self).__str__()
@@ -101,12 +103,12 @@ class TaxClass(TranslatableShuupModel):
     translations = TranslatedFields(
         name=models.CharField(max_length=100, verbose_name=_('name'), help_text=_(
                 "The tax class name. "
-                "Tax classes are used to control how taxes are applied to products."
+                "Tax classes are used to control how taxes are applied to the products."
             )
         ),
     )
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'), help_text=_(
-        "Check this if this tax class is active and valid."
+        "Enable if this tax class is valid and should be active."
     ))
 
     class Meta:

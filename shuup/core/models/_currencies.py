@@ -41,7 +41,7 @@ class Currency(models.Model):
 
         # make sure the code is a valid ISO-4217 currency
         if self.code not in babel.Locale("en").currencies:
-            raise ValidationError(_('Enter a valid ISO-4217 currency code'))
+            raise ValidationError(_("Enter a valid ISO-4217 currency code."))
 
     def save(self, *args, **kwargs):
         super(Currency, self).save(*args, **kwargs)
@@ -63,10 +63,10 @@ def get_currency_precision(currency):
     fields of the `Currency` objects in the database.
 
     :type currency: str
-    :param currency: Currency code as 3-letter string (ISO-4217)
+    :param currency: Currency code as 3-letter string (ISO-4217).
 
     :rtype: decimal.Decimal|None
-    :return: Precision value for given currency code or None for unknown
+    :return: Precision value for a given currency code or None for unknown.
     """
     cache_key = 'currency_precision:' + currency
     precision = cache.get(cache_key)

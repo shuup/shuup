@@ -38,7 +38,7 @@ def encode_enum(enum_val):
     spec = "%s:%s" % (enum_cls.__module__, enum_cls.__name__)
     try:
         if load(spec) != enum_cls:
-            raise ImproperlyConfigured("That's not the same class!")
+            raise ImproperlyConfigured("Error! That's not the same class.")
     except ImproperlyConfigured:  # Also raised by `load`
         return enum_val.value  # Fall back to the bare value.
     return [spec, enum_val.value]
@@ -63,9 +63,9 @@ class TagRegistry(object):
             else:
                 decoder = classes
         if not callable(decoder):
-            raise ValueError("Decoder %r for tag %r is not callable" % (decoder, tag))
+            raise ValueError("Error! Decoder `%r` for tag `%r` is not callable." % (decoder, tag))
         if not callable(encoder):
-            raise ValueError("Encoder %r for tag %r is not callable" % (encoder, tag))
+            raise ValueError("Error! Encoder `%r` for tag `%r` is not callable." % (encoder, tag))
 
         self.tags[tag] = {
             "classes": classes,

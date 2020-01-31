@@ -76,7 +76,7 @@ class Address(NameMixin, ShuupModel):
         "The company name for the address."
     ))
     tax_number = models.CharField(verbose_name=_('tax number'), max_length=64, blank=True, help_text=_(
-        "The business tax number. For example, EIN in US or VAT code in Europe."
+        "The business tax number. For example, EIN in the USA or VAT code in the EU."
     ))
     phone = models.CharField(verbose_name=_('phone'), max_length=64, blank=True, help_text=_(
         "The primary phone number for the address."

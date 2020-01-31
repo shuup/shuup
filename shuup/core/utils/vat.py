@@ -257,7 +257,7 @@ def verify_vat(vat_id, default_prefix=""):
     # Then see if we know about this prefix.
     spec = PATTERNS.get(prefix)
     if not spec or not prefix:  # Sorry, no dice. :/
-        raise VatCannotIdentifyValidationError("VAT ID could not be identified")
+        raise VatCannotIdentifyValidationError("Error! VAT ID could not be identified.")
 
     if not vat_id.startswith(prefix):  # Add the prefix back into the VAT if required
         vat_id = prefix + vat_id

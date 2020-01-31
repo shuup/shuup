@@ -48,15 +48,18 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_('modified on'))
     identifier = InternalIdentifierField(unique=True)
     name = models.CharField(verbose_name=_("name"), max_length=64, db_index=True, help_text=_(
-        "The product suppliers name. "
-        "Suppliers can be used manage the inventory of stocked products."
+        "The product supplier's name. "
+        "You can enable suppliers to manage the inventory of stocked products."
     ))
     type = EnumIntegerField(SupplierType, verbose_name=_("supplier type"), default=SupplierType.INTERNAL, help_text=_(
         "The supplier type indicates whether the products are supplied through an internal supplier or "
-        "an external supplier."
+        "an external supplier, and which group this supplier belongs to."
     ))
     stock_managed = models.BooleanField(verbose_name=_("stock managed"), default=False, help_text=_(
-        "Check this if this supplier will be used to manage the inventory of stocked products."
+        "Enable this if this supplier will manage the inventory of the stocked products. Having a managed stock "
+        "enabled is unnecessary if e.g. selling digital products that will never run out no matter how many are "
+        "being sold. There are some other cases when it could be an unnecessary complication. This setting"
+        "merely assigns a sensible default behavior, which can be overwritten on a product-by-product basis."
     ))
     module_identifier = models.CharField(max_length=64, blank=True, verbose_name=_('module'), help_text=_(
         "Select the supplier module to use for this supplier. "
@@ -65,11 +68,12 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     module_data = JSONField(blank=True, null=True, verbose_name=_("module data"))
     shops = models.ManyToManyField(
         "Shop", blank=True, related_name="suppliers", verbose_name=_("shops"), help_text=_(
-            "You can select which shops the supplier is available to."
+            "You can select which particular shops fronts the supplier should be available in."
         )
     )
     enabled = models.BooleanField(default=True, verbose_name=_("enabled"), help_text=_(
-        "Indicates whether this supplier is currently enabled."
+        "Indicates whether this supplier is currently enabled. In order to participate fully, "
+        "the supplier also needs to be `Approved`."
     ))
     logo = FilerImageField(
         verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL, related_name="supplier_logos")
@@ -81,7 +85,8 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         on_delete=models.SET_NULL
     )
     is_approved = models.BooleanField(default=True, verbose_name=_("approved"), help_text=_(
-        "Indicates whether this supplier is currently approved."
+        "Indicates whether this supplier is currently approved for work. In order to participate fully, "
+        "the supplier also needs to be `Enabled`."
     ))
     options = JSONField(blank=True, null=True, verbose_name=_("options"))
     translations = TranslatedFields(
@@ -90,7 +95,9 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     slug = models.SlugField(
         verbose_name=_('slug'), max_length=255, blank=True, null=True,
         help_text=_(
-            "Enter a URL Slug for your supplier. This is what your supplier page URL will be. "
+            "Enter a URL slug for your supplier. Slug is user- and search engine-friendly short text "
+            "used in a URL to identify and describe a resource. In this case it will determine "
+            "what your supplier page URL in the browser address bar will look like. "
             "A default will be created using the supplier name."
         )
     )
@@ -109,9 +116,9 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
 
     def get_orderability_errors(self, shop_product, quantity, customer):
         """
-        :param shop_product: Shop Product
+        :param shop_product: Shop Product.
         :type shop_product: shuup.core.models.ShopProduct
-        :param quantity: Quantity to order
+        :param quantity: Quantity to order.
         :type quantity: decimal.Decimal
         :param contect: Ordering contact.
         :type contect: shuup.core.models.Contact
@@ -121,7 +128,7 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
 
     def get_stock_statuses(self, product_ids):
         """
-        :param product_ids: Iterable of product IDs
+        :param product_ids: Iterable of product IDs.
         :return: Dict of {product_id: ProductStockStatus}
         :rtype: dict[int, shuup.core.stocks.ProductStockStatus]
         """
@@ -129,7 +136,7 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
 
     def get_stock_status(self, product_id):
         """
-        :param product_id: Product ID
+        :param product_id: Product ID.
         :type product_id: int
         :rtype: shuup.core.stocks.ProductStockStatus
         """
@@ -137,9 +144,9 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
 
     def get_suppliable_products(self, shop, customer):
         """
-        :param shop: Shop to check for suppliability
+        :param shop: Shop to check for suppliability.
         :type shop: shuup.core.models.Shop
-        :param customer: Customer contact to check for suppliability
+        :param customer: Customer contact to check for suppliability.
         :type customer: shuup.core.models.Contact
         :rtype: list[int]
         """

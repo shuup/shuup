@@ -103,7 +103,7 @@ class AttributeQuerySet(TranslatableQuerySet):
 class Attribute(TranslatableModel):
     identifier = InternalIdentifierField(unique=True, blank=False, null=False, editable=True)
     searchable = models.BooleanField(default=True, verbose_name=_("searchable"), help_text=_(
-        "Searchable attributes will be used for product lookup when customers search your store."
+        "Searchable attributes will be used for product lookup when customers search in your store."
     ))
     type = EnumIntegerField(
         AttributeType, default=AttributeType.TRANSLATED_STRING, verbose_name=_("type"), help_text=_(
@@ -137,7 +137,7 @@ class Attribute(TranslatableModel):
 
     def save(self, *args, **kwargs):
         if not self.identifier:
-            raise ValueError(u"Attribute with null identifier not allowed")
+            raise ValueError(u"Error! Attribute with null identifier is not allowed.")
         self.identifier = flatten(("%s" % self.identifier).lower())
         return super(Attribute, self).save(*args, **kwargs)
 
@@ -173,7 +173,7 @@ class Attribute(TranslatableModel):
             #       times for that.
             return forms.CharField(**kwargs)
         else:
-            raise ValueError("`formfield` can't deal with fields of type %r" % self.type)
+            raise ValueError("Error! `formfield` can't deal with the fields of type `%r`." % self.type)
 
     @property
     def is_translated(self):
@@ -196,9 +196,9 @@ class Attribute(TranslatableModel):
         """
         Find out whether the given value is null from this attribute's point of view.
 
-        :param value: A value
+        :param value: A value.
         :type value: object
-        :return: Nulliness boolean
+        :return: Nulliness boolean.
         :rtype: bool
         """
         if self.type == AttributeType.BOOLEAN:
@@ -228,7 +228,7 @@ class AppliedAttribute(TranslatableModel):
     def _get_value(self):
         if self.attribute.type == AttributeType.BOOLEAN:
             """
-            Return Boolean value or None
+            Return Boolean value or `None`.
 
             Since we are using ``django.forms.fields.NullBooleanField`` in admin
             we should return either None, True or False.
@@ -262,7 +262,7 @@ class AppliedAttribute(TranslatableModel):
                 return self.translated_string_value
             return u""
 
-        raise ValueError("Unknown attribute type.")  # pragma: no cover
+        raise ValueError("Error! Unknown attribute type.")  # pragma: no cover
 
     def _set_numeric_value(self, new_value):
         if self.attribute.type == AttributeType.BOOLEAN and new_value is None:
@@ -270,7 +270,7 @@ class AppliedAttribute(TranslatableModel):
             Shuup uses `django.forms.fields.NullBooleanField` in admin.
             Which can read in the `None` value.
 
-            Note: This is being handled separately due backwards compatibility.
+            Note: This is being handled separately due to backwards compatibility.
             TODO (2.0): Boolean should not be a special case and handling `None` should be
             same for every "numeric" value.
             """
@@ -317,7 +317,7 @@ class AppliedAttribute(TranslatableModel):
         if self.attribute.type == AttributeType.DATETIME:
             # Just store datetimes
             if not isinstance(new_value, datetime.datetime):
-                raise TypeError("Can't assign %r to DATETIME attribute" % new_value)
+                raise TypeError("Error! Can't assign `%r` to DATETIME attribute." % new_value)
             self.datetime_value = new_value
             self.numeric_value = calendar.timegm(self.datetime_value.timetuple())
             self.untranslated_string_value = self.datetime_value.isoformat()
@@ -341,7 +341,7 @@ class AppliedAttribute(TranslatableModel):
             self._set_datetime_value(new_value)
             return
 
-        raise ValueError("Unknown attribute type.")  # pragma: no cover
+        raise ValueError("Error! Unknown attribute type.")  # pragma: no cover
 
     value = property(_get_value, _set_value)
 
@@ -359,7 +359,7 @@ class AppliedAttribute(TranslatableModel):
 
         The current locale is used for formatting.
 
-        :return: Textual value
+        :return: Textual value.
         :rtype: str
         """
         try:
@@ -423,7 +423,10 @@ class AttributableMixin(object):
         return targets
 
     def get_available_attribute_queryset(self):  # pragma: no cover
-        raise NotImplementedError("Must be implemented in AttributableMixin subclass")
+        raise NotImplementedError(
+            "Error! Not implemented: `AttributableMixin` -> "
+            "`get_available_attribute_queryset()`. Must be implemented in a subclass."
+        )
 
     def get_all_attribute_info(self, language=None, visibility_mode=None):
         if not settings.SHUUP_ENABLE_ATTRIBUTES:  # pragma: no cover
@@ -462,13 +465,13 @@ class AttributableMixin(object):
 
         If the attribute is not found, return `default`.
 
-        :param identifier: Attribute identifier
+        :param identifier: Attribute identifier.
         :type identifier: str
-        :param language: Language identifier (or `None` for "current")
+        :param language: Language identifier (or `None` for "current").
         :type language: str|None
-        :param default: Default value to return
+        :param default: Default value to return.
         :type default: object
-        :return: Attribute value (or fallback)
+        :return: Attribute value (or fallback).
         :rtype: object
         """
         if not settings.SHUUP_ENABLE_ATTRIBUTES:  # pragma: no cover
@@ -508,13 +511,13 @@ class AttributableMixin(object):
         """
         Set an attribute value.
 
-        :param identifier: Attribute identifier
+        :param identifier: Attribute identifier.
         :type identifier: str
         :param value: The value for the attribute (should be in the correct type for the attribute).
         :type value: object
         :param language: Language for multi-language attributes. Not required for untranslated attributes.
         :type language: str
-        :return: Applied attribute object or None
+        :return: Applied attribute object or None.
         :rtype: AppliedAttribute|None
         """
         if not settings.SHUUP_ENABLE_ATTRIBUTES:  # pragma: no cover
@@ -531,7 +534,7 @@ class AttributableMixin(object):
 
         if attr.is_translated:
             if not language:
-                raise ValueError("`language` must be set for translated attribute %s" % attr)
+                raise ValueError("Error! `language` must be set for translated attribute %s." % attr)
             applied_attr.set_current_language(language)
 
         if not attr.is_translated and attr.is_null_value(value):
