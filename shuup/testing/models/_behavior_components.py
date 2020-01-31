@@ -24,4 +24,4 @@ class ExpensiveSwedenBehaviorComponent(ServiceBehaviorComponent):
 
     def get_unavailability_reasons(self, service, source):
         if source.shipping_address and source.shipping_address.country == "FI":
-            yield ValidationError("Veell nut sheep unytheeng tu Feenlund!", code="we_no_speak_finnish")
+            yield ValidationError("Probleema!! Veell nut sheep unytheeng tu Feenlund!", code="we_no_speak_finnish")
