@@ -84,8 +84,8 @@ def parse_date_range(value):
     elif isinstance(value, (list, tuple)):
         start, end = value[:2]
     else:
-        raise ValueError("Can't split date range: %r" % value)
+        raise ValueError("Error! Can't split date range: `%r`." % value)
     date_range = (dates.try_parse_datetime(start), dates.try_parse_datetime(end))
     if any(p is None for p in date_range):
-        raise ValueError("Invalid date range: %r (parsed as %r)" % (value, date_range))
+        raise ValueError("Error! Invalid date range: `%r` (parsed as `%r`)." % (value, date_range))
     return date_range
