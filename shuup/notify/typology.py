@@ -11,8 +11,23 @@ import enumfields
 from django import forms
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import validate_email
 from django.utils.text import camel_case_to_spaces
 from django.utils.translation import ugettext_lazy as _
+
+
+class MultiEmailField(forms.Field):
+    """
+    From https://docs.djangoproject.com/en/1.11/ref/forms/validation/#form-field-default-cleaning
+    """
+    def validate(self, value):
+        """Check if value consists only of valid emails."""
+        # Use the parent's handling of required fields, etc.
+        super().validate(value)
+        if value:
+            for email in value.split(','):
+                if email:
+                    validate_email(email)
 
 
 class Type(object):
@@ -94,7 +109,7 @@ class Email(_String):
     identifier = "email"
 
     def get_field(self, **kwargs):
-        return forms.EmailField(**kwargs)
+        return MultiEmailField(**kwargs)
 
 
 class URL(_String):

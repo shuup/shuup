@@ -45,19 +45,21 @@ class SendEmail(Action):
             choices=EMAIL_CONTENT_TYPE_CHOICES, initial=EMAIL_CONTENT_TYPE_CHOICES[0][0]
         )
     }
-
+    recipient = Binding(_("Recipient"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
+    reply_to_address = Binding(_("Reply-To"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT)
+    cc = Binding(_("Carbon Copy (CC)"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT,)
+    bcc = Binding(_("Blind Carbon Copy (BCC)"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT)
     from_email = Binding(
         _("From email"),
-        type=Email,
+        type=Text,
         constant_use=ConstantUse.VARIABLE_OR_CONSTANT,
         required=False,
         help_text=_(
-            'The from email to be used. It can either be binded to a variable or be a constant like '
+            'Override the default from email to be used. '
+            'It can either be binded to a variable or be a constant like '
             'support@store.com or even "Store Support" <support@store.com>.'
         )
     )
-    recipient = Binding(_("Recipient"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
-    reply_to_address = Binding(_("Reply-To"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT)
     language = Binding(_("Language"), type=Language, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
     fallback_language = Binding(
         _("Fallback language"), type=Language, constant_use=ConstantUse.CONSTANT_ONLY,
@@ -76,7 +78,7 @@ class SendEmail(Action):
         :param context: Script Context
         :type context: shuup.notify.script.Context
         """
-        recipient = self.get_value(context, "recipient")
+        recipient = get_email_list(self.get_value(context, "recipient"))
         if not recipient:
             context.log(logging.INFO, "%s: Not sending mail, no recipient", self.identifier)
             return
@@ -118,15 +120,28 @@ class SendEmail(Action):
             )
             return
 
-        reply_to = self.get_value(context, "reply_to_address")
-        reply_to = [reply_to] if reply_to else None  # Push email to a list, unless it is None
+        reply_to = get_email_list(self.get_value(context, "reply_to_address"))
+        from_email = self.get_value(context, "from_email")
+        bcc = get_email_list(self.get_value(context, "bcc"))
+        cc = get_email_list(self.get_value(context, "cc"))
 
-        from_email = self.get_value(context, "from_email") or None
         subject = " ".join(subject.splitlines())  # Email headers may not contain newlines
-        message = EmailMessage(subject=subject, body=body, to=[recipient], reply_to=reply_to, from_email=from_email)
+        message = EmailMessage(
+            subject=subject,
+            body=body,
+            to=recipient,
+            reply_to=reply_to,
+            from_email=from_email,
+            bcc=bcc,
+            cc=cc
+        )
         message.content_subtype = content_type
         message.send()
         context.log(logging.INFO, "%s: Mail sent to %s :)", self.identifier, recipient)
 
         if send_identifier:
             context.add_log_entry_on_log_target("Email sent to %s: %s" % (recipient, subject), send_identifier)
+
+
+def get_email_list(email):
+    return email.split(",") if email else []

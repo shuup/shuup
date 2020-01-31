@@ -46,6 +46,36 @@ def test_email_action():
 
 
 @pytest.mark.django_db
+def test_complete_email_action():
+    if settings.EMAIL_BACKEND != 'django.core.mail.backends.locmem.EmailBackend':
+        pytest.skip("Need locmem email backend")
+
+    mail.outbox = []  # Clear the Django testing mail outbox
+
+    event = get_initialized_test_event()
+    ctx = Context.from_event(event, shop=factories.get_default_shop())
+    ctx.set("name", "Luke Warm")  # This variable isn't published by the event, but it's used by the template
+    se = SendEmail({
+        "template_data": TEST_TEMPLATE_DATA,
+        "from_email": {"constant": "from@shuup.local"},
+        "recipient": {"constant": "someone@shuup.local,anotheremail@shuup.local"},
+        "bcc": {"constant": "hiddenone@shuup.local,secret@shuup.local"},
+        "cc": {"constant": "copied@shuup.local,loop@shuup.local"},
+        "language": {"constant": "ja"},
+        "send_identifier": {"constant": "hello, hello, hello"}
+    })
+    se.execute(ctx)  # Once,
+    se.execute(ctx)  # Twice!
+    assert len(mail.outbox) == 1  # 'send_identifier' should ensure this is true
+    msg = mail.outbox[0]
+    assert msg.to == ['someone@shuup.local', 'anotheremail@shuup.local']
+    assert msg.cc == ['copied@shuup.local', 'loop@shuup.local']
+    assert msg.bcc == ['hiddenone@shuup.local', 'secret@shuup.local']
+    assert msg.from_email == 'from@shuup.local'
+    assert ctx.get("name").upper() in msg.subject  # The Japanese template upper-cases the name
+
+
+@pytest.mark.django_db
 def test_email_action_with_template_body():
     with override_settings(LANGUAGES=(("en", "en"))):
         SUPER_TEST_TEMPLATE_DATA = {
