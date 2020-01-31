@@ -46,7 +46,7 @@
                 $("body").removeClass("body-noscroll");
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                window.alert(gettext("An error has occurred while saving the consent, please try again."));
+                window.alert(gettext("Error! Saving the consent failed, please try again."));
             }
         });
     }
