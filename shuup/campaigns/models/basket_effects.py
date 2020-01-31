@@ -29,7 +29,7 @@ class BasketDiscountEffect(PolymorphicShuupModel):
         :return: amount of discount to accumulate for the product
         :rtype: Price
         """
-        raise NotImplementedError("Not implemented!")
+        raise NotImplementedError("Error! Not implemented: `BasketDiscountEffect` -> `apply_for_basket()`.")
 
 
 class BasketDiscountAmount(BasketDiscountEffect):

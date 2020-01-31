@@ -61,7 +61,7 @@ class Campaign(MoneyPropped, TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
 
     active = models.BooleanField(default=False, verbose_name=_("active"), help_text=_(
-        "Check this if the campaign is currently active. Please also set a start and end date."
+        "Enable this if the campaign is currently active. Please also set a start and an end date."
     ))
     start_datetime = models.DateTimeField(null=True, blank=True, verbose_name=_("start date and time"), help_text=_(
         "The date and time the campaign starts. This is only applicable if the campaign is marked as active."
@@ -209,7 +209,7 @@ class BasketCampaign(Campaign):
     admin_url_suffix = "basket_campaign"
 
     basket_line_text = models.CharField(
-        max_length=120, verbose_name=_("basket line text"), help_text=_("This text will be shown in basket."))
+        max_length=120, verbose_name=_("basket line text"), help_text=_("This text will be shown in a basket."))
 
     conditions = models.ManyToManyField('BasketCondition', blank=True, related_name='campaign')
     coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign', verbose_name=_("coupon"))
@@ -220,7 +220,7 @@ class BasketCampaign(Campaign):
         verbose_name=_("supplier"),
         help_text=_(
             "When set, this campaign will match only products from the selected supplier. "
-            "Rules and Effects will also be restricted to the products of this supplier."
+            "Rules and Effects will also be restricted to include only the products of this supplier."
         )
     )
 
@@ -238,10 +238,10 @@ class BasketCampaign(Campaign):
             code_count_for_shop = BasketCampaign.objects.filter(
                 active=True, shop_id=self.shop.id, coupon__code=self.coupon.code)
             if not self.id and code_count_for_shop.exists():
-                raise ValidationError(_("Can not have multiple active campaigns with same code."))
+                raise ValidationError(_("Can't have multiple active campaigns with same code."))
 
             if self.id and code_count_for_shop.exclude(coupon_id=self.coupon.id).exists():
-                raise ValidationError(_("Can not have multiple active campaigns with same code."))
+                raise ValidationError(_("Can't have multiple active campaigns with same code."))
 
         super(BasketCampaign, self).save(*args, **kwargs)
         self.conditions.update(active=self.active)
@@ -300,11 +300,11 @@ class BasketCampaign(Campaign):
         """
         Check if basket rules match.
 
-        They will not match if
+        They will not match if:
         1) The campaign is not active
-        2) The campaign has attached coupon
+        2) The campaign has attached coupon,
            which doesn't match or is not active
-        3) Any of the attached rules doesn't match
+        3) Any of the attached rules don't match
         """
         if not self.is_available():
             return False
@@ -354,7 +354,7 @@ class Coupon(models.Model):
         blank=True, null=True,
         verbose_name=_("usage limit"),
         help_text=_("Set the absolute limit of usages for this coupon. "
-                    "If the limit is zero (0) coupon cannot be used."))
+                    "If the limit is zero (0), coupon can't be used."))
 
     active = models.BooleanField(default=False, verbose_name=_("is active"))
     shop = models.ForeignKey(
@@ -387,7 +387,7 @@ class Coupon(models.Model):
         campaign = BasketCampaign.objects.filter(active=True, coupon_id=self.id).first()
         if campaign and BasketCampaign.objects.filter(
                 active=True, shop_id=campaign.shop.id, coupon__code=self.code).exclude(id=campaign.id).exists():
-            raise ValidationError(_("Can not have multiple active campaigns with same code."))
+            raise ValidationError(_("Can not have multiple active campaigns with the same code."))
 
         return super(Coupon, self).save(**kwargs)
 
@@ -420,7 +420,7 @@ class Coupon(models.Model):
 
     def can_use_code(self, customer):
         """
-        Check if customer can use the code
+        Check if customer can use the code.
 
         :param customer:
         :type customer: `Contact` or None
@@ -454,7 +454,7 @@ class Coupon(models.Model):
         self.usage_limit = self.usage_limit + amount if self.usage_limit else (self.usages.count() + amount)
 
     def has_been_used(self, usage_count=1):
-        """ See if code is used the times given """
+        """ See if code was already used the number of maximum times given """
         return CouponUsage.objects.filter(coupon=self).count() >= usage_count
 
     def __str__(self):

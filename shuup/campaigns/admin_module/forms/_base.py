@@ -44,7 +44,7 @@ class BaseCampaignForm(ShuupAdminForm):
         start_datetime = data.get("start_datetime")
         end_datetime = data.get("end_datetime")
         if start_datetime and end_datetime and end_datetime < start_datetime:
-            self.add_error("end_datetime", _("Campaign end date can't be before start date."))
+            self.add_error("end_datetime", _("Campaign end date can't be before a start date."))
 
 
 class CampaignsSelectMultipleField(Select2MultipleField):

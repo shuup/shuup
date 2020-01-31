@@ -27,7 +27,7 @@ class ProductDiscountEffect(PolymorphicShuupModel):
         :return: amount of discount to accumulate for the product
         :rtype: Price
         """
-        raise NotImplementedError("Not implemented!")
+        raise NotImplementedError("Error! Not implemented: `ProductDiscountEffect` -> `apply_for_product()`")
 
 
 class ProductDiscountAmount(ProductDiscountEffect):

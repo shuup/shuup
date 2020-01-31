@@ -21,7 +21,10 @@ class CatalogFilter(PolymorphicModel):
     active = models.BooleanField(default=True, verbose_name=_("active"))
 
     def filter_queryset(self, queryset):
-        raise NotImplementedError("Subclasses should implement `filter_queryset`")
+        raise NotImplementedError(
+            "Error! Not implemented: `CatalogFilter` -> `filter_queryset()`. "
+            "Subclasses should implement `filter_queryset`."
+        )
 
 
 class ProductTypeFilter(CatalogFilter):
@@ -43,7 +46,7 @@ class ProductTypeFilter(CatalogFilter):
 
     @property
     def description(self):
-        return _("Limit the campaign to selected product types.")
+        return _("Limit the campaign only to selected product types.")
 
     @property
     def values(self):
@@ -76,7 +79,7 @@ class ProductFilter(CatalogFilter):
 
     @property
     def description(self):
-        return _("Limit the campaign to selected products.")
+        return _("Limit the campaign only to selected products.")
 
     @property
     def values(self):
@@ -134,7 +137,7 @@ class CategoryFilter(CatalogFilter):
 
     @property
     def description(self):
-        return _("Limit the campaign to products in selected categories.")
+        return _("Limit the campaign only to products in selected categories.")
 
     @property
     def values(self):
