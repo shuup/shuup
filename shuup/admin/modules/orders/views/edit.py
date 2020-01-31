@@ -220,7 +220,7 @@ class OrderEditView(CreateOrUpdateView):
         customer = Contact.objects.filter(pk=customer_id).first()
         if not customer:
             return JsonResponse(
-                {"success": False, "errorMessage": _("Contact %s does not exist.") % customer_id}, status=400
+                {"success": False, "errorMessage": _("Contact `%s` does not exist.") % customer_id}, status=400
             )
         tax_number = getattr(customer, "tax_number", "")
         return {
@@ -239,7 +239,7 @@ class OrderEditView(CreateOrUpdateView):
     def dispatch_command(self, request):
         handler = getattr(self, "handle_%s" % request.GET.get("command"), None)
         if not callable(handler):
-            return JsonResponse({"error": "unknown command %s" % request.GET.get("command")}, status=400)
+            return JsonResponse({"error": "Error! Unknown command `%s`." % request.GET.get("command")}, status=400)
         retval = handler(request)
         if not isinstance(retval, HttpResponse):
             retval = JsonResponse(retval)
@@ -253,13 +253,13 @@ class OrderEditView(CreateOrUpdateView):
         quantity = decimal.Decimal(request.GET.get("quantity", 1))
         product = Product.objects.filter(pk=product_id).first()
         if not product:
-            return {"errorText": _("Product %s does not exist.") % product_id}
+            return {"errorText": _("Product `%s` does not exist.") % product_id}
         shop = Shop.objects.get(pk=shop_id)
         try:
             shop_product = product.get_shop_instance(shop)
         except ShopProduct.DoesNotExist:
             return {
-                "errorText": _("Product %(product)s is not available in the %(shop)s shop.") %
+                "errorText": _("Product `%(product)s` is not available in the `%(shop)s` shop.") %
                 {"product": product.name, "shop": shop.name}
             }
 
@@ -321,7 +321,7 @@ class OrderEditView(CreateOrUpdateView):
         elif field in [f.name for f in PersonContact._meta.get_fields()]:
             contact_model = PersonContact
         else:
-            return {"error": "Invalid field name"}
+            return {"error": "Error! Invalid field name."}
 
         customer = contact_model.objects.filter(**{field: value}).first()
         if customer:
@@ -374,7 +374,7 @@ class OrderEditView(CreateOrUpdateView):
     def get_request_body(self, request):
         body = request.body.decode("utf-8")
         if not body:
-            raise RuntimeError("No response received")
+            raise RuntimeError("Error! No response received.")
         return body
 
     @transaction.atomic
@@ -409,7 +409,7 @@ class OrderEditView(CreateOrUpdateView):
                 modified_by=request.user
             )
             assert self.object.pk == order.pk
-            messages.success(request, _("Order %(identifier)s updated.") % vars(order))
+            messages.success(request, _("Order `%(identifier)s` was updated.") % vars(order))
         else:  # Create
             order = create_order_from_state(
                 state,
@@ -417,7 +417,7 @@ class OrderEditView(CreateOrUpdateView):
                 ip_address=request.META.get("REMOTE_ADDR"),
             )
             object_created.send(sender=Order, object=order, request=request)
-            messages.success(request, _("Order %(identifier)s created.") % vars(order))
+            messages.success(request, _("Order `%(identifier)s` created.") % vars(order))
 
         object_saved.send(sender=Order, object=order, request=request)
         return JsonResponse({
@@ -427,15 +427,15 @@ class OrderEditView(CreateOrUpdateView):
         })
 
     def handle_source_data(self, request):
-        return _handle_or_return_error(self._handle_source_data, request, _("Could not proceed with order:"))
+        return _handle_or_return_error(self._handle_source_data, request, _("Could not proceed with the order: "))
 
     def handle_finalize(self, request):
-        return _handle_or_return_error(self._handle_finalize, request, _("Could not finalize order:"))
+        return _handle_or_return_error(self._handle_finalize, request, _("Could not finalize the order: "))
 
 
 class UpdateAdminCommentView(View):
     """
-    Update order's admin comment
+    Update order's admin comment.
     """
     def post(self, request, *args, **kwargs):
         shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)

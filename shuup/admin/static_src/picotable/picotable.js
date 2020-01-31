@@ -1113,7 +1113,7 @@ const Picotable = (function (m, storage) {
                         $(".picotable-mass-action-select").val(0);
                         ctrl.refresh();
                         setTimeout(function () {
-                            window.Messages.enqueue({ tags: "success", text: gettext("Mass Action complete.") });
+                            window.Messages.enqueue({ tags: "success", text: gettext("Success! Mass Action was completed.") });
                         }, 1000);
                     }
                     setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
@@ -1123,7 +1123,7 @@ const Picotable = (function (m, storage) {
                 $(".picotable-mass-action-select").val(0);
                 ctrl.refresh();
                 setTimeout(function () {
-                    window.Messages.enqueue({ tags: "error", text: gettext("Something went wrong.") });
+                    window.Messages.enqueue({ tags: "error", text: gettext("Error! Something went wrong with the Mass Action.") });
                 }, 1000);
             }
         };
@@ -1146,7 +1146,7 @@ const Picotable = (function (m, storage) {
             var originalValues = ctrl.vm.checkboxes();
             window.savedValue = value;
             if (originalValues.length === 0) {
-                alert(gettext("You haven't selected anything"));
+                alert(gettext("Warning! You didn't select anything."));
                 return;
             }
             if (value === 0) {
@@ -1219,7 +1219,7 @@ const Picotable = (function (m, storage) {
                 url: url,
                 data: params
             }).then(ctrl.vm.data, function () {
-                alert("An error occurred.");
+                alert("Error! An error occurred.");
             }).then(function () {
                 ctrl.vm.isLoading = false;
             });
@@ -1243,7 +1243,7 @@ const Picotable = (function (m, storage) {
         ctrl.pickObject = function (object) {
             var opener = window.opener;
             if (!opener) {
-                alert("Window has no opener. Can't pick object.");
+                alert("Error! Window has no opener. Can't pick object.");
                 return;
             }
             var text = null;  // Try to figure out a name for the object

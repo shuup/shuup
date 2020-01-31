@@ -43,7 +43,7 @@ class OrderDetailView(DetailView):
             # Check whether the Section should be visible for the current object
             if admin_order_section.visible_for_object(self.object, self.request):
                 context["order_sections"].append(admin_order_section)
-                # add additional context data where the key is the order_section identifier
+                # Add additional context data where the key is the order_section identifier
                 section_context = admin_order_section.get_context_data(self.object, self.request)
                 context[admin_order_section.identifier] = section_context
 
@@ -65,12 +65,12 @@ class OrderSetStatusView(DetailView):
         new_status = OrderStatus.objects.get(pk=int(request.POST["status"]))
         old_status = order.status
         if new_status.role == OrderStatusRole.COMPLETE and not order.can_set_complete():
-            raise Problem(_("Unable to set order as completed at this point"))
+            raise Problem(_("Unable to set order as completed at this point."))
         if new_status.role == OrderStatusRole.CANCELED and not order.can_set_canceled():
-            raise Problem(_("Paid, shipped, or canceled orders cannot be canceled"))
+            raise Problem(_("You can't cancel orders that are paid, shipped, or already canceled."))
         order.status = new_status
         order.save(update_fields=("status",))
-        message = _("Order status changed: {old_status} to {new_status}").format(
+        message = _("Order status changed: from `{old_status}` to `{new_status}`.").format(
             old_status=old_status, new_status=new_status)
         order.add_log_entry(message, user=request.user, identifier="status_change")
         messages.success(self.request, message)

@@ -70,7 +70,7 @@ export function dropzoneConfig(ctrl) {
                     return;
                 }
             }
-            alert("Sorry! You can only drop files here (from your computer or within the file manager).");
+            alert("Error! You can only drop files here (from your computer or within the file manager).");
         });
     };
 }

@@ -23,7 +23,7 @@ def load_setup_wizard_panes(shop, request=None, visible_only=True):
     :type visible_only: bool
     """
     if not shop:
-        raise ValueError("Shop instance is mandatory")
+        raise ValueError("Error! Shop instance is mandatory.")
     panes = []
     for pane_spec in getattr(settings, "SHUUP_SETUP_WIZARD_PANE_SPEC", []):
         pane_class = load(pane_spec)
@@ -45,7 +45,7 @@ def load_setup_wizard_pane(shop, request, pane_id):
     :rtype: shuup.admin.views.wizard.WizardPane|None
     """
     if not shop:
-        raise ValueError("Shop instance is mandatory")
+        raise ValueError("Error! Shop instance is mandatory.")
     for pane_spec in getattr(settings, "SHUUP_SETUP_WIZARD_PANE_SPEC", []):
         pane_class = load(pane_spec)
         pane_inst = pane_class(request=request, object=shop)
@@ -98,7 +98,7 @@ def setup_blocks_complete(request):
 
 def onboarding_complete(request):
     """
-    Check if the shop wizard and all setup blocks are complete
+    Check if the shop wizard and all setup blocks are complete.
 
     :return: whether onboarding is complete
     :rtype: Boolean

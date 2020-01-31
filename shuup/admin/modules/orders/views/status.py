@@ -42,7 +42,7 @@ class OrderStatusForm(MultiLanguageModelForm):
             qs = qs.exclude(pk=self.instance.pk)
 
         if qs.exists():
-            self.add_error("identifier", _("Identifier already exists"))
+            self.add_error("identifier", _("Identifier already exists."))
 
         return super(OrderStatusForm, self).clean()
 

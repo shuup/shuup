@@ -21,7 +21,7 @@ class EmailAuthenticationForm(AuthenticationForm):
     error_messages = {
         'invalid_login': _("Please enter a correct %(username)s and password. "
                            "Note that both fields may be case-sensitive. "
-                           "In case of multiple accounts with same email only username can be used to login."),
+                           "In case of multiple accounts with the same email, only username can be used to log in."),
         'inactive': _("This account is inactive."),
     }
 
@@ -59,8 +59,8 @@ class EmailAuthenticationForm(AuthenticationForm):
             )
 
             # So here even with invalid login and user cache being None
-            # we would like to check whether the user we are trying to
-            # login is inactive or not.
+            # we want to check whether the user we are trying to
+            # log in is inactive or not.
             try:
                 user_temp = get_user_model().objects.get(username=username)
             except ObjectDoesNotExist:
@@ -70,7 +70,7 @@ class EmailAuthenticationForm(AuthenticationForm):
                 self.confirm_login_allowed(user_temp)
 
             # Back to default behavior. Meaning that we want to always
-            # raise for invalid login incase the authenticate
+            # raise for invalid login in case the authenticate fails.
             if self.user_cache is None:
                 raise forms.ValidationError(
                     self.error_messages["invalid_login"],
@@ -97,9 +97,10 @@ class RequestPasswordForm(RecoverPasswordForm):
             "{0}__iexact".format(user_model.USERNAME_FIELD): username
         }
         # only staff and active users
+        # only staff ( Access to Admin Panel ) and active users
         active_users = user_model.objects.filter(
             Q(is_active=True, is_staff=True),
-            Q(**username_filter) | Q(email__iexact=email)
+            Q(**username_filter) | Q(email__iexact=email),
         )
         for user in active_users:
             self.process_user(user)

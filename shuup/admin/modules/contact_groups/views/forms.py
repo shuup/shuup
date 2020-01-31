@@ -99,11 +99,11 @@ class ContactGroupMembersFormSet(BaseFormSet):
         message_parts = []
         if members_to_add:
             add_count = len(members_to_add)
-            message_parts.append(ungettext("%(count)s member added", "%(count)s members added",
+            message_parts.append(ungettext("%(count)s member added", "%(count)s members added.",
                                  add_count) % {"count": add_count})
         if members_to_remove:
             remove_count = len(members_to_remove)
-            message_parts.append(ungettext("%(count)s member removed", "%(count)s members removed",
+            message_parts.append(ungettext("%(count)s member removed", "%(count)s members removed.",
                                  remove_count) % {"count": remove_count})
         if message_parts and self.request:
             messages.success(self.request, ", ".join(message_parts) + ".")

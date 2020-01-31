@@ -49,14 +49,14 @@ class AdminShopProvider(object):
 
     def set_shop(self, request, shop=None):
         if not request.user.is_staff:
-            raise PermissionDenied(_("You must be a staff user"))
+            raise PermissionDenied(_("You must have the Access to Admin Panel permission."))
 
         if shop:
             # only can set if the user is superuser or is the shop staff
             if shop.staff_members.filter(pk=request.user.pk).exists() or request.user.is_superuser:
                 request.session[SHOP_SESSION_KEY] = shop.id
             else:
-                raise PermissionDenied(_("You are not a staff member of this shop"))
+                raise PermissionDenied(_("You must have the Access to Admin Panel permissions to this shop."))
 
         else:
             self.unset_shop(request)

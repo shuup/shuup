@@ -147,7 +147,7 @@ export const Select2 = {
                 }
 
             } else {
-                alert(gettext("Missing JavaScript dependencies detected"));
+                alert(gettext("Warning! Missing JavaScript dependencies detected."));
             }
         };
     }

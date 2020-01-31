@@ -123,7 +123,7 @@ $(function() {
                 });
             },
             error: function(data) {
-                alert("ERROR");
+                alert("Error!");
             }
         });
     }

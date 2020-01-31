@@ -50,7 +50,7 @@ def maybe_callable(thing, context=None):
 
 def maybe_call(thing, context, args=None, kwargs=None):
     """
-    If `thing` is callable, call it with args and kwargs and return the value.
+    If `thing` is callable, call it with `args` and `kwargs` and return the value.
     If `thing` names a callable attribute of `context`, call it with args and kwargs and return the value.
     Otherwise return `thing`.
     """
@@ -424,7 +424,7 @@ class Picotable(object):
             desc = (sort[0] == "-")
             column = self.columns_by_id.get(sort[1:])
             if not (column and column.sortable):
-                raise ValueError("Can't sort by column %r" % sort[1:])
+                raise ValueError("Error! Can't sort by column %r." % sort[1:])
             queryset = column.sort_queryset(queryset, desc=desc)
 
         return queryset
@@ -505,7 +505,7 @@ class PicotableViewMixin(object):
 
     def post(self, request, *args, **kwargs):
         """
-        Post action is where Mass Actions post their data
+        Post action is where Mass Actions post their data.
         """
         data = request.body.decode("utf-8")
         data = json.loads(data)
@@ -514,7 +514,7 @@ class PicotableViewMixin(object):
 
         mass_action = self._get_mass_action(action_identifier)
         if mass_action is None:
-            return JsonResponse({"error": force_text(_("Unknown error"))})
+            return JsonResponse({"error": force_text(_("Mass Action encountered an unknown error."))})
         if isinstance(mass_action, PicotableFileMassAction):
             return mass_action.process(request, ids)
 
@@ -560,9 +560,9 @@ class PicotableViewMixin(object):
         * class (CSS class name -- `header` for instance)
         * raw (boolean; whether or not the `text` is raw HTML)
 
-        :param instance: The instance
+        :param instance: The instance.
         :param item: The item dict so far. Useful for reusing precalculated values.
-        :return: Iterable of dicts to pass through to the picotable javascript
+        :return: Iterable of dicts to pass through to the picotable javascript.
         :rtype: Iterable[dict]
         """
         return None
@@ -603,7 +603,7 @@ class PicotableViewMixin(object):
 
 class PicotableMassAction(object):
     """
-    Simple Mass Action
+    Simple Mass Action.
 
     This action only processes the given id's in subclass.
 
@@ -619,10 +619,10 @@ class PicotableMassAction(object):
 
     def process(self, request, ids):
         """
-        Process the given ids in masses
+        Process the given ids in masses.
 
         :param request: `WSGIRequest`
-        :param ids: list of ids
+        :param ids: list of ids.
         :return: None
         """
         pass
@@ -631,8 +631,9 @@ class PicotableMassAction(object):
         """
         Returns a dict with additional action data to be rendered
         in html action option element as data-xxx attribute.
+
         :param request: `WSGIRequest`
-        :return dict: dictionary with extra info to be rendered in option element
+        :return dict: dictionary with extra info to be rendered in option element.
         """
         return {}
 
@@ -641,16 +642,17 @@ class PicotableMassActionProvider(object):
     @classmethod
     def get_mass_actions_for_view(cls, view):
         """
-        Returns a list of mass actions for a given `view`
+        Returns a list of mass actions for a given `view`.
+
         :param view: `django.views.View`
-        :return list[PicotableMassAction]: list of picotable mass actions definition (strings)
+        :return list[PicotableMassAction]: list of picotable mass actions definition (strings).
         """
         return []
 
 
 class PicotableFileMassAction(PicotableMassAction):
     """
-    File Mass Action
+    File Mass Action.
 
     This action returns file as a response.
 
@@ -660,7 +662,7 @@ class PicotableFileMassAction(PicotableMassAction):
     """
     def process(self, request, ids):
         """
-        Process and return `HttpResponse`
+        Process and return `HttpResponse`.
 
         Example:
             response = HttpResponse(content_type="text/csv")
@@ -670,7 +672,7 @@ class PicotableFileMassAction(PicotableMassAction):
             return response
 
         :param request: `WSGIRequest`
-        :param ids: list of ids
+        :param ids: list of ids.
         :return: `HttpResponse`
         """
         pass
@@ -678,12 +680,12 @@ class PicotableFileMassAction(PicotableMassAction):
 
 class PicotableRedirectMassAction(PicotableMassAction):
     """
-    Redirect Mass Action
+    Redirect Mass Action.
 
     This view saves selected id's into session which are then
     further processed in the mass action view.
 
-    Redirect of this view is handled in `picotable.js`
+    Redirect of this view is handled in `picotable.js`.
 
     To use this action, your admin module must supply admin_url
     and a view for the action.
@@ -710,7 +712,7 @@ class PicotableRedirectMassAction(PicotableMassAction):
 
 class PicotableJavascriptMassAction(PicotableMassAction):
     """
-    Javascript Mass Action
+    Javascript Mass Action.
 
     This view saves invokes a pre-defined javascript function
     with the list of object ids.

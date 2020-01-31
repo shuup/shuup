@@ -98,7 +98,7 @@ class Select2MultipleField(Field):
 
 class Select2ModelMultipleField(Select2MultipleField):
     """
-    Just like Select2MultipleField, but return instances instead of ids
+    Just like Select2MultipleField, but return instances instead of ids.
     """
     def prepare_value(self, value):
         return [getattr(v, "pk", v) for v in value or []]
@@ -110,7 +110,7 @@ class Select2ModelMultipleField(Select2MultipleField):
 
 
 class Select2MultipleMainProductField(Select2MultipleField):
-    """Search only from parent and normal products"""
+    """Search only from parent and normal products."""
     def widget_attrs(self, widget):
         attrs = super(Select2MultipleMainProductField, self).widget_attrs(widget)
         attrs.update({"data-search-mode": "main"})

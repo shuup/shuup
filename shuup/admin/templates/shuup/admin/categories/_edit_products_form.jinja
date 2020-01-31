@@ -12,7 +12,7 @@
     <h2>{% trans %}Products{% endtrans %}</h2>
     <div class="list-group">
         <p class="small">
-            {% trans %}* Products that has this category as a primary category.{% endtrans %}
+            {% trans %}* Products that have this category as a primary category.{% endtrans %}
         </p>
         {% for shop_product in object.shop_products.filter(shop=shop) %}
             {% set product = shop_product.product %}

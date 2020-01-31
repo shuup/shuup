@@ -22,7 +22,7 @@ def filter_form_field_choices(field, predicate, invert=False):
 
     :param field: Form field.
     :type field: django.forms.Field
-    :param predicate: Predicate
+    :param predicate: Predicate.
     :type predicate: function|Iterable
     :param invert: Invert the semantics of the predicate, i.e. items matching it will be rejected.
     :type invert: bool
@@ -47,7 +47,7 @@ def add_form_errors_as_messages(request, form):
     """
     Add the form's errors, if any, into the request as messages.
 
-    :param request: Request to messagify
+    :param request: Request to messagify.
     :type request: django.http.HttpRequest
     :param form: The errorful form.
     :type form: django.forms.Form
@@ -78,7 +78,7 @@ def flatatt_filter(attrs):
 
 def get_possible_name_fields_for_model(model):
     """
-    Get possible name fields for given model
+    Get possible name fields for given model.
 
     This function yields strings of field names that
     could possible be identified as name fields for model.
@@ -88,7 +88,7 @@ def get_possible_name_fields_for_model(model):
 
     :param model Class object of the model:
     :type model object:
-    :return: Yield strings of possible name fields
+    :return: Yield strings of possible name fields.
     :rtype: str
     """
 

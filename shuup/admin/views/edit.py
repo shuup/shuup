@@ -68,4 +68,4 @@ class EditObjectView(View):
 
                 return HttpResponseRedirect(url)
 
-        raise Http404(_("Object not found"))
+        raise Http404(_("Object not found."))

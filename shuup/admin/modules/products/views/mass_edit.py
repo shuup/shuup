@@ -56,6 +56,6 @@ class ProductMassEditView(MassEditMixin, FormView):
             product.save()
             shop_product.save()
 
-        messages.success(self.request, _("Products changed successfully"))
+        messages.success(self.request, _("Products changed."))
         self.request.session["mass_action_ids"] = []
         return HttpResponseRedirect(reverse("shuup_admin:shop_product.list"))

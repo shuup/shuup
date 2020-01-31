@@ -58,13 +58,13 @@ class WizardPane(FormPart):
 
     def visible(self):
         """
-        Returns whether this pane is visible for editing
+        Returns whether this pane is visible for editing.
         """
         return True
 
     def valid(self):
         """
-        Returns whether this pane is valid and should be included in wizard pane list
+        Returns whether this pane is valid and should be included in wizard pane list.
         """
         return True
 

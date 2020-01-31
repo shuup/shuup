@@ -14,7 +14,7 @@ from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 
 
 class PermissionGroupModule(AdminModule):
-    name = _("Permission Groups")
+    name = _("Granular Permission Groups")
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:permission_group.list")
 
     def get_urls(self):

@@ -73,7 +73,7 @@ class ContactAddressFormPart(FormPart):
 class ShopEnablerView(View):
     def post(self, request, *args, **kwargs):
         if not onboarding_complete(request):
-            messages.error(request, _("There are still some pending actions to complete!"))
+            messages.error(request, _("There are still some pending actions to complete."))
             return HttpResponseRedirect(reverse("shuup_admin:home"))
         enable = request.POST.get("enable", True)
         if kwargs.get("pk") == str(request.shop.pk):
@@ -82,7 +82,7 @@ class ShopEnablerView(View):
             shop = Shop.objects.filter(pk=kwargs.get("pk")).first()
         shop.maintenance_mode = not enable
         shop.save()
-        messages.info(request, _("Your store is now live!"))
+        messages.info(request, _("Your store is now live."))
         return HttpResponseRedirect(request.POST.get("redirect"))
 
 
@@ -122,5 +122,5 @@ class ShopSelectView(View):
     def get(self, request, *args, **kwargs):
         shop = Shop.objects.filter(pk=kwargs.get("pk")).first()
         set_shop(request, shop)
-        messages.info(request, (_("Shop {} is now active!")).format(shop.name))
+        messages.info(request, (_("Shop {} is now active.")).format(shop.name))
         return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("shuup_admin:home")))

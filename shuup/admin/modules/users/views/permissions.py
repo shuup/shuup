@@ -28,7 +28,10 @@ class PermissionChangeFormBase(forms.ModelForm):
     old_password = forms.CharField(
         label=_("Your Password"),
         widget=forms.PasswordInput,
-        help_text=_("For security purposes, we need your current password.")
+        help_text=_(
+            "In order to allow making significant changes to accounts, we need "
+            "to confirm that you know the password for the account you are using."
+        )
     )
 
     def __init__(self, changing_user, *args, **kwargs):
@@ -38,19 +41,38 @@ class PermissionChangeFormBase(forms.ModelForm):
             self.fields.pop("is_superuser")
 
         if not (
-            self.changing_user == self.instance or
-            getattr(self.instance, 'is_superuser', False)
+            self.changing_user == self.instance
+            or getattr(self.instance, 'is_superuser', False)
         ):
             # Only require old password when editing
             self.fields.pop("old_password")
 
+        self.fields["is_superuser"].label = _("Superuser (Full rights) status")
+        self.fields["is_superuser"].help_text = _(
+            "Designates whether this user has all permissions without explicitly "
+            "assigning them. Assigning Granular Permission Groups to a Superuser "
+            "will not have any effect because Granular Permission Groups are only "
+            " able to give more rights, but Superuser already has them all."
+        )
+        self.fields["is_staff"].label = _("Access to Admin Panel status")
+        self.fields["is_staff"].help_text = _(
+            "Designates whether this user can log into this admin site. Even "
+            "Superusers should have this status enabled, otherwise they won't "
+            "be able to access the Admin Panel."
+        )
+
         permission_groups_field = Select2MultipleField(
             model=PermissionGroup,
             required=False,
-            label=_("Permission Groups"),
+            label=_("Granular Permission Groups"),
             help_text=_(
-                "The permission groups that this user belongs to. "
-                "Permission groups are configured through Contacts - Permission Groups."
+                "Use Permission Groups to granularly give more permissions. User "
+                "can belong to many groups and their permissions add and stack together. "
+                "Search for `Permission Groups` to change these and add them to "
+                "multiple users. Go to user account -> `Actions` -> `Edit Main "
+                "Permissions` to add them to a specific user. Will not influence "
+                "Superusers as they already have all the rights and can't be "
+                "stripped of them without removing Superuser status first."
             )
         )
         initial_groups = self._get_initial_groups()
@@ -66,7 +88,7 @@ class PermissionChangeFormBase(forms.ModelForm):
 
     def clean_old_password(self):
         """
-        Validates that the old_password field is correct.
+        Validates that the `old_password` field is correct.
         """
         old_password = self.cleaned_data["old_password"]
         if not self.changing_user.check_password(old_password):
@@ -88,7 +110,11 @@ class PermissionChangeFormBase(forms.ModelForm):
         for field in ("is_staff", "is_superuser"):
             flag = self.cleaned_data[field]
             if self.changing_user == self.instance and not flag:
-                self.add_error(field, _("You can't unset this status for yourself."))
+                self.add_error(field, _(
+                    "You can't unset this status for yourself "
+                    "due to security reasons. Use another account if you want to "
+                    "remove permissions for this particular account.")
+                )
         return self.cleaned_data
 
     def save(self):
@@ -117,7 +143,7 @@ class UserChangePermissionsView(UpdateView):
             self,
             "permissions_form",
             discard_url=get_model_url(self.object),
-            with_split_save=False
+            with_split_save=False,
         )
         return toolbar
 
@@ -129,7 +155,7 @@ class UserChangePermissionsView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UserChangePermissionsView, self).get_context_data(**kwargs)
         context["toolbar"] = self.get_toolbar()
-        context["title"] = _("Change Permissions: %s") % self.object
+        context["title"] = _("Change Main Permissions: %s") % self.object
         return context
 
     def form_valid(self, form):

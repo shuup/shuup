@@ -75,7 +75,7 @@ def test_set_shop(rf, set_shop_fn, get_shop_fn):
         # user not staff
         with pytest.raises(PermissionDenied) as exc:
             set_shop_fn(request, shop1)
-            assert exc.value == "You must be a staff user"
+            assert exc.value == "You must have the Access to Admin Panel permission."
 
         # staff user now
         with pytest.raises(PermissionDenied) as exc:

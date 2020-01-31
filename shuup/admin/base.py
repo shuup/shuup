@@ -54,9 +54,9 @@ class AdminModule(object):
 
     def get_help_blocks(self, request, kind):
         """
-        :param request: Request
+        :param request: Request.
         :type request: django.http.request.HttpRequest
-        :param kind: block kind. Currently "setup" or "quicklink"
+        :param kind: block kind. Currently "setup" or "quicklink".
         :type kind: str
         :rtype: list[shuup.admin.views.home.HelpBlock]
         """
@@ -88,9 +88,9 @@ class AdminModule(object):
 
     def get_activity(self, request, cutoff):
         """
-        :param cutoff: Cutoff datetime
+        :param cutoff: Cutoff datetime.
         :type cutoff: datetime.datetime
-        :param request: Request
+        :param request: Request.
         :type request: django.http.request.HttpRequest
         :return: list[shuup.admin.base.Activity]
         """
@@ -107,7 +107,7 @@ class AdminModule(object):
         :type object: django.db.models.Model
         :param kind: URL kind. Currently "detail", "list" or "new".
         :type kind: str
-        :param shop: The shop that owns the resource
+        :param shop: The shop that owns the resource.
         :type shop: shuup.core.models.Shop|None
         :return: The reversed URL or none.
         :rtype: str|None
@@ -139,7 +139,7 @@ class Resolvable(object):
                 return url
             return reverse(url)
 
-        raise TypeError("Can't real_url: %r" % url)
+        raise TypeError("Error! Can't resolve the object's provided value `%r` to an actual URL." % url)
 
     @property
     def original_url(self):
@@ -156,7 +156,7 @@ class BaseMenuEntry(Resolvable):
 
     @property
     def id(self):
-        """ value containing only hexadecimal digits, we can use this safely in html code """
+        """ Value containing only hexadecimal digits, we can use this safely in html code. """
         return hashlib.md5(str(self.identifier).encode('utf8')).hexdigest()
 
     @property
@@ -194,7 +194,7 @@ class MenuEntry(BaseMenuEntry):
 
         if "subcategory" in kwargs:
             warnings.warn(
-                "subcategory attribute will be deprecated in Shuup 2.0 as unused for this util.",
+                "Warning! `subcategory` attribute will be deprecated in Shuup 2.0 as unused for this util.",
                 DeprecationWarning
             )
 
@@ -281,13 +281,13 @@ class Section(object):
     (e.g. `admin_order_section`) to show a custom section on the specified
     model object's admin detail page.
 
-    `identifier` must be unique
-    `name` the section caption
-    `icon` the section icon
-    `template` the section template file
+    `identifier` must be unique.
+    `name` the section caption.
+    `icon` the section icon.
+    `template` the section template file.
     `extra_js` the section extra javascript template file,
-               set a file which contains js code inside a <script> tag
-    `order` the order
+               set a file which contains js code inside a <script> tag.
+    `order` the order.
     """
     identifier = ""
     name = ""
@@ -299,7 +299,8 @@ class Section(object):
     @classmethod
     def visible_for_object(cls, obj, request=None):
         """
-        Returns whether this sections must be visible for the provided object (e.g. `order`)
+        Returns whether this sections must be visible for the provided object (e.g. `order`).
+
         :type model object: e.g. shuup.core.models.Order
         :type request: HttpRequest
         :return whether this section must be shown in order section list, defaults to false
@@ -310,7 +311,7 @@ class Section(object):
     @classmethod
     def get_context_data(cls, obj, request=None):
         """
-        Returns additional information to be used in the template
+        Returns additional information to be used in the template.
 
         To fetch this data in the template, you must first add it to your request's context
 

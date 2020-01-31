@@ -40,7 +40,7 @@ NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _("""
     You've been added as an administrator to %(shop_url)s. Here are some details:
         Shop url: %(shop_url)s
         Login url: %(admin_url)s
-        Your username: %(username)s
+        Your username: '%(username)s'
         Your password: Please contact your admin.
 """)
 
@@ -68,16 +68,25 @@ class BaseUserForm(forms.ModelForm):
         "The user password."
     ))
     permission_info = forms.CharField(
-        label=_("Permissions"),
+        label=_("Main Permissions"),
         widget=forms.TextInput(attrs={"readonly": True, "disabled": True}),
         required=False,
-        help_text=_("See the permissions view to change these.")
+        help_text=_("Two fundamental permissions: Access to Admin Panel and "
+                    "Superuser status rights. Go to user account -> `Actions` "
+                    "-> `Edit Main Permissions` to change these.")
     )
     permission_groups = forms.CharField(
-        label=_("Permission Groups"),
+        label=_("Granular Permission Groups"),
         widget=forms.TextInput(attrs={"readonly": True, "disabled": True}),
         required=False,
-        help_text=_("See Contacts - Permission Groups to change these.")
+        help_text=_(
+            "Use Permission Groups to granularly give more permissions. "
+            "Search for `Permission Groups` to change these and add them to "
+            "multiple users. Go to user account -> `Actions` -> `Edit Main "
+            "Permissions` to add them to a specific user. Will not influence "
+            "Superusers as they already have all the rights and can't be "
+            "stripped of them without removing Superuser status first."
+        )
     )
 
     def __init__(self, *args, **kwargs):
@@ -92,14 +101,17 @@ class BaseUserForm(forms.ModelForm):
             # Changing the password for an existing user requires more confirmation
             self.fields.pop("password")
             self.initial["permission_info"] = ", ".join(force_text(perm) for perm in [
-                _("staff") if getattr(self.instance, 'is_staff', None) else "",
-                _("superuser") if getattr(self.instance, 'is_superuser', None) else "",
-            ] if perm) or _("No special permissions")
+                _("Access to Admin Panel") if getattr(self.instance, 'is_staff', None) else "",
+                _("Superuser (Full rights)") if getattr(self.instance, 'is_superuser', None) else "",
+            ] if perm) or _("No Main Permissions selected.")
             if hasattr(self.instance, "groups"):
                 group_names = [force_text(group) for group in self.instance.groups.all()]
-                self.initial["permission_groups"] = ", ".join(sorted(group_names))
+                if group_names:
+                    self.initial["permission_groups"] = ", ".join(sorted(group_names))
+                else:
+                    self.initial["permission_groups"] = _("No Granular Permission Groups selected.")
             else:
-                self.initial["permission_groups"] = _("No permission groups")
+                self.initial["permission_groups"] = _("No Granular Permission Groups available.")
         else:
             self.fields.pop("permission_info")
             self.fields.pop("permission_groups")
@@ -109,8 +121,9 @@ class BaseUserForm(forms.ModelForm):
                     initial=True,
                     required=False,
                     help_text=_(
-                        "Send an email to the user to let them know they've been added as a shop user. "
-                        "Applicable only for users with staff status."
+                        "Send an email to the user to let them know they've "
+                        "been added as a shop user. Applicable only for users "
+                        "with Access to Admin Panel status."
                     )
                 )
 
@@ -121,7 +134,7 @@ class BaseUserForm(forms.ModelForm):
             cleaned_data.get("is_staff") and
             not self.cleaned_data.get("email")
         ):
-            raise forms.ValidationError({"email": _("Please enter an email to send a confirmation")})
+            raise forms.ValidationError({"email": _("Please enter an email to send a confirmation to.")})
 
     def save(self, commit=True):
         user = super(BaseUserForm, self).save(commit=False)
@@ -160,7 +173,7 @@ class UserDetailToolbar(Toolbar):
         )
         permissions_button = DropdownItem(
             url=reverse("shuup_admin:user.change-permissions", kwargs={"pk": user.pk}),
-            text=_(u"Edit Permissions"), icon="fa fa-lock", required_permissions=["user.change-permissions"]
+            text=_(u"Edit Main Permissions"), icon="fa fa-lock", required_permissions=["user.change-permissions"]
         )
         menu_items = [
             change_password_button,
@@ -296,7 +309,7 @@ class UserDetailView(CreateOrUpdateView):
         self.object = form.save()
         contact = self._get_bind_contact()
 
-        # only touch in shop staff member if the user is not a superuser
+        # only touch in shop staff (Access to Admin Panel) member if the user is not a superuser
         if not getattr(self.object, "is_superuser", False):
             shop = get_shop(self.request)
             if getattr(self.object, "is_staff", False):
@@ -307,13 +320,13 @@ class UserDetailView(CreateOrUpdateView):
         if contact and not contact.user:
             contact.user = self.object
             contact.save()
-            messages.info(self.request, _(u"User bound to contact %(contact)s.") % {"contact": contact})
+            messages.info(self.request, _(u"Info! User bound to contact %(contact)s.") % {"contact": contact})
 
         if getattr(self.object, "is_staff", False) and form.cleaned_data.get("send_confirmation"):
             shop_url = "%s://%s/" % (self.request.scheme, self.request.get_host())
             admin_url = self.request.build_absolute_uri(reverse("shuup_admin:login"))
             send_mail(
-                subject=_("You've been added as an admin user to %s" % shop_url),
+                subject=_("You've been added as an admin user to `%s`." % shop_url),
                 message=NEW_USER_EMAIL_CONFIRMATION_TEMPLATE % {
                     "first_name": getattr(self.object, "first_name") or getattr(self.object, "username", _("User")),
                     "shop_url": shop_url,
@@ -328,9 +341,9 @@ class UserDetailView(CreateOrUpdateView):
         state = bool(int(self.request.POST["set_is_active"]))
         if not state:
             if (getattr(self.object, 'is_superuser', False) and not getattr(self.request.user, 'is_superuser', False)):
-                raise Problem(_("You can not deactivate a superuser."))
+                raise Problem(_("You can not deactivate a Superuser. Remove Superuser status first."))
             if self.object == self.request.user:
-                raise Problem(_("You can not deactivate yourself."))
+                raise Problem(_("You can not deactivate yourself. Use another account."))
 
         self.object.is_active = state
         self.object.save(update_fields=("is_active",))
@@ -404,7 +417,7 @@ class LoginAsUserView(DetailView):
 
         login(request, user)
         request.session["impersonator_user_id"] = impersonator_user_id
-        message = _("You're now logged in as {username}").format(username=user.__dict__[username_field])
+        message = _("You're now logged in as `{username}`.").format(username=user.__dict__[username_field])
         messages.success(request, message)
         return HttpResponseRedirect(redirect_url)
 

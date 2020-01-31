@@ -70,13 +70,13 @@ class OrderCreatePaymentView(UpdateView):
         order = self.object
         amount = Money(form.cleaned_data["amount"], order.currency)
         if amount.value == 0:
-            messages.error(self.request, _("Payment amount cannot be 0"))
+            messages.error(self.request, _("Payment amount cannot be 0."))
             return self.form_invalid(form)
         try:
             payment = order.create_payment(amount, description="Manual payment")
             messages.success(self.request, _("Payment %s created.") % payment.payment_identifier)
         except NoPaymentToCreateException:
-            messages.error(self.request, _("Order has already been paid"))
+            messages.error(self.request, _("Order has already been paid."))
             return self.form_invalid(form)
         else:
             return HttpResponseRedirect(get_model_url(order))

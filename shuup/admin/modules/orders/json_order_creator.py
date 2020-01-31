@@ -53,7 +53,7 @@ class JsonOrderCreator(object):
 
     @staticmethod
     def is_empty_address(address_data):
-        """An address will have at minimum a tax_number field it will still be considered empty"""
+        """An address will have at least a tax_number field. It will still be considered empty."""
         return list(address_data.keys()) == ['tax_number']
 
     def add_error(self, error):
@@ -72,7 +72,7 @@ class JsonOrderCreator(object):
         try:
             sl_kwargs["quantity"] = parse_decimal_string(quantity_val)
         except Exception as exc:
-            msg = _("The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)") % {
+            msg = _("The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s).") % {
                 "text": sl_kwargs["text"],
                 "quantity": quantity_val,
                 "error": exc,
@@ -85,7 +85,7 @@ class JsonOrderCreator(object):
         try:
             sl_kwargs["base_unit_price"] = source.create_price(parse_decimal_string(price_val))
         except Exception as exc:
-            msg = _("The price '%(price)s' (for line %(text)s) is invalid (%(error)s)") % {
+            msg = _("The price '%(price)s' (for line %(text)s) is invalid (%(error)s).") % {
                 "text": sl_kwargs["text"],
                 "price": price_val,
                 "error": exc
@@ -97,7 +97,7 @@ class JsonOrderCreator(object):
         try:
             sl_kwargs["discount_amount"] = source.create_price(parse_decimal_string(discount_val))
         except Exception as exc:
-            msg = _("The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)") % {
+            msg = _("The discount '%(discount)s' (for line %(text)s is invalid (%(error)s).") % {
                 "discount": discount_val,
                 "text": sl_kwargs["text"],
                 "error": exc
@@ -113,7 +113,7 @@ class JsonOrderCreator(object):
             return False
         product = self.safe_get_first(Product, pk=product_info["id"])
         if not product:
-            self.add_error(ValidationError(_("Product %s does not exist.") % product_info["id"], code="no_product"))
+            self.add_error(ValidationError(_("Product `%s` does not exist.") % product_info["id"], code="no_product"))
             return False
         try:
             shop_product = product.get_shop_instance(source.shop)
@@ -190,7 +190,8 @@ class JsonOrderCreator(object):
                 for error_msg in errors:
                     self.add_error(
                         ValidationError(
-                            "%(field_label)s: %(error_msg)s" % {"field_label": field_label, "error_msg": error_msg},
+                            "Error! %(field_label)s: %(error_msg)s"
+                            % {"field_label": field_label, "error_msg": error_msg},
                             code="invalid_address"
                         )
                     )
@@ -284,19 +285,19 @@ class JsonOrderCreator(object):
         """
         Create an order source from a state dict unserialized from JSON.
 
-        :param state: State dictionary
+        :param state: State dictionary.
         :type state: dict
-        :param creator: Creator user
+        :param creator: Creator user.
         :type creator: django.contrib.auth.models.User|None
-        :param save: Flag whether order customer and addresses is saved to database
+        :param save: Flag whether order customer and addresses is saved to database.
         :type save: boolean
-        :param order_to_update: Order object to edit
+        :param order_to_update: Order object to edit.
         :type order_to_update: shuup.core.models.Order|None
-        :return: The created order source, or None if something failed along the way
+        :return: The created order source, or None if something failed along the way.
         :rtype: OrderSource|None
         """
         if not self.is_valid:  # pragma: no cover
-            raise ValueError("Create a new JsonOrderCreator for each order.")
+            raise ValueError("Error! Create a new `JsonOrderCreator` for each order.")
         # We'll be mutating the state to make it easier to track we've done everything,
         # so it's nice to deepcopy things first.
         state = deepcopy(state)
@@ -341,13 +342,13 @@ class JsonOrderCreator(object):
         """
         Create an order from a state dict unserialized from JSON.
 
-        :param state: State dictionary
+        :param state: State dictionary.
         :type state: dict
-        :param creator: Creator user
+        :param creator: Creator user.
         :type creator: django.contrib.auth.models.User|None
-        :param ip_address: Remote IP address (IPv4 or IPv6)
+        :param ip_address: Remote IP address (IPv4 or IPv6).
         :type ip_address: str
-        :return: The created order, or None if something failed along the way
+        :return: The created order, or None if something failed along the way.
         :rtype: Order|None
         """
         source = self.create_source_from_state(
@@ -367,11 +368,11 @@ class JsonOrderCreator(object):
         """
         Update an order from a state dict unserialized from JSON.
 
-        :param state: State dictionary
+        :param state: State dictionary.
         :type state: dict
-        :param order_to_update: Order object to edit
+        :param order_to_update: Order object to edit.
         :type order_to_update: shuup.core.models.Order
-        :return: The created order, or None if something failed along the way
+        :return: The created order, or None if something failed along the way.
         :rtype: Order|None
         """
         # Collect ids for products that were removed from the order for stock update
@@ -396,11 +397,11 @@ class JsonOrderCreator(object):
 
     def get_removed_product_ids(self, state, order_to_update):
         """
-        Collects product ids for products which were removed from the order.
+        Collect product ids for products which were removed from the order.
 
-        :param state: State dictionary
+        :param state: State dictionary.
         :type state: dict
-        :param order_to_update: Order object to edit
+        :param order_to_update: Order object to edit.
         :type order_to_update: shuup.core.models.Order
         :return: set
         """
@@ -421,9 +422,9 @@ class JsonOrderCreator(object):
         """
         Update stocks for products which were completely removed from the updated order.
 
-        :param removed_ids: Set of removed product ids
+        :param removed_ids: Set of removed product ids.
         :type removed_ids: set
-        :param shop: Shop instance where this order is made
+        :param shop: Shop instance where this order is made.
         :type shop: shuup.core.models.Shop
         """
         for prod_id in removed_ids:
