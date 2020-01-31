@@ -44,7 +44,7 @@ class ShuupReportForm(forms.Form):
         help_text=_("The format to show the report results.")
     )
     force_download = forms.BooleanField(required=False, label=_("Download"), help_text=_(
-        "Check this to download the report."))
+        "Enable this to download the report."))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
