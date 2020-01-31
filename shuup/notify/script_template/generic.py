@@ -20,7 +20,7 @@ from shuup.utils.form_group import FormGroup
 
 class GenericScriptTemplateEmailContentForm(forms.Form):
     """
-    Generic form which contains the content of a email: subject and body
+    Generic form which contains the content of a email: subject and body.
     """
     subject = forms.CharField(label=_("Subject"),
                               help_text=_("The subject of the email"))
@@ -31,7 +31,7 @@ class GenericScriptTemplateEmailContentForm(forms.Form):
 
 class GenericScriptTemplateEmailForm(forms.Form):
     """
-    Generic form which contains a destination of the email
+    Generic form which contains a destination of the email.
     """
     SEND_TO_CHOICES = [
         ("customer", _("Customer")),

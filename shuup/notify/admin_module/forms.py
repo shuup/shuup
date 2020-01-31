@@ -47,7 +47,7 @@ class ScriptForm(forms.ModelForm):
         self.fields["event_identifier"].widget.choices = event_choices
         if self.instance.pk:
             self.fields["event_identifier"].help_text = (
-                _(u"Warning: Changing the event for an existing script may have unexpected effects.")
+                _(u"Warning! Changing the event for an existing script may have unexpected effects.")
             )
 
     def save(self, commit=True):
@@ -101,9 +101,9 @@ class ScriptItemEditForm(forms.Form):
 
     def _populate_binding_fields(self, binding_identifier, binding):
         """
-        :param binding_identifier: Binding identifier
+        :param binding_identifier: Binding identifier.
         :type binding_identifier: str
-        :param binding: Binding object
+        :param binding: Binding object.
         :type binding: Binding
         """
         binding_field_info = self.binding_field_info.setdefault(binding_identifier, {"binding": binding})
@@ -176,7 +176,7 @@ class ScriptItemEditForm(forms.Form):
                 return
 
         if binding.required:
-            message = "Binding %s is required but has no value" % binding.name
+            message = "Error! Binding %s is required, but has no value." % binding.name
             if field_info.get("constant"):
                 self.add_error(field_info["constant"], message)
             if field_info.get("variable"):
@@ -202,7 +202,7 @@ class ScriptItemEditForm(forms.Form):
                 for t_field_name, content in lang_vals.items():
                     actual_field_name = t_field_name_to_field_name[t_field_name]
                     if self.fields[actual_field_name].required and not content:  # Add error only to default languages
-                        self.add_error(field_info[t_field_name], _("This field is missing content"))
+                        self.add_error(field_info[t_field_name], _("This field is missing content."))
                         can_save = False
 
             if can_save:
@@ -214,6 +214,6 @@ class ScriptItemEditForm(forms.Form):
         self._save_bindings(new_data)
         self._save_template(new_data)
         if self.errors:
-            raise forms.ValidationError("There are errors")
+            raise forms.ValidationError("Error! There are errors.")
         self.script_item.data.update(new_data)
         return self.script_item

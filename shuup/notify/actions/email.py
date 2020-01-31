@@ -75,19 +75,19 @@ class SendEmail(Action):
 
     def execute(self, context):
         """
-        :param context: Script Context
+        :param context: Script Context.
         :type context: shuup.notify.script.Context
         """
         recipient = get_email_list(self.get_value(context, "recipient"))
         if not recipient:
-            context.log(logging.INFO, "%s: Not sending mail, no recipient", self.identifier)
+            context.log(logging.INFO, "Info! %s: Not sending mail, no recipient.", self.identifier)
             return
 
         send_identifier = self.get_value(context, "send_identifier")
         if send_identifier and context.log_entry_queryset.filter(identifier=send_identifier).exists():
             context.log(
                 logging.INFO,
-                "%s: Not sending mail, have sent it already (%r)",
+                "Info! %s: Not sending mail, it was already sent (%r).",
                 self.identifier,
                 send_identifier
             )
@@ -114,7 +114,7 @@ class SendEmail(Action):
         if not (subject and body):
             context.log(
                 logging.INFO,
-                "%s: Not sending mail to %s, either subject or body empty",
+                "Info! %s: Not sending mail to %s, either subject or body empty.",
                 self.identifier,
                 recipient
             )
@@ -137,10 +137,10 @@ class SendEmail(Action):
         )
         message.content_subtype = content_type
         message.send()
-        context.log(logging.INFO, "%s: Mail sent to %s :)", self.identifier, recipient)
+        context.log(logging.INFO, "Info! %s: Mail sent to %s.", self.identifier, recipient)
 
         if send_identifier:
-            context.add_log_entry_on_log_target("Email sent to %s: %s" % (recipient, subject), send_identifier)
+            context.add_log_entry_on_log_target("Info! Email sent to %s: %s" % (recipient, subject), send_identifier)
 
 
 def get_email_list(email):
