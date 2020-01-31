@@ -29,7 +29,7 @@ def get_visible_attributes(product):
 # Deprecated, see `get_product_cross_sells()`
 @contextfunction
 def get_products_bought_with(context, product, count=5):
-    warnings.warn("Products bought with template helper is deprecated.", DeprecationWarning)
+    warnings.warn("Warning! Products bought with template helper is deprecated.", DeprecationWarning)
     related_product_cross_sells = set(
         ProductCrossSell.objects
         .filter(product1=product, type=ProductCrossSellType.COMPUTED).values_list("product2_id", flat=True)

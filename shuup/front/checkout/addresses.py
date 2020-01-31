@@ -121,7 +121,7 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         elif kind == 'shipping':
             return contact.default_shipping_address
         else:
-            raise TypeError('Unknown address kind: %r' % (kind,))
+            raise TypeError('Error! Unknown address kind: %r.' % (kind,))
 
     def is_valid(self):
         return self.storage.has_all(self.address_kinds)

@@ -165,7 +165,7 @@ class _MethodDependentCheckoutPhase(CheckoutPhaseViewMixin):
         """
         :rtype: shuup.core.models.Service
         """
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError("Error! Not implemented: `_MethodDependentCheckoutPhase` -> `get_method()`.")
 
     def get_method_checkout_phase_object(self):
         """

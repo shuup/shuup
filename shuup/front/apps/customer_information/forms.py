@@ -76,13 +76,13 @@ class CompanyContactForm(forms.ModelForm):
         for field in ("name", "tax_number", "email"):
             self.fields[field].required = True
         if not kwargs.get("instance"):
-            self.fields["email"].help_text = _("Will become default user email when linked")
+            self.fields["email"].help_text = _("Will become default user email when linked.")
 
     def clean_tax_number(self):
         """
-        Clean Tax Number
+        Clean Tax Number.
 
-        This is done because we want to prevent duplicates in front-end
+        This is done because we want to prevent duplicates in the front-end.
         """
         tax_number = self.cleaned_data["tax_number"]
         company = CompanyContact.objects.filter(tax_number=tax_number).first()
@@ -185,12 +185,12 @@ class CompanyInformationFormGroup(FormGroup):
             if shipping_address.pk != company.default_shipping_address_id:  # Identity changed due to immutability
                 company.default_shipping_address = shipping_address
 
-        message = _("Company information saved successfully.")
+        message = _("Company information was saved.")
         # If company registration requires activation,
         # company will be created as inactive.
         if is_new and company_registration_requires_approval(self.request.shop):
             company.is_active = False
-            message = _("Company information saved successfully. "
+            message = _("Company information was saved. "
                         "Please follow the instructions sent to your email address.")
 
         messages.success(self.request, message)

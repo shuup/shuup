@@ -180,7 +180,7 @@
 {% macro render_coupon_div(basket) %}
     <div class="row basket-discount-code">
         <div class="col-sm-6 pull-right">
-            <p class="coupon-text">{% trans %}Have a coupon code? Enter it here{% endtrans %}</p>
+            <p class="coupon-text">{% trans %}Do you have a coupon code? Enter it here. {% endtrans %}</p>
             <div id="collapseCoupon">
                 <div class="input-group">
                     <input type="text"
@@ -276,11 +276,11 @@
                     if (response.ok) {
                         location.reload();
                     } else {
-                        alert("{% trans %}Invalid coupon code.{% endtrans %}")
+                        alert("{% trans %}Error!{% endtrans %} {% trans %}Invalid coupon code.{% endtrans %}")
                     }
                 },
                 error: function() {
-                    alert("{% trans %}Error when removing coupon.{% endtrans %}")
+                    alert("{% trans %}Error!{% endtrans %} {% trans %}Removing a coupon failed.{% endtrans %}")
                 }
             });
         }
@@ -307,11 +307,11 @@
                     if (response.ok) {
                         location.reload();
                     } else {
-                        alert("{% trans %}Coupon is not available.{% endtrans %}")
+                        alert("{% trans %}Error!{% endtrans %} {% trans %}Coupon is not available.{% endtrans %}")
                     }
                 },
                 error: function() {
-                    alert("{% trans %}Error when adding coupon.{% endtrans %}")
+                    alert("{% trans %}Error!{% endtrans %} {% trans %}Adding a coupon failed.{% endtrans %}")
                 }
             });
         }
@@ -332,10 +332,10 @@
                     csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
                 success: function(response) {
-                    $("#save-cart-status").append("<p>" + "{% trans %}Cart saved!{% endtrans %}" + "</p>");
+                    $("#save-cart-status").append("<p>" + "{% trans %}Success!{% endtrans %} {% trans %}Cart saved.{% endtrans %}" + "</p>");
                 },
                 error: function(e) {
-                    $("#save-cart-status").append("<p>" + e.responseJSON.error + "</p>");
+                    $("#save-cart-status").append("<p>" + "{% trans %}Error!{% endtrans %}" + e.responseJSON.error + "</p>");
                 }
             });
         });

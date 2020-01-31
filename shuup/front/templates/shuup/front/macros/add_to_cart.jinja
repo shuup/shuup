@@ -35,7 +35,7 @@
             setTimeout(function() {
                 // Hide the loader and change to error message
                 cover.removeClass("loading").addClass('error');
-                var msg = "{% trans %}There was an error adding the product to the basket{% endtrans %}";
+                var msg = "{% trans %}Adding the product to the basket failed.{% endtrans %}";
                 cover.find("#error-msg").text(error ? error : msg);
                 setTimeout(function() {
                     // Hide the error message and the modal

@@ -25,11 +25,11 @@ from shuup.utils.numbers import get_string_sort_order
 
 def get_product_context(request, product, language=None, supplier=None):   # noqa (C901)
     """
-    Get product context
+    Get product context.
 
-    Used in `shuup.front.views.product:ProductDetailView`
+    Used in `shuup.front.views.product:ProductDetailView`.
 
-    :return: A context dict containing everything needed to render product view
+    :return: A context dict containing everything needed to render product view.
     :rtype: dict
     """
     if not language:
