@@ -41,9 +41,9 @@ class Type(object):
         The kwargs are passed directly to the field
         constructor.
 
-        :param kwargs: Kwargs for field constructor
+        :param kwargs: Kwargs for field constructor.
         :type kwargs: dict
-        :return: Form field
+        :return: Form field.
         :rtype: django.forms.Field
         """
         return forms.CharField(**kwargs)
@@ -135,7 +135,7 @@ class Model(Type):
 
     def __init__(self, model_label):
         """
-        :param model_label: Model label in Django `app.Model` format (e.g. `shuup.Order`)
+        :param model_label: Model label in Django `app.Model` format (e.g. `shuup.Order`).
         :type model_label: str
         """
         self.model_label = model_label

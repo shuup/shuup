@@ -91,10 +91,10 @@ class NotifyAdminModule(AdminModule):
             try:
                 notif = NotificationModel.objects.for_user(request.user).filter(shop=shop).get(pk=pk)
             except ObjectDoesNotExist:
-                return JsonResponse({"error": "no such notification"})
+                return JsonResponse({"error": "Error! No such notification exists."})
             notif.mark_read(request.user)
             return JsonResponse({"ok": True})
-        return JsonResponse({"error": "POST only"})
+        return JsonResponse({"error": "Error! Non-POST request methods are forbidden."})
 
     def get_notifications(self, request):
         shop = get_shop(request)

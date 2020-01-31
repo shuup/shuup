@@ -70,9 +70,9 @@ def script_item_editor(request):
 class ScriptAPI(object):
     def __init__(self, request, script):
         """
-        :param request: Request
+        :param request: Request.
         :type request: django.http.HttpRequest
-        :param script: Script
+        :param script: Script.
         :type script: shuup.notify.models.Script
         """
         self.request = request
@@ -84,7 +84,7 @@ class ScriptAPI(object):
         func_name = "handle_%s" % snake_case(camel_case_to_spaces(command))
         func = getattr(self, func_name, None)
         if not callable(func):
-            return JsonResponse({"error": "No handler: %s" % func_name})
+            return JsonResponse({"error": "Error! No handler: %s." % func_name})
         return func(data)
 
     def handle_get_data(self, data):
@@ -100,7 +100,7 @@ class ScriptAPI(object):
                 raise
             return JsonResponse({"error": exc})
         self.script.save(update_fields=("_step_data",))
-        return JsonResponse({"success": "Changes saved."})
+        return JsonResponse({"success": "Success! Changes were saved."})
 
 
 class EditScriptContentView(DetailView):

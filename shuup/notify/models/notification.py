@@ -72,7 +72,7 @@ class Notification(models.Model):
 
     def save(self, *args, **kwargs):
         if self.recipient_type == RecipientType.SPECIFIC_USER and not self.recipient_id:
-            raise ValueError("With RecipientType.SPECIFIC_USER, recipient is required")
+            raise ValueError("Error! With `RecipientType.SPECIFIC_USER`, recipient is required.")
         super(Notification, self).save(*args, **kwargs)
 
     def mark_read(self, user):
@@ -104,16 +104,16 @@ class Notification(models.Model):
     @url.setter
     def url(self, value):
         if self.pk:
-            raise ValueError("URL can't be set on a saved notification")
+            raise ValueError("Error! URL can't be set on a saved notification.")
         self.data["_url"] = value
 
     def set_reverse_url(self, **reverse_kwargs):
         if self.pk:
-            raise ValueError("URL can't be set on a saved notification")
+            raise ValueError("Error! URL can't be set on a saved notification.")
 
         try:
             reverse(**reverse_kwargs)
         except NoReverseMatch:  # pragma: no cover
-            raise ValueError("Invalid reverse URL parameters")
+            raise ValueError("Error! Invalid reverse URL parameters.")
 
         self.data["_url"] = reverse_kwargs

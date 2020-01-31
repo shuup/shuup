@@ -122,7 +122,7 @@ class TemplatedBinding(Binding):
     def __init__(self, *args, **kwargs):
         super(TemplatedBinding, self).__init__(*args, **kwargs)
         if self.allow_variable:
-            raise ValueError("TemplatedBindings may not allow variable binding for security reasons")
+            raise ValueError("Error! TemplatedBindings may not allow variable binding for security reasons.")
 
     def get_value(self, context, bind_data):
         value = super(TemplatedBinding, self).get_value(context, bind_data)
@@ -157,7 +157,7 @@ class Event(Base):
 
     def __init__(self, **variable_values):
         if not self.identifier:
-            raise ValueError("Attempting to instantiate identifierless event")
+            raise ValueError("Error! Attempting to instantiate identifierless event.")
         self.variable_values = {}
         self.load_variables(variable_values)
 
@@ -169,12 +169,12 @@ class Event(Base):
         for key in sorted(variable_values.keys()):
             variable = self.variables.get(key)
             if not variable:
-                raise ValueError("Unknown variable %r for event %s" % (key, self.identifier))
+                raise ValueError("Error! Unknown variable `%r` for the event `%s`." % (key, self.identifier))
             self.variable_values[key] = variable.type.unserialize(variable_values.pop(key))
 
         for name, variable in six.iteritems(self.variables):
             if variable.required and name not in self.variable_values:
-                raise ValueError("Required variable %r missing for event %s" % (name, self.identifier))
+                raise ValueError("Error! Required variable `%r` missing for the event `%s`" % (name, self.identifier))
 
     def run(self, shop):
         run_event = cached_load("SHUUP_NOTIFY_SCRIPT_RUNNER")
@@ -186,7 +186,10 @@ class ScriptItem(Base):
 
     def __init__(self, data, validate=True):
         if not self.identifier:  # pragma: no cover
-            raise ValueError("Attempting to initialize %s without identifier: %r" % (self.__class__.__name__, self))
+            raise ValueError(
+                "Error! Attempting to initialize %s without an identifier: %r." %
+                (self.__class__.__name__, self)
+            )
         self.data = data
         if validate:
             self.verify_bindings()
@@ -197,7 +200,7 @@ class ScriptItem(Base):
             if binding.required and name not in self.data:
                 unbound.add(name)
         if unbound:
-            raise ValueError("Bindings unbound for %r: %r" % (self.identifier, unbound))
+            raise ValueError("Error! Bindings unbound for %r: %r." % (self.identifier, unbound))
 
     def get_value(self, context, binding_name):
         """
@@ -277,15 +280,14 @@ class Action(ScriptItem):
 
     def get_template(self, context):
         """
-        Get this action's template instance, bound in the
-        context.
+        Get this action's template instance, bound in the context.
 
         :rtype: shuup.notify.template.Template
         """
 
         data = self.data.get("template_data")
         if not data:
-            raise ValueError("No template data in action")
+            raise ValueError("Error! No template data in action.")
         return Template(context, data=data)
 
     def get_template_values(self, context, language_preferences=()):
@@ -305,7 +307,7 @@ class Action(ScriptItem):
         """
 
         if self.template_use == TemplateUse.NONE:
-            raise ValueError("Attempting to `get_template_values` on an action with no template use")
+            raise ValueError("Error! Attempting to `get_template_values` on an action with no template use.")
 
         template = self.get_template(context)
         fields = self.template_fields
@@ -323,19 +325,19 @@ class ScriptTemplate(six.with_metaclass(abc.ABCMeta)):
     Subclass this, implement the methods and add a reference to the class
     in the `notify_script_template` provide category.
 
-    When `form_class` is set, a the form will be presented to the user and validated,
+    When `form_class` is set, a form will be presented to the user and validated,
     so you can extract more information to build the Script.
 
-    :ivar str identifier: a unique identifier for this ScriptTemplate with a max of 64 characters
-    :ivar shuup.notify.Event event: the event class which will be used to trigger the notification
-    :ivar str name: the name of the ScriptTemplate
-    :ivar str description: the description of the ScriptTemplate to present to the user
-    :ivar str help_text: a text to help users understand how this script will work
-    :ivar django.forms.Form|None form_class: a form class if your ScriptTemplate needs extra configuration
-    :ivar dict initial: the initial data to use in forms
-    :ivar str template_name: a template to use to render the form, if needed
-    :ivar str extra_js_template_name: a template with extra JavaScript code to use when rendering the form, if needed
-    :ivar django.http.request.HttpRequest : the http request
+    :ivar str identifier: unique identifier for this ScriptTemplate with a max of 64 characters.
+    :ivar shuup.notify.Event event: event class which will be used to trigger the notification.
+    :ivar str name: name of the ScriptTemplate.
+    :ivar str description: description of the ScriptTemplate presented to the user.
+    :ivar str help_text: text to help users understand how this script will work.
+    :ivar django.forms.Form|None form_class: form class if your ScriptTemplate needs extra configuration.
+    :ivar dict initial: initial data to use in forms.
+    :ivar str template_name: template to use to render the form, if needed.
+    :ivar str extra_js_template_name: template with extra JavaScript code to use when rendering the form, if needed.
+    :ivar django.http.request.HttpRequest : http request.
     """
     identifier = ""
     event = None

@@ -20,13 +20,13 @@ const optionLists = {};
 function showSuccessAndError(data) {
     if (data.error) {
         Messages.enqueue({
-            text: _.isString(data.error) ? data.error : gettext("An error occurred."),
+            text: _.isString(data.error) ? data.error : gettext("Error!"),
             tags: "error"
         });
     }
     if (data.success) {
         Messages.enqueue({
-            text: _.isString(data.success) ? data.success : gettext("Success."),
+            text: _.isString(data.success) ? data.success : gettext("Success!"),
             tags: "success"
         });
     }
@@ -45,7 +45,7 @@ function apiRequest(command, data, options) {
     req.then(function(response) {
         showSuccessAndError(response);
     }, function() {
-        Messages.enqueue({text: gettext("An unspecified error occurred."), tags: "error"});
+        Messages.enqueue({text: gettext("Error! An unspecified error occurred."), tags: "error"});
     });
     return req;
 }
@@ -114,7 +114,7 @@ function Controller() {
     ctrl.receiveItemEditData = function(data) {
         const currentItem = ctrl.currentItem();
         if (!currentItem) {
-            alert(gettext("Unexpected edit data received."));
+            alert(gettext("Warning! Unexpected edit data was received."));
             return;
         }
         m.startComputation();
@@ -195,7 +195,7 @@ function workflowItemList(ctrl, step, itemType) {
                 " ",
                 m("a.delete", {
                     href: "#", onclick: function() {
-                        if (!confirm(gettext("Delete this item?\nThis can not be undone."))) {
+                        if (!confirm(gettext("Delete this item?\nThis is final and can't be undone."))) {
                             return;
                         }
                         ctrl.removeStepItem(step, itemType, item);
@@ -257,7 +257,7 @@ function stepTableRows(ctrl) {
                 ),
                 m("a", {
                     href: "#", title: gettext("Delete"), onclick: function() {
-                        if (confirm(gettext("Are you sure you wish to delete this step?"))) {
+                        if (confirm(gettext("Are you sure you want to delete this step?"))) {
                             ctrl.deleteStep(step);
                         }
                     }
