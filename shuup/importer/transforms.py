@@ -77,7 +77,7 @@ def process_data(rows):
 
     row_limit = getattr(settings, "IMPORT_MAX_ROWS", 1000)
     if len(data) > row_limit:
-        raise Problem(_("Cannot import more than %s rows from one file.") % row_limit)
+        raise Problem(_("Can't import more than %s rows from one file.") % row_limit)
     return (data, got_data)
 
 
@@ -100,7 +100,10 @@ def transform_file(mode, filename, data=None):
         else:
             data, got_data = py2_read_file(data, filename)
     else:
-        raise NotImplementedError("Mode %s Not implemented" % mode)
+        raise NotImplementedError(
+            "Error! Not implemented: `TransformedData` -> "
+            "`transform_file()` -> mode `%s` is not implemented." % mode
+        )
 
     headers = data[0].keys() if len(data) else []
     clean_keys = set(headers) - got_data

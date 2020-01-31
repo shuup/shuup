@@ -72,7 +72,9 @@ class DataImporter(object):
         """
         That method will be called if `cls.custom_file_transformer` is True
         """
-        raise NotImplementedError("Implement `transform_file` function or set `custom_file_transformer` to False")
+        raise NotImplementedError(
+            "Error! Not implemented: `DataImporter` -> `transform_file()`. "
+            "Implement `transform_file()` function or set `custom_file_transformer` to False")
 
     def process_data(self):
         mapping = self.create_mapping()
@@ -114,7 +116,7 @@ class DataImporter(object):
 
     def map_data_to_fields(self, model_mapping):
         """
-        Map fields
+        Map fields.
 
         If field is not found it will be saved into unmapped
         :return:
@@ -325,7 +327,7 @@ class DataImporter(object):
                 value = field.to_python(value)
             except Exception as exc:
                 row_session.log(
-                    _("Error setting value for field %(field_name)s. (%(exception)s)") % {
+                    _("Failed while setting value for field %(field_name)s. (%(exception)s)") % {
                         "field_name": (field.verbose_name or field.name),
                         "exception": exc
                     }
@@ -387,7 +389,7 @@ class DataImporter(object):
 
     def get_fields_for_mapping(self, only_non_mapped=True):
         """
-        Get fields for manual mapping
+        Get fields for manual mapping.
 
         :return: List of fields `module_name.Model:field` or empty list
         :rtype: list
@@ -429,7 +431,7 @@ class DataImporter(object):
 
     def _find_matching_object(self, row, shop):
         """
-        Find object that matches the given row and shop
+        Find object that matches the given row and shop.
 
         :return: Found object or ``None``
         """
@@ -469,11 +471,11 @@ class DataImporter(object):
 
     def get_row_model(self, row):
         """
-        Get model that matches the row
+        Get model that matches the row.
 
-        Can be used in cases where you have multiple types of data in same import
+        Can be used in cases where you have multiple types of data in same import.
 
-        :param row: A row dict
+        :param row: A row dict.
         """
         return self.model
 
@@ -488,9 +490,9 @@ class DataImporter(object):
 
     def process_related_value(self, row_session, field, value, multi, reverse=False):
         """
-        Process Related values
+        Process Related values.
 
-        :param field: Django Field object
+        :param field: Django Field object.
         :return: Found value
         """
         to = field.rel.to
@@ -510,7 +512,7 @@ class DataImporter(object):
     @classmethod
     def get_help_context_data(cls, request):
         """
-        Returns the context data that should be used for help texts in admin
+        Returns the context data that should be used for help texts in admin.
         """
         return {}
 
@@ -531,9 +533,9 @@ class DataImporter(object):
     @classmethod
     def get_example_file_content(cls, example_file, request):
         """
-        Returns a binary file that will be served through the request
-        This base implementation just renders a template and returns the result as BytesIO or StringIO
-        Override this method to return a custom file content
+        Returns a binary file that will be served through the request.
+        This base implementation just renders a template and returns the result as BytesIO or StringIO.
+        Override this method to return a custom file content.
 
         :param request HttpRequest
         :rtype StringIO|BytesIO
