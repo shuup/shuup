@@ -89,7 +89,7 @@ class DiscountFromCategoryProductsForm(BaseEffectModelForm):
     def clean(self):
         data = self.cleaned_data
         if data["discount_amount"] and data["discount_percentage"]:
-            msg = _("Only amount or percentage can be set.")
+            msg = _("Only amount or percentage can be set, not both.")
             self.add_error("discount_amount", msg)
             self.add_error("discount_percentage", msg)
         return data

@@ -52,7 +52,7 @@ class CouponForm(forms.ModelForm):
         if self.instance.pk:
             qs = qs.exclude(pk=self.instance.pk)
         if qs.exists():
-            raise ValidationError(_("Discount Code already in use."))
+            raise ValidationError(_("Discount Code is already in use."))
         return code
 
     def clean_shop(self):

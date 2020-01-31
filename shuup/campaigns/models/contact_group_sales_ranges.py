@@ -47,7 +47,7 @@ class ContactGroupSalesRange(models.Model):
     def clean(self):
         super(ContactGroupSalesRange, self).clean()
         if self.group.is_protected:
-            raise ValidationError(_("Can not add sales limits for default contact groups"))
+            raise ValidationError(_("Can not add sales limits for default contact groups."))
 
     def is_active(self):
         return bool(self.min_value is not None and (self.max_value is None or self.max_value > 0))
