@@ -247,7 +247,7 @@ def test_processor_orderability(admin_user):
     unorderable_line.order = Order(shop=get_default_shop())
     with pytest.raises(ValidationError) as exc:
         processor._check_orderability(unorderable_line)
-    assert "Not available in" in exc.value.message
+    assert "is not available in" in exc.value.message
 
 
 @pytest.mark.django_db

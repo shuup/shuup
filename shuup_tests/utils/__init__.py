@@ -85,9 +85,9 @@ def error_code_test(errors, expect_flag, code):
             if expect_flag:
                 return True
             else:
-                raise ValueError("Code %r found in %r, did not expect it" % (code, errors))
+                raise ValueError("Error! Code %r found in %r, did not expect it." % (code, errors))
     if expect_flag:
-        raise ValueError("Code %r not found in %r, did expect it" % (code, errors))
+        raise ValueError("Error! Code %r not found in %r, did expect it." % (code, errors))
     return True
 
 

@@ -131,7 +131,7 @@ def test_disable(rf, admin_user):
 @pytest.mark.django_db
 def test_graceful_error(admin_user):
     def thrower(*args, **kwargs):
-        raise ValueError("aaaagh")
+        raise ValueError("Error! aaaagh")
     with override_settings(SHUUP_TELEMETRY_ENABLED=True):
         with patch.object(requests, "post", thrower) as requestor:
             _clear_telemetry_submission()

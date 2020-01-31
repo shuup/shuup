@@ -281,11 +281,11 @@ def test_sample_import_no_match(stock_managed):
             assert product.name == "Product 2 English"
             assert product.description == "Description English 2"
         assert shop_product.primary_category.pk == 1
-        assert [c.pk for c in shop_product.categories.all()] == [1,2]
+        assert [c.pk for c in shop_product.categories.all()] == [1, 2]
 
     # stock was not managed since supplier doesn't like that
     for msg in importer.other_log_messages:
-        assert "please set Stock Managed on" in msg
+        assert "please set `Stock Managed` on" in msg
 
     supplier.stock_managed = True
     supplier.save()
@@ -350,6 +350,7 @@ def test_strange_category_names():
         map_to="shuup.core.models.ShopProduct:categories"
     )
 
+
 PRODUCT_DATA = [
     {
         "sku": "test-sku1",
@@ -377,50 +378,50 @@ PRODUCT_DATA = [
     },
     {
         "sku": "test-sku3",
-        "name":"VHS From 1980",
-        "price":"115.65",
-        "description":"This VHS comes with Robocop (uncut)",
+        "name": "VHS From 1980",
+        "price": "115.65",
+        "description": "This VHS comes with Robocop (uncut)",
         "categories": ["Televisions", "Perhipals"],
-        "category":"Blu-ray Players",
-        "product_type":"Perhipal",
-        "visibility":"Always Visible",
-        "tax_class":"Default Tax",
-        "manufacturer":"RoboShuup"
+        "category": "Blu-ray Players",
+        "product_type": "Perhipal",
+        "visibility": "Always Visible",
+        "tax_class": "Default Tax",
+        "manufacturer": "RoboShuup"
     },
     {
         "sku": "test-sku4",
-        "name":"Lamp",
-        "price":"11500.555",
-        "description":"Luxury lamp with pure gold",
+        "name": "Lamp",
+        "price": "11500.555",
+        "description": "Luxury lamp with pure gold",
         "categories": ["Perhipals", "Men"],
-        "category":"Mancave",
-        "product_type":"Mancave",
-        "visibility":"Always Visible",
-        "tax_class":"Cheap Tax",
-        "manufacturer":"Golden Shuup"
+        "category": "Mancave",
+        "product_type": "Mancave",
+        "visibility": "Always Visible",
+        "tax_class": "Cheap Tax",
+        "manufacturer": "Golden Shuup"
     },
     {
         "sku": "test-sku5",
-        "name":"Table",
-        "price":"15500.552",
-        "description":"Desk for the kings!",
+        "name": "Table",
+        "price": "15500.552",
+        "description": "Desk for the kings!",
         "categories": ["Men", "Space Age", "Expensive"],
-        "category":"Mancave",
-        "product_type":"Mancave",
-        "visibility":"Searchable",
-        "tax_class":"Cheap Tax",
-        "manufacturer":"Shuup In Space"
+        "category": "Mancave",
+        "product_type": "Mancave",
+        "visibility": "Searchable",
+        "tax_class": "Cheap Tax",
+        "manufacturer": "Shuup In Space"
     },
     {
         "sku": "test-sku6",
-        "name":"Light Bulb",
-        "price":"3",
-        "description":"Light! Missing categories and manufacturer",
+        "name": "Light Bulb",
+        "price": "3",
+        "description": "Light! Missing categories and manufacturer",
         "categories": None,
         "category": None,
-        "product_type":"Mancave",
-        "visibility":"Searchable",
-        "tax_class":"Cheap Tax",
+        "product_type": "Mancave",
+        "visibility": "Searchable",
+        "tax_class": "Cheap Tax",
         "manufacturer": None
     }
 ]

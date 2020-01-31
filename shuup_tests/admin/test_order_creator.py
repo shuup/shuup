@@ -218,7 +218,7 @@ def test_order_creator_view_invalid_command(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/", {"command": printable_gibberish()}), user=admin_user)
     response = OrderEditView.as_view()(request)
-    assert_contains(response, "unknown command", status_code=400)
+    assert_contains(response, "Unknown command", status_code=400)
 
 
 def test_order_creator_product_data(rf, admin_user):

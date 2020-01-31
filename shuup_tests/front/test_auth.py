@@ -42,9 +42,10 @@ def test_login_with_invalid_password(client, regular_user, rf):
     response = client.post(reverse("shuup:login"), data={
         "username": regular_user.email,
         "password": "hello",
-        REDIRECT_FIELD_NAME: redirect_target
+        REDIRECT_FIELD_NAME: redirect_target,
     })
 
+    print(response.get("location"))
     assert not response.get("location")  # No redirect since errors
 
     request = rf.get("/")
@@ -263,7 +264,7 @@ def test_email_auth_form_with_inactive_user(client, regular_user, rf):
 
     with pytest.raises(ValidationError) as e:
         form.confirm_login_allowed(regular_user)
-    
+
     assert list(e.value)[0] == "This account is inactive."
 
 
@@ -278,13 +279,13 @@ def test_email_auth_form(rf, regular_user):
         assert not form.is_valid()
         assert form.errors["username"][0] == "This field is required."
         assert form.errors["password"][0] == "This field is required."
-        
+
         payload.update({"username": regular_user.username})
         form = EmailAuthenticationForm(request=request, data=payload)
         assert not form.is_valid()
         assert "username" not in list(form.errors)
         assert form.errors["password"][0] == "This field is required."
-        
+
         payload.update({"password": REGULAR_USER_PASSWORD})
         form = EmailAuthenticationForm(request=request, data=payload)
         assert FieldTestProvider.key in form.fields

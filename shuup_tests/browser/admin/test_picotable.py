@@ -23,6 +23,7 @@ from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
+
 def create_contacts(shop):
     for i in range(0, 200):
         contact = create_random_person()
@@ -34,6 +35,7 @@ def create_products(shop):
     for i in range(0, 200):
         sku = "sku-%d" % i
         create_product(sku, shop, supplier, default_price=i)
+
 
 # used in settings
 list_view_settings = {
@@ -175,11 +177,13 @@ def _set_settings(browser, setting_type, creator):
     # not selected by default
     if creator:
         for idx, text in addable_fields:
-           assert not browser.is_text_present(text)
+            assert not browser.is_text_present(text)
 
 
 def _check_picotable_item_info(browser, creator):
     if creator:
         wait_until_appeared(browser, ".picotable-item-info")
     else:
-        wait_until_condition(browser, condition=lambda x: x.is_text_present("There are no permission groups to show"))
+        wait_until_condition(browser, condition=lambda x: x.is_text_present(
+            "There are no granular permission groups to show")
+        )

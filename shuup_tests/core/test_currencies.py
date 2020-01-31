@@ -24,7 +24,7 @@ def test_currency_validation():
     with pytest.raises(ValidationError) as exc:
         Currency(code="ISD").full_clean()
 
-    assert "Enter a valid ISO-4217 currency code" in exc.value.messages
+    assert "Enter a valid ISO-4217 currency code." in exc.value.messages
 
 
 @pytest.mark.django_db

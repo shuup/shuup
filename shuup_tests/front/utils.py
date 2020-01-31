@@ -37,7 +37,7 @@ class FieldTestProvider(FormFieldProvider):
     # these are for test validation purposes only
     key = "accept_test_terms"
     label = "I have read and accept the test terms"
-    error_msg = "You must accept to this to register or authenticate."
+    error_msg = "Error! You must accept this in order to register or authenticate."
 
     def get_fields(self, **kwargs):
         field = forms.BooleanField(
