@@ -28,16 +28,16 @@ class CheckoutPhaseViewMixin(object):
         Initialize a checkout phase view.
 
         :type checkout_process: shuup.front.checkout.CheckoutProcess|None
-        :param checkout_process: The checkout process of this phase
+        :param checkout_process: The checkout process of this phase.
 
         :type horizontal_template: bool
         :param horizontal_template:
-          Set this to False if you want to use single page checkout
+          Set this to False if you want to use single page checkout.
         """
         # TODO: (2.0) Make checkout_process argument mandatory
         if not checkout_process:
             warnings.warn(
-                "Using checkout view without a checkout process is deprecated",
+                "Warning! Using checkout view without a checkout process is deprecated.",
                 DeprecationWarning, 2)
 
         self._checkout_process = checkout_process
@@ -65,7 +65,10 @@ class CheckoutPhaseViewMixin(object):
         return False
 
     def process(self):
-        raise NotImplementedError("`process` MUST be overridden in %r" % self.__class__)
+        raise NotImplementedError(
+            "Error! Not implemented: `CheckoutPhaseViewMixin` -> `process()`. "
+            "`process()` MUST be overridden in %r." % self.__class__
+        )
 
     def reset(self):
         self.storage.reset()

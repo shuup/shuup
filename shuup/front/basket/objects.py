@@ -29,6 +29,7 @@ class BaseBasket(Basket):
         Get the currently persisted data for this basket.
         This will only access the storage once per request in usual
         circumstances.
+
         :return: Data dict.
         :rtype: dict
         """
@@ -36,7 +37,7 @@ class BaseBasket(Basket):
             try:
                 self._data = self.storage.load(basket=self)
             except BasketCompatibilityError as error:
-                msg = _("Basket loading failed: Incompatible basket (%s)")
+                msg = _("Basket loading failed: Incompatible basket (%s).")
                 messages.error(self.request, msg % error)
                 self.storage.delete(basket=self)
                 self._data = self.storage.load(basket=self)
@@ -54,7 +55,7 @@ class BaseBasket(Basket):
 
         if (self.has_shippable_lines() and not shipping_methods and
                 configuration.get(self.shop, SHIPPING_METHOD_REQUIRED_CONFIG_KEY, True)):
-            msg = _("Products in basket cannot be shipped together. %s")
+            msg = _("Products in basket can't be shipped together. %s")
             yield ValidationError(msg % advice, code="no_common_shipping")
 
         if not payment_methods and configuration.get(self.shop, PAYMENT_METHOD_REQUIRED_CONFIG_KEY, True):

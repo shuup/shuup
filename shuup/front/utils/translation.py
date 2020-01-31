@@ -19,8 +19,8 @@ def get_language_choices(shop=None):
     Returns a list of the available language choices, e.g.:
         [("en", "English", "English"])
 
-    If shot is passed, the languages will be filtered by those
-    enabled for the shop.
+    If a shop is passed, the languages will be filtered by those
+    enabled for that shop.
 
     :rtype iterable[(str, str, str)]
     """
@@ -49,7 +49,7 @@ def set_shop_available_languages(shop, languages):
     # validate languages
     for language in languages:
         if language not in available_codes:
-            msg = _("{language_code} is an invalid language code").format(language_code=language)
+            msg = _("`{language_code}` is an invalid language code.").format(language_code=language)
             raise ValueError(msg)
 
     configuration.set(shop, FRONT_AVAILABLE_LANGUAGES_CONFIG_KEY, ",".join(languages))

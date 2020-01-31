@@ -139,12 +139,12 @@ class Slide(TranslatableShuupModel):
             "Set this to current if clicking on this slide should open a new browser tab."
         )
     )
-    available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available from'), help_text=_(
-        "Set the date and time from which this slide should be visible in the carousel. "
+    available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available since'), help_text=_(
+        "Set the date and time, starting from which this slide should be visible in the carousel. "
         "This is useful to advertise sales campaigns or other time-sensitive marketing."
     ))
-    available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available to'), help_text=_(
-        "Set the date and time from which this slide should be visible in the carousel. "
+    available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available until'), help_text=_(
+        "Set the date and time, until which this slide should be visible in the carousel. "
         "This is useful to advertise sales campaigns or other time-sensitive marketing."
     ))
     inactive_dot_color = HexColorField(
@@ -230,8 +230,8 @@ class Slide(TranslatableShuupModel):
             dt = now()
 
         return (
-            (self.available_from and self.available_from <= dt) and
-            (self.available_to is None or self.available_to >= dt)
+            (self.available_from and self.available_from <= dt)
+            and (self.available_to is None or self.available_to >= dt)
         )
 
     def get_link_target(self):

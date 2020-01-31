@@ -25,7 +25,8 @@ def file_size_validator(value):
     size = getattr(value, "size", None)
     if size and settings.SHUUP_FRONT_MAX_UPLOAD_SIZE and settings.SHUUP_FRONT_MAX_UPLOAD_SIZE < size:
         raise ValidationError(
-            _("Maximum file size reached (%(size)s MB)") % {"size": settings.SHUUP_FRONT_MAX_UPLOAD_SIZE / 1000 / 1000},
+            _("Maximum file size reached (%(size)s MB).") %
+            {"size": settings.SHUUP_FRONT_MAX_UPLOAD_SIZE / 1000 / 1000},
             code="file_max_size_reached"
         )
 

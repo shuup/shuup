@@ -27,7 +27,7 @@ def model_url(context, model, absolute=False, **kwargs):
     if absolute:
         request = context.get("request")
         if not request:  # pragma: no cover
-            raise ValueError("Unable to use `absolute=True` when request does not exist")
+            raise ValueError("Error! Unable to use `absolute=True` when request does not exist.")
         uri = request.build_absolute_uri(uri)
 
     return uri

@@ -116,7 +116,7 @@ class RecoverPasswordConfirmView(FormView):
 
         valid = (user is not None and self.token_generator.check_token(user, token))
         if not valid:
-            raise Problem(_(u"This recovery link is invalid."))
+            raise Problem(_(u"Error! This recovery link is invalid."))
 
         return super(RecoverPasswordConfirmView, self).dispatch(request, *args, **kwargs)
 

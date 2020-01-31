@@ -20,22 +20,24 @@ from shuup.front.signals import login_allowed
 class EmailAuthenticationForm(AuthenticationForm):
 
     error_messages = {
-        'invalid_login': _("Please enter a correct %(username)s and password. "
-                           "Note that both fields may be case-sensitive. "
-                           "In case of multiple accounts with same email only username can be used to login."),
-        'inactive': _("This account is inactive."),
+        "invalid_login": _(
+            "Error! Please enter a correct %(username)s and password. "
+            "Note that both fields may be case-sensitive. "
+            "In case of multiple accounts with same email only username can be used to log in."
+        ),
+        "inactive": _("This account is inactive."),
     }
 
     def __init__(self, *args, **kwargs):
         super(EmailAuthenticationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].label = _("Username or email address")
+        self.fields["username"].label = _("Username or email address")
         for provider_cls in get_provide_objects("front_auth_form_field_provider"):
             provider = provider_cls()
             for definition in provider.get_fields(request=self.request):
                 self.fields[definition.name] = definition.field
 
     def clean_username(self):
-        username = self.cleaned_data['username']
+        username = self.cleaned_data["username"]
         user_model = get_user_model()
 
         # Note: Always search by username AND by email prevent timing attacks
@@ -64,7 +66,7 @@ class EmailAuthenticationForm(AuthenticationForm):
             )
 
             # So here even with invalid login and user cache being None
-            # we would like to check whether the user we are trying to
+            # we want to check whether the user we are trying to
             # login is inactive or not.
             try:
                 user_temp = get_user_model().objects.get(username=username)
@@ -85,18 +87,22 @@ class EmailAuthenticationForm(AuthenticationForm):
 
     def confirm_login_allowed(self, user):
         """
-        Do not let user with inactive person contact to login.
+        Do not let inactive person contact user to login.
         """
         if not get_person_contact(user).is_active:
             raise forms.ValidationError(
-                self.error_messages['inactive'],
-                code='inactive',
+                self.error_messages["inactive"], code="inactive",
             )
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+        if (
+            settings.SHUUP_ENABLE_MULTIPLE_SHOPS
+            and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP
+        ):
             if not user.is_superuser:
                 shop = self.request.shop
                 if shop not in user.contact.shops.all():
-                    raise forms.ValidationError(_("You are not allowed to login to this shop."))
+                    raise forms.ValidationError(
+                        _("You are not allowed to log in to this shop.")
+                    )
 
         super(EmailAuthenticationForm, self).confirm_login_allowed(user)
 

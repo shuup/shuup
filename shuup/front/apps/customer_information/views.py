@@ -28,7 +28,7 @@ class PasswordChangeView(DashboardViewMixin, TemplateView):
             template_name=self.template_name
         )
         if response.status_code == 302:
-            messages.success(self.request, _("Password successfully changed."))
+            messages.success(self.request, _("Password changed."))
         return response
 
     def get_context_data(self, **kwargs):
@@ -50,7 +50,7 @@ class CustomerEditView(DashboardViewMixin, FormView):
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, _("Account information saved successfully."))
+        messages.success(self.request, _("Account information was saved."))
         return redirect("shuup:customer_edit")
 
 
@@ -113,7 +113,7 @@ class AddressBookEditView(DashboardViewMixin, FormView):
 
     def form_valid(self, form):
         saved_address = form.save()
-        messages.success(self.request, _("Address information saved successfully."))
+        messages.success(self.request, _("Address information was saved."))
         return redirect("shuup:address_book_edit", pk=saved_address.pk)
 
 
@@ -121,5 +121,5 @@ def delete_address(request, pk):
     try:
         SavedAddress.objects.get(pk=pk, owner=request.customer).delete()
     except SavedAddress.DoesNotExist:
-        messages.error(request, _("Cannot remove address"))
+        messages.error(request, _("Cannot remove address because it doesn't exist."))
     return redirect("shuup:address_book")

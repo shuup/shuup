@@ -22,7 +22,7 @@ from shuup.front.utils.companies import allow_company_registration
 
 
 def activation_complete(request):
-    messages.success(request, _("Activation successful!"))
+    messages.success(request, _("Activation successful"))
     if urls.has_url('shuup:customer_edit'):
         return redirect('shuup:customer_edit')
     else:
