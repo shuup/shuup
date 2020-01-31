@@ -35,14 +35,14 @@ class Money(numbers.UnittedDecimal):
         a required argument and not passing one will raise a TypeError.
 
         :param str|numbers.Number value:
-          Value as string or number
+          Value as string or number.
         :param str|None currency:
           Currency as ISO-4217 code (3-letter string) or None.
         """
         if currency is None and hasattr(value, 'currency'):
             currency = value.currency
         if not currency:
-            raise TypeError('%s: currency must be given' % cls.__name__)
+            raise TypeError('Error! %s: currency must be given.' % cls.__name__)
         instance = super(Money, cls).__new__(cls, value, *args, **kwargs)
         instance.currency = currency
         return instance
@@ -76,12 +76,12 @@ class Money(numbers.UnittedDecimal):
         the precision provider, see `set_precision_provider`.
 
         :type digits: int|None
-        :param digits:  Number of digits to round to or None
+        :param digits:  Number of digits to round to or None.
         :type rounding: str
-        :param rounding: Rounding mode to use
+        :param rounding: Rounding mode to use.
 
         :rtype: Money
-        :return: A new `Money` instance with the rounded value
+        :return: A new `Money` instance with the rounded value.
         """
         precision = _get_precision(self.currency, digits)
         return self.new(self.value.quantize(precision, rounding=rounding))

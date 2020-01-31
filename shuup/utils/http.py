@@ -38,4 +38,4 @@ def retry_request(n_retries=5, **kwargs):
     if resp:
         resp.raise_for_status()
 
-    raise Exception("An unknown problem occurred with a request.")
+    raise Exception("Error! An unknown problem occurred with the request.")

@@ -35,7 +35,7 @@ def get_cached_trees(queryset):
        `Node.objects.filter(**kwargs).get_cached_trees()`
 
     FIXME: This method fixed the original `mptt.utils.get_cached_trees` method
-    as it doesn't consider filtered querysets that might not contain all tree nodes
+    as it doesn't consider filtered querysets that might not contain all tree nodes.
 
     """
 
@@ -59,7 +59,7 @@ def get_cached_trees(queryset):
                 # ``queryset`` was a list or other iterable (unable to order),
                 # and was provided in an order other than depth-first
                 raise ValueError(
-                    'Node %s not in depth-first order' % (type(queryset),)
+                    'Error! Node %s not in depth-first order.' % (type(queryset),)
                 )
 
             # Set up the attribute on the node that will store cached children,

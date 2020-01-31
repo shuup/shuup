@@ -25,14 +25,16 @@ def _fetch_static_resource_str(resource_file):
     resource_path = os.path.realpath(os.path.join(settings.STATIC_ROOT, resource_file))
     if not resource_path.startswith(os.path.realpath(settings.STATIC_ROOT)):
         raise ValueError(
-            "Possible file system traversal shenanigan detected with %(path)s" % {"path": resource_file})
+            "Error! Possible file system traversal shenanigan detected with path: `%(path)s`."
+            % {"path": resource_file}
+        )
 
     if not os.path.isfile(resource_path):
         from django.contrib.staticfiles import finders
         resource_path = finders.find(resource_file)
 
     if not resource_path:
-        raise ValueError("Unable to find: %(path)s" % {"path": resource_file})
+        raise ValueError("Error! Unable to find path: `%(path)s`." % {"path": resource_file})
 
     return open(resource_path, "rb").read().decode("UTF-8", "replace")
 
@@ -42,7 +44,7 @@ def _custom_url_fetcher(url):
         thumbnailer = get_thumbnailer(urllib.parse.unquote(url[5:]))
         thumbnail_options = {"size": (240, 80), "upscale": True}
         return {"file_obj": thumbnailer.get_thumbnail(thumbnail_options), "mime_type": "image/jpg"}
-    raise ValueError("Possible file system traversal shenanigan detected with %(path)s" % {"path": url})
+    raise ValueError("Error! Possible file system traversal shenanigan detected with path: `%(path)s`." % {"path": url})
 
 
 def render_html_to_pdf(html, stylesheet_paths=[]):
