@@ -100,7 +100,7 @@ class ProductMetaBase(ImportMetaBase):
 
     def handle_images(self, fields, sess):
         """
-        Handle images for product
+        Handle images for product.
         """
         # convert all keys to lowercase
         row = {k.lower(): v for k, v in sess.row.items()}
@@ -109,7 +109,7 @@ class ProductMetaBase(ImportMetaBase):
         for image_field in self.aliases["image"]:
             image = row.get(image_field)
             if image and not self._handle_image(sess.shop, product, row[image_field], is_primary=True):
-                msg = _("Image '%s' not found, please check whether the image exists.") % row[image_field]
+                msg = _("Image '%s' was not found, please check whether the image exists.") % row[image_field]
                 sess.log_messages.append(msg)
 
         for image_field in self.aliases["media"]:
@@ -117,7 +117,7 @@ class ProductMetaBase(ImportMetaBase):
             if images:
                 for image_source in images.split(","):
                     if not self._handle_image(sess.shop, product, image_source):
-                        msg = _("Image '%s' not found, please check whether the image exists.") % image_source
+                        msg = _("Image '%s' was not found, please check whether the image exists.") % image_source
                         sess.log_messages.append(msg)
 
         # check whether the product has media but doesn't have a primary image
@@ -129,9 +129,9 @@ class ProductMetaBase(ImportMetaBase):
 
     def handle_stocks(self, fields, sess):
         """
-        Handle stocks for product
+        Handle stocks for product.
 
-        If stock qty has been given, expect that a supplier with stock management must be available.
+        If stock quantity has been given, expect that a supplier with stock management must be available.
         """
         # convert all keys to lowercase
         row = {k.lower(): v for k, v in sess.row.items()}
@@ -148,13 +148,16 @@ class ProductMetaBase(ImportMetaBase):
 
         supplier_id = row.get("supplier")
         if not supplier_id:
-            raise ImporterError(_("Please add supplier to row before importing stock quantities."))
+            raise ImporterError(_("Please add supplier to the row, before importing stock quantities."))
         # shuup only has 1 supplier support now so get first
         supplier = sess.importer.resolve_object(Supplier, supplier_id)
         if not supplier:
-            raise ImporterError(_("No supplier found, please check the supplier exists."))
+            raise ImporterError(_("No supplier found, please check that the supplier exists."))
         if not supplier.stock_managed:
-            raise ImporterError(_("This supplier doesn't handle stocks, please set Stock Managed on."))
+            raise ImporterError(_(
+                "This supplier doesn't handle stocks, please set `Stock Managed` "
+                "on in the individual Supplier's settings page.")
+            )
 
         for qty_field in self.aliases["qty"]:
             qty_field = qty_field.lower()
@@ -241,7 +244,7 @@ class ProductMetaBase(ImportMetaBase):
 
     def get_import_defaults(self):
         """
-        Get default values for import time
+        Get default values for import time.
         """
         data = {
             "type_id": ProductType.objects.first().pk,

@@ -126,7 +126,7 @@ class Task(models.Model):
     def delete(self):
         self.status = TaskStatus.DELETED
         self.save(update_fields=["status"])
-        self.add_log_entry("Deleted.", kind=LogEntryKind.DELETION)
+        self.add_log_entry("Success! Deleted (soft).", kind=LogEntryKind.DELETION)
 
     def comment(self, contact, comment, visibility=TaskCommentVisibility.PUBLIC):
         comment = TaskComment(task=self, author=contact, body=comment, visibility=visibility)
@@ -136,14 +136,14 @@ class Task(models.Model):
 
     def set_in_progress(self):
         self.status = TaskStatus.IN_PROGRESS
-        self.add_log_entry("In progress.", kind=LogEntryKind.EDIT)
+        self.add_log_entry("Info! In progress.", kind=LogEntryKind.EDIT)
         self.save()
 
     def set_completed(self, contact):
         self.completed_by = contact
         self.completed_on = now()
         self.status = TaskStatus.COMPLETED
-        self.add_log_entry("Completed.", kind=LogEntryKind.EDIT)
+        self.add_log_entry("Success! Completed.", kind=LogEntryKind.EDIT)
         self.save()
 
     def get_completion_time(self):

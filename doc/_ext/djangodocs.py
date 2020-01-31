@@ -71,28 +71,28 @@ def setup(app):
 
 class snippet_with_filename(nodes.literal_block):
     """
-    Subclass the literal_block to override the visit/depart event handlers
+    Subclass the literal_block to override the visit/depart event handlers.
     """
     pass
 
 
 def visit_snippet_literal(self, node):
     """
-    default literal block handler
+    default literal block handler.
     """
     self.visit_literal_block(node)
 
 
 def depart_snippet_literal(self, node):
     """
-    default literal block handler
+    default literal block handler.
     """
     self.depart_literal_block(node)
 
 
 def visit_snippet(self, node):
     """
-    HTML document generator visit handler
+    HTML document generator visit handler.
     """
     lang = self.highlightlang
     linenos = node.rawsource.count('\n') >= self.highlightlinenothreshold - 1
@@ -123,7 +123,7 @@ def visit_snippet(self, node):
 
 def visit_snippet_latex(self, node):
     """
-    Latex document generator visit handler
+    Latex document generator visit handler.
     """
     self.verbatim = ''
 
@@ -197,7 +197,7 @@ class VersionDirective(Directive):
 
     def run(self):
         if len(self.arguments) > 1:
-            msg = """Only one argument accepted for directive '{directive_name}::'.
+            msg = """Error! Only one argument accepted for directive '{directive_name}::'.
             Comments should be provided as content,
             not as an extra argument.""".format(directive_name=self.name)
             raise self.error(msg)
