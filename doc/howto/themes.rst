@@ -127,7 +127,7 @@ For the purposes of the following examples, your theme should be defined as foll
 **Case A**
     *Overriding a Shuup front template*
 
-    So the classic gray theme is satisfying but you are not happy with the
+    So the classic gray theme is satisfying, but you are not happy with the
     category page. You can find the current category template
     in ``shuup/front/templates/shuup/front/product/category.jinja``.
 

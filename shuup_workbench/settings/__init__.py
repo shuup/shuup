@@ -35,7 +35,7 @@ def configure(setup):
             compiled = compile(fp.read(), local_settings_file, 'exec')
             exec(compiled, local_settings_ns)
         if 'configure' not in local_settings_ns:
-            raise ImproperlyConfigured('No configure in local_settings')
+            raise ImproperlyConfigured('Error! No configure in local_settings.')
         local_configure = local_settings_ns['configure']
         local_configure(setup)
 

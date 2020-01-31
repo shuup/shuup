@@ -92,11 +92,11 @@ def get_adjustment_success_message(stock_adjustment):
     }
     if stock_adjustment.delta > 0:
         return _(
-            "Added %(delta)s %(unit_symbol)s for product %(product_name)s stock (%(supplier_name)s)"
+            "Success! Added %(delta)s `%(unit_symbol)s` for product `%(product_name)s` stock (%(supplier_name)s)."
         ) % arguments
     else:
         return _(
-            "Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock (%(supplier_name)s)"
+            "Success! Removed %(delta)s `%(unit_symbol)s` from product `%(product_name)s` stock (%(supplier_name)s)."
         ) % arguments
 
 
@@ -146,7 +146,7 @@ def _process_alert_limit(form, request, supplier_id, product_id):
         request,
         supplier,
         product,
-        _("Alert limit for product %(product_name)s set to %(value)s.") % {
+        _("Alert limit for product `%(product_name)s` set to `%(value)s`.") % {
             "product_name": product.name,
             "value": sc.alert_limit
         }
@@ -162,22 +162,22 @@ def process_alert_limit(request, supplier_id, product_id):
 def _process_and_catch_errors(process, form_class, request, supplier_id, product_id):
     try:
         if request.method != "POST":
-            raise Exception(_("Not allowed"))
+            raise Exception(_("Non-POST request methods are forbidden."))
         form = form_class(request.POST)
         if form.is_valid():
             return process(form, request, supplier_id, product_id)
 
-        error_message = ugettext("Error, please check submitted values and try again.")
+        error_message = ugettext("Please check submitted values and try again.")
         return JsonResponse({"message": error_message}, status=400)
     except Exception as exc:
         error_message = ugettext(
-            "Error, please check submitted values and try again (%(error)s).") % {"error":  exc}
+            "Please check submitted values and try again (%(error)s).") % {"error":  exc}
         return JsonResponse({"message": error_message}, status=400)
 
 
 def process_stock_managed(request, supplier_id, product_id):
     if request.method != "POST":
-        raise Exception(_("Not allowed"))
+        raise Exception(_("Non-POST request methods are forbidden."))
 
     stock_managed = bool(request.POST.get("stock_managed") == "True")
     supplier = Supplier.objects.get(id=supplier_id)
@@ -190,9 +190,9 @@ def process_stock_managed(request, supplier_id, product_id):
         context_cache.bump_cache_for_product(product, shop=shop)
 
     if stock_managed:
-        msg = _("Stock management is now enabled for {product}").format(product=product)
+        msg = _("Stock management is now enabled for {product}.").format(product=product)
     else:
-        msg = _("Stock management is now disabled for {product}").format(product=product)
+        msg = _("Stock management is now disabled for {product}.").format(product=product)
 
     success_message = _get_success_message(request, supplier, product, msg)
     return JsonResponse(success_message, status=200)

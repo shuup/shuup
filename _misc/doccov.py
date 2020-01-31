@@ -182,13 +182,13 @@ class GenericDocstringValidator(Validator):
         docstring = docinfo.docstring
         if docstring:
             if len(docstring) < 15:
-                yield "Docstring too short"
+                yield "Error! Docstring is too short."
             sep = (".\n" if "\n" in docstring else ".")
             if sep not in docstring:
-                yield "Docstring doesn't seem to have an opening sentence"
+                yield "Error! Docstring doesn't seem to have an opening sentence."
         else:
             if not self.can_elide_docstring(docinfo):
-                yield "Docstring missing"
+                yield "Error! Docstring is missing."
 
     def can_elide_docstring(self, docinfo):
         if docinfo.name == "__init__" and not docinfo.required_args:
@@ -201,9 +201,9 @@ class ArgValidator(Validator):
 
     def validate(self, docinfo):
         for arg in sorted(docinfo.missing_args):
-            yield u"Missing mention of arg `%s`" % arg
+            yield u"Error! Missing mention of arg `%s`" % arg
         for arg in sorted(docinfo.extraneous_args):
-            yield u"Extraneous mention of arg `%s`" % arg
+            yield u"Error! Extraneous mention of arg `%s`" % arg
 
 
 class ReturnValidator(Validator):
@@ -218,7 +218,7 @@ class ReturnValidator(Validator):
         rvv.visit(node)
         if rvv.has_valueful_return:
             if not (":return" in docstring or ":rtype" in docstring):
-                yield u"Undocumented return value(s)"
+                yield u"Error! Undocumented return value(s)"
 
 
 class DocInfo(object):
@@ -296,7 +296,7 @@ class DocStringVisitor(ast.NodeVisitor):
         elif isinstance(node, ast.ClassDef):
             return (line, "class", name)
         else:
-            raise NotImplementedError("Not implemented: name for %s" % node)
+            raise NotImplementedError("Error! Not implemented: name for %s." % node)
 
     def visit_FunctionDef(self, node):  # noqa (N802)
         if node.name in IGNORED_FUNCTIONS:
@@ -328,7 +328,7 @@ class DocCov(object):
             try:
                 tree = ast.parse(data, filename)
             except SyntaxError:
-                self.log.exception("Can't parse %s" % filename)
+                self.log.exception("Error! Can't parse %s." % filename)
                 return
         visitor = DocStringVisitor(filename=filename)
         visitor.visit(tree)
@@ -339,7 +339,7 @@ class DocCov(object):
         if os.path.isdir(path):
             for filepath in find_files(path, allowed_extensions=(".py",)):
                 if filepath.startswith("test_"):
-                    self.log.info("Skipping: %s" % filepath)
+                    self.log.info("Info! Skipping: %s" % filepath)
                     continue
                 self.filenames.add(filepath)
         elif path.endswith('.py'):

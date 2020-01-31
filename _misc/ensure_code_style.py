@@ -30,7 +30,7 @@ class ForeignKeyVisitor(XNodeVisitor):
         if any(name.endswith(suffix) for suffix in ("ForeignKey", "FilerFileField", "FilerImageField")):
             kwmap = dict((kw.arg, kw.value) for kw in node.keywords)
             if "on_delete" not in kwmap:
-                self.errors.append("%d: %s call missing explicit `on_delete`" % (node.lineno, name))
+                self.errors.append("Error! %d: %s call missing explicit `on_delete`." % (node.lineno, name))
 
 
 class VerboseNameVisitor(XNodeVisitor):
@@ -67,7 +67,10 @@ class VerboseNameVisitor(XNodeVisitor):
         if not kw_value:
             if node.kwargs:  # Assume dynamic use (has **kwargs)
                 return
-            self.errors.append("%d: %s call missing verbose_name or label (ctx: %s)" % (node.lineno, name, context))
+            self.errors.append(
+                "Error! %d: %s call missing verbose_name or label (ctx: %s)."
+                % (node.lineno, name, context)
+            )
             return
 
         if isinstance(kw_value, ast.BinOp) and isinstance(kw_value.op, ast.Mod):
@@ -78,7 +81,7 @@ class VerboseNameVisitor(XNodeVisitor):
             arg = kw_value.args[0]
             if isinstance(arg, ast.Str) and needle == "verbose_name":
                 if not arg.s[0].islower() and not any(arg.s.startswith(acronym) for acronym in KNOWN_ACRONYMS):
-                    self.errors.append("%d: %s `%s` not lower-case (value: %r) (ctx: %s)" % (
+                    self.errors.append("Error! %d: %s `%s` not lower-case (value: %r) (ctx: %s)." % (
                         node.lineno, name, needle, arg.s, context)
                     )
             return
@@ -87,7 +90,7 @@ class VerboseNameVisitor(XNodeVisitor):
             return
 
         self.errors.append(
-            "%d: %s `%s` present but not translatable (ctx: %s)" % (node.lineno, name, needle, context))
+            "Error! %d: %s `%s` present but not translatable (ctx: %s)." % (node.lineno, name, needle, context))
 
 
 def process_file(path, checkers):

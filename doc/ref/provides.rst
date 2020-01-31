@@ -9,7 +9,7 @@ the provides system in various ways.
 * ``shuup.admin`` uses Provides to load admin modules, form customizations etc.
 * ``shuup.front`` uses it for URLconf overrides etc.
 
-The provide categories used by Shuup are listed in :ref:`provide-categories` but you
+The provide categories used by Shuup are listed in :ref:`provide-categories`, but you
 can also define your own categories as you wish.
 
 .. TODO:: Document the various ways better.
