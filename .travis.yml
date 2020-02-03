@@ -25,13 +25,13 @@ jobs:
     - {stage: development, env: TOXENV=flake8, name: "Code Style"}
     - {stage: development, env: TOXENV=license_headers, name: "License Headers"}
     - {stage: development, env: TOXENV=migrations, name: "Migrations"}
-    - {stage: development, python: 2.7, env: TOXENV=py27-django19-nomigrations}
+    - {stage: development, python: 3.7, env: TOXENV=py37-django19-nomigrations}
     - {stage: development, python: 3.6, env: TOXENV=py36-django111-nomigrations}
     - {stage: development, python: 3.5, env: TOXENV=py35-django18-nomigrations}
-    - {stage: deploy, python: 2.7, env: TOXENV=py27-django18-nomigrations}
+    - {stage: deploy, python: 3.7, env: TOXENV=py37-django18-nomigrations}
     - {stage: deploy, python: 3.5, env: TOXENV=py35-django19-nomigrations}
     - {stage: deploy, python: 3.6, env: TOXENV=py36-django19-nomigrations}
-    - {stage: deploy, python: 2.7, env: TOXENV=py27-django111-nomigrations}
+    - {stage: deploy, python: 3.7, env: TOXENV=py37-django111-nomigrations}
     - {stage: deploy, python: 3.5, env: TOXENV=py35-django111-nomigrations}
     - stage: development
       python: 3.6
