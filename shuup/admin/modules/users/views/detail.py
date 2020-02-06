@@ -28,11 +28,11 @@ from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, DropdownItem,
     get_default_edit_toolbar, PostActionButton, Toolbar
 )
+from shuup.admin.utils.permissions import has_permission
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
 from shuup.utils.excs import Problem
 from shuup.utils.text import flatten
-
 
 NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _("""
     Welcome %(first_name)s!
@@ -203,7 +203,12 @@ class UserDetailToolbar(Toolbar):
                 extra_css_class="btn-gray",
             ))
 
-        if (self.request.user.is_superuser and get_front_url() and
+        current_user = self.request.user
+        is_current_user_superuser_or_staff = (
+            getattr(current_user, "is_superuser", False) or
+            getattr(current_user, "is_staff", False)
+        )
+        if (is_current_user_superuser_or_staff and get_front_url() and
                 user.is_active and not user.is_superuser and not user.is_staff):
             self.append(PostActionButton(
                 post_url=reverse("shuup_admin:user.login-as", kwargs={"pk": user.pk}),
@@ -328,6 +333,29 @@ class UserDetailView(CreateOrUpdateView):
         return super(UserDetailView, self).dispatch(request, *args, **kwargs)
 
 
+def _check_for_login_as_problems(front_url, impersonator_user, user):
+    if not front_url:
+        raise Problem(_("No shop configured."))
+    if user == impersonator_user:
+        raise Problem(_("You are already logged in."))
+    if not getattr(user, "is_active", False):
+        raise Problem(_("This user is not active."))
+
+
+def _check_for_login_as_permissions(shop, impersonator_user, user):
+    if getattr(user, "is_superuser", False) or getattr(user, "is_staff", False):
+        raise PermissionDenied
+    if not (getattr(impersonator_user, "is_superuser", False) or getattr(impersonator_user, "is_staff", False)):
+        raise PermissionDenied
+    if not (
+        getattr(impersonator_user, "is_superuser", False) or
+        shop.staff_members.filter(id=impersonator_user.pk).exists()
+    ):
+        raise PermissionDenied
+    if not has_permission(impersonator_user, "user.login-as"):
+        raise PermissionDenied
+
+
 class LoginAsUserView(DetailView):
     model = get_user_model()
 
@@ -335,18 +363,12 @@ class LoginAsUserView(DetailView):
         front_url = get_front_url()
         user = self.get_object()
         username_field = self.model.USERNAME_FIELD
+        impersonator_user = request.user
         impersonator_user_id = request.user.pk
+        shop = get_shop(request)
 
-        if not front_url:
-            raise Problem(_("No shop configured."))
-        if user == request.user:
-            raise Problem(_("You are already logged in."))
-        if not getattr(request.user, "is_superuser", False):
-            raise PermissionDenied
-        if getattr(user, "is_superuser", False) or getattr(user, "is_staff", False):
-            raise PermissionDenied
-        if not getattr(user, "is_active", False):
-            raise Problem(_("This user is not active."))
+        _check_for_login_as_problems(front_url, impersonator_user, user)
+        _check_for_login_as_permissions(shop, impersonator_user, user)
 
         if not hasattr(user, 'backend'):
             for backend in django_settings.AUTHENTICATION_BACKENDS:

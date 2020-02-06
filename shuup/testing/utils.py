@@ -13,7 +13,7 @@ from django.core.exceptions import MiddlewareNotUsed
 from django.utils.module_loading import import_string
 from django.utils.translation import activate, get_language
 
-from shuup.admin.shop_provider import set_shop
+from shuup.admin import shop_provider
 
 
 def apply_request_middleware(request, **attrs):
@@ -51,7 +51,7 @@ def apply_request_middleware(request, **attrs):
         frm = inspect.stack()[1]
         mod = inspect.getmodule(frm[0])
         if mod.__name__.startswith("shuup_tests.admin"):
-            set_shop(request, request.shop)
+            shop_provider.set_shop(request, request.shop)
 
     return request
 
