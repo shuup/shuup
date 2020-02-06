@@ -15,6 +15,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Xtheme: Improve template injection by checking not wasting time invoking regex for nothing
+- Add `MiddlewareMixin` to all middlewares to prepare for Django 2.x
 - Notify: Changed the Email topology type to support comma-separated list of emails when using constants.
 
 ## Older versions

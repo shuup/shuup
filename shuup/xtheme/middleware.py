@@ -12,10 +12,16 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import Shop
 from shuup.xtheme import get_current_theme
 
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    MiddlewareMixin = object
+
+
 log = logging.getLogger(__name__)
 
 
-class XthemeMiddleware(object):
+class XthemeMiddleware(MiddlewareMixin):
     """
     Handle Shuup specific tasks for each request and response.
 

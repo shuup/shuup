@@ -239,11 +239,15 @@ def inject_resources(context, content, clean=True):
         return content
 
     for location_name, location in LOCATION_INFO.items():
-        match = location["regex"].search(content)
-        if not match:
+        if not rc.resources.get(location_name):
             continue
+
         injection = rc.render_resources(location_name, clean=clean)
         if not injection:
+            continue
+
+        match = location["regex"].search(content)
+        if not match:
             continue
 
         start = match.start()
