@@ -15,6 +15,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Add `MiddlewareMixin` to all middlewares to prepare for Django 2.x
 - Notify: Changed the Email topology type to support comma-separated list of emails when using constants.
 
 ## Older versions

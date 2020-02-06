@@ -16,8 +16,13 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.shop_provider import get_shop
 from shuup.utils.excs import ExceptionalResponse, Problem
 
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    MiddlewareMixin = object
 
-class ExceptionMiddleware(object):
+
+class ExceptionMiddleware(MiddlewareMixin):
     def process_exception(self, request, exception):
         if isinstance(exception, ExceptionalResponse):
             return exception.response
@@ -56,7 +61,7 @@ class ExceptionMiddleware(object):
         return templates
 
 
-class ShuupMiddleware(object):
+class ShuupMiddleware(MiddlewareMixin):
     """
     Handle Shuup specific tasks for each request and response.
 
