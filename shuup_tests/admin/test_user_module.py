@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 import json
 
+from mock import patch
+
 import pytest
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user, get_user_model
@@ -24,9 +26,11 @@ from shuup.admin.modules.users.views import (
 from shuup.admin.modules.users.views.permissions import (
     PermissionChangeFormBase
 )
+from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.core.models import Contact, get_person_contact
 from shuup.testing.factories import (
-    create_random_person, get_default_shop, UserFactory
+    create_random_person, get_default_permission_group, get_default_shop,
+    UserFactory
 )
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
@@ -295,6 +299,109 @@ def test_login_as_user_errors(rf, admin_user, regular_user):
     # user is trying to login as an inactive user
     with pytest.raises(Problem):
         view_func(request, pk=user.pk)
+
+
+@pytest.mark.django_db
+def test_login_as_staff_member(rf):
+    shop = get_default_shop()
+    staff_user = UserFactory(is_staff=True)
+    permission_group =  get_default_permission_group()
+    staff_user.groups.add(permission_group)
+    shop.staff_members.add(staff_user)
+
+    view_func = LoginAsUserView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=staff_user, skip_session=True)
+
+    # log in as self
+    with pytest.raises(Problem):
+        view_func(request, pk=staff_user.pk)
+
+    user = UserFactory()
+    get_person_contact(user)
+
+    request = apply_request_middleware(rf.post("/"), user=staff_user)
+    user.is_superuser = True
+    user.save()
+    # user is trying to login as another superuser
+    with pytest.raises(PermissionDenied):
+        view_func(request, pk=user.pk)
+
+    user.is_superuser = False
+    user.is_staff = True
+    user.save()
+    # user is trying to login as a staff user
+    with pytest.raises(PermissionDenied):
+        view_func(request, pk=user.pk)
+
+    user.is_staff = False
+    user.is_active = False
+    user.save()
+    # user is trying to login as an inactive user
+    with pytest.raises(Problem):
+        view_func(request, pk=user.pk)
+
+    user.is_active = True
+    user.save()
+
+    # staff user without "user.login-as" permission trying to login as valid user
+    with pytest.raises(PermissionDenied):
+        view_func(request, pk=user.pk)
+
+    permission_group = staff_user.groups.first()
+    set_permissions_for_group(permission_group, ["user.login-as"])
+    response = view_func(request, pk=user.pk)
+    assert response["location"] == reverse("shuup:index")
+    assert get_user(request) == user
+
+
+@pytest.mark.django_db
+def test_login_as_without_front_url(rf, admin_user, regular_user):
+    get_default_shop()
+    view_func = LoginAsUserView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+
+    def get_none():
+        return None
+
+    with patch("shuup.admin.modules.users.views.detail.get_front_url", side_effect=get_none):
+        with pytest.raises(Problem):
+            view_func(request, pk=regular_user.pk)
+
+
+@pytest.mark.django_db
+def test_login_as_requires_staff_member(rf, regular_user):
+    shop = get_default_shop()
+    staff_user = UserFactory(is_staff=True)
+    permission_group =  get_default_permission_group()
+    staff_user.groups.add(permission_group)
+
+    def do_nothing(request, shop=None):
+        pass
+
+    def get_default(request):
+        return get_default_shop()
+
+    # Maybe some vendors and non marketplace staff members has access to admin module
+    with patch("shuup.admin.shop_provider.set_shop", side_effect=do_nothing):
+        with patch("shuup.admin.shop_provider.get_shop", side_effect=get_default):
+            view_func = LoginAsUserView.as_view()
+            request = apply_request_middleware(rf.post("/"), user=staff_user)
+
+            # not staff member
+            with pytest.raises(PermissionDenied):
+                view_func(request, pk=regular_user.pk)
+
+            shop.staff_members.add(staff_user)
+
+            # no permission
+            with pytest.raises(PermissionDenied):
+                view_func(request, pk=regular_user.pk)
+
+            set_permissions_for_group(permission_group, ["user.login-as"])
+
+            response = view_func(request, pk=regular_user.pk)
+            assert response["location"] == reverse("shuup:index")
+            assert get_user(request) == regular_user
 
 
 @pytest.mark.django_db
