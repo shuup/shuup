@@ -19,6 +19,7 @@ function activateDropzone($dropzone, attrs={}) {
     const selector = "#" + $dropzone.attr("id");
     const $data = $(selector).data();
     const uploadUrl = window.ShuupFrontConfig.uploadUrl;
+    const dataKind = $dropzone.attr("data-kind")
 
     // Load attributes encoded in attributes with `data-dz-` prefixes
     // e.g.: data-dz-maxFilesize="10000"
@@ -76,6 +77,11 @@ function activateDropzone($dropzone, attrs={}) {
     $(selector).on("click", function() {
         const fileInput = document.createElement("input");
         document.body.appendChild(fileInput);
+
+        if (dataKind === "images") {
+            $(fileInput).prop("accept", "image/*");
+        };
+
         $(fileInput).prop("type", "file").css("display", "none").on("change", (evt) => {
             const file = evt.target.files[0];
             dropzone.addFile(file);
