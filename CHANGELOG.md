@@ -19,6 +19,10 @@ List all changes after the last release here (newer on top). Each change on a se
 - Add `MiddlewareMixin` to all middlewares to prepare for Django 2.x
 - Notify: Changed the Email topology type to support comma-separated list of emails when using constants.
 
+### Fixed
+- FileDnDUploader: Add check for the `data-kind` attribute of the drop zone. If the data-kind is
+  `images`, add an attribute to the hidden input that only allows images to be uploaded.
+
 ## Older versions
 
 Find older release notes [here](./doc/changelog.rst).
