@@ -20,6 +20,8 @@ List all changes after the last release here (newer on top). Each change on a se
 - Notify: Changed the Email topology type to support comma-separated list of emails when using constants.
 
 ### Fixed
+
+- Fixed the placeholder of Select2 component in Admin
 - FileDnDUploader: Add check for the `data-kind` attribute of the drop zone. If the data-kind is
   `images`, add an attribute to the hidden input that only allows images to be uploaded.
 
