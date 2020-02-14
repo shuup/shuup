@@ -62,6 +62,11 @@ class NotifyAdminModule(AdminModule):
                 "shuup.notify.admin_module.views.ScriptTemplateEditView",
                 name="notify.script-template-edit"
             ),
+            admin_url(
+                "^notify/script/delete/(?P<pk>\d+)/$",
+                "shuup.notify.admin_module.views.delete.ScriptDeleteView",
+                name="notify.script.delete"
+            ),
         ] + get_edit_and_list_urls(
             url_prefix="^notify/script",
             view_template="shuup.notify.admin_module.views.Script%sView",

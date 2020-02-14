@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.toolbar import Toolbar, URLActionButton
+from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shuup.admin.utils.views import (
     add_create_or_change_message, CreateOrUpdateView
 )
@@ -60,6 +60,16 @@ class ScriptEditView(CreateOrUpdateView):
                 extra_css_class="btn-primary",
                 url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk})
             ))
+
+            buttons.insert(1, PostActionButton(
+                post_url=reverse("shuup_admin:notify.script.delete", kwargs={"pk": self.object.pk}),
+                text=_("Delete"),
+                icon="fa fa-trash",
+                extra_css_class="btn-danger",
+                confirm=_("Are you sure you wish to delete %s?") % object,
+                required_permissions=("notify.script.delete",)
+            ))
+
             context["toolbar"] = Toolbar(buttons, view=self)
         return context
 
