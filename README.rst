@@ -19,7 +19,7 @@ https://shuup.com/
 Copyright
 ---------
 
-Copyright (C) 2012-2019 by Shoop Commerce Ltd. <support@shuup.com>
+Copyright (c) 2012-2020 by Shoop Commerce Ltd. <support@shuup.com>
 
 Shuup is International Registered Trademark & Property of Shoop Commerce Ltd.,
 Business ID: FI27184225,
