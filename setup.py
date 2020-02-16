@@ -102,7 +102,7 @@ REQUIRES = [
     'factory-boy==2.7.0',
     'fake-factory>=0.5.0,<0.5.4',
     'Jinja2==2.8.1',
-    'jsonfield>=1',
+    'jsonfield>=1,<3',
     'keyring>=10',
     'keyrings.alt>=2',
     'lxml>=4,<5',
