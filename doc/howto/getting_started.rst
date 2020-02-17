@@ -11,7 +11,8 @@ Requirements
 ------------
 
 * Python 2.7.9+/3.4+. https://www.python.org/download/.
-* Any database supported by Django.
+* Django's minimum supported version is 1.11LTS. This is the last version to support Python 2.7. The support will end at some point after April 2020.
+* Any database supported by Django. https://docs.djangoproject.com/en/3.0/ref/databases/ .
 
 Installation
 ------------
