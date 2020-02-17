@@ -59,6 +59,7 @@ class Select2ModelField(Field):
         attrs.update({"data-model": model_name})
         if not self.required:
             attrs["data-allow-clear"] = "true"
+            attrs["data-placeholder"] = _("Select an option")
         return attrs
 
 

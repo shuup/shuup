@@ -61,7 +61,16 @@ export function activateSelects() {
             const model = select.data("model");
             const searchMode = select.data("search-mode");
             const noExpand = select.data("no-expand");
-            const placeholder = select.data("placeholder");
+            const placeholderText = select.data("placeholder");
+            let placeholder = null;
+
+            if (placeholderText) {
+                placeholder = {
+                    id: null,
+                    text: placeholderText
+                };
+            }
+
             // do not set clear when there is no placeholder to use
             const allowClear = placeholder ? select.data("allow-clear") : null;
             const attrs = {
