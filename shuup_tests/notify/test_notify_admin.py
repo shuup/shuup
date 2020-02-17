@@ -8,12 +8,15 @@
 import pytest, json
 from django import forms
 from django.http.response import Http404
+from django.core.urlresolvers import reverse
+from django.utils.text import force_text
 from django.test.utils import override_settings
 
 from shuup.admin.shop_provider import set_shop
 from shuup.notify.actions.email import SendEmail
 from shuup.notify.admin_module.forms import ScriptItemEditForm
 from shuup.notify.admin_module.views import ScriptEditView, script_item_editor
+from shuup.notify.admin_module.views.delete import ScriptDeleteView
 from shuup.notify.models import Script
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -94,3 +97,28 @@ def test_admin_script_list(rf, admin_user):
 
         response = view(request, pk=script_shop2.id)
         assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_deleting_script(rf, admin_user):
+    shop = factories.get_default_shop()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    script = Script.objects.create(
+        shop=shop,
+        event_identifier="order_received",
+        name="Script 1",
+        enabled=True
+    )
+        
+    delete_url = reverse("shuup_admin:notify.script.delete", kwargs={"pk": script.pk})
+    view = ScriptEditView.as_view()
+    response = view(request, pk=script.pk).render()
+    assert bool(delete_url in force_text(response.content))
+
+    assert Script.objects.count() == 1
+
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    delete_view = ScriptDeleteView.as_view()
+    response = delete_view(request, pk=script.pk)
+    assert response.status_code == 302  # Redirect to list view
+    assert Script.objects.count() == 0
