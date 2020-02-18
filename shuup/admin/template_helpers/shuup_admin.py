@@ -223,3 +223,20 @@ def get_admin_supplier(context):
 @contextfunction
 def is_multiple_suppliers_enabled(context):
     return settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS is True
+
+
+@contextfunction
+def get_logout_url(context):
+    request = context["request"]
+
+    def get_url(url):
+        try:
+            return reverse(url)
+        except NoReverseMatch:
+            return None
+
+    stop_impersonate_url = None
+    if "impersonator_user_id" in request.session:
+        stop_impersonate_url = get_url("shuup_admin:stop-impersonating-staff")
+
+    return (stop_impersonate_url if stop_impersonate_url else get_url("shuup_admin:logout") or "/logout")

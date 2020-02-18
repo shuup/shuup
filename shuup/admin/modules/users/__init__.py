@@ -59,6 +59,11 @@ class UserModule(AdminModule):
                 name="user.login-as"
             ),
             admin_url(
+                "^users/(?P<pk>\d+)/login/staff/$",
+                "shuup.admin.modules.users.views.LoginAsStaffUserView",
+                name="user.login-as-staff"
+            ),
+            admin_url(
                 "^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="user.list_settings"

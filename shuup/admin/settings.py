@@ -88,3 +88,11 @@ SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC = {
 #: Indicates the authentication form class that should be used in login views inside Admin
 #:
 SHUUP_ADMIN_AUTH_FORM_SPEC = ("shuup.admin.forms.EmailAuthenticationForm")
+
+#: To which view redirect impersonator when login as regular user
+#:
+SHUUP_ADMIN_LOGIN_AS_REDIRECT_VIEW = "shuup:index"
+
+#: To which view redirect impersonator when login as staff
+#:
+SHUUP_ADMIN_LOGIN_AS_STAFF_REDIRECT_VIEW = "shuup_admin:dashboard"
