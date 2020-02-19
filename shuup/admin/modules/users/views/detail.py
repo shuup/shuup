@@ -48,10 +48,19 @@ NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _("""
 def get_front_url():
     front_url = None
     try:
-        front_url = reverse("shuup:index")
+        front_url = reverse(django_settings.SHUUP_ADMIN_LOGIN_AS_REDIRECT_VIEW)
     except NoReverseMatch:
         front_url = None
     return front_url
+
+
+def get_admin_url():
+    admin_url = None
+    try:
+        admin_url = reverse(django_settings.SHUUP_ADMIN_LOGIN_AS_STAFF_REDIRECT_VIEW)
+    except NoReverseMatch:
+        admin_url = None
+    return admin_url
 
 
 class BaseUserForm(forms.ModelForm):
@@ -208,11 +217,20 @@ class UserDetailToolbar(Toolbar):
             getattr(current_user, "is_superuser", False) or
             getattr(current_user, "is_staff", False)
         )
-        if (is_current_user_superuser_or_staff and get_front_url() and
-                user.is_active and not user.is_superuser and not user.is_staff):
+        can_impersonate = bool(
+            is_current_user_superuser_or_staff and user.is_active and not user.is_superuser
+        )
+
+        if (can_impersonate and get_front_url() and not user.is_staff):
             self.append(PostActionButton(
                 post_url=reverse("shuup_admin:user.login-as", kwargs={"pk": user.pk}),
                 text=_(u"Login as User"),
+                extra_css_class="btn-gray"
+            ))
+        elif (can_impersonate and get_admin_url() and user.is_staff):
+            self.append(PostActionButton(
+                post_url=reverse("shuup_admin:user.login-as-staff", kwargs={"pk": user.pk}),
+                text=_(u"Login as Staff User"),
                 extra_css_class="btn-gray"
             ))
         # TODO: Add extensibility
@@ -333,8 +351,8 @@ class UserDetailView(CreateOrUpdateView):
         return super(UserDetailView, self).dispatch(request, *args, **kwargs)
 
 
-def _check_for_login_as_problems(front_url, impersonator_user, user):
-    if not front_url:
+def _check_for_login_as_problems(redirect_url, impersonator_user, user):
+    if not redirect_url:
         raise Problem(_("No shop configured."))
     if user == impersonator_user:
         raise Problem(_("You are already logged in."))
@@ -342,8 +360,10 @@ def _check_for_login_as_problems(front_url, impersonator_user, user):
         raise Problem(_("This user is not active."))
 
 
-def _check_for_login_as_permissions(shop, impersonator_user, user):
-    if getattr(user, "is_superuser", False) or getattr(user, "is_staff", False):
+def _check_for_login_as_permissions(shop, impersonator_user, user, permission_str, can_impersonate_staff=False):
+    if getattr(user, "is_superuser", False):
+        raise PermissionDenied
+    if getattr(user, "is_staff", False) and not can_impersonate_staff:
         raise PermissionDenied
     if not (getattr(impersonator_user, "is_superuser", False) or getattr(impersonator_user, "is_staff", False)):
         raise PermissionDenied
@@ -352,23 +372,29 @@ def _check_for_login_as_permissions(shop, impersonator_user, user):
         shop.staff_members.filter(id=impersonator_user.pk).exists()
     ):
         raise PermissionDenied
-    if not has_permission(impersonator_user, "user.login-as"):
+    if not has_permission(impersonator_user, permission_str):
         raise PermissionDenied
 
 
 class LoginAsUserView(DetailView):
     model = get_user_model()
+    can_impersonate_staff = False
+    permission_str = "user.login-as"
+
+    def get_url(self):
+        return get_front_url()
 
     def post(self, request, *args, **kwargs):
-        front_url = get_front_url()
+        redirect_url = self.get_url()
         user = self.get_object()
         username_field = self.model.USERNAME_FIELD
         impersonator_user = request.user
         impersonator_user_id = request.user.pk
         shop = get_shop(request)
 
-        _check_for_login_as_problems(front_url, impersonator_user, user)
-        _check_for_login_as_permissions(shop, impersonator_user, user)
+        _check_for_login_as_problems(redirect_url, impersonator_user, user)
+        _check_for_login_as_permissions(
+            shop, impersonator_user, user, self.permission_str, self.can_impersonate_staff)
 
         if not hasattr(user, 'backend'):
             for backend in django_settings.AUTHENTICATION_BACKENDS:
@@ -380,4 +406,13 @@ class LoginAsUserView(DetailView):
         request.session["impersonator_user_id"] = impersonator_user_id
         message = _("You're now logged in as {username}").format(username=user.__dict__[username_field])
         messages.success(request, message)
-        return HttpResponseRedirect(front_url)
+        return HttpResponseRedirect(redirect_url)
+
+
+class LoginAsStaffUserView(LoginAsUserView):
+    model = get_user_model()
+    can_impersonate_staff = True
+    permission_str = "user.login-as-staff"
+
+    def get_url(self):
+        return get_admin_url()

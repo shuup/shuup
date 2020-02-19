@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import json
 
-from mock import patch
-
 import pytest
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user, get_user_model
@@ -18,15 +16,19 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.forms.models import modelform_factory
 from django.http.response import Http404
+from django.test import override_settings
 from django.utils.encoding import force_text
+from mock import patch
+from rest_framework.serializers import raise_errors_on_nested_writes
 
 from shuup.admin.modules.users.views import (
-    LoginAsUserView, UserChangePermissionsView, UserDetailView, UserListView
+    LoginAsStaffUserView, LoginAsUserView, UserChangePermissionsView,
+    UserDetailView, UserListView
 )
-from shuup.admin.modules.users.views.permissions import (
-    PermissionChangeFormBase
-)
+from shuup.admin.modules.users.views.permissions import PermissionChangeFormBase
+from shuup.admin.template_helpers.shuup_admin import get_logout_url
 from shuup.admin.utils.permissions import set_permissions_for_group
+from shuup.admin.views.impersonate import stop_impersonating_staff
 from shuup.core.models import Contact, get_person_contact
 from shuup.testing.factories import (
     create_random_person, get_default_permission_group, get_default_shop,
@@ -70,6 +72,59 @@ def test_user_detail_works_at_all(rf, admin_user):
     # non superusers can't see superusers
     with pytest.raises(Http404):
         view_func(apply_request_middleware(rf.get("/"), user=user), pk=admin_user.pk)
+
+
+@pytest.mark.django_db
+def test_user_detail_and_login_as_url(rf, admin_user):
+    shop = get_default_shop()
+    user = get_user_model().objects.create(
+        username=printable_gibberish(20),
+        first_name=printable_gibberish(10),
+        last_name=printable_gibberish(10),
+        password="suihkuunheti"
+    )
+    view_func = UserDetailView.as_view()
+    response = view_func(apply_request_middleware(rf.get("/"), user=admin_user), pk=user.pk)
+    assert response.status_code == 200
+    response.render()
+    assert force_text(user) in force_text(response.content)
+    login_as_url = reverse("shuup_admin:user.login-as", kwargs={"pk": user.pk})
+    assert force_text(login_as_url) in force_text(response.content)
+
+    with override_settings(SHUUP_ADMIN_LOGIN_AS_REDIRECT_VIEW="giberish"):
+        response = view_func(apply_request_middleware(rf.get("/"), user=admin_user), pk=user.pk)
+        assert response.status_code == 200
+        response.render()
+        assert force_text(user) in force_text(response.content)
+        login_as_url = reverse("shuup_admin:user.login-as", kwargs={"pk": user.pk})
+        assert force_text(login_as_url) not in force_text(response.content)
+
+
+@pytest.mark.django_db
+def test_user_detail_as_staff_and_login_as_url(rf, admin_user):
+    shop = get_default_shop()
+    user = get_user_model().objects.create(
+        username=printable_gibberish(20),
+        first_name=printable_gibberish(10),
+        last_name=printable_gibberish(10),
+        password="suihkuunheti",
+        is_staff=True
+    )
+    view_func = UserDetailView.as_view()
+    response = view_func(apply_request_middleware(rf.get("/"), user=admin_user), pk=user.pk)
+    assert response.status_code == 200
+    response.render()
+    assert force_text(user) in force_text(response.content)
+    login_as_staff_url = reverse("shuup_admin:user.login-as-staff", kwargs={"pk": user.pk})
+    assert force_text(login_as_staff_url) in force_text(response.content)
+
+    with override_settings(SHUUP_ADMIN_LOGIN_AS_STAFF_REDIRECT_VIEW="giberish"):
+        response = view_func(apply_request_middleware(rf.get("/"), user=admin_user), pk=user.pk)
+        assert response.status_code == 200
+        response.render()
+        assert force_text(user) in force_text(response.content)
+        login_as_staff_url = reverse("shuup_admin:user.login-as-staff", kwargs={"pk": user.pk})
+        assert force_text(login_as_staff_url) not in force_text(response.content)
 
 
 @pytest.mark.django_db
@@ -413,3 +468,73 @@ def test_login_as_user(rf, admin_user, regular_user):
     response = view_func(request, pk=regular_user.pk)
     assert response["location"] == reverse("shuup:index")
     assert get_user(request) == regular_user
+
+
+@pytest.mark.django_db
+def test_login_as_staff_user(rf, admin_user):
+    get_default_shop()
+    staff_user = UserFactory(is_staff=True)
+    view_func = LoginAsStaffUserView.as_view()
+    
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    context = dict(request=request)
+    assert get_logout_url(context) == "/sa/logout/"
+    response = view_func(request, pk=staff_user.pk)
+    assert response["location"] == reverse("shuup_admin:dashboard")
+    assert get_user(request) == staff_user
+    assert get_logout_url(context) == "/sa/stop-impersonating-staff/"
+
+    # Stop impersonating and since admin user have all access he should
+    # be in user detail for staff user
+    response = stop_impersonating_staff(request)
+    assert response["location"] == reverse("shuup_admin:user.detail", kwargs={"pk": staff_user.pk})
+    assert get_user(request) == admin_user
+
+
+@pytest.mark.django_db
+def test_login_as_staff_without_front_url(rf, admin_user, regular_user):
+    get_default_shop()
+    staff_user = UserFactory(is_staff=True)
+    view_func = LoginAsStaffUserView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+
+    def get_none():
+        return None
+
+    with patch("shuup.admin.modules.users.views.detail.get_admin_url", side_effect=get_none):
+        with pytest.raises(Problem):
+            view_func(request, pk=staff_user.pk)
+
+
+@pytest.mark.django_db
+def test_login_as_staff_as_staff(rf):
+    """
+    Staff user 1 tries to impersonat staff user 2
+    """
+    shop = get_default_shop()
+    staff_user1 = UserFactory(is_staff=True)
+    permission_group =  get_default_permission_group()
+    staff_user1.groups.add(permission_group)
+    shop.staff_members.add(staff_user1)
+
+    staff_user2 = UserFactory(is_staff=True)
+    
+    view_func = LoginAsStaffUserView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=staff_user1)
+    with pytest.raises(PermissionDenied):
+        view_func(request, pk=staff_user2.pk)
+
+    set_permissions_for_group(permission_group, ["user.login-as-staff"])
+
+    response = view_func(request, pk=staff_user2.pk)
+    assert response["location"] == reverse("shuup_admin:dashboard")
+    assert get_user(request) == staff_user2
+
+    # Stop impersonating and since staff1 does not have user detail permission
+    # he/she should find him/herself from dashboard
+    response = stop_impersonating_staff(request)
+    assert response["location"] == reverse("shuup_admin:dashboard")
+    assert get_user(request) == staff_user1
+
+    response = stop_impersonating_staff(request)
+    assert response.status_code == 403
