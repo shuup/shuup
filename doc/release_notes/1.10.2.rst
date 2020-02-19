@@ -1,0 +1,7 @@
+Shuup 1.10.2 Release Notes
+==========================
+
+Released on 2020-02-19 10:05pm +0200.
+
+List of changes see `Git commit log
+<https://github.com/shuup/shuup/commits/v1.10.2>`__.
