@@ -58,10 +58,10 @@ ShipmentCreatedEmailScriptTemplate = generic_send_email_script_template_factory(
     name=_("Send Shipment Created Email"),
     description=_("Send an email to customer when a shipment is created."),
     help_text=_("This script will send an email to customer when a shipment of his order has been created."),
-    initial=dict(
-        subject=_("{{ order.shop }} - Shipment created for order {{ order.identifier }}"),
-        body=SHIPMENT_CREATED_EMAIL_TEMPLATE
-    )
+    initial={
+        "en-subject": _("{{ order.shop }} - Shipment created for order {{ order.identifier }}"),
+        "en-body": SHIPMENT_CREATED_EMAIL_TEMPLATE
+    }
 )
 
 ShipmentDeletedEmailScriptTemplate = generic_send_email_script_template_factory(
@@ -71,9 +71,9 @@ ShipmentDeletedEmailScriptTemplate = generic_send_email_script_template_factory(
     description=_("Send email when a shipment is deleted."),
     help_text=_("This script will send an email to customer or to any configured email "
                 "right after a shipment gets deleted."),
-    initial=dict(
-        subject=_("{{ order.shop }} - Shipment deleted for order {{ order.identifier }}")
-    )
+    initial={
+        "en-subject": _("{{ order.shop }} - Shipment deleted for order {{ order.identifier }}")
+    }
 )
 
 PaymentCreatedEmailScriptTemplate = generic_send_email_script_template_factory(
@@ -83,9 +83,9 @@ PaymentCreatedEmailScriptTemplate = generic_send_email_script_template_factory(
     description=_("Send email to customer when a payment is created."),
     help_text=_("This script will send an email to customer or to any configured email "
                 "right after a payment gets created."),
-    initial=dict(
-        subject=_("{{ order.shop }} - Payment created for order {{ order.identifier }}")
-    )
+    initial={
+        "en-subject": _("{{ order.shop }} - Payment created for order {{ order.identifier }}")
+    }
 )
 
 RefundCreatedEmailScriptTemplate = generic_send_email_script_template_factory(
@@ -95,9 +95,9 @@ RefundCreatedEmailScriptTemplate = generic_send_email_script_template_factory(
     description=_("Send email when a refund is created."),
     help_text=_("This script will send an email to customer or to any configured email "
                 "right after a refund gets created."),
-    initial=dict(
-        subject=_("{{ order.shop }} - Refund created for order {{ order.identifier }}")
-    )
+    initial={
+        "en-subject": _("{{ order.shop }} - Refund created for order {{ order.identifier }}")
+    }
 )
 
 OrderConfirmationEmailScriptTemplate = generic_send_email_script_template_factory(
@@ -108,8 +108,8 @@ OrderConfirmationEmailScriptTemplate = generic_send_email_script_template_factor
     help_text=_("This script will send an email to customer or to any configured email right after an "
                 "order is created. The order contents can be put on email body as well as other "
                 "informations like shipping method and payment method."),
-    initial=dict(
-        subject=ORDER_CONFIRMATION["subject"],
-        body=linebreaksbr(template_loader.get_template(ORDER_CONFIRMATION["body_template"]).render())
-    )
+    initial={
+        "en-subject": ORDER_CONFIRMATION["subject"],
+        "en-body": linebreaksbr(template_loader.get_template(ORDER_CONFIRMATION["body_template"]).render())
+    }
 )

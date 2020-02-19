@@ -100,9 +100,9 @@ RegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_fac
     description=_("Send email when a user registers."),
     help_text=_("This script will send an email to the user or to any configured email "
                 "right after a user get registered."),
-    initial=dict(
-        subject=_("{{ order.shop }} - Welcome!")
-    )
+    initial={
+        "en-subject": _("{{ order.shop }} - Welcome!")
+    }
 )
 
 CompanyRegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_factory(
@@ -112,9 +112,9 @@ CompanyRegistrationReceivedEmailScriptTemplate = generic_send_email_script_templ
     description=_("Send email when a user registers as a company."),
     help_text=_("This script will send an email to the user or to any configured email "
                 "right after a user get registered."),
-    initial=dict(
-        subject=_("{{ order.shop }} - Welcome!")
-    )
+    initial={
+        "en-subject": _("{{ order.shop }} - Welcome!")
+    }
 )
 
 CompanyActivatedEmailScriptTemplate = generic_send_email_script_template_factory(
@@ -124,7 +124,7 @@ CompanyActivatedEmailScriptTemplate = generic_send_email_script_template_factory
     description=_("Notify company's contact person that company account is activated"),
     help_text=_("This script will send an email to the user or to any configured email "
                 "right after a company is activated."),
-    initial=dict(
-        subject=_("{{ order.shop }} - Welcome!")
-    )
+    initial={
+        "en-subject": _("{{ order.shop }} - Welcome!")
+    }
 )
