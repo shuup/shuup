@@ -54,13 +54,38 @@
 
     .message {
         margin-top: 0.5em;
-        padding: 1em 1.2em;
+        padding: 1em;
         box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
         border-radius: 3px;
         background-color: $info;
         line-height: 2rem;
 
-        &:before {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .content {
+            text-align: left;
+            flex: 1;
+            max-width: 280px;
+            line-height: 1.5;
+            margin: 0 5px;
+        }
+
+        .dimiss-icon {
+            cursor: pointer;
+            &:before {
+                display: inline-block;
+                font-family: FontAwesome;
+                margin-right: 8px;
+                font-size: 1.2rem;
+                vertical-align: bottom;
+                content: $fa-var-times; //Font Awesome "times" variable
+            }
+        }
+
+        .status:before {
             display: inline-block;
             font-family: FontAwesome;
             margin-right: 8px;
@@ -70,7 +95,7 @@
         &.success {
             background-color: $success;
 
-            &:before {
+            .status:before {
                 content: $fa-var-check; //Font Awesome "check" variable
             }
         }
@@ -78,7 +103,7 @@
         &.warning {
             background-color: $warning;
 
-            &:before {
+            .status:before {
                 content: $fa-var-warning; //Font Awesome "warning" variable
             }
         }
@@ -86,9 +111,13 @@
         &.error {
             background-color: $danger;
 
-            &:before {
-                content: $fa-var-times-circle; //Font Awesome "times-circle" variable
+            .status:before {
+                content: $fa-var-exclamation-circle; //Font Awesome "exclamation-circle" variable
             }
+        }
+
+        &.dimissed {
+            display: none;
         }
     }
 }
