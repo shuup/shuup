@@ -54,9 +54,21 @@ window.Messages = (function Messages(document) {
         }
         messageDiv.className = "message " + tags.join(" ");
         const textSpan = document.createElement("span");
+        textSpan.className = "content";
         const textNode = document.createTextNode(message.text || "no text");
         textSpan.appendChild(textNode);
+
+        const dismissIcon = document.createElement("span");
+        dismissIcon.className = "dimiss-icon";
+        dismissIcon.addEventListener("click", function () {
+            messageDiv.classList.add("dimissed");
+        });
+        const statucIcon = document.createElement("span");
+        statucIcon.className = "status";
+
+        messageDiv.appendChild(statucIcon);
         messageDiv.appendChild(textSpan);
+        messageDiv.appendChild(dismissIcon);
         return messageDiv;
     }
     function flush() {
