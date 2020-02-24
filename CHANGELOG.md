@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Changed
+
+- Improve the admin modals to use flexbox and work better on small devices
+
+### Fixed
+
+- Picotable: render the filters button on small devices,
+even when there is no data, to allow resetting filters
+
 ## [1.10.4] - 2020-02-22
 
 ### Changed

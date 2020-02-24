@@ -491,6 +491,8 @@ const Picotable = (function (m, storage) {
         var data = ctrl.vm.data();
         if (data === null) {  // Not loaded, don't return anything
             return;
+        } else if (data.items.length === 0) {
+            return;
         }
 
         // Set default filter values
@@ -605,7 +607,7 @@ const Picotable = (function (m, storage) {
                         onclick: function () {
                             ctrl.vm.showMobileFilterSettings(false);
                         }
-                    }, "Done"),
+                    }, gettext("Done")),
                 ]),
                 m("div.mobile-filters-content", filters)
             ])
@@ -940,15 +942,16 @@ const Picotable = (function (m, storage) {
         const data = ctrl.vm.data();
         if (data === null) return;
 
-        const showEmptyState = (ctrl) => {
+        const showEmptyState = (ictrl) => {
+            const content = [
+                (ictrl.vm.renderMode() === "mobile" ? renderMobileTable(ictrl) : renderTable(ictrl)),
+            ];
             if (data.items.length > 0) {
-                return [
-                    (ctrl.vm.renderMode() === "mobile" ? renderMobileTable(ctrl) : renderTable(ctrl)),
-                    renderFooter(ctrl)
-                ];
+                content.push(renderFooter(ictrl));
             } else {
-                return renderEmptyState(ctrl);
+                content.push(renderEmptyState(ictrl));
             }
+            return content;
         };
 
         return m("div.table-view", [

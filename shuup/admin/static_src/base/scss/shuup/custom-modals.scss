@@ -1,4 +1,5 @@
 .shuup-modal-bg {
+    overflow: hidden;
     background: rgba(0,0,0,0.5);
     position: fixed;
     top: 0;
@@ -7,9 +8,9 @@
     bottom: 0;
     z-index: 2000;
     animation: fadeInAnim 0.3s;
+    padding: 15px;
 
     @include media-breakpoint-down(sm) {
-        padding: 0px 15px;
         overflow: auto;
     }
 }
@@ -18,15 +19,16 @@
     background: #fff;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
     animation: fadeInAnim 0.6s;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
     @include media-breakpoint-down(sm) {
         border-radius: 4px;
-        margin: 15px auto;
-        height: 80%;
     }
 
     @include media-breakpoint-up(md) {
-        overflow: auto;
         position: absolute;
         top: 30px;
         bottom: 30px;
