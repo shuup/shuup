@@ -199,7 +199,7 @@ window.VariationVariableEditor = (function(m, _) {
         var variablesDiv = null;
         var newVariationTemplate = m("button.btn.btn-success", {   onclick: (event) => {
                 event.preventDefault();
-                document.getElementById("step-item-wrapper").style.display = "block";
+                document.getElementById("step-item-wrapper").style.display = "flex";
                 var nameField = document.getElementById("id_variables-template_name")
                 nameField.required = true;
                 document.getElementById("template-cancel-btn").onclick = function () {

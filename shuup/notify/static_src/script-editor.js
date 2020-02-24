@@ -80,7 +80,7 @@ function Controller() {
     };
     ctrl.setStepItemEditorState = function(state) {
         if (state) {
-            document.getElementById("step-item-wrapper").style.display = "block";
+            document.getElementById("step-item-wrapper").style.display = "flex";
         } else {
             document.getElementById("step-item-wrapper").style.display = "none";
             document.getElementById("step-item-frame").src = "about:blank";
