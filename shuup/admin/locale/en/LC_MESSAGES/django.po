@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-14 18:02+0000\n"
+"POT-Creation-Date: 2020-02-24 14:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1643,6 +1643,9 @@ msgid "Deactivate User"
 msgstr ""
 
 msgid "Login as User"
+msgstr ""
+
+msgid "Login as Staff User"
 msgstr ""
 
 #, python-format
