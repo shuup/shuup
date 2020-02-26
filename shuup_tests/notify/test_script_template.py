@@ -23,6 +23,7 @@ from shuup.front.notify_script_templates.generics import (
 from shuup.notify.admin_module.views import (
     ScriptTemplateConfigView, ScriptTemplateEditView, ScriptTemplateView
 )
+from shuup.notify.script_templates import PasswordResetTemplate
 from shuup.notify.models import Script
 from shuup.simple_supplier.notify_events import AlertLimitReached
 from shuup.simple_supplier.notify_script_template import (
@@ -76,7 +77,8 @@ def _assert_stock_alert_limit_script(script, data):
     RefundCreatedEmailScriptTemplate,
     ShipmentCreatedEmailScriptTemplate,
     ShipmentDeletedEmailScriptTemplate,
-    RegistrationReceivedEmailScriptTemplate
+    RegistrationReceivedEmailScriptTemplate,
+    PasswordResetTemplate
 ])
 def test_generic_script_template_manual(script_template_cls):
     shop = get_default_shop()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2020-02-26 19:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -42,19 +42,25 @@ msgstr ""
 msgid "Content type"
 msgstr ""
 
-msgid "From email"
-msgstr ""
-
-msgid ""
-"The from email to be used. It can either be binded to a variable or be a "
-"constant like support@store.com or even \"Store Support\" <support@store."
-"com>."
-msgstr ""
-
 msgid "Recipient"
 msgstr ""
 
 msgid "Reply-To"
+msgstr ""
+
+msgid "Carbon Copy (CC)"
+msgstr ""
+
+msgid "Blind Carbon Copy (BCC)"
+msgstr ""
+
+msgid "From email"
+msgstr ""
+
+msgid ""
+"Override the default from email to be used. It can either be binded to a "
+"variable or be a constant like support@store.com or even \"Store Support\" "
+"<support@store.com>."
 msgstr ""
 
 msgid "Language"
@@ -109,6 +115,10 @@ msgstr ""
 msgid "This field is missing content"
 msgstr ""
 
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
 msgid "Edit Script Contents"
 msgstr ""
 
@@ -116,6 +126,13 @@ msgid "Edit Script (advanced)"
 msgstr ""
 
 msgid "Edit Template"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+#, python-format
+msgid "Are you sure you wish to delete %s?"
 msgstr ""
 
 msgid "Save"
@@ -248,6 +265,30 @@ msgstr ""
 msgid "the template identifier used to create this script"
 msgstr ""
 
+msgid "Password Reset"
+msgstr ""
+
+msgid "This event is triggered when password reset is requested."
+msgstr ""
+
+msgid "Site name"
+msgstr ""
+
+msgid "User secret"
+msgstr ""
+
+msgid "User to recover"
+msgstr ""
+
+msgid "Token"
+msgstr ""
+
+msgid "Recovery URL"
+msgstr ""
+
+msgid "To Email"
+msgstr ""
+
 msgid "The subject of the email"
 msgstr ""
 
@@ -279,6 +320,37 @@ msgstr ""
 msgid ""
 "Recipient is a required field when you don't want to send the email to "
 "customer."
+msgstr ""
+
+msgid ""
+"\n"
+"<p>Hi {{ user_to_recover.get_full_name() }},</p>\n"
+"\n"
+"<p>In case you've forgotten, your username is {{ user_to_recover.username }}."
+"</p>\n"
+"<p>You're receiving this email because you requested a password reset for "
+"your user account at {{ site_name }}.</p>\n"
+"<p>Please go to the following page and choose a new password:</p>\n"
+"<br>\n"
+"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
+msgstr ""
+
+msgid "Send Password Reset Link"
+msgstr ""
+
+msgid ""
+"\n"
+"        Send an email to user when their account password reset is "
+"requested\n"
+"    "
+msgstr ""
+
+msgid ""
+"\n"
+"        This script will send an email to user once their account password "
+"reset is\n"
+"        requested either by admin, staff or user.\n"
+"    "
 msgstr ""
 
 msgid "Edit Script Information"

@@ -28,7 +28,12 @@ class ShuupNotifyAppConfig(AppConfig):
             "shuup.notify.actions:SendEmail",
             "shuup.notify.actions:AddNotification",
         ],
-        "notify_event": [],
+        "notify_event": [
+            "shuup.notify.notify_events:PasswordReset",
+        ],
+        "notify_script_template": [
+            "shuup.notify.script_templates:PasswordResetTemplate",
+        ],
         "admin_module": [
             "shuup.notify.admin_module:NotifyAdminModule",
         ]
