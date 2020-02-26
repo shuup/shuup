@@ -43,7 +43,7 @@ def test_reset_admin_user_password(client):
     })
     assert response.status_code == 302
     assert response.get("location")
-    assert response.get("location").endswith(reverse("shuup_admin:login"))
+    assert response.get("location").endswith(reverse("shuup_admin:dashboard"))
     assert len(mail.outbox) == 1
 
     user.refresh_from_db()

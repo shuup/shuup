@@ -14,6 +14,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Admin: fix password recovery success URL
 - Picotable: render the filters button on small devices,
 even when there is no data, to allow resetting filters
 
