@@ -7,6 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import "babel-polyfill";
+import "url-search-params-polyfill";
 import "./language_changer.js";
 import "./navigation.js";
 import "./category.js";

@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Fixed
+
+- Front: keep the current query string parameters as the initial state
+  when refreshing product filters.
+
 ### Changed
 
 - Admin: fix page jumps after reaload
@@ -32,7 +37,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: fix password recovery success URL
 - Picotable: render the filters button on small devices,
-even when there is no data, to allow resetting filters
+  even when there is no data, to allow resetting filters
 
 ## [1.10.4] - 2020-02-22
 
