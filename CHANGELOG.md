@@ -8,12 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Added
+
+- Add option to send notification event at password recovery
+
 ### Changed
 
 - Improve the admin modals to use flexbox and work better on small devices
 
 ### Fixed
 
+- Admin: fix password recovery success URL
 - Picotable: render the filters button on small devices,
 even when there is no data, to allow resetting filters
 

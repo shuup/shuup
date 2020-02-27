@@ -84,6 +84,7 @@ class RequestPasswordForm(RecoverPasswordForm):
     subject_template_name = "shuup/admin/auth/recover_password_mail_subject.jinja"
     email_template_name = "shuup/admin/auth/recover_password_mail_content.jinja"
     from_email = None
+    recover_password_confirm_view_url_name = "shuup_admin:recover_password"
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")

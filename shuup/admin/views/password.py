@@ -45,7 +45,7 @@ class RequestPasswordView(FormView):
 
 class ResetPasswordView(FormView):
     template_name = "shuup/admin/auth/reset_password.jinja"
-    success_url = reverse_lazy("shuup_admin:login")
+    success_url = reverse_lazy("shuup_admin:dashboard")
     token_generator = default_token_generator
 
     def get_form_class(self):

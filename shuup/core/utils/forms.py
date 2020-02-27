@@ -12,6 +12,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail.message import EmailMessage
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import loader
 from django.utils.encoding import force_bytes
@@ -19,6 +20,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Contact, ImmutableAddress, MutableAddress
+from shuup.utils.djangoenv import has_installed
 from shuup.utils.iterables import first
 
 
@@ -95,6 +97,7 @@ class RecoverPasswordForm(forms.Form):
     subject_template_name = "shuup/user/recover_password_mail_subject.jinja"
     email_template_name = "shuup/user/recover_password_mail_content.jinja"
     from_email = None
+    recover_password_confirm_view_url_name = "shuup:recover_password_confirm"
 
     def clean(self):
         data = self.cleaned_data
@@ -134,17 +137,39 @@ class RecoverPasswordForm(forms.Form):
            not user_to_recover.email):
             return False
 
+        uid = urlsafe_base64_encode(force_bytes(user_to_recover.pk))
+        token = self.token_generator.make_token(user_to_recover)
         context = {
             'site_name': getattr(self.request, "shop", _("shop")),
-            'uid': urlsafe_base64_encode(force_bytes(user_to_recover.pk)),
+            'uid': uid,
             'user_to_recover': user_to_recover,
-            'token': self.token_generator.make_token(user_to_recover),
-            'request': self.request,
+            'token': token,
         }
-        subject = loader.render_to_string(self.subject_template_name, context)
-        subject = ''.join(subject.splitlines())  # Email subject *must not* contain newlines
-        body = loader.render_to_string(self.email_template_name, context, request=self.request)
-        email = EmailMessage(from_email=self.from_email, subject=subject, body=body, to=[user_to_recover.email])
-        email.content_subtype = settings.SHUUP_AUTH_EMAIL_CONTENT_SUBTYPE
-        email.send()
+
+        notification_sent = False
+        request = getattr(self, "request", None)
+        if has_installed('shuup.notify') and request and request.shop and self.recover_password_confirm_view_url_name:
+            # Send notification event if any Script enabled
+            from shuup.notify.models import Script
+            from shuup.notify.notify_events import PasswordReset
+            if Script.objects.filter(enabled=True, event_identifier=PasswordReset.identifier).exists():
+                notification_sent = True
+                recovery_url = request.build_absolute_uri(
+                    reverse(self.recover_password_confirm_view_url_name, kwargs=dict(uidb64=uid, token=token))
+                )
+                context.update({'customer_email': user_to_recover.email, 'recovery_url': recovery_url})
+                try:
+                    PasswordReset(**context).run(shop=self.request.shop)
+                    notification_sent = True
+                except:
+                    notification_sent = False
+
+        if not notification_sent:
+            context.update({'request': self.request})
+            subject = loader.render_to_string(self.subject_template_name, context)
+            subject = ''.join(subject.splitlines())  # Email subject *must not* contain newlines
+            body = loader.render_to_string(self.email_template_name, context, request=self.request)
+            email = EmailMessage(from_email=self.from_email, subject=subject, body=body, to=[user_to_recover.email])
+            email.content_subtype = settings.SHUUP_AUTH_EMAIL_CONTENT_SUBTYPE
+            email.send()
         return True
