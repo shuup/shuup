@@ -47,7 +47,7 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on'))
     modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_('modified on'))
     identifier = InternalIdentifierField(unique=True)
-    name = models.CharField(verbose_name=_("name"), max_length=64, db_index=True, help_text=_(
+    name = models.CharField(verbose_name=_("name"), max_length=128, db_index=True, help_text=_(
         "The product suppliers name. "
         "Suppliers can be used manage the inventory of stocked products."
     ))
