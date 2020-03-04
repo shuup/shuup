@@ -8,7 +8,7 @@
 from django.core.urlresolvers import reverse
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
-from registration.signals import user_registered
+from registration.signals import user_registered, user_activated
 
 from shuup.core.models import get_person_contact, PersonContact
 from shuup.notify.base import Event, Variable
@@ -24,6 +24,11 @@ class RegistrationReceived(Event):
     customer_email = Variable(_("Customer Email"), type=Email)
     activation_url = Variable(_("Activation URL"), type=URL, required=False)
     user_is_active = Variable(_("Is User Active"), type=Boolean)
+
+
+class AccountApproved(RegistrationReceived):
+    identifier = "account_approved"
+    name = _("Account Approved")
 
 
 class CompanyRegistrationReceived(RegistrationReceived):
@@ -59,6 +64,21 @@ def send_user_registered_notification(user, request, **kwargs):
         customer=customer,
         customer_email=email,
         activation_url=activation_url,
+        user_is_active=user.is_active,
+    )
+    event.run(shop=request.shop)
+
+
+@receiver(user_activated)
+def test(user, request, **kwargs):
+    cls = AccountApproved
+
+    customer = get_person_contact(user)
+    email = user.email
+
+    event = cls(
+        customer=customer,
+        customer_email=email,
         user_is_active=user.is_active,
     )
     event.run(shop=request.shop)
@@ -102,6 +122,18 @@ RegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_fac
                 "right after a user get registered."),
     initial={
         "en-subject": _("{{ order.shop }} - Welcome!")
+    }
+)
+
+AccountActivationEmailScriptTemplate = generic_send_email_script_template_factory(
+    identifier="account_activation_email",
+    event=AccountApproved,
+    name=_("Send Account Activation Mail"),
+    description=_("Send email when admin or company has accepted the account"),
+    help_text=_("This script will send an email to the user or to any configured email "
+                "right after the account has been activated"),
+    initial={
+        "en-subject": _("{{ customer.username }} is now actvie!")
     }
 )
 
