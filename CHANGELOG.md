@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Changed
+
+- Change name of class to be correct so the admin menu loads correctly
+
 ## [1.10.6] - 2020-02-28
 
 ### Changed
