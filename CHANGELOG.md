@@ -10,7 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
-- Added ability to create notification that send a mail when account get activated from link
+- Added ability to create notification that send a mail when account get activated
 
 ## [1.10.6] - 2020-02-28
 
