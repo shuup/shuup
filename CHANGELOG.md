@@ -10,7 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
-- Change name of class to be correct so the admin menu loads correctly
+- Admin: fix page jumps after reaload
 
 ## [1.10.6] - 2020-02-28
 
