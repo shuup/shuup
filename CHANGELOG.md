@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
-- Admin: fix page jumps after selecting tabs
+### Changed
+
+- Admin: fix page jumps after reaload
 
 ## [1.10.6] - 2020-02-28
 
