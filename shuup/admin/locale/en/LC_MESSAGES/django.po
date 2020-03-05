@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 14:35+0000\n"
+"POT-Creation-Date: 2020-04-23 21:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -351,6 +351,12 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
+msgid "Login as User"
+msgstr ""
+
+msgid "Login as Staff User"
+msgstr ""
+
 msgid "Edit"
 msgstr ""
 
@@ -380,6 +386,9 @@ msgid "Person"
 msgstr ""
 
 msgid "Company"
+msgstr ""
+
+msgid "Staff"
 msgstr ""
 
 msgid "Email"
@@ -1436,9 +1445,6 @@ msgid ""
 "products."
 msgstr ""
 
-msgid "Staff"
-msgstr ""
-
 msgid "Select staff members for this shop."
 msgstr ""
 
@@ -1640,12 +1646,6 @@ msgid "Activate User"
 msgstr ""
 
 msgid "Deactivate User"
-msgstr ""
-
-msgid "Login as User"
-msgstr ""
-
-msgid "Login as Staff User"
 msgstr ""
 
 #, python-format

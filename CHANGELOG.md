@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Added
+
+- Admin: Ability to login as the selected contact if it's a user
+
+### Fixed
+
+- Admin: Now when activating/deactivating user it's contact will also change
+
 ## [1.10.11] - 2020-04-23
 
 ### Fixed
