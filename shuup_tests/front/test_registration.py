@@ -18,8 +18,9 @@ from django.test.utils import override_settings
 from shuup import configuration
 from shuup.admin.modules.contacts.views import ContactDetailView
 from shuup.apps.provides import override_provides
-from shuup.core.models import CompanyContact, PersonContact
+from shuup.core.models import CompanyContact, PersonContact, get_person_contact
 from shuup.front.apps.customer_information.views import CompanyEditView
+from shuup.front.apps.registration.signals import user_reactivated
 from shuup.front.apps.registration.forms import (
     CompanyRegistrationForm, PersonRegistrationForm
 )
@@ -659,3 +660,70 @@ def test_provider_provides_definitions(rf, admin_user):
             assert User.objects.filter(username="changed_username").exists()
             assert CompanyContact.objects.filter(name="changed_name").exists()
             company_registration_save.disconnect(dispatch_uid="test_registration_change_company_signal")
+
+
+@pytest.mark.django_db
+def test_account_reactivation_mail(client):
+    shop = get_default_shop()
+    Script.objects.create(
+        event_identifier="account_reactivation",
+        name="Send account reactivation email",
+        enabled=True,
+        shop=shop,
+        template="account_reactivated",
+        _step_data=[
+            {
+                "conditions":[],
+                "actions":[
+                    {
+                        "identifier":"send_email",
+                        "template_data":{
+                            "base":{
+                                "content_type":"html",
+                                "subject":"",
+                                "body":""
+                            },
+                            "en":{
+                                "content_type":"html",
+                                "subject":"Welcome back {{ customer.name }}",
+                                "body":"<p>Hello your account is now active again <code>{{ customer_email }}</code></p>"
+                            }
+                        },
+                        "language":{
+                            "variable":"language"
+                        },
+                        "fallback_language":{
+                            "constant":"en"
+                        },
+                        "recipient":{
+                            "variable":"customer_email"
+                        }
+                    }
+                ],
+                "next":"stop",
+                "cond_op":"all",
+                "enabled":True
+            }
+        ],
+    )
+
+    response = client.post(reverse("shuup:registration_register"), data={
+        "username": username,
+        "email": email,
+        "password1": "password",
+        "password2": "password",
+    }, follow=True)
+    response.shop = shop
+
+    user = get_user_model().objects.get(username=username)
+    mail.outbox = []
+
+    user_reactivated.send(sender=__name__, user=user, request=response)
+
+    reActivMail = mail.outbox[0]
+    customer = get_person_contact(user)
+    assert reActivMail.subject == "Welcome back " + customer.name
+    assert reActivMail.body == (
+        "<p>Hello your account is now active again <code>" + customer.email + "</code></p>"
+    )
+    assert reActivMail.to[0] == customer.email

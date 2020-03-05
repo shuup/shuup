@@ -16,6 +16,8 @@ from shuup.notify.script_template.factory import \
     generic_send_email_script_template_factory
 from shuup.notify.typology import Boolean, Email, Model, URL
 
+from .signals import user_reactivated
+
 
 class RegistrationReceived(Event):
     identifier = "registration_received"
@@ -24,6 +26,11 @@ class RegistrationReceived(Event):
     customer_email = Variable(_("Customer Email"), type=Email)
     activation_url = Variable(_("Activation URL"), type=URL, required=False)
     user_is_active = Variable(_("Is User Active"), type=Boolean)
+
+
+class AccountReactivation(RegistrationReceived):
+    identifier = "account_reactivation"
+    name = _("Account Reactivation")
 
 
 class CompanyRegistrationReceived(RegistrationReceived):
@@ -59,6 +66,20 @@ def send_user_registered_notification(user, request, **kwargs):
         customer=customer,
         customer_email=email,
         activation_url=activation_url,
+        user_is_active=user.is_active,
+    )
+    event.run(shop=request.shop)
+
+
+@receiver(user_reactivated)
+def send_reactivation_notification(user, request, **kwargs):
+    cls = AccountReactivation
+    customer = get_person_contact(user)
+    email = user.email
+
+    event = cls(
+        customer=customer,
+        customer_email=email,
         user_is_active=user.is_active,
     )
     event.run(shop=request.shop)
@@ -102,6 +123,20 @@ RegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_fac
                 "right after a user get registered."),
     initial={
         "en-subject": _("{{ order.shop }} - Welcome!")
+    }
+)
+
+AccountReactivationEmailScriptTemplate = generic_send_email_script_template_factory(
+    identifier="account_reactivated",
+    event=AccountReactivation,
+    name=_("Send account reactivation email"),
+    description=_("Send email when a user account gets reactivated"),
+    help_text=_(
+        "This script will send an email to the user or to any configured email "
+        "when a account get's reactivated"
+    ),
+    initial={
+        "en-subject": _("{{ customer.username }} is now active again!")
     }
 )
 
