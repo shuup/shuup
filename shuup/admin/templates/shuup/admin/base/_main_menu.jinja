@@ -48,14 +48,14 @@
                     {% set is_menu_category_active = shuup_admin.is_menu_category_active(category, request.path, breadcrumbs) %}
                     <li>
                         <a
-                                class="{% if has_children %}item-category {% endif %} d-flex align-items-center mt-3 mb-3{% if is_menu_category_active %} active-item{% endif %}"
+                                class="{% if has_children %}item-category {% endif %}d-flex align-items-center mt-3 mb-3{% if is_menu_category_active %} item-active{% endif %}"
                                 href="{% if only_entry %}{{ only_entry.url }}{% else %}{{ category.url if category.url != None else '#' }}{% endif %}"
                                 data-target-id="category-{{ category.identifier }}"
                         >
                             <i class="item-icon {{ category.icon }}"></i>
                             <span class="item-name parent">{{ category.name }}</span>
                             {% if has_children %}
-                                <i class="ml-auto item-arrow fa fa-chevron-down"></i>
+                                <i class="ml-auto item-arrow fa fa-chevron-down {% if is_menu_category_active %}rotate{% endif %}"></i>
                             {% endif %}
                         </a>
                         <ul class="submenu{% if is_menu_category_active %} active{% endif %}">

@@ -19,7 +19,7 @@ $(function() {
             if ( l > 0 ) {
                 while (i < l) {
                     h = (h << 5) - h + s.charCodeAt(i++) | 0;
-                }       
+                }
             }
 
             if ( h < 0 ) {
@@ -67,8 +67,8 @@ $(function() {
                             key: item.id,
                             href: "#" + item.id,
                             onclick: function() {
-                                ctrl.showSection(item);
                                 window.location.hash = "#" + item.id;
+                                ctrl.showSection(item);
                                 return false;
                             }
                         },
