@@ -27,14 +27,8 @@ if (typeof window.CustomEvent !== "function") {
 window.ProductListScrollTarget = ".products-wrap";
 
 window.refreshFilters = debounce(function refreshFilters(pageNumber = 1) {
-    const pagination = $("ul.pagination");
-    const state = { page: pageNumber || 1 };
-    const currentState = new URLSearchParams(window.location.search);
-
-    for (let key of currentState.keys()) {
-        state[key] = currentState.get(key);
-    }
-
+    var pagination = $("ul.pagination");
+    var state = { page: pageNumber || 1 };
     if (!window.PRODUCT_LIST_FILTERS) {
         return;
     }

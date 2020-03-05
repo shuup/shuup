@@ -13,6 +13,7 @@ from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Manufacturer
+from shuup.admin.urls import admin_url
 
 
 class ManufacturerModule(AdminModule):
@@ -20,7 +21,12 @@ class ManufacturerModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:manufacturer.list")
 
     def get_urls(self):
-        return get_edit_and_list_urls(
+        delete = admin_url(
+            "^manufacture/(?P<pk>\d+)/delete/$",
+            "shuup.admin.modules.manufacturers.views.edit.ManufacturerDeleteView",
+            name="manufacture.delete"
+        )
+        return [delete] + get_edit_and_list_urls(
             url_prefix="^manufacturers",
             view_template="shuup.admin.modules.manufacturers.views.Manufacturer%sView",
             name_template="manufacturer.%s"

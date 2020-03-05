@@ -8,16 +8,21 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.conf import settings
 from django.db.models import Q
+from django.conf import settings
+from django.contrib import messages
+from django.views.generic import DetailView
 from django.utils.encoding import force_text
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminFormNoTranslation
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.shop_provider import get_shop
+from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Manufacturer, Shop
+from shuup.admin.shop_provider import get_shop
 
 
 class ManufacturerForm(ShuupAdminFormNoTranslation):
@@ -71,3 +76,21 @@ class ManufacturerEditView(CreateOrUpdateView):
         kwargs = super(ManufacturerEditView, self).get_form_kwargs()
         kwargs["request"] = self.request
         return kwargs
+
+    def get_toolbar(self):
+        object = self.get_object()
+        delete_url = (
+            reverse_lazy("shuup_admin:manufacture.delete", kwargs={"pk": object.pk})
+            if object.pk else None)
+        return get_default_edit_toolbar(self, self.get_save_form_id(), delete_url=delete_url)
+
+
+class ManufacturerDeleteView(DetailView):
+    model = Manufacturer
+
+    def post(self, request, *args, **kwargs):
+        manufacturer = self.get_object()
+        manufacturer_name = force_text(manufacturer)
+        manufacturer.delete()
+        messages.success(request, _("%s has been deleted.") % manufacturer_name)
+        return HttpResponseRedirect(reverse_lazy("shuup_admin:manufacturer.list"))

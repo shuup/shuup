@@ -8,4 +8,4 @@
 from .edit import ManufacturerEditView
 from .list import ManufacturerListView
 
-__all__ = ["ManufacturerEditView", "ManufacturerListView"]
+__all__ = ["ManufacturerEditView", "ManufacturerListView", "ManufacturerDeleteView"]
