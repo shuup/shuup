@@ -334,6 +334,11 @@ class UserDetailView(CreateOrUpdateView):
 
         self.object.is_active = state
         self.object.save(update_fields=("is_active",))
+
+        if hasattr(self.object, "contact"):
+            self.object.contact.is_active = state
+            self.object.contact.save(update_fields=("is_active",))
+
         messages.success(self.request, _("%(user)s is now %(state)s.") % {
             "user": self.object,
             "state": _("active") if state else _("inactive")
