@@ -23,12 +23,14 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Admin: remove pinned /sa/ URL from scripts to support dynamic admin URLs
 - Front: keep the current query string parameters as the initial state
   when refreshing product filters.
 
 ### Changed
 
 - Admin: fix page jumps after reaload
+- Admin: make browser urls support urls with parameters
 
 ## [1.10.6] - 2020-02-28
 
