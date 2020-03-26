@@ -47,6 +47,14 @@ class MutableAddressForm(forms.ModelForm):
             for prop in properties:
                 setattr(self.fields[field], prop, properties[prop])
 
+        if settings.SHUUP_ADDRESS_EXTRA_COUNTRIES:
+            choices = self.fields["country"].choices
+
+            for choice in settings.SHUUP_ADDRESS_EXTRA_COUNTRIES:
+                choices.append(choice)
+
+            self.fields["country"].choices = sorted(choices, key=lambda tup: tup[1])
+
     def save(self, commit=True):
         if self.instance.pk:
             if isinstance(self.instance, ImmutableAddress) or _is_assigned_multiple_times(self.instance):
