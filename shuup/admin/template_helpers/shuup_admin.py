@@ -102,7 +102,11 @@ def get_browser_urls(request):
     reversed_browser_urls = {}
     for name, urlname in browser_urls.items():
         try:
-            reversed_browser_urls[name] = reverse(urlname)
+            if isinstance(urlname, (tuple, list)):
+                urlname, args, kwargs = urlname
+                reversed_browser_urls[name] = reverse(urlname, args=args, kwargs=kwargs)
+            else:
+                reversed_browser_urls[name] = reverse(urlname)
         except NoReverseMatch:  # This may occur when a module is not available.
             reversed_browser_urls[name] = None
 
