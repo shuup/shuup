@@ -66,7 +66,7 @@ class ScriptEditView(CreateOrUpdateView):
                 text=_("Delete"),
                 icon="fa fa-trash",
                 extra_css_class="btn-danger",
-                confirm=_("Are you sure you wish to delete %s?") % object,
+                confirm=_('Are you sure you wish to delete "%s" notification?') % self.object,
                 required_permissions=("notify.script.delete",)
             ))
 
