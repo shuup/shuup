@@ -140,11 +140,11 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
 
 
 @contextfunction
-def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_only=True):
+def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_only=True, supplier=None):
     request = context["request"]
 
     key, products = context_cache.get_cached_value(
-        identifier="best_selling_products",
+        identifier="best_selling_products_%s" % (supplier.pk if supplier else ""),
         item=cache_utils.get_best_selling_products_cache_item(request.shop),
         context=request,
         n_products=n_products, cutoff_days=cutoff_days,
@@ -154,15 +154,16 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
     if products is not None:
         return products
 
-    products = _get_best_selling_products(cutoff_days, n_products, orderable_only, request)
+    products = _get_best_selling_products(cutoff_days, n_products, orderable_only, request, supplier=supplier)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
-def _get_best_selling_products(cutoff_days, n_products, orderable_only, request):  # noqa (C901)
+def _get_best_selling_products(cutoff_days, n_products, orderable_only, request, supplier=None):  # noqa (C901)
     data = get_best_selling_product_info(
         shop_ids=[request.shop.pk],
-        cutoff_days=cutoff_days
+        cutoff_days=cutoff_days,
+        supplier=supplier
     )
     combined_variation_products = defaultdict(int)
     for product_id, parent_id, qty in data:
@@ -200,7 +201,10 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request)
 
     if orderable_only:
         valid_products = []
-        suppliers = Supplier.objects.enabled().filter(shops=request.shop)
+        if supplier:
+            suppliers = [supplier]
+        else:
+            suppliers = Supplier.objects.enabled().filter(shops=request.shop)
 
         for product in products:
             # this instance should always exist as the listed() queryset uses the current shop as a filter

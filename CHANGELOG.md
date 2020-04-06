@@ -15,6 +15,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Front: Add supplier choice to best selling product context function
 - Admin: allow sorting categories by name
 - Admin: show product orderability errors as list
 
