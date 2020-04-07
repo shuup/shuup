@@ -11,6 +11,50 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: Added option to delete manufacture
 
+## [1.10.10] - 2020-03-24
+
+### Fixed
+
+- Admin: Notification name when deleteing it
+
+### Changed
+
+- Front: Add supplier choice to best selling product context function
+- Admin: allow sorting categories by name
+- Admin: show product orderability errors as list
+
+
+## [1.10.9] - 2020-03-24
+
+### Fixed
+
+- Admin: remove pinned /sa/ URL from scripts to support dynamic admin URLs
+- Admin: Fix graphical (incorrect indent) bug in Product / Stock Management
+
+## [1.10.8] - 2020-03-20
+
+### Changed
+
+- Admin: add spinner and progressbar options components through Bootstrap 4.
+
+### Fixed
+
+- Issue running category filter browser test with Travis
+
+
+## [1.10.7] - 2020-03-09
+
+### Fixed
+
+- Admin: remove pinned /sa/ URL from scripts to support dynamic admin URLs
+- Front: keep the current query string parameters as the initial state
+  when refreshing product filters.
+
+### Changed
+
+- Admin: fix page jumps after reaload
+- Admin: make browser urls support urls with parameters
+
 ## [1.10.6] - 2020-02-28
 
 ### Changed

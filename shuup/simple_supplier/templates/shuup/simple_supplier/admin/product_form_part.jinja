@@ -4,25 +4,27 @@
 
 {%  macro render_product(suppliers, product, product_url, product_qty) %}
     {% if suppliers %}
-        {% if product_qty > 1 %}<h2><a href="{{ product_url }}" target="_blank">{{ product.name }}</a></h2>{% endif %}
-        {% for supplier in suppliers %}
-            <div class="col-12 pl-3 pt-2">
-                <h3>{{ supplier.name }}</h3>
-            </div>
-            <div class="col-3 p-3">
-                {{ ss_form.get_stock_information(supplier, product)|safe }}
-            </div>
-            <div class="col-9">
-                {{ ss_form.get_stock_adjustment_form(supplier, product)|safe }}
-            </div>
-        {% endfor %}
+        <div class="row">
+            {% if product_qty > 1 %}<h2><a href="{{ product_url }}" target="_blank">{{ product.name }}</a></h2>{% endif %}
+            {% for supplier in suppliers %}
+                <div class="col-12 pl-3 pt-2">
+                    <h3>{{ supplier.name }}</h3>
+                </div>
+                <div class="col-3 p-3">
+                    {{ ss_form.get_stock_information(supplier, product)|safe }}
+                </div>
+                <div class="col-9">
+                    {{ ss_form.get_stock_adjustment_form(supplier, product)|safe }}
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
-        <p>
+        <p class="section-description">
             {% trans product_name=product.name, product_url=product_url, module_name=ss_form.module_name -%}
                 Product <a href="{{ product_url }}" target="_blank">{{ product_name }}</a> does not have suppliers with {{ module_name }} module.
             {%- endtrans %}
-            {% trans -%}
-                Please set suppliers at Purchasing section.
+            {% trans module_name=ss_form.module_name -%}
+                Please go in this product's Additional tab section and add enabled Suppliers that have both {{ module_name }} module and stock management enabled.
             {%- endtrans %}
         </p>
     {% endif %}
@@ -32,9 +34,7 @@
     {% set product_qty = ss_form.products|length %}
     {% for product in form.products %}
         {% set product_url = shuup_admin.model_url(product) %}
-        <div class="row">
-            {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
-        </div>
+        {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
     {% endfor %}
 {% endmacro %}
 
@@ -49,7 +49,7 @@
                         No suppliers with {{ module_name }} available.
                     {%- endtrans %}
                     {% trans module_name=ss_form.module_name, supplier_url=shuup_admin.model_url(ss_form.supplier_model, kind="list", default="#") -%}
-                        Please set {{ module_name }} module for at least one of the <a href="{{ supplier_url }}" target="_blank">Suppliers</a>.
+                        Please set {{ module_name }} module for at least one of the enabled <a href="{{ supplier_url }}" target="_blank">Suppliers</a> and enable the stock management for them.
                     {%- endtrans %}
                 </p>
             </div>

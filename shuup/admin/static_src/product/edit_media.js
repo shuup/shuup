@@ -99,7 +99,7 @@ $(function() {
         }
 
         $.ajax({
-            url: "/sa/products/" + productId + "/media/add/",
+            url: window.ShuupAdminConfig.browserUrls.add_media.replace("/99999/", "/" + productId + "/"),
             method: "POST",
             data: {
                 csrfmiddlewaretoken: ShuupAdminConfig.csrf,
