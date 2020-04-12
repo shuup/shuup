@@ -30,7 +30,7 @@ from shuup.utils.i18n import format_money
 
 
 class FilterWidget(forms.SelectMultiple):
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         if value is None:
             value = []
         choices_to_render = []
@@ -43,7 +43,7 @@ class FilterWidget(forms.SelectMultiple):
 
 
 class OneChoiceFilterWidget(forms.Select):
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         if value is None:
             value = []
         choices_to_render = []

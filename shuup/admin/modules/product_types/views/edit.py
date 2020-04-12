@@ -40,7 +40,7 @@ class ProductTypeForm(MultiLanguageModelForm):
     def save(self, commit=True):
         obj = super(ProductTypeForm, self).save(commit=commit)
         obj.attributes.clear()
-        obj.attributes = self.cleaned_data["attributes"]
+        obj.attributes.set(self.cleaned_data["attributes"])
         return self.instance
 
 

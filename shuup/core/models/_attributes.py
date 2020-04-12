@@ -416,8 +416,11 @@ class AttributableMixin(object):
                 target._set_cached_attribute(language, identifier, NoSuchAttributeHere)
 
             for applied_attr in applied_attrs_by_target_id.get(target.id, ()):
-                attribute_descriptor = applied_attr.__class__.attribute
-                setattr(applied_attr, attribute_descriptor.cache_name, attr_map.get(applied_attr.attribute_id))
+                setattr(
+                    applied_attr,
+                    applied_attr.__class__.attribute.field.name,
+                    attr_map.get(applied_attr.attribute_id)
+                )
                 target._set_cached_attribute(language, applied_attr.attribute.identifier, applied_attr)
 
         return targets

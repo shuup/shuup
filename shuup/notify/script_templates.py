@@ -11,11 +11,12 @@ import six
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from shuup.notify.script_template.factory import \
+
+from shuup.notify.script_template.factory import (
     generic_send_email_script_template_factory
+)
 
 from .notify_events import PasswordReset
-
 
 mark_safe_lazy = lazy(mark_safe, six.text_type)
 

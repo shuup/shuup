@@ -135,6 +135,7 @@ def _complete_checkout(client, expected_order_count):
     confirm_path = reverse("shuup:checkout", kwargs={"phase": "confirm"})
     confirm_soup = client.soup(confirm_path)
     data = extract_form_fields(confirm_soup)
+    data['accept_terms'] = True
     assert client.post(confirm_path, data=data).status_code == 302  # Should redirect forth
 
     n_orders_post = Order.objects.count()

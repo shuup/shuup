@@ -13,12 +13,6 @@ from shuup.core.models import Shop
 from shuup.utils.django_compat import MiddlewareMixin
 from shuup.xtheme import get_current_theme
 
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:
-    MiddlewareMixin = object
-
-
 log = logging.getLogger(__name__)
 
 

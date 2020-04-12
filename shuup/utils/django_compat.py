@@ -8,18 +8,20 @@
 import django
 
 try:
+    from django.urls.resolvers import RegexPattern
     from django.urls import (
         clear_url_caches, get_callable, get_resolver, get_urlconf,
         NoReverseMatch, resolve, Resolver404, reverse,
-        reverse_lazy, set_urlconf, URLPattern, URLResolver
+        reverse_lazy, set_urlconf, URLResolver, URLPattern
     )
 except ImportError:
     from django.core.urlresolvers import (  # noqa (F401)
         clear_url_caches, get_callable, get_resolver, get_urlconf,
-        NoReverseMatch, RegexURLPattern as URLPattern,
+        NoReverseMatch, RegexURLPattern as RegexPattern,
         RegexURLResolver as URLResolver, resolve, Resolver404,
         reverse, reverse_lazy, set_urlconf
     )
+    URLPattern = RegexPattern
 
 
 try:

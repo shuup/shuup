@@ -196,7 +196,7 @@ def fill_address_inputs(soup, address, with_company=False):
                 value = "test%d@example.shuup.com" % random.random()
             if not value:
                 value = "test"
-        inputs[key] = value
+        inputs[key] = value or ''   # prevent None as data
 
     if with_company:
         inputs["company-tax_number"] = "FI1234567-1"
@@ -278,6 +278,7 @@ def test_basic_order_flow_not_registered(with_company):
         Product.objects.get(pk=product_ids[0]).soft_delete()
         assert c.post(confirm_path, data=extract_form_fields(confirm_soup)).status_code == 200  # user needs to reconfirm
         data = extract_form_fields(confirm_soup)
+        data['accept_terms'] = True
         data['product_ids'] = ','.join(product_ids[1:])
         assert c.post(confirm_path, data=data).status_code == 302  # Should redirect forth
 
@@ -335,6 +336,7 @@ def test_basic_order_flow_registered(regular_user):
         Product.objects.get(pk=product_ids[0]).soft_delete()
         assert c.post(confirm_path, data=extract_form_fields(confirm_soup)).status_code == 200  # user needs to reconfirm
         data = extract_form_fields(confirm_soup)
+        data['accept_terms'] = True
         data['product_ids'] = ','.join(product_ids[1:])
         assert c.post(confirm_path, data=data).status_code == 302  # Should redirect forth
 
@@ -353,9 +355,11 @@ def test_basic_order_flow_registered(regular_user):
 def test_order_received_variables(rf, with_shop_contact):
     activate("en")
     shop = get_shop(True)
-    shop.contact_address = get_address(**SHOP_ADDRESS_DATA)
-    shop.contact_address.save()
+    contact_address = get_address(**SHOP_ADDRESS_DATA)
+    contact_address.save()
+    shop.contact_address = contact_address
     shop.save()
+
     get_default_product()
     get_default_supplier()
 
@@ -406,11 +410,12 @@ def test_order_received_variables(rf, with_shop_contact):
 
     n_outbox_pre = len(mail.outbox)
     customer = create_random_person(locale='en')
-    customer.default_shipping_address = get_address(**DEFAULT_ADDRESS_DATA)
-    customer.default_shipping_address.save()
+    address = get_address(**DEFAULT_ADDRESS_DATA)
+    address.save()
+    customer.default_shipping_address = address
     customer.save()
 
-    create_random_order(customer, shop=shop)
+    order = create_random_order(customer, shop=shop)
     assert (len(mail.outbox) == n_outbox_pre + (2 if with_shop_contact else 1)), "Sending email failed"
 
     latest_mail = mail.outbox[-1]

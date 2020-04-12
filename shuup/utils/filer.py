@@ -51,7 +51,6 @@ class UploadImageForm(forms.Form):
     file = forms.ImageField(validators=[file_size_validator])
 
 
-
 def filer_folder_from_path(path):
     """
     Split `path` by slashes and create a hierarchy of Filer Folder objects accordingly.

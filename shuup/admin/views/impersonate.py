@@ -8,9 +8,9 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model, load_backend, login, logout
 from django.http import HttpResponseForbidden, HttpResponseRedirect
-from django.core.urlresolvers import reverse
 
 from shuup.admin.utils.permissions import has_permission
+from shuup.utils.django_compat import reverse
 
 
 def stop_impersonating_staff(request):

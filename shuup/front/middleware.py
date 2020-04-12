@@ -28,12 +28,6 @@ from shuup.front.basket import get_basket
 from shuup.front.utils.user import is_admin_user
 from shuup.utils.django_compat import get_middleware_classes, MiddlewareMixin
 
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:
-    MiddlewareMixin = object
-
-
 __all__ = ["ProblemMiddleware", "ShuupFrontMiddleware"]
 
 ProblemMiddleware = ExceptionMiddleware  # This class is only an alias for ExceptionMiddleware.

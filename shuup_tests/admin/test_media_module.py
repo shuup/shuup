@@ -10,7 +10,7 @@ import tempfile
 
 import pytest
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.http import JsonResponse
 from django.test import override_settings
 from django.test.client import RequestFactory

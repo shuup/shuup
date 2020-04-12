@@ -68,7 +68,10 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     assert response.status_code == 400
     fields["shop-public_name__fi"] = "test shop"
     fields["shop-currency"] = "USD"
-    fields["address-name"] = "TEST"
+    fields["address-first_name"] = "TEST"
+    fields["address-last_name"] = "TEST"
+    fields["address-phone"] = "TEST"
+    fields["address-postal_code"] = "TEST"
     fields["address-city"] = "TEST"
     fields["address-region_code"] = "CA"
     fields["address-street"] = "test"

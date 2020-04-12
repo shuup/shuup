@@ -125,13 +125,13 @@ class HappyHourForm(forms.ModelForm):
     def save(self, commit=True):
         with transaction.atomic():
             instance = super(HappyHourForm, self).save(commit)
-            instance.shops = [self.shop]
+            instance.shops.set([self.shop])
 
             data = self.cleaned_data
             if "discounts" in self.fields:
                 data = self.cleaned_data
                 discount_ids = data.get("discounts", [])
-                instance.discounts = Discount.objects.filter(shops=self.shop, id__in=discount_ids)
+                instance.discounts.set(Discount.objects.filter(shops=self.shop, id__in=discount_ids))
 
             instance.time_ranges.all().delete()
 

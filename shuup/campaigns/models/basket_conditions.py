@@ -9,7 +9,6 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from polymorphic.models import PolymorphicModel
-from shuup.core.models import ProductMode
 
 from shuup.campaigns.utils.campaigns import (
     get_product_ids_and_quantities, get_total_price_of_products
@@ -17,7 +16,7 @@ from shuup.campaigns.utils.campaigns import (
 from shuup.campaigns.utils.time_range import is_in_time_range
 from shuup.core.fields import MoneyValueField
 from shuup.core.models import (
-    Category, Contact, ContactGroup, Product, ShopProduct
+    Category, Contact, ContactGroup, Product, ProductMode, ShopProduct
 )
 from shuup.core.pricing import PricingContext
 from shuup.utils.django_compat import force_text
@@ -338,6 +337,7 @@ class ChildrenProductCondition(BasketCondition):
     model = Product
     product = models.ForeignKey(
         Product,
+        on_delete=models.PROTECT,
         limit_choices_to={
             'mode__in': [
                 ProductMode.SIMPLE_VARIATION_PARENT,

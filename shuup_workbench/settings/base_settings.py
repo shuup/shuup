@@ -215,32 +215,6 @@ SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 
 SHUUP_PRICING_MODULE = "customer_group_pricing"
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'shuup_api.permissions.ShuupAPIPermission',
-    )
-}
-
-JWT_AUTH = {
-    'JWT_ALLOW_REFRESH': True
-}
-
-SWAGGER_SETTINGS = {
-    "SUPPORTED_SUBMIT_METHODS": [
-        "get"
-    ]
-}
-
-# extend the submit methods only if DEBUG is True
-if DEBUG:
-    SWAGGER_SETTINGS["SUPPORTED_SUBMIT_METHODS"].extend(["post", "patch", "delete", "put"])
-
 SHUUP_SETUP_WIZARD_PANE_SPEC = [
     "shuup.admin.modules.shops.views:ShopWizardPane",
     "shuup.admin.modules.service_providers.views.PaymentWizardPane",

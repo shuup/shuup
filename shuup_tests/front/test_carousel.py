@@ -250,7 +250,8 @@ def test_slide_admin_form(rf, admin_user):
         carousel=test_carousel,
         languages=settings.LANGUAGES,
         default_language=settings.PARLER_DEFAULT_LANGUAGE_CODE,
-        request=request)
+        request=request
+    )
 
     soup = BeautifulSoup(slide_form.as_table())
     options = soup.find(id="id_category_link").find_all("option")
@@ -264,9 +265,16 @@ def test_slide_admin_form(rf, admin_user):
     assert options[1]["value"] == "%s" % page.pk
 
     new_shop = get_shop(identifier="second-shop")
-    category.shops.add(new_shop)
+    category.shops.set([new_shop])
     page.shop = new_shop
     page.save()
+
+    slide_form = SlideForm(
+        carousel=test_carousel,
+        languages=settings.LANGUAGES,
+        default_language=settings.PARLER_DEFAULT_LANGUAGE_CODE,
+        request=request
+    )
 
     soup = BeautifulSoup(slide_form.as_table())
     options = soup.find(id="id_category_link").find_all("option")
