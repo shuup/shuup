@@ -16,11 +16,6 @@ from shuup.core.shop_provider import get_shop
 from shuup.utils.django_compat import force_text, MiddlewareMixin
 from shuup.utils.excs import ExceptionalResponse, Problem
 
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:
-    MiddlewareMixin = object
-
 
 class ExceptionMiddleware(MiddlewareMixin):
     def process_exception(self, request, exception):

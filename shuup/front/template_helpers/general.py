@@ -10,7 +10,6 @@ from collections import defaultdict
 import six
 from django.conf import settings
 from django.core.paginator import Paginator
-from django.core.urlresolvers import reverse
 from django.middleware.csrf import get_token
 from django.utils.translation import get_language
 from jinja2.utils import contextfunction
@@ -26,6 +25,7 @@ from shuup.front.utils.translation import get_language_choices
 from shuup.front.utils.user import is_admin_user
 from shuup.front.utils.views import cache_product_things
 from shuup.utils import django_compat
+from shuup.utils.django_compat import reverse
 from shuup.utils.importing import cached_load
 from shuup.utils.mptt import get_cached_trees
 from shuup.utils.translation import cache_translations_for_tree

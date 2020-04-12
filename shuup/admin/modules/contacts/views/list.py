@@ -104,7 +104,9 @@ class ContactListView(PicotableListView):
             qs = qs.exclude(PersonContact___user__is_superuser=True)
 
         if self.request.GET.get("shop"):
-            qs = qs.filter(shops=Shop.objects.get_for_user(self.request.user).filter(pk=self.request.GET["shop"]))
+            qs = qs.filter(
+                shops__in=Shop.objects.get_for_user(self.request.user).filter(pk=self.request.GET["shop"])
+            )
 
         elif request_limited(self.request):
             shop = get_shop(self.request)

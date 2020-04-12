@@ -375,7 +375,6 @@ def test_company_registration(django_user_model, client, allow_company_registrat
             'user_account-password1': "password",
             'user_account-password2': "password",
         })
-
         user = django_user_model.objects.get(username=username)
         contact = PersonContact.objects.get(user=user)
         company = CompanyContact.objects.get(members__in=[contact])

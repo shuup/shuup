@@ -129,16 +129,17 @@ def test_supplier_with_stock_counts_2(rf, admin_user, settings):
         assert sc.stock_value.includes_tax
         assert sc.stock_unit_price.currency == shop.currency
         assert sc.stock_unit_price.includes_tax
-        settings.SHUUP_ENABLE_MULTIPLE_SHOPS = True
-        sa = StockAdjustment.objects.first() # refetch to invalidate cache
-        assert sa.purchase_price.currency != shop.currency
-        assert sa.purchase_price.currency == settings.SHUUP_HOME_CURRENCY
-        assert not sa.purchase_price.includes_tax
-        sc = StockCount.objects.first()
-        assert sc.stock_value.currency == settings.SHUUP_HOME_CURRENCY
-        assert not sc.stock_value.includes_tax
-        assert sc.stock_unit_price.currency == settings.SHUUP_HOME_CURRENCY
-        assert not sc.stock_unit_price.includes_tax
+
+        with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+            sa = StockAdjustment.objects.first() # refetch to invalidate cache
+            assert sa.purchase_price.currency != shop.currency
+            assert sa.purchase_price.currency == settings.SHUUP_HOME_CURRENCY
+            assert not sa.purchase_price.includes_tax
+            sc = StockCount.objects.first()
+            assert sc.stock_value.currency == settings.SHUUP_HOME_CURRENCY
+            assert not sc.stock_value.includes_tax
+            assert sc.stock_unit_price.currency == settings.SHUUP_HOME_CURRENCY
+            assert not sc.stock_unit_price.includes_tax
 
 
 @pytest.mark.django_db

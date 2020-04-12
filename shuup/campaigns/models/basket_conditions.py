@@ -337,6 +337,7 @@ class ChildrenProductCondition(BasketCondition):
     model = Product
     product = models.ForeignKey(
         Product,
+        on_delete=models.PROTECT,
         limit_choices_to={
             'mode__in': [
                 ProductMode.SIMPLE_VARIATION_PARENT,

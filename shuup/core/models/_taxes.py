@@ -133,9 +133,12 @@ class CustomerTaxGroup(TranslatableShuupModel):
 
     @classmethod
     def get_default_person_group(cls):
-        obj, c = CustomerTaxGroup.objects.get_or_create(identifier="default_person_customers", defaults={
-            "name": _("Retail Customers")
-        })
+        obj, c = CustomerTaxGroup.objects.get_or_create(
+            identifier="default_person_customers",
+            defaults={
+                "name": _("Retail Customers")
+            }
+        )
         return obj
 
     @classmethod

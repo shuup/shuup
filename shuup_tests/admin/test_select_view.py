@@ -68,8 +68,8 @@ def test_ajax_select_view_with_products(rf, admin_user):
     results = _get_search_results(rf, view, "shuup.Product", "some str", admin_user)
     assert len(results) == 0
 
-    results = _get_search_results(rf, view, "shuup.Product", None, admin_user)
-    assert len(results) == 0
+    results = _get_search_results(rf, view, "shuup.Product", "", admin_user)
+    assert len(results) == 1
 
     results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
     assert len(results) == 1

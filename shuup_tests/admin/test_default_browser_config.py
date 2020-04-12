@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.admin.modules.media import MediaModule
 from shuup.admin.template_helpers.shuup_admin import get_browser_urls

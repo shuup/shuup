@@ -40,9 +40,6 @@ def test_basic_form_sanity(form):
     product = _get_test_product()
 
     kwargs = dict(product=product, shop=shop)
-    if form == CustomerGroupPricingForm:
-        kwargs.update(dict(empty_permitted=True))
-
     frm = form(**kwargs)
 
     assert len(frm.groups) == ContactGroup.objects.count()
@@ -56,10 +53,10 @@ def test_no_changes_into_form(form):
     product = _get_test_product()
     shop = get_default_shop()
 
-    frm = form(product=product, shop=shop, empty_permitted=True)
+    frm = form(product=product, shop=shop)
     # No changes made, right?
     form_data = get_form_data(frm, prepared=True)
-    frm = form(product=product, shop=shop, data=form_data, empty_permitted=True)
+    frm = form(product=product, shop=shop, data=form_data)
     frm.full_clean()
     frm.save()
 
@@ -78,7 +75,7 @@ def test_change_shop_price(form):
     price = shop.create_price
 
     form_field = "s_%d_g_%d" % (shop.id, group.id)
-    frm = form(product=product, shop=shop, empty_permitted=True)
+    frm = form(product=product, shop=shop)
     form_data = get_form_data(frm, prepared=True)
 
     if form == CustomerGroupPricingForm:
@@ -86,7 +83,7 @@ def test_change_shop_price(form):
     else:
         form_data[form_field] = "50"
 
-    frm = form(product=product, shop=shop, data=form_data, empty_permitted=True)
+    frm = form(product=product, shop=shop, data=form_data)
     frm.full_clean()
     frm.save()
 
@@ -98,7 +95,7 @@ def test_change_shop_price(form):
     # Never mind actually, same price for all shops
     form_data[form_field] = ""
 
-    frm = form(product=product, shop=shop, data=form_data, empty_permitted=True)
+    frm = form(product=product, shop=shop, data=form_data)
     frm.full_clean()
     frm.save()
 
@@ -115,7 +112,7 @@ def test_clear_prices(form):
     shop = get_default_shop()
     # We can clear the prices out, can't we?
     form_data = {}
-    frm = form(product=product, shop=shop, data=form_data, empty_permitted=True)
+    frm = form(product=product, shop=shop, data=form_data)
     frm.full_clean()
     frm.save()
 

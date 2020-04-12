@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import abc
 from abc import abstractmethod
+from collections import OrderedDict
 
 import six
 from django.utils.text import camel_case_to_spaces
@@ -268,7 +269,7 @@ class Condition(ScriptItem):
 class Action(ScriptItem):
     provide_category = "notify_action"
     template_use = TemplateUse.NONE
-    template_fields = {}
+    template_fields = OrderedDict()
 
     @abstractmethod
     def execute(self, context):

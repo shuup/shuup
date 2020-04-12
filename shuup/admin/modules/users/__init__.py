@@ -59,7 +59,7 @@ class UserModule(AdminModule):
                 name="user.login-as"
             ),
             admin_url(
-                "^users/(?P<pk>\d+)/login/staff/$",
+                r"^users/(?P<pk>\d+)/login/staff/$",
                 "shuup.admin.modules.users.views.LoginAsStaffUserView",
                 name="user.login-as-staff"
             ),

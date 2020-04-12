@@ -46,6 +46,7 @@ def test_gdpr_admin_settings(client, admin_user):
     page.save()
     # create the settings with only basic options
     payload = extract_form_fields(response)
+    payload.pop("base-consent_pages")
     payload.update({
         "base-enabled": True,
         "base-privacy_policy_page": page.pk,

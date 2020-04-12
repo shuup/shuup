@@ -5,9 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import django
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
@@ -15,36 +15,25 @@ from django.views.generic import FormView, TemplateView
 from shuup.core.models import CompanyContact, get_company_contact, SavedAddress
 from shuup.front.utils.companies import allow_company_registration
 from shuup.front.views.dashboard import DashboardViewMixin
+from shuup.utils.django_compat import reverse_lazy
 from shuup.utils.importing import cached_load
 
 
-class CustomPasswordChangeView(DashboardViewMixin, TemplateView):
+class CustomPasswordChangeView(PasswordChangeView):
     template_name = "shuup/customer_information/change_password.jinja"
+    success_url = reverse_lazy("shuup:customer_edit")
+    form_class = PasswordChangeForm
 
     def post(self, *args, **kwargs):
-        if django.VERSION < (2, 0):
-            from django.contrib.auth.views import password_change
-            response = password_change(
-                self.request,
-                post_change_redirect="shuup:customer_edit",
-                template_name=self.template_name
-            )
-        else:
-            from django.contrib.auth.views import PasswordChangeView
-            response = PasswordChangeView(
-                self.request,
-                post_change_redirect="shuup:customer_edit",
-                template_name=self.template_name
-            )
-
+        response = super().post(*args, **kwargs)
         if response.status_code == 302:
             messages.success(self.request, _("Password changed."))
         return response
 
-    def get_context_data(self, **kwargs):
-        context = super(CustomPasswordChangeView, self).get_context_data(**kwargs)
-        context["form"] = PasswordChangeForm(user=self.request.user)
-        return context
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
 
 class CustomerEditView(DashboardViewMixin, FormView):
