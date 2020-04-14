@@ -214,6 +214,59 @@ def test_get_best_selling_products():
 
 
 @pytest.mark.django_db
+def test_get_best_selling_products_per_supplier():
+    from shuup.front.template_helpers import general
+    context = get_jinja_context()
+
+    # No products sold
+    assert len(list(general.get_best_selling_products(context, n_products=3))) == 0
+    shop = get_default_shop()
+
+    supplier = get_default_supplier()
+    supplier2 = Supplier.objects.create(name="supplier2", enabled=True, is_approved=True)
+    supplier2.shops.add(shop)
+
+    product1 = create_product("product1", shop, supplier, 10)
+    product2 = create_product("product2", shop, supplier2, 20)
+    create_order_with_product(product1, supplier, quantity=1, taxless_base_unit_price=10, shop=shop)
+    create_order_with_product(product2, supplier2, quantity=2, taxless_base_unit_price=20, shop=shop)
+
+    cache.clear()
+    # Two products sold, but only one supplier
+    for cache_test in range(2):
+        best_selling_products = list(general.get_best_selling_products(context, n_products=3, supplier=supplier))
+        assert len(best_selling_products) == 1
+        assert product1 in best_selling_products
+        assert product2 not in best_selling_products
+
+    # Two products sold, but only one supplier
+    for cache_test in range(2):
+        best_selling_products = list(general.get_best_selling_products(context, n_products=3, supplier=supplier2))
+        assert len(best_selling_products) == 1
+        assert product1 not in best_selling_products
+        assert product2 in best_selling_products
+
+
+    # Make product 1 also sold by supplier2
+    shop_product = product1.get_shop_instance(shop)
+    shop_product.suppliers.add(supplier2)
+
+    cache.clear()
+    for cache_test in range(2):
+        best_selling_products = list(general.get_best_selling_products(context, n_products=3, supplier=supplier2))
+        assert len(best_selling_products) == 1  # Since there isn't any orders yet for supplier 2
+        assert product2 in best_selling_products
+
+    create_order_with_product(product1, supplier2, quantity=2, taxless_base_unit_price=20, shop=shop)
+    cache.clear()
+    for cache_test in range(2):
+        best_selling_products = list(general.get_best_selling_products(context, n_products=3, supplier=supplier2))
+        assert len(best_selling_products) == 2
+        assert product1 in best_selling_products
+        assert product2 in best_selling_products
+
+
+@pytest.mark.django_db
 def test_get_best_selling_products_cache_bump():
     supplier = get_default_supplier()
     shop = get_default_shop()

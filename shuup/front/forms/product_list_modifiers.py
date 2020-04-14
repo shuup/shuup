@@ -110,8 +110,8 @@ class SortProductListByName(SimpleProductListModifier):
     def get_choices_for_fields(self):
         return [
             ("sort", [
-                ("name_a", _("Name - A-Z")),
-                ("name_d", _("Name - Z-A")),
+                ("name_a", get_form_field_label("name_a", _("Name - A-Z"))),
+                ("name_d", get_form_field_label("name_d", _("Name - Z-A"))),
             ]),
         ]
 
@@ -160,8 +160,8 @@ class SortProductListByPrice(SimpleProductListModifier):
     def get_choices_for_fields(self):
         return [
             ("sort", [
-                ("price_a", _("Price - Low to High")),
-                ("price_d", _("Price - High to Low")),
+                ("price_a", get_form_field_label("price_a", _("Price - Low to High"))),
+                ("price_d", get_form_field_label("price_d", _("Price - High to Low"))),
             ]),
         ]
 
@@ -212,7 +212,7 @@ class SortProductListByCreatedDate(SimpleProductListModifier):
     def get_choices_for_fields(self):
         return [
             ("sort", [
-                ("created_date_d", _("Date created")),
+                ("created_date_d", get_form_field_label("created_date_d", _('Date created'))),
             ]),
         ]
 
@@ -253,7 +253,7 @@ class SortProductListByAscendingCreatedDate(SortProductListByCreatedDate):
     def get_choices_for_fields(self):
         return [
             ("sort", [
-                ("created_date_a", _("Date created - oldest first")),
+                ("created_date_a", get_form_field_label("created_date_a", _("Date created - oldest first"))),
             ]),
         ]
 

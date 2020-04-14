@@ -17,19 +17,22 @@ from shuup.core.models import OrderLine, OrderLineType, Product
 from shuup.utils.dates import to_aware
 
 
-def get_best_selling_product_info(shop_ids, cutoff_days=30):
+def get_best_selling_product_info(shop_ids, cutoff_days=30, supplier=None):
     shop_ids = sorted(map(int, shop_ids))
     cutoff_date = datetime.date.today() - datetime.timedelta(days=cutoff_days)
-    cache_key = "best_sellers:%r_%s" % (shop_ids, cutoff_date)
+    cache_key = "best_sellers:%r_%s_%s" % (shop_ids, cutoff_date, (supplier.pk if supplier else ""))
     sales_data = cache.get(cache_key)
     if sales_data is None:
+        queryset = OrderLine.objects.filter(
+            order__shop_id__in=shop_ids,
+            order__order_date__gte=to_aware(cutoff_date),
+            type=OrderLineType.PRODUCT
+        )
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
+
         sales_data = (
-            OrderLine.objects
-            .filter(
-                order__shop_id__in=shop_ids,
-                order__order_date__gte=to_aware(cutoff_date),
-                type=OrderLineType.PRODUCT
-            )
+            queryset
             .values("product")
             .annotate(n=Sum("quantity"))
             .order_by("-n")[:100]
