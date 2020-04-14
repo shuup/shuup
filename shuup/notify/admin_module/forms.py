@@ -81,7 +81,7 @@ class ScriptItemEditForm(forms.Form):
             for language_code, language_name in settings.LANGUAGES:
                 self.template_languages.append((language_code, get_language_name(language_code)))
         elif template_use == TemplateUse.UNILINGUAL:
-            self.template_languages = [UNILINGUAL_TEMPLATE_LANGUAGE, _(u"Template")]
+            self.template_languages = [(UNILINGUAL_TEMPLATE_LANGUAGE, _(u"Template"))]
         else:  # Nothing to do
             return
 
