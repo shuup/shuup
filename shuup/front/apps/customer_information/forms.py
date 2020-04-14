@@ -34,7 +34,7 @@ class PersonContactForm(forms.ModelForm):
         model = PersonContact
         fields = (
             "first_name", "last_name", "phone", "email", "gender", "language",
-            "marketing_permission", "picture"
+            "marketing_permission", "timezone", "picture"
         )
 
     def __init__(self, *args, **kwargs):

@@ -8,10 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Fixed
+
+- Middleware: fix so it trys to take the users timezone first, then the suppliers, last the projects TIME_ZONE
+
 ### Changed
 
 - Front: customize sort options through settings
-
 
 ## [1.10.10] - 2020-03-24
 
@@ -42,8 +45,6 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Issue running category filter browser test with Travis
-
->>>>>>> b389a15b22d15b3d0c943c633de1a806a3e7f31f
 
 ## [1.10.7] - 2020-03-09
 
