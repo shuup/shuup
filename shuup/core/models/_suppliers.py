@@ -14,6 +14,7 @@ from filer.fields.image import FilerImageField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
+from timezone_field.fields import TimeZoneField
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.modules import ModuleInterface
@@ -82,6 +83,10 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     )
     is_approved = models.BooleanField(default=True, verbose_name=_("approved"), help_text=_(
         "Indicates whether this supplier is currently approved."
+    ))
+    timezone = TimeZoneField(blank=True, null=True, verbose_name=_('time zone'), help_text=_(
+        "The timezone in which the shop resides. This can be used to target the delivery of promotional materials "
+        "at a particular time."
     ))
     options = JSONField(blank=True, null=True, verbose_name=_("options"))
     translations = TranslatedFields(

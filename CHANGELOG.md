@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
 
+### Fixed
+
+- Middleware: fix so it trys to take the users timezone first, then the suppliers, last the projects TIME_ZONE
+
 ### Changed
 
 - Front: customize sort options through settings
