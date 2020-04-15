@@ -17,7 +17,6 @@ from shuup.discounts.models import Discount
 
 class DiscountModule(AdminModule):
     name = _("Discounts")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:discounts.list")
 
     def get_urls(self):
         from shuup.admin.urls import admin_url
