@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import django
 import parler.models
 import six
 from django.core.exceptions import ValidationError
@@ -94,10 +93,7 @@ class PolymorphicTranslatableShuupModel(six.with_metaclass(
         PolyTransModelBase,
         PolymorphicShuupModel, TranslatableShuupModel)):
 
-    if django.VERSION < (1, 11):
-        _default_manager = _PolyTransManager()
-    else:
-        objects = _PolyTransManager()
+    objects = _PolyTransManager()
 
     class Meta:
         abstract = True
