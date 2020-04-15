@@ -9,12 +9,12 @@ from __future__ import absolute_import
 
 import hashlib
 
-import django
 import six
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
+from django.core.validators import FileExtensionValidator
 from django.forms.models import modelform_factory
 from django.utils.translation import ugettext as _
 from filer.models import File, Folder, Image
@@ -34,17 +34,11 @@ def file_size_validator(value):
     return value
 
 
-if django.VERSION < (1, 11):
-    class UploadFileForm(forms.Form):
-        file = forms.FileField(validators=[file_size_validator])
-else:
-    from django.core.validators import FileExtensionValidator
-
-    class UploadFileForm(forms.Form):
-        file = forms.FileField(validators=[
-            FileExtensionValidator(allowed_extensions=settings.SHUUP_ALLOWED_UPLOAD_EXTENSIONS),
-            file_size_validator
-        ])
+class UploadFileForm(forms.Form):
+    file = forms.FileField(validators=[
+        FileExtensionValidator(allowed_extensions=settings.SHUUP_ALLOWED_UPLOAD_EXTENSIONS),
+        file_size_validator
+    ])
 
 
 class UploadImageForm(forms.Form):

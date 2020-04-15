@@ -44,17 +44,11 @@ except ImportError:
 
 
 def is_anonymous(user):
-    if django.VERSION < (1, 11):
-        return user.is_anonymous()
-    else:
-        return user.is_anonymous
+    return user.is_anonymous
 
 
 def is_authenticated(user):
-    if django.VERSION < (1, 11):
-        return user.is_authenticated()
-    else:
-        return user.is_authenticated
+    return user.is_authenticated
 
 
 def get_middleware_classes():
