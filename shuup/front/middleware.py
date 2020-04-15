@@ -118,10 +118,14 @@ class ShuupFrontMiddleware(MiddlewareMixin):
     def _set_timezone(self, request):
         if request.person.timezone:
             timezone.activate(request.person.timezone)
-        elif get_supplier(request) and get_supplier(request).timezone:
-            timezone.activate(get_supplier(request).timezone)
+        else:
+            supplier = get_supplier(request)
+            if supplier and supplier.timezone:
+                timezone.activate(supplier.timezone)
+            else:
+                timezone.activate(settings.TIME_ZONE)
 
-        request.TIME_ZONE = timezone.get_current_timezone().zone
+        request.TIME_ZONE = timezone.get_current_timezone_name()
 
     def _set_price_display_options(self, request):
         customer = request.customer
