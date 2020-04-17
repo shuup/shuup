@@ -20,7 +20,6 @@ from shuup.core.middleware import ExceptionMiddleware
 from shuup.core.models import (
     AnonymousContact, Contact, get_company_contact, get_person_contact
 )
-from shuup.admin.supplier_provider import get_supplier
 from shuup.core.shop_provider import get_shop
 from shuup.core.utils.users import (
     should_force_anonymous_contact, should_force_person_contact
@@ -119,11 +118,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
         if request.person.timezone:
             timezone.activate(request.person.timezone)
         else:
-            supplier = get_supplier(request)
-            if supplier and supplier.timezone:
-                timezone.activate(supplier.timezone)
-            else:
-                timezone.activate(settings.TIME_ZONE)
+            timezone.activate(settings.TIME_ZONE)
 
         request.TIME_ZONE = timezone.get_current_timezone_name()
 

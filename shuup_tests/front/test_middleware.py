@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from django.test import override_settings
 from django.contrib.auth import logout
 from django.contrib.auth.models import AnonymousUser
 from django.utils import timezone
@@ -17,13 +16,11 @@ from shuup.core.models import (
     AnonymousContact, CompanyContact, Contact, get_company_contact,
     get_person_contact, PersonContact, Shop
 )
-from shuup.admin.supplier_provider import get_supplier
 from shuup.front.middleware import ShuupFrontMiddleware
 from shuup.front.views.index import IndexView
 from shuup.testing.factories import create_random_company, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
-from shuup.testing import factories
 
 from .fixtures import get_request
 
@@ -107,7 +104,6 @@ def test_customer_company_member(regular_user):
 @pytest.mark.django_db
 def test_timezone_setting(regular_user, admin_user):
     get_default_shop()  # Create a shop
-    factories.get_default_supplier()  # Create a supplier
 
     mw = ShuupFrontMiddleware()
     request = get_unprocessed_request()
@@ -115,40 +111,25 @@ def test_timezone_setting(regular_user, admin_user):
     request.user = regular_user
     second_request.user = admin_user
     user_tz = ('US/Hawaii' if settings.TIME_ZONE != "US/Hawaii" else "Europe/Stockholm")
-    supplier_tz = ('Europe/Helsinki' if settings.TIME_ZONE != 'Europe/Helsinki' else "Europe/Stockholm")
     original_tz = timezone.get_current_timezone_name()
 
 
-    with override_settings(
-        SHUUP_ENABLE_MULTIPLE_SHOPS=True,
-        SHUUP_ENABLE_MULTIPLE_SUPPLIERS=False,
-        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"
-    ):
-        assert timezone.get_current_timezone_name() == settings.TIME_ZONE
-        mw.process_request(request)
+    assert timezone.get_current_timezone_name() == settings.TIME_ZONE
+    mw.process_request(request)
 
-        assert timezone.get_current_timezone_name() == settings.TIME_ZONE
-        assert request.TIME_ZONE == settings.TIME_ZONE
+    assert timezone.get_current_timezone_name() == settings.TIME_ZONE
+    assert request.TIME_ZONE == settings.TIME_ZONE
 
-        # Test the supplier timezone
-        supplier = get_supplier(request)
-        supplier.timezone = supplier_tz
-        supplier.save()
 
-        mw.process_request(request)
+    # Test the users timezone
+    person = get_person_contact(regular_user)
+    person.timezone = user_tz
+    person.save()
 
-        assert timezone.get_current_timezone_name() == supplier_tz
-        assert request.TIME_ZONE == supplier_tz
+    mw.process_request(request)
 
-        # Test the users timezone
-        person = get_person_contact(regular_user)
-        person.timezone = user_tz
-        person.save()
-
-        mw.process_request(request)
-
-        assert timezone.get_current_timezone_name() == user_tz
-        assert request.TIME_ZONE == user_tz
+    assert timezone.get_current_timezone_name() == user_tz
+    assert request.TIME_ZONE == user_tz
 
     # Test that the settings.TIME_ZONE gets activated if there is nothing else to fallback on
     mw.process_request(second_request)
