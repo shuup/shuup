@@ -168,4 +168,4 @@ def test_contact_list_multiple_shop(rf, admin_user):
     assert contact1.pk in contacts
     assert contact2.pk in contacts
     assert contact3.pk in contacts
-    assert superuser_contact.pk in contacts
+    assert superuser_contact.pk not in contacts # Superuser must edit the filter values in order to see other superuser contacts.
