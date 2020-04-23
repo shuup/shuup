@@ -66,7 +66,7 @@ class BaseThemeFieldsMixin(object):
                 initial=[tab[0] for tab in product_detail_tabs],
                 choices=product_detail_tabs,
                 label=_("Product detail tabs"),
-                help_text=_("Select all tabs that should be renderd in product details.")
+                help_text=_("Select all tabs that should be rendered in product details.")
             ))
         ])
         return fields

@@ -26,15 +26,22 @@ from shuup.core.models import (
 
 class ContactTypeFilter(ChoicesFilter):
     def __init__(self):
-        super(ContactTypeFilter, self).__init__(choices=[("person", _("Person")), ("company", _("Company"))])
+        super(ContactTypeFilter, self).__init__(
+            choices=[("person", _("Person")), ("company", _("Company")), ("staff", _("Staff"))],
+            default="_all"
+        )
 
     def filter_queryset(self, queryset, column, value, context):
         if value == "_all":
-            return queryset
-        model_class = PersonContact
-        if value == "company":
-            model_class = CompanyContact
-        return queryset.instance_of(model_class)
+            return queryset.exclude(PersonContact___user__is_staff=True)
+        elif value == "person":
+            return queryset.exclude(PersonContact___user__is_staff=True).instance_of(PersonContact)
+        elif value == "company":
+            return queryset.instance_of(CompanyContact)
+        elif value == "staff":
+            return queryset.filter(PersonContact___user__is_staff=True)
+
+        return queryset
 
 
 class ContactListView(PicotableListView):
