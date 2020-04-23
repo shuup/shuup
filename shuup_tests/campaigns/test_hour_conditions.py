@@ -38,6 +38,7 @@ def mocked_now_basic():
     (get_context_condition, (None, ))
 })
 def test_hour_conditions(rf, get_condition, params_for_matches):
+    timezone.activate(pytz.UTC)
     w_today = timezone.now().date().weekday()
     w_tomorrow = (timezone.now() + datetime.timedelta(days=1)).date().weekday()
     w_future = (timezone.now() + datetime.timedelta(days=2)).date().weekday()
@@ -109,6 +110,7 @@ def test_hour_conditions(rf, get_condition, params_for_matches):
 
     # Lastly few timezone tests (LA it is monday and time is 2:00 AM.)
     with override_settings(TIME_ZONE="America/Los_Angeles"):
+        timezone.activate(pytz.timezone("America/Los_Angeles"))
         # So the 10:00 AM shouldn't match at all
         hour_condition.hour_start = (timezone.now() - datetime.timedelta(hours=1)).time()  # 9:00 AM
         hour_condition.hour_end = (timezone.now() + datetime.timedelta(hours=1)).time()  # 11:00 AM
@@ -143,6 +145,7 @@ def mocked_now_weekday_change():
     (get_context_condition, (None, ))
 })
 def test_hour_conditions_localized_weekday(rf, get_condition, params_for_matches):
+    timezone.activate(pytz.UTC)
     w_today = timezone.now().date().weekday()
     w_yesterday = (timezone.now() - datetime.timedelta(days=1)).date().weekday()
     matching_day_for_utc = ",".join(map(str,[w_today]))
@@ -156,6 +159,7 @@ def test_hour_conditions_localized_weekday(rf, get_condition, params_for_matches
 
     # Lastly few timezone tests (LA it is monday and time is 2:00 AM.)
     with override_settings(TIME_ZONE="America/Los_Angeles"):
+        timezone.activate(pytz.timezone("America/Los_Angeles"))
         # Matching to UTC date doesn't work
         hour_start = (timezone.now().replace(hour=17)).time()  # 5:00 PM
         hour_end = (timezone.now().replace(hour=20)).time()  # 8:00 PM
@@ -174,6 +178,7 @@ def test_hour_conditions_localized_weekday(rf, get_condition, params_for_matches
     (get_context_condition, (None, ))
 })
 def test_hour_conditions_end_before_start(rf, get_condition, params_for_matches):
+    timezone.activate(pytz.UTC)
     # Create condition from 5pm to 1am for monday
     hour_start = (timezone.now().replace(hour=17, minute=0)).time()  # 5:00 PM
     hour_end = (timezone.now().replace(hour=1, minute=0)).time()  # 1:00 AM

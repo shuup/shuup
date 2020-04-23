@@ -133,6 +133,9 @@ def test_happy_hour(rf):
 
     # Lastly few timezone tests (LA it is monday and time is 2:00 AM.)
     with override_settings(TIME_ZONE="America/Los_Angeles"):
+        # Timezone needs to be activated to current one because some old timezone can still be active
+        timezone.activate(pytz.timezone("America/Los_Angeles"))
+
         # So the 10:00 AM shouldn't match at all
         new_hour_start = (timezone.now() - datetime.timedelta(hours=1)).time()  # 9:00 AM
         new_hour_end = (timezone.now() + datetime.timedelta(hours=1)).time()  # 11:00 AM
@@ -158,6 +161,7 @@ def test_happy_hour(rf):
 @patch("django.utils.timezone.now", side_effect=mocked_now_basic)
 @pytest.mark.django_db
 def test_time_ranges_are_still_honored(rf):
+    timezone.activate(pytz.UTC)
     happy_hour = init_test()
 
     shop = happy_hour.shops.first()
@@ -190,6 +194,7 @@ def mocked_now_weekday_change():
 @patch("django.utils.timezone.now", side_effect=mocked_now_weekday_change)
 @pytest.mark.django_db
 def test_happy_hour_localized_weekday(rf):
+    timezone.activate(pytz.UTC)
     happy_hour = init_test()
     shop = happy_hour.shops.first()
 
@@ -207,6 +212,9 @@ def test_happy_hour_localized_weekday(rf):
 
     # Lastly few timezone tests (LA it is monday and time is 2:00 AM.)
     with override_settings(TIME_ZONE="America/Los_Angeles"):
+        # Timezone needs to be activated to current one because some old timezone can still be active
+        timezone.activate(pytz.timezone("America/Los_Angeles"))
+
         # Matching to UTC date doesn't work
         hour_start = (timezone.now().replace(hour=17)).time()  # 5:00 PM
         hour_end = (timezone.now().replace(hour=20)).time()  # 8:00 PM
@@ -222,6 +230,7 @@ def test_happy_hour_localized_weekday(rf):
 
 @pytest.mark.django_db
 def test_hour_conditions_end_before_start():
+    timezone.activate(pytz.UTC)
     happy_hour = init_test()
     shop = happy_hour.shops.first()
 

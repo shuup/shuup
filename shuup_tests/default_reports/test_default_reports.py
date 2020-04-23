@@ -13,11 +13,12 @@ from decimal import Decimal
 
 import pytest
 import six
+import pytz
 from babel.dates import format_date
 from django.test.utils import override_settings
 from django.utils.dateparse import parse_datetime
 from django.utils.encoding import force_text
-from django.utils.timezone import localtime, now
+from django.utils.timezone import localtime, now, activate
 from pytz import timezone
 
 from shuup.apps.provides import override_provides
@@ -925,6 +926,8 @@ def test_refunds_report(rf):
 @pytest.mark.django_db
 def test_sales_report_timezone(server_timezone):
     with override_settings(TIME_ZONE = server_timezone):
+        # Timezone needs to be activated to current one because some old timezone can still be active
+        activate(pytz.timezone(server_timezone))
         """
         TIME TABLE
 
@@ -1016,6 +1019,8 @@ def test_sales_report_timezone(server_timezone):
 @pytest.mark.django_db
 def test_sales_report_per_hour_timezone(server_timezone):
     with override_settings(TIME_ZONE = server_timezone):
+        # Timezone needs to be activated to current one because some old timezone can still be active
+        activate(pytz.timezone(server_timezone))
         """
         TIME TABLE
 
@@ -1047,6 +1052,7 @@ def test_sales_report_per_hour_timezone(server_timezone):
         }
         report = SalesPerHour(**data)
         report_data = report.get_data()["data"]
+        print(report_data)
 
         if server_timezone == "America/Los_Angeles":
             # should have orders in hours: 00, 13, 16 and 21
