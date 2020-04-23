@@ -13,6 +13,7 @@ class AppConfig(shuup.apps.AppConfig):
     provides = {
         "admin_module": [
             "shuup.discounts.admin.modules.DiscountModule",
+            "shuup.discounts.admin.modules.DiscountArchiveModule",
             "shuup.discounts.admin.modules.AvailabilityExceptionModule",
             "shuup.discounts.admin.modules.HappyHourModule",
             "shuup.discounts.admin.modules.CouponCodeModule",

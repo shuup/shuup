@@ -11,29 +11,16 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
+from shuup.admin.urls import admin_url
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.discounts.models import Discount
 
 
 class DiscountModule(AdminModule):
     name = _("Discounts")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:discounts.list")
 
     def get_urls(self):
-        from shuup.admin.urls import admin_url
-        archive = admin_url(
-            "^archived_discounts",
-            "shuup.discounts.admin.views.ArchivedDiscountListView",
-            name="discounts.archive"
-        )
-
-        delete = admin_url(
-            "^discounts/(?P<pk>\d+)/delete/$",
-            "shuup.discounts.admin.views.DiscountDeleteView",
-            name="discounts.delete"
-        )
-
-        return [archive, delete] + get_edit_and_list_urls(
+        return get_edit_and_list_urls(
             url_prefix="^discounts",
             view_template="shuup.discounts.admin.views.Discount%sView",
             name_template="discounts.%s"
@@ -48,6 +35,32 @@ class DiscountModule(AdminModule):
                 category=CAMPAIGNS_MENU_CATEGORY,
                 ordering=4
             ),
+        ]
+
+    def get_model_url(self, object, kind, shop=None):
+        return derive_model_url(Discount, "shuup_admin:discounts", object, kind)
+
+
+class DiscountArchiveModule(AdminModule):
+    name = _("Archived Product Discounts")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:discounts.archive")
+
+    def get_urls(self):
+        return [
+            admin_url(
+                "^archived_discounts",
+                "shuup.discounts.admin.views.ArchivedDiscountListView",
+                name="discounts.archive"
+            ),
+            admin_url(
+                "^discounts/(?P<pk>\d+)/delete/$",
+                "shuup.discounts.admin.views.DiscountDeleteView",
+                name="discounts.delete"
+            )
+        ]
+
+    def get_menu_entries(self, request):
+        return [
             MenuEntry(
                 text=_("Archived Product Discounts"),
                 icon="fa fa-percent",
@@ -56,6 +69,3 @@ class DiscountModule(AdminModule):
                 ordering=5
             )
         ]
-
-    def get_model_url(self, object, kind, shop=None):
-        return derive_model_url(Discount, "shuup_admin:discounts", object, kind)
