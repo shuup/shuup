@@ -21,6 +21,8 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Admin: Notification name when deleteing it
+- Admin: Update contact list so that it only shows customers by default
+- Front: Fix typo
 
 ### Changed
 
