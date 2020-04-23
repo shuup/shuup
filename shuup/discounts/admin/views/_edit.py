@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.urls import reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
@@ -86,7 +86,7 @@ class DiscountEditView(CreateOrUpdateView):
         if not self.object.active:
             return [
                 MenuEntry(
-                    text=_("Archived Discounts"),
+                    text=_("Archived Product Discounts"),
                     url="shuup_admin:discounts.archive"
                 )
             ]
