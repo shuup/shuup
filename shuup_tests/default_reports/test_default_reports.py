@@ -1052,7 +1052,6 @@ def test_sales_report_per_hour_timezone(server_timezone):
         }
         report = SalesPerHour(**data)
         report_data = report.get_data()["data"]
-        print(report_data)
 
         if server_timezone == "America/Los_Angeles":
             # should have orders in hours: 00, 13, 16 and 21
