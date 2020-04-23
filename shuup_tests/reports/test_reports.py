@@ -11,10 +11,12 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
+import pytz
 import six
 from babel.dates import format_date
 from bs4 import BeautifulSoup
 from django.test.utils import override_settings
+from django.utils.timezone import activate
 from django.utils.encoding import force_text
 from django.utils.functional import lazy
 from django.utils.safestring import SafeText
@@ -315,6 +317,8 @@ def test_none_dates(start_date, end_date):
 
     for timezone in ["UTC", "America/Sao_Paulo", "Etc/GMT+12", "Pacific/Kiritimati"]:
         with override_settings(TIME_ZONE=timezone):
+            # Timezone needs to be activated to current one because some old timezone can still be active
+            activate(pytz.timezone(timezone))
             data = {
                 "report": SalesTestReport.get_name(),
                 "shop": shop.pk,

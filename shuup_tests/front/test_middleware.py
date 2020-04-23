@@ -102,25 +102,41 @@ def test_customer_company_member(regular_user):
 
 
 @pytest.mark.django_db
-def test_timezone_setting(regular_user):
+def test_timezone_setting(regular_user, admin_user):
     get_default_shop()  # Create a shop
 
     mw = ShuupFrontMiddleware()
     request = get_unprocessed_request()
+    second_request = get_unprocessed_request()
     request.user = regular_user
-
-    some_tz = ('US/Hawaii' if settings.TIME_ZONE == 'UTC' else 'UTC')
-
-    person = get_person_contact(regular_user)
-    person.timezone = some_tz
-    person.save()
+    second_request.user = admin_user
+    user_tz = ('US/Hawaii' if settings.TIME_ZONE != "US/Hawaii" else "Europe/Stockholm")
     original_tz = timezone.get_current_timezone_name()
 
-    assert timezone.get_current_timezone_name() != some_tz
+
+    assert timezone.get_current_timezone_name() == settings.TIME_ZONE
+    mw.process_request(request)
+
+    assert timezone.get_current_timezone_name() == settings.TIME_ZONE
+    assert request.TIME_ZONE == settings.TIME_ZONE
+
+
+    # Test the users timezone
+    person = get_person_contact(regular_user)
+    person.timezone = user_tz
+    person.save()
 
     mw.process_request(request)
 
-    assert timezone.get_current_timezone_name() == some_tz
+    assert timezone.get_current_timezone_name() == user_tz
+    assert request.TIME_ZONE == user_tz
+
+    # Test that the settings.TIME_ZONE gets activated if there is nothing else to fallback on
+    mw.process_request(second_request)
+
+    assert timezone.get_current_timezone_name() == settings.TIME_ZONE
+    assert second_request.TIME_ZONE == settings.TIME_ZONE
+
     timezone.activate(original_tz)
 
 
