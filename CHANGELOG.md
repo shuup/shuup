@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Discounts: create different admin module for archived discounts to fix breadcrumbs
 - Fix product pagination by not overriding the state with undefined values
 
 ### Changed
