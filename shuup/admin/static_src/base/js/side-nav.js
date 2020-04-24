@@ -67,8 +67,8 @@ $(function() {
                             key: item.id,
                             href: "#" + item.id,
                             onclick: function() {
-                                ctrl.showSection(item);
                                 window.location.hash = "#" + item.id;
+                                ctrl.showSection(item);
                                 return false;
                             }
                         },
