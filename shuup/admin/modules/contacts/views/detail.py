@@ -16,6 +16,7 @@ from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
+from django.contrib.auth.models import User
 
 from shuup.admin.modules.contacts.utils import (
     check_contact_permission, request_limited
@@ -28,6 +29,7 @@ from shuup.admin.toolbar import (
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, Contact
 from shuup.front.apps.registration.signals import company_contact_activated
+from shuup.admin.modules.users.views.detail import get_admin_url, get_front_url
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.excs import Problem
 
@@ -134,6 +136,31 @@ class ContactDetailToolbar(Toolbar):
                 RemovedFromShuupWarning)
             self.append(button(self.contact))
 
+    def build_login_as_button(self):
+        user = self.contact.user if hasattr(self.contact, "user") else None
+        current_user = self.request.user
+        if isinstance(user, User):
+            has_privileges = bool(
+                getattr(current_user, "is_superuser", False) or
+                getattr(current_user, "is_staff", False)
+            )
+            can_impersonate = bool(
+                has_privileges and user.is_active and not user.is_superuser
+            )
+
+            if (can_impersonate and get_front_url() and not user.is_staff):
+                self.append(PostActionButton(
+                    post_url=reverse("shuup_admin:user.login-as", kwargs={"pk": user.pk}),
+                    text=_(u"Login as User"),
+                    extra_css_class="btn-inverse"
+                ))
+            elif (can_impersonate and get_admin_url() and user.is_staff):
+                self.append(PostActionButton(
+                    post_url=reverse("shuup_admin:user.login-as-staff", kwargs={"pk": user.pk}),
+                    text=_(u"Login as Staff User"),
+                    extra_css_class="btn-inverse"
+                ))
+
     def build(self):
         self.append(URLActionButton(
             url=reverse("shuup_admin:contact.edit", kwargs={"pk": self.contact.pk}),
@@ -146,6 +173,7 @@ class ContactDetailToolbar(Toolbar):
         self.build_user_button()
         self.build_new_order_button()
         self.build_provides_buttons()
+        self.build_login_as_button()
 
 
 class ContactDetailView(DetailView):
