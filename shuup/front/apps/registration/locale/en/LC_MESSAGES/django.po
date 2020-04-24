@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 18:06+0000\n"
+"POT-Creation-Date: 2020-04-23 21:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -37,6 +37,9 @@ msgstr ""
 msgid "Is User Active"
 msgstr ""
 
+msgid "Account Reactivation"
+msgstr ""
+
 msgid "Company Registration Received"
 msgstr ""
 
@@ -58,6 +61,20 @@ msgid ""
 msgstr ""
 
 msgid "{{ order.shop }} - Welcome!"
+msgstr ""
+
+msgid "Send account reactivation email"
+msgstr ""
+
+msgid "Send email when a user account gets reactivated"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email when a "
+"account get's reactivated"
+msgstr ""
+
+msgid "{{ customer.username }} is now active again!"
 msgstr ""
 
 msgid "Send Company Registration Received Email"

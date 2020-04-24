@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2020-04-23 21:16+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -1175,7 +1175,7 @@ msgstr ""
 msgid "Product detail tabs"
 msgstr ""
 
-msgid "Select all tabs that should be renderd in product details."
+msgid "Select all tabs that should be rendered in product details."
 msgstr ""
 
 msgid "Tax number is not valid."
@@ -1189,4 +1189,8 @@ msgid "{language_code} is an invalid language code"
 msgstr ""
 
 msgid "This product is not available in this shop."
+msgstr ""
+
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)"
 msgstr ""
