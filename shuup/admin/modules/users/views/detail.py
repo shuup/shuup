@@ -29,6 +29,7 @@ from shuup.admin.toolbar import (
     get_default_edit_toolbar, PostActionButton, Toolbar
 )
 from shuup.admin.utils.permissions import has_permission
+from shuup.front.apps.registration.signals import user_reactivated
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
 from shuup.utils.excs import Problem
@@ -331,6 +332,9 @@ class UserDetailView(CreateOrUpdateView):
                 raise Problem(_("You can not deactivate a superuser."))
             if self.object == self.request.user:
                 raise Problem(_("You can not deactivate yourself."))
+
+        if not self.object.is_active and state:
+            user_reactivated.send(sender=self.__class__, user=self.object, request=self.request)
 
         self.object.is_active = state
         self.object.save(update_fields=("is_active",))

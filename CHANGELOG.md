@@ -15,6 +15,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Admin: Now when activating/deactivating user it's contact will also change
+- Admin: New notification for when a account get's reactivated
 
 ## [1.10.11] - 2020-04-23
 

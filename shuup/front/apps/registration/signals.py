@@ -11,6 +11,9 @@ from registration.signals import login_user
 
 company_contact_activated = Signal(providing_args=["instance", "request"], use_caching=True)
 
+# Used when admin reactivates an account
+user_reactivated = Signal(providing_args=["user", "request"])
+
 
 def handle_user_activation(user, **kwargs):
     activate_contact_by_user(user)
