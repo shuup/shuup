@@ -36,7 +36,6 @@ def test_clean(rf, admin_user):
     form = CompanyForm(data={"name": "Test Oy"}, request=request)
     form.full_clean()
     assert not form.is_valid()
-    print(form.errors)
     assert "Tax number is required with the company name." in form.errors["tax_number"][0]
 
     form = CompanyForm(data={"tax_number": "123"}, request=request)
@@ -51,7 +50,6 @@ def test_clean(rf, admin_user):
     form = CompanyForm(data={"name": "Test Oy", "tax_number": "123"}, request=request)
     form.full_clean()
     assert not form.is_valid()
-    print(form.errors)
     assert len(form.errors["tax_number"]) == 2  # One for missing tax number and one for failing validation
 
     # Test with invalid vat-like tax number

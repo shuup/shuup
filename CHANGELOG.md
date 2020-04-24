@@ -11,11 +11,28 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: Added option to delete manufacturer
 
+## [1.10.11] - 2020-04-23
+
+### Fixed
+
+- Discounts: create different admin module for archived discounts to fix breadcrumbs
+- Fix product pagination by not overriding the state with undefined values
+
+### Fixed
+
+- Middleware: fix so it trys to take the users timezone first, then the suppliers, last the projects TIME_ZONE
+
+### Changed
+
+- Front: customize sort options through settings
+
 ## [1.10.10] - 2020-03-24
 
 ### Fixed
 
 - Admin: Notification name when deleteing it
+- Admin: Update contact list so that it only shows customers by default
+- Front: Fix typo
 
 ### Changed
 

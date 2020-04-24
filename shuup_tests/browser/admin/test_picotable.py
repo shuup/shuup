@@ -89,27 +89,27 @@ def _test_pagination(browser):
     ellipses = u"\u22ef"
 
     items = _get_pagination_content(browser)
-    _assert_pagination_content(items, ["Previous", "1", "2", "3", ellipses, "11", "Next"])
+    _assert_pagination_content(items, ["Previous", "1", "2", "3", ellipses, "10", "Next"])
 
     _goto_page(browser, 3)
     items = _get_pagination_content(browser)
-    _assert_pagination_content(items, ["Previous", "1", "2", "3", "4", "5",  ellipses, "11", "Next"])
+    _assert_pagination_content(items, ["Previous", "1", "2", "3", "4", "5",  ellipses, "10", "Next"])
 
     _goto_page(browser, 5)
     items = _get_pagination_content(browser)
-    _assert_pagination_content(items, ["Previous", "1", ellipses, "3", "4", "5", "6", "7", ellipses, "11", "Next"])
+    _assert_pagination_content(items, ["Previous", "1", ellipses, "3", "4", "5", "6", "7", ellipses, "10", "Next"])
 
     _goto_page(browser, 7)
     items = _get_pagination_content(browser)
-    _assert_pagination_content(items, ["Previous", "1", ellipses, "5", "6", "7", "8", "9", ellipses, "11", "Next"])
+    _assert_pagination_content(items, ["Previous", "1", ellipses, "5", "6", "7", "8", "9", "10", "Next"])
 
     _goto_page(browser, 9)
     items = _get_pagination_content(browser)
-    _assert_pagination_content(items, ["Previous", "1", ellipses, "7", "8", "9", "10", "11", "Next"])
+    _assert_pagination_content(items, ["Previous", "1", ellipses, "7", "8", "9", "10", "Next"])
 
-    _goto_page(browser, 11)
+    _goto_page(browser, 10)
     items = _get_pagination_content(browser)
-    _assert_pagination_content(items, ["Previous", "1", ellipses, "9", "10", "11", "Next"])
+    _assert_pagination_content(items, ["Previous", "1", ellipses, "8", "9", "10", "Next"])
 
 
 def _get_pagination_content(browser):

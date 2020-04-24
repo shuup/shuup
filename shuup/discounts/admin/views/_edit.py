@@ -9,8 +9,10 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.core.urlresolvers import reverse_lazy
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.base import MenuEntry
 from shuup.admin.forms.fields import PercentageField
 from shuup.admin.forms.widgets import (
     ContactChoiceWidget, ProductChoiceWidget, QuickAddCategorySelect,
@@ -79,6 +81,22 @@ class DiscountEditView(CreateOrUpdateView):
         kwargs = super(DiscountEditView, self).get_form_kwargs()
         kwargs["request"] = self.request
         return kwargs
+
+    def get_breadcrumb_parents(self):
+        if not self.object.active:
+            return [
+                MenuEntry(
+                    text=_("Archived Product Discounts"),
+                    url="shuup_admin:discounts.archive"
+                )
+            ]
+
+        return [
+            MenuEntry(
+                text=force_text(self.model._meta.verbose_name_plural).title(),
+                url="shuup_admin:discounts.list"
+            )
+        ]
 
     def get_toolbar(self):
         object = self.get_object()

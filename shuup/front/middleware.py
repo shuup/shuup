@@ -117,7 +117,10 @@ class ShuupFrontMiddleware(MiddlewareMixin):
     def _set_timezone(self, request):
         if request.person.timezone:
             timezone.activate(request.person.timezone)
-            # TODO: Fallback to request.shop.timezone (and add such field)
+        else:
+            timezone.activate(settings.TIME_ZONE)
+
+        request.TIME_ZONE = timezone.get_current_timezone_name()
 
     def _set_price_display_options(self, request):
         customer = request.customer
