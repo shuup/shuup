@@ -5,7 +5,9 @@
   "main": "build_resources.js",
   "scripts": {
     "watch": "node build_resources --watch",
-    "build": "node build_resources --sync"
+    "build": "node build_resources --sync",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "shuup": {
     "static_build": true
@@ -55,9 +57,11 @@
     "sortablejs": "^1.7.0",
     "summernote": "^0.8.12",
     "tooltip.js": "^1.2.0",
-    "vinyl-source-stream": "^2.0.0"
+    "vinyl-source-stream": "^2.0.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "eslint": "^5.1.0"
-  }
+  },
+  "snyk": true
 }
