@@ -6,7 +6,9 @@
   "scripts": {
     "watch": "node build_resources --watch",
     "build": "node build_resources --sync",
-    "lint": "eslint static_src"
+    "lint": "eslint static_src",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "shuup": {
     "static_build": true
@@ -29,10 +31,12 @@
     "select2": "^4.0.6-rc.1",
     "shuup-static-build-tools": "^1.0.3",
     "sortablejs": "^1.7.0",
-    "summernote": "0.8.12"
+    "summernote": "0.8.12",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "eslint": "^5.1.0"
-  }
+  },
+  "snyk": true
 }
