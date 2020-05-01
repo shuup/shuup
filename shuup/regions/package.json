@@ -5,7 +5,9 @@
   "main": "build_resources.js",
   "scripts": {
     "watch": "node build_resources --watch",
-    "build": "node build_resources --sync"
+    "build": "node build_resources --sync",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "shuup": {
     "static_build": true
@@ -16,9 +18,11 @@
   "dependencies": {
     "babel-preset-env": "^1.7.0",
     "parcel-bundler": "^1.12.4",
-    "shuup-static-build-tools": "^1.0.3"
+    "shuup-static-build-tools": "^1.0.3",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3"
-  }
+  },
+  "snyk": true
 }
