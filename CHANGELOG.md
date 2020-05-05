@@ -10,6 +10,12 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Admin: add error message when upload fails. At media queue complete do not
+  resave product media if the file-count has not changed. This for example
+  prevents media save when the upload itself fails.
+- Admin: add option to override dropzone upload path by using data attribute
+- Admin: add upload path to browser URLs and use it to fallback on media
+  uploads when the actual media path is not available.
 - Admin: Ability to delete manufacturer
 - Admin: Ability to login as the selected contact if it's a user
 
