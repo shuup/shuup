@@ -9,9 +9,9 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls, admin_url
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Manufacturer
 
 
@@ -20,7 +20,13 @@ class ManufacturerModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:manufacturer.list")
 
     def get_urls(self):
-        return get_edit_and_list_urls(
+        return [
+            admin_url(
+                "^manufacturer/(?P<pk>\d+)/delete/$",
+                "shuup.admin.modules.manufacturers.views.ManufacturerDeleteView",
+                name="manufacturer.delete"
+            )
+        ] + get_edit_and_list_urls(
             url_prefix="^manufacturers",
             view_template="shuup.admin.modules.manufacturers.views.Manufacturer%sView",
             name_template="manufacturer.%s"

@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Admin: Ability to delete manufacturer
 - Admin: Ability to login as the selected contact if it's a user
 
 ### Fixed
