@@ -14,9 +14,13 @@ function activateDropzone($dropzone, attrs={}) {
 
     const selector = "#" + $dropzone.attr("id");
     const $data = $(selector).data();
-    const uploadPath = attrs.uploadPath || $data.upload_path;
+    const uploadPath = $data.upload_path || attrs.uploadPath;
     const addRemoveLinks = $data.add_remove_links;
-    const uploadUrl = $data.upload_url || window.ShuupAdminConfig.browserUrls.media;
+    const uploadUrl = (
+        $data.upload_url ||
+        window.ShuupAdminConfig.browserUrls.media ||
+        window.ShuupAdminConfig.browserUrls.upload
+    );
     const browsable = (window.ShuupAdminConfig.browserUrls["media"] && $data.browsable && $data.browsable !== "False");
 
     // Load attributes encoded in attributes with `data-dz-` prefixes
@@ -57,7 +61,7 @@ function activateDropzone($dropzone, attrs={}) {
         }
     });
 
-    dropzone.on("removedfile", attrs.onSuccess || function(data){
+    dropzone.on("removedfile", attrs.onRemovedFile || function(data){
         $(selector).find("input").val("");
     });
 
@@ -67,6 +71,19 @@ function activateDropzone($dropzone, attrs={}) {
             data = JSON.parse(data.xhr.responseText).file;
         }
         $(selector).find("input").val(data.id);
+    });
+
+    dropzone.on("error", attrs.onError|| function(data){
+        let errorMessage = gettext("Error happened while uploading file.")
+        if(data.xhr) {
+            response = JSON.parse(data.xhr.responseText)
+            if (response.error && response.error.file) {
+                errorMessage = JSON.parse(data.xhr.responseText).error.file
+            }
+        }
+
+        window.Messages.enqueue({ tags: "error", text: errorMessage});
+        dropzone.removeFile(data);
     });
 
     dropzone.on("queuecomplete", attrs.onQueueComplete || $.noop);

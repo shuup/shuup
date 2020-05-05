@@ -28,6 +28,7 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
             "edit": "shuup_admin:edit",
             "select": "shuup_admin:select",
             "media": ("shuup_admin:media.browse" if has_permission(request.user, "media.browse") else None),
+            "upload": ("shuup_admin:media.upload" if has_permission(request.user, "media.upload") else None),
             "product": "shuup_admin:shop_product.list",
             "contact": "shuup_admin:contact.list",
             "setLanguage": "shuup_admin:set-language",

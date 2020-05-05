@@ -82,20 +82,39 @@ $(function() {
         $html.insertBefore($source);
     }
 
+    function getFileIds(kind) {
+        const $fileInputs = $("#product-" + kind + "-section").find(".file-control input");
+        var fileIds = [];
+        for(var i = 0; i < $fileInputs.length; i++){
+            let fileId = parseInt($($fileInputs[i]).val());
+            if(!isNaN(fileId)) {
+                fileIds.push(parseInt($($fileInputs[i]).val()));
+            }
+        }
+        return fileIds
+    }
+
+    function getFileCount(kind) {
+        return $("#product-" + kind + "-section").data("saved_file_count") || 0;
+    }
+
+    function setFileCount(kind, count) {
+        $("#product-" + kind + "-section").data("saved_file_count", count);
+    }
+
     function onDropzoneQueueComplete(dropzone, kind) {
         if(location.pathname.indexOf("new") > 0) {
             // save product media the traditional way via the save button when creating a new product
             return;
         }
         const productId = $("#product-" + kind + "-section-dropzone").data().product_id;
-        const $fileInputs = $("#product-" + kind + "-section").find(".file-control input");
-        var fileIds = [];
+        if (!productId) {
+            return;
+        }
 
-        for(var i = 0; i < $fileInputs.length; i++){
-            let fileId = parseInt($($fileInputs[i]).val());
-            if(!isNaN(fileId)) {
-                fileIds.push(parseInt($($fileInputs[i]).val()));
-            }
+        let fileIds = getFileIds(kind);
+        if (getFileCount(kind) === fileIds.length) {  // Skip add media if file count has not changed
+            return;
         }
 
         $.ajax({
@@ -152,6 +171,9 @@ $(function() {
     dropzones.forEach(function(zoneData) {
         var fieldId = "#" + zoneData.field + "-dropzone";
         if ($(fieldId).length) {
+            // Save file count so we can prevent saving product media
+            // if file count has not changed
+            setFileCount(zoneData.queueComplete, getFileIds(zoneData.queueComplete).length);
             activateDropzone($(fieldId), {
                 uploadPath: zoneData.targetPath,
                 maxFiles: zoneData.maxFiles,
