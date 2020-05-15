@@ -43,11 +43,16 @@ def test_page_links_plugin_show_all():
     """
     context = get_jinja_context()
     page = create_page(eternal=True, visible_in_menu=True, shop=get_default_shop())
+    page_two = create_page(eternal=True, visible_in_menu=True, shop=get_default_shop())
+    page_three = create_page(eternal=True, visible_in_menu=True, shop=get_default_shop())
     plugin = PageLinksPlugin({"show_all_pages": False})
     assert not plugin.get_context_data(context)["pages"]
 
     plugin = PageLinksPlugin({"show_all_pages": True})
     assert page in plugin.get_context_data(context)["pages"]
+    page_ordered_list = [page_three.pk, page.pk, page_two.pk]
+    plugin = PageLinksPlugin({"show_all_pages": False, "pages": page_ordered_list})
+    assert page_ordered_list == [x.pk for x in plugin.get_context_data(context)["pages"]]
 
 
 @pytest.mark.django_db

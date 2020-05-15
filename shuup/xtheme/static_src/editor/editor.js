@@ -35,6 +35,11 @@ function activateSelect($select, model, searchMode, extraFilters = null, noExpan
         return $select.select2({
             language: "xx",
             ...attrs
+        }).on('select2:select', function (e) {
+            var id = e.params.data.id;
+            var option = $(e.target).children('[value=' + id + ']');
+            option.detach();
+            $(e.target).append(option).change();
         });
     }
 
