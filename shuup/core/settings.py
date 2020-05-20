@@ -97,6 +97,13 @@ SHUUP_ENABLE_MULTIPLE_SHOPS = False
 #: Enabling this flag allows supplier creation from Admin Panel.
 SHUUP_ENABLE_MULTIPLE_SUPPLIERS = False
 
+#: Whether to allow editing order
+#: By default when multiple suppliers is enabled this option is disabled
+#: since order edit does not offer supplier select for product line.
+#: You can enable this when there is max one vendor per product.
+#:
+SHUUP_ALLOW_EDITING_ORDER = not SHUUP_ENABLE_MULTIPLE_SUPPLIERS
+
 #: Indicates whether Shuup should restrict Contact access per Shop.
 #:
 #: This is useful when multi-shop is in use and the contact shouldn't
