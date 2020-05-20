@@ -1194,7 +1194,7 @@ class Order(MoneyPropped, models.Model):
 
     def can_edit(self):
         return (
-            not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS
+            settings.SHUUP_ALLOW_EDITING_ORDER
             and not self.has_refunds()
             and not self.is_canceled()
             and not self.is_complete()

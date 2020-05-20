@@ -97,3 +97,13 @@ SHUUP_ADMIN_LOGIN_AS_REDIRECT_VIEW = "shuup:index"
 #: To which view redirect impersonator when login as staff
 #:
 SHUUP_ADMIN_LOGIN_AS_STAFF_REDIRECT_VIEW = "shuup_admin:dashboard"
+
+
+#: Whether to require shipping method at admin order creator/edit
+#:
+SHUUP_ADMIN_REQUIRE_SHIPPING_METHOD_AT_ORDER_CREATOR = True
+
+
+#: Whether to require payment method at admin order creator/edit
+#:
+SHUUP_ADMIN_REQUIRE_PAYMENT_METHOD_AT_ORDER_CREATOR = True

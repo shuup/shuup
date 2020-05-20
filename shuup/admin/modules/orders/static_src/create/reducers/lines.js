@@ -15,6 +15,7 @@ function newLine() {
         id: (+new Date() * 10000).toString(36),
         type: "product",
         product: null,
+        supplier: null,
         sku: null,
         text: null,
         errors: null,
@@ -104,6 +105,7 @@ function updateLineFromProduct(state, {payload}) {
     updates.step = product.purchaseMultiple;
     updates.errors = product.errors;
     updates.product = product.product;
+    updates.supplier = product.supplier;
     updates = _.merge(updates, getFormattedStockCounts(product));
     return setLineProperties(state, id, updates);
 }
@@ -119,6 +121,9 @@ function setLineProperty(state, {payload}) {
                 updates.product = product;
                 updates.type = "product";
                 break;
+            }
+            case "supplier": {
+                updates.supplier = value;
             }
             case "text": {
                 updates.text = value;

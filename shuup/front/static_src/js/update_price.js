@@ -56,7 +56,7 @@ window.updatePrice = function updatePrice(productId) {
 
         const imagesSelector = ".product-image .product-carousel a";
         if ($(imagesSelector).length > 0) {
-            $(imagesSelector).simpleLightbox();
+            $(imagesSelector).simpleLightbox({history: false});
         }
 
         $(".product-image .owl-carousel.carousel-thumbnails").owlCarousel({

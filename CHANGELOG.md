@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+- Admin: fix width issue with picotable images
+- Admin: fix bugs in order edit and improve it one step closer to
+  multivendor world. Now supports situation when vendors does not
+  share products.
+     - Add option to make shipping and payment method optional
+     - Add supplier to pricing context
+     - Show supplier name on product column
+     - Make auto add for product select false by default
+     - Fix product select2 missing URL and data handler since
+       the whole ajax method was passed as attrs.
+     - Add option to open/close collapsed content sections in mobile
+- Core: add option to enable order edit for multiple vendors
+- Front: do not stack history on product list when filters are changed.
+  Instead replace state so back-buttons works nicely.
+- Front: prevent image Lightbox touching history so you do not need
+  to click back 6 times after you have viewed all images.
+
 ## [1.10.12] - 2020-05-05
 
 ### Added

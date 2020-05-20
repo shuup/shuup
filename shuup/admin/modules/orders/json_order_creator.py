@@ -10,12 +10,14 @@ from __future__ import unicode_literals
 from copy import deepcopy
 
 from django import forms
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 from shuup.core.models import (
     CompanyContact, Contact, MutableAddress, OrderLineType, OrderStatus,
-    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopProduct
+    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopProduct,
+    Supplier
 )
 from shuup.core.order_creator import OrderCreator, OrderModifier, OrderSource
 from shuup.core.order_creator._source import LineSource
@@ -124,7 +126,9 @@ class JsonOrderCreator(object):
             }), code="no_shop_product"))
             return False
 
-        supplier = shop_product.get_supplier(source.customer, sl_kwargs["quantity"], source.shipping_address)
+        supplier = self.safe_get_first(Supplier, pk=product_info["id"])
+        if not supplier:
+            supplier = shop_product.get_supplier(source.customer, sl_kwargs["quantity"], source.shipping_address)
 
         sl_kwargs["product"] = product
         sl_kwargs["supplier"] = supplier
@@ -243,11 +247,11 @@ class JsonOrderCreator(object):
 
         methods_data = state.pop("methods", None) or {}
         shipping_method = methods_data.pop("shippingMethod")
-        if not shipping_method:
+        if not shipping_method and settings.SHUUP_ADMIN_REQUIRE_SHIPPING_METHOD_AT_ORDER_CREATOR:
             self.add_error(ValidationError(_("Please select shipping method."), code="no_shipping_method"))
 
         payment_method = methods_data.pop("paymentMethod")
-        if not payment_method:
+        if not payment_method and settings.SHUUP_ADMIN_REQUIRE_PAYMENT_METHOD_AT_ORDER_CREATOR:
             self.add_error(ValidationError(_("Please select payment method."), code="no_payment_method"))
 
         if self.errors:
@@ -260,8 +264,12 @@ class JsonOrderCreator(object):
             billing_address=billing_address,
             shipping_address=shipping_address,
             status=OrderStatus.objects.get_default_initial(),
-            shipping_method=self.safe_get_first(ShippingMethod, pk=shipping_method.get("id")),
-            payment_method=self.safe_get_first(PaymentMethod, pk=payment_method.get("id")),
+            shipping_method=(
+                self.safe_get_first(ShippingMethod, pk=shipping_method.get("id")) if shipping_method else None
+            ),
+            payment_method=(
+                self.safe_get_first(PaymentMethod, pk=payment_method.get("id")) if payment_method else None
+            )
         )
         return source
 
