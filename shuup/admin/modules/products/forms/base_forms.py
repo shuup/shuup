@@ -47,7 +47,7 @@ class ProductBaseForm(MultiLanguageModelForm):
     file = forms.CharField(
         label=_("Primary Product Image"),
         widget=FileDnDUploaderWidget(kind="images", upload_path="/products/images"),
-        help_text=_("The main product image. You can add additional images on the Product Images tab."),
+        help_text=_("The main product image. You can add additional images in the `Product Images` tab."),
         required=False
     )
 
@@ -182,7 +182,7 @@ class ShopProductForm(MultiLanguageModelForm):
         )
         help_texts = {
             "backorder_maximum": _("Number of units that can be purchased after the product is out of stock. "
-                                   "Set to blank for product to be purchasable without limits")
+                                   "Set to blank for product to be purchasable without limits.")
         }
         widgets = {
             "display_unit": QuickAddDisplayUnitSelect(editable_model="shuup.DisplayUnit"),
@@ -428,7 +428,7 @@ class BaseProductMediaForm(MultiLanguageModelForm):
         try:
             thumbnail = self.instance.get_thumbnail()
         except Exception as error:
-            msg = _("Thumbnail generation of %(media)s failed: %(error)s") % {"media": self.instance, "error": error}
+            msg = _("Thumbnail generation of %(media)s failed: %(error)s.") % {"media": self.instance, "error": error}
             messages.error(request, msg)
             thumbnail = None
         return thumbnail
@@ -494,7 +494,7 @@ class ProductMediaForm(BaseProductMediaForm):
 
         file = self.cleaned_data.get("file")
         if external_url and file:
-            raise ValidationError(_("Use only URL or file, not both"))
+            raise ValidationError(_("Use only URL or file, not both."))
         return external_url
 
 
@@ -517,7 +517,7 @@ class ProductImageMediaForm(BaseProductMediaForm):
     def clean_file(self):
         file = self.cleaned_data.get("file")
         if file and not isinstance(file, Image):
-            raise ValidationError(_("Only images allowed in this field"))
+            raise ValidationError(_("Only images are allowed in this field."))
         return file
 
     def save(self, commit=True):

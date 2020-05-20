@@ -59,7 +59,7 @@ def test_authenticate_form(client):
         REDIRECT_FIELD_NAME: redirect_target
     })
     assert response.status_code == 200
-    assert "You must accept to this to authenticate." in response.content.decode("utf-8")
+    assert "You must accept this in order to authenticate." in response.content.decode("utf-8")
 
     response = client.post(reverse("shuup:login"), data={
         "username": user.email,
@@ -134,7 +134,7 @@ def test_register_form(client):
         REDIRECT_FIELD_NAME: redirect_target
     })
     assert response.status_code == 200
-    assert "You must accept to this to register." in response.content.decode("utf-8")
+    assert "You must accept this in order to register." in response.content.decode("utf-8")
 
     response = client.post(reverse("shuup:registration_register"), data={
         "username": "user",

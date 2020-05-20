@@ -31,7 +31,7 @@ class Mockers(object):
     """
 
     def mock_order(self, **kwargs):
-        """ Create a random order (randomly completed)"""
+        """ Create a random order (randomly completed)."""
         shop = kwargs.pop("shop")
 
         try:
@@ -41,7 +41,7 @@ class Mockers(object):
             pass
 
     def mock_order_6h(self, **kwargs):
-        """ Create a random order for past 6h (20% chance for completion)"""
+        """ Create a random order for past 6h (20% chance for completion)."""
         shop = kwargs.pop("shop")
 
         try:
@@ -51,7 +51,7 @@ class Mockers(object):
             pass
 
     def mock_fully_paid_order(self, **kwargs):
-        """ Create a random order (complete and fully paid)"""
+        """ Create a random order (complete and fully paid)."""
         shop = kwargs.pop("shop")
 
         try:
@@ -61,7 +61,7 @@ class Mockers(object):
             pass
 
     def mock_fully_paid_order_6h(self, **kwargs):
-        """ Create a random order for past 6h (complete and fully paid)"""
+        """ Create a random order for past 6h (complete and fully paid)."""
         shop = kwargs.pop("shop")
         order_date = now() - datetime.timedelta(minutes=random.uniform(0, 360))
         try:
@@ -71,7 +71,7 @@ class Mockers(object):
             pass
 
     def mock_fully_paid_order_30d(self, **kwargs):
-        """ Create a random order for past 30 days (complete and fully paid)"""
+        """ Create a random order for past 30 days (complete and fully paid)."""
         shop = kwargs.pop("shop")
         order_date = now() - datetime.timedelta(hours=random.uniform(0, 720))
         try:
@@ -81,21 +81,21 @@ class Mockers(object):
             pass
 
     def mock_person(self, **kwargs):
-        """ Create a random person """
+        """ Create a random person. """
         shop = kwargs.pop("shop")
         return create_random_person(shop=shop)
 
     def mock_company(self, **kwargs):
-        """ Create a random company """
+        """ Create a random company. """
         shop = kwargs.pop("shop")
         return create_random_company(shop=shop)
 
     def mock_customer_group(self, **kwargs):
-        """ Create a random contact group """
+        """ Create a random contact group. """
         return create_random_contact_group()
 
     def mock_product_attribute(self, **kwargs):
-        """ Create a random product attribute """
+        """ Create a random product attribute. """
         return create_random_product_attribute()
 
 
@@ -130,9 +130,9 @@ class MockerView(FormView):
             try:
                 value = mocker(shop=self.request.shop)
                 if value:
-                    messages.success(self.request, "Created: %s" % value)
+                    messages.success(self.request, "Success! Created: %s" % value)
             except Exception as e:
                 if settings.DEBUG:
                     raise
-                messages.error(self.request, "Error: %s" % e)
+                messages.error(self.request, "Error! %s" % e)
         return self.get(self.request)

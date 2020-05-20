@@ -134,7 +134,7 @@ class SortProductListByName(SimpleProductListModifier):
     def get_admin_fields(self):
         default_fields = super(SortProductListByName, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow products to be sortable by product name."
+            "Enable this to allow products to be sortable by product name."
         )
         default_fields[1][1].help_text = _(
             "Use a numeric value to set the order in which the the filter will appear on the "
@@ -186,7 +186,7 @@ class SortProductListByPrice(SimpleProductListModifier):
     def get_admin_fields(self):
         default_fields = super(SortProductListByPrice, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow products to be sortable by price (from low to high and high to low)."
+            "Enable this to allow products to be sortable by price (from low to high; from high to low)."
         )
         default_fields[1][1].help_text = _(
             "Use a numeric value to set the order in which the the filter will appear on the "
@@ -235,7 +235,7 @@ class SortProductListByCreatedDate(SimpleProductListModifier):
     def get_admin_fields(self):
         default_fields = super(SortProductListByCreatedDate, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow products to be sortable from newest to oldest products."
+            "Enable this to allow products to be sortable from newest to oldest products."
         )
         default_fields[1][1].help_text = _(
             "Use a numeric value to set the order in which the filter will appear on the "
@@ -260,7 +260,7 @@ class SortProductListByAscendingCreatedDate(SortProductListByCreatedDate):
     def get_admin_fields(self):
         default_fields = super(SortProductListByAscendingCreatedDate, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow products to be sortable from oldest to newest products."
+            "Enable this to allow products to be sortable from oldest to newest products."
         )
         default_fields[1][1].help_text = _(
             "Use a numeric value to set the order in which the filter will appear on the "
@@ -313,7 +313,7 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
     def get_admin_fields(self):
         default_fields = super(ManufacturerProductListFilter, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow products to be filterable by manufacturer for this category."
+            "Enable this to allow products to be filterable by manufacturer for this category."
         )
         default_fields[1][1].help_text = _(
             "Use a numeric value to set the order in which the manufacturer filters will appear on the "
@@ -377,7 +377,7 @@ class CategoryProductListFilter(SimpleProductListModifier):
     def get_admin_fields(self):
         default_fields = super(CategoryProductListFilter, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow products to be filterable by any visible product category. "
+            "Enable this to allow products to be filterable by any visible product category. "
         )
         default_fields[1][1].help_text = _(
             "Use a numeric value to set the order in which the category list filters will appear on the "
@@ -409,7 +409,7 @@ class LimitProductListPageSize(SimpleProductListModifier):
     def get_admin_fields(self):
         default_fields = super(LimitProductListPageSize, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow the customer to be able to select the number of products to display."
+            "Enable this to allow the customer to be able to select the number of products to display."
         )
         default_fields[1][1].help_text = _(
             "Use a numeric value to set the order in which the page size filter will appear on the "
@@ -470,7 +470,7 @@ class ProductVariationFilter(SimpleProductListModifier):
     def get_admin_fields(self):
         default_fields = super(ProductVariationFilter, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow products to be filterable by their different variations. "
+            "Enable this to allow products to be filterable by their different variations. "
             "For example, size or color."
         )
         default_fields[1][1].help_text = _(
@@ -530,7 +530,7 @@ class ProductPriceFilter(SimpleProductListModifier):
     def get_admin_fields(self):
         default_fields = super(ProductPriceFilter, self).get_admin_fields()
         default_fields[0][1].help_text = _(
-            "Check this to allow products to be filtered by price. "
+            "Enable this to allow products to be filtered by price. "
             "Prices will be listed in groups from the price range minimum to price range maximum in increments of "
             "the configured price range step."
         )

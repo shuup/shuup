@@ -15,7 +15,7 @@ class ReloadMethod(object):
     title = None
 
     def execute(self):
-        raise NotImplementedError("Not implemented!")
+        raise NotImplementedError("Error! Not implemented: `ReloadMethod` -> `execute()`.")
 
     def is_viable(self):
         return False
@@ -97,7 +97,7 @@ class GunicornReloadMethod(ReloadMethod):
         import signal
         if self.is_parent_an_unicorn():
             os.kill(os.getppid(), signal.SIGHUP)
-        raise ValueError("My parent doesn't look like an unicorn")
+        raise ValueError("Error! My parent doesn't look like an unicorn.")
 
 
 def get_reload_method_classes():

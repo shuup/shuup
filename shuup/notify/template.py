@@ -23,9 +23,9 @@ def get_sandboxed_template_environment(context, **kwargs):
 
     :param context: Script context.
     :type context: shuup.notify.script.Context
-    :param kwargs: extra args
+    :param kwargs: extra args.
     :type kwargs: dict
-    :return: The environment used to render
+    :return: The environment used to render.
     :rtype: jinja2.environment.Environment
     """
     env_kwargs = dict()
@@ -45,9 +45,9 @@ def render_in_context(context, template_text, html_intent=False):
     :param html_intent: Is the template text intended for HTML output?
                         This currently turns on autoescaping.
     :type html_intent: bool
-    :return: Rendered template text
+    :return: Rendered template text.
     :rtype: str
-    :raises: Whatever Jinja2 might happen to raise
+    :raises: Whatever Jinja2 might happen to raise.
     """
 
     environment_provider = cached_load("SHUUP_NOTIFY_TEMPLATE_ENVIRONMENT_PROVIDER")
@@ -59,9 +59,9 @@ def render_in_context(context, template_text, html_intent=False):
 class Template(object):
     def __init__(self, context, data):
         """
-        :param context: Script context
+        :param context: Script context.
         :type context: shuup.notify.script.Context
-        :param data: Template data dictionary
+        :param data: Template data dictionary.
         :type data: dict
         """
         self.context = context
@@ -83,7 +83,7 @@ class Template(object):
         Render this template in the given language,
         returning the given fields.
 
-        :param language: Language code (ISO 639-1 or ISO 639-2)
+        :param language: Language code (ISO 639-1 or ISO 639-2).
         :type language: str
         :param fields: Desired fields to render.
         :type fields: list[str]
@@ -108,6 +108,6 @@ class Template(object):
                 rendered = self.render(language=language, fields=fields)
                 rendered["_language"] = language
                 return rendered
-        raise NoLanguageMatches("No language in template matches any of languages %r for fields %r" % (
+        raise NoLanguageMatches("Error! No language in template matches any of languages `%r` for fields `%r`." % (
             language_preferences, fields.keys()
         ))

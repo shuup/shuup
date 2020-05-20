@@ -15,9 +15,9 @@ def delete_folder(folder):
     """
     Delete a Filer folder and move files and subfolders up to the parent.
 
-    :param folder: Folder
+    :param folder: Folder.
     :type folder: filer.models.Folder
-    :return: Success message
+    :return: Success message.
     :rtype: str
     """
     parent_folder = (folder.parent if folder.parent_id else None)
@@ -40,5 +40,5 @@ def delete_folder(folder):
     folder.delete()
     if subfolders:  # We had some subfolders to mangle, best rebuild now
         Folder._tree_manager.rebuild()
-    message_bits.insert(0, _("Folder %s deleted.") % folder.name)
+    message_bits.insert(0, _("Folder `%s` was deleted.") % folder.name)
     return "\n".join(message_bits)

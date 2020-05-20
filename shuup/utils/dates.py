@@ -118,12 +118,12 @@ def parse_date(value):
     """
     Tries to make a date out of the value. If impossible, it raises an exception.
 
-    :param value: A value of some ilk.
+    :param value: A value of some kind.
     :return: Date
     :rtype: datetime.date
     :raise ValueError:
     """
-    # this should be first since `datetime.datetime` is subclass of `datetime.date`
+    # This should be first since `datetime.datetime` is a subclass of `datetime.date`
     if isinstance(value, datetime.datetime):
         return value.date()
     if isinstance(value, datetime.date):
@@ -131,20 +131,21 @@ def parse_date(value):
     elif isinstance(value, six.string_types):
         date = _parse_date_str(value)
         if not date:
-            raise ValueError("Unable to parse %s as date." % value)
+            raise ValueError("Error! Unable to parse `%s` as date." % value)
         return date
-    raise ValueError("Unable to parse %s as date (unknown type)." % value)
+    raise ValueError("Error! Unable to parse `%s` as date (unknown type)." % value)
 
 
 def parse_datetime(value):
     """
     Tries to make a datetime out of the value. If impossible, it raises an exception.
 
-    :param value: A value of some ilk.
-    :return: DateTime
+    :param value: A value of some kind.
+    :return: DateTime.
     :rtype: datetime.datetime
     :raise ValueError:
     """
+    # This should be first since `datetime.datetime` is a subclass of `datetime.date`
     if isinstance(value, datetime.datetime):
         return value
     if isinstance(value, datetime.date):
@@ -152,17 +153,17 @@ def parse_datetime(value):
     elif isinstance(value, six.string_types):
         date = _parse_datetime_str(value)
         if not date:
-            raise ValueError("Unable to parse %s as datetime." % value)
+            raise ValueError("Error! Unable to parse `%s` as datetime." % value)
         return date
-    raise ValueError("Unable to parse %s as datetime (unknown type)." % value)
+    raise ValueError("Error! Unable to parse `%s` as datetime (unknown type)." % value)
 
 
 def parse_time(value):
     """
     Tries to make a time out of the value. If impossible, it raises an exception.
 
-    :param value: A value of some ilk.
-    :return: Time
+    :param value: A value of some kind.
+    :return: Time.
     :rtype: datetime.time
     :raise ValueError:
     """
@@ -173,17 +174,17 @@ def parse_time(value):
     if isinstance(value, six.string_types):
         parsed_time = _parse_time_str(value)
         if not parsed_time:
-            raise ValueError("Unable to parse %s as date." % value)
+            raise ValueError("Error! Unable to parse `%s` as date." % value)
         return parsed_time
-    raise ValueError("Unable to parse %s as date (unknown type)." % value)
+    raise ValueError("Error! Unable to parse `%s` as date (unknown type)." % value)
 
 
 def try_parse_datetime(value):
     """
     Tries to make a datetime out of the value. If impossible, returns None.
 
-    :param value: A value of some ilk.
-    :return: Datetime
+    :param value: A value of some kind.
+    :return: Datetime.
     :rtype: datetime.datetime
     """
     if value is None:
@@ -198,8 +199,8 @@ def try_parse_date(value):
     """
     Tries to make a time out of the value. If impossible, returns None.
 
-    :param value: A value of some ilk.
-    :return: Date
+    :param value: A value of some kind.
+    :return: Date.
     :rtype: datetime.date
     """
     if value is None:
@@ -214,8 +215,8 @@ def try_parse_time(value):
     """
     Tries to make a time out of the value. If impossible, returns None.
 
-    :param value: A value of some ilk.
-    :return: Time
+    :param value: A value of some kind.
+    :return: Time.
     :rtype: datetime.time
     """
     if value is None:
@@ -233,9 +234,9 @@ def get_year_and_month_format(locale):
 
     Only the "language" part of the locale is taken into account here.
 
-    :param locale: Babel locale
+    :param locale: Babel locale.
     :type locale: babel.Locale
-    :return: format string
+    :return: format string.
     :rtype: str
     """
     return locale_year_and_month_formats.get(locale.language.lower(), "MMM y")
@@ -247,15 +248,15 @@ def to_aware(date, time=datetime.time.min, tz=None):
 
     :type date: datetime.date|datetime.datetime
     :param date:
-      Date or datetime object to convert
+      Date or datetime object to convert.
     :type time: datetime.time
     :param time:
-      Time value for supplementing dates to datetimes, default 0:00:00
+      Time value for supplementing dates to datetimes, default 0:00:00.
     :type tz: datetime.tzinfo|None
-      Timezone to use, default ``timezone.get_current_timezone()``
+      Timezone to use, default ``timezone.get_current_timezone()``.
     :rtype: datetime.datetime
     :return:
-      Converted aware datetime object
+      Converted aware datetime object.
     """
     if isinstance(date, datetime.datetime):
         if timezone.is_aware(date):
@@ -275,12 +276,12 @@ def dst_safe_timezone_aware(dt, tz=None):
 
     :type dt: datetime.datetime
     :param dt:
-      Datetime object to make aware
+      Datetime object to make aware.
     :type tz: datetime.tzinfo|None
-      Timezone to use, default ``timezone.get_current_timezone()``
+      Timezone to use, default ``timezone.get_current_timezone()``.
     :rtype: datetime.datetime
     :return:
-      Converted aware datetime object
+      Converted aware datetime object.
     """
     from pytz.exceptions import NonExistentTimeError
 
@@ -288,7 +289,7 @@ def dst_safe_timezone_aware(dt, tz=None):
         return timezone.make_aware(dt, timezone=tz)
     except NonExistentTimeError:
         if django.VERSION < (1, 9):
-            # is_dst parameter not available for Django 1.8
+            # is_dst parameter is not available for Django 1.8
             if tz is None:
                 tz = timezone.get_current_timezone()
             return tz.localize(dt, is_dst=True)
@@ -309,9 +310,9 @@ def local_now(tz=None):
 
 def to_timestamp(date):
     """
-    Get a UNIX timestamp from a date or datetime
+    Get a UNIX timestamp from a date or datetime.
 
-    :param datetime.date|datetime.datetime date: the datetime to convert to unix timestamp
+    :param datetime.date|datetime.datetime date: the datetime to convert to unix timestamp.
     :rtype float
     """
     return time.mktime(date.timetuple())
@@ -320,11 +321,11 @@ def to_timestamp(date):
 def to_datetime_range(start, end):
     for value in [start, end]:
         if not isinstance(value, datetime.date):
-            raise TypeError("Not date or datetime: {!r}".format(value))
+            raise TypeError("Error! Provided value `{!r}` is neither date nor datetime.".format(value))
     start_is_datetime = isinstance(start, datetime.datetime)
     end_is_datetime = isinstance(end, datetime.datetime)
     if start_is_datetime != end_is_datetime:
-        raise TypeError("Start and end must be same type: {!r} - {!r}"
+        raise TypeError("Error! Start and end must be of the same type: `{!r}` - `{!r}`."
                         .format(start, end))
     # Add +1 day to end if it's a date to make the range inclusive
     end_delta = datetime.timedelta(days=(1 if not end_is_datetime else 0))

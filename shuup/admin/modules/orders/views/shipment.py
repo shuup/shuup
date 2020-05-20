@@ -107,15 +107,15 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
     def create_shipment(self, order, product_quantities, shipment):
         """
         This function exists so subclasses can implement custom logic without
-        overriding the entire form_valid method
+        overriding the entire form_valid method.
 
-        :param order: Order to create the shipment for
+        :param order: Order to create the shipment for.
         :type order: shuup.core.models.Order
-        :param product_quantities: a dict mapping Product instances to quantities to ship
+        :param product_quantities: a dict mapping Product instances to quantities to ship.
         :type product_quantities: dict[shuup.shop.models.Product, decimal.Decimal]
         :param shipment: unsaved Shipment for ShipmentProduct's.
         :type shipment: shuup.core.models.Shipment
-        :return: Saved, complete Shipment object
+        :return: Saved, complete Shipment object.
         :rtype: shuup.core.models.Shipment
         """
         return order.create_shipment(
@@ -168,7 +168,7 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             messages.error(self.request, _("Shipping address is not set."))
             return self.form_invalid(form)
         else:
-            messages.success(self.request, _("Shipment %s created.") % shipment.id)
+            messages.success(self.request, _("Shipment %s was created.") % shipment.id)
             return HttpResponseRedirect(self.get_success_url())
 
 

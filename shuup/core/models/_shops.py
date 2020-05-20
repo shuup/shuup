@@ -49,37 +49,44 @@ class ShopStatus(Enum):
 @python_2_unicode_compatible
 class Shop(ChangeProtected, TranslatableShuupModel):
     protected_fields = ["currency", "prices_include_tax"]
-    change_protect_message = _("The following fields cannot be changed since there are existing orders for this shop")
+    change_protect_message = _("The following fields can't be changed because there are existing orders for this shop.")
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
     modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_('modified on'))
     identifier = InternalIdentifierField(unique=True, max_length=128)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True, verbose_name=_("domain"), help_text=_(
-        "Your shop domain name. Use this field to configure the URL that is used to visit your site. "
+        "Your shop domain name. Use this field to configure the URL that is used to visit your store front. "
         "Note: this requires additional configuration through your internet domain registrar."
     ))
     status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED, verbose_name=_("status"), help_text=_(
-        "Your shop status. Disable your shop if it is no longer in use."
+        "Your shop's status. Disable your shop if it's no longer in use. "
+        "For temporary closing enable the maintenance mode, available in the `Maintenance Mode` tab on the left."
     ))
     owner = models.ForeignKey("Contact", blank=True, null=True, on_delete=models.SET_NULL, verbose_name=_("contact"))
     options = JSONField(blank=True, null=True, verbose_name=_("options"))
     currency = CurrencyField(default=_get_default_currency, verbose_name=_("currency"), help_text=_(
-        "The primary shop currency. This is the currency used when selling your products."
+        "The primary shop currency. This is the currency used when selling the products."
     ))
     prices_include_tax = models.BooleanField(default=True, verbose_name=_("prices include tax"), help_text=_(
         "This option defines whether product prices entered in admin include taxes. "
-        "Note this behavior can be overridden with contact group pricing."
+        "Note: this behavior can be overridden with contact group pricing."
     ))
     logo = FilerImageField(
         verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL,
-        help_text=_("Shop logo. Will be shown at theme."), related_name="shop_logos")
+        help_text=_("Shop's logo. Will be shown at theme."), related_name="shop_logos")
 
     favicon = FilerImageField(
-        verbose_name=_("favicon"), blank=True, null=True, on_delete=models.SET_NULL,
-        help_text=_("Shop favicon. Will be shown next to the address on browser."), related_name="shop_favicons")
+        verbose_name=_("favicon"), blank=True, null=True, on_delete=models.SET_NULL, help_text=_(
+            "Shop's favicon - a mini-image graphically representing your shop. "
+            "Depending on the browser, it will be shown next to the address bar "
+            "and/or on the website title tab."
+        ), related_name="shop_favicons")
 
     maintenance_mode = models.BooleanField(verbose_name=_("maintenance mode"), default=False, help_text=_(
-        "Check this if you would like to make your shop temporarily unavailable while you do some shop maintenance."
+        "Enable if you want to make your shop temporarily unavailable to visitors while you do "
+        "regular shop maintenance, fight the security breach or for some other reason. "
+        "If you don't plan to have this shop open again, "
+        "change the `Status` on the main `General Information` tab to `Disabled`."
     ))
     contact_address = models.ForeignKey(
         "MutableAddress", verbose_name=_("contact address"), blank=True, null=True, on_delete=models.SET_NULL)
@@ -89,7 +96,7 @@ class Shop(ChangeProtected, TranslatableShuupModel):
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64, verbose_name=_("name"), help_text=_(
-            "The shop name. This name is displayed throughout admin."
+            "The shop name. This name is displayed throughout Admin Panel."
         )),
         public_name=models.CharField(max_length=64, verbose_name=_("public name"), help_text=_(
             "The public shop name. This name is displayed in the store front and in any customer email correspondence."
@@ -105,14 +112,15 @@ class Shop(ChangeProtected, TranslatableShuupModel):
         short_description=models.CharField(
             max_length=150, blank=True, verbose_name=_('short description'),
             help_text=_(
-                "Enter a short description for your shop. "
-                "The short description will be used to get the attention of your "
-                "customer with a small but precise description of your shop."
+                "Enter a short description for your shop. The short description will "
+                "be used to get the attention of your customer with a small, but "
+                "precise description of your shop. It also helps with getting more "
+                "traffic via search engines."
             )
         ),
         maintenance_message=models.CharField(
             max_length=300, blank=True, verbose_name=_("maintenance message"), help_text=_(
-                "The message to display to customers while your shop is in maintenance mode."
+                "The message to display to customers while your shop is in a maintenance mode."
             )
         )
     )

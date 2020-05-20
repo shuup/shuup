@@ -41,7 +41,7 @@ class AddNotification(Action):
         values = self.get_values(context)
         if values["recipient_type"] == RecipientType.SPECIFIC_USER:
             if not values["recipient"]:
-                context.log(logging.WARN, "Misconfigured AddNotification -- no recipient for specific user")
+                context.log(logging.WARN, "Warning! Misconfigured AddNotification -- no recipient for specific user.")
                 return
         Notification.objects.create(
             recipient_type=values["recipient_type"],

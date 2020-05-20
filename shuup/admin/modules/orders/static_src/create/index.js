@@ -99,11 +99,11 @@ export function init(config = {}) {
 
 export function debugSaveState() {
     window.localStorage.setItem("_OrderCreatorState", JSON.stringify(store.getState()));
-    console.log("Saved.");  // eslint-disable-line no-console
+    console.log("Success! Saved.");  // eslint-disable-line no-console
 }
 
 export function debugLoadState() {
     const state = JSON.parse(window.localStorage.getItem("_OrderCreatorState"));
     store.dispatch({ "type": "_replaceState", "payload": state });
-    console.log("Loaded.");  // eslint-disable-line no-console
+    console.log("Success! Loaded.");  // eslint-disable-line no-console
 }

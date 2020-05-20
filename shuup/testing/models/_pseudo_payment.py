@@ -92,7 +92,7 @@ class PseudoPaymentProcessor(PaymentProcessor):
         transform = self._get_text_transformer(service)
         mac = self.compute_pseudo_mac(order)
         if request.GET.get("mac") != mac:
-            raise Problem(u"Invalid MAC.")
+            raise Problem(u"Error! Invalid MAC.")
         if not order.is_paid():
             order.create_payment(
                 order.taxful_total_price,
@@ -100,7 +100,7 @@ class PseudoPaymentProcessor(PaymentProcessor):
                 description=transform("Shuup Pseudo Payment Service Payment")
             )
             msg = transform(
-                "Pseudo Payment successfully processed the request.")
+                "Success! The request was processed by Pseudo Payment.")
             messages.success(request, msg)
 
     def _get_text_transformer(self, service):
@@ -110,4 +110,4 @@ class PseudoPaymentProcessor(PaymentProcessor):
         elif choice == 'normal':
             return type("")
         else:
-            raise ValueError('Invalid service choice: %r' % choice)
+            raise ValueError('Error! Invalid service choice: `%r`.' % choice)

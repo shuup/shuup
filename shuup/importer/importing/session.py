@@ -47,7 +47,7 @@ class DataImporterRowSession(object):
         except Exception as e:
             msg = e.message if hasattr(e, "message") else e
             self.importer.other_log_messages.append(_("Row import failed (%s).") % msg)
-            raise ImporterError("Row import failed (cannot save).", code="save-failed")
+            raise ImporterError("Error! Row import failed (cannot save).", code="save-failed")
 
         self._handle_deferred()
         self._handle_postsave_objects()

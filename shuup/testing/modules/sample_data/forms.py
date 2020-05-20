@@ -26,12 +26,12 @@ class SampleObjectsWizardForm(forms.Form):
     categories = forms.BooleanField(label=_("Install Categories"),
                                     initial=False,
                                     required=False,
-                                    help_text=_("Check this to install sample categories."))
+                                    help_text=_("Enable this to install sample categories."))
 
     products = forms.BooleanField(label=_("Install Products"),
                                   initial=False,
                                   required=False,
-                                  help_text=_("Check this to install sample products."))
+                                  help_text=_("Enable this to install sample products."))
 
     def __init__(self, **kwargs):
         shop = kwargs.pop("shop")
@@ -63,7 +63,7 @@ class SampleObjectsWizardForm(forms.Form):
                 initial=has_installed_carousel,
                 required=False,
                 widget=forms.CheckboxInput(attrs={"disabled": has_installed_carousel}),
-                help_text=_("Check this to install a sample carousel.")
+                help_text=_("Enable this to install a sample carousel.")
             )
 
 

@@ -88,7 +88,7 @@
                 if(!window.Messages) return;
                 {% for message in messages -%}Messages.enqueue({
                     tags: {{ message.tags|json }},
-                    text: {{ (""~message.message)|json }}
+                    text: {{ (message.tags.capitalize() ~ "! " ~ message.message)|json }}
                 });{% endfor %}
             }());
         </script>

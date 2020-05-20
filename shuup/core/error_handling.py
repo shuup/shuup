@@ -26,24 +26,30 @@ class ErrorPageHandler(object):
     @classmethod
     def can_handle_error(cls, request, error_status):
         """
-        Returns whether this object can handle the error
+        Returns whether this object can handle the error.
+
         :rtype: bool
         """
-        raise NotImplementedError("Implement this method")
+        raise NotImplementedError(
+            "Error! Not implemented: `ErrorPageHandler` -> `apply_for_product()`. Implement this method."
+        )
 
     @classmethod
     def handle_error(cls, request, error_status):
         """
-        Returns a response for the given request and error status
+        Returns a response for the given request and error status.
+
         :rtype: django.http.HttpResponse
         """
-        raise NotImplementedError("Implement this method")
+        raise NotImplementedError(
+            "Error! Not implemented: `ErrorPageHandler` -> `handle_error(). Implement this method.`"
+        )
 
 
 def make_error_view(error_status):
     """
-    A factory of error views which tries to find a compatible error handler
-    If not handler can do the job, use the Django's default or a blank response
+    A factory of error views which tries to find a compatible error handler.
+    If there is no handler that can do the job, use the Django's default or return a blank response.
     """
 
     def view(request, *args, **kwargs):

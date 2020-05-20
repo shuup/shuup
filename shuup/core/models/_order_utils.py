@@ -71,7 +71,7 @@ def get_reference_number(order):
     from shuup.admin.modules.settings.consts import ORDER_REFERENCE_NUMBER_METHOD_FIELD
 
     if order.reference_number:
-        raise ValueError("Order passed to get_reference_number() already has a reference number")
+        raise ValueError("Error! Order passed to function `get_reference_number()` already has a reference number.")
     reference_number_method = configuration.get(
         order.shop, ORDER_REFERENCE_NUMBER_METHOD_FIELD, settings.SHUUP_REFERENCE_NUMBER_METHOD)
     if reference_number_method == "unique":
@@ -89,7 +89,7 @@ def get_reference_number(order):
 
 def get_order_identifier(order):
     if order.identifier:
-        raise ValueError("Order passed to get_order_identifier() already has an identifier")
+        raise ValueError("Error! Order passed to function `get_order_identifier()` already has an identifier.")
     order_identifier_method = settings.SHUUP_ORDER_IDENTIFIER_METHOD
     if order_identifier_method == "id":
         return force_text(order.id)

@@ -54,22 +54,22 @@ class ReportWriter(object):
         return self.writer_type
 
     def write_heading(self, text):
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError("Error! Not implemented: `ReportWriter` -> `write_heading()`.")
 
     def write_text(self, text):
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError("Error! Not implemented: `ReportWriter` -> `write_text()`.")
 
     def write_data_table(self, report, report_data, has_totals=True):
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError("Error! Not implemented: `ReportWriter` -> `write_data_table()`.")
 
     def write_template(self, template_name, env):
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError("Error! Not implemented: `ReportWriter` -> `write_template()`.")
 
     def next_page(self):
         pass
 
     def get_rendered_output(self):
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError("Error! Not implemented: `ReportWriter` -> `get_rendered_output()`.")
 
     def _render_report(self, report):
         if not report.rendered:
@@ -347,7 +347,7 @@ class PprintReportWriter(JSONReportWriter):
 
 class ReportWriterPopulator(object):
     """
-    A class which populates the report writers map
+    A class which populates the report writers map.
     """
     report_writers_map = {}
 
@@ -373,18 +373,19 @@ class ReportWriterPopulator(object):
 
     @property
     def populated_map(self):
-        """ Returns the populated map """
+        """ Returns the populated map. """
         return self.report_writers_map
 
 
 def get_writer_names():
-    """ Get the registered writer names """
+    """ Get the registered writer names. """
     return set([k for k, v in six.iteritems(REPORT_WRITERS_MAP) if v])
 
 
 def get_writer_instance(writer_name):
     """
-    Get a report writer instance by name
+    Get a report writer instance by name.
+
     :type writer_name: str
     :param writer_name: the name of the report writer
     :rtype: ReportWriter
@@ -396,7 +397,8 @@ def get_writer_instance(writer_name):
 
 def populate_default_writers(writer_populator):
     """
-    Populate the default report writers
+    Populate the default report writers.
+
     :type writer_populator: ReportWriterPopulator
     """
     writer_populator.register("html", HTMLReportWriter)

@@ -23,7 +23,8 @@ def get_default_model_permissions(model):
     :rtype: set[str]
     """
     warnings.warn(
-        "get_default_model_permissions is deprecated in Shuup 2.0. Use human readable permission strings instead.",
+        "Warning! `get_default_model_permissions` is deprecated in Shuup 2.0. "
+        "Use human readable permission strings instead.",
         DeprecationWarning
     )
     permissions = set()
@@ -45,11 +46,11 @@ def get_missing_permissions(user, permissions):
        permissions which are stored to configuration items
        per user group.
 
-    :param user: User instance to check for permissions
+    :param user: User instance to check for permissions.
     :type user: django.contrib.auth.models.User
-    :param permissions: Iterable of permission strings
+    :param permissions: Iterable of permission strings.
     :type permissions: Iterable[str]
-    :return: Set of missing permission strings
+    :return: Set of missing permission strings.
     :rtype: set[str]
     """
     if getattr(user, "is_superuser", False):
@@ -68,11 +69,11 @@ def has_permission(user, permission):
     """
     Returns whether user has permission for a given permission string.
 
-    :param user: User instance to check for permission
+    :param user: User instance to check for permission.
     :type user: django.contrib.auth.models.User
-    :param permission: Permission string
+    :param permission: Permission string.
     :type permission: str
-    :return: Whether user has permission
+    :return: Whether user has permission.
     :rtype: bool
     """
     return not bool(get_missing_permissions(user, [permission]))
@@ -108,9 +109,9 @@ def get_permissions_from_urls(urls):
     """
     Return a set of permissions for a given iterable of urls.
 
-    :param urls: Iterable of url objects to check for permissions
+    :param urls: Iterable of url objects to check for permissions.
     :type urls: Iterable[django.core.urlresolvers.RegexURLPattern]
-    :return: Set of permissions for urls as strings
+    :return: Set of permissions for urls as strings.
     :rtype: set[str]
     """
     permissions = set()
@@ -126,13 +127,14 @@ def get_permission_object_from_string(permission_string):
     Given a permission string of the form `app_label.permission_string`,
     get actual permission object.
 
-    :param permission_string: Permission string
+    :param permission_string: Permission string.
     :type permission_strings: str
-    :return: Permission object
+    :return: Permission object.
     :rtype: django.contrib.auth.models.Permission
     """
     warnings.warn(
-        "get_permission_object_from_string is deprecated in Shuup 2.0. Django permission shouldn't be needed.",
+        "Warning! `get_permission_object_from_string` is deprecated in Shuup 2.0. "
+        "Django permission shouldn't be needed.",
         DeprecationWarning
     )
     app_label, codename = permission_string.split(".")
@@ -145,11 +147,11 @@ def get_permissions_for_module_url(admin_module, url_name):
 
     If the url_name doesn't match with any admin url, a blank set is returned
 
-    :param admin_module: The admin module to return permissions
+    :param admin_module: The admin module to return permissions.
     :type admin_module: shuup.admin.AdminModule
-    :param url_name: the url name
+    :param url_name: the url name.
     :type url_name: string
-    :return: Set of permissions for the given module and url
+    :return: Set of permissions for the given module and url.
     :rtype: set[str]
     """
     for url in admin_module.get_urls():

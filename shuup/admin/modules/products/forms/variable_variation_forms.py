@@ -52,7 +52,7 @@ class VariableVariationChildrenForm(forms.Form):
 
     def _save_combo(self, combo):
         """
-        :param combo: Combo description dict, from `get_all_available_combinations`
+        :param combo: Combo description dict, from `get_all_available_combinations`.
         :type combo: dict
         """
         new_product = self.cleaned_data.get("r_%s" % combo["hash"])
@@ -71,7 +71,7 @@ class VariableVariationChildrenForm(forms.Form):
                 new_product.link_to_parent(parent=self.parent_product, combination_hash=combo["hash"])
             except ImpossibleProductModeException as ipme:
                 six.raise_from(
-                    Problem(_("Unable to link %(product)s: %(error)s") % {"product": new_product, "error": ipme}), ipme
+                    Problem(_("Unable to link %(product)s: %(error)s.") % {"product": new_product, "error": ipme}), ipme
                 )
 
     def save(self):
@@ -88,9 +88,9 @@ class VariationVariablesDataForm(forms.Form):
     data = forms.CharField(widget=forms.HiddenInput(), required=False)
     activate_template = forms.BooleanField(required=False,
                                            label=_("Activate template"),
-                                           help_text=_("Check this to activate a selected template. "
-                                                       "If no template is selected variation data "
-                                                       "will be saved without checking this."))
+                                           help_text=_("Enable this to activate a selected template. If no "
+                                                       "template is selected, variation data will be saved without "
+                                                       "checking, even if this setting is enabled."))
     template_name = forms.CharField(max_length=128, required=False, widget=forms.TextInput(attrs={'pattern': '.*\S.*'}))
 
     def __init__(self, **kwargs):

@@ -18,7 +18,7 @@ def non_reentrant(func):
             self._non_reentrant_check = {}
         invocation_stack = self._non_reentrant_check.get(name)
         if invocation_stack:
-            msg = "Trying to re-entrantly call %s. Last invocation was" % name
+            msg = "Error! Trying to re-entrantly call %s. Last invocation was" % name
             stack_lines = traceback.format_list(invocation_stack)
             raise RuntimeError(msg, stack_lines)
         self._non_reentrant_check[name] = traceback.extract_stack()

@@ -44,8 +44,8 @@ class GDPRSettings(TranslatableModel):
         "shuup_simple_cms.Page",
         verbose_name=_("consent pages"),
         related_name="consent_settings",
-        help_text=_("Choose pages here which are being monitored for customer consent. If any of these pages change"
-                    ", the customer is being prompted for a new consent."))
+        help_text=_("Choose pages here which are being monitored for customer consent. If any of these pages change, "
+                    "the customer is being prompted for a new consent."))
     translations = TranslatedFields(
         cookie_banner_content=models.TextField(
             blank=True,
@@ -61,7 +61,7 @@ class GDPRSettings(TranslatableModel):
             blank=True,
             verbose_name=_("login consent text"),
             help_text=_("Shown in login page between the form and the button. "
-                        "Optional but should be considered when the consent on login is disabled.")
+                        "Optional, but should be considered when the consent on login is disabled.")
         )
     )
 

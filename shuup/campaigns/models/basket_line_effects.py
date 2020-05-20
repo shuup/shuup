@@ -30,7 +30,7 @@ class BasketLineEffect(PolymorphicShuupModel):
         :return: amount of discount to accumulate for the product
         :rtype: Iterable[shuup.core.order_creator.SourceLine]
         """
-        raise NotImplementedError("Not implemented!")
+        raise NotImplementedError("Error! Not implemented: `BasketLineEffect` -> `get_discount_lines()`")
 
 
 class FreeProductLine(BasketLineEffect):
@@ -94,7 +94,7 @@ class DiscountFromProduct(BasketLineEffect):
     per_line_discount = models.BooleanField(
         default=True,
         verbose_name=_("per line discount"),
-        help_text=_("Uncheck this if you want to give discount for each matched product."))
+        help_text=_("Disable this if you want to give discount for each matched product."))
 
     discount_amount = MoneyValueField(
         default=None, blank=True, null=True,

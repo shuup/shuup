@@ -23,7 +23,9 @@ from .forms import PrintoutsEmailForm
 
 def validate_shop_for_order(request, order):
     if get_shop(request) != order.shop:
-        raise Problem(_("Current shop does not match with order shop. Please change currently active shop."))
+        raise Problem(
+            _("The current shop doesn't match the order shop. Please change to the shop that is currently active.")
+        )
 
 
 def get_delivery_pdf(request, shipment_pk):
@@ -54,7 +56,7 @@ def get_confirmation_html(request, order_pk):
 
 def send_delivery_email(request, shipment_pk):
     if request.method != "POST":
-        raise Exception(_("Not allowed"))
+        raise Exception(_("Non-POST request methods are forbidden."))
     shipment = Shipment.objects.get(pk=shipment_pk)
     validate_shop_for_order(request, shipment.order)
     form = PrintoutsEmailForm(request.POST)
@@ -63,12 +65,12 @@ def send_delivery_email(request, shipment_pk):
         _send_printouts_email(
             [data["to"]], data["subject"], data["body"],
             _get_delivery_html(request, shipment.order, shipment), "delivery.pdf")
-    return JsonResponse({"success": "OK!"})
+    return JsonResponse({"success": "Success!"})
 
 
 def send_confirmation_email(request, order_pk):
     if request.method != "POST":
-        raise Exception(_("Not allowed"))
+        raise Exception(_("Non-POST request methods are forbidden."))
     order = Order.objects.get(pk=order_pk)
     validate_shop_for_order(request, order)
     form = PrintoutsEmailForm(request.POST)
@@ -77,7 +79,7 @@ def send_confirmation_email(request, order_pk):
         _send_printouts_email(
             [data["to"]], data["subject"], data["body"],
             _get_confirmation_html(request, order), "confirmation.pdf")
-    return JsonResponse({"success": "OK!"})
+    return JsonResponse({"success": "Success!"})
 
 
 def _get_delivery_html(request, order, shipment, html_mode=False):

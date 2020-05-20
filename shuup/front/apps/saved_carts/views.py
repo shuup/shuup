@@ -69,7 +69,7 @@ class CartSaveView(View):
         if not title:
             return JsonResponse({"ok": False, "error": force_text(_("Please enter a basket title."))}, status=400)
         if basket.is_empty:
-            return JsonResponse({"ok": False, "error": force_text(_("Cannot save an empty basket."))}, status=400)
+            return JsonResponse({"ok": False, "error": force_text(_("Can't save an empty basket."))}, status=400)
         saved_basket = StoredBasket(
             shop=basket.shop,
             customer=basket.customer,
@@ -111,12 +111,12 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
             try:
                 shop_product = product.get_shop_instance(shop=request.shop)
             except ShopProduct.DoesNotExist:
-                errors.append({"product": line.text, "message": _("Product not available in this shop")})
+                errors.append({"product": line.text, "message": _("Product is not available in this shop.")})
                 continue
             supplier = self._get_supplier(
                 shop_product, line.get("supplier_id"), basket.customer, line.get("quantity"), basket.shipping_address)
             if not supplier:
-                errors.append({"product": line.text, "message": _("Invalid supplier")})
+                errors.append({"product": line.text, "message": _("Invalid supplier.")})
                 continue
 
             try:
@@ -136,7 +136,7 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
                 errors.append({"product": line["text"], "message": force_text(e.message)})
         return JsonResponse({
             "errors": errors,
-            "success": force_text(_("%d product(s) added to cart" % quantity_added))
+            "success": force_text(_("%d product(s) added to cart." % quantity_added))
         }, status=200)
 
 

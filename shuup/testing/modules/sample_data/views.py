@@ -62,7 +62,7 @@ class ConsolidateSampleObjectsView(FormView):
                 Carousel.objects.filter(pk=carousel).delete()
 
         sample_manager.clear_installed_samples(shop)
-        messages.success(self.request, _("Sample data were consolidated"))
+        messages.success(self.request, _("Sample data were consolidated."))
         return HttpResponseRedirect(reverse("shuup_admin:dashboard"))
 
     def get_form_kwargs(self):
@@ -155,7 +155,7 @@ class SampleObjectsWizardPane(WizardPane):
     @classmethod
     def _create_sample_categories(cls, shop, business_segment):
         """
-        Create the categories for the given business segment
+        Create the categories for the given business segment.
         """
         if business_segment not in BUSINESS_SEGMENTS:
             return None
@@ -175,7 +175,7 @@ class SampleObjectsWizardPane(WizardPane):
     @classmethod
     def _create_sample_products(cls, shop, business_segment):
         """
-        Create the sample products for the given business_segment
+        Create the sample products for the given business_segment.
         """
         if business_segment not in BUSINESS_SEGMENTS:
             return None
@@ -196,7 +196,7 @@ class SampleObjectsWizardPane(WizardPane):
     def _create_sample_carousel(cls, shop, business_segment):
         """
         Create the sample carousel for the given business_segment
-        and also injects it to the default theme currently being used in front
+        and also injects it to the default theme currently being used in front.
         """
         if business_segment not in BUSINESS_SEGMENTS:
             return None

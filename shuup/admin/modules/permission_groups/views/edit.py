@@ -29,14 +29,14 @@ class PermissionGroupForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PermissionGroupForm, self).__init__(*args, **kwargs)
-        self.fields["name"].help_text = _("The permission group name.")
+        self.fields["name"].help_text = _("The Permission Group name.")
         initial_members = self._get_initial_members()
         members_field = Select2MultipleField(
             model=get_user_model(),
             initial=[member.pk for member in initial_members],
             required=False,
             label=_("Members"),
-            help_text=_("Set the users that belong to this permission group.")
+            help_text=_("Set the users that belong to this Permission Group.")
         )
         members_field.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
         self.fields["members"] = members_field

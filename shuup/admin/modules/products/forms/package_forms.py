@@ -130,7 +130,7 @@ class PackageChildFormSet(ProductChildBaseFormSet):
             except ImpossibleProductModeException as ipme:
                 six.raise_from(
                     Problem(
-                        _("Unable to make package %(product)s: %(error)s") %
+                        _("Unable to make package %(product)s: %(error)s.") %
                         {"product": parent_product, "error": ipme}
                     ), ipme
                 )
@@ -140,9 +140,9 @@ class PackageChildFormSet(ProductChildBaseFormSet):
 
         message_parts = []
         if products_to_add:
-            message_parts.append(_("New: %d") % len(products_to_add))
+            message_parts.append(_("New products: %d.") % len(products_to_add))
         if products_to_remove:
-            message_parts.append(_("Removed: %d") % len(products_to_remove))
+            message_parts.append(_("Removed products: %d.") % len(products_to_remove))
         if message_parts and self.request:
             messages.success(self.request, ", ".join(message_parts))
 
@@ -160,7 +160,7 @@ class PackageChildFormSet(ProductChildBaseFormSet):
             elif child_product != self.parent_product:
                 selected_products.add(child_product)
             elif self.request and child_product == self.parent_product:
-                messages.error(self.request, _("Couldn't add product %s to own package") % str(child_product))
+                messages.error(self.request, _("Couldn't add product %s to its own package.") % str(child_product))
             quantity = child_form.cleaned_data.get("quantity")
             selected_product_quantities[child_product] = quantity
         selected_quantities = {

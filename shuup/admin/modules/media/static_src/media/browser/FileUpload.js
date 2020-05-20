@@ -73,10 +73,10 @@ function handleFileXhrComplete(xhr, file, error) {
     }
     if (window.Messages) {
         if (error && !messageText) {
-            messageText = gettext("Unexpected error while uploading files.");
+            messageText = gettext("Error! Unexpected error while uploading files.");
         }
         const response = {
-            error: (error ? gettext("Error:") + " " + file.name + ": " + messageText : null),
+            error: (error ? gettext("Error!") + " " + file.name + ": " + messageText : null),
             message: (!error ? messageText || gettext("Uploaded:") + " " + file.name : null)
         };
         handleResponseMessages(response);

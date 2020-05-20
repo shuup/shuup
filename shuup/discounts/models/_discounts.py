@@ -108,7 +108,7 @@ class Discount(models.Model, MoneyPropped):
     )
     active = models.BooleanField(
         default=True, verbose_name=_("active"),
-        help_text=_("Check this if the discount is currently active. Please also set a start and end date."))
+        help_text=_("Enable this if the discount is currently active. Please also set a start and an end date."))
     start_datetime = models.DateTimeField(
         null=True, blank=True, verbose_name=_("start date and time"),
         help_text=_(

@@ -53,7 +53,7 @@ def get_current_babel_locale(fallback="en-US-POSIX"):
             locale = get_babel_locale(fallback)
         if not locale:
             raise ValueError(
-                "Failed to get current babel locale (lang=%s)" %
+                "Error! Failed to get the current babel locale (lang=%s)." %
                 (translation.get_language(),))
     return locale
 
@@ -147,7 +147,7 @@ def get_language_name(language_code):
 @cache_page(3600, key_prefix="js18n-%s" % get_language())
 def javascript_catalog_all(request, domain='djangojs'):
     """
-    Get JavaScript message catalog for all apps in INSTALLED_APPS.
+    Get JavaScript message catalog for all apps in `INSTALLED_APPS`.
     """
     all_apps = [x.name for x in apps.get_app_configs()]
     return javascript_catalog(request, domain, all_apps)
@@ -160,7 +160,7 @@ def get_currency_name(currency):
 
 def is_existing_language(language_code):
     """
-    Try to find out if language actually exists
+    Try to find out if the language actually exists.
 
     Calling `babel.Locale("en").languages.keys()`
     will contain extinct languages.
@@ -173,7 +173,7 @@ def is_existing_language(language_code):
         get_babel_locale(language_code)
     except (UnknownLocaleError, ValueError):
         """
-        Catch errors with babel locale parsing
+        Catch errors with babel locale parsing.
 
         For example language `bew` raises `UnknownLocaleError`
         and `ValueError` is being raised if language_code is

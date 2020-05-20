@@ -47,9 +47,9 @@ class AdminRegexURLPattern(RegexURLPattern):
         """
         Get an error response (or raise a Problem) for a given request and reason message.
 
-        :type request: Request
+        :type request: Request.
         :param request: HttpRequest
-        :type reason: Reason string
+        :type reason: Reason string.
         :param reason: str
         """
         if request.is_ajax():
@@ -70,15 +70,15 @@ class AdminRegexURLPattern(RegexURLPattern):
         """
         Figure out if there's any reason not to allow the user access to this view via the given request.
 
-        :type request: Request
+        :type request: Request.
         :param request: HttpRequest
         :rtype: str|None
         """
         if self.require_authentication:
             if not request.user.is_authenticated():
-                return _("Sign in to continue")
+                return _("Sign in to continue.")
             elif not getattr(request.user, 'is_staff', False):
-                return _("You must be a staff member.")
+                return _("Your account must have `Access to Admin Panel` permissions to access this page.")
             elif not get_shop(request):
                 return _("There is no active shop available. Contact support for more details.")
 
@@ -119,7 +119,7 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
 
     if isinstance(view, six.string_types):
         if not view:
-            raise ImproperlyConfigured('Empty URL pattern view name not permitted (for pattern %r)' % regex)
+            raise ImproperlyConfigured('Error! Empty URL pattern view name not permitted (for pattern `%r`).' % regex)
         if prefix:
             view = prefix + '.' + view
 
@@ -136,19 +136,20 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
     """
     Get a list of edit/new/list URLs for (presumably) an object type with standardized URLs and names.
 
-    :param url_prefix: What to prefix the generated URLs with. E.g. `"^taxes/tax"`
+    :param url_prefix: What to prefix the generated URLs with. E.g. `"^taxes/tax"`.
     :type url_prefix: str
     :param view_template: A template string for the dotted name of the view class.
-                          E.g. "shuup.admin.modules.taxes.views.Tax%sView"
+                          E.g. "shuup.admin.modules.taxes.views.Tax%sView".
     :type view_template: str
-    :param name_template: A template string for the URLnames. E.g. "tax.%s"
+    :param name_template: A template string for the URLnames. E.g. "tax.%s".
     :type name_template: str
-    :return: List of URLs
+    :return: List of URLs.
     :rtype: list[AdminRegexURLPattern]
     """
     if permissions:
         warnings.warn(
-            "get_edit_and_list_urls permissions attribute will be deprecated in Shuup 2.0 as unused for this util.",
+            "Warning! `get_edit_and_list_urls` permissions attribute will be "
+            "deprecated in Shuup 2.0 as unused for this util.",
             DeprecationWarning
         )
 
@@ -201,15 +202,15 @@ def get_model_url(object, kind="detail", user=None,
     :type object: class
     :param kind: URL kind. Currently "new", "list", "edit", "detail".
     :type kind: str
-    :param user: Optional instance to check for permissions
+    :param user: Optional instance to check for permissions.
     :type user: django.contrib.auth.models.User|None
-    :param required_permissions: Optional iterable of permission strings
+    :param required_permissions: Optional iterable of permission strings.
     :type required_permissions: Iterable[str]|None
-    :param shop: The shop that owns the resource
+    :param shop: The shop that owns the resource.
     :type request: shuup.core.models.Shop|None
     :param raise_permission_denied: raise PermissionDenied exception if the url
         is found but user has not permission. If false, None will be returned instead.
-        Default is False
+        Default is False.
     :type raise_permission_denied: bool
     :return: Resolved URL.
     :rtype: str
@@ -228,7 +229,8 @@ def get_model_url(object, kind="detail", user=None,
         try:
             if required_permissions is not None:
                 warnings.warn(
-                    "required_permissions parameter will be deprecated in Shuup 2.0 as unused for this util.",
+                    "Warning! `required_permissions` parameter will be deprecated "
+                    "in Shuup 2.0 as unused for this util.",
                     DeprecationWarning
                 )
                 permissions = required_permissions
@@ -244,7 +246,7 @@ def get_model_url(object, kind="detail", user=None,
 
             if raise_permission_denied:
                 from django.core.exceptions import PermissionDenied
-                reason = _("Can't view this page. You do not have the required permission(s): {permissions}").format(
+                reason = _("Can't view this page. You do not have the required permission(s): `{permissions}`.").format(
                     permissions=", ".join(missing_permissions)
                 )
                 raise PermissionDenied(reason)
@@ -253,7 +255,7 @@ def get_model_url(object, kind="detail", user=None,
             # what are you doing developer?
             return url
 
-    raise NoModelUrl("Can't get object URL of kind %s: %r" % (kind, force_text(object)))
+    raise NoModelUrl("Error! Can't get object URL of kind %s: %r." % (kind, force_text(object)))
 
 
 def derive_model_url(model_class, urlname_prefix, object, kind):
@@ -266,7 +268,7 @@ def derive_model_url(model_class, urlname_prefix, object, kind):
     :type model_class: class
     :param urlname_prefix: URLname prefix. For instance, `shuup_admin:shop_product.`
     :type urlname_prefix: str
-    :param object: The model or model class as passed to `get_model_url`
+    :param object: The model or model class as passed to `get_model_url`.
     :type object: django.db.models.Model|class
     :param kind: URL kind as passed to `get_model_url`.
     :type kind: str
@@ -309,11 +311,11 @@ def get_model_front_url(request, object):
     """
     Get a frontend URL for an object.
 
-    :param request: Request
+    :param request: Request.
     :type request: HttpRequest
-    :param object: A model instance
+    :param object: A model instance.
     :type object: django.db.models.Model
-    :return: URL or None
+    :return: URL or None.
     :rtype: str|None
     """
     # TODO: This method could use an extension point for alternative frontends.
@@ -331,11 +333,10 @@ def get_model_front_url(request, object):
 
 def get_front_url(context):
     """
-    Get front URL for admin navigation
+    Get front URL for admin navigation.
 
-    1. Use front URL from view context if passed
-    2. Fallback to index
-
+    1. Use front URL from view context if passed.
+    2. Fallback to index.
     """
     front_url = context.get("front_url")
     if not front_url:

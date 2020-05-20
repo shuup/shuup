@@ -29,24 +29,24 @@ def setup_function(fn):
 
 
 def errorful_view(request, *args, **kwargs):
-    raise Exception("Aaargh")  # The Castle of.
+    raise Exception("Error! Aaargh.")  # The Castle of.
 
 
 def notfound_view(request, *args, **kwargs):
-    raise Http404("Ops!")
+    raise Http404("Error! Ops!")
 
 
 def handler500(request, *args, **kwargs):
-    return HttpResponse("The best error", status=500)
+    return HttpResponse("Error! The best error.", status=500)
 
 
 def four_oh_four(request, *args, **kwargs):
-    return HttpResponse("Just a flesh wound", status=404)
+    return HttpResponse("Error! Just a flesh wound.", status=404)
 
 
 def test_front_error_handlers(rf):
     """
-    Test that SHUUP_ERROR_PAGE_HANDLERS_SPEC installs error handlers overwriting custom ones
+    Test that `SHUUP_ERROR_PAGE_HANDLERS_SPEC` installs error handlers that are overwriting custom ones.
     """
     with override_settings(
         DEBUG=False,
@@ -136,7 +136,7 @@ def test_front_error_handlers(rf):
 
 def test_admin_error_handlers(rf):
     """
-    Test that SHUUP_ERROR_PAGE_HANDLERS_SPEC installs error handlers overwriting custom ones
+    Test that SHUUP_ERROR_PAGE_HANDLERS_SPEC installs error handlers that are overwriting custom ones.
     """
     with override_settings(
         DEBUG=False,

@@ -78,9 +78,9 @@ class BasketLine(SourceLine):
             return
 
         if self.product and type != OrderLineType.PRODUCT:
-            raise ValueError("Can not set a line type for a basket line when it has a product set")
+            raise ValueError("Error! Can't set a line type for a basket line when it has a product set.")
         if type not in OrderLineType.as_dict():
-            raise ValueError("Invalid basket line type. Only values of OrderLineType are allowed.")
+            raise ValueError("Error! Invalid basket line type. Only values of `OrderLineType` are allowed.")
         self.__dict__["type"] = type
 
     def set_quantity(self, quantity):
@@ -143,6 +143,7 @@ class BaseBasket(OrderSource):
         Get the currently persisted data for this basket.
         This will only access the storage once per request in usual
         circumstances.
+
         :return: Data dict.
         :rtype: dict
         """
@@ -332,7 +333,7 @@ class BaseBasket(OrderSource):
         to ``self._data_lines`` to ensure the `dirty`
         flag gets set.
 
-        :return: List of data dicts
+        :return: List of data dicts.
         :rtype: list[dict]
         """
         return self._load().setdefault("lines", [])
@@ -444,7 +445,7 @@ class BaseBasket(OrderSource):
 
     def _initialize_product_line_data(self, product, supplier, shop, quantity=0):
         if product.variation_children.count():
-            raise ValueError("Attempting to add variation parent to basket")
+            raise ValueError("Error! Add a variation parent to the basket is not allowed.")
 
         return {
             # TODO: FIXME: Make sure line_id's are unique (not random)
@@ -464,10 +465,10 @@ class BaseBasket(OrderSource):
         """
         Compare raw line data for coalescing.
 
-        That is, figure out whether the given raw line data is similar enough to product_id
+        That is, figure out whether the given raw line data is similar enough to `product_id`
         and extra to coalesce quantity additions.
 
-        This is nice to override in a project-specific basket class.
+        This is good to override in a project-specific basket class.
 
         :type current_line_data: dict
         :type product: int
@@ -481,7 +482,7 @@ class BaseBasket(OrderSource):
         if current_line_data.get("shop_id") != shop.id:
             return False
 
-        if isinstance(extra, dict):  # We have extra data, so compare it to that in this line
+        if isinstance(extra, dict):  # If we have extra data, compare it to that in this line
             if not compare_partial_dicts(extra, current_line_data):  # Extra data not similar? Okay then. :(
                 return False
         return True
@@ -491,9 +492,9 @@ class BaseBasket(OrderSource):
         Find the underlying basket data dict for a given product and line-specific extra data.
         This uses _compare_line_for_addition internally, which is nice to override in a project-specific basket class.
 
-        :param product: Product object
-        :param extra: optional dict of extra data
-        :return: dict of line or None
+        :param product: Product object.
+        :param extra: optional dict of extra data.
+        :return: dict of line or None.
         """
         for line_data in self._data_lines:
             if self._compare_line_for_addition(line_data, product, supplier, shop, extra):
@@ -518,7 +519,7 @@ class BaseBasket(OrderSource):
             extra = {}
 
         if quantity <= 0:
-            raise ValueError("Invalid quantity!")
+            raise ValueError("Error! Invalid quantity!")
 
         data = None
         if not force_new_line:
@@ -536,7 +537,7 @@ class BaseBasket(OrderSource):
 
     def refresh_lines(self):
         """
-        Refresh lines recalculating prices
+        Refresh lines and recalculating prices.
         """
         for line_data in self._data_lines:
             line = BasketLine.from_dict(self, line_data)
@@ -628,7 +629,7 @@ class BaseBasket(OrderSource):
             "and order them separately.")
 
         if self.has_shippable_lines() and not shipping_methods:
-            msg = _("Products in basket cannot be shipped together. %s")
+            msg = _("Products in basket can't be shipped together. %s")
             yield ValidationError(msg % advice, code="no_common_shipping")
 
         if not payment_methods:

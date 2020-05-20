@@ -35,7 +35,7 @@ class ExceptionMiddleware(MiddlewareMixin):
                     "code": getattr(exception, "code", None)
                 }, status=status_code)
             return render(request, self._get_problem_templates(request), status=status_code, context={
-                "title": getattr(exception, "title", None) or _("Error"),
+                "title": getattr(exception, "title", None) or _("Error!"),
                 "message": exception.message,
                 "exception": exception,
             })
@@ -74,4 +74,4 @@ class ShuupMiddleware(MiddlewareMixin):
         request.shop = get_shop(request)
 
         if not request.shop:
-            raise ImproperlyConfigured(_("No shop!"))
+            raise ImproperlyConfigured(_("No such shop is configured."))

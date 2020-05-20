@@ -36,14 +36,14 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
             return {}
         if stored_basket.shop_id != basket.shop.id:
             msg = (
-                "Cannot load basket of a different Shop ("
+                "Error! Cannot load basket of a different Shop ("
                 "%s id=%r with Shop=%s, Dest. Basket Shop=%s)" % (
                     type(stored_basket).__name__,
                     stored_basket.id, stored_basket.shop_id, basket.shop.id))
             raise BasketCompatibilityError(msg)
         price_units_diff = _price_units_diff(stored_basket, basket.shop)
         if price_units_diff:
-            msg = "%s %r: Price unit mismatch with Shop (%s)" % (
+            msg = "Error! %s %r: Price unit mismatch with Shop (%s)" % (
                 type(stored_basket).__name__, stored_basket.id,
                 price_units_diff)
             raise BasketCompatibilityError(msg)
@@ -93,7 +93,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
 
     def basket_exists(self, key, shop):
         """
-        Check if basket exists in the storage
+        Check if basket exists in the storage.
 
         For example this is used from API to check whether the basket
         actually exists for certain shop when accessed with key.
@@ -177,7 +177,7 @@ def get_storage():
     """
     Retrieve a basket storage object.
 
-    :return: A basket storage object
+    :return: A basket storage object.
     :rtype: BasketStorage
     """
     storage_class = cached_load("SHUUP_BASKET_STORAGE_CLASS_SPEC")

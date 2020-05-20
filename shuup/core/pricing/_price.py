@@ -25,7 +25,7 @@ class Price(Money):
 
     def __new__(cls, value="0", *args, **kwargs):
         if cls == Price:
-            raise TypeError('Do not create direct instances of Price')
+            raise TypeError('Error! Do not create direct instances of Price.')
         return super(Price, cls).__new__(cls, value, *args, **kwargs)
 
     def unit_matches_with(self, other):
@@ -48,7 +48,7 @@ class Price(Money):
     def from_data(cls, value, currency, includes_tax=None):
         if includes_tax is None:
             if cls.includes_tax is None:
-                msg = 'Missing includes_tax argument for %s.from_data'
+                msg = 'Error! Missing includes_tax argument for %s.from_data.'
                 raise TypeError(msg % (cls.__name__,))
             includes_tax = cls.includes_tax
         if includes_tax:

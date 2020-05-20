@@ -41,13 +41,13 @@ class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore
         * If a PUBLIC SavedViewConfig exists, its data is copied into a new, unsaved CURRENT_DRAFT
           SavedViewConfig.
 
-        :param theme: Theme instance
+        :param theme: Theme instance.
         :type theme: shuup.xtheme.Theme
-        :param view_name: View name string
+        :param view_name: View name string.
         :type view_name: str
-        :param draft: Draft mode flag
+        :param draft: Draft mode flag.
         :type draft: bool
-        :return: SavedViewConfig (possibly not saved)
+        :return: SavedViewConfig (possibly not saved).
         :rtype: SavedViewConfig
         """
         svc_kwargs = dict(
@@ -113,7 +113,7 @@ class SavedViewConfig(models.Model):
 
     def publish(self):
         if not self.draft:
-            raise ValueError("Unable to publish a non-draft view configuration")
+            raise ValueError("Error! Unable to publish a non-draft view configuration.")
         self.__class__.objects.filter(
             shop=self.shop,
             theme_identifier=self.theme_identifier,
@@ -124,7 +124,7 @@ class SavedViewConfig(models.Model):
 
     def revert(self):
         if not self.draft:
-            raise ValueError("Unable to revert a non-draft view configuration")
+            raise ValueError("Error! Unable to revert a non-draft view configuration.")
         if self.pk:
             self.delete()
 
@@ -133,7 +133,7 @@ class SavedViewConfig(models.Model):
             self._data.setdefault("layouts", {}).pop(layout_data_key, None)
             return None
         if not self.draft:
-            raise ValueError("Unable to save things in non-draft mode!")
+            raise ValueError("Error! Unable to save things in non-draft mode.")
         if hasattr(layout, "serialize"):
             layout = layout.serialize()
         assert isinstance(layout, dict)
@@ -144,7 +144,7 @@ class SavedViewConfig(models.Model):
 
     def clear_layout_data(self, placeholder_name):
         if not self.draft:
-            raise ValueError("Unable to save things in non-draft mode!")
+            raise ValueError("Error! Unable to save things in non-draft mode")
         self._data.setdefault("layouts", {}).pop(placeholder_name, None)
 
 
@@ -178,7 +178,7 @@ class ThemeSettings(models.Model):
 
 class Snippet(models.Model):
     """
-    Inject snippet code globally filtering by themes if configured
+    Inject snippet code globally filtering by themes if configured.
     """
     shop = models.ForeignKey("shuup.Shop", related_name="snippets")
     location = models.CharField(max_length=64, verbose_name=_("location"))

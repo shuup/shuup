@@ -102,7 +102,7 @@ class Shipment(ShuupModel):
             self.supplier.module.update_stock(product_id=product_id)
 
     def delete(self, using=None):
-        raise NotImplementedError("Not implemented: Use `soft_delete()` for shipments.")
+        raise NotImplementedError("Error! Not implemented: `Shipment` -> `delete()`. Use `soft_delete()` instead.")
 
     @atomic
     def soft_delete(self, user=None):
@@ -121,7 +121,7 @@ class Shipment(ShuupModel):
 
     def cache_values(self):
         """
-        (Re)cache `.volume` and `.weight` for this Shipment from the ShipmentProducts within.
+        (Re)cache `.volume` and `.weight` for this Shipment from within the ShipmentProducts.
         """
         total_volume = 0
         total_weight = 0
@@ -137,9 +137,9 @@ class Shipment(ShuupModel):
 
     def set_received(self, purchase_prices=None, created_by=None):
         """
-        Mark shipment received
+        Mark the shipment as received.
 
-        In case shipment is incoming add stock adjustment for each
+        In case shipment is incoming, add stock adjustment for each
         shipment product in this shipment.
 
         :param purchase_prices: a dict mapping product ids to purchase prices

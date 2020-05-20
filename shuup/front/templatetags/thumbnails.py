@@ -31,7 +31,7 @@ def process_thumbnailer_options(kwargs):
         if m:
             options["size"] = (int(m.group(1)), int(m.group(2)))
         else:
-            raise ValueError("%r is not a valid size." % size)
+            raise ValueError("Error! %r is not a valid size." % size)
     return options
 
 

@@ -165,7 +165,7 @@ class Context(object):
         :type kwargs: dict
         """
         if not identifier:
-            raise ValueError("`identifier` is required for script logging!")
+            raise ValueError("Error! `identifier` is required for script logging.")
 
         if not self._log_target:
             return

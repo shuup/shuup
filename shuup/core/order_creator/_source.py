@@ -48,22 +48,23 @@ class OrderLineBehavior(Enum):
 
 class TaxesNotCalculated(TypeError):
     """
-    Requested tax calculated price but taxes are not calculated.
+    Requested tax calculated price, but taxes are not calculated.
 
     Raised when requesting a price with taxful/taxless mismatching with
-    shop.prices_include_tax and taxes are not yet calculated.
+    `shop.prices_include_tax`, but taxes are not yet calculated.
     """
 
 
 class _PriceSum(object):
     """
-    Property that calculates sum of prices.
+    Property that calculates a sum of prices.
 
-    Used to implement various total price properties to OrderSource.
+    Used to implement various total price properties to `OrderSource`.
 
     Calculate the totals same way as for orders which is from rounded
     line prices.
     """
+
     def __init__(self, field, line_getter="get_final_lines"):
         self.field = field
         self.line_getter = line_getter
@@ -88,11 +89,12 @@ class _PriceSum(object):
 
 class _UnknownTaxesAsNone(object):
     """
-    Property that turns TaxesNotCalculated exception to None.
+    Property that turns `TaxesNotCalculated` exception to None.
 
-    Used to implement the OrderSource taxful/taxless total price
+    Used to implement the `OrderSource` taxful/taxless total price
     properties with the "_or_none" suffix.
     """
+
     def __init__(self, prop):
         self.prop = prop
 
@@ -116,13 +118,13 @@ class OrderSource(object):
     """
     A "provisional order" object.
 
-    Contains data that's not strictly about a basket's contents,
+    Contains data that is not strictly about a basket's contents,
     but is useful for things that need to calculate something based on the
     basket's contents and extra data, such as shipping/billing addresses.
 
     The core API of `OrderCreator` reads an `OrderSource`.
 
-    No objects held here need be saved, but they may be.
+    No objects held here need to be saved, but they may be.
 
     :type shop: shuup.core.models.Shop
     """
@@ -163,7 +165,10 @@ class OrderSource(object):
     def update(self, **values):
         for key, value in values.items():
             if not hasattr(self, key):
-                raise ValueError("Can't update %r with key %r, it's not a pre-existing attribute" % (self, key))
+                raise ValueError(
+                    "Error! Can't update `%r` with key `%r`, as it is not a pre-existing attribute."
+                    % (self, key)
+                )
             if isinstance(getattr(self, key), dict) and value:  # (Shallowly) merge dicts
                 getattr(self, key).update(value)
             else:
@@ -316,7 +321,7 @@ class OrderSource(object):
 
     def add_code(self, code):
         """
-        Add code to this OrderSource.
+        Add a code to this OrderSource.
 
         At this point it is expected that the customers
         permission to use the code has already been
@@ -324,9 +329,9 @@ class OrderSource(object):
 
         The code will be converted to text.
 
-        :param code: The code to add
+        :param code: The code to add.
         :type code: str
-        :return: True if code was added, False if it was already there
+        :return: True if code was added, False if it was already there.
         :rtype: bool
         """
         code_text = force_text(code)
@@ -340,7 +345,7 @@ class OrderSource(object):
         """
         Remove all codes from this OrderSource.
 
-        :return: True iff there was codes before clearing
+        :return: True if there were any codes before clearing.
         :rtype: bool
         """
         if self._codes:
@@ -351,11 +356,11 @@ class OrderSource(object):
 
     def remove_code(self, code):
         """
-        Remove given code from this OrderSource.
+        Remove a given code from this OrderSource.
 
-        :param code: The code to remove
+        :param code: The code to remove.
         :type code: str
-        :return: True if code was removed, False if code was not there
+        :return: True if code was removed, False if code was not there.
         :rtype: bool
         """
         code_text = force_text(code)
@@ -387,7 +392,7 @@ class OrderSource(object):
         """
         Get the sum of product quantities in this order source.
 
-        Note: It is a bit silly to sum different units together.  Check
+        Note: It is a bit silly to sum different units together. Check
         `smart_product_count` and `product_line_count` for other
         options.
 
@@ -402,7 +407,7 @@ class OrderSource(object):
 
         Quantities of lines, which have countable products, will be
         summed and then number of lines with non-countable product units
-        will be added to that.  E.g. smart product count for a basket
+        will be added to that. E.g. smart product count for a basket
         containing 5 chocolate bars, 2 t-shirts and 2.5 kg of cocoa beans
         would be 5 + 2 + 1 = 8.
 
@@ -419,7 +424,7 @@ class OrderSource(object):
 
     def count_products(self, supplier=None):
         """
-        The same as `smart_product_count`` but accepts a supplier as a filter
+        The same as `smart_product_count``, but accepts a supplier as a filter.
 
         :rtype: int
         """
@@ -430,7 +435,7 @@ class OrderSource(object):
     @property
     def product_line_count(self):
         """
-        Get the total number product lines in this order source
+        Get the total number of product lines in this order source.
 
         :rtype: int
         """
@@ -440,17 +445,17 @@ class OrderSource(object):
         """
         Get lines with processed lines added.
 
-        This implementation includes the all lines returned by
-        `get_lines` and in addition, lines from shipping and payment
-        methods, but these lines can be extended, deleted or replaced by
+        This implementation includes all lines returned by
+        `get_lines`. In addition, lines from shipping and payment methods are
+        also returned. These latter lines can be extended, deleted or replaced by
         a subclass (by overriding `_compute_processed_lines` method) and
-        with the `post_compute_source_lines` signal. Lines returned is not
+        with the `post_compute_source_lines` signal. Lines returned are not
         validated.
 
         .. note::
 
            By default, taxes for the returned lines are not calculated
-           when `self.calculate_taxes_automatically` is false.  Pass in
+           when `self.calculate_taxes_automatically` is false. Pass in
            ``True`` to `with_taxes` argument or use `calculate_taxes`
            method to force tax calculation.
         """
@@ -477,14 +482,14 @@ class OrderSource(object):
     def calculate_taxes_or_raise(self):
         if not self._taxes_calculated:
             if not should_calculate_taxes_automatically():
-                raise TaxesNotCalculated('Taxes are not calculated')
+                raise TaxesNotCalculated('Error! Taxes are not calculated.')
             self.calculate_taxes()
 
     def uncache(self):
         """
         Uncache processed lines.
 
-        Should be called after changing the contents before
+        Should be called after changing the contents and before
         (re)accessing lines with :obj:`get_final_lines`.
         """
         self._processed_lines_cache = None
@@ -496,7 +501,7 @@ class OrderSource(object):
         return self._compute_processed_lines()
 
     def _compute_processed_lines(self):
-        # This function would be a good candidate for subclass extension.
+        # This function would be a good candidate for a subclass extension.
         lines = list(self.get_lines())
 
         lines.extend(self._compute_payment_method_lines())
@@ -521,19 +526,19 @@ class OrderSource(object):
 
     def _add_lines_from_modifiers(self, lines):
         """
-        Add lines from OrderSourceModifiers to given list of lines.
+        Add lines from OrderSourceModifiers to a given list of lines.
         """
         for module in get_order_source_modifier_modules():
             new_lines = list(module.get_new_lines(self, list(lines)))
-            # Extend lines now to allow next module to see them
+            # Now extend lines to allow the next module to see them.
             lines.extend(new_lines)
 
     def get_product_lines(self):
         """
         Get lines with a product.
 
-        This does not use get_final_lines because it will be called when
-        final lines is being computed (for example to determine shipping
+        This does not use `get_final_lines` because it will be called when
+        final lines are being computed (for example to determine shipping
         discounts based on the total price of all products).
         """
         product_lines = [l for l in self.get_lines() if l.product]
@@ -584,7 +589,7 @@ class OrderSource(object):
         """
         Get model object from database by pk with caching.
 
-        Avoids same objects being loaded many times from the database
+        Avoids the same objects being loaded many times from the database
         when constructing SourceLines in the same request.
 
         :type model: type
@@ -663,7 +668,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
 
     def __init__(self, source, **kwargs):
         """
-        Initialize SourceLine with given source and data.
+        Initialize SourceLine with a given source and data.
 
         :param source: The `OrderSource` this `SourceLine` belongs to.
         :type source: OrderSource
@@ -702,7 +707,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
 
     def _state_check(self):
         if not self.base_unit_price.unit_matches_with(self.discount_amount):
-            raise TypeError('Unit price %r unit mismatch with discount %r' % (
+            raise TypeError('Error! Unit price %r unit mismatch with discount %r.' % (
                 self.base_unit_price, self.discount_amount))
 
         assert self.shop is None or isinstance(self.shop, Shop)
@@ -712,7 +717,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
     @classmethod
     def from_dict(cls, source, data):
         """
-        Create SourceLine from given OrderSource and dict.
+        Create SourceLine from a given OrderSource and dict.
 
         :type source: OrderSource
         :type data: dict
@@ -731,7 +736,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
         found_forbidden_keys = [key for key in kwargs if key in forbidden_keys]
         if found_forbidden_keys:
             raise TypeError(
-                "You may not add these to SourceLine: %s" % forbidden_keys)
+                "Error! You may not add these keys to SourceLine: `%s`." % forbidden_keys)
 
         for (key, value) in kwargs.items():
             if key in self._FIELDSET:
@@ -764,7 +769,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
         for line in self.source.get_lines():
             if line.line_id == self.parent_line_id:
                 return line
-        raise ValueError('Invalid parent_line_id: %r' % (self.parent_line_id,))
+        raise ValueError('Error! Invalid `parent_line_id`: `%r`.' % (self.parent_line_id,))
 
     @property
     def tax_class(self):
@@ -774,7 +779,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
     def tax_class(self, value):
         if self.product and value and value != self.product.tax_class:
             raise ValueError(
-                "Conflicting product and line tax classes: %r vs %r" % (
+                "Error! Conflicting product and line tax classes: `%r` vs. `%r`." % (
                     self.product.tax_class, value))
         self._tax_class = value
 
@@ -820,10 +825,10 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
             return [(key + "_id", value.id)]
         elif isinstance(value, Price):
             if key not in self._PRICE_FIELDS:
-                raise TypeError('Non-price field "%s" has %r' % (key, value))
+                raise TypeError('Error! Non-price field `%s` has `%r`.' % (key, value))
             if not value.unit_matches_with(self.source.zero_price):
                 raise TypeError(
-                    'Price %r (in field "%s") not compatible with %r' % (
+                    'Error! Price `%r` (in field `%s`) not compatible with `%r`.' % (
                         value, key, self.source.zero_price))
             return [(key, value.value)]
         assert not isinstance(value, Money)

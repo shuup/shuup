@@ -121,13 +121,13 @@ class OrderStatusQuerySet(TranslatableQuerySet):
 
         :param role: The role to look for.
         :type role: OrderStatusRole
-        :return: The OrderStatus
+        :return: The OrderStatus.
         :rtype: OrderStatus
         """
         try:
             return self.get(default=True, role=role)
         except ObjectDoesNotExist:
-            raise ObjectDoesNotExist("No default %s OrderStatus exists." % getattr(role, "label", role))
+            raise ObjectDoesNotExist("Error! No default `%s` OrderStatus exists." % getattr(role, "label", role))
 
     def get_default_initial(self):
         return self._default_for_role(OrderStatusRole.INITIAL)
@@ -145,27 +145,28 @@ class OrderStatusQuerySet(TranslatableQuerySet):
 @python_2_unicode_compatible
 class OrderStatus(TranslatableModel):
     identifier = InternalIdentifierField(
-        db_index=True, blank=False, editable=True,
-        unique=True, help_text=_("Internal identifier for status. This is used to identify the statuses in Shuup."))
+        db_index=True, blank=False, editable=True, unique=True,
+        help_text=_("Internal identifier for status. This is used to identify and distinguish the statuses in Shuup.")
+    )
     ordering = models.IntegerField(db_index=True, default=0, verbose_name=_('ordering'),
                                    help_text=_("The processing order of statuses. Default is always processed first."))
     role = EnumIntegerField(
         OrderStatusRole, db_index=True,
         default=OrderStatusRole.NONE, verbose_name=_('role'),
-        help_text=_("Role of status. One role can have multiple order statuses."))
+        help_text=_("The role of this status. One role can have multiple order statuses."))
     default = models.BooleanField(
         default=False, db_index=True, verbose_name=_('default'),
-        help_text=_("Defines if the status should be considered as default."))
+        help_text=_("Defines if the status should be considered as default. Default is always processed first."))
 
     is_active = models.BooleanField(
-        default=True, db_index=True, verbose_name=_('is active'), help_text=_("Define if the status is usable."))
+        default=True, db_index=True, verbose_name=_('is active'), help_text=_("Defines if the status is usable."))
 
     objects = OrderStatusQuerySet.as_manager()
 
     translations = TranslatedFields(
-        name=models.CharField(verbose_name=_("name"), max_length=64, help_text=_("Name of the order status")),
+        name=models.CharField(verbose_name=_("name"), max_length=64, help_text=_("Name of the order status.")),
         public_name=models.CharField(
-            verbose_name=_('public name'), max_length=64, help_text=_("The name shown for customer in shop front."))
+            verbose_name=_('public name'), max_length=64, help_text=_("The name shown to the customers in shop front."))
     )
 
     class Meta:
@@ -225,13 +226,13 @@ class OrderStatusManager(object):
 
     def ensure_default_statuses(self):
         """
-        Ensure Default Statuses
+        Ensure Default Statuses.
 
         It is important to ensure that default
         statuses are always available. This method
-        will ensure that
+        will ensure this.
         """
-        # these values are based on old shuup data
+        # These values are based on the old Shuup data
         update_map = {
             "none": DefaultOrderStatus.NONE.value,
             "recv": DefaultOrderStatus.INITIAL.value,
@@ -334,7 +335,7 @@ class Order(MoneyPropped, models.Model):
     email = models.EmailField(max_length=128, blank=True, verbose_name=_('email address'))
 
     # Customer related information that might change after order, but is important
-    # for accounting and or reports later.
+    # for accounting and/or reports later.
     account_manager = models.ForeignKey(
         "PersonContact", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('account manager'))
     customer_groups = models.ManyToManyField(
@@ -397,7 +398,7 @@ class Order(MoneyPropped, models.Model):
 
     # Other
     ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name=_('IP address'))
-    # order_date is not `auto_now_add` for backdating purposes
+    # `order_date` is not `auto_now_add` for backdating purposes
     order_date = models.DateTimeField(editable=False, db_index=True, verbose_name=_('order date'))
     payment_date = models.DateTimeField(null=True, editable=False, verbose_name=_('payment date'))
 
@@ -436,7 +437,7 @@ class Order(MoneyPropped, models.Model):
         codes = []
         for code in value:
             if not isinstance(code, six.text_type):
-                raise TypeError('codes must be a list of strings')
+                raise TypeError('Error! `codes` must be a list of strings.')
             codes.append(code)
         self._codes = codes
 
@@ -469,15 +470,15 @@ class Order(MoneyPropped, models.Model):
                     break
 
         if not self.id and self.customer:
-            # These fields is used for reporting and should not
-            # change after create even if empty on moment of ordering.
+            # These fields are used for reporting and should not
+            # change after create even if empty at the moment of ordering.
             self.account_manager = getattr(self.customer, "account_manager", None)
             self.tax_group = self.customer.tax_group
 
     def _cache_contact_values_post_create(self):
         if self.customer:
-            # These fields is used for reporting and should not
-            # change after create even if empty on moment of ordering.
+            # These fields are used for reporting and should not
+            # change after create even if empty at the  moment of ordering.
             self.customer_groups = self.customer.groups.all()
 
     def _cache_values(self):
@@ -523,8 +524,8 @@ class Order(MoneyPropped, models.Model):
         if not self.creator_id:
             if not settings.SHUUP_ALLOW_ANONYMOUS_ORDERS:
                 raise ValidationError(
-                    "Anonymous (userless) orders are not allowed "
-                    "when SHUUP_ALLOW_ANONYMOUS_ORDERS is not enabled.")
+                    "Error! Anonymous (userless) orders are not allowed "
+                    "when `SHUUP_ALLOW_ANONYMOUS_ORDERS` is not enabled.")
         self._cache_values()
         first_save = (not self.pk)
         old_status = self.status
@@ -547,7 +548,7 @@ class Order(MoneyPropped, models.Model):
     def delete(self, using=None):
         if not self.deleted:
             self.deleted = True
-            self.add_log_entry("Deleted.", kind=LogEntryKind.DELETION)
+            self.add_log_entry("Success! Deleted (soft).", kind=LogEntryKind.DELETION)
             # Bypassing local `save()` on purpose.
             super(Order, self).save(update_fields=("deleted", ), using=using)
 
@@ -558,14 +559,14 @@ class Order(MoneyPropped, models.Model):
 
     def _set_paid(self):
         if self.payment_status != PaymentStatus.FULLY_PAID:  # pragma: no branch
-            self.add_log_entry(_('Order marked as paid.'))
+            self.add_log_entry(_("Order was marked as paid."))
             self.payment_status = PaymentStatus.FULLY_PAID
             self.payment_date = local_now()
             self.save()
 
     def _set_partially_paid(self):
         if self.payment_status != PaymentStatus.PARTIALLY_PAID:
-            self.add_log_entry(_('Order marked as partially paid.'))
+            self.add_log_entry(_("Order was marked as partially paid."))
             self.payment_status = PaymentStatus.PARTIALLY_PAID
             self.save()
 
@@ -595,22 +596,22 @@ class Order(MoneyPropped, models.Model):
 
     def create_payment(self, amount, payment_identifier=None, description=''):
         """
-        Create a payment with given amount for this order.
+        Create a payment with a given amount for this order.
 
         If the order already has payments and sum of their amounts is
-        equal or greater than self.taxful_total_price and the order is not
+        equal or greater than `self.taxful_total_price` and the order is not
         a zero price order, an exception is raised.
 
         If the end sum of all payments is equal or greater than
-        self.taxful_total_price, then the order is marked as paid.
+        `self.taxful_total_price`, then the order is marked as paid.
 
         :param amount:
-          Amount of the payment to be created
+          Amount of the payment to be created.
         :type amount: Money
         :param payment_identifier:
           Identifier of the created payment. If not set, default value
-          of "gateway_id:order_id:number" will be used (where number is
-          number of payments in the order).
+          of `gateway_id:order_id:number` will be used (where `number` is
+          a number of payments in the order).
         :type payment_identifier: str|None
         :param description:
           Description of the payment. Will be set to `method` property
@@ -628,7 +629,7 @@ class Order(MoneyPropped, models.Model):
         total_paid_amount = self.get_total_paid_amount()
         if total_paid_amount >= self.taxful_total_price.amount and self.taxful_total_price:
             raise NoPaymentToCreateException(
-                "Order %s has already been fully paid (%s >= %s)." %
+                "Error! Order %s has already been fully paid (%s >= %s)." %
                 (
                     self.pk, total_paid_amount, self.taxful_total_price
                 )
@@ -660,27 +661,29 @@ class Order(MoneyPropped, models.Model):
     def create_shipment(self, product_quantities, supplier=None, shipment=None):
         """
         Create a shipment for this order from `product_quantities`.
-        `product_quantities` is expected to be a dict mapping Product instances to quantities.
+        `product_quantities` is expected to be a dict, which maps Product instances to quantities.
 
         Only quantities over 0 are taken into account, and if the mapping is empty or has no quantity value
         over 0, `NoProductsToShipException` will be raised.
 
         Orders without a shipping address defined, will raise `NoShippingAddressException`.
 
-        :param product_quantities: a dict mapping Product instances to quantities to ship
+        :param product_quantities: a dict mapping Product instances to quantities to ship.
         :type product_quantities: dict[shuup.shop.models.Product, decimal.Decimal]
-        :param supplier: Optional Supplier for this product. No validation is made
+        :param supplier: Optional Supplier for this product. No validation is made.
         :param shipment: Optional unsaved Shipment for ShipmentProduct's. If not given
                          Shipment is created based on supplier parameter.
         :raises: NoProductsToShipException, NoShippingAddressException
-        :return: Saved, complete Shipment object
+        :return: Saved, complete Shipment object.
         :rtype: shuup.core.models.Shipment
         """
         if not product_quantities or not any(quantity > 0 for quantity in product_quantities.values()):
-            raise NoProductsToShipException("No products to ship (`quantities` is empty or has no quantity over 0).")
+            raise NoProductsToShipException(
+                "Error! No products to ship (`quantities` is empty or has no quantity over 0)."
+            )
 
         if self.shipping_address is None:
-            raise NoShippingAddressException("Shipping address is not set on this order")
+            raise NoShippingAddressException("Error! Shipping address is not defined for this order.")
 
         assert (supplier or shipment)
         if shipment:
@@ -695,7 +698,7 @@ class Order(MoneyPropped, models.Model):
 
         supplier.module.ship_products(shipment, product_quantities)
 
-        self.add_log_entry(_(u"Shipment #%d created.") % shipment.id)
+        self.add_log_entry(_(u"Success! Shipment #%d was created.") % shipment.id)
         self.update_shipping_status()
         shipment_created.send(sender=type(self), order=self, shipment=shipment)
         shipment_created_and_processed.send(sender=type(self), order=self, shipment=shipment)
@@ -705,10 +708,10 @@ class Order(MoneyPropped, models.Model):
         unrefunded_amount = self.get_total_unrefunded_amount(supplier)
         unrefunded_quantity = self.get_total_unrefunded_quantity(supplier)
         return (
-            (unrefunded_amount.value > 0 or unrefunded_quantity > 0) and
-            not self.is_canceled() and
-            not self.is_complete() and
-            (self.payment_status != PaymentStatus.NOT_PAID)
+            (unrefunded_amount.value > 0 or unrefunded_quantity > 0)
+            and not self.is_canceled()
+            and not self.is_complete()
+            and (self.payment_status != PaymentStatus.NOT_PAID)
         )
 
     def _get_tax_class_proportions(self):
@@ -769,11 +772,10 @@ class Order(MoneyPropped, models.Model):
         Refund line data is simply a list of dictionaries where
         each dictionary contains data for a particular refund line.
 
-        Additionally, if the parent line is of enum type
+        Additionally, if the parent line is of `enum` type
         `OrderLineType.PRODUCT` and the `restock_products` boolean
         flag is set to `True`, the products will be restocked with the
-        order's supplier the exact amount of the value of the `quantity`
-        field.
+        exact amount set in the order supplier's `quantity` field.
 
         :param refund_data: List of dicts containing refund data.
         :type refund_data: [dict]
@@ -885,10 +887,10 @@ class Order(MoneyPropped, models.Model):
 
     def create_full_refund(self, restock_products=False, created_by=None):
         """
-        Create a full for entire order contents, with the option of
+        Create a full refund for entire order content, with the option of
         restocking stocked products.
 
-        :param restock_products: Boolean indicating whether to restock products
+        :param restock_products: Boolean indicating whether to also restock the products.
         :param created_by: Refund creator's user instance, used for
                            adjusting supplier stock.
         :type restock_products: bool|False
@@ -938,14 +940,14 @@ class Order(MoneyPropped, models.Model):
 
     def create_shipment_of_all_products(self, supplier=None):
         """
-        Create a shipment of all the products in this Order, no matter whether or not any have been previously
-        marked as shipped or not.
+        Create a shipment of all the products in this Order, no matter whether or
+        not any have been previously marked as shipped or not.
 
         See the documentation for `create_shipment`.
 
         :param supplier: The Supplier to use. If `None`, the first supplier in
                          the order is used. (If several are in the order, this fails.)
-        :return: Saved, complete Shipment object
+        :return: Saved, complete Shipment object.
         :rtype: shuup.shop.models.Shipment
         """
         from ._products import ShippingMode
@@ -960,11 +962,13 @@ class Order(MoneyPropped, models.Model):
                 suppliers_to_product_quantities[supplier_id][product_id] += quantity
 
         if not suppliers_to_product_quantities:
-            raise NoProductsToShipException("Could not find any products to ship.")
+            raise NoProductsToShipException("Error! Could not find any products to ship.")
 
         if supplier is None:
             if len(suppliers_to_product_quantities) > 1:  # pragma: no cover
-                raise ValueError("Can only use create_shipment_of_all_products when there is only one supplier")
+                raise ValueError(
+                    "Error! `create_shipment_of_all_products` can be used only when there is a single supplier."
+                )
             supplier_id, quantities = suppliers_to_product_quantities.popitem()
             supplier = Supplier.objects.get(pk=supplier_id)
         else:
@@ -980,7 +984,7 @@ class Order(MoneyPropped, models.Model):
             if new_all_verified:
                 self.all_verified = True
                 if self.require_verification:
-                    self.add_log_entry(_('All rows requiring verification have been verified.'))
+                    self.add_log_entry(_("All rows requiring verification have been verified."))
                     self.require_verification = False
                 self.save()
         return self.all_verified
@@ -1059,7 +1063,7 @@ class Order(MoneyPropped, models.Model):
             self.shipping_status = ShippingStatus.NOT_SHIPPED
         if status_before_update != self.shipping_status:
             self.add_log_entry(
-                _("New shipping status set: %(shipping_status)s" % {
+                _("New shipping status is set to: %(shipping_status)s." % {
                     "shipping_status": self.shipping_status
                 })
             )
@@ -1075,7 +1079,7 @@ class Order(MoneyPropped, models.Model):
             self.payment_status = PaymentStatus.NOT_PAID
         if status_before_update != self.payment_status:
             self.add_log_entry(
-                _("New payment status set: %(payment_status)s" % {
+                _("New payment status is set to: %(payment_status)s." % {
                     "payment_status": self.payment_status
                 })
             )
@@ -1083,7 +1087,7 @@ class Order(MoneyPropped, models.Model):
 
     def get_known_additional_data(self):
         """
-        Get a list of "known additional data" in this order's payment_data, shipping_data and extra_data.
+        Get a list of "known additional data" in this order's `payment_data`, `shipping_data` and `extra_data`.
         The list is returned in the order the fields are specified in the settings entries for said known keys.
         `dict(that_list)` can of course be used to "flatten" the list into a dict.
         :return: list of 2-tuples.
@@ -1190,12 +1194,12 @@ class Order(MoneyPropped, models.Model):
 
     def can_edit(self):
         return (
-            not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS and
-            not self.has_refunds() and
-            not self.is_canceled() and
-            not self.is_complete() and
-            self.shipping_status == ShippingStatus.NOT_SHIPPED and
-            self.payment_status == PaymentStatus.NOT_PAID
+            not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS
+            and not self.has_refunds()
+            and not self.is_canceled()
+            and not self.is_complete()
+            and self.shipping_status == ShippingStatus.NOT_SHIPPED
+            and self.payment_status == PaymentStatus.NOT_PAID
         )
 
     def get_customer_name(self):

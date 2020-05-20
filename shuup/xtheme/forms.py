@@ -32,7 +32,7 @@ class GenericThemeForm(forms.ModelForm):
                 choices = [(style["stylesheet"], style["name"]) for style in self.theme.stylesheets]
             else:
                 warnings.warn(
-                    "Using list of tuples in theme.stylesheets will deprecate "
+                    "Warning! Using list of tuples in `theme.stylesheets` will deprecate "
                     "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
                 choices = self.theme.stylesheets
             self.fields["stylesheet"] = forms.ChoiceField(
@@ -51,14 +51,18 @@ class GenericThemeForm(forms.ModelForm):
 
     def save(self, commit=True):
         """
-        Save theme settings into the ThemeSettings instance
+        Save theme settings into the ThemeSettings instance.
 
-        :param commit: Commit flag. Ignored, but there for compatibility with the superclass.
+        :param commit: Commit flag. Default is True and will raise a ValueError if it is defined in any way.
+                        This field is here only to ensure the compatibility with the superclass.
         :type commit: bool
         :return: The now saved `ThemeSettings` instance
         :rtype: shuup.xtheme.models.ThemeSettings
         """
         if not commit:
-            raise ValueError("This form does not support commit=False")
+            raise ValueError(
+                "Error! This form does not support `commit=False` or any other value. "
+                "This field is here only to ensure the compatibility with the superclass."
+            )
         self.instance.update_settings(self.cleaned_data)
         return self.instance

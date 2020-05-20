@@ -61,11 +61,11 @@ class ScriptTemplateView(TemplateView):
                 if script:
                     script.template = identifier
                     script.save(update_fields=["template"])
-                    messages.success(request, _("Script created from template!"))
+                    messages.success(request, _("Script created from template."))
 
                 return redirect("shuup_admin:notify.script.list")
         else:
-            messages.error(request, _("Template Script not found!"))
+            messages.error(request, _("Template Script not found."))
             return redirect("shuup_admin:notify.script.list")
 
 
@@ -75,7 +75,7 @@ class ScriptTemplateConfigView(FormView):
 
     def _get_script_template_class(self):
         """
-        Get the script template class from the request kwargs
+        Get the script template class from the request kwargs.
         """
         identifier = self.kwargs.get("id", None)
         return get_identifier_to_object_map(SCRIPT_TEMPLATES_PROVIDE_CATEGORY).get(identifier, None)
@@ -86,7 +86,7 @@ class ScriptTemplateConfigView(FormView):
         """
         script_template_class = self._get_script_template_class()
         if not script_template_class:
-            messages.error(request, _("Template Script not found!"))
+            messages.error(request, _("Template Script not found."))
             return redirect("shuup_admin:notify.script.list")
 
         return super(ScriptTemplateConfigView, self).dispatch(request, *args, **kwargs)
@@ -109,7 +109,7 @@ class ScriptTemplateConfigView(FormView):
         if script:
             script.template = self.kwargs["id"]
             script.save(update_fields=["template"])
-            messages.success(self.request, _("Script created from template!"))
+            messages.success(self.request, _("Script created from template."))
         return redirect("shuup_admin:notify.script.list")
 
     def get_context_data(self, **kwargs):
@@ -128,7 +128,7 @@ class ScriptTemplateEditView(FormView):
 
     def _get_script_template_class(self):
         """
-        Get the script template class from script instance
+        Get the script template class from script instance.
         """
         return get_identifier_to_object_map(SCRIPT_TEMPLATES_PROVIDE_CATEGORY).get(self.instance.template, None)
 
@@ -139,7 +139,7 @@ class ScriptTemplateEditView(FormView):
         self.instance = Script.objects.filter(pk=self.kwargs.get("pk")).first()
 
         if not self.instance or not self.instance.template:
-            messages.error(request, _("Templated script not found!"))
+            messages.error(request, _("Templated script not found."))
             return redirect("shuup_admin:notify.script.list")
 
         return super(ScriptTemplateEditView, self).dispatch(request, *args, **kwargs)
@@ -158,7 +158,7 @@ class ScriptTemplateEditView(FormView):
         """
         script_template = self._get_script_template_class()(self.instance)
         script_template.update_script(form)
-        messages.success(self.request, _("Script updated!"))
+        messages.success(self.request, _("Script updated."))
         return redirect("shuup_admin:notify.script.list")
 
     def get_context_data(self, **kwargs):

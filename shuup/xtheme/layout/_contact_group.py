@@ -16,7 +16,7 @@ class AnonymousContactLayout(Layout):
     identifier = "xtheme-anonymous-contact-layout"
 
     def get_help_text(self, context):
-        return _("Content in this placeholder is shown for guests.")
+        return _("Content in this box is shown to guests (anonymous users) only.")
 
     def is_valid_context(self, context):
         customer = get_customer_from_context(context)
@@ -30,7 +30,7 @@ class CompanyContactLayout(Layout):
     identifier = "xtheme-company-contact-layout"
 
     def get_help_text(self, context):
-        return _("Content in this placeholder is shown for company contacts.")
+        return _("Content in this box is shown to company contacts only.")
 
     def is_valid_context(self, context):
         customer = get_customer_from_context(context)
@@ -44,7 +44,7 @@ class ContactLayout(Layout):
     identifier = "xtheme-contact-layout"
 
     def get_help_text(self, context):
-        return _("Content in this placeholder is shown for all logged in contacts.")
+        return _("Content in this box is shown to all logged-in contacts (both person and company; not anonymous).")
 
     def is_valid_context(self, context):
         customer = get_customer_from_context(context)
@@ -58,7 +58,7 @@ class PersonContactLayout(Layout):
     identifier = "xtheme-person-contact-layout"
 
     def get_help_text(self, context):
-        return _("Content in this placeholder is shown for person contacts.")
+        return _("Content in this box is shown to person contacts only.")
 
     def is_valid_context(self, context):
         customer = get_customer_from_context(context)

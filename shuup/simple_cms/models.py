@@ -44,7 +44,7 @@ class PageQuerySet(TranslatableQuerySet):
 
         This does not do permission checking.
 
-        :param dt: Datetime for visibility check
+        :param dt: Datetime for visibility check.
         :type dt: datetime.datetime
         :return: QuerySet of pages.
         :rtype: QuerySet[Page]
@@ -52,8 +52,8 @@ class PageQuerySet(TranslatableQuerySet):
         if not dt:
             dt = now()
         q = Q(
-            Q(available_from__lte=dt) &
-            (Q(available_to__gte=dt) | Q(available_to__isnull=True))
+            Q(available_from__lte=dt)
+            & (Q(available_to__gte=dt) | Q(available_to__isnull=True))
         )
         if user and not user.is_anonymous():
             q |= Q(created_by=user)
@@ -71,15 +71,15 @@ class Page(MPTTModel, TranslatableModel):
     supplier = models.ForeignKey("shuup.Supplier", null=True, blank=True, verbose_name=_('supplier'))
     available_from = models.DateTimeField(
         default=now, null=True, blank=True, db_index=True,
-        verbose_name=_('available from'), help_text=_(
-            "Set an available from date to restrict the page to be available only after a certain date and time. "
+        verbose_name=_('available since'), help_text=_(
+            "Set an available date to restrict the page to be available only after a certain date and time. "
             "This is useful for pages describing sales campaigns or other time-sensitive pages."
         )
     )
     available_to = models.DateTimeField(
         null=True, blank=True, db_index=True,
-        verbose_name=_('available to'), help_text=_(
-            "Set an available to date to restrict the page to be available only after a certain date and time. "
+        verbose_name=_('available until'), help_text=_(
+            "Set an available date to restrict the page to be available only until a certain date and time. "
             "This is useful for pages describing sales campaigns or other time-sensitive pages."
         )
     )
@@ -103,17 +103,17 @@ class Page(MPTTModel, TranslatableModel):
     )
 
     visible_in_menu = models.BooleanField(verbose_name=_("visible in menu"), default=False, help_text=_(
-        "Check this if this page should have a link in the top menu of the store front."
+        "Enable this if this page should have a visible link in the top menu of the store front."
     ))
     parent = TreeForeignKey(
         "self", blank=True, null=True, related_name="children", verbose_name=_("parent"), help_text=_(
-            "Set this to a parent page if this page should be subcategorized under another page."
+            "Set this to a parent page if this page should be subcategorized (sub-menu) under another page."
         ))
-    list_children_on_page = models.BooleanField(verbose_name=_("list children on page"), default=False, help_text=_(
-        "Check this if this page should list its children pages."
+    list_children_on_page = models.BooleanField(verbose_name=_("display children on page"), default=False, help_text=_(
+        "Enable this if this page should display all of its children pages."
     ))
     show_child_timestamps = models.BooleanField(verbose_name=_("show child page timestamps"), default=True, help_text=_(
-        "Check this if you want to show timestamps on the child pages. Please note, that this "
+        "Enable this if you want to show timestamps on the child pages. Please note, that this "
         "requires the children to be listed on the page as well."
     ))
     deleted = models.BooleanField(default=False, verbose_name=_("deleted"))
@@ -144,7 +144,7 @@ class Page(MPTTModel, TranslatableModel):
         default=settings.SHUUP_SIMPLE_CMS_DEFAULT_TEMPLATE
     )
     render_title = models.BooleanField(verbose_name=_("render title"), default=True, help_text=_(
-        "Check this if this page should have a visible title"
+        "Enable this if this page should have a visible title."
     ))
 
     objects = TreeManager.from_queryset(PageQuerySet)()
@@ -156,12 +156,12 @@ class Page(MPTTModel, TranslatableModel):
         unique_together = ("shop", "identifier")
 
     def delete(self, using=None):
-        raise NotImplementedError("Not implemented: Use `soft_delete()`")
+        raise NotImplementedError("Error! Not implemented: `Page` -> `delete()`. Use `soft_delete()` instead.")
 
     def soft_delete(self, user=None):
         if not self.deleted:
             self.deleted = True
-            self.add_log_entry("Deleted.", kind=LogEntryKind.DELETION, user=user)
+            self.add_log_entry("Success! Deleted (soft).", kind=LogEntryKind.DELETION, user=user)
             # Bypassing local `save()` on purpose.
             super(Page, self).save(update_fields=("deleted",))
 
@@ -181,8 +181,8 @@ class Page(MPTTModel, TranslatableModel):
             dt = now()
 
         return (
-            (self.available_from and self.available_from <= dt) and
-            (self.available_to is None or self.available_to >= dt)
+            (self.available_from and self.available_from <= dt)
+            and (self.available_to is None or self.available_to >= dt)
         )
 
     def save(self, *args, **kwargs):
@@ -206,7 +206,7 @@ class Page(MPTTModel, TranslatableModel):
 @python_2_unicode_compatible
 class PageOpenGraph(TranslatableModel):
     """
-    Object that describes Open Graph extra meta attributes
+    Object that describes Open Graph extra meta attributes.
     """
     page = models.OneToOneField(Page, verbose_name=_('page'), related_name="open_graph")
 

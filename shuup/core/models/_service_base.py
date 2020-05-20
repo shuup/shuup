@@ -39,12 +39,12 @@ class ServiceProvider(PolymorphicTranslatableShuupModel):
     `PaymentProcessor`.
 
     When subclassing `ServiceProvider`, set value for `service_model`
-    class attribute.  It should be a model class which is subclass of
+    class attribute. It should be a model class, which is a subclass of
     `Service`.
     """
     identifier = InternalIdentifierField(unique=True)
     enabled = models.BooleanField(default=True, verbose_name=_("enabled"), help_text=_(
-            "Check this if this service provider can be used when placing orders"
+            "Enable this if this service provider can be used when placing orders."
         )
     )
     name = TranslatedField(any_language=True)
@@ -71,13 +71,13 @@ class ServiceProvider(PolymorphicTranslatableShuupModel):
 
     def create_service(self, choice_identifier, **kwargs):
         """
-        Create a service for given choice identifier.
+        Create a service for a given choice identifier.
 
         Subclass implementation may attach some `behavior components
         <ServiceBehaviorComponent>` to the created service.
 
         Subclasses should provide implementation for `_create_service`
-        or override this.  Base class implementation calls the
+        or override it. Base class implementation calls the
         `_create_service` method with resolved `choice_identifier`.
 
         :type choice_identifier: str|None
@@ -92,7 +92,7 @@ class ServiceProvider(PolymorphicTranslatableShuupModel):
 
     def _create_service(self, choice_identifier, **kwargs):
         """
-        Create a service for given choice identifier.
+        Create a service for a given choice identifier.
 
         :type choice_identifier: str
         :rtype: shuup.core.models.Service
@@ -101,7 +101,7 @@ class ServiceProvider(PolymorphicTranslatableShuupModel):
 
     def get_effective_name(self, service, source):
         """
-        Get effective name of the service for given order source.
+        Get effective name of the service for a given order source.
 
         Base class implementation will just return name of the given
         service, but that may be changed in a subclass.
@@ -150,13 +150,13 @@ class ServiceQuerySet(TranslatableQuerySet):
 
     def available_ids(self, shop, products):
         """
-        Retrieve common available services for a shop and product IDs.
+        Retrieve common available services for shop and product IDs.
 
-        :param shop_id: Shop ID
+        :param shop_id: Shop ID.
         :type shop_id: int
-        :param product_ids: Product IDs
+        :param product_ids: Product IDs.
         :type product_ids: set[int]
-        :return: Set of service IDs
+        :return: Set of service IDs.
         :rtype: set[int]
         """
         shop_product_m2m = self.model.shop_product_m2m
@@ -187,13 +187,13 @@ class Service(TranslatableShuupModel):
 
     Each enabled service should be linked to a service provider and
     should have a choice identifier specified in its `choice_identifier`
-    field.  The choice identifier should be valid for the service
+    field. The choice identifier should be valid for the service
     provider, i.e. it should be one of the `ServiceChoice.identifier`
     values returned by the `ServiceProvider.get_service_choices` method.
     """
     identifier = InternalIdentifierField(unique=True, verbose_name=_("identifier"))
     enabled = models.BooleanField(default=False, verbose_name=_("enabled"), help_text=_(
-        "Check this if this service is selectable on checkout."
+        "Enable this if this service should be selectable on checkout."
     ))
     shop = models.ForeignKey(Shop, verbose_name=_("shop"), help_text=_("The shop for this service."))
 
@@ -211,7 +211,7 @@ class Service(TranslatableShuupModel):
         verbose_name=_("logo"))
     tax_class = models.ForeignKey(
         'TaxClass', on_delete=models.PROTECT, verbose_name=_("tax class"), help_text=_(
-            "The tax class to use for this service. Tax classes are defined in Settings - Tax Classes."
+            "The tax class to use for this service. Define by searching for `Tax Classes`."
         )
     )
 
@@ -233,7 +233,7 @@ class Service(TranslatableShuupModel):
 
     def get_effective_name(self, source):
         """
-        Get effective name of the service for given order source.
+        Get an effective name of the service for a given order source.
 
         By default, effective name is the same as name of this service,
         but if there is a service provider with a custom implementation
@@ -249,7 +249,7 @@ class Service(TranslatableShuupModel):
 
     def is_available_for(self, source):
         """
-        Return true if service is available for given source.
+        Return true if service is available for a given source.
 
         :type source: shuup.core.order_creator.OrderSource
         :rtype: bool
@@ -258,17 +258,17 @@ class Service(TranslatableShuupModel):
 
     def get_unavailability_reasons(self, source):
         """
-        Get reasons of being unavailable for given source.
+        Get reasons of being unavailable for a given source.
 
         :type source: shuup.core.order_creator.OrderSource
         :rtype: Iterable[ValidationError]
         """
         if not self.provider or not self.provider.enabled or not self.enabled:
-            yield ValidationError(_("%s is disabled") % self, code='disabled')
+            yield ValidationError(_("%s is disabled.") % self, code='disabled')
 
         if source.shop.id != self.shop_id:
             yield ValidationError(
-                _("%s is for different shop") % self, code='wrong_shop')
+                _("%s is for different shop.") % self, code='wrong_shop')
 
         for component in self.behavior_components.all():
             for reason in component.get_unavailability_reasons(self, source):
@@ -276,7 +276,7 @@ class Service(TranslatableShuupModel):
 
     def get_total_cost(self, source):
         """
-        Get total cost of this service for items in given source.
+        Get total cost of this service for items in a given source.
 
         :type source: shuup.core.order_creator.OrderSource
         :rtype: PriceInfo
@@ -285,10 +285,10 @@ class Service(TranslatableShuupModel):
 
     def get_costs(self, source):
         """
-        Get costs of this service for items in given source.
+        Get costs of this service for items in a given source.
 
         :type source: shuup.core.order_creator.OrderSource
-        :return: description, price and tax class of the costs
+        :return: description, price and tax class of the costs.
         :rtype: Iterable[ServiceCost]
         """
         for component in self.behavior_components.all():
@@ -297,10 +297,10 @@ class Service(TranslatableShuupModel):
 
     def get_lines(self, source):
         """
-        Get lines for given source.
+        Get lines for a given source.
 
-        Lines are created based on costs.  Costs without description are
-        combined to single line.
+        Lines are created based on costs. Costs without descriptions are
+        combined to a single line.
 
         :type source: shuup.core.order_creator.OrderSource
         :rtype: Iterable[shuup.core.order_creator.SourceLine]
@@ -356,17 +356,17 @@ class Service(TranslatableShuupModel):
 
     def _make_sure_is_usable(self):
         if not self.provider:
-            raise ValueError('%r has no %s' % (self, self.provider_attr))
+            raise ValueError("Error! %r has no %s." % (self, self.provider_attr))
         if not self.enabled:
-            raise ValueError('%r is disabled' % (self,))
+            raise ValueError("Error! %r is disabled." % (self,))
         if not self.provider.enabled:
             raise ValueError(
-                '%s of %r is disabled' % (self.provider_attr, self))
+                "Error! %s of %r is disabled." % (self.provider_attr, self))
 
 
 def _sum_costs(costs, source):
     """
-    Sum price info of given costs and return the sum as PriceInfo.
+    Sum the price info of given costs and return the sum as `PriceInfo`.
 
     :type costs: Iterable[ServiceCost]
     :type source: shuup.core.order_creator.OrderSource
@@ -396,7 +396,7 @@ class ServiceCost(object):
         """
         Initialize cost from values.
 
-        Note: If tax_class is specified, also description must be given.
+        Note: If `tax_class` is specified, `description` must also be given.
 
         :type price: shuup.core.pricing.Price
         :type description: str|None
@@ -404,7 +404,7 @@ class ServiceCost(object):
         :type base_price: shuup.core.pricing.Price|None
         """
         if tax_class and not description:
-            raise ValueError('Cost with tax class must have description')
+            raise ValueError("Error! Service cost with a defined tax class must also have a description.")
         self.price = price
         self.description = description
         self.tax_class = tax_class
@@ -424,7 +424,7 @@ class ServiceBehaviorComponent(PolymorphicShuupModel):
 
     def __init__(self, *args, **kwargs):
         if type(self) != ServiceBehaviorComponent and self.name is None:
-            raise TypeError('%s.name is not defined' % type(self).__name__)
+            raise TypeError("Error! %s.name is not defined." % type(self).__name__)
         super(ServiceBehaviorComponent, self).__init__(*args, **kwargs)
 
     def get_unavailability_reasons(self, service, source):
@@ -437,8 +437,8 @@ class ServiceBehaviorComponent(PolymorphicShuupModel):
 
     def get_costs(self, service, source):
         """
-        Return costs for for this object. This should be implemented
-        in subclass. This method is used to calculate price for
+        Return costs for this object. This should be implemented
+        in a subclass. This method is used to calculate price for
         ``ShippingMethod`` and ``PaymentMethod`` objects.
 
         :type service: Service

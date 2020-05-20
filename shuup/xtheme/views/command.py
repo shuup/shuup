@@ -42,4 +42,4 @@ def command_dispatch(request):
         response = handle_command(request, command)
         if response:
             return response
-    raise Problem("Unknown command: %r" % command)
+    raise Problem("Error! Unknown command: `%r`" % command)

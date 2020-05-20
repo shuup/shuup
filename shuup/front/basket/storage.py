@@ -18,7 +18,7 @@ class DirectSessionBasketStorage(BasketStorage):
     def __init__(self):
         if settings.SESSION_SERIALIZER == "django.contrib.sessions.serializers.JSONSerializer":  # pragma: no cover
             raise ImproperlyConfigured(
-                "DirectSessionBasketStorage will not work with the JSONSerializer session serializer."
+                "Error! `DirectSessionBasketStorage` will not work with the JSONSerializer session serializer."
             )
 
     def save(self, basket, data):

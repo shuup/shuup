@@ -82,7 +82,7 @@ class BehaviorWizardForm(forms.Form):
                 }
 
             except:
-                logger.exception("Failed to translate language %s" % language)
+                logger.exception("Error! Failed to translate language %s." % language)
 
                 action_data["template_data"][language] = {
                     "content_type": "text",
@@ -90,15 +90,15 @@ class BehaviorWizardForm(forms.Form):
                     "subject": " "
                 }
 
-        # back to the old language
+        # Back to the old language.
         translation.activate(current_language)
 
         return SendEmail(action_data)
 
     def save(self):
-        """ Create and configure the selected objects if needed """
+        """ Create and configure the selected objects if needed. """
 
-        # User wants a order notification and Notify installed and there is no script created previously
+        # User wants an order notification and Notify installed and there is no script created previously.
         if (self.is_valid() and self.cleaned_data["order_confirm_notification"] and
                 djangoenv.has_installed("shuup.notify") and not self._get_saved_script()):
 
@@ -117,7 +117,7 @@ class BehaviorWizardForm(forms.Form):
             script.set_steps([Step(next=StepNext.STOP, actions=(send_email_action,))])
             script.save()
 
-            # save the PK in the configs
+            # Save the PK in the configs.
             config.set(self.shop, BEHAVIOR_ORDER_CONFIRM_KEY, script.pk)
 
 
@@ -126,7 +126,7 @@ class ContentWizardForm(forms.Form):
     def __init__(self, **kwargs):
         self.shop = kwargs.pop("shop")
         if not self.shop:
-            raise ValueError("No shop provided")
+            raise ValueError("Error! No shop provided.")
         super(ContentWizardForm, self).__init__(**kwargs)
 
         if djangoenv.has_installed("shuup.simple_cms"):
@@ -139,7 +139,7 @@ class ContentWizardForm(forms.Form):
                 widget=forms.CheckboxInput(attrs={"disabled": (content_data.ABOUT_US_KEY in pages)})
             )
 
-            # set the help text for different ocasions - whether the content is installed or not
+            # Set the help text for different ocasions - whether the content is installed or not.
             if content_data.ABOUT_US_KEY in pages:
                 self.fields["about_us"].help_text = _("We have already created an 'About Us' template for you based "
                                                       "on your shop information. You must review the page and "
@@ -156,7 +156,7 @@ class ContentWizardForm(forms.Form):
                 initial=True,
                 widget=forms.CheckboxInput(attrs={"disabled": (content_data.PRIVACY_POLICY_KEY in pages)})
             )
-            # set the help text for different ocasions - whether the content is installed or not
+            # Set the help text for different ocasions - whether the content is installed or not.
             if content_data.PRIVACY_POLICY_KEY in pages:
                 self.fields["privacy_policy"].help_text = _("We have already created a 'Privacy Policy' template "
                                                             "for you based on your shop information. "
@@ -173,13 +173,13 @@ class ContentWizardForm(forms.Form):
                 initial=True,
                 widget=forms.CheckboxInput(attrs={"disabled": (content_data.TERMS_AND_CONDITIONS_KEY in pages)}),
             )
-            # set the help text for different ocasions - whether the content is installed or not
+            # Set the help text for different ocasions - whether the content is installed or not.
             if content_data.TERMS_AND_CONDITIONS_KEY in pages:
                 self.fields["terms_conditions"].help_text = _("We have already created a 'Terms & Conditions' template "
                                                               "for you based on your shop information. "
                                                               "You must review the page and change it accordingly.")
             else:
-                self.fields["terms_conditions"].help_text = _("We will create an 'Terms & Conditions' template "
+                self.fields["terms_conditions"].help_text = _("We will create a 'Terms & Conditions' template "
                                                               "for you. We will base content of the page on "
                                                               "your shop information. After we are done, "
                                                               "you must review the page and change it accordingly.")
@@ -190,7 +190,7 @@ class ContentWizardForm(forms.Form):
                 initial=True,
                 widget=forms.CheckboxInput(attrs={"disabled": (content_data.REFUND_POLICY_KEY in pages)}),
             )
-            # set the help text for different ocasions - whether the content is installed or not
+            # Set the help text for different ocasions - whether the content is installed or not.
             if content_data.REFUND_POLICY_KEY in pages:
                 self.fields["refund_policy"].help_text = _("We have already created a 'Refund Policy' template "
                                                            "for you based on your shop information. "
@@ -217,7 +217,7 @@ class ContentWizardForm(forms.Form):
 
     def _get_installed_pages(self):
         """
-        Returns a dict[str, simple_cms.models.Page] of all installed pages by this form
+        Returns a dict[str, simple_cms.models.Page] of all installed pages by this form.
         """
         from shuup.simple_cms.models import Page
         return {
@@ -230,13 +230,13 @@ class ContentWizardForm(forms.Form):
 
     def save(self):
         """
-        Generate the selected pages is SimpleCMS is installed.
+        Generate the selected pages if SimpleCMS is installed.
         Generate the Footer if xTheme is installed.
         """
         if not self.is_valid():
             return
 
-        # form must be validated
+        # Form must be validated.
         if djangoenv.has_installed("shuup.simple_cms"):
             self._handle_simple_cms_save()
 

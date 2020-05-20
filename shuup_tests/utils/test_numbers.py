@@ -59,7 +59,8 @@ def test_parse_simple_decimal(input_value, expected_result):
         with pytest.raises(ValueError) as exc_info:
             parse_simple_decimal(input_value)
         assert '{}'.format(exc_info.value) == (
-            "Cannot parse as simple decimal: %r" % (input_value,))
+            "Error! Value `%r` can't be parsed as a simple decimal." % (input_value,))
+
 
 
 @pytest.mark.parametrize("input_val, expected_val", [

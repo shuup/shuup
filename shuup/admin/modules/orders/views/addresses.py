@@ -64,7 +64,7 @@ class OrderAddressEditView(UpdateView):
                 identifier=ADDRESS_EDITED_LOG_IDENTIFIER,
                 kind=LogEntryKind.EDIT
             )
-            messages.success(self.request, _("%(field)s saved successfully.") % {"field": field_title})
+            messages.success(self.request, _("%(field)s were saved.") % {"field": field_title})
 
         return HttpResponseRedirect(get_model_url(order))
 

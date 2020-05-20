@@ -27,7 +27,7 @@ def to_language_codes(languages, default_language):
         # `languages` looks like a `settings.LANGUAGES`, so fix it
         languages = [code for (code, name) in languages]
     if default_language not in languages:
-        raise ValueError("Language %r not in %r" % (default_language, languages))
+        raise ValueError("Error! Default language `%r` not in the list: `%r`." % (default_language, languages))
     languages = [default_language] + [code for code in languages if code != default_language]
     return languages
 
@@ -103,7 +103,7 @@ class MultiLanguageModelForm(TranslatableModelForm):
     def clean(self):
         """
         Avoid partially translated languages where the translated fields that
-        is required is not set.
+        are required are not set.
         """
         data = self.cleaned_data
         for language, field_names in self.trans_name_map.items():
@@ -142,9 +142,9 @@ class MultiLanguageModelForm(TranslatableModelForm):
         This could be used to delete unnecessary/cleared translations or skip
         saving translations altogether.
 
-        :param instance: Parent model instance
+        :param instance: Parent model instance.
         :type instance: django.db.models.Model
-        :param translation: Translation model
+        :param translation: Translation model.
         :type translation: parler.models.TranslatedFieldsModelBase
         """
         translation.save()
@@ -154,7 +154,7 @@ class MultiLanguageModelForm(TranslatableModelForm):
         self.pre_master_save(self.instance)
 
         # Save is necessary here since translations can not be
-        # attached to non saved object
+        # attached to non-saved object
         self.instance = self._save_master(commit)
         self._save_translations(self.instance, self.cleaned_data)
 

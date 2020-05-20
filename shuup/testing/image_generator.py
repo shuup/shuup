@@ -49,7 +49,10 @@ class BaseImageGenerator(object):
         self.drawers = [getattr(self, n) for n in dir(self) if n.startswith("draw_")]
 
     def generate(self):  # pragma: no cover
-        raise NotImplementedError("Should be implemented in subclass, this.")
+        raise NotImplementedError(
+            "Error! Not implemented: `BaseImageGenerator` -> `generate()`. "
+            "Should be implemented in subclass, this."
+        )
 
     def draw_circle(self, x, y, w, h, color):
         r = min(w, h) / 2

@@ -28,7 +28,7 @@ class BaseSupplierModule(object):
 
     def __init__(self, supplier, options):
         """
-        :type supplier: Supplier
+        :type supplier: Supplier.
         :type options: dict
         """
         self.supplier = supplier
@@ -36,8 +36,8 @@ class BaseSupplierModule(object):
 
     def get_stock_statuses(self, product_ids):
         """
-        :param product_ids: Iterable of product IDs
-        :return: Dict of {product_id: ProductStockStatus}
+        :param product_ids: Iterable of product IDs.
+        :return: Dict of {product_id: ProductStockStatus}.
         :rtype: dict[int, shuup.core.stocks.ProductStockStatus]
         """
         return dict((
@@ -52,7 +52,7 @@ class BaseSupplierModule(object):
 
     def get_stock_status(self, product_id):
         """
-        :param product_id: Product ID
+        :param product_id: Product ID.
         :type product_id: int
         :rtype: shuup.core.stocks.ProductStockStatus
         """
@@ -60,11 +60,11 @@ class BaseSupplierModule(object):
 
     def get_orderability_errors(self, shop_product, quantity, customer):
         """
-        :param shop_product: Shop Product
+        :param shop_product: Shop Product.
         :type shop_product: shuup.core.models.ShopProduct
-        :param quantity: Quantity to order
+        :param quantity: Quantity to order.
         :type quantity: decimal.Decimal
-        :param customer: Contact
+        :param customer: Contact.
         :type user: django.contrib.auth.models.AbstractUser
         :rtype: iterable[ValidationError]
         """
@@ -76,10 +76,13 @@ class BaseSupplierModule(object):
 
         if self.supplier.stock_managed and stock_status.stock_managed:
             if backorder_maximum is not None and quantity > stock_status.logical_count + backorder_maximum:
-                yield ValidationError(stock_status.message or _(u"Insufficient stock"), code="stock_insufficient")
+                yield ValidationError(
+                    stock_status.message or _(u"Error! Insufficient quantity in stock."),
+                    code="stock_insufficient"
+                )
 
     def adjust_stock(self, product_id, delta, created_by=None, type=StockAdjustmentType.INVENTORY):
-        raise NotImplementedError("Not implemented in BaseSupplierModule")
+        raise NotImplementedError("Error! Not implemented: `BaseSupplierModule` -> `adjust_stock()`.")
 
     def update_stock(self, product_id):
         """
@@ -115,7 +118,7 @@ class BaseSupplierModule(object):
                     for (name, quantity) in insufficient_stocks.items()
                 ]
                 raise Problem(
-                    _("Insufficient physical stock count for following products: %(product_counts)s") % {
+                    _("Insufficient physical stock count for the following products: `%(product_counts)s`.") % {
                         "product_counts": ", ".join(formatted_counts)
                     }
                 )

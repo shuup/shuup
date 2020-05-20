@@ -205,14 +205,14 @@ class TelemetryNotSent(Exception):
 
 def _send_telemetry(request, max_age_hours, force_send=False):
     if not is_telemetry_enabled():
-        raise TelemetryNotSent("Telemetry not enabled", "disabled")
+        raise TelemetryNotSent("Error! Telemetry not enabled.", "disabled")
 
     if not force_send:
         if is_opt_out():
-            raise TelemetryNotSent("Telemetry is opted-out", "optout")
+            raise TelemetryNotSent("Error! Telemetry is opted-out.", "optout")
 
         if is_in_grace_period():
-            raise TelemetryNotSent("Telemetry in grace period", "grace")
+            raise TelemetryNotSent("Error! Telemetry in grace period.", "grace")
 
     if max_age_hours is not None:
         last_send_time = get_last_submission_time()

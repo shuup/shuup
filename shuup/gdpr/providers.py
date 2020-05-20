@@ -75,15 +75,15 @@ class GDPRFieldProvider(FormFieldProvider):
 
 
 class GDPRRegistrationFieldProvider(GDPRFieldProvider):
-    error_message = _("You must accept to this to register.")
+    error_message = _("You must accept this in order to register.")
 
 
 class GDPRCheckoutFieldProvider(GDPRFieldProvider):
-    error_message = _("You must accept to this to order.")
+    error_message = _("You must accept this to order.")
 
 
 class GDPRAuthFieldProvider(GDPRFieldProvider):
-    error_message = _("You must accept to this to authenticate.")
+    error_message = _("You must accept this in order to authenticate.")
 
     def get_fields(self, **kwargs):
         request = kwargs.get("request", None)

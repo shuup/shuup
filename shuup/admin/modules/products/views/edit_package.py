@@ -37,7 +37,7 @@ class ProductChildrenFormPart(ProductChildrenBaseFormPart):
     def get_form_defs(self):
         product = self.object
         if product.mode in self.invalid_modes:
-            raise ValueError("Invalid mode")
+            raise ValueError("Error! Invalid mode.")
         else:
             form = formset_factory(PackageChildForm, PackageChildFormSet, extra=5, can_delete=True)
             template_name = "shuup/admin/products/package/_package_children.jinja"
@@ -49,7 +49,7 @@ class ProductChildrenFormPart(ProductChildrenBaseFormPart):
 
 class ProductPackageViewToolbar(ProductParentBaseToolbar):
     button_text = _("Clear package")
-    confirm_text = _("Are you sure? This will remove all products from package.")
+    confirm_text = _("Are you sure? This will remove all products from the package.")
 
     def __init__(self, view):
         super(ProductPackageViewToolbar, self).__init__(view)
@@ -92,5 +92,5 @@ class ProductPackageView(ProductParentBaseView):
             clear_existing_package(product)
             messages.success(self.request, _("Package cleared."))
         else:
-            raise Problem("Unknown command: %s" % command)
+            raise Problem("Error! Unknown command: `%s`." % command)
         return HttpResponseRedirect(self.get_success_url())

@@ -18,7 +18,7 @@ class HappyHour(models.Model):
     shops = models.ManyToManyField("shuup.Shop", blank=True, db_index=True, verbose_name=_("shops"))
     name = models.CharField(
         max_length=120, verbose_name=_("name"),
-        help_text=_("The name for this . Used internally with exception lists for filtering."))
+        help_text=_("The name for this HappyHour. Used internally with exception lists for filtering."))
 
     def __str__(self):
         return self.name
@@ -47,6 +47,9 @@ class TimeRange(models.Model):
 
     def save(self, **kwargs):
         if self.to_hour < self.from_hour:
-            raise ValidationError(_("To hour has to be after from hour"), code="time_range_error")
+            raise ValidationError(
+                _("The value of the field `to hour` has to be later than that of `from hour`."),
+                code="time_range_error"
+            )
 
         return super(TimeRange, self).save(**kwargs)

@@ -35,7 +35,7 @@ class VariationChildrenFormPart(ProductChildrenBaseFormPart):
     def get_form_defs(self):
         product = self.object
         if product.mode in self.invalid_modes:
-            raise ValueError("Invalid mode")
+            raise ValueError("Error! Invalid mode.")
         elif product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
             form = VariableVariationChildrenForm
             template_name = "shuup/admin/products/variation/_variable_variation_children.jinja"
@@ -128,5 +128,5 @@ class ProductVariationView(ProductParentBaseView):
             product.simplify_variation()
             messages.success(self.request, _("Variation simplified."))
         else:
-            raise Problem("Unknown command: %s" % command)
+            raise Problem("Error! Unknown command: `%s`." % command)
         return HttpResponseRedirect(self.get_success_url())

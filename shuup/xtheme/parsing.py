@@ -40,14 +40,14 @@ def flatten_const_node_list(environment, node_list):
     """
     Try to flatten the given node list into a single string.
 
-    :param environment: Jinja2 environment
+    :param environment: Jinja2 environment.
     :type environment: jinja2.environment.Environment
-    :param node_list: List of nodes
+    :param node_list: List of nodes.
     :type node_list: list[jinja2.nodes.Node]
-    :return: String of content
+    :return: String of content.
     :rtype: str
     :raise Unflattenable: Raised when the node list can't be flattened into
-                          a constant
+                          a constant.
     """
     output = []
     eval_ctx = EvalContext(environment)
@@ -74,11 +74,11 @@ def parse_constantlike(environment, parser):
     Expression trees that fold into constants are constantlike,
     as are bare variable names.
 
-    :param environment: Jinja2 environment
+    :param environment: Jinja2 environment.
     :type environment: jinja2.environment.Environment
-    :param parser: Template parser
+    :param parser: Template parser.
     :type parser: jinja2.parser.Parser
-    :return: constant value of any type
+    :return: Constant value of any type.
     :rtype: object
     """
     expr = parser.parse_expression()
@@ -87,7 +87,7 @@ def parse_constantlike(environment, parser):
     try:
         return expr.as_const(EvalContext(environment))
     except Impossible:
-        raise NonConstant("Not constant: %r" % expr)
+        raise NonConstant("Error! Expression `%r` is not constant." % expr)
 
 
 class _PlaceholderManagingExtension(Extension):
@@ -99,38 +99,38 @@ class _PlaceholderManagingExtension(Extension):
         """
         Get the currently managed Layout from the parser.
 
-        :param parser: Template parser
+        :param parser: Template parser.
         :type parser: jinja2.parser.Parser
         :param accept_none: Whether or not to accept the eventuality that
                             there's no current layout. If False (the
                             default), a `NestingError` is raised.
         :type accept_none: bool
-        :return: The current layout
+        :return: The current layout.
         :rtype: shuup.xtheme.view_config.Layout
         :raises NestingError: Raised if there's no current layout and
                               that's not okay.
         """
         cfg = getattr(parser, "_xtheme_placeholder_layout", None)
         if not accept_none and cfg is None:
-            raise NestingError("No current `placeholder` block!")
+            raise NestingError("Error! No current `placeholder` block exists.")
         return cfg
 
     def _new_layout(self, parser, placeholder_name):
         """
         Begin a new layout for the given placeholder in the parser.
 
-        :param parser: Template parser
+        :param parser: Template parser.
         :type parser: jinja2.parser.Parser
         :param placeholder_name: The name of the placeholder.
         :type placeholder_name: str
-        :return: The new layout
+        :return: The new layout.
         :rtype: shuup.xtheme.view_config.Layout
         :raises NestingError: Raised if there's a layout going on already.
         """
         curr_layout = self._get_layout(parser, accept_none=True)
         if curr_layout is not None:
             raise NestingError(
-                "Can't nest `placeholder`s! (Currently in %r, trying to start %r)" % (
+                "Error! Can't nest `placeholder`s! (Currently in `%r`, trying to start `%r`)." % (
                     curr_layout.placeholder_name,
                     placeholder_name
                 )
@@ -143,9 +143,9 @@ class _PlaceholderManagingExtension(Extension):
         """
         End the current layout in the parser and return the serialized contents.
 
-        :param parser: Template parser
+        :param parser: Template parser.
         :type parser: jinja2.parser.Parser
-        :return: The serialized layout
+        :return: The serialized layout.
         :rtype: dict
         """
         layout = self._get_layout(parser)
@@ -157,7 +157,7 @@ def noop_node(lineno):
     """
     Return a no-op node (compiled into a single `0`).
 
-    :param lineno: Line number for the node
+    :param lineno: Line number for the node.
     :type lineno: int
     :return: Node
     :rtype: jinja2.nodes.ExprStmt
@@ -192,7 +192,7 @@ class PlaceholderExtension(_PlaceholderManagingExtension):
         """
         Parse a placeholder!
 
-        :param parser: Template parser
+        :param parser: Template parser.
         :type parser: jinja2.parser.Parser
         :return: Output node for rendering a placeholder.
         :rtype: jinja2.nodes.Output
@@ -253,7 +253,7 @@ class LayoutPartExtension(_PlaceholderManagingExtension):
         """
         Parse a column or row.
 
-        :param parser: Template parser
+        :param parser: Template parser.
         :type parser: jinja2.parser.Parser
         :return: A null output node.
         :rtype: jinja2.nodes.Node
@@ -277,7 +277,7 @@ class LayoutPartExtension(_PlaceholderManagingExtension):
 
     def _begin_row(self, cfg, arg):
         if arg is not None:
-            raise ValueError("`row`s do not take arguments at present (got %r)" % arg)
+            raise ValueError("Error! `row`s do not take arguments at present time (got `%r`)." % arg)
         cfg.begin_row()
 
     def _begin_column(self, cfg, arg):
@@ -286,9 +286,9 @@ class LayoutPartExtension(_PlaceholderManagingExtension):
             try:
                 sizes = arg.as_const(eval_ctx=EvalContext(self.environment))
             except Impossible:
-                raise ValueError("Invalid argument for `column`: %r" % arg)
+                raise ValueError("Error! Invalid argument for `column`: `%r`." % arg)
             if not isinstance(sizes, dict):
-                raise ValueError("Argument for `column` must be a dict: %r" % arg)
+                raise ValueError("Error! Argument for `column` must be a dict: `%r`." % arg)
         cfg.begin_column(sizes)
 
 
@@ -317,7 +317,7 @@ class PluginExtension(_PlaceholderManagingExtension):
         """
         Parse a column or row.
 
-        :param parser: Template parser
+        :param parser: Template parser.
         :type parser: jinja2.parser.Parser
         :return: A null output node.
         :rtype: jinja2.nodes.Node
@@ -331,7 +331,7 @@ class PluginExtension(_PlaceholderManagingExtension):
             try:
                 config = flatten_const_node_list(self.environment, body)
             except Unflattenable as uf:
-                raise NonConstant("A `plugin` block may only contain static layout (found: %r)" % uf.args[0])
+                raise NonConstant("Error! A `plugin` block may only contain static layout (found: `%r`)." % uf.args[0])
             config = toml.loads(config)
         layout.add_plugin(name, config)
         return noop_node(lineno)

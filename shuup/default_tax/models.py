@@ -27,7 +27,7 @@ class TaxRuleQuerySet(models.QuerySet):
 @python_2_unicode_compatible
 class TaxRule(models.Model):
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'), db_index=True, help_text=_(
-            "Check this if this tax rule is active."
+            "Enable this if this tax rule is active."
         )
     )
     tax_classes = models.ManyToManyField(

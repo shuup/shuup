@@ -52,20 +52,20 @@ class ProductMedia(TranslatableModel):
         help_text=_("Enter URL to external file. If this field is filled, the selected media doesn't apply.")
     )
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'), help_text=_(
-            "You enter the numerical order that your image will be displayed on your product page."
+            "You can assign numerical values to images to tell the order in which they "
+            "shall be displayed on the product page."
         )
     )
-
     # Status
     enabled = models.BooleanField(db_index=True, default=True, verbose_name=_("enabled"))
     public = models.BooleanField(
         default=True, blank=True, verbose_name=_('public (shown on product page)'), help_text=_(
-            "Check this if you would like the image shown on your product page. Checked by default."
+            "Enable this if you want this image be shown on the product page. Enabled by default."
         )
     )
     purchased = models.BooleanField(
         default=False, blank=True, verbose_name=_('purchased (shown for finished purchases)'), help_text=_(
-            "Select this if you would like the product media shown for completed purchases."
+            "Enable this if you want the product media to be shown for completed purchases."
         )
     )
 
@@ -129,7 +129,7 @@ class ProductMedia(TranslatableModel):
 
     def get_thumbnail(self, **kwargs):
         """
-        Get thumbnail for image
+        Get thumbnail for image.
 
         This will return `None` if there is no file or kind is not `ProductMediaKind.IMAGE`
 

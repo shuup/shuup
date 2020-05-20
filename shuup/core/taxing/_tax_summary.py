@@ -24,9 +24,9 @@ class TaxSummary(list):
         """
         Create TaxSummary from LineTaxes.
 
-        :param line_taxes: List of line taxes to summarize
+        :param line_taxes: List of line taxes to summarize.
         :type line_taxes: list[LineTax]
-        :param untaxed: Sum of taxless prices that have no taxes added
+        :param untaxed: Sum of taxless prices that have no taxes added.
         :type untaxed: shuup.core.pricing.TaxlessPrice
         """
         zero_amount = Money(0, untaxed.currency)
@@ -94,7 +94,7 @@ class TaxSummaryLine(object):
         value = getattr(self, key)
         if isinstance(value, Money):
             if key not in self._MONEY_FIELDS:
-                raise TypeError('Non-price field "%s" has %r' % (key, value))
+                raise TypeError('Error! Non-price field "%s" has %r.' % (key, value))
             return [(key, value.value), (key + '_currency', value.currency)]
         assert not isinstance(value, Money)
         return [(key, value)]

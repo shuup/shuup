@@ -67,7 +67,7 @@ def test_condops(cond_op):
     elif cond_op == StepConditionOperator.NONE:
         assert not context.get("debug")
     else:
-        raise ValueError("Unexpected condop %r" % cond_op)
+        raise ValueError("Error! Unexpected cond_op %r." % cond_op)
 
 
 def test_none_condop():

@@ -119,7 +119,7 @@ class ProductType(TranslatableModel):
     attributes = models.ManyToManyField(
         "Attribute", blank=True, related_name='product_types',
         verbose_name=_('attributes'), help_text=_(
-            "Select attributes that go with your product type. These are defined in Products Settings – Attributes."
+            "Select attributes that go with your product type. To change available attributes search for `Attributes`."
         )
     )
 
@@ -231,20 +231,20 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         verbose_name=_('variation parent'))
     shipping_mode = EnumIntegerField(
         ShippingMode, default=ShippingMode.SHIPPED, verbose_name=_('shipping mode'),
-        help_text=_("Set to shipped if the product requires shipment.")
+        help_text=_("Set to `shipped` if the product requires shipment.")
     )
     sales_unit = models.ForeignKey(
         "SalesUnit", verbose_name=_('sales unit'), blank=True, null=True, on_delete=models.PROTECT, help_text=_(
             "Select a sales unit for your product. "
             "This is shown in your store front and is used to determine whether the product can be purchased using "
-            "fractional amounts. Sales units are defined in Products - Sales Units."
+            "fractional amounts. To change settings search for `Sales Units`."
         )
     )
     tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'), on_delete=models.PROTECT, help_text=_(
             "Select a tax class for your product. "
             "The tax class is used to determine which taxes to apply to your product. "
-            "Tax classes are defined in Settings - Tax Classes. "
-            "The rules by which taxes are applied are defined in Settings - Tax Rules."
+            "Define tax classes by searching for `Tax Classes`. "
+            "To define the rules by which taxes are applied search for `Tax Rules`."
         )
     )
 
@@ -263,8 +263,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         db_index=True, max_length=128, verbose_name=_('SKU'), unique=True,
         help_text=_(
             "Enter a SKU (Stock Keeping Unit) number for your product. "
-            "This is a product identification code that helps you track it through your inventory. "
-            "People often use the number by the barcode on the product, "
+            "This is a product identification code that helps you track products through your inventory "
+            "and analyze their movement. People often use the product's barcode number, "
             "but you can set up any numerical system you want to keep track of products."
         )
     )
@@ -284,35 +284,35 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     width = MeasurementField(
         unit="mm", verbose_name=_('width (mm)'),
         help_text=_(
-            "Set the measured width of your product or product packaging. "
-            "This will provide customers with your product size and help with calculating shipping costs."
+            "Set the measured width (in millimeters) of your product or product packaging. "
+            "This will provide customers with the product size and help with calculating shipping costs."
         )
     )
     height = MeasurementField(
         unit="mm", verbose_name=_('height (mm)'),
         help_text=_(
-            "Set the measured height of your product or product packaging. "
-            "This will provide customers with your product size and help with calculating shipping costs."
+            "Set the measured height (in millimeters) of your product or product packaging. "
+            "This will provide customers with the product size and help with calculating shipping costs."
         )
     )
     depth = MeasurementField(
         unit="mm", verbose_name=_('depth (mm)'),
         help_text=_(
-            "Set the measured depth or length of your product or product packaging. "
-            "This will provide customers with your product size and help with calculating shipping costs."
+            "Set the measured depth or length (in millimeters) of your product or product packaging. "
+            "This will provide customers with the product size and help with calculating shipping costs."
         )
     )
     net_weight = MeasurementField(
         unit="g", verbose_name=_('net weight (g)'),
         help_text=_(
-            "Set the measured weight of your product WITHOUT its packaging. "
-            "This will provide customers with your product weight."
+            "Set the measured weight (in grams) of your product WITHOUT its packaging. "
+            "This will provide customers with the actual product's weight."
         )
     )
     gross_weight = MeasurementField(
         unit="g", verbose_name=_('gross weight (g)'),
         help_text=_(
-            "Set the measured gross Weight of your product WITH its packaging. "
+            "Set the measured gross weight (in grams) of your product WITH its packaging. "
             "This will help with calculating shipping costs."
         )
     )
@@ -321,7 +321,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     manufacturer = models.ForeignKey(
         "Manufacturer", blank=True, null=True,
         verbose_name=_('manufacturer'), on_delete=models.PROTECT, help_text=_(
-            "Select a manufacturer for your product. These are defined in Products Settings - Manufacturers"
+            "Select a manufacturer for your product. To define these, search for `Manufacturers`."
         )
     )
     primary_image = models.ForeignKey(
@@ -333,7 +333,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     translations = TranslatedFields(
         name=models.CharField(
             max_length=256, verbose_name=_('name'), db_index=True,
-            help_text=_("Enter a descriptive name for your product. This will be its title in your store.")),
+            help_text=_("Enter a descriptive name for your product. This will be its title in your store front.")),
         description=models.TextField(
             blank=True, verbose_name=_('description'),
             help_text=_(
@@ -345,15 +345,18 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         short_description=models.CharField(
             max_length=150, blank=True, verbose_name=_('short description'),
             help_text=_(
-                "Enter a short description for your product. "
-                "The short description will be used to get the attention of your "
-                "customer with a small but precise description of your product."
+                "Enter a short description for your product. The short description will "
+                "be used to get the attention of your customer with a small, but "
+                "precise description of your product. It also helps with getting more "
+                "traffic via search engines."
             )
         ),
         slug=models.SlugField(
             verbose_name=_('slug'), max_length=255, blank=True, null=True,
             help_text=_(
-                "Enter a URL Slug for your product. This is what your product page URL will be. "
+                "Enter a URL slug for your product. Slug is user- and search engine-friendly short text "
+                "used in a URL to identify and describe a resource. In this case it will determine "
+                "what your product page URL in the browser address bar will look like. "
                 "A default will be created using the product name."
             )
         ),
@@ -368,7 +371,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             verbose_name=_('variation name'),
             help_text=_(
                 "You can enter a name for the variation of your product. "
-                "This could be for example different colors or versions."
+                "This could be for example different colors, sizes or versions. "
+                "To manage variations, at the top of the the individual product page, "
+                "click `Actions` -> `Manage Variations`."
             )
         )
     )
@@ -437,7 +442,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     def get_child_price_range(self, context, quantity=1):
         """
-        Get the prices for cheapest and the most expensive child
+        Get the prices for cheapest and the most expensive child.
 
         The attribute used for sorting is `PriceInfo.price`.
 
@@ -446,7 +451,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
         :type context: shuup.core.pricing.PricingContextable
         :type quantity: int
-        :return: a tuple of prices
+        :return: a tuple of prices.
         :rtype: (shuup.core.pricing.Price, shuup.core.pricing.Price)
         """
         items = []
@@ -461,7 +466,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     def get_cheapest_child_price_info(self, context, quantity=1):
         """
-        Get the `PriceInfo` of the cheapest variation child
+        Get the `PriceInfo` of the cheapest variation child.
 
         The attribute used for sorting is `PriceInfo.price`.
 
@@ -532,7 +537,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         """
         Get a dict of `combination_hash` to product ID of variable variation results.
 
-        :return: Mapping of combination hashes to product IDs
+        :return: Mapping of combination hashes to product IDs.
         :rtype: dict[str, int]
         """
         return dict(
@@ -547,7 +552,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         If the product is not a variable variation parent, the iterator is empty.
 
         Because of possible combinatorial explosion this is a generator function.
-        (For example 6 variables with 5 options each explodes to 15,625 combinations.)
+        (For example 6 variables with 5 options each, would explode to 15,625 combinations.)
 
         :return: Iterable of combination information dicts.
         :rtype: Iterable[dict]
@@ -569,10 +574,10 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     def simplify_variation(self):
         """
-        Remove variation variables from the given variation parent, turning it
+        Remove variation variables from a given variation parent, turning it
         into a simple variation (or a normal product, if it has no children).
 
-        :param product: Variation parent to not be variable any longer.
+        :param product: Variation parent, that shouldn't be variable any more.
         :type product: shuup.core.models.Product
         """
         ProductVariationVariable.objects.filter(product=self).delete()
@@ -600,12 +605,12 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         post_clean.send(type(self), instance=self)
 
     def delete(self, using=None):
-        raise NotImplementedError("Not implemented: Use `soft_delete()` for products.")
+        raise NotImplementedError("Error! Not implemented: `Product` -> `delete()`. Use `soft_delete()` for products.")
 
     def soft_delete(self, user=None):
         if not self.deleted:
             self.deleted = True
-            self.add_log_entry("Deleted.", kind=LogEntryKind.DELETION, user=user)
+            self.add_log_entry("Success! Deleted (soft).", kind=LogEntryKind.DELETION, user=user)
             # Bypassing local `save()` on purpose.
             super(Product, self).save(update_fields=("deleted",))
 
@@ -646,16 +651,15 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         """
         :param parent: The parent to link to.
         :type parent: Product
-        :param variables: Optional dict of {variable identifier: value identifier} for complex variable linkage
+        :param variables: Optional dict of {variable identifier: value identifier} for a complex variable linkage.
         :type variables: dict|None
         :param combination_hash: Optional combination hash (for variable variations), if precomputed. Mutually
-                                 exclusive with `variables`
+                                 exclusive with `variables`.
         :type combination_hash: str|None
-
         """
         if combination_hash:
             if variables:
-                raise ValueError("`combination_hash` and `variables` are mutually exclusive")
+                raise ValueError("Error! `combination_hash` and `variables` are mutually exclusive.")
             variables = True  # Simplifies the below invariant checks
 
         self._raise_if_cant_link_to_parent(parent, variables)
@@ -686,59 +690,59 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     def _raise_if_cant_link_to_parent(self, parent, variables):
         """
-        Validates relation possibility for `self.link_to_parent()`
+        Validates relation possibility for `self.link_to_parent()`.
 
-        :param parent: parent product of self
+        :param parent: parent product of self.
         :type parent: Product
         :param variables:
         :type variables: dict|None
         """
         if parent.is_variation_child():
             raise ImpossibleProductModeException(
-                _("Multilevel parentage hierarchies aren't supported (parent is a child already)"),
+                _("Multilevel parentage hierarchies aren't supported (parent is a child already)."),
                 code="multilevel"
             )
         if parent.mode == ProductMode.VARIABLE_VARIATION_PARENT and not variables:
             raise ImpossibleProductModeException(
-                _("Parent is a variable variation parent, yet variables were not passed"),
+                _("Parent is a variable variation parent, yet variables were not passed."),
                 code="no_variables"
             )
         if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT and variables:
             raise ImpossibleProductModeException(
-                "Parent is a simple variation parent, yet variables were passed",
+                "Error! Parent is a simple variation parent, yet variables were passed.",
                 code="extra_variables"
             )
         if self.mode == ProductMode.SIMPLE_VARIATION_PARENT:
             raise ImpossibleProductModeException(
-                _("Multilevel parentage hierarchies aren't supported (this product is a simple variation parent)"),
+                _("Multilevel parentage hierarchies aren't supported (this product is a simple variation parent)."),
                 code="multilevel"
             )
         if self.mode == ProductMode.VARIABLE_VARIATION_PARENT:
             raise ImpossibleProductModeException(
-                _("Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)"),
+                _("Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)."),
                 code="multilevel"
             )
 
     def make_package(self, package_def):
         if self.mode != ProductMode.NORMAL:
             raise ImpossibleProductModeException(
-                _("Product is currently not a normal product, can't turn into package"),
+                _("Product is currently not a normal product, and can't be turned into a package."),
                 code="abnormal"
             )
 
         for child_product, quantity in six.iteritems(package_def):
             if child_product.pk == self.pk:
-                raise ImpossibleProductModeException(_("Package can't contain itself"), code="content")
+                raise ImpossibleProductModeException(_("Package can't contain itself."), code="content")
             # :type child_product: Product
             if child_product.is_variation_parent():
                 raise ImpossibleProductModeException(
-                    _("Variation parents can not belong into a package"),
+                    _("Variation parents can't belong in the package."),
                     code="abnormal"
                 )
             if child_product.is_container():
-                raise ImpossibleProductModeException(_("Packages can't be nested"), code="multilevel")
+                raise ImpossibleProductModeException(_("Packages can't be nested."), code="multilevel")
             if quantity <= 0:
-                raise ImpossibleProductModeException(_("Quantity %s is invalid") % quantity, code="quantity")
+                raise ImpossibleProductModeException(_("Quantity %s is invalid.") % quantity, code="quantity")
             ProductPackageLink.objects.create(parent=self, child=child_product, quantity=quantity)
         self.verify_mode()
 

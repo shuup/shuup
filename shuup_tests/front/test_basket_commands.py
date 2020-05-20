@@ -101,7 +101,7 @@ def test_add_and_invalid_product():
         basket_commands.handle_add(request, basket, **{
             "product_id": product.pk, "quantity": 1, "supplier_id": supplier.pk
         })
-    assert "Product not available in this shop" in exc.value.message
+    assert "Product is not available in this shop" in exc.value.message
 
 
 @pytest.mark.django_db

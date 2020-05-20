@@ -59,6 +59,6 @@ class ProcessPaymentView(DetailView):
             self.template_name = "shuup/front/order/payment_canceled.jinja"
             return self.render_to_response(self.get_context_data(object=order))
         else:
-            raise ImproperlyConfigured("Unknown ProcessPaymentView mode: %s" % mode)
+            raise ImproperlyConfigured("Error! Unknown ProcessPaymentView mode: `%s`." % mode)
 
         return redirect("shuup:order_complete", pk=order.pk, key=order.key)

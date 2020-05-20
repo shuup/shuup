@@ -61,7 +61,7 @@ class CategoryBaseForm(ShuupAdminForm):
     def clean_parent(self):
         parent = self.cleaned_data.get("parent")
         if parent and self.request.shop not in parent.shops.all():
-            raise ValidationError(_("Can not use this category as parent for this shop."), code="invalid_parent")
+            raise ValidationError(_("Can't use this category as a parent for this shop."), code="invalid_parent")
         return parent
 
     def save(self, commit=True):
@@ -72,17 +72,17 @@ class CategoryBaseForm(ShuupAdminForm):
 class CategoryProductForm(forms.Form):
     primary_products = Select2MultipleField(
         label=_("Primary Category"),
-        help_text=_("Set this category as a primary for selected products."),
+        help_text=_("Set this category as a primary category for selected products."),
         model=Product,
         required=False)
     additional_products = Select2MultipleField(
         label=_("Additional Category"),
-        help_text=_("Add selected products to this category"),
+        help_text=_("Add selected products to this category."),
         model=Product,
         required=False)
     remove_products = forms.MultipleChoiceField(
         label=_("Remove Products"),
-        help_text=_("Remove selected products from this category"),
+        help_text=_("Remove selected products from this category."),
         required=False)
 
     def __init__(self, shop, category, **kwargs):

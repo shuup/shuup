@@ -60,7 +60,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
       ``request.person`` : :class:`shuup.core.models.Contact`
           :class:`~shuup.core.models.PersonContact` of currently logged
           in user or :class:`~shuup.core.models.AnonymousContact` if
-          there is no logged in user.
+          there is no logged-in user.
 
       ``request.customer`` : :class:`shuup.core.models.Contact`
           Customer contact used when creating Orders.  This can be same
@@ -98,7 +98,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
                 logout(request)
                 # Usually logout is connected to the `refresh_on_logout`
                 # method via a signal and that already sets request.person
-                # to anonymous, but set it explicitly too, just to be sure
+                # to anonymous. But set it explicitly too, just to be sure.
                 request.person = get_person_contact(None)
 
     def _set_customer(self, request):
@@ -176,8 +176,8 @@ class ShuupFrontMiddleware(MiddlewareMixin):
 
     def _set_language(self, request):
         """
-        Set the language according to the shop preferences
-        If the current language is not in the available ones, change it to the first available
+        Set the language according to the shop preferences.
+        If the current language is not in the available ones, change it to the first available.
         """
         from shuup.front.utils.translation import get_language_choices
         current_language = translation.get_language()

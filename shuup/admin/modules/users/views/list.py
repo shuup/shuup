@@ -28,10 +28,10 @@ class UserListView(PicotableListView):
         Column(
             "is_active",
             _(u"Active"),
-            filter_config=ChoicesFilter([(False, _("no")), (True, _("yes"))], default=True)
+            filter_config=ChoicesFilter([(False, _("no")), (True, _("yes"))], default=True),
         ),
-        Column("is_staff", _(u"Staff"), filter_config=true_or_false_filter),
-        Column("is_superuser", _(u"Superuser"), filter_config=true_or_false_filter),
+        Column("is_staff", _(u"Access to Admin Panel"), filter_config=true_or_false_filter),
+        Column("is_superuser", _(u"Superuser (Full rights)"), filter_config=true_or_false_filter),
     ]
     toolbar_buttons_provider_key = "user_list_toolbar_provider"
     mass_actions_provider_key = "user_list_mass_actions_provider"
@@ -62,8 +62,8 @@ class UserListView(PicotableListView):
             _("Last Name: %s") % (getattr(instance, 'last_name', None) or "\u2014"),
             _("Active") if instance.is_active else _(u"Inactive"),
             _("Email: %s") % (getattr(instance, 'email', None) or "\u2014"),
-            _("Staff") if getattr(instance, 'is_staff', None) else None,
-            _("Superuser") if getattr(instance, 'is_superuser', None) else None
+            _("Access to Admin Panel") if getattr(instance, 'is_staff', None) else None,
+            _("Superuser (Full rights)") if getattr(instance, 'is_superuser', None) else None
         ])
         return [
             {"text": instance.get_username() or _("User"), "class": "header"},

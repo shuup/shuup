@@ -275,7 +275,7 @@ class OrderCreateFullRefundView(UpdateView):
         try:
             order.create_full_refund(restock_products)
         except NoRefundToCreateException:
-            messages.error(self.request, _("Could not create full refund."))
+            messages.error(self.request, _("Could not create a full refund."))
             return self.form_invalid(form)
 
         messages.success(self.request, _("Full refund created."))

@@ -82,5 +82,5 @@ class ResetPasswordView(FormView):
         form.save()
         form.user.backend = "django.contrib.auth.backends.ModelBackend"
         login(self.request, form.user)
-        messages.success(self.request, _("Password changed successfully!"))
+        messages.success(self.request, _("Password was changed."))
         return HttpResponseRedirect(self.get_success_url())

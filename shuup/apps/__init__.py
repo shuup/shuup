@@ -117,8 +117,8 @@ class AppConfig(django.apps.AppConfig):
         """
         Get default settings module.
 
-        :return: the settings module
-        :raises: ImportError if no such module exists
+        :return: the settings module.
+        :raises: ImportError if no such module exists.
         """
         mod_name = self.default_settings_module
         pkg_name = self.module.__name__
@@ -139,4 +139,6 @@ class AppConfig(django.apps.AppConfig):
                 "%s (%s)" % (app_name, self._get_app_require_reason(app_name))
                 for app_name in sorted(missing_apps)
             )
-            raise ImproperlyConfigured("%s requires the following INSTALLED_APPS: %s" % (self.name, information))
+            raise ImproperlyConfigured(
+                "Error! `%s` requires the following INSTALLED_APPS: `%s`" % (self.name, information)
+            )

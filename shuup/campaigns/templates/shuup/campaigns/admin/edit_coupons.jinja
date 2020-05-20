@@ -27,7 +27,7 @@
     function generateDiscountCode() {
         var $field = $("#id_code");
         if($field.val().length) {
-            alert(gettext("Please empty the code value before using autogenerate."))
+            alert(gettext("Error! Please empty the code value before using autogenerate."))
         }
         else {
             var code = "";

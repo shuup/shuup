@@ -3,12 +3,12 @@
 {% macro alert(message, title=None, mode="") %}
     <div class="alert{% if mode %} alert-{{ mode }}{% endif %}">
         {% if title %}
-            <strong>{{ title }}</strong>
+            <strong>{{ "Error! "~title }}</strong>
         {% endif %}
         {% if not caller %}
-            {{ message|safe }}
+            {{ "Error! "~message|safe }}
         {% else %}
-            {{ caller() }}
+            {{ "Error! "~caller() }}
         {% endif %}
     </div>
 {% endmacro %}
@@ -344,7 +344,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                {{ message }}
+                {{ message.tags.capitalize() ~ "! " ~ message }}
             </div>
         {% endfor %}
     {% endif %}
@@ -356,13 +356,13 @@
             {% for error in form.non_field_errors() %}
             <div class="alert alert-dismissible alert-danger" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <i class="fa fa-exclamation-circle"></i> {{ error }}
+                <i class="fa fa-exclamation-circle"></i>{% trans %}Error!{% endtrans %} {{ error }}
             </div>
             {% endfor %}
         {% elif form.errors %}
             <div class="alert alert-dismissible alert-danger" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <i class="fa fa-exclamation-circle"></i> {% trans %}There were errors on submitted form fields. Please check them and try again.{% endtrans %}
+                <i class="fa fa-exclamation-circle"></i>{% trans %}Error!{% endtrans %} {% trans %}There were errors on submitted form fields. Please check them and try again.{% endtrans %}
             </div>
         {% endif %}
     {% endif %}
