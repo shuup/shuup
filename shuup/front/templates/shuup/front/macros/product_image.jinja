@@ -86,12 +86,12 @@
     // navigate through images.
     var selector_multiple = "a[data-imagelightbox='image-multiple']";
     if ($(selector_multiple).length > 0) {
-        var instance_multiple = $(selector_multiple).simpleLightbox();
+        var instance_multiple = $(selector_multiple).simpleLightbox({history: false});
     }
 
     // Enable lightbox for products with only one image.
     var selector = "a[data-imagelightbox='image']";
     if ($(selector).length > 0) {
-        var instance = $(selector).simpleLightbox();
+        var instance = $(selector).simpleLightbox({history: false});
     }
 {% endmacro %}
