@@ -18,7 +18,7 @@ import shuup.core.models._units
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup', '0066_contact-picture'),
+        ('shuup', '0067_supplier_name_max_length_to_128'),
     ]
 
     operations = [
