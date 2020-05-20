@@ -15,7 +15,7 @@ export default handleActions({
     clearQuickAddProduct: ((state) => _.assign(state, {product: {id: "", text: ""}})),
     setFocusOnQuickAdd: ((state, {payload}) => _.assign(state, {focus: payload}))
 }, {
-    autoAdd: true,
+    autoAdd: false,
     focus: false,
     product: {
         id: "",

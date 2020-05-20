@@ -55,7 +55,18 @@ export function contentBlock(icon, title, view, header = "h2") {
     return m("div.content-block",
         m("div.title",
             m(header + ".block-title.d-flex.align-items-center", m(icon), " " + title),
-            m("a.toggle-contents", m("i.fa.fa-chevron-right"))
+            m("a.toggle-contents", {
+                onclick: (event) => {
+                    const $collapseElement = $(event.target).closest(".content-block").find(".content-wrap");
+                    event.preventDefault();
+
+                    // Checks if the bootstrap collapse animation is not ongoing
+                    if (!$collapseElement.hasClass("collapsing")) {
+                        $collapseElement.collapse("toggle");
+                        $(this).closest(".title").toggleClass("open");
+                    }
+                }
+            }, m("i.fa.fa-chevron-right"))
         ),
         m("div.content-wrap.collapse",
             m("div.content", view)

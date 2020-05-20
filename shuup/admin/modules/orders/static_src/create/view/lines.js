@@ -72,6 +72,7 @@ export function renderOrderLines(store, shop, lines) {
                 }, (line.product ? [
                     line.product.text, m("br"),
                     m("small", "(" + line.sku + ")"), m("br"),
+                    m("small", line.supplier.name), m("br"),
                     m("small", gettext("Logical Count") + ": " + line.logicalCount), m("br"),
                     m("small", gettext("Physical Count") + ": " + line.physicalCount)
                 ] : gettext("Select product"))
@@ -217,7 +218,6 @@ export function renderOrderLines(store, shop, lines) {
 var ProductQuickSelect = {
     view: function(ctrl, attrs) {
         const {store} = attrs;
-
         return m.component(Select2, {
             name: "product-quick-select",
             model: "shuup.product",
@@ -225,6 +225,16 @@ var ProductQuickSelect = {
             attrs: {
                 placeholder: gettext("Search product by name, SKU, or barcode"),
                 ajax: {
+                    url: window.ShuupAdminConfig.browserUrls.select,
+                    dataType: "json",
+                    data: function (params) {
+                        const data = {
+                            model: "shuup.product",
+                            searchMode: "sellable_mode_only",
+                            search: params.term,
+                        };
+                        return data;
+                    },
                     processResults(data) {
                         if (!data) {
                             return {results: []};
@@ -298,8 +308,8 @@ export function orderLinesView(store, isCreating) {
                         type: "checkbox",
                         checked: quickAdd.autoAdd,
                         onchange: function() {
-                            store.dispatch(clearQuickAddProduct());
                             store.dispatch(setAutoAdd(this.checked));
+                            store.dispatch(clearQuickAddProduct());
                         }
                     }),
                     m("span.quick-add-check-text", " " + gettext("Automatically add selected product"))

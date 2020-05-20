@@ -126,13 +126,17 @@ def get_line_data_for_edit(order, line):
     }
     if line.product:
         shop_product = line.product.get_shop_instance(shop)
-        supplier = shop_product.get_supplier(order.customer, line.quantity, order.shipping_address)
+        supplier = line.supplier
         stock_status = supplier.get_stock_status(line.product.pk) if supplier else None
         base_data.update({
             "type": "product",
             "product": {
                 "id": line.product.pk,
                 "text": line.product.name
+            },
+            "supplier": {
+                "name": supplier.name,
+                "id": supplier.id
             },
             "step": shop_product.purchase_multiple,
             "logicalCount": stock_status.logical_count if stock_status else 0,
@@ -143,7 +147,7 @@ def get_line_data_for_edit(order, line):
     return base_data
 
 
-def get_price_info(shop, customer, product, quantity):
+def get_price_info(shop, customer, product, supplier, quantity):
     """
     Get price info of given product for given context parameters.
 
@@ -156,6 +160,7 @@ def get_price_info(shop, customer, product, quantity):
     pricing_ctx = pricing_mod.get_context_from_data(
         shop=shop,
         customer=(customer or AnonymousContact()),
+        supplier=supplier
     )
     return product.get_price_info(pricing_ctx, quantity=quantity)
 
@@ -267,7 +272,6 @@ class OrderEditView(CreateOrUpdateView):
         # Make quantity to be at least minimum quantity
         quantity = (min_quantity if quantity < min_quantity else quantity)
         customer = Contact.objects.filter(pk=customer_id).first() if customer_id else None
-        price_info = get_price_info(shop, customer, product, quantity)
 
         supplier = None
         if supplier_id:
@@ -276,6 +280,7 @@ class OrderEditView(CreateOrUpdateView):
         if not supplier:
             supplier = shop_product.get_supplier(customer, quantity)
 
+        price_info = get_price_info(shop, customer, product, supplier, quantity)
         stock_status = supplier.get_stock_status(product.pk) if supplier else None
         return {
             "id": product.id,
@@ -303,6 +308,10 @@ class OrderEditView(CreateOrUpdateView):
                 "text": product.name,
                 "id": product.id,
                 "url": get_model_url(product, shop=request.shop)
+            },
+            "supplier": {
+                "name": supplier.name if supplier else "",
+                "id": supplier.id if supplier else None
             }
         }
 
