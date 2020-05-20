@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+- Admin: fix width issue with picotable images
 - Admin: fix bugs in order edit and improve it one step closer to
   multivendor world. Now supports situation when vendors does not
   share products.
