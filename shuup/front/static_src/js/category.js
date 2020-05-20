@@ -89,7 +89,7 @@ window.refreshFilters = debounce(function refreshFilters(pageNumber = 1) {
     });
 
     if (window.history && window.history.pushState) {
-        history.pushState(state, null, filterString);
+        history.replaceState(state, null, filterString);
     }
 
     window.dispatchEvent(new CustomEvent("Shuup.FiltersRefreshed", {
