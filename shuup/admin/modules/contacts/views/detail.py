@@ -11,14 +11,15 @@ import warnings
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
-from django.contrib.auth.models import User
 
 from shuup.admin.modules.contacts.utils import (
     check_contact_permission, request_limited
 )
+from shuup.admin.modules.users.views.detail import get_admin_url, get_front_url
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, PostActionButton, Toolbar,
@@ -27,7 +28,6 @@ from shuup.admin.toolbar import (
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, Contact
 from shuup.front.apps.registration.signals import company_contact_activated
-from shuup.admin.modules.users.views.detail import get_admin_url, get_front_url
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.django_compat import force_text, reverse
 from shuup.utils.excs import Problem

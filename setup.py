@@ -128,10 +128,8 @@ EXTRAS_REQUIRE = {
     ],
     'testing': utils.get_test_requirements_from_tox_ini(TOPDIR),
     'coding-style': [
-        'flake8==3.7.0',
-        'flake8-isort==2.9.1',
-        'isort==4.3.21',
-        'pep8-naming==0.10.0'
+        'flake8>3,<4',
+        'isort>4.3,<5',
     ],
 }
 EXTRAS_REQUIRE['everything'] = list(

@@ -27,9 +27,9 @@ from shuup.admin.toolbar import (
     get_default_edit_toolbar, PostActionButton, Toolbar
 )
 from shuup.admin.utils.permissions import has_permission
-from shuup.front.apps.registration.signals import user_reactivated
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
+from shuup.front.apps.registration.signals import user_reactivated
 from shuup.utils.django_compat import force_text, NoReverseMatch, reverse
 from shuup.utils.excs import Problem
 from shuup.utils.text import flatten

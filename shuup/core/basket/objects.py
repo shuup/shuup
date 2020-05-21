@@ -457,7 +457,7 @@ class BaseBasket(OrderSource):
         }
 
     def clean_empty_lines(self):
-        new_lines = [l for l in self._data_lines if l["quantity"] > 0]
+        new_lines = [line for line in self._data_lines if line["quantity"] > 0]
         if len(new_lines) != len(self._data_lines):
             self._data_lines = new_lines
 
@@ -616,7 +616,7 @@ class BaseBasket(OrderSource):
                 yield line
 
     def _get_orderable(self):
-        return (sum(l.quantity for l in self.get_lines()) > 0)
+        return (sum(line.quantity for line in self.get_lines()) > 0)
 
     orderable = property(_get_orderable)
 
