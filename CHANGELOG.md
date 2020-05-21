@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+- Front: improve next parameter with registration. Check GET
+  parameter first and then fallback to POST data.
+
 ## [1.10.13] - 2020-05-20
 
 - Admin: fix width issue with picotable images

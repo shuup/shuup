@@ -40,7 +40,10 @@ class RegistrationViewMixin(object):
     template_name = "shuup/registration/register.jinja"
 
     def get_success_url(self, *args, **kwargs):
-        url = self.request.POST.get(REDIRECT_FIELD_NAME)
+        url = (
+            self.request.GET.get(REDIRECT_FIELD_NAME) or
+            self.request.POST.get(REDIRECT_FIELD_NAME)
+        )
         if url and is_safe_url(url, self.request.get_host()):
             return url
         return ('shuup:registration_complete', (), {})
