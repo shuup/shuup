@@ -69,13 +69,15 @@
         {% set caption_text = slide.get_translated_field("caption_text") or "" %}
 
         {% if link %}<a href="{{ link }}" target="{{ slide.get_link_target() }}" class="col-inner" style="text-decoration: none;" data-toggle="tooltip" title="{{ caption_text }}">{% endif %}
-            <div style="background-image: url({{ cropped_slide }}); height: {{carousel.image_height}}px; color: white;" alt="{{ caption }}" title="{{ caption }}. {{ caption_text }}">
-            {% if type == "carousel" %}
-                <div class="carousel-title-text" style="">{{ caption }}</div>
-                <p class="carousel-text" style="">{{ caption_text }}</p>
-            {% elif type == "banner_box" %}
-                <div class="carousel-title-text"
-                    style="display: flex; align-items: center; height: 100%">{{ caption }}</div>
+            <div class="carousel-page" style="background-image: url({{ cropped_slide }}); height: {{carousel.image_height}}px; color: white;" alt="{{ caption }}" title="{{ caption }}{{ '. ' if caption and caption_text else '' }}{{ caption_text }}">
+            {% if render_image_text %}
+                {% if type == "carousel" %}
+                    {% if caption %}<div class="carousel-title-text">{{ caption }}</div>{% endif %}
+                    {% if caption_text %}<p class="carousel-text">{{ caption_text }}</p>{% endif %}
+                {% elif type == "banner_box" and caption %}
+                    <div class="carousel-title-text"
+                        style="display: flex; align-items: center; height: 100%">{{ caption }}</div>
+                {% endif %}
             {% endif %}
             </div>
         {% if link %}</a>{% endif %}
