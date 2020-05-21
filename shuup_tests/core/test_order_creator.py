@@ -30,6 +30,9 @@ from shuup.testing.factories import (
 )
 from shuup.utils.models import get_data_dict
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
+from shuup.utils.money import Money
+from shuup.core.excs import NoPaymentToCreateException
+from shuup.core.pricing import TaxfulPrice
 
 
 def test_invalid_order_source_updating():
@@ -109,6 +112,49 @@ def test_order_creator(rf, admin_user):
 
     creator = OrderCreator()
     order = creator.create_order(source)
+    zero = Money(0, order.currency)
+
+    taxful_total_price = TaxfulPrice(-50, order.currency)
+    last_price = order.taxful_total_price
+    order.taxful_total_price = taxful_total_price
+    order.save()
+    assert not order.is_paid()
+    assert not order.is_canceled()
+    assert not order.get_total_unpaid_amount() > zero
+    assert order.get_total_unpaid_amount() == zero
+    assert not order.get_total_unpaid_amount() < zero
+    assert not order.can_create_payment()
+    order.taxful_total_price = last_price
+    order.save()
+
+    assert not order.is_paid()
+    assert not order.is_canceled()
+    assert order.get_total_unpaid_amount() > zero
+    assert not order.get_total_unpaid_amount() == zero
+    assert not order.get_total_unpaid_amount() < zero
+    assert order.can_create_payment()
+
+    order.set_canceled()
+    assert not order.is_paid()
+    assert order.is_canceled()
+    assert order.get_total_unpaid_amount() > zero
+    assert not order.get_total_unpaid_amount() == zero
+    assert not order.get_total_unpaid_amount() < zero
+    assert not order.can_create_payment()
+
+    order.create_payment(order.get_total_unpaid_amount())
+    assert order.is_paid()
+    assert order.is_canceled()
+    assert not order.get_total_unpaid_amount() > zero
+    assert order.get_total_unpaid_amount() == zero
+    assert not order.get_total_unpaid_amount() < zero
+    assert not order.can_create_payment()
+
+    with pytest.raises(NoPaymentToCreateException):
+        order.create_payment(order.get_total_unpaid_amount())
+        order.create_payment(order.get_total_unpaid_amount() + Money(10, order.currency))
+        order.create_payment(order.get_total_unpaid_amount() - Money(10, order.currency))
+
     assert get_data_dict(source.billing_address) == get_data_dict(order.billing_address)
     assert get_data_dict(source.shipping_address) == get_data_dict(order.shipping_address)
     customer = source.customer
