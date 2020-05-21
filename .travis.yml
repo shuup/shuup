@@ -22,7 +22,7 @@ cache:
 jobs:
   include:
     - {stage: development, env: TOXENV=sanity, name: "Sanity Check"}
-    - {stage: development, env: TOXENV=flake8, name: "Code Style"}
+    - {stage: development, env: TOXENV=flake8-isort, name: "Code Style"}
     - {stage: development, env: TOXENV=license_headers, name: "License Headers"}
     - {stage: development, env: TOXENV=migrations, name: "Migrations"}
     - {stage: development, python: 3.5, env: TOXENV=py35-django111-nomigrations}

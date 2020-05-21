@@ -34,7 +34,6 @@ from shuup.utils.django_compat import force_text, NoReverseMatch, reverse
 from shuup.utils.excs import Problem
 from shuup.utils.text import flatten
 
-
 NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _("""
     Welcome %(first_name)s!
 

@@ -42,8 +42,8 @@ class ImporterExampleFile(object):
 
 
 class ImporterContext:
-    shop = None         # type: shuup.core.models.Shop
-    language = None     # type: str
+    shop = None  # shuup.core.models.Shop
+    language = None  # str
 
     def __init__(self, shop, language, **kwargs):
         """
@@ -70,7 +70,7 @@ class DataImporter(object):
     unmatched_fields = set()
     relation_map_cache = {}
 
-    example_files = []      # list[ImporterExampleFile]
+    example_files = []  # list[ImporterExampleFile]
     help_template = None
 
     model = None

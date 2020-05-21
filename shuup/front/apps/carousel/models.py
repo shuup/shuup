@@ -275,7 +275,7 @@ class Slide(TranslatableShuupModel):
         kwargs.setdefault("crop", True)  # sane defaults
         kwargs.setdefault("upscale", True)  # sane defaults
 
-        if kwargs["size"] is (0, 0):
+        if kwargs["size"] == (0, 0):
             return None
 
         thumbnailer = self.easy_thumbnails_thumbnailer

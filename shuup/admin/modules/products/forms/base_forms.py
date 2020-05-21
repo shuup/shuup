@@ -15,8 +15,8 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from filer.models import Image
 
 from shuup.admin.forms.fields import (

@@ -24,7 +24,7 @@ class ManufacturerModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^manufacturer/(?P<pk>\d+)/delete/$",
+                r"^manufacturer/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.manufacturers.views.ManufacturerDeleteView",
                 name="manufacturer.delete"
             )

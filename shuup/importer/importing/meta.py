@@ -61,7 +61,7 @@ class ImportMetaBase(object):
     fields_to_skip = []
 
     def __init__(self, handler, model):
-        self.handler = handler      # type: shuup.importer.importing.importing.DataImporter
+        self.handler = handler  # shuup.importer.importing.importing.DataImporter
         self.model = model
         self.global_aliases = get_global_aliases()
 

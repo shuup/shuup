@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from django import forms
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -22,7 +21,7 @@ from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Manufacturer, Shop
-from shuup.utils.django_compat import force_text
+from shuup.utils.django_compat import force_text, reverse_lazy
 
 
 class ManufacturerForm(ShuupAdminFormNoTranslation):
