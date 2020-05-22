@@ -28,7 +28,6 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     browser = initialize_admin_browser_test(browser, live_server, settings)  # Login to admin as admin user
     browser.visit(live_server + "/")
@@ -42,16 +41,18 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     _edit_layout(
         browser, "front_content", "#xt-ph-front_content-xtheme-person-contact-layout", person_contact_text_content)
 
-    browser.find_by_css("#admin-tools-menu li.dropdown").click()
-    browser.find_by_css("a[href='/force-anonymous-contact/']").first.click()
+    click_element(browser, "#admin-tools-menu li.dropdown")
+    click_element(browser, "#admin-tools-menu a[href='/force-anonymous-contact/']")
+    time.sleep(0.5)
 
     ## Add some content only visible for anonymous contacts
     anonymous_contact_text_content = "This text is shown for guests only!"
     _edit_layout(
         browser, "front_content", "#xt-ph-front_content-xtheme-anonymous-contact-layout", anonymous_contact_text_content)
 
-    browser.find_by_css("#admin-tools-menu li.dropdown").click()
-    browser.find_by_css("a[href='/force-company-contact/']").first.click()
+    click_element(browser, "#admin-tools-menu li.dropdown")
+    click_element(browser, "#admin-tools-menu a[href='/force-company-contact/']")
+    time.sleep(0.5)
 
     ### Add some content only visible for company contacts
     company_contact_text_content = "This text is shown for company contacts only!"
@@ -79,6 +80,7 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     user.save()
 
     click_element(browser, "#login-dropdown")
+    time.sleep(0.5)
     browser.fill("username", user.username)
     browser.fill("password", password)
     browser.find_by_css("ul.login button[type='submit']").click()
@@ -97,9 +99,10 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     company.members.add(get_person_contact(user))
 
     click_element(browser, "#login-dropdown")
+    time.sleep(0.5)
     browser.fill("username", user.username)
     browser.fill("password", password)
-    browser.find_by_css("ul.login button[type='submit']").click()
+    click_element(browser, "ul.login button[type='submit']")
 
     wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
     wait_until_condition(browser, lambda x: x.is_text_present(company_contact_text_content))
@@ -109,7 +112,6 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_xtheme_edit_product(admin_user, browser, live_server, settings):
     shop = factories.get_default_shop()
     supplier = factories.get_default_supplier()
@@ -192,7 +194,6 @@ def test_xtheme_edit_product(admin_user, browser, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_xtheme_edit_save_and_publish(admin_user, browser, live_server, settings):
     browser = initialize_admin_browser_test(browser, live_server, settings)  # Login to admin as admin user
     browser.visit(live_server + "/")
@@ -251,6 +252,9 @@ def test_xtheme_edit_save_and_publish(admin_user, browser, live_server, settings
 def _edit_layout(browser, placeholder_name, layout_selector, text_content):
     wait_until_condition(browser, lambda x: x.is_element_present_by_css(layout_selector))
     click_element(browser, layout_selector)
+
+    time.sleep(3)
+
     with browser.get_iframe("xt-edit-sidebar-iframe") as iframe:
         wait_until_condition(iframe, lambda x: x.is_text_present("Edit Placeholder: %s" % placeholder_name))
         wait_until_condition(iframe, lambda x: x.is_element_present_by_css("button.layout-add-row-btn"))
