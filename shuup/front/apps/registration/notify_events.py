@@ -8,7 +8,7 @@
 from django.core.urlresolvers import reverse
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
-from registration.signals import user_registered
+from registration.signals import user_registered, user_activated
 
 from shuup.core.models import get_person_contact, PersonContact
 from shuup.notify.base import Event, Variable
@@ -41,6 +41,24 @@ class CompanyRegistrationReceived(RegistrationReceived):
 class CompanyApproved(RegistrationReceived):
     identifier = "company_approved_by_admin"
     name = _("Company Approved")
+
+
+class AccountActivation(RegistrationReceived):
+    identifier = "account_activation"
+    name = _("Account Activation")
+
+
+@receiver(user_activated)
+def send_activation_notification(user, request, **kwargs):
+    cls = AccountActivation
+    customer = get_person_contact(user)
+    email = user.email
+    event = cls(
+        customer=customer,
+        customer_email=email,
+        user_is_active=user.is_active,
+    )
+    event.run(shop=request.shop)
 
 
 @receiver(user_registered)
@@ -161,5 +179,20 @@ CompanyActivatedEmailScriptTemplate = generic_send_email_script_template_factory
                 "right after a company is activated."),
     initial={
         "en-subject": _("{{ order.shop }} - Welcome!")
+    }
+)
+
+
+AccountActivationEmailScriptTemplate = generic_send_email_script_template_factory(
+    identifier="account_reactivated",
+    event=AccountActivation,
+    name=_("Send account activation email"),
+    description=_("Send email when a user account gets activated for the first time"),
+    help_text=_(
+        "This script will send an email to the user or to any configured email "
+        "when an account gets activated for the first time"
+    ),
+    initial={
+        "en-subject": _("{{ customer.username }} is now active!")
     }
 )
