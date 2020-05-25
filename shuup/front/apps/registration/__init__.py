@@ -52,13 +52,16 @@ class RegistrationAppConfig(AppConfig):
             "shuup.front.apps.registration.notify_events:RegistrationReceived",
             "shuup.front.apps.registration.notify_events:AccountReactivation",
             "shuup.front.apps.registration.notify_events:CompanyRegistrationReceived",
-            "shuup.front.apps.registration.notify_events:CompanyApproved"
+            "shuup.front.apps.registration.notify_events:CompanyApproved",
+            "shuup.front.apps.registration.notify_events:AccountActivation"
         ],
         "notify_script_template": [
             "shuup.front.apps.registration.notify_events:RegistrationReceivedEmailScriptTemplate",
             "shuup.front.apps.registration.notify_events:AccountReactivationEmailScriptTemplate",
             "shuup.front.apps.registration.notify_events:CompanyRegistrationReceivedEmailScriptTemplate",
             "shuup.front.apps.registration.notify_events:CompanyActivatedEmailScriptTemplate",
+            "shuup.front.apps.registration.notify_events:AccountActivationEmailScriptTemplate",
+
         ]
     }
 
