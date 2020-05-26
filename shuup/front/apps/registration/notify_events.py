@@ -122,7 +122,7 @@ RegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_fac
     help_text=_("This script will send an email to the user or to any configured email "
                 "right after a user get registered."),
     initial={
-        "en-subject": _("{{ order.shop }} - Welcome!")
+        "en-subject": _("{{ shop }} - Welcome!")
     }
 )
 
@@ -148,7 +148,7 @@ CompanyRegistrationReceivedEmailScriptTemplate = generic_send_email_script_templ
     help_text=_("This script will send an email to the user or to any configured email "
                 "right after a user get registered."),
     initial={
-        "en-subject": _("{{ order.shop }} - Welcome!")
+        "en-subject": _("{{ shop }} - Welcome!")
     }
 )
 
@@ -160,6 +160,6 @@ CompanyActivatedEmailScriptTemplate = generic_send_email_script_template_factory
     help_text=_("This script will send an email to the user or to any configured email "
                 "right after a company is activated."),
     initial={
-        "en-subject": _("{{ order.shop }} - Welcome!")
+        "en-subject": _("{{ shop }} - Welcome!")
     }
 )

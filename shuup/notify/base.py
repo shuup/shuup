@@ -13,6 +13,7 @@ from abc import abstractmethod
 import six
 from django.utils.encoding import force_text
 from django.utils.text import camel_case_to_spaces
+from django.utils.translation import ugettext_lazy as _
 from jinja2.exceptions import TemplateError
 
 from shuup.apps.provides import get_identifier_to_object_map
@@ -20,6 +21,7 @@ from shuup.notify.enums import (
     ConstantUse, TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
 )
 from shuup.notify.template import render_in_context, Template
+from shuup.notify.typology import Model
 from shuup.utils.importing import cached_load
 from shuup.utils.text import snake_case, space_case
 
@@ -149,7 +151,7 @@ class Base(six.with_metaclass(BaseMetaclass)):
 class Event(Base):
     provide_category = "notify_event"
     identifier = None
-
+    shop = Variable(_("Shop"), type=Model("shuup.Shop"), required=False)
     #: The name of the variable to be used as the log target for this event.
     #:
     #: The target variable must have an `add_log_entry` method.
@@ -178,6 +180,7 @@ class Event(Base):
 
     def run(self, shop):
         run_event = cached_load("SHUUP_NOTIFY_SCRIPT_RUNNER")
+        self.variable_values["shop"] = shop
         run_event(event=self, shop=shop)
 
 

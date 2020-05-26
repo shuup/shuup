@@ -54,9 +54,11 @@ def test_run_multishop():
 
     # runs for shop1 - no script exists
     event.run(shop1)
+    assert event.variable_values["shop"].pk == shop1.pk
     assert not event.variable_values["order"].log_entries.filter(identifier="test_run").exists()
 
     # run for shop2 - ok
     event.run(shop2)
+    assert event.variable_values["shop"].pk == shop2.pk
     assert event.variable_values["order"].log_entries.filter(identifier="test_run").exists()
     script.delete()
