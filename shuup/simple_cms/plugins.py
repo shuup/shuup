@@ -9,14 +9,32 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.simple_cms.models import Page
+from shuup.simple_cms.utils import order_query_by_values
 from shuup.xtheme import TemplatedPlugin
 from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
+
+
+class OrderedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
+
+    def __init__(self, queryset, required=True, widget=None, label=None,
+                 initial=None, help_text='', *args, **kwargs):
+        super(OrderedModelMultipleChoiceField, self).__init__(
+            queryset, required, widget, label,
+            initial, help_text, *args, **kwargs)
+
+        if initial:  # To show current choice order in plugin
+            self.queryset = order_query_by_values(self.queryset, initial)
+
+    def _check_values(self, value):  # To save current choice order in DB
+        initial_q = super(OrderedModelMultipleChoiceField, self)._check_values(value)
+        return order_query_by_values(initial_q, value)
 
 
 class PageLinksConfigForm(GenericPluginForm):
     """
     A configuration for the PageLinksPlugin
     """
+
     def __init__(self, **kwargs):
         super(PageLinksConfigForm, self).__init__(**kwargs)
 
@@ -30,7 +48,7 @@ class PageLinksConfigForm(GenericPluginForm):
                 value.initial = self.plugin.config.get(name, value.initial)
                 self.fields[name] = value
 
-        self.fields["pages"] = forms.ModelMultipleChoiceField(
+        self.fields["pages"] = OrderedModelMultipleChoiceField(
             queryset=Page.objects.visible(self.request.shop),
             required=False,
             initial=self.plugin.config.get("pages", None),
@@ -87,6 +105,7 @@ class PageLinksPlugin(TemplatedPlugin):
             pages_qs = pages_qs.filter(id__in=selected_pages)
 
         pages_qs = pages_qs.for_shop(context["request"].shop).filter(deleted=False)
+        pages_qs = order_query_by_values(pages_qs, selected_pages)
 
         return {
             "title": self.get_translated_value("title"),
