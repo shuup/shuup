@@ -8,12 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+## [1.10.14] - 2020-05-27
+
 ### Fixed
 
 - Front: only show carousel title when there is one
 
 ### Changed
 
+- Notify: Add AccountActivation event. AccountActivation event is
+  triggered only when the user is activated for the first time.
 - Front: improve next parameter with registration. Check GET
   parameter first and then fallback to POST data.
 
