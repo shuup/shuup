@@ -17,7 +17,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^3.4.1",
-    "bootstrap-select": "1.6.3",
+    "bootstrap-select": "1.13.6",
     "dropzone": "^5.5.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
