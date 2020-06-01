@@ -23,22 +23,32 @@ except ImportError:
 
 
 class ExceptionMiddleware(MiddlewareMixin):
+
     def process_exception(self, request, exception):
         if isinstance(exception, ExceptionalResponse):
             return exception.response
 
         if isinstance(exception, (ValidationError, Problem)):
-            status_code = 400
-            if request.is_ajax():
-                return JsonResponse({
-                    "error": force_text(exception),
-                    "code": getattr(exception, "code", None)
-                }, status=status_code)
-            return render(request, self._get_problem_templates(request), status=status_code, context={
-                "title": getattr(exception, "title", None) or _("Error!"),
-                "message": exception.message,
-                "exception": exception,
-            })
+            # This means that the exception is actually a list of exceptions
+            if not hasattr(exception, "message"):
+                for key, value in exception.error_dict.items():
+                    # Only returns render for one exception in a List of them, value = exception
+                    return self._process_exception(request, value)
+            else:
+                return self._process_exception(request, exception)
+
+    def _process_exception(self, request, exception):
+        status_code = 400
+        if request.is_ajax():
+            return JsonResponse({
+                "error": force_text(exception),
+                "code": getattr(exception, "code", None)
+            }, status=status_code)
+        return render(request, self._get_problem_templates(request), status=status_code, context={
+            "title": getattr(exception, "title", None) or _("Error!"),
+            "message": exception.message,
+            "exception": exception,
+        })
 
     def _get_problem_templates(self, request):
         templates = []
