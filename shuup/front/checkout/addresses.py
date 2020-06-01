@@ -144,6 +144,8 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         self._process_addresses(basket)
         if self.storage.get("company"):
             basket.customer = self.storage.get("company")
+
+        if isinstance(basket.customer, CompanyContact):
             for address_kind in self.address_kinds:
                 address = getattr(basket, "{}_address".format(address_kind), None)
                 if address:
