@@ -120,10 +120,11 @@ class ViewSettings(object):
         return columns
 
     def _add_m2m_columns(self, all_models, columns, defaults, identifier, known_names, model):
+        models_from_all_models = [model for identifier, model in all_models]
         for field in model._meta.local_many_to_many:
             if field.name in defaults:
                 continue
-            if field.rel.to in all_models:
+            if field.rel.to in models_from_all_models:
                 continue  # no need to have these...
 
             column = self._get_column(model, field, known_names, identifier)
@@ -131,13 +132,13 @@ class ViewSettings(object):
                 columns.append(column)
 
     def _add_local_columns(self, all_models, columns, defaults, identifier, known_names, model):
+        models_from_all_models = [model for identifier, model in all_models]
         for field in model._meta.local_fields:
             if field.name in defaults:
                 continue
             if field.name == "id" and model != self.model:
                 continue
-
-            if isinstance(field, ForeignKey) and field.rel.to in all_models:
+            if isinstance(field, ForeignKey) and field.rel.to in models_from_all_models:
                 continue  # no need to have these...
 
             column = self._get_column(model, field, known_names, identifier)
@@ -155,8 +156,8 @@ class ViewSettings(object):
 
     def _get_translated_column(self, model, field, known_names, identifier):
         field_name = field.verbose_name.title()
-        if field_name in known_names:
-            field_name = "%s %s" % (model.__name__, field_name)
+        if identifier:
+            field_name = "%s %s" % (identifier.replace("_", " ").capitalize(), field_name)
 
         # take the first extension, usually we should not have more then one
         translation_rel_name = model._parler_meta._extensions[0].rel_name
@@ -169,7 +170,7 @@ class ViewSettings(object):
         display = "%s__%s" % (identifier, field.name) if identifier else field.name
 
         column = Column(
-            "%s_%s" % (model.__name__.lower(), field.name),
+            "%s_%s" % ((identifier if identifier else model.__name__.lower()), field.name),
             field_name,
             sort_field=display,
             display=display,
@@ -190,13 +191,13 @@ class ViewSettings(object):
             return None
 
         field_name = field.verbose_name.title()
-        if field_name in known_names:
-            field_name = "%s %s" % (model.__name__, field_name)
+        if identifier:
+            field_name = "%s %s" % (identifier.replace("_", " ").capitalize(), field_name)
 
         display = "%s__%s" % (identifier, field.name) if identifier else field.name
 
         column = Column(
-            "%s_%s" % (model.__name__.lower(), field.name),
+            "%s_%s" % ((identifier if identifier else model.__name__.lower()), field.name),
             field_name,
             display=display
         )
@@ -204,7 +205,7 @@ class ViewSettings(object):
         column, is_special = self.handle_special_column(field, column)
         if not is_special:
             if isinstance(field, CharField):
-                column.filter_config = TextFilter(placeholder=field_name)
+                column.filter_config = TextFilter(filter_field=field.name, placeholder=field_name)
             if isinstance(field, EnumIntegerField):
                 column.filter_config = ChoicesFilter(field.choices)
             if isinstance(field, BooleanField):

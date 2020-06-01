@@ -10,6 +10,7 @@ import pytest
 from django.utils.http import urlencode
 
 from shuup import configuration
+from shuup.admin.modules.orders.views import OrderListView
 from shuup.admin.modules.products.views import ProductListView
 from shuup.admin.modules.settings.views import ListSettingsView
 from shuup.testing.factories import get_default_shop
@@ -67,3 +68,27 @@ def test_view_saved_columns(rf):
     column_names = [c.id for c in sorted(listview.columns, key=lambda x: x.id)]
     assert len(listview.columns) == len(visible_fields)
     assert column_names == visible_fields
+
+
+@pytest.mark.django_db
+def test_product_view_columns(rf):
+    get_default_shop()
+    listview = ProductListView()
+    column_ids = [c.id for c in listview.settings.column_spec]
+    assert "product_description" in column_ids
+    column_labels = [c.title for c in listview.settings.column_spec]
+    assert "Product Description" in column_labels
+    assert "Product Keywords" in column_labels
+
+
+@pytest.mark.django_db
+def test_order_view_columns(rf):
+    get_default_shop()
+    listview = OrderListView()
+    column_ids = [c.id for c in listview.settings.column_spec]
+    assert "shop_public_name" in column_ids
+    column_labels = [c.title for c in listview.settings.column_spec]
+    assert "Shop Public Name" in column_labels
+    assert "Shop Name" in column_labels
+    assert "Shipping address Street" in column_labels
+    assert "Billing address Street" in column_labels
