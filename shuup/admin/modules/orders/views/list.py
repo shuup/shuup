@@ -47,6 +47,11 @@ class OrderListView(PicotableListView):
             filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
         ),
     ]
+    related_objects = [
+        ("shop", "shuup.core.models:Shop"),
+        ("billing_address", "shuup.core.models:ImmutableAddress"),
+        ("shipping_address", "shuup.core.models:ImmutableAddress"),
+    ]
     mass_actions = [
         "shuup.admin.modules.orders.mass_actions:CancelOrderAction",
         "shuup.admin.modules.orders.mass_actions:OrderConfirmationPdfAction",
