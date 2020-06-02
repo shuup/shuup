@@ -26,8 +26,8 @@ class OrderedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
             self.queryset = order_query_by_values(self.queryset, initial)
 
     def _check_values(self, value):  # To save current choice order in DB
-        initial_q = super(OrderedModelMultipleChoiceField, self)._check_values(value)
-        return order_query_by_values(initial_q, value)
+        queryset = super(OrderedModelMultipleChoiceField, self)._check_values(value)
+        return order_query_by_values(queryset, value)
 
 
 class PageLinksConfigForm(GenericPluginForm):
