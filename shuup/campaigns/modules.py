@@ -92,16 +92,42 @@ class BasketCampaignModule(OrderSourceModifierModule):
 
     def can_use_code(self, order_source, code):
         campaigns = BasketCampaign.objects.filter(
-            active=True, shop=order_source.shop, coupon__code__iexact=code, coupon__active=True)
+            active=True,
+            shop=order_source.shop,
+            coupon__code__iexact=code,
+            coupon__active=True
+        )
+
         for campaign in campaigns:
             if not campaign.is_available():
                 continue
+
+            coupon_code = campaign.coupon
+            suppliers = set([supplier for supplier in (campaign.supplier, coupon_code.supplier) if supplier])
+            if suppliers:
+                has_supplier = False
+
+                # make sure there is at least one item in the order source that has this supplier
+                has_supplier = False
+                for line in order_source.get_final_lines():
+                    if line.supplier in suppliers:
+                        has_supplier = True
+                        break
+
+                # there is no line that matches the coupon or the campaign supplier
+                if not has_supplier:
+                    return False
+
             return campaign.coupon.can_use_code(order_source.customer)
         return False
 
     def use_code(self, order, code):
         campaigns = BasketCampaign.objects.filter(
-            active=True, shop=order.shop, coupon__code__iexact=code, coupon__active=True)
+            active=True,
+            shop=order.shop,
+            coupon__code__iexact=code,
+            coupon__active=True
+        )
         for campaign in campaigns:
             campaign.coupon.use(order)
 
@@ -151,6 +177,8 @@ class BasketCampaignModule(OrderSourceModifierModule):
             campaign_supplier = getattr(campaign, "supplier", None)
             for effect in campaign.line_effects.all():
                 lines += effect.get_discount_lines(
-                    order_source=order_source, original_lines=original_lines, supplier=campaign_supplier
+                    order_source=order_source,
+                    original_lines=original_lines,
+                    supplier=campaign_supplier
                 )
         return lines
