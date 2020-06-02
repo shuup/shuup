@@ -24,6 +24,7 @@ from shuup.core.models import (
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
 from shuup.core.pricing._context import PricingContext
+from shuup.utils.http import get_client_ip
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.objects import compare_partial_dicts
 
@@ -117,7 +118,7 @@ class BaseBasket(OrderSource):
         self.basket_name = basket_name
         self.key = basket_name
         if request:
-            self.ip_address = request.META.get("REMOTE_ADDR")
+            self.ip_address = get_client_ip(request)
         self.storage = get_storage()
         self._data = None
         self._shipping_address = None

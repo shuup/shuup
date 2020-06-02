@@ -22,6 +22,7 @@ from shuup.admin.dashboard import (
 )
 from shuup.admin.utils.urls import admin_url
 from shuup.testing.text_data import random_title
+from shuup.utils.http import get_client_ip
 from shuup.utils.i18n import get_current_babel_locale
 
 
@@ -73,7 +74,7 @@ class DemoModule(AdminModule):
     def get_notifications(self, request):
         if not self.check_demo_optin(request):
             return
-        yield Notification(text="Your IP is %s" % request.META.get("REMOTE_ADDR"))
+        yield Notification(text="Your IP is %s" % get_client_ip(request))
         yield Notification(title="Dice", text="Your lucky number is %d" % random.randint(1, 43), kind="success")
         yield Notification(title="Stock Alert", text="Items X, Y, Z are running low", kind="warning")
         yield Notification(title="Outstanding Orders", text="10 orders have not been touched in 7 days", kind="danger")

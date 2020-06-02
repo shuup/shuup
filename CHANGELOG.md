@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Added
+
+- Add custom get_ip method and use it everywhere
+
 ## [1.10.16] - 2020-06-03
 
 - Simple CMS: Fix a bug with the page links plugin
@@ -24,7 +28,6 @@ at order addresses seems to help with some taxation logic as well as makes thing
 
 - Admin: Make sure related custom columns are added accrodingly. Fix issue with filtering through columns
 that are by default hidden
-
 
 ## [1.10.14] - 2020-05-27
 
