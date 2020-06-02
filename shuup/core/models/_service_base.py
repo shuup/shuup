@@ -56,6 +56,29 @@ class ServiceProvider(PolymorphicTranslatableShuupModel):
         name=models.CharField(max_length=100, verbose_name=_("name"), help_text=_("The service provider name.")),
     )
 
+    shops = models.ManyToManyField(
+        "shuup.Shop",
+        verbose_name=_("shops"),
+        related_name="service_providers",
+        help_text=_(
+            "This service provider will be available only for order sources of the given shop. "
+            "If blank, this service provider is available for any order source."
+        ),
+        blank=True
+    )
+    supplier = models.ForeignKey(
+        "shuup.Supplier",
+        on_delete=models.CASCADE,
+        verbose_name=_("supplier"),
+        related_name="service_providers",
+        help_text=_(
+            "This service provider will be available only for order sources that contain "
+            "all items from the configured supplier. If blank, this service provider is "
+            "available for any order source."
+        ),
+        blank=True, null=True
+    )
+
     #: Model class of the provided services (subclass of `Service`)
     service_model = None
 
@@ -196,9 +219,19 @@ class Service(TranslatableShuupModel):
         "Enable this if this service should be selectable on checkout."
     ))
     shop = models.ForeignKey(Shop, verbose_name=_("shop"), help_text=_("The shop for this service."))
-
+    supplier = models.ForeignKey(
+        "shuup.Supplier",
+        verbose_name=_("supplier"),
+        on_delete=models.CASCADE,
+        help_text=_(
+            "The supplier for this service. This service will be available only for order sources "
+            "that contain all items from this supplier."
+        ),
+        null=True, blank=True
+    )
     choice_identifier = models.CharField(
-        blank=True, max_length=64, verbose_name=_("choice identifier"))
+        blank=True, max_length=64, verbose_name=_("choice identifier")
+    )
 
     # These are for migrating old methods to new architecture
     old_module_identifier = models.CharField(max_length=64, blank=True)
@@ -348,6 +381,8 @@ class Service(TranslatableShuupModel):
             base_unit_price=price_info.base_unit_price,
             discount_amount=price_info.discount_amount,
             tax_class=tax_class,
+            supplier=self.supplier,
+            shop=self.shop
         )
 
     def _generate_line_id(self, num):
@@ -421,6 +456,8 @@ class ServiceBehaviorComponent(PolymorphicShuupModel):
 
     #: Help text for the component (lazy translated)
     help_text = None
+
+    identifier = InternalIdentifierField(unique=True)
 
     def __init__(self, *args, **kwargs):
         if type(self) != ServiceBehaviorComponent and self.name is None:
