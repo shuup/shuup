@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+
+## [1.10.15] - 2020-06-02
+
+### Changed
+
+- Front: Ensure company name and tax number is set to both billing and shipping address same way
+as when filled through company form when customer is not logged in. Company name and tax number
+at order addresses seems to help with some taxation logic as well as makes things more consistent.
+
+### Fixed
+
+- Admin: Make sure related custom columns are added accrodingly. Fix issue with filtering through columns
+that are by default hidden
+
+
 ## [1.10.14] - 2020-05-27
 
 ### Fixed
