@@ -8,7 +8,7 @@
 from django.core.urlresolvers import reverse
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
-from registration.signals import user_registered, user_activated
+from registration.signals import user_activated, user_registered
 
 from shuup.core.models import get_person_contact, PersonContact
 from shuup.notify.base import Event, Variable

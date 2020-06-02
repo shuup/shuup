@@ -21,6 +21,7 @@ from django.views.generic import DetailView
 from shuup.admin.modules.contacts.utils import (
     check_contact_permission, request_limited
 )
+from shuup.admin.modules.users.views.detail import get_admin_url, get_front_url
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, PostActionButton, Toolbar,
@@ -29,7 +30,6 @@ from shuup.admin.toolbar import (
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, Contact
 from shuup.front.apps.registration.signals import company_contact_activated
-from shuup.admin.modules.users.views.detail import get_admin_url, get_front_url
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.excs import Problem
 

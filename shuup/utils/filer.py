@@ -7,16 +7,16 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import absolute_import
 
-import django
 import hashlib
 
+import django
 import six
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
-from django.utils.translation import ugettext as _
 from django.forms.models import modelform_factory
+from django.utils.translation import ugettext as _
 from filer.models import File, Folder, Image
 
 from shuup.core.models import MediaFile, MediaFolder

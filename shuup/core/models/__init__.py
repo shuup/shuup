@@ -47,9 +47,9 @@ from ._product_shops import (
     ProductVisibility, ShopProduct, ShopProductVisibility
 )
 from ._product_variation import (
-    get_all_available_combinations,
-    ProductVariationLinkStatus, ProductVariationResult,
-    ProductVariationVariable, ProductVariationVariableValue
+    get_all_available_combinations, ProductVariationLinkStatus,
+    ProductVariationResult, ProductVariationVariable,
+    ProductVariationVariableValue
 )
 from ._products import (
     Product, ProductAttribute, ProductCrossSell, ProductCrossSellType,

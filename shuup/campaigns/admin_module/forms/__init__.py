@@ -10,9 +10,9 @@ from ._basket_conditions import (
     BasketMaxTotalProductAmountConditionForm, BasketTotalAmountConditionForm,
     BasketTotalProductAmountConditionForm,
     BasketTotalUndiscountedProductAmountConditionForm,
-    CategoryProductsBasketConditionForm, ContactBasketConditionForm,
-    ContactGroupBasketConditionForm, HourBasketConditionForm,
-    ProductsInBasketConditionForm, ChildrenProductConditionForm
+    CategoryProductsBasketConditionForm, ChildrenProductConditionForm,
+    ContactBasketConditionForm, ContactGroupBasketConditionForm,
+    HourBasketConditionForm, ProductsInBasketConditionForm
 )
 from ._basket_effects import (
     BasketDiscountAmountForm, BasketDiscountPercentageForm,

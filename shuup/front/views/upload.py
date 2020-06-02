@@ -16,8 +16,8 @@ from filer.models import Folder
 
 from shuup.core.shop_provider import get_shop
 from shuup.utils.filer import (
-    filer_file_to_json_dict, filer_image_from_upload, ensure_media_file,
-    ensure_media_folder
+    ensure_media_file, ensure_media_folder, filer_file_to_json_dict,
+    filer_image_from_upload
 )
 
 
