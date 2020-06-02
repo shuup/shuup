@@ -41,6 +41,8 @@ that are by default hidden
 
 ### Changed
 
+- Core: ignore lines that are not from the given source while calculating taxes
+- Campaigns: do not apply campaigns in baskets configured to a supplier
 - Admin: change service admin to list only providers that the current user can access
 - Use UUID4 while generating order line ids by default
 - Notify: Add AccountActivation event. AccountActivation event is

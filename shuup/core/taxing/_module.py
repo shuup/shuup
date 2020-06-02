@@ -92,7 +92,10 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         lines_without_tax_class = []
         taxed_lines = []
         for (idx, line) in enumerate(lines):
-            assert line.source == source
+            # this line doesn't belong to this source, ignore it
+            if line.source != source:
+                continue
+
             if line.tax_class is None:
                 lines_without_tax_class.append(line)
             else:
