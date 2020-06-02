@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 import functools
-import random
+from uuid import uuid4
 
 import django
 import six
@@ -351,8 +351,8 @@ class Service(TranslatableShuupModel):
         )
 
     def _generate_line_id(self, num):
-        return "%s-%02d-%08x" % (
-            self.line_type.name.lower(), num, random.randint(0, 0x7FFFFFFF))
+        return "%s-%02d-%s" % (
+            self.line_type.name.lower(), num, uuid4().hex)
 
     def _make_sure_is_usable(self):
         if not self.provider:

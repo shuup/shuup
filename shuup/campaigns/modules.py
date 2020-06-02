@@ -5,7 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import random
+from uuid import uuid4
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -81,7 +81,7 @@ class BasketCampaignModule(OrderSourceModifierModule):
             text += " (%s %s)" % (_("Coupon Code:"), campaign.coupon.code)
 
         return order_source.create_line(
-            line_id="discount_%s" % str(random.randint(0, 0x7FFFFFFF)),
+            line_id="discount_%s" % uuid4().hex,
             type=OrderLineType.DISCOUNT,
             quantity=1,
             discount_amount=campaign.shop.create_price(highest_discount),

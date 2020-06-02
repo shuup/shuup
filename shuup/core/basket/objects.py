@@ -7,9 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import random
 from collections import Counter
 from decimal import Decimal
+from uuid import uuid4
 
 import six
 from django.contrib import messages
@@ -152,7 +152,7 @@ class BaseBasket(OrderSource):
             try:
                 self._data = self.storage.load(basket=self)
             except BasketCompatibilityError as error:
-                msg = _("Basket loading failed: Incompatible basket (%s)")
+                msg = _("Basket loading failed: Incompatible basket (%s).")
                 messages.error(self.request, msg % error)
                 self.storage.delete(basket=self)
                 self._data = self.storage.load(basket=self)
@@ -449,8 +449,7 @@ class BaseBasket(OrderSource):
             raise ValueError("Error! Add a variation parent to the basket is not allowed.")
 
         return {
-            # TODO: FIXME: Make sure line_id's are unique (not random)
-            "line_id": str(random.randint(0, 0x7FFFFFFF)),
+            "line_id": uuid4().hex,
             "product": product,
             "supplier": supplier,
             "shop": shop,

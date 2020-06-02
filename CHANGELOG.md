@@ -33,10 +33,12 @@ that are by default hidden
 
 ### Fixed
 
+- Core: changed `del` basket command handler to not try to parse the basket line into an integer
 - Front: only show carousel title when there is one
 
 ### Changed
 
+- Use UUID4 while generating order line ids by default
 - Notify: Add AccountActivation event. AccountActivation event is
   triggered only when the user is activated for the first time.
 - Front: improve next parameter with registration. Check GET

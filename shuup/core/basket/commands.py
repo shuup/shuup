@@ -158,7 +158,7 @@ def handle_del(request, basket, line_id, **kwargs):
     :param line_id: The line ID to delete.
     :return:
     """
-    return {'ok': basket.delete_line(int(line_id))}
+    return {'ok': basket.delete_line(line_id)}
 
 
 def handle_clear(request, basket, **kwargs):

@@ -4,7 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import random
+from uuid import uuid4
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -64,14 +64,18 @@ class FreeProductLine(BasketLineEffect):
 
             if not supplier:
                 supplier = shop_product.get_supplier(
-                    order_source.customer, self.quantity, order_source.shipping_address)
+                    order_source.customer,
+                    self.quantity,
+                    order_source.shipping_address
+                )
 
             if not shop_product.is_orderable(
                     supplier=supplier, customer=order_source.customer,
                     quantity=self.quantity, allow_cache=False):
                 continue
+
             line_data = dict(
-                line_id="free_product_%s" % str(random.randint(0, 0x7FFFFFFF)),
+                line_id="free_product_%s" % uuid4().hex,
                 type=OrderLineType.PRODUCT,
                 quantity=self.quantity,
                 shop=shop,

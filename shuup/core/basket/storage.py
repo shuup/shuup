@@ -57,7 +57,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         The returned object should have ``id``, ``shop_id``,
         ``currency``, ``prices_include_tax`` and ``data`` attributes.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         :return: Stored basket or None
         """
         pass
@@ -69,6 +69,8 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
 
         :type basket: shuup.core.basket.objects.BaseBasket
         :type data: dict
+        :rtype str:
+        :return: The unique identifier of the basket just created
         """
         pass
 
