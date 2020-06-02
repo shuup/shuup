@@ -35,6 +35,7 @@ that are by default hidden
 
 ### Fixed
 
+- Fixed issue that was importing User model directly
 - Core: changed `del` basket command handler to not try to parse the basket line into an integer
 - Front: only show carousel title when there is one
 
