@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Front: add feature for checkout phases to spawn extra phases
 - Add custom get_ip method and use it everywhere
 
 ## [1.10.16] - 2020-06-03
