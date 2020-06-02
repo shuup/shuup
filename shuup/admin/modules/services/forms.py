@@ -9,6 +9,7 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django_countries import Countries
 
@@ -16,12 +17,33 @@ from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.widgets import (
     QuickAddLabelMultiSelect, TextEditorWidget
 )
+from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.core.models import (
-    CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
+    Carrier, CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
     GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
-    PaymentMethod, ServiceProvider, ShippingMethod, StaffOnlyBehaviorComponent,
-    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
+    PaymentMethod, PaymentProcessor, ServiceProvider, ShippingMethod,
+    StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
+    WeightLimitsBehaviorComponent
 )
+
+
+def get_service_providers_filters(request, payment_method=None):
+    shop_filter = Q(
+        Q(shops__isnull=True) |
+        Q(shops=get_shop(request))
+    )
+    if payment_method and payment_method.pk and payment_method.supplier:
+        return shop_filter & Q(
+            Q(supplier__isnull=True) |
+            Q(supplier=get_supplier(request)) |
+            Q(supplier=payment_method.supplier)
+        )
+
+    return shop_filter & Q(
+        Q(supplier__isnull=True) |
+        Q(supplier=get_supplier(request))
+    )
 
 
 class BaseMethodForm(ShuupAdminForm):
@@ -33,7 +55,7 @@ class BaseMethodForm(ShuupAdminForm):
         ]
         base_fields = [
             "choice_identifier", "name", "description", "enabled",
-            "logo", "tax_class", "labels"
+            "logo", "tax_class", "labels", "supplier"
         ]
         widgets = {
             "description": TextEditorWidget(),
@@ -58,7 +80,9 @@ class BaseMethodForm(ShuupAdminForm):
     def get_service_provider(self, id):
         if not id:
             return
-        return ServiceProvider.objects.filter(id=id).first()
+        return ServiceProvider.objects.filter(
+            get_service_providers_filters(self.request, self.instance)
+        ).filter(pk=id).first()
 
     @property
     def service_provider(self):
@@ -110,6 +134,12 @@ class ShippingMethodForm(BaseMethodForm):
             )
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["carrier"].queryset = Carrier.objects.filter(
+            get_service_providers_filters(self.request, self.instance)
+        ).distinct()
+
 
 class PaymentMethodForm(BaseMethodForm):
     service_provider_attr = "payment_processor"
@@ -123,6 +153,12 @@ class PaymentMethodForm(BaseMethodForm):
                 "Select a payment processor before filling out the other fields."
             )
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["payment_processor"].queryset = PaymentProcessor.objects.filter(
+            get_service_providers_filters(self.request, self.instance)
+        ).distinct()
 
 
 class FixedCostBehaviorComponentForm(ShuupAdminForm):

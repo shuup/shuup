@@ -40,6 +40,7 @@ that are by default hidden
 
 ### Changed
 
+- Admin: change service admin to list only providers that the current user can access
 - Use UUID4 while generating order line ids by default
 - Notify: Add AccountActivation event. AccountActivation event is
   triggered only when the user is activated for the first time.

@@ -82,7 +82,9 @@ def test_choice_identifier_in_method_form(rf, admin_user, form_class, get_object
     assert object.pk
 
     service_provider = getattr(object, service_provider_attr)
-    form = form_class(instance=object, languages=settings.LANGUAGES, request=rf.get("/"))
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+
+    form = form_class(instance=object, languages=settings.LANGUAGES, request=request)
     assert "choice_identifier" in form.fields
     assert len(form.fields["choice_identifier"].choices) == len(service_provider.get_service_choices())
     assert form.fields["choice_identifier"].widget.__class__ == forms.Select
@@ -91,7 +93,7 @@ def test_choice_identifier_in_method_form(rf, admin_user, form_class, get_object
     setattr(object, service_provider_attr, None)
 
     # No service provider so no choice_identifier-field
-    form = form_class(instance=object, languages=settings.LANGUAGES, request=rf.get("/"))
+    form = form_class(instance=object, languages=settings.LANGUAGES, request=request)
     assert "choice_identifier" in form.fields
     assert len(form.fields["choice_identifier"].choices) == 0  # Choices for default provider
 
