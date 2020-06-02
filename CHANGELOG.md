@@ -41,6 +41,7 @@ that are by default hidden
 
 ### Changed
 
+- Front: remove the custom _load() implementation from the basket as it is the same as the core
 - Core: ignore lines that are not from the given source while calculating taxes
 - Campaigns: do not apply campaigns in baskets configured to a supplier
 - Admin: change service admin to list only providers that the current user can access

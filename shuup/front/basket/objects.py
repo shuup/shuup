@@ -7,13 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
 from shuup.core.basket.objects import BaseBasket as Basket
-from shuup.core.basket.storage import BasketCompatibilityError
 from shuup.front.checkout.methods import (
     PAYMENT_METHOD_REQUIRED_CONFIG_KEY, SHIPPING_METHOD_REQUIRED_CONFIG_KEY
 )
@@ -23,27 +21,6 @@ class BaseBasket(Basket):
     def __init__(self, request, basket_name="basket", shop=None, **kwargs):
         super(BaseBasket, self).__init__(request, basket_name, shop)
         self.basket_name = basket_name
-
-    def _load(self):
-        """
-        Get the currently persisted data for this basket.
-        This will only access the storage once per request in usual
-        circumstances.
-
-        :return: Data dict.
-        :rtype: dict
-        """
-        if self._data is None:
-            try:
-                self._data = self.storage.load(basket=self)
-            except BasketCompatibilityError as error:
-                msg = _("Basket loading failed: Incompatible basket (%s).")
-                messages.error(self.request, msg % error)
-                self.storage.delete(basket=self)
-                self._data = self.storage.load(basket=self)
-            self.dirty = False
-            self.uncache()
-        return self._data
 
     def get_methods_validation_errors(self):
         shipping_methods = self.get_available_shipping_methods()
