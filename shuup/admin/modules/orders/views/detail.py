@@ -29,8 +29,7 @@ class OrderDetailView(DetailView):
         return OrderDetailToolbar(self.object)
 
     def get_queryset(self):
-        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
-        return Order.objects.exclude(deleted=True).filter(shop_id__in=shop_ids)
+        return Order.objects.filter(id=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
         context = super(OrderDetailView, self).get_context_data(**kwargs)

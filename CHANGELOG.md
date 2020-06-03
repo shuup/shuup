@@ -13,6 +13,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Front: only show carousel title when there is one
+- Admin: database query for order details
 
 ### Changed
 
