@@ -61,7 +61,8 @@ class XThemeAppConfig(AppConfig):
             "shuup.xtheme.admin_module:XthemeSnippetsAdminModule"
         ],
         "xtheme_resource_injection": [
-            "shuup.xtheme.resources:inject_global_snippet"
+            "shuup.xtheme.resources:inject_global_snippet",
+            "shuup.xtheme.resources:inject_forced_snippet"
         ],
     }
 

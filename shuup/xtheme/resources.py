@@ -21,6 +21,8 @@ from jinja2.utils import contextfunction
 from shuup.core import cache
 from shuup.core.fields import TaggedJSONEncoder
 from shuup.core.shop_provider import get_shop
+from shuup.xtheme import get_current_theme
+from shuup.xtheme.models import Snippet, SnippetType
 from shuup.xtheme.utils import get_html_attrs
 
 LOGGER = getLogger(__name__)
@@ -317,14 +319,34 @@ def valid_view(context):
     return True
 
 
-def inject_global_snippet(context, content):
-    if not valid_view(context):
+def inject_forced_snippet(context, content):
+    view_class = getattr(context["view"], "__class__", None) if context.get("view") else None
+    if not view_class or not context.get("request"):
         return
 
-    from shuup.xtheme import get_current_theme
-    from shuup.xtheme.models import Snippet, SnippetType
     shop = get_shop(context["request"])
 
+    snippets = get_snippets(shop)
+    snippets = snippets.filter(force_to_all_pages=True)
+
+    inject_global_snippet(context, content, snippets)
+
+
+def inject_global_snippet(context, content, snippets=None):
+    if not valid_view(context) and snippets is None:
+        return
+
+    shop = get_shop(context["request"])
+
+    if snippets is None:
+        snippets = get_snippets(shop)
+        snippets = snippets.filter(force_to_all_pages=False)
+
+    for snippet in snippets:
+        test_and_add_snippet(snippet, context, shop)
+
+
+def get_snippets(shop):
     cache_key = GLOBAL_SNIPPETS_CACHE_KEY.format(shop_id=shop.id)
     snippets = cache.get(cache_key)
 
@@ -332,18 +354,21 @@ def inject_global_snippet(context, content):
         snippets = Snippet.objects.filter(shop=shop)
         cache.set(cache_key, snippets)
 
-    for snippet in snippets:
-        if snippet.themes:
-            current_theme = get_current_theme(shop)
-            if current_theme and current_theme.identifier not in snippet.themes:
-                continue
+    return snippets
 
-        content = snippet.snippet
-        if snippet.snippet_type == SnippetType.InlineJS:
-            content = InlineScriptResource(content)
-        elif snippet.snippet_type == SnippetType.InlineCSS:
-            content = InlineStyleResource(content)
-        elif snippet.snippet_type == SnippetType.InlineHTMLMarkup:
-            content = InlineMarkupResource(content)
 
-        add_resource(context, snippet.location, content)
+def test_and_add_snippet(snippet, context, shop):
+    if snippet.themes:
+        current_theme = get_current_theme(shop)
+        if current_theme and current_theme.identifier not in snippet.themes:
+            return
+
+    content = snippet.snippet
+    if snippet.snippet_type == SnippetType.InlineJS:
+        content = InlineScriptResource(content)
+    elif snippet.snippet_type == SnippetType.InlineCSS:
+        content = InlineStyleResource(content)
+    elif snippet.snippet_type == SnippetType.InlineHTMLMarkup:
+        content = InlineMarkupResource(content)
+
+    add_resource(context, snippet.location, content)

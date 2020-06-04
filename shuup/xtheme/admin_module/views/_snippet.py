@@ -27,7 +27,7 @@ from shuup.xtheme.resources import GLOBAL_SNIPPETS_CACHE_KEY
 class SnippetForm(forms.ModelForm):
     class Meta:
         model = Snippet
-        fields = ["location", "themes", "snippet_type", "snippet"]
+        fields = ["location", "themes", "snippet_type", "force_to_all_pages", "snippet"]
         widgets = {
             "snippet": CodeEditorWidget()
         }

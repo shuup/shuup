@@ -188,6 +188,9 @@ class Snippet(models.Model):
     themes = SeparatedValuesField(verbose_name=_("themes"), blank=True, null=True, help_text=_(
         "Select the themes that will have this snippet injected. Leave the field blank to inject in all themes."
     ))
+    force_to_all_pages = models.BooleanField(verbose_name=_("force to all pages"), default=False, help_text=_(
+        "Force this snippet to all pages even to the admin page. Do not use for other then meta tags"
+    ))
 
     class Meta:
         verbose_name = _("Snippet")
