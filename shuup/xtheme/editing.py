@@ -8,9 +8,9 @@
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 
+from shuup.core.utils.static import get_shuup_static_url
 from shuup.front.utils.user import is_admin_user
 from shuup.xtheme.resources import add_resource, InlineScriptResource
-from shuup.core.utils.static import get_shuup_static_url
 
 from ._theme import get_current_theme
 

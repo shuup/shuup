@@ -11,9 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
-from shuup.core.models import (
-    OrderStatus, OrderStatusManager, OrderStatusRole
-)
+from shuup.core.models import OrderStatus, OrderStatusManager, OrderStatusRole
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

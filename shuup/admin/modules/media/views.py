@@ -26,9 +26,9 @@ from shuup.admin.shop_provider import get_shop
 from shuup.core.models import MediaFile, MediaFolder
 from shuup.utils.excs import Problem
 from shuup.utils.filer import (
-    filer_file_from_upload, filer_file_to_json_dict, filer_folder_to_json_dict,
-    filer_image_from_upload, ensure_media_file, ensure_media_folder,
-    UploadFileForm, UploadImageForm
+    ensure_media_file, ensure_media_folder, filer_file_from_upload,
+    filer_file_to_json_dict, filer_folder_to_json_dict,
+    filer_image_from_upload, UploadFileForm, UploadImageForm
 )
 from shuup.utils.mptt import get_cached_trees
 

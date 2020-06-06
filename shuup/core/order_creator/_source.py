@@ -616,7 +616,11 @@ class OrderSource(object):
         """
         all_line_taxes = []
         untaxed = TaxlessPrice(self.create_price(0).amount)
+
         for line in self.get_final_lines():
+            if line.source != self:
+                continue
+
             line_taxes = list(line.taxes)
             all_line_taxes.extend(line_taxes)
             if not line_taxes:

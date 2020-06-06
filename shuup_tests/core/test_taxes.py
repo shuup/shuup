@@ -136,7 +136,6 @@ def test_broken_order(admin_user):
     currency = "EUR"
     summary = source.get_tax_summary()
 
-
     assert len(summary) == 1
     summary = summary[0]
 
@@ -162,3 +161,26 @@ def test_broken_order(admin_user):
 
     # originally non-rounded value
     assert bankers_round(order.get_total_tax_amount()) == summary.tax_amount
+
+
+@pytest.mark.django_db
+def test_ignore_lines_from_other_sources():
+    with override_settings(SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=True):
+        source1 = get_source()
+        source2 = get_source()
+
+        # get the tax summary from source1
+        source1_summary = source1.get_tax_summary()
+        assert len(source1_summary) == 1
+        based_on_before = source1_summary[0].based_on
+
+        # add line from order source2 in source1
+        source1._lines.append(source2._lines[0])
+        source1.uncache()
+
+        # get the summary again, we should ignore lines
+        # that are not from the same order source
+        source1_summary = source1.get_tax_summary()
+        assert len(source1_summary) == 1
+        # nothing changed
+        assert based_on_before == source1_summary[0].based_on

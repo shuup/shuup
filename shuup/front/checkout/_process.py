@@ -50,14 +50,23 @@ class CheckoutProcess(object):
         phase = phase_class(
             checkout_process=self,
             horizontal_template=self.horizontal_template,
-            **kwargs)
+            **kwargs
+        )
         return phase
 
     def _load_phases(self):
         phases = OrderedDict()
+
         for phase_spec in self.phase_specs:
             phase_class = load(phase_spec)
-            phases[phase_class.identifier] = self.instantiate_phase_class(phase_class)
+            phase = self.instantiate_phase_class(phase_class)
+            phases[phase_class.identifier] = phase
+
+            # check whether the phase spawns new phases,
+            # if so, then let's spawn then and add the phases
+            for spawned_phase in phase.spawn_phases(self):
+                phases[spawned_phase.identifier] = spawned_phase
+
         return list(phases.values())
 
     def get_current_phase(self, requested_phase_identifier):

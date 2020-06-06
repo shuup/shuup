@@ -17,6 +17,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from shuup import configuration
+from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
+from shuup.core.models import Category, Product, Shop
 from shuup.testing.modules.sample_data import manager as sample_manager
 from shuup.testing.modules.sample_data.data import BUSINESS_SEGMENTS
 from shuup.testing.modules.sample_data.factories import (
@@ -25,8 +27,6 @@ from shuup.testing.modules.sample_data.factories import (
 from shuup.testing.modules.sample_data.forms import (
     ConsolidateObjectsForm, SampleObjectsWizardForm
 )
-from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
-from shuup.core.models import Category, Product, Shop
 
 
 class ConsolidateSampleObjectsView(FormView):

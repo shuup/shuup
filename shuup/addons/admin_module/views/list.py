@@ -22,6 +22,7 @@ from shuup.addons.manager import (
 from shuup.admin.toolbar import (
     NewActionButton, PostActionButton, Toolbar, URLActionButton
 )
+from shuup.utils.http import get_client_ip
 
 
 class AddonEnableDisableForm(forms.Form):
@@ -68,7 +69,7 @@ class AddonListView(FormView):
                 new_enabled_addons,
                 comment="Written via Shuup admin (user %s; IP %s; time %s)" % (
                     self.request.user.pk,
-                    self.request.META.get("REMOTE_ADDR"),
+                    get_client_ip(self.request),
                     now().isoformat()
                 )
             )

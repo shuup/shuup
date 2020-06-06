@@ -14,9 +14,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.testing.modules.sample_data import manager as sample_manager
 from shuup.admin.utils.urls import admin_url
 from shuup.core.settings_provider import ShuupSettings
+from shuup.testing.modules.sample_data import manager as sample_manager
 
 SAMPLE_BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SAMPLE_IMAGES_BASE_DIR = os.path.join(SAMPLE_BASE_DIR, "sample_data/images")

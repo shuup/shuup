@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+
 from shuup.notify.base import Event, Variable
 from shuup.notify.typology import Email, Model, Text
 

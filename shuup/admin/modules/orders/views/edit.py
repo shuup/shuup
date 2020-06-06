@@ -35,6 +35,7 @@ from shuup.core.models import (
     ShopStatus
 )
 from shuup.core.pricing import get_pricing_module
+from shuup.utils.http import get_client_ip
 from shuup.utils.i18n import (
     format_money, format_percent, get_current_babel_locale,
     get_locally_formatted_datetime
@@ -393,7 +394,7 @@ class OrderEditView(CreateOrUpdateView):
         source = create_source_from_state(
             state,
             creator=request.user,
-            ip_address=request.META.get("REMOTE_ADDR"),
+            ip_address=get_client_ip(request),
             order_to_update=self.object if self.object.pk else None
         )
         # Calculate final lines for confirmation
@@ -423,7 +424,7 @@ class OrderEditView(CreateOrUpdateView):
             order = create_order_from_state(
                 state,
                 creator=request.user,
-                ip_address=request.META.get("REMOTE_ADDR"),
+                ip_address=get_client_ip(request),
             )
             object_created.send(sender=Order, object=order, request=request)
             messages.success(request, _("Order `%(identifier)s` created.") % vars(order))
