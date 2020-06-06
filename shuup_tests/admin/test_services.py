@@ -25,7 +25,7 @@ from shuup.core.models import Label, PaymentMethod, ShippingMethod
 from shuup.testing.factories import (
     create_empty_order, get_custom_carrier, get_custom_payment_processor,
     get_default_payment_method, get_default_shipping_method, get_default_shop,
-    get_default_tax_class
+    get_default_tax_class, get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -240,3 +240,39 @@ def test_delete_toolbar_button(rf, admin_user, view_cls, get_method, method_attr
     # Make sure that the actual delete is also blocked
     with pytest.raises(ProtectedError):
         method.delete()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("view,model,service_provider_attr,get_provider", [
+    (PaymentMethodEditView, PaymentMethod, "payment_processor", get_custom_payment_processor),
+    (ShippingMethodEditView, ShippingMethod, "carrier", get_custom_carrier)
+])
+def test_method_creation_with_supplier(rf, admin_user, view, model, service_provider_attr, get_provider):
+    provider = get_provider()
+    supplier = get_default_supplier()
+
+    # add supplier to the service provider
+    provider.supplier = supplier
+    provider.save()
+
+    with override_settings(LANGUAGES=[("en", "en")]):
+        view = view.as_view()
+        service_provider_field = "base-%s" % service_provider_attr
+        data = {
+            service_provider_field: provider.id,
+            "base-choice_identifier": "manual",
+            "base-name__en": "Custom method",
+            "base-shop": get_default_shop().id,
+            "base-tax_class": get_default_tax_class().id,
+            "base-enabled": True
+        }
+        # Default provider CustomCarrier/CustomPaymentProcessor should be set in form init
+        methods_before = model.objects.count()
+        url = "/?provider=%s" % provider.id
+        request = apply_request_middleware(rf.post(url, data=data), user=admin_user)
+        response = view(request, pk=None)
+        if hasattr(response, "render"):
+            response.render()
+        assert response.status_code == 200
+        # nothing created as the service provider has supplier and we don't have access to it
+        assert model.objects.count() == methods_before

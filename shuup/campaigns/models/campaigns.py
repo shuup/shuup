@@ -24,7 +24,9 @@ from shuup.campaigns.consts import (
 from shuup.campaigns.models.basket_conditions import (
     CategoryProductsBasketCondition, ProductsInBasketCondition
 )
-from shuup.campaigns.utils.campaigns import get_product_ids_and_quantities
+from shuup.campaigns.utils.campaigns import (
+    get_lines_suppliers, get_product_ids_and_quantities
+)
 from shuup.campaigns.utils.matcher import get_matching_for_product
 from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField
@@ -263,6 +265,7 @@ class BasketCampaign(Campaign):
         matching = []
         exclude_condition_ids = set()
         product_id_to_qty = get_product_ids_and_quantities(basket)
+        lines_suppliers = get_lines_suppliers(basket)
 
         # Get ProductsInBasketCondition's that can't match with the basket
         products_in_basket_conditions_to_check = set(
@@ -289,11 +292,20 @@ class BasketCampaign(Campaign):
         )
 
         queryset = cls.objects.filter(active=True, shop=basket.shop)
+
         if exclude_condition_ids:
             queryset = queryset.exclude(conditions__id__in=exclude_condition_ids)
-        for campaign in queryset.prefetch_related("conditions"):
+
+        # exclude the campaigns that have supplier set and are not included the supplier list
+        if lines_suppliers:
+            queryset = queryset.filter(
+                Q(supplier__isnull=True) | Q(supplier__in=lines_suppliers)
+            )
+
+        for campaign in queryset.prefetch_related("conditions").distinct():
             if campaign.rules_match(basket, lines):
                 matching.append(campaign)
+
         return matching
 
     def rules_match(self, basket, lines):

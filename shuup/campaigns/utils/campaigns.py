@@ -8,6 +8,17 @@
 from collections import Counter
 
 
+def get_lines_suppliers(basket):
+    """
+    Returns a list of all suppliers from the basket
+    """
+    suppliers = set()
+    for line in basket.get_lines():
+        if line.supplier:
+            suppliers.add(line.supplier)
+    return suppliers
+
+
 def get_product_ids_and_quantities(basket, supplier=None):
     q_counter = Counter()
     for line in basket.get_lines():

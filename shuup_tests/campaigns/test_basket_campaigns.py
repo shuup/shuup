@@ -26,7 +26,7 @@ from shuup.campaigns.models.campaigns import (
 )
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
-    Category, OrderLineType, Shop, ShopProduct, ShopStatus
+    Category, OrderLineType, Shop, ShopProduct, ShopStatus, Supplier
 )
 from shuup.core.order_creator import OrderCreator
 from shuup.front.basket import get_basket
@@ -488,3 +488,96 @@ def test_percentage_campaign_full_discount(rf, include_tax):
     order = order_creator.create_order(basket)
     order.create_payment(order.taxful_total_price)
     assert order.taxful_total_price.value == Decimal()
+
+
+@pytest.mark.parametrize("include_tax", [True, False])
+@pytest.mark.django_db
+def test_percentage_campaign_different_supplier(rf, include_tax):
+    request, shop, group = initialize_test(rf, include_tax)
+    create_default_order_statuses()
+    tax = get_tax("sales-tax", "Sales Tax", Decimal(0.2)) # 20%
+    create_default_tax_rule(tax)
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+    supplier_2 = Supplier.objects.create(name="Supplier 2")
+
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=200)
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
+    basket.status = get_initial_order_status()
+
+    # create a campaign for the Supplier 2
+    campaign = BasketCampaign.objects.create(
+        shop=shop,
+        public_name="test",
+        name="test",
+        active=True,
+        supplier=supplier_2
+    )
+    # 100% of discount
+    BasketDiscountPercentage.objects.create(
+        campaign=campaign,
+        discount_percentage=Decimal(1)
+    )
+    # discount is never applied
+    lines_types = [line.type for line in basket.get_final_lines()]
+    assert OrderLineType.DISCOUNT not in lines_types
+    assert basket.product_count == 1
+    assert basket.total_price.value == Decimal(200)
+
+
+@pytest.mark.django_db
+def test_percentage_campaign_different_coupon_supplier(rf):
+    request, shop, group = initialize_test(rf, True)
+    create_default_order_statuses()
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+    supplier_2 = Supplier.objects.create(name="Supplier 2")
+
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=200)
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
+    basket.status = get_initial_order_status()
+
+    # Create coupon that is attached to Supplier 2
+    coupon = Coupon.objects.create(
+        code="QWERTY",
+        shop=shop,
+        active=True,
+        supplier=supplier_2
+    )
+    # create basket with coupon code
+    campaign = BasketCampaign.objects.create(
+        shop=shop,
+        public_name="test",
+        name="test",
+        active=True,
+        coupon=coupon,
+        supplier=supplier_2
+    )
+    BasketDiscountPercentage.objects.create(
+        campaign=campaign,
+        discount_percentage=Decimal(1)
+    )
+    basket.add_code(coupon.code)
+
+    # discount is never applied as there is no line
+    # in the basket that matches the coupon's supplier
+    lines_types = [line.type for line in basket.get_final_lines()]
+    assert OrderLineType.DISCOUNT not in lines_types
+    assert basket.product_count == 1
+    assert basket.total_price.value == Decimal(200)
+
+    # make supplier be the default supplier
+    coupon.supplier = supplier
+    coupon.save()
+    campaign.supplier = supplier
+    campaign.save()
+    basket.uncache()
+
+    lines_types = [line.type for line in basket.get_final_lines()]
+    assert OrderLineType.DISCOUNT in lines_types
+    assert basket.product_count == 1
+    assert basket.total_price.value == Decimal()
