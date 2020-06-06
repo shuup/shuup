@@ -17,15 +17,13 @@ VERSION_FILE = os.path.join(TOPDIR, 'shuup', '_version.py')
 
 # Release instructions
 #
-#  1. Update the Change Log (doc/changelog.rst)
+#  1. Update the Change Log (CHANGELOG.md)
 #      - Make sure all relevant changes since last release are listed
 #      - Remove the instruction bullet point ("List all changes after
 #        x.x.x here...")
 #      - Change the "Unreleased" header to appropriate version header.
 #        See header of the last release for example.
-#  2. Create/update Release Notes (doc/release_notes/<VERSION>.rst) and
-#     add it to index (doc/release_notes/index.rst)
-#  3. Update VERSION variable here: Increase and drop .post0.dev suffix
+#  2. Update VERSION variable here: Increase and drop .post0.dev suffix
 #  4. Update version and release variables in doc/conf.py
 #  5. Commit changes of steps 1--4
 #  6. Tag the commit (of step 5) with
@@ -40,7 +38,7 @@ VERSION_FILE = os.path.join(TOPDIR, 'shuup', '_version.py')
 #      - Add ".post0.dev" suffix to VERSION variable here
 
 NAME = 'shuup'
-VERSION = '1.10.16.post0.dev'
+VERSION = '1.11.0b1'
 DESCRIPTION = 'E-Commerce Platform'
 AUTHOR = 'Shoop Commerce Ltd.'
 AUTHOR_EMAIL = 'shuup@shuup.com'
