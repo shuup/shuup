@@ -8,11 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Changed
+
+- Front: remove the custom _load() implementation from the basket as it is the same as the core
+- Core: ignore lines that are not from the given source while calculating taxes
+- Campaigns: do not apply campaigns in baskets configured to a supplier
+- Admin: change service admin to list only providers that the current user can access
+- Use UUID4 while generating order line ids by default
+
 ### Added
 
 - Core: add shops and supplier to ServiceProvider and Service models
 - Front: add feature for checkout phases to spawn extra phases
 - Add custom get_ip method and use it everywhere
+
+### Fixed
+
+- Fixed issue that was importing User model directly
+- Core: changed `del` basket command handler to not try to parse the basket line into an integer
 
 ## [1.10.16] - 2020-06-03
 
@@ -35,17 +48,10 @@ that are by default hidden
 
 ### Fixed
 
-- Fixed issue that was importing User model directly
-- Core: changed `del` basket command handler to not try to parse the basket line into an integer
 - Front: only show carousel title when there is one
 
 ### Changed
 
-- Front: remove the custom _load() implementation from the basket as it is the same as the core
-- Core: ignore lines that are not from the given source while calculating taxes
-- Campaigns: do not apply campaigns in baskets configured to a supplier
-- Admin: change service admin to list only providers that the current user can access
-- Use UUID4 while generating order line ids by default
 - Notify: Add AccountActivation event. AccountActivation event is
   triggered only when the user is activated for the first time.
 - Front: improve next parameter with registration. Check GET
