@@ -12,11 +12,18 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.urls import admin_url
+from shuup.apps.provides import get_provide_objects
 
 
 class ImportAdminModule(AdminModule):
     name = _("Data Import")
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:importer.import")
+
+    def get_extra_permissions(self):
+        return [
+            importer.name
+            for importer in get_provide_objects("importers")
+        ]
 
     def get_urls(self):
         return [

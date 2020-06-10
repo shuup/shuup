@@ -19,6 +19,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView, View
 
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
 from shuup.importer.transforms import transform_file
 from shuup.importer.utils import (
@@ -37,6 +38,7 @@ class ImportProcessView(TemplateView):
         self.importer_cls = get_importer(request.GET.get("importer"))
         self.model_str = request.GET.get("importer")
         self.lang = request.GET.get("lang")
+        self.supplier = get_supplier(request)
         return super(ImportProcessView, self).dispatch(request, *args, **kwargs)
 
     def _transform_request_file(self):
@@ -53,8 +55,8 @@ class ImportProcessView(TemplateView):
             if filename.endswith("csv"):
                 mode = "csv"
             if self.importer_cls.custom_file_transformer:
-                return self.importer_cls.transform_file(mode, filename)
-            return transform_file(mode, filename)
+                return self.importer_cls.transform_file(mode, filename, supplier=self.supplier)
+            return transform_file(mode, filename, supplier=self.supplier)
         except (Exception, RuntimeError) as e:
             messages.error(self.request, e)
 
@@ -63,7 +65,12 @@ class ImportProcessView(TemplateView):
         if self.data is None:
             return False
 
-        self.importer = self.importer_cls(self.data, get_shop(self.request), self.lang)
+        self.importer = self.importer_cls(
+            self.data,
+            get_shop(self.request),
+            self.lang,
+            supplier=self.supplier,
+        )
         self.importer.process_data()
 
         if self.request.method == "POST":

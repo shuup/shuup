@@ -46,11 +46,20 @@ class XLSXRowYielder(RowYielder):
 
 
 class TransformedData(object):
-    def __init__(self, mode, headers, rows, **meta):
+    def __init__(self, mode, headers, rows, supplier=None, **meta):
+        updated_rows = []
+        if supplier:
+            updated_rows.append(rows[0])
+            for row in rows[1:]:
+                row['supplier'] = supplier
+                updated_rows.append(row)
+        else:
+            updated_rows = rows
+
         self.mode = mode
         self.headers = headers
         self.meta = meta
-        self.rows = rows
+        self.rows = updated_rows
 
     def __iter__(self):
         return iter(self.rows)
@@ -81,7 +90,7 @@ def process_data(rows):
     return (data, got_data)
 
 
-def transform_file(mode, filename, data=None):
+def transform_file(mode, filename, data=None, supplier=None):
     meta = {}
 
     if mode == "xls":
@@ -107,12 +116,11 @@ def transform_file(mode, filename, data=None):
 
     headers = data[0].keys() if len(data) else []
     clean_keys = set(headers) - got_data
-
     for datum in data:
         for key in clean_keys:
             datum.pop(key, None)
 
-    return TransformedData(mode, headers, data, **meta)
+    return TransformedData(mode, headers, data, supplier=supplier, **meta)
 
 
 def py2_read_file(data, filename):
