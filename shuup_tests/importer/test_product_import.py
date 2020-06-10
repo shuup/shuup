@@ -425,19 +425,25 @@ PRODUCT_DATA = [
         "manufacturer": None
     }
 ]
+
+@pytest.mark.parametrize("with_supplier", [True, False])
 @pytest.mark.django_db
-def test_complex_import():
+def test_complex_import(with_supplier):
     filename = "complex_import.xlsx"
     activate("en")
     shop = get_default_shop()
     get_default_tax_class()
     get_default_product_type()
-    get_default_supplier()
+    supplier = get_default_supplier()
     get_default_sales_unit()
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
-    importer = ProductImporter(transformed_data, shop, "en")
+    importer = None
+    if with_supplier:
+        importer = ProductImporter(transformed_data, shop, "en", supplier=supplier)
+    else:
+        importer = ProductImporter(transformed_data, shop, "en")
     importer.process_data()
 
     assert len(importer.unmatched_fields) == 0
@@ -454,6 +460,13 @@ def test_complex_import():
         data = PRODUCT_DATA[idx]
         assert product.sku == data["sku"]
         assert product.name == data["name"]
+        for product_supplier in shop_product.suppliers.all():
+            if with_supplier:
+                assert supplier == product_supplier
+            else:
+                # 2 is the supplier id from the 'complex_import.xlsx' file,
+                # it can't be 1 due to that the Supplier from get_default_supplier has the id 1
+                assert 2 == product_supplier.id
 
         assert shop_product.default_price_value == Decimal(data["price"])
         assert product.description == data["description"]

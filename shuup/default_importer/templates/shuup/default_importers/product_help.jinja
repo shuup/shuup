@@ -10,19 +10,32 @@
     {% endif %}
     <li>{% trans %}your import file has <strong>supplier</strong> field{% endtrans %}</li>
 </ul>
-<h2>{% trans %}Images{% endtrans %}</h2>
-<p>{% trans %}If you are importing products with images, ensure the following:{% endtrans %}</p>
-<ul>
-    {% set media_browser_url = url("shuup_admin:media.browse") %}
-    <li>{% trans media_browser_url=media_browser_url %}Upload all product images using the <a href="{{ media_browser_url }}" target="_blank">Media Browser</a>.{% endtrans %}</li>
-    <li>{% trans %}Use the image file name on <strong>image</strong> and/or <strong>images</strong> column(s).{% endtrans %}</li>
-    <li>{% trans %}<strong>images</strong> column can receive a comma-separated list of image names.{% endtrans %}</li>
-    <li>{% trans %}Image names can be the file name (e.g.: <em>product_001.png</em>) or the path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).
-        Using the full path will ensure that the correct image will be used when there is more than one image with the same name.{% endtrans %}
-    </li>
-</ul>
+{% if check_if_user_has_permission(request.user, "media.browse") %}
+    <h2>{% trans %}Images{% endtrans %}</h2>
+    <p>{% trans %}If you are importing products with images, ensure the following:{% endtrans %}</p>
+    <ul>
+        {% set media_browser_url = url("shuup_admin:media.browse") %}
+        <li>{% trans media_browser_url=media_browser_url %}Upload all product images using the <a href="{{ media_browser_url }}" target="_blank">Media Browser</a>.{% endtrans %}</li>
+        <li>{% trans %}Use the image file name on <strong>image</strong> and/or <strong>images</strong> column(s).{% endtrans %}</li>
+        <li>{% trans %}<strong>images</strong> column can receive a comma-separated list of image names.{% endtrans %}</li>
+        <li>{% trans %}Image names can be the file name (e.g.: <em>product_001.png</em>) or the path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).
+            Using the full path will ensure that the correct image will be used when there is more than one image with the same name.{% endtrans %}
+        </li>
+    </ul>
+{% endif %}
 <h2>{% trans %}Related objects{% endtrans %}</h2>
 <p>
     {% trans %}Columns that are relations to other objects (like Category and Supplier) accept both the object ID number
     and the object name. Make sure that when using the name, there should be only a single object for that given name.{% endtrans %}
 </p>
+{% if not check_if_user_has_permission(request.user, "category.new") %}
+    <h2>{% trans %}Product categories{% endtrans %}</h2>
+    <p>{% trans %}When selecting categories for a product use one/more of this categories{% endtrans %}</p>
+    <ul>
+        {% for category in categories %}
+            <li>
+                {{ category }}
+            </li>
+        {% endfor %}
+    </ul>                
+{% endif %}

@@ -13,9 +13,10 @@ from django.db.models import ForeignKey, ManyToManyField, Q
 from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.utils.permissions import has_permission
 from shuup.core.models import (
     MediaFile, Product, ProductMedia, ProductMediaKind, ProductType, SalesUnit,
-    ShopProduct, Supplier, TaxClass
+    ShopProduct, Supplier, TaxClass, Category
 )
 from shuup.importer.exceptions import ImporterError
 from shuup.importer.importing import (
@@ -279,10 +280,6 @@ class ProductImporter(DataImporter):
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         ),
         ImporterExampleFile(
-            "product_sample_import_with_images.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        ),
-        ImporterExampleFile(
             "product_sample_import.csv",
             "text/csv"
         )
@@ -295,7 +292,14 @@ class ProductImporter(DataImporter):
 
     @classmethod
     def get_help_context_data(cls, request):
+        image_sample_file = ImporterExampleFile(
+            "product_sample_import_with_images.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+        if image_sample_file not in cls.example_files and has_permission(request.user, "media.browse"):
+            cls.example_files.append(image_sample_file)
         from shuup.admin.shop_provider import get_shop
         return {
+            "categories": Category.objects.all(),
             "supplier": Supplier.objects.enabled().filter(shops=get_shop(request)).first()
         }
