@@ -5,11 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
 from django.db.models.fields.related import ManyToManyField
-from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import CurrencyField, MoneyValueField, TaggedJSONField
@@ -20,7 +20,7 @@ from shuup.utils.properties import (
 
 
 def generate_key():
-    return get_random_string(32)
+    return uuid4().hex
 
 
 class StoredBasket(MoneyPropped, models.Model):

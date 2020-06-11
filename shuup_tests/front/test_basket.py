@@ -19,7 +19,8 @@ from shuup.front.models import StoredBasket
 from shuup.testing.factories import (
     create_default_tax_rule, create_product, get_default_payment_method,
     get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_default_tax, get_default_tax_class, get_shipping_method, get_tax
+    get_default_tax, get_default_tax_class, get_shipping_method, get_tax,
+    create_random_address
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.money import Money
@@ -287,3 +288,46 @@ def test_basket_clearing(rf):
 
     assert not basket.shipping_method
     assert not basket.payment_method
+
+
+@pytest.mark.django_db
+def test_basket_store_addresses(rf):
+    """
+    Make sure the shipping and billing addresses
+    are saved as plain when the address is not
+    previously created in the database (existing MutableAddress)
+    """
+    StoredBasket.objects.all().delete()
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
+    request = apply_request_middleware(rf.get("/"), shop=shop)
+    basket = get_basket(request)
+    assert not basket.billing_address
+    assert not basket.shipping_address
+
+    shipping_address = create_random_address(save=False)
+    billing_address = create_random_address(save=False)
+
+    basket.shipping_address = shipping_address
+    basket.billing_address = billing_address
+    basket.save()
+    basket_key = basket.storage.get_basket_kwargs(basket)["key"]
+
+    # let use the same session later
+    session = request.session
+
+    assert basket.shipping_address and basket.shipping_address.name
+    assert basket.billing_address and basket.billing_address.name
+
+    # address are not saved model instances
+    assert not basket.shipping_address.id
+    assert not basket.billing_address.id
+
+    # load the basket, it should load the address data
+    request = apply_request_middleware(rf.get("/"), shop=shop)
+    request.session = session
+    basket = get_basket(request)
+
+    assert basket.shipping_address.as_string_list() == shipping_address.as_string_list()
+    assert basket.billing_address.as_string_list() == billing_address.as_string_list()
