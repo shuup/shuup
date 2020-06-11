@@ -13,7 +13,6 @@ from django_jinja import library
 from shuup.admin.template_helpers import \
     shuup_admin as shuup_admin_template_helpers
 from shuup.admin.utils.bs3_renderers import AdminFieldRenderer
-from shuup.admin.utils.permissions import has_permission
 
 
 class Bootstrap3Namespace(object):
@@ -28,8 +27,3 @@ class Bootstrap3Namespace(object):
 
 library.global_function(name="shuup_admin", fn=shuup_admin_template_helpers)
 library.global_function(name="bs3", fn=Bootstrap3Namespace())
-
-
-@library.global_function
-def check_if_user_has_permission(user, permission):
-    return has_permission(user, permission)

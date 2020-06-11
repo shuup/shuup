@@ -280,6 +280,10 @@ class ProductImporter(DataImporter):
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         ),
         ImporterExampleFile(
+            "product_sample_import_with_images.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ),
+        ImporterExampleFile(
             "product_sample_import.csv",
             "text/csv"
         )
@@ -292,13 +296,8 @@ class ProductImporter(DataImporter):
 
     @classmethod
     def get_help_context_data(cls, request):
-        image_sample_file = ImporterExampleFile(
-            "product_sample_import_with_images.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-        if image_sample_file not in cls.example_files and has_permission(request.user, "media.browse"):
-            cls.example_files.append(image_sample_file)
         from shuup.admin.shop_provider import get_shop
         return {
+            "has_media_browse_permission": has_permission(request.user, "media.browse"),
             "supplier": Supplier.objects.enabled().filter(shops=get_shop(request)).first()
         }
