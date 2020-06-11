@@ -32,7 +32,7 @@ def get_importer_choices(user=None):
         return [
             (importer.identifier, importer.name)
             for importer in get_provide_objects("importers")
-            if has_permission(user, importer.name)
+            if has_permission(user, importer.get_permission_identifier())
         ]
 
     return [(i.identifier, i.name) for i in get_provide_objects("importers")]

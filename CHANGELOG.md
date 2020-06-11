@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Importer: add context object while initializing a importer class
 - Core: use UUID in basket IDs to prevent possible duplicates
 - Core: save basket shipping and billing address as dictionary when id is not available
 - Front: remove the custom _load() implementation from the basket as it is the same as the core
@@ -29,6 +30,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Fixed the way the permissions identifier are split in admin
 - Fixed issue that was importing User model directly
 - Core: changed `del` basket command handler to not try to parse the basket line into an integer
 

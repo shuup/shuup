@@ -41,6 +41,8 @@ class ImporterExampleFile(object):
 
 
 class DataImporter(object):
+    identifier = None
+    name = None
     meta_class_getter_name = "get_import_meta"
     meta_base_class = ImportMetaBase
     extra_matches = {}
@@ -67,6 +69,10 @@ class DataImporter(object):
         self._meta = (meta_class(self, self.model) if meta_class else None)
 
         self.field_defaults = self._meta.get_import_defaults()
+
+    @classmethod
+    def get_permission_identifier(cls):
+        return "{}:{}".format(cls.identifier, force_text(cls.name))
 
     @classmethod
     def transform_file(cls, mode, filename, data=None, supplier=None):

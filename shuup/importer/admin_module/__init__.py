@@ -21,7 +21,7 @@ class ImportAdminModule(AdminModule):
 
     def get_extra_permissions(self):
         return [
-            importer.name
+            importer.get_permission_identifier()
             for importer in get_provide_objects("importers")
         ]
 
