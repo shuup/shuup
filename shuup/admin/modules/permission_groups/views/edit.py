@@ -103,7 +103,7 @@ class PermissionGroupForm(forms.ModelForm):
 
         for field, value in cleaned_data.items():
             if field.startswith("perm:") and value:
-                permissions.add(field.split(":")[-1])
+                permissions.add(field.split("perm:")[-1])
 
         cleaned_data["permissions"] = permissions
         return cleaned_data
