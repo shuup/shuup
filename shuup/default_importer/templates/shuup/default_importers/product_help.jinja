@@ -28,14 +28,3 @@
     {% trans %}Columns that are relations to other objects (like Category and Supplier) accept both the object ID number
     and the object name. Make sure that when using the name, there should be only a single object for that given name.{% endtrans %}
 </p>
-{% if not check_if_user_has_permission(request.user, "category.new") %}
-    <h2>{% trans %}Product categories{% endtrans %}</h2>
-    <p>{% trans %}When selecting categories for a product use one/more of this categories{% endtrans %}</p>
-    <ul>
-        {% for category in categories %}
-            <li>
-                {{ category }}
-            </li>
-        {% endfor %}
-    </ul>                
-{% endif %}

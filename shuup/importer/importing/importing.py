@@ -21,7 +21,6 @@ from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 
-from shuup.admin.utils.permissions import has_permission
 from shuup.importer._mapper import RelatedMapper
 from shuup.importer.exceptions import ImporterError
 from shuup.importer.importing.meta import ImportMetaBase
@@ -147,6 +146,7 @@ class DataImporter(object):
 
             elif not mapped_value and not self._meta.has_post_save_handler(field_name):
                 self.unmatched_fields.add(field_name)
+
         self.data_map = data_map
         return data_map
 
@@ -254,10 +254,6 @@ class DataImporter(object):
         row_lower = {key.lower(): val for key, val in row.items()}
         if row_lower.get("ignore"):
             return
-
-        if self.supplier:
-            if "Supplier" in row.keys():
-                row["Supplier"] = self.supplier
 
         obj, new = self._resolve_obj(row)
         if not obj:

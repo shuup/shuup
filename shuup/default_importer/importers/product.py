@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.utils.permissions import has_permission
 from shuup.core.models import (
     MediaFile, Product, ProductMedia, ProductMediaKind, ProductType, SalesUnit,
-    ShopProduct, Supplier, TaxClass, Category
+    ShopProduct, Supplier, TaxClass
 )
 from shuup.importer.exceptions import ImporterError
 from shuup.importer.importing import (
@@ -300,6 +300,5 @@ class ProductImporter(DataImporter):
             cls.example_files.append(image_sample_file)
         from shuup.admin.shop_provider import get_shop
         return {
-            "categories": Category.objects.all(),
             "supplier": Supplier.objects.enabled().filter(shops=get_shop(request)).first()
         }
