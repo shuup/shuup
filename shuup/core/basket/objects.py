@@ -264,10 +264,21 @@ class BaseBasket(OrderSource):
         if shipping_address_id:
             return MutableAddress.objects.get(pk=shipping_address_id)
 
+        shipping_address_data = self._get_value_from_data("shipping_address_data")
+        if shipping_address_data:
+            return MutableAddress.from_data(shipping_address_data)
+
     @shipping_address.setter
     def shipping_address(self, value):
         self._shipping_address = value
-        self._set_value_to_data("shipping_address_id", getattr(value, "id", None))
+
+        if value:
+            if value.id:
+                self._set_value_to_data("shipping_address_id", value.id)
+                self._set_value_to_data("shipping_address_data", None)
+            else:
+                from shuup.utils.models import get_data_dict
+                self._set_value_to_data("shipping_address_data", get_data_dict(value))
 
     @property
     def billing_address(self):
@@ -278,10 +289,21 @@ class BaseBasket(OrderSource):
         if billing_address_id:
             return MutableAddress.objects.get(pk=billing_address_id)
 
+        billing_address_data = self._get_value_from_data("billing_address_data")
+        if billing_address_data:
+            return MutableAddress.from_data(billing_address_data)
+
     @billing_address.setter
     def billing_address(self, value):
         self._billing_address = value
-        self._set_value_to_data("billing_address_id", getattr(value, "id", None))
+
+        if value:
+            if value.id:
+                self._set_value_to_data("billing_address_id", value.id)
+                self._set_value_to_data("billing_address_data", None)
+            else:
+                from shuup.utils.models import get_data_dict
+                self._set_value_to_data("billing_address_data", get_data_dict(value))
 
     @property
     def shipping_method(self):

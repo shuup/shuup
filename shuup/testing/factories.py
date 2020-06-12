@@ -687,7 +687,7 @@ def get_random_email(fake):
     return email
 
 
-def create_random_address(fake=None, **values):
+def create_random_address(fake=None, save=True, **values):
     if not fake:
         fake = get_faker(["person", "address"])
     empty = str  # i.e. constructor for empty string
@@ -698,7 +698,8 @@ def create_random_address(fake=None, **values):
     values.setdefault("country", random.choice(COUNTRY_CODES))
     values.setdefault("postal_code", getattr(fake, "postalcode", empty)())
     address = MutableAddress.from_data(values)
-    address.save()
+    if save:
+        address.save()
     return address
 
 

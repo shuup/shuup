@@ -10,6 +10,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Core: use UUID in basket IDs to prevent possible duplicates
+- Core: save basket shipping and billing address as dictionary when id is not available
 - Front: remove the custom _load() implementation from the basket as it is the same as the core
 - Core: ignore lines that are not from the given source while calculating taxes
 - Campaigns: do not apply campaigns in baskets configured to a supplier
