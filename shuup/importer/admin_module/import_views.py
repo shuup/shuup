@@ -70,6 +70,7 @@ class ImportProcessView(TemplateView):
             get_shop(self.request),
             self.lang,
             supplier=self.supplier,
+            request=self.request,
         )
         self.importer.process_data()
 

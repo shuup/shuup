@@ -57,10 +57,11 @@ class DataImporter(object):
 
     model = None
 
-    def __init__(self, data, shop, language, supplier=None):
+    def __init__(self, data, shop, language, supplier=None, request=None):
         self.shop = shop
         self.data = data
         self.supplier = supplier
+        self.request = request
         self.data_keys = data[0].keys()
         self.language = language
 
