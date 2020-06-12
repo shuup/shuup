@@ -496,10 +496,27 @@ def get_discard_button(discard_url):
     )
 
 
+def get_save_as_copy_button(object, copy_url):
+    if copy_url and object and object.pk:
+        copy_url = try_reverse(copy_url, pk=object.pk)
+        return DropdownItem(
+            url=copy_url,
+            text=_("Save as a copy"),
+            icon="fa fa-clone",
+        )
+    elif object and object.pk:
+        return DropdownItem(
+            onclick="saveAsACopy()",
+            text=_("Save as a copy"),
+            icon="fa fa-clone",
+        )
+
+
 def get_default_edit_toolbar(
         view_object, save_form_id,
         discard_url=None,
         delete_url=None,
+        copy_url=None,
         with_split_save=True,
         with_save_as_copy=False,
         toolbar=None,
@@ -537,11 +554,7 @@ def get_default_edit_toolbar(
         required_permissions=required_permissions,
     )
 
-    save_as_copy_button = DropdownItem(
-        onclick="saveAsACopy()",
-        text=_("Save as a copy"),
-        icon="fa fa-clone",
-    )
+    save_as_copy_button = get_save_as_copy_button(object, copy_url)
 
     if with_split_save:
         dropdown_options = [

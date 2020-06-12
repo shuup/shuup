@@ -13,7 +13,7 @@ from enumfields import Enum
 
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, DropdownHeader, DropdownItem,
-    get_default_edit_toolbar, JavaScriptActionButton, Toolbar
+    get_default_edit_toolbar, Toolbar
 )
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
@@ -38,6 +38,7 @@ class EditProductToolbar(Toolbar):
             self.view, "product_form",
             delete_url="shuup_admin:shop_product.delete",
             with_save_as_copy=True,
+            copy_url="shuup_admin:shop_product.copy"
         ))
         if self.product.pk:
             self._build_existing_product()
@@ -179,10 +180,3 @@ class EditProductToolbar(Toolbar):
                 icon="fa fa-retweet",
                 url=self._get_variation_url(product),
             )
-
-    def get_split_save_button(self, save_form_id):
-        return DropdownActionButton([
-            DropdownItem(onclick="setNextActionAndSubmit('%s', 'return')" % save_form_id, text=_("Save and Exit")),
-            DropdownItem(onclick="setNextActionAndSubmit('%s', 'new')" % save_form_id, text=_("Save and Create New")),
-            JavaScriptActionButton(onclick="saveAsACopy()", text=_("Save as a copy"), icon="fa fa-clone"),
-        ], extra_css_class="btn-primary")

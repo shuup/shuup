@@ -15,3 +15,4 @@ form_post_clean = Signal(
     providing_args=["instance", "cleaned_data"], use_caching=True)
 form_pre_clean = Signal(
     providing_args=["instance", "cleaned_data"], use_caching=True)
+product_copied = Signal(providing_args=["shop", "copied", "copy"], use_caching=True)
