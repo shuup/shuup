@@ -20,6 +20,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Core: add task runner to support running tasks using 3rd party services like Celery
 - Core: add shops and supplier to ServiceProvider and Service models
 - Front: add feature for checkout phases to spawn extra phases
 - Add custom get_ip method and use it everywhere

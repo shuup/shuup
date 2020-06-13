@@ -268,3 +268,15 @@ SHUUP_ALLOWED_UPLOAD_EXTENSIONS = ["pdf"]
 #: `shuup.utils.filer.UploadImageForm`.
 #:
 SHUUP_MAX_UPLOAD_SIZE = 5000000
+
+#: Spec that defines the task runner.
+#: The task runner is an object that can handle dynamic task execution
+#: by receiving a function spec and a set of arguments.
+#:
+#: Custom task runners can be implemented to enable asynchronous
+#: execution through tools like Celery.
+#:
+#: The default implementation is a basic task runner that will
+#: load the function and call it passing the arguments received.
+#:
+SHUUP_TASK_RUNNER = "shuup.core.tasks.DefaultTaskRunner"
