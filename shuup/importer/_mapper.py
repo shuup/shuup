@@ -125,6 +125,10 @@ class RelatedMapper(object):
             elif field.name == "shop":
                 obj.shop = self.row_session.shop
 
+        # ask the handler whether we can create new objects of this type
+        if not self.handler.can_create_object(obj):
+            return None
+
         try:
             obj.save()
             mapped = obj

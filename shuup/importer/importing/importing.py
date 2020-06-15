@@ -75,49 +75,46 @@ class DataImporter(object):
     model = None
 
     @classmethod
-    def get_import_context_from_request(cls, request, **defaults):
+    def get_importer_context(cls, request, **defaults):
         """
-        Implement your custom context creator here
+        Returns a context object for the given `request`
+        that will be used on the importer process.
+
+        :type request: django.http.HttpRequest
+        :type defaults: dict
+
+        :rtype: ImporterContext
         """
         return ImporterContext(**defaults)
 
-    def __init__(self, data, shop=None, language=None, context=None):
+    def __init__(self, data, context):
         """
         :type context: ImporterContext
         """
         self.data = data
-
-        if (shop or language) and not context:
-            import warnings
-            warnings.warn(
-                "Warning! `shop` and `language` parameters will be "
-                "deprecated in Shuup 2.0. Use `context` instead.",
-                DeprecationWarning
-            )
-
-        if context:
-            self.shop = context.shop
-            self.language = context.language
-            self.context = context
-        else:
-            self.shop = shop
-            self.language = language
-            self.context = None
-
         self.data_keys = data[0].keys()
+
+        self.shop = context.shop
+        self.language = context.language
+        self.context = context
 
         meta_class_getter = getattr(self.model, self.meta_class_getter_name, None)
         meta_class = meta_class_getter() if meta_class_getter else self.meta_base_class
-        self._meta = (meta_class(self, self.model, self.context) if meta_class else None)
+        self._meta = (meta_class(self, self.model) if meta_class else None)
 
         self.field_defaults = self._meta.get_import_defaults()
+
+        self.other_log_messages = []
+        self.new_objects = []
+        self.updated_objects = []
+        self.log_messages = []
 
     @classmethod
     def get_permission_identifier(cls):
         return "{}:{}".format(cls.identifier, force_text(cls.name))
 
     @classmethod
-    def transform_file(cls, mode, filename, data=None, supplier=None):
+    def transform_file(cls, mode, filename, data=None):
         """
         That method will be called if `cls.custom_file_transformer` is True
         """
@@ -154,6 +151,9 @@ class DataImporter(object):
 
                 # Assign into mapping
                 for name in names:
+                    if name in self._meta.fields_to_skip:
+                        continue
+
                     if map_base.get("translated"):
                         mapping[name] = copy_update(map_base, lang=self.language)
                     else:
@@ -175,10 +175,11 @@ class DataImporter(object):
 
         data_map = {}
         for field_name in sorted(self.data_keys):
-            if field_name.lower() == "ignore":
+            mfname = fold_mapping_name(field_name)
+
+            if mfname == "ignore" or mfname in self._meta.fields_to_skip:
                 continue
 
-            mfname = fold_mapping_name(field_name)
             mapped_value = model_mapping.get(mfname)
             if not mapped_value:
                 for fld, opt in six.iteritems(model_mapping):
@@ -303,11 +304,10 @@ class DataImporter(object):
         if row_lower.get("ignore"):
             return
 
-        should_continue = self._meta.should_skip_row(row_lower)
-        if should_continue:
-            return
-
         row = self._meta.pre_process_row(row)
+
+        if self._meta.should_skip_row(row):
+            return
 
         obj, new = self._resolve_obj(row)
         if not obj:
@@ -533,6 +533,14 @@ class DataImporter(object):
         :param row: A row dict.
         """
         return self.model
+
+    def can_create_object(self, obj):
+        """
+        Returns whether the importer can create the given object.
+        This is useful to handle related objects creation and
+        skip them when needed.
+        """
+        return True
 
     @property
     def is_multi_model(self):

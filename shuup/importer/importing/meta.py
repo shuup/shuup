@@ -60,10 +60,9 @@ class ImportMetaBase(object):
     """
     fields_to_skip = []
 
-    def __init__(self, handler, model, context):
-        self.handler = handler
+    def __init__(self, handler, model):
+        self.handler = handler      # type: shuup.importer.importing.importing.DataImporter
         self.model = model
-        self.context = context
         self.global_aliases = get_global_aliases()
 
     def get_import_defaults(self):
@@ -93,23 +92,23 @@ class ImportMetaBase(object):
         :param row: Current row data
         :type row: dict
 
-        :return: False
-        :type bool: True if the row should get skipped else False
+        :return: True if the row should get skipped, False otherwise
+        :rtype: bool
         """
         return False
 
     def pre_process_row(self, row):
         """
-        Change values for the row
+        Do a pre-processing task on the given row and change the data in place.
 
-        This method is called befor the row_session is created.
-        This allows to override values on the row.
+        This method is called befor the row_session is created
+        to allow to override values on the row or to create related objects.
 
         :param row: Current row data
         :type row: dict
 
-        :return: row
-        :type row: dict
+        :return: the row modified, if needed
+        :rtype: dict
         """
         return row
 
