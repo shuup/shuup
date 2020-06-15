@@ -83,6 +83,27 @@ class ImportMetaBase(object):
         """
         return {}
 
+    def change_row_values(self, row, request):
+        """
+        Change values for the row
+
+        This method is called befor the row_session is created.
+        This allows to override values on the row.
+        Also allows you to cancel the row from being created.
+
+        :param row: Current row data
+        :type row: dict
+        :param request: Current request
+        :type request: django.core.handlers.wsgi.WSGIRequest
+
+        :return: row
+        :type row: dict
+
+        :return: True
+        :type bool: True if the row should continue to be imported else False
+        """
+        return row, True
+
     def presave_hook(self, row_session):
         """
         Pre-save Hook

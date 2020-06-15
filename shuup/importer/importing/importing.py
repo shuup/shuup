@@ -57,10 +57,9 @@ class DataImporter(object):
 
     model = None
 
-    def __init__(self, data, shop, language, supplier=None, request=None):
+    def __init__(self, data, shop, language, request=None):
         self.shop = shop
         self.data = data
-        self.supplier = supplier
         self.request = request
         self.data_keys = data[0].keys()
         self.language = language
@@ -260,6 +259,10 @@ class DataImporter(object):
         # ignore the row if there is a column 'ignore" with a valid value
         row_lower = {key.lower(): val for key, val in row.items()}
         if row_lower.get("ignore"):
+            return
+
+        row, should_continue = self._meta.change_row_values(row, self.request)
+        if not should_continue:
             return
 
         obj, new = self._resolve_obj(row)
