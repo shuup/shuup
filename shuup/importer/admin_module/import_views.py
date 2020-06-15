@@ -69,8 +69,6 @@ class ImportProcessView(TemplateView):
             self.request,
             shop=get_shop(self.request),
             language=self.lang,
-            user=self.request.user,
-            supplier=get_supplier(self.request)
         )
 
         self.importer = self.importer_cls(self.data, get_shop(self.request), self.lang, context=context)
