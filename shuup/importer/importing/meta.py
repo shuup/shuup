@@ -60,9 +60,10 @@ class ImportMetaBase(object):
     """
     fields_to_skip = []
 
-    def __init__(self, handler, model):
+    def __init__(self, handler, model, context):
         self.handler = handler
         self.model = model
+        self.context = context
         self.global_aliases = get_global_aliases()
 
     def get_import_defaults(self):
@@ -83,26 +84,34 @@ class ImportMetaBase(object):
         """
         return {}
 
-    def change_row_values(self, row, request):
+    def should_skip_row(self, row):
+        """
+        Allows you to skip a row from getting imported
+
+        Used to set up a condition for a row to get imported
+
+        :param row: Current row data
+        :type row: dict
+
+        :return: False
+        :type bool: True if the row should get skipped else False
+        """
+        return False
+
+    def pre_process_row(self, row):
         """
         Change values for the row
 
         This method is called befor the row_session is created.
         This allows to override values on the row.
-        Also allows you to cancel the row from being created.
 
         :param row: Current row data
         :type row: dict
-        :param request: Current request
-        :type request: django.core.handlers.wsgi.WSGIRequest
 
         :return: row
         :type row: dict
-
-        :return: True
-        :type bool: True if the row should continue to be imported else False
         """
-        return row, True
+        return row
 
     def presave_hook(self, row_session):
         """

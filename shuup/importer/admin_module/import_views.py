@@ -65,12 +65,15 @@ class ImportProcessView(TemplateView):
         if self.data is None:
             return False
 
-        self.importer = self.importer_cls(
-            self.data,
-            get_shop(self.request),
-            self.lang,
-            request=self.request,
+        context = self.importer_cls.get_import_context_from_request(
+            self.request,
+            shop=get_shop(self.request),
+            language=self.lang,
+            user=self.request.user,
+            supplier=get_supplier(self.request)
         )
+
+        self.importer = self.importer_cls(self.data, get_shop(self.request), self.lang, context=context)
         self.importer.process_data()
 
         if self.request.method == "POST":

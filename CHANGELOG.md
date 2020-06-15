@@ -26,7 +26,7 @@ List all changes after the last release here (newer on top). Each change on a se
 - Front: add feature for checkout phases to spawn extra phases
 - Add custom get_ip method and use it everywhere
 - Importer: add permissions for all the diffrent types of importers
-- Importer: removed product image example file if user dose not have permissions to go to media.browse
+- Importer: add context class to data importer
 
 ### Fixed
 

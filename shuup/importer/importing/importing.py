@@ -40,6 +40,23 @@ class ImporterExampleFile(object):
         self.template_name = template_name
 
 
+class ImporterContext:
+    shop = None         # type: shuup.core.models.Shop
+    language = None     # type: str
+
+    def __init__(self, shop, language, **kwargs):
+        """
+        :type shop: shuup.core.models.Shop
+        :param shop: the current shop
+
+        :type language: shuup.core.models.Shop
+        :param language: the current shop
+
+        """
+        self.shop = shop
+        self.language = language
+
+
 class DataImporter(object):
     identifier = None
     name = None
@@ -57,16 +74,41 @@ class DataImporter(object):
 
     model = None
 
-    def __init__(self, data, shop, language, request=None):
-        self.shop = shop
+    @classmethod
+    def get_import_context_from_request(cls, request, **defaults):
+        """
+        Implement your custom context creator here
+        """
+        return ImporterContext(**defaults)
+
+    def __init__(self, data, shop=None, language=None, context=None):
+        """
+        :type context: ImporterContext
+        """
         self.data = data
-        self.request = request
+
+        if (shop or language) and not context:
+            import warnings
+            warnings.warn(
+                "Warning! `shop` and `language` parameters will be "
+                "deprecated in Shuup 2.0. Use `context` instead.",
+                DeprecationWarning
+            )
+
+        if context:
+            self.shop = context.shop
+            self.language = context.language
+            self.context = context
+        else:
+            self.shop = shop
+            self.language = language
+            self.context = None
+
         self.data_keys = data[0].keys()
-        self.language = language
 
         meta_class_getter = getattr(self.model, self.meta_class_getter_name, None)
         meta_class = meta_class_getter() if meta_class_getter else self.meta_base_class
-        self._meta = (meta_class(self, self.model) if meta_class else None)
+        self._meta = (meta_class(self, self.model, self.context) if meta_class else None)
 
         self.field_defaults = self._meta.get_import_defaults()
 
@@ -261,9 +303,11 @@ class DataImporter(object):
         if row_lower.get("ignore"):
             return
 
-        row, should_continue = self._meta.change_row_values(row, self.request)
-        if not should_continue:
+        should_continue = self._meta.should_skip_row(row_lower)
+        if should_continue:
             return
+
+        row = self._meta.pre_process_row(row)
 
         obj, new = self._resolve_obj(row)
         if not obj:
