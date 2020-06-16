@@ -13,6 +13,7 @@ from django.db.models import ForeignKey, ManyToManyField, Q
 from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.utils.permissions import has_permission
 from shuup.core.models import (
     MediaFile, Product, ProductMedia, ProductMediaKind, ProductType, SalesUnit,
     ShopProduct, Supplier, TaxClass
@@ -297,5 +298,6 @@ class ProductImporter(DataImporter):
     def get_help_context_data(cls, request):
         from shuup.admin.shop_provider import get_shop
         return {
+            "has_media_browse_permission": has_permission(request.user, "media.browse"),
             "supplier": Supplier.objects.enabled().filter(shops=get_shop(request)).first()
         }

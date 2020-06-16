@@ -40,7 +40,26 @@ class ImporterExampleFile(object):
         self.template_name = template_name
 
 
+class ImporterContext:
+    shop = None         # type: shuup.core.models.Shop
+    language = None     # type: str
+
+    def __init__(self, shop, language, **kwargs):
+        """
+        :type shop: shuup.core.models.Shop
+        :param shop: the current shop
+
+        :type language: shuup.core.models.Shop
+        :param language: the current shop
+
+        """
+        self.shop = shop
+        self.language = language
+
+
 class DataImporter(object):
+    identifier = None
+    name = None
     meta_class_getter_name = "get_import_meta"
     meta_base_class = ImportMetaBase
     extra_matches = {}
@@ -55,17 +74,44 @@ class DataImporter(object):
 
     model = None
 
-    def __init__(self, data, shop, language):
-        self.shop = shop
+    @classmethod
+    def get_importer_context(cls, request, **defaults):
+        """
+        Returns a context object for the given `request`
+        that will be used on the importer process.
+
+        :type request: django.http.HttpRequest
+        :type defaults: dict
+
+        :rtype: ImporterContext
+        """
+        return ImporterContext(**defaults)
+
+    def __init__(self, data, context):
+        """
+        :type context: ImporterContext
+        """
         self.data = data
         self.data_keys = data[0].keys()
-        self.language = language
+
+        self.shop = context.shop
+        self.language = context.language
+        self.context = context
 
         meta_class_getter = getattr(self.model, self.meta_class_getter_name, None)
         meta_class = meta_class_getter() if meta_class_getter else self.meta_base_class
         self._meta = (meta_class(self, self.model) if meta_class else None)
 
         self.field_defaults = self._meta.get_import_defaults()
+
+        self.other_log_messages = []
+        self.new_objects = []
+        self.updated_objects = []
+        self.log_messages = []
+
+    @classmethod
+    def get_permission_identifier(cls):
+        return "{}:{}".format(cls.identifier, force_text(cls.name))
 
     @classmethod
     def transform_file(cls, mode, filename, data=None):
@@ -105,6 +151,9 @@ class DataImporter(object):
 
                 # Assign into mapping
                 for name in names:
+                    if name in self._meta.fields_to_skip:
+                        continue
+
                     if map_base.get("translated"):
                         mapping[name] = copy_update(map_base, lang=self.language)
                     else:
@@ -126,10 +175,11 @@ class DataImporter(object):
 
         data_map = {}
         for field_name in sorted(self.data_keys):
-            if field_name.lower() == "ignore":
+            mfname = fold_mapping_name(field_name)
+
+            if mfname == "ignore" or mfname in self._meta.fields_to_skip:
                 continue
 
-            mfname = fold_mapping_name(field_name)
             mapped_value = model_mapping.get(mfname)
             if not mapped_value:
                 for fld, opt in six.iteritems(model_mapping):
@@ -252,6 +302,11 @@ class DataImporter(object):
         # ignore the row if there is a column 'ignore" with a valid value
         row_lower = {key.lower(): val for key, val in row.items()}
         if row_lower.get("ignore"):
+            return
+
+        row = self._meta.pre_process_row(row)
+
+        if self._meta.should_skip_row(row):
             return
 
         obj, new = self._resolve_obj(row)
@@ -478,6 +533,14 @@ class DataImporter(object):
         :param row: A row dict.
         """
         return self.model
+
+    def can_create_object(self, obj):
+        """
+        Returns whether the importer can create the given object.
+        This is useful to handle related objects creation and
+        skip them when needed.
+        """
+        return True
 
     @property
     def is_multi_model(self):

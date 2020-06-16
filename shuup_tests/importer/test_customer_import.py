@@ -20,7 +20,7 @@ from shuup.testing.factories import get_default_shop
 
 
 @pytest.mark.django_db
-def test_customer_sample():
+def test_customer_sample(rf):
     filename = "customer_sample.xlsx"
     activate("en")
     shop = get_default_shop()
@@ -28,7 +28,10 @@ def test_customer_sample():
     path = os.path.join(os.path.dirname(__file__), "data", "contact", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
 
-    importer = PersonContactImporter(transformed_data, shop, "en")
+    importer = PersonContactImporter(
+        transformed_data,
+        CompanyContactImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
     assert len(importer.unmatched_fields) == 0
     importer.do_import(ImportMode.CREATE_UPDATE)
@@ -70,7 +73,7 @@ def test_customer_sample():
 
 
 @pytest.mark.django_db
-def test_company_sample():
+def test_company_sample(rf):
     filename = "company_contact_sample.xlsx"
     activate("en")
     shop = get_default_shop()
@@ -78,7 +81,10 @@ def test_company_sample():
     path = os.path.join(os.path.dirname(__file__), "data", "contact", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
 
-    importer = CompanyContactImporter(transformed_data, shop, "en")
+    importer = CompanyContactImporter(
+        transformed_data,
+        CompanyContactImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
     assert len(importer.unmatched_fields) == 0
     importer.do_import(ImportMode.CREATE_UPDATE)

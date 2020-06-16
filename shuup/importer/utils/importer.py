@@ -11,6 +11,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 
+from shuup.admin.utils.permissions import has_permission
 from shuup.apps.provides import get_provide_objects
 
 
@@ -25,7 +26,15 @@ class ImportMode(Enum):
         UPDATE = _("Only update existing (no new ones are created)")
 
 
-def get_importer_choices():
+def get_importer_choices(user=None):
+    # filter the importers by the user
+    if user:
+        return [
+            (importer.identifier, importer.name)
+            for importer in get_provide_objects("importers")
+            if has_permission(user, importer.get_permission_identifier())
+        ]
+
     return [(i.identifier, i.name) for i in get_provide_objects("importers")]
 
 

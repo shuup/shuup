@@ -12,7 +12,13 @@
                 <ul>
                     {% for obj in importer.new_objects %}
                     {% set url = shuup_admin.model_url(obj, "detail") %}
-                    <li><a href="{{ url }}">{{ obj }}</a></li>
+                    <li>
+                    {% if url %}
+                        <a href="{{ url }}">{{ obj }}</a>
+                    {% else %}
+                        {{ obj }}
+                    {% endif %}
+                    </li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -25,7 +31,13 @@
                 <ul>
                     {% for obj in importer.updated_objects %}
                     {% set url = shuup_admin.model_url(obj, "detail") %}
-                        <li><a href="{{ url }}">{{ obj }}</a></li>
+                        <li>
+                        {% if url %}
+                            <a href="{{ url }}">{{ obj }}</a>
+                        {% else %}
+                            {{ obj }}
+                        {% endif %}
+                        </li>
                     {% endfor %}
                 </ul>
             {% else %}

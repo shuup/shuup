@@ -61,7 +61,7 @@ class ImportMetaBase(object):
     fields_to_skip = []
 
     def __init__(self, handler, model):
-        self.handler = handler
+        self.handler = handler      # type: shuup.importer.importing.importing.DataImporter
         self.model = model
         self.global_aliases = get_global_aliases()
 
@@ -82,6 +82,35 @@ class ImportMetaBase(object):
         :rtype: dict[str, str]|dict
         """
         return {}
+
+    def should_skip_row(self, row):
+        """
+        Allows you to skip a row from getting imported
+
+        Used to set up a condition for a row to get imported
+
+        :param row: Current row data
+        :type row: dict
+
+        :return: True if the row should get skipped, False otherwise
+        :rtype: bool
+        """
+        return False
+
+    def pre_process_row(self, row):
+        """
+        Do a pre-processing task on the given row and change the data in place.
+
+        This method is called befor the row_session is created
+        to allow to override values on the row or to create related objects.
+
+        :param row: Current row data
+        :type row: dict
+
+        :return: the row modified, if needed
+        :rtype: dict
+        """
+        return row
 
     def presave_hook(self, row_session):
         """

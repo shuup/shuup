@@ -97,9 +97,9 @@
     (function() {
         // make all checkboxes for the same id be checked/unchecked
         function handleCheckboxChanged(inputElement) {
-            if (inputElement.name.indexOf(":")) {
-                var perm_id = inputElement.name.split(":")[1];
-                $("#permissions-accordion input[name*=':" + perm_id + "']").prop("checked", inputElement.checked);
+            if (inputElement.name.indexOf("perm:")) {
+                var perm_id = inputElement.name.split("perm:")[1];
+                $("#permissions-accordion input[name*='perm:" + perm_id + "']").prop("checked", inputElement.checked);
             }
         }
         $(".required-permissions .module-select-all").on("change", function(evt) {

@@ -35,4 +35,4 @@ class ImportForm(forms.Form):
     def __init__(self, **kwargs):
         self.request = kwargs.pop("request")
         super(ImportForm, self).__init__(**kwargs)
-        self.fields["importer"].choices = get_importer_choices()
+        self.fields["importer"].choices = get_importer_choices(self.request.user)

@@ -13,8 +13,16 @@
 <h2>{% trans %}Images{% endtrans %}</h2>
 <p>{% trans %}If you are importing products with images, ensure the following:{% endtrans %}</p>
 <ul>
-    {% set media_browser_url = url("shuup_admin:media.browse") %}
-    <li>{% trans media_browser_url=media_browser_url %}Upload all product images using the <a href="{{ media_browser_url }}" target="_blank">Media Browser</a>.{% endtrans %}</li>
+    <li>
+        {% if has_media_browse_permission %}
+            {% set media_browser_url = url("shuup_admin:media.browse") %}
+            {% trans media_browser_url=media_browser_url %}
+                Upload all product images using the <a href="{{ media_browser_url }}" target="_blank">Media Browser</a>.
+            {% endtrans %}
+        {% else %}
+            {% trans %}Upload all product images using the Media Browser.{% endtrans %}
+        {% endif %}
+    </li>
     <li>{% trans %}Use the image file name on <strong>image</strong> and/or <strong>images</strong> column(s).{% endtrans %}</li>
     <li>{% trans %}<strong>images</strong> column can receive a comma-separated list of image names.{% endtrans %}</li>
     <li>{% trans %}Image names can be the file name (e.g.: <em>product_001.png</em>) or the path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).
