@@ -54,7 +54,7 @@ def _create_random_media_file(shop, file_path):
                                       "sample_import4.csv", "sample_import5.csv",
                                       "sample_import.xls", images_file, bom_file])
 @pytest.mark.django_db
-def test_sample_import_all_match(filename):
+def test_sample_import_all_match(filename, rf):
     activate("en")
     shop = get_default_shop()
     tax_class = get_default_tax_class()
@@ -69,7 +69,10 @@ def test_sample_import_all_match(filename):
         assert raw.startswith(codecs.BOM_UTF8)
 
     transformed_data = transform_file(filename.split(".")[1], path)
-    importer = ProductImporter(transformed_data, shop, "en")
+    importer = ProductImporter(
+        transformed_data,
+        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
 
     if filename == images_file:
@@ -123,7 +126,7 @@ def test_sample_import_all_match(filename):
 
 
 @pytest.mark.django_db
-def test_sample_import_shop_relation():
+def test_sample_import_shop_relation(rf):
     activate("en")
     shop = get_default_shop()
     get_default_tax_class()
@@ -132,7 +135,10 @@ def test_sample_import_shop_relation():
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", "complex_import.xlsx")
     transformed_data = transform_file("xlsx", path)
-    importer = ProductImporter(transformed_data, shop, "en")
+    importer = ProductImporter(
+        transformed_data,
+        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
     importer.do_import(ImportMode.CREATE_UPDATE)
     products = importer.new_objects
@@ -151,7 +157,7 @@ def test_sample_import_shop_relation():
                                       "sample_import4.csv", "sample_import5.csv",
                                       "sample_import.xls"])
 @pytest.mark.django_db
-def test_sample_import_all_match_all_shops(filename):
+def test_sample_import_all_match_all_shops(filename, rf):
     activate("en")
     shop1 = get_shop(identifier="shop1", domain="shop1", enabled=True)
     shop2 = get_shop(identifier="shop2", domain="shop2", enabled=True)
@@ -164,7 +170,10 @@ def test_sample_import_all_match_all_shops(filename):
     transformed_data = transform_file(filename.split(".")[1], path)
 
     for shop in [shop1, shop2]:
-        importer = ProductImporter(transformed_data, shop, "en")
+        importer = ProductImporter(
+            transformed_data,
+            ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        )
         importer.process_data()
 
         assert len(importer.unmatched_fields) == 0
@@ -195,7 +204,7 @@ def test_sample_import_all_match_all_shops(filename):
 
 
 @pytest.mark.django_db
-def test_sample_import_images_errors():
+def test_sample_import_images_errors(rf):
     activate("en")
     shop = get_default_shop()
     get_default_tax_class()
@@ -204,7 +213,10 @@ def test_sample_import_images_errors():
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", "sample_import_images_error.csv")
     transformed_data = transform_file("csv", path)
-    importer = ProductImporter(transformed_data, shop, "en")
+    importer = ProductImporter(
+        transformed_data,
+        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
 
     assert len(importer.unmatched_fields) == 2
@@ -216,7 +228,7 @@ def test_sample_import_images_errors():
 
 
 @pytest.mark.django_db
-def test_sample_ignore_column():
+def test_sample_ignore_column(rf):
     activate("en")
     shop = get_default_shop()
     get_default_tax_class()
@@ -225,7 +237,10 @@ def test_sample_ignore_column():
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", "sample_import_ignore.csv")
     transformed_data = transform_file("csv", path)
-    importer = ProductImporter(transformed_data, shop, "en")
+    importer = ProductImporter(
+        transformed_data,
+        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
 
     assert len(importer.unmatched_fields) == 0
@@ -236,7 +251,7 @@ def test_sample_ignore_column():
 
 @pytest.mark.parametrize("stock_managed", [True, False])
 @pytest.mark.django_db
-def test_sample_import_no_match(stock_managed):
+def test_sample_import_no_match(rf, stock_managed):
     filename = "sample_import_nomatch.xlsx"
     if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
         pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")
@@ -253,7 +268,10 @@ def test_sample_import_no_match(stock_managed):
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
 
-    importer = ProductImporter(transformed_data, shop, "en")
+    importer = ProductImporter(
+        transformed_data,
+        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
     assert len(importer.unmatched_fields) == 1
     assert "gtiin" in importer.unmatched_fields
@@ -297,7 +315,7 @@ def test_sample_import_no_match(stock_managed):
         assert sa.delta == 20
 
 
-def import_categoryfile(filename, expected_category_count, map_from=None, map_to=None):
+def import_categoryfile(rf, filename, expected_category_count, map_from=None, map_to=None):
     activate("en")
     shop = get_default_shop()
     get_default_tax_class()
@@ -307,7 +325,10 @@ def import_categoryfile(filename, expected_category_count, map_from=None, map_to
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
-    importer = ProductImporter(transformed_data, shop, "en")
+    importer = ProductImporter(
+        transformed_data,
+        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
     if map_from:
         assert len(importer.unmatched_fields) == 1
@@ -322,13 +343,14 @@ def import_categoryfile(filename, expected_category_count, map_from=None, map_to
 
 
 @pytest.mark.django_db
-def test_proper_category_name():
-    import_categoryfile(filename="proper_category_name.xlsx", expected_category_count=1)
+def test_proper_category_name(rf):
+    import_categoryfile(rf, filename="proper_category_name.xlsx", expected_category_count=1)
 
 
 @pytest.mark.django_db
-def test_strange_category_name():
+def test_strange_category_name(rf):
     import_categoryfile(
+        rf,
         filename="strange_category_name.xlsx",
         expected_category_count=1,
         map_from="mycat",
@@ -337,13 +359,14 @@ def test_strange_category_name():
 
 
 @pytest.mark.django_db
-def test_proper_category_names():
-    import_categoryfile(filename="proper_categories.xlsx", expected_category_count=2)
+def test_proper_category_names(rf):
+    import_categoryfile(rf, filename="proper_categories.xlsx", expected_category_count=2)
 
 
 @pytest.mark.django_db
-def test_strange_category_names():
+def test_strange_category_names(rf):
     import_categoryfile(
+        rf,
         filename="strange_categories.xlsx",
         expected_category_count=2,
         map_from="mycats",
@@ -426,7 +449,7 @@ PRODUCT_DATA = [
     }
 ]
 @pytest.mark.django_db
-def test_complex_import():
+def test_complex_import(rf):
     filename = "complex_import.xlsx"
     activate("en")
     shop = get_default_shop()
@@ -437,7 +460,10 @@ def test_complex_import():
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
-    importer = ProductImporter(transformed_data, shop, "en")
+    importer = ProductImporter(
+        transformed_data,
+        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+    )
     importer.process_data()
 
     assert len(importer.unmatched_fields) == 0
