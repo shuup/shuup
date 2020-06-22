@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 21:39+0000\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,15 +62,15 @@ msgstr ""
 msgid "Please enter a basket title."
 msgstr ""
 
-msgid "Cannot save an empty basket."
+msgid "Can't save an empty basket."
 msgstr ""
 
-msgid "Product not available in this shop"
+msgid "Product is not available in this shop."
 msgstr ""
 
-msgid "Invalid supplier"
+msgid "Invalid supplier."
 msgstr ""
 
 #, python-format
-msgid "%d product(s) added to cart"
+msgid "%d product(s) added to cart."
 msgstr ""

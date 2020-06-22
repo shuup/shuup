@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-23 21:16+0000\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -125,15 +125,11 @@ msgid ""
 "that all languages should be available."
 msgstr ""
 
-#, python-format
-msgid "Basket loading failed: Incompatible basket (%s)"
-msgstr ""
-
 msgid "Try to remove some products from the basket and order them separately."
 msgstr ""
 
 #, python-format
-msgid "Products in basket cannot be shipped together. %s"
+msgid "Products in basket can't be shipped together. %s"
 msgstr ""
 
 #, python-format
@@ -208,7 +204,7 @@ msgstr ""
 msgid "Name - Z-A"
 msgstr ""
 
-msgid "Check this to allow products to be sortable by product name."
+msgid "Enable this to allow products to be sortable by product name."
 msgstr ""
 
 msgid ""
@@ -229,8 +225,8 @@ msgid "Price - High to Low"
 msgstr ""
 
 msgid ""
-"Check this to allow products to be sortable by price (from low to high and "
-"high to low)."
+"Enable this to allow products to be sortable by price (from low to high; "
+"from high to low)."
 msgstr ""
 
 msgid "Sort products by date created"
@@ -243,7 +239,7 @@ msgid "Date created"
 msgstr ""
 
 msgid ""
-"Check this to allow products to be sortable from newest to oldest products."
+"Enable this to allow products to be sortable from newest to oldest products."
 msgstr ""
 
 msgid ""
@@ -261,7 +257,7 @@ msgid "Date created - oldest first"
 msgstr ""
 
 msgid ""
-"Check this to allow products to be sortable from oldest to newest products."
+"Enable this to allow products to be sortable from oldest to newest products."
 msgstr ""
 
 msgid "Filter products by manufacturer"
@@ -274,7 +270,7 @@ msgid "Manufacturers"
 msgstr ""
 
 msgid ""
-"Check this to allow products to be filterable by manufacturer for this "
+"Enable this to allow products to be filterable by manufacturer for this "
 "category."
 msgstr ""
 
@@ -293,7 +289,7 @@ msgid "Categories"
 msgstr ""
 
 msgid ""
-"Check this to allow products to be filterable by any visible product "
+"Enable this to allow products to be filterable by any visible product "
 "category. "
 msgstr ""
 
@@ -312,8 +308,8 @@ msgid "Products per page"
 msgstr ""
 
 msgid ""
-"Check this to allow the customer to be able to select the number of products "
-"to display."
+"Enable this to allow the customer to be able to select the number of "
+"products to display."
 msgstr ""
 
 msgid ""
@@ -328,8 +324,8 @@ msgid "Ordering for filter by variation"
 msgstr ""
 
 msgid ""
-"Check this to allow products to be filterable by their different variations. "
-"For example, size or color."
+"Enable this to allow products to be filterable by their different "
+"variations. For example, size or color."
 msgstr ""
 
 msgid ""
@@ -347,7 +343,7 @@ msgid "Price"
 msgstr ""
 
 msgid ""
-"Check this to allow products to be filtered by price. Prices will be listed "
+"Enable this to allow products to be filtered by price. Prices will be listed "
 "in groups from the price range minimum to price range maximum in increments "
 "of the configured price range step."
 msgstr ""
@@ -401,7 +397,7 @@ msgstr ""
 msgid "Suppliers"
 msgstr ""
 
-msgid "Check this to allow products to be filterable by supplier."
+msgid "Enable this to allow products to be filterable by supplier."
 msgstr ""
 
 msgid ""
@@ -739,7 +735,7 @@ msgstr ""
 msgid "Product added to cart"
 msgstr ""
 
-msgid "There was an error adding the product to the basket"
+msgid "Adding the product to the basket failed."
 msgstr ""
 
 msgid "Remove product from basket"
@@ -759,7 +755,7 @@ msgstr ""
 msgid "Coupons applied"
 msgstr ""
 
-msgid "Have a coupon code? Enter it here"
+msgid "Do you have a coupon code? Enter it here. "
 msgstr ""
 
 msgid "Coupon Code"
@@ -780,19 +776,25 @@ msgstr ""
 msgid "Back to Products"
 msgstr ""
 
+msgid "Error!"
+msgstr ""
+
 msgid "Invalid coupon code."
 msgstr ""
 
-msgid "Error when removing coupon."
+msgid "Removing a coupon failed."
 msgstr ""
 
 msgid "Coupon is not available."
 msgstr ""
 
-msgid "Error when adding coupon."
+msgid "Adding a coupon failed."
 msgstr ""
 
-msgid "Cart saved!"
+msgid "Success!"
+msgstr ""
+
+msgid "Cart saved."
 msgstr ""
 
 msgid "Filter Products"
@@ -1136,7 +1138,7 @@ msgid "Show Product Details"
 msgstr ""
 
 msgid ""
-"If you check this, extra information will be shown on product page in "
+"If you enable this, extra information will be shown on product page in "
 "frontend."
 msgstr ""
 
@@ -1144,7 +1146,7 @@ msgid "Show Variations as Buttons"
 msgstr ""
 
 msgid ""
-"If you check this, the variations will be shown as buttons instead of "
+"If you enable this, the variations will be shown as buttons instead of "
 "dropdowns."
 msgstr ""
 
@@ -1185,12 +1187,12 @@ msgid "Edit"
 msgstr ""
 
 #, python-brace-format
-msgid "{language_code} is an invalid language code"
+msgid "`{language_code}` is an invalid language code."
 msgstr ""
 
-msgid "This product is not available in this shop."
+msgid "Error! This product is not available in this shop."
 msgstr ""
 
 #, python-format
-msgid "Maximum file size reached (%(size)s MB)"
+msgid "Maximum file size reached (%(size)s MB)."
 msgstr ""

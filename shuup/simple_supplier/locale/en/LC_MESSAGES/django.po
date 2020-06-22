@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2020-06-22 18:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,36 +43,36 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
-"(%(supplier_name)s)"
+"Success! Added %(delta)s `%(unit_symbol)s` for product `%(product_name)s` "
+"stock (%(supplier_name)s)."
 msgstr ""
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
-"(%(supplier_name)s)"
+"Success! Removed %(delta)s `%(unit_symbol)s` from product `%(product_name)s` "
+"stock (%(supplier_name)s)."
 msgstr ""
 
 #, python-format
-msgid "Alert limit for product %(product_name)s set to %(value)s."
+msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
 msgstr ""
 
-msgid "Not allowed"
+msgid "Non-POST request methods are forbidden."
 msgstr ""
 
-msgid "Error, please check submitted values and try again."
+msgid "Please check submitted values and try again."
 msgstr ""
 
 #, python-format
-msgid "Error, please check submitted values and try again (%(error)s)."
+msgid "Please check submitted values and try again (%(error)s)."
 msgstr ""
 
 #, python-brace-format
-msgid "Stock management is now enabled for {product}"
+msgid "Stock management is now enabled for {product}."
 msgstr ""
 
 #, python-brace-format
-msgid "Stock management is now disabled for {product}"
+msgid "Stock management is now disabled for {product}."
 msgstr ""
 
 #, python-format
@@ -204,7 +204,10 @@ msgid ""
 "does not have suppliers with %(module_name)s module."
 msgstr ""
 
-msgid "Please set suppliers at Purchasing section."
+#, python-format
+msgid ""
+"Please go in this product's Additional tab section and add enabled Suppliers "
+"that have both %(module_name)s module and stock management enabled."
 msgstr ""
 
 #, python-format
@@ -213,8 +216,9 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Please set %(module_name)s module for at least one of the <a href="
-"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+"Please set %(module_name)s module for at least one of the enabled <a href="
+"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a> and enable the stock "
+"management for them."
 msgstr ""
 
 #, python-brace-format

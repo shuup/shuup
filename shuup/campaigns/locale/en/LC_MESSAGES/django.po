@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-28 17:33+0000\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,7 +55,7 @@ msgstr ""
 msgid "Leave empty for no maximum"
 msgstr ""
 
-msgid "Campaign end date can't be before start date."
+msgid "Campaign end date can't be before a start date."
 msgstr ""
 
 msgid "Define the required coupon for this campaign."
@@ -74,13 +74,13 @@ msgstr ""
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr ""
 
-msgid "Only amount or percentage can be set."
+msgid "Only amount or percentage can be set, not both."
 msgstr ""
 
 msgid "Autogenerate code"
 msgstr ""
 
-msgid "Discount Code already in use."
+msgid "Discount Code is already in use."
 msgstr ""
 
 msgid "Active Basket Campaigns"
@@ -324,7 +324,7 @@ msgstr ""
 msgid "per line discount"
 msgstr ""
 
-msgid "Uncheck this if you want to give discount for each matched product."
+msgid "Disable this if you want to give discount for each matched product."
 msgstr ""
 
 msgid "Select discount amount and products."
@@ -357,8 +357,8 @@ msgid "active"
 msgstr ""
 
 msgid ""
-"Check this if the campaign is currently active. Please also set a start and "
-"end date."
+"Enable this if the campaign is currently active. Please also set a start and "
+"an end date."
 msgstr ""
 
 msgid "start date and time"
@@ -402,7 +402,7 @@ msgstr ""
 msgid "basket line text"
 msgstr ""
 
-msgid "This text will be shown in basket."
+msgid "This text will be shown in a basket."
 msgstr ""
 
 msgid "coupon"
@@ -413,7 +413,8 @@ msgstr ""
 
 msgid ""
 "When set, this campaign will match only products from the selected supplier. "
-"Rules and Effects will also be restricted to the products of this supplier."
+"Rules and Effects will also be restricted to include only the products of "
+"this supplier."
 msgstr ""
 
 msgid "public name"
@@ -423,7 +424,7 @@ msgstr ""
 msgid "Basket Campaign: %(name)s"
 msgstr ""
 
-msgid "Can not have multiple active campaigns with same code."
+msgid "Can't have multiple active campaigns with same code."
 msgstr ""
 
 msgid "usage limit per customer"
@@ -436,14 +437,17 @@ msgid "usage limit"
 msgstr ""
 
 msgid ""
-"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
-"coupon cannot be used."
+"Set the absolute limit of usages for this coupon. If the limit is zero (0), "
+"coupon can't be used."
 msgstr ""
 
 msgid "is active"
 msgstr ""
 
 msgid "The shop where the coupon is active."
+msgstr ""
+
+msgid "Can not have multiple active campaigns with the same code."
 msgstr ""
 
 msgid "Base Catalog Filter"
@@ -455,19 +459,19 @@ msgstr ""
 msgid "product Types"
 msgstr ""
 
-msgid "Limit the campaign to selected product types."
+msgid "Limit the campaign only to selected product types."
 msgstr ""
 
 msgid "Product"
 msgstr ""
 
-msgid "Limit the campaign to selected products."
+msgid "Limit the campaign only to selected products."
 msgstr ""
 
 msgid "Product Category"
 msgstr ""
 
-msgid "Limit the campaign to products in selected categories."
+msgid "Limit the campaign only to products in selected categories."
 msgstr ""
 
 msgid "group"
@@ -479,7 +483,7 @@ msgstr ""
 msgid "max amount"
 msgstr ""
 
-msgid "Can not add sales limits for default contact groups"
+msgid "Can not add sales limits for default contact groups."
 msgstr ""
 
 msgid "Context Condition"

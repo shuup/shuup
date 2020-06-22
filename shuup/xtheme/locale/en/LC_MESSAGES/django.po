@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -19,10 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
-msgid "Theme identifier must match"
+msgid "Theme identifiers must match."
 msgstr ""
 
-msgid "Either theme_settings or shop should be informed"
+msgid "Either theme_settings or shop should be informed."
 msgstr ""
 
 msgid "Global plugins"
@@ -96,7 +96,7 @@ msgstr ""
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr ""
 
-msgid "Content in this placeholder is shown without limitations."
+msgid "Content in this box is shown to all user types without limitations."
 msgstr ""
 
 #, python-format
@@ -104,16 +104,18 @@ msgid ""
 "Content in this placeholder is shown for %(category_name)s category only."
 msgstr ""
 
-msgid "Content in this placeholder is shown for guests."
+msgid "Content in this box is shown to guests (anonymous users) only."
 msgstr ""
 
-msgid "Content in this placeholder is shown for company contacts."
+msgid "Content in this box is shown to company contacts only."
 msgstr ""
 
-msgid "Content in this placeholder is shown for all logged in contacts."
+msgid ""
+"Content in this box is shown to all logged-in contacts (both person and "
+"company; not anonymous)."
 msgstr ""
 
-msgid "Content in this placeholder is shown for person contacts."
+msgid "Content in this box is shown to person contacts only."
 msgstr ""
 
 #, python-format
@@ -211,13 +213,13 @@ msgstr ""
 msgid "Full width"
 msgstr ""
 
-msgid "Set image to full width of cell"
+msgid "Set image to the full width of cell."
 msgstr ""
 
 msgid "Width (px)"
 msgstr ""
 
-msgid "Leave blank for default width"
+msgid "Leave blank for default width."
 msgstr ""
 
 msgid "Height (px)"
@@ -345,7 +347,7 @@ msgstr ""
 msgid "Content end"
 msgstr ""
 
-msgid "(Error while rendering)"
+msgid "(Error while rendering.)"
 msgstr ""
 
 msgid "Delete This Cell"
@@ -429,18 +431,18 @@ msgstr ""
 msgid "Publish Changes"
 msgstr ""
 
-msgid "No access to editing"
+msgid "No access to editing."
 msgstr ""
 
 #, python-format
-msgid "Unknown command %s"
+msgid "Unknown command: `%s`."
 msgstr ""
 
-msgid "Unable to determine current theme."
+msgid "Unable to determine the current theme."
 msgstr ""
 
 #, python-format
-msgid "Cannot add more than %d cells in one row."
+msgid "Can't add more than %d cells in one row."
 msgstr ""
 
 msgid "Published"

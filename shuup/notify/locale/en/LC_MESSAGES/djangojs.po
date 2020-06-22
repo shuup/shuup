@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -19,16 +19,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
-msgid "An error occurred."
+msgid "Error!"
 msgstr ""
 
-msgid "Success."
+msgid "Success!"
 msgstr ""
 
-msgid "An unspecified error occurred."
+msgid "Error! An unspecified error occurred."
 msgstr ""
 
-msgid "Unexpected edit data received."
+msgid "Warning! Unexpected edit data was received."
 msgstr ""
 
 msgid "Add new"
@@ -36,7 +36,7 @@ msgstr ""
 
 msgid ""
 "Delete this item?\n"
-"This can not be undone."
+"This is final and can't be undone."
 msgstr ""
 
 msgid "New"
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-msgid "Are you sure you wish to delete this step?"
+msgid "Are you sure you want to delete this step?"
 msgstr ""
 
 msgid "If"
