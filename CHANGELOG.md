@@ -30,6 +30,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Removed the kind prefix from feedback messages using Django messages to prevent duplicate strings.
 - Fixed the way the permissions identifier are split in admin
 - Fixed issue that was importing User model directly
 - Core: changed `del` basket command handler to not try to parse the basket line into an integer

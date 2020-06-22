@@ -33,5 +33,5 @@ class ProductTypeDeleteView(DetailView):
             product.type = None
             product.save(update_fields=['type'])
         product_type.delete()
-        messages.success(request, _(u"Success! %s has been marked deleted.") % product_type_repr)
+        messages.success(request, _(u"%s has been marked deleted.") % product_type_repr)
         return HttpResponseRedirect(reverse("shuup_admin:product_type.list"))

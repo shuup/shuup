@@ -131,7 +131,7 @@ class UserResetPasswordView(DetailView):
         r = RecoverPasswordForm()
         r.request = self.request
         if r.process_user(user):
-            messages.success(self.request, _(u"Success! Password recovery email sent to %(email)s.") %
+            messages.success(self.request, _(u"Password recovery email sent to %(email)s.") %
                              {"email": getattr(user, 'email', '')})
         else:
             raise Problem(_(u"Error! Sending the password recovery email failed."))

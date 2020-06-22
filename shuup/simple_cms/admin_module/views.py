@@ -260,5 +260,5 @@ class PageDeleteView(DetailView):
     def post(self, request, *args, **kwargs):
         page = self.get_object()
         page.soft_delete(user=request.user)
-        messages.success(request, _(u"Success! %s has been marked deleted.") % page)
+        messages.success(request, _(u"%s has been marked deleted.") % page)
         return HttpResponseRedirect(self.get_success_url())
