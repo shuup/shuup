@@ -18,6 +18,11 @@ List all changes after the last release here (newer on top). Each change on a se
 - Campaigns: do not apply campaigns in baskets configured to a supplier
 - Admin: change service admin to list only providers that the current user can access
 - Use UUID4 while generating order line ids by default
+- Admin: Improve message banners, by:
+    - Resetting the timeout for hiding the messages when a new message is added.
+    - Immediately clearing the already hidden messages a when new one is added.
+    - Not hiding messages when clicking just random background elements.
+    - Allowing dismissing all of the messages by clicking any one of them anywhere.
 
 ### Added
 
