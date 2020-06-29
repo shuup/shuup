@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-26 19:28+0000\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -102,7 +102,7 @@ msgid "Choose whether this script should be activated when its event fires."
 msgstr ""
 
 msgid ""
-"Warning: Changing the event for an existing script may have unexpected "
+"Warning! Changing the event for an existing script may have unexpected "
 "effects."
 msgstr ""
 
@@ -112,7 +112,7 @@ msgstr ""
 msgid "Bind to Variable"
 msgstr ""
 
-msgid "This field is missing content"
+msgid "This field is missing content."
 msgstr ""
 
 #, python-format
@@ -132,7 +132,7 @@ msgid "Delete"
 msgstr ""
 
 #, python-format
-msgid "Are you sure you wish to delete %s?"
+msgid "Are you sure you wish to delete \"%s\" notification?"
 msgstr ""
 
 msgid "Save"
@@ -150,16 +150,16 @@ msgstr ""
 msgid "New From Template"
 msgstr ""
 
-msgid "Script created from template!"
+msgid "Script created from template."
 msgstr ""
 
-msgid "Template Script not found!"
+msgid "Template Script not found."
 msgstr ""
 
-msgid "Templated script not found!"
+msgid "Templated script not found."
 msgstr ""
 
-msgid "Script updated!"
+msgid "Script updated."
 msgstr ""
 
 msgid ""

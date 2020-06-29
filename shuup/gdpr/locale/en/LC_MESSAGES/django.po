@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
 "PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "General Data Protection Regulation"
 msgstr ""
 
-msgid "Contact anonymized!"
+msgid "Contact was anonymized."
 msgstr ""
 
 msgid "My Data"
@@ -91,7 +91,7 @@ msgid "login consent text"
 msgstr ""
 
 msgid ""
-"Shown in login page between the form and the button. Optional but should be "
+"Shown in login page between the form and the button. Optional, but should be "
 "considered when the consent on login is disabled."
 msgstr ""
 
@@ -159,13 +159,13 @@ msgid ""
 "class='gdpr_consent_doc_check'>{}</a>"
 msgstr ""
 
-msgid "You must accept to this to register."
+msgid "You must accept this in order to register."
 msgstr ""
 
-msgid "You must accept to this to order."
+msgid "You must accept this to order."
 msgstr ""
 
-msgid "You must accept to this to authenticate."
+msgid "You must accept this in order to authenticate."
 msgstr ""
 
 msgid ""
@@ -790,7 +790,7 @@ msgstr ""
 msgid "Privacy Preferences"
 msgstr ""
 
-msgid "I Agree"
+msgid "I Understand"
 msgstr ""
 
 msgid "Privacy Preference Center"

@@ -171,9 +171,9 @@ def add_create_or_change_message(request, instance, is_new):
         msg = _("Item")  # instance is not always present. For example when saving configurations.
 
     if is_new:
-        msg = _(u"Success! New %s was created.") % msg
+        msg = _(u"New %s was created.") % msg
     else:
-        msg = _(u"Success! %s was edited.") % msg
+        msg = _(u"%s was edited.") % msg
 
     messages.success(request,  msg)
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-02 12:09+0000\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -19,10 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
-msgid "Unexpected error while uploading files."
+msgid "Error! Unexpected error while uploading files."
 msgstr ""
 
-msgid "Error:"
+msgid "Error!"
 msgstr ""
 
 msgid "Uploaded:"
@@ -96,10 +96,10 @@ msgid "Delete folder"
 msgstr ""
 
 #, javascript-format
-msgid "Order %s created."
+msgid "Success! Order %s was created."
 msgstr ""
 
-msgid "An unspecified error occurred.\n"
+msgid "Error! An unspecified error occurred.\n"
 msgstr ""
 
 msgid "SKU"
@@ -163,7 +163,7 @@ msgstr ""
 msgid "Order for company"
 msgstr ""
 
-msgid "Check this if the order is for a company or business with a tax ID."
+msgid "Enable this if the order is for a company or business with a tax ID."
 msgstr ""
 
 msgid "Billing Address"
@@ -479,7 +479,7 @@ msgstr ""
 msgid "No records found."
 msgstr ""
 
-msgid "Missing JavaScript dependencies detected"
+msgid "Warning! Missing JavaScript dependencies detected."
 msgstr ""
 
 msgid "Identifier"
@@ -540,11 +540,14 @@ msgstr ""
 msgid "only images can be uploaded!"
 msgstr ""
 
+msgid "Error happened while uploading file."
+msgstr ""
+
 msgid "Browse media"
 msgstr ""
 
 #, javascript-format
-msgid "For images greater than %s kb, use the media browser instead."
+msgid "Error! For images greater than %s kb, use the media browser instead."
 msgstr ""
 
 msgid "No results."
@@ -725,6 +728,61 @@ msgid "Previous"
 msgstr ""
 
 msgid "Next"
+msgstr ""
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr ""
+
+msgid "Filters"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Show filters"
+msgstr ""
+
+msgid "Select Action"
+msgstr ""
+
+msgid "Clear Selections"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+#, javascript-format
+msgid "Select All %s Items"
+msgstr ""
+
+#, javascript-format
+msgid "There are no %s to show"
+msgstr ""
+
+msgid "There is no item to show"
+msgstr ""
+
+msgid "with selected filters"
+msgstr ""
+
+msgid "How about creating a new entry?"
+msgstr ""
+
+msgid "Success! Mass Action was completed."
+msgstr ""
+
+msgid "Error! Something went wrong with the Mass Action."
+msgstr ""
+
+#, javascript-format
+msgid "All %s Items Selected"
+msgstr ""
+
+msgid "Warning! You didn't select anything."
+msgstr ""
+
+msgid "Confirm action by clicking OK!"
 msgstr ""
 
 msgid "Are you sure you want to delete this media?"

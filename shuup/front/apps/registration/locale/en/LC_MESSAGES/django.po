@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-23 21:21+0000\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -44,6 +44,9 @@ msgid "Company Registration Received"
 msgstr ""
 
 msgid "Company Approved"
+msgstr ""
+
+msgid "Account Activation"
 msgstr ""
 
 msgid "Company has been activated."
@@ -94,6 +97,20 @@ msgid ""
 "after a company is activated."
 msgstr ""
 
+msgid "Send account activation email"
+msgstr ""
+
+msgid "Send email when a user account gets activated for the first time"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email when "
+"an account gets activated for the first time"
+msgstr ""
+
+msgid "{{ customer.username }} is now active!"
+msgstr ""
+
 msgid "Account activation"
 msgstr ""
 
@@ -133,7 +150,7 @@ msgstr ""
 msgid "Register as a company."
 msgstr ""
 
-msgid "Activation successful!"
+msgid "Activation successful"
 msgstr ""
 
 msgid ""

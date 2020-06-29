@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 10:46+0000\n"
+"POT-Creation-Date: 2020-06-22 17:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,16 +24,18 @@ msgid "Company Contact Importer"
 msgstr ""
 
 #, python-format
-msgid "Image '%s' not found, please check whether the image exists."
+msgid "Image '%s' was not found, please check whether the image exists."
 msgstr ""
 
-msgid "Please add supplier to row before importing stock quantities."
+msgid "Please add supplier to the row, before importing stock quantities."
 msgstr ""
 
-msgid "No supplier found, please check the supplier exists."
+msgid "No supplier found, please check that the supplier exists."
 msgstr ""
 
-msgid "This supplier doesn't handle stocks, please set Stock Managed on."
+msgid ""
+"This supplier doesn't handle stocks, please set `Stock Managed` on in the "
+"individual Supplier's settings page."
 msgstr ""
 
 msgid "Product Importer"
@@ -68,8 +70,13 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Upload all product images using the <a href=\"%(media_browser_url)s\" target="
-"\"_blank\">Media Browser</a>."
+"\n"
+"                Upload all product images using the <a href="
+"\"%(media_browser_url)s\" target=\"_blank\">Media Browser</a>.\n"
+"            "
+msgstr ""
+
+msgid "Upload all product images using the Media Browser."
 msgstr ""
 
 msgid ""

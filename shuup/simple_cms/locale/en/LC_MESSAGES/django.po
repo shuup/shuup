@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -34,10 +34,10 @@ msgstr ""
 msgid "New page"
 msgstr ""
 
-msgid "Available from"
+msgid "Available since"
 msgstr ""
 
-msgid "Available to"
+msgid "Available until"
 msgstr ""
 
 msgid "Template"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "URL already exists."
 msgstr ""
 
-msgid "URL must be unique"
+msgid "URL must be unique."
 msgstr ""
 
 #, python-format
@@ -94,20 +94,20 @@ msgstr ""
 msgid "supplier"
 msgstr ""
 
-msgid "available from"
+msgid "available since"
 msgstr ""
 
 msgid ""
-"Set an available from date to restrict the page to be available only after a "
+"Set an available date to restrict the page to be available only after a "
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
 msgstr ""
 
-msgid "available to"
+msgid "available until"
 msgstr ""
 
 msgid ""
-"Set an available to date to restrict the page to be available only after a "
+"Set an available date to restrict the page to be available only until a "
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
 msgstr ""
@@ -131,29 +131,29 @@ msgid "visible in menu"
 msgstr ""
 
 msgid ""
-"Check this if this page should have a link in the top menu of the store "
-"front."
+"Enable this if this page should have a visible link in the top menu of the "
+"store front."
 msgstr ""
 
 msgid "parent"
 msgstr ""
 
 msgid ""
-"Set this to a parent page if this page should be subcategorized under "
-"another page."
+"Set this to a parent page if this page should be subcategorized (sub-menu) "
+"under another page."
 msgstr ""
 
-msgid "list children on page"
+msgid "display children on page"
 msgstr ""
 
-msgid "Check this if this page should list its children pages."
+msgid "Enable this if this page should display all of its children pages."
 msgstr ""
 
 msgid "show child page timestamps"
 msgstr ""
 
 msgid ""
-"Check this if you want to show timestamps on the child pages. Please note, "
+"Enable this if you want to show timestamps on the child pages. Please note, "
 "that this requires the children to be listed on the page as well."
 msgstr ""
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "render title"
 msgstr ""
 
-msgid "Check this if this page should have a visible title"
+msgid "Enable this if this page should have a visible title."
 msgstr ""
 
 msgid "page"
