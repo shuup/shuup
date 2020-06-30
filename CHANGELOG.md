@@ -34,6 +34,11 @@ List all changes after the last release here (newer on top). Each change on a se
 - Importer: add permissions for all the diffrent types of importers
 - Importer: add context class to data importer
 
+
+### Removed
+
+- Travis jobs for Django 1.8 and 1.9
+
 ### Fixed
 
 - Removed the kind prefix from feedback messages using Django messages to prevent duplicate strings.
