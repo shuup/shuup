@@ -26,12 +26,18 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Admin: add improved product copy
 - Core: add task runner to support running tasks using 3rd party services like Celery
 - Core: add shops and supplier to ServiceProvider and Service models
 - Front: add feature for checkout phases to spawn extra phases
 - Add custom get_ip method and use it everywhere
 - Importer: add permissions for all the diffrent types of importers
 - Importer: add context class to data importer
+
+
+### Removed
+
+- Travis jobs for Django 1.8 and 1.9
 
 ### Fixed
 

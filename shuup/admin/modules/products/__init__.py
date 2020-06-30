@@ -71,6 +71,11 @@ class ProductModule(AdminModule):
                 "shuup.admin.modules.products.views.ProductMassEditView",
                 name="shop_product.mass_edit"
             ),
+            admin_url(
+                "^products/(?P<pk>\d+)/copy/$",
+                "shuup.admin.modules.products.views.copy.ProductCopyView",
+                name="shop_product.copy"
+            ),
         ] + get_edit_and_list_urls(
             url_prefix="^products",
             view_template="shuup.admin.modules.products.views.Product%sView",
