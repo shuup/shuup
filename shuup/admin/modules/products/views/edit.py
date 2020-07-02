@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+import warnings
 
 from django import forms
 from django.conf import settings
@@ -29,6 +30,7 @@ from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
     Product, ProductType, SalesUnit, ShopProduct, Supplier, TaxClass
 )
+from shuup.core.utils.product import get_available_sku
 
 from .toolbars import EditProductToolbar
 
@@ -63,6 +65,11 @@ class ProductBaseFormPart(FormPart):
         return self.object.product
 
     def get_sku(self):
+        warnings.warn(
+            "Warning! `ProductBaseFormPart.get_sku` function will be "
+            "deprecated in Shuup 2.0 as it can be replaced with shuup.core.utils.product.get_avileble_sku.",
+            DeprecationWarning
+        )
         sku = self.request.GET.get("sku", "")
         if not sku:
             last_id = Product.objects.values_list('id', flat=True).first()
@@ -75,7 +82,7 @@ class ProductBaseFormPart(FormPart):
             name_field = "name__%s" % get_language()
             return {
                 name_field: self.request.GET.get("name", ""),
-                "sku": self.get_sku(),
+                "sku": get_available_sku(self.request.GET.get("sku", None)),
                 "type": ProductType.objects.first(),
                 "tax_class": TaxClass.objects.first(),
                 "sales_unit": SalesUnit.objects.first()

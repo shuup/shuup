@@ -50,6 +50,13 @@ class CgpPrice(MoneyPropped, CgpBase):
         if self.product.shop_products.filter(shop_id=self.shop.id).exists():
             bump_cache_for_product(self.product, self.shop)
 
+    def clone(self, new_product_id):
+        clone_instance = CgpPrice.objects.get(id=self.pk)
+        clone_instance.pk = None
+        clone_instance.product_id = new_product_id
+        clone_instance.save()
+        return clone_instance
+
 
 class CgpDiscount(MoneyPropped, CgpBase):
     discount_amount = PriceProperty("discount_amount_value", "shop.currency", "shop.prices_include_tax")
@@ -74,3 +81,10 @@ class CgpDiscount(MoneyPropped, CgpBase):
         # check if there is a shop product before bumping the cache
         if self.product.shop_products.filter(shop_id=self.shop.id).exists():
             bump_cache_for_product(self.product, self.shop)
+
+    def clone(self, new_product_id):
+        clone_instance = CgpDiscount.objects.get(id=self.pk)
+        clone_instance.pk = None
+        clone_instance.product_id = new_product_id
+        clone_instance.save()
+        return clone_instance

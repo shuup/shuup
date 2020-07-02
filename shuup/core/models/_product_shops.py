@@ -27,6 +27,7 @@ from shuup.core.signals import (
     get_orderability_errors, get_visibility_errors, post_clean, pre_clean
 )
 from shuup.core.utils import context_cache
+from shuup.core.utils.product import clone_add_m2m_filed
 from shuup.utils.analog import define_log_model
 from shuup.utils.importing import cached_load
 from shuup.utils.properties import MoneyPropped, PriceProperty
@@ -635,6 +636,19 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             self.safe_translation_getter(key, any_language=True)
             or self.product.safe_translation_getter(key, any_language=True)
         )
+
+    def clone(self):
+        # Clones the shop product
+        clone_instance = ShopProduct.objects.get(id=self.pk)
+        clone_instance.pk = None
+        clone_instance.product = clone_instance.product.clone()
+        clone_instance.sku = clone_instance.product.sku
+        clone_instance.save()
+
+        # Clones the translations
+        shop_product = ShopProduct.objects.get(id=self.pk)
+        clone_add_m2m_filed(clone_instance, shop_product.translations.all(), 'translations', create_new=True)
+        return clone_instance
 
 
 ShopProductLogEntry = define_log_model(ShopProduct)

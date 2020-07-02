@@ -10,15 +10,20 @@ from datetime import timedelta
 
 import pytest
 from django.utils.timezone import now
+from django.utils import translation
+from django.utils.translation import ugettext_lazy as _
+
 
 from shuup import configuration
 from shuup.core.models import (
     AnonymousContact, get_person_contact, Product, ProductVisibility,
     ShopProductVisibility
 )
+from shuup.customer_group_pricing.models import CgpPrice
 from shuup.testing.factories import (
     create_product, get_all_seeing_key, get_default_customer_group,
-    get_default_shop, get_default_shop_product, get_default_supplier
+    get_default_shop, get_default_shop_product, get_default_supplier,
+    create_random_contact_group
 )
 from shuup_tests.core.utils import modify
 from shuup_tests.utils.fixtures import regular_user
@@ -142,3 +147,30 @@ def test_product_available(admin_user, regular_user, available_until, visible):
     assert product in Product.objects.listed(shop=shop, customer=admin_contact)
     assert product in Product.objects.searchable(shop=shop, customer=admin_contact)
     configuration.set(None, get_all_seeing_key(admin_contact), False)
+
+
+@pytest.mark.django_db
+def test_shop_product_cloning():
+    translation.activate('en')
+    shop_product = get_default_shop_product()
+    shop_product.name = _("Test")
+    shop_product.product.height = 100
+    cgp_price = CgpPrice.objects.create(
+        product=shop_product.product,
+        shop=shop_product.shop,
+        group=create_random_contact_group(),
+        price_value=10,
+    )
+    shop_product.save()
+    cloned_shop_product = shop_product.clone()
+    assert cloned_shop_product.product.sku != shop_product.product.sku
+    assert cloned_shop_product.name == _("Test")
+    assert cloned_shop_product.product.height == 100
+    cloned_cgp_price = CgpPrice.objects.filter(
+        product=cloned_shop_product.product,
+        shop=cloned_shop_product.shop,
+    ).first()
+    cloned_cgp_price.price_value = 20
+    cloned_cgp_price.save()
+
+    assert cloned_cgp_price.price_value != cgp_price.price_value

@@ -18,11 +18,13 @@ from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
+from shuup.customer_group_pricing.models import CgpPrice, CgpDiscount
 from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.fields import InternalIdentifierField, MeasurementField
 from shuup.core.signals import post_clean, pre_clean
 from shuup.core.taxing import TaxableItem
 from shuup.core.utils.slugs import generate_multilanguage_slugs
+from shuup.core.utils.product import get_available_sku, clone_add_m2m_filed
 from shuup.utils.analog import define_log_model, LogEntryKind
 
 from ._attributes import AppliedAttribute, AttributableMixin, Attribute
@@ -788,6 +790,26 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     def is_container(self):
         return (self.is_package_parent() or self.is_subscription_parent())
+
+    def clone(self):
+        # Clones the product
+        clone_product = Product.objects.get(id=self.pk)
+        clone_product.pk = None
+        clone_product.sku = get_available_sku()
+        clone_product.save()
+        old_product = Product.objects.get(id=self.pk)
+
+        def clone_cgp(clone_product, cpg_objects):
+            for cpg_object in cpg_objects:
+                cpg_object.clone(clone_product.pk)
+
+        clone_cgp(clone_product, CgpPrice.objects.filter(product_id=self.pk))
+        clone_cgp(clone_product, CgpDiscount.objects.filter(product_id=self.pk))
+
+        # Clones the m2m fields
+        clone_add_m2m_filed(clone_product, old_product.translations.all(), 'translations', create_new=True)
+        clone_add_m2m_filed(clone_product, old_product.media.all(), 'media', create_new=True)
+        return clone_product
 
 
 ProductLogEntry = define_log_model(Product)
