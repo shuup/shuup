@@ -19,6 +19,7 @@ from __future__ import unicode_literals
 from datetime import date
 from json import dumps as json_dump
 
+import bleach
 from babel.dates import format_date, format_datetime, format_time
 from babel.numbers import format_decimal
 from django.conf import settings
@@ -26,7 +27,7 @@ from django.utils import translation
 from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
 from django_jinja import library
-from jinja2.runtime import Undefined
+from jinja2 import Undefined
 from jinja2.utils import contextfunction
 
 from shuup.utils.i18n import (
@@ -137,6 +138,24 @@ def json(value):
     if isinstance(value, Undefined):
         value = None
     return mark_safe(json_dump(value, cls=ExtendedJSONEncoder))
+
+
+@library.filter
+def safe_product_description(value):
+    if isinstance(value, Undefined):
+        return value
+    if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
+        value = bleach.clean(value, tags=[])
+    return mark_safe(value)
+
+
+@library.filter
+def safe_vendor_description(value):
+    if isinstance(value, Undefined):
+        return value
+    if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION:
+        value = bleach.clean(value, tags=[])
+    return mark_safe(value)
 
 
 @library.global_function
