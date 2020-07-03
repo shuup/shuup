@@ -51,8 +51,22 @@ We have a Gitter chat room for Shuup.  Come chat with us!  |Join chat|
 .. |Join chat| image:: https://badges.gitter.im/Join%20Chat.svg
    :target: https://gitter.im/shuup/shuup
 
-Install Shuup
--------------
+Docker quick start
+------------------
+
+Fastest way to get Shuup up and running is to use `Docker <https://www.docker.com>`_.
+
+1. Run:
+
+   .. code-block:: shell
+
+      docker-compose up
+
+2. Open `localhost:8000/sa <http://localhost:8000/sa>`_ in a browser,
+   log in with username: ``admin`` password: ``admin``
+
+Full Shuup installation guide
+-----------------------------
 
 See `Getting Started
 <http://shuup.readthedocs.io/en/latest/howto/getting_started.html>`__.

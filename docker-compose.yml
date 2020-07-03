@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  shuup:
+    container_name: shuup
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    tty: true
+    restart: unless-stopped

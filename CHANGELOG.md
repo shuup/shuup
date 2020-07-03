@@ -8,10 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Added
+
+- Add `Dockerfile-dev` for development
+- Add Docker instructions to docs
+
 ### Changed
 
 - Add theme for the shop in `shuup_init`
 - Make the shop not be in maintenance mode in `shuup_init`
+- Make `Dockerfile` use `shuup` from PyPi for faster build time
 
 ## [1.11.2] - 2020-07-03
 

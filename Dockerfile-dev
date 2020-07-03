@@ -9,7 +9,8 @@ RUN apt-get update && \
 COPY . /app
 WORKDIR /app
 
-RUN pip3 install shuup
+RUN pip3 install -e .[everything]
+RUN python3 setup.py build_resources
 
 RUN python3 -m shuup_workbench migrate
 RUN python3 -m shuup_workbench shuup_init
