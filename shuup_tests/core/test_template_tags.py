@@ -8,6 +8,8 @@
 from __future__ import unicode_literals
 
 from decimal import Decimal
+
+from django.conf import settings
 from mock import patch
 
 from django.utils import translation
@@ -15,7 +17,7 @@ from jinja2 import Template
 
 from shuup.core.models import Shop
 from shuup.core.templatetags.shuup_common import (
-    get_global_configuration, get_shop_configuration, money, number, percent
+    get_global_configuration, get_shop_configuration, money, number, percent, safe_product_description, safe_vendor_description
 )
 from shuup.utils.money import Money
 
@@ -213,3 +215,23 @@ def test_get_global_configuration(conf_get_mock, rf):
 def test_get_global_configuration_with_default(conf_get_mock, rf):
     get_global_configuration('some_variable', 'default')
     conf_get_mock.assert_called_once_with(None, 'some_variable', 'default')
+
+
+def test_safe_product_description():
+    text = "<p>product description</p>"
+
+    settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION = True
+    assert safe_product_description(text) == text
+
+    settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION = False
+    assert safe_product_description(text) == "&lt;p&gt;product description&lt;/p&gt;"
+
+
+def test_safe_vendor_description():
+    text = "<p>vendor description</p>"
+
+    settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION = True
+    assert safe_vendor_description(text) == text
+
+    settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION = False
+    assert safe_vendor_description(text) == "&lt;p&gt;vendor description&lt;/p&gt;"

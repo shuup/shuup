@@ -82,7 +82,9 @@ class ProductBaseForm(MultiLanguageModelForm):
             "keywords": forms.TextInput(),
             "sales_unit": QuickAddSalesUnitSelect(editable_model="shuup.SalesUnit"),
             "tax_class": QuickAddTaxClassSelect(editable_model="shuup.TaxClass"),
-            "description": TextEditorWidget(),
+            "description": (TextEditorWidget()
+                            if settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION
+                            else forms.Textarea(attrs={"rows": 5})),
             "short_description": forms.TextInput(),
         }
 

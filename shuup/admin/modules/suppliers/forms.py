@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import bleach
 from django import forms
 from django.conf import settings
 from django.utils.encoding import force_text
@@ -25,7 +26,9 @@ class SupplierBaseForm(ShuupAdminForm):
         exclude = ("module_data", "options", "contact_address", "deleted")
         widgets = {
             "module_identifier": forms.Select,
-            "description": TextEditorWidget()
+            "description": (TextEditorWidget()
+                            if settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION
+                            else forms.Textarea(attrs={"rows": 5})),
         }
 
     def __init__(self, *args, **kwargs):
@@ -62,6 +65,11 @@ class SupplierBaseForm(ShuupAdminForm):
 
         if stock_managed and not module_identifier:
             self.add_error("stock_managed", _("It is not possible to manage inventory when no module is selected."))
+
+        if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION:
+            for key, value in cleaned_data.items():
+                if key.startswith("description__"):
+                    cleaned_data[key] = bleach.clean(value, tags=[])
 
         return cleaned_data
 
