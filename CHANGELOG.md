@@ -8,9 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+## [1.11.1] - 2020-07-03
+
 ### Added
 
 - Admin: Add settings for controlling allowing HTML in product and vendor descriptions
+
 
 ## [1.11.0] - 2020-07-02
 
@@ -40,7 +43,6 @@ List all changes after the last release here (newer on top). Each change on a se
 - Importer: add permissions for all the diffrent types of importers
 - Importer: add context class to data importer
 
-
 ### Removed
 
 - Travis jobs for Django 1.8 and 1.9
@@ -51,6 +53,7 @@ List all changes after the last release here (newer on top). Each change on a se
 - Fixed the way the permissions identifier are split in admin
 - Fixed issue that was importing User model directly
 - Core: changed `del` basket command handler to not try to parse the basket line into an integer
+
 
 ## [1.10.16] - 2020-06-03
 
