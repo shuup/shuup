@@ -25,17 +25,34 @@ To start developing Shuup, you'll need a Git checkout of Shuup and a
 Github fork of Shuup for creating pull requests.  Github pull requests
 are used to get your changes into Shuup Base.
 
-1. If you haven't done so already, create a fork of Shuup in Github by
-   clicking the "Fork" button at https://github.com/shuup/shuup and
-   clone the fork to your computer as usual. See `Github Help about
-   forking repos <https://help.github.com/articles/fork-a-repo/>`__ for
-   details.
+If you haven't done so already, create a fork of Shuup in Github by
+clicking the "Fork" button at https://github.com/shuup/shuup and
+clone the fork to your computer as usual. See `Github Help about
+forking repos <https://help.github.com/articles/fork-a-repo/>`__ for
+details.
 
-2. Python < 3.6 is recommended only advanced users. To cover large amount
+Docker
+######
+
+Fastest way to get Shuup development environment up and running is to use `Docker <https://www.docker.com>`_.
+
+1. Run the development compose file, it allows your local changes to update in the browser:
+
+   .. code-block:: shell
+
+      docker-compose -f docker-compose-dev.yml up
+
+2. Open `localhost:8000/sa <http://localhost:8000/sa>`_ in a browser,
+   log in with username: ``admin`` password: ``admin``
+
+Locally
+#######
+
+1. Python < 3.6 is recommended only advanced users. To cover large amount
    of issues with setup it is recommended to run
    `pip install -U pip setuptools wheel` before creating virtualenv.
 
-3. Setup a virtualenv and activate it.  You may use the traditional
+2. Setup a virtualenv and activate it. You may use the traditional
    ``virtualenv`` command, or the newer ``python -m venv`` if you're
    using Python 3.  See `Virtualenv User Guide
    <https://virtualenv.pypa.io/en/latest/userguide.html>`__, if you
@@ -47,7 +64,7 @@ are used to get your changes into Shuup Base.
       virtualenv shuup-venv
       . shuup-venv/bin/activate
 
-4. Finally, you'll need to install Shuup in the activated virtualenv in
+3. Finally, you'll need to install Shuup in the activated virtualenv in
    development mode.  To do that, run the following commands in the
    root of the checkout (within the activated virtualenv):
 

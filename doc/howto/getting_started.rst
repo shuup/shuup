@@ -17,6 +17,23 @@ Requirements
 Installation
 ------------
 
+Docker
+######
+
+Fastest way to get Shuup up and running is to use `Docker <https://www.docker.com>`_.
+
+1. Run:
+
+   .. code-block:: shell
+
+      docker-compose up
+
+2. Open `localhost:8000/sa <http://localhost:8000/sa>`_ in a browser,
+   log in with username: ``admin`` password: ``admin``
+
+Locally
+#######
+
 This guide assumes familiarity with the PyPA tools for Python packaging,
 including ``pip`` and ``virtualenv``.
 

@@ -22,6 +22,7 @@ from shuup.core.models import (
     Supplier
 )
 from shuup.core.telemetry import get_installation_key, is_telemetry_enabled
+from shuup.xtheme import set_current_theme
 
 
 def schema(model, identifier, **info):
@@ -32,7 +33,7 @@ class Initializer(object):
     schemata = [
         schema(
             Shop, "default", name="Default Shop", public_name="Default Shop", domain="localhost",
-            status=ShopStatus.ENABLED, maintenance_mode=True),
+            status=ShopStatus.ENABLED, maintenance_mode=False),
         schema(ProductType, "default", name="Standard Product"),
         schema(ProductType, "digital", name="Digital Product"),
         schema(Supplier, "default", name="Default Supplier"),
@@ -92,6 +93,9 @@ class Initializer(object):
                     configuration.set(None, "shuup_support_id", resp.json().get("support_id"))
             except Exception:
                 print_("Failed to get support id.")
+
+        set_current_theme("shuup.themes.classic_gray", Shop.objects.first())
+
         print_("Initialization done.")
 
 
