@@ -8,10 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Changed
+
+- Add theme for the shop in `shuup_init`
+- Make the shop not be in maintenance mode in `shuup_init`
+
 ## [1.11.2] - 2020-07-03
 
 - Move workbench sqlite database location for upcoming Docker setup
-
 
 ## [1.11.1] - 2020-07-03
 
