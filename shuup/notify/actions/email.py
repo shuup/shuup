@@ -17,6 +17,7 @@ from django.utils.translation import ugettext as _
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.notify.base import Action, Binding
 from shuup.notify.enums import ConstantUse, TemplateUse
+from shuup.notify.signals import notification_email_sent
 from shuup.notify.typology import Email, Language, Text
 
 
@@ -138,6 +139,8 @@ class SendEmail(Action):
         message.content_subtype = content_type
         message.send()
         context.log(logging.INFO, "Info! %s: Mail sent to %s.", self.identifier, recipient)
+
+        notification_email_sent.send(sender=type(self), message=message, context=context)
 
         if send_identifier:
             context.add_log_entry_on_log_target("Info! Email sent to %s: %s" % (recipient, subject), send_identifier)
