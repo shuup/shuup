@@ -26,7 +26,7 @@ def test_dev_onboarding(browser, admin_user, live_server, settings):
     Shop.objects.first().delete()  # Delete first shop created by test initializations
     call_command("shuup_init", *[], **{})
     shop = Shop.objects.first()
-    assert shop.maintenance_mode
+    assert not shop.maintenance_mode
     initialize_admin_browser_test(browser, live_server, settings, onboarding=True)
 
     browser.fill("address-first_name", "Matti")
