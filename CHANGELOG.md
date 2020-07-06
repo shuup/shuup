@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+## [1.11.4] - 2020-07-06
+
+- Fix issue with browser tests
+
 ## [1.11.3] - 2020-07-04
 
 ### Added
