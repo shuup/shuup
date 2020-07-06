@@ -10,6 +10,7 @@ import pytest
 from django.conf import settings
 import django.core.mail as mail
 from django.test import override_settings
+import mock
 
 from shuup.notify.actions.email import SendEmail
 from shuup.notify.script import Context
@@ -17,6 +18,7 @@ from shuup.testing import factories
 from shuup_tests.notify.fixtures import (
     get_initialized_test_event, TEST_TEMPLATE_DATA
 )
+from shuup.notify.signals import notification_email_sent
 
 
 @pytest.mark.django_db
@@ -93,19 +95,22 @@ def test_email_action_with_template_body():
 
         mail.outbox = []  # Clear the Django testing mail outbox
 
-        event = get_initialized_test_event()
-        ctx = Context.from_event(event, shop=factories.get_default_shop())
-        ctx.set("name", "Luke J. Warm")  # This variable isn't published by the event, but it's used by the template
-        se = SendEmail({
-            "template_data": SUPER_TEST_TEMPLATE_DATA,
-            "from_email": {"constant": "from@shuup.local"},
-            "recipient": {"constant": "someone@shuup.local"},
-            "language": {"constant": "ja"},
-        })
-        se.execute(ctx)  # Once
-        assert len(mail.outbox) == 1  # 'send_identifier' should ensure this is true
-        msg = mail.outbox[0]
-        assert msg.to == ['someone@shuup.local']
-        assert msg.from_email == 'from@shuup.local'
-        assert ".dog-color { color: red; }" in msg.body
-        assert "Luke J. Warm" in msg.body
+        with mock.patch.object(notification_email_sent, "send") as mocked_method:
+            event = get_initialized_test_event()
+            ctx = Context.from_event(event, shop=factories.get_default_shop())
+            ctx.set("name", "Luke J. Warm")  # This variable isn't published by the event, but it's used by the template
+            se = SendEmail({
+                "template_data": SUPER_TEST_TEMPLATE_DATA,
+                "from_email": {"constant": "from@shuup.local"},
+                "recipient": {"constant": "someone@shuup.local"},
+                "language": {"constant": "ja"},
+            })
+            se.execute(ctx)  # Once
+            assert len(mail.outbox) == 1  # 'send_identifier' should ensure this is true
+            msg = mail.outbox[0]
+            assert msg.to == ['someone@shuup.local']
+            assert msg.from_email == 'from@shuup.local'
+            assert ".dog-color { color: red; }" in msg.body
+            assert "Luke J. Warm" in msg.body
+
+        mocked_method.assert_called()
