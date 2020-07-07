@@ -9,9 +9,8 @@ import zipfile
 import six
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
-from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from six import BytesIO
 
 from shuup.admin.shop_provider import get_shop
@@ -22,6 +21,7 @@ from shuup.core.models import Order, Shipment
 from shuup.order_printouts.admin_module.views import (
     get_confirmation_pdf, get_delivery_pdf
 )
+from shuup.utils.django_compat import force_text
 
 
 class CancelOrderAction(PicotableMassAction):

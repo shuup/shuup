@@ -103,7 +103,8 @@ class Discount(models.Model, MoneyPropped):
 
     shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_("shops"))
     supplier = models.ForeignKey(
-        "shuup.Supplier", related_name="supplier_discounts", null=True, blank=True,
+        on_delete=models.CASCADE,
+        to="shuup.Supplier", related_name="supplier_discounts", null=True, blank=True,
         verbose_name=_("supplier"), help_text=_("Select supplier for this discount.")
     )
     active = models.BooleanField(

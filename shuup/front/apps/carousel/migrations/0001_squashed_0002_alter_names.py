@@ -92,25 +92,25 @@ class Migration(migrations.Migration):
                 ('available_to', models.DateTimeField(
                     null=True, verbose_name='available to', blank=True)),
                 ('carousel', models.ForeignKey(
-                    related_name='slides', to='carousel.Carousel')),
+                    related_name='slides', to='carousel.Carousel', on_delete=models.CASCADE)),
                 ('category_link', models.ForeignKey(
                     null=True,
                     verbose_name='category link',
                     related_name='+',
                     to='shuup.Category',
-                    blank=True)),
+                    blank=True, on_delete=models.CASCADE)),
                 ('cms_page_link', models.ForeignKey(
                     null=True,
                     verbose_name='cms page link',
                     related_name='+',
                     to='shuup_simple_cms.Page',
-                    blank=True)),
+                    blank=True, on_delete=models.CASCADE)),
                 ('product_link', models.ForeignKey(
                     null=True,
                     verbose_name='product link',
                     related_name='+',
                     to='shuup.Product',
-                    blank=True)),
+                    blank=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name_plural': 'Slides',
@@ -156,7 +156,7 @@ class Migration(migrations.Migration):
                     editable=False,
                     null=True,
                     related_name='translations',
-                    to='carousel.Slide')),
+                    to='carousel.Slide', on_delete=models.CASCADE)),
             ],
             options={
                 'db_tablespace': '',
@@ -237,7 +237,7 @@ class Migration(migrations.Migration):
                     'Set the product category page that should be shown '
                     'when this slide is clicked, if any.'),
                 to='shuup.Category',
-                blank=True)),
+                blank=True, on_delete=models.CASCADE)),
         migrations.AlterField(
             model_name='slide',
             name='cms_page_link',
@@ -249,7 +249,7 @@ class Migration(migrations.Migration):
                     'Set the web page that should be shown when the slide '
                     'is clicked, if any.'),
                 to='shuup_simple_cms.Page',
-                blank=True)),
+                blank=True, on_delete=models.CASCADE)),
         migrations.AlterField(
             model_name='slide',
             name='ordering',
@@ -272,7 +272,7 @@ class Migration(migrations.Migration):
                     'Set the product detail page that should be shown '
                     'when this slide is clicked, if any.'),
                 to='shuup.Product',
-                blank=True)),
+                blank=True, on_delete=models.CASCADE)),
         migrations.AlterField(
             model_name='slide',
             name='target',

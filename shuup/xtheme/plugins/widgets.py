@@ -7,8 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.template.loader import render_to_string
-from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
+
+from shuup.utils.django_compat import force_text
 
 
 class XThemeModelChoiceWidget(forms.Select):

@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -18,6 +18,7 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.django_compat import force_text
 
 
 class TaskStatus(Enum):
@@ -47,7 +48,8 @@ class TaskCommentVisibility(Enum):
 @python_2_unicode_compatible
 class TaskType(TranslatableModel):
     identifier = InternalIdentifierField(unique=False, blank=True, null=True, editable=True)
-    shop = models.ForeignKey("shuup.Shop", verbose_name=_("shop"), related_name="task_types")
+    shop = models.ForeignKey(
+        on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="task_types")
     translations = TranslatedFields(
         name=models.TextField(verbose_name=_("name"))
     )
@@ -83,31 +85,22 @@ class TaskQuerySet(models.QuerySet):
 
 @python_2_unicode_compatible
 class Task(models.Model):
-    shop = models.ForeignKey("shuup.Shop", verbose_name=_("shop"), related_name="tasks")
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="tasks")
     name = models.CharField(verbose_name=_("name"), max_length=60)
-    type = models.ForeignKey(TaskType, verbose_name=_("task type"), related_name="tasks")
+    type = models.ForeignKey(on_delete=models.CASCADE, to=TaskType, verbose_name=_("task type"), related_name="tasks")
     status = EnumIntegerField(TaskStatus, default=TaskStatus.NEW, verbose_name=_("status"))
     priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"), db_index=True)
     creator = models.ForeignKey(
-        "shuup.Contact",
-        blank=True,
-        null=True,
-        related_name="creted_tasks",
-        verbose_name=_("creator")
+        on_delete=models.CASCADE, to="shuup.Contact", blank=True, null=True,
+        related_name="creted_tasks", verbose_name=_("creator")
     )
     assigned_to = models.ForeignKey(
-        "shuup.Contact",
-        blank=True,
-        null=True,
-        related_name="assigned_tasks",
-        verbose_name=_("assigned to")
+        on_delete=models.CASCADE, to="shuup.Contact", blank=True, null=True,
+        related_name="assigned_tasks", verbose_name=_("assigned to")
     )
     completed_by = models.ForeignKey(
-        "shuup.Contact",
-        blank=True,
-        null=True,
-        related_name="completed_tasks",
-        verbose_name=_("completed by")
+        on_delete=models.CASCADE, to="shuup.Contact", blank=True, null=True,
+        related_name="completed_tasks", verbose_name=_("completed by")
     )
     completed_on = models.DateTimeField(verbose_name=_("completed on"), null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
@@ -170,12 +163,10 @@ class TaskCommentQuerySet(models.QuerySet):
 
 
 class TaskComment(models.Model):
-    task = models.ForeignKey(Task, verbose_name=_("task"), related_name="comments")
+    task = models.ForeignKey(on_delete=models.CASCADE, to=Task, verbose_name=_("task"), related_name="comments")
     author = models.ForeignKey(
-        "shuup.Contact",
-        blank=True, null=True,
-        related_name="task_comments",
-        verbose_name=_("author")
+        on_delete=models.CASCADE, to="shuup.Contact", blank=True, null=True,
+        related_name="task_comments", verbose_name=_("author")
     )
     visibility = EnumIntegerField(
         TaskCommentVisibility,

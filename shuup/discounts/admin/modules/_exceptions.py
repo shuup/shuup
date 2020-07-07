@@ -22,7 +22,7 @@ class AvailabilityExceptionModule(AdminModule):
     def get_urls(self):
         from shuup.admin.urls import admin_url
         delete = admin_url(
-            "^discounts_availability_exception/(?P<pk>\d+)/delete/$",
+            r"^discounts_availability_exception/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.AvailabilityExceptionDeleteView",
             name="discounts_availability_exception.delete"
         )

@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
                     default=0)),
                 ('extra', jsonfield.fields.JSONField(
                     blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(
+                ('target', models.ForeignKey(on_delete=models.CASCADE,
                     to='campaigns.BasketCampaign',
                     related_name='log_entries',
                     verbose_name='target')),
@@ -137,7 +137,7 @@ class Migration(migrations.Migration):
                     help_text='The campaign name to show in the store front.',
                     max_length=120,
                     verbose_name='public name')),
-                ('master', models.ForeignKey(
+                ('master', models.ForeignKey(on_delete=models.CASCADE,
                     to='campaigns.BasketCampaign',
                     editable=False,
                     related_name='translations',
@@ -254,7 +254,7 @@ class Migration(migrations.Migration):
                     default=0)),
                 ('extra', jsonfield.fields.JSONField(
                     blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(
+                ('target', models.ForeignKey(on_delete=models.CASCADE,
                     to='campaigns.CatalogCampaign',
                     related_name='log_entries',
                     verbose_name='target')),
@@ -281,7 +281,7 @@ class Migration(migrations.Migration):
                     blank=True,
                     help_text='The campaign name to show in the store front.',
                     max_length=120)),
-                ('master', models.ForeignKey(
+                ('master', models.ForeignKey(on_delete=models.CASCADE,
                     to='campaigns.CatalogCampaign',
                     editable=False,
                     related_name='translations',
@@ -337,11 +337,11 @@ class Migration(migrations.Migration):
                     null=True,
                     max_digits=36,
                     verbose_name='max amount')),
-                ('group', models.ForeignKey(
+                ('group', models.ForeignKey(on_delete=models.CASCADE,
                     to='shuup.ContactGroup',
                     related_name='+',
                     verbose_name='group')),
-                ('shop', models.ForeignKey(
+                ('shop', models.ForeignKey(on_delete=models.CASCADE,
                     to='shuup.Shop', related_name='+', verbose_name='shop')),
             ], ),
         migrations.CreateModel(
@@ -419,7 +419,7 @@ class Migration(migrations.Migration):
                     default=0)),
                 ('extra', jsonfield.fields.JSONField(
                     blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(
+                ('target', models.ForeignKey(on_delete=models.CASCADE,
                     to='campaigns.Coupon',
                     related_name='log_entries',
                     verbose_name='target')),
@@ -444,7 +444,7 @@ class Migration(migrations.Migration):
                     verbose_name='created on', auto_now_add=True)),
                 ('modified_on', models.DateTimeField(
                     auto_now=True, verbose_name='modified on')),
-                ('coupon', models.ForeignKey(
+                ('coupon', models.ForeignKey(on_delete=models.CASCADE,
                     to='campaigns.Coupon', related_name='usages')),
                 ('created_by', models.ForeignKey(
                     to=settings.AUTH_USER_MODEL,
@@ -460,7 +460,7 @@ class Migration(migrations.Migration):
                     null=True,
                     verbose_name='modified by',
                     related_name='+')),
-                ('order', models.ForeignKey(
+                ('order', models.ForeignKey(on_delete=models.CASCADE,
                     to='shuup.Order', related_name='coupon_usages')),
             ], ),
         migrations.CreateModel(
@@ -483,7 +483,7 @@ class Migration(migrations.Migration):
                     default=0)),
                 ('extra', jsonfield.fields.JSONField(
                     blank=True, null=True, verbose_name='extra data')),
-                ('target', models.ForeignKey(
+                ('target', models.ForeignKey(on_delete=models.CASCADE,
                     to='campaigns.CouponUsage',
                     related_name='log_entries',
                     verbose_name='target')),
@@ -516,7 +516,8 @@ class Migration(migrations.Migration):
                     primary_key=True,
                     parent_link=True,
                     serialize=False,
-                    to='campaigns.BasketDiscountEffect')),
+                    to='campaigns.BasketDiscountEffect',
+                    on_delete=models.CASCADE)),
                 ('discount_amount', shuup.core.fields.MoneyValueField(
                     decimal_places=9,
                     max_digits=36,
@@ -534,6 +535,7 @@ class Migration(migrations.Migration):
             name='BasketDiscountPercentage',
             fields=[
                 ('basketdiscounteffect_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -555,6 +557,7 @@ class Migration(migrations.Migration):
             name='BasketMaxTotalAmountCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -577,6 +580,7 @@ class Migration(migrations.Migration):
             name='BasketMaxTotalProductAmountCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -597,6 +601,7 @@ class Migration(migrations.Migration):
             name='BasketTotalAmountCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -619,6 +624,7 @@ class Migration(migrations.Migration):
             name='BasketTotalProductAmountCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -639,6 +645,7 @@ class Migration(migrations.Migration):
             name='CategoryFilter',
             fields=[
                 ('catalogfilter_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -655,6 +662,7 @@ class Migration(migrations.Migration):
             name='CategoryProductsBasketCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -689,6 +697,7 @@ class Migration(migrations.Migration):
             name='ContactBasketCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -705,6 +714,7 @@ class Migration(migrations.Migration):
             name='ContactCondition',
             fields=[
                 ('contextcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -721,6 +731,7 @@ class Migration(migrations.Migration):
             name='ContactGroupBasketCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -737,6 +748,7 @@ class Migration(migrations.Migration):
             name='ContactGroupCondition',
             fields=[
                 ('contextcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -753,6 +765,7 @@ class Migration(migrations.Migration):
             name='DiscountFromCategoryProducts',
             fields=[
                 ('basketlineeffect_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -773,7 +786,7 @@ class Migration(migrations.Migration):
                     help_text='The discount percentage for this campaign.',
                     null=True,
                     verbose_name='discount percentage')),
-                ('category', models.ForeignKey(
+                ('category', models.ForeignKey(on_delete=models.CASCADE,
                     to='shuup.Category', verbose_name='category')),
             ],
             options={
@@ -784,6 +797,7 @@ class Migration(migrations.Migration):
             name='DiscountFromProduct',
             fields=[
                 ('basketlineeffect_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -813,6 +827,7 @@ class Migration(migrations.Migration):
             name='FreeProductLine',
             fields=[
                 ('basketlineeffect_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -834,6 +849,7 @@ class Migration(migrations.Migration):
             name='HourBasketCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -864,6 +880,7 @@ class Migration(migrations.Migration):
             name='HourCondition',
             fields=[
                 ('contextcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -894,6 +911,7 @@ class Migration(migrations.Migration):
             name='ProductDiscountAmount',
             fields=[
                 ('productdiscounteffect_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -916,6 +934,7 @@ class Migration(migrations.Migration):
             name='ProductDiscountPercentage',
             fields=[
                 ('productdiscounteffect_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -937,6 +956,7 @@ class Migration(migrations.Migration):
             name='ProductFilter',
             fields=[
                 ('catalogfilter_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -953,6 +973,7 @@ class Migration(migrations.Migration):
             name='ProductsInBasketCondition',
             fields=[
                 ('basketcondition_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -976,6 +997,7 @@ class Migration(migrations.Migration):
             name='ProductTypeFilter',
             fields=[
                 ('catalogfilter_ptr', models.OneToOneField(
+                    on_delete=models.CASCADE,
                     auto_created=True,
                     primary_key=True,
                     parent_link=True,
@@ -991,14 +1013,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='productdiscounteffect',
             name='campaign',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='campaigns.CatalogCampaign',
                 related_name='effects',
                 verbose_name='campaign'), ),
         migrations.AddField(
             model_name='productdiscounteffect',
             name='polymorphic_ctype',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='contenttypes.ContentType',
                 editable=False,
                 related_name=
@@ -1007,7 +1029,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contextcondition',
             name='polymorphic_ctype',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='contenttypes.ContentType',
                 editable=False,
                 related_name='polymorphic_campaigns.contextcondition_set+',
@@ -1015,19 +1037,19 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='catalogfiltercachedshopproduct',
             name='filter',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='campaigns.CatalogFilter',
                 related_name='cached_shop_products'), ),
         migrations.AddField(
             model_name='catalogfiltercachedshopproduct',
             name='shop_product',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='shuup.ShopProduct',
                 related_name='cached_catalog_campaign_filters'), ),
         migrations.AddField(
             model_name='catalogfilter',
             name='polymorphic_ctype',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='contenttypes.ContentType',
                 editable=False,
                 related_name='polymorphic_campaigns.catalogfilter_set+',
@@ -1069,21 +1091,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='catalogcampaign',
             name='shop',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 help_text='The shop where the campaign is active.',
                 to='shuup.Shop',
                 verbose_name='shop'), ),
         migrations.AddField(
             model_name='basketlineeffect',
             name='campaign',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='campaigns.BasketCampaign',
                 related_name='line_effects',
                 verbose_name='campaign'), ),
         migrations.AddField(
             model_name='basketlineeffect',
             name='polymorphic_ctype',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='contenttypes.ContentType',
                 editable=False,
                 related_name='polymorphic_campaigns.basketlineeffect_set+',
@@ -1091,14 +1113,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='basketdiscounteffect',
             name='campaign',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='campaigns.BasketCampaign',
                 related_name='discount_effects',
                 verbose_name='campaign'), ),
         migrations.AddField(
             model_name='basketdiscounteffect',
             name='polymorphic_ctype',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='contenttypes.ContentType',
                 editable=False,
                 related_name='polymorphic_campaigns.basketdiscounteffect_set+',
@@ -1106,7 +1128,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='basketcondition',
             name='polymorphic_ctype',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 to='contenttypes.ContentType',
                 editable=False,
                 related_name='polymorphic_campaigns.basketcondition_set+',
@@ -1122,6 +1144,7 @@ class Migration(migrations.Migration):
             model_name='basketcampaign',
             name='coupon',
             field=models.OneToOneField(
+                on_delete=models.CASCADE,
                 blank=True,
                 to='campaigns.Coupon',
                 null=True,
@@ -1150,7 +1173,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='basketcampaign',
             name='shop',
-            field=models.ForeignKey(
+            field=models.ForeignKey(on_delete=models.CASCADE,
                 help_text='The shop where the campaign is active.',
                 to='shuup.Shop',
                 verbose_name='shop'), ),

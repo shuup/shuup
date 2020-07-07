@@ -85,9 +85,9 @@ class ScriptItemEditForm(forms.Form):
         else:  # Nothing to do
             return
 
-        ordered_fields = sorted(self.script_item.template_fields.items(), key=lambda p: p[1].creation_counter)
+        fields = self.script_item.template_fields.items()
         for lang_code, lang_name in self.template_languages:
-            for t_field_name, base_field in ordered_fields:
+            for t_field_name, base_field in fields:
                 field = copy.deepcopy(base_field)
                 field.label = "%s (%s)" % (field.label, lang_name)
 

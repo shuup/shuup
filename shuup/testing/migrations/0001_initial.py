@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CarrierWithCheckoutPhase',
             fields=[
-                ('customcarrier_ptr', models.OneToOneField(to='shuup.CustomCarrier', parent_link=True, serialize=False, auto_created=True, primary_key=True)),
+                ('customcarrier_ptr', models.OneToOneField(to='shuup.CustomCarrier', on_delete=models.CASCADE, parent_link=True, serialize=False, auto_created=True, primary_key=True)),
             ],
             options={
                 'abstract': False,
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ExpensiveSwedenBehaviorComponent',
             fields=[
-                ('servicebehaviorcomponent_ptr', models.OneToOneField(to='shuup.ServiceBehaviorComponent', parent_link=True, serialize=False, auto_created=True, primary_key=True)),
+                ('servicebehaviorcomponent_ptr', models.OneToOneField(to='shuup.ServiceBehaviorComponent', on_delete=models.CASCADE, parent_link=True, serialize=False, auto_created=True, primary_key=True)),
             ],
             options={
                 'abstract': False,
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PaymentWithCheckoutPhase',
             fields=[
-                ('custompaymentprocessor_ptr', models.OneToOneField(to='shuup.CustomPaymentProcessor', parent_link=True, serialize=False, auto_created=True, primary_key=True)),
+                ('custompaymentprocessor_ptr', models.OneToOneField(to='shuup.CustomPaymentProcessor', on_delete=models.CASCADE, parent_link=True, serialize=False, auto_created=True, primary_key=True)),
             ],
             options={
                 'abstract': False,
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PseudoPaymentProcessor',
             fields=[
-                ('paymentprocessor_ptr', models.OneToOneField(to='shuup.PaymentProcessor', parent_link=True, serialize=False, auto_created=True, primary_key=True)),
+                ('paymentprocessor_ptr', models.OneToOneField(to='shuup.PaymentProcessor', on_delete=models.CASCADE, parent_link=True, serialize=False, auto_created=True, primary_key=True)),
                 ('bg_color', models.CharField(verbose_name='Payment Page Background Color', max_length=20, blank=True, default='white')),
                 ('fg_color', models.CharField(verbose_name='Payment Page Text Color', max_length=20, blank=True, default='black')),
             ],

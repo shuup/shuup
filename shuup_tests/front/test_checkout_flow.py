@@ -8,7 +8,7 @@
 import random
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.core import cache
 from shuup.core.models import Order, PaymentStatus, Product
@@ -41,7 +41,7 @@ def fill_address_inputs(soup, with_company=False):
                 value = "test%d@example.shuup.com" % random.random()
             if not value:
                 value = "test"
-        inputs[key] = value
+        inputs[key] = value or ''   # prevent None as data
 
     if with_company:
         inputs["company-tax_number"] = "FI1234567-1"
@@ -139,6 +139,7 @@ def test_basic_order_flow(with_company, with_signal):
     Product.objects.get(pk=product_ids[0]).soft_delete()
     assert c.post(confirm_path, data=extract_form_fields(confirm_soup)).status_code == 200  # user needs to reconfirm
     data = extract_form_fields(confirm_soup)
+    data['accept_terms'] = True
     data['product_ids'] = ','.join(product_ids[1:])
     assert c.post(confirm_path, data=data).status_code == 302  # Should redirect forth
 
@@ -212,7 +213,9 @@ def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_
     assert Order.objects.count() == 0
     confirm_soup = c.soup(confirm_path)
 
-    response = c.post(confirm_path, data=extract_form_fields(confirm_soup))
+    data = extract_form_fields(confirm_soup)
+    data["accept_terms"] = True
+    response = c.post(confirm_path, data)
     assert response.status_code == 302, "Confirm should redirect forth"
 
     order = Order.objects.first()

@@ -8,7 +8,6 @@
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
@@ -19,6 +18,7 @@ from shuup.admin.forms.widgets import (
 from shuup.core.models import Currency, MutableAddress, Shop
 from shuup.core.settings_provider import ShuupSettings
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import get_current_babel_locale
 
 

@@ -28,7 +28,7 @@ class SalesRangeQuerySet(models.QuerySet):
 
 class ContactGroupSalesRange(models.Model):
     group = models.ForeignKey(ContactGroup, related_name="+", on_delete=models.CASCADE, verbose_name=_("group"))
-    shop = models.ForeignKey(Shop, related_name="+", verbose_name=_("shop"))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to=Shop, related_name="+", verbose_name=_("shop"))
     min_value = MoneyValueField(verbose_name=_("min amount"), blank=True, null=True)
     max_value = MoneyValueField(verbose_name=_("max amount"), blank=True, null=True)
 
@@ -42,7 +42,7 @@ class ContactGroupSalesRange(models.Model):
         super(ContactGroupSalesRange, self).save(*args, **kwargs)
         if self.is_active():  # Update group members only if the range is still active
             contact_ids = get_contacts_in_sales_range(self.shop, self.min_value, self.max_value)
-            self.group.members = contact_ids
+            self.group.members.set(contact_ids)
 
     def clean(self):
         super(ContactGroupSalesRange, self).clean()

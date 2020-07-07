@@ -8,7 +8,7 @@
 import pytest
 
 from bs4 import BeautifulSoup
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import Supplier
@@ -96,7 +96,7 @@ def test_category_detail(client):
             # has to start adjust their prices.
 
             # Let's say Mike has the cheapest laptop
-            mike_supplier = Supplier.objects.filter(name="Mike Inc")
+            mike_supplier = Supplier.objects.get(name="Mike Inc")
             SupplierPrice.objects.filter(supplier=mike_supplier, shop=shop, product=laptop).update(amount_value=333)
 
             soup = _get_category_detail_soup(client, category)
@@ -105,7 +105,7 @@ def test_category_detail(client):
             _assert_product_price(laptop_product_box, 333)
 
             # Just to make sure Simon takes over the mouse biz
-            simon_supplier = Supplier.objects.filter(name="Simon Inc")
+            simon_supplier = Supplier.objects.get(name="Simon Inc")
             SupplierPrice.objects.filter(supplier=simon_supplier, shop=shop, product=mouse).update(amount_value=1)
 
             soup = _get_category_detail_soup(client, category)

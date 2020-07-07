@@ -11,9 +11,10 @@ import hashlib
 import warnings
 
 import six
-from django.core.urlresolvers import reverse
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import override
+
+from shuup.utils.django_compat import reverse
 
 
 class AdminModule(object):
@@ -24,7 +25,7 @@ class AdminModule(object):
 
     def get_urls(self):
         """
-        :rtype: list[django.core.urlresolvers.RegexURLPattern]
+        :rtype: list[django.urls.RegexURLPattern]
         """
         return ()
 

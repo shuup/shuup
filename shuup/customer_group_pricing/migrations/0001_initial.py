@@ -18,9 +18,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('price_value', shuup.core.fields.MoneyValueField(verbose_name='price', decimal_places=9, max_digits=36)),
-                ('group', models.ForeignKey(verbose_name='contact group', to='shuup.ContactGroup')),
-                ('product', models.ForeignKey(related_name='+', to='shuup.Product', verbose_name='product')),
-                ('shop', models.ForeignKey(verbose_name='shop', to='shuup.Shop')),
+                ('group', models.ForeignKey(on_delete=models.CASCADE, verbose_name='contact group', to='shuup.ContactGroup')),
+                ('product', models.ForeignKey(on_delete=models.CASCADE, related_name='+', to='shuup.Product', verbose_name='product')),
+                ('shop', models.ForeignKey(on_delete=models.CASCADE, verbose_name='shop', to='shuup.Shop')),
             ],
             options={
                 'verbose_name': 'product price',

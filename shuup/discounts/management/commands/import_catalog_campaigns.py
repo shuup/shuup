@@ -41,7 +41,7 @@ class Command(BaseCommand):
             new_happy_hours = []
             for happy_hour_name, time_ranges in happy_hours:
                 happy_hour = HappyHour.objects.create(name=happy_hour_name)
-                happy_hour.shops = [campaign.shop]
+                happy_hour.shops.set([campaign.shop])
                 happy_hour.time_ranges.all().delete()
 
                 possible_parent = None
@@ -75,8 +75,8 @@ class Command(BaseCommand):
                 })
 
                 discount, created = Discount.objects.get_or_create(identifier=identifier, defaults=data)
-                discount.shops = [campaign.shop]
-                discount.happy_hours = new_happy_hours
+                discount.shops.set([campaign.shop])
+                discount.happy_hours.set(new_happy_hours)
 
 
 def _get_data_from_campaign(campaign):  # noqa

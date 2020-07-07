@@ -5,8 +5,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.core.models import get_company_contact, get_person_contact, SavedAddress
 from shuup.testing.factories import get_address, get_default_shop

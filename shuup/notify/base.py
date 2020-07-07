@@ -9,9 +9,9 @@ from __future__ import unicode_literals
 
 import abc
 from abc import abstractmethod
+from collections import OrderedDict
 
 import six
-from django.utils.encoding import force_text
 from django.utils.text import camel_case_to_spaces
 from jinja2.exceptions import TemplateError
 
@@ -20,6 +20,7 @@ from shuup.notify.enums import (
     ConstantUse, TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
 )
 from shuup.notify.template import render_in_context, Template
+from shuup.utils.django_compat import force_text
 from shuup.utils.importing import cached_load
 from shuup.utils.text import snake_case, space_case
 
@@ -268,7 +269,7 @@ class Condition(ScriptItem):
 class Action(ScriptItem):
     provide_category = "notify_action"
     template_use = TemplateUse.NONE
-    template_fields = {}
+    template_fields = OrderedDict()
 
     @abstractmethod
     def execute(self, context):

@@ -153,7 +153,7 @@ ARG_RE = re.compile(r":param\s+([a-z_0-9]+)", re.I)
 
 INTERNAL_NAME_RE = re.compile("^_[^_].+$")
 
-DOCCOV_DIRECTIVE_COMMENT_RE = re.compile("doccov:\s*(.+)", re.I)
+DOCCOV_DIRECTIVE_COMMENT_RE = re.compile(r"doccov:\s*(.+)", re.I)
 
 
 class ReturnValueVisitor(ast.NodeVisitor):

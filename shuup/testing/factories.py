@@ -135,7 +135,7 @@ class CategoryFactory(DjangoModelFactory):
     @factory.post_generation
     def post(self, create, extracted, **kwargs):
         # TODO: Fix and re-enable this -- it seems to occasionally create malformed trees
-        self.shops = Shop.objects.all()
+        self.shops.set(Shop.objects.all())
         if False and create and random.random() < 0.5:
             try:
                 parent = Category.objects.all().exclude(pk=self.pk).order_by("?")[:1][0]
@@ -175,7 +175,7 @@ def _generate_product_image(product):
         kind=ProductMediaKind.IMAGE,
         file=filer_file
     )
-    media.shops = Shop.objects.all()
+    media.shops.set(Shop.objects.all())
     media.save()
     return media
 
@@ -213,7 +213,7 @@ class ProductFactory(DjangoModelFactory):
             sp.shop_primary_image = image
             sp.save()
             sp.suppliers.add(get_default_supplier())
-            sp.categories = shop.categories.all()
+            sp.categories.set(shop.categories.all())
 
 
 def get_address(**overrides):

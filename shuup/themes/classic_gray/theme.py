@@ -8,10 +8,10 @@
 
 import django.conf
 from django import forms
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.front.themes import BaseThemeFieldsMixin
+from shuup.utils.django_compat import force_text
 from shuup.xtheme import Theme
 
 

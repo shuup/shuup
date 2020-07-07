@@ -18,8 +18,8 @@ class TaskNotSerializableError(Exception):
 
 
 class Task:
-    function = ""       # type: str
-    kwargs = None       # type: Optional[Dict[str, Any]]
+    function = ""  # str
+    kwargs = None  # Optional[Dict[str, Any]]
 
     def __init__(self, function, **kwargs):
         """

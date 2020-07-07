@@ -12,7 +12,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail.message import EmailMessage
-from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import loader
 from django.utils.encoding import force_bytes
@@ -20,6 +19,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Contact, ImmutableAddress, MutableAddress
+from shuup.utils.django_compat import reverse
 from shuup.utils.djangoenv import has_installed
 from shuup.utils.iterables import first
 
@@ -161,7 +161,7 @@ class RecoverPasswordForm(forms.Form):
                 try:
                     PasswordReset(**context).run(shop=self.request.shop)
                     notification_sent = True
-                except:
+                except Exception:
                     notification_sent = False
 
         if not notification_sent:

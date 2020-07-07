@@ -12,7 +12,6 @@ from collections import Counter
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
-from django.utils.encoding import force_text
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
@@ -28,6 +27,7 @@ from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
 from shuup.core.utils.line_unit_mixin import LineWithUnit
 from shuup.utils.decorators import non_reentrant
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import is_existing_language
 from shuup.utils.money import Money
 
@@ -541,7 +541,7 @@ class OrderSource(object):
         final lines are being computed (for example to determine shipping
         discounts based on the total price of all products).
         """
-        product_lines = [l for l in self.get_lines() if l.product]
+        product_lines = [line for line in self.get_lines() if line.product]
         return product_lines
 
     def verify_orderability(self):
@@ -555,7 +555,7 @@ class OrderSource(object):
                 yield error
 
     def _get_suppliers(self):
-        return set([l.supplier for l in self.get_lines() if l.supplier])
+        return set([line.supplier for line in self.get_lines() if line.supplier])
 
     def _get_products_and_quantities(self, supplier=None):
         q_counter = Counter()
@@ -583,7 +583,7 @@ class OrderSource(object):
     @property
     def total_gross_weight(self):
         product_lines = self.get_product_lines()
-        return ((sum(l.product.gross_weight * l.quantity for l in product_lines)) if product_lines else 0)
+        return ((sum(line.product.gross_weight * line.quantity for line in product_lines)) if product_lines else 0)
 
     def _get_object(self, model, pk):
         """

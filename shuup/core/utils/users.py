@@ -8,6 +8,7 @@
 from django.contrib.auth import get_user_model
 
 from shuup import configuration
+from shuup.utils.django_compat import is_anonymous
 
 ALL_SEEING_FORMAT = "is_all_seeing:%(user_id)s"
 FORCE_ANONYMOYS_FORMAT = "force_anonymous_contact:%(user_id)s"
@@ -20,9 +21,9 @@ def real_user_or_none(user):
 
     If user is anonymous, return None, otherwise return the user as is.
     """
-    assert (user is None or user.is_anonymous() or
+    assert (user is None or is_anonymous(user) or
             isinstance(user, get_user_model()))
-    return user if (user and not user.is_anonymous()) else None
+    return user if (user and not is_anonymous(user)) else None
 
 
 def toggle_all_seeing_for_user(user):

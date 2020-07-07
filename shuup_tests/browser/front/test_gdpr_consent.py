@@ -8,7 +8,7 @@
 import os
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.gdpr.models import GDPRSettings
 from shuup.testing.browser_utils import (

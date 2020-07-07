@@ -218,7 +218,8 @@ class Service(TranslatableShuupModel):
     enabled = models.BooleanField(default=False, verbose_name=_("enabled"), help_text=_(
         "Enable this if this service should be selectable on checkout."
     ))
-    shop = models.ForeignKey(Shop, verbose_name=_("shop"), help_text=_("The shop for this service."))
+    shop = models.ForeignKey(
+        on_delete=models.CASCADE, to=Shop, verbose_name=_("shop"), help_text=_("The shop for this service."))
     supplier = models.ForeignKey(
         "shuup.Supplier",
         verbose_name=_("supplier"),

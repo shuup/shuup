@@ -12,8 +12,9 @@ from shuup.core.models import (
     OrderLine, OrderLineType, ProductCrossSell, ProductCrossSellType, Shop
 )
 from shuup.core.utils import context_cache
-from shuup.core.utils.product_bought_with_relations import \
+from shuup.core.utils.product_bought_with_relations import (
     add_bought_with_relations_for_product
+)
 from shuup.front.utils import cache as cache_utils
 
 

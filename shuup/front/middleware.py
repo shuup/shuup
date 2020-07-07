@@ -26,12 +26,7 @@ from shuup.core.utils.users import (
 )
 from shuup.front.basket import get_basket
 from shuup.front.utils.user import is_admin_user
-
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:
-    MiddlewareMixin = object
-
+from shuup.utils.django_compat import get_middleware_classes, MiddlewareMixin
 
 __all__ = ["ProblemMiddleware", "ShuupFrontMiddleware"]
 
@@ -209,7 +204,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
 
 if (
     "django.contrib.auth" in settings.INSTALLED_APPS and
-    "shuup.front.middleware.ShuupFrontMiddleware" in settings.MIDDLEWARE_CLASSES
+    "shuup.front.middleware.ShuupFrontMiddleware" in get_middleware_classes()
 ):
     user_logged_in.connect(ShuupFrontMiddleware.refresh_on_user_change, dispatch_uid="shuup_front_refresh_on_login")
     user_logged_out.connect(ShuupFrontMiddleware.refresh_on_logout, dispatch_uid="shuup_front_refresh_on_logout")

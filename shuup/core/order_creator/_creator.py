@@ -12,7 +12,6 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.utils.encoding import force_text
 
 from shuup.core.models import Order, OrderLine, OrderLineType, ShopProduct
 from shuup.core.order_creator.signals import (
@@ -22,6 +21,7 @@ from shuup.core.shortcuts import update_order_line_from_product
 from shuup.core.utils import context_cache
 from shuup.core.utils.users import real_user_or_none
 from shuup.utils.deprecation import RemovedFromShuupWarning
+from shuup.utils.django_compat import force_text
 from shuup.utils.numbers import bankers_round
 
 from ._source_modifier import get_order_source_modifier_modules

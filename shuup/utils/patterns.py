@@ -8,8 +8,9 @@
 import fnmatch
 
 from django.utils import lru_cache
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+
+from shuup.utils.django_compat import force_text
 
 PATTERN_SYNTAX_HELP_TEXT = _(
     "Comma-separated values or ranges, e.g. A-Z,10000-19000. "

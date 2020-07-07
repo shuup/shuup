@@ -7,13 +7,16 @@
 # LICENSE file in the root directory of this source tree.
 import inspect
 
+import django
 from django.conf import settings
-from django.core import urlresolvers
 from django.core.exceptions import MiddlewareNotUsed
 from django.utils.module_loading import import_string
 from django.utils.translation import activate, get_language
 
 from shuup.admin import shop_provider
+from shuup.utils.django_compat import (
+    get_middleware_classes, RegexPattern, set_urlconf, URLResolver
+)
 
 
 def apply_request_middleware(request, **attrs):
@@ -28,7 +31,7 @@ def apply_request_middleware(request, **attrs):
     :return: The same request, massaged in-place.
     :rtype: django.http.HttpRequest
     """
-    for middleware_path in settings.MIDDLEWARE_CLASSES:
+    for middleware_path in get_middleware_classes():
         mw_class = import_string(middleware_path)
         current_language = get_language()
 
@@ -70,13 +73,18 @@ def apply_view_middleware(request):
     :rtype: django.http.HttpRequest
     """
     urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
-    urlresolvers.set_urlconf(urlconf)
-    resolver = urlresolvers.RegexURLResolver(r'^/', urlconf)
+    set_urlconf(urlconf)
+
+    if django.VERSION < (2, 0):
+        resolver = URLResolver(r'^/', urlconf)
+    else:
+        resolver = URLResolver(RegexPattern(r'^/'), urlconf)
+
     resolver_match = resolver.resolve(request.path_info)
     callback, callback_args, callback_kwargs = resolver_match
     request.resolver_match = resolver_match
 
-    for middleware_path in settings.MIDDLEWARE_CLASSES:
+    for middleware_path in get_middleware_classes():
         mw_class = import_string(middleware_path)
         try:
             mw_instance = mw_class()

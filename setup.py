@@ -83,21 +83,20 @@ utils.add_exclude_patters([
 REQUIRES = [
     'Babel==2.5.3',
     'bleach==3.1.5',
-    'Django>=1.8,<2',
-    'django-bootstrap3>=6.1,<10',
-    'django-countries>=3.3,<5.3',
-    'django-enumfields>=0.9,<0.10',
-    'django-filer>=1.0,<2',
-    'django-filter>=1.0,<1.2',
-    'django-jinja>=1.4,<3',
-    'django-mptt>=0.8.0,<0.10',  # Django-filer doesn't officially support 0.9.0
-    'django-parler>=1.5,<2',
-    'django-parler-rest>=1.3a1,<2',
-    'django-polymorphic>=0.8,<2.1.0',  # For Django 1.8 and 1.9 use version lower 1
-    'django-registration-redux>=1.5,<1.9',
-    'django-reversion>=2,<3',
-    'django-timezone-field>=1.2,<3',
-    'djangorestframework>=3.5,<3.6',
+    'django>=1.11,<2.3',
+    'django-bootstrap3>=11,<11.1',
+    'django-countries>=6.1.2,<6.2',
+    'django-enumfields>=2.0.0,<2.1',
+    'django-filer>=1.7,<1.8',
+    'django-filter>=2.2.0,<2.3',
+    'django-jinja==2.5.0',
+    'django-mptt==0.9.1',
+    'django-parler==2.0.1',
+    'django-polymorphic==2.1.2',
+    'django-registration-redux==2.7',
+    'django-reversion==3.0.5',
+    'django-timezone-field==3.1',   # doesn't support Django 3 in this version
+    'djangorestframework==3.11',
     'factory-boy==2.7.0',
     'fake-factory>=0.5.0,<0.5.4',
     'Jinja2==2.8.1',
@@ -107,12 +106,10 @@ REQUIRES = [
     'lxml>=4,<5',
     'Markdown>=2.6,<3',
     'openpyxl>=2.3,<2.6',
-    'python-dateutil>=2.5',
-    'toml>=0.10.0, <1'
+    'python-dateutil>=2.8',
+    'toml>=0.10.0,<1'
     'pytz>=2015.4',
     'requests>=2.7,<3',
-    'shuup-api>=1.0,<2',
-    'shuup-rest-api>=1.0,<2',
     'six>=1.9,<2',
     'unicodecsv==0.14.1',
     'xlrd>=1'
@@ -130,11 +127,8 @@ EXTRAS_REQUIRE = {
     ],
     'testing': utils.get_test_requirements_from_tox_ini(TOPDIR),
     'coding-style': [
-        'flake8==3.3.0',
-        'flake8-isort==2.1.3',
-        'flake8-polyfill==1.0.1',
-        'isort==4.2.5',
-        'pep8-naming==0.4.1'
+        'flake8>3,<4',
+        'isort>4.3,<5',
     ],
 }
 EXTRAS_REQUIRE['everything'] = list(

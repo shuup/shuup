@@ -11,7 +11,7 @@ import math
 def float_wrap(value, func):
     try:
         return func(float(value))
-    except:
+    except Exception:
         return None
 
 

@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
                 ('customcarrier_ptr', models.OneToOneField(
                     serialize=False,
                     to='shuup.CustomCarrier',
+                    on_delete=models.CASCADE,
                     primary_key=True,
                     parent_link=True,
                     auto_created=True)),
@@ -41,6 +42,7 @@ class Migration(migrations.Migration):
                 ('servicebehaviorcomponent_ptr', models.OneToOneField(
                     serialize=False,
                     to='shuup.ServiceBehaviorComponent',
+                    on_delete=models.CASCADE,
                     primary_key=True,
                     parent_link=True,
                     auto_created=True)),
@@ -55,6 +57,7 @@ class Migration(migrations.Migration):
                 ('custompaymentprocessor_ptr', models.OneToOneField(
                     serialize=False,
                     to='shuup.CustomPaymentProcessor',
+                    on_delete=models.CASCADE,
                     primary_key=True,
                     parent_link=True,
                     auto_created=True)),
@@ -71,6 +74,7 @@ class Migration(migrations.Migration):
                 ('paymentprocessor_ptr', models.OneToOneField(
                     serialize=False,
                     to='shuup.PaymentProcessor',
+                    on_delete=models.CASCADE,
                     primary_key=True,
                     parent_link=True,
                     auto_created=True)),
@@ -97,28 +101,30 @@ class Migration(migrations.Migration):
                 ('catalogfilter_ptr', models.OneToOneField(
                     serialize=False,
                     to='campaigns.CatalogFilter',
+                    on_delete=models.CASCADE,
                     primary_key=True,
                     parent_link=True,
                     auto_created=True)),
                 ('categories', models.ManyToManyField(
                     to='shuup.Category', related_name='ultrafilter2')),
                 ('category', models.ForeignKey(
-                    to='shuup.Category', null=True,
-                    related_name='ultrafilte5')),
-                ('contact', models.ForeignKey(null=True, to='shuup.Contact')),
-                ('derp', models.ForeignKey(
                     to='shuup.Category',
+                    on_delete=models.CASCADE, null=True,
+                    related_name='ultrafilte5')),
+                ('contact', models.ForeignKey(null=True, to='shuup.Contact', on_delete=models.CASCADE)),
+                ('derp', models.ForeignKey(
+                    to='shuup.Category', on_delete=models.CASCADE,
                     null=True,
                     related_name='ultrafilte55')),
-                ('product', models.ForeignKey(null=True, to='shuup.Product')),
+                ('product', models.ForeignKey(null=True, to='shuup.Product', on_delete=models.CASCADE)),
                 ('product_type', models.ForeignKey(
-                    null=True, to='shuup.ProductType')),
+                    null=True, to='shuup.ProductType', on_delete=models.CASCADE)),
                 ('product_types', models.ManyToManyField(
                     to='shuup.ProductType', related_name='ultrafilter3')),
                 ('products', models.ManyToManyField(
                     to='shuup.Product', related_name='ultrafilter1')),
                 ('shop_product', models.ForeignKey(
-                    null=True, to='shuup.ShopProduct')),
+                    null=True, to='shuup.ShopProduct', on_delete=models.CASCADE)),
                 ('shop_products', models.ManyToManyField(
                     to='shuup.ShopProduct', related_name='ultrafilter4')),
             ],

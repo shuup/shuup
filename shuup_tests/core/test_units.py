@@ -10,6 +10,7 @@ from django.utils.translation.trans_real import translation as get_trans
 from shuup.core.models import (
     DisplayUnit, SalesUnit, PiecesSalesUnit, UnitInterface)
 from shuup.core.models._units import SalesUnitAsDisplayUnit
+from django.utils.translation.trans_real import DjangoTranslation
 
 
 def nbsp(x):
@@ -212,11 +213,15 @@ trans_key = (
 
 
 class ValueSymbolTranslationWithSpace(object):
+    _fallback = None
     _catalog = {trans_key: nbsp('{value} {symbol}')}
+    plural = lambda n: int(n != 1)
 
 
 class ValueSymbolTranslationWithoutSpace(object):
+    _fallback = None
     _catalog = {trans_key: '{value}{symbol}'}
+    plural = lambda n: int(n != 1)
 
 
 def test_unit_interface_render_quantity_internal_kg():

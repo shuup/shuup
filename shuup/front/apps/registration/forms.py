@@ -8,6 +8,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 from registration.forms import RegistrationForm
 
@@ -75,11 +76,12 @@ class PersonRegistrationForm(RegistrationForm):
             for definition in provider.get_fields(request=self.request):
                 self.fields[definition.name] = definition.field
 
-    def save(self, *args, **kwargs):
-        user = super(PersonRegistrationForm, self).save(*args, **kwargs)
-        contact = get_person_contact(user)
-        contact.add_to_shop(self.request.shop)
-        person_registration_save.send(sender=type(self), request=self.request, user=user, contact=contact)
+    def save(self, commit=True, *args, **kwargs):
+        with atomic():
+            user = super(PersonRegistrationForm, self).save(*args, **kwargs)
+            contact = get_person_contact(user)
+            contact.add_to_shop(self.request.shop)
+            person_registration_save.send(sender=type(self), request=self.request, user=user, contact=contact)
         return user
 
 
@@ -112,30 +114,30 @@ class CompanyRegistrationForm(FormGroup):
                 del billing_form.fields[field]
 
     def save(self, commit=True):
-        company = self.forms['company'].save(commit=False)
-        billing_address = self.forms['billing'].save(commit=False)
-        person = self.forms['contact_person'].save(commit=False)
-        user = self.forms['user_account'].save(commit=False)
+        with atomic():
+            company = self.forms['company'].save(commit=False)
+            billing_address = self.forms['billing'].save(commit=False)
+            person = self.forms['contact_person'].save(commit=False)
+            user = self.forms['user_account'].save(commit=False)
 
-        company.default_billing_address = billing_address
-        company.default_shipping_address = billing_address
+            company.default_billing_address = billing_address
+            company.default_shipping_address = billing_address
 
-        for field in ['name', 'name_ext', 'email', 'phone']:
-            setattr(billing_address, field, getattr(company, field))
+            for field in ['name', 'name_ext', 'email', 'phone']:
+                setattr(billing_address, field, getattr(company, field))
 
-        person.user = user
+            person.user = user
 
-        user.first_name = person.first_name
-        user.last_name = person.last_name
-        user.email = person.email
+            user.first_name = person.first_name
+            user.last_name = person.last_name
+            user.email = person.email
 
-        # If company registration requires approval,
-        # company and person contacts will be created as inactive
-        if company_registration_requires_approval(self.request.shop):
-            company.is_active = False
-            person.is_active = False
+            # If company registration requires approval,
+            # company and person contacts will be created as inactive
+            if company_registration_requires_approval(self.request.shop):
+                company.is_active = False
+                person.is_active = False
 
-        if commit:
             user.save()
             person.user = user
             person.save()

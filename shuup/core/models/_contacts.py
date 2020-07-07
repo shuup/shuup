@@ -26,6 +26,7 @@ from shuup.core.fields import (
 from shuup.core.pricing import PriceDisplayOptions
 from shuup.core.utils.users import is_user_all_seeing
 from shuup.utils.analog import define_log_model
+from shuup.utils.django_compat import is_anonymous
 
 from ._base import PolymorphicShuupModel, TranslatableShuupModel
 from ._taxes import CustomerTaxGroup
@@ -50,8 +51,8 @@ class ContactGroupPriceDisplayQueryset(QuerySet):
 
 
 class ContactGroupPriceDisplay(models.Model):
-    shop = models.ForeignKey("Shop", related_name="price_display_options", null=True)
-    group = models.ForeignKey("ContactGroup", related_name="price_display_options")
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="Shop", related_name="price_display_options", null=True)
+    group = models.ForeignKey(on_delete=models.CASCADE, to="ContactGroup", related_name="price_display_options")
     show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
     show_prices_including_taxes = models.NullBooleanField(
         default=None, null=True, blank=True,
@@ -91,7 +92,8 @@ class ContactGroupQuerySet(TranslatableQuerySet):
 
 class ContactGroup(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
-    shop = models.ForeignKey("Shop", related_name="contact_groups", verbose_name=_("shop"), null=True)
+    shop = models.ForeignKey(
+        on_delete=models.CASCADE, to="Shop", related_name="contact_groups", verbose_name=_("shop"), null=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
 
     translations = TranslatedFields(
@@ -186,7 +188,8 @@ class Contact(PolymorphicShuupModel):
     ))
 
     registration_shop = models.ForeignKey(
-        "Shop", related_name="registrations", verbose_name=_("registration shop"), null=True)
+        on_delete=models.CASCADE, to="Shop", related_name="registrations",
+        verbose_name=_("registration shop"), null=True)
 
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(
@@ -243,7 +246,8 @@ class Contact(PolymorphicShuupModel):
     merchant_notes = models.TextField(blank=True, verbose_name=_('merchant notes'), help_text=_(
         "Enter any private notes for this customer that are only accessible in Shuup admin."
     ))
-    account_manager = models.ForeignKey("PersonContact", blank=True, null=True, verbose_name=_('account manager'))
+    account_manager = models.ForeignKey(
+        on_delete=models.CASCADE, to="PersonContact", blank=True, null=True, verbose_name=_('account manager'))
     options = PolymorphicJSONField(blank=True, null=True, verbose_name=_("options"))
     picture = FilerImageField(
         verbose_name=_("picture"), blank=True, null=True, related_name="picture", on_delete=models.SET_NULL,
@@ -417,7 +421,7 @@ class PersonContact(Contact):
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name="contact",
-        verbose_name=_('user')
+        on_delete=models.CASCADE, verbose_name=_('user')
     )
     gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4, verbose_name=_('gender'), help_text=_(
         "The gender of the contact."
@@ -557,7 +561,7 @@ def get_person_contact(user):
     :return: PersonContact of the user or AnonymousContact
     :rtype: PersonContact|AnonymousContact
     """
-    if not user or user.is_anonymous():
+    if not (user and not is_anonymous(user)):
         return AnonymousContact()
 
     defaults = {

@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth.models import AnonymousUser
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import PersonContact, Shop

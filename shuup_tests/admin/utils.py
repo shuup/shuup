@@ -12,10 +12,11 @@ def get_admin_only_urls():
     from django.conf.urls import url, include
     from shuup.admin.urls import get_urls
     class FauxUrlPatternsModule:
+        app_name = "shuup_admin"
         urlpatterns = get_urls()
 
     return [
-        url(r'^sa/', include(FauxUrlPatternsModule, namespace="shuup_admin", app_name="shuup_admin")),
+        url(r'^sa/', include(FauxUrlPatternsModule, namespace="shuup_admin")),
     ]
 
 def admin_only_urls():

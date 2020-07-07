@@ -12,7 +12,7 @@ import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core import mail
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.test.utils import override_settings
 
 from shuup import configuration
@@ -375,7 +375,6 @@ def test_company_registration(django_user_model, client, allow_company_registrat
             'user_account-password1': "password",
             'user_account-password2': "password",
         })
-
         user = django_user_model.objects.get(username=username)
         contact = PersonContact.objects.get(user=user)
         company = CompanyContact.objects.get(members__in=[contact])

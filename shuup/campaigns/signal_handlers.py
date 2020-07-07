@@ -10,8 +10,9 @@ from shuup.campaigns.consts import (
     CONTEXT_CONDITION_CACHE_NAMESPACE
 )
 from shuup.campaigns.models import CatalogFilter
-from shuup.campaigns.models.contact_group_sales_ranges import \
+from shuup.campaigns.models.contact_group_sales_ranges import (
     ContactGroupSalesRange
+)
 from shuup.campaigns.models.matching import (
     update_matching_catalog_filters, update_matching_category_filters
 )

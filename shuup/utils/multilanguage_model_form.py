@@ -13,8 +13,8 @@ from collections import defaultdict
 import six
 from django.conf import settings
 from django.forms.models import model_to_dict, ModelForm
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 from parler.forms import TranslatableModelForm
 from parler.utils.context import switch_language
 

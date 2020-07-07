@@ -9,7 +9,6 @@ from django.utils.timezone import now
 
 from shuup.core.models import CustomPaymentProcessor
 
-
 # TEMPORARY until we get admin orders also calling service methods
 
 

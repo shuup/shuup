@@ -60,7 +60,8 @@ def test_invalid_admin_url():
 
 
 class TestMagic(object):
-    pass
+    def __call__(self):
+        return
 
 
 @patch("shuup.utils.importing.load", autospec=TestMagic)

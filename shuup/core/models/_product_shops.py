@@ -176,9 +176,12 @@ class ShopProduct(MoneyPropped, TranslatableModel):
     ))
 
     display_unit = models.ForeignKey(
-        DisplayUnit, null=True, blank=True,
+        DisplayUnit,
+        on_delete=models.CASCADE,
+        null=True, blank=True,
         verbose_name=_("display unit"),
-        help_text=_("Unit for displaying quantities of this product."))
+        help_text=_("Unit for displaying quantities of this product.")
+    )
 
     translations = TranslatedFields(
         name=models.CharField(

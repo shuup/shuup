@@ -233,10 +233,9 @@ class SavedAddress(ShuupModel):
     """
     Model for saving multiple addresses in an 'address book' of sorts.
     """
-    owner = models.ForeignKey("Contact", on_delete=models.CASCADE, verbose_name=_("owner"))
-    address = models.ForeignKey(
-        MutableAddress, verbose_name=_('address'),
-        related_name="saved_addresses", on_delete=models.CASCADE)
+    owner = models.ForeignKey(on_delete=models.CASCADE, to="Contact", verbose_name=_("owner"))
+    address = models.ForeignKey(on_delete=models.CASCADE, to=MutableAddress, verbose_name=_('address'),
+                                related_name="saved_addresses")
     role = EnumIntegerField(SavedAddressRole, verbose_name=_('role'), default=SavedAddressRole.SHIPPING)
     status = EnumIntegerField(SavedAddressStatus, default=SavedAddressStatus.ENABLED, verbose_name=_('status'))
     title = models.CharField(max_length=255, blank=True, verbose_name=_('title'))

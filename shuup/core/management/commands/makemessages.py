@@ -17,15 +17,9 @@ import os
 from io import BytesIO
 
 import babel.messages.extract
-import django
 from django.core.management.commands import makemessages
 from django.utils.six import StringIO
-
-if django.VERSION < (1, 11):
-    from django.utils.translation import trans_real
-else:
-    from django.utils.translation import template as trans_real
-
+from django.utils.translation import template as trans_real
 
 KEYWORDS = dict(babel.messages.extract.DEFAULT_KEYWORDS, **{
     '_L': None,

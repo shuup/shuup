@@ -8,7 +8,6 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
@@ -20,6 +19,7 @@ from shuup.admin.toolbar import get_default_edit_toolbar, URLActionButton
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.core import cache
+from shuup.utils.django_compat import reverse
 from shuup.utils.importing import cached_load
 from shuup.xtheme._theme import (
     get_theme_by_identifier, get_theme_cache_key, set_current_theme
