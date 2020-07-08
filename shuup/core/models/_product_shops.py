@@ -107,8 +107,8 @@ class ShopProduct(MoneyPropped, TranslatableModel):
     )
     limit_shipping_methods = models.BooleanField(
         default=False, verbose_name=_("limit the shipping methods"), help_text=_(
-            "Enable this if you want to limit your product to use only the select payment methods. "
-            "You can select the allowed payment method(s) in the field below - all the rest "
+            "Enable this if you want to limit your product to use only the select shipping methods. "
+            "You can select the allowed shipping method(s) in the field below - all the rest "
             "are disallowed."
         )
     )
