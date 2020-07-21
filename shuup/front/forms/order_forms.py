@@ -13,6 +13,7 @@ from shuup.core.models import ProductMode
 class ProductOrderForm(FormView):
     template_name = "shuup/front/product/forms/product_order_form.jinja"
     engine = None
+    priority = 0    # a greater number has precedence
 
     def __init__(self, request, context, product, language, **kwargs):
         self.request = request
