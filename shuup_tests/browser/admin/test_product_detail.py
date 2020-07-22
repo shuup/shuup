@@ -22,6 +22,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_product_detail(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     product = create_product("test_sku", shop, default_price=10)
