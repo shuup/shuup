@@ -85,7 +85,7 @@ class BasketLine(SourceLine):
         self.__dict__["type"] = type
 
     def set_quantity(self, quantity):
-        cls = Decimal if self.product.sales_unit.allow_fractions else int
+        cls = Decimal if self.product and self.product.sales_unit.allow_fractions else int
         self.quantity = cls(max(0, quantity))
 
     @property
