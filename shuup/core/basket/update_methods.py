@@ -123,11 +123,10 @@ class BasketUpdateMethods(object):
 
         for linked_line in linked_lines:
             orderable_line = orderable_lines.get(linked_line["line_id"])
+
             # Use default OrderLineBehaviour
-            if "on_parent_change_behavior" in linked_line:
-                line_behavior = linked_line["on_parent_change_behavior"]
-            else:
-                line_behavior = OrderLineBehavior.INHERIT
+            line_behavior = linked_line.get("on_parent_change_behavior", OrderLineBehavior.INHERIT)
+
             if not orderable_line:
                 # Customer can change quantity in non-orderable lines regardless
                 linked_line["quantity"] = new_quantity
@@ -137,17 +136,23 @@ class BasketUpdateMethods(object):
                 changed = True
             elif line_behavior == OrderLineBehavior.SKIP:
                 continue
+
+            # then line_behavior == OrderLineBehavior.INHERIT
             else:
                 product = orderable_line.product
                 supplier = orderable_line.supplier
 
                 # Basket quantities already contain current quantities for orderable lines
                 quantity_delta = new_quantity - line["quantity"]
-                errors = self._get_orderability_errors(product, supplier, quantity_delta)
-                if errors:
-                    for error in errors:
-                        self._handle_orderability_error(line, error)
-                    continue
+
+                # check orderability errors if the line contains a product
+                if product:
+                    errors = self._get_orderability_errors(product, supplier, quantity_delta)
+                    if errors:
+                        for error in errors:
+                            self._handle_orderability_error(line, error)
+                        continue
+
                 self.basket.update_line(linked_line, quantity=new_quantity)
                 linked_line["quantity"] = new_quantity
                 changed = True
