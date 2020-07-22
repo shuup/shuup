@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Added
+
+- Core: Add dynamic measurement unit system
+  - New setting for specifying the measurement provider: `SHUUP_MEASUREMENT_PROVIDER_SPEC`
+  - New setting for specifying all the units that `MeasurementField` will accept: `SHUUP_MEASUREMENT_FIELD_KNOWN_UNITS`
+  - New settings for specifying various units:
+    - `SHUUP_UNIT_PRODUCT_LENGTH`
+    - `SHUUP_UNIT_PRODUCT_WEIGHT`
+    - `SHUUP_UNIT_SHIPMENT_PRODUCT_VOLUME`
+    - `SHUUP_UNIT_SHIPMENT_PRODUCT_WEIGHT`
+    - `SHUUP_UNIT_SHIPMENT_VOLUME`
+    - `SHUUP_UNIT_SHIPMENT_WEIGHT`
+
 ## [1.11.5] - 2020-07-07
 
 ### Added

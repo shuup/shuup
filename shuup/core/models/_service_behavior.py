@@ -109,12 +109,20 @@ class WeightBasedPriceRange(TranslatableModel):
         related_name="ranges",
         on_delete=models.CASCADE
     )
-    min_value = MeasurementField(unit="g", verbose_name=_("min weight (g)"), blank=True, null=True, help_text=_(
-        "The minimum weight (grams) for this price to apply."
-    ))
-    max_value = MeasurementField(unit="g", verbose_name=_("max weight (g)"), blank=True, null=True, help_text=_(
-        "The maximum weight (grams) before this price no longer applies."
-    ))
+    min_value = MeasurementField(
+        unit=settings.SHUUP_UNIT_PRODUCT_WEIGHT,
+        verbose_name=_("min weight ({})".format(settings.SHUUP_UNIT_PRODUCT_WEIGHT)),
+        blank=True,
+        null=True,
+        help_text=_("The minimum weight for this price to apply.")
+    )
+    max_value = MeasurementField(
+        unit=settings.SHUUP_UNIT_PRODUCT_WEIGHT,
+        verbose_name=_("max weight ({})".format(settings.SHUUP_UNIT_PRODUCT_WEIGHT)),
+        blank=True,
+        null=True,
+        help_text=_("The maximum weight before this price no longer applies.")
+    )
     price_value = MoneyValueField(help_text=_("The cost to apply to this service when the weight criteria is met."))
     description = TranslatedField(any_language=True)
 

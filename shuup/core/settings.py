@@ -280,3 +280,46 @@ SHUUP_MAX_UPLOAD_SIZE = 5000000
 #: load the function and call it passing the arguments received.
 #:
 SHUUP_TASK_RUNNER = "shuup.core.tasks.DefaultTaskRunner"
+
+#: Spec that defines the measurement provider.
+#: Measurement provider is the class which contains
+#: all of the methods for calculating and computing volumes and widths from arbitrary units.
+#:
+SHUUP_MEASUREMENT_PROVIDER_SPEC = "shuup.core.utils.measurement.DefaultMeasurementProvider"
+
+#: All of the units that ``shuup.core.fields.MeasurementField`` should accept as valid options.
+#: When overriding this setting value, one should never remove any values from the tuple
+#: to keep support for previous migrations.
+#:
+SHUUP_MEASUREMENT_FIELD_KNOWN_UNITS = ("mm", "m", "kg", "g", "m3")
+
+#: The length unit that ``shuup.core.models.Product`` uses.
+#: If this unit is changed, most probably also ``SHUUP_MEASUREMENT_PROVIDER_SPEC`` needs to be changed.
+#:
+SHUUP_UNIT_PRODUCT_LENGTH = "mm"
+
+#: The weight unit that ``shuup.core.models.Shipment``
+#: and ``shuup.core.models.WeightLimitsBehaviorComponent`` use.
+#: If this unit is changed, most probably also ``SHUUP_MEASUREMENT_PROVIDER_SPEC`` needs to be changed.
+#:
+SHUUP_UNIT_PRODUCT_WEIGHT = "g"
+
+#: The volume unit that ``shuup.core.models.Shipment`` uses.
+#: If this unit is changed, most probably also ``SHUUP_MEASUREMENT_PROVIDER_SPEC`` needs to be changed.
+#:
+SHUUP_UNIT_SHIPMENT_VOLUME = "m3"
+
+#: The weight unit that ``shuup.core.models.Shipment`` uses.
+#: If this unit is changed, most probably also ``SHUUP_MEASUREMENT_PROVIDER_SPEC`` needs to be changed.
+#:
+SHUUP_UNIT_SHIPMENT_WEIGHT = "kg"
+
+#: The volume unit that ``shuup.core.models.ShipmentProduct`` uses.
+#: If this unit is changed, most probably also ``SHUUP_MEASUREMENT_PROVIDER_SPEC`` needs to be changed.
+#:
+SHUUP_UNIT_SHIPMENT_PRODUCT_VOLUME = "m3"
+
+#: The weight unit that ``shuup.core.models.ShipmentProduct`` uses.
+#: If this unit is changed, most probably also ``SHUUP_MEASUREMENT_PROVIDER_SPEC`` needs to be changed.
+#:
+SHUUP_UNIT_SHIPMENT_PRODUCT_WEIGHT = "g"

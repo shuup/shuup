@@ -8,6 +8,7 @@
 from __future__ import unicode_literals, with_statement
 
 import six
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
@@ -282,37 +283,42 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     # Physical dimensions
     width = MeasurementField(
-        unit="mm", verbose_name=_('width (mm)'),
+        unit=settings.SHUUP_UNIT_PRODUCT_LENGTH,
+        verbose_name=_('width ({})'.format(settings.SHUUP_UNIT_PRODUCT_LENGTH)),
         help_text=_(
-            "Set the measured width (in millimeters) of your product or product packaging. "
+            "Set the measured width of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
         )
     )
     height = MeasurementField(
-        unit="mm", verbose_name=_('height (mm)'),
+        unit=settings.SHUUP_UNIT_PRODUCT_LENGTH,
+        verbose_name=_('height ({})'.format(settings.SHUUP_UNIT_PRODUCT_LENGTH)),
         help_text=_(
-            "Set the measured height (in millimeters) of your product or product packaging. "
+            "Set the measured height of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
         )
     )
     depth = MeasurementField(
-        unit="mm", verbose_name=_('depth (mm)'),
+        unit=settings.SHUUP_UNIT_PRODUCT_LENGTH,
+        verbose_name=_('depth ({})'.format(settings.SHUUP_UNIT_PRODUCT_LENGTH)),
         help_text=_(
-            "Set the measured depth or length (in millimeters) of your product or product packaging. "
+            "Set the measured depth or length of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
         )
     )
     net_weight = MeasurementField(
-        unit="g", verbose_name=_('net weight (g)'),
+        unit=settings.SHUUP_UNIT_PRODUCT_WEIGHT,
+        verbose_name=_('net weight ({})'.format(settings.SHUUP_UNIT_PRODUCT_WEIGHT)),
         help_text=_(
-            "Set the measured weight (in grams) of your product WITHOUT its packaging. "
+            "Set the measured weight of your product WITHOUT its packaging. "
             "This will provide customers with the actual product's weight."
         )
     )
     gross_weight = MeasurementField(
-        unit="g", verbose_name=_('gross weight (g)'),
+        unit=settings.SHUUP_UNIT_PRODUCT_WEIGHT,
+        verbose_name=_('gross weight ({})'.format(settings.SHUUP_UNIT_PRODUCT_WEIGHT)),
         help_text=_(
-            "Set the measured gross weight (in grams) of your product WITH its packaging. "
+            "Set the measured gross weight of your product WITH its packaging. "
             "This will help with calculating shipping costs."
         )
     )
