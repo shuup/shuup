@@ -227,7 +227,7 @@ class SeparatedValuesField(models.TextField):
         self.separator = kwargs.pop("separator", ",")
         super(SeparatedValuesField, self).__init__(*args, **kwargs)
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection):
         if isinstance(value, six.string_types):
             return value.split(self.separator)
         return []

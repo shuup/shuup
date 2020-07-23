@@ -8,6 +8,6 @@
 
 
 def get_shuup_static_url(path):
-    from django.contrib.staticfiles.templatetags.staticfiles import static
+    from django.templatetags.static import static
     from shuup import __version__
     return "%s?v=%s" % (static(path), __version__)
