@@ -14,7 +14,7 @@ import numbers
 import babel
 import six
 from django import forms
-from django.core.exceptions import ImproperlyConfigured, ValidationError
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import BLANK_CHOICE_DASH
@@ -130,11 +130,7 @@ class QuantityField(FormattedDecimalField):
 
 
 class MeasurementField(FormattedDecimalField):
-    KNOWN_UNITS = ("mm", "m", "kg", "g", "m3")
-
     def __init__(self, unit, **kwargs):
-        if unit not in self.KNOWN_UNITS:
-            raise ImproperlyConfigured("Error! Provided unit `%r` is not a known unit. Configure it properly." % unit)
         self.unit = unit
         kwargs.setdefault("decimal_places", FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
         kwargs.setdefault("max_digits", FORMATTED_DECIMAL_FIELD_MAX_DIGITS)

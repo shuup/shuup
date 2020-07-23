@@ -152,7 +152,7 @@ def test_basic_order():
     assert order.taxful_total_price == TaxfulPrice(PRODUCTS_TO_SEND * (10 + 5) - 30, currency)
     shipment = order.create_shipment_of_all_products(supplier=supplier)
     assert shipment.total_products == PRODUCTS_TO_SEND, "All products were shipped"
-    assert shipment.weight == product.gross_weight * PRODUCTS_TO_SEND / 1000, "Gravity works"
+    assert shipment.weight == product.gross_weight * PRODUCTS_TO_SEND, "Gravity works"
     assert not order.get_unshipped_products(), "Nothing was left in the warehouse"
     order.shipping_status = ShippingStatus.FULLY_SHIPPED
     order.create_payment(order.taxful_total_price)

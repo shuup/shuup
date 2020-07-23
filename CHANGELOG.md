@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Added
+
+- Core: Add dynamic measurement unit system
+  - New settings for specifying units:
+    - `SHUUP_MASS_UNIT`
+    - `SHUUP_LENGTH_UNIT`
+  - New function for getting the volume unit: `shuup.core.utils.units.get_shuup_volume_unit`
+ 
+### Changed
+
+- **BREAKING**: Change `Shipment` default weight unit from `kg` to `g`
+- **BREAKING**: Change `Shipment` default volume unit from `m3` to `mm3`
+- **BREAKING**: Change `ShipmentProduct` default volume unit from `m3` to `mm3`
+
+### Removed
+
+- Remove 'known unit' validation from `MeasurementField`, it can contain any units now
+
 ## [1.11.6] - 2020-07-22
 
 ### Changed
