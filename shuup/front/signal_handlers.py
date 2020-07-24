@@ -20,25 +20,14 @@ from shuup.front.utils.sorts_and_filters import bump_product_queryset_cache
 
 
 @receiver(context_cache_item_bumped, dispatch_uid="context-cache-item-bumped")
-def handle_context_cache_item_bumped(sender, item, shop=None, **kwargs):
-    """
-    Every time the context cache is bumped for a ShopProduct
-    we bump the context cache for template helpers for the item's shop
-    """
-    if issubclass(sender, ShopProduct):
-        if not shop and isinstance(item, int):
-            shop = ShopProduct.objects.get(id=item).shop
-        elif not shop:
-            shop = item.shop
-        context_cache.bump_cache_for_item(cache_utils.get_listed_products_cache_item(shop))
-        context_cache.bump_cache_for_item(cache_utils.get_best_selling_products_cache_item(shop))
-        context_cache.bump_cache_for_item(cache_utils.get_newest_products_cache_item(shop))
-        context_cache.bump_cache_for_item(cache_utils.get_products_for_category_cache_item(shop))
-        context_cache.bump_cache_for_item(cache_utils.get_random_products_cache_item(shop))
-        bump_product_queryset_cache()
-
-    elif issubclass(sender, Product):
-        bump_product_queryset_cache()
+def handle_context_cache_item_bumped(sender, shop_id, **kwargs):
+    shop = Shop.objects.filter(pk=shop_id).first()
+    context_cache.bump_cache_for_item(cache_utils.get_listed_products_cache_item(shop))
+    context_cache.bump_cache_for_item(cache_utils.get_best_selling_products_cache_item(shop))
+    context_cache.bump_cache_for_item(cache_utils.get_newest_products_cache_item(shop))
+    context_cache.bump_cache_for_item(cache_utils.get_products_for_category_cache_item(shop))
+    context_cache.bump_cache_for_item(cache_utils.get_random_products_cache_item(shop))
+    bump_product_queryset_cache()
 
 
 def handle_manufacturer_post_save(sender, instance, **kwargs):

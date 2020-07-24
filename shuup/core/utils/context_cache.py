@@ -61,7 +61,7 @@ def set_cached_value(key, value, timeout=None):
     cache.set(key, value, timeout=timeout)
 
 
-def bump_cache_for_shop_product(shop_product, shop=None):
+def bump_cache_for_shop_product(instance, shop=None):
     """
     Bump cache for given shop product
 
@@ -73,15 +73,17 @@ def bump_cache_for_shop_product(shop_product, shop=None):
     """
     from shuup.core.models import ShopProduct, ProductPackageLink, Product
 
-    if not isinstance(shop_product, ShopProduct):
-        shop_product_id = shop_product
+    if isinstance(instance, ShopProduct):
+        shop_product_ids = [instance.pk]
+    elif isinstance(instance, QuerySet):
+        shop_product_ids = instance
     else:
-        shop_product_id = shop_product.id
+        shop_product_ids = [instance]
 
     # Get all normal products linked to passed
     # shop product id
     product_ids = Product.objects.filter(
-        shop_products__id=shop_product_id
+        shop_products__id__in=shop_product_ids
     ).values_list("id", flat=True)
 
     # Get all affect variation parent ids just in
@@ -104,6 +106,7 @@ def bump_cache_for_shop_product(shop_product, shop=None):
         Q(variation_parent_id__in=variation_parent_ids) |
         Q(id__in=set(value for pair_of_values in package_product_ids for value in pair_of_values)
           )).values_list("id", flat=True)
+
     # One extra query should be better what we have now
     shop_product_ids_to_bump = ShopProduct.objects.filter(
         product_id__in=product_ids_to_bump
@@ -150,7 +153,6 @@ def bump_cache_for_item_ids(item_ids, namespace, object_class, shop=None):
     """
     for item_id in item_ids:
         cache.bump_version("{}-{}".format(namespace, item_id))
-        context_cache_item_bumped.send(object_class, item=item_id, shop=shop)
 
 
 def bump_cache_for_item(item):
@@ -164,7 +166,6 @@ def bump_cache_for_item(item):
     :param item: Cached object
     """
     cache.bump_version(_get_namespace_for_item(item))
-    context_cache_item_bumped.send(getattr(item, "__class__", item), item=item)
 
 
 def bump_cache_for_pk(cls, pk):
