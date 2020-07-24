@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Changed
+
+- Sanitize product description on save if `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` is set to `False`
+
 ## [1.11.7] - 2020-07-23
 
 ### Added
