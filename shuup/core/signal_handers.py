@@ -11,9 +11,10 @@ from django.db.backends.signals import connection_created
 from django.db.models.signals import m2m_changed, post_save
 
 from shuup.core.models import (
-    Category, CompanyContact, ContactGroup, PersonContact, Product,
+    Category, CompanyContact, ContactGroup, PersonContact, Product, Shop,
     ShopProduct, Supplier, Tax, TaxClass
 )
+from shuup.core.signals import context_cache_item_bumped
 from shuup.core.utils.context_cache import (
     bump_internal_cache, bump_product_signal_handler,
     bump_shop_product_signal_handler
@@ -35,21 +36,29 @@ def handle_product_post_save(sender, instance, **kwargs):
     bump_product_signal_handler(sender, instance, **kwargs)
     bump_prices_for_product(instance)
 
+    for shop_id in set(instance.shop_products.all().values_list("shop_id", flat=True)):
+        context_cache_item_bumped.send(sender=Shop, shop_id=shop_id)
+
 
 def handle_shop_product_post_save(sender, instance, **kwargs):
     if isinstance(instance, Category):
-        for shop_product in instance.shop_products.all():
-            bump_shop_product_signal_handler(sender, shop_product, **kwargs)
-            bump_prices_for_shop_product(shop_product)
-    else:
+        bump_shop_product_signal_handler(sender, instance.shop_products.all().values_list("pk", flat=True), **kwargs)
+
+        for shop_id in set(instance.shop_products.all().values_list("shop_id", flat=True)):
+            bump_prices_for_shop_product(shop_id)
+            context_cache_item_bumped.send(sender=Shop, shop_id=shop_id)
+    else:  # ShopProduct
         bump_shop_product_signal_handler(sender, instance, **kwargs)
-        bump_prices_for_shop_product(instance)
+        bump_prices_for_shop_product(instance.shop_id)
+        context_cache_item_bumped.send(sender=Shop, shop_id=instance.shop_id)
 
 
 def handle_supplier_post_save(sender, instance, **kwargs):
-    for shop_product in instance.shop_products.all():
-        bump_shop_product_signal_handler(sender, shop_product, **kwargs)
-        bump_prices_for_shop_product(shop_product)
+    bump_shop_product_signal_handler(sender, instance.shop_products.all().values_list("pk", flat=True), **kwargs)
+
+    for shop_id in set(instance.shop_products.all().values_list("shop_id", flat=True)):
+        bump_prices_for_shop_product(shop_id)
+        context_cache_item_bumped.send(sender=Shop, shop_id=shop_id)
 
 
 def handle_contact_post_save(sender, instance, **kwargs):
