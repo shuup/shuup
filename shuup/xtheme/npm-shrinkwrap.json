@@ -2623,11 +2623,6 @@
         "q": "^1.1.2"
       }
     },
-    "codemirror": {
-      "version": "5.48.4",
-      "resolved": "https://registry.npmjs.org/codemirror/-/codemirror-5.48.4.tgz",
-      "integrity": "sha512-pUhZXDQ6qXSpWdwlgAwHEkd4imA0kf83hINmUEzJpmG80T/XLtDDEzZo8f6PQLuRCcUQhmzqqIo3ZPTRaWByRA=="
-    },
     "collection-visit": {
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/collection-visit/-/collection-visit-1.0.0.tgz",

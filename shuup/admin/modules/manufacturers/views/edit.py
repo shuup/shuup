@@ -95,6 +95,9 @@ class ManufacturerEditView(CreateOrUpdateView):
 class ManufacturerDeleteView(DetailView):
     model = Manufacturer
 
+    def get_queryset(self):
+        return Manufacturer.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True))
+
     def post(self, request, *args, **kwargs):
         manufacturer = self.get_object()
         manufacturer_name = force_text(manufacturer)

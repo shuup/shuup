@@ -8,8 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Fixed
+
+- Admin: limit the Manufacturer delete queryset per shop
+
+### Added
+
+- Notify: added email template object to store reusable email templates for SendEmail actions
+  This contains a migration step to move all old body template field to use email templates.
+
 ### Changed
 
+- Xtheme: move CodeMirror JS lib dependence to Admin
 - Sanitize product description on save if `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` is set to `False`
 
 ## [1.11.7] - 2020-07-23
@@ -21,7 +31,7 @@ List all changes after the last release here (newer on top). Each change on a se
     - `SHUUP_MASS_UNIT`
     - `SHUUP_LENGTH_UNIT`
   - New function for getting the volume unit: `shuup.core.utils.units.get_shuup_volume_unit`
- 
+
 ### Changed
 
 - **BREAKING**: Change `Shipment` default weight unit from `kg` to `g`
