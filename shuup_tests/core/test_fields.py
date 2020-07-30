@@ -9,18 +9,25 @@ import re
 from decimal import Decimal
 
 import pytest
-from django.core.exceptions import ImproperlyConfigured
 from django.forms import Form, ModelForm
 from django.forms.widgets import NumberInput
 from django.utils.encoding import force_text
 
-from shuup.core.fields import FormattedDecimalFormField, MeasurementField
+from shuup.core.fields import (
+    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES,
+    FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+    FormattedDecimalFormField,
+    MeasurementField,
+)
 from shuup.core.models import Product
 
 
-def test_measurement_field_doesnt_know_bananas():
-    with pytest.raises(ImproperlyConfigured):
-        scale = MeasurementField(unit="banana")
+def test_measurement_field():
+    field = MeasurementField(unit="mm3")
+    assert field.unit == "mm3"
+    assert field.default == 0
+    assert field.max_digits == FORMATTED_DECIMAL_FIELD_MAX_DIGITS
+    assert field.decimal_places == FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES
 
 
 def test_formatted_decimal_field():

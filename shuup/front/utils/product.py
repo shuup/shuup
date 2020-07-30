@@ -106,7 +106,12 @@ def get_product_context(request, product, language=None, supplier=None):   # noq
 
 
 def _get_order_form(request, context, product, language):
-    for obj in get_provide_objects("front_product_order_form"):
+    order_forms = sorted(
+        get_provide_objects("front_product_order_form"),
+        key=lambda form: form.priority,
+        reverse=True
+    )
+    for obj in order_forms:
         product_order_form = obj(request, context, product, language)
         if product_order_form.is_compatible():
             return mark_safe(product_order_form.render())

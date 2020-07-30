@@ -280,3 +280,14 @@ SHUUP_MAX_UPLOAD_SIZE = 5000000
 #: load the function and call it passing the arguments received.
 #:
 SHUUP_TASK_RUNNER = "shuup.core.tasks.DefaultTaskRunner"
+
+#: The mass/weight unit that Shuup should use.
+#:
+SHUUP_MASS_UNIT = "g"
+
+#: The length/distance unit that Shuup should use.
+#:
+#: All area values will use this unit raised to the power of 2.
+#: All volume values will use this unit raised to the power of 3.
+#:
+SHUUP_LENGTH_UNIT = "mm"

@@ -12,6 +12,36 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Fix admin order edit tool to use correct id for supplier query
 
+### Changed
+
+- Sanitize product description on save if `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` is set to `False`
+
+## [1.11.7] - 2020-07-23
+
+### Added
+
+- Core: Add dynamic measurement unit system
+  - New settings for specifying units:
+    - `SHUUP_MASS_UNIT`
+    - `SHUUP_LENGTH_UNIT`
+  - New function for getting the volume unit: `shuup.core.utils.units.get_shuup_volume_unit`
+ 
+### Changed
+
+- **BREAKING**: Change `Shipment` default weight unit from `kg` to `g`
+- **BREAKING**: Change `Shipment` default volume unit from `m3` to `mm3`
+- **BREAKING**: Change `ShipmentProduct` default volume unit from `m3` to `mm3`
+
+### Removed
+
+- Remove 'known unit' validation from `MeasurementField`, it can contain any units now
+
+## [1.11.6] - 2020-07-22
+
+### Changed
+
+- Front: Add priority attribute to base order form to enable using precedence
+
 ## [1.11.5] - 2020-07-07
 
 ### Added

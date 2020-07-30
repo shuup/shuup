@@ -7,8 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from decimal import Decimal
-
+from django.conf import settings
 from django.db import models
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
@@ -21,12 +20,10 @@ from shuup.core.fields import (
 )
 from shuup.core.models import ShuupModel
 from shuup.core.signals import shipment_deleted
+from shuup.core.utils.units import get_shuup_volume_unit
 from shuup.utils.analog import define_log_model
 
 __all__ = ("Shipment", "ShipmentProduct")
-
-CUBIC_MM_TO_CUBIC_METERS_DIVISOR = Decimal("1000000000")
-GRAMS_TO_KILOGRAMS_DIVISOR = 1000
 
 
 class ShipmentStatus(Enum):
@@ -70,8 +67,14 @@ class Shipment(ShuupModel):
     status = EnumIntegerField(ShipmentStatus, default=ShipmentStatus.NOT_SENT, verbose_name=_("status"))
     tracking_code = models.CharField(max_length=64, blank=True, verbose_name=_("tracking code"))
     description = models.CharField(max_length=255, blank=True, verbose_name=_("description"))
-    volume = MeasurementField(unit="m3", verbose_name=_("volume"))
-    weight = MeasurementField(unit="kg", verbose_name=_("weight"))
+    volume = MeasurementField(
+        unit=get_shuup_volume_unit(),
+        verbose_name=_("volume ({})".format(get_shuup_volume_unit()))
+    )
+    weight = MeasurementField(
+        unit=settings.SHUUP_MASS_UNIT,
+        verbose_name=_("weight ({})".format(settings.SHUUP_MASS_UNIT))
+    )
     identifier = InternalIdentifierField(unique=True)
     type = EnumIntegerField(ShipmentType, default=ShipmentType.OUT, verbose_name=_("type"))
     # TODO: documents = models.ManyToManyField(FilerFile)
@@ -129,7 +132,7 @@ class Shipment(ShuupModel):
             total_volume += quantity * volume
             total_weight += quantity * weight
         self.volume = total_volume
-        self.weight = total_weight / GRAMS_TO_KILOGRAMS_DIVISOR
+        self.weight = total_weight
 
     @property
     def total_products(self):
@@ -169,9 +172,14 @@ class ShipmentProduct(ShuupModel):
     )
     quantity = QuantityField(verbose_name=_("quantity"))
 
-    # volume is m^3, not mm^3, because mm^3 are tiny. like ants.
-    unit_volume = MeasurementField(unit="m3", verbose_name=_("unit volume"))
-    unit_weight = MeasurementField(unit="g", verbose_name=_("unit weight"))
+    unit_volume = MeasurementField(
+        unit=get_shuup_volume_unit(),
+        verbose_name=_("unit volume ({})".format(get_shuup_volume_unit()))
+    )
+    unit_weight = MeasurementField(
+        unit=settings.SHUUP_MASS_UNIT,
+        verbose_name=_("unit weight ({})".format(settings.SHUUP_MASS_UNIT))
+    )
 
     class Meta:
         verbose_name = _('sent product')
@@ -186,7 +194,7 @@ class ShipmentProduct(ShuupModel):
 
     def cache_values(self):
         prod = self.product
-        self.unit_volume = (prod.width * prod.height * prod.depth) / CUBIC_MM_TO_CUBIC_METERS_DIVISOR
+        self.unit_volume = prod.width * prod.height * prod.depth
         self.unit_weight = prod.gross_weight
 
 
