@@ -110,6 +110,12 @@ class JsonOrderCreator(object):
 
     def _process_product_line(self, source, sline, sl_kwargs):
         product_info = sline.pop("product", None)
+        supplier_info = sline.pop("supplier", None)
+
+        if not supplier_info:
+            self.add_error(ValidationError(_("Product line dose not have a supplier."), code="no_supplier"))
+            return False
+
         if not product_info:
             self.add_error(ValidationError(_("Product line does not have a product set."), code="no_product"))
             return False
@@ -126,7 +132,8 @@ class JsonOrderCreator(object):
             }), code="no_shop_product"))
             return False
 
-        supplier = self.safe_get_first(Supplier, pk=product_info["id"])
+        supplier = self.safe_get_first(Supplier, pk=supplier_info['id'])
+
         if not supplier:
             supplier = shop_product.get_supplier(source.customer, sl_kwargs["quantity"], source.shipping_address)
 
