@@ -5,20 +5,20 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
-
-from django.conf import settings
 import django.core.mail as mail
-from django.test import override_settings
 import mock
+import pytest
+from django.conf import settings
+from django.test import override_settings
 
 from shuup.notify.actions.email import SendEmail
+from shuup.notify.models import EmailTemplate
 from shuup.notify.script import Context
+from shuup.notify.signals import notification_email_sent
 from shuup.testing import factories
 from shuup_tests.notify.fixtures import (
     get_initialized_test_event, TEST_TEMPLATE_DATA
 )
-from shuup.notify.signals import notification_email_sent
 
 
 @pytest.mark.django_db
@@ -80,11 +80,15 @@ def test_complete_email_action():
 @pytest.mark.django_db
 def test_email_action_with_template_body():
     with override_settings(LANGUAGES=(("en", "en"))):
+        email_template = EmailTemplate.objects.create(
+            name="template 1",
+            template="<html><style>.dog-color { color: red; }</style><body>%html_body%</body></html>"
+        )
         SUPER_TEST_TEMPLATE_DATA = {
             "en": {
                 # English
                 "subject": "Hello, {{ name }}!",
-                "body_template": "<html><style>.dog-color { color: red; }</style><body>%html_body%</body></html>",
+                "email_template": str(email_template.pk),
                 "body": "Hi, {{ name }}. This is a test.",
                 "content_type": "plain"
             }

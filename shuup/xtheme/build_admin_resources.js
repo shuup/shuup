@@ -24,9 +24,4 @@ runBuildCommands([
         outputDir: "static/xtheme/admin/",
         entryFile: "static_src/admin/snippet.js"
     }),
-    getParcelBuildCommand({
-        cacheDir: "xtheme",
-        outputDir: "static/xtheme/admin/",
-        entryFile: "static_src/admin/snippet.less"
-    })
 ]);

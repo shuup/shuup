@@ -25,6 +25,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-colorpicker": "^3.1.2",
     "chart.js": "^2.7.2",
+    "codemirror": "^5.56.0",
     "desandro-matches-selector": "^2.0.2",
     "dropzone": "^5.5.1",
     "ev-emitter": "^1.1.1",
