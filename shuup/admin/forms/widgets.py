@@ -248,6 +248,14 @@ class HexColorWidget(TextInput):
         return super(HexColorWidget, self).render(name, value, field_attrs)
 
 
+class CodeEditorWidget(Textarea):
+    def render(self, name, value, attrs=None, renderer=None):
+        attrs_for_textarea = attrs.copy()
+        attrs_for_textarea["id"] += "-snippet"
+        attrs_for_textarea["class"] += " code-editor-textarea"
+        return super().render(name, value, attrs_for_textarea)
+
+
 class PersonContactChoiceWidget(ContactChoiceWidget):
 
     @property

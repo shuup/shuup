@@ -20,6 +20,7 @@ from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
 from shuup.notify.enums import Priority
+from shuup.notify.models import EmailTemplate
 from shuup.notify.models import Notification as NotificationModel
 from shuup.notify.models import Script
 
@@ -38,12 +39,12 @@ class NotifyAdminModule(AdminModule):
                 name="notify.script-item-editor"
             ),
             admin_url(
-                "notify/script/content/(?P<pk>\d+)/",
+                r"notify/script/content/(?P<pk>\d+)/",
                 "shuup.notify.admin_module.views.EditScriptContentView",
                 name="notify.script.edit-content"
             ),
             admin_url(
-                "notify/mark-read/(?P<pk>\d+)/$",
+                r"notify/mark-read/(?P<pk>\d+)/$",
                 self.mark_notification_read_view,
                 name="notify.mark-read"
             ),
@@ -53,17 +54,17 @@ class NotifyAdminModule(AdminModule):
                 name="notify.script-template"
             ),
             admin_url(
-                "notify/script-template-config/(?P<id>.+)/",
+                r"notify/script-template-config/(?P<id>.+)/",
                 "shuup.notify.admin_module.views.ScriptTemplateConfigView",
                 name="notify.script-template-config"
             ),
             admin_url(
-                "notify/script-template-edit/(?P<pk>.+)/",
+                r"notify/script-template-edit/(?P<pk>.+)/",
                 "shuup.notify.admin_module.views.ScriptTemplateEditView",
                 name="notify.script-template-edit"
             ),
             admin_url(
-                "^notify/script/delete/(?P<pk>\d+)/$",
+                r"^notify/script/delete/(?P<pk>\d+)/$",
                 "shuup.notify.admin_module.views.delete.ScriptDeleteView",
                 name="notify.script.delete"
             ),
@@ -118,3 +119,35 @@ class NotifyAdminModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Script, "shuup_admin:notify.script", object, kind)
+
+
+class EmailTemplateAdminModule(AdminModule):
+    name = _("Email Template")
+    breadcrumbs_menu_entry = MenuEntry(name, "shuup_admin:notify.email_template.list")
+
+    def get_urls(self):
+        return [
+            admin_url(
+                r"^notify/email_template/delete/(?P<pk>\d+)/$",
+                "shuup.notify.admin_module.views.email_template.EmailTemplateDeleteView",
+                name="notify.email_template.delete"
+            ),
+        ] + get_edit_and_list_urls(
+            url_prefix="^notify/email_template",
+            view_template="shuup.notify.admin_module.views.email_template.EmailTemplate%sView",
+            name_template="notify.email_template.%s"
+        )
+
+    def get_menu_entries(self, request):
+        return [
+            MenuEntry(
+                text=_("Email Templates"),
+                icon="fa fa-envelope",
+                url="shuup_admin:notify.email_template.list",
+                category=SETTINGS_MENU_CATEGORY,
+                ordering=15,
+            )
+        ]
+
+    def get_model_url(self, object, kind, shop=None):
+        return derive_model_url(EmailTemplate, "shuup_admin:notify.email_template", object, kind)

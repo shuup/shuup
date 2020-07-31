@@ -1,0 +1,7 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
+
+{% block body_class %}shuup-details{% endblock %}
+{% block content %}
+    {{ single_section_form("email_template_form", form) }}
+{% endblock %}

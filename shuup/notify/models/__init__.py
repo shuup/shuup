@@ -6,10 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from .email_template import EmailTemplate
 from .notification import Notification
 from .script import Script
 
 __all__ = (
+    "EmailTemplate",
     "Notification",
     "Script",
 )

@@ -33,7 +33,9 @@ def test_xtheme_snippet_injection(browser, admin_user, live_server, settings):
     wait_until_condition(browser, lambda x: x.is_text_present("New Snippet"))
     browser.execute_script("$(\"[name='location']\").val('body_end').trigger('change')")
     browser.execute_script("$(\"[name='snippet_type']\").val('inline_js').trigger('change')")
-    browser.execute_script("window.CodeMirror.editors['id_snippet-snippet'].setValue('alert(\"works\")');")
+    browser.execute_script(
+        "window.ShuupCodeMirror.editors[document.getElementById('id_snippet-snippet')].setValue('alert(\"works\")');"
+    )
     click_element(browser, "button[type='submit']")
     wait_until_appeared(browser, "div[class='message success']")
 
