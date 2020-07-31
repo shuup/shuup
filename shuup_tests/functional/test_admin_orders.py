@@ -45,34 +45,51 @@ def get_frontend_order_state(contact, payment_method, product_price, valid_lines
     rule = TaxRule.objects.create(tax=tax)
     rule.tax_classes.add(tax_class)
     rule.save()
+    supplier = get_default_supplier()
     product = create_product(
         sku=printable_gibberish(),
-        supplier=get_default_supplier(),
+        supplier=supplier,
         shop=shop
     )
     product.tax_class = tax_class
     product.save()
     if valid_lines:
         lines = [
-            {"id": "x", "type": "product", "product": {"id": product.id}, "quantity": "1", "baseUnitPrice": product_price},
+            {
+                "id": "x", "type": "product", "product": {"id": product.id}, "quantity": "1",
+                "baseUnitPrice": product_price, 'supplier': {'name': supplier.name, 'id': supplier.id}
+            },
             {"id": "z", "type": "text", "text": "This was an order!", "quantity": 0},
         ]
     else:
-        unshopped_product = create_product(sku=printable_gibberish(), supplier=get_default_supplier())
+        unshopped_product = create_product(sku=printable_gibberish(), supplier=supplier)
         not_visible_product = create_product(
             sku=printable_gibberish(),
-            supplier=get_default_supplier(),
+            supplier=supplier,
             shop=shop
         )
         not_visible_shop_product = not_visible_product.get_shop_instance(shop)
         not_visible_shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
         not_visible_shop_product.save()
         lines = [
-            {"id": "x", "type": "product"},  # no product?
-            {"id": "x", "type": "product", "product": {"id": unshopped_product.id}},  # not in this shop?
-            {"id": "y", "type": "product", "product": {"id": -product.id}},  # invalid product?
-            {"id": "z", "type": "other", "quantity": 1, "unitPrice": "q"},  # what's that price?
-            {"id": "rr", "type": "product", "quantity": 1, "product": {"id": not_visible_product.id}}  # not visible
+            {"id": "x", "type": "product", 'supplier': {'name': supplier.name, 'id': supplier.id}},  # no product?
+            {
+                "id": "x", "type": "product", "product": {"id": unshopped_product.id},
+                'supplier': {'name': supplier.name, 'id': supplier.id}
+            },  # not in this shop?
+            {
+                "id": "y", "type": "product", "product": {"id": -product.id},
+                'supplier': {'name': supplier.name, 'id': supplier.id}
+            },  # invalid product?
+            {
+                "id": "z", "type": "other", "quantity": 1, "unitPrice": "q",
+                'supplier': {'name': supplier.name, 'id': supplier.id}
+            },  # what's that price?
+            {
+                "id": "rr", "type": "product", "quantity": 1, "product": {"id": not_visible_product.id},
+                'supplier': {'name': supplier.name, 'id': supplier.id}
+            },  # not visible
+            {"id": "y", "type": "product", "product": {"id": product.id}} # no supplier
         ]
 
     state = {

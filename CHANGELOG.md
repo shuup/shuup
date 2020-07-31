@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Fix admin order edit tool to use correct id for supplier query
 - Admin: limit the Manufacturer delete queryset per shop
 
 ### Added
