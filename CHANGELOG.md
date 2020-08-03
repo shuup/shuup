@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+
+- Admin: add option to arrange menu for superuses, staff and suppliers
+  
+  For now it was only possible to arrange menu per user which is not
+  sufficient while the menu needs to be arranged for the whole group
+  of people like shop staff or vendors.
+    
+  Allow to create menu custom menu for superusers, staff or suppliers,
+  but remain the possibility to still arrange the menu per user.
+    
+  Add option to translate each menu arranged for these groups since
+  not all vendors/suppliers necessary speak same language.
+
+
 ## [1.11.8] - 2020-07-31
 
 ### Fixed
