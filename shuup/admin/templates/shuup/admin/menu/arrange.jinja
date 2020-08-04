@@ -6,10 +6,10 @@
 
 {% block action_buttons %}
     <div class="btn-toolbar" role="toolbar">
-        <form action="{{ url("shuup_admin:menu.arrange") }}" method="post">
+        <form method="post">
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
             <input type="hidden" name="menus" value="">
-            <a href="{{ url("shuup_admin:menu.reset") }}" class="btn btn-danger">
+            <a href="{{ reset_url }}" class="btn btn-danger">
                 <i class="fa fa-save"></i>&nbsp;{% trans %}Reset{% endtrans %}
             </a>
             <button class="btn btn-success" onclick="saveMenus()">
@@ -38,7 +38,7 @@
         {% endif %}
         <div class="name" contenteditable="true">
             {{ entry.name }}
-        </div>
+        </div>&nbsp;&nbsp;&nbsp;({{ entry.url or _("Folder") }})
         <div class="menu-actions">
             <div class="input-group">
                 <div class="custom-control custom-checkbox">
