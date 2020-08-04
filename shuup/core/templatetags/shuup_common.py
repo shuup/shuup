@@ -191,6 +191,13 @@ def get_shuup_version():
 
 
 @library.global_function
-def shuup_static(path):
+def shuup_static(path, package=None):
+    """
+    `path` is the static source path, e.g. myapp/styles.css
+    `package` is the package name to get the version from.
+        If not set, Shuup version is used. You can pass
+        the name if any installed pacakge and use that
+        version as a base.
+    """
     from shuup.core.utils.static import get_shuup_static_url
-    return get_shuup_static_url(path)
+    return get_shuup_static_url(path, package)
