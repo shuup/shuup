@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup', '0069_shop_supplier_service_providers'),
+        ('shuup', '0070_dynamic_units'),
     ]
 
     operations = [

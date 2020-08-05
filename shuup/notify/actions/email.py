@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import logging
-from collections import OrderedDict
 
 from django import forms
 from django.conf import settings
@@ -38,12 +37,12 @@ class SendEmail(Action):
             label=_("Email Template"),
             required=False
         ),
-        body=forms.CharField(required=True, label=_("Email Body"), widget=TextEditorWidget()),
-        content_type=forms.ChoiceField(
+        "body": forms.CharField(required=True, label=_("Email Body"), widget=TextEditorWidget()),
+        "content_type": forms.ChoiceField(
             required=True, label=_(u"Content type"),
             choices=EMAIL_CONTENT_TYPE_CHOICES, initial=EMAIL_CONTENT_TYPE_CHOICES[0][0]
         )
-    )
+    }
     recipient = Binding(_("Recipient"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
     reply_to_address = Binding(_("Reply-To"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT)
     cc = Binding(_("Carbon Copy (CC)"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT,)

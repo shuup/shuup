@@ -18,9 +18,7 @@ from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
 from shuup.utils.django_compat import force_text, reverse_lazy
-from shuup.xtheme.admin_module.widgets import (
-    CodeEditorWidget, XthemeCodeEditorWidget
-)
+from shuup.xtheme.admin_module.widgets import XthemeCodeEditorWidget
 from shuup.xtheme.models import Snippet
 from shuup.xtheme.resources import GLOBAL_SNIPPETS_CACHE_KEY
 

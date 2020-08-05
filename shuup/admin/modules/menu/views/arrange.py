@@ -11,15 +11,15 @@ import json
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.utils.translation import get_language, ugettext_lazy as _
+from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import RedirectView, TemplateView
 
 from shuup import configuration
-from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.menu import (
-    get_menu_entry_categories, CUSTOM_ADMIN_MENU_USER_PREFIX,
-    CUSTOM_ADMIN_MENU_SUPPLIER_KEY, CUSTOM_ADMIN_MENU_STAFF_KEY,
-    CUSTOM_ADMIN_MENU_SUPERUSER_KEY
+    CUSTOM_ADMIN_MENU_STAFF_KEY, CUSTOM_ADMIN_MENU_SUPERUSER_KEY,
+    CUSTOM_ADMIN_MENU_SUPPLIER_KEY, CUSTOM_ADMIN_MENU_USER_PREFIX,
+    get_menu_entry_categories
 )
 from shuup.utils.django_compat import reverse_lazy
 

@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 import json
 
 import pytest
-from django.core.urlresolvers import reverse
 from django.test import override_settings
 from django.utils.translation import activate
 from jinja2 import Environment
@@ -28,6 +27,7 @@ from shuup.admin.template_helpers.shuup_admin import (
 from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 
 
 def get_staff_user():
