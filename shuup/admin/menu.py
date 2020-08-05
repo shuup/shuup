@@ -8,14 +8,18 @@
 import six
 from django.utils.datastructures import OrderedDict
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import force_text
+from django.utils.translation import get_language, ugettext_lazy as _
 
 from shuup import configuration
 from shuup.admin.base import BaseMenuEntry
 from shuup.admin.module_registry import get_modules
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.views.home import QUICKLINK_ORDER
 from shuup.apps.provides import get_provide_objects
 from shuup.utils.django_compat import force_text
+from shuup.utils.iterables import first
 
 ORDERS_MENU_CATEGORY = 1
 PRODUCTS_MENU_CATEGORY = 2
@@ -87,6 +91,11 @@ MAIN_MENU = [
     },
 ]
 
+CUSTOM_ADMIN_MENU_USER_PREFIX = "admin_menu_user_{}"
+CUSTOM_ADMIN_MENU_SUPPLIER_KEY = "admin_menu_supplier"
+CUSTOM_ADMIN_MENU_STAFF_KEY = "admin_menu_staff"
+CUSTOM_ADMIN_MENU_SUPERUSER_KEY = "admin_menu_superuser"
+
 
 class _MenuCategory(BaseMenuEntry):
     """
@@ -106,11 +115,33 @@ def extend_main_menu(menu):
     return menu
 
 
-def customize_menu(entries, user):  # noqa (C901)
+def customize_menu(entries, request):  # noqa (C901)
     """
     Merge system menu with customized admin menu
     """
-    customized_admin_menu = configuration.get(None, "admin_menu_user_{}".format(user.pk))
+    customized_admin_menu = configuration.get(
+        None,
+        CUSTOM_ADMIN_MENU_USER_PREFIX.format(request.user.pk)
+    )
+    if not customized_admin_menu:
+        supplier = get_supplier(request)
+        if supplier:
+            customized_admin_menu = configuration.get(None, CUSTOM_ADMIN_MENU_SUPPLIER_KEY)
+        elif getattr(request.user, "is_superuser", False):
+            customized_admin_menu = configuration.get(None, CUSTOM_ADMIN_MENU_SUPERUSER_KEY)
+        else:
+            customized_admin_menu = configuration.get(None, CUSTOM_ADMIN_MENU_STAFF_KEY)
+
+    if customized_admin_menu and isinstance(customized_admin_menu, dict):
+        """
+        If menu configuration is stored to dict try to find right configuration with
+        current language and fallback to first stored configuration
+        """
+        customized_admin_menu = customized_admin_menu.get(
+            get_language(),
+            customized_admin_menu.get(first(customized_admin_menu))
+        )
+
     if customized_admin_menu:
 
         def unset_mismatched(menu):
@@ -245,7 +276,7 @@ def get_menu_entry_categories(request): # noqa (C901)
         categories.append(cat)
     clean_categories = [c for menu_identifier, c in six.iteritems(menu_categories) if c in categories]
 
-    return customize_menu(clean_categories, request.user)
+    return customize_menu(clean_categories, request)
 
 
 def get_quicklinks(request):

@@ -18,6 +18,7 @@ from django.utils.translation import ugettext as _
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.notify.base import Action, Binding
 from shuup.notify.enums import ConstantUse, TemplateUse
+from shuup.notify.models import EmailTemplate
 from shuup.notify.signals import notification_email_sent
 from shuup.notify.typology import Email, Language, Text
 
@@ -30,16 +31,12 @@ class SendEmail(Action):
 
     identifier = "send_email"
     template_use = TemplateUse.MULTILINGUAL
-    template_fields = OrderedDict(
-        subject=forms.CharField(required=True, label=_(u"Subject")),
-        body_template=forms.CharField(
-            required=False,
-            label=_("Body Template"),
-            help_text=_(
-                "You can use this template to wrap the HTML body with your custom static template."
-                "Mark the spot for the HTML body with %html_body%."
-            ),
-            widget=forms.Textarea()
+    template_fields = {
+        "subject": forms.CharField(required=True, label=_(u"Subject")),
+        "email_template": forms.ChoiceField(
+            choices=[(None, "-----")],
+            label=_("Email Template"),
+            required=False
         ),
         body=forms.CharField(required=True, label=_("Email Body"), widget=TextEditorWidget()),
         content_type=forms.ChoiceField(
@@ -75,6 +72,14 @@ class SendEmail(Action):
         )
     )
 
+    def __init__(self, *args, **kwargs):
+        # force refresh the lis of options
+        self.template_fields["email_template"].choices = [(None, "-----")] + [
+            (template.pk, template.name)
+            for template in EmailTemplate.objects.all()
+        ]
+        super().__init__(*args, **kwargs)
+
     def execute(self, context):
         """
         :param context: Script Context.
@@ -107,10 +112,13 @@ class SendEmail(Action):
 
         subject = strings.get("subject")
         body = strings.get("body")
-        body_template = strings.get("body_template")
+        email_template_id = strings.get("email_template")
 
-        if body_template and "%html_body%" in body_template:
-            body = body_template.replace("%html_body%", body)
+        if email_template_id:
+            email_template = EmailTemplate.objects.filter(pk=email_template_id).first()
+
+            if email_template and "%html_body%" in email_template.template:
+                body = email_template.template.replace("%html_body%", body)
 
         content_type = strings.get("content_type")
         if not (subject and body):

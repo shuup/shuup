@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 
+import bleach
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -152,6 +153,12 @@ class ProductBaseForm(MultiLanguageModelForm):
         form_pre_clean.send(
             Product, instance=self.instance, cleaned_data=self.cleaned_data)
         super(ProductBaseForm, self).clean()
+
+        if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
+            for key, value in self.cleaned_data.items():
+                if key.startswith("description__"):
+                    self.cleaned_data[key] = bleach.clean(value, tags=[])
+
         form_post_clean.send(
             Product, instance=self.instance, cleaned_data=self.cleaned_data)
 

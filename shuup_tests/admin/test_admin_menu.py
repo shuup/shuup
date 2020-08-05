@@ -17,7 +17,7 @@ from jinja2.runtime import Context
 from shuup.admin.menu import (
     get_menu_entry_categories, PRODUCTS_MENU_CATEGORY, SETTINGS_MENU_CATEGORY
 )
-from shuup.admin.modules.menu.views import (
+from shuup.admin.modules.menu.views.arrange import (
     AdminMenuArrangeView, AdminMenuResetView
 )
 from shuup.admin.template_helpers.shuup_admin import (
