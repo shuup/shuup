@@ -36,6 +36,7 @@ class ShuupNotifyAppConfig(AppConfig):
         ],
         "admin_module": [
             "shuup.notify.admin_module:NotifyAdminModule",
+            "shuup.notify.admin_module:EmailTemplateAdminModule",
         ]
     }
 

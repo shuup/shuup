@@ -128,15 +128,19 @@ def _get_frontend_order_state(shop, contact):
     rule = TaxRule.objects.create(tax=tax)
     rule.tax_classes.add(tax_class)
     rule.save()
+    supplier = get_default_supplier()
     product = create_product(
         sku=printable_gibberish(),
-        supplier=get_default_supplier(),
+        supplier=supplier,
         shop=shop
     )
     product.tax_class = tax_class
     product.save()
     lines = [
-        {"id": "x", "type": "product", "product": {"id": product.id}, "quantity": "32", "baseUnitPrice": 50}
+        {
+            "id": "x", "type": "product", "product": {"id": product.id},
+            "quantity": "32", "baseUnitPrice": 50, 'supplier': {'name': supplier.name, 'id': supplier.id}
+        }
     ]
 
     state = {

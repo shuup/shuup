@@ -8,7 +8,7 @@ import parler.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup', '0070_fix_shop_product_typo'),
+        ('shuup', '0071_fix_shop_product_typo'),
     ]
 
     operations = [

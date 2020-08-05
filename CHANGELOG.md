@@ -8,6 +8,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+## [1.11.10] - 2020-08-04
+
+- Fix issue on arranging menu after reset which sets the configuration None
+  which in the other hand is hard to update as it is not dict.
+
+
+## [1.11.9] - 2020-08-04
+
+- Admin: add option to arrange menu for superuses, staff and suppliers
+  
+  For now it was only possible to arrange menu per user which is not
+  sufficient while the menu needs to be arranged for the whole group
+  of people like shop staff or vendors.
+    
+  Allow to create menu custom menu for superusers, staff or suppliers,
+  but remain the possibility to still arrange the menu per user.
+    
+  Add option to translate each menu arranged for these groups since
+  not all vendors/suppliers necessary speak same language.
+
+
+## [1.11.8] - 2020-07-31
+
+### Fixed
+
+- Fix admin order edit tool to use correct id for supplier query
+- Admin: limit the Manufacturer delete queryset per shop
+
+### Added
+
+- Notify: added email template object to store reusable email templates for SendEmail actions
+  This contains a migration step to move all old body template field to use email templates.
+
+### Changed
+
+- Xtheme: move CodeMirror JS lib dependence to Admin
+- Sanitize product description on save if `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` is set to `False`
+
+## [1.11.7] - 2020-07-23
+
+### Added
+
+- Core: Add dynamic measurement unit system
+  - New settings for specifying units:
+    - `SHUUP_MASS_UNIT`
+    - `SHUUP_LENGTH_UNIT`
+  - New function for getting the volume unit: `shuup.core.utils.units.get_shuup_volume_unit`
+
+### Changed
+
+- **BREAKING**: Change `Shipment` default weight unit from `kg` to `g`
+- **BREAKING**: Change `Shipment` default volume unit from `m3` to `mm3`
+- **BREAKING**: Change `ShipmentProduct` default volume unit from `m3` to `mm3`
+
+### Removed
+
+- Remove 'known unit' validation from `MeasurementField`, it can contain any units now
+
+## [1.11.6] - 2020-07-22
+
+### Changed
+
+- Front: Add priority attribute to base order form to enable using precedence
+
 ## [1.11.5] - 2020-07-07
 
 ### Added

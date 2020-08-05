@@ -15,6 +15,16 @@ import select2 from 'select2';
 var jquery = require("jquery");
 window.$ = window.jQuery = jquery;
 
+import CodeMirror from "codemirror";
+
+import "codemirror/mode/javascript/javascript";
+import "codemirror/mode/css/css";
+import "codemirror/mode/htmlmixed/htmlmixed";
+import "codemirror/addon/edit/closebrackets";
+import "codemirror/addon/edit/closetag";
+import "codemirror/addon/edit/matchbrackets";
+import "codemirror/addon/edit/matchtags";
+
 const _ = require('lodash');
 window._ = _;
 
@@ -30,6 +40,7 @@ select2($);
 
 window.Sortable = require('sortablejs');  // TODO: Deprecate and merge to html5sortable
 window.html5sortable = require('html5sortable/dist/html5sortable.cjs');
+window.ShuupCodeMirror = CodeMirror;
 
 require('bootstrap');
 require('../../node_modules/chart.js/dist/Chart.js');

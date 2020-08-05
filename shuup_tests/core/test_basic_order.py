@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import decimal
 import pytest
 from django.utils.timezone import now
 
@@ -96,7 +95,7 @@ def create_order(request, creator, customer, product):
     assert order.is_fully_shipped()
 
     assert shipment.total_products == 5, "All products were shipped"
-    assert shipment.weight == product.gross_weight * 5 / 1000, "Gravity works"
+    assert shipment.weight == product.gross_weight * 5, "Gravity works"
     assert not order.get_unshipped_products(), "Nothing was left in the warehouse"
 
     assert order.can_set_complete()
