@@ -75,11 +75,7 @@ def apply_view_middleware(request):
     urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
     set_urlconf(urlconf)
 
-    if django.VERSION < (2, 0):
-        resolver = URLResolver(r'^/', urlconf)
-    else:
-        resolver = URLResolver(RegexPattern(r'^/'), urlconf)
-
+    resolver = URLResolver(RegexPattern(r'^/'), urlconf)
     resolver_match = resolver.resolve(request.path_info)
     callback, callback_args, callback_kwargs = resolver_match
     request.resolver_match = resolver_match

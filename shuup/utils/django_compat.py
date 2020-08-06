@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import django
 
 try:
     from django.urls.resolvers import RegexPattern
@@ -53,4 +52,4 @@ def is_authenticated(user):
 
 def get_middleware_classes():
     from django.conf import settings
-    return (settings.MIDDLEWARE_CLASSES if django.VERSION < (2, 0) else settings.MIDDLEWARE)
+    return settings.MIDDLEWARE

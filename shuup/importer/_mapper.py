@@ -24,12 +24,8 @@ class RelatedMapper(object):
         self.row_session = row_session
         self.handler = handler
         self.field = field
-        if django.VERSION < (2, 0):
-            self.rel = rel = field.rel
-            self.to = to = rel.to
-        else:
-            self.rel = rel = field.remote_field
-            self.to = to = rel.model
+        self.rel = rel = field.remote_field
+        self.to = to = rel.model
         self.map_cache = {}
         self.fk_cache = {}
         self.explicit_uk_fields = tuple(handler._meta.fk_matchers.get(field.name) or ())
@@ -122,12 +118,6 @@ class RelatedMapper(object):
 
         for field in obj._meta.local_fields:
             if (
-                django.VERSION < (2, 0) and
-                isinstance(field, ForeignKey) and
-                isinstance(self.row_session.instance, field.rel.to)
-            ):
-                setattr(obj, field.name, self.row_session.instance)
-            elif (
                 django.VERSION > (2, 0) and
                 isinstance(field, ForeignKey) and
                 isinstance(self.row_session.instance, field.remote_field.model)

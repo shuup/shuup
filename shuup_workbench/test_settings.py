@@ -88,23 +88,6 @@ MIDDLEWARE = [
     'shuup.admin.middleware.ShuupAdminMiddleware'
 ]
 
-if django.VERSION < (2, 0):
-    MIDDLEWARE_CLASSES = [
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.middleware.locale.LocaleMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'shuup.front.middleware.ProblemMiddleware',
-        'shuup.core.middleware.ShuupMiddleware',
-        'shuup.front.middleware.ShuupFrontMiddleware',
-        'shuup.xtheme.middleware.XthemeMiddleware',
-        'shuup.admin.middleware.ShuupAdminMiddleware'
-    ]
-
 ROOT_URLCONF = 'shuup_workbench.test_urls'
 WSGI_APPLICATION = 'shuup_workbench.wsgi.application'
 

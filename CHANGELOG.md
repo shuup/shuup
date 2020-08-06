@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Changed
+
+- Removed Django 1.11 compatible code from the code base
+
 ### Fixed
 
 - Admin: fix logout view that was loading the template from Django instead of custom template
