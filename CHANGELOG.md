@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: return `None` when the order source was not correctly initialized in JsonOrderCreator
 
+### Added
+
+- Core: add parameter in shuup_static to load the version of a given package
+
 ## [1.11.10] - 2020-08-04
 
 - Fix issue on arranging menu after reset which sets the configuration None
