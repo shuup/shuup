@@ -11,7 +11,6 @@ from __future__ import unicode_literals
 import warnings
 
 import django
-import django.contrib.auth.views as auth_views
 from django.conf.urls import url
 from django.contrib.auth import logout as do_logout
 from django.views.decorators.csrf import csrf_exempt
@@ -19,6 +18,7 @@ from django.views.i18n import set_language
 
 from shuup.admin.module_registry import get_module_urls
 from shuup.admin.utils.urls import admin_url, AdminRegexURLPattern
+from shuup.admin.views.auth import LoginView, LogoutView
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.edit import EditObjectView
 from shuup.admin.views.home import HomeView
@@ -31,7 +31,6 @@ from shuup.admin.views.tour import TourView
 from shuup.admin.views.wizard import WizardView
 from shuup.utils.django_compat import is_anonymous
 from shuup.utils.i18n import javascript_catalog_all
-from shuup.utils.importing import cached_load
 
 
 def login(request, **kwargs):
@@ -39,17 +38,7 @@ def login(request, **kwargs):
         do_logout(request)
 
     kwargs.setdefault("extra_context", {})["error"] = request.GET.get("error")
-    if django.VERSION < (2, 0):
-        return auth_views.login(
-            request=request,
-            authentication_form=cached_load("SHUUP_ADMIN_AUTH_FORM_SPEC"),
-            **kwargs
-        )
-    else:
-        return auth_views.LoginView.as_view(
-            form_class=cached_load("SHUUP_ADMIN_AUTH_FORM_SPEC"),
-            **kwargs
-        )(request)
+    return LoginView.as_view(**kwargs)(request)
 
 
 def get_urls():
@@ -80,8 +69,7 @@ def get_urls():
         ),
         admin_url(
             r'^logout/$',
-            (auth_views.logout if django.VERSION < (2, 0) else auth_views.LogoutView),
-            kwargs={"template_name": "shuup/admin/auth/logout.jinja"},
+            LogoutView,
             name='logout',
             require_authentication=False,
             permissions=()

@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Admin: fix logout view that was loading the template from Django instead of custom template
 - Admin: return `None` when the order source was not correctly initialized in JsonOrderCreator
 
 ## [1.11.10] - 2020-08-04
