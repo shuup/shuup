@@ -242,6 +242,6 @@ def test_safe_vendor_description():
 def test_get_shuup_static_url():
     assert "test.js?v=%s" % get_shuup_version() in get_shuup_static_url("test.js")
     assert get_shuup_static_url("test.js") == shuup_static("test.js")
-    assert "test.css?v=" in get_shuup_static_url("test.css", "shuup-api")
-    assert get_shuup_static_url("test2.js", "shuup-api") == shuup_static("test2.js", "shuup-api")
-    assert shuup_static("test3.js") != shuup_static("test3.js", "shuup-api")
+    assert "test.css?v=" in get_shuup_static_url("test.css", "django")
+    assert get_shuup_static_url("test2.js", "django") == shuup_static("test2.js", "django")
+    assert shuup_static("test3.js") != shuup_static("test3.js", "django")
