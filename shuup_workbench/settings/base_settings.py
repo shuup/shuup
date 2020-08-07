@@ -6,8 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import os
 
-import django
-
 from shuup.addons import add_enabled_addons
 
 BASE_DIR = os.getenv("SHUUP_WORKBENCH_BASE_DIR") or (

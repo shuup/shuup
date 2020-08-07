@@ -11,7 +11,6 @@ import inspect
 import json
 import warnings
 
-import django
 import six
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login

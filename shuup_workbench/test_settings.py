@@ -6,8 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import os
 
-import django
-
 BASE_DIR = os.getenv("SHUUP_WORKBENCH_BASE_DIR") or (
     os.path.dirname(os.path.dirname(__file__)))
 SECRET_KEY = "Shhhhh"

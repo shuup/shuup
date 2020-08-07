@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import inspect
 
-import django
 from django.conf import settings
 from django.core.exceptions import MiddlewareNotUsed
 from django.utils.module_loading import import_string
