@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
 
+## [2.0.3] - 2020-08-07
+
+- CMS: add missing migrations
+
+
 ## [2.0.2] - 2020-08-07
 
 ### Changed
