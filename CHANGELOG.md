@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+
+## [2.0.2] - 2020-08-07
+
 ### Changed
 
 - Removed Django 1.11 compatible code from the code base
@@ -20,6 +23,12 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Core: add parameter in shuup_static to load the version of a given package
+
+
+## [2.0.1] - 2020-08-04
+
+- Add initial support for Django 2.2
+
 
 ## [1.11.10] - 2020-08-04
 
