@@ -36,11 +36,7 @@ migrated_permissions = {
 
 
 def test_default_model_permissions():
-    if django.VERSION < (2, 0):
-        permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
-    else:
-        permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product", "shuup.view_product"])
-
+    permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product", "shuup.view_product"])
     assert get_default_model_permissions(Product) == permissions
 
 

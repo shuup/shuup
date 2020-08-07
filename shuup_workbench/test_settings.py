@@ -6,8 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import os
 
-import django
-
 BASE_DIR = os.getenv("SHUUP_WORKBENCH_BASE_DIR") or (
     os.path.dirname(os.path.dirname(__file__)))
 SECRET_KEY = "Shhhhh"
@@ -87,23 +85,6 @@ MIDDLEWARE = [
     'shuup.xtheme.middleware.XthemeMiddleware',
     'shuup.admin.middleware.ShuupAdminMiddleware'
 ]
-
-if django.VERSION < (2, 0):
-    MIDDLEWARE_CLASSES = [
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.middleware.locale.LocaleMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'shuup.front.middleware.ProblemMiddleware',
-        'shuup.core.middleware.ShuupMiddleware',
-        'shuup.front.middleware.ShuupFrontMiddleware',
-        'shuup.xtheme.middleware.XthemeMiddleware',
-        'shuup.admin.middleware.ShuupAdminMiddleware'
-    ]
 
 ROOT_URLCONF = 'shuup_workbench.test_urls'
 WSGI_APPLICATION = 'shuup_workbench.wsgi.application'

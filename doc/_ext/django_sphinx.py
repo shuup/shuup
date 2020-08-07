@@ -65,19 +65,13 @@ def _process_field_help_text_and_verbose_name(field, lines, is_translation=0):
 
 def _process_field_type(field, lines, latelines):
     if isinstance(field, models.ForeignKey):
-        if django.VERSION < (2, 0):
-            to = _resolve_field_destination(field, field.rel.to)
-        else:
-            to = _resolve_field_destination(field, field.remote_field.target_field)
-        
+        to = _resolve_field_destination(field, field.remote_field.target_field)
+
         lines.append(':type %s: %s to :class:`%s.%s`' % (
             field.attname,
             type(field).__name__, to.__module__, to.__name__))
     elif isinstance(field, models.ManyToManyField):
-        if django.VERSION < (2, 0):
-            to = _resolve_field_destination(field, field.rel.to)
-        else:
-            to = _resolve_field_destination(field, field.remote_field.target_field)
+        to = _resolve_field_destination(field, field.remote_field.target_field)
 
         lines.append(':type %s: %s to :class:`%s.%s`' % (
             field.attname,

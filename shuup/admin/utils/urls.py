@@ -11,7 +11,6 @@ import inspect
 import json
 import warnings
 
-import django
 import six
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
@@ -40,16 +39,14 @@ class AdminRegexURLPattern(URLPattern):
     def __init__(self, regex, callback, default_args=None, name=None, require_authentication=True, permissions=()):
         self.permissions = tuple(permissions)
         self.require_authentication = require_authentication
+
         if callable(callback):
             callback = self.wrap_with_permissions(callback)
 
-        if django.VERSION < (2, 0):
-            super(AdminRegexURLPattern, self).__init__(regex, callback, default_args, name)
-        else:
-            from django.urls import re_path
-            repath = re_path(regex, callback, default_args, name)
-            pattern = repath.pattern
-            super(AdminRegexURLPattern, self).__init__(pattern, callback, default_args, name)
+        from django.urls import re_path
+        repath = re_path(regex, callback, default_args, name)
+        pattern = repath.pattern
+        super(AdminRegexURLPattern, self).__init__(pattern, callback, default_args, name)
 
     def _get_unauth_response(self, request, reason):
         """
