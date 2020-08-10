@@ -13,10 +13,12 @@ import django
 import six
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.forms.models import modelform_factory
 from django.utils.translation import ugettext as _
+
 from filer.models import File, Folder, Image
 
 from shuup.core.models import MediaFile, MediaFolder
@@ -221,10 +223,36 @@ def filer_folder_to_json_dict(folder, children=None):
     }
 
 
+def subfolder_of_users_root(user, folder):
+    if user.id in list(folder.media_folder.all().values_list("root_folder_for", flat=True)):
+        return True
+
+    parents = folder.logical_path
+    for parent in parents:
+        if user.id in list(parent.media_folder.all().values_list("root_folder_for", flat=True)):
+            return True
+    return False
+
+
 def ensure_media_folder(shop, folder):
     media_folder, created = MediaFolder.objects.get_or_create(folder=folder)
     if not media_folder.shops.filter(id=shop.id).exists():
         media_folder.shops.add(shop)
+
+    return media_folder
+
+
+def ensure_media_folder_users(media_folder, parent_folders, user):
+    if user and not media_folder.user_access.filter(id=user.id).exists():
+        media_folder.user_access.add(user)
+        for user in get_user_model().objects.filter(is_superuser=True):
+            if user:
+                media_folder.user_access.add(user)
+
+    for folder in parent_folders:
+        for user in folder.media_folder.all().values_list("user_access", flat=True):
+            if user:
+                media_folder.user_access.add(user)
 
 
 def ensure_media_file(shop, file):

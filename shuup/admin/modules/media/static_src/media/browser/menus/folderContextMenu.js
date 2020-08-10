@@ -22,7 +22,10 @@ export default function(controller) {
             }, {disabled: isRoot || controller.isMenuDisabled("rename")}),
             menuItem(gettext("Delete folder"), () => {
                 folderActions.promptDeleteCurrentFolder(controller);
-            }, {disabled: isRoot || controller.isMenuDisabled("delete")})
-        ];
+            }, {disabled: isRoot || controller.isMenuDisabled("delete")}),
+            menuItem(gettext("Edit folder access"), () => {
+                folderActions.editAccessCurrentFolder(controller);
+            }, {disabled: isRoot || controller.isMenuDisabled("edit")})
+        ];``
     };
 }

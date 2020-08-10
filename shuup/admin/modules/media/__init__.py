@@ -28,11 +28,28 @@ class MediaModule(AdminModule):
                 name="media.browse"
             ),
             admin_url(
+                r"^media/folder/(?P<pk>\d+)/$",
+                "shuup.admin.modules.media.views.MediaFolderEditView",
+                name="media.details"
+            ),
+            admin_url(
                 "^media/upload/$",
                 "shuup.admin.modules.media.views.media_upload",
                 name="media.upload"
             )
         ]
+
+    def get_extra_permissions(self):
+        permissions = super().get_extra_permissions()
+        permissions += (
+            "media.create-folder",
+            "media.rename-folder",
+            "media.delete-folder",
+            "media.upload-to-folder",
+            "media.rename-file"
+            "media.delete-file",
+        )
+        return permissions
 
     def get_menu_entries(self, request):
         return [

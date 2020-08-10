@@ -12,6 +12,8 @@ import * as BrowserView from "./BrowserView";
 import * as dragDrop from "./util/dragDrop";
 import * as FileUpload from "./FileUpload";
 import * as menuManager from "./util/menuManager";
+import * as remote from "./util/remote";
+
 import folderContextMenu from "./menus/folderContextMenu";
 
 window.m = m;
@@ -54,6 +56,28 @@ class MediaBrowser {
           event.preventDefault();
       }, false);
   }
+
+  static setupCopyButton(element) {
+    element.addEventListener("click", function(event) {
+        remote.get({"action": "path", "id": controller.currentFolderId()}).then(function(response) {
+            const path = response["folderPath"]
+            var dummy = document.createElement("input");
+            document.body.appendChild(dummy);
+            dummy.setAttribute("id", "dummy_id");
+            document.getElementById("dummy_id").value=path;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            if (path === ""){
+                alert("You are in the root folder")
+            } else {
+                alert(path + " was copied to your clipboard")
+            }
+        });
+        event.preventDefault();
+    }, false);
+}
+
 }
 
 window.MediaBrowser = MediaBrowser;

@@ -117,3 +117,6 @@ SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION = True
 #: If this is False, only a allow simple text field and sanitize all HTML from it.
 #:
 SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION = True
+
+#: The method used to get the media folder from the folder.
+SHUUP_GET_MEDIA_FOLDER_FROM_FOLDER = "shuup.admin.utils.media_folder_from_folder"

@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
+
 from filer.models import Folder
 
 
@@ -21,11 +22,21 @@ def delete_folder(folder):
     :rtype: str
     """
     parent_folder = (folder.parent if folder.parent_id else None)
+
+    folder_users = list(folder.media_folder.all().values_list('user_access', flat=True))
+    parent_folder_users = (
+        list(parent_folder.media_folder.all().values_list('user_access', flat=True))
+        if parent_folder else []
+    )
+    users_to_remove = list(set(folder_users) - set(parent_folder_users))
     parent_name = (parent_folder.name if parent_folder else _("Root"))
     subfolders = list(folder.children.all())
     message_bits = []
     if subfolders:
         for subfolder in subfolders:
+            for user in users_to_remove:
+                for sub_mediafolder in subfolder.media_folder.all():
+                    sub_mediafolder.remove_user_and_subfolder_user(user)
             subfolder.move_to(parent_folder, "last-child")
             subfolder.save()
         message_bits.append(

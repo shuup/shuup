@@ -12,12 +12,11 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseForbidden, JsonResponse
 from django.utils.translation import ugettext as _
-from filer.models import Folder
 
+from shuup.admin.modules.media.views import get_or_create_folder
 from shuup.core.shop_provider import get_shop
 from shuup.utils.filer import (
-    ensure_media_file, ensure_media_folder, filer_file_to_json_dict,
-    filer_image_from_upload
+    ensure_media_file, filer_file_to_json_dict, filer_image_from_upload
 )
 
 
@@ -35,19 +34,6 @@ def file_size_validator(value):
 
 class UploadImageForm(forms.Form):
     file = forms.ImageField(validators=[file_size_validator])
-
-
-def get_or_create_folder(shop, path):
-    folders = path.split("/")
-    parent = None
-    child = None
-    created = False
-    for folder in folders:
-        if folder != "":
-            child, created = Folder.objects.get_or_create(parent=parent, name=folder)
-            ensure_media_folder(shop, child)
-            parent = child
-    return child
 
 
 def media_upload(request, *args, **kwargs):

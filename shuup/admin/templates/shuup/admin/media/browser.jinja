@@ -15,6 +15,9 @@
              {# wrapper will be filled with an invisible file input by Javascript #}
              <i class="fa fa-upload"></i> {% trans %}Upload{% endtrans %}
         </button>
+        <button class="btn btn-inverse" id="copy-path-wrapper">
+             <i class="fa fa-clipboard"></i> {% trans %}Copy folder path{% endtrans %}
+        </button>
     </div>
 {% endblock %}
 
@@ -26,6 +29,7 @@
     <script>
     window.MediaBrowser.init({{ browser_config|json }});
     window.MediaBrowser.setupUploadButton(document.getElementById("upload-button-wrapper"));
+    window.MediaBrowser.setupCopyButton(document.getElementById("copy-path-wrapper"));
     </script>
 {% endblock %}
 {% block extra_css %}

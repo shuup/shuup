@@ -51,3 +51,10 @@ export function promptDeleteCurrentFolder(controller) {
         });
     }
 }
+
+export function editAccessCurrentFolder(controller) {
+    const {id, name} = controller.folderData();
+    remote.get({action: "get_edit_url", id}).then(function(response) {
+        window.location = response['url'];
+    });
+}
