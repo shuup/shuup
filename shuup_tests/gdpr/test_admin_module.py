@@ -8,7 +8,7 @@
 
 import pytest
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.utils.timezone import now
 from django.utils.translation import activate
 
@@ -46,6 +46,7 @@ def test_gdpr_admin_settings(client, admin_user):
     page.save()
     # create the settings with only basic options
     payload = extract_form_fields(response)
+    payload.pop("base-consent_pages")
     payload.update({
         "base-enabled": True,
         "base-privacy_policy_page": page.pk,

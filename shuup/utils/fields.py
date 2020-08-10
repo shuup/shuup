@@ -7,7 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.core.exceptions import ValidationError
-from django.utils.encoding import force_text
+
+from shuup.utils.django_compat import force_text
 
 
 class RelaxedModelChoiceField(forms.ModelChoiceField):

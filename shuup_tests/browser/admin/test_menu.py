@@ -10,7 +10,7 @@ import os
 import pytest
 import selenium
 
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.testing.browser_utils import wait_until_condition, wait_until_appeared
 from shuup.testing.factories import get_default_shop

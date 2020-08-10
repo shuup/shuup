@@ -12,7 +12,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
@@ -25,6 +25,7 @@ from shuup.core.signals import post_clean, pre_clean
 from shuup.core.taxing import TaxableItem
 from shuup.core.utils.slugs import generate_multilanguage_slugs
 from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.django_compat import force_text
 
 from ._attributes import AppliedAttribute, AttributableMixin, Attribute
 from ._product_media import ProductMediaKind

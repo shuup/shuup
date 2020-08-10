@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import ShopStatus
@@ -21,7 +21,7 @@ def test_staff_authentication():
     staff_user = factories.create_random_user(is_staff=True)
     staff_user.set_password("randpw")
     staff_user.save()
-    staff_user.groups = [factories.get_default_permission_group()]
+    staff_user.groups.set([factories.get_default_permission_group()])
     shop.staff_members.add(staff_user)
 
     assert staff_user in [staff for staff in shop.staff_members.all()]

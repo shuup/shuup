@@ -45,7 +45,9 @@ def test_all_categories_view(rf, admin_user):
         # Add random categories expect default category which we will make
         # hidden to make sure that products linked to hidden categories are
         # not listed
-        shop_product.categories = Category.objects.exclude(id=category.pk).order_by("?")[:i]
+        shop_product.categories.set(
+            Category.objects.exclude(id=category.pk).order_by("?")[:i]
+        )
 
     _check_product_count(request, new_product_count)
 

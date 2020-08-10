@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView
 from enumfields import Enum
@@ -17,6 +16,7 @@ from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.wizard import (
     load_setup_wizard_panes, setup_wizard_complete
 )
+from shuup.utils.django_compat import reverse
 
 
 class HelpBlockCategory(Enum):

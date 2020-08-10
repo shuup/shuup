@@ -53,7 +53,7 @@ class DiscountArchiveModule(AdminModule):
                 name="discounts.archive"
             ),
             admin_url(
-                "^discounts/(?P<pk>\d+)/delete/$",
+                r"^discounts/(?P<pk>\d+)/delete/$",
                 "shuup.discounts.admin.views.DiscountDeleteView",
                 name="discounts.delete"
             )

@@ -10,7 +10,6 @@ import os
 
 import six
 from django.db.models import ForeignKey, ManyToManyField, Q
-from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.permissions import has_permission
@@ -23,6 +22,7 @@ from shuup.importer.importing import (
     DataImporter, ImporterExampleFile, ImportMetaBase
 )
 from shuup.importer.utils import fold_mapping_name
+from shuup.utils.django_compat import force_text
 from shuup.utils.properties import PriceProperty
 
 
@@ -173,7 +173,7 @@ class ProductMetaBase(ImportMetaBase):
         if not product.description:
             product.description = ""
 
-    def postsave_hook(self, sess):
+    def postsave_hook(self, sess):  # noqa (C901)
         # get all the special values
         shop_product = ShopProduct.objects.get_or_create(product=sess.instance, shop=sess.shop)[0]
 
@@ -200,7 +200,12 @@ class ProductMetaBase(ImportMetaBase):
                 if is_related and isinstance(value, six.string_types):
                     continue
 
-                setattr(shop_product, field_name, value)
+                if field_name in [
+                    "suppliers", "visibility_groups", "shipping_methods", "payment_methods", "categories"
+                ]:
+                    getattr(shop_product, field_name).set(value)
+                else:
+                    setattr(shop_product, field_name, value)
 
         shop_product.save()
 
@@ -227,7 +232,7 @@ class ProductMetaBase(ImportMetaBase):
             if isinstance(related_field, ForeignKey):
                 try:
                     value = int(value)  # this is because xlrd causes 1 to be 1.0
-                except:
+                except Exception:
                     pass
                 value = relmapper.fk_cache.get(str(value))
                 break

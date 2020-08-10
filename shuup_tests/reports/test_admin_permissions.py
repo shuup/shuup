@@ -36,7 +36,7 @@ def test_reports_admin_permissions(rf):
     shop = get_default_shop()  # We need a shop to exists
     staff_user = get_default_staff_user(shop)
     permission_group = get_default_permission_group()
-    staff_user.groups = [permission_group]
+    staff_user.groups.add(permission_group)
     request = apply_request_middleware(rf.get("/"), user=staff_user)
     request.user = staff_user
 

@@ -10,15 +10,17 @@ from __future__ import unicode_literals
 from decimal import Decimal
 
 from django.conf import settings
-from mock import patch
-
 from django.utils import translation
 from jinja2 import Template
+from mock import patch
 
 from shuup.core.models import Shop
 from shuup.core.templatetags.shuup_common import (
-    get_global_configuration, get_shop_configuration, money, number, percent, safe_product_description, safe_vendor_description
+    get_global_configuration, get_shop_configuration, get_shuup_version, money,
+    number, percent, safe_product_description, safe_vendor_description,
+    shuup_static
 )
+from shuup.core.utils.static import get_shuup_static_url
 from shuup.utils.money import Money
 
 
@@ -235,3 +237,11 @@ def test_safe_vendor_description():
 
     settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION = False
     assert safe_vendor_description(text) == "&lt;p&gt;vendor description&lt;/p&gt;"
+
+
+def test_get_shuup_static_url():
+    assert "test.js?v=%s" % get_shuup_version() in get_shuup_static_url("test.js")
+    assert get_shuup_static_url("test.js") == shuup_static("test.js")
+    assert "test.css?v=" in get_shuup_static_url("test.css", "django")
+    assert get_shuup_static_url("test2.js", "django") == shuup_static("test2.js", "django")
+    assert shuup_static("test3.js") != shuup_static("test3.js", "django")

@@ -5,23 +5,23 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest, json
+import json
+
+import pytest
 from django import forms
 from django.http.response import Http404
-from django.core.urlresolvers import reverse
-from django.utils.text import force_text
 from django.test.utils import override_settings
 
 from shuup.admin.shop_provider import set_shop
 from shuup.notify.actions.email import SendEmail
 from shuup.notify.admin_module.forms import ScriptItemEditForm
-from shuup.notify.admin_module.views import ScriptEditView, script_item_editor
+from shuup.notify.admin_module.views import script_item_editor, ScriptEditView
 from shuup.notify.admin_module.views.delete import ScriptDeleteView
 from shuup.notify.models import Script
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import force_text, reverse
 from shuup_tests.notify.fixtures import ATestEvent, TEST_TEMPLATE_DATA
-
 
 # TODO: Embetter the tests in this file
 
@@ -109,7 +109,7 @@ def test_deleting_script(rf, admin_user):
         name="Script 1",
         enabled=True
     )
-        
+
     delete_url = reverse("shuup_admin:notify.script.delete", kwargs={"pk": script.pk})
     view = ScriptEditView.as_view()
     response = view(request, pk=script.pk).render()

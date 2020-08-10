@@ -34,15 +34,15 @@ def test_order_refunds_with_multiple_suppliers():
 
     product1 = create_product("sku1", shop=shop, default_price=10)
     shop_product1 = product1.get_shop_instance(shop=shop)
-    shop_product1.suppliers = [supplier1, supplier2, supplier3]
+    shop_product1.suppliers.set([supplier1, supplier2, supplier3])
 
     product2 = create_product("sku2", shop=shop, default_price=10)
     shop_product2 = product1.get_shop_instance(shop=shop)
-    shop_product2.suppliers = [supplier1, supplier2]
+    shop_product2.suppliers.set([supplier1, supplier2])
 
     product3 = create_product("sku3", shop=shop, default_price=10, shipping_mode=ShippingMode.NOT_SHIPPED)
     shop_product3 = product1.get_shop_instance(shop=shop)
-    shop_product3.suppliers = [supplier3]
+    shop_product3.suppliers.set([supplier3])
 
     product_quantities = {
         supplier1: {
@@ -161,7 +161,7 @@ def test_order_refunds_with_other_lines():
 
     product = create_product("sku", shop=shop, default_price=10)
     shop_product = product.get_shop_instance(shop=shop)
-    shop_product.suppliers = [supplier]
+    shop_product.suppliers.set([supplier])
 
     order = create_empty_order(shop=shop)
     order.full_clean()

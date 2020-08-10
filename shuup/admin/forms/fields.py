@@ -104,8 +104,10 @@ class Select2ModelMultipleField(Select2MultipleField):
         return [getattr(v, "pk", v) for v in value or []]
 
     def to_python(self, value):
-        if value:
-            return self.model.objects.filter(pk__in=value)
+        if value and isinstance(value, (list, tuple)):
+            value = [v for v in value if v]
+            if value:
+                return self.model.objects.filter(pk__in=value)
         return []
 
 
@@ -147,7 +149,16 @@ class WeekdayField(MultipleChoiceField):
     def __init__(self, choices=(), required=True, widget=None, label=None, initial=None, help_text='', *args, **kwargs):
         if not choices:
             choices = self.DAYS_OF_THE_WEEK
-        super(WeekdayField, self).__init__(choices, required, widget, label, initial, help_text, *args, **kwargs)
+
+        super().__init__(
+            choices=choices,
+            required=required,
+            widget=widget,
+            label=label,
+            initial=initial,
+            help_text=help_text,
+            **kwargs
+        )
 
     def clean(self, value):
         return ",".join(super(WeekdayField, self).clean(value))

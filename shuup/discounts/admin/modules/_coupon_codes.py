@@ -22,7 +22,7 @@ class CouponCodeModule(AdminModule):
     def get_urls(self):
         from shuup.admin.urls import admin_url
         delete = admin_url(
-            "^discounts_coupon_codes/(?P<pk>\d+)/delete/$",
+            r"^discounts_coupon_codes/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.CouponCodeDeleteView",
             name="discounts_coupon_codes.delete"
         )

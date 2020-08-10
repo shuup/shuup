@@ -7,11 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth import get_user_model
 from django.http.response import Http404, JsonResponse
-from django.utils.encoding import force_text
 from django.views.generic import View
 
 from shuup.core.models import Order, OrderLogEntry, Shop
 from shuup.utils.analog import LogEntryKind
+from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import get_locally_formatted_datetime
 
 

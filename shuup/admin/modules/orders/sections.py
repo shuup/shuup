@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from shuup.admin.base import Section
@@ -16,6 +15,7 @@ from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shipment, Supplier
 from shuup.core.models._orders import OrderLogEntry
+from shuup.utils.django_compat import reverse
 
 
 class BasicDetailsOrderSection(Section):

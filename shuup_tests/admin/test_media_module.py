@@ -10,7 +10,7 @@ import tempfile
 
 import pytest
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.http import JsonResponse
 from django.test import override_settings
 from django.test.client import RequestFactory
@@ -158,7 +158,6 @@ def test_upload(rf, admin_user):
 
 
 @pytest.mark.django_db
-@pytest.mark.skipif(django.VERSION < (1, 11), reason="Disable when run for Django < 1.11.")
 def test_upload_invalid_filetype(rf, admin_user):
     assert File.objects.count() == 0
     content = ("42" * 42).encode("UTF-8")

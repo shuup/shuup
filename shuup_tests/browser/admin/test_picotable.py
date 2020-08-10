@@ -9,7 +9,7 @@ import os
 import time
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.testing.browser_utils import (
     click_element, move_to_element, wait_until_appeared,
@@ -49,7 +49,7 @@ list_view_settings = {
     "shop_product": {
         "page_header": "Shop Products",
         "default_column_count": 7,
-        "addable_fields": [(21, "Product Gtin"), (3, "Default Price")],
+        "addable_fields": [(22, "Product Gtin"), (3, "Default Price")],
         "creator": create_products,
         "test_pagination": False
     },

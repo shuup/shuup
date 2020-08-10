@@ -125,7 +125,7 @@ class BaseDatabaseBasketStorage(BasketStorage):
         stored_basket.orderer = (basket.orderer or None)
         stored_basket.creator = real_user_or_none(basket.creator)
         stored_basket.save()
-        stored_basket.products = set(basket.product_ids)
+        stored_basket.products.set(set(basket.product_ids))
         return stored_basket
 
     def delete(self, basket):

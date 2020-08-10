@@ -6,12 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import django
 import parler.models
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from parler.managers import TranslatableManager, TranslatableQuerySet
 from polymorphic.base import PolymorphicModelBase
@@ -19,6 +18,7 @@ from polymorphic.managers import PolymorphicManager, PolymorphicQuerySet
 from polymorphic.models import PolymorphicModel
 
 from shuup.utils import text
+from shuup.utils.django_compat import force_text
 
 
 class ShuupModel(models.Model):
@@ -93,10 +93,7 @@ class PolymorphicTranslatableShuupModel(six.with_metaclass(
         PolyTransModelBase,
         PolymorphicShuupModel, TranslatableShuupModel)):
 
-    if django.VERSION < (1, 11):
-        _default_manager = _PolyTransManager()
-    else:
-        objects = _PolyTransManager()
+    objects = _PolyTransManager()
 
     class Meta:
         abstract = True

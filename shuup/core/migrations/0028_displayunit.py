@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(
                     auto_created=True, primary_key=True, serialize=False)),
                 ('internal_unit', models.ForeignKey(
-                    to='shuup.SalesUnit', related_name='display_units')),
+                    to='shuup.SalesUnit', related_name='display_units', on_delete=models.CASCADE)),
                 ('ratio', shuup.core.fields.QuantityField(
                     default=1, max_digits=36, decimal_places=9, validators=[
                         shuup.core.models._units.validate_positive_not_zero])),
@@ -53,7 +53,8 @@ class Migration(migrations.Migration):
                 ('symbol', models.CharField(max_length=50)),
                 ('master', models.ForeignKey(
                     to='shuup.DisplayUnit', editable=False,
-                    related_name='translations', null=True)),
+                    related_name='translations', null=True,
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'shuup_displayunit_translation',
@@ -71,6 +72,7 @@ class Migration(migrations.Migration):
             model_name='shopproduct',
             name='display_unit',
             field=models.ForeignKey(
-                to='shuup.DisplayUnit', blank=True, null=True),
+                to='shuup.DisplayUnit', blank=True, null=True,
+                on_delete=models.CASCADE),
         ),
     ]

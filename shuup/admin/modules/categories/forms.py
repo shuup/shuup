@@ -9,7 +9,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.db.transaction import atomic
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
@@ -20,6 +19,7 @@ from shuup.admin.utils.forms import filter_form_field_choices
 from shuup.core.models import (
     Category, CategoryStatus, Product, ShopProduct, ShopProductVisibility
 )
+from shuup.utils.django_compat import force_text
 
 
 class CategoryBaseForm(ShuupAdminForm):
@@ -107,7 +107,7 @@ class CategoryProductForm(forms.Form):
                 ShopProductVisibility.ALWAYS_VISIBLE if is_visible else ShopProductVisibility.NOT_VISIBLE
             )
             shop_product.visibility_limit = self.category.visibility.value
-            shop_product.visibility_groups = visibility_groups
+            shop_product.visibility_groups.set(visibility_groups)
             shop_product.save()
             shop_product.categories.add(self.category)
 

@@ -17,7 +17,7 @@ def extract_form_fields(soup):  # pragma: no cover  # noqa (C901)
     fields = {}
     for input in soup.findAll('input'):
         name = input.get("name")
-        value = input.get("value")
+        value = input.get("value") or ""
         type = input.get("type", "text")
         if not name:
             continue
@@ -56,6 +56,6 @@ def extract_form_fields(soup):  # pragma: no cover  # noqa (C901)
 
         value = [option['value'] for option in selected_options if option["value"]]
 
-        fields[select['name']] = value
+        fields[select['name']] = value or ""
 
     return fields

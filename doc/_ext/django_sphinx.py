@@ -65,12 +65,14 @@ def _process_field_help_text_and_verbose_name(field, lines, is_translation=0):
 
 def _process_field_type(field, lines, latelines):
     if isinstance(field, models.ForeignKey):
-        to = _resolve_field_destination(field, field.rel.to)
+        to = _resolve_field_destination(field, field.remote_field.target_field)
+
         lines.append(':type %s: %s to :class:`%s.%s`' % (
             field.attname,
             type(field).__name__, to.__module__, to.__name__))
     elif isinstance(field, models.ManyToManyField):
-        to = _resolve_field_destination(field, field.rel.to)
+        to = _resolve_field_destination(field, field.remote_field.target_field)
+
         lines.append(':type %s: %s to :class:`%s.%s`' % (
             field.attname,
             type(field).__name__, to.__module__, to.__name__))

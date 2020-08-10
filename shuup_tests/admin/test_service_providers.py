@@ -111,10 +111,7 @@ def test_invalid_service_provider_type(rf, admin_user):
             "value": option["value"],
         })
 
-    if django.VERSION < (1, 11):
-        assert [x["selected"] for x in options] == [True, False, False]
-    else:
-        assert [x["selected"] for x in options] == [False, False, False]
+    assert [x["selected"] for x in options] == [False, False, False]
 
 
 @pytest.mark.parametrize("type,extra_inputs", [

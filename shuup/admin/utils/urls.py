@@ -15,18 +15,18 @@ import six
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import (
-    get_callable, NoReverseMatch, RegexURLPattern, reverse
-)
 from django.http.response import HttpResponseForbidden
 from django.utils.encoding import force_str, force_text
 from django.utils.http import urlencode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.utils import importing
+from shuup.utils.django_compat import (
+    get_callable, is_authenticated, NoReverseMatch, reverse, URLPattern
+)
 from shuup.utils.excs import Problem
 
 try:
@@ -35,13 +35,18 @@ except ImportError:  # pragma: no cover
     from urlparse import parse_qsl  # Python 2.7
 
 
-class AdminRegexURLPattern(RegexURLPattern):
+class AdminRegexURLPattern(URLPattern):
     def __init__(self, regex, callback, default_args=None, name=None, require_authentication=True, permissions=()):
         self.permissions = tuple(permissions)
         self.require_authentication = require_authentication
+
         if callable(callback):
             callback = self.wrap_with_permissions(callback)
-        super(AdminRegexURLPattern, self).__init__(regex, callback, default_args, name)
+
+        from django.urls import re_path
+        repath = re_path(regex, callback, default_args, name)
+        pattern = repath.pattern
+        super(AdminRegexURLPattern, self).__init__(pattern, callback, default_args, name)
 
     def _get_unauth_response(self, request, reason):
         """
@@ -57,7 +62,7 @@ class AdminRegexURLPattern(RegexURLPattern):
         error_params = urlencode({"error": reason})
         login_url = force_str(reverse("shuup_admin:login") + "?" + error_params)
         resp = redirect_to_login(next=request.path, login_url=login_url)
-        if request.user.is_authenticated():
+        if is_authenticated(request.user):
             # Instead of redirecting to the login page, let the user know what's wrong with
             # a helpful link.
             raise (
@@ -75,7 +80,7 @@ class AdminRegexURLPattern(RegexURLPattern):
         :rtype: str|None
         """
         if self.require_authentication:
-            if not request.user.is_authenticated():
+            if not is_authenticated(request.user):
                 return _("Sign in to continue.")
             elif not getattr(request.user, 'is_staff', False):
                 return _("Your account must have `Access to Admin Panel` permissions to access this page.")
@@ -155,7 +160,7 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
 
     return [
         admin_url(
-            "%s/(?P<pk>\d+)/$" % url_prefix,
+            r"%s/(?P<pk>\d+)/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "edit",
             permissions=(name_template % "edit",)
@@ -224,8 +229,7 @@ def get_model_url(object, kind="detail", user=None,
         if user is None:
             return url
 
-        from django.core.urlresolvers import resolve, Resolver404
-
+        from shuup.utils.django_compat import resolve, Resolver404
         try:
             if required_permissions is not None:
                 warnings.warn(

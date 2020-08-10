@@ -10,8 +10,8 @@ from __future__ import unicode_literals
 import datetime
 
 from django.conf import settings
-from django.utils.encoding import force_text
 
+from shuup.utils.django_compat import force_text
 from shuup.utils.importing import load
 
 from ._counters import Counter, CounterType

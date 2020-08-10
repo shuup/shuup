@@ -21,8 +21,8 @@ from django.template.defaultfilters import yesno
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timesince import timesince
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
@@ -209,7 +209,7 @@ class Attribute(TranslatableModel):
 class AppliedAttribute(TranslatableModel):
     _applied_fk_field = None  # Used by the `repr` implementation
 
-    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, verbose_name=_("attribute"))
+    attribute = models.ForeignKey(on_delete=models.CASCADE, to=Attribute, verbose_name=_("attribute"))
 
     numeric_value = models.DecimalField(
         null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"), db_index=True)
@@ -308,7 +308,7 @@ class AppliedAttribute(TranslatableModel):
             self.translated_string_value = new_value
         try:
             self.numeric_value = int(self.string_value, 10)
-        except:
+        except Exception:
             self.numeric_value = None
         self.datetime_value = None
         return
@@ -373,7 +373,7 @@ class AppliedAttribute(TranslatableModel):
                 return timesince(a, b)
             if self.attribute.type in (AttributeType.DATETIME, AttributeType.DATE):
                 return format_datetime(self.value)
-        except:  # If formatting fails, fall back to string formatting.
+        except Exception:  # If formatting fails, fall back to string formatting.
             pass
         return six.text_type(self.value)
 
@@ -416,8 +416,11 @@ class AttributableMixin(object):
                 target._set_cached_attribute(language, identifier, NoSuchAttributeHere)
 
             for applied_attr in applied_attrs_by_target_id.get(target.id, ()):
-                attribute_descriptor = applied_attr.__class__.attribute
-                setattr(applied_attr, attribute_descriptor.cache_name, attr_map.get(applied_attr.attribute_id))
+                setattr(
+                    applied_attr,
+                    applied_attr.__class__.attribute.field.name,
+                    attr_map.get(applied_attr.attribute_id)
+                )
                 target._set_cached_attribute(language, applied_attr.attribute.identifier, applied_attr)
 
         return targets

@@ -49,11 +49,12 @@ class Migration(migrations.Migration):
                     verbose_name='created by',
                     to=settings.AUTH_USER_MODEL)),
                 ('product', models.ForeignKey(
+                    on_delete=models.CASCADE,
                     verbose_name='product',
                     to='shuup.Product',
                     related_name='+')),
                 ('supplier', models.ForeignKey(
-                    verbose_name='supplier', to='shuup.Supplier')),
+                    on_delete=models.CASCADE, verbose_name='supplier', to='shuup.Supplier')),
                 ('type', enumfields.fields.EnumIntegerField(
                     enum=shuup.core.suppliers.enums.StockAdjustmentType,
                     verbose_name='type',
@@ -83,11 +84,13 @@ class Migration(migrations.Migration):
                 ('stock_value_value', shuup.core.fields.MoneyValueField(
                     max_digits=36, decimal_places=9, default=0)),
                 ('product', models.ForeignKey(
+                    on_delete=models.CASCADE,
                     editable=False,
                     verbose_name='product',
                     to='shuup.Product',
                     related_name='+')),
                 ('supplier', models.ForeignKey(
+                    on_delete=models.CASCADE,
                     editable=False,
                     verbose_name='supplier',
                     to='shuup.Supplier')),

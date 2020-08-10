@@ -14,7 +14,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.shortcuts import resolve_url
 from django.test import override_settings
 
@@ -100,6 +100,7 @@ def test_new_user_information_edit(allow_image_uploads):
         form["contact-country"] = "FI"
 
         for prefix in ("billing", "shipping"):
+            form["%s-name" % prefix] = user.first_name
             form["%s-city" % prefix] = "test-city"
             form["%s-email" % prefix] = new_email
             form["%s-street" % prefix] = "test-street"
@@ -131,7 +132,7 @@ def test_new_user_information_edit(allow_image_uploads):
             assert int(soup.find(attrs={"id": "id_contact-picture-dropzone"})["data-id"]) == file_id
         else:
             assert contact.picture is None
-            
+
 
 
 @pytest.mark.django_db

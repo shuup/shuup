@@ -11,7 +11,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import JsonResponse
 from django.test import override_settings
 from django.test.client import RequestFactory
-from django.utils.text import force_text
+from django.utils.encoding import force_text
 from filer.models import File, Folder
 from six import BytesIO
 

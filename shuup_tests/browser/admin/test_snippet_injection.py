@@ -8,13 +8,14 @@
 import os
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
     click_element, wait_until_appeared, wait_until_condition
 )
 from shuup.testing.browser_utils import initialize_admin_browser_test
+from django.test import override_settings
 from shuup.core import cache
 from shuup.xtheme import get_current_theme
 from shuup.xtheme.models import Snippet
@@ -24,6 +25,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_xtheme_snippet_injection(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     initialize_admin_browser_test(browser, live_server, settings)

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import django
 
 
 class DisableMigrations(object):
@@ -12,9 +11,6 @@ class DisableMigrations(object):
 
 
 def get_disabled_migrations():
-    if django.VERSION < (1, 11):
-        return DisableMigrations()
-
     return {
         'auth': None,
         'contenttypes': None,

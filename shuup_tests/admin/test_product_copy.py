@@ -63,7 +63,7 @@ def test_product_copy(rf, admin_user):
     shop_product = product.get_shop_instance(shop)
     shop_product.primary_category = category
     shop_product.save()
-    shop_product.categories = [category]
+    shop_product.categories.set([category])
 
     assert Product.objects.count() == 1
     view_func = ProductCopyView.as_view()

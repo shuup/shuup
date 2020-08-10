@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.http.response import Http404
 
 from shuup.admin.shop_provider import SHOP_SESSION_KEY
@@ -21,7 +21,7 @@ from shuup.utils.excs import Problem
 def _get_edit_object_view(rf, view, model_name, object_id, user, shop, mode=None):
     data = {
         "model": model_name,
-        "id": object_id
+        "id": object_id or ""
     }
     if mode:
         data["mode"] = mode
@@ -98,7 +98,7 @@ def test_edit_object_view_errors(rf, admin_user):
     # invalid model
     response = _get_edit_object_view(rf, view, ".", None, admin_user, shop)
     assert response.status_code == 400
-    assert "Invalid model" in response.content.decode("utf-8")
+    assert "Invalid object" in response.content.decode("utf-8")
 
     # invalid object ID
     product = factories.create_product("p1", shop, factories.get_default_supplier())

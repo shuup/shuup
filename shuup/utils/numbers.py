@@ -163,7 +163,7 @@ def parse_decimal_string(s):
 def try_parse_decimal_string(s):
     try:
         return parse_decimal_string(s)
-    except:
+    except Exception:
         return None
 
 
@@ -186,7 +186,7 @@ def get_string_sort_order(s):
 
     try:  # If not, see if it looks enough like a decimal
         return (5, parse_decimal_string(s))
-    except:  # Otherwise just sort as a string
+    except Exception:  # Otherwise just sort as a string
         return (1, s)
 
 

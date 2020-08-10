@@ -8,7 +8,7 @@
 import os
 
 import pytest
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 
 from shuup.testing.browser_utils import (
     click_element, wait_until_condition, wait_until_appeared
@@ -22,6 +22,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_product_detail(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     product = create_product("test_sku", shop, default_price=10)

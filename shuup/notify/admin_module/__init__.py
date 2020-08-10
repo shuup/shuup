@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.http.response import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
@@ -23,6 +22,7 @@ from shuup.notify.enums import Priority
 from shuup.notify.models import EmailTemplate
 from shuup.notify.models import Notification as NotificationModel
 from shuup.notify.models import Script
+from shuup.utils.django_compat import reverse
 
 SCRIPT_TEMPLATES_PROVIDE_CATEGORY = 'notify_script_template'
 
@@ -34,7 +34,7 @@ class NotifyAdminModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "notify/script-item-editor/",
+                r"notify/script-item-editor/",
                 "shuup.notify.admin_module.views.script_item_editor",
                 name="notify.script-item-editor"
             ),
@@ -49,7 +49,7 @@ class NotifyAdminModule(AdminModule):
                 name="notify.mark-read"
             ),
             admin_url(
-                "notify/script-template/",
+                r"notify/script-template/",
                 "shuup.notify.admin_module.views.ScriptTemplateView",
                 name="notify.script-template"
             ),

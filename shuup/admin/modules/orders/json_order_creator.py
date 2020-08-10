@@ -113,7 +113,7 @@ class JsonOrderCreator(object):
         supplier_info = sline.pop("supplier", None)
 
         if not supplier_info:
-            self.add_error(ValidationError(_("Product line dose not have a supplier."), code="no_supplier"))
+            self.add_error(ValidationError(_("Product line does not have a supplier."), code="no_supplier"))
             return False
 
         if not product_info:
@@ -368,6 +368,9 @@ class JsonOrderCreator(object):
         """
         source = self.create_source_from_state(
             state, creator=creator, ip_address=ip_address, save=True)
+
+        if not source:
+            return
 
         # Then create an OrderCreator and try to get things done!
         creator = AdminOrderCreator()

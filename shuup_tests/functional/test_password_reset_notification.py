@@ -8,7 +8,7 @@
 import pytest
 
 from django.core import mail
-from django.core.urlresolvers import reverse
+from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.notify.admin_module.views import ScriptTemplateView

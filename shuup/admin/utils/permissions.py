@@ -110,7 +110,7 @@ def get_permissions_from_urls(urls):
     Return a set of permissions for a given iterable of urls.
 
     :param urls: Iterable of url objects to check for permissions.
-    :type urls: Iterable[django.core.urlresolvers.RegexURLPattern]
+    :type urls: Iterable[django.urls.RegexURLPattern]
     :return: Set of permissions for urls as strings.
     :rtype: set[str]
     """

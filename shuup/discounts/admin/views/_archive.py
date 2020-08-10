@@ -7,11 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
 from shuup.discounts.models import Discount
+from shuup.utils.django_compat import reverse
 
 from ._active_list import DiscountListView
 

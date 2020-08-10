@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
+
 from shuup.core.models import Shop
 
 SHOP_SESSION_KEY = "admin_shop"

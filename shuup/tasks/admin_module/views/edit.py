@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.forms.models import ModelForm
@@ -24,6 +23,7 @@ from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, get_person_contact
 from shuup.tasks.models import Task, TaskComment, TaskStatus, TaskType
 from shuup.utils.analog import LogEntryKind
+from shuup.utils.django_compat import reverse_lazy
 from shuup.utils.form_group import FormGroup
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 

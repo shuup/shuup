@@ -5,10 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import django
 import pytest
 import six
 from django.contrib.auth.models import AbstractUser
-from django.core.urlresolvers import reverse, reverse_lazy
 
 from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.modules.customers_dashboard import CustomersDashboardModule
@@ -24,6 +24,7 @@ from shuup.admin.utils.permissions import (
 )
 from shuup.core.models import Product, ShopProduct
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse, reverse_lazy
 from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule
 from shuup_tests.utils.faux_users import StaffUser
 
@@ -35,8 +36,7 @@ migrated_permissions = {
 
 
 def test_default_model_permissions():
-    permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
-
+    permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product", "shuup.view_product"])
     assert get_default_model_permissions(Product) == permissions
 
 

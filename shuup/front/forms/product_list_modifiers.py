@@ -15,8 +15,8 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst, slugify
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import (
     Category, Manufacturer, ProductVariationVariable, ShopProduct,
@@ -30,7 +30,7 @@ from shuup.utils.i18n import format_money
 
 
 class FilterWidget(forms.SelectMultiple):
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         if value is None:
             value = []
         choices_to_render = []
@@ -43,7 +43,7 @@ class FilterWidget(forms.SelectMultiple):
 
 
 class OneChoiceFilterWidget(forms.Select):
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         if value is None:
             value = []
         choices_to_render = []

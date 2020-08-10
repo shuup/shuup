@@ -20,17 +20,17 @@ class GDPRModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^gdpr/$",
+                r"^gdpr/$",
                 "shuup.gdpr.admin_module.views.GDPRView",
                 name="gdpr.settings"
             ),
             admin_url(
-                "^gdpr/contact/(?P<pk>\d+)/anonymize/$",
+                r"^gdpr/contact/(?P<pk>\d+)/anonymize/$",
                 "shuup.gdpr.admin_module.views.GDPRAnonymizeView",
                 name="gdpr.anonymize"
             ),
             admin_url(
-                "^gdpr/contact/(?P<pk>\d+)/download/$",
+                r"^gdpr/contact/(?P<pk>\d+)/download/$",
                 "shuup.gdpr.admin_module.views.GDPRDownloadDataView",
                 name="gdpr.download_data"
             )

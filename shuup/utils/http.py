@@ -34,7 +34,7 @@ def retry_request(n_retries=5, **kwargs):
             resp = requests.request(**kwargs)
             if resp.status_code < 500:
                 return resp
-        except requests.RequestException as exc:
+        except requests.RequestException:
             pass
 
         time.sleep((2 ** (n_try + 1)) * 0.5)

@@ -35,7 +35,7 @@ class CategoryCopyVisibilityView(View):
                 ShopProductVisibility.ALWAYS_VISIBLE if is_visible else ShopProductVisibility.NOT_VISIBLE
             )
             product.visibility_limit = category.visibility.value
-            product.visibility_groups = category_visibility_groups
+            product.visibility_groups.set(category_visibility_groups)
             product.save()
             count += 1
         return JsonResponse({"message": _("Visibility settings copied to %d product(s)") % count})

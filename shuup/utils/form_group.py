@@ -29,6 +29,11 @@ class FormDef(object):
         if not issubclass(self.form_class, BaseFormSet):
             # FormSets don't support `empty_permitted` (they'll deal with it themselves)
             kwargs["empty_permitted"] = not self.required
+            if not self.required:
+                # FIXME: Above would raise ValueError: The empty_permitted and
+                # use_required_attribute arguments may not both be True with
+                # Django 2.2.
+                kwargs["use_required_attribute"] = False
 
         kwargs.update(self.kwargs)
         kwargs.update(extra_kwargs)
@@ -73,6 +78,7 @@ class FormGroup(object):
                 prefix = "%s_%s" % (self.prefix, name)
             else:
                 prefix = name
+
             self._forms[name] = form_def.instantiate(
                 prefix=prefix,
                 data=self.data,
