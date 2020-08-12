@@ -28,11 +28,45 @@ class MediaModule(AdminModule):
                 name="media.browse"
             ),
             admin_url(
+                r"^media/folder/(?P<pk>\d+)/$",
+                "shuup.admin.modules.media.views.MediaFolderEditView",
+                name="media.details"
+            ),
+            admin_url(
                 "^media/upload/$",
                 "shuup.admin.modules.media.views.media_upload",
                 name="media.upload"
             )
         ]
+
+    def get_extra_permissions(self):
+        permissions = super().get_extra_permissions()
+        permissions += (
+            # Allows the users to edit access on all folders.
+            "media.edit-access",
+
+            # Allows the users to view all folders, not limited to the once that they have access to.
+            "media.view-all",
+
+            # Allows the user to create a folder anywhere, not limited to folders under their root folder.
+            "media.create-folder",
+
+            # Allows the user to rename all folders, not limited to folders under their root folder.
+            "media.rename-folder",
+
+            # Allows the user to delete all folders, not limited to folders under their root folder.
+            "media.delete-folder",
+
+            # Allows the user to upload content to all folders, not limited to folders under their root folder.
+            "media.upload-to-folder",
+
+            # Allows the user to rename all files, not limeted to files that the user has uploaded.
+            "media.rename-file",
+
+            # Allows the user to delete all files, not limeted to files that the user has uploaded.
+            "media.delete-file",
+        )
+        return permissions
 
     def get_menu_entries(self, request):
         return [

@@ -1,0 +1,14 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar %}
+
+{% block body_class %}shuup-details{% endblock %}
+{% block content %}
+    {% call content_with_sidebar(content_id="media_folder_form") %}
+        <form method="post" id="media_folder_form" novalidate>
+            {% csrf_token %}
+            {% for form_def in form.form_defs.values() %}
+                {% include form_def.template_name with context %}
+            {% endfor %}
+        </form>
+    {% endcall %}
+{% endblock %}

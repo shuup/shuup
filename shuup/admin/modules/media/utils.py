@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
+
 from filer.models import Folder
 
 
@@ -21,6 +22,7 @@ def delete_folder(folder):
     :rtype: str
     """
     parent_folder = (folder.parent if folder.parent_id else None)
+
     parent_name = (parent_folder.name if parent_folder else _("Root"))
     subfolders = list(folder.children.all())
     message_bits = []

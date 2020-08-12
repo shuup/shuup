@@ -1,0 +1,8 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% set media_form = form["media_form"] %}
+
+{% call content_block(_("Access to folder"), icon="fa-info-circle") %}
+    {{ language_dependent_content_tabs(media_form) }}
+    {{ render_monolingual_fields(media_form) }}
+{% endcall %}
