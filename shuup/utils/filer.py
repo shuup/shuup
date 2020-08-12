@@ -17,11 +17,10 @@ from django.core.files.base import ContentFile
 from django.core.validators import FileExtensionValidator
 from django.forms.models import modelform_factory
 from django.utils.translation import ugettext as _
-
 from filer.models import File, Folder, Image
 
-from shuup.core.models import MediaFile, MediaFolder
 from shuup.admin.utils.permissions import has_permission
+from shuup.core.models import MediaFile, MediaFolder
 
 
 def file_size_validator(value):

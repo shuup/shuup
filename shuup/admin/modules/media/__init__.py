@@ -30,7 +30,7 @@ class MediaModule(AdminModule):
             admin_url(
                 r"^media/folder/(?P<pk>\d+)/$",
                 "shuup.admin.modules.media.views.MediaFolderEditView",
-                name="media.details"
+                name="media.edit-access"
             ),
             admin_url(
                 "^media/upload/$",
@@ -42,9 +42,6 @@ class MediaModule(AdminModule):
     def get_extra_permissions(self):
         permissions = super().get_extra_permissions()
         permissions += (
-            # Allows the users to edit access on all folders.
-            "media.edit-access",
-
             # Allows the users to view all folders, not limited to the once that they have access to.
             "media.view-all",
 
