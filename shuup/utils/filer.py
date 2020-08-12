@@ -192,7 +192,6 @@ def filer_file_to_json_dict(file, user=None):
     except Exception:
         thumbnail = None
 
-
     extra_permissions = {}
     if user:
         if has_permission(user, "media.delete-file"):

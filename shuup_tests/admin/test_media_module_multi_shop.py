@@ -17,9 +17,11 @@ from six import BytesIO
 
 from shuup.admin.modules.media.views import MediaBrowserView
 from shuup.admin.shop_provider import set_shop
+from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.core.models import MediaFile, MediaFolder
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+
 
 
 @pytest.mark.django_db
@@ -29,14 +31,21 @@ def test_media_view_images(rf):
         shop1_staff1 = _create_random_staff(shop1)
         shop1_staff2 = _create_random_staff(shop1)
 
+        group = factories.get_default_permission_group()
+        set_permissions_for_group(group, ["media.upload-to-folder", "media.view-all"])
+
         shop2 = factories.get_shop(identifier="shop2", enabled=True)
         shop2_staff = _create_random_staff(shop2)
+
+        shop1_staff1.groups.add(group)
+        shop1_staff2.groups.add(group)
+        shop2_staff.groups.add(group)
 
         # Let's agree this folder is created by for example carousel
         # so it would be shared with all the shops.
         folder = Folder.objects.create(name="Root")
         assert MediaFolder.objects.count() == 0
-        path = "/%s" % folder.name
+        path = "%s" % folder.name
 
         File.objects.create(name="normalfile", folder=folder)  # Shared between shops
 
