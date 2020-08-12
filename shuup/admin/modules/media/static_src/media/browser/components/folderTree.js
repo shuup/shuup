@@ -29,7 +29,7 @@ export default function(ctrl) {
             m("span.name", folder.name)
         ]);
         const childLis = (inPath ? _.map(folder.children, walk) : []);
-        if (isCurrent) {
+        if (isCurrent && !ctrl.isMenuDisabled("folder-new")) {
             childLis.push(m("li.new-folder-item", {key: "new-folder"}, m("a", {
                 href: "#",
                 onclick: _.bind(folderActions.promptCreateFolder, null, ctrl, folder.id),
