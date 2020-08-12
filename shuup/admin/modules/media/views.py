@@ -156,14 +156,26 @@ class MediaBrowserView(TemplateView):
     def handle_get_folders(self, data):
         shop = get_shop(self.request)
 
-        users_root_folder = Folder.objects.filter(media_folder__owners=self.request.user).first()
+        users_owned_folders = Folder.objects.filter(media_folder__owners=self.user)
         root_folders = None
 
         # If the user has a root folder and not permission to view all folders
-        if users_root_folder and not has_permission(self.user, "media.view-all"):
-            # Makes so all folder and files are shown under the users root folder
+        if len(users_owned_folders) > 0 and not has_permission(self.user, "media.view-all"):
+            all_accessed_folders = list(Folder._tree_manager.filter(_get_folder_query_filter(shop, self.user)))
+            get_media_folder = cached_load("SHUUP_GET_MEDIA_FOLDER_FROM_FOLDER")
+
+            # We will need to change the tree ordering of folders that the user owns,
+            # so the owning folders shows up under the root folder.
+            # This is because if admin gives view access to a folder that has a lower level (closer to the root),
+            # then the folder the user owns. It would be stacked under the folder that the admin has given access to,
+            # insted of under the root folder.
+            for index, folder in enumerate(all_accessed_folders):
+                media_folder = get_media_folder(folder)
+                if self.user in media_folder.owners.all():
+                    setattr(all_accessed_folders[index], folder._mptt_meta.level_attr, 0)
+
             root_folders = get_cached_trees(
-                Folder._tree_manager.filter(_get_folder_query_filter(shop, self.user))
+                all_accessed_folders
             )
         else:
             # Everything is shown under the fake root folder that is actually not a real folder
@@ -256,7 +268,7 @@ class MediaBrowserView(TemplateView):
         folder = _get_folder_query(shop, self.user).get(pk=data["id"])
         get_media_folder = cached_load("SHUUP_GET_MEDIA_FOLDER_FROM_FOLDER")
         media_folder = get_media_folder(folder)
-        url = reverse("shuup_admin:media.details", kwargs={"pk": media_folder.id})
+        url = reverse("shuup_admin:media.edit-access", kwargs={"pk": media_folder.id})
         return JsonResponse({"success": True, "url": url})
 
     def handle_post_rename_folder(self, data):
@@ -266,9 +278,10 @@ class MediaBrowserView(TemplateView):
         # If the folder is not sheard between one or more shop and
         # the folder is in the subfolder tree of the users root folder or the user has folder renaming permissions.
         # Then they are alloed to change rename the folder.
-        if not _is_folder_shared(folder) and (
+        if not _is_folder_shared(folder) and folder.media_folder.all().values_list("owners", flat=True)[0] is None and (
             subfolder_of_users_root(self.user, folder) or
             has_permission(self.user, "media.rename-folder")
+
         ):
             folder.name = data["name"]
             try:
@@ -280,7 +293,7 @@ class MediaBrowserView(TemplateView):
 
         message = _(
             "Can't rename this folder, either you don't have permssion to do it "
-            "or it's a shared folder between more then one shop"
+            "or it's a shared folder between more then one shop or it has a owner"
         )
         return JsonResponse({"success": False, "message": message})
 
