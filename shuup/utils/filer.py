@@ -13,13 +13,16 @@ import django
 import six
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.forms.models import modelform_factory
 from django.utils.translation import ugettext as _
+
 from filer.models import File, Folder, Image
 
 from shuup.core.models import MediaFile, MediaFolder
+from shuup.admin.utils.permissions import has_permission
 
 
 def file_size_validator(value):
@@ -179,7 +182,7 @@ def filer_image_from_data(request, path, file_name, file_data, sha1=None):
     return _filer_file_from_upload(model=Image, request=request, path=path, upload_data=upload_data, sha1=sha1)
 
 
-def filer_file_to_json_dict(file):
+def filer_file_to_json_dict(file, user=None):
     """
     :type file: filer.models.File
     :rtype: dict
@@ -195,17 +198,28 @@ def filer_file_to_json_dict(file):
         })
     except Exception:
         thumbnail = None
+
+
+    extra_permissions = {}
+    if user:
+        if has_permission(user, "media.delete-file"):
+            extra_permissions["delete-file"] = True
+        if has_permission(user, "media.rename-file"):
+            extra_permissions["rename-file"] = True
+
     return {
         "id": file.id,
         "name": file.label,
         "size": file.size,
         "url": file.url,
+        "owner": True if user == file.owner else False,
         "thumbnail": (thumbnail.url if thumbnail else None),
-        "date": file.uploaded_at.isoformat()
+        "date": file.uploaded_at.isoformat(),
+        **extra_permissions
     }
 
 
-def filer_folder_to_json_dict(folder, children=None):
+def filer_folder_to_json_dict(folder, children=None, user=None):
     """
     :type file: filer.models.Folder|None
     :type children: list(filer.models.Folder)
@@ -214,20 +228,62 @@ def filer_folder_to_json_dict(folder, children=None):
     if folder and children is None:
         # This allows us to pass `None` as a pseudo root folder
         children = folder.get_children()
+
+    is_owned = subfolder_of_users_root(user, folder) if folder and user else False
+    extra_permissions = {"folder-edit": True if has_permission(user, "media.edit-access") else False}
+    if user and not is_owned:
+        if has_permission(user, "media.create-folder"):
+            extra_permissions["folder-new"] = True
+        if has_permission(user, "media.rename-folder"):
+            extra_permissions["folder-rename"] = True
+        if has_permission(user, "media.delete-folder"):
+            extra_permissions["folder-delete"] = True
+        if has_permission(user, "media.upload-to-folder"):
+            extra_permissions["upload-media"] = True
+
     return {
         "id": folder.pk if folder else 0,
         "name": folder.name if folder else _("Root"),
-        "children": [filer_folder_to_json_dict(child) for child in children]
+        "owner": is_owned,
+        "children": [filer_folder_to_json_dict(child, user=user) for child in children],
+        **extra_permissions
     }
+
+
+def subfolder_of_users_root(user, folder):
+    if not folder:
+        return False
+
+    if user.id in list(folder.media_folder.all().values_list("owners", flat=True)):
+        return True
+
+    parents = folder.logical_path
+    for parent in parents:
+        if user.id in list(parent.media_folder.all().values_list("owners", flat=True)):
+            return True
+    return False
 
 
 def ensure_media_folder(shop, folder):
     media_folder, created = MediaFolder.objects.get_or_create(folder=folder)
     if not media_folder.shops.filter(id=shop.id).exists():
         media_folder.shops.add(shop)
+    return media_folder
 
 
 def ensure_media_file(shop, file):
     media_file, created = MediaFile.objects.get_or_create(file=file)
     if not media_file.shops.filter(id=shop.id).exists():
         media_file.shops.add(shop)
+
+
+def get_or_create_folder(shop, path, user=None):
+    folders = path.split("/")
+    parent = None
+    child = None
+    for folder in folders:
+        if folder != "":
+            child = Folder.objects.get_or_create(parent=parent, name=folder)[0]
+            ensure_media_folder(shop, child)
+            parent = child
+    return child
