@@ -13,7 +13,6 @@ import django
 import six
 from django import forms
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.forms.models import modelform_factory
@@ -198,7 +197,6 @@ def filer_file_to_json_dict(file, user=None):
         })
     except Exception:
         thumbnail = None
-
 
     extra_permissions = {}
     if user:
