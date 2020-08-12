@@ -15,6 +15,7 @@ export default function item(label, action, attrs = {}) {
     if (attrs.disabled) {
         action = _.noop;
         tagBits.push("disabled");
+        return;
     }
     return m(tagBits.join("."), m("a", {
         href: "#", onclick: (event) => {

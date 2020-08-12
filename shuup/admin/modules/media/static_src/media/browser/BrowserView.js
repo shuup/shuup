@@ -15,6 +15,8 @@ import folderTree from "./components/folderTree";
 import folderBreadcrumbs from "./components/folderBreadcrumbs";
 import folderView from "./components/folderView";
 import findPathToFolder from "./util/findPathToFolder";
+import folderContextMenu from "./menus/folderContextMenu";
+import getFolder from "./util/getFolder";
 import * as remote from "./util/remote";
 
 export function view(ctrl) {
@@ -39,8 +41,25 @@ export function controller(config={}) {
     ctrl.sortMode = m.prop("+name");
 
     ctrl.isMenuDisabled = function(action) {
-        return (config.disabledMenus || []).indexOf(action) >= 0;
+        var id = ctrl.currentFolderId(),
+            folder = getFolder(findPathToFolder(ctrl.rootFolder(), id), id);
+        if (folder === undefined) {
+            return true;
+        }
+        if (action in folder){
+            return !folder[action];
+        }
+
+        return !folder["owner"]
     }
+
+    ctrl.isFileMenuDisabled = function(action, file) {
+        if (action in file){
+            return !file[action];
+        }
+        return !file['owner'];
+    }
+
     ctrl.setFolder = function(newFolderId) {
         newFolderId = 0 | newFolderId;
         if (ctrl.currentFolderId() === newFolderId) {
@@ -56,6 +75,27 @@ export function controller(config={}) {
         if (currentFolderId === null) {
             return;  // Nothing loaded yet; defer to later
         }
+        var menuItems = folderContextMenu(ctrl)().filter(function( item ) {
+            return item !== undefined;
+        });
+
+        if (menuItems.length > 0){
+            $("#media-folder-edit-button").show();
+        } else {
+            $("#media-folder-edit-button").hide();
+        }
+
+
+        var id = ctrl.currentFolderId(),
+            folder = getFolder(findPathToFolder(ctrl.rootFolder(), id), id);
+
+        if (folder !== undefined && ("upload-media" in folder || folder["owner"])){
+            $("#upload-button-wrapper").show();
+        } else {
+            $("#upload-button-wrapper").hide();
+        }
+
+
         ctrl.currentFolderPath(findPathToFolder(ctrl.rootFolder(), currentFolderId));
     };
     ctrl.reloadFolderTree = function() {
