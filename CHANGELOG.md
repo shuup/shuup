@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Core: add parameter in shuup_static to load the version of a given package
+- shuup.notify: add notification_email_before_send signal to SendMail
 
 ## [1.11.10] - 2020-08-04
 
