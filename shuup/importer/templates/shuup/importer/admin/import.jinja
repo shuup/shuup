@@ -16,6 +16,11 @@
             <div class="col-md-6 col-md-offset-3">
                 {% if importer and importer.has_example_file() %}
                 <h2>{% trans %}Example files{% endtrans %}</h2>
+                <p>
+                    {% trans %}If there is a 'Ignore' column in the example file you are using,
+                    make sure to leave the ignore column empty for all your rows,
+                    otherwise the rows won't be imported.{% endtrans %}
+                </p>
                 <p>{% trans %}This importer provides example files. Click below to download them:{% endtrans %}</p>
                 <ul>
                     {% for example_file in importer.example_files %}
