@@ -132,7 +132,8 @@ def get_line_data_for_edit(order, line):
             "type": "product",
             "product": {
                 "id": line.product.pk,
-                "text": line.product.name
+                "text": line.product.name,
+                "url": get_model_url(line.product, shop=shop),
             },
             "step": shop_product.purchase_multiple,
             "logicalCount": stock_status.logical_count if stock_status else 0,

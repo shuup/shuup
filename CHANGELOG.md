@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: Make the order editor keep the suppliers of non-product order lines intact. 
 
+### Fixed:
+
+- Admin: Fix the edit button on the order editor.
+
 
 ## [2.0.5] - 2020-08-16
 
