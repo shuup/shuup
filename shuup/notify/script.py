@@ -100,22 +100,23 @@ CONTEXT_LOGGER = logging.Logger("%s.Context" % __name__)
 
 
 class Context(object):
-    def __init__(self, variables=None, shop=None):
+    def __init__(self, variables=None, shop=None, event_identifier=None):
         if not variables:
             variables = {}
+        self.event_identifier = event_identifier
         self.shop = shop
         self._variables = dict(variables)
         self._logger = CONTEXT_LOGGER  # This object could be replaced if required
         self._log_target = None
 
     @classmethod
-    def from_variables(cls, shop=None, **variables):
+    def from_variables(cls, shop=None, event_identifier=None, **variables):
         """
         Create Context from variables.
 
         :rtype: shuup.notify.script.Context
         """
-        return cls(variables, shop)
+        return cls(variables, shop, event_identifier)
 
     @classmethod
     def from_event(cls, event, shop=None):
@@ -126,7 +127,7 @@ class Context(object):
         :type shop: shuup.Shop
         :rtype: shuup.notify.script.Context
         """
-        ctx = cls(event.variable_values, shop)
+        ctx = cls(event.variable_values, shop, event.identifier)
         ctx._log_target = event.log_target
         return ctx
 
