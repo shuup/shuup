@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+## [2.0.5] - 2020-08-16
+
+### Added
+
+- Admin: user and permission based access to media folders
+  
+  This means that all vendors can have their own root folder and do what every they want in that folder.
+  But it also allows the admin to give viewing access to one folder for all suppliers.
+
+
 ## [2.0.4] - 2020-08-07
 
 - Testing: add missing migrations
@@ -28,14 +38,6 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: fix logout view that was loading the template from Django instead of custom template
 - Admin: return `None` when the order source was not correctly initialized in JsonOrderCreator
-
-### Added
-
-- Admin: user and permission based access to media folders
-  
-  This means that all vendors can have their own root folder and do what every they want in that folder.
-  But it also allows the admin to give viewing access to one folder for all suppliers.
-
 - Core: add parameter in shuup_static to load the version of a given package
 
 
