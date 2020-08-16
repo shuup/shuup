@@ -22,17 +22,21 @@ from shuup.admin.modules.media.views import MediaBrowserView
 from shuup.testing.factories import generate_image, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
+from shuup.utils.filer import get_or_create_folder
 
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("is_public, expected_file_count", [(False, 0), (True, 1)])
 def test_media_view_images(rf, admin_user, is_public, expected_file_count):
-    get_default_shop()
-    folder = Folder.objects.create(name="Root")
+    shop = get_default_shop()
+    folder = get_or_create_folder(shop, "Root")
     File.objects.create(name="normalfile", folder=folder)
     img = Image.objects.create(name="imagefile", folder=folder, is_public=is_public)
 
-    request = apply_request_middleware(rf.get("/", {"filter": "images", "action": "folder", "id": folder.id}), user=admin_user)
+    request = apply_request_middleware(
+        rf.get("/", {"filter": "images", "action": "folder", "id": folder.id}),
+        user=admin_user
+    )
     request.user = admin_user
     view_func = MediaBrowserView.as_view()
     response = view_func(request)
@@ -80,7 +84,8 @@ def get_id_tree(folders_response):
 
 @pytest.mark.django_db
 def test_new_folder(admin_user):
-    folder1 = Folder.objects.create(name=printable_gibberish())
+    shop = get_default_shop()
+    folder1 = get_or_create_folder(shop, printable_gibberish())
     child_folder_data = mbv_command(admin_user, {"action": "new_folder", "name": "y", "parent": folder1.id})["folder"]
     assert Folder.objects.get(pk=child_folder_data["id"]).parent == folder1
     root_folder_data = mbv_command(admin_user, {"action": "new_folder", "name": "y"})["folder"]
@@ -89,8 +94,12 @@ def test_new_folder(admin_user):
 
 @pytest.mark.django_db
 def test_get_folder(admin_user):
-    folder1 = Folder.objects.create(name=printable_gibberish())
-    folder2 = Folder.objects.create(name=printable_gibberish(), parent=folder1)
+    shop = get_default_shop()
+    folder1 = get_or_create_folder(shop, printable_gibberish())
+    folder2 = get_or_create_folder(shop, printable_gibberish())
+    folder2.parent = folder1
+    folder2.save()
+
     root_resp = mbv_command(admin_user, {"action": "folder"}, "GET")
     assert any(f["id"] == folder1.pk for f in root_resp["folder"]["folders"])
     f1_resp = mbv_command(admin_user, {"action": "folder", "id": folder1.pk}, "GET")
@@ -102,14 +111,16 @@ def test_get_folder(admin_user):
 
 @pytest.mark.django_db
 def test_rename_folder(admin_user):
-    folder = Folder.objects.create(name=printable_gibberish())
+    shop = get_default_shop()
+    folder = get_or_create_folder(shop, printable_gibberish())
     mbv_command(admin_user, {"action": "rename_folder", "id": folder.pk, "name": "Space"})
     assert Folder.objects.get(pk=folder.pk).name == "Space"
 
 
 @pytest.mark.django_db
 def test_delete_folder(admin_user):
-    folder = Folder.objects.create(name=printable_gibberish())
+    shop = get_default_shop()
+    folder = get_or_create_folder(shop, printable_gibberish())
     mbv_command(admin_user, {"action": "delete_folder", "id": folder.pk})
     assert not Folder.objects.filter(pk=folder.pk).exists()
 
@@ -134,8 +145,9 @@ def test_delete_file(admin_user):
 
 @pytest.mark.django_db
 def test_move_file(admin_user):
-    folder1 = Folder.objects.create(name=printable_gibberish())
-    folder2 = Folder.objects.create(name=printable_gibberish())
+    shop = get_default_shop()
+    folder1 = get_or_create_folder(shop, printable_gibberish())
+    folder2 = get_or_create_folder(shop, printable_gibberish())
     file = File.objects.create(folder=folder1)
     mbv_command(admin_user, {"action": "move_file", "file_id": file.pk, "folder_id": folder2.pk})
     assert File.objects.get(pk=file.pk).folder == folder2
@@ -150,9 +162,10 @@ def test_auto_error_handling(admin_user):
 
 @pytest.mark.django_db
 def test_upload(rf, admin_user):
+    shop = get_default_shop()
     response = mbv_upload(admin_user)
     assert not File.objects.get(pk=response["file"]["id"]).folder
-    folder = Folder.objects.create(name=printable_gibberish())
+    folder = get_or_create_folder(shop, printable_gibberish())
     response = mbv_upload(admin_user, folder_id=folder.pk)
     assert File.objects.get(pk=response["file"]["id"]).folder == folder
 
@@ -214,12 +227,20 @@ def test_upload_into_new_folder(rf, admin_user):
 
 @pytest.mark.django_db
 def test_get_folders(rf, admin_user):
+    shop = get_default_shop()
+
     # Create a structure and retrieve it
-    folder1 = Folder.objects.create(name=printable_gibberish())
-    folder2 = Folder.objects.create(name=printable_gibberish())
-    folder3 = Folder.objects.create(name=printable_gibberish())
-    folder4 = Folder.objects.create(name=printable_gibberish(), parent=folder2)
-    folder5 = Folder.objects.create(name=printable_gibberish(), parent=folder3)
+    folder1 = get_or_create_folder(shop, printable_gibberish())
+    folder2 = get_or_create_folder(shop, printable_gibberish())
+    folder3 = get_or_create_folder(shop, printable_gibberish())
+
+    folder4 = get_or_create_folder(shop, printable_gibberish())
+    folder4.parent = folder2
+    folder4.save()
+
+    folder5 = get_or_create_folder(shop, printable_gibberish())
+    folder5.parent = folder3
+    folder5.save()
 
     tree = get_id_tree(mbv_command(admin_user, {"action": "folders"}, "GET"))
     assert set((folder1.id, folder2.id, folder3.id)) <= set(tree.keys())
@@ -229,9 +250,17 @@ def test_get_folders(rf, admin_user):
 
 @pytest.mark.django_db
 def test_deleting_mid_folder(rf, admin_user):
-    folder1 = Folder.objects.create(name=printable_gibberish())
-    folder2 = Folder.objects.create(name=printable_gibberish(), parent=folder1)
-    folder3 = Folder.objects.create(name=printable_gibberish(), parent=folder2)
+    shop = get_default_shop()
+
+    folder1 = get_or_create_folder(shop, printable_gibberish(), admin_user)
+
+    folder2 = get_or_create_folder(shop, printable_gibberish(), admin_user)
+    folder2.parent = folder1
+    folder2.save()
+
+    folder3 = get_or_create_folder(shop, printable_gibberish(), admin_user)
+    folder3.parent = folder2
+    folder3.save()
     tree = get_id_tree(mbv_command(admin_user, {"action": "folders"}, "GET"))
     assert tree[folder1.pk] == {folder2.pk: {folder3.pk: {}}}
     mbv_command(admin_user, {"action": "delete_folder", "id": folder2.pk})

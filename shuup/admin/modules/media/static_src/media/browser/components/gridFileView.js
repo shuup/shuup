@@ -33,6 +33,10 @@ export default function(ctrl, folders, files) {
         ]);
     });
     const fileItems = _.map(files, function(file) {
+        var editOptionsAvailable = fileContextMenu(ctrl, file)().filter(function( item ) {
+            return item !== undefined;
+        });
+
         return m(
             "div.col-xs-6.col-md-4.col-lg-3.grid-file",
             {
@@ -52,13 +56,13 @@ export default function(ctrl, folders, files) {
                     }
                 }
             },
-            m("button.file-cog-btn.btn.btn-xs.btn-default", {
+            editOptionsAvailable.length > 0 ? m("button.file-cog-btn.btn.btn-xs.btn-default", {
                 key: "filecog",
                 onclick: (event) => {
                     menuManager.open(event.currentTarget, fileContextMenu(ctrl, file));
                     event.preventDefault();
                 }
-            }, m("i.fa.fa-cog")),
+            }, m("i.fa.fa-cog")) : null,
             wrapFileLink(file, "a.file-preview", [
                 m("img.img-responsive", {src: file.thumbnail || images.defaultThumbnail}),
                 m("div.file-name", file.name)

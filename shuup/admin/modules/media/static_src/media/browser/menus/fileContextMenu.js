@@ -14,10 +14,10 @@ export default function(controller, file) {
         return [
             menuItem(gettext("Rename file"), () => {
                 fileActions.promptRenameFile(controller, file);
-            }, {disabled: controller.isMenuDisabled("rename")}),
+            }, {disabled: controller.isFileMenuDisabled("rename-file", file)}),
             menuItem(gettext("Delete file"), () => {
                 fileActions.promptDeleteFile(controller, file);
-            }, {disabled: controller.isMenuDisabled("delete")})
+            }, {disabled: controller.isFileMenuDisabled("delete-file", file)})
         ];
     };
 }
