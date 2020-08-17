@@ -114,6 +114,7 @@ class Context(object):
         """
         Create Context from variables.
 
+        :param event_identifier: identifier for shuup.notify event type
         :rtype: shuup.notify.script.Context
         """
         return cls(variables, shop, event_identifier)
