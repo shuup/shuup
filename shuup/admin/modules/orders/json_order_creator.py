@@ -155,6 +155,9 @@ class JsonOrderCreator(object):
             type=OrderLineType.OTHER  # Overridden in the `product` branch
         )
 
+        # _process_product_line pops this value, so need to store it here
+        supplier_info = sline.get("supplier")
+
         if type != "text":
             if not self._process_line_quantity_and_price(source, sline, sl_kwargs):
                 valid = False
@@ -162,6 +165,11 @@ class JsonOrderCreator(object):
         if type == "product":
             if not self._process_product_line(source, sline, sl_kwargs):
                 valid = False
+        else:
+            if supplier_info:
+                supplier = self.safe_get_first(Supplier, pk=supplier_info["id"])
+                if supplier:
+                    sl_kwargs["supplier"] = supplier
 
         if valid:
             source.add_line(**sl_kwargs)

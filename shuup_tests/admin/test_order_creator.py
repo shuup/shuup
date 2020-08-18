@@ -63,8 +63,14 @@ def get_frontend_order_state(contact, valid_lines=True):
                 "id": "x", "type": "product", "product": {"id": product.id},
                 'supplier': {'name': supplier.name, 'id': supplier.id}, "quantity": "32", "baseUnitPrice": 50
             },
-            {"id": "y", "type": "other", "sku": "hello", "text": "A greeting", "quantity": 1, "unitPrice": "5.5"},
-            {"id": "z", "type": "text", "text": "This was an order!", "quantity": 0},
+            {
+                "id": "y", "type": "other", "sku": "hello", "text": "A greeting",
+                "supplier": {"name": supplier.name, "id": supplier.id}, "quantity": 1, "unitPrice": "5.5",
+            },
+            {
+                "id": "z", "type": "text", "text": "This was an order!",
+                "supplier": {"name": supplier.name, "id": supplier.id}, "quantity": 0,
+            },
         ]
     else:
         unshopped_product = create_product(sku=printable_gibberish(), supplier=supplier)
@@ -146,11 +152,17 @@ def test_order_creator_valid(rf, admin_user):
     assert order.creator == admin_user
     assert order.customer == contact
 
-    # Check that product line have right taxes
+    supplier = get_default_supplier()
+
     for line in order.lines.all():
         if line.type == OrderLineType.PRODUCT:
+            # Check that product line have right taxes
             assert [line_tax.tax.code for line_tax in line.taxes.all()] == ["test_code"]
             assert line.taxful_price.amount > line.taxless_price.amount
+
+        if line.type not in {OrderLineType.PAYMENT, OrderLineType.SHIPPING}:
+            # Check that all of the lines that a supplier set, kept it.
+            assert line.supplier == supplier
 
 
 def test_order_creator_invalid_base_data(rf, admin_user):

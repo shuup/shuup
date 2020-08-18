@@ -132,11 +132,8 @@ def get_line_data_for_edit(order, line):
             "type": "product",
             "product": {
                 "id": line.product.pk,
-                "text": line.product.name
-            },
-            "supplier": {
-                "name": supplier.name,
-                "id": supplier.id
+                "text": line.product.name,
+                "url": get_model_url(line.product, shop=shop),
             },
             "step": shop_product.purchase_multiple,
             "logicalCount": stock_status.logical_count if stock_status else 0,
@@ -144,6 +141,14 @@ def get_line_data_for_edit(order, line):
             "salesDecimals": line.product.sales_unit.decimals if line.product.sales_unit else 0,
             "salesUnit": line.product.sales_unit.symbol if line.product.sales_unit else ""
         })
+    if line.supplier:
+        base_data.update({
+            "supplier": {
+                "name": line.supplier.name,
+                "id": line.supplier.id
+            },
+        })
+
     return base_data
 
 
