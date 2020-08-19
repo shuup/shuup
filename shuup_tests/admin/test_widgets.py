@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from bs4 import BeautifulSoup
+from django.urls import reverse_lazy
 from filer.models import File
 
 from shuup.admin.forms.widgets import FileDnDUploaderWidget
@@ -57,3 +58,13 @@ def test_bound_file_dnd_uploader_widget():
     assert soup.select("[data-dz_retry-chunks-limit]")[0]["data-dz_retry-chunks-limit"] == "100"
     assert soup.select("[data-dz_clickable]")[0]["data-dz_clickable"] == "false"
     assert not soup.select("[data-thumbnail]")
+
+
+def test_lazy_url_not_evaluated_on_init():
+    widget = FileDnDUploaderWidget(upload_url=reverse_lazy("not:evaluated"))
+    assert widget
+
+
+def test_default_url_works():
+    widget = FileDnDUploaderWidget()
+    assert widget.upload_url == reverse_lazy("shuup_admin:media.upload")
