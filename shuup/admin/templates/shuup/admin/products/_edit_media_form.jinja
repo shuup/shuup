@@ -106,8 +106,12 @@
     {% else %}
         <p class="section-description">{% trans %}Showcase your merchandise here.{% endtrans %}</p>
     {% endif %}
-    <div id="{{ id }}-dropzone" class="dropzone dropzone-no-preview"
-        {% if is_image_form %}data-kind="images"{% endif %}
+    <div id="product-section-dropzone" class="dropzone dropzone-no-preview"
+        {% if not is_image_form %}
+            data-kind="images"
+        {% else %}
+            data-kind="media"
+        {% endif %}
         data-product_id="{{ product.pk }}"
         data-upload_path="/products/{{ media_form.prefix }}">
         <div class="dz-message" data-dz-message>
