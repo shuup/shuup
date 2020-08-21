@@ -14,7 +14,7 @@ from django.test import override_settings
 from shuup.notify.actions.email import SendEmail
 from shuup.notify.models import EmailTemplate
 from shuup.notify.script import Context
-from shuup.notify.signals import notification_email_sent
+from shuup.notify.signals import notification_email_before_send, notification_email_sent
 from shuup.testing import factories
 from shuup_tests.notify.fixtures import (
     get_initialized_test_event, TEST_TEMPLATE_DATA
@@ -99,7 +99,24 @@ def test_email_action_with_template_body():
 
         mail.outbox = []  # Clear the Django testing mail outbox
 
-        with mock.patch.object(notification_email_sent, "send") as mocked_method:
+        with mock.patch.object(notification_email_before_send, "send") as mocked_method_1:
+            event = get_initialized_test_event()
+            ctx = Context.from_event(event, shop=factories.get_default_shop())
+            ctx.set("name", "John Smith")  # This variable isn't published by the event, but it's used by the template
+            se = SendEmail({
+                "template_data": SUPER_TEST_TEMPLATE_DATA,
+                "from_email": {"constant": "from@shuup.local"},
+                "recipient": {"constant": "someone@shuup.local"},
+                "language": {"constant": "ja"},
+            })
+            assert ctx.event_identifier == 'test_event'
+            se.execute(ctx)
+
+        mocked_method_1.assert_called()
+
+        mail.outbox = [] # Clear the Django testing mail outbox
+
+        with mock.patch.object(notification_email_sent, "send") as mocked_method_2:
             event = get_initialized_test_event()
             ctx = Context.from_event(event, shop=factories.get_default_shop())
             ctx.set("name", "Luke J. Warm")  # This variable isn't published by the event, but it's used by the template
@@ -117,4 +134,4 @@ def test_email_action_with_template_body():
             assert ".dog-color { color: red; }" in msg.body
             assert "Luke J. Warm" in msg.body
 
-        mocked_method.assert_called()
+        mocked_method_2.assert_called()
