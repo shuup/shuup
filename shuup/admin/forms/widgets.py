@@ -122,7 +122,7 @@ class FileDnDUploaderWidget(Widget):
         self.browsable = browsable
         self.dropzone_attrs = dropzone_attrs
 
-        if not upload_url:
+        if upload_url is None:
             upload_url = reverse_lazy("shuup_admin:media.upload")
         self.upload_url = upload_url
         super(FileDnDUploaderWidget, self).__init__(attrs)
