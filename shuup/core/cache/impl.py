@@ -7,9 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import logging
 import random
 import threading
 import time
+from pickle import PicklingError
 
 from django.conf import settings
 from django.core.cache import caches
@@ -19,6 +21,9 @@ from django.utils.encoding import force_str
 DEFAULT_CACHE_DURATIONS = {
     # Add default durations for various namespaces here (in seconds)
 }
+
+LOGGER = logging.getLogger(__name__)
+
 _versions = threading.local()
 
 
@@ -124,7 +129,12 @@ class VersionedCache(object):
             timeout = get_cache_duration(key)
         if version is None:
             version = self.get_version(key)
-        self._cache.set(key, value, timeout=timeout, version=version)
+        try:
+            self._cache.set(key, value, timeout=timeout, version=version)
+        except PicklingError:
+            LOGGER.exception(
+                "Unable to set cache with key: {}, value: {!r}, value could not be pickled.".format(key, value)
+            )
 
     def get(self, key, version=None, default=None):
         """
