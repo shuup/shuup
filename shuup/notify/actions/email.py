@@ -18,7 +18,9 @@ from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.notify.base import Action, Binding
 from shuup.notify.enums import ConstantUse, TemplateUse
 from shuup.notify.models import EmailTemplate
-from shuup.notify.signals import notification_email_sent
+from shuup.notify.signals import (
+    notification_email_before_send, notification_email_sent
+)
 from shuup.notify.typology import Email, Language, Text
 
 
@@ -145,6 +147,7 @@ class SendEmail(Action):
             cc=cc
         )
         message.content_subtype = content_type
+        notification_email_before_send.send(sender=type(self), action=self, message=message, context=context)
         message.send()
         context.log(logging.INFO, "Info! %s: Mail sent to %s.", self.identifier, recipient)
 
