@@ -12,6 +12,12 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Prevent crashing when trying to cache an unpicklable value.
 
+### Changed
+
+- shuup.notify: add notification_email_before_send signal to SendMail
+- shuup.notify: add event identifier to Context
+
+
 ## [2.0.7] - 2020-08-21
 
 ### Fixed
@@ -23,7 +29,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
-- Admin: Make the order editor keep the suppliers of non-product order lines intact. 
+- Admin: Make the order editor keep the suppliers of non-product order lines intact.
 
 ### Fixed:
 
@@ -35,7 +41,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Admin: user and permission based access to media folders
-  
+
   This means that all vendors can have their own root folder and do what every they want in that folder.
   But it also allows the admin to give viewing access to one folder for all suppliers.
 

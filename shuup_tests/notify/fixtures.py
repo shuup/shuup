@@ -80,7 +80,7 @@ TEST_TEMPLATE_LANGUAGES = ("sw", "ja", "en")
 
 
 class ATestEvent(Event):
-    identifier = "test_event"
+    identifier = 'test_event'
     log_target_variable = "order"
 
     order_language = Variable(name="Order Language", type=Language)
@@ -114,7 +114,7 @@ def get_test_script():
     return sc
 
 
-def get_initialized_test_event():
+def get_initialized_test_event(identifier=None):
     get_default_product()
     customer = create_random_person()
     order = create_random_order(customer)
