@@ -117,7 +117,7 @@ Roadmap
 * Improve product stock behavior. `#1249 <https://github.com/shuup/shuup/issues/1249>`__.
 * Improved unit tests for the multishop feature. `#1160 <https://github.com/shuup/shuup/issues/1160>`__.
 * Improve order status and order status history. `#1211 <https://github.com/shuup/shuup/issues/1211>`__.
-* Initial support for Django 2.0. `#1289 <https://github.com/shuup/shuup/issues/1289>`__.
+* Initial support for Django 2.0. `#1289 <https://github.com/shuup/shuup/issues/1289>`__ :white_check_mark:.
 * OS Admin design/UX overhaul.
 * Various smaller issues from the issues-list.
 
