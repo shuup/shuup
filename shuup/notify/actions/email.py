@@ -18,7 +18,9 @@ from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.notify.base import Action, Binding
 from shuup.notify.enums import ConstantUse, TemplateUse
 from shuup.notify.models import EmailTemplate
-from shuup.notify.signals import notification_email_sent, notification_email_before_send
+from shuup.notify.signals import (
+    notification_email_before_send, notification_email_sent
+)
 from shuup.notify.typology import Email, Language, Text
 
 
