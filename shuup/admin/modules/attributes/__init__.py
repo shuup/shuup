@@ -11,7 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
+from shuup.admin.utils.urls import (
+    admin_url, derive_model_url, get_edit_and_list_urls
+)
 from shuup.core.models import Attribute
 
 
@@ -20,7 +22,13 @@ class AttributeModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:attribute.list")
 
     def get_urls(self):
-        return get_edit_and_list_urls(
+        return [
+            admin_url(
+                r"^attributes/(?P<pk>\d+)/delete/$",
+                "shuup.admin.modules.attributes.views.edit.AttributeDeleteView",
+                name="attribute.delete"
+            )
+        ] + get_edit_and_list_urls(
             url_prefix="^attributes",
             view_template="shuup.admin.modules.attributes.views.Attribute%sView",
             name_template="attribute.%s"
