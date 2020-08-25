@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: add option to delete attributes
 
+### Fixed
+
+- Notify: unescape email subject and body to prevent sending broken characters in emails
+
 
 ## [2.1.0] - 2020-08-24
 

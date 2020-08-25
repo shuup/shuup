@@ -89,7 +89,7 @@ def test_email_action_with_template_body():
                 # English
                 "subject": "Hello, {{ name }}!",
                 "email_template": str(email_template.pk),
-                "body": "Hi, {{ name }}. This is a test.",
+                "body": "Hi, {{ name }}. This is a test &amp; it works.",
                 "content_type": "plain"
             }
         }
@@ -111,6 +111,7 @@ def test_email_action_with_template_body():
             })
             assert ctx.event_identifier == 'test_event'
             se.execute(ctx)
+            mail.outbox[0].body == "Hi, John Smith. This is a test & it works."
 
         mocked_method_1.assert_called()
 
