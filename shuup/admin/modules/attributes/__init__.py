@@ -26,7 +26,7 @@ class AttributeModule(AdminModule):
             admin_url(
                 r"^attributes/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.attributes.views.edit.AttributeDeleteView",
-                name="manufacturer.delete"
+                name="attribute.delete"
             )
         ] + get_edit_and_list_urls(
             url_prefix="^attributes",
