@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+## [2.1.2] - 2020-08-26
+
+### Fixed
+
+- Xtheme: fix editor template issue
+- Simple CMS: make sure to pass optional parameters through kwargs in form
+
+
 ## [2.1.1] - 2020-08-26
 
 ### Added
