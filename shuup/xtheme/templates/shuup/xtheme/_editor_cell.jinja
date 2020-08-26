@@ -12,7 +12,7 @@
         <input name="save" type="hidden" value="1"/>
         <input name="publish" type="hidden" value="0"/>
         <table>
-            {{ form.general.as_table()|safe }}
+            {{ form.forms['general'].as_table()|safe }}
         </table>
         <hr>
         {% if "plugin" in form.forms %}

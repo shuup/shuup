@@ -16,6 +16,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Xtheme: fix editor template issue and make sure to pass optional parameters through kwargs in form
 - Notify: unescape email subject and body to prevent sending broken characters in emails
 
 

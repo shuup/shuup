@@ -15,12 +15,12 @@ from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
 
 
 class OrderedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
-
     def __init__(self, queryset, required=True, widget=None, label=None,
                  initial=None, help_text='', *args, **kwargs):
-        super(OrderedModelMultipleChoiceField, self).__init__(
-            queryset, required, widget, label,
-            initial, help_text, *args, **kwargs)
+        super().__init__(
+            queryset, required=required, widget=widget, label=label,
+            initial=initial, help_text=help_text, *args, **kwargs
+        )
 
         if initial:  # To show current choice order in plugin
             self.queryset = order_query_by_values(self.queryset, initial)
