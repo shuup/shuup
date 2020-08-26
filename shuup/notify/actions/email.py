@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import logging
+from html import unescape
 
 from django import forms
 from django.conf import settings
@@ -111,8 +112,8 @@ class SendEmail(Action):
 
         strings = self.get_template_values(context, languages)
 
-        subject = strings.get("subject")
-        body = strings.get("body")
+        subject = unescape(strings.get("subject"))
+        body = unescape(strings.get("body"))
         email_template_id = strings.get("email_template")
 
         if email_template_id:
