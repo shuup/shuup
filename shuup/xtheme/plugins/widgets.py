@@ -13,7 +13,7 @@ from shuup.utils.django_compat import force_text
 
 
 class XThemeModelChoiceWidget(forms.Select):
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         return mark_safe(
             render_to_string("shuup/xtheme/_model_widget.jinja", {
                 "name": name,
