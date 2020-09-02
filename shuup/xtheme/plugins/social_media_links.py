@@ -33,10 +33,15 @@ class SocialMediaLinksPluginForm(GenericPluginForm):
             self.fields[name] = forms.URLField(
                 label=name, required=False,
                 widget=forms.TextInput(attrs={"placeholder": _("URL")}),
-                initial=url)
+                initial=url
+            )
             self.fields["%s-ordering" % name] = forms.IntegerField(
-                label="", required=False, min_value=0, max_value=len(icon_classes)*2,
-                initial=ordering, widget=forms.NumberInput(attrs={"placeholder": _("Ordering")}))
+                label=_("%(name)s Ordering") % {"name": name}, required=False,
+                min_value=0, max_value=len(icon_classes)*2,
+                initial=ordering, widget=forms.NumberInput(attrs={"placeholder": _("Ordering")})
+            )
+
+        self.plugin.config.pop("links", None)
         super(SocialMediaLinksPluginForm, self).populate()
 
     def clean(self):
