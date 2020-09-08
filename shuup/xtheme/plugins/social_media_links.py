@@ -30,19 +30,28 @@ class SocialMediaLinksPluginForm(GenericPluginForm):
         for name, icon_class in sorted(icon_classes.items()):
             url = links[name]["url"] if name in links else ""
             ordering = links[name]["ordering"] if name in links else None
-            self.fields[name] = forms.URLField(
-                label=name, required=False,
+            self.fields[name] = forms.CharField(
+                max_length=300,
+                label=name,
+                required=False,
                 widget=forms.TextInput(attrs={"placeholder": _("URL")}),
-                initial=url
             )
             self.fields["%s-ordering" % name] = forms.IntegerField(
-                label=_("%(name)s Ordering") % {"name": name}, required=False,
-                min_value=0, max_value=len(icon_classes)*2,
-                initial=ordering, widget=forms.NumberInput(attrs={"placeholder": _("Ordering")})
+                label=_("%(name)s Ordering") % {"name": name},
+                required=False,
+                min_value=0,
+                max_value=len(icon_classes)*2,
+                widget=forms.NumberInput(attrs={"placeholder": _("Ordering")}),
             )
 
-        self.plugin.config.pop("links", None)
-        super(SocialMediaLinksPluginForm, self).populate()
+        super().populate()
+
+        # We set the initial after calling super, to avoid it shadowing our initial data.
+        for name, icon_class in icon_classes.items():
+            url = links[name]["url"] if name in links else ""
+            ordering = links[name]["ordering"] if name in links else None
+            self.initial[name] = url
+            self.initial["%s-ordering" % name] = ordering
 
     def clean(self):
         """
