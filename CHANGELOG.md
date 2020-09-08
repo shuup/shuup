@@ -12,6 +12,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Xtheme: fix social media plugin form populate
+- GDPR: Fix anonymization error when an order of a contact had no shipping or billing address.
 
 
 ## [2.1.3] - 2020-08-28

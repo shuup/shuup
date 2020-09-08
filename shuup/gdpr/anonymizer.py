@@ -139,12 +139,13 @@ class Anonymizer(object):
         assert isinstance(order, Order)
         self.anonymize_object(order)
 
-        self.anonymize_object(order.shipping_address, save=False)
-        self.anonymize_object(order.billing_address, save=False)
+        if order.shipping_address:
+            self.anonymize_object(order.shipping_address, save=False)
+            Address.save(order.shipping_address)  # bypass Protected model save() invoking super directly
 
-        # bypass Protected model save() invoking super directly
-        Address.save(order.shipping_address)
-        Address.save(order.billing_address)
+        if order.billing_address:
+            self.anonymize_object(order.billing_address, save=False)
+            Address.save(order.billing_address)
 
     def anonymize_object(self, obj, save=True):
         if not obj:
