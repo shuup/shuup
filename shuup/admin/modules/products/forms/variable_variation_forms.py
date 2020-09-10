@@ -86,15 +86,6 @@ class VariationVariablesDataForm(forms.Form):
     configuration_key = "saved_variation_templates"
 
     data = forms.CharField(widget=forms.HiddenInput(), required=False)
-    activate_template = forms.BooleanField(
-        required=False,
-        label=_("Activate template"),
-        help_text=_(
-            "Enable this to activate a selected template. If no "
-            "template is selected, variation data will be saved without "
-            "checking, even if this setting is enabled."
-        )
-    )
     template_name = forms.CharField(
         max_length=128,
         required=False,
@@ -218,7 +209,7 @@ class VariationVariablesDataForm(forms.Form):
         if identifier:
             for template in saved_templates:
                 if(template["identifier"] == identifier):
-                    template["data"] = data  # Edit tempalte
+                    template["data"] = data  # Edit template
         else:
             template_name = self.cleaned_data.get("template_name", _("Unnamed %s") % random.randint(1, 9999))
             payload = {
@@ -229,10 +220,7 @@ class VariationVariablesDataForm(forms.Form):
             saved_templates.append(payload)
         configuration.set(shop, self.configuration_key, saved_templates)
 
-    def _activate_template(self, var_data, identifier):
-        if self.change_template:
-            ProductVariationVariable.objects.filter(
-                product=self.parent_product).delete()  # former PVV objects need to be deleted!
+    def _process_variation_data(self, var_data):
         self.parent_product.clear_variation()
         for ordering, var_datum in enumerate(var_data):
             self.process_var_datum(var_datum, ordering)
@@ -242,16 +230,25 @@ class VariationVariablesDataForm(forms.Form):
         template_name = self.cleaned_data.get("template_name", "").strip()
         if not template_data:  # No data means the Mithril side hasn't been touched at all
             return
-        self.change_template = False
+
         identifier = template_data.get("template_identifier", False)
         var_data = template_data.get("variable_values")
-        activate_template = self.cleaned_data.get("activate_template", False)
+
         if template_name != "":
+            """
+            Template name passed so let's just save empty template
+            """
             var_data = []  # New template name is added so var data is empty
-            identifier = False
-            activate_template = False
-        if identifier or template_name != "":
+            self._save_template(var_data)
+            return
+
+        if identifier:
+            """
+            Template selected so let's save the template with passed data
+            """
             self._save_template(var_data, identifier)
-        if activate_template:
-            self.change_template = True
-            self._activate_template(var_data, identifier)
+
+        """
+        Save posted variations based on the selections
+        """
+        self._process_variation_data(var_data)
