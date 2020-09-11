@@ -60,7 +60,6 @@ def test_variation_templates(browser, admin_user, live_server, settings):
     browser.find_by_xpath('//*[@id="product-variable-wrap"]/div/div[2]/div[1]/table/tbody[1]/tr/td[1]/input').first.fill("Size")
     click_element(browser, ".btn.btn-xs.btn-text")
     browser.find_by_xpath('//*[@id="product-variable-wrap"]/div/div[2]/div[1]/table/tbody[2]/tr/td[1]/input').first.fill("S")
-    click_element(browser, "#id_variables-activate_template")  # Activate template
     click_element(browser, ".fa.fa-check-circle")  # Save
 
     assert len(ProductVariationVariable.objects.filter(product=product)) == 1 # Size

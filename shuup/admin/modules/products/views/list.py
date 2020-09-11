@@ -13,6 +13,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, Picotable, RangeFilter, TextFilter
 )
@@ -159,6 +160,11 @@ class ProductListView(PicotableListView):
         if manufacturer_ids:
             q |= Q(product__manufacturer_id__in=manufacturer_ids)
         qs = qs.filter(q)
+
+        supplier = get_supplier(self.request)
+        if supplier:
+            qs = qs.filter(suppliers=supplier)
+
         return qs
 
     def get_object_abstract(self, instance, item):

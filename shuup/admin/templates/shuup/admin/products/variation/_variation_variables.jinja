@@ -4,10 +4,6 @@
 {% call content_block(_("Variables"), "fa-clone", id="variables-section") %}
     <div id="variation-variable-editor"></div>
     {{ var_form["data"]|safe }}
-    <div class="product-variable">
-    <h3>{% trans %}Template{% endtrans %}</h3>
-    {{ bs3.field(var_form["activate_template"]) }}
-    </div>
     {% block post_content %}
     <div class="shuup-modal-bg" id="step-item-wrapper" style="display: none;">
 

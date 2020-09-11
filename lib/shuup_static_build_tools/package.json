@@ -1,6 +1,6 @@
 {
   "name": "shuup-static-build-tools",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Shuup Static Build Tools",
   "main": "index.js",
   "author": "Shuup Team <shuup@shuup.com>",

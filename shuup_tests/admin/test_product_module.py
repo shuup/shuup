@@ -33,7 +33,8 @@ from shuup.core.models import (
 )
 from shuup.importer.admin_module import ImportAdminModule
 from shuup.testing.factories import (
-    create_product, create_random_user, get_default_product, get_default_shop
+    create_product, create_random_user, get_default_product, get_default_shop,
+    get_default_supplier
 )
 from shuup.testing.factories import get_shop as get_new_shop
 from shuup.testing.utils import apply_request_middleware
@@ -188,3 +189,23 @@ def test_product_edit_view_multipleshops(rf):
         assert response.status_code == 200
         data = json.loads(response.content.decode("utf-8"))
         assert len(data["items"]) == 0
+
+
+@pytest.mark.django_db
+def test_product_edit_view_multiplessuppliers(rf, admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product("product", shop=shop)
+    shop_product = product.get_shop_instance(shop)
+
+    product_with_supplier = create_product(sku="product_with_supplier", shop=shop, supplier=supplier)
+    shop_product_with_supplier = product_with_supplier.get_shop_instance(shop)
+
+    with override_settings(
+        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"
+    ):
+        request = apply_request_middleware(rf.get("/", HTTP_HOST=shop.domain), user=admin_user)
+        view_func = ProductEditView.as_view()
+        with pytest.raises(Http404):
+            view_func(request, pk=shop_product.pk)
+        view_func(request, pk=shop_product_with_supplier.pk)
