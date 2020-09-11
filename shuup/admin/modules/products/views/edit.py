@@ -23,6 +23,7 @@ from shuup.admin.modules.products.forms import (
     ProductMediaFormSet, ShopProductForm
 )
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
@@ -217,7 +218,13 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         return EditProductToolbar(view=self)
 
     def get_queryset(self):
-        return super(ProductEditView, self).get_queryset().filter(shop=get_shop(self.request))
+        qs = super(ProductEditView, self).get_queryset().filter(shop=get_shop(self.request))
+
+        supplier = get_supplier(self.request)
+        if supplier:
+            qs = qs.filter(suppliers=supplier)
+
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(ProductEditView, self).get_context_data(**kwargs)
