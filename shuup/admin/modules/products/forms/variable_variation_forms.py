@@ -58,14 +58,17 @@ class VariableVariationChildrenForm(forms.Form):
         new_product = self.cleaned_data.get("r_%s" % combo["hash"])
         new_product_pk = getattr(new_product, "pk", None)
         old_product_pk = combo["result_product_pk"]
+
         if old_product_pk == new_product_pk:  # Nothing to do
             return
+
         if old_product_pk:  # Unlink old one
             try:
                 old_product = Product.objects.get(variation_parent=self.parent_product, pk=old_product_pk)
                 old_product.unlink_from_parent()
             except ObjectDoesNotExist:
                 pass
+
         if new_product:
             try:
                 new_product.link_to_parent(parent=self.parent_product, combination_hash=combo["hash"])
@@ -163,22 +166,29 @@ class VariationVariablesDataForm(forms.Form):
         }
 
     def process_var_datum(self, var_datum, ordering):
+        pk = str(var_datum["pk"])
         deleted = var_datum.get("DELETE")
-        var = ProductVariationVariable(product=self.parent_product)
+        if pk.startswith("$"):  # New value.
+            var = ProductVariationVariable(product=self.parent_product)
+        else:
+            var = ProductVariationVariable.objects.get(product=self.parent_product, pk=pk)
+
         if deleted:
             if var.pk:
                 var.delete()
             return
+
         var.identifier = var_datum.get("identifier") or get_random_string()
         var.ordering = ordering
         var.save()
+
         for lang_code, name in var_datum["names"].items():
             var.set_current_language(lang_code)
             var.name = name
         var.save_translations()
 
-        for ordering, val_datum in enumerate(var_datum["values"]):
-            self.process_val_datum(var, val_datum, ordering)
+        for value_ordering, val_datum in enumerate(var_datum["values"]):
+            self.process_val_datum(var, val_datum, value_ordering)
 
         if not var.values.exists():  # All values gone, so delete the skeleton variable too
             var.delete()
@@ -189,12 +199,18 @@ class VariationVariablesDataForm(forms.Form):
         :type var: ProductVariationVariable
         :type val_datum: dict
         """
+        pk = str(val_datum["pk"])
         deleted = val_datum.get("DELETE")
-        val = ProductVariationVariableValue(variable=var)
+        if pk.startswith("$"):  # New value.
+            val = ProductVariationVariableValue(variable=var)
+        else:
+            val = var.values.get(pk=pk)
+
         if deleted:
             if val.pk:
                 val.delete()
             return
+
         val.identifier = val_datum.get("identifier") or get_random_string()
         val.ordering = ordering
         val.save()
@@ -221,7 +237,6 @@ class VariationVariablesDataForm(forms.Form):
         configuration.set(shop, self.configuration_key, saved_templates)
 
     def _process_variation_data(self, var_data):
-        self.parent_product.clear_variation()
         for ordering, var_datum in enumerate(var_data):
             self.process_var_datum(var_datum, ordering)
 
@@ -247,6 +262,10 @@ class VariationVariablesDataForm(forms.Form):
             Template selected so let's save the template with passed data
             """
             self._save_template(var_data, identifier)
+
+            # To avoid creating multiple variables here we must clear
+            # all existing linked variation products.
+            self.parent_product.clear_variation()
 
         """
         Save posted variations based on the selections
