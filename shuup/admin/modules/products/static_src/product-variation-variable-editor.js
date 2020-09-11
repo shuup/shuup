@@ -116,7 +116,7 @@ window.VariationVariableEditor = (function(m, _) {
                         currentVariable = variables[varIndex];
                         for(var valIndex=0; valIndex < currentVariable.values.length; valIndex++) {
                             currentValue = currentVariable.values[valIndex];
-                            if(currentValue.pk === itemId) {
+                            if(currentValue.pk === parseInt(itemId, 10)) {
                                 variables[varIndex].values.reindex(valIndex, newIndex);
                             }
                         }
@@ -197,7 +197,7 @@ window.VariationVariableEditor = (function(m, _) {
 
     function view(ctrl) {
         var variablesDiv = null;
-        var newVariationTemplate = m("button.btn.btn-success", {   onclick: (event) => {
+        var newVariationTemplate = m("button.btn.btn-success.mt-2.mb-1", {   onclick: (event) => {
                 event.preventDefault();
                 document.getElementById("step-item-wrapper").style.display = "flex";
                 var nameField = document.getElementById("id_variables-template_name")
@@ -265,6 +265,9 @@ window.VariationVariableEditor = (function(m, _) {
                     }, template.name)
                 )),
             ]),
+            m("p.help-text",
+                gettext("Selecting and saving a template will clear all variable children selections for this product.")
+            ),
             newVariationTemplate
         ]) : newVariationTemplate;
         return m("div", {config: config}, [

@@ -8,9 +8,19 @@ from shuup_tests.utils import printable_gibberish
 from shuup.testing.factories import get_default_shop, create_random_user
 from shuup.testing.utils import apply_request_middleware
 
-var_data = [{"pk":"$0.3","identifier":"","names":{"en":"Size"},
-"values":[{"pk":"$0.8","identifier":"","texts":{"en":"X"}},
-{"pk":"$0.1","identifier":"","texts":{"en":"S"}}]}]
+var_data = [
+    {
+        "pk": "$0.3",
+        "identifier": "",
+        "names": {
+            "en": "Size"
+        },
+        "values": [
+            {"pk": "$0.8", "identifier": "", "texts": {"en": "X"}},
+            {"pk": "$0.1", "identifier": "","texts": {"en": "S"}}
+        ]
+    }
+]
 
 @pytest.mark.django_db
 def test_variation_template_creation(rf):
@@ -56,17 +66,26 @@ def test_variation_activation(rf):
     assert len(ProductVariationVariable.objects.filter(product=parent)) == 1 # Size
     assert len(ProductVariationVariableValue.objects.all()) == 2  # X,S
 
+    var = ProductVariationVariable.objects.first()
+    val_1 = ProductVariationVariableValue.objects.first()
+    val_2 = ProductVariationVariableValue.objects.last()
     var_data_one_value = [{
-        "pk": "$0.3",
+        "pk": "%s" % var.pk,
         "identifier": "",
         "names": {"en": "Size"},
-        "values": [{
-            "pk": "$0.8",
-            "identifier": "",
-            "texts": {
-                "en": "X"
+        "values": [
+            {
+                "pk": "%s" % val_1.pk,
+                "identifier": "",
+                "texts": {
+                    "en": "X"
+                }
+            },
+            {
+                "pk": "%s" % val_2.pk,
+                "DELETE": True
             }
-        }]
+        ]
     }] #  Delete one value
     var_data_dict['data'] = json.dumps({"variable_values": var_data_one_value})
     form.cleaned_data = var_data_dict
@@ -83,7 +102,6 @@ def test_variation_activation(rf):
 
     template_identifier = form.get_variation_templates()[0].get('identifier')
     # dict with template identifier which contains only one ProductVariationVariableValue data
-    one_value_dict = json.dumps({"variable_values": var_data_one_value, 'template_identifier' : template_identifier})
     two_values_dict = json.dumps({"variable_values": var_data, 'template_identifier' : template_identifier})  # Has two PVVV
     var_data_dict['data'] = two_values_dict
     var_data_dict['template_name'] = ''
@@ -92,13 +110,3 @@ def test_variation_activation(rf):
 
     assert len(ProductVariationVariable.objects.filter(product=parent)) == 1
     assert len(ProductVariationVariableValue.objects.all()) == 2
-    var_template_data = form.get_variation_templates()[0].get("data")
-    assert var_template_data == var_data
-    var_data_dict['data'] = one_value_dict
-    form.cleaned_data = var_data_dict
-    form.save()
-
-    assert len(ProductVariationVariable.objects.filter(product=parent)) == 1
-    assert len(ProductVariationVariableValue.objects.all()) == 1
-    var_template_data = form.get_variation_templates()[0].get("data")
-    assert var_template_data == var_data_one_value
