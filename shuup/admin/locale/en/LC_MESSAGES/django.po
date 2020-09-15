@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -113,6 +113,10 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
+#, python-format
+msgid "%s has been deleted."
+msgstr ""
+
 msgid "Identifier"
 msgstr ""
 
@@ -172,10 +176,6 @@ msgstr ""
 
 #, python-format
 msgid "Visibility settings copied to %d product(s)"
-msgstr ""
-
-#, python-format
-msgid "%s has been deleted."
 msgstr ""
 
 msgid "Image"
@@ -505,6 +505,9 @@ msgstr ""
 msgid "Media browser"
 msgstr ""
 
+msgid "Visible for all everyone in the media browser"
+msgstr ""
+
 msgid "Root"
 msgstr ""
 
@@ -523,25 +526,36 @@ msgstr ""
 msgid "Browse Media"
 msgstr ""
 
-msgid "Can't rename a shared folder."
+msgid "You do not have permissions to create a subfolder here."
 msgstr ""
 
 msgid "Folder was renamed."
 msgstr ""
 
-msgid "Can't delete a shared folder."
+#, python-format
+msgid "Folder can't be renamed to %s."
 msgstr ""
 
-msgid "Can not rename a shared file."
+msgid ""
+"Can't rename this folder, either you don't have permssion to do it or it's a "
+"shared folder between more then one shop or it has a owner"
+msgstr ""
+
+msgid ""
+"Can't delete this folder, either you don't have permssion to do it or it's a "
+"shared folder between more then one shop"
 msgstr ""
 
 msgid "File was renamed."
 msgstr ""
 
-msgid "Can not delete a shared file."
+msgid "Can not rename this file."
 msgstr ""
 
 msgid "File was deleted."
+msgstr ""
+
+msgid "Can not delete this file."
 msgstr ""
 
 msgid "Can't move a shared file."
@@ -555,10 +569,34 @@ msgstr ""
 msgid "%(file)s uploaded to %(folder)s."
 msgstr ""
 
-msgid "Admin menu"
+msgid "You do not have permission to upload content to this folder"
 msgstr ""
 
-msgid "Customize Admin Menu"
+msgid "You don't have access to preform this action."
+msgstr ""
+
+msgid "Customize Your Admin Menu"
+msgstr ""
+
+msgid "Arrange Your Admin Menu"
+msgstr ""
+
+msgid "Customize SuperUser Admin Menu"
+msgstr ""
+
+msgid "Arrange SuperUser Admin Menu"
+msgstr ""
+
+msgid "Customize Staff Admin Menu"
+msgstr ""
+
+msgid "Arrange Staff Admin Menu"
+msgstr ""
+
+msgid "Customize Supplier Admin Menu"
+msgstr ""
+
+msgid "Arrange Supplier Admin Menu"
 msgstr ""
 
 msgid "Menu saved"
@@ -596,6 +634,9 @@ msgstr ""
 
 #, python-format
 msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)."
+msgstr ""
+
+msgid "Product line does not have a supplier."
 msgstr ""
 
 msgid "Product line does not have a product set."
@@ -1026,15 +1067,6 @@ msgstr ""
 msgid "variable combination"
 msgstr ""
 
-msgid "Activate template"
-msgstr ""
-
-msgid ""
-"Enable this to activate a selected template. If no template is selected, "
-"variation data will be saved without checking, even if this setting is "
-"enabled."
-msgstr ""
-
 #, python-format
 msgid "Unnamed %s"
 msgstr ""
@@ -1049,6 +1081,10 @@ msgid "Export CSV"
 msgstr ""
 
 msgid "Edit products"
+msgstr ""
+
+#, python-format
+msgid "Product %s copy successfull."
 msgstr ""
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
@@ -1193,15 +1229,6 @@ msgid "Convert to Package Parent"
 msgstr ""
 
 msgid "Convert to Variation Parent"
-msgstr ""
-
-msgid "Save and Exit"
-msgstr ""
-
-msgid "Save and Create New"
-msgstr ""
-
-msgid "Save as a copy"
 msgstr ""
 
 msgid "Sales Dashboard"
@@ -2977,6 +3004,9 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
+msgid "Save and Exit"
+msgstr ""
+
 msgid "This action effects on all items."
 msgstr ""
 
@@ -2987,10 +3017,19 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
+msgid "Copy folder path"
+msgstr ""
+
+msgid "Access to folder"
+msgstr ""
+
 msgid "Customize admin menu"
 msgstr ""
 
 msgid "Reset"
+msgstr ""
+
+msgid "Folder"
 msgstr ""
 
 msgid "Drag me"
@@ -3358,9 +3397,6 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-msgid "Template"
-msgstr ""
-
 msgid "New template"
 msgstr ""
 
@@ -3596,6 +3632,12 @@ msgid "New %(model)s"
 msgstr ""
 
 msgid "Discard Changes"
+msgstr ""
+
+msgid "Save as a copy"
+msgstr ""
+
+msgid "Save and Create New"
 msgstr ""
 
 #, python-format

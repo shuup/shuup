@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -28,12 +28,7 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-msgid "Body Template"
-msgstr ""
-
-msgid ""
-"You can use this template to wrap the HTML body with your custom static "
-"template.Mark the spot for the HTML body with %html_body%."
+msgid "Email Template"
 msgstr ""
 
 msgid "Email Body"
@@ -81,6 +76,9 @@ msgid "Notifications"
 msgstr ""
 
 msgid "Show notification scripts"
+msgstr ""
+
+msgid "Email Templates"
 msgstr ""
 
 msgid "Event"
@@ -136,6 +134,10 @@ msgid "Are you sure you wish to delete \"%s\" notification?"
 msgstr ""
 
 msgid "Save"
+msgstr ""
+
+#, python-format
+msgid "%s has been deleted."
 msgstr ""
 
 msgid "Name"
@@ -221,6 +223,11 @@ msgid "high"
 msgstr ""
 
 msgid "critical"
+msgstr ""
+
+msgid ""
+"Enter the base HTML template to be used in emails. Mark the place to inject "
+"the email content using the variable `%html_body%` inside the body."
 msgstr ""
 
 msgid "shop"

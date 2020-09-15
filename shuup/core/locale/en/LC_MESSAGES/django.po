@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -765,6 +765,18 @@ msgstr ""
 msgid "Select which shops you would like the folder to be visible in."
 msgstr ""
 
+msgid "Should this folder be visible for everyone in the media browser"
+msgstr ""
+
+msgid "owning_media_folders"
+msgstr ""
+
+msgid "owners"
+msgstr ""
+
+msgid "Select which users will own this folder."
+msgstr ""
+
 msgid "product"
 msgstr ""
 
@@ -1206,12 +1218,18 @@ msgid "limit the shipping methods"
 msgstr ""
 
 msgid ""
-"Enable this if you want to limit your product to use only the select payment "
-"methods. You can select the allowed payment method(s) in the field below - "
-"all the rest are disallowed."
+"Enable this if you want to limit your product to use only the select "
+"shipping methods. You can select the allowed shipping method(s) in the field "
+"below - all the rest are disallowed."
 msgstr ""
 
 msgid "limit the payment methods"
+msgstr ""
+
+msgid ""
+"Enable this if you want to limit your product to use only the select payment "
+"methods. You can select the allowed payment method(s) in the field below - "
+"all the rest are disallowed."
 msgstr ""
 
 msgid "shipping methods"
@@ -1532,47 +1550,47 @@ msgstr ""
 msgid "cost center"
 msgstr ""
 
-msgid "width (mm)"
+msgid "width ({})"
 msgstr ""
 
 msgid ""
-"Set the measured width (in millimeters) of your product or product "
-"packaging. This will provide customers with the product size and help with "
-"calculating shipping costs."
+"Set the measured width of your product or product packaging. This will "
+"provide customers with the product size and help with calculating shipping "
+"costs."
 msgstr ""
 
-msgid "height (mm)"
-msgstr ""
-
-msgid ""
-"Set the measured height (in millimeters) of your product or product "
-"packaging. This will provide customers with the product size and help with "
-"calculating shipping costs."
-msgstr ""
-
-msgid "depth (mm)"
+msgid "height ({})"
 msgstr ""
 
 msgid ""
-"Set the measured depth or length (in millimeters) of your product or product "
-"packaging. This will provide customers with the product size and help with "
-"calculating shipping costs."
+"Set the measured height of your product or product packaging. This will "
+"provide customers with the product size and help with calculating shipping "
+"costs."
 msgstr ""
 
-msgid "net weight (g)"
-msgstr ""
-
-msgid ""
-"Set the measured weight (in grams) of your product WITHOUT its packaging. "
-"This will provide customers with the actual product's weight."
-msgstr ""
-
-msgid "gross weight (g)"
+msgid "depth ({})"
 msgstr ""
 
 msgid ""
-"Set the measured gross weight (in grams) of your product WITH its packaging. "
-"This will help with calculating shipping costs."
+"Set the measured depth or length of your product or product packaging. This "
+"will provide customers with the product size and help with calculating "
+"shipping costs."
+msgstr ""
+
+msgid "net weight ({})"
+msgstr ""
+
+msgid ""
+"Set the measured weight of your product WITHOUT its packaging. This will "
+"provide customers with the actual product's weight."
+msgstr ""
+
+msgid "gross weight ({})"
+msgstr ""
+
+msgid ""
+"Set the measured gross weight of your product WITH its packaging. This will "
+"help with calculating shipping costs."
 msgstr ""
 
 msgid ""
@@ -1776,16 +1794,16 @@ msgstr ""
 msgid "Maximum weight exceeded."
 msgstr ""
 
-msgid "min weight (g)"
+msgid "min weight ({})"
 msgstr ""
 
-msgid "The minimum weight (grams) for this price to apply."
+msgid "The minimum weight for this price to apply."
 msgstr ""
 
-msgid "max weight (g)"
+msgid "max weight ({})"
 msgstr ""
 
-msgid "The maximum weight (grams) before this price no longer applies."
+msgid "The maximum weight before this price no longer applies."
 msgstr ""
 
 msgid "The cost to apply to this service when the weight criteria is met."
@@ -1963,7 +1981,10 @@ msgstr ""
 msgid "tracking code"
 msgstr ""
 
-msgid "volume"
+msgid "volume ({})"
+msgstr ""
+
+msgid "weight ({})"
 msgstr ""
 
 msgid "shipment"
@@ -1972,10 +1993,10 @@ msgstr ""
 msgid "shipments"
 msgstr ""
 
-msgid "unit volume"
+msgid "unit volume ({})"
 msgstr ""
 
-msgid "unit weight"
+msgid "unit weight ({})"
 msgstr ""
 
 msgid "sent product"

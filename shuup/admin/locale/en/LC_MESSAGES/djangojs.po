@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -43,9 +43,6 @@ msgid "Are you sure you want to delete the %s folder?"
 msgstr ""
 
 msgid "New folder"
-msgstr ""
-
-msgid "current"
 msgstr ""
 
 msgid "Oldest first"
@@ -93,6 +90,9 @@ msgid "Rename folder"
 msgstr ""
 
 msgid "Delete folder"
+msgstr ""
+
+msgid "Edit folder access"
 msgstr ""
 
 #, javascript-format
@@ -523,6 +523,11 @@ msgid "Variation Template"
 msgstr ""
 
 msgid "Select Template"
+msgstr ""
+
+msgid ""
+"Selecting and saving a template will clear all variable children selections "
+"for this product."
 msgstr ""
 
 msgid "Add new variable"

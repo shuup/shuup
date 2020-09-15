@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-05 13:52+0000\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -80,9 +80,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"We will create an 'Terms & Conditions' template for you. We will base "
-"content of the page on your shop information. After we are done, you must "
-"review the page and change it accordingly."
+"We will create a 'Terms & Conditions' template for you. We will base content "
+"of the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
 msgstr ""
 
 msgid "Create Refund Policy page"
@@ -151,12 +151,11 @@ msgid "This is %(sku)s"
 msgstr ""
 
 msgid ""
-"There is sample data installed. Access \"Settings > Sample Data\" for more "
-"information."
+"There is a sample data installed. Search `Sample Data` for more information."
 msgstr ""
 
 msgid ""
-"There is sample data installed. Click here to consolidate or delete them."
+"There is a sample data installed. Click here to consolidate or delete them."
 msgstr ""
 
 msgid "Sample Data"
@@ -250,19 +249,19 @@ msgstr ""
 msgid "Install Categories"
 msgstr ""
 
-msgid "Check this to install sample categories."
+msgid "Enable this to install sample categories."
 msgstr ""
 
 msgid "Install Products"
 msgstr ""
 
-msgid "Check this to install sample products."
+msgid "Enable this to install sample products."
 msgstr ""
 
 msgid "Install Carousel"
 msgstr ""
 
-msgid "Check this to install a sample carousel."
+msgid "Enable this to install a sample carousel."
 msgstr ""
 
 msgid "Uninstall Categories"
@@ -274,11 +273,14 @@ msgstr ""
 msgid "Uninstall Carousel"
 msgstr ""
 
-msgid "Sample data were consolidated"
+msgid "Sample data were consolidated."
 msgstr ""
 
 msgid ""
 "To start shopping right now, please install some sample data into your shop"
+msgstr ""
+
+msgid "You must have the Access to Admin Panel permission."
 msgstr ""
 
 msgid "Supplier Pricing"

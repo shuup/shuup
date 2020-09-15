@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:59+0000\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,38 +26,38 @@ msgstr ""
 msgid "Importing language"
 msgstr ""
 
-msgid "The language of the data you would like to import."
+msgid "The language of the data you want to import."
 msgstr ""
 
 msgid "Importer"
 msgstr ""
 
-msgid "Select a importer type matching the data you would like to import"
+msgid "Select a importer type matching the data you want to import"
 msgstr ""
 
 msgid "File"
 msgstr ""
 
 #, python-format
-msgid "%s is not a file"
+msgid "%s is not a file."
 msgstr ""
 
-msgid "File missing."
+msgid "File is missing."
 msgstr ""
 
 msgid "Failed to import the file."
 msgstr ""
 
-msgid "Invalid parameters"
+msgid "Invalid parameters."
 msgstr ""
 
-msgid "Invalid importer"
+msgid "Invalid importer."
 msgstr ""
 
-msgid "Invalid file name"
+msgid "Invalid file name."
 msgstr ""
 
-msgid "File not found"
+msgid "File was not found."
 msgstr ""
 
 msgid "Import"
@@ -72,7 +72,7 @@ msgid ""
 msgstr ""
 
 #, python-format
-msgid "Error setting value for field %(field_name)s. (%(exception)s)"
+msgid "Failed while setting value for field %(field_name)s. (%(exception)s)"
 msgstr ""
 
 #, python-format
@@ -84,6 +84,13 @@ msgid "Row import failed (%s)."
 msgstr ""
 
 msgid "Example files"
+msgstr ""
+
+msgid ""
+"If there is a 'Ignore' column in the example file you are using,\n"
+"                    make sure to leave the ignore column empty for all your "
+"rows,\n"
+"                    otherwise the rows won't be imported."
 msgstr ""
 
 msgid "This importer provides example files. Click below to download them:"
@@ -221,7 +228,7 @@ msgid "Import errors"
 msgstr ""
 
 #, python-format
-msgid "Cannot import more than %s rows from one file."
+msgid "Can't import more than %s rows from one file."
 msgstr ""
 
 msgid "Allow create and update"
