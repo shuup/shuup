@@ -76,7 +76,6 @@ def test_sample_import_all_match(filename, rf):
     importer.process_data()
 
     if filename == images_file:
-        assert len(importer.unmatched_fields) == 2
         _create_random_media_file(shop, "image1.jpeg")
         _create_random_media_file(shop, "products/images/image2.jpeg")
         _create_random_media_file(shop, "products/images/image3.jpeg")
@@ -85,11 +84,10 @@ def test_sample_import_all_match(filename, rf):
         _create_random_media_file(shop, "product1.jpeg")
         _create_random_media_file(shop, "products/images/product2.jpeg")
         _create_random_media_file(shop, "products/images2/product2.jpeg")
-    else:
-        assert len(importer.unmatched_fields) == 0
 
     importer.do_import(ImportMode.CREATE_UPDATE)
     products = importer.new_objects
+    assert len(importer.log_messages) == 0
 
     if filename == images_file:
         assert len(products) == 3
@@ -219,8 +217,8 @@ def test_sample_import_images_errors(rf):
     )
     importer.process_data()
 
-    assert len(importer.unmatched_fields) == 2
     importer.do_import(ImportMode.CREATE_UPDATE)
+    assert len(importer.log_messages) == 2
     products = importer.new_objects
     assert len(products) == 2
     for product in products:
