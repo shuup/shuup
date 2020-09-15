@@ -107,7 +107,6 @@ def transform_file(mode, filename, data=None):
 
     headers = data[0].keys() if len(data) else []
     clean_keys = set(headers) - got_data
-
     for datum in data:
         for key in clean_keys:
             datum.pop(key, None)
@@ -122,8 +121,8 @@ def py2_read_file(data, filename):
         dialect = csv.Sniffer().sniff(f.read(1024))
         f.seek(0)
         for x, row in enumerate(csv.DictReader(f, dialect=dialect)):
-            got_data.update(set(h for (h, d) in six.iteritems(row) if d))
-            data.append(row)
+            got_data.update(set(h.lower() for (h, d) in six.iteritems(row) if d))
+            data.append(dict((k.lower(), v if v else None) for k, v in six.iteritems(row)))
     return data, got_data
 
 
@@ -143,6 +142,6 @@ def py3_read_file(data, filename):
         dialect = csv.Sniffer().sniff(f.read(1024))
         f.seek(0)
         for x, row in enumerate(csv.DictReader(f, dialect=dialect)):
-            got_data.update(set(h for (h, d) in six.iteritems(row) if d))
-            data.append(row)
+            got_data.update(set(h.lower() for (h, d) in six.iteritems(row) if d))
+            data.append(dict((k.lower(), v if v else None) for k, v in six.iteritems(row)))
     return data, got_data
