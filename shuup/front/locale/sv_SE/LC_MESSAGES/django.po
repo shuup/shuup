@@ -834,7 +834,7 @@ msgid "Next"
 msgstr "Nästa"
 
 #, python-format
-msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
+msgid "Items %(start_index)d to %(end_index)d of %(count)d total"
 msgstr "Artiklarna %(start_index)d till %(end_index)d av %(count)d summan"
 
 msgid "Change visibility limit to"

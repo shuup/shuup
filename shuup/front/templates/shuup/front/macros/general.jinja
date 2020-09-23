@@ -181,7 +181,7 @@
         </ul>
         {% if show_details %}
             <p class="text-muted">
-                {{ gettext("Items %(start_index)d of %(end_index)d of %(count)d total", start_index=page.start_index(), end_index=page.end_index(), count=paginator.count) }}
+                {{ gettext("Items %(start_index)d to %(end_index)d of %(count)d total", start_index=page.start_index(), end_index=page.end_index(), count=paginator.count) }}
             <p>
         {% endif %}
     </nav>
