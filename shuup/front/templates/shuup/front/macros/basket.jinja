@@ -262,7 +262,7 @@
 
 {% macro remove_basket_code() %}
     $(".basket-remove-code-btn").click(function(evt) {
-        var code = $(evt.target).data("code");
+        var code = $(evt.currentTarget).data("code");
         if (code) {
             var data = {
                 "command": "remove_campaign_code",
