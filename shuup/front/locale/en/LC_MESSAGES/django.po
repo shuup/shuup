@@ -861,7 +861,7 @@ msgid "Next"
 msgstr ""
 
 #, python-format
-msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
+msgid "Items %(start_index)d to %(end_index)d of %(count)d total"
 msgstr ""
 
 msgid "Change visibility limit to"

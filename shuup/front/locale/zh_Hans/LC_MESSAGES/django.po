@@ -835,7 +835,7 @@ msgid "Next"
 msgstr "下一页"
 
 #, python-format
-msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
+msgid "Items %(start_index)d to %(end_index)d of %(count)d total"
 msgstr "项目%(start_index)d%(end_index)d %(count)d总计"
 
 msgid "Change visibility limit to"
