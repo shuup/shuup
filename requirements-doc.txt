@@ -57,7 +57,7 @@ sqlparse==0.3.1           # via django
 toml==0.10.0              # via shuup
 unicodecsv==0.14.1        # via shuup
 unidecode==1.0.23         # via django-filer
-urllib3==1.24.1           # via requests
+urllib3==1.24.2           # via requests
 webencodings==0.5.1       # via bleach
 xlrd==1.2.0               # via shuup
 zipp==3.2.0               # via importlib-metadata
