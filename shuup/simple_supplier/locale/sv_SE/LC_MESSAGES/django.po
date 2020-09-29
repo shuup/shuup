@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 13:55+0000\n"
-"PO-Revision-Date: 2019-03-09 18:36+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-06-22 18:11+0000\n"
+"PO-Revision-Date: 2020-09-29 10:10+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,37 +44,37 @@ msgstr "Justera lager"
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
-"(%(supplier_name)s)"
-msgstr "Tillagda %(delta)s %(unit_symbol)s för produkten %(product_name)s i lageret (%(supplier_name)s)"
+"Success! Added %(delta)s `%(unit_symbol)s` for product `%(product_name)s` "
+"stock (%(supplier_name)s)."
+msgstr "Framgång! Lagt till %(delta)s `%(unit_symbol)s` för produkt` %(product_name)s` lager (%(supplier_name)s)."
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
-"(%(supplier_name)s)"
-msgstr "Borttagna %(delta)s %(unit_symbol)s från produkten %(product_name)s i lageret (%(supplier_name)s)"
+"Success! Removed %(delta)s `%(unit_symbol)s` from product `%(product_name)s`"
+" stock (%(supplier_name)s)."
+msgstr "Framgång! Borttagen %(delta)s `%(unit_symbol)s` från produkten` %(product_name)s` lager (%(supplier_name)s)."
 
 #, python-format
-msgid "Alert limit for product %(product_name)s set to %(value)s."
-msgstr "Varningsgränsen för produkten %(product_name)s inställd till %(value)s."
+msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
+msgstr "Varningsgräns för produkt &#39;%(product_name)s&#39; inställd på &#39;%(value)s&#39;."
 
-msgid "Not allowed"
-msgstr "Ej tillåten"
+msgid "Non-POST request methods are forbidden."
+msgstr "Metoder för icke-POST-förfrågan är förbjudna."
 
-msgid "Error, please check submitted values and try again."
-msgstr "Fel, vänligen kontrollera skickade värden och försök igen."
+msgid "Please check submitted values and try again."
+msgstr "Kontrollera de skickade värdena och försök igen."
 
 #, python-format
-msgid "Error, please check submitted values and try again (%(error)s)."
-msgstr "Fel, vänligen kontrollera skickade värden och försök igen (%(error)s)."
+msgid "Please check submitted values and try again (%(error)s)."
+msgstr "Kontrollera de skickade värdena och försök igen (%(error)s)."
 
 #, python-brace-format
-msgid "Stock management is now enabled for {product}"
-msgstr ""
+msgid "Stock management is now enabled for {product}."
+msgstr "Lagerhantering är nu aktiverad för {product}."
 
 #, python-brace-format
-msgid "Stock management is now disabled for {product}"
-msgstr ""
+msgid "Stock management is now disabled for {product}."
+msgstr "Lagerhantering är nu inaktiverad för {product}."
 
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
@@ -110,10 +111,10 @@ msgid "alert limit"
 msgstr "varningsgräns"
 
 msgid "stock managed"
-msgstr ""
+msgstr "lagerhantering"
 
 msgid "Use this to override the supplier default stock behavior per product."
-msgstr ""
+msgstr "Använd detta för att åsidosätta leverantörens standardlagerbeteende per produkt."
 
 msgid "logical count"
 msgstr "logiskt antal"
@@ -126,6 +127,12 @@ msgstr "Varningsgräns nådd"
 
 msgid "Product"
 msgstr "Produkt"
+
+msgid "Supplier Email"
+msgstr "Leverantörens e-post"
+
+msgid "Shop Email"
+msgstr "Handla e-post"
 
 msgid "Fired in the last 24 hours?"
 msgstr "Hänt under de senaste 24 timmarna?"
@@ -186,10 +193,10 @@ msgid "Change alert limit"
 msgstr "Ändra varningsgräns"
 
 msgid "Disable stock management"
-msgstr ""
+msgstr "Inaktivera lagerhantering"
 
 msgid "Enable stock management"
-msgstr ""
+msgstr "Aktivera lagerhantering"
 
 #, python-format
 msgid ""
@@ -197,8 +204,11 @@ msgid ""
 "does not have suppliers with %(module_name)s module."
 msgstr "Produkt <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> har inga leverantörer med %(module_name)s modulen."
 
-msgid "Please set suppliers at Purchasing section."
-msgstr "Vänligen ange leverantörer under Uppköp."
+#, python-format
+msgid ""
+"Please go in this product's Additional tab section and add enabled Suppliers"
+" that have both %(module_name)s module and stock management enabled."
+msgstr "Gå till den här produktens ytterligare flikavsnitt och lägg till aktiverade leverantörer som har både %(module_name)s-modulen och lagerhantering aktiverad."
 
 #, python-format
 msgid "No suppliers with %(module_name)s available."
@@ -206,27 +216,28 @@ msgstr "Inga leverantörer med %(module_name)s tillgängliga."
 
 #, python-format
 msgid ""
-"Please set %(module_name)s module for at least one of the <a "
-"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
-msgstr "Vänligen ställ in %(module_name)s modulen för minst en av de <a href=\"%(supplier_url)s\" target=\"_blank\">leverantörerna</a>."
+"Please set %(module_name)s module for at least one of the enabled <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a> and enable the "
+"stock management for them."
+msgstr "Ställ in %(module_name)s-modulen för minst en av de aktiverade <a href=\"%(supplier_url)s\" target=\"_blank\">leverantörerna</a> och aktivera lagerhanteringen för dem."
 
 #, python-brace-format
 msgid "Physical count ({sales_unit})"
-msgstr ""
+msgstr "Fysiskt antal ({sales_unit})"
 
 #, python-brace-format
 msgid "Logical count ({sales_unit})"
-msgstr ""
+msgstr "Logiskt antal ({sales_unit})"
 
 msgid "Value per unit"
-msgstr ""
+msgstr "Värde per enhet"
 
 msgid "Total value"
-msgstr ""
+msgstr "Totala värdet"
 
 #, python-brace-format
 msgid "Alert limit ({sales_unit})"
-msgstr ""
+msgstr "Varningsgräns ({sales_unit})"
 
 msgid "No stock information available."
 msgstr "Ingen lagerinformation tillgänglig."

@@ -5,13 +5,13 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-25 21:31+0000\n"
-"PO-Revision-Date: 2018-09-28 21:21+0000\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-29 08:47+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,9 @@ msgstr "HTML"
 msgid "Subject"
 msgstr "Aihe"
 
+msgid "Email Template"
+msgstr ""
+
 msgid "Email Body"
 msgstr "Sähköpostin sisältö"
 
@@ -53,6 +56,21 @@ msgstr "Vastaanottaja"
 
 msgid "Reply-To"
 msgstr "Vastaa"
+
+msgid "Carbon Copy (CC)"
+msgstr "Hiilikopio (CC)"
+
+msgid "Blind Carbon Copy (BCC)"
+msgstr "Sokea hiilikopio (BCC)"
+
+msgid "From email"
+msgstr "Sähköpostista"
+
+msgid ""
+"Override the default from email to be used. It can either be binded to a "
+"variable or be a constant like support@store.com or even \"Store Support\" "
+"<support@store.com>."
+msgstr "Ohita käytetyn sähköpostin oletusarvo. Se voi olla joko sidottu muuttujaan tai vakiona, kuten support@store.com tai jopa &quot;Store-tuki&quot; <support@store.com> ."
 
 msgid "Language"
 msgstr "Kieli"
@@ -74,6 +92,9 @@ msgstr "Ilmoitukset"
 msgid "Show notification scripts"
 msgstr "Näytä ilmoituskomentosarjat"
 
+msgid "Email Templates"
+msgstr ""
+
 msgid "Event"
 msgstr "Tapahtuma"
 
@@ -93,15 +114,22 @@ msgid "Choose whether this script should be activated when its event fires."
 msgstr "Valitse, käynnistyykö komentosarja siihen liitetyn tapahtuman alkaessa."
 
 msgid ""
-"Warning: Changing the event for an existing script may have unexpected "
+"Warning! Changing the event for an existing script may have unexpected "
 "effects."
-msgstr "Varoitus: Olemassaolevan komentosarjan tapahtuman vaihtamisella saattaa olla odottamattomia seurauksia."
+msgstr "Varoitus! Tapahtuman muuttaminen olemassa olevalle komentosarjalle voi aiheuttaa odottamattomia vaikutuksia."
 
 msgid "Template"
 msgstr "Mallipohja"
 
 msgid "Bind to Variable"
 msgstr "Sido muuttujaan"
+
+msgid "This field is missing content."
+msgstr "Tästä kentästä puuttuu sisältöä."
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s on merkitty poistetuksi."
 
 msgid "Edit Script Contents"
 msgstr "Muokkaa komentosarjan sisältöä..."
@@ -112,8 +140,19 @@ msgstr "Muokkaa komentosarjaa (edistynyt)"
 msgid "Edit Template"
 msgstr "Muokkaa mallipohjaa"
 
+msgid "Delete"
+msgstr "Poistaa"
+
+#, python-format
+msgid "Are you sure you wish to delete \"%s\" notification?"
+msgstr "Haluatko varmasti poistaa ilmoituksen &quot;%s&quot;?"
+
 msgid "Save"
 msgstr "Tallenna"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr ""
 
 msgid "Name"
 msgstr "Nimi"
@@ -127,17 +166,17 @@ msgstr "Uusi komentosarja"
 msgid "New From Template"
 msgstr "Uusi mallipohjasta"
 
-msgid "Script created from template!"
-msgstr "Komentosarja luotu mallipohjasta!"
+msgid "Script created from template."
+msgstr "Komentosarja luotu mallista."
 
-msgid "Template Script not found!"
-msgstr "Mallipohjan komentosarjaa ei löydy!"
+msgid "Template Script not found."
+msgstr "Malliskriptiä ei löydy."
 
-msgid "Templated script not found!"
-msgstr "Mallipohjan komentosarjaa ei löydy!"
+msgid "Templated script not found."
+msgstr "Mallikoodia ei löytynyt."
 
-msgid "Script updated!"
-msgstr "Komentosarja päivitetty!"
+msgid "Script updated."
+msgstr "Skripti päivitetty."
 
 msgid ""
 "Check whether the bound value `value` exists and is non-empty and non-zero."
@@ -200,6 +239,11 @@ msgstr "korkea"
 msgid "critical"
 msgstr "kriittinen"
 
+msgid ""
+"Enter the base HTML template to be used in emails. Mark the place to inject "
+"the email content using the variable `%html_body%` inside the body."
+msgstr ""
+
 msgid "shop"
 msgstr "kauppa"
 
@@ -242,6 +286,30 @@ msgstr "Mallineen tunniste"
 msgid "the template identifier used to create this script"
 msgstr "Mallineen tunniste, jota käytetään tämän komentosarjan luonnissa"
 
+msgid "Password Reset"
+msgstr "Salasanan nollaus"
+
+msgid "This event is triggered when password reset is requested."
+msgstr "Tämä tapahtuma laukaistaan, kun salasanan vaihtamista pyydetään."
+
+msgid "Site name"
+msgstr "Sivuston nimi"
+
+msgid "User secret"
+msgstr "Käyttäjän salaisuus"
+
+msgid "User to recover"
+msgstr "Käyttäjä toipumaan"
+
+msgid "Token"
+msgstr "Tunnus"
+
+msgid "Recovery URL"
+msgstr "Palautuksen URL-osoite"
+
+msgid "To Email"
+msgstr "Sähköpostiin"
+
 msgid "The subject of the email"
 msgstr "Sähköpostin otsikko"
 
@@ -274,6 +342,33 @@ msgid ""
 "Recipient is a required field when you don't want to send the email to "
 "customer."
 msgstr "Vastaanottaja on vaadittu kenttä, kun sähköpostia ei haluta lähettää asiakkaalle."
+
+msgid ""
+"\n"
+"<p>Hi {{ user_to_recover.get_full_name() }},</p>\n"
+"\n"
+"<p>In case you've forgotten, your username is {{ user_to_recover.username }}.</p>\n"
+"<p>You're receiving this email because you requested a password reset for your user account at {{ site_name }}.</p>\n"
+"<p>Please go to the following page and choose a new password:</p>\n"
+"<br>\n"
+"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
+msgstr ""
+
+msgid "Send Password Reset Link"
+msgstr "Lähetä salasanan nollauslinkki"
+
+msgid ""
+"\n"
+"        Send an email to user when their account password reset is requested\n"
+"    "
+msgstr ""
+
+msgid ""
+"\n"
+"        This script will send an email to user once their account password reset is\n"
+"        requested either by admin, staff or user.\n"
+"    "
+msgstr ""
 
 msgid "Edit Script Information"
 msgstr "Muokkaa komentosarjan tietoja"

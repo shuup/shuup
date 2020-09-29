@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Frank Wickström <frwickst@gmail.com>, 2017
+# Panu Tulimäki <panu@shuup.com>, 2020
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 17:25+0000\n"
-"PO-Revision-Date: 2019-03-10 04:56+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-29 10:12+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,9 +27,9 @@ msgstr "Start"
 #, python-format
 msgid ""
 "Please enter a correct %(username)s and password. Note that both fields may "
-"be case-sensitive. In case of multiple accounts with same email only "
-"username can be used to login."
-msgstr "Ange ett korrekt %(username)s och lösenord. Notera att båda fälten kan vara skiftlägeskänsliga (skillnad på stora och små bokstäver). Om fler konton har samma e-postadress så kan endast användarnamnet användas för att logga in."
+"be case-sensitive. In case of multiple accounts with the same email, only "
+"username can be used to log in."
+msgstr "Ange rätt %(username)s och lösenord. Notera att båda fälten kan vara skiftlägeskänsliga. Vid flera konton med samma e-post kan endast användarnamn användas för att logga in."
 
 msgid "This account is inactive."
 msgstr "Det här kontot är inaktivt."
@@ -39,41 +40,44 @@ msgstr "Användarnamn eller e-postadress"
 msgid "Create New"
 msgstr "Skapa ny"
 
+msgid "Select an option"
+msgstr "Välj ett alternativ"
+
 msgid "Monday"
-msgstr ""
+msgstr "Måndag"
 
 msgid "Tuesday"
-msgstr ""
+msgstr "Tisdag"
 
 msgid "Wednesday"
-msgstr ""
+msgstr "Onsdag"
 
 msgid "Thursday"
-msgstr ""
+msgstr "Torsdag"
 
 msgid "Friday"
-msgstr ""
+msgstr "fredag"
 
 msgid "Saturday"
-msgstr ""
+msgstr "Lördag"
 
 msgid "Sunday"
-msgstr ""
+msgstr "Söndag"
 
 msgid "Select"
-msgstr ""
+msgstr "Välj"
 
 msgid "Select Media"
-msgstr ""
+msgstr "Välj Media"
 
 msgid "Select Image"
-msgstr ""
+msgstr "Välj bild"
 
 msgid "Select Product"
-msgstr ""
+msgstr "Välj produkt"
 
 msgid "Select Contact"
-msgstr ""
+msgstr "Välj kontakt"
 
 msgid "Orders"
 msgstr "Beställningar"
@@ -90,50 +94,30 @@ msgstr "Erbjudanden"
 msgid "Content"
 msgstr "Innehåll"
 
-msgid "Elements"
-msgstr "Element"
-
-msgid "Design"
-msgstr "Design"
-
-msgid "Other"
-msgstr "Övrigt"
-
 msgid "Reports"
 msgstr "Rapporter"
 
 msgid "Shops"
 msgstr "Butiker"
 
+msgid "Addons"
+msgstr "Tillägg"
+
 msgid "Settings"
 msgstr "Inställningar"
 
-msgid "Payment & Shipping"
-msgstr "Betalning & Leverans"
+msgid "Logs"
+msgstr "Loggar"
 
-msgid "Currency"
-msgstr "Valuta"
+msgid "Messages"
+msgstr "Meddelanden"
 
 msgid "Attributes"
 msgstr "Attribut"
 
-msgid "Other settings"
-msgstr "Andra inställningar"
-
-msgid "Addons"
-msgstr "Tillägg"
-
-msgid "Data Transfer"
-msgstr "Dataöverföring"
-
-msgid "Taxes"
-msgstr "Skatter"
-
-msgid "Permissions"
-msgstr "Behörigheter"
-
-msgid "Other Settings"
-msgstr "Andra inställningar"
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s har tagits bort."
 
 msgid "Identifier"
 msgstr "Identifierare"
@@ -162,32 +146,32 @@ msgstr "Används i # produkttyper"
 msgid "Categories"
 msgstr "Kategorier"
 
-msgid "Add a product category to organize your products"
-msgstr "Lägg till en produktkategori för att organisera dina produkter"
+msgid "Add a product category to organize your products."
+msgstr "Lägg till en produktkategori för att organisera dina produkter."
 
 msgid "New category"
 msgstr "Ny kategori"
 
-msgid "Can not use this category as parent for this shop."
-msgstr ""
+msgid "Can't use this category as a parent for this shop."
+msgstr "Det går inte att använda den här kategorin som förälder för den här butiken."
 
 msgid "Primary Category"
 msgstr "Primära kategori"
 
-msgid "Set this category as a primary for selected products."
-msgstr "Ställ in denna kategori som primärkategori för utvalda produkter."
+msgid "Set this category as a primary category for selected products."
+msgstr "Ställ in denna kategori som en primär kategori för utvalda produkter."
 
 msgid "Additional Category"
 msgstr "Tilläggskategori"
 
-msgid "Add selected products to this category"
-msgstr "Lägg utvalda produkter i denna kategori"
+msgid "Add selected products to this category."
+msgstr "Lägg till utvalda produkter i denna kategori."
 
 msgid "Remove Products"
 msgstr "Ta bort produkter"
 
-msgid "Remove selected products from this category"
-msgstr "Ta bort markerade produkter inom denna kategori"
+msgid "Remove selected products from this category."
+msgstr "Ta bort utvalda produkter från denna kategori."
 
 msgid "Invalid category"
 msgstr "Felaktig kategori"
@@ -195,10 +179,6 @@ msgstr "Felaktig kategori"
 #, python-format
 msgid "Visibility settings copied to %d product(s)"
 msgstr "Synlighetsinställningar kopierades till %d produkt(er)"
-
-#, python-format
-msgid "%s has been deleted."
-msgstr "%s har tagits bort."
 
 msgid "Image"
 msgstr "Bild"
@@ -210,7 +190,7 @@ msgid "Visibility"
 msgstr "Synlighet"
 
 msgid "Contact Group Pricing Display"
-msgstr ""
+msgstr "Kontaktgrupps prissättning"
 
 msgid "unspecified"
 msgstr "ospecificerad"
@@ -225,7 +205,7 @@ msgid "hide prices"
 msgstr "dölj priser"
 
 msgid "shop"
-msgstr ""
+msgstr "affär"
 
 msgid "Price display mode"
 msgstr "Prisers visningsläge"
@@ -234,13 +214,13 @@ msgid "Set how prices are displayed to contacts in this group."
 msgstr "Ange hur priser visas för kontakter i denna grupp."
 
 msgid "Group"
-msgstr ""
+msgstr "Grupp"
 
 msgid "Display Mode"
-msgstr ""
+msgstr "Visningsläge"
 
 msgid "Unspecified"
-msgstr ""
+msgstr "Ospecificerad"
 
 msgid "Contact Groups"
 msgstr "Kontaktgrupper"
@@ -253,22 +233,22 @@ msgstr "Ta bort"
 
 #, python-format
 msgid "%(count)s member added"
-msgid_plural "%(count)s members added"
-msgstr[0] "%(count)s tillagd medlem"
-msgstr[1] "%(count)s tillagda medlemmar"
+msgid_plural "%(count)s members added."
+msgstr[0] "%(count)s medlem tillagd"
+msgstr[1] "%(count)s medlemmar tillagda."
 
 #, python-format
 msgid "%(count)s member removed"
-msgid_plural "%(count)s members removed"
-msgstr[0] "%(count)s borttagen medlem"
-msgstr[1] "%(count)s borttagna medlemmar"
+msgid_plural "%(count)s members removed."
+msgstr[0] "%(count)s medlem borttagen"
+msgstr[1] "%(count)s medlemmar har tagits bort."
 
 msgid "Number of Members"
 msgstr "Antal medlemmar"
 
 #, python-format
-msgid "User %(bind_user)s already has a contact"
-msgstr "Användare %(bind_user)s har redan en kontakt"
+msgid "User `%(bind_user)s` already has a contact."
+msgstr "Användaren `%(bind_user)s` har redan en kontakt."
 
 msgid ""
 "The contact groups this contact belongs to. Contact groups are defined in "
@@ -277,7 +257,7 @@ msgid ""
 msgstr "Kontaktgrupperna denna kontakt tillhör. Kontaktgrupper definieras i Kontakter - Kontaktgrupper och används för att konfigurera försäljning, kampanjer och prissättning skräddarsydda för en grupp av användare."
 
 msgid "The shops this contact belongs to"
-msgstr ""
+msgstr "Butikerna som denna kontakt tillhör"
 
 msgid "Language"
 msgstr "Språk"
@@ -369,19 +349,27 @@ msgid "Activate Contact"
 msgstr "Aktivera kontakt"
 
 msgid "Options"
-msgstr ""
+msgstr "alternativ"
 
 msgid "Actions"
 msgstr "Åtgärder"
 
+msgid "Login as User"
+msgstr "Logga in som användare"
+
+msgid "Login as Staff User"
+msgstr "Logga in som personalanvändare"
+
 msgid "Edit"
 msgstr "Redigera"
 
-msgid "You can not deactivate a superuser."
-msgstr "Du kan inte inaktivera en superanvändare."
+msgid "You can not deactivate a superuser. Remove superuser permission first."
+msgstr "Du kan inte inaktivera en superanvändare. Ta bort behörigheten för superanvändaren först."
 
-msgid "You can not deactivate yourself."
-msgstr "Du kan inte inaktivera dig själv."
+msgid ""
+"You can not deactivate yourself. Use another account to deactivate the "
+"current one."
+msgstr "Du kan inte inaktivera dig själv. Använd ett annat konto för att inaktivera det aktuella."
 
 #, python-format
 msgid "%(contact)s is now %(state)s."
@@ -405,6 +393,9 @@ msgstr "Person"
 msgid "Company"
 msgstr "Företag"
 
+msgid "Staff"
+msgstr "Personal"
+
 msgid "Email"
 msgstr "E-post"
 
@@ -427,16 +418,16 @@ msgid "Groups"
 msgstr "Grupper"
 
 msgid "Registered in"
-msgstr ""
+msgstr "Registrerad i"
 
 msgid "Contact"
 msgstr "Kontakt"
 
 msgid "No group"
-msgstr ""
+msgstr "Ingen grupp"
 
 msgid "No shops"
-msgstr ""
+msgstr "Inga butiker"
 
 msgid "Inactive"
 msgstr "Inaktiv"
@@ -456,14 +447,14 @@ msgstr "%d beställningar"
 msgid "Mass Edit: Contacts"
 msgstr "Redigera många: Kontakter"
 
-msgid "Contacts changed successfully"
-msgstr "Sparande av kontakten lyckades"
+msgid "Contacts were changed."
+msgstr "Kontakterna ändrades."
 
 msgid "Mass Edit: Contact Groups"
 msgstr "Redigera många: Kontaktgrupper"
 
-msgid "Contacts Groups changed successfully"
-msgstr "Sparande av kontaktgruppen lyckades"
+msgid "Contacts Groups were changed."
+msgstr "Kontakter Grupper har ändrats."
 
 msgid "The contact does not have an associated user."
 msgstr "Kontakten har inte en associerad användare."
@@ -490,32 +481,35 @@ msgid "Based on orders within 30 days"
 msgstr "Baserat på beställnigar inom 30 dagar"
 
 msgid "Labels"
-msgstr ""
+msgstr "Etiketter"
 
 msgid "Created on"
-msgstr ""
+msgstr "Skapad på"
 
 msgid "Modified on"
-msgstr ""
+msgstr "Ändrad den"
 
 msgid "Manufacturers"
 msgstr "Tillverkare"
 
 msgid ""
 "Select shops for this manufacturer. Keep it blank to share with all shops."
-msgstr ""
+msgstr "Välj butiker för denna tillverkare. Håll den tom för att dela med alla butiker."
 
 msgid "You have no permission to change a shared Manufacturer."
-msgstr ""
+msgstr "Du har ingen behörighet att ändra en delad tillverkare."
 
 msgid "Logo"
-msgstr ""
+msgstr "Logotyp"
 
 msgid "Media"
 msgstr "Media"
 
 msgid "Media browser"
 msgstr "Mediabläddrare"
+
+msgid "Visible for all everyone in the media browser"
+msgstr "Synlig för alla i mediebläddraren"
 
 msgid "Root"
 msgstr "Rot"
@@ -529,43 +523,90 @@ msgid "{num} files moved to {folder}."
 msgstr "{num} filer flyttade till {folder}."
 
 #, python-format
-msgid "Folder %s deleted."
-msgstr "Mappen %s har tagits bort."
+msgid "Folder `%s` was deleted."
+msgstr "Mappen &#39;%s&#39; raderades."
 
 msgid "Browse Media"
 msgstr "Bläddra efter media"
 
-msgid "Can not rename shared folder."
-msgstr ""
+msgid "You do not have permissions to create a subfolder here."
+msgstr "Du har inte behörighet att skapa en undermapp här."
 
-msgid "Folder renamed."
-msgstr "Mappen har bytt namn."
+msgid "Folder was renamed."
+msgstr "Mappen döptes om."
 
-msgid "Can not delete shared folder."
-msgstr ""
+#, python-format
+msgid "Folder can't be renamed to %s."
+msgstr "Mappen kan inte bytas om till %s."
 
-msgid "Can not rename shared file."
-msgstr ""
+msgid ""
+"Can't rename this folder, either you don't have permssion to do it or it's a"
+" shared folder between more then one shop or it has a owner"
+msgstr "Det går inte att byta namn på den här mappen, antingen har du inte tillstånd att göra det eller så är det en delad mapp mellan mer än en butik eller så har den en ägare"
 
-msgid "File renamed."
-msgstr "Filen har bytt namn."
+msgid ""
+"Can't delete this folder, either you don't have permssion to do it or it's a"
+" shared folder between more then one shop"
+msgstr "Det går inte att ta bort den här mappen, antingen har du inte tillstånd att göra det eller så är det en delad mapp mellan mer än en butik"
 
-msgid "Can not delete shared file."
-msgstr ""
+msgid "File was renamed."
+msgstr "Filen döptes om."
 
-msgid "File deleted."
-msgstr "Fil raderad."
+msgid "Can not rename this file."
+msgstr "Det går inte att byta namn på den här filen."
 
-msgid "Can not move shared file."
-msgstr ""
+msgid "File was deleted."
+msgstr "Filen raderades."
+
+msgid "Can not delete this file."
+msgstr "Det går inte att ta bort den här filen."
+
+msgid "Can't move a shared file."
+msgstr "Det går inte att flytta en delad fil."
 
 #, python-format
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s flyttades från %(old)s till %(new)s."
 
 #, python-format
-msgid "%(file)s uploaded to %(folder)s"
-msgstr "%(file)s laddades upp til %(folder)s"
+msgid "%(file)s uploaded to %(folder)s."
+msgstr "%(file)s uppladdat till %(folder)s."
+
+msgid "You do not have permission to upload content to this folder"
+msgstr "Du har inte behörighet att ladda upp innehåll till den här mappen"
+
+msgid "You don't have access to preform this action."
+msgstr "Du har inte tillgång till preform den här åtgärden."
+
+msgid "Customize Your Admin Menu"
+msgstr "Anpassa din administratörsmeny"
+
+msgid "Arrange Your Admin Menu"
+msgstr "Ordna din administratörsmeny"
+
+msgid "Customize SuperUser Admin Menu"
+msgstr "Anpassa SuperUser Admin Menu"
+
+msgid "Arrange SuperUser Admin Menu"
+msgstr "Ordna administratörsmenyn för SuperUser"
+
+msgid "Customize Staff Admin Menu"
+msgstr "Anpassa personaladministratörsmenyn"
+
+msgid "Arrange Staff Admin Menu"
+msgstr "Ordna personaladministratörsmenyn"
+
+msgid "Customize Supplier Admin Menu"
+msgstr "Anpassa leverantörens administratörsmeny"
+
+msgid "Arrange Supplier Admin Menu"
+msgstr "Ordna leverantörens administratörsmeny"
+
+msgid "Menu saved"
+msgstr "Menyn sparad"
+
+msgid "Menu reset"
+msgstr "Menyåterställning"
 
 msgid "Show orders"
 msgstr "Visa beställningar"
@@ -587,23 +628,27 @@ msgid "List Statuses"
 msgstr "Lista statusar"
 
 #, python-format
-msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
-msgstr "Antalet '%(quantity)s' (för %(text)s) är ogiltigt (%(error)s)"
+msgid ""
+"The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)."
+msgstr "Kvantiteten &#39;%(quantity)s&#39; (för rad %(text)s) är ogiltig (%(error)s)."
 
 #, python-format
-msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
-msgstr "Priset '%(price)s' (för %(text)s) är ogiltigt (%(error)s)"
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)."
+msgstr "Priset &#39;%(price)s&#39; (för rad %(text)s) är ogiltigt (%(error)s)."
 
 #, python-format
-msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
-msgstr "Rabatten '%(discount)s' (för %(text)s) är ogiltigt (%(error)s)"
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)."
+msgstr "Rabatten &#39;%(discount)s&#39; (för rad %(text)s är ogiltig (%(error)s)."
+
+msgid "Product line does not have a supplier."
+msgstr "Produktlinjen har ingen leverantör."
 
 msgid "Product line does not have a product set."
 msgstr "Produkten har inte en produktuppsättning."
 
 #, python-format
-msgid "Product %s does not exist."
-msgstr "Produkten %s finns inte."
+msgid "Product `%s` does not exist."
+msgstr "Produkten &quot;%s&quot; finns inte."
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
@@ -630,8 +675,8 @@ msgstr "Avbryt"
 msgid "Print Confirmation PDF(s)"
 msgstr "Skriv ut bekräftelse PDF(er)"
 
-msgid "Selecting all is not supported."
-msgstr "Att välja alla stöds inte."
+msgid "Error! Selecting all is not supported."
+msgstr "Fel! Att välja alla stöds inte."
 
 msgid "Print Delivery PDF(s)"
 msgstr "Skriv ut leverans PDF(er)"
@@ -678,9 +723,6 @@ msgstr "Skapa betalning"
 msgid "Set Paid"
 msgstr "Markera som betald"
 
-msgid "Create Shipment"
-msgstr "Skapa transport"
-
 msgid "Create Refund"
 msgstr "Skapa återbetalning"
 
@@ -698,43 +740,50 @@ msgid "%(field)s updated from: %(old_address)s"
 msgstr "%(field)s uppdaterad från: %(old_address)s"
 
 #, python-format
-msgid "%(field)s saved successfully."
+msgid "%(field)s were saved."
 msgstr "%(field)s sparades."
 
 #, python-format
 msgid "Save -- %s"
-msgstr ""
+msgstr "Spara - %s"
 
 msgid "Save"
 msgstr "Spara"
 
-msgid "Unable to set order as completed at this point"
-msgstr "Det gick inte att ställa in beställning som klar i detta skede"
+msgid "Unable to set order as completed at this point."
+msgstr "Det går inte att ställa in ordern som slutförd just nu."
+
+msgid "You can't cancel orders that are paid, shipped, or already canceled."
+msgstr "Du kan inte avbryta beställningar som har betalats, skickats eller redan annullerats."
 
 #, python-brace-format
-msgid "Order status changed: {old_status} to {new_status}"
-msgstr "Orderstatus ändrad från {old_status} till {new_status}"
+msgid "Order status changed: from `{old_status}` to `{new_status}`."
+msgstr "Orderstatus har ändrats: från &quot;{old_status}&quot; till &quot;{new_status}&quot;."
 
 msgid "Create Order"
 msgstr "Skapa beställning"
 
 #, python-format
-msgid "Contact %s does not exist."
-msgstr "Kontakt %s finns inte."
+msgid "Contact `%s` does not exist."
+msgstr "Kontakt `%s` existerar inte."
 
 #, python-format
-msgid "Order %(identifier)s updated."
-msgstr "Beställning %(identifier)s uppdaterad."
+msgid "Product `%(product)s` is not available in the `%(shop)s` shop."
+msgstr "Produkten &quot;%(product)s&quot; finns inte i butiken &quot;%(shop)s&quot;."
 
 #, python-format
-msgid "Order %(identifier)s created."
-msgstr "Beställning %(identifier)s skapad."
+msgid "Order `%(identifier)s` was updated."
+msgstr "Beställningen `%(identifier)s` uppdaterades."
 
-msgid "Could not proceed with order:"
-msgstr "Kunde inte fortsätta med beställning:"
+#, python-format
+msgid "Order `%(identifier)s` created."
+msgstr "Beställning `%(identifier)s` skapad."
 
-msgid "Could not finalize order:"
-msgstr "Kunde inte slutföra order:"
+msgid "Could not proceed with the order: "
+msgstr "Det gick inte att fortsätta med beställningen:"
+
+msgid "Could not finalize the order: "
+msgstr "Det gick inte att slutföra beställningen:"
 
 msgid "Order"
 msgstr "Beställning"
@@ -761,15 +810,15 @@ msgstr "Skapa betalning--%s"
 msgid "Payment amount"
 msgstr "Betalningsbelopp"
 
-msgid "Payment amount cannot be 0"
-msgstr "Beloppet kan inte vara 0"
+msgid "Payment amount cannot be 0."
+msgstr "Betalningsbeloppet kan inte vara 0."
 
 #, python-format
 msgid "Payment %s created."
 msgstr "Betalning %s skapad."
 
-msgid "Order has already been paid"
-msgstr "Beställningen är redan betald"
+msgid "Order has already been paid."
+msgstr "Order har redan betalats."
 
 msgid "Only orders which are not paid or deferred can be set as paid."
 msgstr "Endast beställningar som inte är betalda kan markeras som betald."
@@ -784,10 +833,10 @@ msgid "Order marked as paid."
 msgstr "Beställning markerad som betald."
 
 msgid "Payment doesn't exist."
-msgstr ""
+msgstr "Betalning finns inte."
 
 msgid "Payment deleted."
-msgstr ""
+msgstr "Betalning borttagen."
 
 msgid "Line"
 msgstr "Rad"
@@ -850,7 +899,7 @@ msgstr "Återbetalning skapad."
 msgid "Create Full Refund -- %s"
 msgstr "Skapa fullständig återbetalning -- %s"
 
-msgid "Could not create full refund."
+msgid "Could not create a full refund."
 msgstr "Det gick inte att skapa en fullständig återbetalning."
 
 msgid "Full refund created."
@@ -860,17 +909,12 @@ msgstr "Fullständig återbetalnings skapad."
 msgid "Create Shipment -- %s"
 msgstr "Skapa leverans -- %s"
 
-msgid "Supplier"
-msgstr "Leverantör"
-
-msgid ""
-"Select the shipment supplier. You can only ship the suppliers assigned to "
-"order lines."
-msgstr ""
+msgid "Create Shipment"
+msgstr "Skapa transport"
 
 #, python-format
 msgid "%(product_name)s (%(supplier)s)"
-msgstr ""
+msgstr "%(product_name)s (%(supplier)s)"
 
 msgid "No products to ship."
 msgstr "Inga produkter att leverera."
@@ -879,18 +923,15 @@ msgid "Shipping address is not set."
 msgstr "Leveransadress är inte angiven."
 
 #, python-format
-msgid "Shipment %s created."
-msgstr "Leverans %s skapad."
+msgid "Shipment %s was created."
+msgstr "Leverans %s skapades."
 
 #, python-format
 msgid "Shipment %s has been deleted."
 msgstr "Leverans %s har tagits bort."
 
-msgid "Identifier already exists"
-msgstr "Identifierare finns redan"
-
-msgid "Order Statuses"
-msgstr "Beställningsstatus"
+msgid "Identifier already exists."
+msgstr "Identifierare finns redan."
 
 msgid "Public Name"
 msgstr "Officiellt namn"
@@ -901,14 +942,14 @@ msgstr "Roll"
 msgid "Default"
 msgstr "Standard"
 
-msgid "Permission Groups"
-msgstr "Behörighetsgrupper"
+msgid "Granular Permission Groups"
+msgstr "Granular Permission Groups"
 
-msgid "The permission group name."
-msgstr "Behörighetsgruppens namn."
+msgid "The Permission Group name."
+msgstr "Tillståndsgruppens namn."
 
-msgid "Set the users that belong to this permission group."
-msgstr "Ställ in de användare som hör till denna behörighetsgrupp."
+msgid "Set the users that belong to this Permission Group."
+msgstr "Ställ in de användare som tillhör denna behörighetsgrupp."
 
 msgid "Create new Permission Group"
 msgstr "Skapa ny behörighetsgrupp"
@@ -919,10 +960,23 @@ msgstr "Produkttyper"
 msgid "Product types"
 msgstr "Produkttyper"
 
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s är markerats som borttagna."
+
 msgid ""
 "Select attributes that go with your product type. These are defined in "
 "Products Settings - Attributes."
 msgstr "Välj attribut som passar ihop med produkttypen. Dessa definieras i Produktinställningar - Attribut."
+
+msgid "Delete"
+msgstr "Ta bort"
+
+#, python-format
+msgid ""
+"Are you sure you wish to delete %s? Warrning: all related products will "
+"disappear from storefront until new value for product type is set!"
+msgstr "Är du säker på att du vill ta bort %s? Varning: alla relaterade produkter försvinner från butiksfönstret tills nytt värde för produkttyp har ställts in!"
 
 msgid "Number of Attributes"
 msgstr "Antalet attribut"
@@ -948,26 +1002,26 @@ msgid "Primary Product Image"
 msgstr "Primära produktbild"
 
 msgid ""
-"The main product image. You can add additional images on the Product Images "
-"tab."
-msgstr "Den viktigaste produktbilden. Du kan lägga till ytterligare bilder under fliken Produktbilder."
+"The main product image. You can add additional images in the `Product "
+"Images` tab."
+msgstr "Huvudbilden på produkten. Du kan lägga till ytterligare bilder på fliken &#39;Produktbilder&#39;."
 
 msgid "Select a manufacturer"
-msgstr ""
+msgstr "Välj en tillverkare"
 
 msgid "Product type"
-msgstr ""
+msgstr "Produkttyp"
 
 msgid "Given value is already in use, please use unique SKU and try again."
 msgstr "Angivet värde är redan i bruk, vänligen använd unika artikelnummer och försök igen."
 
 msgid ""
 "Number of units that can be purchased after the product is out of stock. Set"
-" to blank for product to be purchasable without limits"
-msgstr "Antalet enheter som kan köpas efter det att produkten är slut i lager. Ställ in som tomt för att produkten skall kunna köpas utan gränser."
+" to blank for product to be purchasable without limits."
+msgstr "Antal enheter som kan köpas efter att produkten är slut i lager. Ställ in tomt för att produkten ska kunna köpas utan begränsningar."
 
 msgid "Select a category"
-msgstr ""
+msgstr "Välj en kategori"
 
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "Minsta inköpskvantitet måste vara större än 0."
@@ -976,33 +1030,33 @@ msgid "Backorder maximum must be greater than or equal to 0."
 msgstr "Restorder maximala antal måste vara större än eller lika med 0."
 
 #, python-format
-msgid "Thumbnail generation of %(media)s failed: %(error)s"
-msgstr "Skapandet av en miniatyrbild för %(media)s misslyckades: %(error)s"
+msgid "Thumbnail generation of %(media)s failed: %(error)s."
+msgstr "Miniatyrbildgenerering av %(media)s misslyckades: %(error)s."
 
-msgid "Use only URL or file, not both"
-msgstr "Använd endast en webbplats eller fil, inte båda"
+msgid "Use only URL or file, not both."
+msgstr "Använd endast URL eller fil, inte båda."
 
 msgid "Is primary"
 msgstr "Primär"
 
-msgid "Only images allowed in this field"
-msgstr "Endast bilder är tillåtna i det här fältet"
+msgid "Only images are allowed in this field."
+msgstr "Endast bilder är tillåtna i det här fältet."
 
 #, python-format
-msgid "Unable to make package %(product)s: %(error)s"
-msgstr "Det går inte att skapa paketet %(product)s: %(error)s"
+msgid "Unable to make package %(product)s: %(error)s."
+msgstr "Det går inte att göra paketet %(product)s: %(error)s."
 
 #, python-format
-msgid "New: %d"
-msgstr "Ny: %d"
+msgid "New products: %d."
+msgstr "Nya produkter: %d."
 
 #, python-format
-msgid "Removed: %d"
-msgstr "Borttagen: %d"
+msgid "Removed products: %d."
+msgstr "Borttagna produkter: %d."
 
 #, python-format
-msgid "Couldn't add product %s to own package"
-msgstr "Kunde inte lägga till produkten %s till det egna paketet"
+msgid "Couldn't add product %s to its own package."
+msgstr "Det gick inte att lägga till produkten %s i sitt eget paket."
 
 msgid "child"
 msgstr "underordnad"
@@ -1011,11 +1065,15 @@ msgid "Unlink"
 msgstr "Ta bort koppling"
 
 #, python-format
-msgid "Unable to link %(product)s: %(error)s"
-msgstr "Det går inte att länka %(product)s: %(error)s"
+msgid "Unable to link %(product)s: %(error)s."
+msgstr "Det går inte att länka %(product)s: %(error)s."
 
 msgid "variable combination"
 msgstr "variabelkombination"
+
+#, python-format
+msgid "Unnamed %s"
+msgstr "Namnlös %s"
 
 msgid "Set visible"
 msgstr "Ställ in som synlig"
@@ -1030,15 +1088,15 @@ msgid "Edit products"
 msgstr "Redigera produkter"
 
 #, python-format
-msgid "%s has been marked deleted."
-msgstr "%s är markerats som borttagna."
+msgid "Product %s copy successfull."
+msgstr "Produkt %s kopia framgångsrik."
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
 msgstr "Minsta inköpskvantitet har avrundats för att matcha försäljningsenheten."
 
 #, python-format
-msgid "Changes to shop instance for %s saved"
-msgstr "Ändringar för butikinstansen för %s sparade"
+msgid "Changes to shop instance for %s saved."
+msgstr "Ändringar i butiksinstans för %s sparade."
 
 msgid "Product is not available."
 msgstr "Produkten är inte tillgänglig."
@@ -1057,14 +1115,17 @@ msgstr "Ändringar sparade."
 msgid "Edit Media: %s"
 msgstr "Redigera media: %s"
 
-msgid "Files added to product."
-msgstr "Filer tillagda till produkten."
+msgid "Changes were saved."
+msgstr "Ändringar sparades."
+
+msgid "Files added to the product."
+msgstr "Filer har lagts till i produkten."
 
 msgid "Clear package"
 msgstr "Töm paketet"
 
-msgid "Are you sure? This will remove all products from package."
-msgstr "Är du säker? Alla produkter tas från paketet."
+msgid "Are you sure? This will remove all products from the package."
+msgstr "Är du säker? Detta tar bort alla produkter från förpackningen."
 
 #, python-format
 msgid "Edit Package: %s"
@@ -1115,7 +1176,13 @@ msgid "Mode"
 msgstr "Läge"
 
 msgid "Filter by category name..."
-msgstr ""
+msgstr "Filtrera efter kategorinamn ..."
+
+msgid "Filter by supplier name..."
+msgstr "Filtrera efter leverantörsnamn ..."
+
+msgid "Suppliers"
+msgstr "Leveranrörer"
 
 msgid "Additional Categories"
 msgstr "Ytterligare kategorier"
@@ -1126,14 +1193,17 @@ msgstr "Köpbar"
 msgid "Mass Edit: Products"
 msgstr "Redigera många: Produkter"
 
-msgid "Products changed successfully"
-msgstr "Produkter ändrats"
+msgid "Products changed."
+msgstr "Produkterna har ändrats."
 
 msgid "Manage Cross-Selling"
 msgstr "Hantera korsförsäljning"
 
 msgid "Cross-Selling"
 msgstr "Korsförsäljning"
+
+msgid "Other"
+msgstr "Övrigt"
 
 #, python-format
 msgid "Child: %s"
@@ -1164,15 +1234,6 @@ msgstr "Konvertera till överordnat paket"
 
 msgid "Convert to Variation Parent"
 msgstr "Konvertera till överordnad variant"
-
-msgid "Save and Exit"
-msgstr "Spara och avsluta"
-
-msgid "Save and Create New"
-msgstr "Spara och skapa ny"
-
-msgid "Save as a copy"
-msgstr "Lagra som kopia"
 
 msgid "Sales Dashboard"
 msgstr "Försäljningsöversikt"
@@ -1383,17 +1444,14 @@ msgid ""
 "for reference."
 msgstr "Det här alternativet definierar hur referensnummer för beställningar byggs. Alternativen är: <br><br> <b>Unik</b> <br> Referensnummer är unika i hela systemet, oavsett mängden av butiker. <br><br> <b>Löpande</b> <br> Referensnummer är löpande i hela systemet, oavsett mängden av butiker. <br><br> <b>Butikslöpande</b> <br> Varje butik har sina egen löpande siffror som referenser."
 
-msgid "Settings saved"
-msgstr "Inställningar sparade"
+msgid "Settings saved."
+msgstr "Inställningar Sparade."
 
 msgid "Reset Defaults"
 msgstr "Återställ till standardinställningar"
 
-msgid "Changes saved successfully"
-msgstr "Ändringarna sparades felfritt."
-
-msgid "No changes detected"
-msgstr "Inga förändringar som upptäcktes"
+msgid "No changes detected."
+msgstr "Inga ändringar upptäcktes."
 
 msgid "Save system settings"
 msgstr "Spara systeminställningar"
@@ -1414,28 +1472,28 @@ msgid "Publish shop"
 msgstr "Publicera butik"
 
 msgid "Set \"{}\" as the active shop"
-msgstr ""
+msgstr "Ställ in &quot;{}&quot; som den aktiva butiken"
 
 msgid "Available Shops [currently active: {}]"
-msgstr ""
+msgstr "Tillgängliga butiker [för närvarande aktiva: {}]"
 
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr "Detta fält kan inte ändras eftersom det finns existerande beställningar för den här butiken."
+
+msgid "Currency"
+msgstr "Valuta"
 
 msgid ""
 "The primary shop currency. This is the currency used when selling your "
 "products."
 msgstr "Butiken primära valuta. Detta är den valuta som används när sälja dina produkter."
 
-msgid "Staff"
-msgstr "Personal"
-
 msgid "Select staff members for this shop."
 msgstr "Väl butikens personal"
 
 msgid "Domain is unique. Please enter a unique value."
-msgstr ""
+msgstr "Domänen är unik. Ange ett unikt värde."
 
 msgid "Shop name"
 msgstr "Butiksnamn"
@@ -1478,14 +1536,14 @@ msgstr "Staden i vilket din butik befinner sig i."
 msgid "The country in which your shop is located."
 msgstr "Landet i vilket din butik befinner sig i."
 
-msgid "There are still some pending actions to complete!"
-msgstr "Det finns fortfarande några väntande åtgärder för att slutföra!"
+msgid "There are still some pending actions to complete."
+msgstr "Det finns fortfarande några väntande åtgärder att slutföra."
 
-msgid "Your store is now live!"
-msgstr "Din butik är nu klar för användning!"
+msgid "Your store is now live."
+msgstr "Din butik är nu live."
 
-msgid "Shop {} is now active!"
-msgstr ""
+msgid "Shop {} is now active."
+msgstr "Butik {} är nu aktiv."
 
 msgid "Domain"
 msgstr "Domän"
@@ -1499,18 +1557,19 @@ msgstr "Lägg till en adress så att du kan ta betalt"
 msgid "Default Tax Class"
 msgstr "Standard skatteklass"
 
-msgid "Suppliers"
-msgstr "Leveranrörer"
-
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
-msgstr ""
+msgstr "Välj butiker för denna leverantör. Håll den tom för att dela med alla butiker."
 
 #, python-format
 msgid "No %s module"
 msgstr "Ingen %s modul"
 
 msgid "It is not possible to manage inventory when no module is selected."
-msgstr ""
+msgstr "Det är inte möjligt att hantera inventering när ingen modul har valts."
+
+#, python-format
+msgid "Success! %s has been marked deleted."
+msgstr "Framgång! %s har markerats borttagen."
 
 msgid "Module"
 msgstr "Modul"
@@ -1530,7 +1589,10 @@ msgid ""
 msgstr "Statistiken kommer att med jämna mellanrum skickas till Shuup.com efter 24 timmar. Klicka här för mer information."
 
 msgid "Opt-in for telemetry"
-msgstr ""
+msgstr "Välj telemetri"
+
+msgid "Taxes"
+msgstr "Skatter"
 
 msgid "Customer Tax Groups"
 msgstr "Kunders skattegrupper"
@@ -1558,9 +1620,9 @@ msgid ""
 "    You've been added as an administrator to %(shop_url)s. Here are some details:\n"
 "        Shop url: %(shop_url)s\n"
 "        Login url: %(admin_url)s\n"
-"        Your username: %(username)s\n"
+"        Your username: '%(username)s'\n"
 "        Your password: Please contact your admin.\n"
-msgstr "\n    Välkommen %(first_name)s!\n\n    Du har lagts till som en administratör på %(shop_url) s. Här är några detaljer: \n        Butikens webbadress: %(shop_url)s\n        Inloggningsadress: %(admin_url)s\n        Ditt användarnamn: %(username)s\n        Ditt löslenord: Kontakta administratören.\n"
+msgstr ""
 
 msgid "Password"
 msgstr "Lösenord"
@@ -1568,11 +1630,23 @@ msgstr "Lösenord"
 msgid "The user password."
 msgstr "Användarens lösenord."
 
-msgid "See the permissions view to change these."
-msgstr "Se behörigheterna för att ändra dessa."
+msgid "Main Permissions"
+msgstr "Huvudtillstånd"
 
-msgid "See Contacts - Permission Groups to change these."
-msgstr "Se Kontakter - Behörighetsgrupper för att ändra dessa."
+msgid ""
+"Two fundamental permissions: Access to Admin Panel and Superuser status "
+"rights. Go to user account -> `Actions` -> `Edit Main Permissions` to change"
+" these."
+msgstr "Två grundläggande behörigheter: tillgång till administratörspanelen och superanvändares statusrättigheter. Gå till användarkontot -&gt; `Åtgärder` -&gt;` Redigera huvudbehörigheter` för att ändra dessa."
+
+msgid ""
+"Use Permission Groups to granularly give more permissions. Search for "
+"`Permission Groups` to change these and add them to multiple users. Go to "
+"user account -> `Actions` -> `Edit Main Permissions` to add them to a "
+"specific user. Will not influence Superusers as they already have all the "
+"rights and can't be stripped of them without removing Superuser status "
+"first."
+msgstr "Använd behörighetsgrupper för att detaljerat ge fler behörigheter. Sök efter &#39;Tillståndsgrupper&#39; för att ändra dessa och lägga till dem till flera användare. Gå till användarkontot -&gt; `Åtgärder` -&gt;` Redigera huvudbehörigheter` för att lägga till dem till en viss användare. Kommer inte att påverka Superanvändare eftersom de redan har alla rättigheter och inte kan tas bort från dem utan att först ta bort Superanvändarstatus."
 
 msgid "The user email address. Used for password resets."
 msgstr "Användarens e-postadress. Används för lösenordsåterställning."
@@ -1583,28 +1657,31 @@ msgstr "Användarens förnamn."
 msgid "The last name of the user."
 msgstr "Användarens efternamn."
 
-msgid "staff"
-msgstr "personal"
+msgid "Access to Admin Panel"
+msgstr "Åtkomst till administratörspanelen"
 
-msgid "superuser"
-msgstr "superanvändare"
+msgid "Superuser (Full rights)"
+msgstr "Superanvändare (fullständiga rättigheter)"
 
-msgid "No special permissions"
-msgstr "Inga speciella behörigheter"
+msgid "No Main Permissions selected."
+msgstr "Inga huvudbehörigheter har valts."
 
-msgid "No permission groups"
-msgstr "Ingen behörighetsgrupp"
+msgid "No Granular Permission Groups selected."
+msgstr "Inga granulära behörighetsgrupper har valts."
+
+msgid "No Granular Permission Groups available."
+msgstr "Inga granulära tillståndsgrupper tillgängliga."
 
 msgid "Send email confirmation"
 msgstr "Skicka e-postbekräftelse"
 
 msgid ""
 "Send an email to the user to let them know they've been added as a shop "
-"user. Applicable only for users with staff status."
-msgstr "Skicka ett mail till användaren för att låta dem veta att de har lagts till som en butiksanvändare. Gäller endast för användare med personal status."
+"user. Applicable only for users with Access to Admin Panel status."
+msgstr "Skicka ett mejl till användaren för att meddela dem att de har lagts till som butiksanvändare. Gäller endast användare med åtkomst till adminpanelens status."
 
-msgid "Please enter an email to send a confirmation"
-msgstr "Ange en e-postaddress dit bekräftelsen skall skickas"
+msgid "Please enter an email to send a confirmation to."
+msgstr "Ange ett e-postmeddelande för att skicka en bekräftelse till."
 
 msgid "Change Password"
 msgstr "Ändra lösenord"
@@ -1615,8 +1692,8 @@ msgstr "Användaren har ingen e-postadress"
 msgid "Send Password Reset Email"
 msgstr "Skicka ett epost för lösenordsåterställning"
 
-msgid "Edit Permissions"
-msgstr "Redigera behörigheter"
+msgid "Edit Main Permissions"
+msgstr "Redigera huvudbehörigheter"
 
 msgid "Contact Details"
 msgstr "Kontaktuppgifter"
@@ -1630,19 +1707,22 @@ msgstr "Aktivera användare"
 msgid "Deactivate User"
 msgstr "Inaktivera användare"
 
-msgid "Login as User"
-msgstr "Logga in som användare"
+#, python-format
+msgid "Info! User bound to contact %(contact)s."
+msgstr "Info! Användaren måste kontakta %(contact)s."
 
 #, python-format
-msgid "User bound to contact %(contact)s."
-msgstr "Användaren är skyldig att kontakta %(contact)s."
-
-#, python-format
-msgid "You've been added as an admin user to %s"
-msgstr "Du har lagts till som en admin-användare till %s"
+msgid "You've been added as an admin user to `%s`."
+msgstr "Du har lagts till som administratörsanvändare till &#39;%s&#39;."
 
 msgid "User"
 msgstr "Användare"
+
+msgid "You can not deactivate a Superuser. Remove Superuser status first."
+msgstr "Du kan inte inaktivera en superanvändare. Ta bort status för superanvändare först."
+
+msgid "You can not deactivate yourself. Use another account."
+msgstr "Du kan inte inaktivera dig själv. Använd ett annat konto."
 
 #, python-format
 msgid "%(user)s is now %(state)s."
@@ -1658,8 +1738,8 @@ msgid "This user is not active."
 msgstr "Den här användaren är inte aktiv."
 
 #, python-brace-format
-msgid "You're now logged in as {username}"
-msgstr "Du är nu inloggad som {username}"
+msgid "You're now logged in as `{username}`."
+msgstr "Du är nu inloggad som &#39;{username}&#39;."
 
 msgid "Username"
 msgstr "Användarnamn"
@@ -1669,9 +1749,6 @@ msgstr "Förnamn"
 
 msgid "Last Name"
 msgstr "Efternamn"
-
-msgid "Superuser"
-msgstr "Superanvändare"
 
 #, python-format
 msgid "First Name: %s"
@@ -1713,40 +1790,73 @@ msgid "Reset User Password"
 msgstr "Nollställ användarens lösenord"
 
 msgid ""
-"The `shuup.front.apps.auth` app needs to be enabled for password reset."
-msgstr "Applikationen `shuup.front.apps.auth` måste vara aktiverad för att kunna nollställa lösenord."
+"Error! The `shuup.front.apps.auth` app needs to be enabled for password "
+"reset."
+msgstr "Fel! Appen `shuup.front.apps.auth` måste vara aktiverad för återställning av lösenord."
 
 #, python-format
-msgid "Password recovery email sent to %(email)s"
-msgstr "Återställningsmail har skickats till %(email)s"
+msgid "Password recovery email sent to %(email)s."
+msgstr "E-postmeddelande för återställning av lösenord skickas till %(email)s."
 
-msgid "Sending the password recovery email failed."
-msgstr "Skickandet av återställningsmailet misslyckades."
+msgid "Error! Sending the password recovery email failed."
+msgstr "Fel! Det gick inte att skicka e-postmeddelandet för återställning av lösenord."
 
 msgid ""
-"The permission groups that this user belongs to. Permission groups are "
-"configured through Contacts - Permission Groups."
-msgstr "Behörighetsgrupper som denna användare tillhör. Behörighetsgrupper konfigureras via Kontakter - Behörighetsgrupper."
+"In order to allow making significant changes to accounts, we need to confirm"
+" that you know the password for the account you are using."
+msgstr "För att göra betydande ändringar i konton måste vi bekräfta att du känner till lösenordet för kontot du använder."
 
-msgid "You can't unset this status for yourself."
-msgstr "Du kan inte nollställa denna status själv."
+msgid "Superuser (Full rights) status"
+msgstr "Superanvändarstatus (fullständiga rättigheter)"
+
+msgid ""
+"Designates whether this user has all permissions without explicitly "
+"assigning them. Assigning Granular Permission Groups to a Superuser will not"
+" have any effect because Granular Permission Groups are only  able to give "
+"more rights, but Superuser already has them all."
+msgstr "Anger om den här användaren har alla behörigheter utan att de uttryckligen tilldelas dem. Tilldelning av granulära behörighetsgrupper till en superanvändare kommer inte att ha någon effekt eftersom Granular Permission Groups bara kan ge fler rättigheter, men Superuser har redan alla."
+
+msgid "Access to Admin Panel status"
+msgstr "Åtkomst till administratörspanelens status"
+
+msgid ""
+"Designates whether this user can log into this admin site. Even Superusers "
+"should have this status enabled, otherwise they won't be able to access the "
+"Admin Panel."
+msgstr "Anger om den här användaren kan logga in på den här admin-webbplatsen. Även superanvändare bör ha den här statusen aktiverad, annars kommer de inte att kunna komma åt administratörspanelen."
+
+msgid ""
+"Use Permission Groups to granularly give more permissions. User can belong "
+"to many groups and their permissions add and stack together. Search for "
+"`Permission Groups` to change these and add them to multiple users. Go to "
+"user account -> `Actions` -> `Edit Main Permissions` to add them to a "
+"specific user. Will not influence Superusers as they already have all the "
+"rights and can't be stripped of them without removing Superuser status "
+"first."
+msgstr "Använd behörighetsgrupper för att detaljerat ge fler behörigheter. Användaren kan tillhöra många grupper och deras behörigheter läggs till och staplas ihop. Sök efter &#39;Tillståndsgrupper&#39; för att ändra dessa och lägga till dem till flera användare. Gå till användarkontot -&gt; `Åtgärder` -&gt;` Redigera huvudbehörigheter` för att lägga till dem till en viss användare. Kommer inte att påverka Superanvändare eftersom de redan har alla rättigheter och inte kan tas bort från dem utan att först ta bort Superanvändarstatus."
+
+msgid ""
+"You can't unset this status for yourself due to security reasons. Use "
+"another account if you want to remove permissions for this particular "
+"account."
+msgstr "Du kan inte avmarkera den här statusen av säkerhetsskäl. Använd ett annat konto om du vill ta bort behörigheter för just detta konto."
 
 msgid "Change User Permissions"
 msgstr "Ändra användarbehörigheter"
 
 #, python-format
-msgid "Change Permissions: %s"
-msgstr "Ändra behörigheter: %s"
+msgid "Change Main Permissions: %s"
+msgstr "Ändra huvudbehörigheter: %s"
 
 #, python-format
 msgid "Permissions changed for %s."
 msgstr "Behörigheter ändrats till %s."
 
-msgid "You must be a staff user"
-msgstr ""
+msgid "You must have the Access to Admin Panel permission."
+msgstr "Du måste ha behörighet för åtkomst till administratörspanelen."
 
-msgid "You are not a staff member of this shop"
-msgstr ""
+msgid "You must have the Access to Admin Panel permissions to this shop."
+msgstr "Du måste ha åtkomst till adminpanelens behörigheter till den här butiken."
 
 msgid "New Attribute"
 msgstr "Nytt attribut"
@@ -1755,7 +1865,7 @@ msgid "Login"
 msgstr "Logga in"
 
 msgid "Welcome back"
-msgstr ""
+msgstr "Välkommen tillbaka"
 
 msgid "Forgot your password?"
 msgstr "Glömt ditt lösenord?"
@@ -1774,29 +1884,35 @@ msgstr "Besök butik"
 
 #, python-format
 msgid "Hi %(fullname)s"
-msgstr ""
+msgstr "Hej %(fullname)s"
 
 #, python-format
 msgid "In case you've forgotten, your username is %(username)s."
-msgstr ""
+msgstr "Om du har glömt är ditt användarnamn %(username)s."
 
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
-msgstr ""
+msgstr "Du får det här e-postmeddelandet eftersom du begärde en återställning av lösenordet för ditt användarkonto på %(site_name)s."
 
 msgid "Please go to the following page and choose a new password:"
-msgstr ""
+msgstr "Gå till följande sida och välj ett nytt lösenord:"
 
 msgid "Password Recovery"
-msgstr ""
+msgstr "Återställning av lösenord"
 
 msgid "Reset Password"
-msgstr ""
+msgstr "Återställ lösenord"
 
 msgid "Send password recovery instructions"
-msgstr ""
+msgstr "Skicka instruktioner för återställning av lösenord"
+
+msgid "Active shop:"
+msgstr "Aktiv butik:"
+
+msgid "Active vendor:"
+msgstr "Aktiv leverantör:"
 
 msgid "Dashboard"
 msgstr "Översikt"
@@ -1810,11 +1926,20 @@ msgstr "Meny"
 msgid "Search for"
 msgstr "Sök efter"
 
+msgid "Go to dashboard"
+msgstr "Gå till instrumentpanelen"
+
 msgid "Go home"
 msgstr "Gå till startsidan"
 
 msgid "Hello"
 msgstr "Hej"
+
+msgid "Stop Auto Refresh"
+msgstr "Stoppa automatisk uppdatering"
+
+msgid "Auto Refresh Every 30s"
+msgstr "Automatisk uppdatering vart 30: e år"
 
 msgid "Show Tour"
 msgstr "Visa rundtur"
@@ -1831,8 +1956,8 @@ msgstr "Kopiera synlighetsinställningarna till produkter"
 msgid "Category Image"
 msgstr "Kategoribild"
 
-msgid "* Products that has this category as a primary category."
-msgstr "* Produkter som har denna kategori som en primär kategori."
+msgid "* Products that have this category as a primary category."
+msgstr "* Produkter som har denna kategori som primär kategori."
 
 msgid "Add a new product category"
 msgstr "Lägg till ny produktkategori"
@@ -2860,15 +2985,15 @@ msgid ""
 msgstr "Tyvärr inträffade ett internt serverfel. Försök att uppdatera sidan eller försök igen senare."
 
 msgid "Edit the selected object"
-msgstr ""
+msgstr "Redigera det valda objektet"
 
 #, python-brace-format
 msgid "Required. {field_help}"
-msgstr ""
+msgstr "Nödvändig. {field_help}"
 
 #, python-brace-format
 msgid "Optional. {field_help}"
-msgstr ""
+msgstr "Frivillig. {field_help}"
 
 msgid "Welcome to Shuup!"
 msgstr "Välkommen till Shuup!"
@@ -2891,15 +3016,36 @@ msgstr "Låt oss gå igenom några av de saker du kan göra. Klicka på Nästa f
 msgid "Date"
 msgstr "Datum"
 
+msgid "Save and Exit"
+msgstr "Spara och avsluta"
+
 msgid "This action effects on all items."
-msgstr ""
+msgstr "Denna åtgärd påverkar alla objekt."
 
 #, python-format
 msgid "This action affects %(item_count)s item(s)."
-msgstr ""
+msgstr "Denna åtgärd påverkar %(item_count)s objekt."
 
 msgid "Upload"
 msgstr "Ladda upp"
+
+msgid "Copy folder path"
+msgstr "Kopiera mappsökväg"
+
+msgid "Access to folder"
+msgstr "Tillgång till mapp"
+
+msgid "Customize admin menu"
+msgstr "Anpassa admin-menyn"
+
+msgid "Reset"
+msgstr "Återställa"
+
+msgid "Folder"
+msgstr "Mapp"
+
+msgid "Drag me"
+msgstr "Dra mig"
 
 msgid "Comment"
 msgstr "Kommentar"
@@ -2907,26 +3053,26 @@ msgstr "Kommentar"
 msgid "Save comment"
 msgstr "Spara kommentar"
 
-msgid "Comment saved."
-msgstr "Kommentar sparad."
+msgid "Comment was saved."
+msgstr "Kommentaren sparades."
 
-msgid "There was an error updating the admin comment."
-msgstr "Det gick inte att uppdatera den administrativa kommentaren."
+msgid "Updating the admin comment failed."
+msgstr "Det gick inte att uppdatera administratörskommentaren."
 
 msgid "Description"
 msgstr "Beskrivning"
-
-msgid "Delete"
-msgstr "Ta bort"
 
 msgid "No payments have been created yet."
 msgstr "Inga betalningar har skapats ännu."
 
 msgid "Are you sure you want to delete this payment?"
-msgstr ""
+msgstr "Är du säker på att du vill ta bort den här betalningen?"
 
 msgid "Order Details"
-msgstr ""
+msgstr "Orderdetaljer"
+
+msgid "Order Shop"
+msgstr "Beställ butik"
 
 msgid "Order Number"
 msgstr "Beställningsnummer"
@@ -2988,6 +3134,10 @@ msgstr "Summa exkl. skatt"
 msgid "Total incl. Tax"
 msgstr "Summa inkl. skatt"
 
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr "Levereras av %(supplier)s"
+
 msgid "Discount"
 msgstr "Rabatt"
 
@@ -3006,20 +3156,33 @@ msgstr "Använd fältet nedan för att lägga till nya loggposter."
 msgid "Add to Log"
 msgstr "Lägg till loggpost"
 
-msgid "Log entry added."
-msgstr "Loggpost tillagt."
+msgid "Log entry was added."
+msgstr "Loggposten lades till."
 
-msgid "There was an error adding the log entry."
+msgid "Adding the log entry failed."
 msgstr "Det gick inte att lägga till loggposten."
+
+msgid "Unshipped"
+msgstr "Ej levererad"
+
+msgid "Shipped"
+msgstr "Levererad"
+
+msgid "Ordered"
+msgstr "Beställd"
+
+msgid "Refunded"
+msgstr "Återbetald"
+
+#, python-format
+msgid "Create new shipment for %(supplier_name)s"
+msgstr "Skapa ny leverans för %(supplier_name)s"
 
 msgid "Tracking Code"
 msgstr "Spårningskod"
 
 msgid "Created"
 msgstr "Skapad"
-
-msgid "No shipments have been created yet."
-msgstr "Inga leveranser har ännu skapats."
 
 msgid ""
 "Shipped shipments should not be deleted. Deletion will affect products "
@@ -3050,26 +3213,14 @@ msgstr "Betald"
 msgid "Remaining"
 msgstr "Återstående"
 
-msgid "Refunded"
-msgstr "Återbetald"
-
 msgid "Add Another Refund"
 msgstr "Lägg till en ny återbetalning"
 
 msgid "Order Line"
-msgstr ""
+msgstr "Beställningslinje"
 
 msgid "To Ship"
 msgstr "För leverans"
-
-msgid "Ordered"
-msgstr "Beställd"
-
-msgid "Shipped"
-msgstr "Levererad"
-
-msgid "Unshipped"
-msgstr "Ej levererad"
 
 msgid "Set All Products To Ship"
 msgstr "Ställ alla produkter för leverans"
@@ -3077,33 +3228,36 @@ msgstr "Ställ alla produkter för leverans"
 msgid "Ship All"
 msgstr "Leverera alla"
 
+msgid "Permissions"
+msgstr "Behörigheter"
+
 msgid "Select all permissions"
-msgstr ""
+msgstr "Välj alla behörigheter"
 
 msgid "Deselect all permissions"
-msgstr ""
+msgstr "Avmarkera alla behörigheter"
 
 msgid "(All permissions granted)"
-msgstr ""
+msgstr "(Alla behörigheter beviljade)"
 
 msgid "(Partial permissions granted)"
-msgstr ""
+msgstr "(Delvis behörighet beviljad)"
 
 msgid "Module permission"
-msgstr ""
+msgstr "Modultillstånd"
 
 msgid "Select the following permission to enable users to access this module."
-msgstr ""
+msgstr "Välj följande behörighet för att låta användare få åtkomst till den här modulen."
 
 msgid "Select all permissions for this module"
-msgstr ""
+msgstr "Välj alla behörigheter för den här modulen"
 
 msgid "Features permissions"
-msgstr ""
+msgstr "Funktionsbehörigheter"
 
 msgid ""
 "Select the permissions to enable access to specific features of the module."
-msgstr ""
+msgstr "Välj behörigheter för att möjliggöra åtkomst till specifika funktioner i modulen."
 
 msgid "Error!"
 msgstr "Fel!"
@@ -3162,7 +3316,7 @@ msgid "Showcase your merchandise here."
 msgstr "Visa upp dina varor här."
 
 msgid "Drop files here or click to <a href=\"#\">browse</a>."
-msgstr ""
+msgstr "Släpp filer här eller klicka för att <a href=\"#\">bläddra</a> ."
 
 msgid "All the orders that have this product."
 msgstr "Alla beställningar som har denna produkt."
@@ -3174,7 +3328,7 @@ msgid "This product is currently not orderable."
 msgstr "Denna produkt är för närvarande inte beställningsbar."
 
 msgid "Add a new product"
-msgstr ""
+msgstr "Lägg till en ny produkt"
 
 msgid "You are adding a product."
 msgstr "Du lägger till en produkt."
@@ -3208,12 +3362,12 @@ msgid ""
 msgstr "Ställ in ett specifikt pris för dina kundsegment, såsom lojalitet, nivåstatus eller säsong."
 
 msgid "Contact Group Discounts"
-msgstr ""
+msgstr "Kontakta grupprabatter"
 
 msgid ""
 "Here you can set individual discount amounts for different contact groups. \" +\n"
 "                    \"The discount amount may be visible on storefront. These groups are defined in"
-msgstr ""
+msgstr "Här kan du ställa in individuella rabattbelopp för olika kontaktgrupper. &quot;+&quot; Rabattbeloppet kan vara synligt i butiksfönstret. Dessa grupper definieras i"
 
 msgid "Cross-sells"
 msgstr "Korsförsäljningar"
@@ -3253,6 +3407,12 @@ msgstr "Kombination"
 msgid "Variables"
 msgstr "Variabler"
 
+msgid "New template"
+msgstr "Ny mall"
+
+msgid " Cancel "
+msgstr "Avbryt"
+
 msgid "This product is not yet a variation."
 msgstr "Denna produkt är inte ännu en variant."
 
@@ -3277,16 +3437,16 @@ msgid "Today"
 msgstr "Idag"
 
 msgid "Month to date (MTD)"
-msgstr ""
+msgstr "Månad till datum (MTD)"
 
 msgid "Year to date (YTD)"
-msgstr ""
+msgstr "År till datum (YTD)"
 
 msgid "Totals"
 msgstr "Summa"
 
 msgid "Consolidate Data"
-msgstr ""
+msgstr "Konsolidera data"
 
 msgid ""
 "Your shop currently has some sample data installed. Select below which "
@@ -3396,10 +3556,10 @@ msgstr "Shuup kommer emellanåt sända telemetri data till an av Shuup.com serve
 
 #, python-format
 msgid ""
-"The data contains an unique installation key, as well as the hostname of the"
-" installation (as sent by the visiting browser; currently "
+"The data contains a unique installation key, as well as the hostname of the "
+"installation (as sent by the visiting browser; currently "
 "<code>%(host)s</code>)."
-msgstr "Informationen innehåller en unik installationsnyckel, liksom värdnamnet för installationen (som skickas av den besökande webbläsare, för närvarande <code>%(host)s</code> )."
+msgstr "Data innehåller en unik installationsnyckel, liksom värdens namn på installationen (som skickas av den besökande webbläsaren; för närvarande <code>%(host)s</code> )."
 
 msgid ""
 "No business data or other customer information is ever sent. Shuup.com only "
@@ -3485,6 +3645,12 @@ msgstr "Ny %(model)s"
 msgid "Discard Changes"
 msgstr "Kasta ändringar"
 
+msgid "Save as a copy"
+msgstr "Lagra som kopia"
+
+msgid "Save and Create New"
+msgstr "Spara och skapa ny"
+
 #, python-format
 msgid "Are you sure you wish to delete %s?"
 msgstr "Är du säker du vill ta bort %s?"
@@ -3496,8 +3662,8 @@ msgstr "Visar %(per_page)s av %(n_items)s %(verbose_name_plural)s"
 msgid "objects"
 msgstr "objekt"
 
-msgid "Unknown error"
-msgstr "Okänt fel"
+msgid "Mass Action encountered an unknown error."
+msgstr "Mass Action stötte på ett okänt fel."
 
 msgid "Mass Action"
 msgstr "Hantera många"
@@ -3509,14 +3675,16 @@ msgstr "Det går inte att komma åt denna sida. %(reason)s"
 msgid "Log in with different credentials..."
 msgstr "Logga in med andra inloggninguppgifter..."
 
-msgid "Sign in to continue"
-msgstr ""
+msgid "Sign in to continue."
+msgstr "Logga in för att fortsätta."
 
-msgid "You must be a staff member."
-msgstr "Du måste tillhöra personalen."
+msgid ""
+"Your account must have `Access to Admin Panel` permissions to access this "
+"page."
+msgstr "Ditt konto måste ha &quot;Tillgång till administratörspanelen&quot; behörighet för att komma åt den här sidan."
 
 msgid "There is no active shop available. Contact support for more details."
-msgstr ""
+msgstr "Det finns ingen aktiv butik tillgänglig. Kontakta support för mer information."
 
 #, python-format
 msgid "You do not have the required permissions: %s"
@@ -3525,30 +3693,26 @@ msgstr "Du har inte den behörighet som krävs: %s"
 #, python-brace-format
 msgid ""
 "Can't view this page. You do not have the required permission(s): "
-"{permissions}"
-msgstr ""
+"`{permissions}`."
+msgstr "Kan inte visa den här sidan. Du har inte nödvändiga behörighet (er): &quot;{permissions}&quot;."
 
 msgid "Unnamed"
 msgstr "Namnlös"
 
 msgid "Item"
-msgstr ""
+msgstr "Artikel"
 
 #, python-format
-msgid "New %s created."
-msgstr "Ny %s skapades."
+msgid "New %s was created."
+msgstr "Nytt %s skapades."
 
 #, python-format
-msgid "%s edited."
-msgstr "%s redigerat"
+msgid "%s was edited."
+msgstr "%s redigerades."
 
 #, python-format
 msgid "New %s"
 msgstr "Ny %s"
-
-#, python-format
-msgid "Unnamed %s"
-msgstr "Namnlös %s"
 
 #, python-format
 msgid "Only one %(model)s permitted."
@@ -3558,13 +3722,13 @@ msgid "Mass Edit"
 msgstr "Redigera många"
 
 msgid "Invalid object."
-msgstr ""
+msgstr "Ogiltigt objekt."
 
 msgid "Invalid model."
-msgstr ""
+msgstr "Ogiltig modell."
 
-msgid "Object not found"
-msgstr ""
+msgid "Object not found."
+msgstr "Objekt hittades inte."
 
 msgid "Storefront"
 msgstr "Butikens framsida"
@@ -3578,16 +3742,19 @@ msgstr "Slutför guide"
 msgid "Complete the setup wizard"
 msgstr "Slutföra installationsguiden"
 
+msgid "All set. Nothing to be configured"
+msgstr "Redo. Inget att konfigurera"
+
 msgid ""
 "A reset password email was sent. Please, follow the instructions to set a "
 "new password."
-msgstr ""
+msgstr "En e-postadress för återställning av lösenord skickades. Följ instruktionerna för att ställa in ett nytt lösenord."
 
 msgid "This recovery link is invalid."
-msgstr ""
+msgstr "Den här återställningslänken är ogiltig."
 
-msgid "Password changed successfully!"
-msgstr ""
+msgid "Password was changed."
+msgstr "Lösenordet ändrades."
 
 #, python-format
 msgid "Couldn't get selections for %s."

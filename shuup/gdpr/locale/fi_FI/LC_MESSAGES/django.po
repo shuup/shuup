@@ -3,14 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 # 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-27 19:23+0000\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"PO-Revision-Date: 2018-05-29 19:55+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,8 +45,8 @@ msgstr "Tallenna"
 msgid "General Data Protection Regulation"
 msgstr "General Data Protection Regulation"
 
-msgid "Contact anonymized!"
-msgstr "Kontakti anonymisoitu!"
+msgid "Contact was anonymized."
+msgstr "Yhteystiedot nimettömiksi."
 
 msgid "My Data"
 msgstr "Omat tiedot"
@@ -56,6 +59,13 @@ msgstr "käytössä"
 
 msgid "Define if the GDPR is active."
 msgstr "Aktivoi GDPR."
+
+msgid "skip consent on login"
+msgstr "ohita suostumus kirjautumisen yhteydessä"
+
+msgid "Do not require consent on login when GDPR is activated."
+msgstr ""
+"Älä vaadi suostumusta kirjautumisen yhteydessä, kun GDPR on aktivoitu."
 
 msgid "privacy policy page"
 msgstr "tietosuojakäytäntö-sivu"
@@ -89,6 +99,17 @@ msgstr "ote tietosuojakäytännöstä"
 msgid "The summary text to be presented about cookie privacy."
 msgstr "Yhteenvetoteksti evästeen tietosuoja-osiosta."
 
+msgid "login consent text"
+msgstr "kirjautumistiedot"
+
+msgid ""
+"Shown in login page between the form and the button. Optional, but should be"
+" considered when the consent on login is disabled."
+msgstr ""
+"Näkyy kirjautumissivulla lomakkeen ja painikkeen välissä. Valinnainen, mutta"
+" se on otettava huomioon, kun sisäänkirjautumisen suostumus on poistettu "
+"käytöstä."
+
 msgid "GDPR settings"
 msgstr "GDPR asetukset"
 
@@ -97,6 +118,12 @@ msgstr "GDPR {}"
 
 msgid "always active"
 msgstr "aina aktiivinen"
+
+msgid "active by default"
+msgstr "oletuksena aktiivinen"
+
+msgid "whether this cookie category is active by default"
+msgstr "onko tämä evästeluokka aktiivinen oletuksena"
 
 msgid "cookies used"
 msgstr "käytetyt evästeet"
@@ -151,14 +178,14 @@ msgstr ""
 "Olen lukenut ja hyväksyn <a href='{}' target='_blank' "
 "class='gdpr_consent_doc_check'>{}</a>"
 
-msgid "You must accept to this to register."
-msgstr "Sinun pitää hyväksyä tämä, jotta voit rekisteröityä."
+msgid "You must accept this in order to register."
+msgstr "Sinun on hyväksyttävä tämä rekisteröityäksesi."
 
-msgid "You must accept to this to order."
-msgstr "Sinun pitää hyväksyä tämä, jotta voit tilata."
+msgid "You must accept this to order."
+msgstr "Sinun on hyväksyttävä tämä tilausta varten."
 
-msgid "You must accept to this to authenticate."
-msgstr "Sinun pitää hyväksyä tämä, jotta voit kirjautua."
+msgid "You must accept this in order to authenticate."
+msgstr "Sinun on hyväksyttävä tämä todentamiseksi."
 
 msgid ""
 "<p>This website stores cookies on your computer. These cookies are used to "
@@ -1057,8 +1084,8 @@ msgstr "Oletko varma? Tätä toimintoa ei voi peruuttaa."
 msgid "Privacy Preferences"
 msgstr "Tietosuoja-asetukset"
 
-msgid "I Agree"
-msgstr "Hyväksyn"
+msgid "I Understand"
+msgstr "Ymmärrän"
 
 msgid "Privacy Preference Center"
 msgstr "Tietosuojakeskus"

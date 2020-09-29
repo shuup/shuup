@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"

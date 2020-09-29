@@ -1,22 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-29 08:13+0000\n"
-"PO-Revision-Date: 2017-11-29 12:53+0200\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
-"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
-"language/sv_SE/)\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-09-29 10:09+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Frontend - Customer Information Editing"
@@ -37,8 +37,8 @@ msgstr "Adressbok"
 msgid "Language"
 msgstr "Språk"
 
-msgid "Will become default user email when linked"
-msgstr "Kommer att bli användarens e-post när den är länkad"
+msgid "Will become default user email when linked."
+msgstr "Blir standard användar-e-post när den är länkad."
 
 msgid "Given Tax Number already exists. Please contact support."
 msgstr "Det givna momsnumret finns redan. Vänligen kontakta support."
@@ -51,6 +51,17 @@ msgstr "Adresstyp"
 
 msgid "Address Status"
 msgstr "Adress-status"
+
+msgid "Company information was saved."
+msgstr "Företagsinformation sparades."
+
+msgid ""
+"Company information was saved. Please follow the instructions sent to your "
+"email address."
+msgstr "Företagsinformation sparades. Följ instruktionerna som skickas till din e-postadress."
+
+msgid "Customer Email"
+msgstr "Kundens e-post"
 
 msgid "Home"
 msgstr "Start"
@@ -143,10 +154,9 @@ msgid "Company account information"
 msgstr "Företagets kontoinformation"
 
 msgid ""
-"You have already linked your account to a company and it is pending approval."
-msgstr ""
-"Du har redan länkat ditt konto till ett företag och kontot väntar på "
-"godkännande."
+"You have already linked your account to a company and it is pending "
+"approval."
+msgstr "Du har redan länkat ditt konto till ett företag och det väntar på godkännande."
 
 msgid "User account information"
 msgstr "Användarkontots Information"
@@ -199,24 +209,14 @@ msgstr "Företagsinformation"
 msgid "User information"
 msgstr "Användarinformation"
 
-msgid "Password successfully changed."
-msgstr "Lösenordet har ändrats"
+msgid "Password changed."
+msgstr "Lösenordet ändrat."
 
-msgid "Account information saved successfully."
-msgstr "Kontoinformation sparat."
+msgid "Account information was saved."
+msgstr "Kontouppgifter sparades."
 
-msgid "Company information saved successfully."
-msgstr "Företagsinformation sparat."
+msgid "Address information was saved."
+msgstr "Adressinformation sparades."
 
-msgid ""
-"Company information saved successfully. Please follow the instructions sent "
-"to your email address."
-msgstr ""
-"Företagsinformation har sparats framgångsrikt. Var god och följ "
-"instruktionerna som skickas till din e-postaddress."
-
-msgid "Address information saved successfully."
-msgstr "Adressinformationen sparat."
-
-msgid "Cannot remove address"
-msgstr "Det går inte att ta bort adressen"
+msgid "Cannot remove address because it doesn't exist."
+msgstr "Det går inte att ta bort adressen eftersom den inte finns."

@@ -3,6 +3,9 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,6 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-05 20:21+0000\n"
 "PO-Revision-Date: 2018-06-01 17:37+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,155 +22,155 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Tasks"
-msgstr ""
+msgstr "Uppgifter"
 
 msgid "Show Tasks"
-msgstr ""
+msgstr "Visa uppgifter"
 
 msgid "Task Types"
-msgstr ""
+msgstr "Uppgiftstyper"
 
 msgid "Show Task Types"
-msgstr ""
+msgstr "Visa uppgiftstyper"
 
 #, python-brace-format
 msgid "Changed assigment from {from_contact_name} to {to_contact_name}."
-msgstr ""
+msgstr "Ändrat uppdrag från {from_contact_name} till {to_contact_name}."
 
 msgid "Set In Progress"
-msgstr ""
+msgstr "Pågår"
 
 msgid "Set Completed"
-msgstr ""
+msgstr "Set slutfört"
 
 msgid "Invalid status."
-msgstr ""
+msgstr "Ogiltig status."
 
 msgid "Status changed."
-msgstr ""
+msgstr "Status ändrad."
 
 msgid "Name"
-msgstr ""
+msgstr "namn"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Filtrera efter namn ..."
 
 msgid "Creator"
-msgstr ""
+msgstr "Skapare"
 
 msgid "Filter by creator..."
-msgstr ""
+msgstr "Filtrera efter skapare ..."
 
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 msgid "Priority"
-msgstr ""
+msgstr "Prioritet"
 
 msgid "Comments"
-msgstr ""
+msgstr "Kommentarer"
 
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 msgid "In progress"
-msgstr ""
+msgstr "Pågående"
 
 msgid "Completed"
-msgstr ""
+msgstr "Avslutad"
 
 msgid "Deleted"
-msgstr ""
+msgstr "raderade"
 
 msgid "Public"
-msgstr ""
+msgstr "offentlig"
 
 msgid "Staff Only"
-msgstr ""
+msgstr "Endast personal"
 
 msgid "Admins Only"
-msgstr ""
+msgstr "Endast administratörer"
 
 msgid "shop"
-msgstr ""
+msgstr "affär"
 
 msgid "name"
-msgstr ""
+msgstr "namn"
 
 msgid "task type"
-msgstr ""
+msgstr "uppgiftstyp"
 
 msgid "task types"
-msgstr ""
+msgstr "uppgiftstyper"
 
 msgid "status"
-msgstr ""
+msgstr "status"
 
 msgid "priority"
-msgstr ""
+msgstr "prioritet"
 
 msgid "creator"
-msgstr ""
+msgstr "skapare"
 
 msgid "assigned to"
-msgstr ""
+msgstr "tilldelats"
 
 msgid "completed by"
-msgstr ""
+msgstr "fullgjord av"
 
 msgid "completed on"
-msgstr ""
+msgstr "slutfört den"
 
 msgid "created on"
-msgstr ""
+msgstr "skapad på"
 
 msgid "modified on"
-msgstr ""
+msgstr "ändrad den"
 
 msgid "task"
-msgstr ""
+msgstr "uppgift"
 
 msgid "author"
-msgstr ""
+msgstr "författare"
 
 msgid "visibility"
-msgstr ""
+msgstr "synlighet"
 
 msgid "body"
-msgstr ""
+msgstr "kropp"
 
 msgid "New Task"
-msgstr ""
+msgstr "Ny uppgift"
 
 msgid "General Information"
-msgstr ""
+msgstr "Allmän information"
 
 msgid "Created on"
-msgstr ""
+msgstr "Skapad på"
 
 msgid "Completed on"
-msgstr ""
+msgstr "Slutfört den"
 
 msgid "Completed by"
-msgstr ""
+msgstr "Fullgjord av"
 
 msgid "Author"
-msgstr ""
+msgstr "Författare"
 
 msgid "Visibility"
-msgstr ""
+msgstr "Synlighet"
 
 msgid "Comment"
-msgstr ""
+msgstr "Kommentar"
 
 msgid "Post a new comment"
-msgstr ""
+msgstr "Lägg upp en ny kommentar"
 
 msgid "New Task Type"
-msgstr ""
+msgstr "Ny uppgiftstyp"
 
 msgid "Last 10 pending tasks assigned for you"
-msgstr ""
+msgstr "Senaste 10 väntande uppgifter som tilldelats åt dig"
 
 msgid "Task"
-msgstr ""
+msgstr "Uppgift"

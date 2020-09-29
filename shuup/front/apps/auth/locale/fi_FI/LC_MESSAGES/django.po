@@ -5,13 +5,13 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Janne Tammi <janne@shuup.com>, 2017
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 18:06+0000\n"
-"PO-Revision-Date: 2018-06-28 20:11+0000\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-09-29 08:47+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -34,10 +34,10 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Please enter a correct %(username)s and password. Note that both fields may "
-"be case-sensitive. In case of multiple accounts with same email only "
-"username can be used to login."
-msgstr "Syötä oikea %(username)s ja salasana. Huomaathan, että molemmissa kentissä voi olla isoja ja pieniä kirjaimia. Jos teillä on useita tilejä samalla sähköpostilla niin vain käyttäjätunnusta voidaan käyttää kirjautumiseen."
+"Error! Please enter a correct %(username)s and password. Note that both "
+"fields may be case-sensitive. In case of multiple accounts with same email "
+"only username can be used to log in."
+msgstr "Virhe! Anna oikea %(username)s ja salasana. Huomaa, että molemmat kentät voivat olla kirjainkokoisia. Jos käytössä on useita tilejä, joilla on sama sähköpostiosoite, sisäänkirjautumiseen voidaan käyttää vain käyttäjänimeä."
 
 msgid "This account is inactive."
 msgstr "Tämä tili ei ole aktiivinen"
@@ -45,8 +45,8 @@ msgstr "Tämä tili ei ole aktiivinen"
 msgid "Username or email address"
 msgstr "Käyttäjänimi tai sähköpostiosoite"
 
-msgid "You are not allowed to login to this shop."
-msgstr "Sinulla ei ole lupaa kirjautua tähän kauppaan."
+msgid "You are not allowed to log in to this shop."
+msgstr "Et voi kirjautua tähän kauppaan."
 
 msgid "Log in"
 msgstr "Kirjaudu sisään"
@@ -113,5 +113,5 @@ msgid ""
 " receive instructions on how to reset your password shortly."
 msgstr "Mikäli käyttäjätili on liitetty antamiisi tietoihin, saat pian salasanan resetointiohjeet sähköpostiisi."
 
-msgid "This recovery link is invalid."
-msgstr "Tämä palautuslinkki on virheellinen."
+msgid "Error! This recovery link is invalid."
+msgstr "Virhe! Tämä palautuslinkki on virheellinen."

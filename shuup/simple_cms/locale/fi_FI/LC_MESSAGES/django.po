@@ -11,7 +11,7 @@
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
@@ -23,9 +23,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-21 19:51+0000\n"
-"PO-Revision-Date: 2018-12-07 17:35+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-09-29 08:47+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,11 +49,11 @@ msgstr "Lisää sivu"
 msgid "New page"
 msgstr "Uusi sivu"
 
-msgid "Available from"
-msgstr "Saatavilla alkaen"
+msgid "Available since"
+msgstr "Saatavana vuodesta"
 
-msgid "Available to"
-msgstr "Saatavilla päättyen"
+msgid "Available until"
+msgstr "Saatavana"
 
 msgid "Template"
 msgstr "Malline"
@@ -61,8 +61,8 @@ msgstr "Malline"
 msgid "URL already exists."
 msgstr "Antamasi verkko-osoite on jo olemassa."
 
-msgid "URL must be unique"
-msgstr "URL pitää olla uniikki"
+msgid "URL must be unique."
+msgstr "URL-osoitteen on oltava yksilöllinen."
 
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
@@ -86,6 +86,10 @@ msgstr "Luontipvm"
 msgid "Page"
 msgstr "Sivu"
 
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s on merkitty poistetuksi."
+
 msgid "Content in this placeholder is shown for this page only."
 msgstr "Tämän sisältöalueen sisältö näytetään vain tällä sivulla."
 
@@ -94,31 +98,34 @@ msgid "Content in this placeholder is shown for %(title)s only."
 msgstr "Tämä sisältöalue näytetään vain sivulle %(title)s."
 
 msgid "Website"
-msgstr ""
+msgstr "Verkkosivusto"
 
 msgid "Article"
-msgstr ""
+msgstr "Artikla"
 
 msgid "shop"
 msgstr "kauppa"
 
-msgid "available from"
-msgstr "saatavilla alkaen"
+msgid "supplier"
+msgstr "toimittaja"
+
+msgid "available since"
+msgstr "saatavana vuodesta"
 
 msgid ""
-"Set an available from date to restrict the page to be available only after a"
-" certain date and time. This is useful for pages describing sales campaigns "
-"or other time-sensitive pages."
-msgstr "Aseta päivämäärä, josta eteenpäin sivu on näkyvissä. Tämä on kätevä sivuille, jotka kuvaavat kampanjoita, tai muita ajoitettuja sivuja."
-
-msgid "available to"
-msgstr "saatavilla päättyen"
-
-msgid ""
-"Set an available to date to restrict the page to be available only after a "
+"Set an available date to restrict the page to be available only after a "
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
-msgstr "Aseta päivämäärä, johon asti sivu on näkyvissä. Tämä on kätevä sivuille, jotka kuvaavat kampanjoita, tai muita ajoitettuja sivuja."
+msgstr "Määritä käytettävissä oleva päivämäärä rajoittaaksesi sivun saataville vasta tietyn päivämäärän ja ajan jälkeen. Tästä on hyötyä myyntikampanjoita kuvaaville sivuille tai muille aikaherkille sivuille."
+
+msgid "available until"
+msgstr "saatavana"
+
+msgid ""
+"Set an available date to restrict the page to be available only until a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr "Määritä käytettävissä oleva päivämäärä rajoittaaksesi sivun saatavuuden vain tiettyyn päivämäärään ja aikaan. Tästä on hyötyä myyntikampanjoita kuvaaville sivuille tai muille aikaherkille sivuille."
 
 msgid "created by"
 msgstr "luoja"
@@ -139,31 +146,31 @@ msgid "visible in menu"
 msgstr "näkyvissä valikossa"
 
 msgid ""
-"Check this if this page should have a link in the top menu of the store "
-"front."
-msgstr "Valitse tämä, jos sivun pitäisi olla linkitettynä teeman ylävalikossa."
+"Enable this if this page should have a visible link in the top menu of the "
+"store front."
+msgstr "Ota tämä käyttöön, jos tällä sivulla pitäisi olla näkyvä linkki myymälän etuosan ylävalikossa."
 
 msgid "parent"
 msgstr "isäntä"
 
 msgid ""
-"Set this to a parent page if this page should be subcategorized under "
-"another page."
-msgstr "Aseta tämä isäsivuun, mikäli tämän sivun pitää olla toisen sivun alla."
+"Set this to a parent page if this page should be subcategorized (sub-menu) "
+"under another page."
+msgstr "Määritä tämä vanhemmalle sivulle, jos tämä sivu tulisi alaluokittaa (alivalikko) toisen sivun alle."
 
-msgid "list children on page"
-msgstr "listaa lapset sivulla"
+msgid "display children on page"
+msgstr "Näytä lapset sivulla"
 
-msgid "Check this if this page should list its children pages."
-msgstr "Valitse tämä jos sivun pitäisi listata alasivunsa."
+msgid "Enable this if this page should display all of its children pages."
+msgstr "Ota tämä käyttöön, jos tämän sivun pitäisi näyttää kaikki sen alisivut."
 
 msgid "show child page timestamps"
 msgstr "näytä alasivun aikaleimat"
 
 msgid ""
-"Check this if you want to show timestamps on the child pages. Please note, "
+"Enable this if you want to show timestamps on the child pages. Please note, "
 "that this requires the children to be listed on the page as well."
-msgstr "Valitse tämä jos haluat näyttää aikaleimat alasivuilla. Huomioi, että tämä vaatii että listaa alasivut sivulla täytyy olla myös valittuna."
+msgstr "Ota tämä käyttöön, jos haluat näyttää aikaleimat lapsisivuilla. Huomaa, että tämä edellyttää, että lapset mainitaan myös sivulla."
 
 msgid "deleted"
 msgstr "poistettu"
@@ -199,8 +206,8 @@ msgstr "Mallinteen polku"
 msgid "render title"
 msgstr "Näytä otsikko"
 
-msgid "Check this if this page should have a visible title"
-msgstr "Valitse tämä, mikäli haluat otsikon näkyvän sivulla."
+msgid "Enable this if this page should have a visible title."
+msgstr "Ota tämä käyttöön, jos tällä sivulla on oltava näkyvä otsikko."
 
 msgid "page"
 msgstr "sivu"
@@ -212,48 +219,48 @@ msgid "Untitled"
 msgstr "Nimetön"
 
 msgid "Image"
-msgstr ""
+msgstr "Kuva"
 
 msgid "The image of your object."
-msgstr ""
+msgstr "Objektisi kuva."
 
 msgid "type"
-msgstr ""
+msgstr "tyyppi"
 
 msgid ""
 "The title of your object as it should appear within the graph, e.g. The "
 "Rock."
-msgstr ""
+msgstr "Kohteen otsikko sellaisena kuin sen pitäisi näkyä kaaviossa, esim. Rock"
 
 msgid "Description"
-msgstr ""
+msgstr "Kuvaus"
 
 msgid "A one to two sentence description of your object."
-msgstr ""
+msgstr "Yhden tai kahden lauseen kuvaus objektistasi."
 
 msgid "Section"
-msgstr ""
+msgstr "Osa"
 
 msgid ""
 "A high-level section name, e.g. Technology. Only applicable when type is "
 "Article."
-msgstr ""
+msgstr "Korkean tason osaston nimi, esim. Tekniikka. Koskee vain, kun tyyppi on artikkeli."
 
 msgid "Tags"
-msgstr ""
+msgstr "Tunnisteet"
 
 msgid ""
 "Tag words associated with this article. Only applicable when type is "
 "Article."
-msgstr ""
+msgstr "Merkitse tähän artikkeliin liittyvät sanat. Koskee vain, kun tyyppi on artikkeli."
 
 msgid "Article author"
-msgstr ""
+msgstr "Artikkelin kirjoittaja"
 
 msgid ""
 "The name of the author for the article. Only applicable when type is "
 "Article."
-msgstr ""
+msgstr "Artikkelin kirjoittajan nimi. Koskee vain, kun tyyppi on artikkeli."
 
 msgid "CMS Page Links"
 msgstr "Sisällönhallinnan sivulinkit"
@@ -276,7 +283,7 @@ msgstr "Sisältösivu sivupalkilla"
 msgid ""
 "Fill the fields below to add extra OpenGraph information to the page meta.\n"
 "        If not informed, some values will be inferred from the page attributes."
-msgstr ""
+msgstr "Täytä alla olevat kentät lisätäksesi lisää OpenGraph-tietoja sivun metaan. Jos tietoja ei ilmoiteta, jotkin arvot päätetään sivumääritteistä."
 
 msgid "New Page"
 msgstr "Uusi sivu"

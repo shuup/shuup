@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Frank Wickström <frwickst@gmail.com>, 2017
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 17:25+0000\n"
-"PO-Revision-Date: 2019-03-10 05:37+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-29 10:12+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,11 +20,11 @@ msgstr ""
 "Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Unexpected error while uploading files."
-msgstr "Oväntat fel påträffades när filen laddades upp."
+msgid "Error! Unexpected error while uploading files."
+msgstr "Fel! Oväntat fel vid överföring av filer."
 
-msgid "Error:"
-msgstr "Fel:"
+msgid "Error!"
+msgstr "Fel!"
 
 msgid "Uploaded:"
 msgstr "Uppladdad:"
@@ -44,9 +45,6 @@ msgstr "Är du säker du vill ta bort mappen %s?"
 
 msgid "New folder"
 msgstr "Ny mapp"
-
-msgid "current"
-msgstr "nuvarande"
 
 msgid "Oldest first"
 msgstr "Äldsta först"
@@ -95,12 +93,15 @@ msgstr "Byt namn på mappen"
 msgid "Delete folder"
 msgstr "Radera mappen"
 
-#, javascript-format
-msgid "Order %s created."
-msgstr "Beställning %s skapad."
+msgid "Edit folder access"
+msgstr "Redigera mappåtkomst"
 
-msgid "An unspecified error occurred.\n"
-msgstr "Ett ospecificerat fel har inträffat.\n"
+#, javascript-format
+msgid "Success! Order %s was created."
+msgstr "Framgång! Beställning %s skapades."
+
+msgid "Error! An unspecified error occurred.\n"
+msgstr ""
 
 msgid "SKU"
 msgstr "Artikelnummer"
@@ -164,8 +165,8 @@ msgstr "Markera denna ruta om du vill att leveransadressen skall vara den samma 
 msgid "Order for company"
 msgstr "Beställ som företag"
 
-msgid "Check this if the order is for a company or business with a tax ID."
-msgstr "Markera detta om beställningen är för ett företag eller verksamhet med ett moms-ID."
+msgid "Enable this if the order is for a company or business with a tax ID."
+msgstr "Aktivera detta om beställningen gäller ett företag eller företag med skatte-ID."
 
 msgid "Billing Address"
 msgstr "Faktureringsadress"
@@ -481,8 +482,8 @@ msgstr "Ange landet för den %s adressen."
 msgid "No records found."
 msgstr "Kunde inte hitta några poster."
 
-msgid "Missing JavaScript dependencies detected"
-msgstr "Saknade JavaScript beroenden upptäckt"
+msgid "Warning! Missing JavaScript dependencies detected."
+msgstr "Varning! Saknade JavaScript-beroenden har upptäckts."
 
 msgid "Identifier"
 msgstr "Identifierare"
@@ -512,11 +513,25 @@ msgstr "Variabel"
 msgid "Identifer"
 msgstr "Identifierare"
 
+msgid "New template"
+msgstr "Ny mall"
+
 msgid "Show identifier fields (for advanced users)"
 msgstr "Visa identifieringsfält (för avancerade användare)"
 
 msgid "There are no variables defined."
 msgstr "Det finns inga definierade variabler."
+
+msgid "Variation Template"
+msgstr "Variationsmall"
+
+msgid "Select Template"
+msgstr "Välj mall"
+
+msgid ""
+"Selecting and saving a template will clear all variable children selections "
+"for this product."
+msgstr "Om du väljer och sparar en mall raderas alla variabler för barn för den här produkten."
 
 msgid "Add new variable"
 msgstr "Lägg till ny variabel"
@@ -532,6 +547,16 @@ msgstr "Släpp filer här eller klicka för att bläddra."
 
 msgid "only images can be uploaded!"
 msgstr "endast bilder kan laddas upp!"
+
+msgid "Error happened while uploading file."
+msgstr "Ett fel inträffade när filen överfördes."
+
+msgid "Browse media"
+msgstr "Bläddra i media"
+
+#, javascript-format
+msgid "Error! For images greater than %s kb, use the media browser instead."
+msgstr "Fel! För bilder större än %s kb, använd mediebläddraren istället."
 
 msgid "No results."
 msgstr "Inga resultat."
@@ -688,7 +713,7 @@ msgid "Items per page"
 msgstr "Objekt per sida"
 
 msgid "Page"
-msgstr ""
+msgstr "Sida"
 
 msgid "Reset filters"
 msgstr "Återställ filter"
@@ -721,47 +746,50 @@ msgstr "Filtrera efter %s"
 msgid "Filters"
 msgstr "Filter"
 
+msgid "Done"
+msgstr "Gjort"
+
 msgid "Show filters"
-msgstr ""
+msgstr "Visa filter"
 
 msgid "Select Action"
-msgstr "Välj åtgärd"
+msgstr "Välj Åtgärd"
 
 msgid "Clear Selections"
 msgstr "Rensa val"
 
 msgid "Select All"
-msgstr "Markera alla"
+msgstr "Välj alla"
 
 #, javascript-format
 msgid "Select All %s Items"
-msgstr "Markera alla %s objekt"
+msgstr "Välj alla %s objekt"
 
 #, javascript-format
 msgid "There are no %s to show"
-msgstr ""
+msgstr "Det finns ingen %s att visa"
 
 msgid "There is no item to show"
-msgstr ""
+msgstr "Det finns inget objekt att visa"
 
 msgid "with selected filters"
-msgstr ""
+msgstr "med valda filter"
 
 msgid "How about creating a new entry?"
-msgstr ""
+msgstr "Vad sägs om att skapa en ny post?"
 
-msgid "Mass Action complete."
-msgstr "Hantering av ett flertal artiklar slutfört."
+msgid "Success! Mass Action was completed."
+msgstr "Framgång! Mass Action slutfördes."
 
-msgid "Something went wrong."
-msgstr "Någonting gick snett."
+msgid "Error! Something went wrong with the Mass Action."
+msgstr "Fel! Något gick fel med Mass Action."
 
 #, javascript-format
 msgid "All %s Items Selected"
-msgstr "Alla %s markerade objekt"
+msgstr "Alla %s valda objekt"
 
-msgid "You haven't selected anything"
-msgstr "Du har inte valt något"
+msgid "Warning! You didn't select anything."
+msgstr "Varning! Du valde ingenting."
 
 msgid "Confirm action by clicking OK!"
 msgstr "Bekräfta åtgärden genom att klicka på OK!"

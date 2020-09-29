@@ -2,22 +2,28 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Frank Wickström <frwickst@gmail.com>, 2017
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
-"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
-"sv_SE/)\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2020-06-22 17:58+0000\n"
+"PO-Revision-Date: 2016-06-28 12:30+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Printouts"
+msgstr "Utskrifter"
 
 msgid "To"
 msgstr "Till"
@@ -40,15 +46,19 @@ msgstr ""
 "Bästa hälsningar, \n"
 "%(shop)s"
 
-msgid "Printouts"
-msgstr "Utskrifter"
-
 #, python-format
 msgid "%(shop)s: Order %(pk)s"
 msgstr "%(shop)s: Beställning %(pk)s"
 
-msgid "Not allowed"
-msgstr "Ej tillåten"
+msgid ""
+"The current shop doesn't match the order shop. Please change to the shop "
+"that is currently active."
+msgstr ""
+"Den aktuella butiken matchar inte orderbutiken. Byt till den butik som för "
+"närvarande är aktiv."
+
+msgid "Non-POST request methods are forbidden."
+msgstr "Metoder för icke-POST-förfrågan är förbjudna."
 
 msgid "Delivery slip"
 msgstr "Leveransanteckning"
@@ -80,6 +90,10 @@ msgstr "Betalstatus"
 msgid "Shipping status"
 msgstr "Leveransstatus"
 
+#, python-format
+msgid "Tracking code #%(index)s"
+msgstr "Spårningskod # %(index)s"
+
 msgid "Order date"
 msgstr "Beställningsdatum"
 
@@ -91,6 +105,9 @@ msgstr "Identifierare"
 
 msgid "Shipment date"
 msgstr "Utleveransdatum"
+
+msgid "Tracking code"
+msgstr "Spårningskod"
 
 msgid "SKU"
 msgstr "Artikelnummer"
@@ -155,8 +172,8 @@ msgstr "Skicka orderbekräftelse"
 msgid "Send Delivery Slip (Shipment %(id)s)"
 msgstr "Skicka leveransanteckning (leverans %(id)s)"
 
-msgid "Email sent successfully!"
-msgstr "E-postmeddelandet skickades framgångsrikt!"
+msgid "Email was sent."
+msgstr "E-post skickades."
 
 msgid "Could not sent the email, please try again."
 msgstr "Kunde inte skicka e-postmeddelandet, vänligen försök igen."

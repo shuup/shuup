@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Janne Tammi <janne@shuup.com>, 2017
-# Panu Tulimäki <panu@shuup.com>, 2016
+# Panu Tulimäki <panu@shuup.com>, 2016,2020
 # Rauli L. <rauli.laine@iki.fi>, 2016
 # Rauli L. <rauli.laine@iki.fi>, 2016
 # Shuup Admin <admin@shuup.com>, 2016
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 13:55+0000\n"
-"PO-Revision-Date: 2019-03-09 18:36+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-06-22 18:11+0000\n"
+"PO-Revision-Date: 2020-09-29 08:48+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,37 +50,37 @@ msgstr "Muuta varastosaldoa"
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
-"(%(supplier_name)s)"
-msgstr "Lisättiin %(delta)s %(unit_symbol)s tuotteelle %(product_name)s varastoon (%(supplier_name)s)"
+"Success! Added %(delta)s `%(unit_symbol)s` for product `%(product_name)s` "
+"stock (%(supplier_name)s)."
+msgstr "Menestys! Lisätty %(delta)s &quot;%(unit_symbol)s&quot; tuotteelle &quot;%(product_name)s&quot; (%(supplier_name)s)."
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
-"(%(supplier_name)s)"
-msgstr "Poistettiin %(delta)s %(unit_symbol)s tuotteelta %(product_name)s varastosta (%(supplier_name)s)"
+"Success! Removed %(delta)s `%(unit_symbol)s` from product `%(product_name)s`"
+" stock (%(supplier_name)s)."
+msgstr "Menestys! Poistettu %(delta)s &quot;%(unit_symbol)s&quot; tuotteesta &quot;%(product_name)s&quot; (%(supplier_name)s)."
 
 #, python-format
-msgid "Alert limit for product %(product_name)s set to %(value)s."
-msgstr "Hälytysraja tuotteelle %(product_name)s asetettu arvoon %(value)s."
+msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
+msgstr "Tuotteen &quot;%(product_name)s&quot; hälytysraja asetettu arvoon &quot;%(value)s&quot;."
 
-msgid "Not allowed"
-msgstr "Ei sallittu"
+msgid "Non-POST request methods are forbidden."
+msgstr "Muut kuin POST-pyyntötavat ovat kiellettyjä."
 
-msgid "Error, please check submitted values and try again."
-msgstr "Virhe, tarkista arvot ja koita uudelleen."
+msgid "Please check submitted values and try again."
+msgstr "Tarkista lähetetyt arvot ja yritä uudelleen."
 
 #, python-format
-msgid "Error, please check submitted values and try again (%(error)s)."
-msgstr "Virhe, tarkista arvot ja koita uudelleen (%(error)s)."
+msgid "Please check submitted values and try again (%(error)s)."
+msgstr "Tarkista lähetetyt arvot ja yritä uudelleen (%(error)s)."
 
 #, python-brace-format
-msgid "Stock management is now enabled for {product}"
-msgstr ""
+msgid "Stock management is now enabled for {product}."
+msgstr "Varastonhallinta on nyt käytössä verkkotunnuksessa {product}."
 
 #, python-brace-format
-msgid "Stock management is now disabled for {product}"
-msgstr ""
+msgid "Stock management is now disabled for {product}."
+msgstr "Varastonhallinta on nyt poistettu käytöstä verkkotunnuksessa {product}."
 
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
@@ -117,10 +117,10 @@ msgid "alert limit"
 msgstr "hälytysraja"
 
 msgid "stock managed"
-msgstr ""
+msgstr "varastossa hallittu"
 
 msgid "Use this to override the supplier default stock behavior per product."
-msgstr ""
+msgstr "Käytä tätä ohittaaksesi toimittajan oletusvaraston käyttäytymisen tuotteittain."
 
 msgid "logical count"
 msgstr "looginen määrä"
@@ -133,6 +133,12 @@ msgstr "Hälytysraja saavutettu"
 
 msgid "Product"
 msgstr "Tuote"
+
+msgid "Supplier Email"
+msgstr "Toimittajan sähköposti"
+
+msgid "Shop Email"
+msgstr "Osta sähköposti"
 
 msgid "Fired in the last 24 hours?"
 msgstr "Ajettu viimeisen 24 tunnin aikana?"
@@ -193,10 +199,10 @@ msgid "Change alert limit"
 msgstr "Vaihda hälytysrajaa"
 
 msgid "Disable stock management"
-msgstr ""
+msgstr "Poista varastohallinta käytöstä"
 
 msgid "Enable stock management"
-msgstr ""
+msgstr "Ota varastohallinta käyttöön"
 
 #, python-format
 msgid ""
@@ -204,8 +210,11 @@ msgid ""
 "does not have suppliers with %(module_name)s module."
 msgstr "Tuotteella <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> ei ole toimittajia modulissa %(module_name)s."
 
-msgid "Please set suppliers at Purchasing section."
-msgstr "Ole hyvä ja määritä toimittajat osiossa Ostaminen."
+#, python-format
+msgid ""
+"Please go in this product's Additional tab section and add enabled Suppliers"
+" that have both %(module_name)s module and stock management enabled."
+msgstr "Siirry tämän tuotteen Lisäasetukset-välilehteen ja lisää käytössä olevat toimittajat, joilla sekä %(module_name)s-moduuli että varastohallinta ovat käytössä."
 
 #, python-format
 msgid "No suppliers with %(module_name)s available."
@@ -213,27 +222,28 @@ msgstr "Ei toimittajia saatavana modulille %(module_name)s."
 
 #, python-format
 msgid ""
-"Please set %(module_name)s module for at least one of the <a "
-"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
-msgstr "Ole hyvä ja aseta %(module_name)s moduli ainakin yhdelle <a href=\"%(supplier_url)s\" target=\"_blank\">toimittajalle</a>."
+"Please set %(module_name)s module for at least one of the enabled <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a> and enable the "
+"stock management for them."
+msgstr "Määritä %(module_name)s-moduuli ainakin yhdelle käytössä olevista <a href=\"%(supplier_url)s\" target=\"_blank\">toimittajista</a> ja ota heille käyttöön varastonhallinta."
 
 #, python-brace-format
 msgid "Physical count ({sales_unit})"
-msgstr ""
+msgstr "Fyysinen määrä ({sales_unit})"
 
 #, python-brace-format
 msgid "Logical count ({sales_unit})"
-msgstr ""
+msgstr "Looginen määrä ({sales_unit})"
 
 msgid "Value per unit"
-msgstr ""
+msgstr "Arvo yksikköä kohti"
 
 msgid "Total value"
-msgstr ""
+msgstr "Kokonaisarvo"
 
 #, python-brace-format
 msgid "Alert limit ({sales_unit})"
-msgstr ""
+msgstr "Varoitusraja ({sales_unit})"
 
 msgid "No stock information available."
 msgstr "Varastotietoa ei saatavilla."

@@ -13,7 +13,7 @@
 # Juha Kujala, 2017
 # Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Rauli L. <rauli.laine@iki.fi>, 2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
@@ -25,9 +25,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-18 22:57+0000\n"
-"PO-Revision-Date: 2019-01-22 22:56+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-29 08:53+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,11 +36,11 @@ msgstr ""
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Theme identifier must match"
-msgstr "Teeman tunnus pitää täsmätä"
+msgid "Theme identifiers must match."
+msgstr "Teeman tunnisteiden on vastattava toisiaan."
 
-msgid "Either theme_settings or shop should be informed"
-msgstr "Joko teeman asetukset tai kauppa tulee olla saatavilla"
+msgid "Either theme_settings or shop should be informed."
+msgstr "Joko teema_asetukset tai kauppa tulee ilmoittaa."
 
 msgid "Global plugins"
 msgstr "Globaali liitännäinen"
@@ -113,25 +113,27 @@ msgstr "Tyylit"
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Teemasi käyttämät fontit, värit ja tyylit."
 
-msgid "Content in this placeholder is shown without limitations."
-msgstr "Tämä sisältöalue näytetään ilman rajoituksia."
+msgid "Content in this box is shown to all user types without limitations."
+msgstr "Tämän ruudun sisältö näytetään kaikille käyttäjätyypeille rajoituksetta."
 
 #, python-format
 msgid ""
 "Content in this placeholder is shown for %(category_name)s category only."
 msgstr "Tämä sisältöalue näytetään vain kategorialle %(category_name)s."
 
-msgid "Content in this placeholder is shown for guests."
-msgstr "Tämä sisältöalue näytetään vain vieraille."
+msgid "Content in this box is shown to guests (anonymous users) only."
+msgstr "Tämän kentän sisältö näytetään vain vieraille (tuntemattomille käyttäjille)."
 
-msgid "Content in this placeholder is shown for company contacts."
-msgstr "Tämä sisältöalue näytetään vain yrityksille."
+msgid "Content in this box is shown to company contacts only."
+msgstr "Tämän ruudun sisältö näytetään vain yrityksen yhteyshenkilöille."
 
-msgid "Content in this placeholder is shown for all logged in contacts."
-msgstr "Sisältöalue näytetään vain kirjautuneille kontakteille."
+msgid ""
+"Content in this box is shown to all logged-in contacts (both person and "
+"company; not anonymous)."
+msgstr "Tämän ruudun sisältö näytetään kaikille kirjautuneille yhteyshenkilöille (sekä henkilöille että yrityksille; ei nimettömille)."
 
-msgid "Content in this placeholder is shown for person contacts."
-msgstr "Sisältöalue näytetään vain henkilöasiakkaille."
+msgid "Content in this box is shown to person contacts only."
+msgstr "Tämän kentän sisältö näytetään vain henkilöiden yhteyshenkilöille."
 
 #, python-format
 msgid "Content in this placeholder is shown for %(product_name)s only."
@@ -205,7 +207,7 @@ msgid "Plugin"
 msgstr "Lisäosa"
 
 msgid "Categories"
-msgstr ""
+msgstr "Luokat"
 
 msgid "Category Links"
 msgstr "Kategorialinkit"
@@ -228,14 +230,14 @@ msgstr "Kuvan linkin URL-osoite"
 msgid "Full width"
 msgstr "Täysi leveys"
 
-msgid "Set image to full width of cell"
-msgstr "Aseta kuva solun levyiseksi"
+msgid "Set image to the full width of cell."
+msgstr "Aseta kuva solun koko leveydelle."
 
 msgid "Width (px)"
 msgstr "Leveys (pikseliä)"
 
-msgid "Leave blank for default width"
-msgstr "Jätä tyhjäksi oletusleveydelle"
+msgid "Leave blank for default width."
+msgstr "Jätä tyhjä oletusleveydeksi."
 
 msgid "Height (px)"
 msgstr "Korkeus (pikseliä)"
@@ -261,25 +263,31 @@ msgstr "Näytä vain varastossa olevat sekä tilattavat tuotteet"
 msgid ""
 "Warning: The final number of products can be lower than 'Count' as it will "
 "filter out unorderable products from a set of 'Count' products."
-msgstr ""
+msgstr "Varoitus: Tuotteiden lopullinen määrä voi olla pienempi kuin Count, koska se suodattaa tilaamattomat tuotteet Count-tuotteiden joukosta."
 
 msgid "Product Cross Sells"
 msgstr "Tuotteiden ristiinmyynti"
 
+msgid "Show variation parents"
+msgstr "Näytä muunnelmat vanhemmat"
+
+msgid "Render variation parents instead of the children."
+msgstr "Tee vaihtelevia vanhempia lasten sijasta."
+
 msgid "Category"
-msgstr ""
+msgstr "Kategoria"
 
 msgid "Category Products Highlight"
 msgstr "Kategoriatuotenostot"
 
 msgid "Products"
-msgstr ""
+msgstr "Tuotteet"
 
 msgid "Select all products you want to show"
-msgstr ""
+msgstr "Valitse kaikki tuotteet, jotka haluat näyttää"
 
 msgid "Product Selection"
-msgstr ""
+msgstr "Tuotteen valinta"
 
 msgid "In-Place Snippet"
 msgstr "Kohdalla olevat koodinpätkät"
@@ -295,6 +303,10 @@ msgstr "Resurssi BODY-osion loppuun"
 
 msgid "URL"
 msgstr "URL"
+
+#, python-format
+msgid "%(name)s Ordering"
+msgstr "%(name)s Tilaaminen"
 
 msgid "Ordering"
 msgstr "Järjestys"
@@ -356,6 +368,9 @@ msgstr "Sisällön alku"
 msgid "Content end"
 msgstr "Sisällön loppu"
 
+msgid "(Error while rendering.)"
+msgstr "(Virhe hahmonnettaessa.)"
+
 msgid "Delete This Cell"
 msgstr "Poista tämä solu"
 
@@ -411,13 +426,13 @@ msgid "Select theme"
 msgstr "Valitse teema"
 
 msgid "Theme Guide"
-msgstr ""
+msgstr "Teemaopas"
 
 msgid "Author"
 msgstr "Tekijä"
 
 msgid "Configure"
-msgstr ""
+msgstr "Määritä"
 
 msgid "Activate"
 msgstr "Aktivoi"
@@ -437,19 +452,19 @@ msgstr "Palauta muutokset"
 msgid "Publish Changes"
 msgstr "Julkaise muutokset"
 
-msgid "No access to editing"
-msgstr "Ei oikeuksia editointiin"
+msgid "No access to editing."
+msgstr "Ei pääsyä muokkaukseen."
 
 #, python-format
-msgid "Unknown command %s"
-msgstr "Tuntematon komento %s"
+msgid "Unknown command: `%s`."
+msgstr "Tuntematon komento: `%s`."
 
-msgid "Unable to determine current theme."
-msgstr "Nykyistä teemaa ei voitu määrittää."
+msgid "Unable to determine the current theme."
+msgstr "Nykyistä teemaa ei voida määrittää."
 
 #, python-format
-msgid "Cannot add more than %d cells in one row."
-msgstr "Rivissä ei voi olla enempää kuin %d solua."
+msgid "Can't add more than %d cells in one row."
+msgstr "Yhdelle riville voi lisätä enintään %d solua."
 
 msgid "Published"
 msgstr "Julkaistu"

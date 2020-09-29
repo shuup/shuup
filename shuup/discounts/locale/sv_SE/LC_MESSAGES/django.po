@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 01:41+0000\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,331 +22,391 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Archive Product Discounts"
-msgstr ""
+msgstr "Arkivera produktrabatter"
 
 msgid "Unarchive Discounts"
-msgstr ""
+msgstr "Ta bort arkivering av rabatter"
 
 msgid "Delete Discounts"
-msgstr ""
+msgstr "Ta bort rabatter"
 
 msgid "Product Discounts Coupon Codes"
-msgstr ""
+msgstr "Produktrabatter Kupongkoder"
 
 msgid "Discounts"
-msgstr ""
+msgstr "Rabatter"
 
 msgid "Product Discounts"
-msgstr ""
+msgstr "Produktrabatter"
 
 msgid "Archived Product Discounts"
-msgstr ""
+msgstr "Arkiverade produktrabatter"
 
 msgid "Discounts Availability Exceptions"
-msgstr ""
+msgstr "Undantag för tillgänglighet rabatter"
 
 msgid "Product Discounts Availability Exceptions"
-msgstr ""
+msgstr "Produktrabatter Undantag från tillgänglighet"
 
 msgid "Discounts Happy Hours"
-msgstr ""
+msgstr "Rabatter Happy Hours"
 
 msgid "Product Discounts Happy Hours"
-msgstr ""
+msgstr "Produktrabatter Happy Hours"
 
 msgid "Discount Name"
-msgstr ""
+msgstr "Rabattnamn"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Filtrera efter namn ..."
 
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 msgid "Filter by product..."
-msgstr ""
+msgstr "Filtrera efter produkt ..."
 
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 msgid "Filter by category..."
-msgstr ""
+msgstr "Filtrera efter kategori ..."
 
 msgid "Contact Group"
-msgstr ""
+msgstr "Kontaktgrupp"
 
 msgid "Filter by contact group..."
-msgstr ""
+msgstr "Filtrera efter kontaktgrupp ..."
 
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 msgid "Filter by contact..."
-msgstr ""
+msgstr "Filtrera efter kontakt ..."
 
 msgid "Coupon code"
-msgstr ""
+msgstr "Kupongskod"
 
 msgid "Filter by coupon code..."
-msgstr ""
+msgstr "Filtrera efter kupongkod ..."
 
 msgid "Effect"
-msgstr ""
+msgstr "Effekt"
 
 msgid "End Date and Time"
-msgstr ""
+msgstr "Slutdatum och tid"
 
 msgid "Code"
-msgstr ""
+msgstr "Koda"
 
 msgid "Usages"
-msgstr ""
+msgstr "Användningar"
 
 msgid "Usages Limit per contact"
-msgstr ""
+msgstr "Användningsgräns per kontakt"
 
 msgid "Usage Limit"
-msgstr ""
+msgstr "Användningsgräns"
 
 msgid "Active"
-msgstr ""
+msgstr "Aktiva"
 
 msgid "Created by"
-msgstr ""
+msgstr "Skapad av"
 
 msgid "Date created"
-msgstr ""
+msgstr "Skapat datum"
 
 msgid "Select discounts linked to this coupon code."
-msgstr ""
-
-msgid "Shops"
-msgstr ""
-
-msgid "Select shops for this discount. Keep it blank to share with all shops."
-msgstr ""
+msgstr "Välj rabatter kopplade till den här kupongkoden."
 
 #, python-format
 msgid "%s has been deleted."
-msgstr ""
+msgstr "%s har tagits bort."
 
 msgid "Discount percentage"
-msgstr ""
+msgstr "Rabattprocent"
 
 msgid "The discount percentage for this discount."
-msgstr ""
+msgstr "Rabattprocenten för denna rabatt."
 
 msgid "Exception Name"
-msgstr ""
+msgstr "Undantagsnamn"
 
 msgid "Start Date and Time"
-msgstr ""
+msgstr "Startdatum och tid"
 
 msgid "Select discounts to be ignored on given time frame."
-msgstr ""
+msgstr "Välj rabatter som ska ignoreras under en viss tidsram."
 
 msgid "Happy Hour Name"
-msgstr ""
+msgstr "Happy Hour-namn"
 
 msgid "Select discounts for this happy hour."
-msgstr ""
+msgstr "Välj rabatter för denna happy hour."
 
 msgid ""
 "12pm is considered noon and 12am as midnight. Start hour is included to the "
 "discount."
 msgstr ""
+"12.00 anses vara 12.00 och 12.00 som midnatt. Starttid ingår i rabatten."
 
 msgid ""
 "12pm is considered noon and 12am as midnight. End hours is included to the "
 "discount."
 msgstr ""
+"12.00 anses vara 12.00 och 12.00 som midnatt. Slut timmar ingår i rabatten."
 
 msgid "Weekdays the happy hour is active."
-msgstr ""
+msgstr "På vardagar är happy hour aktiv."
 
 msgid "shops"
-msgstr ""
+msgstr "butiker"
 
 msgid "name"
-msgstr ""
+msgstr "namn"
 
 msgid ""
 "The name for this exception. Used internally with exception lists for "
 "filtering."
 msgstr ""
+"Namnet på detta undantag. Används internt med undantagslistor för "
+"filtrering."
 
-msgid "start"
-msgstr ""
+msgid "start since"
+msgstr "starta sedan"
 
-msgid "end"
+msgid ""
+"Set to restrict the availability exception to be available only after a "
+"certain date and time."
 msgstr ""
+"Ställ in för att begränsa tillgänglighetsundantaget så att det bara är "
+"tillgängligt efter ett visst datum och tid."
+
+msgid "end until"
+msgstr "slut till"
+
+msgid ""
+"Set to restrict the availability exception to be available only until a "
+"certain date and time."
+msgstr ""
+"Ställ in för att begränsa tillgänglighetsundantaget så att det bara är "
+"tillgängligt till ett visst datum och tid."
 
 msgid "availability exception"
-msgstr ""
+msgstr "tillgänglighetsundantag"
 
 msgid "availability exceptions"
-msgstr ""
+msgstr "undantag från tillgänglighet"
 
 msgid "created on"
-msgstr ""
+msgstr "skapad på"
 
 msgid "usage limit per customer"
-msgstr ""
+msgstr "användningsgräns per kund"
 
 msgid "Limit the amount of usages per a single customer."
-msgstr ""
+msgstr "Begränsa antalet användningar per enskild kund."
 
 msgid "usage limit"
-msgstr ""
+msgstr "användningsgräns"
 
 msgid ""
 "Set the absolute limit of usages for this coupon. If the limit is zero (0) "
 "coupon cannot be used."
 msgstr ""
+"Ställ in den absoluta gränsen för användningen för den här kupongen. Om "
+"gränsen är noll (0) kan inte kupongen användas."
 
 msgid "active"
-msgstr ""
+msgstr "aktiva"
 
 msgid "created by"
-msgstr ""
+msgstr "skapad av"
 
 msgid "modified by"
-msgstr ""
+msgstr "modifierad av"
 
 msgid "modified on"
-msgstr ""
+msgstr "ändrad den"
 
 msgid ""
 "The name for this discount. Used internally with discount lists for "
 "filtering."
 msgstr ""
+"Namnet på denna rabatt. Används internt med rabattlistor för filtrering."
+
+msgid "supplier"
+msgstr "leverantör"
+
+msgid "Select supplier for this discount."
+msgstr "Välj leverantör för denna rabatt."
 
 msgid ""
-"Check this if the discount is currently active. Please also set a start and "
-"end date."
+"Enable this if the discount is currently active. Please also set a start and"
+" an end date."
 msgstr ""
+"Aktivera detta om rabatten för närvarande är aktiv. Ange också start- och "
+"slutdatum."
 
 msgid "start date and time"
-msgstr ""
+msgstr "startdatum och tid"
 
 msgid ""
 "The date and time the discount starts. This is only applicable if the "
 "discount is marked as active."
 msgstr ""
+"Datum och tid då rabatten börjar. Detta gäller endast om rabatten är "
+"markerad som aktiv."
 
 msgid "end date and time"
-msgstr ""
+msgstr "slutdatum och tid"
 
 msgid ""
 "The date and time the discount ends. This is only applicable if the discount"
 " is marked as active."
 msgstr ""
+"Datum och tid då rabatten slutar. Detta gäller endast om rabatten är "
+"markerad som aktiv."
 
 msgid "happy hours"
-msgstr ""
+msgstr "lyckliga timmar"
 
 msgid "Select happy hours for this discount."
-msgstr ""
+msgstr "Välj happy hours för denna rabatt."
 
 msgid "Select availability for this discount."
-msgstr ""
+msgstr "Välj tillgänglighet för denna rabatt."
 
 msgid "product"
-msgstr ""
+msgstr "produkt"
 
 msgid "Select product for this discount."
-msgstr ""
+msgstr "Välj produkt för denna rabatt."
 
 msgid "exclude selected category"
-msgstr ""
+msgstr "exkludera vald kategori"
 
 msgid "Exclude products in selected category from this discount."
-msgstr ""
+msgstr "Uteslut produkter i vald kategori från denna rabatt."
 
 msgid "category"
-msgstr ""
+msgstr "kategori"
 
 msgid "Select category for this discount."
-msgstr ""
+msgstr "Välj kategori för denna rabatt."
 
 msgid "contact"
-msgstr ""
+msgstr "Kontakt"
 
 msgid "Select contact for this discount."
-msgstr ""
+msgstr "Välj kontakt för denna rabatt."
 
 msgid "exclude selected contact group"
-msgstr ""
+msgstr "utesluta vald kontaktgrupp"
 
 msgid "Exclude contacts in selected contact group from this discount."
-msgstr ""
+msgstr "Uteslut kontakter i vald kontaktgrupp från denna rabatt."
 
 msgid "contact group"
-msgstr ""
+msgstr "kontaktgrupp"
 
 msgid "Select contact group for this discount."
-msgstr ""
+msgstr "Välj kontaktgrupp för denna rabatt."
 
 msgid "coupon code"
-msgstr ""
+msgstr "kupongskod"
 
 msgid "Select coupon code for this discount."
-msgstr ""
+msgstr "Välj kupongkod för denna rabatt."
 
 msgid "discounted price"
-msgstr ""
+msgstr "nedsatt pris"
 
 msgid "Discounted product price for this discount."
-msgstr ""
+msgstr "Rabatterat produktpris för denna rabatt."
 
 msgid "discount amount"
-msgstr ""
+msgstr "rabattbelopp"
 
 msgid "Discount amount value for this discount."
-msgstr ""
+msgstr "Rabattbelopp för denna rabatt."
 
 msgid "discount percentage"
-msgstr ""
+msgstr "rabattprocent"
 
 msgid "Discount percentage for this discount."
-msgstr ""
+msgstr "Rabattprocent för denna rabatt."
 
 msgid "product discount"
-msgstr ""
+msgstr "produktrabatt"
 
 msgid "product discounts"
-msgstr ""
+msgstr "produktrabatter"
 
 msgid ""
-"The name for this . Used internally with exception lists for filtering."
+"The name for this HappyHour. Used internally with exception lists for "
+"filtering."
 msgstr ""
+"Namnet på denna HappyHour. Används internt med undantagslistor för "
+"filtrering."
 
 msgid "happy hour"
-msgstr ""
+msgstr "roliga timmen"
 
 msgid "parent"
-msgstr ""
+msgstr "förälder"
 
 msgid "from hour"
-msgstr ""
+msgstr "från timme"
 
 msgid "to hour"
-msgstr ""
+msgstr "till timme"
 
-msgid "weekdays"
-msgstr ""
+msgid "weekday"
+msgstr "veckodag"
 
 msgid "time range"
-msgstr ""
+msgstr "tidsintervall"
 
 msgid "time ranges"
-msgstr ""
+msgstr "tidsintervall"
 
-msgid "To hour has to be after from hour"
+msgid ""
+"The value of the field `to hour` has to be later than that of `from hour`."
 msgstr ""
+"Fältets värde &quot;till timme&quot; måste vara senare än värdet för "
+"&quot;från timme&quot;."
+
+msgid ""
+"Select all discounts to render products from. Only active discounts that "
+"have product or category linked are available."
+msgstr ""
+"Välj alla rabatter att göra produkter från. Endast aktiva rabatter som har "
+"en produkt- eller kategorilänk är tillgängliga."
+
+msgid "Discounted Products"
+msgstr "Rabatterade produkter"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Count"
+msgstr "Räkna"
+
+msgid "Only show in-stock and orderable items"
+msgstr "Visa endast i lager och beställbara artiklar"
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
+"Varning: Det slutliga antalet produkter kan vara lägre än &#39;Räkna&#39; "
+"eftersom det filtrerar bort beställbara produkter från en uppsättning "
+"&#39;Räkna&#39; produkter."
 
 msgid "Availability"
-msgstr ""
+msgstr "Tillgänglighet"
 
 msgid "Condition"
-msgstr ""
+msgstr "Skick"

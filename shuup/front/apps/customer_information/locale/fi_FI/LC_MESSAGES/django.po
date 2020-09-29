@@ -5,7 +5,7 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne@shuup.com>, 2015,2017
 # Janne Tammi <janne@shuup.com>, 2015
@@ -13,7 +13,7 @@
 # Juha Kujala, 2015
 # Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015-2016
@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-19 05:25+0000\n"
-"PO-Revision-Date: 2018-06-28 19:54+0000\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-09-29 08:47+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -53,8 +53,8 @@ msgstr "Osoitekirja"
 msgid "Language"
 msgstr "Kieli"
 
-msgid "Will become default user email when linked"
-msgstr "Tee tästä oletussähköpostiosoite"
+msgid "Will become default user email when linked."
+msgstr "Siitä tulee oletusarvoinen käyttäjän sähköposti, kun se linkitetään."
 
 msgid "Given Tax Number already exists. Please contact support."
 msgstr "Antamasi veronumero on jo syötetty. Olethan yhteydessä tukipalveluun."
@@ -67,6 +67,17 @@ msgstr "Osoitteen tyyppi"
 
 msgid "Address Status"
 msgstr "Osoitteen tila"
+
+msgid "Company information was saved."
+msgstr "Yritystiedot tallennettiin."
+
+msgid ""
+"Company information was saved. Please follow the instructions sent to your "
+"email address."
+msgstr "Yritystiedot tallennettiin. Noudata sähköpostiosoitteeseesi lähetettyjä ohjeita."
+
+msgid "Customer Email"
+msgstr "Asiakkaan sähköposti"
 
 msgid "Home"
 msgstr "Etusivu"
@@ -214,22 +225,14 @@ msgstr "Yrityksen tiedot"
 msgid "User information"
 msgstr "Käyttäjätiedot"
 
-msgid "Password successfully changed."
+msgid "Password changed."
 msgstr "Salasana vaihdettu."
 
-msgid "Account information saved successfully."
-msgstr "Tilitiedot tallennettu."
+msgid "Account information was saved."
+msgstr "Tilitiedot tallennettiin."
 
-msgid "Company information saved successfully."
-msgstr "Yrityksen tiedot tallennettu onnistuneesti."
+msgid "Address information was saved."
+msgstr "Osoitetiedot tallennettiin."
 
-msgid ""
-"Company information saved successfully. Please follow the instructions sent "
-"to your email address."
-msgstr "Yrityksen tiedot tallennettu onnistuneesti. Ole hyvä ja seuraa sähköpostiosoitteeseesi lähetettyjä ohjeita."
-
-msgid "Address information saved successfully."
-msgstr "Osoitetiedot tallennettu."
-
-msgid "Cannot remove address"
-msgstr "Osoitetta ei voi poistaa."
+msgid "Cannot remove address because it doesn't exist."
+msgstr "Osoitetta ei voi poistaa, koska sitä ei ole olemassa."

@@ -3,14 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Ville-Pekka Altti <ville-pekka.altti@anders.fi>, 2017
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-22 08:36+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
+"POT-Creation-Date: 2020-06-22 17:59+0000\n"
+"PO-Revision-Date: 2017-01-06 15:35+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,6 +55,18 @@ msgstr "Tämä Vuosi"
 msgid "All Time"
 msgstr "Kaikki"
 
+msgid "Output Format"
+msgstr "Tulostusformaatti"
+
+msgid "The format to show the report results."
+msgstr "Formaatti raportin tulosten näyttämiseen."
+
+msgid "Download"
+msgstr "Lataa"
+
+msgid "Enable this to download the report."
+msgstr "Ota tämä käyttöön raportin lataamiseksi."
+
 msgid "Shop"
 msgstr "Kauppa"
 
@@ -71,18 +87,6 @@ msgstr "Mukautetulle aikavälille."
 
 msgid "End Date"
 msgstr "Loppupäivämäärä"
-
-msgid "Output Format"
-msgstr "Tulostusformaatti"
-
-msgid "The format to show the report results."
-msgstr "Formaatti raportin tulosten näyttämiseen."
-
-msgid "Download"
-msgstr "Lataa"
-
-msgid "Check this to download the report."
-msgstr " Valitse tämä, jos haluat ladata raportin."
 
 msgid "Toggle Filters"
 msgstr "Vaihda Suodattimet"

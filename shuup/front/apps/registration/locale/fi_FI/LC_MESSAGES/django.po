@@ -5,14 +5,14 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Janne Tammi <janne@shuup.com>, 2015,2017
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015
 # Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
@@ -24,9 +24,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 18:06+0000\n"
-"PO-Revision-Date: 2018-06-28 17:30+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-09-29 08:48+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,11 +53,17 @@ msgstr "Aktivointi URL"
 msgid "Is User Active"
 msgstr "aktiivinen"
 
+msgid "Account Reactivation"
+msgstr "Tilin uudelleenaktivointi"
+
 msgid "Company Registration Received"
 msgstr "Yrityksen rekisteröityminen vastaanotettu"
 
 msgid "Company Approved"
 msgstr "Yritystili hyväksytty"
+
+msgid "Account Activation"
+msgstr "Tilin aktivointi"
 
 msgid "Company has been activated."
 msgstr "Yritys on aktivoitu."
@@ -76,6 +82,20 @@ msgstr "Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfigu
 msgid "{{ order.shop }} - Welcome!"
 msgstr "{{ order.shop }} - Tervetuloa!"
 
+msgid "Send account reactivation email"
+msgstr "Lähetä tilin uudelleenaktivointisähköposti"
+
+msgid "Send email when a user account gets reactivated"
+msgstr "Lähetä sähköpostia, kun käyttäjätili aktivoidaan uudelleen"
+
+msgid ""
+"This script will send an email to the user or to any configured email when a"
+" account get's reactivated"
+msgstr "Tämä komentosarja lähettää sähköpostin käyttäjälle tai mille tahansa määritetylle sähköpostille, kun tili aktivoidaan uudelleen"
+
+msgid "{{ customer.username }} is now active again!"
+msgstr "{{customer.username}} on nyt taas aktiivinen!"
+
 msgid "Send Company Registration Received Email"
 msgstr "Lähetä \"Yrityksen rekisteröityminen vastaanotettu\" -sähköposti"
 
@@ -92,6 +112,20 @@ msgid ""
 "This script will send an email to the user or to any configured email right "
 "after a company is activated."
 msgstr "Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille sähköposteille, kun yritystili aktivoidaan."
+
+msgid "Send account activation email"
+msgstr "Lähetä tilin aktivointisähköposti"
+
+msgid "Send email when a user account gets activated for the first time"
+msgstr "Lähetä sähköpostia, kun käyttäjätili aktivoidaan ensimmäisen kerran"
+
+msgid ""
+"This script will send an email to the user or to any configured email when "
+"an account gets activated for the first time"
+msgstr "Tämä komentosarja lähettää sähköpostin käyttäjälle tai mille tahansa määritetylle sähköpostille, kun tili aktivoidaan ensimmäisen kerran"
+
+msgid "{{ customer.username }} is now active!"
+msgstr "{{asiakas.käyttäjänimi}} on nyt aktiivinen!"
 
 msgid "Account activation"
 msgstr "Tilin aktivointi"
@@ -132,8 +166,8 @@ msgstr "Rekisteröityminen"
 msgid "Register as a company."
 msgstr "Rekisteröidy yrityksenä."
 
-msgid "Activation successful!"
-msgstr "Aktivointi onnistui!"
+msgid "Activation successful"
+msgstr "Aktivointi onnistui"
 
 msgid ""
 "Registration complete. Please follow the instructions sent to your email "

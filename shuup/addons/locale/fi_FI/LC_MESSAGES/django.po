@@ -5,25 +5,26 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Janne Tammi <janne@shuup.com>, 2015
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2020
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tomi Järvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
-# Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-23 11:18+0000\n"
-"PO-Revision-Date: 2017-09-23 22:00+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-28 09:10+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,11 +74,11 @@ msgstr "Ladataan uudelleen."
 msgid "Addon file (ZIP)"
 msgstr "Lisäosan tiedosto (ZIP)"
 
-msgid "Only upload addon files you trust."
+msgid "Only upload the addon files you trust."
 msgstr "Lataa vain lisäosia joihin luotat."
 
-msgid "Only wheel files are supported"
-msgstr "Vain wheel-tiedostot ovat tuettuja"
+msgid "Only wheel files (`.whl`) are supported."
+msgstr "Vain wheel-tiedostot (`.whl`) ovat tuettuja."
 
 msgid "Upload"
 msgstr "Lataa"
@@ -122,11 +123,11 @@ msgstr "Viimeistele laajennustesi asennus."
 msgid "Reload application server"
 msgstr "Käynnistä sovelluspalvelin uudelleen"
 
-msgid "Reload initiated."
+msgid "Reload was initiated."
 msgstr "Uudelleenkäynnistäminen aloitettu."
 
-msgid "Error while reloading application."
-msgstr "Virhe sovelluspalvelimen uudelleenlatauksessa."
+msgid "Reloading application failed."
+msgstr "Sovelluksen uudelleenkäynnistäminen epäonnistui."
 
 msgid "Finalizing installations."
 msgstr "Viimeistellään asennuksia."

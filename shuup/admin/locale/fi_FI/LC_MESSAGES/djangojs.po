@@ -9,7 +9,7 @@
 # Juha Kujala, 2017
 # Juha Kujala, 2017
 # Juha Kujala, 2015-2016
-# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
 # Shuup Admin <admin@shuup.com>, 2016
 # Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
@@ -19,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 17:25+0000\n"
-"PO-Revision-Date: 2019-03-10 05:37+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-29 08:53+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,11 +30,11 @@ msgstr ""
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Unexpected error while uploading files."
-msgstr "Odottamaton virhe ladattaessa tiedostoja palvelimelle."
+msgid "Error! Unexpected error while uploading files."
+msgstr "Virhe! Odottamaton virhe tiedostoja ladattaessa."
 
-msgid "Error:"
-msgstr "Virhe:"
+msgid "Error!"
+msgstr "Virhe!"
 
 msgid "Uploaded:"
 msgstr "Ladattu:"
@@ -55,9 +55,6 @@ msgstr "Oletko varma että haluat poistaa %s kansion?"
 
 msgid "New folder"
 msgstr "Uusi kansio"
-
-msgid "current"
-msgstr "nykyinen"
 
 msgid "Oldest first"
 msgstr "Vanhin ensin"
@@ -106,12 +103,15 @@ msgstr "Uudelleennimeä kansio"
 msgid "Delete folder"
 msgstr "Poista kansio"
 
-#, javascript-format
-msgid "Order %s created."
-msgstr "Tilaus %s luotu."
+msgid "Edit folder access"
+msgstr "Muokkaa kansion käyttöoikeuksia"
 
-msgid "An unspecified error occurred.\n"
-msgstr "Määrittelemätön virhe tapahtui.\n"
+#, javascript-format
+msgid "Success! Order %s was created."
+msgstr "Menestys! Tilaus %s luotiin."
+
+msgid "Error! An unspecified error occurred.\n"
+msgstr ""
 
 msgid "SKU"
 msgstr "Tuotekoodi"
@@ -175,8 +175,8 @@ msgstr "Tämän valitseminen vaihtaa toimitusosoitteen samaksi kuin laskutusosoi
 msgid "Order for company"
 msgstr "Tilaa yritykselle"
 
-msgid "Check this if the order is for a company or business with a tax ID."
-msgstr "Valitse tämä, jos tilaus on yritykselle, jolla on verotunnus."
+msgid "Enable this if the order is for a company or business with a tax ID."
+msgstr "Ota tämä käyttöön, jos tilaus koskee yritystä tai yritystä, jolla on verotunnus."
 
 msgid "Billing Address"
 msgstr "Laskutusosoite"
@@ -492,8 +492,8 @@ msgstr "Syötä maa %s osoitteelle."
 msgid "No records found."
 msgstr "Tietoja ei löytynyt."
 
-msgid "Missing JavaScript dependencies detected"
-msgstr "Puuttuvia JavasScript riippuvaisuuksia havaittu"
+msgid "Warning! Missing JavaScript dependencies detected."
+msgstr "Varoitus! Puuttuvat JavaScript-riippuvuudet havaittu."
 
 msgid "Identifier"
 msgstr "Tunniste"
@@ -523,11 +523,25 @@ msgstr "Muuttuja"
 msgid "Identifer"
 msgstr "Tunniste"
 
+msgid "New template"
+msgstr "Uusi malli"
+
 msgid "Show identifier fields (for advanced users)"
 msgstr "Näytä tunnistekentät (Edistyneille käyttäjille)"
 
 msgid "There are no variables defined."
 msgstr "Yhtään muuttujaa ei ole määritetty."
+
+msgid "Variation Template"
+msgstr "Muunnosmalli"
+
+msgid "Select Template"
+msgstr "Valitse malli"
+
+msgid ""
+"Selecting and saving a template will clear all variable children selections "
+"for this product."
+msgstr "Mallin valitseminen ja tallentaminen tyhjentää kaikki muuttujan alavalinnat tälle tuotteelle."
 
 msgid "Add new variable"
 msgstr "Lisää uusi muuttuja"
@@ -543,6 +557,16 @@ msgstr "Pudota tiedostot tähän tai klikkaa selaa."
 
 msgid "only images can be uploaded!"
 msgstr "voit lisätä vain kuvia!"
+
+msgid "Error happened while uploading file."
+msgstr "Virhe ladattaessa tiedostoa."
+
+msgid "Browse media"
+msgstr "Selaa mediaa"
+
+#, javascript-format
+msgid "Error! For images greater than %s kb, use the media browser instead."
+msgstr "Virhe! Käytä sen sijaan mediaselainta, jos kuvat ovat suurempia kuin %s kb."
 
 msgid "No results."
 msgstr "Ei tuloksia."
@@ -727,16 +751,19 @@ msgstr "Seuraava"
 
 #, javascript-format
 msgid "Filter by %s"
-msgstr "Rajaa: %s"
+msgstr "Suodata %s"
 
 msgid "Filters"
 msgstr "Suodattimet"
 
+msgid "Done"
+msgstr "Tehty"
+
 msgid "Show filters"
-msgstr ""
+msgstr "Näytä suodattimet"
 
 msgid "Select Action"
-msgstr "Valitse toiminto"
+msgstr "Valitse Toiminto"
 
 msgid "Clear Selections"
 msgstr "Tyhjennä valinnat"
@@ -750,32 +777,32 @@ msgstr "Valitse kaikki %s kohdetta"
 
 #, javascript-format
 msgid "There are no %s to show"
-msgstr ""
+msgstr "Ei ole %s näytettävää"
 
 msgid "There is no item to show"
-msgstr ""
+msgstr "Ei ole näytettävää kohdetta"
 
 msgid "with selected filters"
-msgstr ""
+msgstr "valituilla suodattimilla"
 
 msgid "How about creating a new entry?"
-msgstr ""
+msgstr "Entä uuden merkinnän luominen?"
 
-msgid "Mass Action complete."
-msgstr "Massatoiminto valmis."
+msgid "Success! Mass Action was completed."
+msgstr "Menestys! Joukkotoiminta saatiin päätökseen."
 
-msgid "Something went wrong."
-msgstr "Jotain meni pieleen."
+msgid "Error! Something went wrong with the Mass Action."
+msgstr "Virhe! Jotain meni pieleen joukkotoiminnassa."
 
 #, javascript-format
 msgid "All %s Items Selected"
 msgstr "Kaikki %s kohdetta valittu"
 
-msgid "You haven't selected anything"
-msgstr "Et ole tehnyt valintaa."
+msgid "Warning! You didn't select anything."
+msgstr "Varoitus! Et valinnut mitään."
 
 msgid "Confirm action by clicking OK!"
-msgstr "Vahvista toiminto klikkaamalla OK!"
+msgstr "Vahvista toiminta napsauttamalla OK!"
 
 msgid "Are you sure you want to delete this media?"
 msgstr "Oletko varma, että haluat poistaa tämän median?"

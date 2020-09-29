@@ -6,16 +6,16 @@
 # Aarni Koskela, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
 # Juha Kujala, 2015
-# Panu Tulimäki <panu@shuup.com>, 2018
+# Panu Tulimäki <panu@shuup.com>, 2018,2020
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 19:05+0000\n"
-"PO-Revision-Date: 2018-12-03 23:57+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2019-12-05 00:12+0000\n"
+"PO-Revision-Date: 2020-09-29 08:38+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,6 +27,11 @@ msgstr ""
 #, javascript-format
 msgid "Edit %s"
 msgstr "Muokkaa %s"
+
+msgid ""
+"Changing plugin cells without saving will cause changes made to this cell to"
+" be lost."
+msgstr "Laajennussolujen vaihtaminen tallentamatta tälle solulle tehdyt muutokset menetetään."
 
 #, javascript-format
 msgid "Error: Cannot add more than %s cells to one row."

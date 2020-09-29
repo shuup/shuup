@@ -4,13 +4,13 @@
 # 
 # Translators:
 # Janne Tammi <janne@shuup.com>, 2018
-# Panu Tulimäki <panu@shuup.com>, 2016,2018
+# Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 10:46+0000\n"
-"PO-Revision-Date: 2018-09-04 16:13+0000\n"
+"POT-Creation-Date: 2020-06-22 17:56+0000\n"
+"PO-Revision-Date: 2020-09-28 09:32+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -26,17 +26,19 @@ msgid "Company Contact Importer"
 msgstr "Yritysten tuonti"
 
 #, python-format
-msgid "Image '%s' not found, please check whether the image exists."
-msgstr "Kuvaa '%s' ei löytynyt, ole hyvä ja tarkista onko kuva olemassa."
+msgid "Image '%s' was not found, please check whether the image exists."
+msgstr "Kuvaa &#39;%s&#39; ei löydy. Tarkista, onko kuva olemassa."
 
-msgid "Please add supplier to row before importing stock quantities."
-msgstr "Ole hyvä ja lisää toimittaja ennen kun voit tuoda varastosaldoja."
+msgid "Please add supplier to the row, before importing stock quantities."
+msgstr "Lisää toimittaja riville ennen varastomäärien tuomista."
 
-msgid "No supplier found, please check the supplier exists."
-msgstr "Toimittajaa ei löytynyt. Ole hyvä ja tarkista että toimittaja on olemassa."
+msgid "No supplier found, please check that the supplier exists."
+msgstr "Toimittajaa ei löytynyt. Tarkista, että toimittaja on olemassa."
 
-msgid "This supplier doesn't handle stocks, please set Stock Managed on."
-msgstr "Tällä toimittajalla ei ole varastonhallinta päällä. Tarkista toimittajan tiedot."
+msgid ""
+"This supplier doesn't handle stocks, please set `Stock Managed` on in the "
+"individual Supplier's settings page."
+msgstr "Tämä toimittaja ei käsittele varastoja, aseta `Stock Managed` päälle yksittäisen toimittajan asetussivulla."
 
 msgid "Product Importer"
 msgstr "Tuotteiden tuonti"
@@ -70,9 +72,13 @@ msgstr "Mikäli tuot tuotteita kuvien kanssa, varmista seuraavat asiat:"
 
 #, python-format
 msgid ""
-"Upload all product images using the <a href=\"%(media_browser_url)s\" "
-"target=\"_blank\">Media Browser</a>."
-msgstr "Lisää kaikki tuotekuvat käyttäen <a href=\"%(media_browser_url)s\" target=\"_blank\">Mediaselainta</a>."
+"\n"
+"                Upload all product images using the <a href=\"%(media_browser_url)s\" target=\"_blank\">Media Browser</a>.\n"
+"            "
+msgstr "\nLisää kaikki tuotekuvat käyttäen <a href=\"%(media_browser_url)s\" target=\"_blank\">Mediaselainta</a>."
+
+msgid "Upload all product images using the Media Browser."
+msgstr "Lataa kaikki tuotekuvat Media-selaimen avulla."
 
 msgid ""
 "Use the image file name on <strong>image</strong> and/or "

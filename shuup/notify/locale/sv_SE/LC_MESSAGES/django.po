@@ -1,22 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-29 08:13+0000\n"
-"PO-Revision-Date: 2017-11-29 12:19+0200\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
-"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
-"language/sv_SE/)\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-29 10:13+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Plain text"
@@ -27,6 +27,9 @@ msgstr "HTML"
 
 msgid "Subject"
 msgstr "Ämne"
+
+msgid "Email Template"
+msgstr "E-postmall"
 
 msgid "Email Body"
 msgstr "E-post meddelandetext"
@@ -40,6 +43,21 @@ msgstr "Mottagare"
 msgid "Reply-To"
 msgstr "Svara till"
 
+msgid "Carbon Copy (CC)"
+msgstr "Carbon Copy (CC)"
+
+msgid "Blind Carbon Copy (BCC)"
+msgstr "Blind Carbon Copy (BCC)"
+
+msgid "From email"
+msgstr "Från epost"
+
+msgid ""
+"Override the default from email to be used. It can either be binded to a "
+"variable or be a constant like support@store.com or even \"Store Support\" "
+"<support@store.com>."
+msgstr "Åsidosätt standardinställningen från e-post som ska användas. Den kan antingen bindas till en variabel eller vara konstant som support@store.com eller till och med &quot;Store Support&quot; <support@store.com> ."
+
 msgid "Language"
 msgstr "Språk"
 
@@ -52,15 +70,16 @@ msgstr "Skicka identifierare"
 msgid ""
 "If set, this identifier will be logged into the event's log target. If the "
 "identifier has already been logged, the e-mail won't be sent again."
-msgstr ""
-"Om inställd, så kommer denna identifierare att loggas i evenemangets logg. "
-"Om identifieraren redan loggats, kommer inte att e-post skickas igen."
+msgstr "Om inställd, så kommer denna identifierare att loggas i evenemangets logg. Om identifieraren redan loggats, kommer inte att e-post skickas igen."
 
 msgid "Notifications"
 msgstr "Notifieringar"
 
 msgid "Show notification scripts"
 msgstr "Visa notifieringsskript"
+
+msgid "Email Templates"
+msgstr "E-postmallar"
 
 msgid "Event"
 msgstr "Händelse"
@@ -81,11 +100,9 @@ msgid "Choose whether this script should be activated when its event fires."
 msgstr "Välj huruvida detta skript ska aktiveras när dess händelse sker."
 
 msgid ""
-"Warning: Changing the event for an existing script may have unexpected "
+"Warning! Changing the event for an existing script may have unexpected "
 "effects."
-msgstr ""
-"Varning: Ändringar av en händelsen för ett befintligt skript kan ha oväntade "
-"effekter."
+msgstr "Varning! Att ändra händelsen för ett befintligt skript kan ha oväntade effekter."
 
 msgid "Template"
 msgstr "Mall"
@@ -93,14 +110,35 @@ msgstr "Mall"
 msgid "Bind to Variable"
 msgstr "Bind till variabel"
 
-msgid "Edit Script Contents..."
-msgstr "Redigera skriptets innehåll..."
+msgid "This field is missing content."
+msgstr "Det här fältet saknar innehåll."
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s har markerats borttagen."
+
+msgid "Edit Script Contents"
+msgstr "Redigera skriptinnehåll"
 
 msgid "Edit Script (advanced)"
 msgstr "Redigera skript (avancerat)"
 
 msgid "Edit Template"
 msgstr "Redigera mall"
+
+msgid "Delete"
+msgstr "Radera"
+
+#, python-format
+msgid "Are you sure you wish to delete \"%s\" notification?"
+msgstr "Är du säker på att du vill ta bort meddelandet &quot;%s&quot;?"
+
+msgid "Save"
+msgstr "Spara"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s har tagits bort."
 
 msgid "Name"
 msgstr "Namn"
@@ -114,23 +152,21 @@ msgstr "Nytt skript"
 msgid "New From Template"
 msgstr "Ny från mall"
 
-msgid "Script created from template!"
-msgstr "Skript skapat från mall!"
+msgid "Script created from template."
+msgstr "Skript skapat från mall."
 
-msgid "Template Script not found!"
-msgstr "Mallskript hittades inte!"
+msgid "Template Script not found."
+msgstr "Mallskript hittades inte."
 
-msgid "Templated script not found!"
-msgstr "Skript skapat från mall hittades inte!"
+msgid "Templated script not found."
+msgstr "Mallskript hittades inte."
 
-msgid "Script updated!"
-msgstr "Skript uppdaterat!"
+msgid "Script updated."
+msgstr "Skript uppdaterat."
 
 msgid ""
 "Check whether the bound value `value` exists and is non-empty and non-zero."
-msgstr ""
-"Kontrollera om det bundna värdet 'värde' existerar och inte är tomt och/"
-"eller noll."
+msgstr "Kontrollera om det bundna värdet 'värde' existerar och inte är tomt och/eller noll."
 
 msgid "Non-Empty"
 msgstr "Icke-tom"
@@ -189,6 +225,14 @@ msgstr "hög"
 msgid "critical"
 msgstr "kritisk"
 
+msgid ""
+"Enter the base HTML template to be used in emails. Mark the place to inject "
+"the email content using the variable `%html_body%` inside the body."
+msgstr "Ange HTML-basmallen som ska användas i e-postmeddelanden. Markera platsen för att injicera e-postinnehållet med variabeln &#39;% html_body%&#39; inuti kroppen."
+
+msgid "shop"
+msgstr "affär"
+
 msgid "recipient type"
 msgstr "mottagartyp"
 
@@ -228,6 +272,30 @@ msgstr "mallidentifierare"
 msgid "the template identifier used to create this script"
 msgstr "mallidentifieraren som användes för att skapa skriptet"
 
+msgid "Password Reset"
+msgstr "Lösenordsåterställning"
+
+msgid "This event is triggered when password reset is requested."
+msgstr "Denna händelse utlöses när du återställer lösenord."
+
+msgid "Site name"
+msgstr "Sidnamn"
+
+msgid "User secret"
+msgstr "Användarhemlighet"
+
+msgid "User to recover"
+msgstr "Användaren att återhämta sig"
+
+msgid "Token"
+msgstr "Tecken"
+
+msgid "Recovery URL"
+msgstr "Återställnings-URL"
+
+msgid "To Email"
+msgstr "Att mejla"
+
 msgid "The subject of the email"
 msgstr "Ämne för e-postmeddelandet"
 
@@ -248,9 +316,7 @@ msgstr "Skicka till"
 
 msgid ""
 "You can send this email to the customer or to other email of your choice."
-msgstr ""
-"Du kan skicka detta mail till kunden eller till andra, av dig valda, e-"
-"postadresser"
+msgstr "Du kan skicka detta mail till kunden eller till andra, av dig valda, e-postadresser"
 
 msgid "Destination"
 msgstr "Mottagare"
@@ -261,8 +327,34 @@ msgstr "Fyll med e-måladressen."
 msgid ""
 "Recipient is a required field when you don't want to send the email to "
 "customer."
+msgstr "Mottagaren är ett obligatoriskt fält när du inte skickae e-post till kunden."
+
+msgid ""
+"\n"
+"<p>Hi {{ user_to_recover.get_full_name() }},</p>\n"
+"\n"
+"<p>In case you've forgotten, your username is {{ user_to_recover.username }}.</p>\n"
+"<p>You're receiving this email because you requested a password reset for your user account at {{ site_name }}.</p>\n"
+"<p>Please go to the following page and choose a new password:</p>\n"
+"<br>\n"
+"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
 msgstr ""
-"Mottagaren är ett obligatoriskt fält när du inte skickae e-post till kunden."
+
+msgid "Send Password Reset Link"
+msgstr "Skicka lösenord Återställ länk"
+
+msgid ""
+"\n"
+"        Send an email to user when their account password reset is requested\n"
+"    "
+msgstr ""
+
+msgid ""
+"\n"
+"        This script will send an email to user once their account password reset is\n"
+"        requested either by admin, staff or user.\n"
+"    "
+msgstr ""
 
 msgid "Edit Script Information"
 msgstr "Redigera skriptinformation"

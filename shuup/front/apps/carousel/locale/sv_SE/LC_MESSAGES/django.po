@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:34+0000\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
-"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
-"language/sv_SE/)\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-09-29 10:09+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Carousels"
@@ -43,11 +43,17 @@ msgstr "Bildspel"
 msgid "Fade"
 msgstr "Tona"
 
-msgid "Current"
-msgstr "Aktuellt"
+msgid "Current page"
+msgstr "Nuvarande sida"
 
-msgid "New"
-msgstr "Ny"
+msgid "New page"
+msgstr "Ny sida"
+
+msgid "shops"
+msgstr "butiker"
+
+msgid "Select which shops you would like the carousel to be visible in."
+msgstr "Välj vilka butiker du vill att karusellen ska vara synlig i."
 
 msgid "name"
 msgstr "namn"
@@ -79,9 +85,7 @@ msgstr "visa navigeringspilar"
 msgid ""
 "When checked, navigational arrows are shown on the carousel allowing for "
 "customers to go back and forward."
-msgstr ""
-"När markerad, visas navigeringspilar i karusellen vilket gör det möjligt för "
-"kunder att gå fram och tillbaka."
+msgstr "När markerad, visas navigeringspilar i karusellen vilket gör det möjligt för kunder att gå fram och tillbaka."
 
 msgid "show navigation dots"
 msgstr "visa navigeringprickar"
@@ -101,6 +105,12 @@ msgstr "bildhöjd"
 msgid "Slide images will be cropped to this height."
 msgstr "Slidebilder kommer att beskäras till denna höjd."
 
+msgid "Arrows color"
+msgstr "Pilar färg"
+
+msgid "Set the custom color for the arrows."
+msgstr "Ställ in anpassad färg för pilarna."
+
 msgid "Name is only used to configure slides."
 msgstr "Namnet används endast att konfigurera slides."
 
@@ -108,10 +118,9 @@ msgid "product link"
 msgstr "produktlänk"
 
 msgid ""
-"Set the product detail page that should be shown when this slide is clicked, "
-"if any."
-msgstr ""
-"Ange den produktinformationssida som ska visas när den här sliden klickas."
+"Set the product detail page that should be shown when this slide is clicked,"
+" if any."
+msgstr "Ange den produktinformationssida som ska visas när den här sliden klickas."
 
 msgid "category link"
 msgstr "kategorilänk"
@@ -134,44 +143,62 @@ msgstr "ordning"
 msgid ""
 "Set the numeric order in which this slide should appear relative to other "
 "slides in this carousel."
-msgstr ""
-"Ange den numeriska ordning som denna slide bör visas i förhållande till "
-"övriga bilder i denna karusell."
+msgstr "Ange den numeriska ordning som denna slide bör visas i förhållande till övriga bilder i denna karusell."
 
 msgid "link target"
 msgstr "länkmål"
 
 msgid ""
 "Set this to current if clicking on this slide should open a new browser tab."
-msgstr ""
-"Markera detta om nya sidor skall öppnas flik i webbläsaren när man klickar "
-"på en slide."
+msgstr "Markera detta om nya sidor skall öppnas flik i webbläsaren när man klickar på en slide."
 
-msgid "available from"
-msgstr "tillgänglig från"
+msgid "available since"
+msgstr "tillgänglig sedan"
 
 msgid ""
-"Set the date and time from which this slide should be visible in the "
+"Set the date and time, starting from which this slide should be visible in "
+"the carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr "Ställ in datum och tid, från och med vilken denna bild ska synas i karusellen. Detta är användbart för att marknadsföra reklamkampanjer eller annan tidskänslig marknadsföring."
+
+msgid "available until"
+msgstr "tillgänglig fram till"
+
+msgid ""
+"Set the date and time, until which this slide should be visible in the "
 "carousel. This is useful to advertise sales campaigns or other time-"
 "sensitive marketing."
-msgstr ""
-"Ställ in datum och tid då sliden ska synas i karusellen. Detta är användbart "
-"att annonsera försäljningskampanjer eller anna tidskänslig marknadsföring."
+msgstr "Ställ in datum och tid, tills den här bilden ska synas i karusellen. Detta är användbart för att marknadsföra reklamkampanjer eller annan tidskänslig marknadsföring."
 
-msgid "available to"
-msgstr "tillgängligt till"
+msgid "Inactive dot border color"
+msgstr "Inaktiv prickfärg"
+
+msgid "Customize the dot border color when slide is not active."
+msgstr "Anpassa prickfärgen när bilden inte är aktiv."
+
+msgid "Active dot color"
+msgstr "Aktiv prickfärg"
+
+msgid "Customize the dot color when slide is active."
+msgstr "Anpassa prickfärgen när bilden är aktiv."
 
 msgid "caption"
 msgstr "rubrik"
 
-msgid "Text that describes the image. Used for search engine purposes."
-msgstr "Text som beskriver bilden. Används för sökningmotorer."
+msgid ""
+"Text that describes the image. It is displayed on top of the image if "
+"'Render image text' box is enabled in front-end. Also used for search engine"
+" purposes."
+msgstr "Text som beskriver bilden. Den visas ovanpå bilden om rutan &#39;Rendera bildtext&#39; är aktiverad i frontend. Används också för sökmotorändamål."
 
 msgid "caption text"
 msgstr "bildtext"
 
-msgid "When displayed in banner box mode, caption text is shown as a tooltip"
-msgstr "När visas i banner-box-läge, visas bildtexten som en bildbeskrivning"
+msgid ""
+"Caption text is displayed as secondary text on top of the image if 'Render "
+"image text' box is enabled in front-end for 'Carousel plugin' type (disabled"
+" for 'Banner box' type). It is also shown as a tooltip."
+msgstr "Bildtext visas som sekundär text överst på bilden om rutan &#39;Rendera bildtext&#39; är aktiverad i frontend för typ &#39;Karusellplugg&#39; (avaktiverad för &#39;Bannerbox&#39; -typ). Det visas också som ett verktygstips."
 
 msgid "external link"
 msgstr "extern länk"
@@ -193,6 +220,12 @@ msgstr "Slides"
 msgid "Carousel Plugin"
 msgstr "Karusell insticksmodul"
 
+msgid "Render image text"
+msgstr "Rendera bildtext"
+
+msgid "Display the text on top of the image."
+msgstr "Visa texten ovanpå bilden."
+
 msgid "Banner Box"
 msgstr "Banner-Box"
 
@@ -205,9 +238,22 @@ msgstr "Slides kan läggas till efter att karusellen är sparad."
 msgid ""
 "This form is also used to define banner boxes. Marked fields only apply to "
 "banner boxes."
-msgstr ""
-"Detta formulär används också att definiera bannerlådor. Markerade fält "
-"gäller endast bannerlådor."
+msgstr "Detta formulär används också att definiera bannerlådor. Markerade fält gäller endast bannerlådor."
+
+msgid "Adding the carousel to your site"
+msgstr "Lägga till karusellen på din webbplats"
+
+msgid ""
+"To add a carousel to your site, you must edit the page using the placeholder"
+" editor. To do this, go to your site and click the 'Edit page' on the page "
+"you want to add the carousel banner to. Then, select the placeholder to "
+"change and add a new plugin row and from the plugin dropdown and select "
+"'Carousel Plugin'. From 'Carousel' dropdown options choose the carousel you "
+"want to display. As a final step, save the plugin and publish changes."
+msgstr "För att lägga till en karusell på din webbplats måste du redigera sidan med platshållarredigeraren. För att göra detta, gå till din webbplats och klicka på &quot;Redigera sida&quot; på den sida du vill lägga till karusellbannern till. Välj sedan platshållaren som du vill ändra och lägg till en ny pluginrad och från plugin-rullgardinsmenyn och välj &quot;Carousel Plugin&quot;. Välj karusell som du vill visa från rullgardinsalternativen &#39;Karusell&#39;. Som ett sista steg sparar du plugin-programmet och publicerar ändringar."
+
+msgid "Learn more."
+msgstr "Läs mer."
 
 msgid "Basic details"
 msgstr "Grundinformation"
@@ -215,15 +261,16 @@ msgstr "Grundinformation"
 msgid "Advanced options"
 msgstr "Avancerade inställningar"
 
+msgid "Remove Slide"
+msgstr "Ta bort bilden"
+
 msgid "Only image for default language is required."
 msgstr "En bild krävs enbart för standardspråket."
 
 msgid ""
 "If external link is not set link will fallback to product link, category "
 "link or cms page link in this order."
-msgstr ""
-"Om en extern länk inte anges kommer användaren att skickas till, i denna "
-"ordning, produktlänken, kategorilänk eller innehållshanteringssystemetet."
+msgstr "Om en extern länk inte anges kommer användaren att skickas till, i denna ordning, produktlänken, kategorilänk eller innehållshanteringssystemetet."
 
 msgid "Add new slide"
 msgstr "Lägg till ny slide"

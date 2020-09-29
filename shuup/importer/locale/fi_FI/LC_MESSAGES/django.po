@@ -3,14 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2017
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 12:09+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2017-03-01 14:19+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,49 +31,39 @@ msgstr "Tuonnin tila"
 msgid "Importing language"
 msgstr "Tuonnin kieli"
 
-msgid "The language of the data you would like to import."
+msgid "The language of the data you want to import."
 msgstr "Tuotavien tietojen kieli."
-
-msgid "Shop"
-msgstr "Kauppa"
-
-msgid "Select a shop you want import into"
-msgstr "Valitse kauppa, johon haluat tuoda tiedot"
 
 msgid "Importer"
 msgstr "Tuoja"
 
-msgid "Select a importer type matching the data you would like to import"
-msgstr "Valitse tuojan tyyppi, joka vastaa tuotavia tietoja"
+msgid "Select a importer type matching the data you want to import"
+msgstr "Valitse tuontityyppi, joka vastaa tuotavia tietoja"
 
 msgid "File"
 msgstr "Tiedosto"
 
 #, python-format
-msgid "%s is not a file"
-msgstr "%s ei ole tiedosto"
+msgid "%s is not a file."
+msgstr "%s ei ole tiedosto."
 
-msgid "File missing."
+msgid "File is missing."
 msgstr "Tiedosto puuttuu."
 
 msgid "Failed to import the file."
 msgstr "Tiedoston tuonti epäonnistui."
 
-#, python-format
-msgid "Failed while preparing the file: %s."
-msgstr "Tiedoston valmistelussa tapahtui virhe: %s."
+msgid "Invalid parameters."
+msgstr "Virheelliset parametrit."
 
-msgid "Invalid parameters"
-msgstr "Virheelliset parametrit"
+msgid "Invalid importer."
+msgstr "Virheellinen tuoja."
 
-msgid "Invalid importer"
-msgstr "Virheellinen importer"
+msgid "Invalid file name."
+msgstr "Virheellinen tiedoston nimi."
 
-msgid "Invalid file name"
-msgstr "Virheellinen tiedostonimi"
-
-msgid "File not found"
-msgstr "Tiedostoa ei löytynyt"
+msgid "File was not found."
+msgstr "Tiedostoa ei löytynyt."
 
 msgid "Import"
 msgstr "Tuo"
@@ -87,8 +81,9 @@ msgstr ""
 "%(object_id)s)."
 
 #, python-format
-msgid "Error setting value for field %(field_name)s. (%(exception)s)"
-msgstr "Virhe asettaessa arvoa kentälle %(field_name)s. (%(exception)s)"
+msgid "Failed while setting value for field %(field_name)s. (%(exception)s)"
+msgstr ""
+"Epäonnistui asetettaessa arvoa kentälle %(field_name)s. (%(exception)s)"
 
 #, python-format
 msgid "Couldn't set value %(original_value)s for field %(field_name)s."
@@ -100,6 +95,14 @@ msgstr "Rivin tuonti epäonnistui (%s)."
 
 msgid "Example files"
 msgstr "Esimerkkitiedostot"
+
+msgid ""
+"If there is a 'Ignore' column in the example file you are using,\n"
+"                    make sure to leave the ignore column empty for all your rows,\n"
+"                    otherwise the rows won't be imported."
+msgstr ""
+"Jos käyttämässäsi esimerkkitiedostossa on Ohita-sarake, muista jättää Ohita-"
+"sarake tyhjäksi kaikille riveillesi, muuten rivejä ei tuoda."
 
 msgid "This importer provides example files. Click below to download them:"
 msgstr ""
@@ -245,8 +248,8 @@ msgid "Import errors"
 msgstr "Virheitä tuonnissa"
 
 #, python-format
-msgid "Cannot import more than %s rows from one file."
-msgstr "Yhdestä tiedostosta ei voi tuoda enempää kuin %s riviä."
+msgid "Can't import more than %s rows from one file."
+msgstr "Yhdestä tiedostosta voi tuoda vain %s riviä."
 
 msgid "Allow create and update"
 msgstr "Salli luominen ja päivittäminen"

@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 01:41+0000\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,331 +22,393 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Archive Product Discounts"
-msgstr ""
+msgstr "Arkistoi tuotealennukset"
 
 msgid "Unarchive Discounts"
-msgstr ""
+msgstr "Poista alennukset arkistoinnista"
 
 msgid "Delete Discounts"
-msgstr ""
+msgstr "Poista alennukset"
 
 msgid "Product Discounts Coupon Codes"
-msgstr ""
+msgstr "Tuotealennukset kuponkikoodeista"
 
 msgid "Discounts"
-msgstr ""
+msgstr "Alennukset"
 
 msgid "Product Discounts"
-msgstr ""
+msgstr "Tuotealennukset"
 
 msgid "Archived Product Discounts"
-msgstr ""
+msgstr "Arkistoidut tuotealennukset"
 
 msgid "Discounts Availability Exceptions"
-msgstr ""
+msgstr "Alennukset saatavuuden poikkeuksista"
 
 msgid "Product Discounts Availability Exceptions"
-msgstr ""
+msgstr "Tuotealennukset Saatavuuspoikkeukset"
 
 msgid "Discounts Happy Hours"
-msgstr ""
+msgstr "Alennukset Happy Hours -palvelusta"
 
 msgid "Product Discounts Happy Hours"
-msgstr ""
+msgstr "Tuotealennukset Happy Hours"
 
 msgid "Discount Name"
-msgstr ""
+msgstr "Alennuksen nimi"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Suodata nimen mukaan ..."
 
 msgid "Product"
-msgstr ""
+msgstr "Tuote"
 
 msgid "Filter by product..."
-msgstr ""
+msgstr "Suodata tuotteen mukaan ..."
 
 msgid "Category"
-msgstr ""
+msgstr "Kategoria"
 
 msgid "Filter by category..."
-msgstr ""
+msgstr "Suodata luokan mukaan ..."
 
 msgid "Contact Group"
-msgstr ""
+msgstr "Ota yhteyttä ryhmään"
 
 msgid "Filter by contact group..."
-msgstr ""
+msgstr "Suodata yhteysryhmän mukaan ..."
 
 msgid "Contact"
-msgstr ""
+msgstr "Ottaa yhteyttä"
 
 msgid "Filter by contact..."
-msgstr ""
+msgstr "Suodata kontaktin mukaan ..."
 
 msgid "Coupon code"
-msgstr ""
+msgstr "Kuponkikoodi"
 
 msgid "Filter by coupon code..."
-msgstr ""
+msgstr "Suodata kuponkikoodin mukaan ..."
 
 msgid "Effect"
-msgstr ""
+msgstr "Vaikutus"
 
 msgid "End Date and Time"
-msgstr ""
+msgstr "Lopetuspäivä ja -aika"
 
 msgid "Code"
-msgstr ""
+msgstr "Koodi"
 
 msgid "Usages"
-msgstr ""
+msgstr "Käyttötavat"
 
 msgid "Usages Limit per contact"
-msgstr ""
+msgstr "Käyttötarkoitus yhteystietoa kohden"
 
 msgid "Usage Limit"
-msgstr ""
+msgstr "Käyttöraja"
 
 msgid "Active"
-msgstr ""
+msgstr "Aktiivinen"
 
 msgid "Created by"
-msgstr ""
+msgstr "Luonut"
 
 msgid "Date created"
-msgstr ""
+msgstr "Päivämäärä luotu"
 
 msgid "Select discounts linked to this coupon code."
-msgstr ""
-
-msgid "Shops"
-msgstr ""
-
-msgid "Select shops for this discount. Keep it blank to share with all shops."
-msgstr ""
+msgstr "Valitse tähän kuponkikoodiin liittyvät alennukset."
 
 #, python-format
 msgid "%s has been deleted."
-msgstr ""
+msgstr "%s on poistettu."
 
 msgid "Discount percentage"
-msgstr ""
+msgstr "Alennusprosentti"
 
 msgid "The discount percentage for this discount."
-msgstr ""
+msgstr "Tämän alennuksen alennusprosentti."
 
 msgid "Exception Name"
-msgstr ""
+msgstr "Poikkeuksen nimi"
 
 msgid "Start Date and Time"
-msgstr ""
+msgstr "Aloituspäivä ja -aika"
 
 msgid "Select discounts to be ignored on given time frame."
-msgstr ""
+msgstr "Valitse alennukset, jotka jätetään huomioimatta tietyllä aikavälillä."
 
 msgid "Happy Hour Name"
-msgstr ""
+msgstr "Happy Hour -nimi"
 
 msgid "Select discounts for this happy hour."
-msgstr ""
+msgstr "Valitse alennukset tälle onnelliselle tunnille."
 
 msgid ""
 "12pm is considered noon and 12am as midnight. Start hour is included to the "
 "discount."
 msgstr ""
+"Klo 12 pidetään keskipäivänä ja klo 12 keskiyönä. Aloitusaika sisältyy "
+"alennukseen."
 
 msgid ""
 "12pm is considered noon and 12am as midnight. End hours is included to the "
 "discount."
 msgstr ""
+"Klo 12.00 pidetään keskipäivänä ja klo 12 keskiyönä. Loppuajat sisältyvät "
+"alennukseen."
 
 msgid "Weekdays the happy hour is active."
-msgstr ""
+msgstr "Arkisin happy hour on aktiivinen."
 
 msgid "shops"
-msgstr ""
+msgstr "kauppoja"
 
 msgid "name"
-msgstr ""
+msgstr "nimi"
 
 msgid ""
 "The name for this exception. Used internally with exception lists for "
 "filtering."
 msgstr ""
+"Tämän poikkeuksen nimi. Käytetään sisäisesti poikkeusluetteloiden avulla "
+"suodattamiseen."
 
-msgid "start"
-msgstr ""
+msgid "start since"
+msgstr "aloita siitä lähtien"
 
-msgid "end"
+msgid ""
+"Set to restrict the availability exception to be available only after a "
+"certain date and time."
 msgstr ""
+"Aseta rajoittamaan saatavuuspoikkeutta, joka on käytettävissä vasta tietyn "
+"päivämäärän ja ajan jälkeen."
+
+msgid "end until"
+msgstr "päättyy"
+
+msgid ""
+"Set to restrict the availability exception to be available only until a "
+"certain date and time."
+msgstr ""
+"Aseta rajoittamaan saatavuuspoikkeutta, joka on käytettävissä vain tiettyyn "
+"päivämäärään ja aikaan saakka."
 
 msgid "availability exception"
-msgstr ""
+msgstr "saatavuutta koskeva poikkeus"
 
 msgid "availability exceptions"
-msgstr ""
+msgstr "saatavuutta koskevat poikkeukset"
 
 msgid "created on"
-msgstr ""
+msgstr "luotu"
 
 msgid "usage limit per customer"
-msgstr ""
+msgstr "käyttöraja asiakasta kohti"
 
 msgid "Limit the amount of usages per a single customer."
-msgstr ""
+msgstr "Rajoita käyttömääriä yksittäistä asiakasta kohti."
 
 msgid "usage limit"
-msgstr ""
+msgstr "käyttöraja"
 
 msgid ""
 "Set the absolute limit of usages for this coupon. If the limit is zero (0) "
 "coupon cannot be used."
 msgstr ""
+"Aseta tämän kuponin absoluuttinen käyttöraja. Jos raja on nolla (0), "
+"kuponkia ei voi käyttää."
 
 msgid "active"
-msgstr ""
+msgstr "aktiivinen"
 
 msgid "created by"
-msgstr ""
+msgstr "luonut"
 
 msgid "modified by"
-msgstr ""
+msgstr "muokannut"
 
 msgid "modified on"
-msgstr ""
+msgstr "muokattu"
 
 msgid ""
 "The name for this discount. Used internally with discount lists for "
 "filtering."
 msgstr ""
+"Tämän alennuksen nimi. Käytetään sisäisesti alennusluetteloiden kanssa "
+"suodattamiseen."
+
+msgid "supplier"
+msgstr "toimittaja"
+
+msgid "Select supplier for this discount."
+msgstr "Valitse tämän alennuksen toimittaja."
 
 msgid ""
-"Check this if the discount is currently active. Please also set a start and "
-"end date."
+"Enable this if the discount is currently active. Please also set a start and"
+" an end date."
 msgstr ""
+"Ota tämä käyttöön, jos alennus on tällä hetkellä aktiivinen. Määritä myös "
+"aloitus- ja lopetuspäivä."
 
 msgid "start date and time"
-msgstr ""
+msgstr "aloituspäivä ja -aika"
 
 msgid ""
 "The date and time the discount starts. This is only applicable if the "
 "discount is marked as active."
 msgstr ""
+"Alennuksen alkamispäivä ja -aika. Tätä sovelletaan vain, jos alennus on "
+"merkitty aktiiviseksi."
 
 msgid "end date and time"
-msgstr ""
+msgstr "päättymispäivä ja -aika"
 
 msgid ""
 "The date and time the discount ends. This is only applicable if the discount"
 " is marked as active."
 msgstr ""
+"Alennuksen päättymispäivä ja -aika. Tätä sovelletaan vain, jos alennus on "
+"merkitty aktiiviseksi."
 
 msgid "happy hours"
-msgstr ""
+msgstr "iloiset tunnit"
 
 msgid "Select happy hours for this discount."
-msgstr ""
+msgstr "Valitse onnelliset ajat tälle alennukselle."
 
 msgid "Select availability for this discount."
-msgstr ""
+msgstr "Valitse tämän alennuksen saatavuus."
 
 msgid "product"
-msgstr ""
+msgstr "tuote"
 
 msgid "Select product for this discount."
-msgstr ""
+msgstr "Valitse tuote tähän alennukseen."
 
 msgid "exclude selected category"
-msgstr ""
+msgstr "sulje pois valittu luokka"
 
 msgid "Exclude products in selected category from this discount."
-msgstr ""
+msgstr "Sulje pois valitun luokan tuotteet tästä alennuksesta."
 
 msgid "category"
-msgstr ""
+msgstr "kategoria"
 
 msgid "Select category for this discount."
-msgstr ""
+msgstr "Valitse alennuksen luokka."
 
 msgid "contact"
-msgstr ""
+msgstr "ottaa yhteyttä"
 
 msgid "Select contact for this discount."
-msgstr ""
+msgstr "Valitse yhteyshenkilö tästä alennuksesta."
 
 msgid "exclude selected contact group"
-msgstr ""
+msgstr "poista valittu yhteysryhmä"
 
 msgid "Exclude contacts in selected contact group from this discount."
-msgstr ""
+msgstr "Sulje pois valitun yhteysryhmän yhteystiedot tästä alennuksesta."
 
 msgid "contact group"
-msgstr ""
+msgstr "yhteysryhmä"
 
 msgid "Select contact group for this discount."
-msgstr ""
+msgstr "Valitse tämän alennuksen yhteysryhmä."
 
 msgid "coupon code"
-msgstr ""
+msgstr "Kuponkikoodi"
 
 msgid "Select coupon code for this discount."
-msgstr ""
+msgstr "Valitse kuponkikoodi tälle alennukselle."
 
 msgid "discounted price"
-msgstr ""
+msgstr "alennettu hinta"
 
 msgid "Discounted product price for this discount."
-msgstr ""
+msgstr "Tuotteen alennettu hinta tälle alennukselle."
 
 msgid "discount amount"
-msgstr ""
+msgstr "alennuksen määrä"
 
 msgid "Discount amount value for this discount."
-msgstr ""
+msgstr "Tämän alennuksen alennussumman arvo."
 
 msgid "discount percentage"
-msgstr ""
+msgstr "alennusprosentti"
 
 msgid "Discount percentage for this discount."
-msgstr ""
+msgstr "Alennuksen prosenttiosuus tästä alennuksesta."
 
 msgid "product discount"
-msgstr ""
+msgstr "tuotealennus"
 
 msgid "product discounts"
-msgstr ""
+msgstr "tuotealennukset"
 
 msgid ""
-"The name for this . Used internally with exception lists for filtering."
+"The name for this HappyHour. Used internally with exception lists for "
+"filtering."
 msgstr ""
+"Tämän HappyHourin nimi. Käytetään sisäisesti poikkeusluetteloiden avulla "
+"suodattamiseen."
 
 msgid "happy hour"
-msgstr ""
+msgstr "onnellinen tunti"
 
 msgid "parent"
-msgstr ""
+msgstr "vanhempi"
 
 msgid "from hour"
-msgstr ""
+msgstr "tunnista"
 
 msgid "to hour"
-msgstr ""
+msgstr "tuntiin"
 
-msgid "weekdays"
-msgstr ""
+msgid "weekday"
+msgstr "arkipäivä"
 
 msgid "time range"
-msgstr ""
+msgstr "aikahaarukka"
 
 msgid "time ranges"
-msgstr ""
+msgstr "ajanjaksot"
 
-msgid "To hour has to be after from hour"
+msgid ""
+"The value of the field `to hour` has to be later than that of `from hour`."
 msgstr ""
+"Kentän &quot;tuntiin&quot; arvon on oltava myöhempi kuin "
+"&quot;tunnista&quot;."
+
+msgid ""
+"Select all discounts to render products from. Only active discounts that "
+"have product or category linked are available."
+msgstr ""
+"Valitse kaikki alennukset, joista renderoit tuotteita. Vain aktiiviset "
+"alennukset, joihin tuote tai luokka on liitetty, ovat käytettävissä."
+
+msgid "Discounted Products"
+msgstr "Alennetut tuotteet"
+
+msgid "Title"
+msgstr "Otsikko"
+
+msgid "Count"
+msgstr "Kreivi"
+
+msgid "Only show in-stock and orderable items"
+msgstr "Näytä vain varastossa olevat ja tilattavat tuotteet"
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
+"Varoitus: Tuotteiden lopullinen lukumäärä voi olla pienempi kuin Count, "
+"koska se suodattaa tilaamattomat tuotteet Count-tuotteiden joukosta."
 
 msgid "Availability"
-msgstr ""
+msgstr "Saatavuus"
 
 msgid "Condition"
-msgstr ""
+msgstr "Kunto"

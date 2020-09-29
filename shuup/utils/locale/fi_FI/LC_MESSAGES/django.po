@@ -5,7 +5,7 @@
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
-# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Eetu Häivälä, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
@@ -23,9 +23,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-16 20:50+0000\n"
-"PO-Revision-Date: 2018-07-17 04:26+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-16 00:14+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -91,6 +91,13 @@ msgstr[1] "%s päivää"
 #, python-format
 msgid "%(min)s--%(max)s days"
 msgstr "%(min)s--%(max)s päivää"
+
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)."
+msgstr ""
+
+msgid "Root"
+msgstr ""
 
 msgid "This field is required."
 msgstr "Tämä kenttä on pakollinen."

@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:33+0000\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
-"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
-"language/sv_SE/)\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2020-06-22 17:56+0000\n"
+"PO-Revision-Date: 2020-09-29 10:05+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Contact Importer"
@@ -24,15 +24,80 @@ msgstr "Importör för kontakter"
 msgid "Company Contact Importer"
 msgstr "Importör för företagskontakter"
 
-msgid "Please add supplier to row before importing stock quantities."
-msgstr "Vänligen lägg till en leverantör före du fyller på lagret."
+#, python-format
+msgid "Image '%s' was not found, please check whether the image exists."
+msgstr "Bilden &#39;%s&#39; hittades inte, kontrollera om bilden finns."
 
-msgid "No supplier found, please check the supplier exists."
-msgstr "Ingen leverantör hittade, vänligen kontrollera att leverantören finns."
+msgid "Please add supplier to the row, before importing stock quantities."
+msgstr "Lägg till leverantör i raden innan du importerar lagerkvantiteter."
 
-msgid "This supplier doesn't handle stocks, please set Stock Managed on."
-msgstr ""
-"Denna leverantör hanterar inte lager, vänligen aktivera Lager Hanterat."
+msgid "No supplier found, please check that the supplier exists."
+msgstr "Ingen leverantör hittades, kontrollera att leverantören finns."
+
+msgid ""
+"This supplier doesn't handle stocks, please set `Stock Managed` on in the "
+"individual Supplier's settings page."
+msgstr "Denna leverantör hanterar inte lager, ställ in &quot;Lagerhanterad&quot; på den enskilda leverantörens inställningssida."
 
 msgid "Product Importer"
 msgstr "Importör för produkter"
+
+msgid "Quantities"
+msgstr "Mängder"
+
+msgid "If you are importing products with quantities, ensure the following:"
+msgstr "Om du importerar produkter med kvantiteter, se till följande:"
+
+#, python-format
+msgid ""
+"You have atleast one <a href=\"%(supplier_url)s\">supplier</a> with \"Stock "
+"Managed\" <strong>on</strong>."
+msgstr "Du har minst en <a href=\"%(supplier_url)s\">leverantör</a> med &quot;Stock Managed&quot; <strong>på</strong> ."
+
+#, python-format
+msgid ""
+"your <a href=\"%(supplier_url)s\">supplier</a> has \"Stock Managed\" "
+"<strong>on</strong>. (Currently <strong>off</strong>)"
+msgstr "din <a href=\"%(supplier_url)s\">leverantör</a> har &quot;Lagerhanterat&quot; <strong>på</strong> . (För närvarande <strong>avstängd</strong> )"
+
+msgid "your import file has <strong>supplier</strong> field"
+msgstr "din importfil har <strong>leverantörsfält</strong>"
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "If you are importing products with images, ensure the following:"
+msgstr "Se till följande om du importerar produkter med bilder:"
+
+#, python-format
+msgid ""
+"\n"
+"                Upload all product images using the <a href=\"%(media_browser_url)s\" target=\"_blank\">Media Browser</a>.\n"
+"            "
+msgstr ""
+
+msgid "Upload all product images using the Media Browser."
+msgstr "Ladda upp alla produktbilder med Media Browser."
+
+msgid ""
+"Use the image file name on <strong>image</strong> and/or "
+"<strong>images</strong> column(s)."
+msgstr "Använd bildfilnamnet på <strong>bild-</strong> och / eller <strong>bildkolumner</strong> ."
+
+msgid ""
+"<strong>images</strong> column can receive a comma-separated list of image "
+"names."
+msgstr "<strong>bilder</strong> kolumn kan få en kommaseparerad lista med bildnamn."
+
+msgid ""
+"Image names can be the file name (e.g.: <em>product_001.png</em>) or the path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).\n"
+"        Using the full path will ensure that the correct image will be used when there is more than one image with the same name."
+msgstr "Bildnamn kan vara filnamnet (t.ex. <em>produkt_001.png</em> ) eller sökvägen till bilden (t.ex. <em>Produkter / bilder / produkt_001.jpeg</em> ). Att använda hela sökvägen säkerställer att rätt bild används när det finns mer än en bild med samma namn."
+
+msgid "Related objects"
+msgstr "Relaterade objekt"
+
+msgid ""
+"Columns that are relations to other objects (like Category and Supplier) accept both the object ID number\n"
+"    and the object name. Make sure that when using the name, there should be only a single object for that given name."
+msgstr "Kolumner som är relationer till andra objekt (som kategori och leverantör) accepterar både objektets ID-nummer och objektnamnet. Se till att när du använder namnet ska det bara finnas ett enda objekt för det angivna namnet."

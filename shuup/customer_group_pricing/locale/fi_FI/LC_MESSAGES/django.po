@@ -3,13 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 # 
+# Translators:
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2016
+# Janne Tammi <janne@shuup.com>, 2016
+# Ville-Pekka Altti <ville-pekka.altti@anders.fi>, 2017
+# Panu Tulimäki <panu@shuup.com>, 2018
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 13:42+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
+"PO-Revision-Date: 2016-06-28 10:53+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -29,13 +35,6 @@ msgstr "Hinta (%(shop)s/%(group)s)"
 #, python-format
 msgid "Discount (%(shop)s/%(group)s)"
 msgstr "Alennus (%(shop)s/%(group)s)"
-
-msgid "Customer Group Price"
-msgstr "Asiakasryhmähinta"
-
-msgid ""
-"Customer group prices can be listed, fetched, created, updated and deleted."
-msgstr "Asiakasryhmähintoja voi listata, noutaa, luoda, päivittää ja poistaa."
 
 msgid "product"
 msgstr "tuote"

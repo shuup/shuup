@@ -2,21 +2,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Frank Wickström <frwickst@gmail.com>, 2017
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
-"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
-"sv_SE/)\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2017-03-01 14:19+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Data Import"
@@ -28,30 +31,39 @@ msgstr "Importläge"
 msgid "Importing language"
 msgstr "Importeraingsspråk"
 
-msgid "The language of the data you would like to import."
-msgstr "Importdatans språk"
-
-msgid "Shop"
-msgstr "Butik"
-
-msgid "Select a shop you want import into"
-msgstr "Välj en butik som du vill importera till"
+msgid "The language of the data you want to import."
+msgstr "Språket för de data du vill importera."
 
 msgid "Importer"
 msgstr "Importerare"
 
-msgid "Select a importer type matching the data you would like to import"
-msgstr "Välj en importerare som matchar den data du vill importera"
+msgid "Select a importer type matching the data you want to import"
+msgstr "Välj en importörstyp som matchar de data du vill importera"
 
 msgid "File"
 msgstr "Fil"
 
 #, python-format
-msgid "%s is not a file"
-msgstr "%s är inte en fil"
+msgid "%s is not a file."
+msgstr "%s är inte en fil."
 
-msgid "File missing."
-msgstr "Fil saknas."
+msgid "File is missing."
+msgstr "Filen saknas."
+
+msgid "Failed to import the file."
+msgstr "Det gick inte att importera filen."
+
+msgid "Invalid parameters."
+msgstr "Ogiltiga parametrar."
+
+msgid "Invalid importer."
+msgstr "Ogiltig importör."
+
+msgid "Invalid file name."
+msgstr "Ogiltigt filnamn."
+
+msgid "File was not found."
+msgstr "Filen hittades inte."
 
 msgid "Import"
 msgstr "Importera"
@@ -66,8 +78,9 @@ msgstr ""
 "Rad ignoreras (objektet finns redan (%(object_name)s med id: %(object_id)s)."
 
 #, python-format
-msgid "Error setting value for field %(field_name)s. (%(exception)s)"
-msgstr "Gick inte att ange värde för fältet %(field_name)s. (%(exception)s)"
+msgid "Failed while setting value for field %(field_name)s. (%(exception)s)"
+msgstr ""
+"Det gick inte att ställa in värde för fältet %(field_name)s. (%(exception)s)"
 
 #, python-format
 msgid "Couldn't set value %(original_value)s for field %(field_name)s."
@@ -78,30 +91,22 @@ msgstr ""
 msgid "Row import failed (%s)."
 msgstr "Radimport misslyckades (%s)."
 
-msgid "Note"
-msgstr "Anteckning"
+msgid "Example files"
+msgstr "Exempel på filer"
 
-msgid "If you are importing products with quantities, ensure the following:"
-msgstr "Om du importerar produkter med antal, försäkra dig om följande:"
-
-#, python-format
 msgid ""
-"You have atleast one <a href=\"%(url)s\">supplier</a> with \"Stock Managed\" "
-"<b>on</b>."
+"If there is a 'Ignore' column in the example file you are using,\n"
+"                    make sure to leave the ignore column empty for all your rows,\n"
+"                    otherwise the rows won't be imported."
 msgstr ""
-"Du har iallafall en <a href=\"%(url)s\">leverantör</a> med \"Lager Hanterat"
-"\" <b>på</b>."
+"Om det finns en &quot;Ignorera&quot; -kolumn i exempelfilen du använder, se "
+"till att lämna ignoreringskolumnen tom för alla dina rader, annars "
+"importeras inte raderna."
 
-#, python-format
-msgid ""
-"your <a href=\"%(url)s\">supplier</a> has \"Stock Managed\" <b>on</b>. "
-"(Currently <b>off</b>)"
+msgid "This importer provides example files. Click below to download them:"
 msgstr ""
-"din <a href=\"%(url)s\">leverantör</a> har \"Lager Hanterat\" <b>på</b>. "
-"(För närvarande <b>av</b>)"
-
-msgid "your import file has <b>supplier</b> field"
-msgstr "din importfil har <b>leverantören</b>"
+"Denna importör tillhandahåller exempelfiler. Klicka nedan för att ladda ner "
+"dem:"
 
 msgid "Continue"
 msgstr "Fortsätt"
@@ -116,7 +121,8 @@ msgid "The following fields were automatically mapped"
 msgstr "Följande fält karterades automatiskt"
 
 msgid ""
-"The following fields in the file are being used a s possible connection keys:"
+"The following fields in the file are being used a s possible connection "
+"keys:"
 msgstr "Följande fält i filen används en som möjliga anslutningsnycklar:"
 
 msgid "Not a single connection key was found, File cannot be imported."
@@ -198,8 +204,8 @@ msgid "You can continue importing, but it might end up in error"
 msgstr "Du kan fortsätta att importera, men fel kan uppstå"
 
 msgid ""
-"If you are importing customers this might be a false alarm if you have email "
-"key set"
+"If you are importing customers this might be a false alarm if you have email"
+" key set"
 msgstr ""
 "Om du är importerande kunder så kan detta vara ett falskt alarm om du har "
 "nyckeln \"email\" satt"
@@ -237,8 +243,11 @@ msgstr "Importloggen"
 msgid "Other messages"
 msgstr "Andra meddelanden"
 
+msgid "Import errors"
+msgstr "Importera fel"
+
 #, python-format
-msgid "Cannot import more than %s rows from one file."
+msgid "Can't import more than %s rows from one file."
 msgstr "Kan inte importera mer än %s rader från en fil."
 
 msgid "Allow create and update"
