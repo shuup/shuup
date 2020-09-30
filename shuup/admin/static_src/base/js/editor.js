@@ -104,6 +104,9 @@ function activateEditor($editor, attrs = {}) {
         var textarea = $editor.parent().find("textarea");
         textarea.val($editor.summernote("code"));
     });
+    $editor.parent().on("DOMSubtreeModified", ".note-editable", function() {
+        $('#preview').html($editor.summernote("code"));
+    });
     return $summernote;
 }
 

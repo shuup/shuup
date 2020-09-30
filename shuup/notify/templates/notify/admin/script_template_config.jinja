@@ -6,7 +6,7 @@
 <div class="container-fluid">
         <div class="content-block">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <h2>{{ _("Configure the Script Template") }}</h2>
                     {% if script_template.help_text %}
                         <p><i class="fa fa-question-circle text-info"></i> {{ script_template.help_text }}</p>
@@ -32,6 +32,32 @@
                             </button>
                         </div>
                     </form>
+                </div>
+                <div class="col-md-6">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-available-variable-tab" data-toggle="tab" href="#nav-available-variable" role="tab" aria-controls="nav-home" aria-selected="true">{{ _("Variables") }}</a>
+                            <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-profile" aria-selected="false">{{ _("Preview") }}</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-available-variable" role="tabpanel" aria-labelledby="nav-available-variable-tab">
+                            <ul class="list-group">
+                                {% for variable_identifier, variable_info in script_template.event.variables|dictsort %}
+                                <li class="list-group-item">
+                                    <span class="text-info">{{ variable_info.name }}</span>
+                                    <br><code>{{ '{{ ' ~ variable_identifier ~ ' }}' }}</code>
+                                    <br>{{ variable_info.help_text|default("") }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+                            <div class="card">
+                                <div id="preview" class="card-body"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
