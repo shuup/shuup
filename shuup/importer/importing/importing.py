@@ -9,11 +9,13 @@ from __future__ import unicode_literals, with_statement
 
 import datetime
 import itertools
+import logging
 from operator import iand, ior
 
 import django
 import six
 import xlrd
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.db.models import AutoField, ForeignKey, Q
 from django.db.models.fields import BooleanField
 from django.db.models.fields.related import RelatedField
@@ -28,6 +30,8 @@ from shuup.importer.importing.session import DataImporterRowSession
 from shuup.importer.utils import copy_update, fold_mapping_name
 from shuup.importer.utils.importer import ImportMode
 from shuup.utils.django_compat import force_text
+
+LOGGER = logging.getLogger(__name__)
 
 
 class ImporterExampleFile(object):
@@ -243,7 +247,7 @@ class DataImporter(object):
         try:
             value = int(value)
             return cls.objects.get(pk=value)
-        except Exception:
+        except (ObjectDoesNotExist, MultipleObjectsReturned):
             name_fields = ["name", "title"]
             query = Q()
 
@@ -382,6 +386,8 @@ class DataImporter(object):
             try:
                 value = field.to_python(value)
             except Exception as exc:
+                LOGGER.exception("Failed to convert field")
+
                 row_session.log(
                     _("Failed while setting value for field %(field_name)s. (%(exception)s)") % {
                         "field_name": (field.verbose_name or field.name),
@@ -441,6 +447,7 @@ class DataImporter(object):
                     "messages": row_session.log_messages
                 })
         except ImporterError as e:
+            LOGGER.exception(e.message)
             self.other_log_messages.append(e.message)
 
     def get_fields_for_mapping(self, only_non_mapped=True):
@@ -506,7 +513,7 @@ class DataImporter(object):
 
             try:
                 return self.model.objects.get(and_query)
-            except Exception:  # Found multiple or zero -- not okay
+            except (ObjectDoesNotExist, MultipleObjectsReturned):  # Found multiple or zero -- not okay
                 pass
 
             return self.model.objects.filter(or_query).first()
