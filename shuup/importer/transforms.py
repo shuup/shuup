@@ -69,7 +69,7 @@ def process_data(rows):
     if not len(data):
         for y, row in enumerate(rows):
             if y == 0:
-                headers = [x.lower().strip() for x in row]
+                headers = [x.lower().strip() for x in row if x]
                 continue
             datum = dict(zip(headers, row))
             got_data.update(set(h for (h, d) in six.iteritems(datum) if d))
