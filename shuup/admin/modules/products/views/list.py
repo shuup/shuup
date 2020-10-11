@@ -29,6 +29,7 @@ class ProductPicotable(Picotable):
         kind = self.request.GET.get("kind", "")
         if popup and kind == "product":  # Enable option to pick products
             out.update({"_id": object.product.id})
+            out["popup"] = True
         return out
 
 
