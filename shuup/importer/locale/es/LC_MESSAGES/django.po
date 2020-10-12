@@ -1,0 +1,257 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: 2020-10-10 19:14+0200\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.1\n"
+
+msgid "Data Import"
+msgstr "Importar Datos"
+
+msgid "Import mode"
+msgstr "Modo de importación"
+
+msgid "Importing language"
+msgstr "Idioma de importación"
+
+msgid "The language of the data you want to import."
+msgstr "El idioma de los datos que quieres importar."
+
+msgid "Importer"
+msgstr "Importador"
+
+msgid "Select a importer type matching the data you want to import"
+msgstr ""
+"Selecciona un tipo de importador que coincida con los datos que quieres "
+"importar"
+
+msgid "File"
+msgstr "Fichero"
+
+#, python-format
+msgid "%s is not a file."
+msgstr "%s no es un fichero."
+
+msgid "File is missing."
+msgstr "El fichero no existe."
+
+msgid "Failed to import the file."
+msgstr "Error al importar el fichero."
+
+msgid "Invalid parameters."
+msgstr "Parámetros no válidos."
+
+msgid "Invalid importer."
+msgstr "Importador no válido."
+
+msgid "Invalid file name."
+msgstr "Nombre de fichero no válido."
+
+msgid "File was not found."
+msgstr "El fichero no se ha encontrado."
+
+msgid "Import"
+msgstr "Importar"
+
+msgid "Row ignored (no existing item and creating new is not allowed)."
+msgstr ""
+"Fila ignorada (no existe el elemento y crear uno nuevo no está permitido)."
+
+#, python-format
+msgid ""
+"Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
+msgstr ""
+"Fila ignorada (elemento ya existe (%(object_name)s con el id: %(object_id)s)."
+
+#, python-format
+msgid "Failed while setting value for field %(field_name)s. (%(exception)s)"
+msgstr ""
+"Error al establecer el valor para el campo %(field_name)s. (%(exception)s)"
+
+#, python-format
+msgid "Couldn't set value %(original_value)s for field %(field_name)s."
+msgstr ""
+"No se ha podido establecer el valor %(original_value)s para el campo "
+"%(field_name)s."
+
+#, python-format
+msgid "Row import failed (%s)."
+msgstr "Fallo al importar fila (%s)."
+
+msgid "Example files"
+msgstr "Ficheros de ejemplo"
+
+msgid "This importer provides example files. Click below to download them:"
+msgstr ""
+"Este importador incluye ficheros de ejemplo. Haz click debajo para "
+"descargarlos:"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Import Data - process"
+msgstr "Importar Datos - Procesando"
+
+msgid "Amount if items being imported"
+msgstr "Cantidad de elementos que se van a importar"
+
+msgid "The following fields were automatically mapped"
+msgstr "Los siguientes campos serán mapeados automáticamente"
+
+msgid ""
+"The following fields in the file are being used a s possible connection keys:"
+msgstr ""
+"Los siguientes campos en el fichero serán usados como posibles claves de "
+"conexión:"
+
+msgid "Not a single connection key was found, File cannot be imported."
+msgstr ""
+"No se ha encontrado ninguna clave de conexión, el fichero no se puede "
+"importar."
+
+msgid "Connection Keys"
+msgstr "Claves de conexión"
+
+msgid "Read only fields"
+msgstr "Campos de solo lectura"
+
+msgid ""
+"The following fields are Read Only and changes for those fields will be "
+"ignored."
+msgstr ""
+"Los siguientes campos son de solo lectura y los cambios sobre ellos serán "
+"ignorados."
+
+msgid "Import method"
+msgstr "Método de importación"
+
+msgid "Automatically mapped"
+msgstr "Mapeado automáticamente"
+
+msgid "Original field"
+msgstr "Campo original"
+
+msgid "Shuup field"
+msgstr "Campo de Shuup"
+
+msgid "Sample values"
+msgstr "Valores de muestra"
+
+msgid "The following fields must be manually tied"
+msgstr "Los siguientes campos deben ser relacionados manualmente"
+
+msgid "Don't import"
+msgstr "No importar"
+
+msgid "Field name"
+msgstr "Nombre del campo"
+
+msgid "Target field"
+msgstr "Campo objetivo"
+
+msgid "We may not be able to import the file."
+msgstr "Puede que no sea posible importar el fichero."
+
+msgid ""
+"File may not be imported because no connection keys were found. Connection "
+"keys are unique keys that are used to map results."
+msgstr ""
+"Es posible que el archivo no se importe porque no se encontraron claves de "
+"conexión. Las claves de conexión son claves únicas que se utilizan para "
+"asignar resultados."
+
+msgid ""
+"Please consider adding some of the following fields to your import file:"
+msgstr ""
+"Considere agregar algunos de los siguientes campos a su archivo de "
+"importación:"
+
+msgid "Products"
+msgstr "Productos"
+
+msgid "SKU"
+msgstr ""
+
+msgid "Customers"
+msgstr "Clientes"
+
+msgid "email"
+msgstr ""
+
+msgid "Importer type"
+msgstr "Tipo de importador"
+
+msgid "Field(s) to add"
+msgstr "Campo(s) a añadir"
+
+msgid "You can continue importing, but it might end up in error"
+msgstr "Puede continuar importando, pero podría terminar con un error"
+
+msgid ""
+"If you are importing customers this might be a false alarm if you have email "
+"key set"
+msgstr ""
+"Si está importando clientes, esto podría ser una falsa alarma si tiene "
+"configurada una clave de correo electrónico"
+
+msgid "Start Import"
+msgstr "Empezar importación"
+
+msgid "Import Data - Complete"
+msgstr "Importación de Datos - Completa"
+
+msgid "Import Complete!"
+msgstr "¡Importación Completa!"
+
+msgid "New items"
+msgstr "Nuevos elementos"
+
+msgid "The following items were imported as new:"
+msgstr "Los siguientes elementos se importaron como nuevos:"
+
+msgid "Zero new items were created."
+msgstr "Se crearon cero nuevos elementos."
+
+msgid "Updated items"
+msgstr "Elementos actualizados"
+
+msgid "The following items were updated:"
+msgstr "Se actualizaron los siguientes elementos:"
+
+msgid "Zero items were updated."
+msgstr "Se actualizaron cero elementos."
+
+msgid "Import log"
+msgstr "Registro de importación"
+
+msgid "Other messages"
+msgstr "Otros mensajes"
+
+msgid "Import errors"
+msgstr "Errores de importación"
+
+#, python-format
+msgid "Can't import more than %s rows from one file."
+msgstr "No se pueden importar más de %s filas de un fichero."
+
+msgid "Allow create and update"
+msgstr "Permitir crear y actualizar"
+
+msgid "Only create (no updates)"
+msgstr "Solo crear (no actualizaciones)"
+
+msgid "Only update existing (no new ones are created)"
+msgstr "Solo actualizar existentes (no se crearan nuevos)"

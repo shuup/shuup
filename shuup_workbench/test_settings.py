@@ -132,6 +132,7 @@ LANGUAGES = [
     ('zh-hans', 'Simplified Chinese'),
     ('pt-br', 'Portuguese (Brazil)'),
     ('it', 'Italian'),
+    ('es', 'Spanish'),
 ]
 
 PARLER_DEFAULT_LANGUAGE_CODE = "en"

@@ -37,6 +37,7 @@ GDPR_PRIVACY_POLICY_PAGE_URLS = {
     "it": "politica-di-riservatezza",
     "ja": "個人情報保護方針",
     "pt-br": "política-de-privacidade",
+    "es": "política-de-privacidad",
     "sv": "integritetspolicy",
     "zh-hans": "隐私政策"
 }

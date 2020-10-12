@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: 2020-10-09 16:59+0200\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.1\n"
+
+msgid "Reports"
+msgstr "Informes"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Select the type of report to run."
+msgstr "Selecciona el tipo de informe a ejecutar."
+
+msgid "Custom"
+msgstr "Personalizar"
+
+msgid "Today"
+msgstr "Hoy"
+
+msgid "Running Week (last 7 days)"
+msgstr "Semana en curso (últimos 7 días)"
+
+msgid "Running Month (last 30 days)"
+msgstr "Mes en curso (últimos 30 días)"
+
+msgid "This Week"
+msgstr "Esta semana"
+
+msgid "This Month"
+msgstr "Este mes"
+
+msgid "This Year"
+msgstr "Este Año"
+
+msgid "All Time"
+msgstr "Todo el tiempo"
+
+msgid "Output Format"
+msgstr "Formato de salida"
+
+msgid "The format to show the report results."
+msgstr "El formato que mostrarán los resultados del informe."
+
+msgid "Download"
+msgstr "Descargar"
+
+msgid "Enable this to download the report."
+msgstr "Activar esto para descargar el informe."
+
+msgid "Shop"
+msgstr "Tienda"
+
+msgid "Filter report results by shop."
+msgstr "Filtrar resultados del informe por tienda."
+
+msgid "Date Range"
+msgstr "Rango de fechas"
+
+msgid "Filter report results by a date range."
+msgstr "Filtrar resultados del informe por rango de fechas."
+
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+msgid "For a custom date range."
+msgstr "Para personalizar el rango de fechas."
+
+msgid "End Date"
+msgstr "Fecha de fin"
+
+msgid "Toggle Filters"
+msgstr "Alternar filtros"
+
+msgid "Get Report"
+msgstr "Obtener informe"
+
+msgid "No reports available"
+msgstr "No hay informes disponibles"

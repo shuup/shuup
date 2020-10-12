@@ -1,0 +1,176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Default Tax"
+msgstr ""
+
+msgid "Tax Rules"
+msgstr ""
+
+msgid "Show tax rules"
+msgstr ""
+
+msgid "Use ISO 3166-1 country codes (US, FI etc.)"
+msgstr ""
+
+msgid "Use two letter state codes for the US"
+msgstr ""
+
+msgid "Tax Rule"
+msgstr ""
+
+msgid "Tax"
+msgstr ""
+
+msgid "Tax Classes"
+msgstr ""
+
+msgid "Customer Tax Groups"
+msgstr ""
+
+msgid "Countries"
+msgstr ""
+
+msgid "Regions"
+msgstr ""
+
+msgid "Postal Codes"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "Override Group"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "Enable this if this tax rule is active."
+msgstr ""
+
+msgid "tax classes"
+msgstr ""
+
+msgid "Tax classes of the items to be taxed"
+msgstr ""
+
+msgid "customer tax groups"
+msgstr ""
+
+msgid "The customer tax groups for which this tax rule is limited."
+msgstr ""
+
+msgid "country codes pattern"
+msgstr ""
+
+msgid "region codes pattern"
+msgstr ""
+
+msgid "postal codes pattern"
+msgstr ""
+
+msgid "priority"
+msgstr ""
+
+msgid ""
+"Rules with same priority define added taxes (e.g. US taxes) and rules with "
+"different priority define compound taxes (e.g. Canada Quebec PST case)"
+msgstr ""
+
+msgid "override group number"
+msgstr ""
+
+msgid ""
+"If several rules match, only the rules with the highest override group "
+"number will be effective.  This can be used, for example, to implement tax "
+"exemption by adding a rule with very high override group that sets a zero "
+"tax."
+msgstr ""
+
+msgid "tax"
+msgstr ""
+
+msgid "The tax to apply when this rule is applied."
+msgstr ""
+
+msgid "Tax rule {} ({})"
+msgstr ""
+
+msgid "Default Taxation"
+msgstr ""
+
+msgid "Tax rule information"
+msgstr ""
+
+msgid "Matching criteria"
+msgstr ""
+
+msgid "Grouping"
+msgstr ""
+
+msgid "Applied tax"
+msgstr ""
+
+msgid ""
+"\n"
+"            The following fields determine when this rule applies.  All\n"
+"            non-empty fields must match for the rule to apply.  Empty fields "
+"are\n"
+"            not considered, e.g. if \"Customer tax groups\" is left empty, "
+"all\n"
+"            customer tax groups will match.\n"
+"        "
+msgstr ""
+
+msgid ""
+"\n"
+"            Pattern can be a single value or a comma separated list of "
+"items,\n"
+"            where each item can be a single value or a range, such as\n"
+"            \"value1-value2\".  Special value \"*\" matches everything.  "
+"For\n"
+"            example, a pattern \"1,2,50-90\" will match values \"1\" and "
+"\"2\", and\n"
+"            \"50\", \"90\", and everything between.  The range uses "
+"alphabetical\n"
+"            ordering unless start, end and the string to be matched are all\n"
+"            numerical, i.e. \"50-90\" will match also \"6a\" and \"700X\", "
+"since they\n"
+"            are alphabetically between \"50\" and \"90\", but it will not "
+"match\n"
+"            \"700000\" since for numerical items natural numeric ordering is "
+"used.\n"
+"        "
+msgstr ""
+
+msgid ""
+"\n"
+"            Use the following fields to configure added or compounded\n"
+"            taxes (when several taxes apply for an item), or to create a\n"
+"            tax rule or a set of tax rules that override other tax rules.\n"
+"        "
+msgstr ""
+
+msgid "When this rule applies, apply the following tax."
+msgstr ""
