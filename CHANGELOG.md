@@ -15,6 +15,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Preserve newlines in vendor and product descriptions even when
+ `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` and `SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION` are `False`.
 - Importer: log errors in the importer and use specific exception classes instead of using Exception
 - Notify: make the default script language be the fallback from Parler
 
