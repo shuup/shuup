@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"POT-Creation-Date: 2020-10-13 11:37+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -472,6 +472,24 @@ msgid "stored basket"
 msgstr ""
 
 msgid "stored baskets"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Reference Number"
+msgstr ""
+
+msgid "Currency"
+msgstr ""
+
+msgid "Customer Name"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Shipping Method"
 msgstr ""
 
 msgid "Order Received"

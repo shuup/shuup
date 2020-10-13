@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Added
+
+- Notify: Add a new `attributes` attribute to `shuup.notify.base.Variable` for showing examples
+  of which attributes can be accessed in the script templates.
+- Notfiy: Show some `Order` related attributes in the notify templates.
+
 ### Fixed
 
 - Core: include arbitrary refunds for max refundable amount

@@ -1,4 +1,7 @@
 {% extends "shuup/admin/base.jinja" %}
+
+{%- from "notify/admin/macros.jinja" import render_attributes -%}
+
 {% block top %}{% endblock %}
 
 {% block support_content %}
@@ -73,6 +76,7 @@
             </a>
             <br><code>{{ '{{ ' ~ variable_identifier ~ ' }}' }}</code>
             <br>{{ variable_info.help_text|default("") }}
+            {{ render_attributes(variable_identifier, variable_info, onclick="insertTemplateVariableExpression(this.dataset.var);return false") }}
         </li>
         {% endfor %}
     </ul>
