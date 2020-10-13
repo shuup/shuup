@@ -918,11 +918,20 @@ class Order(MoneyPropped, models.Model):
 
     def get_total_unrefunded_amount(self, supplier=None):
         if supplier:
-            total = sum([
+            total_refund_amount = sum([
                 line.max_refundable_amount.value
                 for line in self.lines.filter(supplier=supplier).exclude(type=OrderLineType.REFUND)
             ])
-            return (Money(total, self.currency) if total else Money(0, self.currency))
+            arbitrary_refunds = abs(sum([
+                refund_line.taxful_price.value
+                for refund_line in self.lines.filter(
+                    supplier=supplier, parent_line__isnull=True, type=OrderLineType.REFUND)
+            ]))
+            return (
+                Money(max(total_refund_amount - arbitrary_refunds, 0), self.currency)
+                if total_refund_amount else
+                Money(0, self.currency)
+            )
         return max(self.taxful_total_price.amount, Money(0, self.currency))
 
     def get_total_unrefunded_quantity(self, supplier=None):
