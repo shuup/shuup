@@ -8,9 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+
 ### Fixed
 
 - Admin: select product variation in popup window 
+- Importer: ignore None columns while importing files
+
+### Changed
+
+- Preserve newlines in vendor and product descriptions even when
+ `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` and `SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION` are `False`.
+- Importer: log errors in the importer and use specific exception classes instead of using Exception
+- Notify: make the default script language be the fallback from Parler
+
 
 ## [2.1.10] - 2020-09-29
 

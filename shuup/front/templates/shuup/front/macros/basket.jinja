@@ -255,7 +255,22 @@
 {% endmacro %}
 
 {% macro update_quantity_js() %}
-    $("#update_basket_form .quantity :input").change(function() {
+    function checkEvent(e) {
+        return (e.which == 13 || e.keyCode == 13 || e.key == "Enter");
+    }
+
+    $("#update_basket_form .quantity :input")
+    .keydown(function(e) {
+        if (checkEvent(e)) {
+            e.preventDefault();
+        }
+    })
+    .keyup(function(e) {
+        if (checkEvent(e)) {
+            $("#update_basket_form").submit();
+        }
+    })
+    .change(function() {
         $("#update_basket_form").submit();
     });
 {% endmacro %}

@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from decimal import Decimal
 
 from django.conf import settings
+from django.test import override_settings
 from django.utils import translation
 from jinja2 import Template
 from mock import patch
@@ -220,23 +221,23 @@ def test_get_global_configuration_with_default(conf_get_mock, rf):
 
 
 def test_safe_product_description():
-    text = "<p>product description</p>"
+    text = "<strong>product description</strong>\nSome text here."
 
-    settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION = True
-    assert safe_product_description(text) == text
+    with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION=True):
+        assert safe_product_description(text) == text
 
-    settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION = False
-    assert safe_product_description(text) == "&lt;p&gt;product description&lt;/p&gt;"
+    with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION=False):
+        assert safe_product_description(text) == "<p>&lt;strong&gt;product description&lt;/strong&gt;<br>Some text here.</p>"
 
 
 def test_safe_vendor_description():
-    text = "<p>vendor description</p>"
+    text = "<strong>vendor description</strong>\nSome text here."
 
-    settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION = True
-    assert safe_vendor_description(text) == text
+    with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION=True):
+        assert safe_vendor_description(text) == text
 
-    settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION = False
-    assert safe_vendor_description(text) == "&lt;p&gt;vendor description&lt;/p&gt;"
+    with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION=False):
+        assert safe_vendor_description(text) == "<p>&lt;strong&gt;vendor description&lt;/strong&gt;<br>Some text here.</p>"
 
 
 def test_get_shuup_static_url():
