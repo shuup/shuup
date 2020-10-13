@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Admin: select product variation in popup window 
 - Importer: ignore None columns while importing files
 
 ### Changed
