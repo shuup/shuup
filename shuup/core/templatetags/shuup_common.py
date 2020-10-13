@@ -23,6 +23,7 @@ import bleach
 from babel.dates import format_date, format_datetime, format_time
 from babel.numbers import format_decimal
 from django.conf import settings
+from django.template.defaultfilters import linebreaks
 from django.utils import translation
 from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
@@ -145,7 +146,7 @@ def safe_product_description(value):
     if isinstance(value, Undefined):
         return value
     if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
-        value = bleach.clean(value, tags=[])
+        value = linebreaks(bleach.clean(value, tags=[]))
     return mark_safe(value)
 
 
@@ -154,7 +155,7 @@ def safe_vendor_description(value):
     if isinstance(value, Undefined):
         return value
     if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION:
-        value = bleach.clean(value, tags=[])
+        value = linebreaks(bleach.clean(value, tags=[]))
     return mark_safe(value)
 
 
