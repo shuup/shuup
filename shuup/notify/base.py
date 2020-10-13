@@ -67,7 +67,22 @@ class BaseMetaclass(type):
 class Variable(object):
     _creation_counter = 0  # For sorting, incremented by `__init__`
 
-    def __init__(self, name, type=Type, required=True, help_text=""):
+    def __init__(self, name, type=Type, required=True, help_text="", attributes=()):
+        """
+        :param name: A human readable name for the variable.
+        :type name: str
+        :param type: The datatype of the variable.
+        :type type: shuup.notify.typology.Type
+        :param required: Whether the variable is required or not.
+        :type required: bool
+        :param help_text: A free-form plaintext help text for the variable.
+        :type help_text: str
+        :param attributes: A sequence of (label, accessor) pairs that will be shown
+            under the variable as guides of attributes that can be accessed from it.
+            If one would pass `[_("ID", "id")]` to this when the `name` param is "Order"
+            if would get rendered as `Order ID: {{ order.id }}` in the script editor.
+        :type attributes: typing.Sequence[tuple[str, str]]
+        """
         self.position = Variable._creation_counter
         Variable._creation_counter += 1
         if callable(type):
@@ -78,6 +93,7 @@ class Variable(object):
         self.type = type
         self.required = bool(required)
         self.help_text = help_text
+        self.attributes = attributes
 
     def get_matching_types(self, variable_dict):
         return set(

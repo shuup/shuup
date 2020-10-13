@@ -18,12 +18,23 @@ from shuup.notify.base import Event, Variable
 from shuup.notify.models import Script
 from shuup.notify.typology import Email, Enum, Language, Model, Phone
 
+# Common attributes that can be used with orders.
+ORDER_ATTRIBUTES = (
+    (_("ID"), "id"),
+    (_("Reference Number"), "reference_number"),
+    (_("Currency"), "currency"),
+    (_("Shop"), "shop"),
+    (_("Customer Name"), "get_customer_name()"),
+    (_("Status"), "status.name"),
+    (_("Shipping Method"), "shipping_method_name"),
+)
+
 
 class OrderReceived(Event):
     identifier = "order_received"
     name = _("Order Received")
 
-    order = Variable(_("Order"), type=Model("shuup.Order"))
+    order = Variable(_("Order"), type=Model("shuup.Order"), attributes=ORDER_ATTRIBUTES)
     customer_email = Variable(_("Customer Email"), type=Email)
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     shop_email = Variable(_("Shop Email"), type=Email)
@@ -35,7 +46,7 @@ class OrderStatusChanged(Event):
     identifier = "order_status_changed"
     name = _("Order Status Changed")
 
-    order = Variable(_("Order"), type=Model("shuup.Order"))
+    order = Variable(_("Order"), type=Model("shuup.Order"), attributes=ORDER_ATTRIBUTES)
     customer_email = Variable(_("Customer Email"), type=Email)
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     shop_email = Variable(_("Shop Email"), type=Email)
@@ -49,7 +60,7 @@ class ShipmentCreated(Event):
     identifier = "shipment_created"
     name = _("Shipment Created")
 
-    order = Variable(_("Order"), type=Model("shuup.Order"))
+    order = Variable(_("Order"), type=Model("shuup.Order"), attributes=ORDER_ATTRIBUTES)
     customer_email = Variable(_("Customer Email"), type=Email)
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     language = Variable(_("Language"), type=Language)
@@ -63,7 +74,7 @@ class ShipmentDeleted(Event):
     identifier = "shipment_deleted"
     name = _("Shipment Deleted")
 
-    order = Variable(_("Order"), type=Model("shuup.Order"))
+    order = Variable(_("Order"), type=Model("shuup.Order"), attributes=ORDER_ATTRIBUTES)
     customer_email = Variable(_("Customer Email"), type=Email)
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     language = Variable(_("Language"), type=Language)
@@ -76,7 +87,7 @@ class PaymentCreated(Event):
     identifier = "payment_created"
     name = _("Payment Created")
 
-    order = Variable(_("Order"), type=Model("shuup.Order"))
+    order = Variable(_("Order"), type=Model("shuup.Order"), attributes=ORDER_ATTRIBUTES)
     customer_email = Variable(_("Customer Email"), type=Email)
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     language = Variable(_("Language"), type=Language)
@@ -89,7 +100,7 @@ class RefundCreated(Event):
     identifier = "refund_created"
     name = _("Refund Created")
 
-    order = Variable(_("Order"), type=Model("shuup.Order"))
+    order = Variable(_("Order"), type=Model("shuup.Order"), attributes=ORDER_ATTRIBUTES)
     customer_email = Variable(_("Customer Email"), type=Email)
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     language = Variable(_("Language"), type=Language)

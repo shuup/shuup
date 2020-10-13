@@ -1,0 +1,18 @@
+{% macro render_attributes(variable_identifier, variable_info, onclick=None) %}
+    {% if variable_info.attributes %}
+        <br>
+    {% endif %}
+    {% for attribute in variable_info.attributes %}
+        {% set accessor = variable_identifier ~ "." ~ attribute[1] %}
+        {% set label = variable_info.name ~ " " ~ attribute[0] %}
+        <span>
+            {% if onclick %}
+                <a href="#" onclick="{{ onclick }}" data-var="{{ accessor }}">{{ label }}</a>:
+            {% else %}
+                {{ label }}:
+            {% endif %}
+            <code>{{ '{{ ' ~ accessor ~ ' }}'}}</code>
+        </span>
+        <br>
+    {% endfor %}
+{% endmacro %}
