@@ -1,22 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.1.1\n"
 
 msgid "Name of the company"
 msgstr ""
@@ -63,13 +64,13 @@ msgid ""
 msgstr ""
 
 msgid "{{ order.shop }} - Welcome!"
-msgstr ""
+msgstr "{{ order.shop }} - ¡Bienvenido!"
 
 msgid "Send account reactivation email"
-msgstr ""
+msgstr "Enviar email de reactivacion"
 
 msgid "Send email when a user account gets reactivated"
-msgstr ""
+msgstr "Enviar email cuando una cuenta de usuario es reactivada"
 
 msgid ""
 "This script will send an email to the user or to any configured email when a "
@@ -77,7 +78,7 @@ msgid ""
 msgstr ""
 
 msgid "{{ customer.username }} is now active again!"
-msgstr ""
+msgstr "¡{{ customer.username }} esta activo de nuevo!"
 
 msgid "Send Company Registration Received Email"
 msgstr ""
@@ -97,10 +98,10 @@ msgid ""
 msgstr ""
 
 msgid "Send account activation email"
-msgstr ""
+msgstr "Enbiar email de activacion de cuenta"
 
 msgid "Send email when a user account gets activated for the first time"
-msgstr ""
+msgstr "Enviar email cuando una cuenta de usuario se activa por primera vez"
 
 msgid ""
 "This script will send an email to the user or to any configured email when "
@@ -111,48 +112,48 @@ msgid "{{ customer.username }} is now active!"
 msgstr ""
 
 msgid "Account activation"
-msgstr ""
+msgstr "Activacion de cuenta"
 
 msgid "Account activation failed."
-msgstr ""
+msgstr "La activacion de cuenta ha fallado"
 
 msgid "Register as a Company"
-msgstr ""
+msgstr "Registrar como empresa"
 
 msgid "Company Registration"
-msgstr ""
+msgstr "Registro de empresa"
 
 msgid "Company information"
-msgstr ""
+msgstr "Informacion de empresa"
 
 msgid "Company billing information"
 msgstr ""
 
 msgid "Contact person"
-msgstr ""
+msgstr "Informacion de contacto"
 
 msgid "Contact information for primary company contact"
 msgstr ""
 
 msgid "Login information"
-msgstr ""
+msgstr "Informacion de inicio de sesion"
 
 msgid "The information you will log in with."
 msgstr ""
 
 msgid "Register"
-msgstr ""
+msgstr "Registrar"
 
 msgid "Registration"
-msgstr ""
+msgstr "Registro"
 
 msgid "Register as a company."
-msgstr ""
+msgstr "Registrar como empresa"
 
 msgid "Activation successful"
-msgstr ""
+msgstr "Activacion satisfactoria"
 
 msgid ""
 "Registration complete. Please follow the instructions sent to your email "
 "address."
-msgstr ""
+msgstr "Registro completo. Por favor siga las instrucciones enviadas a su correo electronico."
