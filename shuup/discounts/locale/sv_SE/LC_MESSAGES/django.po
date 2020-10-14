@@ -5,6 +5,7 @@
 # 
 # Translators:
 # Panu Tulimäki <panu@shuup.com>, 2020
+# William Lindholm <william.lindholm@shuup.com>, 2020
 # 
 #, fuzzy
 msgid ""
@@ -13,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-22 17:57+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Last-Translator: William Lindholm <william.lindholm@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -97,7 +98,7 @@ msgid "End Date and Time"
 msgstr "Slutdatum och tid"
 
 msgid "Code"
-msgstr "Koda"
+msgstr "Kod"
 
 msgid "Usages"
 msgstr "Användningar"
@@ -106,7 +107,7 @@ msgid "Usages Limit per contact"
 msgstr "Användningsgräns per kontakt"
 
 msgid "Usage Limit"
-msgstr "Användningsgräns"
+msgstr "Användnings gräns"
 
 msgid "Active"
 msgstr "Aktiva"
@@ -374,9 +375,7 @@ msgstr "tidsintervall"
 
 msgid ""
 "The value of the field `to hour` has to be later than that of `from hour`."
-msgstr ""
-"Fältets värde &quot;till timme&quot; måste vara senare än värdet för "
-"&quot;från timme&quot;."
+msgstr "Fältets värde \"till timme\" måste vara senare än värdet för \"från timme\"."
 
 msgid ""
 "Select all discounts to render products from. Only active discounts that "
@@ -401,9 +400,9 @@ msgid ""
 "Warning: The final number of products can be lower than 'Count' as it will "
 "filter out unorderable products from a set of 'Count' products."
 msgstr ""
-"Varning: Det slutliga antalet produkter kan vara lägre än &#39;Räkna&#39; "
-"eftersom det filtrerar bort beställbara produkter från en uppsättning "
-"&#39;Räkna&#39; produkter."
+"Varning: Det slutliga antalet produkter kan vara lägre än 'Räkna' eftersom "
+"det filtrerar bort beställbara produkter från en uppsättning 'Räkna' "
+"produkter."
 
 msgid "Availability"
 msgstr "Tillgänglighet"

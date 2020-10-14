@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Panu Tulimäki <panu@shuup.com>, 2020
+# William Lindholm <william.lindholm@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-09-29 10:13+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"PO-Revision-Date: 2020-10-04 19:35+0000\n"
+"Last-Translator: William Lindholm <william.lindholm@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,10 +33,10 @@ msgid "Refund Policy"
 msgstr "Återbetalningspolicy"
 
 msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
-msgstr "{{order.shop}} - Order {{order.identifier}} Mottagen"
+msgstr "{{order.shop}} - Beställning {{order.identifier}} Mottagen"
 
 msgid "Send customer order confirmation email"
-msgstr "Skicka e-postbekräftelse via kundorder"
+msgstr "Skicka e-postbekräftelse för kund beställning"
 
 msgid ""
 "We will configure a notification to send the customer an email after a "
@@ -49,13 +50,13 @@ msgstr "Skapa Om oss-sidan"
 msgid ""
 "We have already created an 'About Us' template for you based on your shop "
 "information. You must review the page and change it accordingly."
-msgstr "Vi har redan skapat en &quot;Om oss&quot; -mall för dig baserat på din butiksinformation. Du måste granska sidan och ändra den därefter."
+msgstr "Vi har redan skapat en 'Om oss'-mall för dig baserat på din butiksinformation. Du måste granska sidan och ändra den därefter."
 
 msgid ""
 "We will create an 'About Us' template for you. We will base content of the "
 "page on your shop information. After we are done, you must review the page "
 "and change it accordingly."
-msgstr "Vi skapar en &quot;Om oss&quot; -mall för dig. Vi baserar innehållet på sidan på din butiksinformation. När vi är klara måste du granska sidan och ändra den därefter."
+msgstr "Vi skapar en 'Om oss' -mall för dig. Vi baserar innehållet på sidan på din butiksinformation. När vi är klara måste du granska sidan och ändra den därefter."
 
 msgid "Create Privacy Policy page"
 msgstr "Skapa sekretesspolicy"
@@ -63,16 +64,16 @@ msgstr "Skapa sekretesspolicy"
 msgid ""
 "We have already created a 'Privacy Policy' template for you based on your "
 "shop information. You must review the page and change it accordingly."
-msgstr "Vi har redan skapat en mall för &quot;Integritetspolicy&quot; baserat på din butiksinformation. Du måste granska sidan och ändra den därefter."
+msgstr "Vi har redan skapat en mall för 'Integritetspolicy' baserat på din butiksinformation. Du måste granska sidan och ändra den därefter."
 
 msgid ""
 "We will create a 'Privacy Policy' template for you. We will base content of "
 "the page on your shop information. After we are done, you must review the "
 "page and change it accordingly."
-msgstr "Vi skapar en mall för &quot;Integritetspolicy&quot; åt dig. Vi baserar innehållet på sidan på din butiksinformation. När vi är klara måste du granska sidan och ändra den därefter."
+msgstr "Vi skapar en mall för 'Integritetspolicy' åt dig. Vi baserar innehållet på sidan på din butiksinformation. När vi är klara måste du granska sidan och ändra den därefter."
 
 msgid "Create Terms and Conditions page"
-msgstr "Skapa sidan Villkor"
+msgstr "Skapa Villkors-sidan"
 
 msgid ""
 "We have already created a 'Terms & Conditions' template for you based on "
@@ -91,13 +92,13 @@ msgstr "Skapa sidan Återbetalningspolicy"
 msgid ""
 "We have already created a 'Refund Policy' template for you based on your "
 "shop information. You must review the page and change it accordingly."
-msgstr "Vi har redan skapat en mall för &quot;återbetalningspolicy&quot; baserat på din butiksinformation. Du måste granska sidan och ändra den därefter."
+msgstr "Vi har redan skapat en mall för 'återbetalningspolicy' baserat på din butiksinformation. Du måste granska sidan och ändra den därefter."
 
 msgid ""
 "We will create an 'Refund Policy' template for you. We will base content of "
 "the page on your shop information. After we are done, you must review the "
 "page and change it accordingly."
-msgstr "Vi skapar en mall för återbetalningspolicy åt dig. Vi baserar innehållet på sidan på din butiksinformation. När vi är klara måste du gå igenom sidan och ändra den därefter."
+msgstr "Vi skapar en mall för 'återbetalningspolicy' åt dig. Vi baserar innehållet på sidan på din butiksinformation. När vi är klara måste du gå igenom sidan och ändra den därefter."
 
 msgid "Configure the footer"
 msgstr "Konfigurera sidfoten"
@@ -152,7 +153,7 @@ msgstr "Detta är %(sku)s"
 
 msgid ""
 "There is a sample data installed. Search `Sample Data` for more information."
-msgstr "Det finns ett exempel på data installerat. Sök efter &#39;Exempeldata&#39; för mer information."
+msgstr "Det finns ett exempel på data installerat. Sök efter 'Exempeldata' för mer information."
 
 msgid ""
 "There is a sample data installed. Click here to consolidate or delete them."
@@ -213,7 +214,7 @@ msgid ""
 msgstr "Ge dig själv över till denna doft så berusande och ren som en kvinnas själ är ömtålig."
 
 msgid "Still Jennifer Lopez Perfume"
-msgstr "Fortfarande Jennifer Lopez Parfym"
+msgstr "Still Jennifer Lopez Perfume"
 
 msgid ""
 "Be driven with vitality and confidence, as you wear the Jennifer Lopez Still"
@@ -221,7 +222,7 @@ msgid ""
 msgstr "Driv med livskraft och självförtroende när du bär Jennifer Lopez Still-doften."
 
 msgid "La Vie Est Belle"
-msgstr "livet är vackert"
+msgstr "La Vie Est Belle"
 
 msgid "A captivating new scent joins the La vie est belle path to happiness."
 msgstr "En fängslande ny doft ansluter sig till La vie est belle-vägen till lycka."
@@ -233,7 +234,7 @@ msgid "Just a beard brush."
 msgstr "Bara en skäggborste."
 
 msgid "Beard & Stash Oil"
-msgstr "Beard &amp; Stash Oil"
+msgstr "Beard & Stash Oil"
 
 msgid "This oil is natural, and is made with the perfect combination of oils."
 msgstr "Denna olja är naturlig och är gjord med en perfekt kombination av oljor."
@@ -285,7 +286,7 @@ msgid "You must have the Access to Admin Panel permission."
 msgstr "Du måste ha behörighet för åtkomst till administratörspanelen."
 
 msgid "Supplier Pricing"
-msgstr "Leverantörsprissättning"
+msgstr "Leverantörs prissättning"
 
 msgid "Shuup Testing Theme"
 msgstr "Shuups testningtema"

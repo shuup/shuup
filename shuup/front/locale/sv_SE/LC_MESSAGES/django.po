@@ -5,13 +5,14 @@
 # Translators:
 # Frank Wickström <frwickst@gmail.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2020
+# William Lindholm <william.lindholm@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
-"PO-Revision-Date: 2020-09-29 10:14+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2020-10-13 11:37+0000\n"
+"PO-Revision-Date: 2020-10-13 17:15+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +41,7 @@ msgstr "Vagnens inaktivitetsfördröjning (timmar)"
 msgid ""
 "Set the number of hours the cart must be inactive before it's displayed in "
 "Orders > Carts"
-msgstr "Ställ in hur många timmar vagnen måste vara inaktiv innan den visas i Order&gt; Vagnar"
+msgstr "Ställ in hur många timmar vagnen måste vara inaktiv innan den visas i Order > Vagnar"
 
 msgid "Created on"
 msgstr "Skapad den"
@@ -76,19 +77,19 @@ msgid "Ordered"
 msgstr "Beställd"
 
 msgid "Require shipping method"
-msgstr "Kräver leveransmetod"
+msgstr "Kräver fraktmetod"
 
 msgid "Whether to require the shipping method in checkout phases."
-msgstr "Huruvida fraktmetoden ska krävas i kassafaserna."
+msgstr "Krävs val av fraktmetoden kassa faserna."
 
 msgid "Require payment method"
 msgstr "Kräva betalningsmetod"
 
 msgid "Whether to require the payment method in checkout phases."
-msgstr "Huruvida betalningsmetoden ska krävas i kassafaserna."
+msgstr "Krävs val av betalningsmetoden i kassa faserna."
 
 msgid "Registration Settings"
-msgstr "Registreringsinställningar"
+msgstr "Registrerings Inställningar"
 
 msgid "Allow company registration"
 msgstr "Tillåt företagsregistrering"
@@ -109,7 +110,7 @@ msgid "Company tax number validation"
 msgstr "Validering av företagsskattnummer"
 
 msgid "Company tax number format is validated for European countries."
-msgstr "Företagsskattnummerformat valideras för europeiska länder."
+msgstr "Företagsskatt nummerformat valideras för europeiska länder."
 
 msgid "Override shop's default configuration"
 msgstr "Åsidosätt butikens standardkonfiguration"
@@ -120,12 +121,12 @@ msgid ""
 msgstr "Om det är markerat kommer denna konfiguration att användas istället för butikens standardkonfiguration."
 
 msgid "Available languages in storefront"
-msgstr "Tillgängliga språk i skyltfönstret"
+msgstr "Tillgängliga språk på webbplatsen"
 
 msgid ""
 "Select all the languages that should be available in storefront. Blank means"
 " that all languages should be available."
-msgstr "Välj alla språk som ska finnas tillgängliga i skyltfönstret. Tom betyder att alla språk ska vara tillgängliga."
+msgstr "Välj alla språk som ska finnas tillgängliga på webbplatsen. Tom betyder att alla språk är tillgängliga."
 
 msgid "Try to remove some products from the basket and order them separately."
 msgstr "Försök ta bort vissa produkter från korgen och beställ dem separat."
@@ -476,6 +477,24 @@ msgstr "lagrad korg"
 msgid "stored baskets"
 msgstr "lagrade korgar"
 
+msgid "ID"
+msgstr ""
+
+msgid "Reference Number"
+msgstr ""
+
+msgid "Currency"
+msgstr ""
+
+msgid "Customer Name"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Shipping Method"
+msgstr ""
+
 msgid "Order Received"
 msgstr "Beställning mottagen"
 
@@ -632,13 +651,13 @@ msgid "Cart Inactivity Delay"
 msgstr "Vagnens inaktivitetsfördröjning"
 
 msgid "Checkout configuration"
-msgstr "Kassakonfiguration"
+msgstr "Kassa konfiguration"
 
 msgid "Product list sorts and filters"
 msgstr "Produktlistans sorterings och filtreringsmöjligheter"
 
 msgid "Storefront Languages"
-msgstr "Storefront Språk"
+msgstr "Webbplatsens Språk"
 
 msgid "Shopping cart"
 msgstr "Varukorg"
@@ -867,7 +886,7 @@ msgid "Items %(start_index)d to %(end_index)d of %(count)d total"
 msgstr "Objekt %(start_index)d till %(end_index)d av %(count)d totalt"
 
 msgid "Change visibility limit to"
-msgstr "Ändra siktgränsen till"
+msgstr "Ändra sikt gränsen till"
 
 msgid "show only visible products and categories"
 msgstr "visa endast synliga produkter och kategorier"
@@ -876,10 +895,10 @@ msgid "show all products and categories"
 msgstr "visa alla produkter och kategorier"
 
 msgid "Change customer to person contact mode"
-msgstr "Ändra kontaktläge för kund till person"
+msgstr "Ändra kontaktläge från kund till person"
 
 msgid "Change customer to company contact mode"
-msgstr "Byt kund till företagskontaktläge"
+msgstr "Byt kund till företagskontakt läge"
 
 msgid "Change customer mode to guest"
 msgstr "Ändra kundläge till gäst"
@@ -891,7 +910,7 @@ msgid "Maintenance"
 msgstr "Underhåll"
 
 msgid "Live"
-msgstr "leva"
+msgstr "Live"
 
 msgid "Customer mode"
 msgstr "Kundläge"
@@ -910,7 +929,7 @@ msgstr "Visa/göm navigering"
 
 #, python-brace-format
 msgid "Edit '{object_title}' in administration page"
-msgstr "Redigera &quot;{object_title}&quot; på administrationssidan"
+msgstr "Redigera \"{object_title}\" på administrationssidan"
 
 #, python-brace-format
 msgid "Edit {object_name} in Admin"
@@ -929,7 +948,7 @@ msgstr "Av <strong>%(supplier_name)s</strong>"
 
 #, python-brace-format
 msgid "Available until: <span class=\"availability-date\">{date}</span></small>"
-msgstr "Tillgänglig till: <span class=\"availability-date\">{date}</span>"
+msgstr "Tillgänglig till: <span class=\"availability-date\">{date}</span></small>"
 
 msgid "Edit account details"
 msgstr "Redigera kontouppgifter"
@@ -1189,7 +1208,7 @@ msgstr "Redigera"
 
 #, python-brace-format
 msgid "`{language_code}` is an invalid language code."
-msgstr "&quot;{language_code}&quot; är en ogiltig språkkod."
+msgstr "\"{language_code}\" är en ogiltig språkkod."
 
 msgid "Error! This product is not available in this shop."
 msgstr "Fel! Denna produkt finns inte i denna butik."

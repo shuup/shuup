@@ -6,6 +6,7 @@
 # Translators:
 # Frank Wickström <frwickst@gmail.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2020
+# William Lindholm <william.lindholm@shuup.com>, 2020
 # 
 #, fuzzy
 msgid ""
@@ -14,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-02 12:09+0000\n"
 "PO-Revision-Date: 2016-06-28 10:53+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Last-Translator: William Lindholm <william.lindholm@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,13 +60,13 @@ msgid "product discount"
 msgstr "produktrabatt"
 
 msgid "product discounts"
-msgstr "produktrabatter"
+msgstr "produkt rabatter"
 
 msgid "Customer Group Pricing"
 msgstr "Kundgruppers prissättning"
 
 msgid "Customer Group Discount"
-msgstr "Kundgruppsrabatt"
+msgstr "Kundgrupps rabatt"
 
 msgid "Contact Group Discount"
 msgstr "Kontakta grupprabatt"
@@ -76,7 +77,7 @@ msgid ""
 "in Contacts Settings – Contact Groups"
 msgstr ""
 "Här kan du ställa in individuella rabattbelopp för olika kontaktgrupper. "
-"Rabattbeloppet kan vara synligt i skyltfönstret. Dessa grupper definieras i "
+"Rabattbeloppet kan vara synligt för kunder. Dessa grupper definieras i "
 "Kontaktinställningar - Kontaktgrupper"
 
 msgid "Contact Group Pricing"

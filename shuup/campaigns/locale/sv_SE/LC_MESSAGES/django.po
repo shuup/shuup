@@ -5,6 +5,7 @@
 # Translators:
 # Frank Wickström <frwickst@gmail.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2020
+# William Lindholm <william.lindholm@shuup.com>, 2020
 # 
 #, fuzzy
 msgid ""
@@ -13,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-22 17:55+0000\n"
 "PO-Revision-Date: 2016-06-28 10:48+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Last-Translator: William Lindholm <william.lindholm@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -175,14 +176,15 @@ msgstr ""
 "det värde som anges här."
 
 msgid "Undiscounted basket total value"
-msgstr "Obeskrivna korgens totala värde"
+msgstr "Icke rabatterade varukorgens totala värde"
 
 msgid ""
 "Limit the campaign to match when it has at least the total value entered "
 "here worth of products which doesn't have already discounts."
 msgstr ""
-"Begränsa kampanjen så att den matchar när den har åtminstone det totala "
-"värdet som anges här värdet av produkter som inte redan har rabatter."
+"Begränsa kampanjen så att den är aktiv endast när beställningens totala "
+"värdet är mera än det specificerade värde. Producent som redan är "
+"rabbaterade räcknas inte med i totala värdet."
 
 msgid "Basket maximum product count"
 msgstr "Högsta antalet varor i korgen"
@@ -278,7 +280,7 @@ msgid "start time"
 msgstr "starttid"
 
 msgid "12pm is considered noon and 12am as midnight."
-msgstr "12.00 anses vara 12.00 och 12.00 som midnatt."
+msgstr "12pm anses vara 12.00 och 12am som 24.00."
 
 msgid "end time"
 msgstr "sluttid"
@@ -287,8 +289,7 @@ msgid ""
 "12pm is considered noon and 12am as midnight. End time is not considered "
 "match."
 msgstr ""
-"12.00 anses vara 12.00 och 12.00 som midnatt. Sluttid anses inte vara "
-"matchning."
+"12pm anses vara 12.00 och 12am som 24.00 Sluttid anses inte vara matchning."
 
 msgid "days"
 msgstr "dagar"
@@ -327,10 +328,10 @@ msgid "Give percentage discount."
 msgstr "Ge procentrabatt."
 
 msgid "Discount amount percentage from undiscounted amount"
-msgstr "Procent av rabattbelopp från odiskonterat belopp"
+msgstr "Rabatt procenten för det icke rabatterade beloppet."
 
 msgid "Give percentage discount based on undiscounted product prices."
-msgstr "Ge rabatt i procent baserat på odiskonterade produktpriser."
+msgstr "Ge rabatt i procent baserat på icke rabatterade produktpriser."
 
 msgid "Free Product(s)"
 msgstr "Gratis produkt(er)"
