@@ -27,6 +27,7 @@ List all changes after the last release here (newer on top). Each change on a se
  `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` and `SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION` are `False`.
 - Importer: log errors in the importer and use specific exception classes instead of using Exception
 - Notify: make the default script language be the fallback from Parler
+- Admin: Hide the 'Root' folder from users that do not have the `"media.view-all"` permission.
 
 
 ## [2.1.10] - 2020-09-29

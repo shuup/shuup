@@ -212,7 +212,7 @@ def filer_file_to_json_dict(file, user=None):
 
 def filer_folder_to_json_dict(folder, children=None, user=None):
     """
-    :type file: filer.models.Folder|None
+    :type folder: filer.models.Folder|None
     :type children: list(filer.models.Folder)
     :rtype: dict
     """
@@ -220,7 +220,7 @@ def filer_folder_to_json_dict(folder, children=None, user=None):
         # This allows us to pass `None` as a pseudo root folder
         children = folder.get_children()
 
-    is_owned = subfolder_of_users_root(user, folder) if folder and user else False
+    is_owned = subfolder_of_users_root(user=user, folder=folder)
     extra_permissions = {"folder-edit": True if has_permission(user, "media.edit-access") else False}
     if user and not is_owned:
         if has_permission(user, "media.create-folder"):
@@ -237,12 +237,13 @@ def filer_folder_to_json_dict(folder, children=None, user=None):
         "name": folder.name if folder else _("Root"),
         "owner": is_owned,
         "children": [filer_folder_to_json_dict(child, user=user) for child in children],
+        "canSeeRoot": can_see_root_folder(user),
         **extra_permissions
     }
 
 
 def subfolder_of_users_root(user, folder):
-    if not folder:
+    if not folder or not user:
         return False
 
     if user.id in list(folder.media_folder.all().values_list("owners", flat=True)):
@@ -278,3 +279,13 @@ def get_or_create_folder(shop, path, user=None):
             ensure_media_folder(shop, child)
             parent = child
     return child
+
+
+def can_see_root_folder(user):
+    """
+    Return True if the user is allowed to see files that exists in the root folder.
+    This means all files that have `folder=None`.
+    """
+    if not user:
+        return False
+    return has_permission(user, "media.view-all")

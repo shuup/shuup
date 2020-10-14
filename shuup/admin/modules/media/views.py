@@ -35,8 +35,8 @@ from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import MediaFile, MediaFolder
 from shuup.utils.excs import Problem
 from shuup.utils.filer import (
-    ensure_media_file, ensure_media_folder, filer_file_from_upload,
-    filer_file_to_json_dict, filer_folder_to_json_dict,
+    can_see_root_folder, ensure_media_file, ensure_media_folder,
+    filer_file_from_upload, filer_file_to_json_dict, filer_folder_to_json_dict,
     filer_image_from_upload, get_or_create_folder, subfolder_of_users_root,
     UploadFileForm, UploadImageForm
 )
@@ -183,7 +183,6 @@ class MediaBrowserView(TemplateView):
                 else:
                     in_path = False
                     for folder_on_path in folder.logical_path:
-                        print(folder_on_path)
                         if folder_on_path in all_accessed_folders:
                             ordered_folders.append(folder)
                             in_path = True
@@ -257,7 +256,11 @@ class MediaBrowserView(TemplateView):
             else:
                 folder = None
                 subfolders = _get_folder_query(shop, self.user).filter(parent=None)
-                files = _get_file_query(shop).filter(folder=None)
+                if can_see_root_folder(self.request.user):
+                    files = _get_file_query(shop).filter(folder=None)
+                else:
+                    files = File.objects.none()
+
         except ObjectDoesNotExist:
             return JsonResponse({
                 "folder": None,
