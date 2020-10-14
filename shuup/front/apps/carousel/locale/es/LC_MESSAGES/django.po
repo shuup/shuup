@@ -1,0 +1,279 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Carousels"
+msgstr ""
+
+#, python-format
+msgid "%s has been deleted."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Filter by name..."
+msgstr ""
+
+msgid "Carousel"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Slide"
+msgstr ""
+
+msgid "Fade"
+msgstr ""
+
+msgid "Current page"
+msgstr ""
+
+msgid "New page"
+msgstr ""
+
+msgid "shops"
+msgstr ""
+
+msgid "Select which shops you would like the carousel to be visible in."
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "The carousel name use for carousel configuration."
+msgstr ""
+
+msgid "animation"
+msgstr ""
+
+msgid "Animation type for cycling slides."
+msgstr ""
+
+msgid "interval"
+msgstr ""
+
+msgid "Slide interval in seconds."
+msgstr ""
+
+msgid "pause on hover"
+msgstr ""
+
+msgid "When checked, the carousel cycling pauses on mouse over."
+msgstr ""
+
+msgid "show navigation arrows"
+msgstr ""
+
+msgid ""
+"When checked, navigational arrows are shown on the carousel allowing for "
+"customers to go back and forward."
+msgstr ""
+
+msgid "show navigation dots"
+msgstr ""
+
+msgid "When checked, navigational indicator dots are shown."
+msgstr ""
+
+msgid "image width"
+msgstr ""
+
+msgid "Slide images will be cropped to this width."
+msgstr ""
+
+msgid "image height"
+msgstr ""
+
+msgid "Slide images will be cropped to this height."
+msgstr ""
+
+msgid "Arrows color"
+msgstr ""
+
+msgid "Set the custom color for the arrows."
+msgstr ""
+
+msgid "Name is only used to configure slides."
+msgstr ""
+
+msgid "product link"
+msgstr ""
+
+msgid ""
+"Set the product detail page that should be shown when this slide is clicked, "
+"if any."
+msgstr ""
+
+msgid "category link"
+msgstr ""
+
+msgid ""
+"Set the product category page that should be shown when this slide is "
+"clicked, if any."
+msgstr ""
+
+msgid "cms page link"
+msgstr ""
+
+msgid ""
+"Set the web page that should be shown when the slide is clicked, if any."
+msgstr ""
+
+msgid "ordering"
+msgstr ""
+
+msgid ""
+"Set the numeric order in which this slide should appear relative to other "
+"slides in this carousel."
+msgstr ""
+
+msgid "link target"
+msgstr ""
+
+msgid ""
+"Set this to current if clicking on this slide should open a new browser tab."
+msgstr ""
+
+msgid "available since"
+msgstr ""
+
+msgid ""
+"Set the date and time, starting from which this slide should be visible in "
+"the carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr ""
+
+msgid "available until"
+msgstr ""
+
+msgid ""
+"Set the date and time, until which this slide should be visible in the "
+"carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr ""
+
+msgid "Inactive dot border color"
+msgstr ""
+
+msgid "Customize the dot border color when slide is not active."
+msgstr ""
+
+msgid "Active dot color"
+msgstr ""
+
+msgid "Customize the dot color when slide is active."
+msgstr ""
+
+msgid "caption"
+msgstr ""
+
+msgid ""
+"Text that describes the image. It is displayed on top of the image if "
+"'Render image text' box is enabled in front-end. Also used for search engine "
+"purposes."
+msgstr ""
+
+msgid "caption text"
+msgstr ""
+
+msgid ""
+"Caption text is displayed as secondary text on top of the image if 'Render "
+"image text' box is enabled in front-end for 'Carousel plugin' type (disabled "
+"for 'Banner box' type). It is also shown as a tooltip."
+msgstr ""
+
+msgid "external link"
+msgstr ""
+
+msgid ""
+"Set the external site that should be shown when this slide is clicked, if "
+"any."
+msgstr ""
+
+msgid "image"
+msgstr ""
+
+msgid "The slide image to show."
+msgstr ""
+
+msgid "Slides"
+msgstr ""
+
+msgid "Carousel Plugin"
+msgstr ""
+
+msgid "Render image text"
+msgstr ""
+
+msgid "Display the text on top of the image."
+msgstr ""
+
+msgid "Banner Box"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Slides can be added after saving the Carousel."
+msgstr ""
+
+msgid ""
+"This form is also used to define banner boxes. Marked fields only apply to "
+"banner boxes."
+msgstr ""
+
+msgid "Adding the carousel to your site"
+msgstr ""
+
+msgid ""
+"To add a carousel to your site, you must edit the page using the placeholder "
+"editor. To do this, go to your site and click the 'Edit page' on the page "
+"you want to add the carousel banner to. Then, select the placeholder to "
+"change and add a new plugin row and from the plugin dropdown and select "
+"'Carousel Plugin'. From 'Carousel' dropdown options choose the carousel you "
+"want to display. As a final step, save the plugin and publish changes."
+msgstr ""
+
+msgid "Learn more."
+msgstr ""
+
+msgid "Basic details"
+msgstr ""
+
+msgid "Advanced options"
+msgstr ""
+
+msgid "Remove Slide"
+msgstr ""
+
+msgid "Only image for default language is required."
+msgstr ""
+
+msgid ""
+"If external link is not set link will fallback to product link, category "
+"link or cms page link in this order."
+msgstr ""
+
+msgid "Add new slide"
+msgstr ""
+
+msgid "New Carousel"
+msgstr ""

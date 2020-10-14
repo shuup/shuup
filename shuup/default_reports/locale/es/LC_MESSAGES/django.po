@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Customer"
+msgstr ""
+
+msgid "Filter report results by customer."
+msgstr ""
+
+msgid "Orderer"
+msgstr ""
+
+msgid "Filter report results by the person that made the order."
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Taxful Total"
+msgstr ""
+
+msgid "Sort order"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Year/Month"
+msgstr ""
+
+msgid "Year/Month/Day"
+msgstr ""
+
+msgid "Group by"
+msgstr ""
+
+msgid "Order Count"
+msgstr ""
+
+msgid "Average Sales"
+msgstr ""
+
+msgid "Tax"
+msgstr ""
+
+msgid "Filter report results by tax."
+msgstr ""
+
+msgid "Tax Class"
+msgstr ""
+
+msgid "Filter report results by tax class."
+msgstr ""
+
+msgid "Shipping Method"
+msgstr ""
+
+msgid "Filter report results by shipping method."
+msgstr ""
+
+msgid "Carrier"
+msgstr ""
+
+msgid "Filter report results by carrier."
+msgstr ""
+
+msgid "Customer Sales"
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "New Customers"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Persons"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Product Total Sales"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "Refunded Sales"
+msgstr ""
+
+msgid "Refunded Orders"
+msgstr ""
+
+msgid "Total Refunded"
+msgstr ""
+
+msgid "Sales Report"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Sales Per Hour"
+msgstr ""
+
+msgid "Hour"
+msgstr ""
+
+msgid "Order Amount"
+msgstr ""
+
+msgid "Total Sales"
+msgstr ""
+
+msgid "Shipping"
+msgstr ""
+
+msgid "Shipping method"
+msgstr ""
+
+msgid "Total Charged"
+msgstr ""
+
+msgid "Taxes"
+msgstr ""
+
+msgid "Rate (%)"
+msgstr ""
+
+msgid "Pre-tax Total"
+msgstr ""
+
+msgid "Total Tax Amount"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Shop Name"
+msgstr ""
+
+msgid "Currency"
+msgstr ""
+
+msgid "Customers"
+msgstr ""
+
+msgid "Customer Average Sale"
+msgstr ""

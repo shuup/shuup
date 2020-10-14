@@ -1,0 +1,68 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: 2020-10-11 22:33+0200\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.1\n"
+
+#, javascript-format
+msgid "Edit %s"
+msgstr "Editar %s"
+
+msgid ""
+"Changing plugin cells without saving will cause changes made to this cell to "
+"be lost."
+msgstr ""
+"Cambiar celdas de plugin sin guardar, puede causar que los cambios de esta "
+"celda se pierdan."
+
+#, javascript-format
+msgid "Error: Cannot add more than %s cells to one row."
+msgstr "Error: No se puede añadir mas de %s celdas a una fila."
+
+msgid "Are you sure you wish to delete this row?"
+msgstr "¿Seguro que quieres eliminar esta fila?"
+
+msgid "Are you sure you wish to delete this cell?"
+msgstr "¿Seguro que quieres eliminar esta celda?"
+
+msgid "Are you sure you wish to publish changes made to this view?"
+msgstr "¿Seguro que desea publicar los cambios realizados en esta vista?"
+
+msgid "You have changed the form. Do you want to save them before publishing?"
+msgstr ""
+"Has cambiado el formulario. ¿Deseas guardar los cambios antes de publicar?"
+
+msgid ""
+"Are you sure you wish to revert all changes made since the last published "
+"version?"
+msgstr ""
+"¿Seguro que deseas deshacer todos los cambios hechos desde la última versión "
+"publicada?"
+
+msgid "Changing plugins will cause other changes made on this form to be lost."
+msgstr ""
+"Cambiar plugins puede hacer que otros cambios realizados en este formulario "
+"se pierdan."
+
+msgid "Custom CSS/JS"
+msgstr "Personalizar CSS/JS"
+
+msgid "Exit Edit"
+msgstr "Salir de la edición"
+
+msgid "Edit Page"
+msgstr "Editar pagina"

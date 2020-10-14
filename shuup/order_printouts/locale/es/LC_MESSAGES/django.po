@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Printouts"
+msgstr ""
+
+msgid "To"
+msgstr ""
+
+msgid "Email Subject"
+msgstr ""
+
+msgid "Email Body"
+msgstr ""
+
+#, python-format
+msgid ""
+"Important information regarding your order, see attachment.\n"
+"\n"
+"Best Regards,\n"
+"%(shop)s"
+msgstr ""
+
+#, python-format
+msgid "%(shop)s: Order %(pk)s"
+msgstr ""
+
+msgid ""
+"The current shop doesn't match the order shop. Please change to the shop "
+"that is currently active."
+msgstr ""
+
+msgid "Non-POST request methods are forbidden."
+msgstr ""
+
+msgid "Delivery slip"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Order confirmation"
+msgstr ""
+
+msgid "Order printouts"
+msgstr ""
+
+msgid "Shipped products"
+msgstr ""
+
+msgid "Payment and shipping methods"
+msgstr ""
+
+msgid "Order number"
+msgstr ""
+
+msgid "Total price"
+msgstr ""
+
+msgid "Payment status"
+msgstr ""
+
+msgid "Shipping status"
+msgstr ""
+
+#, python-format
+msgid "Tracking code #%(index)s"
+msgstr ""
+
+msgid "Order date"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Identifier"
+msgstr ""
+
+msgid "Shipment date"
+msgstr ""
+
+msgid "Tracking code"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Tax"
+msgstr ""
+
+msgid "Taxful total"
+msgstr ""
+
+msgid "Taxless total"
+msgstr ""
+
+msgid "Tax percentage"
+msgstr ""
+
+msgid "Based on amount"
+msgstr ""
+
+msgid "Amount of tax"
+msgstr ""
+
+msgid "Total including tax"
+msgstr ""
+
+msgid "Billing address"
+msgstr ""
+
+msgid "Confirmation"
+msgstr ""
+
+msgid "Get Order Confirmation PDF"
+msgstr ""
+
+msgid "Get Order Confirmation HTML"
+msgstr ""
+
+msgid "Shipments"
+msgstr ""
+
+#, python-format
+msgid "Get Delivery Slip PDF (Shipment %(id)s)"
+msgstr ""
+
+#, python-format
+msgid "Get Delivery Slip HTML (Shipment %(id)s)"
+msgstr ""
+
+msgid "Send Email"
+msgstr ""
+
+msgid "Send Order Confirmation"
+msgstr ""
+
+#, python-format
+msgid "Send Delivery Slip (Shipment %(id)s)"
+msgstr ""
+
+msgid "Email was sent."
+msgstr ""
+
+msgid "Could not sent the email, please try again."
+msgstr ""

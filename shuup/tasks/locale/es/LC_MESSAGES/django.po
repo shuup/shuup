@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: 2020-10-09 15:52+0200\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.1\n"
+
+msgid "Tasks"
+msgstr "Tareas"
+
+msgid "Show Tasks"
+msgstr "Mostrar Tareas"
+
+msgid "Task Types"
+msgstr "Tipos de Tareas"
+
+msgid "Show Task Types"
+msgstr "Mostrar tipos de tareas"
+
+#, python-brace-format
+msgid "Changed assigment from {from_contact_name} to {to_contact_name}."
+msgstr "Se ha cambiado la asignación de {from_contact_name} a {to_contact_name}."
+
+msgid "Set In Progress"
+msgstr "Marcar como en progreso"
+
+msgid "Set Completed"
+msgstr "Marcar como completada"
+
+msgid "Invalid status."
+msgstr "Estado inválido."
+
+msgid "Status changed."
+msgstr "Estado cambiado."
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Filter by name..."
+msgstr "Filtrar por nombre..."
+
+msgid "Creator"
+msgstr "Creador"
+
+msgid "Filter by creator..."
+msgstr "Filtrar por creador..."
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Priority"
+msgstr "Prioridad"
+
+msgid "Comments"
+msgstr "Comentarios"
+
+msgid "New"
+msgstr "Nuevo"
+
+msgid "In progress"
+msgstr "En progreso"
+
+msgid "Completed"
+msgstr "Completado"
+
+msgid "Deleted"
+msgstr "Borrado"
+
+msgid "Public"
+msgstr "Público"
+
+msgid "Staff Only"
+msgstr "Solo personal autorizado"
+
+msgid "Admins Only"
+msgstr "Solo Administradores"
+
+msgid "shop"
+msgstr "tienda"
+
+msgid "name"
+msgstr "nombre"
+
+msgid "task type"
+msgstr "tipo de tarea"
+
+msgid "task types"
+msgstr "tipos de tareas"
+
+msgid "status"
+msgstr "estado"
+
+msgid "priority"
+msgstr "prioridad"
+
+msgid "creator"
+msgstr "creador"
+
+msgid "assigned to"
+msgstr "asignada a"
+
+msgid "completed by"
+msgstr "completada por"
+
+msgid "completed on"
+msgstr "completada en"
+
+msgid "created on"
+msgstr "creada en"
+
+msgid "modified on"
+msgstr "modificada en"
+
+msgid "task"
+msgstr "tarea"
+
+msgid "author"
+msgstr "autor"
+
+msgid "visibility"
+msgstr "visibilidad"
+
+msgid "body"
+msgstr "cuerpo"
+
+msgid "New Task"
+msgstr "Nueva Tarea"
+
+msgid "General Information"
+msgstr "Información General"
+
+msgid "Created on"
+msgstr "Creada en"
+
+msgid "Completed on"
+msgstr "Completada en"
+
+msgid "Completed by"
+msgstr "Completada por"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Visibility"
+msgstr "Visibilidad"
+
+msgid "Comment"
+msgstr "Comentario"
+
+msgid "Post a new comment"
+msgstr "Enviar un nuevo comentario"
+
+msgid "New Task Type"
+msgstr "Nuevo tipo de tarea"
+
+msgid "Last 10 pending tasks assigned for you"
+msgstr "Ultimas 10 tareas pendientes asignadas a ti"
+
+msgid "Task"
+msgstr "Tarea"

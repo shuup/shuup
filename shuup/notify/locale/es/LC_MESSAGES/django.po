@@ -1,0 +1,476 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: 2020-10-09 17:46+0200\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.1\n"
+
+msgid "Plain text"
+msgstr "Texto plano"
+
+msgid "HTML"
+msgstr ""
+
+msgid "Subject"
+msgstr "Asunto"
+
+msgid "Body Template"
+msgstr "Plantilla del contenido"
+
+msgid ""
+"You can use this template to wrap the HTML body with your custom static "
+"template.Mark the spot for the HTML body with %html_body%."
+msgstr ""
+"Puedes usar esta plantilla para envolver el cuerpo del HTML con tu plantilla "
+"personalizada. Indica el punto para el cuerpo del HTML con %html_body%."
+
+msgid "Email Body"
+msgstr "Contenido del email"
+
+msgid "Content type"
+msgstr "Tipo de contenido"
+
+msgid "Recipient"
+msgstr "Receptor"
+
+msgid "Reply-To"
+msgstr "Responder A"
+
+msgid "Carbon Copy (CC)"
+msgstr "Copia A (CC)"
+
+msgid "Blind Carbon Copy (BCC)"
+msgstr "Copia Oculta A (BCC)"
+
+msgid "From email"
+msgstr "Email Remitente"
+
+msgid ""
+"Override the default from email to be used. It can either be binded to a "
+"variable or be a constant like support@store.com or even \"Store Support\" "
+"<support@store.com>."
+msgstr ""
+"Anula el valor predeterminado del correo electrónico que se utilizará. Puede "
+"estar vinculado a una variable o ser una constante como support@store.com o "
+"incluso \"Store Support\" <support@store.com>."
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Fallback language"
+msgstr "Idioma alternativo"
+
+msgid "Send Identifier"
+msgstr "Enviar identificador"
+
+msgid ""
+"If set, this identifier will be logged into the event's log target. If the "
+"identifier has already been logged, the e-mail won't be sent again."
+msgstr ""
+"Si se establece, este identificador se registrará en el destino del registro "
+"del evento. Si el identificador ya se ha registrado, el correo electrónico "
+"no se enviará de nuevo."
+
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgid "Show notification scripts"
+msgstr "Mostrar secuencias de comandos de notificación"
+
+msgid "Event"
+msgstr "Evento"
+
+msgid "Choose which event to bind this script to."
+msgstr "Elige que evento vincular a esta secuencia de comandos."
+
+msgid "Script Name"
+msgstr "Nombre de la Secuencia de comandos"
+
+msgid "Type in a descriptive name for your new script."
+msgstr "Escribe un nombre descriptivo para la nueva secuencia de comandos."
+
+msgid "Enable Script"
+msgstr "Activar secuencia de comandos"
+
+msgid "Choose whether this script should be activated when its event fires."
+msgstr ""
+"Elija si esta secuencia de comandos debe activarse cuando se active su "
+"evento."
+
+msgid ""
+"Warning! Changing the event for an existing script may have unexpected "
+"effects."
+msgstr ""
+"¡Alerta! Cambiar el evento de una secuencia de comandos existente puede "
+"tener efectos inesperados."
+
+msgid "Template"
+msgstr "Plantilla"
+
+msgid "Bind to Variable"
+msgstr "Vincular a una Variable"
+
+msgid "This field is missing content."
+msgstr "A este campo le falta contenido."
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s ha sido marcado como borrado."
+
+msgid "Edit Script Contents"
+msgstr "Editar contenido de la secuencia de comandos"
+
+msgid "Edit Script (advanced)"
+msgstr "Editar Secuencia de comandos (avanzado)"
+
+msgid "Edit Template"
+msgstr "Editar plantilla"
+
+msgid "Delete"
+msgstr "Borrar"
+
+#, python-format
+msgid "Are you sure you wish to delete \"%s\" notification?"
+msgstr "¿Seguro que quieres borrar la notificación \"%s\"?"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Enabled"
+msgstr "Activar"
+
+msgid "New Script"
+msgstr "Nueva secuencia de comandos"
+
+msgid "New From Template"
+msgstr "Nuevo desde plantilla"
+
+msgid "Script created from template."
+msgstr "Secuencia de comandos creada desde plantilla"
+
+msgid "Template Script not found."
+msgstr "Plantilla de secuencia de comandos no encontrada."
+
+msgid "Templated script not found."
+msgstr "No se encontró la secuencia de comandos con plantilla."
+
+msgid "Script updated."
+msgstr "Secuencia de comandos actualizada"
+
+msgid ""
+"Check whether the bound value `value` exists and is non-empty and non-zero."
+msgstr ""
+"Verifique si el valor enlazado \"valor\" existe y no está vacío y no es cero."
+
+msgid "Non-Empty"
+msgstr "No Vacío"
+
+msgid "Check whether the bound value `value` is empty or zero."
+msgstr "Verifique si el valor enlazado \"valor\" está vacío o es cero."
+
+msgid "Empty"
+msgstr "Vacío"
+
+msgid "none"
+msgstr "nulo"
+
+msgid "unilingual"
+msgstr "unilingüe"
+
+msgid "multilingual"
+msgstr "multilingüe"
+
+msgid "variable only"
+msgstr "solo variable"
+
+msgid "constant only"
+msgstr "solo constante"
+
+msgid "variable or constant"
+msgstr "variable o constante"
+
+msgid "continue to the next step"
+msgstr "continuar al siguiente paso"
+
+msgid "stop processing"
+msgstr "parar el proceso"
+
+msgid "all"
+msgstr "todo"
+
+msgid "any"
+msgstr "cualquiera"
+
+msgid "any shop administrator"
+msgstr "cualquier administrador de la tienda"
+
+msgid "a specific user"
+msgstr "un usuario específico"
+
+msgid "low"
+msgstr "bajo"
+
+msgid "normal"
+msgstr ""
+
+msgid "high"
+msgstr "alto"
+
+msgid "critical"
+msgstr "crítico"
+
+msgid "shop"
+msgstr "tienda"
+
+msgid "recipient type"
+msgstr "tipo de receptor"
+
+msgid "recipient"
+msgstr "receptor"
+
+#, fuzzy
+msgid "created on"
+msgstr "creado en"
+
+#, fuzzy
+msgid "message"
+msgstr "mensaje"
+
+#, fuzzy
+msgid "priority"
+msgstr "prioridad"
+
+msgid "marked read"
+msgstr "marcado como leído"
+
+msgid "marked read by"
+msgstr "marcado como leído por"
+
+msgid "marked read on"
+msgstr "marcado como leído en"
+
+msgid "event identifier"
+msgstr "identificador de evento"
+
+#, fuzzy
+msgid "name"
+msgstr "nombre"
+
+msgid "enabled"
+msgstr "activar"
+
+msgid "template identifier"
+msgstr "identificador de plantilla"
+
+msgid "the template identifier used to create this script"
+msgstr ""
+"el identificador de plantilla utilizado para crear esta secuencia de comandos"
+
+msgid "Password Reset"
+msgstr "Restablecer contraseña"
+
+msgid "This event is triggered when password reset is requested."
+msgstr "Este evento se lanza cuando se solicita restablecer la contraseña."
+
+msgid "Site name"
+msgstr "Nombre del sitio web"
+
+msgid "User secret"
+msgstr "Secreto del usuario"
+
+msgid "User to recover"
+msgstr "Usuario a recuperar"
+
+msgid "Token"
+msgstr ""
+
+msgid "Recovery URL"
+msgstr "URL de recuperación"
+
+msgid "To Email"
+msgstr "Email destino"
+
+msgid "The subject of the email"
+msgstr "El asunto del email"
+
+#, fuzzy
+msgid "Email content"
+msgstr "Contenido del email"
+
+msgid "The content of the email."
+msgstr "El contenido del email."
+
+msgid "Customer"
+msgstr "Cliente"
+
+msgid "Other destination"
+msgstr "Otro destinatario"
+
+#, fuzzy
+msgid "Send to?"
+msgstr "¿Enviar a?"
+
+msgid ""
+"You can send this email to the customer or to other email of your choice."
+msgstr "Puedes enviar este email al cliente y otro email de tu elección."
+
+msgid "Destination"
+msgstr ""
+"Esta secuencia de comandos enviará un email a la dirección configurada "
+"alertando de que el producto de un proveedor tiene el inventario bajo. "
+"Puedes configurar para que no se envíe el mismo email varias veces en el "
+"periodo de 24 horas. Cada vez que el inventario del producto alcance el "
+"límite configurado, esta notificación se activará y se mandará un email."
+
+msgid "Fill with the destination email address."
+msgstr "Rellenar con la dirección de correo electrónico de destino."
+
+msgid ""
+"Recipient is a required field when you don't want to send the email to "
+"customer."
+msgstr ""
+"Destinatario es un campo obligatorio cuando no desea enviar el correo "
+"electrónico al cliente."
+
+msgid ""
+"\n"
+"<p>Hi {{ user_to_recover.get_full_name() }},</p>\n"
+"\n"
+"<p>In case you've forgotten, your username is {{ user_to_recover.username }}."
+"</p>\n"
+"<p>You're receiving this email because you requested a password reset for "
+"your user account at {{ site_name }}.</p>\n"
+"<p>Please go to the following page and choose a new password:</p>\n"
+"<br>\n"
+"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
+msgstr ""
+"\n"
+"<p>Hola {{ user_to_recover.get_full_name() }},</p>\n"
+"\n"
+"<p>\n"
+"En caso de que lo haya olvidado, su nombre de usuario es {{ user_to_recover."
+"username }}.</p>\n"
+"<p>Recibió este correo electrónico porque solicitó un restablecimiento de "
+"contraseña para su cuenta de usuario en {{ site_name }}.</p>\n"
+"<p>Vaya a la página siguiente y elija una nueva contraseña:</p>\n"
+"<br>\n"
+"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
+
+msgid "Send Password Reset Link"
+msgstr "Enviar enlace de restablecer contraseña"
+
+msgid ""
+"\n"
+"        Send an email to user when their account password reset is "
+"requested\n"
+"    "
+msgstr ""
+"\n"
+"Enviar un correo electrónico al usuario cuando se solicite el "
+"restablecimiento de la contraseña de su cuenta"
+
+msgid ""
+"\n"
+"        This script will send an email to user once their account password "
+"reset is\n"
+"        requested either by admin, staff or user.\n"
+"    "
+msgstr ""
+"\n"
+"        Esta secuencia de comandos enviará un email al usuario cuando se "
+"haya solicitado cambiar su contraseña.\n"
+"    "
+
+msgid "Edit Script Information"
+msgstr "Editar información de la secuencia de comandos"
+
+msgid "Create a new script"
+msgstr "Crear nueva secuencia de comandos"
+
+msgid "Script Details"
+msgstr "Detalles de la secuencia de comandos"
+
+msgid "OK"
+msgstr ""
+
+msgid "Show available variables"
+msgstr "Mostrar variables disponibles"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Select the script template to be created"
+msgstr "Selecciona la plantilla de secuencia de comandos para crear"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Edit Script"
+msgstr "Editar secuencia de comandos"
+
+msgid "Edit Step"
+msgstr "Editar paso"
+
+msgid "Done"
+msgstr "Hecho"
+
+msgid "Please correct the errors below."
+msgstr "Por favor corrija los errores siguientes."
+
+msgid "Variables"
+msgstr ""
+
+msgid "Save changes"
+msgstr "Guardar cambios"
+
+msgid "Script Template: {}"
+msgstr "Plantilla de secuencia de comandos: {}"
+
+msgid "Configure the Script Template"
+msgstr "Configurar la plantilla de secuencia de comandos"
+
+msgid "Modify Script"
+msgstr "Modificar secuencia de comandos"
+
+msgid "Create Script"
+msgstr "Crear secuencia de comandos"
+
+msgid "Create"
+msgstr "Crear"
+
+msgid "Boolean"
+msgstr "Booleano"
+
+msgid "Integer Number"
+msgstr "Número Entero"
+
+msgid "Decimal Number"
+msgstr "Numero Decimal"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Email Address"
+msgstr "Dirección de correo electrónico"
+
+msgid "URL Address"
+msgstr "Dirección URL"
+
+msgid "Phone Number"
+msgstr "Número de teléfono"

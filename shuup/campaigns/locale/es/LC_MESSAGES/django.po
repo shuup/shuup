@@ -1,0 +1,577 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-31 08:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Campaigns"
+msgstr "Campañas"
+
+msgid "Basket Campaigns"
+msgstr "Campañas de cesta"
+
+msgid "Show Basket Campaigns"
+msgstr "Mostrar campañas de cesta"
+
+msgid "Coupons"
+msgstr "Cupones"
+
+msgid "Show Coupons"
+msgstr "Mostrar cupones"
+
+msgid "Catalog Campaigns"
+msgstr "Campañas de catalogo"
+
+msgid "Show Catalog Campaigns"
+msgstr "Mostrar campañas de catalogo"
+
+msgid "Set up a sales campaign"
+msgstr "Configurar una campaña de ventas"
+
+msgid "New basket campaign"
+msgstr "Nueva campaña de cesta"
+
+msgid "New coupon"
+msgstr "Nuevo cupon"
+
+msgid "Minimum value"
+msgstr "Valor minimo"
+
+msgid "Maximum value"
+msgstr "Valor maximo"
+
+msgid "Leave empty for no maximum"
+msgstr "Dejar vacio si no hay maximo"
+
+msgid "Campaign end date can't be before a start date."
+msgstr "La fecha de fin de la campaña no puede ser anterior a la de inicio"
+
+msgid "Define the required coupon for this campaign."
+msgstr "Define el cupon requerido para esta campaña"
+
+msgid "Coupon"
+msgstr "Cupon"
+
+msgid "discount percentage"
+msgstr "porcentaje de descuento"
+
+msgid "The discount percentage for this campaign."
+msgstr "El porcentaje de descuento para esta campaña"
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr "El producto %(product)s no se encuentra disponible en la tienda %(shop)s"
+
+msgid "Only amount or percentage can be set, not both."
+msgstr "Solo cantidad o porcentaje pueden establecerse, no ambos"
+
+msgid "Autogenerate code"
+msgstr "Codigo autogenerado"
+
+msgid "Discount Code is already in use."
+msgstr "Codigo de descuento ya en uso"
+
+msgid "Active Basket Campaigns"
+msgstr "Activar campañas de cesta"
+
+msgid "Catalog Campaign"
+msgstr "Campaña de catalogo"
+
+msgid "Basket Campaign"
+msgstr "Campaña de cesta"
+
+msgid "Title"
+msgstr "Titulo"
+
+msgid "Starts"
+msgstr "Comienza"
+
+msgid "Ends"
+msgstr "Termina"
+
+msgid "Active"
+msgstr "Activa"
+
+msgid "No"
+msgstr ""
+
+msgid "Yes"
+msgstr "Si"
+
+msgid "CatalogCampaign"
+msgstr "Campaña de catalogo"
+
+msgid "Create new Catalog Campaign"
+msgstr "Crear nueva campaña de catalogo"
+
+msgid "Create new Basket Campaign"
+msgstr "Crear nueva campaña de cesta"
+
+msgid "Code"
+msgstr "Codigo"
+
+msgid "Usages"
+msgstr "Usos"
+
+msgid "Usages Limit per contact"
+msgstr "Limite de usus por contacto"
+
+msgid "Usage Limit"
+msgstr "Limite de usos"
+
+msgid "Created by"
+msgstr "Creado por"
+
+msgid "Date created"
+msgstr "Fecha de creacion"
+
+msgid "Create new Coupon"
+msgstr "Crear nuevo cupon"
+
+msgid "Basket condition"
+msgstr "Estado de la cesta"
+
+msgid "Basket product count"
+msgstr "Numero de productos en la cesta"
+
+msgid "product count in basket"
+msgstr "Numero de productos en la cesta"
+
+msgid ""
+"Limit the campaign to match when basket has at least the product count "
+"entered here."
+msgstr ""
+
+msgid "Basket total value"
+msgstr "Valor total de la cesta"
+
+msgid "basket total amount"
+msgstr "valor total de la cesta"
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products."
+msgstr ""
+
+msgid "Undiscounted basket total value"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products which doesn't have already discounts."
+msgstr ""
+
+msgid "Basket maximum product count"
+msgstr ""
+
+msgid "maximum product count in basket"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when basket has at maximum the product count "
+"entered here."
+msgstr ""
+
+msgid "Basket maximum total value"
+msgstr ""
+
+msgid "maximum basket total amount"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when it has at maximum the total value entered "
+"here worth of products."
+msgstr ""
+
+msgid "Exactly"
+msgstr "Exactamente"
+
+msgid "Greater than or equal to"
+msgstr "Mayor o igual que"
+
+msgid "Products in basket"
+msgstr "Productos en la cesta"
+
+msgid "operator"
+msgstr "operador"
+
+msgid "quantity"
+msgstr "cantidad"
+
+msgid "products"
+msgstr "productos"
+
+msgid "Limit the campaign to have the selected products in basket."
+msgstr ""
+
+msgid "Contact Group"
+msgstr "Grupo de contacto"
+
+msgid "contact groups"
+msgstr "Grupos de contacto"
+
+msgid "Limit the campaign to members of the selected contact groups."
+msgstr ""
+
+msgid "Contact"
+msgstr "Contacto"
+
+msgid "contacts"
+msgstr "Contactos"
+
+msgid "Limit the campaign to selected contacts."
+msgstr "Limitar la campaña a los contactos seleccionados"
+
+msgid "Category products in basket"
+msgstr "Categorias de productos en la cesta"
+
+msgid "categories"
+msgstr "Categorias"
+
+msgid "excluded categories"
+msgstr "Categorias excluidas"
+
+msgid ""
+"If the customer has even a single product in the basket from these "
+"categories this rule won't match thus the campaign cannot be applied to the "
+"basket."
+msgstr ""
+
+msgid "Limit the campaign to match the products from selected categories."
+msgstr ""
+
+msgid "Day and hour"
+msgstr "Dia y hora"
+
+msgid "start time"
+msgstr "Hora de inicio"
+
+msgid "12pm is considered noon and 12am as midnight."
+msgstr "12pm es considerado mediodia y 12 am es considerado medianoche"
+
+msgid "end time"
+msgstr "hora de fin"
+
+msgid ""
+"12pm is considered noon and 12am as midnight. End time is not considered "
+"match."
+msgstr ""
+
+msgid "days"
+msgstr "dias"
+
+msgid "Limit the campaign to selected days."
+msgstr "Limitar la campaña a los dias seleccionados."
+
+msgid "Product Variation Child"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match only variation children of the selected product."
+msgstr ""
+
+msgid "campaign"
+msgstr "campaña"
+
+msgid "Discount amount value"
+msgstr "valor de la cantidad de descuento"
+
+msgid "discount amount"
+msgstr "cantidad de descuento"
+
+msgid "Flat amount of discount."
+msgstr ""
+
+msgid "Give discount amount."
+msgstr "Dar cantidad de descuento."
+
+msgid "Discount amount percentage"
+msgstr "Porcentaje de descuento"
+
+msgid "Give percentage discount."
+msgstr "Dar porcentaje de descuento."
+
+msgid "Discount amount percentage from undiscounted amount"
+msgstr ""
+
+msgid "Give percentage discount based on undiscounted product prices."
+msgstr ""
+
+msgid "Free Product(s)"
+msgstr "Productos gratuitos"
+
+msgid "product"
+msgstr "producto"
+
+msgid "Select product(s) to give free."
+msgstr "Seleccionar productos para dar gratis"
+
+msgid "Discount from Product"
+msgstr "Descuento del Producto"
+
+msgid "per line discount"
+msgstr "descuento por linea"
+
+msgid "Disable this if you want to give discount for each matched product."
+msgstr "Desactiva esto si quieres dar el descuento por cada producto que coincida"
+
+msgid "Select discount amount and products."
+msgstr "Seleccionar cantidad de descuento y productos."
+
+msgid "Discount from Category products"
+msgstr "Descuento para categoria de productos"
+
+msgid "category"
+msgstr "categoria"
+
+msgid ""
+"Select discount amount and category. Please note that the discount will be "
+"given to all matching products in basket."
+msgstr ""
+
+msgid "shop"
+msgstr "tienda"
+
+msgid "The shop where the campaign is active."
+msgstr "La tienda donde la campaña esta activa."
+
+msgid "name"
+msgstr "Nombre"
+
+msgid "The name for this campaign."
+msgstr "El nombre para esta campaña."
+
+msgid "active"
+msgstr "activa"
+
+msgid ""
+"Enable this if the campaign is currently active. Please also set a start and "
+"an end date."
+msgstr ""
+
+msgid "start date and time"
+msgstr "fecha y hora de inicio"
+
+msgid ""
+"The date and time the campaign starts. This is only applicable if the "
+"campaign is marked as active."
+msgstr ""
+
+msgid "end date and time"
+msgstr "fecha y hora de fin"
+
+msgid ""
+"The date and time the campaign ends. This is only applicable if the campaign "
+"is marked as active."
+msgstr ""
+
+msgid "created by"
+msgstr "creado por"
+
+msgid "modified by"
+msgstr "modificado por"
+
+msgid "created on"
+msgstr "creado en"
+
+msgid "modified on"
+msgstr "modificado en"
+
+msgid "Campaign"
+msgstr "Campaña"
+
+msgid "The campaign name to show in the store front."
+msgstr "El nombre de la campaña para mostrar en la parte publica de la tienda."
+
+#, python-format
+msgid "Catalog Campaign: %(name)s"
+msgstr "Campaña de Catalogo: %(name)s"
+
+msgid "basket line text"
+msgstr ""
+
+msgid "This text will be shown in a basket."
+msgstr "Este texto se mostrara en la cesta"
+
+msgid "coupon"
+msgstr "cupon"
+
+msgid "supplier"
+msgstr "proveedor"
+
+msgid ""
+"When set, this campaign will match only products from the selected supplier. "
+"Rules and Effects will also be restricted to include only the products of "
+"this supplier."
+msgstr ""
+
+msgid "public name"
+msgstr "nombre publico"
+
+#, python-format
+msgid "Basket Campaign: %(name)s"
+msgstr "Campaña de Cesta: %(name)s"
+
+msgid "Can't have multiple active campaigns with same code."
+msgstr "No puedes tener multiples campañas activas con el mismo codigo"
+
+msgid "usage limit per customer"
+msgstr "limite de usos por cliente"
+
+msgid "Limit the amount of usages per a single customer."
+msgstr "Limitar los usos para un solo cliente."
+
+msgid "usage limit"
+msgstr "limite de usos"
+
+msgid ""
+"Set the absolute limit of usages for this coupon. If the limit is zero (0), "
+"coupon can't be used."
+msgstr ""
+
+msgid "is active"
+msgstr "esta activo"
+
+msgid "The shop where the coupon is active."
+msgstr "La tienda don el cupon esta activo."
+
+msgid "Can not have multiple active campaigns with the same code."
+msgstr ""
+
+msgid "Base Catalog Filter"
+msgstr ""
+
+msgid "Product type"
+msgstr "Tipo de producto"
+
+msgid "product Types"
+msgstr "tipos de producto"
+
+msgid "Limit the campaign only to selected product types."
+msgstr ""
+
+msgid "Product"
+msgstr "Producto"
+
+msgid "Limit the campaign only to selected products."
+msgstr ""
+
+msgid "Product Category"
+msgstr "Categoria de Producto"
+
+msgid "Limit the campaign only to products in selected categories."
+msgstr ""
+
+msgid "group"
+msgstr "grupo"
+
+msgid "min amount"
+msgstr "cantidad minima"
+
+msgid "max amount"
+msgstr "cantidad maxima"
+
+msgid "Can not add sales limits for default contact groups."
+msgstr ""
+
+msgid "Context Condition"
+msgstr ""
+
+msgid "Campaign Basket Discounts"
+msgstr ""
+
+msgid "Coupon Code:"
+msgstr ""
+
+msgid "Filter report results by coupon."
+msgstr ""
+
+msgid "Coupons Usage"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Coupon code"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Taxful total"
+msgstr ""
+
+msgid "Taxful subtotal"
+msgstr ""
+
+msgid "Total discount"
+msgstr ""
+
+msgid "General Information"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Not set"
+msgstr ""
+
+msgid "No campaigns found"
+msgstr ""
+
+msgid "This section shows all the <b>active</b> campaigns this product is in."
+msgstr ""
+
+msgid "Rules"
+msgstr ""
+
+msgid "Rule type"
+msgstr ""
+
+msgid "The criteria used to determine whether this campaign is applied."
+msgstr ""
+
+msgid "Add rule"
+msgstr ""
+
+msgid "Effects"
+msgstr ""
+
+msgid "Effect type"
+msgstr ""
+
+msgid "Add effect"
+msgstr ""
+
+msgid "New Discount Code"
+msgstr ""
+
+msgid "General information"
+msgstr ""
+
+msgid "Generate"
+msgstr ""
+
+#, python-format
+msgid "%(coupons)s used"
+msgstr ""
+
+msgid "Sales Ranges"
+msgstr ""
+
+msgid "Customers within this sales range are assigned to this contact group."
+msgstr ""
