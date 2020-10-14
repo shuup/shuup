@@ -19,6 +19,7 @@ List all changes after the last release here (newer on top). Each change on a se
 - Core: include arbitrary refunds for max refundable amount
 - Admin: select product variation in popup window 
 - Importer: ignore None columns while importing files
+- Admin: Show more descriptive error messages in the media uploader in some situations.
 
 ### Changed
 
