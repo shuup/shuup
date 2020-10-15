@@ -19,10 +19,14 @@ from filer.models import File, Folder, Image
 from six import BytesIO
 
 from shuup.admin.modules.media.views import MediaBrowserView
+from shuup.admin.utils.permissions import set_permissions_for_group
+from shuup.testing import factories
 from shuup.testing.factories import generate_image, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
-from shuup.utils.filer import get_or_create_folder
+from shuup.utils.filer import (
+    can_see_root_folder, ensure_media_folder, get_or_create_folder
+)
 
 
 @pytest.mark.django_db
@@ -46,6 +50,34 @@ def test_media_view_images(rf, admin_user, is_public, expected_file_count):
     if expected_file_count:
         filedata = content["folder"]["files"][0]
         assert filedata["name"] == img.name
+
+
+@pytest.mark.django_db
+def test_media_view_images_without_root_access(rf):
+    shop = factories.get_default_shop()
+    staff_user = factories.UserFactory(is_staff=True)
+    permission_group = factories.get_default_permission_group()
+    staff_user.groups.add(permission_group)
+    shop.staff_members.add(staff_user)
+    set_permissions_for_group(permission_group, ["upload-media"])
+
+    assert not can_see_root_folder(staff_user)
+
+    folder = get_or_create_folder(shop, "Root")
+    File.objects.create(name="normalfile", folder=folder)
+    img = Image.objects.create(name="imagefile", folder=folder, is_public=True)
+
+    request = apply_request_middleware(
+        rf.get("/", {"filter": "images", "action": "folder"}),
+        user=staff_user
+    )
+    request.user = staff_user
+    view_func = MediaBrowserView.as_view()
+    response = view_func(request)
+    assert isinstance(response, JsonResponse)
+    content = json.loads(response.content.decode("utf-8"))
+    assert len(content["folder"]["folders"]) == 0
+    assert len(content["folder"]["files"]) == 0
 
 
 def mbv_command(user, payload, method="post"):
@@ -246,6 +278,48 @@ def test_get_folders(rf, admin_user):
     assert set((folder1.id, folder2.id, folder3.id)) <= set(tree.keys())
     assert folder4.pk in tree[folder2.pk]
     assert folder5.pk in tree[folder3.pk]
+
+
+@pytest.mark.django_db
+def test_get_folders_without_view_all_permission(rf):
+    shop = factories.get_default_shop()
+    staff_user = factories.UserFactory(is_staff=True)
+    permission_group = factories.get_default_permission_group()
+    staff_user.groups.add(permission_group)
+    shop.staff_members.add(staff_user)
+    set_permissions_for_group(permission_group, ["upload-media"])
+
+    assert not can_see_root_folder(staff_user)
+
+    # Create a structure and retrieve it
+    folder1 = get_or_create_folder(shop, printable_gibberish())
+    folder1_media_folder = ensure_media_folder(shop, folder1)
+    folder1_media_folder.owners.add(staff_user)
+    folder2 = get_or_create_folder(shop, printable_gibberish())
+    folder3 = get_or_create_folder(shop, printable_gibberish())
+
+    folder4 = get_or_create_folder(shop, printable_gibberish())
+    folder4.parent = folder2
+    folder4.save()
+    folder4_media_folder = ensure_media_folder(shop, folder4)
+    folder4_media_folder.owners.add(staff_user)
+
+    folder5 = get_or_create_folder(shop, printable_gibberish())
+    folder5.parent = folder4
+    folder5.save()
+
+    folder6 = get_or_create_folder(shop, printable_gibberish())
+    folder6.parent = folder5
+    folder6.save()
+    folder6_media_folder = ensure_media_folder(shop, folder6)
+    folder6_media_folder.owners.add(staff_user)
+
+    folder7 = get_or_create_folder(shop, printable_gibberish())
+    folder7.parent = folder6
+    folder7.save()
+
+    tree = get_id_tree(mbv_command(staff_user, {"action": "folders"}, "GET"))
+    assert set((folder1.id, folder4.id)) <= set(tree.keys())
 
 
 @pytest.mark.django_db
