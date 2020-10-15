@@ -1,22 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Pablo Burgos <hispar@gmail.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: 2020-10-12 01:23+0200\n"
-"Language: es\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-10-15 10:38+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.4.1\n"
 
 msgid "Addons"
 msgstr "Complementos"
@@ -34,7 +35,7 @@ msgid "%d previously enabled addons disabled."
 msgstr "%d complementos desactivados."
 
 msgid "No changes were made."
-msgstr "No se hicieron cambios."
+msgstr "No se han realizado cambios."
 
 msgid "Save addon changes"
 msgstr "Guardar cambios en el complemento"
@@ -48,9 +49,7 @@ msgstr "Recargar aplicación"
 msgid ""
 "There are no viable reload methods available. Please contact your system "
 "administrator."
-msgstr ""
-"No hay métodos de recarga viables disponibles. Por favor, póngase en "
-"contacto con el administrador del sistema."
+msgstr "No hay métodos de recarga viables disponibles. Por favor, póngase en contacto con el administrador del sistema."
 
 msgid "Reload Method"
 msgstr "Método de recarga"
@@ -62,10 +61,10 @@ msgid "Addon file (ZIP)"
 msgstr "Complemento (ZIP)"
 
 msgid "Only upload the addon files you trust."
-msgstr "Solo cargue los complementos en los que confíe."
+msgstr "Solo sube complementos en los que confíes."
 
 msgid "Only wheel files (`.whl`) are supported."
-msgstr "Solo se admiten archivos wheel (`.whl`)."
+msgstr "Solo ficheros de tipo wheel (`.whl`) están soportados."
 
 msgid "Upload"
 msgstr "Subir"
@@ -74,35 +73,30 @@ msgid "Install Addon"
 msgstr "Instalar Complemento"
 
 msgid "Installed addons"
-msgstr "Complementos Instalados"
+msgstr "Complementos instalados"
 
 msgid "Addon name"
-msgstr "Nombre del Complemento"
+msgstr "Nombre del complemento"
 
 msgid "Is enabled"
 msgstr "Está activado"
 
 msgid "You don't have any installed addons"
-msgstr "No tienes ningún complemento instalado"
+msgstr "No tienes instalado ningún complemento"
 
 msgid "Reload Application Server"
-msgstr "Recargar el servidor de aplicaciones"
+msgstr "Recargar servidor de aplicaciones"
 
 msgid ""
 "When you reload the application server, it may take some time for the new "
 "instance of your application to properly initialize."
-msgstr ""
-"Cuando vuelva a cargar el servidor de aplicaciones, es posible que la nueva "
-"instancia de su aplicación tarde algún tiempo en inicializarse correctamente."
+msgstr "Cuando vuelva a cargar el servidor de aplicaciones, es posible que la nueva instancia de su aplicación tarde algún tiempo en inicializarse correctamente."
 
 msgid ""
 "In addition, there is always a chance for the server to not properly "
 "initialize at all, in which case you may need to troubleshoot the problem "
 "yourself (or have a system administrator handy)."
-msgstr ""
-"Además, siempre existe la posibilidad de que el servidor no se inicialice "
-"correctamente, en cuyo caso es posible que deba solucionar el problema usted "
-"mismo (o tener a mano un administrador del sistema)."
+msgstr "Además, siempre existe la posibilidad de que el servidor no se inicialice correctamente, en cuyo caso es posible que deba solucionar el problema usted mismo (o tener a mano un administrador del sistema)."
 
 msgid "Reload steps"
 msgstr "Recargar pasos"
@@ -110,65 +104,59 @@ msgstr "Recargar pasos"
 msgid ""
 "Finalize installations for newly installed addons (migrate and collect "
 "static resources)"
-msgstr ""
-"Finalizar las instalaciones de los complementos recién instalados (migrar y "
-"recopilar recursos estáticos)"
+msgstr "Finalizar las instalaciones de los complementos recién instalados (migrar y recopilar recursos estáticos)"
 
 msgid "Reload application server"
-msgstr "Recargar servidor de aplicacion"
+msgstr "Recargar servidor de aplicaciones"
 
 msgid "Reload was initiated."
-msgstr "Se inició la recarga."
+msgstr "La recarga fue iniciada."
 
 msgid "Reloading application failed."
-msgstr "Falló la recarga de la aplicación."
+msgstr "La recarga de aplicaciones ha fallado."
 
 msgid "Finalizing installations."
 msgstr "Finalizando instalaciones."
 
 msgid "Your Shuup seems to be back up!"
-msgstr "¡Tu Shuup parece haber vuelto!"
+msgstr "¡Tu tienda vuelve a estar online!."
 
 msgid "Your Shuup is not up yet. Trying again soon."
-msgstr "Tu Shuup aún no ha terminado. Intentando de nuevo pronto."
+msgstr "Tu tienda no está online aún. Inténtalo de nuevo pronto."
 
 msgid "Select file"
 msgstr "Seleccionar fichero"
 
 msgid "Installation Finished"
-msgstr "Instalación finalizada"
+msgstr "Instalación Finalizada"
 
 msgid "Installation Failed"
-msgstr "Instalación fallida"
+msgstr "Instalación Fallida"
 
 msgid "Success"
 msgstr "Éxito"
 
 #, python-format
 msgid ""
-"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
-"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
-"class=\"text-success\"><strong>reload your application server</strong></a>."
-msgstr ""
-"A continuación, <a href=\"%(addon_list_url)s\" class=\"text-success\"> "
-"<strong> active el complemento recién instalado </strong> </a> y la clase <a "
-"href = \"%(addon_reload_url)s\" = \"text-success\"> <strong> recargue su "
-"servidor de aplicaciones </strong> </a>."
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
+" the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
+" class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr "Siguiente, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activa el complemento recién instalado </strong></a> y <a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>recarga el servidor de aplicaciones.</strong></a>"
 
 msgid "Error"
 msgstr "Error"
 
 msgid "Installer Log"
-msgstr "Registro del instalador"
+msgstr "Registro de instalación"
 
 msgid "Upload Addon - Install"
 msgstr "Subir Complemento - Instalar"
 
 msgid "Package Information"
-msgstr "Información del paquete"
+msgstr "Información del Paquete"
 
 msgid "No package information could be extracted."
-msgstr "No se pudo extraer información del paquete."
+msgstr "No se pudo extraer la información del paquete."
 
 msgid "File List"
-msgstr "Lista de ficheros"
+msgstr "Lista de Ficheros"
