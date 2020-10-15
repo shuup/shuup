@@ -100,10 +100,10 @@ export function controller(config={}) {
     };
     ctrl.reloadFolderTree = function() {
         remote.get({"action": "folders"}).then(function(response) {
-            if (response.rootFolder.name === "Root" && !response.rootFolder.canSeeRoot) {
+            if (response.rootFolder.id === 0 && !response.rootFolder.canSeeRoot) {
                 // Hide the root folder if the user cannot access it.
                 // This is only a visual thing to avoid showing the empty folder.
-                // The views handles the actual permission checking and clears the whole file
+                // The view handles the actual permission checking and clears the whole file
                 // QueyrSet of the root folder if the user is not allowed to access it.
                 const currentFolder = response.rootFolder.children[0];
                 ctrl.rootFolder(currentFolder || {});

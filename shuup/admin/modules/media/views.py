@@ -255,11 +255,12 @@ class MediaBrowserView(TemplateView):
                 files = _get_file_query(shop, folder)
             else:
                 folder = None
-                subfolders = _get_folder_query(shop, self.user).filter(parent=None)
                 if can_see_root_folder(self.request.user):
+                    subfolders = _get_folder_query(shop, self.user).filter(parent=None)
                     files = _get_file_query(shop).filter(folder=None)
                 else:
                     files = File.objects.none()
+                    subfolders = Folder.objects.none()
 
         except ObjectDoesNotExist:
             return JsonResponse({

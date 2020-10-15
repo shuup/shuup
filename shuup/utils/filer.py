@@ -286,6 +286,4 @@ def can_see_root_folder(user):
     Return True if the user is allowed to see files that exists in the root folder.
     This means all files that have `folder=None`.
     """
-    if not user:
-        return False
-    return has_permission(user, "media.view-all")
+    return bool(user and has_permission(user, "media.view-all"))
