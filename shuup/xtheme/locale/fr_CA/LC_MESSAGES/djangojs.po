@@ -1,0 +1,63 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-05 00:12+0000\n"
+"PO-Revision-Date: 2020-10-12 17:39+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, javascript-format
+msgid "Edit %s"
+msgstr "Modifier %s"
+
+msgid ""
+"Changing plugin cells without saving will cause changes made to this cell to"
+" be lost."
+msgstr "Changer les cellules du plugin sans enregistrer entraînera la perte des modifications apportées à cette cellule."
+
+#, javascript-format
+msgid "Error: Cannot add more than %s cells to one row."
+msgstr "Erreur: impossible d&#39;ajouter plus de cellules %s à une ligne."
+
+msgid "Are you sure you wish to delete this row?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette ligne?"
+
+msgid "Are you sure you wish to delete this cell?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette cellule?"
+
+msgid "Are you sure you wish to publish changes made to this view?"
+msgstr "Voulez-vous vraiment publier les modifications apportées à cette vue?"
+
+msgid "You have changed the form. Do you want to save them before publishing?"
+msgstr "Vous avez changé le formulaire. Voulez-vous les enregistrer avant la publication?"
+
+msgid ""
+"Are you sure you wish to revert all changes made since the last published "
+"version?"
+msgstr "Voulez-vous vraiment annuler toutes les modifications apportées depuis la dernière version publiée?"
+
+msgid ""
+"Changing plugins will cause other changes made on this form to be lost."
+msgstr "La modification des plugins entraînera la perte des autres modifications apportées à ce formulaire."
+
+msgid "Custom CSS/JS"
+msgstr "CSS / JS personnalisé"
+
+msgid "Exit Edit"
+msgstr "Quitter Modifier"
+
+msgid "Edit Page"
+msgstr "Modifier la page"

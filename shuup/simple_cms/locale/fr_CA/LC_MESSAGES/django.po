@@ -1,0 +1,277 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-10-12 17:59+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Content Pages"
+msgstr "Pages de contenu"
+
+msgid "Pages"
+msgstr "Des pages"
+
+msgid "Show pages"
+msgstr "Afficher les pages"
+
+msgid "Add a web page"
+msgstr "Ajouter une page Web"
+
+msgid "New page"
+msgstr "Nouvelle page"
+
+msgid "Available since"
+msgstr "Disponible depuis"
+
+msgid "Available until"
+msgstr "Disponible jusqu&#39;au"
+
+msgid "Template"
+msgstr "Modèle"
+
+msgid "URL already exists."
+msgstr "L&#39;URL existe déjà."
+
+msgid "URL must be unique."
+msgstr "L&#39;URL doit être unique."
+
+#, python-format
+msgid "%(label)s is required when any %(language)s field is filled."
+msgstr "%(label)s est requis lorsqu&#39;un champ %(language)s est rempli."
+
+msgid "Please fill at least one language fully."
+msgstr "Veuillez remplir au moins une langue au complet."
+
+msgid "A page may not be made a child of itself."
+msgstr "Une page ne peut pas devenir un enfant d&#39;elle-même."
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Created by"
+msgstr "Créé par"
+
+msgid "Date created"
+msgstr "Date créée"
+
+msgid "Page"
+msgstr "Page"
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s a été marqué comme supprimé."
+
+msgid "Content in this placeholder is shown for this page only."
+msgstr "Le contenu de cet espace réservé est affiché pour cette page uniquement."
+
+#, python-format
+msgid "Content in this placeholder is shown for %(title)s only."
+msgstr "Le contenu de cet espace réservé est affiché pour %(title)s uniquement."
+
+msgid "Website"
+msgstr "Site Internet"
+
+msgid "Article"
+msgstr "Article"
+
+msgid "shop"
+msgstr "boutique"
+
+msgid "supplier"
+msgstr "fournisseur"
+
+msgid "available since"
+msgstr "disponible depuis"
+
+msgid ""
+"Set an available date to restrict the page to be available only after a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr "Définissez une date disponible pour que la page ne soit disponible qu&#39;après une certaine date et heure. Ceci est utile pour les pages décrivant des campagnes de vente ou d&#39;autres pages sensibles au facteur temps."
+
+msgid "available until"
+msgstr "disponible jusqu&#39;au"
+
+msgid ""
+"Set an available date to restrict the page to be available only until a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr "Définissez une date disponible pour que la page ne soit disponible que jusqu&#39;à une certaine date et heure. Ceci est utile pour les pages décrivant des campagnes de vente ou d&#39;autres pages sensibles au facteur temps."
+
+msgid "created by"
+msgstr "créé par"
+
+msgid "modified by"
+msgstr "modifié par"
+
+msgid "created on"
+msgstr "créé sur"
+
+msgid "modified on"
+msgstr "modifié le"
+
+msgid "This identifier can be used in templates to create URLs"
+msgstr "Cet identifiant peut être utilisé dans les modèles pour créer des URL"
+
+msgid "visible in menu"
+msgstr "visible dans le menu"
+
+msgid ""
+"Enable this if this page should have a visible link in the top menu of the "
+"store front."
+msgstr "Activez cette option si cette page doit avoir un lien visible dans le menu supérieur de la devanture du magasin."
+
+msgid "parent"
+msgstr "parent"
+
+msgid ""
+"Set this to a parent page if this page should be subcategorized (sub-menu) "
+"under another page."
+msgstr "Définissez ceci sur une page parent si cette page doit être sous-catégorisée (sous-menu) sous une autre page."
+
+msgid "display children on page"
+msgstr "afficher les enfants sur la page"
+
+msgid "Enable this if this page should display all of its children pages."
+msgstr "Activez cette option si cette page doit afficher toutes ses pages enfants."
+
+msgid "show child page timestamps"
+msgstr "afficher les horodatages de la page enfant"
+
+msgid ""
+"Enable this if you want to show timestamps on the child pages. Please note, "
+"that this requires the children to be listed on the page as well."
+msgstr "Activez cette option si vous souhaitez afficher les horodatages sur les pages enfants. Veuillez noter que cela nécessite que les enfants soient également répertoriés sur la page."
+
+msgid "deleted"
+msgstr "supprimé"
+
+msgid "title"
+msgstr "Titre"
+
+msgid "The page title. This is shown anywhere links to your page are shown."
+msgstr "Le titre de la page. Ceci est affiché partout où des liens vers votre page sont affichés."
+
+msgid "URL"
+msgstr "URL"
+
+msgid ""
+"The page url. Choose a descriptive url so that search engines can rank your "
+"page higher. Often the best url is simply the page title with spaces "
+"replaced with dashes."
+msgstr "L&#39;URL de la page. Choisissez une URL descriptive afin que les moteurs de recherche puissent classer votre page plus haut. Souvent, la meilleure URL est simplement le titre de la page avec des espaces remplacés par des tirets."
+
+msgid "content"
+msgstr "contenu"
+
+msgid ""
+"The page content. This is the text that is displayed when customers click on"
+" your page link.You can leave this empty and add all page content through "
+"placeholder editor in shop front.To edit the style of the page you can use "
+"the Snippet plugin which is in shop front editor."
+msgstr "Le contenu de la page. Il s&#39;agit du texte qui s&#39;affiche lorsque les clients cliquent sur le lien de votre page.Vous pouvez laisser ce champ vide et ajouter tout le contenu de la page via l&#39;éditeur d&#39;espace réservé dans la boutique.Pour modifier le style de la page, vous pouvez utiliser le plugin Snippet qui se trouve en boutique éditeur."
+
+msgid "Template path"
+msgstr "Chemin du modèle"
+
+msgid "render title"
+msgstr "titre de rendu"
+
+msgid "Enable this if this page should have a visible title."
+msgstr "Activez cette option si cette page doit avoir un titre visible."
+
+msgid "page"
+msgstr "page"
+
+msgid "pages"
+msgstr "pages"
+
+msgid "Untitled"
+msgstr "Sans titre"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "The image of your object."
+msgstr "L&#39;image de votre objet."
+
+msgid "type"
+msgstr "type"
+
+msgid ""
+"The title of your object as it should appear within the graph, e.g. The "
+"Rock."
+msgstr "Le titre de votre objet tel qu&#39;il devrait apparaître dans le graphique, par exemple The Rock."
+
+msgid "Description"
+msgstr "La description"
+
+msgid "A one to two sentence description of your object."
+msgstr "Une description en une à deux phrases de votre objet."
+
+msgid "Section"
+msgstr "Section"
+
+msgid ""
+"A high-level section name, e.g. Technology. Only applicable when type is "
+"Article."
+msgstr "Un nom de section de haut niveau, par exemple Technology. Applicable uniquement lorsque le type est Article."
+
+msgid "Tags"
+msgstr "Mots clés"
+
+msgid ""
+"Tag words associated with this article. Only applicable when type is "
+"Article."
+msgstr "Marquer les mots associés à cet article. Applicable uniquement lorsque le type est Article."
+
+msgid "Article author"
+msgstr "Auteur de l&#39;article"
+
+msgid ""
+"The name of the author for the article. Only applicable when type is "
+"Article."
+msgstr "Le nom de l&#39;auteur de l&#39;article. Applicable uniquement lorsque le type est Article."
+
+msgid "CMS Page Links"
+msgstr "Liens de page CMS"
+
+msgid "Show all pages"
+msgstr "Afficher toutes les pages"
+
+msgid "All pages are shown, even if not selected"
+msgstr "Toutes les pages sont affichées, même si elles ne sont pas sélectionnées"
+
+msgid "Hide expired pages"
+msgstr "Masquer les pages expirées"
+
+msgid "Default Page"
+msgstr "Page par défaut"
+
+msgid "Page with sidebar"
+msgstr "Page avec barre latérale"
+
+msgid ""
+"Fill the fields below to add extra OpenGraph information to the page meta.\n"
+"        If not informed, some values will be inferred from the page attributes."
+msgstr "Remplissez les champs ci-dessous pour ajouter des informations OpenGraph supplémentaires à la méta de la page. Sinon, certaines valeurs seront déduites des attributs de la page."
+
+msgid "New Page"
+msgstr "Nouvelle page"
+
+msgid "Home"
+msgstr "Accueil"

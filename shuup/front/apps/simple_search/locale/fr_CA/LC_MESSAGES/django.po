@@ -1,0 +1,39 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-05 21:13+0000\n"
+"PO-Revision-Date: 2020-10-12 15:52+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Search"
+msgstr "Chercher"
+
+msgid "Search for products"
+msgstr "Rechercher des produits"
+
+#, python-format
+msgid "No results found for \"<strong>%(query)s</strong>\"."
+msgstr "Aucun résultat trouvé pour &quot; <strong>%(query)s</strong> &quot;."
+
+msgid ""
+"Limiting results to first 150 products. Refine search terms for better "
+"results."
+msgstr "Limitation des résultats aux 150 premiers produits. Affinez les termes de recherche pour de meilleurs résultats."
+
+#, python-format
+msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
+msgstr "%(n)s résultats trouvés pour &quot; <strong>%(query)s</strong> &quot;."

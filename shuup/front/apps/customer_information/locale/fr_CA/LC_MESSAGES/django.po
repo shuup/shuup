@@ -1,0 +1,222 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-10-12 17:59+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Frontend - Customer Information Editing"
+msgstr "Shuup Frontend - Modification des informations client"
+
+msgid "Customer Information"
+msgstr "Informations client"
+
+msgid "Company Information"
+msgstr "Informations sur la société"
+
+msgid "Edit Company Information."
+msgstr "Modifier les informations sur la société."
+
+msgid "Address Book"
+msgstr "Carnet d&#39;adresses"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Will become default user email when linked."
+msgstr "Deviendra l&#39;adresse e-mail de l&#39;utilisateur par défaut une fois liée."
+
+msgid "Given Tax Number already exists. Please contact support."
+msgstr "Le numéro de taxe donné existe déjà. Veuillez contacter le support."
+
+msgid "Address Title"
+msgstr "Titre de l&#39;adresse"
+
+msgid "Address Type"
+msgstr "Type d&#39;adresse"
+
+msgid "Address Status"
+msgstr "Statut de l&#39;adresse"
+
+msgid "Company information was saved."
+msgstr "Les informations sur l&#39;entreprise ont été enregistrées."
+
+msgid ""
+"Company information was saved. Please follow the instructions sent to your "
+"email address."
+msgstr "Les informations sur l&#39;entreprise ont été enregistrées. Veuillez suivre les instructions envoyées à votre adresse e-mail."
+
+msgid "Customer Email"
+msgstr "Email client"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "General Information"
+msgstr "Informations générales"
+
+msgid "Contact Information"
+msgstr "Informations de contact"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Default Addresses"
+msgstr "Adresses par défaut"
+
+msgid "Edit"
+msgstr "Éditer"
+
+msgid "Default Billing Address"
+msgstr "adresse de facturation par défaut"
+
+msgid "No Default Billing Address set."
+msgstr "Aucune adresse de facturation par défaut définie."
+
+msgid "Default Shipping Address"
+msgstr "Adresse de livraison par défaut"
+
+msgid "No Default Shipping Address set."
+msgstr "Aucune adresse de livraison par défaut définie."
+
+msgid "Additional Addresses"
+msgstr "Adresses supplémentaires"
+
+msgid "Create new"
+msgstr "Créer un nouveau"
+
+msgid "Role"
+msgstr "Rôle"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Delete"
+msgstr "Effacer"
+
+msgid "You don't have any additional addresses"
+msgstr "Vous n&#39;avez aucune adresse supplémentaire"
+
+msgid "Change Password"
+msgstr "Changer le mot de passe"
+
+msgid "Change password"
+msgstr "Changer le mot de passe"
+
+msgid "Basic Information"
+msgstr "Informations de base"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Téléphone"
+
+msgid "Tax Number"
+msgstr "Numéro d&#39;identification fiscale"
+
+msgid "Birth Date"
+msgstr "Date de naissance"
+
+msgid "Gender"
+msgstr "Le genre"
+
+msgid "Marketing Permission"
+msgstr "Autorisation de commercialisation"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Company account information"
+msgstr "Informations sur le compte de l&#39;entreprise"
+
+msgid ""
+"You have already linked your account to a company and it is pending "
+"approval."
+msgstr "Vous avez déjà associé votre compte à une entreprise et il est en attente d&#39;approbation."
+
+msgid "User account information"
+msgstr "Informations sur le compte utilisateur"
+
+msgid "Not specified"
+msgstr "Non précisé"
+
+msgid "Street"
+msgstr "rue"
+
+msgid "Postal code"
+msgstr "Code postal"
+
+msgid "City"
+msgstr "Ville"
+
+msgid "Country"
+msgstr "Pays"
+
+msgid "Billing information"
+msgstr "Détails de facturation"
+
+msgid "Copy to shipping information"
+msgstr "Copie des informations d&#39;expédition"
+
+msgid "Shipping information"
+msgstr "Informations sur la livraison"
+
+msgid "Copy to billing information"
+msgstr "Copier vers les informations de facturation"
+
+msgid "Edit user account information"
+msgstr "Modifier les informations du compte utilisateur"
+
+msgid "Save password"
+msgstr "Enregistrer le mot de passe"
+
+msgid "Save changes"
+msgstr "Sauvegarder les modifications"
+
+msgid "Edit company information"
+msgstr "Modifier les informations de l&#39;entreprise"
+
+msgid "Link account to company"
+msgstr "Lier le compte à l&#39;entreprise"
+
+msgid "Company information"
+msgstr "Informations sur la société"
+
+msgid "User information"
+msgstr "Informations de l&#39;utilisateur"
+
+msgid "Password changed."
+msgstr "Mot de passe changé."
+
+msgid "Account information was saved."
+msgstr "Les informations du compte ont été enregistrées."
+
+msgid "Address information was saved."
+msgstr "Les informations d&#39;adresse ont été enregistrées."
+
+msgid "Cannot remove address because it doesn't exist."
+msgstr "Impossible de supprimer l&#39;adresse car elle n&#39;existe pas."

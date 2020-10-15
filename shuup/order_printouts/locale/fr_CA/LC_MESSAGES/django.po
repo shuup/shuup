@@ -1,0 +1,176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:58+0000\n"
+"PO-Revision-Date: 2016-06-28 12:30+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: French (Canada) (https://www.transifex.com/shuup/teams/55306/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Printouts"
+msgstr "Impressions"
+
+msgid "To"
+msgstr "À"
+
+msgid "Email Subject"
+msgstr "Sujet du courriel"
+
+msgid "Email Body"
+msgstr "Corps de l&#39;e-mail"
+
+#, python-format
+msgid ""
+"Important information regarding your order, see attachment.\n"
+"\n"
+"Best Regards,\n"
+"%(shop)s"
+msgstr ""
+"Informations importantes concernant votre commande, voir pièce jointe. "
+"Meilleures salutations, %(shop)s"
+
+#, python-format
+msgid "%(shop)s: Order %(pk)s"
+msgstr "%(shop)s: Commandez %(pk)s"
+
+msgid ""
+"The current shop doesn't match the order shop. Please change to the shop "
+"that is currently active."
+msgstr ""
+"La boutique actuelle ne correspond pas à la boutique de commande. Veuillez "
+"passer à la boutique actuellement active."
+
+msgid "Non-POST request methods are forbidden."
+msgstr "Les méthodes de requête non POST sont interdites."
+
+msgid "Delivery slip"
+msgstr "Bon de livraison"
+
+msgid "Order"
+msgstr "Commande"
+
+msgid "Order confirmation"
+msgstr "Confirmation de commande"
+
+msgid "Order printouts"
+msgstr "Commander des impressions"
+
+msgid "Shipped products"
+msgstr "Produits expédiés"
+
+msgid "Payment and shipping methods"
+msgstr "Modes de paiement et d&#39;expédition"
+
+msgid "Order number"
+msgstr "Numéro de commande"
+
+msgid "Total price"
+msgstr "Prix total"
+
+msgid "Payment status"
+msgstr "Statut de paiement"
+
+msgid "Shipping status"
+msgstr "Statut d&#39;envoi"
+
+#, python-format
+msgid "Tracking code #%(index)s"
+msgstr "Code de suivi # %(index)s"
+
+msgid "Order date"
+msgstr "Date de commande"
+
+msgid "Comment"
+msgstr "Commentaire"
+
+msgid "Identifier"
+msgstr "Identifiant"
+
+msgid "Shipment date"
+msgstr "Date d&#39;expédition"
+
+msgid "Tracking code"
+msgstr "Code de suivi"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr "Texte"
+
+msgid "Quantity"
+msgstr "Quantité"
+
+msgid "Tax"
+msgstr "Impôt"
+
+msgid "Taxful total"
+msgstr "Total fiscal"
+
+msgid "Taxless total"
+msgstr "Total hors taxe"
+
+msgid "Tax percentage"
+msgstr "Pourcentage de taxe"
+
+msgid "Based on amount"
+msgstr "Basé sur le montant"
+
+msgid "Amount of tax"
+msgstr "Montant de la taxe"
+
+msgid "Total including tax"
+msgstr "Total TTC"
+
+msgid "Billing address"
+msgstr "Adresse de facturation"
+
+msgid "Confirmation"
+msgstr "Confirmation"
+
+msgid "Get Order Confirmation PDF"
+msgstr "Obtenir le PDF de confirmation de commande"
+
+msgid "Get Order Confirmation HTML"
+msgstr "Obtenir le code HTML de confirmation de commande"
+
+msgid "Shipments"
+msgstr "Expéditions"
+
+#, python-format
+msgid "Get Delivery Slip PDF (Shipment %(id)s)"
+msgstr "Obtenir le bon de livraison PDF (expédition %(id)s)"
+
+#, python-format
+msgid "Get Delivery Slip HTML (Shipment %(id)s)"
+msgstr "Obtenir le bon de livraison HTML (expédition %(id)s)"
+
+msgid "Send Email"
+msgstr "Envoyer un e-mail"
+
+msgid "Send Order Confirmation"
+msgstr "Envoyer la confirmation de commande"
+
+#, python-format
+msgid "Send Delivery Slip (Shipment %(id)s)"
+msgstr "Envoyer le bon de livraison (envoi %(id)s)"
+
+msgid "Email was sent."
+msgstr "Un e-mail a été envoyé."
+
+msgid "Could not sent the email, please try again."
+msgstr "Impossible d&#39;envoyer l&#39;e-mail, veuillez réessayer."

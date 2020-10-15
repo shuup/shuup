@@ -1,0 +1,168 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2020-10-12 17:59+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Default Tax"
+msgstr "Taxe par défaut Shuup"
+
+msgid "Tax Rules"
+msgstr "Règles fiscales"
+
+msgid "Show tax rules"
+msgstr "Afficher les règles fiscales"
+
+msgid "Use ISO 3166-1 country codes (US, FI etc.)"
+msgstr "Utilisez les codes de pays ISO 3166-1 (US, FI, etc.)"
+
+msgid "Use two letter state codes for the US"
+msgstr "Utilisez des codes d&#39;état à deux lettres pour les États-Unis"
+
+msgid "Tax Rule"
+msgstr "Règle fiscale"
+
+msgid "Tax"
+msgstr "Impôt"
+
+msgid "Tax Classes"
+msgstr "Classes fiscales"
+
+msgid "Customer Tax Groups"
+msgstr "Groupes de taxes client"
+
+msgid "Countries"
+msgstr "Des pays"
+
+msgid "Regions"
+msgstr "Régions"
+
+msgid "Postal Codes"
+msgstr "Codes postaux"
+
+msgid "Priority"
+msgstr "Priorité"
+
+msgid "Override Group"
+msgstr "Groupe de remplacement"
+
+msgid "Enabled"
+msgstr "Activée"
+
+msgid "enabled"
+msgstr "activée"
+
+msgid "Enable this if this tax rule is active."
+msgstr "Activez cette option si cette règle fiscale est active."
+
+msgid "tax classes"
+msgstr "classes fiscales"
+
+msgid "Tax classes of the items to be taxed"
+msgstr "Catégories de taxes des articles à taxer"
+
+msgid "customer tax groups"
+msgstr "groupes fiscaux clients"
+
+msgid "The customer tax groups for which this tax rule is limited."
+msgstr "Les groupes de taxe client pour lesquels cette règle de taxe est limitée."
+
+msgid "country codes pattern"
+msgstr "modèle de codes de pays"
+
+msgid "region codes pattern"
+msgstr "modèle de codes de région"
+
+msgid "postal codes pattern"
+msgstr "modèle de codes postaux"
+
+msgid "priority"
+msgstr "priorité"
+
+msgid ""
+"Rules with same priority define added taxes (e.g. US taxes) and rules with "
+"different priority define compound taxes (e.g. Canada Quebec PST case)"
+msgstr "Les règles avec la même priorité définissent les taxes ajoutées (par exemple les taxes américaines) et les règles avec une priorité différente définissent les taxes composées (par exemple le cas de la TVP Canada Québec)"
+
+msgid "override group number"
+msgstr "remplacer le numéro de groupe"
+
+msgid ""
+"If several rules match, only the rules with the highest override group "
+"number will be effective.  This can be used, for example, to implement tax "
+"exemption by adding a rule with very high override group that sets a zero "
+"tax."
+msgstr "Si plusieurs règles correspondent, seules les règles avec le numéro de groupe de remplacement le plus élevé seront effectives. Cela peut être utilisé, par exemple, pour implémenter une exonération fiscale en ajoutant une règle avec un groupe de remplacement très élevé qui définit une taxe nulle."
+
+msgid "tax"
+msgstr "impôt"
+
+msgid "The tax to apply when this rule is applied."
+msgstr "La taxe à appliquer lorsque cette règle est appliquée."
+
+msgid "Tax rule {} ({})"
+msgstr "Règle fiscale {} ({})"
+
+msgid "Default Taxation"
+msgstr "Imposition par défaut"
+
+msgid "Tax rule information"
+msgstr "Informations sur les règles fiscales"
+
+msgid "Matching criteria"
+msgstr "Critères de correspondance"
+
+msgid "Grouping"
+msgstr "Regroupement"
+
+msgid "Applied tax"
+msgstr "Taxe appliquée"
+
+msgid ""
+"\n"
+"            The following fields determine when this rule applies.  All\n"
+"            non-empty fields must match for the rule to apply.  Empty fields are\n"
+"            not considered, e.g. if \"Customer tax groups\" is left empty, all\n"
+"            customer tax groups will match.\n"
+"        "
+msgstr ""
+
+msgid ""
+"\n"
+"            Pattern can be a single value or a comma separated list of items,\n"
+"            where each item can be a single value or a range, such as\n"
+"            \"value1-value2\".  Special value \"*\" matches everything.  For\n"
+"            example, a pattern \"1,2,50-90\" will match values \"1\" and \"2\", and\n"
+"            \"50\", \"90\", and everything between.  The range uses alphabetical\n"
+"            ordering unless start, end and the string to be matched are all\n"
+"            numerical, i.e. \"50-90\" will match also \"6a\" and \"700X\", since they\n"
+"            are alphabetically between \"50\" and \"90\", but it will not match\n"
+"            \"700000\" since for numerical items natural numeric ordering is used.\n"
+"        "
+msgstr ""
+
+msgid ""
+"\n"
+"            Use the following fields to configure added or compounded\n"
+"            taxes (when several taxes apply for an item), or to create a\n"
+"            tax rule or a set of tax rules that override other tax rules.\n"
+"        "
+msgstr ""
+
+msgid "When this rule applies, apply the following tax."
+msgstr "Lorsque cette règle s&#39;applique, appliquez la taxe suivante."

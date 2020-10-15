@@ -1,0 +1,159 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-10-12 18:01+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Name of the company"
+msgstr "Nom de l&#39;entreprise"
+
+msgid "Registration Received"
+msgstr "Inscription reçue"
+
+msgid "Customer"
+msgstr "Client"
+
+msgid "Customer Email"
+msgstr "Email client"
+
+msgid "Activation URL"
+msgstr "URL d&#39;activation"
+
+msgid "Is User Active"
+msgstr "L&#39;utilisateur est-il actif"
+
+msgid "Account Reactivation"
+msgstr "Réactivation du compte"
+
+msgid "Company Registration Received"
+msgstr "Enregistrement de l&#39;entreprise reçu"
+
+msgid "Company Approved"
+msgstr "Approuvé par l&#39;entreprise"
+
+msgid "Account Activation"
+msgstr "Activation de compte"
+
+msgid "Company has been activated."
+msgstr "La société a été activée."
+
+msgid "Send Registration Received Email"
+msgstr "Envoyer un e-mail de réception d&#39;inscription"
+
+msgid "Send email when a user registers."
+msgstr "Envoyez un e-mail lorsqu&#39;un utilisateur s&#39;inscrit."
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a user get registered."
+msgstr "Ce script enverra un e-mail à l&#39;utilisateur ou à tout e-mail configuré juste après l&#39;inscription d&#39;un utilisateur."
+
+msgid "{{ order.shop }} - Welcome!"
+msgstr "{{order.shop}} - Bienvenue!"
+
+msgid "Send account reactivation email"
+msgstr "Envoyer un e-mail de réactivation de compte"
+
+msgid "Send email when a user account gets reactivated"
+msgstr "Envoyer un e-mail lorsqu&#39;un compte utilisateur est réactivé"
+
+msgid ""
+"This script will send an email to the user or to any configured email when a"
+" account get's reactivated"
+msgstr "Ce script enverra un e-mail à l&#39;utilisateur ou à tout e-mail configuré lors de la réactivation d&#39;un compte"
+
+msgid "{{ customer.username }} is now active again!"
+msgstr "{{customer.username}} est à nouveau actif!"
+
+msgid "Send Company Registration Received Email"
+msgstr "Envoyer un e-mail de réception d&#39;enregistrement de l&#39;entreprise"
+
+msgid "Send email when a user registers as a company."
+msgstr "Envoyez un e-mail lorsqu&#39;un utilisateur s&#39;inscrit en tant qu&#39;entreprise."
+
+msgid "Send Company Activated Email"
+msgstr "Envoyer un e-mail activé par l&#39;entreprise"
+
+msgid "Notify company's contact person that company account is activated"
+msgstr "Informer le contact de l&#39;entreprise que le compte d&#39;entreprise est activé"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr "Ce script enverra un e-mail à l&#39;utilisateur ou à tout e-mail configuré juste après l&#39;activation d&#39;une entreprise."
+
+msgid "Send account activation email"
+msgstr "Envoyer un e-mail d&#39;activation de compte"
+
+msgid "Send email when a user account gets activated for the first time"
+msgstr "Envoyer un e-mail lorsqu&#39;un compte utilisateur est activé pour la première fois"
+
+msgid ""
+"This script will send an email to the user or to any configured email when "
+"an account gets activated for the first time"
+msgstr "Ce script enverra un e-mail à l&#39;utilisateur ou à tout e-mail configuré lorsqu&#39;un compte est activé pour la première fois"
+
+msgid "{{ customer.username }} is now active!"
+msgstr "{{customer.username}} est maintenant actif!"
+
+msgid "Account activation"
+msgstr "Activation de compte"
+
+msgid "Account activation failed."
+msgstr "L&#39;activation du compte a échoué."
+
+msgid "Register as a Company"
+msgstr "S&#39;inscrire en tant qu&#39;entreprise"
+
+msgid "Company Registration"
+msgstr "Enregistrement de la société"
+
+msgid "Company information"
+msgstr "Informations sur la société"
+
+msgid "Company billing information"
+msgstr "Informations de facturation de l&#39;entreprise"
+
+msgid "Contact person"
+msgstr "Contact"
+
+msgid "Contact information for primary company contact"
+msgstr "Coordonnées du contact principal de l&#39;entreprise"
+
+msgid "Login information"
+msgstr "Informations de connexion"
+
+msgid "The information you will log in with."
+msgstr "Les informations avec lesquelles vous vous connecterez."
+
+msgid "Register"
+msgstr "S&#39;inscrire"
+
+msgid "Registration"
+msgstr "enregistrement"
+
+msgid "Register as a company."
+msgstr "Inscrivez-vous en tant qu&#39;entreprise."
+
+msgid "Activation successful"
+msgstr "Activation réussie"
+
+msgid ""
+"Registration complete. Please follow the instructions sent to your email "
+"address."
+msgstr "Inscription complète. Veuillez suivre les instructions envoyées à votre adresse e-mail."

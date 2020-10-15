@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-10-12 18:07+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Utilities"
+msgstr "Utilitaires Shuup"
+
+msgid "other"
+msgstr "autre"
+
+msgid "audit"
+msgstr "Audit"
+
+msgid "edit"
+msgstr "Éditer"
+
+msgid "deletion"
+msgstr "effacement"
+
+msgid "note"
+msgstr "Remarque"
+
+msgid "email"
+msgstr "email"
+
+msgid "warning"
+msgstr "avertissement"
+
+msgid "error"
+msgstr "Erreur"
+
+msgid "created on"
+msgstr "créé sur"
+
+msgid "user"
+msgstr "utilisateur"
+
+msgid "message"
+msgstr "message"
+
+msgid "identifier"
+msgstr "identifiant"
+
+msgid "log entry kind"
+msgstr "type d&#39;entrée de journal"
+
+msgid "extra data"
+msgstr "données supplémentaires"
+
+msgid "target"
+msgstr "cible"
+
+#, python-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s jour"
+msgstr[1] "%s jours"
+
+#, python-format
+msgid "%(min)s--%(max)s days"
+msgstr "%(min)s - %(max)s jours"
+
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)."
+msgstr "Taille de fichier maximale atteinte (%(size)s Mo)."
+
+msgid "Root"
+msgstr "Racine"
+
+msgid "This field is required."
+msgstr "Ce champ est requis."
+
+msgid ""
+"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
+"marks to negate (A-Z,!G will not match G)."
+msgstr "Valeurs ou plages séparées par des virgules, par exemple AZ, 10000-19000. Utilisez des points d&#39;exclamation pour annuler (AZ,! G ne correspondra pas à G)."
+
+msgid ""
+"Could not create PDF since Weasyprint is not available. Please contact "
+"support."
+msgstr "Impossible de créer le PDF car Weasyprint n&#39;est pas disponible. Veuillez contacter le support."

@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
+"PO-Revision-Date: 2016-06-28 10:53+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: French (Canada) (https://www.transifex.com/shuup/teams/55306/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Customer Group Pricing"
+msgstr "Tarification du groupe de clients Shuup"
+
+#, python-format
+msgid "Price (%(shop)s/%(group)s)"
+msgstr "Prix (%(shop)s / %(group)s)"
+
+#, python-format
+msgid "Discount (%(shop)s/%(group)s)"
+msgstr "Remise (%(shop)s / %(group)s)"
+
+msgid "product"
+msgstr "produit"
+
+msgid "shop"
+msgstr "boutique"
+
+msgid "contact group"
+msgstr "groupe de contact"
+
+msgid "price"
+msgstr "prix"
+
+msgid "product price"
+msgstr "prix du produit"
+
+msgid "product prices"
+msgstr "prix des produits"
+
+msgid "discount amount"
+msgstr "montant de la remise"
+
+msgid "product discount"
+msgstr "remise de produit"
+
+msgid "product discounts"
+msgstr "remises sur les produits"
+
+msgid "Customer Group Pricing"
+msgstr "Tarification du groupe de clients"
+
+msgid "Customer Group Discount"
+msgstr "Remise de groupe de clients"
+
+msgid "Contact Group Discount"
+msgstr "Remise de groupe de contact"
+
+msgid ""
+"Here you can set individual discount amounts for different contact groups. "
+"The discount amount may be visible on storefront. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr ""
+"Ici, vous pouvez définir des montants de remise individuels pour différents "
+"groupes de contacts. Le montant de la remise peut être visible sur la "
+"vitrine. Ces groupes sont définis dans Paramètres des contacts - Groupes de "
+"contacts"
+
+msgid "Contact Group Pricing"
+msgstr "Tarifs de groupe de contact"
+
+msgid ""
+"Here you can set individual pricing for different contact groups. This can "
+"be useful for special discounts or for B2B orders. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr ""
+"Ici, vous pouvez définir une tarification individuelle pour différents "
+"groupes de contacts. Cela peut être utile pour des remises spéciales ou pour"
+" des commandes B2B. Ces groupes sont définis dans Paramètres des contacts - "
+"Groupes de contacts"
