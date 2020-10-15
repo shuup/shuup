@@ -1,22 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Pablo Burgos <hispar@gmail.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: 2020-10-11 22:39+0200\n"
-"Language: es\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-10-15 10:38+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.4.1\n"
 
 msgid "Theme identifiers must match."
 msgstr "Los identificadores de tema deben coincidir."
@@ -24,7 +25,6 @@ msgstr "Los identificadores de tema deben coincidir."
 msgid "Either theme_settings or shop should be informed."
 msgstr "Se debe informar a theme_settings o a la tienda."
 
-# Plugins globales
 msgid "Global plugins"
 msgstr "Plugins globales"
 
@@ -61,9 +61,7 @@ msgstr "Tema CSS/JS personalizados"
 msgid ""
 "Select the themes that will have this snippet injected. Leave the field "
 "blank to inject in all themes."
-msgstr ""
-"Selecciona los temas que tendrán este fragmento incrustado. Déjalo en "
-"blanco para incrustarlo en todos los temas."
+msgstr "Selecciona los temas que tendrán este fragmento incrustado. Déjalo en blanco para incrustarlo en todos los temas."
 
 msgid "Select the location of the page to inject the snippet."
 msgstr "Selecciona la ubicación de la página para incrustar el fragmento."
@@ -99,42 +97,30 @@ msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Las fuentes, colores y estilos para usar en tu tema."
 
 msgid "Content in this box is shown to all user types without limitations."
-msgstr ""
-"El contenido en esta caja se muestra a todos los usuarios sin limitaciones."
+msgstr "El contenido en esta caja se muestra a todos los usuarios sin limitaciones."
 
 #, python-format
 msgid ""
 "Content in this placeholder is shown for %(category_name)s category only."
-msgstr ""
-"El contenido en este marcador de posición se muestra solo para la categoría "
-"%(category_name)s."
+msgstr "El contenido en este marcador de posición se muestra solo para la categoría %(category_name)s."
 
 msgid "Content in this box is shown to guests (anonymous users) only."
-msgstr ""
-"El contenido en esta caja se muestra a las visitas (usuarios anónimos) "
-"únicamente."
+msgstr "El contenido en esta caja se muestra a las visitas (usuarios anónimos) únicamente."
 
 msgid "Content in this box is shown to company contacts only."
-msgstr ""
-"El contenido en esta caja se muestra a los usuarios corporativos únicamente."
+msgstr "El contenido en esta caja se muestra a los usuarios corporativos únicamente."
 
 msgid ""
 "Content in this box is shown to all logged-in contacts (both person and "
 "company; not anonymous)."
-msgstr ""
-"El contenido en esta caja se muestra a todos los usuarios que hayan "
-"iniciado sesión (personales o corporativos; no anónimos)"
+msgstr "El contenido en esta caja se muestra a todos los usuarios que hayan iniciado sesión (personales o corporativos; no anónimos)"
 
 msgid "Content in this box is shown to person contacts only."
-msgstr ""
-"El contenido en esta caja se muestra a los usuarios no personales (no "
-"corporativos) únicamente."
+msgstr "El contenido en esta caja se muestra a los usuarios no personales (no corporativos) únicamente."
 
 #, python-format
 msgid "Content in this placeholder is shown for %(product_name)s only."
-msgstr ""
-"El contenido en este marcador de posición se muestra para %(product_name)s "
-"únicamente."
+msgstr "El contenido en este marcador de posición se muestra para %(product_name)s únicamente."
 
 msgid "Shop '{}' has no active theme"
 msgstr "La tienda '{}' no tiene un tema activo"
@@ -260,10 +246,7 @@ msgstr "Solo mostrar productos en stock y que se puedan pedir"
 msgid ""
 "Warning: The final number of products can be lower than 'Count' as it will "
 "filter out unorderable products from a set of 'Count' products."
-msgstr ""
-"Alerta: El numero final de productos puede ser menor que el 'Total' ya que "
-"se filtraran aquellos productos que no se pueden pedir de la lista inicial "
-"de 'Total' productos."
+msgstr "Alerta: El numero final de productos puede ser menor que el 'Total' ya que se filtraran aquellos productos que no se pueden pedir de la lista inicial de 'Total' productos."
 
 msgid "Product Cross Sells"
 msgstr "Ventas cruzadas de productos"
@@ -296,13 +279,17 @@ msgid "Resource snippet for end of head"
 msgstr "Fragmento de código para el final del encabezado"
 
 msgid "Resource snippet for beginning of body"
-msgstr ""
+msgstr "Fragmento de código para el comienzo del cuerpo"
 
 msgid "Resource for end of body"
-msgstr ""
+msgstr "Recurso para el final del cuerpo"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
+
+#, python-format
+msgid "%(name)s Ordering"
+msgstr "%(name)s Ordenar"
 
 msgid "Ordering"
 msgstr "Ordenar"
@@ -344,9 +331,7 @@ msgstr "Haz click para editar el marcador de posición: %s"
 msgid ""
 "This placeholder is global and content of this placeholder is shown on all "
 "pages."
-msgstr ""
-"Este marcador de posición es global y su contenido se muestra en todas las "
-"páginas."
+msgstr "Este marcador de posición es global y su contenido se muestra en todas las páginas."
 
 msgid "End of head"
 msgstr "Fin de la etiqueta head"
@@ -384,9 +369,7 @@ msgstr "Guardar Plugin"
 msgid ""
 "Remember to publish your changes for this placeholder when you are done, by "
 "clicking the Publish Changes button at the top."
-msgstr ""
-"Recuerda publicar tus cambios para este marcador de posición cuando hayas "
-"terminado. haciendo click en el botón Publicar Cambios arriba."
+msgstr "Recuerda publicar tus cambios para este marcador de posición cuando hayas terminado. haciendo click en el botón Publicar Cambios arriba."
 
 msgid "Edit Placeholder"
 msgstr "Editar marcador de posición"
@@ -395,10 +378,7 @@ msgid ""
 "Edit plugins inside this placeholder. By saving the individual plugin, the "
 "changes are saved as a draft, and only you are able to see the changes. To "
 "make your changes Public, Click the Publish Changes button."
-msgstr ""
-"Editar plugins dentro de este marcador de posición. Al guardar este plugin, "
-"los cambios se guardarán como borrador, solo tu podrás ver estos cambios. "
-"Para hacer los cambios Públicos, haz click en el botón de Publicar Cambios."
+msgstr "Editar plugins dentro de este marcador de posición. Al guardar este plugin, los cambios se guardarán como borrador, solo tu podrás ver estos cambios. Para hacer los cambios Públicos, haz click en el botón de Publicar Cambios."
 
 msgid "Add new cell"
 msgstr "Añadir nueva celda"
@@ -494,7 +474,7 @@ msgid "One Fourth (1/4)"
 msgstr "Un cuarto (1/4)"
 
 msgid "Auto"
-msgstr ""
+msgstr "Auto"
 
 msgid "Cell width"
 msgstr "Ancho de celda"
@@ -509,4 +489,4 @@ msgid "Add extra CSS classes names to the cell"
 msgstr "Añadir nombre de clase CSS adicionales a la celda"
 
 msgid "No Plugin"
-msgstr ""
+msgstr "No hay Plugin"

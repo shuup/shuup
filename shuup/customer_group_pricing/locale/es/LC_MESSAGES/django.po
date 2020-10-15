@@ -1,22 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# 
+# Translators:
+# Pablo Burgos <hispar@gmail.com>, 2020
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: 2020-10-12 01:29+0200\n"
-"Language: es\n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
+"PO-Revision-Date: 2016-06-28 10:53+0000\n"
+"Last-Translator: Pablo Burgos <hispar@gmail.com>, 2020\n"
+"Language-Team: Spanish (https://www.transifex.com/shuup/teams/55306/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.4.1\n"
 
 msgid "Shuup Customer Group Pricing"
 msgstr "Precios del grupo de clientes de Shuup"
@@ -36,22 +40,22 @@ msgid "shop"
 msgstr "tienda"
 
 msgid "contact group"
-msgstr "grupo de contactos"
+msgstr "grupo de contacto"
 
 msgid "price"
 msgstr "precio"
 
 msgid "product price"
-msgstr "precio del producto"
+msgstr "precio de producto"
 
 msgid "product prices"
-msgstr "precios de los productos"
+msgstr "precios de producto"
 
 msgid "discount amount"
 msgstr "importe de descuento"
 
 msgid "product discount"
-msgstr "descuento del producto"
+msgstr "descuento de producto"
 
 msgid "product discounts"
 msgstr "descuentos de productos"
@@ -60,10 +64,10 @@ msgid "Customer Group Pricing"
 msgstr "Precios del grupo de clientes"
 
 msgid "Customer Group Discount"
-msgstr "Descuento por grupo de clientes"
+msgstr "Descuento del grupo de clientes"
 
 msgid "Contact Group Discount"
-msgstr "Descuento de grupo de contacto"
+msgstr "Descuento del grupo de contactos"
 
 msgid ""
 "Here you can set individual discount amounts for different contact groups. "
@@ -75,7 +79,7 @@ msgstr ""
 "Estos grupos se definen en Configuración de contactos - Grupos de contactos"
 
 msgid "Contact Group Pricing"
-msgstr "Precios del grupo de contacto"
+msgstr "Precio del grupo de contactos"
 
 msgid ""
 "Here you can set individual pricing for different contact groups. This can "
