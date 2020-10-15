@@ -22,6 +22,13 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Importer: add option to import product variations
+  - Add option to import product variations
+  - Improve handle stock to get supplier by supplier name and
+    set the supplier stock managed and update the module identifier.
+  - Improve handle stock to set the logical count to desired quantity
+    instead adding new stock for the amount. This should help sellers  
+    to keep their product stock value correct.
 - Preserve newlines in vendor and product descriptions even when
  `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` and `SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION` are `False`.
 - Importer: log errors in the importer and use specific exception classes instead of using Exception
