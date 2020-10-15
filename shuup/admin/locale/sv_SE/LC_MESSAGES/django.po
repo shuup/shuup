@@ -6,13 +6,14 @@
 # Frank Wickström <frwickst@gmail.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2020
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2017
+# William Lindholm <william.lindholm@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-09-29 10:12+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"PO-Revision-Date: 2020-10-04 19:23+0000\n"
+"Last-Translator: William Lindholm <william.lindholm@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +57,7 @@ msgid "Thursday"
 msgstr "Torsdag"
 
 msgid "Friday"
-msgstr "fredag"
+msgstr "Fredag"
 
 msgid "Saturday"
 msgstr "Lördag"
@@ -500,7 +501,7 @@ msgid "You have no permission to change a shared Manufacturer."
 msgstr "Du har ingen behörighet att ändra en delad tillverkare."
 
 msgid "Logo"
-msgstr "Logotyp"
+msgstr "Logo"
 
 msgid "Media"
 msgstr "Media"
@@ -524,7 +525,7 @@ msgstr "{num} filer flyttade till {folder}."
 
 #, python-format
 msgid "Folder `%s` was deleted."
-msgstr "Mappen &#39;%s&#39; raderades."
+msgstr "Mappen '%s' raderades."
 
 msgid "Browse Media"
 msgstr "Bläddra efter media"
@@ -630,15 +631,15 @@ msgstr "Lista statusar"
 #, python-format
 msgid ""
 "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)."
-msgstr "Kvantiteten &#39;%(quantity)s&#39; (för rad %(text)s) är ogiltig (%(error)s)."
+msgstr "Kvantiteten '%(quantity)s' (för rad %(text)s) är ogiltig (%(error)s)."
 
 #, python-format
 msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)."
-msgstr "Priset &#39;%(price)s&#39; (för rad %(text)s) är ogiltigt (%(error)s)."
+msgstr "Priset '%(price)s' (för rad %(text)s) är ogiltigt (%(error)s)."
 
 #, python-format
 msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)."
-msgstr "Rabatten &#39;%(discount)s&#39; (för rad %(text)s är ogiltig (%(error)s)."
+msgstr "Rabatten '%(discount)s' (för rad %(text)s är ogiltig (%(error)s)."
 
 msgid "Product line does not have a supplier."
 msgstr "Produktlinjen har ingen leverantör."
@@ -648,7 +649,7 @@ msgstr "Produkten har inte en produktuppsättning."
 
 #, python-format
 msgid "Product `%s` does not exist."
-msgstr "Produkten &quot;%s&quot; finns inte."
+msgstr "Produkten \"%s\" finns inte."
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
@@ -758,7 +759,7 @@ msgstr "Du kan inte avbryta beställningar som har betalats, skickats eller reda
 
 #, python-brace-format
 msgid "Order status changed: from `{old_status}` to `{new_status}`."
-msgstr "Orderstatus har ändrats: från &quot;{old_status}&quot; till &quot;{new_status}&quot;."
+msgstr "Orderstatus har ändrats: från \"{old_status}\" till \"{new_status}\"."
 
 msgid "Create Order"
 msgstr "Skapa beställning"
@@ -769,7 +770,7 @@ msgstr "Kontakt `%s` existerar inte."
 
 #, python-format
 msgid "Product `%(product)s` is not available in the `%(shop)s` shop."
-msgstr "Produkten &quot;%(product)s&quot; finns inte i butiken &quot;%(shop)s&quot;."
+msgstr "Produkten \"%(product)s\" finns inte i butiken \"%(shop)s\"."
 
 #, python-format
 msgid "Order `%(identifier)s` was updated."
@@ -1004,7 +1005,7 @@ msgstr "Primära produktbild"
 msgid ""
 "The main product image. You can add additional images in the `Product "
 "Images` tab."
-msgstr "Huvudbilden på produkten. Du kan lägga till ytterligare bilder på fliken &#39;Produktbilder&#39;."
+msgstr "Huvudbilden på produkten. Du kan lägga till ytterligare bilder på fliken 'Produktbilder'."
 
 msgid "Select a manufacturer"
 msgstr "Välj en tillverkare"
@@ -1472,7 +1473,7 @@ msgid "Publish shop"
 msgstr "Publicera butik"
 
 msgid "Set \"{}\" as the active shop"
-msgstr "Ställ in &quot;{}&quot; som den aktiva butiken"
+msgstr "Ställ in \"{}\" som den aktiva butiken"
 
 msgid "Available Shops [currently active: {}]"
 msgstr "Tillgängliga butiker [för närvarande aktiva: {}]"
@@ -1637,7 +1638,7 @@ msgid ""
 "Two fundamental permissions: Access to Admin Panel and Superuser status "
 "rights. Go to user account -> `Actions` -> `Edit Main Permissions` to change"
 " these."
-msgstr "Två grundläggande behörigheter: tillgång till administratörspanelen och superanvändares statusrättigheter. Gå till användarkontot -&gt; `Åtgärder` -&gt;` Redigera huvudbehörigheter` för att ändra dessa."
+msgstr "Två grundläggande behörigheter: tillgång till administratörspanelen och superanvändares statusrättigheter. Gå till användarkontot -> `Åtgärder` ->` Redigera huvudbehörigheter` för att ändra dessa."
 
 msgid ""
 "Use Permission Groups to granularly give more permissions. Search for "
@@ -1646,7 +1647,7 @@ msgid ""
 "specific user. Will not influence Superusers as they already have all the "
 "rights and can't be stripped of them without removing Superuser status "
 "first."
-msgstr "Använd behörighetsgrupper för att detaljerat ge fler behörigheter. Sök efter &#39;Tillståndsgrupper&#39; för att ändra dessa och lägga till dem till flera användare. Gå till användarkontot -&gt; `Åtgärder` -&gt;` Redigera huvudbehörigheter` för att lägga till dem till en viss användare. Kommer inte att påverka Superanvändare eftersom de redan har alla rättigheter och inte kan tas bort från dem utan att först ta bort Superanvändarstatus."
+msgstr "Använd behörighetsgrupper för att detaljerat ge fler behörigheter. Sök efter 'Tillståndsgrupper' för att ändra dessa och lägga till dem till flera användare. Gå till användarkontot -> `Åtgärder` ->` Redigera huvudbehörigheter` för att lägga till dem till en viss användare. Kommer inte att påverka Superanvändare eftersom de redan har alla rättigheter och inte kan tas bort från dem utan att först ta bort Superanvändarstatus."
 
 msgid "The user email address. Used for password resets."
 msgstr "Användarens e-postadress. Används för lösenordsåterställning."
@@ -1713,7 +1714,7 @@ msgstr "Info! Användaren måste kontakta %(contact)s."
 
 #, python-format
 msgid "You've been added as an admin user to `%s`."
-msgstr "Du har lagts till som administratörsanvändare till &#39;%s&#39;."
+msgstr "Du har lagts till som administratör användare till '%s'."
 
 msgid "User"
 msgstr "Användare"
@@ -1739,7 +1740,7 @@ msgstr "Den här användaren är inte aktiv."
 
 #, python-brace-format
 msgid "You're now logged in as `{username}`."
-msgstr "Du är nu inloggad som &#39;{username}&#39;."
+msgstr "Du är nu inloggad som '{username}'."
 
 msgid "Username"
 msgstr "Användarnamn"
@@ -1833,7 +1834,7 @@ msgid ""
 "specific user. Will not influence Superusers as they already have all the "
 "rights and can't be stripped of them without removing Superuser status "
 "first."
-msgstr "Använd behörighetsgrupper för att detaljerat ge fler behörigheter. Användaren kan tillhöra många grupper och deras behörigheter läggs till och staplas ihop. Sök efter &#39;Tillståndsgrupper&#39; för att ändra dessa och lägga till dem till flera användare. Gå till användarkontot -&gt; `Åtgärder` -&gt;` Redigera huvudbehörigheter` för att lägga till dem till en viss användare. Kommer inte att påverka Superanvändare eftersom de redan har alla rättigheter och inte kan tas bort från dem utan att först ta bort Superanvändarstatus."
+msgstr "Använd behörighetsgrupper för att detaljerat ge fler behörigheter. Användaren kan tillhöra många grupper och deras behörigheter läggs till och staplas ihop. Sök efter \"Tillståndsgrupper\" för att ändra dessa och lägga till dem till flera användare. Gå till användarkontot -> `Åtgärder` ->` Redigera huvudbehörigheter` för att lägga till dem till en viss användare. Kommer inte att påverka Superanvändare eftersom de redan har alla rättigheter och inte kan tas bort från dem utan att först ta bort Superanvändarstatus."
 
 msgid ""
 "You can't unset this status for yourself due to security reasons. Use "
@@ -1894,7 +1895,7 @@ msgstr "Om du har glömt är ditt användarnamn %(username)s."
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
-msgstr "Du får det här e-postmeddelandet eftersom du begärde en återställning av lösenordet för ditt användarkonto på %(site_name)s."
+msgstr "Du får det här e-postmeddelandet eftersom du begärde återställning av lösenordet för ditt användarkonto på %(site_name)s."
 
 msgid "Please go to the following page and choose a new password:"
 msgstr "Gå till följande sida och välj ett nytt lösenord:"
@@ -1906,7 +1907,7 @@ msgid "Reset Password"
 msgstr "Återställ lösenord"
 
 msgid "Send password recovery instructions"
-msgstr "Skicka instruktioner för återställning av lösenord"
+msgstr "Återställning av lösenord instruktioner skickades"
 
 msgid "Active shop:"
 msgstr "Aktiv butik:"
@@ -3057,7 +3058,7 @@ msgid "Comment was saved."
 msgstr "Kommentaren sparades."
 
 msgid "Updating the admin comment failed."
-msgstr "Det gick inte att uppdatera administratörskommentaren."
+msgstr "Det gick inte att uppdatera administratörs kommentaren."
 
 msgid "Description"
 msgstr "Beskrivning"
@@ -3069,7 +3070,7 @@ msgid "Are you sure you want to delete this payment?"
 msgstr "Är du säker på att du vill ta bort den här betalningen?"
 
 msgid "Order Details"
-msgstr "Orderdetaljer"
+msgstr "beställnings detaljer"
 
 msgid "Order Shop"
 msgstr "Beställ butik"
@@ -3241,19 +3242,19 @@ msgid "(All permissions granted)"
 msgstr "(Alla behörigheter beviljade)"
 
 msgid "(Partial permissions granted)"
-msgstr "(Delvis behörighet beviljad)"
+msgstr "(Endel behörigheter beviljade)"
 
 msgid "Module permission"
 msgstr "Modultillstånd"
 
 msgid "Select the following permission to enable users to access this module."
-msgstr "Välj följande behörighet för att låta användare få åtkomst till den här modulen."
+msgstr "Välj följande behörighet för att låta användare få åtkomst till i den här modulen."
 
 msgid "Select all permissions for this module"
 msgstr "Välj alla behörigheter för den här modulen"
 
 msgid "Features permissions"
-msgstr "Funktionsbehörigheter"
+msgstr "Funktions behörigheter"
 
 msgid ""
 "Select the permissions to enable access to specific features of the module."
@@ -3367,7 +3368,7 @@ msgstr "Kontakta grupprabatter"
 msgid ""
 "Here you can set individual discount amounts for different contact groups. \" +\n"
 "                    \"The discount amount may be visible on storefront. These groups are defined in"
-msgstr "Här kan du ställa in individuella rabattbelopp för olika kontaktgrupper. &quot;+&quot; Rabattbeloppet kan vara synligt i butiksfönstret. Dessa grupper definieras i"
+msgstr "Här kan du ställa in individuella rabattbelopp för olika kontaktgrupper. \"+\n\" Rabattbeloppet kan vara synligt i butiksfönstret. Dessa grupper definieras i"
 
 msgid "Cross-sells"
 msgstr "Korsförsäljningar"
@@ -3437,10 +3438,10 @@ msgid "Today"
 msgstr "Idag"
 
 msgid "Month to date (MTD)"
-msgstr "Månad till datum (MTD)"
+msgstr "Månad till datum"
 
 msgid "Year to date (YTD)"
-msgstr "År till datum (YTD)"
+msgstr "År till datum"
 
 msgid "Totals"
 msgstr "Summa"
@@ -3681,7 +3682,7 @@ msgstr "Logga in för att fortsätta."
 msgid ""
 "Your account must have `Access to Admin Panel` permissions to access this "
 "page."
-msgstr "Ditt konto måste ha &quot;Tillgång till administratörspanelen&quot; behörighet för att komma åt den här sidan."
+msgstr "Ditt konto måste ha \"Tillgång till administratörspanelen\" behörighet för att komma åt den här sidan."
 
 msgid "There is no active shop available. Contact support for more details."
 msgstr "Det finns ingen aktiv butik tillgänglig. Kontakta support för mer information."
@@ -3694,13 +3695,13 @@ msgstr "Du har inte den behörighet som krävs: %s"
 msgid ""
 "Can't view this page. You do not have the required permission(s): "
 "`{permissions}`."
-msgstr "Kan inte visa den här sidan. Du har inte nödvändiga behörighet (er): &quot;{permissions}&quot;."
+msgstr "Kan inte visa den här sidan. Du har inte nödvändiga behörighet (er): \"{permissions}\"."
 
 msgid "Unnamed"
 msgstr "Namnlös"
 
 msgid "Item"
-msgstr "Artikel"
+msgstr "Sak"
 
 #, python-format
 msgid "New %s was created."
@@ -3748,7 +3749,7 @@ msgstr "Redo. Inget att konfigurera"
 msgid ""
 "A reset password email was sent. Please, follow the instructions to set a "
 "new password."
-msgstr "En e-postadress för återställning av lösenord skickades. Följ instruktionerna för att ställa in ett nytt lösenord."
+msgstr "Ett återställning av lösenord e-post skickades. Följ instruktionerna för att ställa in ett nytt lösenord."
 
 msgid "This recovery link is invalid."
 msgstr "Den här återställningslänken är ogiltig."

@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Panu Tulimäki <panu@shuup.com>, 2020
+# William Lindholm <william.lindholm@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-22 18:11+0000\n"
-"PO-Revision-Date: 2020-09-29 10:10+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"PO-Revision-Date: 2020-10-04 19:34+0000\n"
+"Last-Translator: William Lindholm <william.lindholm@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +57,7 @@ msgstr "Framgång! Borttagen %(delta)s `%(unit_symbol)s` från produkten` %(prod
 
 #, python-format
 msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
-msgstr "Varningsgräns för produkt &#39;%(product_name)s&#39; inställd på &#39;%(value)s&#39;."
+msgstr "Varningsgräns för produkt '%(product_name)s' inställd på '%(value)s'."
 
 msgid "Non-POST request methods are forbidden."
 msgstr "Metoder för icke-POST-förfrågan är förbjudna."

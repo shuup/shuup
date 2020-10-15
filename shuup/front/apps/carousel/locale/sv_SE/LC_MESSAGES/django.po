@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Panu Tulimäki <panu@shuup.com>, 2020
+# William Lindholm <william.lindholm@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-22 17:54+0000\n"
-"PO-Revision-Date: 2020-09-29 10:09+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"PO-Revision-Date: 2020-10-04 19:15+0000\n"
+"Last-Translator: William Lindholm <william.lindholm@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -171,10 +172,10 @@ msgid ""
 msgstr "Ställ in datum och tid, tills den här bilden ska synas i karusellen. Detta är användbart för att marknadsföra reklamkampanjer eller annan tidskänslig marknadsföring."
 
 msgid "Inactive dot border color"
-msgstr "Inaktiv prickfärg"
+msgstr "Inaktiv prickgräns färg"
 
 msgid "Customize the dot border color when slide is not active."
-msgstr "Anpassa prickfärgen när bilden inte är aktiv."
+msgstr "Anpassa prickgräns färgen när bilden inte är aktiv."
 
 msgid "Active dot color"
 msgstr "Aktiv prickfärg"
@@ -189,7 +190,7 @@ msgid ""
 "Text that describes the image. It is displayed on top of the image if "
 "'Render image text' box is enabled in front-end. Also used for search engine"
 " purposes."
-msgstr "Text som beskriver bilden. Den visas ovanpå bilden om rutan &#39;Rendera bildtext&#39; är aktiverad i frontend. Används också för sökmotorändamål."
+msgstr "Text som beskriver bilden. Den visas ovanpå bilden om rutan 'Rendera bildtext' är aktiverad i frontend. Används också för sökmotorändamål."
 
 msgid "caption text"
 msgstr "bildtext"
@@ -198,7 +199,7 @@ msgid ""
 "Caption text is displayed as secondary text on top of the image if 'Render "
 "image text' box is enabled in front-end for 'Carousel plugin' type (disabled"
 " for 'Banner box' type). It is also shown as a tooltip."
-msgstr "Bildtext visas som sekundär text överst på bilden om rutan &#39;Rendera bildtext&#39; är aktiverad i frontend för typ &#39;Karusellplugg&#39; (avaktiverad för &#39;Bannerbox&#39; -typ). Det visas också som ett verktygstips."
+msgstr "Bildtext visas som sekundär text överst på bilden om rutan 'Rendera bildtext' är aktiverad i frontend för typ 'Karusellplugg' (avaktiverad för 'Bannerbox' -typ). Det visas också som ett verktygstips."
 
 msgid "external link"
 msgstr "extern länk"
@@ -250,7 +251,7 @@ msgid ""
 "change and add a new plugin row and from the plugin dropdown and select "
 "'Carousel Plugin'. From 'Carousel' dropdown options choose the carousel you "
 "want to display. As a final step, save the plugin and publish changes."
-msgstr "För att lägga till en karusell på din webbplats måste du redigera sidan med platshållarredigeraren. För att göra detta, gå till din webbplats och klicka på &quot;Redigera sida&quot; på den sida du vill lägga till karusellbannern till. Välj sedan platshållaren som du vill ändra och lägg till en ny pluginrad och från plugin-rullgardinsmenyn och välj &quot;Carousel Plugin&quot;. Välj karusell som du vill visa från rullgardinsalternativen &#39;Karusell&#39;. Som ett sista steg sparar du plugin-programmet och publicerar ändringar."
+msgstr "För att lägga till en karusell på din webbplats måste du redigera sidan med platshållare redigeraren. För att göra detta, gå till din webbplats och klicka på \"Redigera sida\" på den sida du vill lägga till karusell bannern. Välj sedan platshållaren som du vill ändra och lägg till en ny plugins och från plugin-rullgardinsmenyn och välj \"Carousel Plugin\" Välj karusell som du vill visa från rullgardin alternativen 'Karusell'. Som ett sista steg sparar din plugin och publicerar ändringar."
 
 msgid "Learn more."
 msgstr "Läs mer."

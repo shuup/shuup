@@ -6,6 +6,7 @@
 # Translators:
 # Frank Wickström <frwickst@gmail.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2020
+# William Lindholm <william.lindholm@shuup.com>, 2020
 # 
 #, fuzzy
 msgid ""
@@ -14,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Last-Translator: William Lindholm <william.lindholm@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,16 +93,16 @@ msgid "Row import failed (%s)."
 msgstr "Radimport misslyckades (%s)."
 
 msgid "Example files"
-msgstr "Exempel på filer"
+msgstr "Exempel filer"
 
 msgid ""
 "If there is a 'Ignore' column in the example file you are using,\n"
 "                    make sure to leave the ignore column empty for all your rows,\n"
 "                    otherwise the rows won't be imported."
 msgstr ""
-"Om det finns en &quot;Ignorera&quot; -kolumn i exempelfilen du använder, se "
-"till att lämna ignoreringskolumnen tom för alla dina rader, annars "
-"importeras inte raderna."
+"Om det finns en \"Ignorera\" -kolumn i exempelfilen du använder, se till att"
+" lämna ignoreringskolumnen tom för alla dina rader, annars importeras inte "
+"raderna."
 
 msgid "This importer provides example files. Click below to download them:"
 msgstr ""
