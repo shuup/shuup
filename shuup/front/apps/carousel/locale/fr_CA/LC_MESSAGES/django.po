@@ -1,0 +1,279 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-10-12 17:59+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Carousels"
+msgstr "Carrousels"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s a été supprimé."
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Filter by name..."
+msgstr "Filtrer par nom ..."
+
+msgid "Carousel"
+msgstr "Carrousel"
+
+msgid "Active"
+msgstr "actif"
+
+msgid "Slide"
+msgstr "Faire glisser"
+
+msgid "Fade"
+msgstr "Fondu"
+
+msgid "Current page"
+msgstr "Page actuelle"
+
+msgid "New page"
+msgstr "Nouvelle page"
+
+msgid "shops"
+msgstr "magasins"
+
+msgid "Select which shops you would like the carousel to be visible in."
+msgstr "Sélectionnez les magasins dans lesquels vous souhaitez que le carrousel soit visible."
+
+msgid "name"
+msgstr "Nom"
+
+msgid "The carousel name use for carousel configuration."
+msgstr "Le nom du carrousel utilisé pour la configuration du carrousel."
+
+msgid "animation"
+msgstr "animation"
+
+msgid "Animation type for cycling slides."
+msgstr "Type d&#39;animation pour les diapositives cyclables."
+
+msgid "interval"
+msgstr "intervalle"
+
+msgid "Slide interval in seconds."
+msgstr "Intervalle de glissement en secondes."
+
+msgid "pause on hover"
+msgstr "pause en survol"
+
+msgid "When checked, the carousel cycling pauses on mouse over."
+msgstr "Lorsqu&#39;elle est cochée, le cycle du carrousel s&#39;arrête au survol de la souris."
+
+msgid "show navigation arrows"
+msgstr "afficher les flèches de navigation"
+
+msgid ""
+"When checked, navigational arrows are shown on the carousel allowing for "
+"customers to go back and forward."
+msgstr "Lorsqu&#39;elle est cochée, les flèches de navigation sont affichées sur le carrousel permettant aux clients d&#39;aller en arrière et en avant."
+
+msgid "show navigation dots"
+msgstr "afficher les points de navigation"
+
+msgid "When checked, navigational indicator dots are shown."
+msgstr "Lorsqu&#39;elle est cochée, les points indicateurs de navigation sont affichés."
+
+msgid "image width"
+msgstr "Largeur de l&#39;image"
+
+msgid "Slide images will be cropped to this width."
+msgstr "Les images des diapositives seront rognées à cette largeur."
+
+msgid "image height"
+msgstr "hauteur de l&#39;image"
+
+msgid "Slide images will be cropped to this height."
+msgstr "Les images des diapositives seront rognées à cette hauteur."
+
+msgid "Arrows color"
+msgstr "Couleur des flèches"
+
+msgid "Set the custom color for the arrows."
+msgstr "Définissez la couleur personnalisée des flèches."
+
+msgid "Name is only used to configure slides."
+msgstr "Le nom n&#39;est utilisé que pour configurer les diapositives."
+
+msgid "product link"
+msgstr "lien produit"
+
+msgid ""
+"Set the product detail page that should be shown when this slide is clicked,"
+" if any."
+msgstr "Définissez la page de détails du produit à afficher lorsque vous cliquez sur cette diapositive, le cas échéant."
+
+msgid "category link"
+msgstr "lien de catégorie"
+
+msgid ""
+"Set the product category page that should be shown when this slide is "
+"clicked, if any."
+msgstr "Définissez la page de catégorie de produit à afficher lorsque vous cliquez sur cette diapositive, le cas échéant."
+
+msgid "cms page link"
+msgstr "lien vers la page cms"
+
+msgid ""
+"Set the web page that should be shown when the slide is clicked, if any."
+msgstr "Définissez la page Web à afficher lorsque l&#39;utilisateur clique sur la diapositive, le cas échéant."
+
+msgid "ordering"
+msgstr "commande"
+
+msgid ""
+"Set the numeric order in which this slide should appear relative to other "
+"slides in this carousel."
+msgstr "Définissez l&#39;ordre numérique dans lequel cette diapositive doit apparaître par rapport aux autres diapositives de ce carrousel."
+
+msgid "link target"
+msgstr "cible du lien"
+
+msgid ""
+"Set this to current if clicking on this slide should open a new browser tab."
+msgstr "Réglez-le sur courant si le fait de cliquer sur cette diapositive doit ouvrir un nouvel onglet de navigateur."
+
+msgid "available since"
+msgstr "disponible depuis"
+
+msgid ""
+"Set the date and time, starting from which this slide should be visible in "
+"the carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr "Définissez la date et l&#39;heure à partir desquelles cette diapositive doit être visible dans le carrousel. Ceci est utile pour annoncer des campagnes de vente ou tout autre marketing sensible au facteur temps."
+
+msgid "available until"
+msgstr "disponible jusqu&#39;au"
+
+msgid ""
+"Set the date and time, until which this slide should be visible in the "
+"carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr "Définissez la date et l&#39;heure auxquelles cette diapositive doit être visible dans le carrousel. Ceci est utile pour annoncer des campagnes de vente ou tout autre marketing sensible au facteur temps."
+
+msgid "Inactive dot border color"
+msgstr "Couleur de bordure de point inactive"
+
+msgid "Customize the dot border color when slide is not active."
+msgstr "Personnalisez la couleur de la bordure du point lorsque la diapositive n&#39;est pas active."
+
+msgid "Active dot color"
+msgstr "Couleur des points actifs"
+
+msgid "Customize the dot color when slide is active."
+msgstr "Personnalisez la couleur des points lorsque la diapositive est active."
+
+msgid "caption"
+msgstr "légende"
+
+msgid ""
+"Text that describes the image. It is displayed on top of the image if "
+"'Render image text' box is enabled in front-end. Also used for search engine"
+" purposes."
+msgstr "Texte décrivant l&#39;image. Il est affiché en haut de l&#39;image si la case «Rendre le texte de l&#39;image» est activée dans le front-end. Également utilisé à des fins de moteur de recherche."
+
+msgid "caption text"
+msgstr "texte de la légende"
+
+msgid ""
+"Caption text is displayed as secondary text on top of the image if 'Render "
+"image text' box is enabled in front-end for 'Carousel plugin' type (disabled"
+" for 'Banner box' type). It is also shown as a tooltip."
+msgstr "Le texte de la légende est affiché en tant que texte secondaire au-dessus de l&#39;image si la case &quot;Rendre le texte de l&#39;image&quot; est activée dans le front-end pour le type &quot;Carousel plugin&quot; (désactivé pour le type &quot;Bannière&quot;). Il est également affiché sous la forme d&#39;une info-bulle."
+
+msgid "external link"
+msgstr "lien externe"
+
+msgid ""
+"Set the external site that should be shown when this slide is clicked, if "
+"any."
+msgstr "Définissez le site externe à afficher lorsque l&#39;utilisateur clique sur cette diapositive, le cas échéant."
+
+msgid "image"
+msgstr "image"
+
+msgid "The slide image to show."
+msgstr "L&#39;image de la diapositive à afficher."
+
+msgid "Slides"
+msgstr "Diapositives"
+
+msgid "Carousel Plugin"
+msgstr "Plugin Carousel"
+
+msgid "Render image text"
+msgstr "Rendre le texte de l&#39;image"
+
+msgid "Display the text on top of the image."
+msgstr "Affichez le texte au-dessus de l&#39;image."
+
+msgid "Banner Box"
+msgstr "Boîte de bannière"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Slides can be added after saving the Carousel."
+msgstr "Des diapositives peuvent être ajoutées après avoir enregistré le carrousel."
+
+msgid ""
+"This form is also used to define banner boxes. Marked fields only apply to "
+"banner boxes."
+msgstr "Ce formulaire est également utilisé pour définir des bannières. Les champs marqués ne s&#39;appliquent qu&#39;aux bannières."
+
+msgid "Adding the carousel to your site"
+msgstr "Ajouter le carrousel à votre site"
+
+msgid ""
+"To add a carousel to your site, you must edit the page using the placeholder"
+" editor. To do this, go to your site and click the 'Edit page' on the page "
+"you want to add the carousel banner to. Then, select the placeholder to "
+"change and add a new plugin row and from the plugin dropdown and select "
+"'Carousel Plugin'. From 'Carousel' dropdown options choose the carousel you "
+"want to display. As a final step, save the plugin and publish changes."
+msgstr "Pour ajouter un carrousel à votre site, vous devez modifier la page à l&#39;aide de l&#39;éditeur d&#39;espace réservé. Pour ce faire, accédez à votre site et cliquez sur «Modifier la page» sur la page à laquelle vous souhaitez ajouter la bannière du carrousel. Ensuite, sélectionnez l&#39;espace réservé à modifier et ajoutez une nouvelle ligne de plug-in et dans la liste déroulante du plug-in, sélectionnez &#39;Carousel Plugin&#39;. Dans les options de la liste déroulante «Carrousel», choisissez le carrousel que vous souhaitez afficher. Enfin, enregistrez le plugin et publiez les modifications."
+
+msgid "Learn more."
+msgstr "Apprendre encore plus."
+
+msgid "Basic details"
+msgstr "Détails de base"
+
+msgid "Advanced options"
+msgstr "Options avancées"
+
+msgid "Remove Slide"
+msgstr "Supprimer la diapositive"
+
+msgid "Only image for default language is required."
+msgstr "Seule l&#39;image de la langue par défaut est requise."
+
+msgid ""
+"If external link is not set link will fallback to product link, category "
+"link or cms page link in this order."
+msgstr "Si le lien externe n&#39;est pas défini, le lien retournera au lien du produit, au lien de la catégorie ou au lien de la page cms dans cet ordre."
+
+msgid "Add new slide"
+msgstr "Ajouter une nouvelle diapositive"
+
+msgid "New Carousel"
+msgstr "Nouveau carrousel"

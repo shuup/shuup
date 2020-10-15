@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:59+0000\n"
+"PO-Revision-Date: 2017-01-06 15:35+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: French (Canada) (https://www.transifex.com/shuup/teams/55306/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Reports"
+msgstr "Rapports"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Select the type of report to run."
+msgstr "Sélectionnez le type de rapport à exécuter."
+
+msgid "Custom"
+msgstr "Douane"
+
+msgid "Today"
+msgstr "Aujourd&#39;hui"
+
+msgid "Running Week (last 7 days)"
+msgstr "Semaine de course (7 derniers jours)"
+
+msgid "Running Month (last 30 days)"
+msgstr "Mois courant (30 derniers jours)"
+
+msgid "This Week"
+msgstr "Cette semaine"
+
+msgid "This Month"
+msgstr "Ce mois-ci"
+
+msgid "This Year"
+msgstr "Cette année"
+
+msgid "All Time"
+msgstr "Tout le temps"
+
+msgid "Output Format"
+msgstr "Format de sortie"
+
+msgid "The format to show the report results."
+msgstr "Le format pour afficher les résultats du rapport."
+
+msgid "Download"
+msgstr "Télécharger"
+
+msgid "Enable this to download the report."
+msgstr "Activez cette option pour télécharger le rapport."
+
+msgid "Shop"
+msgstr "Boutique"
+
+msgid "Filter report results by shop."
+msgstr "Filtrer les résultats des rapports par boutique."
+
+msgid "Date Range"
+msgstr "Plage de dates"
+
+msgid "Filter report results by a date range."
+msgstr "Filtrez les résultats du rapport par plage de dates."
+
+msgid "Start Date"
+msgstr "Date de début"
+
+msgid "For a custom date range."
+msgstr "Pour une plage de dates personnalisée."
+
+msgid "End Date"
+msgstr "Date de fin"
+
+msgid "Toggle Filters"
+msgstr "Basculer les filtres"
+
+msgid "Get Report"
+msgstr "Obtenir un rapport"
+
+msgid "No reports available"
+msgstr "Aucun rapport disponible"

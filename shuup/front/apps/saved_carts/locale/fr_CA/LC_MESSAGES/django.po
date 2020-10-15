@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2017-03-30 06:49+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: French (Canada) (https://www.transifex.com/shuup/teams/55306/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr "Shuup Frontend - Paniers enregistrés"
+
+msgid "Saved Carts"
+msgstr "Paniers enregistrés"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "My Saved Carts"
+msgstr "Mes paniers enregistrés"
+
+msgid "Product"
+msgstr "Produit"
+
+msgid "Quantity"
+msgstr "Quantité"
+
+msgid "Price"
+msgstr "Prix"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Product Count"
+msgstr "Nombre de produits"
+
+msgid "Details"
+msgstr "Détails"
+
+msgid "You haven't saved any carts yet."
+msgstr "Vous n&#39;avez encore enregistré aucun panier."
+
+msgid "Add all products to cart"
+msgstr "Ajouter tous les produits au panier"
+
+msgid "Delete cart"
+msgstr "Supprimer le panier"
+
+msgid "Please enter a basket title."
+msgstr "Veuillez saisir un titre de panier."
+
+msgid "Can't save an empty basket."
+msgstr "Impossible d&#39;enregistrer un panier vide."
+
+msgid "Product is not available in this shop."
+msgstr "Le produit n&#39;est pas disponible dans cette boutique."
+
+msgid "Invalid supplier."
+msgstr "Fournisseur non valide."
+
+#, python-format
+msgid "%d product(s) added to cart."
+msgstr "%d produit (s) ajouté (s) au panier."

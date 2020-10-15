@@ -1,0 +1,104 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-10-12 17:59+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, python-format
+msgid ""
+"Error! Please enter a correct %(username)s and password. Note that both "
+"fields may be case-sensitive. In case of multiple accounts with same email "
+"only username can be used to log in."
+msgstr "Erreur! Veuillez saisir un %(username)s et un mot de passe corrects. Noter que les deux champs peuvent être sensibles à la casse. Dans le cas de plusieurs comptes avec le même e-mail, seul le nom d&#39;utilisateur peut être utilisé pour se connecter."
+
+msgid "This account is inactive."
+msgstr "Ce compte est inactif."
+
+msgid "Username or email address"
+msgstr "Nom d&#39;utilisateur ou adresse e-mail"
+
+msgid "You are not allowed to log in to this shop."
+msgstr "Vous n&#39;êtes pas autorisé à vous connecter à cette boutique."
+
+msgid "Log in"
+msgstr "S&#39;identifier"
+
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr "Vous êtes déjà connecté en tant que <strong>%(username)s</strong>"
+
+msgid "Go to Homepage"
+msgstr "Aller à la page d&#39;accueil"
+
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié?"
+
+msgid "New user? Register here!"
+msgstr "Nouvel utilisateur? Inscrivez-vous ici!"
+
+msgid "Logged out"
+msgstr "Déconnecté"
+
+msgid "You have been logged out. Thank you for visiting!"
+msgstr "Vous avez été déconnecté. Merci pour votre visite!"
+
+msgid "Recover your password"
+msgstr "Récupérez votre mot de passe"
+
+msgid "You can recover your password with either username or email."
+msgstr "Vous pouvez récupérer votre mot de passe avec un nom d&#39;utilisateur ou un e-mail."
+
+msgid "Send password recovery instructions"
+msgstr "Envoyer les instructions de récupération du mot de passe"
+
+msgid "Password Changed"
+msgstr "Mot de passe changé"
+
+msgid "Your password has been changed and you have been logged in."
+msgstr "Votre mot de passe a été modifié et vous êtes connecté."
+
+msgid "Password Recovery"
+msgstr "Récupération de mot de passe"
+
+msgid "Change Password"
+msgstr "Changer le mot de passe"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr "Salut %(fullname)s"
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr "Au cas où vous l&#39;auriez oublié, votre nom d&#39;utilisateur est %(username)s."
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr "Vous recevez cet e-mail car vous avez demandé la réinitialisation du mot de passe de votre compte utilisateur à l&#39;adresse %(site_name)s."
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "Veuillez vous rendre sur la page suivante et choisir un nouveau mot de passe:"
+
+msgid ""
+"If a user account is associated with the information you entered, you should"
+" receive instructions on how to reset your password shortly."
+msgstr "Si un compte utilisateur est associé aux informations que vous avez saisies, vous devriez recevoir sous peu des instructions sur la façon de réinitialiser votre mot de passe."
+
+msgid "Error! This recovery link is invalid."
+msgstr "Erreur! Ce lien de récupération n&#39;est pas valide."

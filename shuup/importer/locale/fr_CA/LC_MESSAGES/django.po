@@ -1,0 +1,274 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2017-03-01 14:19+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: French (Canada) (https://www.transifex.com/shuup/teams/55306/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Data Import"
+msgstr "Importation de données"
+
+msgid "Import mode"
+msgstr "Mode d&#39;importation"
+
+msgid "Importing language"
+msgstr "Importation de la langue"
+
+msgid "The language of the data you want to import."
+msgstr "La langue des données que vous souhaitez importer."
+
+msgid "Importer"
+msgstr "Importateur"
+
+msgid "Select a importer type matching the data you want to import"
+msgstr ""
+"Sélectionnez un type d&#39;importateur correspondant aux données que vous "
+"souhaitez importer"
+
+msgid "File"
+msgstr "Fichier"
+
+#, python-format
+msgid "%s is not a file."
+msgstr "%s n&#39;est pas un fichier."
+
+msgid "File is missing."
+msgstr "Le fichier est manquant."
+
+msgid "Failed to import the file."
+msgstr "Échec de l&#39;importation du fichier."
+
+msgid "Invalid parameters."
+msgstr "Paramètres invalides."
+
+msgid "Invalid importer."
+msgstr "Importateur non valide."
+
+msgid "Invalid file name."
+msgstr "Nom de fichier non valide."
+
+msgid "File was not found."
+msgstr "Le fichier est introuvable."
+
+msgid "Import"
+msgstr "Importer"
+
+msgid "Row ignored (no existing item and creating new is not allowed)."
+msgstr ""
+"Ligne ignorée (aucun élément existant et la création d&#39;un nouveau "
+"n&#39;est pas autorisée)."
+
+#, python-format
+msgid ""
+"Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
+msgstr ""
+"Ligne ignorée (l&#39;objet existe déjà (%(object_name)s avec l&#39;ID: "
+"%(object_id)s)."
+
+#, python-format
+msgid "Failed while setting value for field %(field_name)s. (%(exception)s)"
+msgstr ""
+"Échec lors de la définition de la valeur pour le champ %(field_name)s. "
+"(%(exception)s)"
+
+#, python-format
+msgid "Couldn't set value %(original_value)s for field %(field_name)s."
+msgstr ""
+"Impossible de définir la valeur %(original_value)s pour le champ "
+"%(field_name)s."
+
+#, python-format
+msgid "Row import failed (%s)."
+msgstr "L&#39;importation de ligne a échoué (%s)."
+
+msgid "Example files"
+msgstr "Exemples de fichiers"
+
+msgid ""
+"If there is a 'Ignore' column in the example file you are using,\n"
+"                    make sure to leave the ignore column empty for all your rows,\n"
+"                    otherwise the rows won't be imported."
+msgstr ""
+"S&#39;il y a une colonne «Ignorer» dans le fichier d&#39;exemple que vous "
+"utilisez, assurez-vous de laisser la colonne Ignorer vide pour toutes vos "
+"lignes, sinon les lignes ne seront pas importées."
+
+msgid "This importer provides example files. Click below to download them:"
+msgstr ""
+"Cet importateur fournit des fichiers d&#39;exemple. Cliquez ci-dessous pour "
+"les télécharger:"
+
+msgid "Continue"
+msgstr "Continuer"
+
+msgid "Import Data - process"
+msgstr "Importer des données - processus"
+
+msgid "Amount if items being imported"
+msgstr "Montant si articles importés"
+
+msgid "The following fields were automatically mapped"
+msgstr "Les champs suivants ont été automatiquement mappés"
+
+msgid ""
+"The following fields in the file are being used a s possible connection "
+"keys:"
+msgstr ""
+"Les champs suivants du fichier sont utilisés comme clés de connexion "
+"possibles:"
+
+msgid "Not a single connection key was found, File cannot be imported."
+msgstr ""
+"Aucune clé de connexion n&#39;a été trouvée, le fichier ne peut pas être "
+"importé."
+
+msgid "Connection Keys"
+msgstr "Clés de connexion"
+
+msgid "Read only fields"
+msgstr "Champs en lecture seule"
+
+msgid ""
+"The following fields are Read Only and changes for those fields will be "
+"ignored."
+msgstr ""
+"Les champs suivants sont en lecture seule et les modifications de ces champs"
+" seront ignorées."
+
+msgid "Import method"
+msgstr "Méthode d&#39;importation"
+
+msgid "Automatically mapped"
+msgstr "Mappé automatiquement"
+
+msgid "Original field"
+msgstr "Champ d&#39;origine"
+
+msgid "Shuup field"
+msgstr "Champ Shuup"
+
+msgid "Sample values"
+msgstr "Exemples de valeurs"
+
+msgid "The following fields must be manually tied"
+msgstr "Les champs suivants doivent être liés manuellement"
+
+msgid "Don't import"
+msgstr "N&#39;importez pas"
+
+msgid "Field name"
+msgstr "Nom de domaine"
+
+msgid "Target field"
+msgstr "Champ cible"
+
+msgid "We may not be able to import the file."
+msgstr "Nous ne pourrons peut-être pas importer le fichier."
+
+msgid ""
+"File may not be imported because no connection keys were found. Connection "
+"keys are unique keys that are used to map results."
+msgstr ""
+"Le fichier ne peut pas être importé car aucune clé de connexion n&#39;a été "
+"trouvée. Les clés de connexion sont des clés uniques utilisées pour mapper "
+"les résultats."
+
+msgid ""
+"Please consider adding some of the following fields to your import file:"
+msgstr ""
+"Veuillez envisager d&#39;ajouter certains des champs suivants à votre "
+"fichier d&#39;importation:"
+
+msgid "Products"
+msgstr "Des produits"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Customers"
+msgstr "Les clients"
+
+msgid "email"
+msgstr "email"
+
+msgid "Importer type"
+msgstr "Type d&#39;importateur"
+
+msgid "Field(s) to add"
+msgstr "Champ (s) à ajouter"
+
+msgid "You can continue importing, but it might end up in error"
+msgstr "Vous pouvez continuer à importer, mais cela peut entraîner une erreur"
+
+msgid ""
+"If you are importing customers this might be a false alarm if you have email"
+" key set"
+msgstr ""
+"Si vous importez des clients, cela peut être une fausse alarme si vous avez "
+"défini une clé de messagerie"
+
+msgid "Start Import"
+msgstr "Lancer l&#39;importation"
+
+msgid "Import Data - Complete"
+msgstr "Importer des données - Terminé"
+
+msgid "Import Complete!"
+msgstr "Importation terminée!"
+
+msgid "New items"
+msgstr "Nouveaux articles"
+
+msgid "The following items were imported as new:"
+msgstr "Les éléments suivants ont été importés comme neufs:"
+
+msgid "Zero new items were created."
+msgstr "Aucun nouvel élément n&#39;a été créé."
+
+msgid "Updated items"
+msgstr "Articles mis à jour"
+
+msgid "The following items were updated:"
+msgstr "Les éléments suivants ont été mis à jour:"
+
+msgid "Zero items were updated."
+msgstr "Aucun élément n&#39;a été mis à jour."
+
+msgid "Import log"
+msgstr "Importer le journal"
+
+msgid "Other messages"
+msgstr "Autres messages"
+
+msgid "Import errors"
+msgstr "Importer des erreurs"
+
+#, python-format
+msgid "Can't import more than %s rows from one file."
+msgstr "Impossible d&#39;importer plus de %s lignes d&#39;un fichier."
+
+msgid "Allow create and update"
+msgstr "Autoriser la création et la mise à jour"
+
+msgid "Only create (no updates)"
+msgstr "Créer uniquement (pas de mises à jour)"
+
+msgid "Only update existing (no new ones are created)"
+msgstr ""
+"Mettre à jour uniquement l&#39;existant (aucun nouveau n&#39;est créé)"

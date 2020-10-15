@@ -1,0 +1,103 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:56+0000\n"
+"PO-Revision-Date: 2020-10-12 17:53+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Contact Importer"
+msgstr "Contacter l&#39;importateur"
+
+msgid "Company Contact Importer"
+msgstr "Entreprise Contact Importateur"
+
+#, python-format
+msgid "Image '%s' was not found, please check whether the image exists."
+msgstr "L&#39;image &#39;%s&#39; n&#39;a pas été trouvée, veuillez vérifier si l&#39;image existe."
+
+msgid "Please add supplier to the row, before importing stock quantities."
+msgstr "Veuillez ajouter le fournisseur à la ligne avant d&#39;importer les quantités en stock."
+
+msgid "No supplier found, please check that the supplier exists."
+msgstr "Aucun fournisseur trouvé, veuillez vérifier que le fournisseur existe."
+
+msgid ""
+"This supplier doesn't handle stocks, please set `Stock Managed` on in the "
+"individual Supplier's settings page."
+msgstr "Ce fournisseur ne gère pas les stocks, veuillez activer «Gestion des stocks» sur la page des paramètres du fournisseur individuel."
+
+msgid "Product Importer"
+msgstr "Importateur de produits"
+
+msgid "Quantities"
+msgstr "Quantités"
+
+msgid "If you are importing products with quantities, ensure the following:"
+msgstr "Si vous importez des produits avec des quantités, assurez-vous de ce qui suit:"
+
+#, python-format
+msgid ""
+"You have atleast one <a href=\"%(supplier_url)s\">supplier</a> with \"Stock "
+"Managed\" <strong>on</strong>."
+msgstr "Vous avez atleast un <a href=\"%(supplier_url)s\">fournisseur</a> avec « Stock géré » , ."
+
+#, python-format
+msgid ""
+"your <a href=\"%(supplier_url)s\">supplier</a> has \"Stock Managed\" "
+"<strong>on</strong>. (Currently <strong>off</strong>)"
+msgstr "votre <a href=\"%(supplier_url)s\">fournisseur</a> a « Stock géré » <strong>sur.</strong> (Actuellement <strong>désactivé</strong> )"
+
+msgid "your import file has <strong>supplier</strong> field"
+msgstr "votre fichier d&#39;importation a un champ <strong>fournisseur</strong>"
+
+msgid "Images"
+msgstr "Images"
+
+msgid "If you are importing products with images, ensure the following:"
+msgstr "Si vous importez des produits avec des images, assurez-vous de ce qui suit:"
+
+#, python-format
+msgid ""
+"\n"
+"                Upload all product images using the <a href=\"%(media_browser_url)s\" target=\"_blank\">Media Browser</a>.\n"
+"            "
+msgstr ""
+
+msgid "Upload all product images using the Media Browser."
+msgstr "Téléchargez toutes les images du produit à l&#39;aide du navigateur multimédia."
+
+msgid ""
+"Use the image file name on <strong>image</strong> and/or "
+"<strong>images</strong> column(s)."
+msgstr "Utilisez le nom du fichier image sur <strong>la</strong> ou les colonnes d&#39; <strong>image</strong> et / ou d&#39; <strong>images</strong> ."
+
+msgid ""
+"<strong>images</strong> column can receive a comma-separated list of image "
+"names."
+msgstr "<strong>La</strong> colonne <strong>images</strong> peut recevoir une liste de noms d&#39;images séparés par des virgules."
+
+msgid ""
+"Image names can be the file name (e.g.: <em>product_001.png</em>) or the path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).\n"
+"        Using the full path will ensure that the correct image will be used when there is more than one image with the same name."
+msgstr "Les noms d&#39;image peuvent être le nom du fichier (par exemple: <em>product_001.png</em> ) ou le chemin d&#39;accès à l&#39;image (par exemple: <em>Products / Images / product_001.jpeg</em> ). L&#39;utilisation du chemin complet garantira que l&#39;image correcte sera utilisée lorsqu&#39;il y a plus d&#39;une image avec le même nom."
+
+msgid "Related objects"
+msgstr "Objets associés"
+
+msgid ""
+"Columns that are relations to other objects (like Category and Supplier) accept both the object ID number\n"
+"    and the object name. Make sure that when using the name, there should be only a single object for that given name."
+msgstr "Les colonnes qui sont des relations avec d&#39;autres objets (comme la catégorie et le fournisseur) acceptent à la fois le numéro d&#39;identification de l&#39;objet et le nom de l&#39;objet. Assurez-vous que lors de l&#39;utilisation du nom, il ne doit y avoir qu&#39;un seul objet pour ce nom donné."

@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-01 15:33+0000\n"
+"PO-Revision-Date: 2020-10-12 16:32+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Frontend - Personal Order History"
+msgstr "Shuup Frontend - Historique des commandes personnelles"
+
+msgid "Order history"
+msgstr "Historique des commandes"
+
+msgid "Show all"
+msgstr "Afficher tout"
+
+msgid "Identifier"
+msgstr "Identifiant"
+
+msgid "Order date"
+msgstr "Date de commande"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Total price"
+msgstr "Prix total"
+
+msgid "Details"
+msgstr "Détails"
+
+msgid "You haven't made any orders yet."
+msgstr "Vous n&#39;avez encore passé aucune commande."
+
+msgid "Add all products to cart"
+msgstr "Ajouter tous les produits au panier"
+
+msgid "Basic Information"
+msgstr "Informations de base"
+
+msgid "Order Number"
+msgstr "Numéro de commande"
+
+msgid "Order Date"
+msgstr "Date de commande"
+
+msgid "Reference"
+msgstr "Référence"
+
+msgid "Label"
+msgstr "Étiquette"
+
+msgid "Customer"
+msgstr "Client"
+
+msgid "Ordered by"
+msgstr "Commander par"
+
+msgid "Creator"
+msgstr "Créateur"
+
+msgid "Phone"
+msgstr "Téléphone"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Tax Number"
+msgstr "Numéro d&#39;identification fiscale"
+
+msgid "Total Price"
+msgstr "Prix total"
+
+msgid "Total Price (taxless)"
+msgstr "Prix total (sans taxe)"
+
+msgid "Tracking codes"
+msgstr "Codes de suivi"
+
+msgid "Order Status"
+msgstr "Statut de la commande"
+
+msgid "Payment Status"
+msgstr "Statut de paiement"
+
+msgid "Shipping Status"
+msgstr "Statut d&#39;envoi"
+
+msgid "Shipping Address"
+msgstr "Adresse de livraison"
+
+msgid "Billing Address"
+msgstr "Adresse de facturation"
+
+msgid "Order Contents"
+msgstr "Contenu de la commande"
+
+#, python-format
+msgid "Order %(identifier)s"
+msgstr "Commande %(identifier)s"
+
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr "Détails de la commande %(identifier)s"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "Order History"
+msgstr "Historique des commandes"
