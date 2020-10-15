@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+## [2.1.11] - 2020-10-15
+
 ### Added
 
+- Add Spanish and French (CA) translations from Transifex
 - Notify: Add a new `attributes` attribute to `shuup.notify.base.Variable` for showing examples
   of which attributes can be accessed in the script templates.
 - Notfiy: Show some `Order` related attributes in the notify templates.
@@ -23,6 +26,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Update Finnish and Swedish translations from Transifex
 - Importer: add option to import product variations
   - Add option to import product variations
   - Improve handle stock to get supplier by supplier name and
