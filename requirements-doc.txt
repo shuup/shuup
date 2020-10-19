@@ -2,12 +2,10 @@
 #
 #   prequ update
 #
---find-links wheels
-
 alabaster==0.7.12         # via sphinx
-babel==2.5.3              # via shuup, sphinx
+babel==2.5.3              # via sphinx, shuup
 bleach==3.1.5             # via shuup
-certifi==2019.3.9         # via requests
+certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
 django==2.2.16
 django-bootstrap3==11.0.0  # via shuup
@@ -24,40 +22,39 @@ django-registration-redux==2.7  # via shuup
 django-reversion==3.0.5   # via shuup
 django-timezone-field==3.1  # via shuup
 djangorestframework==3.11  # via shuup
-docutils==0.14            # via sphinx
-easy-thumbnails==2.6      # via django-filer
-entrypoints==0.3          # via keyring
+docutils==0.16            # via sphinx
+easy-thumbnails==2.7      # via django-filer
 et-xmlfile==1.0.1         # via openpyxl
 factory-boy==2.7.0        # via shuup
 fake-factory==0.5.3       # via factory-boy, shuup
-idna==2.8                 # via requests
-imagesize==1.1.0          # via sphinx
-importlib-metadata==2.0.0  # via markdown
-jdcal==1.4                # via openpyxl
-jinja2==2.8.1             # via django-jinja, shuup, sphinx
-jsonfield==2.0.2          # via shuup
-keyring==19.0.1           # via shuup
-keyrings.alt==3.1.1       # via shuup
-lxml==4.2.1               # via shuup
-markdown==3.2.2           # via shuup
+idna==2.10                # via requests
+imagesize==1.2.0          # via sphinx
+importlib-metadata==2.0.0  # via markdown, keyring
+jdcal==1.4.1              # via openpyxl
+jinja2==2.8.1             # via sphinx, django-jinja, shuup
+jsonfield==2.1.1          # via shuup
+keyring==21.4.0           # via shuup
+keyrings.alt==4.0.0       # via shuup
+lxml==4.6.1               # via shuup
+markdown==3.3.1           # via shuup
 markupsafe==1.1.1         # via jinja2
 openpyxl==2.5.14          # via shuup
 packaging==20.4           # via bleach
-pillow==5.4.1             # via easy-thumbnails
-pygments==2.3.1           # via sphinx
+pillow==8.0.0             # via easy-thumbnails
+pygments==2.7.1           # via sphinx
 pyparsing==2.4.7          # via packaging
-python-dateutil==2.8.0    # via shuup
-pytz==2018.9              # via babel, django, django-timezone-field
-requests==2.21.0          # via shuup, sphinx
-shuup==2.1.8
-six==1.12.0               # via bleach, django-filer, django-parler, keyrings-alt, packaging, python-dateutil, shuup, sphinx
-snowballstemmer==1.2.1    # via sphinx
+python-dateutil==2.8.1    # via shuup
+pytz==2020.1              # via babel, django, django-timezone-field
+requests==2.24.0          # via sphinx, shuup
+shuup==2.1.11
+six==1.15.0               # via sphinx, bleach, django-filer, django-parler, jsonfield, packaging, python-dateutil, shuup
+snowballstemmer==2.0.0    # via sphinx
 sphinx==1.5.6
-sqlparse==0.3.1           # via django
-toml==0.10.0              # via shuup
+sqlparse==0.4.1           # via django
+toml==0.10.1              # via shuup
 unicodecsv==0.14.1        # via shuup
-unidecode==1.0.23         # via django-filer
-urllib3==1.24.1           # via requests
+unidecode==1.1.1          # via django-filer
+urllib3==1.25.10          # via requests
 webencodings==0.5.1       # via bleach
 xlrd==1.2.0               # via shuup
-zipp==3.2.0               # via importlib-metadata
+zipp==3.3.1               # via importlib-metadata
