@@ -70,7 +70,14 @@ class ProductMetaBase(ImportMetaBase):
         if not parent_sku:  # No parent -> skip
             return
 
-        parent_product = Product.objects.filter(sku=parent_sku).first()
+        parent_product = Product.objects.filter(
+            sku=parent_sku,
+            variation_parent__isnull=True  # prevent linking to another child
+        )
+        if product.pk:
+            parent_product = parent_product.exclude(pk=product.pk)
+
+        parent_product = parent_product.first()
         if not parent_product:
             msg = _("Parent SKU set for the row, but couldn't find product to match with the given SKU.")
             sess.log_messages.append(msg)
