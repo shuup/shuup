@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Fixed
+
+- Importer: fix the product importer to prevent parent sku being the current product or other variation child
+
 ## [2.1.11] - 2020-10-15
 
 ### Added
@@ -20,7 +24,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Core: include arbitrary refunds for max refundable amount
-- Admin: select product variation in popup window 
+- Admin: select product variation in popup window
 - Importer: ignore None columns while importing files
 - Admin: Show more descriptive error messages in the media uploader in some situations.
 
@@ -32,7 +36,7 @@ List all changes after the last release here (newer on top). Each change on a se
   - Improve handle stock to get supplier by supplier name and
     set the supplier stock managed and update the module identifier.
   - Improve handle stock to set the logical count to desired quantity
-    instead adding new stock for the amount. This should help sellers  
+    instead adding new stock for the amount. This should help sellers
     to keep their product stock value correct.
 - Preserve newlines in vendor and product descriptions even when
  `SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION` and `SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION` are `False`.
