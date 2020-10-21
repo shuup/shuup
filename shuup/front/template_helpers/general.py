@@ -83,25 +83,30 @@ def _get_listed_products(context, n_products, ordering=None,    # noqa (C901)
     if ordering:
         products_qs = products_qs.order_by(ordering)
 
-    products = list(products_qs.distinct()[:n_products])
+    products_qs.distinct()
+    products = list(products_qs)[:n_products]
 
     if orderable_only:
         suppliers = Supplier.objects.enabled().filter(shops=shop)
         valid_products = []
+        counter = 0
 
-        for product in products:
-            if len(valid_products) == n_products:
-                break
-            try:
-                shop_product = product.get_shop_instance(shop, allow_cache=True)
-            except ShopProduct.DoesNotExist:
-                continue
-
-            for supplier in suppliers:
-                if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
-                    valid_products.append(product)
+        while len(valid_products) < n_products and products:
+            for product in products:
+                if len(valid_products) == n_products:
                     break
 
+                try:
+                    shop_product = product.get_shop_instance(shop, allow_cache=True)
+                except ShopProduct.DoesNotExist:
+                    continue
+
+                for supplier in suppliers:
+                    if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
+                        valid_products.append(product)
+                        break
+            counter += 1
+            products = list(products_qs)[n_products * counter:n_products * (counter + 1)]
         return valid_products
 
     return products
