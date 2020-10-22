@@ -28,7 +28,7 @@ from shuup_tests.campaigns import initialize_test
 def test_category_product_in_basket_condition(rf):
     request, shop, group = initialize_test(rf, False)
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     category = get_default_category()
     product = create_product("The Product", shop=shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
@@ -67,7 +67,7 @@ def test_category_products_effect_with_amount(rf):
 
     basket = get_basket(request)
     category = get_default_category()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
     discount_amount_value = "10"
@@ -108,7 +108,7 @@ def test_category_products_effect_with_percentage(rf):
 
     basket = get_basket(request)
     category = get_default_category()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
     discount_percentage = decimal.Decimal("0.10")

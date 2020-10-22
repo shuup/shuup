@@ -27,7 +27,7 @@ def test_product_in_basket_condition(rf):
     request, shop, group = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     product = create_product("Just-A-Product-Too", shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
@@ -61,7 +61,7 @@ def test_product_in_basket_condition_with_variation_parent(rf):
     request, shop, group = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     product = create_product(
         "test-product", shop, default_price="200", supplier=supplier, mode=ProductMode.SIMPLE_VARIATION_PARENT)
@@ -91,7 +91,7 @@ def test_basket_total_amount_conditions(rf):
     request, shop, group = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     product = create_product("Just-A-Product-Too", shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
@@ -119,7 +119,7 @@ def test_basket_total_value_conditions(rf):
     request, shop, group = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     product = create_product("Just-A-Product-Too", shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
@@ -146,7 +146,7 @@ def test_basket_total_undiscounted_value_conditions(rf):
     request, shop, group = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     product = create_product("Just-A-Product", shop, default_price="150", supplier=supplier)
     discounted_product = create_product("Just-A-Second-Product", shop, default_price="200", supplier=supplier)
@@ -180,7 +180,7 @@ def test_product_child_condition_in_basket(rf):
     request, shop, group = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     product = create_product(
         "test-product", shop, default_price="200", supplier=supplier, mode=ProductMode.SIMPLE_VARIATION_PARENT)

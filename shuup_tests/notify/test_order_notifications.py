@@ -361,7 +361,7 @@ def test_order_received_variables(rf, with_shop_contact):
     shop.save()
 
     get_default_product()
-    get_default_supplier()
+    get_default_supplier(shop)
 
     STEP_DATA = [{
         "cond_op": "all",

@@ -58,7 +58,7 @@ def test_basket_campaign_module_case1(rf):
     price = shop.create_price
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
     discount_amount_value = "10"
@@ -108,7 +108,7 @@ def test_basket_category_discount(rf):
     price = shop.create_price
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     category = CategoryFactory()
 
@@ -157,7 +157,7 @@ def test_basket_campaign_case2(rf):
     price = shop.create_price
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     # create a basket rule that requires at least value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
@@ -205,7 +205,7 @@ def test_only_cheapest_price_is_selected(rf):
     price = shop.create_price
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     # create a basket rule that requires atleast value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
@@ -243,7 +243,7 @@ def test_multiple_campaigns_match_with_coupon(rf):
     price = shop.create_price
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     # create a basket rule that requires atleast value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
@@ -298,7 +298,7 @@ def test_percentage_campaign(rf):
     price = shop.create_price
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     # create a basket rule that requires at least value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
@@ -332,7 +332,7 @@ def test_order_creation_adds_usage(rf, admin_user):
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(shop),
         quantity=1,
         base_unit_price=source.create_price(10),
     )
@@ -469,7 +469,7 @@ def test_percentage_campaign_full_discount(rf, include_tax):
     create_default_tax_rule(tax)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=200)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
@@ -499,7 +499,7 @@ def test_percentage_campaign_different_supplier(rf, include_tax):
     create_default_tax_rule(tax)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     supplier_2 = Supplier.objects.create(name="Supplier 2")
 
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=200)
@@ -533,7 +533,7 @@ def test_percentage_campaign_different_coupon_supplier(rf):
     create_default_order_statuses()
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     supplier_2 = Supplier.objects.create(name="Supplier 2")
 
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=200)

@@ -46,7 +46,7 @@ def test_protected_fields():
     shop_form.save()
 
     # Now let's make it protected!
-    create_product(printable_gibberish(), shop=shop, supplier=get_default_supplier())
+    create_product(printable_gibberish(), shop=shop, supplier=get_default_supplier(shop))
     order = create_random_order(customer=create_random_person(), shop=shop)
     assert order.shop == shop
 

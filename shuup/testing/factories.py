@@ -414,12 +414,13 @@ def get_default_customer_group(shop=None):
     return group
 
 
-def get_default_supplier():
+def get_default_supplier(shop=None):
     supplier = default_by_identifier(Supplier)
     if not supplier:
         supplier = Supplier.objects.create(name=DEFAULT_NAME, identifier=DEFAULT_IDENTIFIER, type=SupplierType.INTERNAL)
         assert str(supplier) == DEFAULT_NAME
-    shop = get_default_shop()
+    if not shop:
+        shop = get_default_shop()
     supplier.shops.add(shop)
     return supplier
 
@@ -825,7 +826,9 @@ def create_random_order(  # noqa
     source.status = get_initial_order_status()
 
     if not products:
-        products = list(Product.objects.listed(source.shop, customer).order_by("?")[:40])
+        products = list(
+            Product.objects.listed(source.shop, customer).order_by("?")[:40]
+        )
 
     if random_products:
         quantity = random.randint(3, 10)

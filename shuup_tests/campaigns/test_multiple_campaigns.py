@@ -47,7 +47,7 @@ def test_multiple_campaigns_cheapest_price():
     matching_expected_total = price(product_price) - price(total_discount_amount)
 
     category = get_default_category()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     shop_product = product.get_shop_instance(shop)
     shop_product.categories.add(category)

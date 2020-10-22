@@ -43,7 +43,7 @@ class CheapestSupplierPriceSupplierStrategy(object):
             shop=shop,
             product_id=product_id,
             supplier__in=enabled_suppliers
-        ).select_related("shupplier").order_by("amount_value").first()
+        ).select_related("supplier").order_by("amount_value").first()
 
         if supplier_price:
             return supplier_price.supplier

@@ -90,7 +90,7 @@ def test_campaign_with_non_active_coupon(rf):
 def _get_order_with_coupon(request, initial_status, condition_product_count=1):
     shop = request.shop
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price="50")
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     basket.shipping_method = get_shipping_method(shop=shop)  # For shippable products
@@ -128,7 +128,7 @@ def _get_frontend_order_state(shop, contact):
     rule = TaxRule.objects.create(tax=tax)
     rule.tax_classes.add(tax_class)
     rule.save()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     product = create_product(
         sku=printable_gibberish(),
         supplier=supplier,

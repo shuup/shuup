@@ -35,7 +35,7 @@ def test_basket_free_product(rf):
     request, shop, _ = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
     original_quantity = 2
@@ -92,7 +92,7 @@ def test_basket_free_product_coupon(rf):
     request, shop, _ = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
 
@@ -142,7 +142,7 @@ def test_productdiscountamount(rf):
     request, shop, _ = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
     discount_amount_value = "10"
@@ -185,7 +185,7 @@ def test_productdiscountamount_with_minimum_price(rf, per_line_discount):
     request, shop, _ = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = Decimal("50")
     single_product_min_price = Decimal("40")
@@ -233,7 +233,7 @@ def test_product_category_discount_amount_with_minimum_price(rf):
     request, shop, _ = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = Decimal("50")
     single_product_min_price = Decimal("40")
@@ -285,7 +285,7 @@ def test_productdiscountamount_greater_then_products(rf):
     request, shop, _ = initialize_test(rf, False)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
     discount_amount_value = "150"
@@ -331,7 +331,7 @@ def test_product_category_discount_amount_greater_then_products(rf, include_tax)
     request, shop, _ = initialize_test(rf, include_tax)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
     discount_amount_value = "150"
@@ -379,7 +379,7 @@ def test_product_category_discount_percentage_greater_then_products(rf, include_
     request, shop, _ = initialize_test(rf, include_tax)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = "50"
     discount_percentage = Decimal(1.9) # 190%
@@ -429,7 +429,7 @@ def test_discount_no_limits(rf, include_tax):
     request, shop, _ = initialize_test(rf, include_tax)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = Decimal(50)
     quantity = 4
@@ -525,7 +525,7 @@ def test_undiscounted_effects(rf, include_tax):
     request, shop, _ = initialize_test(rf, include_tax)
 
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     single_product_price = Decimal(50)
     discounted_product_quantity = 4

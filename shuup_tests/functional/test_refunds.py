@@ -100,7 +100,7 @@ def _add_taxes():
 
 def _get_order(prices_include_tax=False, include_basket_campaign=False, include_catalog_campaign=False):
     shop = get_shop(prices_include_tax=prices_include_tax)
-    supplier = get_simple_supplier()
+    supplier = get_simple_supplier(shop=shop)
 
     if include_basket_campaign:
         _add_basket_campaign(shop)
@@ -146,8 +146,8 @@ def _get_order(prices_include_tax=False, include_basket_campaign=False, include_
 @pytest.mark.django_db
 @pytest.mark.parametrize("prices_include_tax", (True, False))
 def test_create_full_refund(prices_include_tax):
-    supplier = get_simple_supplier()
     order = _get_order(prices_include_tax, True, True)
+    supplier = get_simple_supplier(order.shop)
     original_order_total = order.taxful_total_price
     num_order_lines = order.lines.count()
     order.create_full_refund(restock_products=True)

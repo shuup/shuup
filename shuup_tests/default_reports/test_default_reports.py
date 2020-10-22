@@ -120,7 +120,7 @@ def test_total_sales_report(rf):
 @pytest.mark.django_db
 def test_total_sales_customers_report(rf):
     shop = get_default_shop()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     p1 = create_product("p1", shop=shop, supplier=supplier, default_price="5")
     p2 = create_product("p2", shop=shop, supplier=supplier, default_price="20")
 
@@ -304,7 +304,7 @@ def _assert_expected_values(expected_order_count,
 def test_product_total_sales_report(rf, admin_user, order_by):
     with override_provides("reports", ["shuup.default_reports.reports.product_total_sales:ProductSalesReport"]):
         shop = get_default_shop()
-        supplier = get_default_supplier()
+        supplier = get_default_supplier(shop)
         product1 = create_product("product1", supplier=supplier, shop=shop)
         product2 = create_product("product2", supplier=supplier, shop=shop)
 
@@ -557,7 +557,7 @@ def test_new_customers_report(rf, admin_user, group_by):
 @pytest.mark.parametrize("order_by", ["order_count", "average_sales", "taxless_total", "taxful_total"])
 def test_customer_sales_report(rf, order_by):
     shop = get_default_shop()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     product1 = create_product("p1", shop=shop, supplier=supplier)
     product2 = create_product("p2", shop=shop, supplier=supplier)
     product3 = create_product("p3", shop=shop, supplier=supplier)
@@ -664,7 +664,7 @@ def test_customer_sales_report(rf, order_by):
 @pytest.mark.django_db
 def test_taxes_report(rf):
     shop = get_default_shop()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     product1 = create_product("p1", shop=shop, supplier=supplier)
     product2 = create_product("p2", shop=shop, supplier=supplier)
     create_product("p3", shop=shop, supplier=supplier)
@@ -777,7 +777,7 @@ def seed_source(shipping_method=None, produce_price=10, shop=None):
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(shop),
         quantity=1,
         base_unit_price=source.create_price(produce_price),
     )

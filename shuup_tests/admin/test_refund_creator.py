@@ -63,7 +63,7 @@ def test_create_refund_view(rf, admin_user):
 @pytest.mark.django_db
 def test_create_full_refund_view(rf, admin_user):
     shop = get_default_shop()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     product = create_product(sku="test-sku", shop=shop, supplier=supplier, default_price=3.33)
     order = create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=1, shop=shop)
     order.cache_prices()

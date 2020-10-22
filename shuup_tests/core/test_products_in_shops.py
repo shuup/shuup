@@ -52,7 +52,7 @@ def test_image_inheritance():
 def test_product_orderability():
     anon_contact = AnonymousContact()
     shop_product = get_default_shop_product()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop_product.shop)
 
     with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True):
         shop_product.raise_if_not_orderable(supplier=supplier, customer=anon_contact, quantity=1)
@@ -68,7 +68,7 @@ def test_product_orderability():
 def test_purchasability():
     anon_contact = AnonymousContact()
     shop_product = get_default_shop_product()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop_product.shop)
     assert shop_product.purchasable
 
     shop_product.raise_if_not_orderable(supplier=supplier, customer=anon_contact, quantity=1)
@@ -83,7 +83,7 @@ def test_purchasability():
 @pytest.mark.django_db
 def test_product_minimum_order_quantity(admin_user):
     shop_product = get_default_shop_product()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop_product.shop)
     admin_contact = get_person_contact(admin_user)
 
     with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True, minimum_purchase_quantity=10):
@@ -94,7 +94,7 @@ def test_product_minimum_order_quantity(admin_user):
 @pytest.mark.django_db
 def test_product_order_multiple(admin_user):
     shop_product = get_default_shop_product()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop_product.shop)
     admin_contact = get_person_contact(admin_user)
 
     with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True, purchase_multiple=7):
@@ -107,6 +107,7 @@ def test_product_order_multiple(admin_user):
 def test_product_unsupplied(admin_user):
     shop_product = get_default_shop_product()
     fake_supplier = Supplier.objects.create(identifier="fake")
+    fake_supplier.shops.add(shop_product.shop)
     admin_contact = get_person_contact(admin_user)
 
     with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True):
@@ -182,6 +183,7 @@ def test_complex_orderability(admin_user):
     shop = get_default_shop()
 
     fake_supplier = Supplier.objects.create(identifier="fake")
+    fake_supplier.shops.add(shop)
     admin_contact = get_person_contact(admin_user)
 
     parent = create_product("SuperComplexVarParent")
@@ -259,6 +261,7 @@ def test_complex_orderability(admin_user):
 def test_simple_orderability(admin_user):
     shop = get_default_shop()
     fake_supplier = Supplier.objects.create(identifier="fake")
+    fake_supplier.shops.add(shop)
     admin_contact = get_person_contact(admin_user)
 
     parent = create_product("SimpleVarParent", shop=shop, supplier=fake_supplier)
