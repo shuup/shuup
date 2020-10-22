@@ -36,7 +36,7 @@ class SupplierQueryset(TranslatableQuerySet):
         return self.filter(deleted=False)
 
     def enabled(self):
-        return self.filter(enabled=True, is_approved=True).not_deleted()
+        return self.filter(enabled=True).not_deleted()
 
 
 @python_2_unicode_compatible
@@ -92,10 +92,6 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         blank=True, null=True,
         on_delete=models.SET_NULL
     )
-    is_approved = models.BooleanField(default=True, verbose_name=_("approved"), help_text=_(
-        "Indicates whether this supplier is currently approved for work. In order to participate fully, "
-        "the supplier also needs to be `Enabled`."
-    ))
     options = JSONField(blank=True, null=True, verbose_name=_("options"))
     translations = TranslatedFields(
         description=models.TextField(blank=True, verbose_name=_("description"))

@@ -65,7 +65,6 @@ def test_suppliers_edit(rf, admin_user):
                 "base-shops": shop.pk,
                 "base-enabled": "on",
                 "base-logo": "",
-                "base-is_approved": "on",
                 "address-name": "Address Name %d" % index,
                 "address-email": "email@example.com",
                 "address-phone": "23742578329",
@@ -88,7 +87,6 @@ def test_suppliers_edit(rf, admin_user):
             assert supplier.description == payload["base-description__en"]
             assert supplier.shops.count() == 1
             assert supplier.enabled
-            assert supplier.is_approved
             assert supplier.contact_address.name == payload["address-name"]
 
             request = apply_request_middleware(rf.get("/"), user=user)
