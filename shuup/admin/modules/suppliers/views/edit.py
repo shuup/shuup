@@ -5,18 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
-from django.conf import settings
 from django.db.models import Q
 from django.db.transaction import atomic
 
-from shuup.admin.form_part import (
-    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
-)
-from shuup.admin.modules.suppliers.forms import (
-    SupplierBaseForm, SupplierContactAddressForm
-)
+from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import (
@@ -26,56 +18,11 @@ from shuup.core.models import Supplier
 from shuup.utils.django_compat import reverse
 
 
-class SupplierBaseFormPart(FormPart):
-    priority = 1
-
-    def get_form_defs(self):
-        yield TemplatedFormDef(
-            "base",
-            SupplierBaseForm,
-            template_name="shuup/admin/suppliers/_edit_base_form.jinja",
-            required=True,
-            kwargs={
-                "instance": self.object,
-                "request": self.request,
-                "languages": settings.LANGUAGES,
-
-            }
-        )
-
-    def form_valid(self, form):
-        self.object = form["base"].save()
-
-
-class SupplierContactAddressFormPart(FormPart):
-    priority = 2
-
-    def get_form_defs(self):
-        initial = {}
-        yield TemplatedFormDef(
-            "address",
-            SupplierContactAddressForm,
-            template_name="shuup/admin/suppliers/_edit_contact_address_form.jinja",
-            required=False,
-            kwargs={
-                "instance": self.object.contact_address,
-                "initial": initial
-            }
-        )
-
-    def form_valid(self, form):
-        addr_form = form["address"]
-        if addr_form.changed_data:
-            addr = addr_form.save()
-            setattr(self.object, "contact_address", addr)
-            self.object.save()
-
-
 class SupplierEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     model = Supplier
     template_name = "shuup/admin/suppliers/edit.jinja"
     context_object_name = "supplier"
-    base_form_part_classes = [SupplierBaseFormPart, SupplierContactAddressFormPart]
+    base_form_part_classes = []
     form_part_class_provide_key = "admin_supplier_form_part"
 
     def get_toolbar(self):
