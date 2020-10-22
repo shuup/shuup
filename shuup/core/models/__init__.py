@@ -73,7 +73,7 @@ from ._service_shipping import Carrier, CustomCarrier, ShippingMethod
 from ._shipments import Shipment, ShipmentProduct, ShipmentStatus, ShipmentType
 from ._shops import Shop, ShopStatus
 from ._supplied_products import SuppliedProduct
-from ._suppliers import Supplier, SupplierType
+from ._suppliers import Supplier, SupplierShop, SupplierType
 from ._taxes import CustomerTaxGroup, Tax, TaxClass
 from ._units import DisplayUnit, PiecesSalesUnit, SalesUnit, UnitInterface
 
@@ -184,6 +184,7 @@ __all__ = [
     "StockBehavior",
     "SuppliedProduct",
     "Supplier",
+    "SupplierShop",
     "SupplierType",
     "Tax",
     "TaxClass",
