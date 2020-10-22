@@ -51,7 +51,7 @@ def handle_add(  # noqa (C901)
         raise ValidationError("Error! Product is not available in this shop.", code="product_not_available_in_shop")
 
     if supplier_id:
-        supplier = shop_product.suppliers.enabled().filter(pk=supplier_id).first()
+        supplier = shop_product.suppliers.enabled(shop=shop_product.shop).filter(pk=supplier_id).first()
     else:
         supplier = shop_product.get_supplier(basket.customer, quantity, basket.shipping_address)
 

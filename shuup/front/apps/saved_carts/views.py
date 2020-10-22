@@ -92,7 +92,7 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
 
     def _get_supplier(self, shop_product, supplier_id, customer, quantity, shipping_address):
         if supplier_id:
-            supplier = shop_product.suppliers.enabled().filter(pk=supplier_id).first()
+            supplier = shop_product.suppliers.enabled(shop=shop_product.shop).filter(pk=supplier_id).first()
         else:
             supplier = shop_product.get_supplier(customer, quantity, shipping_address)
         return supplier

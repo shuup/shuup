@@ -40,11 +40,12 @@ class ProductPriceView(ProductDetailView):
 
         supplier_pk = self.request.GET.get("supplier", None)
         if supplier_pk is not None:
-            context["supplier"] = Supplier.objects.enabled().filter(pk=int(supplier_pk)).first()
+            context["supplier"] = Supplier.objects.enabled(shop=shop_product.shop).filter(pk=int(supplier_pk)).first()
         else:
             context["supplier"] = shop_product.get_supplier(
                 customer=self.request.customer,
-                quantity=(quantity or shop_product.minimum_purchase_quantity))
+                quantity=(quantity or shop_product.minimum_purchase_quantity)
+            )
 
         is_orderable = shop_product.is_orderable(context["supplier"], self.request.customer, context["quantity"])
         if not context["product"] or not is_orderable:

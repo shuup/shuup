@@ -60,7 +60,7 @@ class DiscountForm(forms.ModelForm):
         self.fields["coupon_code"].queryset = CouponCode.objects.filter(shops=self.shop)
         self.fields["happy_hours"].queryset = HappyHour.objects.filter(shops=self.shop)
         self.fields["product"].widget = ProductChoiceWidget(clearable=True)
-        self.fields["supplier"].queryset = Supplier.objects.enabled().filter(shops=self.shop)
+        self.fields["supplier"].queryset = Supplier.objects.enabled(shop=self.shop)
 
     def save(self, commit=True):
         instance = super(DiscountForm, self).save(commit)

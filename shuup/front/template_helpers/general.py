@@ -86,7 +86,7 @@ def _get_listed_products(context, n_products, ordering=None,    # noqa (C901)
     products = list(products_qs.distinct()[:n_products])
 
     if orderable_only:
-        suppliers = Supplier.objects.enabled().filter(shops=shop)
+        suppliers = Supplier.objects.enabled(shop=shop)
         valid_products = []
 
         for product in products:
@@ -205,7 +205,7 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
         if supplier:
             suppliers = [supplier]
         else:
-            suppliers = Supplier.objects.enabled().filter(shops=request.shop)
+            suppliers = Supplier.objects.enabled(shop=request.shop)
 
         for product in products:
             # this instance should always exist as the listed() queryset uses the current shop as a filter

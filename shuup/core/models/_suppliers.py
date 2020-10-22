@@ -35,8 +35,16 @@ class SupplierQueryset(TranslatableQuerySet):
     def not_deleted(self):
         return self.filter(deleted=False)
 
-    def enabled(self):
-        return self.filter(enabled=True).not_deleted()
+    def enabled(self, shop=None):
+        queryset = self.filter(enabled=True).not_deleted()
+
+        if shop:
+            queryset = queryset.filter(
+                supplier_shops__shop=shop,
+                supplier_shops__is_approved=True
+            ).distinct()
+
+        return queryset
 
 
 @python_2_unicode_compatible
