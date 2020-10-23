@@ -94,7 +94,7 @@ def test_order_creator(rf, admin_user):
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(source.shop),
         quantity=1,
         base_unit_price=source.create_price(10),
     )
@@ -252,7 +252,7 @@ def test_order_creator_orderability(admin_user):
     line = source.add_line(
         type=OrderLineType.PRODUCT,
         product=product,
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(source.shop),
         quantity=1,
         shop=get_default_shop(),
         base_unit_price=source.create_price(10),
@@ -269,28 +269,28 @@ def test_order_creator_orderability(admin_user):
 
 @pytest.mark.django_db
 def test_processor_orderability(admin_user):
-    source = OrderSource(Shop())
+    source = OrderSource(get_default_shop())
     processor = OrderProcessor()
     line = source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(source.shop),
         quantity=1,
         shop=get_default_shop(),
         base_unit_price=source.create_price(10),
     )
-    line.order = Order(shop=get_default_shop())
+    line.order = Order(shop=source.shop)
     assert processor._check_orderability(line) is None
 
     unorderable_line = source.add_line(
         type=OrderLineType.PRODUCT,
         product=create_product("no-shop"),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(source.shop),
         quantity=1,
-        shop=get_default_shop(),
+        shop=source.shop,
         base_unit_price=source.create_price(20),
     )
-    unorderable_line.order = Order(shop=get_default_shop())
+    unorderable_line.order = Order(shop=source.shop)
     with pytest.raises(ValidationError) as exc:
         processor._check_orderability(unorderable_line)
     assert "is not available in" in exc.value.message
@@ -303,7 +303,7 @@ def test_order_source_parentage(rf, admin_user):
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=product,
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(source.shop),
         quantity=1,
         base_unit_price=source.create_price(10),
         line_id="parent"
@@ -331,7 +331,7 @@ def test_order_source_extra_data(rf, admin_user):
     line1 = source.add_line(
         type=OrderLineType.PRODUCT,
         product=product,
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(source.shop),
         quantity=1,
         base_unit_price=source.create_price(10),
         line_id="parent"
@@ -361,7 +361,7 @@ def test_order_creator_min_total(rf, admin_user):
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(shop),
         quantity=1,
         base_unit_price=source.create_price(10),
     )
@@ -390,7 +390,7 @@ def test_order_creator_contact_multishop():
         source.add_line(
             type=OrderLineType.PRODUCT,
             product=get_default_product(),
-            supplier=get_default_supplier(),
+            supplier=get_default_supplier(shop),
             quantity=1,
             base_unit_price=source.create_price(10),
         )
@@ -411,7 +411,7 @@ def test_order_creator_company_multishop():
         source.add_line(
             type=OrderLineType.PRODUCT,
             product=get_default_product(),
-            supplier=get_default_supplier(),
+            supplier=get_default_supplier(shop),
             quantity=1,
             base_unit_price=source.create_price(10),
         )
@@ -432,7 +432,7 @@ def test_order_customer_groups(rf, admin_user):
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(source.shop),
         quantity=1,
         base_unit_price=source.create_price(10),
     )
@@ -477,7 +477,7 @@ def test_order_creator_account_manager():
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(shop),
         quantity=1,
         base_unit_price=source.create_price(10),
     )
@@ -494,7 +494,7 @@ def test_order_creator_account_manager():
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(shop),
         quantity=1,
         base_unit_price=source.create_price(10),
     )
@@ -513,7 +513,7 @@ def test_order_copy_by_updating_order_source_from_order(admin_user):
     line_data = {
         "type": OrderLineType.PRODUCT,
         "product": get_default_product(),
-        "supplier": get_default_supplier(),
+        "supplier": get_default_supplier(shop),
         "quantity": 1,
         "base_unit_price": shop.create_price(10),
     }
@@ -549,7 +549,7 @@ def test_order_creator_taxes(admin_user, include_tax):
         line_id="product-line",
         type=OrderLineType.PRODUCT,
         product=product,
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(shop),
         quantity=1,
         shop=shop,
         base_unit_price=source.create_price(100),
@@ -557,7 +557,7 @@ def test_order_creator_taxes(admin_user, include_tax):
     discount_line = source.add_line(
         line_id="discount-line",
         type=OrderLineType.DISCOUNT,
-        supplier=get_default_supplier(),
+        supplier=get_default_supplier(shop),
         quantity=1,
         base_unit_price=source.create_price(0),
         discount_amount=source.create_price(100),

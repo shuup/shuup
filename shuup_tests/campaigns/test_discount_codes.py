@@ -56,7 +56,7 @@ def test_coupon_user_limit():
     get_default_campaign(coupon)
     contact = create_random_person()
     shop = get_default_shop()
-    product = create_product("test", shop=shop, supplier=get_default_supplier(), default_price="12")
+    product = create_product("test", shop=shop, supplier=get_default_supplier(shop), default_price="12")
     order = create_random_order(customer=contact)
     for x in range(50):
        coupon.use(order)
@@ -84,7 +84,7 @@ def test_coupon_amount_limit():
 
     contact = create_random_person()
     shop = get_default_shop()
-    product = create_product("test", shop=shop, supplier=get_default_supplier(), default_price="12")
+    product = create_product("test", shop=shop, supplier=get_default_supplier(shop), default_price="12")
     order = create_random_order(customer=contact)
 
     for x in range(50):
@@ -178,7 +178,7 @@ def _init_basket_coupon_test(rf, code="TEST"):
     status = get_initial_order_status()
     request, shop, group = initialize_test(rf, False)
     basket = get_basket(request)
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     for x in range(2):
         product = create_product(printable_gibberish(), shop, supplier=supplier, default_price="50")
         basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)

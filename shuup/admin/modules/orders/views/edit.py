@@ -280,7 +280,7 @@ class OrderEditView(CreateOrUpdateView):
 
         supplier = None
         if supplier_id:
-            supplier = shop_product.suppliers.enabled().filter(id=supplier_id).first()
+            supplier = shop_product.suppliers.enabled(shop=shop_product.shop).filter(id=supplier_id).first()
 
         if not supplier:
             supplier = shop_product.get_supplier(customer, quantity)

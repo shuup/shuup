@@ -164,8 +164,8 @@ def test_get_best_selling_products():
     shop = get_default_shop()
 
     supplier = get_default_supplier()
-    supplier2 = Supplier.objects.create(name="supplier2", enabled=True, is_approved=True)
-    supplier3 = Supplier.objects.create(name="supplier3", enabled=True, is_approved=True)
+    supplier2 = Supplier.objects.create(name="supplier2", enabled=True)
+    supplier3 = Supplier.objects.create(name="supplier3", enabled=True)
     supplier2.shops.add(shop)
     supplier3.shops.add(shop)
 
@@ -223,7 +223,7 @@ def test_get_best_selling_products_per_supplier():
     shop = get_default_shop()
 
     supplier = get_default_supplier()
-    supplier2 = Supplier.objects.create(name="supplier2", enabled=True, is_approved=True)
+    supplier2 = Supplier.objects.create(name="supplier2", enabled=True)
     supplier2.shops.add(shop)
 
     product1 = create_product("product1", shop, supplier, 10)

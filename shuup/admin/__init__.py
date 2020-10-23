@@ -102,6 +102,10 @@ class ShuupAdminAppConfig(AppConfig):
         ],
         "admin_browser_config_provider": [
             "shuup.admin.browser_config:DefaultBrowserConfigProvider"
+        ],
+        "admin_supplier_form_part": [
+            "shuup.admin.modules.suppliers.form_parts.SupplierBaseFormPart",
+            "shuup.admin.modules.suppliers.form_parts.SupplierContactAddressFormPart",
         ]
     }
 

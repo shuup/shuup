@@ -48,6 +48,7 @@ def test_order_flow_with_multiple_suppliers():
     ]
     for name, product_price in supplier_data:
         supplier = Supplier.objects.create(name=name)
+        supplier.shops.add(shop_product.shop)
         shop_product.suppliers.add(supplier)
         SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=product_price)
 

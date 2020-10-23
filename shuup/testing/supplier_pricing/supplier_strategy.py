@@ -37,11 +37,15 @@ class CheapestSupplierPriceSupplierStrategy(object):
         # but this is just a testing strategy to help
         # test supplier prices and multiple suppliers
         # with front.
-        result = SupplierPrice.objects.filter(
+        enabled_suppliers = Supplier.objects.enabled(shop=shop)
+
+        supplier_price = SupplierPrice.objects.filter(
             shop=shop,
             product_id=product_id,
-            supplier__enabled=True
-        ).order_by("amount_value")[:1].values_list("supplier_id", flat=True)
-        if result:
-            return Supplier.objects.filter(pk=result[0]).first()
-        return Supplier.objects.enabled().filter(shop_products__product__id=product_id).first()
+            supplier__in=enabled_suppliers
+        ).select_related("supplier").order_by("amount_value").first()
+
+        if supplier_price:
+            return supplier_price.supplier
+
+        return enabled_suppliers.filter(shop_products__product__id=product_id).first()

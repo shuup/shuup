@@ -43,10 +43,12 @@ def test_basket_campaign_with_multiple_supppliers(rf):
     request, shop, group = initialize_test(rf, False)
     supplier1 = Supplier.objects.create(identifier="1")
     supplier2 = Supplier.objects.create(identifier="2")
+    supplier1.shops.add(shop)
+    supplier2.shops.add(shop)
 
     price = shop.create_price
     basket = get_basket(request)
-    
+
     single_product_price = "50"
     discount_amount_supplier1 = "10"
     discount_amount_supplier2 = "40"
@@ -105,6 +107,8 @@ def test_basket_campaign_with_multiple_supppliers_sharing_product(rf):
     request, shop, group = initialize_test(rf, False)
     supplier1 = Supplier.objects.create(identifier="1")
     supplier2 = Supplier.objects.create(identifier="2")
+    supplier1.shops.add(shop)
+    supplier2.shops.add(shop)
 
     price = shop.create_price
     basket = get_basket(request)

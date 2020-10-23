@@ -400,8 +400,8 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             yield ValidationError(message, code="invalid_purchase_multiple")
 
     def get_supplier_errors(self, supplier, customer, quantity, ignore_minimum):
-        enabled_supplier_pks = self.suppliers.enabled().values_list("pk", flat=True)
-        if supplier is None and not enabled_supplier_pks:
+        enabled_supplier = self.suppliers.enabled(shop=self.shop)
+        if supplier is None and not enabled_supplier.exists():
             # `ShopProduct` must have at least one `Supplier`.
             # If supplier is not given and the `ShopProduct` itself
             # doesn't have suppliers we cannot sell this product.
@@ -410,7 +410,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                 code="no_supplier"
             )
 
-        if supplier and supplier.pk not in enabled_supplier_pks:
+        if supplier and not enabled_supplier.filter(pk=supplier.pk).exists():
             yield ValidationError(
                 _("The product is not supplied by %s.") % supplier,
                 code="invalid_supplier"

@@ -22,7 +22,7 @@ from shuup.utils.i18n import get_locally_formatted_datetime
 @pytest.mark.django_db
 def test_class_refunded():
     shop = factories.get_default_shop()
-    supplier = factories.get_default_supplier()
+    supplier = factories.get_default_supplier(shop)
     customer = factories.create_random_person("en")
     OrderStatusManager().ensure_default_statuses()
 
@@ -40,9 +40,9 @@ def test_class_refunded():
         order.save()
         mocked.assert_called()
         order.refresh_from_db()
-        assert mocked.call_args.kwargs["order"] == order
-        assert mocked.call_args.kwargs["old_status"] == OrderStatus.objects.get_default_initial()
-        assert mocked.call_args.kwargs["new_status"] == OrderStatus.objects.get_default_processing()
+        assert mocked.call_args[1]["order"] == order
+        assert mocked.call_args[1]["old_status"] == OrderStatus.objects.get_default_initial()
+        assert mocked.call_args[1]["new_status"] == OrderStatus.objects.get_default_processing()
         assert order.status == OrderStatus.objects.get_default_processing()
 
     # nothing changes

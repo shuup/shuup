@@ -26,7 +26,7 @@ from shuup.testing.utils import apply_request_middleware
 @pytest.mark.django_db
 def test_variation_product_price_more_complex(rf):
     shop = get_default_shop()
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
 
     product_data = {
         "supplier-1": {
@@ -42,6 +42,7 @@ def test_variation_product_price_more_complex(rf):
     shop_parent_product = parent.get_shop_instance(shop)
     for key, data in six.iteritems(product_data):
         supplier = Supplier.objects.create(identifier=key)
+        supplier.shops.add(shop)
         for size in data["sizes"]:
             for color in data["colors"]:
                 sku = "ComplexVarChild-%s-%s" % (size, color)

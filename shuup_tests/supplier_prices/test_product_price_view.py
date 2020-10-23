@@ -30,6 +30,7 @@ def test_product_price(client):
     ]
     for name, product_price in supplier_data:
         supplier = Supplier.objects.create(name=name)
+        supplier.shops.add(shop)
         shop_product.suppliers.add(supplier)
         SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=product_price)
 

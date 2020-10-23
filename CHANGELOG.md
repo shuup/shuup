@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Changed
+
+- Admin: change the supplier views to update the approved flag for the current shop only
+- Core: change the Supplier object manager to consider the approved flag for the given shop
+
+### Added
+
+- Core: add new module SupplierShop to store thre M2M relationship between the supplier
+and the shop with additional attributes
+
 ## [2.1.12] - 2020-10-21
 
 ### Fixed

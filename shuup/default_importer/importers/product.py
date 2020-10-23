@@ -418,8 +418,5 @@ class ProductImporter(DataImporter):
         from shuup.admin.supplier_provider import get_supplier
         return {
             "has_media_browse_permission": has_permission(request.user, "media.browse"),
-            "supplier": (
-                get_supplier(request) or
-                Supplier.objects.enabled().filter(shops=get_shop(request)).first()
-            )
+            "supplier": get_supplier(request) or Supplier.objects.enabled(shop=get_shop(request)).first()
         }

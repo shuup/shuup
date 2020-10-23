@@ -30,7 +30,7 @@ class ProductDetailView(DetailView):
 
         supplier_pk = self.kwargs.get("supplier_pk")
         if supplier_pk:
-            supplier = Supplier.objects.enabled().filter(id=supplier_pk, shops=self.request.shop).first()
+            supplier = Supplier.objects.enabled(shop=self.request.shop).filter(id=supplier_pk).first()
         else:
             shop_product = self.object.get_shop_instance(self.request.shop, allow_cache=True)
             supplier = shop_product.get_supplier(self.request.customer)

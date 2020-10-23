@@ -107,7 +107,7 @@ def test_productfilter_works():
     product_price = "100"
     discount_percentage = "0.30"
 
-    supplier = get_default_supplier()
+    supplier = get_default_supplier(shop)
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     shop_product = product.get_shop_instance(shop)
 
