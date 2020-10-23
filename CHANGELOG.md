@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+
+## [2.2.0] - 2020-10-23
+
+### Possible breaking change
+
+- When updating to this double check your project filters around supplier are working
+  after this Supplire shop->shops change.
+
 ### Changed
 
 - Admin: change the supplier views to update the approved flag for the current shop only
