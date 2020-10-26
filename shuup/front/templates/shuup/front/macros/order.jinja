@@ -79,7 +79,7 @@
                     <td colspan="5" class="text-right">
                         <strong>{% trans %}Total{% endtrans %}:
                         <span class="total-price">{{ taxful_total_price|money }}</span></strong>
-                        {% if taxless_total_price != taxful_total_price %}
+                        {% if taxless_total_price.amount != taxful_total_price.amount %}
                         <br>
                         <span class="total-price text-muted">({{ taxless_total_price|money }} {{ _("excl. tax") }})</span>
                         {% endif %}
