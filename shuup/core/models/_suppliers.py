@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from typing import TYPE_CHECKING, Union
+
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
@@ -21,6 +23,9 @@ from shuup.utils.analog import define_log_model
 
 from ._base import TranslatableShuupModel
 
+if TYPE_CHECKING:
+    from shuup.core.models import Shop
+
 
 class SupplierType(Enum):
     INTERNAL = 1
@@ -35,16 +40,26 @@ class SupplierQueryset(TranslatableQuerySet):
     def not_deleted(self):
         return self.filter(deleted=False)
 
-    def enabled(self, shop=None):
-        queryset = self.filter(enabled=True).not_deleted()
+    def enabled(self, shop: Union['Shop', int] = None):
+        """
+        Filter the queryset to contain only enabled and approved suppliers.
+
+        If `shop` is given, only approved suppliers
+        for the given shop will be filtered.
+
+        `shop` can be either a Shop instance or the shop's PK
+        """
+        queryset = self.filter(
+            enabled=True,
+            supplier_shops__is_approved=True
+        ).not_deleted()
 
         if shop:
-            queryset = queryset.filter(
-                supplier_shops__shop=shop,
-                supplier_shops__is_approved=True
-            ).distinct()
+            from shuup.core.models import Shop
+            shop_id = shop.pk if isinstance(shop, Shop) else shop
+            queryset = queryset.filter(supplier_shops__shop_id=shop_id)
 
-        return queryset
+        return queryset.distinct()
 
 
 @python_2_unicode_compatible
