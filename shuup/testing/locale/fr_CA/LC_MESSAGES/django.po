@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-10-12 18:07+0000\n"
+"PO-Revision-Date: 2020-11-02 13:42+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgid ""
 "We will configure a notification to send the customer an email after a "
 "placed order. You can disable this option later or even change the layout of"
 " the email."
-msgstr "Nous allons configurer une notification pour envoyer un e-mail au client après une commande passée. Vous pouvez désactiver cette option plus tard ou même modifier la mise en page de l&#39;e-mail."
+msgstr "Nous allons configurer une notification pour envoyer un e-mail au client après une commande passée. Vous pouvez désactiver cette option plus tard ou même modifier la mise en page de l'e-mail."
 
 msgid "Create About Us page"
 msgstr "Créer une page À propos de nous"
@@ -148,11 +148,11 @@ msgstr "Bonjour %(name)s"
 
 #, python-format
 msgid "This is %(sku)s"
-msgstr "C&#39;est %(sku)s"
+msgstr "C'est %(sku)s"
 
 msgid ""
 "There is a sample data installed. Search `Sample Data` for more information."
-msgstr "Un exemple de données est installé. Recherchez «Exemple de données» pour plus d&#39;informations."
+msgstr "Un exemple de données est installé. Recherchez «Exemple de données» pour plus d'informations."
 
 msgid ""
 "There is a sample data installed. Click here to consolidate or delete them."
@@ -194,7 +194,7 @@ msgid "Clinique Happy"
 msgstr "Clinique Happy"
 
 msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
-msgstr "Un soupçon d&#39;agrumes. Une richesse de fleurs. Un mélange d&#39;émotions."
+msgstr "Un soupçon d'agrumes. Une richesse de fleurs. Un mélange d'émotions."
 
 msgid "Tommy Girld by Tommy Hilfiger Perfume"
 msgstr "Parfum Tommy Girld par Tommy Hilfiger"
@@ -210,7 +210,7 @@ msgstr "Eau de toilette Bvlgari Omnia Crystalline"
 msgid ""
 "Give yourself over to this fragrance as intoxicating and pure as a woman's "
 "soul is fragile."
-msgstr "Abandonnez-vous à ce parfum aussi enivrant et pur que l&#39;âme d&#39;une femme est fragile."
+msgstr "Abandonnez-vous à ce parfum aussi enivrant et pur que l'âme d'une femme est fragile."
 
 msgid "Still Jennifer Lopez Perfume"
 msgstr "Parfum Still Jennifer Lopez"
@@ -236,19 +236,19 @@ msgid "Beard & Stash Oil"
 msgstr "Huile pour barbe et cachette"
 
 msgid "This oil is natural, and is made with the perfect combination of oils."
-msgstr "Cette huile est naturelle et est faite avec la combinaison parfaite d&#39;huiles."
+msgstr "Cette huile est naturelle et est faite avec la combinaison parfaite d'huiles."
 
 msgid "Sample Carousel"
 msgstr "Exemple de carrousel"
 
 msgid "Business Segment"
-msgstr "Segment d&#39;activité"
+msgstr "Segment d'activité"
 
 msgid "Select your business segment to install categories."
-msgstr "Sélectionnez votre segment d&#39;activité pour installer des catégories."
+msgstr "Sélectionnez votre segment d'activité pour installer des catégories."
 
 msgid "Install Categories"
-msgstr "Catégories d&#39;installation"
+msgstr "Catégories d'installation"
 
 msgid "Enable this to install sample categories."
 msgstr "Activez cette option pour installer des exemples de catégories."
@@ -275,14 +275,14 @@ msgid "Uninstall Carousel"
 msgstr "Désinstaller Carousel"
 
 msgid "Sample data were consolidated."
-msgstr "Les données d&#39;échantillon ont été consolidées."
+msgstr "Les données d'échantillon ont été consolidées."
 
 msgid ""
 "To start shopping right now, please install some sample data into your shop"
 msgstr "Pour commencer vos achats dès maintenant, veuillez installer des exemples de données dans votre boutique"
 
 msgid "You must have the Access to Admin Panel permission."
-msgstr "Vous devez disposer de l&#39;autorisation d&#39;accès au panneau d&#39;administration."
+msgstr "Vous devez disposer de l'autorisation d'accès au panneau d'administration."
 
 msgid "Supplier Pricing"
 msgstr "Tarification des fournisseurs"

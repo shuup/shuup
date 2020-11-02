@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-10-12 18:05+0000\n"
+"PO-Revision-Date: 2020-11-02 13:42+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -38,13 +38,13 @@ msgid "Themes"
 msgstr "Thèmes"
 
 msgid "Customize the look and feel of your shop"
-msgstr "Personnalisez l&#39;apparence et la convivialité de votre boutique"
+msgstr "Personnalisez l'apparence et la convivialité de votre boutique"
 
 msgid "Customize theme"
 msgstr "Personnaliser le thème"
 
 msgid "No theme is active. Click here to activate one."
-msgstr "Aucun thème n&#39;est actif. Cliquez ici pour en activer un."
+msgstr "Aucun thème n'est actif. Cliquez ici pour en activer un."
 
 msgid "Theming"
 msgstr "Thème"
@@ -64,7 +64,7 @@ msgid ""
 msgstr "Sélectionnez les thèmes qui auront cet extrait de code injecté. Laissez le champ vide pour injecter dans tous les thèmes."
 
 msgid "Select the location of the page to inject the snippet."
-msgstr "Sélectionnez l&#39;emplacement de la page pour injecter l&#39;extrait."
+msgstr "Sélectionnez l'emplacement de la page pour injecter l'extrait."
 
 msgid "Location"
 msgstr "Emplacement"
@@ -97,7 +97,7 @@ msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Les polices, couleurs et styles à utiliser avec votre thème."
 
 msgid "Content in this box is shown to all user types without limitations."
-msgstr "Le contenu de cette boîte est présenté à tous les types d&#39;utilisateurs sans limitation."
+msgstr "Le contenu de cette boîte est présenté à tous les types d'utilisateurs sans limitation."
 
 #, python-format
 msgid ""
@@ -108,7 +108,7 @@ msgid "Content in this box is shown to guests (anonymous users) only."
 msgstr "Le contenu de cette boîte est présenté aux invités (utilisateurs anonymes) uniquement."
 
 msgid "Content in this box is shown to company contacts only."
-msgstr "Le contenu de cette boîte est présenté aux contacts de l&#39;entreprise uniquement."
+msgstr "Le contenu de cette boîte est présenté aux contacts de l'entreprise uniquement."
 
 msgid ""
 "Content in this box is shown to all logged-in contacts (both person and "
@@ -123,7 +123,7 @@ msgid "Content in this placeholder is shown for %(product_name)s only."
 msgstr "Le contenu de cet espace réservé est affiché pour %(product_name)s uniquement."
 
 msgid "Shop '{}' has no active theme"
-msgstr "La boutique &#39;{}&#39; n&#39;a pas de thème actif"
+msgstr "La boutique &#39;{}&#39; n'a pas de thème actif"
 
 msgid "Inline JavaScript"
 msgstr "JavaScript intégré"
@@ -172,7 +172,7 @@ msgid "location"
 msgstr "emplacement"
 
 msgid "snippet type"
-msgstr "type d&#39;extrait"
+msgstr "type d'extrait"
 
 msgid "snippet"
 msgstr "fragment"
@@ -208,13 +208,13 @@ msgid "Image"
 msgstr "Image"
 
 msgid "Image Link URL"
-msgstr "URL du lien d&#39;image"
+msgstr "URL du lien d'image"
 
 msgid "Full width"
 msgstr "Pleine largeur"
 
 msgid "Set image to the full width of cell."
-msgstr "Définissez l&#39;image sur toute la largeur de la cellule."
+msgstr "Définissez l'image sur toute la largeur de la cellule."
 
 msgid "Width (px)"
 msgstr "Largeur (px)"
@@ -246,7 +246,7 @@ msgstr "Afficher uniquement les articles en stock et pouvant être commandés"
 msgid ""
 "Warning: The final number of products can be lower than 'Count' as it will "
 "filter out unorderable products from a set of 'Count' products."
-msgstr "Attention: le nombre final de produits peut être inférieur à «Count» car il filtrera les produits non commandables d&#39;un ensemble de produits «Count»."
+msgstr "Attention: le nombre final de produits peut être inférieur à «Count» car il filtrera les produits non commandables d'un ensemble de produits «Count»."
 
 msgid "Product Cross Sells"
 msgstr "Ventes croisées de produits"
@@ -276,7 +276,7 @@ msgid "In-Place Snippet"
 msgstr "Extrait sur place"
 
 msgid "Resource snippet for end of head"
-msgstr "Extrait de ressource pour la fin de l&#39;en-tête"
+msgstr "Extrait de ressource pour la fin de l'en-tête"
 
 msgid "Resource snippet for beginning of body"
 msgstr "Extrait de ressource pour le début du corps"
@@ -301,7 +301,7 @@ msgid "Topic"
 msgstr "Sujet"
 
 msgid "Icon Size"
-msgstr "Taille de l&#39;icône"
+msgstr "Taille de l'icône"
 
 msgid "Default"
 msgstr "Défaut"
@@ -326,7 +326,7 @@ msgstr "texte"
 
 #, python-format
 msgid "Click to edit placeholder: %s"
-msgstr "Cliquez pour modifier l&#39;espace réservé: %s"
+msgstr "Cliquez pour modifier l'espace réservé: %s"
 
 msgid ""
 "This placeholder is global and content of this placeholder is shown on all "
@@ -361,7 +361,7 @@ msgid "Untranslated"
 msgstr "Non traduit"
 
 msgid "There's nothing to configure in this plugin."
-msgstr "Il n&#39;y a rien à configurer dans ce plugin."
+msgstr "Il n'y a rien à configurer dans ce plugin."
 
 msgid "Save Plugin"
 msgstr "Enregistrer le plugin"
@@ -369,16 +369,16 @@ msgstr "Enregistrer le plugin"
 msgid ""
 "Remember to publish your changes for this placeholder when you are done, by "
 "clicking the Publish Changes button at the top."
-msgstr "N&#39;oubliez pas de publier vos modifications pour cet espace réservé lorsque vous avez terminé, en cliquant sur le bouton Publier les modifications en haut."
+msgstr "N'oubliez pas de publier vos modifications pour cet espace réservé lorsque vous avez terminé, en cliquant sur le bouton Publier les modifications en haut."
 
 msgid "Edit Placeholder"
-msgstr "Modifier l&#39;espace réservé"
+msgstr "Modifier l'espace réservé"
 
 msgid ""
 "Edit plugins inside this placeholder. By saving the individual plugin, the "
 "changes are saved as a draft, and only you are able to see the changes. To "
 "make your changes Public, Click the Publish Changes button."
-msgstr "Modifiez les plugins à l&#39;intérieur de cet espace réservé. En enregistrant le plugin individuel, les modifications sont enregistrées en tant que brouillon et vous seul pouvez voir les modifications. Pour rendre vos modifications publiques, cliquez sur le bouton Publier les modifications."
+msgstr "Modifiez les plugins à l'intérieur de cet espace réservé. En enregistrant le plugin individuel, les modifications sont enregistrées en tant que brouillon et vous seul pouvez voir les modifications. Pour rendre vos modifications publiques, cliquez sur le bouton Publier les modifications."
 
 msgid "Add new cell"
 msgstr "Ajouter une nouvelle cellule"
@@ -396,14 +396,14 @@ msgid "Theme Configuration"
 msgstr "Configuration du thème"
 
 msgid "No themes are installed."
-msgstr "Aucun thème n&#39;est installé."
+msgstr "Aucun thème n'est installé."
 
 #, python-format
 msgid "Theme Configuration: %(name)s"
 msgstr "Configuration du thème: %(name)s"
 
 msgid "There's nothing to configure in this theme."
-msgstr "Il n&#39;y a rien à configurer dans ce thème."
+msgstr "Il n'y a rien à configurer dans ce thème."
 
 msgid "Select theme"
 msgstr "Sélectionne un thème"
@@ -436,7 +436,7 @@ msgid "Publish Changes"
 msgstr "Publier les modifications"
 
 msgid "No access to editing."
-msgstr "Aucun accès à l&#39;édition."
+msgstr "Aucun accès à l'édition."
 
 #, python-format
 msgid "Unknown command: `%s`."
@@ -447,7 +447,7 @@ msgstr "Impossible de déterminer le thème actuel."
 
 #, python-format
 msgid "Can't add more than %d cells in one row."
-msgstr "Impossible d&#39;ajouter plus de cellules %d dans une ligne."
+msgstr "Impossible d'ajouter plus de cellules %d dans une ligne."
 
 msgid "Published"
 msgstr "Publié"

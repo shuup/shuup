@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-10-12 18:05+0000\n"
+"PO-Revision-Date: 2020-11-02 13:42+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgid "%d previously enabled addons disabled."
 msgstr "%d addons précédemment activés désactivés."
 
 msgid "No changes were made."
-msgstr "Aucune modification n&#39;a été apportée."
+msgstr "Aucune modification n'a été apportée."
 
 msgid "Save addon changes"
 msgstr "Enregistrer les modifications du module complémentaire"
@@ -44,12 +44,12 @@ msgid "Upload new addon"
 msgstr "Télécharger un nouvel addon"
 
 msgid "Reload application"
-msgstr "Recharger l&#39;application"
+msgstr "Recharger l'application"
 
 msgid ""
 "There are no viable reload methods available. Please contact your system "
 "administrator."
-msgstr "Il n&#39;y a pas de méthodes de rechargement viables disponibles. Veuillez contacter votre administrateur système."
+msgstr "Il n'y a pas de méthodes de rechargement viables disponibles. Veuillez contacter votre administrateur système."
 
 msgid "Reload Method"
 msgstr "Méthode de rechargement"
@@ -70,33 +70,33 @@ msgid "Upload"
 msgstr "Télécharger"
 
 msgid "Install Addon"
-msgstr "Installer l&#39;addon"
+msgstr "Installer l'addon"
 
 msgid "Installed addons"
 msgstr "Addons installés"
 
 msgid "Addon name"
-msgstr "Nom de l&#39;addon"
+msgstr "Nom de l'addon"
 
 msgid "Is enabled"
 msgstr "Est autorisé"
 
 msgid "You don't have any installed addons"
-msgstr "Vous n&#39;avez pas d&#39;addons installés"
+msgstr "Vous n'avez pas d'addons installés"
 
 msgid "Reload Application Server"
-msgstr "Recharger le serveur d&#39;applications"
+msgstr "Recharger le serveur d'applications"
 
 msgid ""
 "When you reload the application server, it may take some time for the new "
 "instance of your application to properly initialize."
-msgstr "Lorsque vous rechargez le serveur d&#39;applications, l&#39;initialisation correcte de la nouvelle instance de votre application peut prendre un certain temps."
+msgstr "Lorsque vous rechargez le serveur d'applications, l'initialisation correcte de la nouvelle instance de votre application peut prendre un certain temps."
 
 msgid ""
 "In addition, there is always a chance for the server to not properly "
 "initialize at all, in which case you may need to troubleshoot the problem "
 "yourself (or have a system administrator handy)."
-msgstr "En outre, il est toujours possible que le serveur ne s&#39;initialise pas correctement du tout, auquel cas vous devrez peut-être résoudre le problème vous-même (ou demander à un administrateur système à portée de main)."
+msgstr "En outre, il est toujours possible que le serveur ne s'initialise pas correctement du tout, auquel cas vous devrez peut-être résoudre le problème vous-même (ou demander à un administrateur système à portée de main)."
 
 msgid "Reload steps"
 msgstr "Recharger les étapes"
@@ -107,13 +107,13 @@ msgid ""
 msgstr "Finaliser les installations pour les addons nouvellement installés (migrer et collecter les ressources statiques)"
 
 msgid "Reload application server"
-msgstr "Recharger le serveur d&#39;applications"
+msgstr "Recharger le serveur d'applications"
 
 msgid "Reload was initiated."
 msgstr "Le rechargement a été lancé."
 
 msgid "Reloading application failed."
-msgstr "Le rechargement de l&#39;application a échoué."
+msgstr "Le rechargement de l'application a échoué."
 
 msgid "Finalizing installations."
 msgstr "Finalisation des installations."
@@ -122,7 +122,7 @@ msgid "Your Shuup seems to be back up!"
 msgstr "Votre Shuup semble être de retour!"
 
 msgid "Your Shuup is not up yet. Trying again soon."
-msgstr "Votre Shuup n&#39;est pas encore en place. Réessayer bientôt."
+msgstr "Votre Shuup n'est pas encore en place. Réessayer bientôt."
 
 msgid "Select file"
 msgstr "Choisir le dossier"
@@ -131,7 +131,7 @@ msgid "Installation Finished"
 msgstr "Installation terminée"
 
 msgid "Installation Failed"
-msgstr "L&#39;installation a échoué"
+msgstr "L'installation a échoué"
 
 msgid "Success"
 msgstr "Succès"
@@ -141,13 +141,13 @@ msgid ""
 "Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
 " the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
 " class=\"text-success\"><strong>reload your application server</strong></a>."
-msgstr "Ensuite, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activez le module complémentaire nouvellement installé</strong></a> et <a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>rechargez votre serveur d&#39;applications</strong></a> ."
+msgstr "Ensuite, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activez le module complémentaire nouvellement installé</strong></a> et <a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>rechargez votre serveur d'applications</strong></a> ."
 
 msgid "Error"
 msgstr "Erreur"
 
 msgid "Installer Log"
-msgstr "Journal de l&#39;installateur"
+msgstr "Journal de l'installateur"
 
 msgid "Upload Addon - Install"
 msgstr "Upload Addon - Installer"
@@ -156,7 +156,7 @@ msgid "Package Information"
 msgstr "Information sur le paquet"
 
 msgid "No package information could be extracted."
-msgstr "Aucune information sur le package n&#39;a pu être extraite."
+msgstr "Aucune information sur le package n'a pu être extraite."
 
 msgid "File List"
 msgstr "Liste des fichiers"
