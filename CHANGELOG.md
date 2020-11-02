@@ -6,10 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-List all changes after the last release here (newer on top). Each change on a separate bullet point line.
+List all changes after the last release here (newer on top). Each change on a separate bullet point line
+
+## [2.2.1] - 2020-11-02
 
 ### Changed
 
+- Update French, Finnish and Swedish translations
 - Change the Supplier.objects.enabled() filter to only return approved suppliers
 
 ## [2.2.0] - 2020-10-23
