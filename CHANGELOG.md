@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line.
 
+### Changed
+
+- Change the Supplier.objects.enabled() filter to only return approved suppliers
 
 ## [2.2.0] - 2020-10-23
 
