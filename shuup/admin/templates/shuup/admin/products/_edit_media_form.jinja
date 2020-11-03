@@ -4,7 +4,10 @@
 
 {% macro render_media_form(f, media_form, idx, is_image_form) %}
     {% for h in f.hidden_fields() %}
-        {{ h|safe }}
+        {# make sure to not duplicate hidden fields #}
+        {% if h.name not in ("kind", "file", "id") %}
+            {{ h|safe }}
+        {% endif %}
     {% endfor %}
     {%- set is_primary = f.is_primary.value() if is_image_form else None %}
     <div

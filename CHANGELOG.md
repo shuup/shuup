@@ -13,6 +13,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Prevent duplicate images in product media form
+- Do not render duplicate hidden media form field
 
 ### Changed
 
