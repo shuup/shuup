@@ -10,6 +10,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ## [2.2.1] - 2020-11-02
 
+### Fixed
+
+- Prevent duplicate images in product media form
+
 ### Changed
 
 - Update French, Finnish and Swedish translations
