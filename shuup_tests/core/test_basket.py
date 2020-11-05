@@ -81,3 +81,22 @@ def test_basket_with_custom_shop(rf):
         product_shop2 = factories.create_product("product_shop2", shop2, factories.get_default_supplier(), 10)
         line = basket.add_product(factories.get_default_supplier(), shop2, product_shop2, 1)
         assert line.shop == shop2
+
+
+@pytest.mark.django_db
+def test_basket_extra_data(rf):
+    with override_settings(**CORE_BASKET_SETTINGS):
+        shop = factories.get_default_shop()
+        user = factories.create_random_user()
+        request = apply_request_middleware(rf.get("/"), user=user, shop=shop)
+        basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
+
+        basket1 = basket_class(request, "basket", shop=shop)
+        basket1.payment_data["token"] = "qwerty"
+        basket1.extra_data["my"] = "value"
+        basket1.shipping_data["ship"] = "there"
+
+        basket2 = basket_class(request, "basket2", shop=shop)
+        assert not basket2.extra_data
+        assert not basket2.shipping_data
+        assert not basket2.payment_data
