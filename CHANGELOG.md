@@ -8,16 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+
+## [2.2.4] - 2020-11-09
+
 ### Fixed
 
 - Core: Fix basket implementation that was using the same memory
 object for all baskets instances in the same process
+
 
 ## [2.2.3] - 2020-11-05
 
 ### Fixed
 
 - Add missing id field to the media forms
+
 
 ## [2.2.2] - 2020-11-03
 
@@ -33,6 +38,7 @@ object for all baskets instances in the same process
 
 - Update French, Finnish and Swedish translations
 - Change the Supplier.objects.enabled() filter to only return approved suppliers
+
 
 ## [2.2.0] - 2020-10-23
 
