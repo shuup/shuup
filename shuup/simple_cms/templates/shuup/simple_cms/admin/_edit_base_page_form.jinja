@@ -6,7 +6,7 @@
     {{ language_dependent_content_tabs(base_form) }}
     {{ render_monolingual_fields(base_form, exclude=[
         "available_from", "available_to", "visible_in_menu", "identifier",
-        "parent", "list_children_on_page", "show_child_timestamps", "template_name", "render_title"]) }}
+        "parent", "list_children_on_page", "show_child_timestamps", "template_name", "render_title", "available_permission_groups"]) }}
 {% endcall %}
 
 {% call content_block(("Availability"), "fa-clock-o") %}
@@ -16,5 +16,5 @@
 
 {% call content_block(("Extras"), "fa-plus-circle") %}
     {{ render_monolingual_fields(base_form, exclude=[
-        "available_from", "available_to", "visible_in_menu", "render_title"]) }}
+        "available_from", "available_to", "visible_in_menu", "render_title", "available_permission_groups"]) }}
 {% endcall %}

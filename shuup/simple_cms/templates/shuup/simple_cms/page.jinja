@@ -26,7 +26,7 @@
     {{ page.get_html()|safe }}
     {% if page.list_children_on_page %}
         {# TODO: add pagination for children list #}
-        {% for child in page.children.visible(request.shop).order_by("-available_from") %}
+        {% for child in page.children.visible(request.shop, user=request.user).order_by("-available_from") %}
             <div class="row">
                 <a href="{{ url('shuup:cms_page', url=child.url) }}"><h2>{{ child.title }}</h2></a>
                 {% if child.available_from and page.show_child_timestamps %}
