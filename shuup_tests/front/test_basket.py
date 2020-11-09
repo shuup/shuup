@@ -20,7 +20,7 @@ from shuup.testing.factories import (
     create_default_tax_rule, create_product, get_default_payment_method,
     get_default_shipping_method, get_default_shop, get_default_supplier,
     get_default_tax, get_default_tax_class, get_shipping_method, get_tax,
-    create_random_address
+    create_random_address, create_random_user
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.money import Money
@@ -331,3 +331,42 @@ def test_basket_store_addresses(rf):
 
     assert basket.shipping_address.as_string_list() == shipping_address.as_string_list()
     assert basket.billing_address.as_string_list() == billing_address.as_string_list()
+
+
+@pytest.mark.django_db
+def test_basket_extra_data(rf):
+    shop = get_default_shop()
+    user = create_random_user()
+
+    request = apply_request_middleware(rf.get("/"), user=user, shop=shop)
+    basket1 = get_basket(request, basket_name="basket")
+
+    basket1.extra_data["my"] = "value"
+    basket1.shipping_data["ship"] = "there"
+    basket1.payment_data["token"] = "qwerty"
+
+    assert basket1.extra_data["my"] == "value"
+    assert basket1.shipping_data["ship"] == "there"
+    assert basket1.payment_data["token"] == "qwerty"
+
+    stored_basket = basket1.save()
+    loaded_data = basket1.storage.load(basket1)
+    assert loaded_data["extra_data"] == basket1.extra_data
+    assert loaded_data["payment_data"] == basket1.payment_data
+    assert loaded_data["shipping_data"] == basket1.shipping_data
+
+    # make sure the data is clear
+    request2 = apply_request_middleware(rf.get("/"), user=user, shop=shop)
+    basket2 = get_basket(request2, basket_name="basket2")
+    assert not basket2.extra_data
+    assert not basket2.shipping_data
+    assert not basket2.payment_data
+
+    # make sure the saved basket is loaded from the storage
+    request3 = apply_request_middleware(rf.get("/"), user=user, shop=shop)
+    request3.session = request.session
+    request3.basket = None
+    basket3 = get_basket(request3, basket_name="basket")
+    assert basket3.extra_data["my"] == basket1.extra_data["my"]
+    assert basket3.shipping_data["ship"] == basket1.shipping_data["ship"]
+    assert basket3.payment_data["token"] == basket1.payment_data["token"]
