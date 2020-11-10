@@ -1222,6 +1222,7 @@ const Picotable = (function (m, storage) {
             var url = ctrl.vm.url();
 
             ctrl.vm.isLoading = true;
+            m.redraw();
 
             if (!url) return;
             if (!Object.keys(ctrl.vm.filterValues()).length) {

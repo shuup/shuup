@@ -39,6 +39,9 @@ object for all baskets instances in the same process
 - Update French, Finnish and Swedish translations
 - Change the Supplier.objects.enabled() filter to only return approved suppliers
 
+### Changed
+
+- Admin: Show a loader in place of picotable when a request is pending.
 
 ## [2.2.0] - 2020-10-23
 
