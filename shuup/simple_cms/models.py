@@ -52,14 +52,33 @@ class PageQuerySet(TranslatableQuerySet):
         """
         if not dt:
             dt = now()
-        q = Q(
+
+        available_filter = Q(
             Q(available_from__lte=dt)
             & (Q(available_to__gte=dt) | Q(available_to__isnull=True))
         )
+
         if user and not is_anonymous(user):
-            q |= Q(created_by=user)
-        qs = self.not_deleted().for_shop(shop).filter(q)
-        return qs
+            available_filter |= Q(created_by=user)
+
+        return self.not_deleted().for_shop(shop).for_user(user).filter(available_filter).distinct()
+
+    def for_user(self, user):
+        """
+        Get pages that should be visible for the given user.
+        """
+        if user and not is_anonymous(user):
+            # superuser can see everything
+            if user.is_superuser:
+                user_filter = Q()
+            else:
+                user_filter = Q(
+                    Q(available_permission_groups__in=user.groups.all()) | Q(created_by=user)
+                )
+        else:
+            user_filter = Q(available_permission_groups__isnull=True)
+
+        return self.filter(user_filter).distinct()
 
     def for_shop(self, shop):
         return self.filter(shop=shop)
@@ -84,6 +103,12 @@ class Page(MPTTModel, TranslatableModel):
             "Set an available date to restrict the page to be available only until a certain date and time. "
             "This is useful for pages describing sales campaigns or other time-sensitive pages."
         )
+    )
+    available_permission_groups = models.ManyToManyField(
+        to="auth.Group",
+        verbose_name=_("Available for permission groups"),
+        help_text=_("Select the permission groups that can have access to this page."),
+        blank=True
     )
 
     created_by = models.ForeignKey(

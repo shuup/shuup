@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-22 17:56+0000\n"
-"PO-Revision-Date: 2020-10-12 17:53+0000\n"
+"PO-Revision-Date: 2020-11-02 13:42+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -19,17 +19,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Contact Importer"
-msgstr "Contacter l&#39;importateur"
+msgstr "Contacter l'importateur"
 
 msgid "Company Contact Importer"
 msgstr "Entreprise Contact Importateur"
 
 #, python-format
 msgid "Image '%s' was not found, please check whether the image exists."
-msgstr "L&#39;image &#39;%s&#39; n&#39;a pas été trouvée, veuillez vérifier si l&#39;image existe."
+msgstr "L'image &#39;%s&#39; n'a pas été trouvée, veuillez vérifier si l'image existe."
 
 msgid "Please add supplier to the row, before importing stock quantities."
-msgstr "Veuillez ajouter le fournisseur à la ligne avant d&#39;importer les quantités en stock."
+msgstr "Veuillez ajouter le fournisseur à la ligne avant d'importer les quantités en stock."
 
 msgid "No supplier found, please check that the supplier exists."
 msgstr "Aucun fournisseur trouvé, veuillez vérifier que le fournisseur existe."
@@ -61,7 +61,7 @@ msgid ""
 msgstr "votre <a href=\"%(supplier_url)s\">fournisseur</a> a « Stock géré » <strong>sur.</strong> (Actuellement <strong>désactivé</strong> )"
 
 msgid "your import file has <strong>supplier</strong> field"
-msgstr "votre fichier d&#39;importation a un champ <strong>fournisseur</strong>"
+msgstr "votre fichier d'importation a un champ <strong>fournisseur</strong>"
 
 msgid "Images"
 msgstr "Images"
@@ -77,7 +77,7 @@ msgid ""
 msgstr ""
 
 msgid "Upload all product images using the Media Browser."
-msgstr "Téléchargez toutes les images du produit à l&#39;aide du navigateur multimédia."
+msgstr "Téléchargez toutes les images du produit à l'aide du navigateur multimédia."
 
 msgid ""
 "Use the image file name on <strong>image</strong> and/or "
@@ -87,12 +87,12 @@ msgstr "Utilisez le nom du fichier image sur <strong>la</strong> ou les colonnes
 msgid ""
 "<strong>images</strong> column can receive a comma-separated list of image "
 "names."
-msgstr "<strong>La</strong> colonne <strong>images</strong> peut recevoir une liste de noms d&#39;images séparés par des virgules."
+msgstr "<strong>La</strong> colonne <strong>images</strong> peut recevoir une liste de noms d'images séparés par des virgules."
 
 msgid ""
 "Image names can be the file name (e.g.: <em>product_001.png</em>) or the path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).\n"
 "        Using the full path will ensure that the correct image will be used when there is more than one image with the same name."
-msgstr "Les noms d&#39;image peuvent être le nom du fichier (par exemple: <em>product_001.png</em> ) ou le chemin d&#39;accès à l&#39;image (par exemple: <em>Products / Images / product_001.jpeg</em> ). L&#39;utilisation du chemin complet garantira que l&#39;image correcte sera utilisée lorsqu&#39;il y a plus d&#39;une image avec le même nom."
+msgstr "Les noms d'image peuvent être le nom du fichier (par exemple: <em>product_001.png</em> ) ou le chemin d'accès à l'image (par exemple: <em>Products / Images / product_001.jpeg</em> ). L'utilisation du chemin complet garantira que l'image correcte sera utilisée lorsqu'il y a plus d'une image avec le même nom."
 
 msgid "Related objects"
 msgstr "Objets associés"
@@ -100,4 +100,4 @@ msgstr "Objets associés"
 msgid ""
 "Columns that are relations to other objects (like Category and Supplier) accept both the object ID number\n"
 "    and the object name. Make sure that when using the name, there should be only a single object for that given name."
-msgstr "Les colonnes qui sont des relations avec d&#39;autres objets (comme la catégorie et le fournisseur) acceptent à la fois le numéro d&#39;identification de l&#39;objet et le nom de l&#39;objet. Assurez-vous que lors de l&#39;utilisation du nom, il ne doit y avoir qu&#39;un seul objet pour ce nom donné."
+msgstr "Les colonnes qui sont des relations avec d'autres objets (comme la catégorie et le fournisseur) acceptent à la fois le numéro d'identification de l'objet et le nom de l'objet. Assurez-vous que lors de l'utilisation du nom, il ne doit y avoir qu'un seul objet pour ce nom donné."

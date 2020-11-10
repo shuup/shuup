@@ -25,7 +25,7 @@ msgid "Data Import"
 msgstr "Importation de données"
 
 msgid "Import mode"
-msgstr "Mode d&#39;importation"
+msgstr "Mode d'importation"
 
 msgid "Importing language"
 msgstr "Importation de la langue"
@@ -38,7 +38,7 @@ msgstr "Importateur"
 
 msgid "Select a importer type matching the data you want to import"
 msgstr ""
-"Sélectionnez un type d&#39;importateur correspondant aux données que vous "
+"Sélectionnez un type d'importateur correspondant aux données que vous "
 "souhaitez importer"
 
 msgid "File"
@@ -46,13 +46,13 @@ msgstr "Fichier"
 
 #, python-format
 msgid "%s is not a file."
-msgstr "%s n&#39;est pas un fichier."
+msgstr "%s n'est pas un fichier."
 
 msgid "File is missing."
 msgstr "Le fichier est manquant."
 
 msgid "Failed to import the file."
-msgstr "Échec de l&#39;importation du fichier."
+msgstr "Échec de l'importation du fichier."
 
 msgid "Invalid parameters."
 msgstr "Paramètres invalides."
@@ -71,14 +71,14 @@ msgstr "Importer"
 
 msgid "Row ignored (no existing item and creating new is not allowed)."
 msgstr ""
-"Ligne ignorée (aucun élément existant et la création d&#39;un nouveau "
-"n&#39;est pas autorisée)."
+"Ligne ignorée (aucun élément existant et la création d'un nouveau n'est pas "
+"autorisée)."
 
 #, python-format
 msgid ""
 "Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
 msgstr ""
-"Ligne ignorée (l&#39;objet existe déjà (%(object_name)s avec l&#39;ID: "
+"Ligne ignorée (l'objet existe déjà (%(object_name)s avec l'ID: "
 "%(object_id)s)."
 
 #, python-format
@@ -95,7 +95,7 @@ msgstr ""
 
 #, python-format
 msgid "Row import failed (%s)."
-msgstr "L&#39;importation de ligne a échoué (%s)."
+msgstr "L'importation de ligne a échoué (%s)."
 
 msgid "Example files"
 msgstr "Exemples de fichiers"
@@ -105,14 +105,14 @@ msgid ""
 "                    make sure to leave the ignore column empty for all your rows,\n"
 "                    otherwise the rows won't be imported."
 msgstr ""
-"S&#39;il y a une colonne «Ignorer» dans le fichier d&#39;exemple que vous "
-"utilisez, assurez-vous de laisser la colonne Ignorer vide pour toutes vos "
-"lignes, sinon les lignes ne seront pas importées."
+"S'il y a une colonne «Ignorer» dans le fichier d'exemple que vous utilisez, "
+"assurez-vous de laisser la colonne Ignorer vide pour toutes vos lignes, "
+"sinon les lignes ne seront pas importées."
 
 msgid "This importer provides example files. Click below to download them:"
 msgstr ""
-"Cet importateur fournit des fichiers d&#39;exemple. Cliquez ci-dessous pour "
-"les télécharger:"
+"Cet importateur fournit des fichiers d'exemple. Cliquez ci-dessous pour les "
+"télécharger:"
 
 msgid "Continue"
 msgstr "Continuer"
@@ -135,7 +135,7 @@ msgstr ""
 
 msgid "Not a single connection key was found, File cannot be imported."
 msgstr ""
-"Aucune clé de connexion n&#39;a été trouvée, le fichier ne peut pas être "
+"Aucune clé de connexion n'a été trouvée, le fichier ne peut pas être "
 "importé."
 
 msgid "Connection Keys"
@@ -152,13 +152,13 @@ msgstr ""
 " seront ignorées."
 
 msgid "Import method"
-msgstr "Méthode d&#39;importation"
+msgstr "Méthode d'importation"
 
 msgid "Automatically mapped"
 msgstr "Mappé automatiquement"
 
 msgid "Original field"
-msgstr "Champ d&#39;origine"
+msgstr "Champ d'origine"
 
 msgid "Shuup field"
 msgstr "Champ Shuup"
@@ -170,7 +170,7 @@ msgid "The following fields must be manually tied"
 msgstr "Les champs suivants doivent être liés manuellement"
 
 msgid "Don't import"
-msgstr "N&#39;importez pas"
+msgstr "N'importez pas"
 
 msgid "Field name"
 msgstr "Nom de domaine"
@@ -185,15 +185,15 @@ msgid ""
 "File may not be imported because no connection keys were found. Connection "
 "keys are unique keys that are used to map results."
 msgstr ""
-"Le fichier ne peut pas être importé car aucune clé de connexion n&#39;a été "
+"Le fichier ne peut pas être importé car aucune clé de connexion n'a été "
 "trouvée. Les clés de connexion sont des clés uniques utilisées pour mapper "
 "les résultats."
 
 msgid ""
 "Please consider adding some of the following fields to your import file:"
 msgstr ""
-"Veuillez envisager d&#39;ajouter certains des champs suivants à votre "
-"fichier d&#39;importation:"
+"Veuillez envisager d'ajouter certains des champs suivants à votre fichier "
+"d'importation:"
 
 msgid "Products"
 msgstr "Des produits"
@@ -208,7 +208,7 @@ msgid "email"
 msgstr "email"
 
 msgid "Importer type"
-msgstr "Type d&#39;importateur"
+msgstr "Type d'importateur"
 
 msgid "Field(s) to add"
 msgstr "Champ (s) à ajouter"
@@ -224,7 +224,7 @@ msgstr ""
 "défini une clé de messagerie"
 
 msgid "Start Import"
-msgstr "Lancer l&#39;importation"
+msgstr "Lancer l'importation"
 
 msgid "Import Data - Complete"
 msgstr "Importer des données - Terminé"
@@ -239,7 +239,7 @@ msgid "The following items were imported as new:"
 msgstr "Les éléments suivants ont été importés comme neufs:"
 
 msgid "Zero new items were created."
-msgstr "Aucun nouvel élément n&#39;a été créé."
+msgstr "Aucun nouvel élément n'a été créé."
 
 msgid "Updated items"
 msgstr "Articles mis à jour"
@@ -248,7 +248,7 @@ msgid "The following items were updated:"
 msgstr "Les éléments suivants ont été mis à jour:"
 
 msgid "Zero items were updated."
-msgstr "Aucun élément n&#39;a été mis à jour."
+msgstr "Aucun élément n'a été mis à jour."
 
 msgid "Import log"
 msgstr "Importer le journal"
@@ -261,7 +261,7 @@ msgstr "Importer des erreurs"
 
 #, python-format
 msgid "Can't import more than %s rows from one file."
-msgstr "Impossible d&#39;importer plus de %s lignes d&#39;un fichier."
+msgstr "Impossible d'importer plus de %s lignes d'un fichier."
 
 msgid "Allow create and update"
 msgstr "Autoriser la création et la mise à jour"
@@ -270,5 +270,4 @@ msgid "Only create (no updates)"
 msgstr "Créer uniquement (pas de mises à jour)"
 
 msgid "Only update existing (no new ones are created)"
-msgstr ""
-"Mettre à jour uniquement l&#39;existant (aucun nouveau n&#39;est créé)"
+msgstr "Mettre à jour uniquement l'existant (aucun nouveau n'est créé)"

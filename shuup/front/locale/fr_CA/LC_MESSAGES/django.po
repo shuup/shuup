@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-13 11:37+0000\n"
-"PO-Revision-Date: 2020-10-13 17:15+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"PO-Revision-Date: 2020-11-02 13:42+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,12 +34,12 @@ msgid "Show carts"
 msgstr "Afficher les chariots"
 
 msgid "Cart Inactivity Delay (hours)"
-msgstr "Délai d&#39;inactivité du chariot (heures)"
+msgstr "Délai d'inactivité du chariot (heures)"
 
 msgid ""
 "Set the number of hours the cart must be inactive before it's displayed in "
 "Orders > Carts"
-msgstr "Définissez le nombre d&#39;heures pendant lesquelles le panier doit être inactif avant d&#39;être affiché dans Commandes&gt; Chariots"
+msgstr "Définissez le nombre d'heures pendant lesquelles le panier doit être inactif avant d'être affiché dans Commandes&gt; Chariots"
 
 msgid "Created on"
 msgstr "Créé sur"
@@ -75,37 +75,37 @@ msgid "Ordered"
 msgstr "Commandé"
 
 msgid "Require shipping method"
-msgstr "Exiger une méthode d&#39;expédition"
+msgstr "Exiger une méthode d'expédition"
 
 msgid "Whether to require the shipping method in checkout phases."
-msgstr "S&#39;il faut exiger la méthode d&#39;expédition dans les phases de paiement."
+msgstr "S'il faut exiger la méthode d'expédition dans les phases de paiement."
 
 msgid "Require payment method"
 msgstr "Exiger un mode de paiement"
 
 msgid "Whether to require the payment method in checkout phases."
-msgstr "S&#39;il faut exiger le mode de paiement dans les phases de paiement."
+msgstr "S'il faut exiger le mode de paiement dans les phases de paiement."
 
 msgid "Registration Settings"
-msgstr "Paramètres d&#39;enregistrement"
+msgstr "Paramètres d'enregistrement"
 
 msgid "Allow company registration"
-msgstr "Autoriser l&#39;enregistrement de l&#39;entreprise"
+msgstr "Autoriser l'enregistrement de l'entreprise"
 
 msgid "If you select this, companies can register into your store."
-msgstr "Si vous sélectionnez cette option, les entreprises peuvent s&#39;inscrire dans votre boutique."
+msgstr "Si vous sélectionnez cette option, les entreprises peuvent s'inscrire dans votre boutique."
 
 msgid "Company registration requires approval"
-msgstr "L&#39;enregistrement de l&#39;entreprise nécessite une approbation"
+msgstr "L'enregistrement de l'entreprise nécessite une approbation"
 
 msgid ""
 "Registered companies must be manually approved by admin if this is checked. "
 "This option has no effect if company registration is not allowed on your "
 "site."
-msgstr "Les sociétés enregistrées doivent être approuvées manuellement par l&#39;administrateur si cela est coché. Cette option n&#39;a aucun effet si l&#39;enregistrement de l&#39;entreprise n&#39;est pas autorisé sur votre site."
+msgstr "Les sociétés enregistrées doivent être approuvées manuellement par l'administrateur si cela est coché. Cette option n'a aucun effet si l'enregistrement de l'entreprise n'est pas autorisé sur votre site."
 
 msgid "Company tax number validation"
-msgstr "Validation du numéro fiscal de l&#39;entreprise"
+msgstr "Validation du numéro fiscal de l'entreprise"
 
 msgid "Company tax number format is validated for European countries."
 msgstr "Le format du numéro fiscal des sociétés est validé pour les pays européens."
@@ -135,13 +135,13 @@ msgstr "Les produits dans le panier ne peuvent pas être expédiés ensemble. %s
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
-msgstr "Les produits dans le panier n&#39;ont pas de mode de paiement commun. %s"
+msgstr "Les produits dans le panier n'ont pas de mode de paiement commun. %s"
 
 msgid "Tax number is required with the company name."
-msgstr "Le numéro fiscal est obligatoire avec le nom de l&#39;entreprise."
+msgstr "Le numéro fiscal est obligatoire avec le nom de l'entreprise."
 
 msgid "Company name is required with the tax number."
-msgstr "Le nom de l&#39;entreprise est obligatoire avec le numéro fiscal."
+msgstr "Le nom de l'entreprise est obligatoire avec le numéro fiscal."
 
 msgid "Use a saved address"
 msgstr "Utiliser une adresse enregistrée"
@@ -150,10 +150,10 @@ msgid "Addresses"
 msgstr "Adresses"
 
 msgid "Checkout as Guest"
-msgstr "Commander en tant qu&#39;invité"
+msgstr "Commander en tant qu'invité"
 
 msgid "Register"
-msgstr "S&#39;inscrire"
+msgstr "S'inscrire"
 
 msgid "Register with us for future convenience"
 msgstr "Inscrivez-vous avec nous pour plus de commodité"
@@ -162,7 +162,7 @@ msgid "Checkout Method Choice"
 msgstr "Choix de la méthode de paiement"
 
 msgid "I accept the terms and conditions"
-msgstr "J&#39;accepte les termes et conditions"
+msgstr "J'accepte les termes et conditions"
 
 msgid "I want to receive marketing material"
 msgstr "Je souhaite recevoir du matériel marketing"
@@ -206,12 +206,12 @@ msgid "Name - Z-A"
 msgstr "Nom - ZA"
 
 msgid "Enable this to allow products to be sortable by product name."
-msgstr "Activez cette option pour permettre aux produits d&#39;être triés par nom de produit."
+msgstr "Activez cette option pour permettre aux produits d'être triés par nom de produit."
 
 msgid ""
 "Use a numeric value to set the order in which the the filter will appear on "
 "the product listing page."
-msgstr "Utilisez une valeur numérique pour définir l&#39;ordre dans lequel le filtre apparaîtra sur la page de liste des produits."
+msgstr "Utilisez une valeur numérique pour définir l'ordre dans lequel le filtre apparaîtra sur la page de liste des produits."
 
 msgid "Sort products by price"
 msgstr "Trier les produits par prix"
@@ -228,7 +228,7 @@ msgstr "Prix - décroissant"
 msgid ""
 "Enable this to allow products to be sortable by price (from low to high; "
 "from high to low)."
-msgstr "Activez cette option pour permettre aux produits d&#39;être triés par prix (de bas en haut; de haut en bas)."
+msgstr "Activez cette option pour permettre aux produits d'être triés par prix (de bas en haut; de haut en bas)."
 
 msgid "Sort products by date created"
 msgstr "Trier les produits par date de création"
@@ -241,12 +241,12 @@ msgstr "Date créée"
 
 msgid ""
 "Enable this to allow products to be sortable from newest to oldest products."
-msgstr "Activez cette option pour permettre aux produits d&#39;être triés du plus récent au plus ancien."
+msgstr "Activez cette option pour permettre aux produits d'être triés du plus récent au plus ancien."
 
 msgid ""
 "Use a numeric value to set the order in which the filter will appear on the "
 "product listing page."
-msgstr "Utilisez une valeur numérique pour définir l&#39;ordre dans lequel le filtre apparaîtra sur la page de liste des produits."
+msgstr "Utilisez une valeur numérique pour définir l'ordre dans lequel le filtre apparaîtra sur la page de liste des produits."
 
 msgid "Sort products by date created - oldest first"
 msgstr "Trier les produits par date de création - le plus ancien en premier"
@@ -259,7 +259,7 @@ msgstr "Date de création - la plus ancienne en premier"
 
 msgid ""
 "Enable this to allow products to be sortable from oldest to newest products."
-msgstr "Activez cette option pour permettre aux produits d&#39;être triés du plus ancien au plus récent."
+msgstr "Activez cette option pour permettre aux produits d'être triés du plus ancien au plus récent."
 
 msgid "Filter products by manufacturer"
 msgstr "Filtrer les produits par fabricant"
@@ -273,12 +273,12 @@ msgstr "Fabricants"
 msgid ""
 "Enable this to allow products to be filterable by manufacturer for this "
 "category."
-msgstr "Activez cette option pour permettre aux produits d&#39;être filtrables par le fabricant pour cette catégorie."
+msgstr "Activez cette option pour permettre aux produits d'être filtrables par le fabricant pour cette catégorie."
 
 msgid ""
 "Use a numeric value to set the order in which the manufacturer filters will "
 "appear on the product listing page."
-msgstr "Utilisez une valeur numérique pour définir l&#39;ordre dans lequel les filtres du fabricant apparaîtront sur la page de liste des produits."
+msgstr "Utilisez une valeur numérique pour définir l'ordre dans lequel les filtres du fabricant apparaîtront sur la page de liste des produits."
 
 msgid "Filter products by category"
 msgstr "Filtrer les produits par catégorie"
@@ -292,12 +292,12 @@ msgstr "Catégories"
 msgid ""
 "Enable this to allow products to be filterable by any visible product "
 "category. "
-msgstr "Activez cette option pour permettre aux produits d&#39;être filtrables par n&#39;importe quelle catégorie de produits visible."
+msgstr "Activez cette option pour permettre aux produits d'être filtrables par n'importe quelle catégorie de produits visible."
 
 msgid ""
 "Use a numeric value to set the order in which the category list filters will"
 " appear on the product listing page."
-msgstr "Utilisez une valeur numérique pour définir l&#39;ordre dans lequel les filtres de liste de catégories apparaîtront sur la page de liste de produits."
+msgstr "Utilisez une valeur numérique pour définir l'ordre dans lequel les filtres de liste de catégories apparaîtront sur la page de liste de produits."
 
 msgid "Limit page size"
 msgstr "Limiter la taille de la page"
@@ -316,7 +316,7 @@ msgstr "Activez cette option pour permettre au client de sélectionner le nombre
 msgid ""
 "Use a numeric value to set the order in which the page size filter will "
 "appear on the product listing page."
-msgstr "Utilisez une valeur numérique pour définir l&#39;ordre dans lequel le filtre de taille de page apparaîtra sur la page de liste des produits."
+msgstr "Utilisez une valeur numérique pour définir l'ordre dans lequel le filtre de taille de page apparaîtra sur la page de liste des produits."
 
 msgid "Filter products by variation"
 msgstr "Filtrer les produits par variation"
@@ -327,12 +327,12 @@ msgstr "Commande de filtre par variante"
 msgid ""
 "Enable this to allow products to be filterable by their different "
 "variations. For example, size or color."
-msgstr "Activez cette option pour permettre aux produits d&#39;être filtrables selon leurs différentes variantes. Par exemple, la taille ou la couleur."
+msgstr "Activez cette option pour permettre aux produits d'être filtrables selon leurs différentes variantes. Par exemple, la taille ou la couleur."
 
 msgid ""
 "Use a numeric value to set the order in which the variation filters will "
 "appear on the product listing page."
-msgstr "Utilisez une valeur numérique pour définir l&#39;ordre dans lequel les filtres de variantes apparaîtront sur la page de liste des produits."
+msgstr "Utilisez une valeur numérique pour définir l'ordre dans lequel les filtres de variantes apparaîtront sur la page de liste des produits."
 
 msgid "Filter products by price"
 msgstr "Filtrer les produits par prix"
@@ -347,12 +347,12 @@ msgid ""
 "Enable this to allow products to be filtered by price. Prices will be listed"
 " in groups from the price range minimum to price range maximum in increments"
 " of the configured price range step."
-msgstr "Activez cette option pour permettre aux produits d&#39;être filtrés par prix. Les prix seront listés par groupes de la fourchette de prix minimum à la fourchette de prix maximum par incréments de l&#39;étape de fourchette de prix configurée."
+msgstr "Activez cette option pour permettre aux produits d'être filtrés par prix. Les prix seront listés par groupes de la fourchette de prix minimum à la fourchette de prix maximum par incréments de l'étape de fourchette de prix configurée."
 
 msgid ""
 "Use a numeric value to set the order in which the price range filters will "
 "appear on the product listing page."
-msgstr "Utilisez une valeur numérique pour définir l&#39;ordre dans lequel les filtres de fourchette de prix apparaîtront sur la page de liste des produits."
+msgstr "Utilisez une valeur numérique pour définir l'ordre dans lequel les filtres de fourchette de prix apparaîtront sur la page de liste des produits."
 
 msgid "Price range minimum"
 msgstr "Gamme de prix minimum"
@@ -399,12 +399,12 @@ msgid "Suppliers"
 msgstr "Fournisseurs"
 
 msgid "Enable this to allow products to be filterable by supplier."
-msgstr "Activez cette option pour permettre aux produits d&#39;être filtrables par le fournisseur."
+msgstr "Activez cette option pour permettre aux produits d'être filtrables par le fournisseur."
 
 msgid ""
 "Use a numeric value to set the order in which the supplier filters will "
 "appear."
-msgstr "Utilisez une valeur numérique pour définir l&#39;ordre dans lequel les filtres du fournisseur apparaîtront."
+msgstr "Utilisez une valeur numérique pour définir l'ordre dans lequel les filtres du fournisseur apparaîtront."
 
 msgid "Allow multiselect suppliers"
 msgstr "Autoriser la sélection multiple de fournisseurs"
@@ -476,22 +476,22 @@ msgid "stored baskets"
 msgstr "paniers rangés"
 
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 msgid "Reference Number"
-msgstr ""
+msgstr "Numéro de réference"
 
 msgid "Currency"
-msgstr ""
+msgstr "Devise"
 
 msgid "Customer Name"
-msgstr ""
+msgstr "Nom du client"
 
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 msgid "Shipping Method"
-msgstr ""
+msgstr "Mode de livraison"
 
 msgid "Order Received"
 msgstr "Ordre reçu"
@@ -530,7 +530,7 @@ msgid "Shipment"
 msgstr "Expédition"
 
 msgid "Order Shipping Status"
-msgstr "Statut d&#39;expédition de la commande"
+msgstr "Statut d'expédition de la commande"
 
 msgid "Shipment Status"
 msgstr "Expédition statut"
@@ -578,57 +578,57 @@ msgid ""
 msgstr ""
 
 msgid "Send Shipment Created Email"
-msgstr "Envoyer l&#39;e-mail créé pour l&#39;envoi"
+msgstr "Envoyer l'e-mail créé pour l'envoi"
 
 msgid "Send an email to customer when a shipment is created."
-msgstr "Envoyez un e-mail au client lors de la création d&#39;un envoi."
+msgstr "Envoyez un e-mail au client lors de la création d'un envoi."
 
 msgid ""
 "This script will send an email to customer when a shipment of his order has "
 "been created."
-msgstr "Ce script enverra un email au client lorsqu&#39;une expédition de sa commande aura été créée."
+msgstr "Ce script enverra un email au client lorsqu'une expédition de sa commande aura été créée."
 
 msgid "{{ order.shop }} - Shipment created for order {{ order.identifier }}"
 msgstr "{{order.shop}} - Envoi créé pour la commande {{order.identifier}}"
 
 msgid "Send Shipment Deleted Email"
-msgstr "Envoyer l&#39;e-mail supprimé de l&#39;envoi"
+msgstr "Envoyer l'e-mail supprimé de l'envoi"
 
 msgid "Send email when a shipment is deleted."
-msgstr "Envoyez un e-mail lorsqu&#39;un envoi est supprimé."
+msgstr "Envoyez un e-mail lorsqu'un envoi est supprimé."
 
 msgid ""
 "This script will send an email to customer or to any configured email right "
 "after a shipment gets deleted."
-msgstr "Ce script enverra un e-mail au client ou à tout e-mail configuré juste après la suppression d&#39;un envoi."
+msgstr "Ce script enverra un e-mail au client ou à tout e-mail configuré juste après la suppression d'un envoi."
 
 msgid "{{ order.shop }} - Shipment deleted for order {{ order.identifier }}"
 msgstr "{{order.shop}} - Envoi supprimé pour la commande {{order.identifier}}"
 
 msgid "Send Payment Created Email"
-msgstr "Envoyer l&#39;e-mail de création de paiement"
+msgstr "Envoyer l'e-mail de création de paiement"
 
 msgid "Send email to customer when a payment is created."
-msgstr "Envoyer un e-mail au client lorsqu&#39;un paiement est créé."
+msgstr "Envoyer un e-mail au client lorsqu'un paiement est créé."
 
 msgid ""
 "This script will send an email to customer or to any configured email right "
 "after a payment gets created."
-msgstr "Ce script enverra un e-mail au client ou à tout e-mail configuré juste après la création d&#39;un paiement."
+msgstr "Ce script enverra un e-mail au client ou à tout e-mail configuré juste après la création d'un paiement."
 
 msgid "{{ order.shop }} - Payment created for order {{ order.identifier }}"
 msgstr "{{order.shop}} - Paiement créé pour la commande {{order.identifier}}"
 
 msgid "Send Refund Created Email"
-msgstr "Envoyer l&#39;e-mail de remboursement créé"
+msgstr "Envoyer l'e-mail de remboursement créé"
 
 msgid "Send email when a refund is created."
-msgstr "Envoyez un e-mail lorsqu&#39;un remboursement est créé."
+msgstr "Envoyez un e-mail lorsqu'un remboursement est créé."
 
 msgid ""
 "This script will send an email to customer or to any configured email right "
 "after a refund gets created."
-msgstr "Ce script enverra un e-mail au client ou à tout e-mail configuré juste après la création d&#39;un remboursement."
+msgstr "Ce script enverra un e-mail au client ou à tout e-mail configuré juste après la création d'un remboursement."
 
 msgid "{{ order.shop }} - Refund created for order {{ order.identifier }}"
 msgstr "{{order.shop}} - Remboursement créé pour la commande {{order.identifier}}"
@@ -643,10 +643,10 @@ msgid ""
 "This script will send an email to customer or to any configured email right "
 "after an order is created. The order contents can be put on email body as "
 "well as other informations like shipping method and payment method."
-msgstr "Ce script enverra un e-mail au client ou à tout e-mail configuré juste après la création d&#39;une commande. Le contenu de la commande peut être mis sur le corps de l&#39;e-mail ainsi que d&#39;autres informations telles que le mode d&#39;expédition et le mode de paiement."
+msgstr "Ce script enverra un e-mail au client ou à tout e-mail configuré juste après la création d'une commande. Le contenu de la commande peut être mis sur le corps de l'e-mail ainsi que d'autres informations telles que le mode d'expédition et le mode de paiement."
 
 msgid "Cart Inactivity Delay"
-msgstr "Délai d&#39;inactivité du chariot"
+msgstr "Délai d'inactivité du chariot"
 
 msgid "Checkout configuration"
 msgstr "Configuration de la caisse"
@@ -673,7 +673,7 @@ msgid "Checkout"
 msgstr "Check-out"
 
 msgid "Log in"
-msgstr "S&#39;identifier"
+msgstr "S'identifier"
 
 msgid "Forgot your password?"
 msgstr "Mot de passe oublié?"
@@ -682,7 +682,7 @@ msgid "There are errors"
 msgstr "Il y a des erreurs"
 
 msgid "Please wait..."
-msgstr "S&#39;il vous plaît, attendez..."
+msgstr "S'il vous plaît, attendez..."
 
 msgid "My Dashboard"
 msgstr "Mon tableau de bord"
@@ -697,10 +697,10 @@ msgid "Bad Request"
 msgstr "Mauvaise Demande"
 
 msgid "Unfortunately the server couldn't process your request."
-msgstr "Malheureusement, le serveur n&#39;a pas pu traiter votre demande."
+msgstr "Malheureusement, le serveur n'a pas pu traiter votre demande."
 
 msgid "Back to Homepage"
-msgstr "Retour à la page d&#39;accueil"
+msgstr "Retour à la page d'accueil"
 
 msgid "Permission Denied"
 msgstr "Permission refusée"
@@ -712,7 +712,7 @@ msgid "Page Not Found"
 msgstr "Page non trouvée"
 
 msgid "Unfortunately the page you were looking for does not exist."
-msgstr "Malheureusement, la page que vous recherchez n&#39;existe pas."
+msgstr "Malheureusement, la page que vous recherchez n'existe pas."
 
 msgid "Go Back"
 msgstr "Retourner"
@@ -723,7 +723,7 @@ msgstr "Erreur Interne du Serveur"
 msgid ""
 "Unfortunately an internal server error occurred. Try refreshing the page or "
 "try again later."
-msgstr "Malheureusement, une erreur de serveur interne s&#39;est produite. Essayez d&#39;actualiser la page ou réessayez plus tard."
+msgstr "Malheureusement, une erreur de serveur interne s'est produite. Essayez d'actualiser la page ou réessayez plus tard."
 
 msgid "Welcome to Shuup!"
 msgstr "Bienvenue à Shuup!"
@@ -738,10 +738,10 @@ msgstr "votre magasin"
 msgid ""
 "You are seeing this page because there is no theme selected for the default "
 "frontend."
-msgstr "Vous voyez cette page car aucun thème n&#39;est sélectionné pour l&#39;interface par défaut."
+msgstr "Vous voyez cette page car aucun thème n'est sélectionné pour l'interface par défaut."
 
 msgid "Log in to the administration interface"
-msgstr "Connectez-vous à l&#39;interface d&#39;administration"
+msgstr "Connectez-vous à l'interface d'administration"
 
 msgid "to choose a theme and set up your shop."
 msgstr "pour choisir un thème et configurer votre boutique."
@@ -749,13 +749,13 @@ msgstr "pour choisir un thème et configurer votre boutique."
 msgid ""
 "The administration interface does not seem to be available. Use other means "
 "to choose a theme."
-msgstr "L&#39;interface d&#39;administration ne semble pas disponible. Utilisez d&#39;autres moyens pour choisir un thème."
+msgstr "L'interface d'administration ne semble pas disponible. Utilisez d'autres moyens pour choisir un thème."
 
 msgid "Product added to cart"
 msgstr "Produit ajouté au panier"
 
 msgid "Adding the product to the basket failed."
-msgstr "L&#39;ajout du produit au panier a échoué."
+msgstr "L'ajout du produit au panier a échoué."
 
 msgid "Remove product from basket"
 msgstr "Retirer le produit du panier"
@@ -802,13 +802,13 @@ msgid "Invalid coupon code."
 msgstr "Code de Coupon Invalide."
 
 msgid "Removing a coupon failed."
-msgstr "La suppression d&#39;un coupon a échoué."
+msgstr "La suppression d'un coupon a échoué."
 
 msgid "Coupon is not available."
-msgstr "Le coupon n&#39;est pas disponible."
+msgstr "Le coupon n'est pas disponible."
 
 msgid "Adding a coupon failed."
-msgstr "L&#39;ajout d&#39;un coupon a échoué."
+msgstr "L'ajout d'un coupon a échoué."
 
 msgid "Success!"
 msgstr "Succès!"
@@ -844,13 +844,13 @@ msgid "Ship to my billing address"
 msgstr "Envoyer à mon adresse de facturation"
 
 msgid "Choose Shipping Method"
-msgstr "Choisissez la méthode d&#39;expédition"
+msgstr "Choisissez la méthode d'expédition"
 
 msgid "Choose Payment Method"
 msgstr "Choisissez le mode de paiement"
 
 msgid "No method is available."
-msgstr "Aucune méthode n&#39;est disponible."
+msgstr "Aucune méthode n'est disponible."
 
 msgid "Delivery"
 msgstr "Livraison"
@@ -927,7 +927,7 @@ msgstr "Basculer la navigation"
 
 #, python-brace-format
 msgid "Edit '{object_title}' in administration page"
-msgstr "Modifier &quot;{object_title}&quot; dans la page d&#39;administration"
+msgstr "Modifier &quot;{object_title}&quot; dans la page d'administration"
 
 #, python-brace-format
 msgid "Edit {object_name} in Admin"
@@ -946,13 +946,13 @@ msgstr "Par <strong>%(supplier_name)s</strong>"
 
 #, python-brace-format
 msgid "Available until: <span class=\"availability-date\">{date}</span></small>"
-msgstr "Disponible jusqu&#39;au: <span class=\"availability-date\">{date}</span>"
+msgstr "Disponible jusqu'au: <span class=\"availability-date\">{date}</span>"
 
 msgid "Edit account details"
 msgstr "Modifier les détails du compte"
 
 msgid "Edit company details"
-msgstr "Modifier les détails de l&#39;entreprise"
+msgstr "Modifier les détails de l'entreprise"
 
 msgid "My orders"
 msgstr "Mes commandes"
@@ -964,7 +964,7 @@ msgid "My wishlists"
 msgstr "Mes listes de souhaits"
 
 msgid "Admin panel"
-msgstr "Panneau d&#39;administration"
+msgstr "Panneau d'administration"
 
 msgid "Log out"
 msgstr "Se déconnecter"
@@ -1030,7 +1030,7 @@ msgid "Company"
 msgstr "Compagnie"
 
 msgid "Tax number"
-msgstr "Numéro d&#39;identification fiscale"
+msgstr "Numéro d'identification fiscale"
 
 msgid "Preview"
 msgstr "Aperçu"
@@ -1064,7 +1064,7 @@ msgid "Package Size"
 msgstr "Taille du paquet"
 
 msgid "Available Until"
-msgstr "Disponible jusqu&#39;au"
+msgstr "Disponible jusqu'au"
 
 msgid "Width"
 msgstr "Largeur"
@@ -1095,13 +1095,13 @@ msgstr "Ajouter au chariot"
 
 #, python-brace-format
 msgid "Available until: {date}"
-msgstr "Disponible jusqu&#39;au: {date}"
+msgstr "Disponible jusqu'au: {date}"
 
 msgid "Maintenance mode"
 msgstr "Mode de Maintenance"
 
 msgid "Shop is currently down for maintenance."
-msgstr "L&#39;atelier est actuellement en maintenance."
+msgstr "L'atelier est actuellement en maintenance."
 
 msgid "Thank you for your order!"
 msgstr "Nous vous remercions de votre commande!"
@@ -1116,7 +1116,7 @@ msgstr "Activation du compte utilisateur"
 msgid ""
 "If you want to be able to see your order history, please create a password "
 "for your account: "
-msgstr "Si vous souhaitez voir l&#39;historique de vos commandes, veuillez créer un mot de passe pour votre compte:"
+msgstr "Si vous souhaitez voir l'historique de vos commandes, veuillez créer un mot de passe pour votre compte:"
 
 msgid "Send"
 msgstr "Envoyer"
@@ -1169,16 +1169,16 @@ msgid ""
 msgstr "Si vous activez cette option, les variantes seront affichées sous forme de boutons au lieu de listes déroulantes."
 
 msgid "Product detail extra tab title"
-msgstr "Titre de l&#39;onglet supplémentaire des détails du produit"
+msgstr "Titre de l'onglet supplémentaire des détails du produit"
 
 msgid "Enter the title for the product detail extra tab."
-msgstr "Saisissez le titre de l&#39;onglet supplémentaire des détails du produit."
+msgstr "Saisissez le titre de l'onglet supplémentaire des détails du produit."
 
 msgid "Product detail extra tab content"
-msgstr "Contenu de l&#39;onglet supplémentaire sur les détails du produit"
+msgstr "Contenu de l'onglet supplémentaire sur les détails du produit"
 
 msgid "Enter the content for the product detail extra tab."
-msgstr "Entrez le contenu de l&#39;onglet supplémentaire des détails du produit."
+msgstr "Entrez le contenu de l'onglet supplémentaire des détails du produit."
 
 msgid "Description"
 msgstr "La description"
@@ -1199,7 +1199,7 @@ msgid "Select all tabs that should be rendered in product details."
 msgstr "Sélectionnez tous les onglets qui doivent être rendus dans les détails du produit."
 
 msgid "Tax number is not valid."
-msgstr "Le numéro de taxe n&#39;est pas valide."
+msgstr "Le numéro de taxe n'est pas valide."
 
 msgid "Edit"
 msgstr "Éditer"
@@ -1209,7 +1209,7 @@ msgid "`{language_code}` is an invalid language code."
 msgstr "`{language_code}` est un code de langue non valide."
 
 msgid "Error! This product is not available in this shop."
-msgstr "Erreur! Ce produit n&#39;est pas disponible dans cette boutique."
+msgstr "Erreur! Ce produit n'est pas disponible dans cette boutique."
 
 #, python-format
 msgid "Maximum file size reached (%(size)s MB)."

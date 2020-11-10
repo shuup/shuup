@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-10-12 18:07+0000\n"
+"PO-Revision-Date: 2020-11-02 13:42+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -29,10 +29,10 @@ msgid "Subject"
 msgstr "Matière"
 
 msgid "Email Template"
-msgstr "Modèle d&#39;e-mail"
+msgstr "Modèle d'e-mail"
 
 msgid "Email Body"
-msgstr "Corps de l&#39;e-mail"
+msgstr "Corps de l'e-mail"
 
 msgid "Content type"
 msgstr "Type de contenu"
@@ -50,7 +50,7 @@ msgid "Blind Carbon Copy (BCC)"
 msgstr "Copie carbone aveugle (BCC)"
 
 msgid "From email"
-msgstr "De l&#39;email"
+msgstr "De l'email"
 
 msgid ""
 "Override the default from email to be used. It can either be binded to a "
@@ -65,12 +65,12 @@ msgid "Fallback language"
 msgstr "Langue de secours"
 
 msgid "Send Identifier"
-msgstr "Envoyer l&#39;identifiant"
+msgstr "Envoyer l'identifiant"
 
 msgid ""
 "If set, this identifier will be logged into the event's log target. If the "
 "identifier has already been logged, the e-mail won't be sent again."
-msgstr "S&#39;il est défini, cet identifiant sera enregistré dans la cible du journal de l&#39;événement. Si l&#39;identifiant a déjà été enregistré, l&#39;e-mail ne sera pas renvoyé."
+msgstr "S'il est défini, cet identifiant sera enregistré dans la cible du journal de l'événement. Si l'identifiant a déjà été enregistré, l'e-mail ne sera pas renvoyé."
 
 msgid "Notifications"
 msgstr "Notifications"
@@ -79,7 +79,7 @@ msgid "Show notification scripts"
 msgstr "Afficher les scripts de notification"
 
 msgid "Email Templates"
-msgstr "Modèles d&#39;e-mails"
+msgstr "Modèles d'e-mails"
 
 msgid "Event"
 msgstr "un événement"
@@ -102,7 +102,7 @@ msgstr "Choisissez si ce script doit être activé lorsque son événement se d�
 msgid ""
 "Warning! Changing the event for an existing script may have unexpected "
 "effects."
-msgstr "Avertissement! La modification de l&#39;événement pour un script existant peut avoir des effets inattendus."
+msgstr "Avertissement! La modification de l'événement pour un script existant peut avoir des effets inattendus."
 
 msgid "Template"
 msgstr "Modèle"
@@ -111,7 +111,7 @@ msgid "Bind to Variable"
 msgstr "Lier à une variable"
 
 msgid "This field is missing content."
-msgstr "Ce champ n&#39;a pas de contenu."
+msgstr "Ce champ n'a pas de contenu."
 
 #, python-format
 msgid "%s has been marked deleted."
@@ -196,7 +196,7 @@ msgid "variable or constant"
 msgstr "variable ou constante"
 
 msgid "continue to the next step"
-msgstr "Continuer à l&#39;étape suivante"
+msgstr "Continuer à l'étape suivante"
 
 msgid "stop processing"
 msgstr "arrêter le traitement"
@@ -228,7 +228,7 @@ msgstr "critique"
 msgid ""
 "Enter the base HTML template to be used in emails. Mark the place to inject "
 "the email content using the variable `%html_body%` inside the body."
-msgstr "Saisissez le modèle HTML de base à utiliser dans les e-mails. Marquez l&#39;endroit pour injecter le contenu de l&#39;e-mail en utilisant la variable `% html_body%` à l&#39;intérieur du corps."
+msgstr "Saisissez le modèle HTML de base à utiliser dans les e-mails. Marquez l'endroit pour injecter le contenu de l'e-mail en utilisant la variable `% html_body%` à l'intérieur du corps."
 
 msgid "shop"
 msgstr "boutique"
@@ -258,7 +258,7 @@ msgid "marked read on"
 msgstr "marqué comme lu"
 
 msgid "event identifier"
-msgstr "identifiant d&#39;événement"
+msgstr "identifiant d'événement"
 
 msgid "name"
 msgstr "Nom"
@@ -270,7 +270,7 @@ msgid "template identifier"
 msgstr "identifiant du modèle"
 
 msgid "the template identifier used to create this script"
-msgstr "l&#39;identifiant du modèle utilisé pour créer ce script"
+msgstr "l'identifiant du modèle utilisé pour créer ce script"
 
 msgid "Password Reset"
 msgstr "Réinitialisation du mot de passe"
@@ -282,7 +282,7 @@ msgid "Site name"
 msgstr "Nom du site"
 
 msgid "User secret"
-msgstr "Secret d&#39;utilisateur"
+msgstr "Secret d'utilisateur"
 
 msgid "User to recover"
 msgstr "Utilisateur à récupérer"
@@ -297,13 +297,13 @@ msgid "To Email"
 msgstr "Envoyer un email"
 
 msgid "The subject of the email"
-msgstr "L&#39;objet de l&#39;e-mail"
+msgstr "L'objet de l'e-mail"
 
 msgid "Email content"
-msgstr "Contenu de l&#39;e-mail"
+msgstr "Contenu de l'e-mail"
 
 msgid "The content of the email."
-msgstr "Le contenu de l&#39;e-mail."
+msgstr "Le contenu de l'e-mail."
 
 msgid "Customer"
 msgstr "Client"
@@ -322,12 +322,12 @@ msgid "Destination"
 msgstr "Destination"
 
 msgid "Fill with the destination email address."
-msgstr "Renseignez l&#39;adresse e-mail de destination."
+msgstr "Renseignez l'adresse e-mail de destination."
 
 msgid ""
 "Recipient is a required field when you don't want to send the email to "
 "customer."
-msgstr "Destinataire est un champ obligatoire lorsque vous ne souhaitez pas envoyer l&#39;e-mail au client."
+msgstr "Destinataire est un champ obligatoire lorsque vous ne souhaitez pas envoyer l'e-mail au client."
 
 msgid ""
 "\n"
@@ -366,7 +366,7 @@ msgid "Script Details"
 msgstr "Détails du script"
 
 msgid "OK"
-msgstr "D&#39;accord"
+msgstr "D'accord"
 
 msgid "Show available variables"
 msgstr "Afficher les variables disponibles"
@@ -384,7 +384,7 @@ msgid "Edit Script"
 msgstr "Modifier le script"
 
 msgid "Edit Step"
-msgstr "Modifier l&#39;étape"
+msgstr "Modifier l'étape"
 
 msgid "Done"
 msgstr "Terminé"

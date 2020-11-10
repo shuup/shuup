@@ -18,4 +18,4 @@ class SimpleCMSTemplateHelpers(object):
 
     @contextfunction
     def get_visible_pages(self, context):
-        return Page.objects.visible(context["request"].shop)
+        return Page.objects.visible(context["request"].shop, user=context["request"].user)

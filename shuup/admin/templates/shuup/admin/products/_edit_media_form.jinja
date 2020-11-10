@@ -3,9 +3,6 @@
 {% set media_form = form[form_def.name] %}
 
 {% macro render_media_form(f, media_form, idx, is_image_form) %}
-    {% for h in f.hidden_fields() %}
-        {{ h|safe }}
-    {% endfor %}
     {%- set is_primary = f.is_primary.value() if is_image_form else None %}
     <div
         class="panel{% if is_primary %} panel-selected{% else %} panel-default{% endif %} pt-4"
@@ -17,6 +14,12 @@
         data-file="__file_id__"
         {% endif %}
     >
+        {% for h in f.hidden_fields() %}
+            {# make sure to not duplicate hidden fields #}
+            {% if h.name not in ("kind", "file") %}
+                {{ h|safe }}
+            {% endif %}
+        {% endfor %}
         <div class="panel-heading d-flex align-items-center pb-1">
           <h4 class="panel-title mr-auto">
               {%- if is_image_form -%}
@@ -40,17 +43,17 @@
             <div class="media-row row align-items-center">
                 <div class="col-2 file-control">
                     {%- set thumbnail = f.get_thumbnail(request) %}
-                            <div class="thumbnail">
-                        {% if thumbnail %}
-                                <a class="thumbnail-image" href="{{ f.file_url }}" target="_blank">
-                                    <img src="{{ thumbnail.url }}" />
-                                </a>
-                        {% elif  f.instance.pk %}
-                                <a class="thumbnail-image thumbnail-file href="{{ f.file_url }}" target="_blank">
-                                    <i class="fa fa-file-o"></i>
-                                </a>
-                        {% endif %}
-                            </div>
+                    <div class="thumbnail">
+                    {% if thumbnail %}
+                        <a class="thumbnail-image" href="{{ f.file_url }}" target="_blank">
+                            <img src="{{ thumbnail.url }}" />
+                        </a>
+                    {% elif f.instance.pk %}
+                        <a class="thumbnail-image thumbnail-file" href="{{ f.file_url }}" target="_blank">
+                            <i class="fa fa-file-o"></i>
+                        </a>
+                    {% endif %}
+                    </div>
                     {{ f.file }}
                 </div>
                 <div class="col extra-fields">

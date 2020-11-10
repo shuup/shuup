@@ -55,7 +55,7 @@ msgid "Details"
 msgstr "Détails"
 
 msgid "You haven't saved any carts yet."
-msgstr "Vous n&#39;avez encore enregistré aucun panier."
+msgstr "Vous n'avez encore enregistré aucun panier."
 
 msgid "Add all products to cart"
 msgstr "Ajouter tous les produits au panier"
@@ -67,10 +67,10 @@ msgid "Please enter a basket title."
 msgstr "Veuillez saisir un titre de panier."
 
 msgid "Can't save an empty basket."
-msgstr "Impossible d&#39;enregistrer un panier vide."
+msgstr "Impossible d'enregistrer un panier vide."
 
 msgid "Product is not available in this shop."
-msgstr "Le produit n&#39;est pas disponible dans cette boutique."
+msgstr "Le produit n'est pas disponible dans cette boutique."
 
 msgid "Invalid supplier."
 msgstr "Fournisseur non valide."

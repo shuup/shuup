@@ -97,15 +97,12 @@ class BasketLine(SourceLine):
         return (self.type == OrderLineType.PRODUCT and self.line_source != LineSource.DISCOUNT_MODULE)
 
 
-class _DataValueProperty(object):
-    def __init__(self, name, default=None):
+class _ExtraDataContainerProperty(object):
+    def __init__(self, name):
         self.name = name
-        self.default = default
 
-    def __get__(self, instance, type=None):
-        if instance is None:
-            return self
-        return instance._get_value_from_data(self.name) or self.default
+    def __get__(self, instance: 'BaseBasket', *args, **kwargs):
+        return instance._get_value_from_data(self.name, initialize_with={})
 
     def __set__(self, instance, value):
         instance._set_value_to_data(self.name, value)
@@ -119,11 +116,13 @@ class BaseBasket(OrderSource):
         self.key = basket_name
         if request:
             self.ip_address = get_client_ip(request)
+
         self.storage = get_storage()
         self._data = None
+
         self._shipping_address = None
         self._billing_address = None
-        self._customer_comment = u""
+        self._customer_comment = ""
         self.creator = getattr(request, "user", None)
 
         # {Note: Being "dirty" means "not saved".  It's independent of
@@ -148,6 +147,13 @@ class BaseBasket(OrderSource):
         :return: Data dict.
         :rtype: dict
         """
+
+        # This can happen when the object is not loaded yet
+        # Usually when __init__ calls super().__init__()
+        # and OrderSource starts initializing the instance attributes
+        if not hasattr(self, "_data"):
+            return
+
         if self._data is None:
             try:
                 self._data = self.storage.load(basket=self)
@@ -205,12 +211,25 @@ class BaseBasket(OrderSource):
         self.customer_comment = ""
 
     def _set_value_to_data(self, field_attr, value):
-        if hasattr(self, "_data"):
-            self._load()[field_attr] = value
+        self._load()
 
-    def _get_value_from_data(self, field_attr):
-        if hasattr(self, "_data") and self._load().get(field_attr):
-            return self._load()[field_attr]
+        # Check _load() comments to see why this can happen
+        if not hasattr(self, "_data"):
+            return
+
+        self._data[field_attr] = value
+
+    def _get_value_from_data(self, field_attr, initialize_with=None):
+        self._load()
+
+        # Check _load() comments to see why this can happen
+        if not hasattr(self, "_data"):
+            return
+
+        if field_attr not in self._data and initialize_with is not None:
+            self._data[field_attr] = initialize_with
+
+        return self._data.get(field_attr)
 
     @property
     def customer(self):
@@ -343,9 +362,9 @@ class BaseBasket(OrderSource):
         self._customer_comment = value or ""
         self._set_value_to_data("customer_comment", value or "")
 
-    extra_data = _DataValueProperty('extra_data', {})
-    shipping_data = _DataValueProperty('shipping_data', {})
-    payment_data = _DataValueProperty('payment_data', {})
+    extra_data = _ExtraDataContainerProperty('extra_data')
+    shipping_data = _ExtraDataContainerProperty('shipping_data')
+    payment_data = _ExtraDataContainerProperty('payment_data')
 
     @property
     def _data_lines(self):
@@ -359,7 +378,8 @@ class BaseBasket(OrderSource):
         :return: List of data dicts.
         :rtype: list[dict]
         """
-        return self._load().setdefault("lines", [])
+        self._load()
+        return self._data.setdefault("lines", [])
 
     @_data_lines.setter
     def _data_lines(self, new_lines):
@@ -373,7 +393,13 @@ class BaseBasket(OrderSource):
         :param new_lines: New list of lines.
         :type new_lines: list[dict]
         """
-        self._load()["lines"] = new_lines
+        self._load()
+
+        # Check _load() comments to see why this can happen
+        if not hasattr(self, "_data"):
+            return
+
+        self._data["lines"] = new_lines
         self.dirty = True
         self.uncache()
 
@@ -387,12 +413,18 @@ class BaseBasket(OrderSource):
 
     @property
     def _codes(self):
-        return self._load().setdefault("codes", [])
+        self._load()
+        return self._data.setdefault("codes", [])
 
     @_codes.setter
     def _codes(self, value):
-        if hasattr(self, "_data"):  # Check that we're initialized
-            self._load()["codes"] = value
+        self._load()
+
+        # Check _load() comments to see why this can happen
+        if not hasattr(self, "_data"):
+            return
+
+        self._data["codes"] = value
 
     def add_code(self, code):
         modified = super(BaseBasket, self).add_code(code)

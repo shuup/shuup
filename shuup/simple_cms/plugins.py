@@ -97,14 +97,16 @@ class PageLinksPlugin(TemplatedPlugin):
         show_all_pages = self.config.get("show_all_pages", True)
         hide_expired = self.config.get("hide_expired", False)
 
-        pages_qs = Page.objects.prefetch_related("translations")
+        pages_qs = Page.objects.prefetch_related("translations").not_deleted()
+
         if hide_expired:
-            pages_qs = pages_qs.visible(context["request"].shop)
+            pages_qs = pages_qs.visible(context["request"].shop, user=context["request"].user)
+        else:
+            pages_qs = pages_qs.for_shop(context["request"].shop).for_user(user=context["request"].user)
 
         if not show_all_pages:
             pages_qs = pages_qs.filter(id__in=selected_pages)
 
-        pages_qs = pages_qs.for_shop(context["request"].shop).filter(deleted=False)
         pages_qs = order_query_by_values(pages_qs, selected_pages)
 
         return {

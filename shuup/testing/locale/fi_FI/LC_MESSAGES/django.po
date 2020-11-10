@@ -12,7 +12,7 @@
 # Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Panu Tulimäki <panu@shuup.com>, 2018,2020
-# Rauli L. <rauli.laine@iki.fi>, 2015
+# Rauli Laine <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tomi Järvi <tomi@jarvi.pro>, 2015
@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-09-29 08:16+0000\n"
+"PO-Revision-Date: 2020-10-15 13:37+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -96,7 +96,7 @@ msgid ""
 "We will create a 'Terms & Conditions' template for you. We will base content"
 " of the page on your shop information. After we are done, you must review "
 "the page and change it accordingly."
-msgstr ""
+msgstr "Luomme sinulle käyttöehdot-mallin. Perustamme sivun sisällön ostoksesi tietoihin. Kun olemme valmis, sinun on tarkistettava sivu ja muutettava sitä vastaavasti."
 
 msgid "Create Refund Policy page"
 msgstr "Luo hyvityskäytäntö -sivu"
@@ -165,11 +165,11 @@ msgstr "Tämä on %(sku)s"
 
 msgid ""
 "There is a sample data installed. Search `Sample Data` for more information."
-msgstr ""
+msgstr "Näyte on asennettu. Hae lisätietoja `` Näytetiedoista``."
 
 msgid ""
 "There is a sample data installed. Click here to consolidate or delete them."
-msgstr ""
+msgstr "Näyte on asennettu. Yhdistä tai poista ne napsauttamalla tätä."
 
 msgid "Sample Data"
 msgstr "Näytetiedot"
@@ -264,19 +264,19 @@ msgid "Install Categories"
 msgstr "Asenna luokat"
 
 msgid "Enable this to install sample categories."
-msgstr ""
+msgstr "Ota tämä käyttöön asentaaksesi esimerkkiluokkia."
 
 msgid "Install Products"
 msgstr "Asenna tuotteet"
 
 msgid "Enable this to install sample products."
-msgstr ""
+msgstr "Ota tämä käyttöön asentaaksesi esimerkkituotteita."
 
 msgid "Install Carousel"
 msgstr "Asenna Karuselli"
 
 msgid "Enable this to install a sample carousel."
-msgstr ""
+msgstr "Ota tämä käyttöön, jos haluat asentaa näytekarusellin."
 
 msgid "Uninstall Categories"
 msgstr "Poista luokat"
@@ -288,14 +288,14 @@ msgid "Uninstall Carousel"
 msgstr "Poista Carousel asennus"
 
 msgid "Sample data were consolidated."
-msgstr ""
+msgstr "Näytetiedot yhdistettiin."
 
 msgid ""
 "To start shopping right now, please install some sample data into your shop"
 msgstr "Aloita ostaminen heti asentamalla näytetietoja kauppaan"
 
 msgid "You must have the Access to Admin Panel permission."
-msgstr ""
+msgstr "Sinulla on oltava pääsy hallintapaneeliin."
 
 msgid "Supplier Pricing"
 msgstr "Toimittajan hinnoittelu"

@@ -474,7 +474,7 @@ class BaseProductMediaFormSet(BaseModelFormSet):
         qs = ProductMedia.objects.filter(product=self.product)
         if self.allowed_media_kinds:
             qs = qs.filter(kind__in=self.allowed_media_kinds)
-        return qs
+        return qs.distinct()
 
     def form(self, **kwargs):
         kwargs.setdefault("languages", self.languages)

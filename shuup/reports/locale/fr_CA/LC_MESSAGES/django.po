@@ -34,7 +34,7 @@ msgid "Custom"
 msgstr "Douane"
 
 msgid "Today"
-msgstr "Aujourd&#39;hui"
+msgstr "Aujourd'hui"
 
 msgid "Running Week (last 7 days)"
 msgstr "Semaine de course (7 derniers jours)"

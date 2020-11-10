@@ -31,7 +31,7 @@ msgid "Email Subject"
 msgstr "Sujet du courriel"
 
 msgid "Email Body"
-msgstr "Corps de l&#39;e-mail"
+msgstr "Corps de l'e-mail"
 
 #, python-format
 msgid ""
@@ -73,7 +73,7 @@ msgid "Shipped products"
 msgstr "Produits expédiés"
 
 msgid "Payment and shipping methods"
-msgstr "Modes de paiement et d&#39;expédition"
+msgstr "Modes de paiement et d'expédition"
 
 msgid "Order number"
 msgstr "Numéro de commande"
@@ -85,7 +85,7 @@ msgid "Payment status"
 msgstr "Statut de paiement"
 
 msgid "Shipping status"
-msgstr "Statut d&#39;envoi"
+msgstr "Statut d'envoi"
 
 #, python-format
 msgid "Tracking code #%(index)s"
@@ -101,7 +101,7 @@ msgid "Identifier"
 msgstr "Identifiant"
 
 msgid "Shipment date"
-msgstr "Date d&#39;expédition"
+msgstr "Date d'expédition"
 
 msgid "Tracking code"
 msgstr "Code de suivi"
@@ -173,4 +173,4 @@ msgid "Email was sent."
 msgstr "Un e-mail a été envoyé."
 
 msgid "Could not sent the email, please try again."
-msgstr "Impossible d&#39;envoyer l&#39;e-mail, veuillez réessayer."
+msgstr "Impossible d'envoyer l'e-mail, veuillez réessayer."

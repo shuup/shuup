@@ -7,6 +7,7 @@
 import datetime
 
 import pytest
+from django.contrib.auth.models import Group
 from django.core.cache import cache
 from django.http.response import Http404
 from django.utils import translation
@@ -148,3 +149,31 @@ def test_render_page_title(rf):
     soup = BeautifulSoup(response.content)
     title = soup.find("h1", class_= "page-header").text
     assert title == "\n"
+
+
+@pytest.mark.django_db
+def test_page_permission_group(rf):
+    shop = get_default_shop()
+    page = create_page(available_from=datetime.date(1988, 1, 1), shop=shop)
+    permitted_group = Group.objects.create(name="Permitted")
+    page.available_permission_groups.add(permitted_group)
+    view_func = PageView.as_view()
+
+    # not available for anonymous
+    request = apply_request_middleware(rf.get("/"))
+    with pytest.raises(Http404):
+        response = view_func(request, url=page.url)
+
+    # not available for wrong user group
+    user = create_random_user()
+    request = apply_request_middleware(rf.get("/"), user=user)
+    with pytest.raises(Http404):
+        response = view_func(request, url=page.url)
+
+    # available for correct user group
+    user.groups.add(permitted_group)
+    request = apply_request_middleware(rf.get("/"), user=user)
+    response = view_func(request, url=page.url)
+    assert response.status_code == 200
+    response.render()
+    assert "<h1>Bacon ipsum" in response.rendered_content

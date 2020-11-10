@@ -6,9 +6,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-List all changes after the last release here (newer on top). Each change on a separate bullet point line.
+List all changes after the last release here (newer on top). Each change on a separate bullet point line
+
+### Changed
 
 - Don't display taxless price when it's equal to taxful in checkout
+
+### Added
+
+- SimpleCMS: Add field to limit a page availability by permission group
+
+## [2.2.4] - 2020-11-09
+
+### Fixed
+
+- Core: Fix basket implementation that was using the same memory
+object for all baskets instances in the same process
+
+## [2.2.3] - 2020-11-05
+
+### Fixed
+
+- Add missing id field to the media forms
+
+
+## [2.2.2] - 2020-11-03
+
+### Fixed
+
+- Prevent duplicate images in product media form
+- Do not render duplicate hidden media form field
+
+
+## [2.2.1] - 2020-11-02
+
+### Changed
+
+- Update French, Finnish and Swedish translations
+- Change the Supplier.objects.enabled() filter to only return approved suppliers
+
+### Changed
+
+- Admin: Show a loader in place of picotable when a request is pending.
 
 ## [2.2.0] - 2020-10-23
 

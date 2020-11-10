@@ -36,7 +36,7 @@ msgstr "Afficher les types de tâches"
 #, python-brace-format
 msgid "Changed assigment from {from_contact_name} to {to_contact_name}."
 msgstr ""
-"L&#39;assignation a été modifiée de {from_contact_name} à {to_contact_name}."
+"L'assignation a été modifiée de {from_contact_name} à {to_contact_name}."
 
 msgid "Set In Progress"
 msgstr "Définir en cours"
