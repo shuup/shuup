@@ -218,6 +218,8 @@ class BaseBasket(OrderSource):
             return
 
         self._data[field_attr] = value
+        # mark the basket as changed
+        self.dirty = True
 
     def _get_value_from_data(self, field_attr, initialize_with=None):
         self._load()
