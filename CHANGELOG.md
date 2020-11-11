@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Include products belonging to child categories of filtered category
+
 ## [2.2.5] - 2020-11-12
 
 ### Fixed

@@ -63,7 +63,7 @@ class CategoryView(DetailView):
         return {
             "shop_products__shop": self.request.shop,
             "variation_parent__isnull": True,
-            "shop_products__categories": self.object,
+            "shop_products__categories__in": self.object.get_descendants(include_self=True),
             "shop_products__suppliers__in": Supplier.objects.enabled(shop=self.request.shop)
         }
 
