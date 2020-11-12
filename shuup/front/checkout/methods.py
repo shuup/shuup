@@ -123,6 +123,9 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
         self.basket.shipping_method_id = shipping_method.pk if shipping_method else None
         self.basket.payment_method_id = payment_method.pk if payment_method else None
 
+        # force recalculate lines
+        self.basket.uncache()
+
     def get_form_kwargs(self):
         kwargs = super(MethodsPhase, self).get_form_kwargs()
         kwargs["request"] = self.request
