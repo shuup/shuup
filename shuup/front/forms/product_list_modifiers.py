@@ -372,7 +372,8 @@ class CategoryProductListFilter(SimpleProductListModifier):
 
         categories = [cat.strip() for cat in categories if cat]
         if categories:
-            return Q(shop_products__categories__in=categories)
+            return Q(shop_products__categories__in=Category.objects.get_queryset_descendants(
+                Category.objects.filter(pk__in=categories), include_self=True))
 
     def get_admin_fields(self):
         default_fields = super(CategoryProductListFilter, self).get_admin_fields()
