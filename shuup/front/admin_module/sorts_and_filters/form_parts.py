@@ -25,6 +25,12 @@ class ConfigurationForm(forms.Form):
                 self.fields[field_key] = field
                 self.form_module_map[field_key] = extend_class
 
+    def clean(self):
+        cleaned_data = super(ConfigurationForm, self).clean()
+        for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
+            extend_class().admin_clean_hook(self)
+        return cleaned_data
+
 
 class ConfigurationShopFormPart(FormPart):
     priority = 7

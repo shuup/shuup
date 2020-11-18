@@ -159,6 +159,21 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         """
         pass
 
+    def admin_clean_hook(self, form):
+        """
+        Extra clean for configuration form.
+
+        This hook will be called in `~Django.forms.Form.clean` method of
+        the form, after calling parent clean.  Implementor of this hook
+        may call `~Django.forms.Form.add_error` to add errors to form or
+        modify the ``form.cleaned_data`` dictionary.
+
+        :param form: Form that is currently cleaned
+        :type form: ConfigurationForm
+        :rtype: None
+        """
+        pass
+
     def clean_hook(self, form):
         """
         Extra clean for product list form.
