@@ -37,7 +37,7 @@ class PermissionChangeFormBase(forms.ModelForm):
     def __init__(self, changing_user, *args, **kwargs):
         super(PermissionChangeFormBase, self).__init__(*args, **kwargs)
         self.changing_user = changing_user
-        if getattr(self.instance, 'is_superuser', False) and not getattr(self.changing_user, 'is_superuser', False):
+        if not getattr(self.changing_user, 'is_superuser', False):
             self.fields.pop("is_superuser")
 
         if not (
@@ -47,13 +47,14 @@ class PermissionChangeFormBase(forms.ModelForm):
             # Only require old password when editing
             self.fields.pop("old_password")
 
-        self.fields["is_superuser"].label = _("Superuser (Full rights) status")
-        self.fields["is_superuser"].help_text = _(
-            "Designates whether this user has all permissions without explicitly "
-            "assigning them. Assigning Granular Permission Groups to a Superuser "
-            "will not have any effect because Granular Permission Groups are only "
-            " able to give more rights, but Superuser already has them all."
-        )
+        if "is_superuser" in self.fields:
+            self.fields["is_superuser"].label = _("Superuser (Full rights) status")
+            self.fields["is_superuser"].help_text = _(
+                "Designates whether this user has all permissions without explicitly "
+                "assigning them. Assigning Granular Permission Groups to a Superuser "
+                "will not have any effect because Granular Permission Groups are only "
+                " able to give more rights, but Superuser already has them all."
+            )
         self.fields["is_staff"].label = _("Access to Admin Panel status")
         self.fields["is_staff"].help_text = _(
             "Designates whether this user can log into this admin site. Even "

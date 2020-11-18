@@ -8,9 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+
 ### Added
 
 - Include products belonging to child categories of filtered category
+
+### Changed
+
+Admin: do not allow non-superusers manage superusers
+  - Do not show is_superuser field for non-superusers no matter
+    who they are editing
+  - Do not show superuser column in list since the superusers are
+    already filtered out from non-superusers who are main people
+    using the admin panel.
+
 
 ## [2.2.5] - 2020-11-12
 

@@ -31,7 +31,6 @@ class UserListView(PicotableListView):
             filter_config=ChoicesFilter([(False, _("no")), (True, _("yes"))], default=True),
         ),
         Column("is_staff", _(u"Access to Admin Panel"), filter_config=true_or_false_filter),
-        Column("is_superuser", _(u"Superuser (Full rights)"), filter_config=true_or_false_filter),
     ]
     toolbar_buttons_provider_key = "user_list_toolbar_provider"
     mass_actions_provider_key = "user_list_mass_actions_provider"
