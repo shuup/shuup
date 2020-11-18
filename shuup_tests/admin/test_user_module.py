@@ -31,8 +31,8 @@ from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.admin.views.impersonate import stop_impersonating_staff
 from shuup.core.models import Contact, get_person_contact
 from shuup.testing.factories import (
-    create_random_person, get_default_permission_group, get_default_shop,
-    UserFactory
+    create_random_person, create_random_user, get_default_permission_group,
+    get_default_shop, UserFactory
 )
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
@@ -254,6 +254,36 @@ def test_user_create(rf, admin_user):
     last_user = get_user_model().objects.last()
     # superuser shouldn't be added to staff members
     assert last_user not in shop.staff_members.all()
+
+
+@pytest.mark.django_db
+def test_user_permission_view_as_staff_user(rf, admin_user):
+    shop = get_default_shop()
+    staff = create_random_user(is_staff=True)
+    shop.staff_members.set([staff])
+
+    user = create_random_user()
+
+    # Staff shouldn't be able to see superuser status
+    view_func = UserChangePermissionsView.as_view()
+    response = view_func(
+        apply_request_middleware(rf.get("/"), user=staff),
+        pk=user.id
+    )
+    assert response.status_code == 200
+    response.render()
+    assert "Superuser (Full rights) status" not in force_text(response.content)
+
+    # Superuser can see the superuser status
+    assert admin_user.is_superuser
+    view_func = UserChangePermissionsView.as_view()
+    response = view_func(
+        apply_request_middleware(rf.get("/"), user=admin_user),
+        pk=user.id
+    )
+    assert response.status_code == 200
+    response.render()
+    assert "Superuser (Full rights) status" in force_text(response.content)
 
 
 @pytest.mark.django_db
