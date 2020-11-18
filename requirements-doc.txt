@@ -31,7 +31,7 @@ idna==2.10                # via requests
 imagesize==1.2.0          # via sphinx
 importlib-metadata==2.0.0  # via markdown, keyring
 jdcal==1.4.1              # via openpyxl
-jinja2==2.8.1             # via sphinx, django-jinja, shuup
+jinja2==2.10.1             # via sphinx, django-jinja, shuup
 jsonfield==2.1.1          # via shuup
 keyring==21.4.0           # via shuup
 keyrings.alt==4.0.0       # via shuup
