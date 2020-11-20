@@ -186,7 +186,7 @@ def test_user_create(rf, admin_user):
     assert response.status_code == 302
     assert get_user_model().objects.count() == before_count + 2
     last_user = get_user_model().objects.last()
-    assert last_user in shop.staff_members.all()
+    assert last_user not in shop.staff_members.all()
     assert len(mail.outbox) == 1, "mail sent"
 
     user = get_user_model().objects.create(
@@ -212,14 +212,14 @@ def test_user_create(rf, admin_user):
     last_user = get_user_model().objects.last()
     assert last_user not in shop.staff_members.all()
 
-    # add again
+    # add again, the member should not be inside shop staff member list
     view_func = UserChangePermissionsView.as_view()
     response = view_func(apply_request_middleware(rf.post("/", {
         "is_staff": True
     }), user=admin_user), pk=last_user.id)
     assert response.status_code == 302
     last_user = get_user_model().objects.last()
-    assert last_user in shop.staff_members.all()
+    assert last_user not in shop.staff_members.all()
 
     # create a superuser
     view_func = UserDetailView.as_view()
@@ -505,7 +505,7 @@ def test_login_as_staff_user(rf, admin_user):
     get_default_shop()
     staff_user = UserFactory(is_staff=True)
     view_func = LoginAsStaffUserView.as_view()
-    
+
     request = apply_request_middleware(rf.post("/"), user=admin_user)
     context = dict(request=request)
     assert get_logout_url(context) == "/sa/logout/"
@@ -548,7 +548,7 @@ def test_login_as_staff_as_staff(rf):
     shop.staff_members.add(staff_user1)
 
     staff_user2 = UserFactory(is_staff=True)
-    
+
     view_func = LoginAsStaffUserView.as_view()
     request = apply_request_middleware(rf.post("/"), user=staff_user1)
     with pytest.raises(PermissionDenied):
