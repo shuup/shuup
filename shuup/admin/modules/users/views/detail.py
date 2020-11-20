@@ -309,14 +309,6 @@ class UserDetailView(CreateOrUpdateView):
         self.object = form.save()
         contact = self._get_bind_contact()
 
-        # only touch in shop staff (Access to Admin Panel) member if the user is not a superuser
-        if not getattr(self.object, "is_superuser", False):
-            shop = get_shop(self.request)
-            if getattr(self.object, "is_staff", False):
-                shop.staff_members.add(self.object)
-            else:
-                shop.staff_members.remove(self.object)
-
         if contact and not contact.user:
             contact.user = self.object
             contact.save()

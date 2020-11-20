@@ -18,7 +18,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.utils.django_compat import force_text
@@ -161,14 +160,6 @@ class UserChangePermissionsView(UpdateView):
 
     def form_valid(self, form):
         form.save()
-
-        if not getattr(self.object, "is_superuser", False):
-            shop = get_shop(self.request)
-            if getattr(self.object, "is_staff", False):
-                shop.staff_members.add(self.object)
-            else:
-                shop.staff_members.remove(self.object)
-
         messages.success(self.request, _("Permissions changed for %s.") % self.object)
         return HttpResponseRedirect(self.get_success_url())
 
