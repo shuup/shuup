@@ -202,7 +202,7 @@ def get_active_consent_pages(shop):
     from shuup.gdpr.models import GDPRSettings
     gdpr_settings = GDPRSettings.get_for_shop(shop)
     if not gdpr_settings.enabled:
-        return False  # nothing to do.
+        return []  # nothing to do.
     ids = [page.id for page in gdpr_settings.consent_pages.all()]
     if gdpr_settings.privacy_policy_page:
         ids.append(gdpr_settings.privacy_policy_page.pk)

@@ -12,11 +12,18 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Add font size 16 to summernote text editor
 
+### Fixed
+
+- GDPR: make sure to return a blank list in the `get_active_consent_pages`
+  method when there is no page to consent
+
+
 ## [2.2.7] - 2020-11-20
 
 ### Fixed
 
 - Admin: do not add/remove shop staff member while saving a staff user
+
 
 ## [2.2.6] - 2020-11-17
 
