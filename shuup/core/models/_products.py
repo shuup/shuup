@@ -327,7 +327,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     # Misc.
     manufacturer = models.ForeignKey(
         "Manufacturer", blank=True, null=True,
-        verbose_name=_('manufacturer'), on_delete=models.PROTECT, help_text=_(
+        verbose_name=_('manufacturer'), on_delete=models.SET_NULL, help_text=_(
             "Select a manufacturer for your product. To define these, search for `Manufacturers`."
         )
     )
