@@ -8,9 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.2.9] - 2020-11-23
+
+### Changed
+
+- Core: Increase field lengths in *LogEntry models
+  - Add an index to the indentifier for faster querying.
+  - Use the same error prevention measures for message than is done for
+    identifier in _add_log_entry() for consistency.
+
 ### Fixed
 
-- Core: Fix `ProtectedError` when deleting a `Manufacturer` which was still connected to product(s).
+- Core: Fix `ProtectedError` when deleting a `Manufacturer` which was still
+  connected to product(s).
+
 
 ## [2.2.8] - 2020-11-23
 
