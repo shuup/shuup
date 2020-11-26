@@ -40,8 +40,8 @@ class BaseLogEntry(models.Model):
     target = None  # This will be overridden dynamically
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT, verbose_name=_("user"))
-    message = models.CharField(max_length=256, verbose_name=_("message"))
-    identifier = models.CharField(max_length=64, blank=True, verbose_name=_("identifier"))
+    message = models.CharField(max_length=1024, verbose_name=_("message"))
+    identifier = models.CharField(max_length=256, db_index=True, blank=True, verbose_name=_("identifier"))
     kind = EnumIntegerField(LogEntryKind, default=LogEntryKind.OTHER, verbose_name=_("log entry kind"))
     extra = JSONField(null=True, blank=True, verbose_name=_("extra data"))
 
@@ -77,8 +77,8 @@ def define_log_model(model_class):
             user = None
         log_entry = log_entry_class(
             target=self,
-            message=message,
-            identifier=force_text(identifier or "", errors="ignore")[:64],
+            message=force_text(message or "", errors="ignore")[:1024],
+            identifier=force_text(identifier or "", errors="ignore")[:256],
             user=user,
             kind=kind,
             extra=(extra or None),
