@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     'shuup.gdpr',
     'shuup.tasks',
     'shuup.discounts',
+    'shuup_api',
+    'shuup_rest_api',
 
     # external apps
     'bootstrap3',

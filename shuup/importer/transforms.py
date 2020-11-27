@@ -41,8 +41,9 @@ class XLSRowYielder(RowYielder):
 
 class XLSXRowYielder(RowYielder):
     def __iter__(self):
+        from django.utils.encoding import force_text
         for row in self.sheet_or_data.rows:
-            yield self.transform_values([cell.value for cell in row])
+            yield self.transform_values([(force_text(cell.value) if cell.value else None) for cell in row])
 
 
 class TransformedData(object):
