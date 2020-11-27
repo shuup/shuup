@@ -7,11 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from django.dispatch import receiver
 
+from shuup.gdpr.models import GDPRSettings
 from shuup.front.signals import (
     checkout_complete, company_registration_save, login_allowed,
     person_registration_save
 )
 from shuup.gdpr.utils import create_user_consent_for_all_documents
+from shuup.utils.djangoenv import has_installed
 
 
 @receiver(company_registration_save)
@@ -31,4 +33,8 @@ def create_consents_login_allowed(sender, request, user, *args, **kwargs):
 
 @receiver(checkout_complete)
 def create_consents_checkout_complete(sender, request, user, order, *args, **kwargs):
-    create_user_consent_for_all_documents(request.shop, user)
+    gdpr_settings = GDPRSettings.get_for_shop(request.shop)
+    if not user.is_authenticated() and has_installed("shuup.gdpr") and gdpr_settings.enabled:
+        create_user_consent_for_all_documents(request.shop, order.orderer.user)
+    else:
+        create_user_consent_for_all_documents(request.shop, user)

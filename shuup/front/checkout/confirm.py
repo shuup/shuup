@@ -10,15 +10,18 @@ from logging import getLogger
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import OrderStatus
+from shuup.core.models import AnonymousContact, OrderStatus, get_person_contact
 from shuup.front.basket import get_basket_order_creator
 from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.front.signals import checkout_complete
+from shuup.gdpr.models import GDPRSettings
+from shuup.utils.djangoenv import has_installed
 
 logger = getLogger(__name__)
 
@@ -97,6 +100,29 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         context["product_ids"] = ','.join(self._get_product_ids())
         return context
 
+    def _get_guest_order_data_with_gdpr(self):
+        basket = self.basket
+        first_name = basket._billing_address.name
+        last_name = basket._billing_address.name_ext
+        email = basket._billing_address.email
+        basket._billing_address.save()
+        basket._shipping_address.save()
+        user, created = User.objects.get_or_create(
+            username=email,
+            defaults={
+                'email': email,
+                'first_name': first_name,
+                'last_name': last_name,
+                'is_active': False,
+            }
+        )
+        user.first_name = first_name
+        user.last_name = last_name
+        user.is_active = False
+        user.save()
+        contact = get_person_contact(user)
+        return contact, user
+
     def form_valid(self, form):
         for key, value in form.cleaned_data.items():
             self.storage[key] = value
@@ -123,9 +149,16 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
     def create_order(self):
         basket = self.basket
         assert basket.shop == self.request.shop
-        basket.orderer = self.request.person
-        basket.customer = self.request.customer
-        basket.creator = self.request.user
+        gdpr_settings = GDPRSettings.get_for_shop(basket.shop)
+        if type(self.request.person) == AnonymousContact and has_installed("shuup.gdpr") and gdpr_settings.enabled:
+            contact, user = self._get_guest_order_data_with_gdpr()
+            basket.orderer = contact
+            basket.customer = contact
+            basket.creator = user
+        else:
+            basket.orderer = self.request.person
+            basket.customer = self.request.customer
+            basket.creator = self.request.user
         if "impersonator_user_id" in self.request.session:
             basket.creator = get_user_model().objects.get(pk=self.request.session["impersonator_user_id"])
         basket.status = OrderStatus.objects.get_default_initial()
