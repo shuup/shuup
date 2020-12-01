@@ -113,32 +113,25 @@
                             <dt>{% trans %}Available Until{% endtrans %}</dt>
                             <dd>{{ shop_product.available_until|date }}</dd>
                         {% endif %}
+                        {% set mass_unit, length_unit = get_mass_and_length_units() %}
                         {% if product.width or product.height or product.depth %}
                             <dt>{% trans %}Width{% endtrans %}</dt>
-                            <dd>{{ product.width|floatformat(2) }} mm</dd>
+                            <dd>{{ product.width|floatformat(2) }} {{ length_unit }}</dd>
                             <dt>{% trans %}Height{% endtrans %}</dt>
-                            <dd>{{ product.height|floatformat(2) }} mm</dd>
+                            <dd>{{ product.height|floatformat(2) }} {{ length_unit }}</dd>
                             <dt>{% trans %}Depth{% endtrans %}</dt>
-                            <dd>{{ product.depth|floatformat(2) }} mm</dd>
+                            <dd>{{ product.depth|floatformat(2) }} {{ length_unit }}</dd>
                         {% endif %}
                         {% if product.net_weight %}
                             <dt>{% trans %}Net Weight{% endtrans %}</dt>
                             <dd>
-                                {% if product.net_weight < 1000 %}
-                                    {{ product.net_weight|floatformat(2) }} g
-                                {% else %}
-                                    {{ (product.net_weight / 1000)|floatformat(2) }} kg
-                                {% endif %}
+                                {{ product.net_weight|floatformat(2) }} {{ mass_unit }}
                             </dd>
                         {% endif %}
                         {% if product.gross_weight %}
                             <dt>{% trans %}Gross Weight{% endtrans %}</dt>
                             <dd>
-                                {% if product.gross_weight < 1000 %}
-                                    {{ product.gross_weight|floatformat(2) }} g
-                                {% else %}
-                                    {{ (product.gross_weight / 1000)|floatformat(2) }} kg
-                                {% endif %}
+                                {{ product.gross_weight|floatformat(2) }} {{ mass_unit }}
                             </dd>
                         {% endif %}
                         {% if product.external_link %}
