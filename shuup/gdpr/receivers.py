@@ -31,4 +31,5 @@ def create_consents_login_allowed(sender, request, user, *args, **kwargs):
 
 @receiver(checkout_complete)
 def create_consents_checkout_complete(sender, request, user, order, *args, **kwargs):
-    create_user_consent_for_all_documents(request.shop, user)
+    if user.is_authenticated:
+        create_user_consent_for_all_documents(request.shop, user)
