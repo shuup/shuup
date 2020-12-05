@@ -83,7 +83,7 @@ utils.add_exclude_patters([
 REQUIRES = [
     'Babel==2.5.3',
     'bleach==3.1.5',
-    'django>=1.11,<2.3',
+    'django>=2.2,<3.3',
     'django-bootstrap3>=11,<11.1',
     'django-countries>=6.1.2,<6.2',
     'django-enumfields>=2.0.0,<2.1',
