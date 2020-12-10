@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Dashboard: Sorting of dashboard items by ordering number
+
 ## [2.2.11] - 2020-12-08
 
 ### Fixed
