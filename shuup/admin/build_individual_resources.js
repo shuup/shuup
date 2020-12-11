@@ -14,7 +14,6 @@ const srcFiles = [
   { entry: "modules/media/static_src/media/browser/Browser.js", name: "media-browser" },
   { entry: "modules/orders/static_src/create/index.js", name: "order-creator" },
   { entry: "static_src/product/edit_media.js", name: "product" },
-  { entry: "modules/products/static_src/product-variation-variable-editor.js"},
   { entry: "static_src/wizard/js/wizard.js"},
 ];
 

@@ -57,11 +57,6 @@ class ProductModule(AdminModule):
                 name="shop_product.edit_cross_sell"
             ),
             admin_url(
-                r"^products/(?P<pk>\d+)/variation/$",
-                "shuup.admin.modules.products.views.ProductVariationView",
-                name="shop_product.edit_variation"
-            ),
-            admin_url(
                 r"^products/(?P<pk>\d+)/package/$", "shuup.admin.modules.products.views.ProductPackageView",
                 name="shop_product.edit_package"
             ),

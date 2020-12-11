@@ -23,7 +23,6 @@ class ProductActionCategory(Enum):
     MAIN = 1
     CHILD_CROSS_SELL = 2
     CHILD_PACKAGE = 3
-    CHILD_VARIATION = 4
     CHILD_OTHER = 5
 
 
@@ -91,9 +90,6 @@ class EditProductToolbar(Toolbar):
     def _get_package_url(self, product):
         return reverse("shuup_admin:shop_product.edit_package", kwargs={"pk": product.pk})
 
-    def _get_variation_url(self, product):
-        return reverse("shuup_admin:shop_product.edit_variation", kwargs={"pk": product.pk})
-
     def _get_children_items(self, children):
         for child in children:
             yield DropdownItem(
@@ -115,23 +111,6 @@ class EditProductToolbar(Toolbar):
                 url=get_model_url(sib, shop=self.request.shop),
             )
 
-    def _get_variation_menu_items(self, product):
-        for item in self._get_header_items(_("Variations"), identifier=ProductActionCategory.CHILD_VARIATION):
-            yield item
-
-        yield DropdownItem(
-            text=_("Manage Variations"),
-            icon="fa fa-sitemap",
-            url=self._get_variation_url(product),
-        )
-
-        if product.is_variation_parent():
-            for child in self._get_children_items(product.variation_children.all()):
-                yield child
-        elif product.is_variation_child():
-            for item in self._get_parent_and_sibling_items(product.variation_parent, product.get_variation_siblings()):
-                yield item
-
     def _get_package_menu_items(self, product):
         for item in self._get_header_items(_("Packages"), identifier=ProductActionCategory.CHILD_PACKAGE):
             yield item
@@ -152,17 +131,12 @@ class EditProductToolbar(Toolbar):
                     yield item
 
     def _get_variation_and_package_menu_items(self, product):
-        is_variation_product = (product.is_variation_parent() or product.is_variation_child())
-        if is_variation_product:
-            for item in self._get_variation_menu_items(product):
-                yield item
-
         is_package_product = (product.is_container() or product.is_package_child())
         if is_package_product:
             for item in self._get_package_menu_items(product):
                 yield item
 
-        if not (is_variation_product or is_package_product):
+        if not is_package_product:
             # package header
             for item in self._get_header_items(_("Packages"), identifier=ProductActionCategory.CHILD_PACKAGE):
                 yield item
@@ -170,13 +144,4 @@ class EditProductToolbar(Toolbar):
                 text=_("Convert to Package Parent"),
                 icon="fa fa-retweet",
                 url=self._get_package_url(product),
-            )
-
-            # variation header
-            for item in self._get_header_items(_("Variations"), identifier=ProductActionCategory.CHILD_VARIATION):
-                yield item
-            yield DropdownItem(
-                text=_("Convert to Variation Parent"),
-                icon="fa fa-retweet",
-                url=self._get_variation_url(product),
             )
