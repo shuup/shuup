@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Dashboard: Sorting of dashboard items by ordering number
+- Xtheme: add option to set a custom cell width in placeholders
 
 ## [2.2.11] - 2020-12-08
 

@@ -84,3 +84,29 @@ def test_lcfg(rf):
             assert cell.sizes["md"] == two_thirds
             assert cell.extra_classes == "newClass"
             assert cell.config["text"] == {FALLBACK_LANGUAGE_CODE: "Hello, world!"}
+
+
+@pytest.mark.django_db
+def test_custom_cell_size(rf):
+    with plugin_override():
+        with override_current_theme_class(None):
+            theme = get_current_theme(get_default_shop())
+
+            cell = LayoutCell(theme, "text", sizes={"md": None, "sm": None})
+            lcfg = LayoutCellFormGroup(
+                data={
+                    "general-cell_width": None,
+                    "general-cell_align": " ",
+                    "general-cell_extra_classes" : "newClass",
+                    "plugin-text_*": "Hello, world!"
+                },
+                layout_cell=cell,
+                theme=theme,
+                request=apply_request_middleware(rf.get("/"))
+            )
+            assert lcfg.is_valid()
+            lcfg.save()
+            assert cell.sizes["md"] is None
+            assert cell.sizes["sm"] is None
+            assert cell.extra_classes == "newClass"
+            assert cell.config["text"] == {FALLBACK_LANGUAGE_CODE: "Hello, world!"}
