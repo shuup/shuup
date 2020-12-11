@@ -206,9 +206,9 @@ class PlaceholderRenderer(object):
         """
         classes = ["xt-ph-cell"]
         for breakpoint, width in cell.sizes.items():
-            if width is None:
+            if width is None or width == 0:
                 continue
-            if width <= 0:
+            if width < 0:
                 classes.append(layout.hide_cell_class_template % {"breakpoint": breakpoint, "width": width})
             else:
                 classes.append(layout.cell_class_template % {"breakpoint": breakpoint, "width": width})
