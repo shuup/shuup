@@ -7,6 +7,7 @@
 """
 Utilities for caching price info
 """
+from shuup.core.models import ShopProduct
 from shuup.core.pricing import PriceInfo
 from shuup.core.utils import context_cache
 from shuup.utils.dates import to_timestamp
@@ -156,10 +157,14 @@ def bump_all_price_caches(shops=[]):
         bump_price_info_cache(shop_id)
 
 
-def bump_prices_for_product(product):
-    for shop_id in set(product.shop_products.values_list("shop", flat=True)):
+def bump_prices_for_product(product_id):
+    if hasattr(product_id, "pk"):
+        product_id = product_id.pk
+    for shop_id in set(ShopProduct.objects.filter(product_id=product_id).values_list("shop_id", flat=True)):
         bump_price_info_cache(shop_id)
 
 
-def bump_prices_for_shop_product(shop_product):
-    bump_price_info_cache(shop_product.shop_id)
+def bump_prices_for_shop_product(shop_id):
+    if isinstance(shop_id, ShopProduct):
+        shop_id = shop_id.shop_id
+    bump_price_info_cache(shop_id)

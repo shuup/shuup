@@ -19,7 +19,7 @@ payment_created = Signal(providing_args=["order", "payment"], use_caching=True)
 get_basket_command_handler = Signal(providing_args=["command"], use_caching=True)
 pre_clean = Signal(providing_args=["instance"], use_caching=True)
 post_clean = Signal(providing_args=["instance"], use_caching=True)
-context_cache_item_bumped = Signal(providing_args=["item"], use_caching=True)
+context_cache_item_bumped = Signal(providing_args=["item", "shop_id"], use_caching=True)
 order_status_changed = Signal(providing_args=["order", "old_status", "new_status"], use_caching=True)
 
 #: Send from supplier module after the stocks updated have
