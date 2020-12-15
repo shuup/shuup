@@ -47,6 +47,10 @@ class XthemeTemplate(Template):
         return self.environment.handle_exception(exc_info, True)
 
     def _postprocess(self, context, content):
+        request = context.get("request")
+        if request and request.is_ajax():
+            return content
+
         for inject_func in get_provide_objects("xtheme_resource_injection"):
             if callable(inject_func):
                 inject_func(context, content)

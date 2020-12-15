@@ -57,6 +57,11 @@
 
 {% block extrajs %}
     <script>
+        window.checkoutInitializeRegionFields = function checkoutInitializeRegionFields() {
+            window.initializeRegionFields("#id_billing-country", "#id_billing-region_code", "#id_billing-region");
+            window.initializeRegionFields("#id_shipping-country", "#id_shipping-region_code", "#id_shipping-region");
+        }
+
         window.submitCheckoutPhaseForm = function submitCheckoutPhaseForm(form) {
             var data = $(form).serialize();
             if (!data.includes("csrfmiddlewaretoken")) {  // no csrftoken no post
@@ -69,6 +74,7 @@
                 data: data,
                 success: function (response) {
                     $("#ajax_content").html(response);
+                    window.checkoutInitializeRegionFields();
                     window.scrollTo(0, $("#ajax_content").offset().top);
                     if (currentPhase != window.currentPhase && $(form).hasClass("single-page-refresh-after")) {
                         location.reload();
@@ -84,6 +90,8 @@
                     url: "/checkout/" + phase + "/",
                     success: function (response) {
                         $("#ajax_content").html(response);
+                        window.checkoutInitializeRegionFields();
+
                     }
                 });
             }
@@ -99,12 +107,8 @@
                 e.preventDefault();
                 window.moveToPhase($(this).data("phase"));
             });
-            if (typeof window.initializeBillingRegion === "function") {
-                window.initializeBillingRegion();
-            }
-            if (typeof window.initializeShippingRegion === "function") {
-                window.initializeShippingRegion();
-            }
+
+            window.checkoutInitializeRegionFields();
         });
     </script>
 {% endblock %}
