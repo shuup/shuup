@@ -128,12 +128,12 @@ class ContactListView(PicotableListView):
             return _(u"Contact")
 
     def get_groups_display(self, instance):
-        groups = instance.groups.all_except_defaults().values_list("translations__name", flat=True)
+        groups = [group.name for group in instance.groups.all_except_defaults()]
         return ", ".join(groups) if groups else _("No group")
 
     def get_shops_display(self, instance):
         user = self.request.user
-        shops = instance.shops.get_for_user(user=user).values_list("translations__name", flat=True)
+        shops = [shop.name for shop in instance.shops.get_for_user(user=user)]
         return ", ".join(shops) if shops else _("No shops")
 
     def get_object_abstract(self, instance, item):
