@@ -15,6 +15,7 @@ import openpyxl
 import six
 import xlrd
 from django.conf import settings
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.utils.excs import Problem
@@ -42,7 +43,7 @@ class XLSRowYielder(RowYielder):
 class XLSXRowYielder(RowYielder):
     def __iter__(self):
         for row in self.sheet_or_data.rows:
-            yield self.transform_values([cell.value for cell in row])
+            yield self.transform_values([(force_text(cell.value) if cell.value else None) for cell in row])
 
 
 class TransformedData(object):
