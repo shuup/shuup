@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import decimal
 import os
 
 import six
@@ -268,7 +269,7 @@ class ProductMetaBase(ImportMetaBase):
 
         product = sess.instance
         stock_status = supplier.get_stock_status(product.pk)
-        stock_delta = qty - stock_status.logical_count
+        stock_delta = decimal.Decimal(qty) - stock_status.logical_count
 
         if stock_delta != 0:
             supplier.adjust_stock(product.pk, stock_delta)
