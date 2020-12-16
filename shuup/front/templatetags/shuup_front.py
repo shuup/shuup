@@ -5,7 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
+import django_jinja
+from django.conf import settings
 from django.utils.functional import SimpleLazyObject
 from django.utils.lru_cache import lru_cache
 from django.utils.safestring import mark_safe
@@ -58,3 +59,13 @@ def replace_field_attrs(field, **attrs):
     for attr, value in attrs.items():
         setattr(field.field, attr, value)
     return field
+
+
+@django_jinja.library.global_function
+def get_mass_and_length_units():
+    """
+    Returns the mass and the length unit from settings
+
+    :rtype: Tuple[str, str]
+    """
+    return settings.SHUUP_MASS_UNIT, settings.SHUUP_LENGTH_UNIT

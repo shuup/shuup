@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+
 ### Added
 
 - Dashboard: Sorting of dashboard items by ordering number
@@ -15,7 +16,9 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
-- Fix multiple translations returned when using values_list on translated field
+- Admin: Fix multiple translations returned when using values_list on translated field
+- Front: Fix so mass and measurements unit is displayed in same unit as in the backend
+
 
 ## [2.2.11] - 2020-12-08
 
@@ -29,6 +32,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - GDPR: do not create consent for anonymous user in checkout
+
 
 ## [2.2.9] - 2020-11-23
 
