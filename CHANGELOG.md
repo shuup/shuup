@@ -8,17 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.0] - 2020-12-16
 
 ### Added
 
 - Dashboard: Sorting of dashboard items by ordering number
 - Xtheme: add option to set a custom cell width in placeholders
 
+### Changed
+
+- Admin: set product default price value initial value to zero
+
 ### Fixed
 
 - Admin: Fix multiple translations returned when using values_list on translated field
 - Front: Fix so mass and measurements unit is displayed in same unit as in the backend
 
+### Removed
+
+- Product variation management. [Use this instead](https://pypi.org/project/shuup-product-variations/).
 
 ## [2.2.11] - 2020-12-08
 
