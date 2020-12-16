@@ -18,6 +18,7 @@ class LayoutCellGeneralInfoForm(forms.Form):
     CELL_FULL_WIDTH = 12
 
     CELL_WIDTH_CHOICES = [
+        (0, _("Custom")),
         (int(CELL_FULL_WIDTH), _("Full Width")),
         (int(CELL_FULL_WIDTH * 3 / 4), _("Three Fourths (3/4)")),
         (int(CELL_FULL_WIDTH * 2 / 3), _("Two Thirds (2/3)")),
@@ -44,9 +45,17 @@ class LayoutCellGeneralInfoForm(forms.Form):
         """
 
         if self.layout_cell.plugin_identifier:
-            initial_cell_width = self.layout_cell.sizes.get("sm") or self.CELL_FULL_WIDTH
+            if "sm" in self.layout_cell.sizes:
+                initial_cell_width = self.layout_cell.sizes.get("sm")
+            else:
+                initial_cell_width = self.CELL_FULL_WIDTH
+
             self.fields["cell_width"] = forms.ChoiceField(
-                label=_("Cell width"), choices=self.CELL_WIDTH_CHOICES, initial=initial_cell_width)
+                label=_("Cell width"),
+                choices=self.CELL_WIDTH_CHOICES,
+                initial=initial_cell_width,
+                required=False
+            )
 
             initial_cell_align = self.layout_cell.align or self.CELL_ALIGN_CHOICES[0][0]
             self.fields["cell_align"] = forms.ChoiceField(
@@ -78,7 +87,7 @@ class LayoutCellGeneralInfoForm(forms.Form):
         data = self.cleaned_data
         sizes = ["sm", "md"]  # TODO: Parametrize? Currently Bootstrap dependent.
         for size in sizes:
-            self.layout_cell.sizes[size] = int(data["cell_width"])
+            self.layout_cell.sizes[size] = int(data["cell_width"]) if data["cell_width"] else None
 
         self.layout_cell.align = data["cell_align"]
         self.layout_cell.extra_classes = data["cell_extra_classes"].strip()

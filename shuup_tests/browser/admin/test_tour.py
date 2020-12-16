@@ -67,6 +67,7 @@ def test_dashbord_tour(browser, admin_user, live_server, settings):
 
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_home_tour(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     shop2 = factories.get_shop(identifier="shop2")

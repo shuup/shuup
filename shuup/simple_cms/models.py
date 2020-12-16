@@ -73,7 +73,9 @@ class PageQuerySet(TranslatableQuerySet):
                 user_filter = Q()
             else:
                 user_filter = Q(
-                    Q(available_permission_groups__in=user.groups.all()) | Q(created_by=user)
+                    Q(available_permission_groups__in=user.groups.all()) |
+                    Q(available_permission_groups__isnull=True) |
+                    Q(created_by=user)
                 )
         else:
             user_filter = Q(available_permission_groups__isnull=True)

@@ -23,7 +23,12 @@ class DashboardViewMixin(object):
 
     def get_menu_items(self):
         items = []
-        for cls in get_provide_objects("customer_dashboard_items"):
+        sorted_items = sorted(
+            get_provide_objects("customer_dashboard_items"),
+            key=lambda dashboard: dashboard.ordering
+        )
+
+        for cls in sorted_items:
             c = cls(self.request)
             if c.show_on_menu():
                 items.append(c)
