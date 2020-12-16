@@ -130,7 +130,7 @@ class ProductListView(PicotableListView):
             suppliers_column.filter_config = get_suppliers_filter()
 
     def format_categories(self, instance):
-        return ", ".join(list(instance.categories.values_list("translations__name", flat=True)))
+        return ", ".join(category.name for category in instance.categories.all()) or "-"
 
     def format_suppliers(self, instance):
         return ", ".join(list(instance.suppliers.values_list("name", flat=True)))

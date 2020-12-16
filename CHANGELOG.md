@@ -16,6 +16,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Admin: Fix multiple translations returned when using values_list on translated field
 - Front: Fix so mass and measurements unit is displayed in same unit as in the backend
 
 
