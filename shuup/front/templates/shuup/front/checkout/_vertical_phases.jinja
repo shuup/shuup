@@ -89,7 +89,7 @@
             }
         };
         $(function() {
-            $("form").on("submit", function(e) {
+            $("form").on("submit","[id='addresses'], [id='methods'], [id='payment-form'], [id='confirm_form']", function(e) {
                 if (window.currentPhase !== "confirm") {
                     e.preventDefault();
                     window.submitCheckoutPhaseForm($(this));
