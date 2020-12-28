@@ -475,7 +475,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='supplier',
             name='name',
-            field=models.CharField(db_index=True, help_text="The product supplier's name. You can enable suppliers to manage the inventory of stocked products.", max_length=64, verbose_name='name'),
+            field=models.CharField(db_index=True, help_text="The product supplier's name. You can enable suppliers to manage the inventory of stocked products.", max_length=128, verbose_name='name'),
         ),
         migrations.AlterField(
             model_name='supplier',
