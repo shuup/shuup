@@ -15,6 +15,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Fix `0068_help_text_improvements` migration file to have the correct field char size: 128
 - Fix _vertical_phases.jinja incorrectly targets all forms
+- Fix initial value of Choose to register form
 
 ## [2.3.0] - 2020-12-16
 
