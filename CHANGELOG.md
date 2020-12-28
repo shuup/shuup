@@ -7,13 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
-
 ### Changed
 
 - Admin: MultiselectAjaxView returns ordered by name choices
 
 ### Fixed
--  Fix _vertical_phases.jinja incorrectly targets all forms
+
+- Fix `0068_help_text_improvements` migration file to have the correct field char size: 128
+- Fix _vertical_phases.jinja incorrectly targets all forms
 
 ## [2.3.0] - 2020-12-16
 
