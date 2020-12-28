@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:37+0000\n"
+"POT-Creation-Date: 2020-12-28 10:59+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -669,6 +669,9 @@ msgid "You are unable to proceed to checkout!"
 msgstr ""
 
 msgid "Checkout"
+msgstr ""
+
+msgid "Error! Please reload the page or move to previous step."
 msgstr ""
 
 msgid "Log in"
