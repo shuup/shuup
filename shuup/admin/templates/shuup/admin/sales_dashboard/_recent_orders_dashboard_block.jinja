@@ -13,11 +13,12 @@
                         <th>{% trans %}Customer{% endtrans %}</th>
                         <th class="text-right">{% trans %}Total{% endtrans %}</th>
                         <th>{% trans %}Order Date{% endtrans %}</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for order in orders %}
                         <tr>
-                            <td class="text-nowrap"><a href="{{ shuup_admin.model_url(order, "detail") }}">{{ order.id }}</a></td>
+                            <td class="text-nowrap"><a href="{{ shuup_admin.model_url(order, 'detail') }}">{{ order.id }}</a></td>
                             <td class="text-nowrap">{{ order.get_customer_name() }}</td>
                             <td class="text-right text-nowrap">{{ order.taxful_total_price|money }}</td>
                             <td class="text-nowrap">{{ order.order_date|datetime }}</td>
