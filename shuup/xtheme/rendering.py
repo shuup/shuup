@@ -7,14 +7,18 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.utils.text import slugify
+from django.utils.translation import get_language
 from django.utils.translation import ugettext_lazy as _
 from markupsafe import Markup
 
+from shuup.core import cache
 from shuup.core.fields.tagged_json import TaggedJSONEncoder
 from shuup.utils.django_compat import force_text
 from shuup.xtheme._theme import get_current_theme
 from shuup.xtheme.editing import is_edit_mode, may_inject
 from shuup.xtheme.layout.utils import get_layout_data_key
+from shuup.xtheme.models import SavedViewConfigStatus
 from shuup.xtheme.utils import get_html_attrs
 from shuup.xtheme.view_config import ViewConfig
 
@@ -117,22 +121,49 @@ class PlaceholderRenderer(object):
         :return: Rendered markup.
         :rtype: markupsafe.Markup
         """
+        language = get_language()
+
         if not may_inject(self.context):
             return ""
 
         full_content = ""
+        saved_view_config = self.view_config.saved_view_config
         for layout in self.layouts:
-            wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs(layout))
-            buffer = []
-            write = buffer.append
-            self._render_layout(write, layout)
-            content = "".join(buffer)
-            full_content += (
-                "%(wrapper_start)s%(content)s%(wrapper_end)s" % {
-                    "wrapper_start": wrapper_start,
-                    "content": content,
-                    "wrapper_end": "</div>",
-                })
+            cache_key = slugify(
+                "shuup_xtheme_placeholders:placeholder_%s_%s_%s_%s_%s_%s" % (
+                    (saved_view_config.pk if saved_view_config else ""),
+                    (saved_view_config.status if saved_view_config else ""),
+                    (
+                        saved_view_config.modified_on.isoformat()
+                        if saved_view_config and saved_view_config.modified_on
+                        else ""
+                    ),
+                    language,
+                    self.placeholder_name,
+                    get_layout_data_key(self.placeholder_name, layout, self.context)
+                )
+            )
+            layout_content = cache.get(cache_key)
+            if (
+                saved_view_config and
+                saved_view_config.status == SavedViewConfigStatus.PUBLIC and
+                layout_content
+            ):
+                full_content += layout_content
+            else:
+                wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs(layout))
+                buffer = []
+                write = buffer.append
+                self._render_layout(write, layout)
+                content = "".join(buffer)
+                layout_content = (
+                    "%(wrapper_start)s%(content)s%(wrapper_end)s" % {
+                        "wrapper_start": wrapper_start,
+                        "content": content,
+                        "wrapper_end": "</div>",
+                    })
+                cache.set(cache_key, layout_content)
+                full_content += layout_content
 
         return Markup('<div class="placeholder-edit-wrap">%s</div>' % full_content)
 

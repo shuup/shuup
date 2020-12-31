@@ -103,6 +103,7 @@ class SavedViewConfig(models.Model):
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="saved_views_config", null=True)
     view_name = models.CharField(max_length=64, db_index=True, verbose_name=_("view name"))
     created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created on"))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("modified on"))
     status = EnumIntegerField(SavedViewConfigStatus, db_index=True, verbose_name=_("status"))
     _data = TaggedJSONField(db_column="data", default=dict, verbose_name=_("internal data"))
     objects = SavedViewConfigQuerySet.as_manager()

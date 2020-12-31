@@ -79,6 +79,7 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
 @pytest.mark.urls('shuup.testing.single_page_checkout_with_login_and_register_conf')
 @pytest.mark.browser
 @pytest.mark.djangodb
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
 def test_single_page_checkout_with_login_and_register(browser, live_server, settings):
     cache.clear()  # Avoid caches from past tests
 

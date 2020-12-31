@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2020-12-28 10:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -152,6 +152,9 @@ msgstr ""
 msgid "created on"
 msgstr ""
 
+msgid "modified on"
+msgstr ""
+
 msgid "status"
 msgstr ""
 
@@ -270,6 +273,24 @@ msgid "Select all products you want to show"
 msgstr ""
 
 msgid "Product Selection"
+msgstr ""
+
+msgid "Product Highlights (asynchronous)"
+msgstr ""
+
+msgid "Cutoff days"
+msgstr ""
+
+msgid "Cache timeout (seconds)"
+msgstr ""
+
+msgid "Product Cross Sells (asynchronous)"
+msgstr ""
+
+msgid "Category Products Highlight (asynchronous)"
+msgstr ""
+
+msgid "Product Selection (asynchronous)"
 msgstr ""
 
 msgid "In-Place Snippet"
@@ -453,6 +474,9 @@ msgid "Published"
 msgstr ""
 
 msgid "Reverted"
+msgstr ""
+
+msgid "Custom"
 msgstr ""
 
 msgid "Full Width"

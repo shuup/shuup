@@ -42,6 +42,10 @@
                          role="tabpanel"
                          aria-labelledby="headingOne">
                         <div class="panel-body">
+                            {% if request.is_ajax() %}
+                                {{ macros.render_errors() }}
+                            {% endif %}
+
                             {% if phase.is_current %}
                                 <script>window.currentPhase="{{ phase.identifier }}";</script>
                                 {% block checkout_phase_content %}{% endblock %}
@@ -55,6 +59,14 @@
     </div>
 {% endblock %}
 
+{% block extracss %}
+    <style>
+        #main .alert i {
+            margin-right: 15px;
+        }
+    </style>
+{% endblock %}
+
 {% block extrajs %}
     <script>
         window.submitCheckoutPhaseForm = function submitCheckoutPhaseForm(form) {
@@ -63,6 +75,9 @@
                 return false;
             }
             const currentPhase = window.currentPhase;
+            $(".vertical-checkout-phase").find("#ajax_content").find("div.panel-body").html(
+                '<div class="text-primary text-center spinner"><i class="fa fa-3x fa-spin fa-spinner"></i></div>'
+            )
             $.ajax({
                 type: "post",
                 url: "/checkout/" + window.currentPhase + "/",
@@ -73,17 +88,26 @@
                     if (currentPhase != window.currentPhase && $(form).hasClass("single-page-refresh-after")) {
                         location.reload();
                     }
+                },
+                error: function (error) {
+                    $("#ajax_content").find("div.panel-body").html('<p class="text-center">{% trans %}Error! Please reload the page or move to previous step.{% endtrans %}</p>');
                 }
             });
         };
 
         window.moveToPhase = function moveToPhase(phase) {
             if (phase !== window.currentPhase) {
+                $(".vertical-checkout-phase").find("#ajax_content").find("div.panel-body").html(
+                    '<div class="text-primary text-center spinner"><i class="fa fa-3x fa-spin fa-spinner"></i></div>'
+                )
                 $.ajax({
                     type: "get",
                     url: "/checkout/" + phase + "/",
                     success: function (response) {
                         $("#ajax_content").html(response);
+                    },
+                    error: function (error) {
+                        $("#ajax_content").find("div.panel-body").html('<p class="text-center">{% trans %}Error! Please reload the page or move to previous step.{% endtrans %}</p>');
                     }
                 });
             }

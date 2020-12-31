@@ -1,0 +1,18 @@
+{# This template requires shuup.front static resources to setup the carousel of products using owl-carousel #}
+
+{% if request.is_ajax() %}
+    {%- from "shuup/front/macros/product.jinja" import product_box with context -%}
+    {% for product in products if shuup.product.is_visible(product) %}
+        {{ product_box(product, show_description=False) }}
+    {% endfor %}
+{% else %}
+    <section
+        class="carousel-section product-highlight-plugin async-xtheme-product-carousel-plugin"
+        data-url='{{ data_url }}'
+    >
+        {% if title %}
+            <div class="title-bar light"><h2>{{ title }}</h2></div>
+        {% endif %}
+        <div class="product-carousel owl-carousel ajax-content"></div>
+    </section>
+{% endif %}

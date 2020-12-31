@@ -44,6 +44,10 @@ class XThemeAppConfig(AppConfig):
             "shuup.xtheme.plugins.products:ProductHighlightPlugin",
             "shuup.xtheme.plugins.products:ProductCrossSellsPlugin",
             "shuup.xtheme.plugins.products:ProductSelectionPlugin",
+            "shuup.xtheme.plugins.products_async:ProductsFromCategoryPlugin",
+            "shuup.xtheme.plugins.products_async:ProductHighlightPlugin",
+            "shuup.xtheme.plugins.products_async:ProductCrossSellsPlugin",
+            "shuup.xtheme.plugins.products_async:ProductSelectionPlugin",
             "shuup.xtheme.plugins.snippets:SnippetsPlugin",
             "shuup.xtheme.plugins.social_media_links:SocialMediaLinksPlugin",
             "shuup.xtheme.plugins.text:TextPlugin",
@@ -64,6 +68,9 @@ class XThemeAppConfig(AppConfig):
             "shuup.xtheme.resources:inject_global_snippet"
         ],
     }
+
+    def ready(self):
+        import shuup.xtheme.signal_handlers  # noqa: F401
 
 
 default_app_config = "shuup.xtheme.XThemeAppConfig"

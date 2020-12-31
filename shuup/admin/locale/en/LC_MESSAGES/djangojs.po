@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:59+0000\n"
+"POT-Creation-Date: 2020-12-28 10:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -480,57 +480,6 @@ msgid "No records found."
 msgstr ""
 
 msgid "Warning! Missing JavaScript dependencies detected."
-msgstr ""
-
-msgid "Identifier"
-msgstr ""
-
-#, javascript-format
-msgid "Value %s Name"
-msgstr ""
-
-msgid "Delete value"
-msgstr ""
-
-msgid "Are you sure?"
-msgstr ""
-
-msgid "Delete Variable"
-msgstr ""
-
-msgid "Add new value"
-msgstr ""
-
-msgid "Variable Name"
-msgstr ""
-
-msgid "Variable"
-msgstr ""
-
-msgid "Identifer"
-msgstr ""
-
-msgid "New template"
-msgstr ""
-
-msgid "Show identifier fields (for advanced users)"
-msgstr ""
-
-msgid "There are no variables defined."
-msgstr ""
-
-msgid "Variation Template"
-msgstr ""
-
-msgid "Select Template"
-msgstr ""
-
-msgid ""
-"Selecting and saving a template will clear all variable children selections "
-"for this product."
-msgstr ""
-
-msgid "Add new variable"
 msgstr ""
 
 msgid "No browser URL for kind:"

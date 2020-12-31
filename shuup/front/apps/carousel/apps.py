@@ -20,3 +20,12 @@ class AppConfig(shuup.apps.AppConfig):
             "shuup.front.apps.carousel.plugins:BannerBoxPlugin"
         ],
     }
+
+    def ready(self):
+        from shuup.utils.djangoenv import has_installed
+        if has_installed("shuup.xtheme"):
+            from django.db.models.signals import post_save
+            from shuup.xtheme.cache import bump_xtheme_cache
+            from .models import Carousel, Slide
+            post_save.connect(bump_xtheme_cache, sender=Carousel)
+            post_save.connect(bump_xtheme_cache, sender=Slide)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2020-12-28 10:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1054,23 +1054,6 @@ msgstr ""
 msgid "Couldn't add product %s to its own package."
 msgstr ""
 
-msgid "child"
-msgstr ""
-
-msgid "Unlink"
-msgstr ""
-
-#, python-format
-msgid "Unable to link %(product)s: %(error)s."
-msgstr ""
-
-msgid "variable combination"
-msgstr ""
-
-#, python-format
-msgid "Unnamed %s"
-msgstr ""
-
 msgid "Set visible"
 msgstr ""
 
@@ -1130,32 +1113,6 @@ msgstr ""
 msgid "Package cleared."
 msgstr ""
 
-msgid ""
-"Are you sure? This will unlink all children and remove all variation "
-"variables."
-msgstr ""
-
-msgid "Clear variation"
-msgstr ""
-
-msgid ""
-"Are you sure? This will remove all variation variables, converting children "
-"to direct links."
-msgstr ""
-
-msgid "Convert to simple variation"
-msgstr ""
-
-#, python-format
-msgid "Edit Variation: %s"
-msgstr ""
-
-msgid "Variation cleared."
-msgstr ""
-
-msgid "Variation simplified."
-msgstr ""
-
 msgid "Primary Image"
 msgstr ""
 
@@ -1213,12 +1170,6 @@ msgstr ""
 msgid "Sibling: %s"
 msgstr ""
 
-msgid "Variations"
-msgstr ""
-
-msgid "Manage Variations"
-msgstr ""
-
 msgid "Packages"
 msgstr ""
 
@@ -1226,9 +1177,6 @@ msgid "Manage Package"
 msgstr ""
 
 msgid "Convert to Package Parent"
-msgstr ""
-
-msgid "Convert to Variation Parent"
 msgstr ""
 
 msgid "Sales Dashboard"
@@ -1556,11 +1504,20 @@ msgstr ""
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr ""
 
+msgid "Is approved for {}"
+msgstr ""
+
+msgid "Indicates whether this supplier is approved for the shop."
+msgstr ""
+
 #, python-format
 msgid "No %s module"
 msgstr ""
 
 msgid "It is not possible to manage inventory when no module is selected."
+msgstr ""
+
+msgid "{} is not in the Shops field."
 msgstr ""
 
 #, python-format
@@ -3385,35 +3342,6 @@ msgstr ""
 msgid "Package Products"
 msgstr ""
 
-msgid "Simple Variation Children"
-msgstr ""
-
-msgid "Variable Children"
-msgstr ""
-
-msgid "Combination"
-msgstr ""
-
-msgid "Variables"
-msgstr ""
-
-msgid "New template"
-msgstr ""
-
-msgid " Cancel "
-msgstr ""
-
-msgid "This product is not yet a variation."
-msgstr ""
-
-msgid "To create a simple variation, choose products below."
-msgstr ""
-
-msgid ""
-"To create a variation with multiple variables, create the variables on the "
-"Variables tab and then link them to products here."
-msgstr ""
-
 msgid "Recent Orders"
 msgstr ""
 
@@ -3701,6 +3629,10 @@ msgstr ""
 
 #, python-format
 msgid "New %s"
+msgstr ""
+
+#, python-format
+msgid "Unnamed %s"
 msgstr ""
 
 #, python-format
