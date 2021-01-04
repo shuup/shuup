@@ -15,7 +15,6 @@ from django.conf import settings
 from django.core.mail.message import EmailMessage
 from django.utils.translation import ugettext as _
 
-from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.notify.base import Action, Binding
 from shuup.notify.enums import ConstantUse, TemplateUse
 from shuup.notify.models import EmailTemplate
@@ -40,10 +39,10 @@ class SendEmail(Action):
             label=_("Email Template"),
             required=False
         ),
-        "body": forms.CharField(required=True, label=_("Email Body"), widget=TextEditorWidget()),
+        "body": forms.CharField(required=True, label=_("Email Body"), widget=forms.Textarea),
         "content_type": forms.ChoiceField(
             required=True, label=_(u"Content type"),
-            choices=EMAIL_CONTENT_TYPE_CHOICES, initial=EMAIL_CONTENT_TYPE_CHOICES[0][0]
+            choices=EMAIL_CONTENT_TYPE_CHOICES, initial=EMAIL_CONTENT_TYPE_CHOICES[1][0]
         )
     }
     recipient = Binding(_("Recipient"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
