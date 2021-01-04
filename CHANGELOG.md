@@ -8,13 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.2] - 2021-01-04
+
 ### Changed
 
+- GDPR: hide consent immediately on accept
+- Notify: Make HTML default format for emails
 - Improve the way the cache is bumped when order is created and changed
 
 ### Fixed
 
 - Admin: fix missing `tr` closing tags
+
+### Removed
+
+- Notify: Remove HTML editor from notifications since summernote does not
+function Jinja syntax very well and for example for-loops and ifs
+cause easily broken notifications.
+
 
 ## [2.3.1] - 2020-12-28
 
