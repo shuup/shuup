@@ -44,7 +44,7 @@ class BasketLine(SourceLine):
 
         :rtype: shuup.core.models.ShopProduct
         """
-        return self.product.get_shop_instance(self.shop)
+        return self.product.get_shop_instance(self.shop, allow_cache=True)
 
     def cache_info(self, pricing_context):
         product = self.product

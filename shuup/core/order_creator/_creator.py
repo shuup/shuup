@@ -113,7 +113,7 @@ class OrderProcessor(object):
             raise ValueError("Error! Order line has no supplier.")
         order = order_line.order
         try:
-            shop_product = order_line.product.get_shop_instance(order.shop)
+            shop_product = order_line.product.get_shop_instance(order.shop, allow_cache=True)
         except ShopProduct.DoesNotExist:
             raise ValidationError(
                 "Error! %s is not available in %s." % (order_line.product, order.shop),

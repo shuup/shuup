@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Always use cached shop product when possible
 - Improve the way the cache is bumped when order is created and changed
 
 ### Fixed

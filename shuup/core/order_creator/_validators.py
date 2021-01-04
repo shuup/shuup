@@ -58,7 +58,7 @@ class OrderSourceSupplierValidator(object):
         for supplier in order_source._get_suppliers():
             for product, quantity in iteritems(order_source._get_products_and_quantities(supplier)):
                 try:
-                    shop_product = product.get_shop_instance(shop=order_source.shop)
+                    shop_product = product.get_shop_instance(shop=order_source.shop, allow_cache=True)
                 except ShopProduct.DoesNotExist:
                     msg = _("%s is not available in this shop.") % product.name
                     yield ValidationError(msg, code="product_not_available_in_shop")
