@@ -35,17 +35,22 @@
     });
 
     function saveConsent() {
+        $(".gdpr-consent-warn-bar").hide();
+        $(".gdpr-consent-preferences").hide();
         data = $("#consent-form").serialize();
         var request = $.ajax({
             url: $("#consent-form").attr("action"),
             type: 'POST',
             data: data,
             success: function() {
+                // Remove GDPR divs and their content upon successful completion
                 $(".gdpr-consent-warn-bar").remove();
-                $(".gdpr-consent-preferences").remove(); // Remove GDPR divs and their content upon successful completion
+                $(".gdpr-consent-preferences").remove();
                 $("body").removeClass("body-noscroll");
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                $(".gdpr-consent-warn-bar").show();
+                $(".gdpr-consent-preferences").show();
                 window.alert(gettext("Error! Saving the consent failed, please try again."));
             }
         });
