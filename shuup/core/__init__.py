@@ -49,7 +49,7 @@ class ShuupCoreAppConfig(AppConfig):
             install_error_handlers()
 
         # connect signals
-        import shuup.core.signal_handers    # noqa: F401
+        import shuup.core.signal_handlers    # noqa: F401
 
 
 default_app_config = "shuup.core.ShuupCoreAppConfig"

@@ -40,8 +40,8 @@ from shuup.core.fields import (
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.core.settings_provider import ShuupSettings
 from shuup.core.signals import (
-    order_status_changed, payment_created, refund_created, shipment_created,
-    shipment_created_and_processed
+    order_changed, order_status_changed, payment_created, refund_created,
+    shipment_created, shipment_created_and_processed
 )
 from shuup.utils.analog import define_log_model, LogEntryKind
 from shuup.utils.dates import local_now, to_aware
@@ -445,7 +445,7 @@ class Order(MoneyPropped, models.Model):
     def cache_prices(self):
         taxful_total = TaxfulPrice(0, self.currency)
         taxless_total = TaxlessPrice(0, self.currency)
-        for line in self.lines.all():
+        for line in self.lines.all().prefetch_related("taxes"):
             taxful_total += line.taxful_price
             taxless_total += line.taxless_price
         self.taxful_total_price = taxful_total
@@ -540,8 +540,7 @@ class Order(MoneyPropped, models.Model):
             self._save_identifiers()
             self._cache_contact_values_post_create()
 
-        for line in self.lines.exclude(product_id=None):
-            line.supplier.module.update_stock(line.product_id)
+        order_changed.send(type(self), order=self)
 
         if self.status != old_status:
             order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)

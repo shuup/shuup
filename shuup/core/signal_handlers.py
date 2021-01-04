@@ -6,15 +6,18 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-# extends SQLite with necessary functions
 from django.db.backends.signals import connection_created
 from django.db.models.signals import m2m_changed, post_save
+# extends SQLite with necessary functions
+from django.dispatch import receiver
 
 from shuup.core.models import (
     Category, CompanyContact, ContactGroup, PersonContact, Product, Shop,
     ShopProduct, Supplier, Tax, TaxClass
 )
-from shuup.core.signals import context_cache_item_bumped
+from shuup.core.order_creator.signals import order_creator_finished
+from shuup.core.signals import context_cache_item_bumped, order_changed
+from shuup.core.utils import context_cache
 from shuup.core.utils.context_cache import (
     bump_internal_cache, bump_product_signal_handler,
     bump_shop_product_signal_handler
@@ -63,6 +66,19 @@ def handle_supplier_post_save(sender, instance, **kwargs):
 
 def handle_contact_post_save(sender, instance, **kwargs):
     bump_internal_cache()
+
+
+@receiver(order_creator_finished)
+def on_order_creator_finished(sender, order, source, **kwargs):
+    # reset product prices
+    for product_id, shop_id in order.lines.exclude(product__isnull=False).values_list("product_id", "order__shop_id"):
+        context_cache.bump_cache_for_product(product_id, shop_id)
+
+
+@receiver(order_changed)
+def on_order_changed(sender, order, **kwargs):
+    for line in order.lines.products().only("product_id", "supplier").select_related("supplier"):
+        line.supplier.module.update_stock(line.product_id)
 
 
 # connect signals to bump caches on Product and ShopProduct change

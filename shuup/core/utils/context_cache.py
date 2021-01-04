@@ -148,6 +148,8 @@ def bump_cache_for_item_ids(item_ids, namespace, object_class, shop=None):
     and shop_products use `bump_cache_for_product` and
     `bump_cache_for_shop_product` for those.
 
+    `shop` parameter is deprecated and not used
+
     :param ids: list of cached object id's
     """
     for item_id in item_ids:
