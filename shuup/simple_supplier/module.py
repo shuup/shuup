@@ -109,6 +109,6 @@ class SimpleSupplierModule(BaseSupplierModule):
                         ).run(shop=shop)
 
         sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))
-        context_cache.bump_cache_for_product(Product.objects.get(id=product_id))
+        context_cache.bump_cache_for_product(product_id)
         stocks_updated.send(
             type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier)

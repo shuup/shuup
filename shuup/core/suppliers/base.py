@@ -8,7 +8,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Product
 from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.utils import context_cache
@@ -89,7 +88,7 @@ class BaseSupplierModule(object):
         Supplier module update stock should always bump product
         cache and send `shuup.core.signals.stocks_updated` signal.
         """
-        context_cache.bump_cache_for_product(Product.objects.get(id=product_id))
+        context_cache.bump_cache_for_product(product_id)
         stocks_updated.send(
             type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier)
 

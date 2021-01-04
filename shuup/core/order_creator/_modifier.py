@@ -43,7 +43,7 @@ class OrderModifier(OrderProcessor):
             module.clear_codes(order)
 
         products_to_adjust_stock = set()
-        for line in order.lines.all():
+        for line in order.lines.all().select_related("product", "supplier"):
             if line.product:
                 products_to_adjust_stock.add((line.product, line.supplier))
             line.taxes.all().delete()  # Delete all tax lines before OrderLine's

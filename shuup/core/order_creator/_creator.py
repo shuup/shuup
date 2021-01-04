@@ -18,7 +18,6 @@ from shuup.core.order_creator.signals import (
     order_creator_finished, post_order_line_save
 )
 from shuup.core.shortcuts import update_order_line_from_product
-from shuup.core.utils import context_cache
 from shuup.core.utils.users import real_user_or_none
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.django_compat import force_text
@@ -224,7 +223,7 @@ class OrderProcessor(object):
         lines = self.get_source_order_lines(source=order_source, order=order)
         self.add_lines_into_order(order, lines)
 
-        if any(line.require_verification for line in order.lines.all()):
+        if order.lines.filter(require_verification=True).exists():
             order.require_verification = True
             order.all_verified = False
         else:
@@ -317,7 +316,4 @@ class OrderCreator(OrderProcessor):
         order.save()
         order = self.finalize_creation(order, order_source)
         order_creator_finished.send(sender=type(self), order=order, source=order_source)
-        # reset product prices
-        for line in order.lines.exclude(product_id=None):
-            context_cache.bump_cache_for_product(line.product, shop=order.shop)
         return order
