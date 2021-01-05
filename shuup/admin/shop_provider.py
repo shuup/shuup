@@ -16,11 +16,19 @@ SHOP_SESSION_KEY = "admin_shop"
 
 
 class AdminShopProvider(object):
-
     def get_shop(self, request):
         if not request.user.is_staff:
             return None
 
+        cached_shop = getattr(request, "_cached_admin_shop", None)
+        if cached_shop:
+            return request._cached_admin_shop
+
+        shop = self._get_shop(request)
+        request._cached_admin_shop = shop
+        return shop
+
+    def _get_shop(self, request):
         # take the first if multishop is disabled
         if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
             return Shop.objects.first()
