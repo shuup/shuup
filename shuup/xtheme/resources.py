@@ -301,17 +301,16 @@ def valid_view(context):
     Prevent adding the global snippet in admin views and in editor view.
     """
     view_class = getattr(context["view"], "__class__", None) if context.get("view") else None
-    if not view_class or not context.get("request"):
+    request = context.get("request")
+    if not view_class or not request:
         return False
 
-    request = context.get("request")
-    if request:
-        match = request.resolver_match
-        if match and match.app_name == "shuup_admin":
-            return False
+    match = request.resolver_match
+    if not match or match.app_name == "shuup_admin":
+        return False
 
-    view_name = getattr(view_class, "__name__", "")
-    if view_name == "EditorView":
+    from shuup.xtheme.views.editor import EditorView
+    if issubclass(view_class, EditorView):
         return False
 
     return True
@@ -345,5 +344,10 @@ def inject_global_snippet(context, content):
             content = InlineStyleResource(content)
         elif snippet.snippet_type == SnippetType.InlineHTMLMarkup:
             content = InlineMarkupResource(content)
+        elif snippet.snippet_type == SnippetType.InlineJinjaHTMLMarkup:
+            context = dict(context.items())
+            # prevent recursive injection
+            context["allow_resource_injection"] = False
+            content = JinjaMarkupResource(content, context)
 
         add_resource(context, snippet.location, content)

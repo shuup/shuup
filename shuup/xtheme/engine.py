@@ -47,6 +47,11 @@ class XthemeTemplate(Template):
         return self.environment.handle_exception(exc_info, True)
 
     def _postprocess(self, context, content):
+        # if the context contains the `allow_resource_injection` key and
+        # it's value is False, we don't inject resources in the content
+        if context and context.get("allow_resource_injection", True) is False:
+            return content
+
         for inject_func in get_provide_objects("xtheme_resource_injection"):
             if callable(inject_func):
                 inject_func(context, content)
