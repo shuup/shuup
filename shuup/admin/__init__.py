@@ -110,11 +110,7 @@ class ShuupAdminAppConfig(AppConfig):
     }
 
     def ready(self):
-        from shuup.core.order_creator.signals import order_creator_finished
-        from shuup.admin.modules.orders.receivers import handle_custom_payment_return_requests
-
-        order_creator_finished.connect(handle_custom_payment_return_requests,
-                                       dispatch_uid='shuup.admin.handle_cash_payments')
+        import shuup.admin.signal_handling  # noqa (F401)
 
         validate_templates_configuration()
 

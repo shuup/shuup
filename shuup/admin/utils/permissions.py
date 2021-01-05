@@ -11,6 +11,9 @@ import six
 from django.contrib.auth.models import Permission
 
 from shuup import configuration
+from shuup.core import cache
+
+USER_PERMISSIONS_CACHE_NAMESPACE = "user_permissions"
 
 
 def get_default_model_permissions(model):
@@ -56,10 +59,15 @@ def get_missing_permissions(user, permissions):
     if getattr(user, "is_superuser", False):
         return set()
 
-    group_permissions = getattr(user, "_cached_user_groups_permissions", None)
-    if group_permissions is None:
-        group_permissions = get_permissions_from_groups(user.groups.values_list("pk", flat=True))
-        user._cached_user_groups_permissions = group_permissions
+    group_permissions = None
+
+    if user:
+        cache_key = "{}:{}".format(USER_PERMISSIONS_CACHE_NAMESPACE, user.pk)
+        group_permissions = cache.get(cache_key)
+
+        if group_permissions is None:
+            group_permissions = get_permissions_from_groups(user.groups.values_list("pk", flat=True))
+            cache.set(cache_key, group_permissions)
 
     if group_permissions:
         missing_permissions = set(p for p in set(permissions) if p not in group_permissions)
@@ -99,6 +107,7 @@ def get_permissions_from_group(group):
 def set_permissions_for_group(group, permissions):
     group_id = (group if isinstance(group, six.integer_types) else group.pk)
     configuration.set(None, _get_permission_key_for_group(group_id), permissions)
+    cache.bump_version(USER_PERMISSIONS_CACHE_NAMESPACE)
 
 
 def get_permissions_from_groups(groups):
