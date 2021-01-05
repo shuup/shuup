@@ -17,12 +17,14 @@ class SnippetType(object):
     InlineJS = "inline_js"
     InlineCSS = "inline_css"
     InlineHTMLMarkup = "inline_html"
+    InlineJinjaHTMLMarkup = "inline_jinja_html"
 
 
 SnippetTypeChoices = [
     (SnippetType.InlineJS, _("Inline JavaScript")),
     (SnippetType.InlineCSS, _("Inline CSS")),
     (SnippetType.InlineHTMLMarkup, _("Inline HTML")),
+    (SnippetType.InlineJinjaHTMLMarkup, _("Inline Jinja HTML")),
 ]
 
 

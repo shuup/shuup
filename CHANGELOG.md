@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Xtheme: add Jinja markup in custom snippet type
+
 ## [2.3.2] - 2021-01-04
 
 ### Changed
