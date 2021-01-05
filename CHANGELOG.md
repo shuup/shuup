@@ -12,6 +12,15 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Xtheme: add Jinja markup in custom snippet type
 
+## [2.3.3] - 2021-01-05
+
+- Patches v2.3.2 a bit around the xtheme editing
+
+- Xtheme: add Jinja markup in custom snippet type
+- Xtheme: add option to disable placeholder cache
+  - Use setting SHUUP_XTHEME_USE_PLACEHOLDER_CACHE = True for this
+
+
 ## [2.3.2] - 2021-01-04
 
 ### Changed
