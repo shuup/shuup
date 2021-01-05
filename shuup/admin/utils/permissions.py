@@ -56,7 +56,11 @@ def get_missing_permissions(user, permissions):
     if getattr(user, "is_superuser", False):
         return set()
 
-    group_permissions = get_permissions_from_groups(user.groups.values_list("pk", flat=True))
+    group_permissions = getattr(user, "_cached_user_groups_permissions", None)
+    if group_permissions is None:
+        group_permissions = get_permissions_from_groups(user.groups.values_list("pk", flat=True))
+        user._cached_user_groups_permissions = group_permissions
+
     if group_permissions:
         missing_permissions = set(p for p in set(permissions) if p not in group_permissions)
     else:

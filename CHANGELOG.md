@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Admin: cache the user permissions in the user object
 - Admin: make shop provider cache the shop in the request
 
 ### Added
