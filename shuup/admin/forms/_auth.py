@@ -104,4 +104,4 @@ class RequestPasswordForm(RecoverPasswordForm):
             Q(**username_filter) | Q(email__iexact=email),
         )
         for user in active_users:
-            self.process_user(user)
+            self.process_user(user, self.request)

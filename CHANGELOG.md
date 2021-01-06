@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Core: remove the dependency of shuup.notify while resetting user's password
 - Core: add signal that is triggered when user request a password reset email
 
 ## [2.3.5] - 2021-01-07
