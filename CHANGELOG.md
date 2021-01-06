@@ -8,23 +8,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+
+## [2.3.4] - 2021-01-06
+
 ### Changed
 
 - Xtheme: use the shop provider instead of falling back to first shop
 - Admin: cache the user permissions in the user object
 - Admin: make shop provider cache the shop in the request
+- Xtheme: add option to disable placeholder cache
+  - Use setting SHUUP_XTHEME_USE_PLACEHOLDER_CACHE = True for this
 
-### Added
+### Removed
 
-- Xtheme: add Jinja markup in custom snippet type
+- Core: remove GB from countries in European Union
+
 
 ## [2.3.3] - 2021-01-05
 
 - Patches v2.3.2 a bit around the xtheme editing
 
 - Xtheme: add Jinja markup in custom snippet type
-- Xtheme: add option to disable placeholder cache
-  - Use setting SHUUP_XTHEME_USE_PLACEHOLDER_CACHE = True for this
 
 
 ## [2.3.2] - 2021-01-04
