@@ -9,7 +9,7 @@ import logging
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Shop
+from shuup.core.shop_provider import get_shop
 from shuup.utils.django_compat import MiddlewareMixin
 from shuup.xtheme import get_current_theme
 
@@ -24,7 +24,7 @@ class XthemeMiddleware(MiddlewareMixin):
     can set the current shop in the request
     """
     def process_request(self, request):
-        shop = getattr(request, "shop", Shop.objects.first())
+        shop = getattr(request, "shop", get_shop(request))
         theme = get_current_theme(shop)
         if theme:
             theme.set_current()

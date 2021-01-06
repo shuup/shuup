@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Changed
+
+- Xtheme: use the shop provider instead of falling back to first shop
+- Admin: cache the user permissions in the user object
+- Admin: make shop provider cache the shop in the request
+
 ### Added
 
 - Xtheme: add Jinja markup in custom snippet type

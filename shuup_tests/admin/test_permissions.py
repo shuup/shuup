@@ -8,7 +8,7 @@
 import django
 import pytest
 import six
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 
 from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.modules.customers_dashboard import CustomersDashboardModule
@@ -20,7 +20,7 @@ from shuup.admin.toolbar import (
     NewActionButton, SettingsActionButton)
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permission_object_from_string,
-    get_permissions_from_urls, set_permissions_for_group
+    get_permissions_from_urls, set_permissions_for_group, get_missing_permissions
 )
 from shuup.core.models import Product, ShopProduct
 from shuup.testing import factories
@@ -126,3 +126,34 @@ def test_url_buttons_permission(rf, button, permission, instance):
 
         set_permissions_for_group(request.user.groups.first(), (permission,))
         assert "".join(bit for bit in button.render(request))
+
+
+@pytest.mark.django_db
+def test_user_permission_cache_bump(rf):
+    user = factories.get_default_staff_user()
+    group_a = Group.objects.create(name="Group A")
+    group_b = Group.objects.create(name="Group B")
+
+    group_a_permissions = ["purchase", "sell"]
+    group_b_permissions = ["delete", "create"]
+    set_permissions_for_group(group_a, set(group_a_permissions))
+    set_permissions_for_group(group_b, set(group_b_permissions))
+    all_permissions = set(group_a_permissions + group_b_permissions)
+
+    # as user is not in any group, it misses all the groups
+    assert get_missing_permissions(user, all_permissions) == all_permissions
+
+    # add the user to Group A
+    user.groups.add(group_a)
+    # the user misses the group_b permissions
+    assert get_missing_permissions(user, all_permissions) == set(group_b_permissions)
+
+    # make the user be part only of group b
+    group_b.user_set.add(user)
+    group_a.user_set.remove(user)
+    # the user misses the group_a permissions
+    assert get_missing_permissions(user, all_permissions) == set(group_a_permissions)
+
+    # user is part of all groups
+    user.groups.set([group_a, group_b])
+    assert get_missing_permissions(user, all_permissions) == set()

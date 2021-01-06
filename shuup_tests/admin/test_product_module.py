@@ -29,7 +29,7 @@ from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.views.search import get_search_results
 from shuup.core.models import (
-    ProductMedia, ProductMediaKind, ProductVisibility, ShopProduct
+    Product, ProductMedia, ProductMediaKind, ProductVisibility, ShopProduct
 )
 from shuup.importer.admin_module import ImportAdminModule
 from shuup.testing.factories import (
@@ -169,14 +169,24 @@ def test_product_edit_view_multipleshops(rf):
     when the staff user is only attached to Shop A
     """
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+        assert Product.objects.count() == 0
         shop1 = get_default_shop()
         shop2 = get_new_shop(identifier="shop2", domain="shop2", name="Shop 2")
         shop2_staff = create_random_user(is_staff=True)
         shop2.staff_members.add(shop2_staff)
 
+        assert Product.objects.count() == 1
+
         product = create_product("shop1-product", shop=shop1)
+        assert Product.objects.count() == 2
+        # Default product is set to default shop as well
+        assert ShopProduct.objects.filter(shop=shop1).count() == 2
+
+        # Default product created in get_new_shop-function
+        assert ShopProduct.objects.filter(shop=shop2).count() == 1
         shop_product = product.get_shop_instance(shop1)
         request = apply_request_middleware(rf.get("/", HTTP_HOST=shop2.domain), user=shop2_staff)
+        assert get_shop(request) == shop2
 
         view_func = ProductEditView.as_view()
         with pytest.raises(Http404):
@@ -185,10 +195,12 @@ def test_product_edit_view_multipleshops(rf):
         view_func = ProductListView.as_view()
         payload = {"jq": json.dumps({"perPage": 100, "page": 1}), "shop": shop2.pk}
         request = apply_request_middleware(rf.get("/", payload, HTTP_HOST=shop2.domain), user=shop2_staff)
+        assert get_shop(request) == shop2
+
         response = view_func(request)
         assert response.status_code == 200
         data = json.loads(response.content.decode("utf-8"))
-        assert len(data["items"]) == 0
+        assert len(data["items"]) == 1  # There is one shop product create in "get new shop"
 
 
 @pytest.mark.django_db
