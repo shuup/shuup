@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Notify: send notification when user request to reset password
 - Core: remove the dependency of shuup.notify while resetting user's password
 - Core: add signal that is triggered when user request a password reset email
 

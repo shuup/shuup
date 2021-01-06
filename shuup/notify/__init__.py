@@ -40,5 +40,8 @@ class ShuupNotifyAppConfig(AppConfig):
         ]
     }
 
+    def ready(self):
+        import shuup.notify.signal_handlers  # noqa F(401)
+
 
 default_app_config = "shuup.notify.ShuupNotifyAppConfig"
