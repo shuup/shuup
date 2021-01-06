@@ -218,10 +218,10 @@ class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
 
     available_in_countries = JSONField(blank=True, null=True, verbose_name=_("available in countries"))
     available_in_european_countries = models.BooleanField(
-        default=False, verbose_name=_("available in european countries"))
+        default=False, verbose_name=_("available in european union"))
     unavailable_in_countries = JSONField(blank=True, null=True, verbose_name=_("unavailable in countries"))
     unavailable_in_european_countries = models.BooleanField(
-        default=False, verbose_name=_("unavailable in european countries"))
+        default=False, verbose_name=_("unavailable in european union"))
 
     def get_unavailability_reasons(self, service, source):
         address = (source.shipping_address if hasattr(service, "carrier") else source.billing_address)

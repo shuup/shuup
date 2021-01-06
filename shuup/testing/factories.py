@@ -64,7 +64,7 @@ DEFAULT_ADDRESS_DATA = dict(
     postal_code="K9N",
     street="Woof Ave.",
     city="Dog Fort",
-    country="GB"
+    country="FR"
 )
 
 COUNTRY_CODES = sorted(COUNTRIES.keys())
