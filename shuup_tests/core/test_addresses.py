@@ -38,11 +38,17 @@ def test_basic_address():
             continue
         assert value in string_repr, "Field %s is not represented in %r" % (field, string_repr)
 
-    assert address.is_european_union, "Dog Fort, UK is in the EU"
+    assert address.is_european_union, "Dog Fort, UK is not in the EU, France actually is"
     assert list(address.split_name) == ["Dog", "Hello"], "Names split correctly"
     assert address.first_name == "Dog", "Names split correctly"
     assert address.last_name == "Hello", "Names split correctly"
     assert address.full_name == "Sir Dog Hello , Esq.", "Names join correctly"
+
+
+@pytest.mark.django_db
+def test_uk_not_in_eu():
+    address = get_address(country="GB")
+    assert not address.is_european_union
 
 
 @pytest.mark.django_db
