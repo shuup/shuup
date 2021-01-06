@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.utils.text import slugify
 from django.utils.translation import get_language
 from django.utils.translation import ugettext_lazy as _
@@ -145,6 +146,7 @@ class PlaceholderRenderer(object):
             )
             layout_content = cache.get(cache_key)
             if (
+                settings.SHUUP_XTHEME_USE_PLACEHOLDER_CACHE and
                 saved_view_config and
                 saved_view_config.status == SavedViewConfigStatus.PUBLIC and
                 layout_content
