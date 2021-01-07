@@ -662,7 +662,7 @@ def get_random_filer_image():
     return image
 
 
-def get_faker(providers, locale=None):
+def get_faker(providers, locale="en"):
     providers = [
         ("faker.providers.%s" % provider if ("." not in provider) else provider)
         for provider in providers
@@ -704,7 +704,7 @@ def create_random_address(fake=None, save=True, **values):
     return address
 
 
-def create_random_person(locale=None, minimum_name_comp_len=0, shop=None):
+def create_random_person(locale="en", minimum_name_comp_len=0, shop=None):
     """
     Create a random PersonContact from the given locale (or a random one).
 
