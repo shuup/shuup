@@ -388,7 +388,7 @@ class CompanyContact(Contact):
         verbose_name=_('members')
     )
     tax_number = models.CharField(
-        max_length=32, blank=True,
+        max_length=64, blank=True,
         verbose_name=_("tax number"),
         help_text=_("e.g. EIN in US or VAT code in Europe"))
 
