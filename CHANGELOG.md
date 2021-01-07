@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.5] - 2021-01-07
+
+- Core: unify tax number max length at models
+  - Also good practice would be not to validate tax number
+  on model level but instead at the form since tax number
+  format varies per country/region.
+
 
 ## [2.3.4] - 2021-01-06
 
