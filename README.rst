@@ -110,16 +110,25 @@ modules, use command:
 Roadmap
 -------
 
-* Per object placeholders. Option to add content per contact group, category, product and CMS page. `#1220 <https://github.com/shuup/shuup/issues/1220>`__ :white_check_mark:.
-* Pricing cache. To improve the performance issues with complex catalog campaigns. `#1163 <https://github.com/shuup/shuup/issues/1163>`__ :white_check_mark:.
-* Improve shop product purchasable attribute. `#1281 <https://github.com/shuup/shuup/issues/1281>`__ :white_check_mark:.
-* Option for 'centrally' or 'separately' managed products. `#1275 <https://github.com/shuup/shuup/issues/1275>`__.
-* Improve product stock behavior. `#1249 <https://github.com/shuup/shuup/issues/1249>`__.
-* Improved unit tests for the multishop feature. `#1160 <https://github.com/shuup/shuup/issues/1160>`__.
-* Improve order status and order status history. `#1211 <https://github.com/shuup/shuup/issues/1211>`__.
-* Initial support for Django 2.0. `#1289 <https://github.com/shuup/shuup/issues/1289>`__ :white_check_mark:.
-* OS Admin design/UX overhaul.
-* Various smaller issues from the issues-list.
+v3 (early 2021)
+###############
+
+* Initial Django 3.x support
+* Latest Jinja support
+* Deprecate theme folders under Shuup front which are used to override
+  individual macros in macro folders. This does not work well with latest
+  Jinja and adds extra complexity.
+
+v4 (mid 2021)
+#############
+
+* Move Shuup front, xtheme and theming features to own addons. This so that
+  projects not ready for updating theme or front can still get latest Shuup.
+* Introduce new default theme and overhaul templates structure to be more
+  simple (liekly Bootstrap 5 will be used).
+* Bump admin Bootstrap version to same with the new front
+* Move various other not essential apps in this repository to addons for
+  better version management.
 
 OS Addons
 ---------
@@ -128,6 +137,7 @@ OS Addons
 
 * `Shuup API <https://github.com/shuup/shuup-api>`__. Shuup API.
 * `Shuup REST API <https://github.com/shuup/shuup-rest-api>`__. Shuup REST API.
+* `Shuup Product Variations <https://github.com/shuup/shuup-product-variations>`__. Shuup Product Variations.
 * `Shuup Product Reviews <https://github.com/shuup/shuup-product-reviews>`__. Shuup Product Reviews.
 * `Shuup Stripe <https://github.com/shuup/shuup-stripe>`__. Stripe Payment Processor Addon for Shuup.
 * `Shuup Wishlist <https://github.com/shuup/shuup-wishlist>`__. Shuup Wishlist Addon.
