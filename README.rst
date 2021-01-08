@@ -125,8 +125,8 @@ v4 (mid 2021)
 * Move Shuup front, xtheme and theming features to own addons. This so that
   projects not ready for updating theme or front can still get latest Shuup.
 * Introduce new default theme and overhaul templates structure to be more
-  simple (liekly Bootstrap 5 will be used).
-* Bump admin Bootstrap version to same with the new front
+  simple (likely Bootstrap 5 will be used).
+* Bump admin Bootstrap version to match with the new front
 * Move various other not essential apps in this repository to addons for
   better version management.
 
