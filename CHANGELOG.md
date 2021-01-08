@@ -8,13 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Admin: add mass action to send password reset emails to selected users
+- Notify: send notification when user request to reset password
+- Core: remove the dependency of shuup.notify while resetting user's password
+- Core: add signal that is triggered when user request a password reset email
+
 ## [2.3.5] - 2021-01-07
 
 - Core: unify tax number max length at models
   - Also good practice would be not to validate tax number
   on model level but instead at the form since tax number
   format varies per country/region.
-
 
 ## [2.3.4] - 2021-01-06
 

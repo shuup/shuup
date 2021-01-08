@@ -106,6 +106,9 @@ class ShuupAdminAppConfig(AppConfig):
         "admin_supplier_form_part": [
             "shuup.admin.modules.suppliers.form_parts.SupplierBaseFormPart",
             "shuup.admin.modules.suppliers.form_parts.SupplierContactAddressFormPart",
+        ],
+        "user_list_mass_actions_provider": [
+            "shuup.admin.modules.users.mass_actions.UserMassActionProvider",
         ]
     }
 

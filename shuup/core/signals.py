@@ -22,6 +22,7 @@ post_clean = Signal(providing_args=["instance"], use_caching=True)
 context_cache_item_bumped = Signal(providing_args=["item", "shop_id"], use_caching=True)
 order_changed = Signal(providing_args=["order"], use_caching=True)
 order_status_changed = Signal(providing_args=["order", "old_status", "new_status"], use_caching=True)
+user_reset_password_requested = Signal(providing_args=["shop", "user", "reset_domain_url", "reset_url_name"])
 
 #: Send from supplier module after the stocks updated have
 #: been triggered after order, shipment and shop product change.
