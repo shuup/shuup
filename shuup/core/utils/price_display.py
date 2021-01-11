@@ -161,6 +161,27 @@ class TotalPriceDisplayFilter(_ContextFilter):
         return money(total)
 
 
+def get_priced_children_for_price_range(request, product, quantity, supplier):
+    product_queryset = product.variation_children.visible(
+        shop=request.shop, customer=request.customer
+    ).order_by("shop_products__default_price_value", "pk")
+    if supplier:
+        product_queryset = product_queryset.filter(
+            shop_products__suppliers=supplier
+        )
+
+    low = product_queryset.first()
+    high = product_queryset.last()
+
+    if not (low or high):
+        return
+
+    return [
+        (low, _get_priceful(request, low, quantity, supplier)),
+        (high, _get_priceful(request, high, quantity, supplier)),
+    ]
+
+
 class PriceRangeDisplayFilter(_ContextFilter):
     def __call__(self, context, product, quantity=1, allow_cache=True, supplier=None):
         """
@@ -186,9 +207,10 @@ class PriceRangeDisplayFilter(_ContextFilter):
             if hasattr(request, priced_children_key):
                 priced_children = getattr(request, priced_children_key)
             else:
-                priced_children = product.get_priced_children(request, quantity) or [
-                    (product, _get_priceful(request, product, quantity, supplier))
-                ]
+                priced_children = (
+                    get_priced_children_for_price_range(request, product, quantity, supplier) or
+                    [(product, _get_priceful(request, product, quantity, supplier))]
+                )
                 setattr(request, priced_children_key, priced_children)
 
             for child_product, price_info in priced_children:
@@ -250,19 +272,7 @@ def _get_priceful(request, item, quantity, supplier):
         if hasattr(request, price_key):
             return getattr(request, price_key)
 
-        if hasattr(item, 'is_variation_parent') and item.is_variation_parent():
-            priced_children_key = PRICED_CHILDREN_CACHE_KEY % (item.id, quantity)
-            priced_children = getattr(request, priced_children_key, None)
-
-            if priced_children is None:
-                priced_children = item.get_priced_children(request, quantity)
-
-            price = (
-                priced_children[0][1] if priced_children else item.get_cheapest_child_price_info(request, quantity)
-            )
-        else:
-            price = item.get_price_info(request, quantity=quantity)
-
+        price = item.get_price_info(request, quantity=quantity)
         setattr(request, price_key, price)
         return price
 
