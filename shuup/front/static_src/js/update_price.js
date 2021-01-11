@@ -49,7 +49,7 @@ window.updatePrice = function updatePrice(productId) {
 
         // ensure images are updated
         const combinationCarouselID = "#carousel_product_" + $(priceDiv).data("product-id");
-        const combinationImages = $(combinationCarouselID).parent("div").html();
+        const combinationImages = $content.find(combinationCarouselID).parent("div").html();
 
         $(".product-image").empty();
         $(".product-image").append(combinationImages);

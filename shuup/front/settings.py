@@ -67,6 +67,13 @@ SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION = {
     "sort_products_by_price_ordering": 2
 }
 
+#: Default product context for product detail view
+#:
+#: Override this configuration for quick per project optimization or for adding
+#: something extra for your custom, templates, snippets and plugins.
+SHUUP_FRONT_PRODUCT_CONTEXT_SPEC = (
+    "shuup.front.utils.product:get_default_product_context")
+
 #: Default cache duration for template helpers (in seconds).
 #:
 #: Cache duration in seconds for front template helpers. Default: 30 minutes.
