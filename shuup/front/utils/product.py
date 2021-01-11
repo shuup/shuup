@@ -14,11 +14,12 @@ from django.utils.translation import get_language
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
-    AttributeVisibility, Product, ProductMode, ProductVariationResult,
-    ProductVariationVariable, ProductVariationVariableValue, ShopProduct
+    AttributeVisibility, Product, ProductMode, ProductVariationVariable,
+    ProductVariationVariableValue, ShopProduct
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils.views import cache_product_things
+from shuup.utils.iterables import first
 from shuup.utils.numbers import get_string_sort_order
 
 
@@ -156,23 +157,27 @@ def get_orderable_variation_children(product, request, variation_variables, supp
     orderable_variation_children = OrderedDict()
     orderable = 0
 
-    for combo_data in product.get_all_available_combinations():
+    product_queryset = product.variation_children.visible(
+        shop=request.shop, customer=request.customer
+    ).values_list("pk", flat=True)
+    all_combinations = list(product.get_all_available_combinations())
+    for shop_product in ShopProduct.objects.filter(shop=request.shop, product__id__in=product_queryset):
+        combo_data = first(
+            combo for combo in all_combinations if combo["result_product_pk"] == shop_product.product.id
+        )
+        if not combo_data:
+            continue
+
         combo = combo_data["variable_to_value"]
         for variable, values in six.iteritems(combo):
             if variable not in orderable_variation_children:
                 orderable_variation_children[variable] = []
 
-        res = ProductVariationResult.resolve(product, combo)
-        if not res:
-            continue
-
-        try:
-            shop_product = res.get_shop_instance(request.shop)
-        except ShopProduct.DoesNotExist:
-            continue
-
-        if res and shop_product.is_orderable(
-                supplier=supplier, customer=request.customer, quantity=shop_product.minimum_purchase_quantity):
+        if shop_product.is_orderable(
+            supplier=supplier,
+            customer=request.customer,
+            quantity=shop_product.minimum_purchase_quantity
+        ):
             orderable += 1
             for variable, value in six.iteritems(combo):
                 if value not in orderable_variation_children[variable]:
