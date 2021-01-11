@@ -19,11 +19,16 @@ from shuup.core.models import (
 )
 from shuup.core.utils import context_cache
 from shuup.front.utils.views import cache_product_things
+from shuup.utils.importing import cached_load
 from shuup.utils.iterables import first
 from shuup.utils.numbers import get_string_sort_order
 
 
-def get_product_context(request, product, language=None, supplier=None):   # noqa (C901)
+def get_product_context(request, product, language=None, supplier=None):
+    return cached_load("SHUUP_FRONT_PRODUCT_CONTEXT_SPEC")(request, product, language, supplier)
+
+
+def get_default_product_context(request, product, language=None, supplier=None):   # noqa (C901)
     """
     Get product context.
 
