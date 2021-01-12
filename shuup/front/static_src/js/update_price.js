@@ -51,23 +51,25 @@ window.updatePrice = function updatePrice(productId) {
         const combinationCarouselID = "#carousel_product_" + $(priceDiv).data("product-id");
         const combinationImages = $content.find(combinationCarouselID).parent("div").html();
 
-        $(".product-image").empty();
-        $(".product-image").append(combinationImages);
+        if (combinationImages) {
+            $(".product-image").empty();
+            $(".product-image").append(combinationImages);
 
-        const imagesSelector = ".product-image .product-carousel a";
-        if ($(imagesSelector).length > 0) {
-            $(imagesSelector).simpleLightbox({history: false});
+            const imagesSelector = ".product-image .product-carousel a";
+            if ($(imagesSelector).length > 0) {
+                $(imagesSelector).simpleLightbox({history: false});
+            }
+
+            $(".product-image .owl-carousel.carousel-thumbnails").owlCarousel({
+                margin: 10,
+                nav: $(".carousel-thumbnails .thumbnail").length > 4,
+                navText: [
+                    "<i class='fa fa-chevron-left'></i>",
+                    "<i class='fa fa-chevron-right'></i>"
+                ],
+                responsiveClass: true,
+                items: 4
+            });
         }
-
-        $(".product-image .owl-carousel.carousel-thumbnails").owlCarousel({
-            margin: 10,
-            nav: $(".carousel-thumbnails .thumbnail").length > 4,
-            navText: [
-                "<i class='fa fa-chevron-left'></i>",
-                "<i class='fa fa-chevron-right'></i>"
-            ],
-            responsiveClass: true,
-            items: 4
-        });
     });
 };
