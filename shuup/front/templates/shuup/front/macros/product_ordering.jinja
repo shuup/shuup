@@ -36,14 +36,12 @@
                 {{ simple_variation_form(shop_product, quantity, orderable_variation_children, supplier) }}
             {% else %}
                 {{ simple_product_form(shop_product, quantity, supplier=supplier) }}
-                {% if shop_product.product.variation_parent %}
                 <div id="product-image-sections" class="hidden">
                     <div class="variation-image-section" id="variation-images-{{ shop_product.product.id }}">
                         {% set product_images = shop_product.public_images.all() %}
                         {{ render_product_image_section(shop_product.product, product_images=product_images) }}
                     </div>
                 </div>
-                {% endif %}
             {% endif %}
         </form>
     </div>
