@@ -6,6 +6,30 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+window.SHUUP_FRONT_ASYNC_PRODUCT_CAROUSEL_CONFIG = {
+    0: {
+        items : 1,
+        slideBy: 1
+    },
+    540: {
+        items : 2,
+        slideBy: 1
+    },
+    768: {
+        items : 3,
+        slideBy: 2
+    },
+    992: {
+        items : 4,
+        slideBy: 2
+    },
+    1200: {
+        items : 5,
+        slideBy: 3
+    }
+}
+
 $(document).ready(function() {
     $('.async-xtheme-product-carousel-plugin').each(function(index, value) {
         const url = $(this).data("url");
@@ -29,24 +53,7 @@ $(document).ready(function() {
                             "<i class='fa fa-angle-right'></i>"
                         ],
                         responsiveClass: true,
-                        responsive: {
-                            0: { // breakpoint from 0 up
-                                items : 2,
-                                slideBy: 1
-                            },
-                            425: { // breakpoint from 425px up
-                                items : 3,
-                                slideBy: 2
-                            },
-                            640: { // breakpoint from 640 up
-                                items : 4,
-                                slideBy: 2
-                            },
-                            1200: { // breakpoint from 992 up
-                                items : 5,
-                                slideBy: 3
-                            }
-                        }
+                        responsive: window.SHUUP_FRONT_ASYNC_PRODUCT_CAROUSEL_CONFIG
                     });
                 },
                 error: function(error) {
