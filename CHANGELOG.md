@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.7] - 2021-01-12
+
+- Front: improve async product carousel breakpoints
+  - Also add option to easily override breakpoints by
+    re-defining the breakpoint variable.
+- Front: optimize child product orderability checks a bit
+- Front: add option to replace product detail context
+- Front: optimize rendering images for variation products
+- Core: optimize price range calculations
+
 ## [2.3.6] - 2021-01-08
 
 ### Added
