@@ -281,6 +281,10 @@ Core
     Additional context data for the front product views. Provide objects should inherit
     from `~shuup.front.utils.ProductContextExtra` class.
 
+``product_subscription_option_provider``
+    Returns subscription options for a given `~shuup.core.utils.product_subscription.ProductSubscriptionContext` context.
+    The provider must inherit from the base class `~shuup.core.utils.product_subscription.BaseProductSubscriptionOptionProvider`.
+
 ``supplier_module``
     Supplier module classes (deriving from `~shuup.core.suppliers.base.BaseSupplierModule`),
     as used by `~shuup.core.models.Supplier`.
