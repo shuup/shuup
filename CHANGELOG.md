@@ -14,6 +14,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Front: render subscription options in basket template
 - Core: add provider to retrieve subscription options for a given product
 
 ### Changed
