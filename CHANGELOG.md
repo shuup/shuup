@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.8] - 2021-01-13
+
+- Front: fix with the product images on price update
+  - patches previous v2.3.7 release
+
 ## [2.3.7] - 2021-01-12
 
 - Front: improve async product carousel breakpoints
