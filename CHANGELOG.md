@@ -15,6 +15,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Core: add middleware provides to the basket command handler
 - Core: add provides to retrieve properties from order or order source
 - Front: render subscription options in basket template
 - Core: add provider to retrieve subscription options for a given product

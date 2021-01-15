@@ -144,6 +144,11 @@ Core
     Admin module classes. Practically all of the functionality in the admin is built
     via admin modules.
 
+``basket_command_middleware``
+    Injects a middleware in the basket command dispatcher that can be used
+    to mutate the basket kwargs and response and execute additional steps
+    with the basket once a command is invoked.
+
 ``customer_dashboard_items``
     Classes to parse customer dashboard items from. These are subclasses of
     ``shuup.front.utils.dashboard.DashboardItem``
