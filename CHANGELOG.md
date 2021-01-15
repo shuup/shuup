@@ -10,10 +10,12 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Front: render basket and order line properties using the `front_line_properties_descriptor` provides
 - Admin: change the product files form part icon to a file icon
 
 ### Added
 
+- Core: add provides to retrieve properties from order or order source
 - Front: render subscription options in basket template
 - Core: add provider to retrieve subscription options for a given product
 

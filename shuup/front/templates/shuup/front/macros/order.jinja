@@ -114,6 +114,10 @@
                             {% if show_product_package_info and product and product.is_package_parent() %}
                                 {{ render_package_children(product) }}
                             {% endif %}
+                            {% set line_properties = shuup.basket.get_properties_from_line(line) %}
+                            {% if line_properties %}
+                                {{ render_line_properties(line_properties) }}
+                            {% endif %}
                         </td>
                         <td class="text-right">
                             {{ line.taxful_discounted_unit_price|money }}
@@ -143,6 +147,27 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+{% endmacro %}
+
+{% macro render_line_properties(properties) %}
+    <div class="basket-line-properties">
+        {% for property in properties %}
+            <p class="basket-line-property">
+                {% if property.name %}
+                    <strong class="property-name">
+                        {% if property.value %}
+                            {{ _("{prop}:").format(prop=property.name) }}
+                        {% else %}
+                            {{ property.name }}
+                        {% endif %}
+                    </strong>
+                {% endif %}
+                {% if property.value %}
+                    <span class="property-value">{{ property.value }}</span>
+                {% endif %}
+            </p>
+        {% endfor %}
     </div>
 {% endmacro %}
 

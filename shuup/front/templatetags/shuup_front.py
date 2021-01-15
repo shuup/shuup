@@ -23,9 +23,11 @@ class HelpersNamespace(object):
 
 def _get_helpers():
     helpers = HelpersNamespace()
-    from shuup.front.template_helpers import general, product, category, urls
+    from shuup.front.template_helpers import basket, general, order, product, category, urls
 
     helpers.general = general
+    helpers.basket = basket
+    helpers.order = order
     helpers.product = product
     helpers.category = category
     helpers.urls = urls

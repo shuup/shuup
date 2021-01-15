@@ -227,6 +227,11 @@ Core
     Lists of frontend URLs to be prepended to the usual frontend URLs.
     Most of the time, ``front_urls`` should do.
 
+``front_line_properties_descriptor``
+    Object that returns properties for order source lines and order lines
+    to be rendered in the basket and order detail views.
+    The objects must inherit from the `~shuup.front.utils.order_source.BaseLinePropertiesDescriptor` base class.
+
 ``notify_action``
     Notification framework `~shuup.notify.Action` classes.
 
