@@ -17,8 +17,8 @@ const DND_UPLOAD_HINT = (
 );
 
 const responsiveUploadHint = [
-    m("div.visible-sm.visible-xs", m.trust(NO_DND_UPLOAD_HINT)),
-    m("div.visible-md.visible-lg", m.trust(DND_UPLOAD_HINT))
+    m("div.d-block.d-lg-none", m.trust(NO_DND_UPLOAD_HINT)),
+    m("div.d-none.d-lg-block", m.trust(DND_UPLOAD_HINT))
 ];
 
 export default responsiveUploadHint;
