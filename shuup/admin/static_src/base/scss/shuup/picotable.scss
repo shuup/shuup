@@ -455,7 +455,11 @@ nav.mobile-pagination {
 }
 
 .picotable-empty > div {
-    min-height: 50vh;
+    min-height: 25vh;
+
+    @include media-breakpoint-up(md) {
+        min-height: 50vh;
+    }
 
     h3, p {
         opacity: 0.8;
