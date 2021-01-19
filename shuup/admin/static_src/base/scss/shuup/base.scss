@@ -102,11 +102,11 @@ body {
 
 // Set header sizes on mobile screens
 @include media-breakpoint-down(sm) {
-    // Font sizes are about 85% of original sizes
-    h1 { font-size: 2.6rem; }
-    h2 { font-size: 2.1rem; }
-    h3 { font-size: 1.8rem; }
-    h4 { font-size: 1.5rem; }
+    // Font sizes are about 90% of original sizes
+    h1 { font-size: $h1-font-size * .9; }
+    h2 { font-size: $h2-font-size * .9; }
+    h3 { font-size: $h3-font-size * .9; }
+    h4 { font-size: $h4-font-size * .9; }
 }
 
 img {
