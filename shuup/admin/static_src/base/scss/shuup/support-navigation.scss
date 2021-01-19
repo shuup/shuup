@@ -38,6 +38,10 @@ body {
 .support-nav {
     padding: 2em 0;
 
+    @include media-breakpoint-down(sm) {
+        padding: .75em 0 1.5em 0;
+    }
+
     .breadcrumbs {
         list-style: none;
         padding: 0;
@@ -101,6 +105,12 @@ body {
 
         small {
             color: lighten($text-color, 20%);
+        }
+    }
+
+    .main-header + .page-actions {
+        @include media-breakpoint-down(xs) {
+            margin-top: 1em;
         }
     }
 
