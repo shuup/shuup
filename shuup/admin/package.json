@@ -16,6 +16,13 @@
   "alias": {
     "jQuery": "jquery"
   },
+  "browserslist": [
+    "defaults",
+    "> 0.2%",
+    "not dead",
+    "last 2 versions",
+    "maintained node versions"
+  ],
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "autoprefixer": "^9.6.1",

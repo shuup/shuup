@@ -38,6 +38,10 @@ body {
 .support-nav {
     padding: 2em 0;
 
+    @include media-breakpoint-down(sm) {
+        padding: .75em 0 1.5em 0;
+    }
+
     .breadcrumbs {
         list-style: none;
         padding: 0;
@@ -104,6 +108,12 @@ body {
         }
     }
 
+    .main-header + .page-actions {
+        @include media-breakpoint-down(xs) {
+            margin-top: 1em;
+        }
+    }
+
     .page-actions {
         &:empty {
             display: none;
@@ -154,6 +164,10 @@ body {
             }
         }
 
+        .btn-save.opaque {
+            width: auto;
+        }
+
         .btn-group {
             margin: 10px 10px 0 0;
 
@@ -171,6 +185,7 @@ body {
                 bottom: 10px;
                 right: 20px;
                 z-index: $zindex-fixed;
+                border-radius: $border-radius;
 
                 .btn-success {
                     color: $white;

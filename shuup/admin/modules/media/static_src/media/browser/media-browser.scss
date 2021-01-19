@@ -173,6 +173,10 @@
             color: $gray-light;
             text-align: center;
             transition: opacity 0.2s;
+
+            span {
+                font-weight: 700;
+            }
         }
 
         .empty-folder {
@@ -195,7 +199,7 @@
 
                 span {
                     font-size: 26px;
-                    font-weight: 500;
+                    font-weight: 600;
                 }
             }
         }
