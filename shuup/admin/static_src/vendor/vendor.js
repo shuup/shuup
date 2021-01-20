@@ -38,7 +38,8 @@ window.m = m;
 
 select2($);
 
-window.Sortable = require('sortablejs');  // TODO: Deprecate and merge to html5sortable
+const Sortable = require('sortablejs');  // TODO: Deprecate and merge to html5sortable
+window.Sortable = Sortable.default || Sortable;
 window.html5sortable = require('html5sortable/dist/html5sortable.cjs');
 window.ShuupCodeMirror = CodeMirror;
 
