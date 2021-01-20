@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Xtheme: fix summernote icons by using the original summernote css file
+
 ## [2.3.8] - 2021-01-13
 
 - Front: fix with the product images on price update
