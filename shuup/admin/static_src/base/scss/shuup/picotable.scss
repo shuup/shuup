@@ -313,9 +313,8 @@
             display: none;
 
             @include media-breakpoint-up(lg) {
-                display: flex;
-                justify-content: center;
-                margin: 0.5em 0;
+                display: block;
+                margin-top: 15px;
             }
         }
     }
@@ -383,6 +382,21 @@
                 }
             }
         }
+    }
+
+    .apply-filters {
+        padding: 15px 0;
+
+        .btn {
+            font-weight: 700;
+        }
+    }
+
+    .active-filter-counter {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
     }
 
     .picotable-item-info {
