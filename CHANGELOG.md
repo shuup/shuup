@@ -8,8 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.9] - 2021-01-19
+
+### Changed
+
+- Admin: add UX improvements through small style updates
+
 ### Fixed
 
+- Admin: add apply filters button and display active filters counter badge
+  - Do not save and refresh Picotable lists on filter change, but wait
+  that the user selects the "Apply filter" option. Also show badge for
+  active filters to indicate that some content is filtered out.
+  Consider "_all" as not filter.
 - Xtheme: fix summernote icons by using the original summernote css file
 
 ## [2.3.8] - 2021-01-13
