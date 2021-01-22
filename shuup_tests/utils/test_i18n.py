@@ -53,4 +53,4 @@ def test_existing_languages():
 def test_remove_extinct_languages():
     all_languages = [v[0] for k, v in six.iteritems(LANGUAGES)]
     expected = set([v[0] for k, v in six.iteritems(LANGUAGES) if v[1]])
-    assert remove_extinct_languages(all_languages) == expected
+    assert remove_extinct_languages(tuple(all_languages)) == expected

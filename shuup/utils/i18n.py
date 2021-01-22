@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
 import babel
 import babel.numbers
 from babel import UnknownLocaleError
@@ -121,6 +120,7 @@ def format_money(amount, digits=None, widen=0, locale=None):
     return format_currency(amount.value, amount.currency, pattern, loc, currency_digits=False)
 
 
+@lru_cache()
 def get_language_name(language_code):
     """
     Get a language's name in the currently active locale.
@@ -184,6 +184,7 @@ def is_existing_language(language_code):
     return True
 
 
+@lru_cache()
 def remove_extinct_languages(language_codes):
     language_codes = set(language_codes)
     codes = language_codes.copy()
