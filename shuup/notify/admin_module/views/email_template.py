@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shuup.admin.forms import ShuupAdminFormNoTranslation
-from shuup.admin.forms.widgets import CodeEditorWidget
+from shuup.admin.forms.widgets import CodeEditorWithHTMLPreview
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.picotable import Column
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
@@ -24,7 +24,7 @@ class EmailTemplateForm(ShuupAdminFormNoTranslation):
         model = EmailTemplate
         fields = ("name", "template")
         widgets = {
-            "template": CodeEditorWidget()
+            "template": CodeEditorWithHTMLPreview
         }
 
 
