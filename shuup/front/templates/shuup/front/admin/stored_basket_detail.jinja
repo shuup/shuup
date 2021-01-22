@@ -1,0 +1,196 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_block_subtitle, info_row %}
+
+{% macro contact_row(label, contact) %}
+    {% set url = shuup_admin.model_url(contact, "detail") %}
+    {% if contact is not none and contact.account_manager is not none %}
+        {{ info_row(label, contact ~ " (" ~ contact.account_manager ~ ")", url) }}
+    {% else %}
+        {{ info_row(label, contact, url) }}
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+    {% call content_block(_("Cart - %(key)s" % {"key": basket.key})) %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="list-group">
+                    {{ info_row(_("Shop"), basket.shop.name) }}
+                    {% if object.supplier %}
+                        {{ info_row(_("Vendor"), object.supplier.name) }}
+                    {% endif %}
+                    {{ info_row(_("Key"), basket.key) }}
+                    {{ info_row(_("Created Date"), object.created_on|datetime) }}
+                    {{ info_row(_("Updated Date"), object.updated_on|datetime) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="list-group">
+                    {{ contact_row(_("Customer"), basket.customer) }}
+                    {{ contact_row(_("Ordered by"), basket.orderer) }}
+                    {{ info_row(_("Email"), email or "") }}
+                    {{ info_row(_("Phone"), phone or "") }}
+                    {{ info_row(_("Tax Number"), tax_number or "") }}
+                    {{ info_row(_("Customer Comment"), customer_comment or "") }}
+
+                    {{ info_row(_("Payment Method"), basket.payment_method) }}
+                    {{ info_row(_("Shipping Method"), basket.shipping_method) }}
+                    {{ info_row(_("Total Price"), basket.taxful_total_price|money) }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="row"></div>
+
+        {% if basket.shipping_address or basket.billing_address %}
+            <div class="row">
+                <div class="col-lg-12">
+                    {{ content_block_subtitle("h4", _("Address Information"), "fa-map-marker", top_line=False)}}
+                    <div class="row contact-addresses">
+                        <div class="col-lg-6 billing-address">
+                            <h4 class="pt-3 pb-3"><strong>{% trans %}Billing address{% endtrans %}</strong></h4>
+                            <div class="list-group">
+                                {% for line in basket.billing_address or [] %}
+                                    <address class="list-group-item">{{ line }}</address>
+                                {% else %}
+                                    <p><i class="fa fa-warning text-warning"></i> {% trans %}No billing address defined.{% endtrans %}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-lg-6 shipping-address">
+                            <h4 class="pt-3 pb-3"><strong>{% trans %}Shipping address{% endtrans %}</strong></h4>
+                            <div class="list-group">
+                                {% for line in basket.shipping_address or [] %}
+                                    <address class="list-group-item">{{ line }}</address>
+                                {% else %}
+                                    <p><i class="fa fa-warning text-warning"></i> {% trans %}No shipping address defined.{% endtrans %}</p>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row"></div>
+
+        {% set lines = basket.get_lines() %}
+        {% if lines %}
+        <div class="row">
+            <div class="col-lg-12">
+                {{ content_block_subtitle("h4", _("Lines"), "fa-cubes", top_line=False)}}
+                <div class="table-responsive d-none d-xl-block">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{% trans %}SKU{% endtrans %}</th>
+                                <th>{% trans %}Text{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Taxless Unit Price{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Taxless Discount{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Taxless Discount Percentage{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Tax{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Taxless Total{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Total incl. Tax{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th colspan="7"></th>
+                                <th class="text-right">{{ basket.taxless_total_price|money }}</th>
+                                <th class="text-right">{{ basket.taxful_total_price|money }}</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for line in basket.get_lines() %}
+                            <tr>
+                                <td>{{ line.sku }}</td>
+                                <td>{{ line.text }}{% if line.supplier and not object.supplier %} - {% trans supplier=line.supplier.name %}Supplied by {{ supplier }}{% endtrans %}{% endif %}</td>
+                                <td class="text-right">{{ line.taxless_base_unit_price|money }}</td>
+                                <td class="text-right">{{ line.unit.render_quantity(line.quantity) }}</td>
+                                <td class="text-right">{% if line.taxless_discount_amount %}{{ line.taxless_discount_amount|money }}{% else %}-{% endif %}</td>
+                                <td class="text-right">{% if line.taxless_discount_amount %}{{ line|discount_percent }}{% else %}-{% endif %}</td>
+                                <td class="text-right">{{ line.tax_rate|percent }}</td>
+                                <td class="text-right">{{ line.taxless_price|money }}</td>
+                                <td class="text-right">{{ line.taxful_price|money }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-sm-block d-xl-none mobile-list-group">
+                    <ul class="list-group">
+                        {% for line in basket.get_lines() %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <strong>{{ line.sku }}</strong>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        {{ line.text }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        {{ line.quantity|number }} &times; {{ line.taxless_base_unit_price|money }} {% if line.taxless_discount_amount %}<span class="text-muted">{% trans %}Discount{% endtrans %}{{ line.taxless_discount_amount|money }}</span>{% endif %}
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <strong>{% trans %}Total{% endtrans %}: {{ line.taxful_price|money }}</strong>
+                                    </div>
+                                    <div class="col-sm-12 text-right text-muted">
+                                        {{ line.tax_rate|percent }} {% trans %}Tax{% endtrans %} ({{ line.taxless_price|money }} {% trans %}Taxless{% endtrans %})
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="row">
+                        <div class="col-sm-6 p-3"><strong>{% trans %}Taxless Total{% endtrans %}</strong></div>
+                        <div class="col-sm-6 text-right p-3"><strong>{{ basket.taxless_total_price|money }}</strong></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 p-3"><strong>{% trans %}Total incl. Tax{% endtrans %}</strong></div>
+                        <div class="col-sm-6 text-right p-3"><strong>{{ basket.taxful_total_price|money }}</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="row"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                {{ content_block_subtitle("h4", _("Logs"), "fa-archive", top_line=False)}}
+                <div id="order-log-entries">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>{% trans %}Date{% endtrans %}</th>
+                                    <th>{% trans %}Type{% endtrans %}</th>
+                                    <th>{% trans %}Message{% endtrans %}</th>
+                                    <th>{% trans %}Extra{% endtrans %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entry in basket.get_log_entries() %}
+                                    <tr>
+                                        <td>{{ entry.created_on|datetime }}</td>
+                                        <td>{{ entry.kind }}</td>
+                                        <td>{{ entry.message }}</td>
+                                        <td>{{ entry.extra }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}{% endblock %}

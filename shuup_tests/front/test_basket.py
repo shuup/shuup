@@ -379,7 +379,6 @@ def test_bsket_log_entries(rf):
     user = create_random_user()
     request = apply_request_middleware(rf.get("/"), user=user, shop=shop)
     basket = get_basket(request, basket_name="basket")
-    print(basket.storage)
     basket.add_log_entry("hello")
     assert len(basket.get_log_entries()) == 1
 
