@@ -12,15 +12,6 @@
         </div>
         {% endif %}
         <div class="support-nav">
-            {% block breadcrumbs -%}
-                {% if not iframe_mode %}
-                    {% set breadcrumbs = breadcrumbs or shuup_admin.get_breadcrumbs() %}
-                    {%- if breadcrumbs -%}
-                        {% from "shuup/admin/macros/breadcrumbs.jinja" import render_breadcrumbs with context %}
-                        {{ render_breadcrumbs(breadcrumbs) }}
-                    {%- endif -%}
-                {% endif %}
-            {%- endblock %}
             <div class="flex-wrapper">
                 <h1 class="main-header">{% block header %}{{ self.title() }}{% endblock %}</h1>
                 <div class="page-actions">
@@ -87,6 +78,9 @@
         <h2 class="iframe-title">{{ script_item.name }}</h2>
         {% if script_item.description %}<p>{{ script_item.description }}</p>{% endif %}
         <form enctype="multipart/form-data" action="" method="post" novalidate>
+            <div clas="pull-right">
+                <button class="btn btn-success" type="submit">{% trans %}Save changes{% endtrans %}</button>
+            </div>
             {% if form.errors %}
                 <div class="alert alert-dismissible alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
