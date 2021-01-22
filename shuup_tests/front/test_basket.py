@@ -61,7 +61,8 @@ def test_basket(rf):
         basket = get_basket(request)
         assert basket.get_product_ids_and_quantities().get(product.pk) == q
 
-        product_ids = set(StoredBasket.objects.last().products.values_list("id", flat=True))
+        # Since ordering the latest basket is first in line
+        product_ids = set(StoredBasket.objects.first().products.values_list("id", flat=True))
         assert product_ids == set([product.pk])
 
     stats = StoredBasket.objects.all().aggregate(
@@ -370,3 +371,22 @@ def test_basket_extra_data(rf):
     assert basket3.extra_data["my"] == basket1.extra_data["my"]
     assert basket3.shipping_data["ship"] == basket1.shipping_data["ship"]
     assert basket3.payment_data["token"] == basket1.payment_data["token"]
+
+
+@pytest.mark.django_db
+def test_bsket_log_entries(rf):
+    shop = get_default_shop()
+    user = create_random_user()
+    request = apply_request_middleware(rf.get("/"), user=user, shop=shop)
+    basket = get_basket(request, basket_name="basket")
+    print(basket.storage)
+    basket.add_log_entry("hello")
+    assert len(basket.get_log_entries()) == 1
+
+    basket.shop = None  # No shop no log entry
+    basket.add_log_entry("hello world")
+    assert len(basket.get_log_entries()) == 0  # No shop returns empty list
+
+    basket.shop = shop
+    basket.add_log_entry("hello world")
+    assert len(basket.get_log_entries()) == 2

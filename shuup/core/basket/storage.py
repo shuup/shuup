@@ -124,6 +124,13 @@ class BaseDatabaseBasketStorage(BasketStorage):
         stored_basket.customer = (basket.customer or None)
         stored_basket.orderer = (basket.orderer or None)
         stored_basket.creator = real_user_or_none(basket.creator)
+        if hasattr(self.model, "supplier") and hasattr(basket, "supplier"):
+            stored_basket.supplier = basket.supplier
+
+        stored_basket.class_spec = "%s.%s" % (
+            basket.__class__.__module__, basket.__class__.__name__
+        )
+
         stored_basket.save()
         stored_basket.products.set(set(basket.product_ids))
         return stored_basket

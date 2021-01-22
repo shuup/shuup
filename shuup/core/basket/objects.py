@@ -24,6 +24,7 @@ from shuup.core.models import (
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
 from shuup.core.pricing._context import PricingContext
+from shuup.utils.analog import LogEntryKind
 from shuup.utils.http import get_client_ip
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.objects import compare_partial_dicts
@@ -731,6 +732,22 @@ class BaseBasket(OrderSource):
             in PaymentMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_available_for(self)
         ]
+
+    def add_log_entry(self, message, extra={}, kind=LogEntryKind.NOTE):
+        """
+        Log errors to basket storage
+
+        :type message: str
+        :type extra: dict
+        :type kind: shuup.utils.analog.LogEntryKind
+        """
+        if hasattr(self.storage, "add_log_entry"):
+            self.storage.add_log_entry(self, message, extra, kind)
+
+    def get_log_entries(self):
+        if hasattr(self.storage, "get_log_entries"):
+            return self.storage.get_log_entries(self)
+        return []
 
 
 class Basket(BaseBasket):

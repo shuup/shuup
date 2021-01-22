@@ -13,7 +13,6 @@ from django.db.models.fields.related import ManyToManyField
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import CurrencyField, MoneyValueField, TaggedJSONField
-from shuup.core.models import Contact, PersonContact, Product, Shop
 from shuup.utils.properties import (
     MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
 )
@@ -27,23 +26,26 @@ class StoredBasket(MoneyPropped, models.Model):
     # A combination of the PK and key is used to retrieve a basket for session situations.
     key = models.CharField(max_length=32, default=generate_key, verbose_name=_('key'))
 
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, verbose_name=_('shop'))
+    shop = models.ForeignKey("shuup.Shop", on_delete=models.CASCADE, verbose_name=_('shop'))
+    supplier = models.ForeignKey(
+        "shuup.Supplier", null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_('supplier')
+    )
 
     customer = models.ForeignKey(
-        Contact, blank=True, null=True,
-        on_delete=models.CASCADE,
+        "shuup.Contact", blank=True, null=True,
+        on_delete=models.SET_NULL,
         related_name="customer_baskets",
         verbose_name=_('customer')
     )
     orderer = models.ForeignKey(
-        PersonContact, blank=True, null=True,
-        on_delete=models.CASCADE,
+        "shuup.PersonContact", blank=True, null=True,
+        on_delete=models.SET_NULL,
         related_name="orderer_baskets",
         verbose_name=_('orderer')
     )
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name="baskets_created",
         verbose_name=_('creator')
     )
@@ -66,9 +68,12 @@ class StoredBasket(MoneyPropped, models.Model):
     prices_include_tax = models.BooleanField(verbose_name=_('prices include tax'))
 
     product_count = models.IntegerField(default=0, verbose_name=_('product_count'))
-    products = ManyToManyField(Product, blank=True, verbose_name=_('products'))
+    products = ManyToManyField("shuup.Product", blank=True, verbose_name=_('products'))
+
+    class_spec = models.CharField(max_length=256, blank=True, verbose_name=_('class spec'))
 
     class Meta:
         app_label = "shuup_front"
         verbose_name = _('stored basket')
         verbose_name_plural = _('stored baskets')
+        ordering = ('-updated_on',)
