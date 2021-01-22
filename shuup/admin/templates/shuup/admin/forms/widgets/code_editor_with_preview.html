@@ -1,0 +1,12 @@
+{% load i18n %}
+<div class="d-flex flex-column code-editor-with-preview-container">
+    <textarea
+        name="{{ widget.name }}"
+        {% include "django/forms/widgets/attrs.html" %}
+    >{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+    <br>
+    <h2>{% trans "HTML Preview" %}</h2>
+    <div class="preview-container">
+        <iframe class="html-preview" srcdoc="{% if widget.value %}{{ widget.value }}{% endif %}"></iframe>
+    </div>
+</div>
