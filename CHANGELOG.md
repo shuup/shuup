@@ -8,9 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
-### Changed
+## [2.3.10] - 2021-01-22
 
+- Notify: make email template form use code editor with preview
+- Notify: make email action body use code editor with preview
+- Admin: add code editor with preview widget
+- Notify: Remove breadcrumbs from editor and add save button on top
+- Notify: make editor close button to Close instead Done
 - Add related name to package links to enable better queryset performance
+- Ensure migrations are fine for longer log entry fields
 
 ## [2.3.9] - 2021-01-19
 
