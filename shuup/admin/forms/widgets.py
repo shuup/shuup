@@ -256,6 +256,16 @@ class CodeEditorWidget(Textarea):
         return super().render(name, value, attrs_for_textarea)
 
 
+class CodeEditorWithHTMLPreview(Textarea):
+    template_name = 'shuup/admin/forms/widgets/code_editor_with_preview.html'
+
+    def render(self, name, value, attrs=None, renderer=None):
+        attrs_for_textarea = attrs.copy()
+        attrs_for_textarea["id"] += "-snippet"
+        attrs_for_textarea["class"] += " code-editor-textarea code-editor-with-preview"
+        return super().render(name, value, attrs_for_textarea)
+
+
 class PersonContactChoiceWidget(ContactChoiceWidget):
 
     @property
