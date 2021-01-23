@@ -16,6 +16,13 @@
   "alias": {
     "jQuery": "jquery"
   },
+  "browserslist": [
+    "defaults",
+    "> 0.2%",
+    "not dead",
+    "last 2 versions",
+    "maintained node versions"
+  ],
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "autoprefixer": "^9.6.1",
@@ -53,7 +60,7 @@
     "select2-bootstrap-css": "^1.4.6",
     "shepherd.js": "^2.5.0",
     "shuup-static-build-tools": "^1.0.3",
-    "sortablejs": "^1.7.0",
+    "sortablejs": "^1.13.0",
     "summernote": "^0.8.12",
     "tooltip.js": "^1.2.0",
     "vinyl-source-stream": "^2.0.0"

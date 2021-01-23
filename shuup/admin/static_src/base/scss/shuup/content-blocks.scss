@@ -47,6 +47,12 @@
             }
         }
 
+        .block-title {
+            @include media-breakpoint-down(sm) {
+                font-size: $h3-font-size;
+            }
+        }
+
         .block-title,
         .block-subtitle {
             padding-bottom: 8px;
@@ -100,6 +106,10 @@
                 padding: 7px;
                 font-size: 1.4rem;
                 transition: all 0.2s;
+
+                @include media-breakpoint-down(sm) {
+                    font-size: 1rem;
+                }
             }
         }
     }

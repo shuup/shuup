@@ -198,11 +198,8 @@ fieldset[disabled] .btn {
         transition: none;
 
         &.opaque {
-            @include media-breakpoint-down(sm) {
-                padding: 5px;
-            }
             background-color: darken($success, 5%);
-            color:$white;
+            color: $white;
             position: fixed;
             bottom: 10px;
             right: 20px;
