@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-01-23 14:16+0000\n"
 "PO-Revision-Date: 2020-10-04 19:40+0000\n"
 "Last-Translator: William Lindholm <william.lindholm@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
@@ -1479,6 +1479,12 @@ msgstr "Välj attribut som passar din produkttyp. För att ändra tillgängliga 
 
 msgid "product type"
 msgstr "produkttyp"
+
+msgid "shop product"
+msgstr "butik produkt"
+
+msgid "shop products"
+msgstr "butik produkter"
 
 msgid "product types"
 msgstr "produkttyper"

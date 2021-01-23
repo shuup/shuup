@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+
+### Added
+
+- Core: add verbose_name to shop product so we can translate it
+
 ## [2.3.10] - 2021-01-22
 
 - Notify: make email template form use code editor with preview

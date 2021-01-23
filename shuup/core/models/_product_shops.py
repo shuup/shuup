@@ -217,6 +217,8 @@ class ShopProduct(MoneyPropped, TranslatableModel):
 
     class Meta:
         unique_together = (("shop", "product",),)
+        verbose_name = _("shop product")
+        verbose_name_plural = _("shop products")
 
     def save(self, *args, **kwargs):
         self.clean()
