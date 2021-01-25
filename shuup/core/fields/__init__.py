@@ -145,11 +145,7 @@ class MeasurementField(FormattedDecimalField):
 
 
 class LanguageFieldMixin(object):
-    # TODO: This list will include extinct languages
-    LANGUAGE_CODES = set(babel.Locale("en").languages.keys())
-
-    def clean_language_codes(self):
-        self.LANGUAGE_CODES = remove_extinct_languages(self.LANGUAGE_CODES)
+    LANGUAGE_CODES = remove_extinct_languages(tuple(set(babel.Locale("en").languages.keys())))
 
 
 class LanguageField(LanguageFieldMixin, models.CharField):
@@ -173,7 +169,6 @@ class LanguageFormField(LanguageFieldMixin, forms.ChoiceField):
     def __init__(self, *args, **kwargs):
         include_blank = kwargs.pop("include_blank", True)
         blank_choice = kwargs.pop("blank_choice", BLANK_CHOICE_DASH)
-        self.clean_language_codes()
         kwargs["choices"] = self.get_choices(include_blank, blank_choice)
         super(LanguageFormField, self).__init__(*args, **kwargs)
 

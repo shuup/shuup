@@ -13,6 +13,7 @@ from shuup.apps.provides import clear_provides_cache
 from shuup.testing.factories import get_default_shop
 from shuup.utils.importing import clear_load_cache
 from shuup.xtheme.testing import override_current_theme_class
+from shuup.utils.i18n import get_language_name
 
 
 def clear_caches(setting, **kwargs):
@@ -32,6 +33,7 @@ def pytest_runtest_call(item):
     from shuup.themes.classic_gray.theme import ClassicGrayTheme
     item.session._theme_overrider = override_current_theme_class(ClassicGrayTheme, get_default_shop())
     item.session._theme_overrider.__enter__()
+    get_language_name.cache_clear()  # Clear language name lru_cache for each test
 
 
 def pytest_runtest_teardown(item, nextitem):
