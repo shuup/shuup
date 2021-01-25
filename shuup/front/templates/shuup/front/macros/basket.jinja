@@ -52,9 +52,16 @@
                     {{ line.text }}
                 {% endif %}
             </h4>
+
+            {% set line_properties = shuup.basket.get_properties_from_line(line) %}
+            {% if line_properties %}
+                {{ render_basket_line_properties(line_properties) }}
+            {% endif %}
+
             {% if product and product.is_package_parent() %}
                 {{ order_macros.render_package_children(product) }}
             {% endif %}
+
             <div class="quantity">
                 {% if product %}
                     {% set unit = shop_product.unit %}
@@ -101,6 +108,27 @@
                 </button>
             {% endif %}
         </div>
+    </div>
+{% endmacro %}
+
+{% macro render_basket_line_properties(properties) %}
+    <div class="basket-line-properties">
+        {% for property in properties %}
+            <p class="basket-line-property">
+                {% if property.name %}
+                    <strong class="property-name">
+                        {% if property.value %}
+                            {{ _("{prop}:").format(prop=property.name) }}
+                        {% else %}
+                            {{ property.name }}
+                        {% endif %}
+                    </strong>
+                {% endif %}
+                {% if property.value %}
+                    <span class="property-value">{{ property.value }}</span>
+                {% endif %}
+            </p>
+        {% endfor %}
     </div>
 {% endmacro %}
 

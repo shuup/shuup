@@ -103,7 +103,8 @@
 {%- set is_image_form = media_form.prefix == "images" %}
 {%- set id = "product-images-section" if is_image_form else "product-media-section" %}
 {%- set name = _("Product Images") if is_image_form else _("Product Files") %}
-{% call content_block(name, "fa-camera", id=id) %}
+{%- set icon = "fa-camera" if is_image_form else "fa-files-o" %}
+{% call content_block(name, icon, id=id) %}
     {% if not is_image_form %}
         <p class="section-description">{% trans %}You can attach files such as manual to the merchandise(s) here.{% endtrans %}</p>
     {% else %}

@@ -15,6 +15,9 @@ from shuup.core.models import (
     ProductCrossSell, ProductCrossSellType, ProductMode, ShopProduct, Supplier
 )
 from shuup.core.utils import context_cache
+from shuup.core.utils.product_subscription import (
+    get_product_subscription_options, ProductSubscriptionContext
+)
 from shuup.front.utils import cache as cache_utils
 from shuup.utils.text import force_ascii
 
@@ -24,6 +27,11 @@ def get_visible_attributes(product):
         product=product,
         attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE
     )
+
+
+def get_subscription_options_for_product(shop, product, supplier=None, user=None, **kwargs):
+    context = ProductSubscriptionContext(shop, product, supplier, user)
+    return list(get_product_subscription_options(context, **kwargs))
 
 
 # Deprecated, see `get_product_cross_sells()`

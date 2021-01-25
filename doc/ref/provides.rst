@@ -144,6 +144,11 @@ Core
     Admin module classes. Practically all of the functionality in the admin is built
     via admin modules.
 
+``basket_command_middleware``
+    Injects a middleware in the basket command dispatcher that can be used
+    to mutate the basket kwargs and response and execute additional steps
+    with the basket once a command is invoked.
+
 ``customer_dashboard_items``
     Classes to parse customer dashboard items from. These are subclasses of
     ``shuup.front.utils.dashboard.DashboardItem``
@@ -227,6 +232,11 @@ Core
     Lists of frontend URLs to be prepended to the usual frontend URLs.
     Most of the time, ``front_urls`` should do.
 
+``front_line_properties_descriptor``
+    Object that returns properties for order source lines and order lines
+    to be rendered in the basket and order detail views.
+    The objects must inherit from the `~shuup.front.utils.order_source.BaseLinePropertiesDescriptor` base class.
+
 ``notify_action``
     Notification framework `~shuup.notify.Action` classes.
 
@@ -280,6 +290,10 @@ Core
 ``product_context_extra``
     Additional context data for the front product views. Provide objects should inherit
     from `~shuup.front.utils.ProductContextExtra` class.
+
+``product_subscription_option_provider``
+    Returns subscription options for a given `~shuup.core.utils.product_subscription.ProductSubscriptionContext` context.
+    The provider must inherit from the base class `~shuup.core.utils.product_subscription.BaseProductSubscriptionOptionProvider`.
 
 ``supplier_module``
     Supplier module classes (deriving from `~shuup.core.suppliers.base.BaseSupplierModule`),

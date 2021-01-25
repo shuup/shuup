@@ -13,7 +13,9 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core.basket import commands
+from shuup.core.basket.command_middleware import BaseBasketCommandMiddleware
 from shuup.core.signals import get_basket_command_handler
 from shuup.utils.django_compat import force_text
 from shuup.utils.excs import Problem
@@ -70,7 +72,9 @@ class BasketCommandDispatcher(object):
             kwargs.pop("command", None)  # Nor the command
             kwargs.update(request=self.request, basket=self.basket)
             kwargs = self.preprocess_kwargs(command, kwargs)
+
             response = handler(**kwargs) or {}
+
         except (Problem, ValidationError) as exc:
             if not self.ajax:
                 raise
@@ -79,6 +83,7 @@ class BasketCommandDispatcher(object):
                 "error": force_text(msg, errors="ignore"),
                 "code": force_text(getattr(exc, "code", None) or "", errors="ignore")
             }
+
         response = self.postprocess_response(command, kwargs, response)
 
         if self.ajax:
@@ -99,6 +104,21 @@ class BasketCommandDispatcher(object):
         :param kwargs: dict of arguments.
         :return: dict of arguments.
         """
+
+        for basket_command_middleware in get_provide_objects("basket_command_middleware"):
+            if not issubclass(basket_command_middleware, BaseBasketCommandMiddleware):
+                continue
+
+            # create a copy
+            kwargs = dict(
+                basket_command_middleware().preprocess_kwargs(
+                    basket=self.basket,
+                    request=self.request,
+                    command=command,
+                    kwargs=kwargs
+                )
+            )
+
         return kwargs
 
     def postprocess_response(self, command, kwargs, response):
@@ -111,4 +131,19 @@ class BasketCommandDispatcher(object):
         :param response: The response the command returned.
         :return: The response to be processed and sent to the client.
         """
+
+        for basket_command_middleware in get_provide_objects("basket_command_middleware"):
+            if not issubclass(basket_command_middleware, BaseBasketCommandMiddleware):
+                continue
+
+            response = dict(
+                basket_command_middleware().postprocess_response(
+                    basket=self.basket,
+                    request=self.request,
+                    command=command,
+                    kwargs=kwargs,
+                    response=response
+                )
+            )
+
         return response
