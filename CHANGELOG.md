@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+
+### Added
+
+- Save basket just before starting the order creation.
+  This ensures we have latest basket there on store
+- Save basket after shipping or payment method is saved.
+- Save basket after shipping or billing address is saved. For
+  saving the addresses to basket data
+- Add option to add log entries linked to stored baskets
+- Add detail page for carts
+
+### Changed
+
+- Hide "finished" carts by default
+- Modify carts list to show latest cart first
+
+### Removed
+
+- Remove the delay filter as useless. No need to hide carts
+
 ## [2.3.11] - 2021-01-25
 
 ### Added
