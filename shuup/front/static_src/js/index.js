@@ -13,6 +13,7 @@ import "./navigation.js";
 import "./category.js";
 import "./carousel.js";
 import "./product_preview.js";
+import "./product_order.js";
 import "./update_price.js";
 import "./custom.js";
 import "./utils";

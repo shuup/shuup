@@ -24,7 +24,7 @@
             </script>
         {% endif %}
 
-        <form role="form" method="post" action="{{ url("shuup:basket") }}" class="add-to-basket">
+        <form role="form" method="post" action="{{ url('shuup:basket') }}" class="add-to-basket">
             {% set return_path = return_url if return_url else request.path %}
             <input type="hidden" name="return" value="{{ return_path }}">
             {{ supplier_input(shop_product, supplier) }}
@@ -156,9 +156,63 @@
         </div>
         {% endif %}
         {% if not xtheme.get("catalog_mode") %}
+            {% set subscription_options = shuup.product.get_subscription_options_for_product(
+                shop=shop_product.shop,
+                product=shop_product.product,
+                supplier=supplier,
+                user=request.user) %}
+
+            {% if subscription_options|length > 0 %}
+                {{ render_purchase_options(subscription_options) }}
+            {% endif %}
+
             {{ add_to_cart_btn(shop_product, is_orderable, button_text=button_text) }}
         {% endif %}
     {% endif %}
+{% endmacro %}
+
+{% macro render_purchase_options(subscription_options) %}
+    <ul class="list-group product-purchase-options-list-group">
+        <li class="list-group-item selected">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="purchase-option" value="one-time" checked onchange="onProductPurchaseOptionChange(this);">
+                    {{ _("One-time purchase") }}
+                </label>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="purchase-option" value="subscription" onchange="onProductPurchaseOptionChange(this);">
+                    {{ _("Subscribe") }}
+                </label>
+            </div>
+
+            <div class="subscription-frequency">
+                <strong>{{ _("Select frequency") }}</strong>
+
+                <div class="subscription-options">
+                    {% for option in subscription_options %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="subscription-option" value="{{ option.value }}" onchange="onProductSubscriptionSelectionChange(this);" {% if loop.first %}checked{% endif %}>
+                                <span class="option-label">{{ option.label }}</span> - <span class="option-price">{{ option.price|money }}/{{ product.sales_unit.symbol }}</span>
+                                {% if option.description %}
+                                    <p class="text-muted">
+                                    {% for description_line in option.description.split("\n") %}
+                                        <small>{{ description_line }}</small>
+                                        {% if not loop.last %}<br>{% endif %}
+                                    {% endfor %}
+                                    </p>
+                                {% endif %}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </li>
+    </ul>
 {% endmacro %}
 
 {% macro quantity_box(shop_product, quantity) %}
@@ -217,6 +271,7 @@
     {% if not button_text %}
         {%- set button_text = _("Add to cart") -%}
     {% endif %}
+
     <div class="clearfix btn-add-to-cart">
         <button type="submit"
                 class="btn btn-primary btn-block btn-lg{% if not orderable %} not-orderable{% endif %}"

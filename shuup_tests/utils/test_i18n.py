@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import six
 from django.utils.translation import override
 
+from shuup.core import cache
 from shuup.utils.i18n import (
     get_language_name, is_existing_language, remove_extinct_languages
 )
@@ -30,13 +31,15 @@ LANGUAGES = {
 
 
 
-def test_get_language_name():
+def test_get_language_name_1():
     with override("fi"):
         assert get_language_name("fi") == "suomi"
         assert get_language_name("zh") == "kiina"
         assert get_language_name("zh_Hans") == get_language_name("zh-Hans") == "yksinkertaistettu kiina"
         assert "yksinkertaistettu kiina"
 
+
+def test_get_language_name_2():
     with override("sv"):
         assert get_language_name("fi") == "finska"
         assert get_language_name("zh") == "kinesiska"
@@ -53,4 +56,4 @@ def test_existing_languages():
 def test_remove_extinct_languages():
     all_languages = [v[0] for k, v in six.iteritems(LANGUAGES)]
     expected = set([v[0] for k, v in six.iteritems(LANGUAGES) if v[1]])
-    assert remove_extinct_languages(all_languages) == expected
+    assert remove_extinct_languages(tuple(all_languages)) == expected
