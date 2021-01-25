@@ -8,11 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
-### Changed
-
-- Front: render basket and order line properties using the `front_line_properties_descriptor` provides
-- Admin: change the product files form part icon to a file icon
-
 ### Added
 
 - Core: add middleware provides to the basket command handler
@@ -22,6 +17,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Front: render basket and order line properties using the `front_line_properties_descriptor` provides
+- Admin: change the product files form part icon to a file icon
 - Core: cache language utils methods using LRU
 
 ## [2.3.10] - 2021-01-22
