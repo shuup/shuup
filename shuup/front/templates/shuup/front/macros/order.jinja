@@ -116,7 +116,7 @@
                             {% endif %}
                             {% set line_properties = shuup.basket.get_properties_from_line(line) %}
                             {% if line_properties %}
-                                {{ render_line_properties(line_properties) }}
+                                {{ render_order_line_properties(line_properties) }}
                             {% endif %}
                         </td>
                         <td class="text-right">
@@ -150,10 +150,10 @@
     </div>
 {% endmacro %}
 
-{% macro render_line_properties(properties) %}
-    <div class="basket-line-properties">
+{% macro render_order_line_properties(properties) %}
+    <div class="order-line-properties">
         {% for property in properties %}
-            <p class="basket-line-property">
+            <p class="order-line-property">
                 {% if property.name %}
                     <strong class="property-name">
                         {% if property.value %}

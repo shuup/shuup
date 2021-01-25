@@ -55,7 +55,7 @@
 
             {% set line_properties = shuup.basket.get_properties_from_line(line) %}
             {% if line_properties %}
-                {{ render_line_properties(line_properties) }}
+                {{ render_basket_line_properties(line_properties) }}
             {% endif %}
 
             {% if product and product.is_package_parent() %}
@@ -111,7 +111,7 @@
     </div>
 {% endmacro %}
 
-{% macro render_line_properties(properties) %}
+{% macro render_basket_line_properties(properties) %}
     <div class="basket-line-properties">
         {% for property in properties %}
             <p class="basket-line-property">
