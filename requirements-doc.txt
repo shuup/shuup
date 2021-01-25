@@ -13,7 +13,7 @@ django-countries==6.1.3   # via shuup
 django-enumfields==2.0.0  # via shuup
 django-filer==1.7.1       # via shuup
 django-filter==2.2.0      # via shuup
-django-jinja==2.5.0       # via shuup
+django-jinja==2.7.0       # via shuup
 django-js-asset==1.2.2    # via django-mptt
 django-mptt==0.9.1
 django-parler==2.0.1      # via shuup
@@ -31,7 +31,7 @@ idna==2.10                # via requests
 imagesize==1.2.0          # via sphinx
 importlib-metadata==2.0.0  # via markdown, keyring
 jdcal==1.4.1              # via openpyxl
-jinja2==2.8.1             # via sphinx, django-jinja, shuup
+jinja2==2.11.2             # via sphinx, django-jinja, shuup
 jsonfield==2.1.1          # via shuup
 keyring==21.4.0           # via shuup
 keyrings.alt==4.0.0       # via shuup
