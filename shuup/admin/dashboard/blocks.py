@@ -77,10 +77,7 @@ class DashboardChartBlock(DashboardBlock):
     default_size = "medium"
     BLOCK_TEMPLATE = """
     <div class="color-block block-purple">
-        <div class="block-header">
-            <div class="text-wrap"><span>%(title)s</span></div>
-            <div class="icon-wrap"><i class="fa %(icon)s"></i></div>
-        </div>
+        <h2 class="block-title">%(title)s</h2>
         <div class="block-content">
             <canvas id="chart-%(id)s" height="250"></canvas>
         </div>
