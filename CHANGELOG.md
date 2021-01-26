@@ -11,6 +11,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Setup: add .html to MANIFEST.in
+- Admin: Add text truncate CSS to user dropdown if the user's username
+  gets too long and display only a user icon on mobile screens
+- Admin: always display the dashboard link in the main navigation as the first item
 - Save basket just before starting the order creation.
   This ensures we have latest basket there on store
 - Save basket after shipping or payment method is saved.
@@ -21,11 +25,13 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Admin: Change visit shop link from an icon to a button with text
 - Hide "finished" carts by default
 - Modify carts list to show latest cart first
 
 ### Removed
 
+- Admin: Remove dashboard and home icon links from top menu
 - Remove the delay filter as useless. No need to hide carts
 
 ## [2.3.11] - 2021-01-25

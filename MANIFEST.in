@@ -5,7 +5,7 @@ include VENDOR-LICENSES.md
 include tox.ini
 
 recursive-include shuup \
-    *.jinja *.txt *.js *.css *.json *.less *.map \
+    *.jinja *.html *.txt *.js *.css *.json *.less *.map \
     *.ico *.png *.svg *.jpg \
     *.woff *.woff2 *.eot *.otf *.ttf *.po *.mo
 
