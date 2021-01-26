@@ -42,7 +42,7 @@ def test_menu(browser, admin_user, live_server, settings):
 
 
     wait_until_appeared(browser, ".item-category.item-active")
-    browser.find_by_css(".menu-list li a")[1].click()
+    browser.find_by_css(".menu-list li a")[2].click()
 
     wait_until_condition(browser, lambda x: x.is_text_present("New shop product"))
 
@@ -69,7 +69,7 @@ def test_menu_small_device(browser, admin_user, live_server, settings):
     browser.find_by_css(".quicklinks a").first.click()
 
     wait_until_appeared(browser, ".item-category.item-active")
-    browser.find_by_css(".menu-list li a")[1].click()
+    browser.find_by_css(".menu-list li a")[2].click()
 
     wait_until_condition(browser, lambda x: x.is_text_present("New shop product"))
 

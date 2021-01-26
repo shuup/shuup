@@ -23,20 +23,8 @@
         margin-top: 10px;
     }
 
-    .nav-btn {
-        color: $secondary;
-        display: inline-block;
-        text-align: center;
-        transition: background 0.2s, color 0.2s;
-        padding: 0.7rem;
-
-        i {
-            font-size: 18px;
-        }
-
-        &:hover, &:active, &:focus {
-            color: $primary;
-        }
+    .site-links .btn {
+        padding: 0.5rem 0.8rem;
     }
 
     .dropdown {
@@ -54,12 +42,18 @@
 
         .dropdown-toggle {
             padding: 0.5rem 0.8rem;
-            margin-right: 30px;
             cursor: pointer;
+            margin-right: 10px;
 
-            i {
-                font-size: 18px;
-                line-height: 60px;
+            span {
+                overflow: hidden;
+                max-width: 150px;
+                text-overflow: ellipsis;
+                vertical-align: top;
+            }
+
+            @include media-breakpoint-up(md) {
+                margin-right: 30px;
             }
         }
 

@@ -2,6 +2,7 @@
 {% block title -%}
     {% trans %}Welcome!{% endtrans %}
 {%- endblock %}
+
 {% macro regular_block(width) %}
     <div class="block width-{{ width }}">
         <div class="block-inner">
@@ -9,30 +10,28 @@
         </div>
     </div>
 {% endmacro %}
+
 {% macro large_value_block(b) %}
     <div class="block width-{{ b.size }}">
-        <div class="block-inner color-block block-{{ b.color }}">
-            <div class="block-header">
-                <div class="text-wrap"><span>{{ b.title }}</span></div>
-                {% if b.icon %}
-                    <div class="icon-wrap"><i class="{{ b.icon }}"></i></div>
-                {% endif %}
-            </div>
-            <div class="block-content">
-                <h2>{{ b.value }}</h2>
+        <div class="block-inner">
+            <div class="color-block block-{{ b.color }}">
+                <h2 class="block-title">{{ b.value }}</h2>
+                <div class="block-subtitle">
+                    {{ b.title }}
+                </div>
                 {% if b.subtitle %}
-                    <div class="subtitle">{{ b.subtitle }}</div>
+                    <div class="block-description">{{ b.subtitle }}</div>
                 {% endif %}
             </div>
         </div>
     </div>
 {% endmacro %}
+
 {% macro notification_block_content(notifications) %}
     <div class="color-block block-red">
-        <div class="block-header">
-            <div class="text-wrap"><span>{% trans %}Notifications{% endtrans %}</span></div>
-            <div class="icon-wrap"><i class="fa fa-line-chart"></i></div>
-        </div>
+        <h2 class="block-title">
+            {% trans %}Notifications{% endtrans %}
+        </h2>
         <div class="block-content">
             <table>
             {% for notification in notifications %}
@@ -47,7 +46,7 @@
                         {% endif %}
                     </td>
                     <td>
-                    {%- if notification.title %}<span class="label label-{{ notification.kind }}">{{ notification.title }}</span>&nbsp;{% endif %}
+                    {%- if notification.title %}<span class="badge badge-{{ notification.kind }} mr-1">{{ notification.title }}</span>&nbsp;{% endif %}
                     {%- if notification.url %}<a href="{{ notification.url }}">{% endif -%}
                     {{ notification.text }}
                     {%- if notification.url -%}</a>{%- endif %}
@@ -61,47 +60,59 @@
 {% endmacro %}
 
 {% macro activity_block_content(activities) %}
-<div class="activity-list">
-    <h2 class="block-title"><i class="fa fa-pencil-square-o"></i>{% trans %}Activity Feed{% endtrans %}</h2>
-    <ul>
-        {% for act in activities %}
-            <li>
-                <div class="activity-name">
-                    {% if act.url %}<a href="{{ act.url }}">{% endif %}
-                    {{ act.text }}
-                    {% if act.url %}</a>{% endif %}
-                </div>
-                <div class="timestamp timesince" data-ts="{{ act.datetime.isoformat() }}"></div>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+    <div class="color-block block-navy">
+        <h2 class="block-title">{% trans %}Activity Feed{% endtrans %}</h2>
+        <div class="activity-list block-content">
+            <ul>
+                {% for act in activities %}
+                    <li>
+                        <div class="activity-name">
+                            {% if act.url %}<a href="{{ act.url }}">{% endif %}
+                            {{ act.text }}
+                            {% if act.url %}</a>{% endif %}
+                        </div>
+                        <div class="timestamp timesince" data-ts="{{ act.datetime.isoformat() }}"></div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endmacro %}
 
 {% block content_wrap %}
     <main id="main-content" class="dashboard">
         {% block content %}
-            <div id="dashboard-wrapper">
-
+            <div class="dashboard-value-block-wrapper">
                 {% for b in blocks %}
                     {% if b.type == "value" %}
                         {{ large_value_block(b) }}
-                    {% else %}
-                        {% call regular_block(b.size) %}
-                            {{ b.content|safe }}
-                        {% endcall %}
                     {% endif %}
                 {% endfor %}
+            </div>
 
-                {% if notifications %}
-                    {% call regular_block("medium") %}{{ notification_block_content(notifications) }}{% endcall %}
-                {% endif %}
+            <div class="dashboard-other-blocks-wrapper">
+                <div id="dashboard-wrapper">
+                    {% for b in blocks %}
+                        {% if not b.type == "value" %}
+                            {% call regular_block(b.size) %}
+                                {{ b.content|safe }}
+                            {% endcall %}
+                        {% endif %}
+                    {% endfor %}
 
-                {% if activity %}
-                    {% call regular_block("medium") %}{{ activity_block_content(activity) }}{% endcall %}
-                {% endif %}
-                <div class="block width-large">
-                    <p>{{ _("Shuup %(version)s", version=version) }}</p>
+                    {% if notifications %}
+                        {% call regular_block("medium") %}{{ notification_block_content(notifications) }}{% endcall %}
+                    {% endif %}
+
+                    {% if activity %}
+                        {% call regular_block("medium") %}{{ activity_block_content(activity) }}{% endcall %}
+                    {% endif %}
+
+                    <div class="block width-full">
+                        <p class="text-muted text-center small mt-3">
+                            {{ _("Shuup %(version)s", version=version) }}
+                        </p>
+                    </div>
                 </div>
             </div>
         {% endblock %}
@@ -129,6 +140,7 @@
         })();
     </script>
 {% endblock %}
+
 {% block extra_css %}
     <link rel="stylesheet" href="{{ shuup_static("shuup_admin/css/dashboard.css") }}">
 {% endblock %}

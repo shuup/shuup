@@ -9,19 +9,57 @@ $block-columns: 12;
     width: round(percentage($block-width / $block-columns));
 }
 
+.dashboard-value-block-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+
+    @include media-breakpoint-down(xs) {
+        padding: 0px 10px;
+    }
+
+    .block {
+        position: relative;
+        display: flex;
+
+        .block-inner {
+            width: 100%;
+        }
+    }
+}
+
+.dashboard-other-blocks-wrapper {
+    @include media-breakpoint-down(xs) {
+        padding: 0px 10px;
+    }
+}
+
+#dashboard-wrapper {
+    position: relative;
+}
+
 .block {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     display: inline-block;
     width: 100%;
     position: absolute;
-    padding: 0 15px;
+    padding: 0 5px;
+
+    @include media-breakpoint-up(sm) {
+        padding: 0 15px;
+    }
+
+    @include media-breakpoint-up(sm) {
+        margin-bottom: 30px;
+    }
 
     &.width-small {
-        @include media-breakpoint-up(sm) {
-            @include block-width(6);
-        }
+        @include block-width(6);
 
         @include media-breakpoint-up(md) {
+            @include block-width(4);
+        }
+
+        @include media-breakpoint-up(xl) {
             @include block-width(3);
         }
     }
@@ -113,79 +151,83 @@ $block-columns: 12;
                 }
             }
         }
-
     }
 
     .block-inner {
-        padding: 0px;
         background-color: $white;
-        border-radius: 4px;
+        border-radius: $border-radius;
         box-shadow: $shadow-md;
+        display: flex;
 
-        .block-title {
-            border-bottom: 2px solid $primary;
-            margin-bottom: 5px;
-            padding-bottom: 5px;
-            margin-top: 0px;
-            padding-top: 0;
-            font-size: 1.6rem;
-
-            i {
-                margin-right: 10px;
-                color: $primary;
-            }
-        }
-
-         .block-header {
+        .color-block {
+            position: relative;
             width: 100%;
-            color: #fff;
-            overflow: hidden;
 
-            .text-wrap {
-                background-color: #fff;
-                margin: 0;
-                color: $text-color;
-                vertical-align: middle;
-                padding: 0.5em 1em;
-                font-size: 1.1rem;
-                font-weight: 500;
-                text-transform: uppercase;
-                padding-bottom: 0.2em;
-                background-color: gainsboro;
-            }
+            &::before {
+                content: "";
+                position: absolute;
+                right: 20px;
+                left: 20px;
+                bottom: -7px;
+                height: 10px;
+                border-radius: $border-radius;
+                z-index: -1;
 
-            .icon-wrap {
-                display:none;
-                background: darken($primary, 8%);
-                height: 2rem;
-                width: 2rem;
-                vertical-align: middle;
-                text-align: center;
-
-                i {
-                    font-size: 2.5rem;
-                    color: rgba(255, 255, 255, 0.85);
+                @include media-breakpoint-down(xs) {
+                    display: none;
                 }
             }
         }
 
+        h2,
+        .block-title {
+            margin: 0;
+            padding: 1rem 1.25rem 0 1.25rem;
+            font-weight: bold;
+
+            @include media-breakpoint-down(xs) {
+                font-size: $h3-font-size;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+
+        .block-subtitle {
+            color: $text-muted;
+            padding: .25rem 1.25rem .75rem 1.25rem;
+            font-weight: 600;
+
+            @include media-breakpoint-down(xs) {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+
+        .block-description {
+            color: $text-muted;
+            border-top: 2px solid $gray-bg;
+            display: block;
+            font-size: 0.8rem;
+            padding: .75rem 1.25rem;
+
+            @include media-breakpoint-down(xs) {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+
         .block-content {
-            padding: 1rem;
-            background-color:#fff;
+            padding: 1rem 1.25rem;
 
-            h2 {
-                margin: 0;
-                font-weight: 400;
+            @include media-breakpoint-down(xs) {
+                padding-left: 1rem;
+                padding-right: 1rem;
             }
+        }
 
-            .subtitle {
-                color: #999;
-                padding-top: 1em;
-                border-top: 1px solid #DDD;
-                display: block;
-                margin-top: 10px;
-                font-size: 0.8rem;
-            }
+        h2 + .block-content {
+            margin-top: 1rem;
+            border-top: 2px solid $gray-bg;
         }
 
         .activity-list,
@@ -247,8 +289,8 @@ $block-columns: 12;
 
     // Mixin for changing block header background colors
     @mixin block-bg-color($color) {
-        .block-header {
-            border-bottom: 2.5px solid $color;
+        &::before {
+            background: rgba($color, .25);
         }
     }
 
