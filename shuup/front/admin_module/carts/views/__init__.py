@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from ._detail import CartDetailView
 from ._list import CartListView
 
-__all__ = ["CartListView"]
+__all__ = ["CartDetailView", "CartListView"]

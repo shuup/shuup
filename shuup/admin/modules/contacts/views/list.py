@@ -56,9 +56,12 @@ class ContactListView(PicotableListView):
             filter_config=ChoicesFilter([(False, _("no")), (True, _("yes"))], default=True)
         ),
         Column("n_orders", _(u"# Orders"), class_name="text-right", filter_config=RangeFilter(step=1)),
-        Column("groups", _("Groups"),
-               filter_config=ChoicesFilter(ContactGroup.objects.all_except_defaults(), "groups"),
-               display="get_groups_display"),
+        Column(
+            "groups",
+            _("Groups"),
+            filter_config=Select2Filter("get_groups"),
+            display="get_groups_display"
+        ),
         Column("shops", _("Shops"), filter_config=Select2Filter("get_shops"), display="get_shops_display"),
         Column("registration_shop", _("Registered in"), filter_config=Select2Filter("get_shops"))
     ]
@@ -76,8 +79,15 @@ class ContactListView(PicotableListView):
         if picture_column:
             picture_column[0].raw = True
 
+    def get_groups(self):
+        return list(
+            ContactGroup.objects.translated().all_except_defaults().values_list("id", "translations__name")
+        )
+
     def get_shops(self):
-        return Shop.objects.get_for_user(self.request.user)
+        return list(
+            Shop.objects.get_for_user(self.request.user).translated().values_list("id", "translations__public_name")
+        )
 
     def get_toolbar(self):
         if self.request.user.is_superuser:

@@ -120,8 +120,8 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
         shipping_method = ShippingMethod.objects.filter(pk=self.storage.get("shipping_method_id")).first()
         payment_method = PaymentMethod.objects.filter(pk=self.storage.get("payment_method_id")).first()
 
-        self.basket.shipping_method_id = shipping_method.pk if shipping_method else None
-        self.basket.payment_method_id = payment_method.pk if payment_method else None
+        self.basket.shipping_method = shipping_method if shipping_method else None
+        self.basket.payment_method = payment_method if payment_method else None
 
         # force recalculate lines
         self.basket.uncache()
@@ -142,6 +142,11 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
                 value = form.cleaned_data[field_name].id
 
             self.storage[storage_key] = value
+
+        if form.has_changed():
+            self.process()
+            self.basket.save()
+            self.basket.storage.add_log_entry(self.basket, _("Saved services."))
 
         return super(MethodsPhase, self).form_valid(form)
 

@@ -257,7 +257,6 @@ const Picotable = (function (m, storage) {
                 }
             };
         };
-
         var select = m("select.form-control", {
             config: (col.filter.select2) ? select2Config() : null,
             value: JSON.stringify(value),
@@ -282,7 +281,7 @@ const Picotable = (function (m, storage) {
         for (var i = 0; i < data.columns.length; i++) {
             if (data.columns[i].filter) {
                 var value = data.columns[i].filter.defaultChoice;
-                if (value) {
+                if (value !== undefined) {
                     filters[data.columns[i].id] = value;
                 }
             }
@@ -505,16 +504,16 @@ const Picotable = (function (m, storage) {
     }
 
     function renderTable(ctrl) {
+        // Set default filter values even without data since filters are always rendered
+        var defaultValues = Util.extend(getDefaultValues(ctrl), ctrl.vm.filterValues());
+        ctrl.vm.filterValues(defaultValues);
+
         var data = ctrl.vm.data();
         if (data === null) {  // Not loaded, don't return anything
             return;
         } else if (data.items.length === 0) {
             return;
         }
-
-        // Set default filter values
-        var defaultValues = Util.extend(getDefaultValues(ctrl), ctrl.vm.filterValues());
-        ctrl.vm.filterValues(defaultValues);
 
         // Build header
         var columnHeaderCells = Util.map(data.columns, function (col, columnNumber) {
@@ -688,14 +687,13 @@ const Picotable = (function (m, storage) {
     }
 
     function renderMobileTable(ctrl) {
-        var data = ctrl.vm.data();
-        if (data === null) return; // Not loaded, don't return anything
-
-        // Set default filter values
+        // Set default filter values even without data since filters are always rendered
         var defaultValues = Util.extend(getDefaultValues(ctrl), ctrl.vm.filterValues());
         ctrl.vm.filterValues(defaultValues);
-
         const filterCount = ctrl.getActiveFilterCount();
+
+        var data = ctrl.vm.data();
+        if (data === null) return; // Not loaded, don't return anything
 
         var isPick = !!ctrl.vm.pickId();
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
@@ -912,7 +910,6 @@ const Picotable = (function (m, storage) {
             "aria-expanded": "false",
             onclick: initSelect,
         };
-
         const filterCount = ctrl.getActiveFilterCount();
 
         return m("div.picotable-filter.btn-group.d-none.d-lg-flex",
@@ -1121,7 +1118,7 @@ const Picotable = (function (m, storage) {
         ctrl.getActiveFilterCount = function () {
             return Object.values(
                 ctrl.getFilters()
-            ).filter((value) => value && value !== "_all").length;
+            ).filter((value) => value !== undefined && value !== "_all").length;
         }
         ctrl.saveFilters = function () {
             if (!storage) return;

@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.dashboard import DashboardMoneyBlock
 from shuup.admin.menu import ORDERS_MENU_CATEGORY
-from shuup.admin.utils.urls import admin_url
+from shuup.admin.utils.urls import admin_url, derive_model_url
 from shuup.front.models import StoredBasket
 
 
@@ -62,9 +62,14 @@ class CartAdminModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^carts/$",
+                r"^carts/$",
                 "shuup.front.admin_module.carts.views.CartListView",
                 name="cart.list"
+            ),
+            admin_url(
+                r"^carts/(?P<pk>\d+)/$",
+                "shuup.front.admin_module.carts.views.CartDetailView",
+                name="cart.detail"
             ),
         ]
 
@@ -81,3 +86,6 @@ class CartAdminModule(AdminModule):
                 aliases=[_("Show carts")]
             ),
         ]
+
+    def get_model_url(self, object, kind, shop=None):
+        return derive_model_url(StoredBasket, "shuup_admin:cart", object, kind)

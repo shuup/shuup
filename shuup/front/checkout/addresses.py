@@ -133,6 +133,12 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
             self.storage["company"] = form.forms["company"].save(commit=False)
         else:
             self.storage["company"] = None
+
+        process_and_save_basket = any([form[form_key].has_changed() for form_key in form.forms])
+        if process_and_save_basket:
+            self.process()
+            self.basket.save()
+            self.basket.storage.add_log_entry(self.basket, _("Saved addresses."))
         return super(AddressesPhase, self).form_valid(form)
 
     def _process_addresses(self, basket):

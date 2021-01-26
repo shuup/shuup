@@ -100,7 +100,11 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
     def form_valid(self, form):
         for key, value in form.cleaned_data.items():
             self.storage[key] = value
+
         self.process()
+        self.basket.save()
+        self.basket.storage.add_log_entry(self.basket, _("Starting to create order."))
+
         order = self.create_order()
         self.checkout_process.complete()  # Inform the checkout process it's completed
 
