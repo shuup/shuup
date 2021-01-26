@@ -269,14 +269,19 @@
     .summernote-wrap,
     .select2-container,
     .checkbox {
-        max-width: 80%;
+        max-width: 85%;
         border-radius: $border-radius-lg;
-        margin: 3px;
         display: inline-block;
+
+        @include media-breakpoint-down(sm) {
+            max-width: 100%;
+        }
     }
 
     .select2-container {
         min-width: 200px;
+        width: 100% !important;
+        margin-right: 0;
 
         // make room to add quick add buttons
         @include media-breakpoint-down(sm) {

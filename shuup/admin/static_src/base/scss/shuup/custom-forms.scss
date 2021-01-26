@@ -31,12 +31,23 @@ $input-bg-color: #F3F3F3;
 }
 
 .form-content {
-    padding: 1.2rem 0.5rem;
+    padding: 1rem .5rem;
     margin-bottom: 0;
+
+    @include media-breakpoint-down(sm) {
+        padding: .8rem .25rem;
+    }
 
     label {
         color: rgba($text-color, 0.9);
         font-weight: 600;
+    }
+
+    .control-label {
+        @include media-breakpoint-down(sm) {
+            // Make room for tooltips that are positioned absolute on the right
+            padding-right: 30px;
+        }
     }
 }
 
@@ -245,7 +256,26 @@ fieldset[disabled] .form-control {
 
 .help-popover-btn {
     display: inline-block;
-    margin-top: 4px;
+}
+
+.form-input-group .help-popover-btn {
+    // Position tooltips on the right side above the fields on mobile
+    @include media-breakpoint-down(sm) {
+        position: absolute;
+        bottom: 100%;
+        right: -10px;
+    }
+}
+
+.form-input-group .checkbox {
+    & + .help-popover-btn {
+        // Don't do positioning of the tooltips for checkboxes
+        @include media-breakpoint-down(sm) {
+            position: relative;
+            bottom: auto;
+            right: auto;
+        }
+    }
 }
 
 .checkbox {
