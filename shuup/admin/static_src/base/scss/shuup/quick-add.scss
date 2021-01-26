@@ -71,21 +71,16 @@ div.container-fluid.support-nav-wrap {
             cursor: pointer;
             float: left;
             position: relative;
-            margin-top: 4px;
 
             i.fa-plus:hover {
                 color: #000;
             }
 
-            @include media-breakpoint-up(sm) {
+            @include media-breakpoint-up(md) {
                 margin-left: 5px;
             }
 
-            i.fa-plus:hover {
-                color: #000;
-            }
-
-            @include media-breakpoint-down(xs) {
+            @include media-breakpoint-down(sm) {
                 position: absolute;
                 left: 3px;
                 bottom: 0px;
@@ -96,13 +91,12 @@ div.container-fluid.support-nav-wrap {
             cursor: pointer;
             float: left;
             position: relative;
-            margin-top: 4px;
 
             i.fa-plus:hover {
                 color: #000;
             }
 
-            @include media-breakpoint-down(xs) {
+            @include media-breakpoint-down(sm) {
                 position: absolute;
                 left: 50px;
                 bottom: 0px;
