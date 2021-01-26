@@ -12,7 +12,7 @@ import json
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import IntegrityError
+from django.db import IntegrityError, models
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
@@ -331,9 +331,14 @@ class MediaBrowserView(TemplateView):
             subfolder_of_users_root(self.user, folder) or
             has_permission(self.user, "media.delete-folder")
         ):
-            new_selected_folder_id = folder.parent_id
-            message = delete_folder(folder)
-            return JsonResponse({"success": True, "message": message, "newFolderId": new_selected_folder_id})
+            new_selected_folder_id = folder.parent_id  # This will be changed by the delete function so save it here.
+            try:
+                message = delete_folder(folder)
+            except models.ProtectedError:
+                message = _("This folder is protected and cannot be deleted.")
+                return JsonResponse({"success": False, "message": message})
+            else:
+                return JsonResponse({"success": True, "message": message, "newFolderId": new_selected_folder_id})
 
         message = _(
             "Can't delete this folder, either you don't have permssion to do it "

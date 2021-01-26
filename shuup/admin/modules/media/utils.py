@@ -7,10 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.db import transaction
 from django.utils.translation import ugettext_lazy as _
 from filer.models import Folder
 
 
+@transaction.atomic()
 def delete_folder(folder):
     """
     Delete a Filer folder and move files and subfolders up to the parent.
@@ -38,8 +40,9 @@ def delete_folder(folder):
         message_bits.append(
             _("{num} files moved to {folder}.").format(
                 num=n_files, folder=parent_name))
-    folder.delete()
+    folder.delete()  # Possibly raises a `ProtectedError`, that's why the `atomic()` block.
     if subfolders:  # We had some subfolders to mangle, best rebuild now
         Folder._tree_manager.rebuild()
+
     message_bits.insert(0, _("Folder `%s` was deleted.") % folder.name)
     return "\n".join(message_bits)

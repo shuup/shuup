@@ -8,8 +8,11 @@ import django
 import json
 import tempfile
 
+import mock
 import pytest
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db.models import ProtectedError
+
 from shuup.utils.django_compat import reverse
 from django.http import JsonResponse
 from django.test import override_settings
@@ -342,6 +345,31 @@ def test_deleting_mid_folder(rf, admin_user):
     assert tree[folder1.pk] == {folder3.pk: {}}
     folder1 = Folder.objects.get(pk=folder1.pk)
     assert list(folder1.get_children()) == [folder3]
+
+
+@pytest.mark.django_db
+def test_delete_protected_folder(rf, admin_user):
+    shop = get_default_shop()
+
+    folder1 = get_or_create_folder(shop, printable_gibberish(), admin_user)
+
+    folder2 = get_or_create_folder(shop, printable_gibberish(), admin_user)
+    folder2.parent = folder1
+    folder2.save()
+
+    with mock.patch(
+        "filer.models.foldermodels.Folder.delete",
+        side_effect=ProtectedError("Cannot delete", [folder2]),
+    ) as mocked:
+        mbv_command(admin_user, {"action": "delete_folder", "id": folder2.pk})
+        mocked.assert_called()
+    folder1 = Folder.objects.get(pk=folder1.pk)
+    assert list(folder1.get_children()) == [folder2]
+
+    mbv_command(admin_user, {"action": "delete_folder", "id": folder2.pk})
+    folder1 = Folder.objects.get(pk=folder1.pk)
+    assert list(folder1.get_children()) == []
+    assert not Folder.objects.filter(pk=folder2.pk).exists()
 
 
 @pytest.mark.django_db
