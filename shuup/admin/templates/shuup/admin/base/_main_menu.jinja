@@ -14,6 +14,12 @@
             </div>
         </div>
         <ul class="menu-list">
+            <li class="dashboard">
+                <a class="d-flex align-items-center mt-3 mb-3{% if request.path == url('shuup_admin:dashboard') %} item-active{% endif %}" href="{{ url('shuup_admin:dashboard') }}">
+                    <i class="item-icon fa fa-dashboard"></i>
+                    <span class="item-name parent">{% trans %}Dashboard{% endtrans %}</span>
+                </a>
+            </li>
             {% if quicklinks %}
                 <li class="quicklinks">
                     <a class="item-category d-flex align-items-center mt-3 mb-3" href="#">
