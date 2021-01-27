@@ -17,7 +17,7 @@ export default function item(label, action, attrs = {}) {
         tagBits.push("disabled");
         return;
     }
-    return m(tagBits.join("."), m("a", {
+    return m(tagBits.join("."), m("a.dropdown-item", {
         href: "#", onclick: (event) => {
             event.preventDefault();
             action();

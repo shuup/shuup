@@ -17,7 +17,7 @@ import fileContextMenu from "../menus/fileContextMenu";
 
 export default function(ctrl, folders, files) {
     const folderItems = _.map(folders, function(folder) {
-        return m("div.col-xs-6.col-md-4.col-lg-3.grid-folder.fd-zone", {
+        return m("div.grid-folder.fd-zone", {
             key: "folder-" + folder.id,
             "data-folder-id": folder.id,
             config: dropzoneConfig(ctrl),
@@ -38,7 +38,7 @@ export default function(ctrl, folders, files) {
         });
 
         return m(
-            "div.col-xs-6.col-md-4.col-lg-3.grid-file",
+            "div.grid-file",
             {
                 key: file.id,
                 draggable: true,
@@ -64,10 +64,12 @@ export default function(ctrl, folders, files) {
                 }
             }, m("i.fa.fa-cog")) : null,
             wrapFileLink(file, "a.file-preview", [
-                m("img.img-responsive", {src: file.thumbnail || images.defaultThumbnail}),
+                m("div.preview-img-wrap", [
+                    m("img.img-responsive", {src: file.thumbnail || images.defaultThumbnail}),
+                ]),
                 m("div.file-name", file.name)
             ])
         );
     });
-    return m("div.row", folderItems.concat(fileItems));
+    return m("div.custom-browser-row", folderItems.concat(fileItems));
 }
