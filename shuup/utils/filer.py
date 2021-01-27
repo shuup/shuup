@@ -184,8 +184,9 @@ def filer_file_to_json_dict(file, user=None):
     try:
         thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
             'size': (128, 128),
-            'crop': True,
+            'crop': False,
             'upscale': True,
+            'background': "#ffffff",
             'subject_location': file.subject_location
         })
     except Exception:
