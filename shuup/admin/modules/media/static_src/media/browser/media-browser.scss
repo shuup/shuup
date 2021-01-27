@@ -8,6 +8,9 @@
 }
 
 .folder-tree {
+    flex-basis: 260px;
+    max-width: 260px;
+
     @include media-breakpoint-down(md) {
         display: none;
     }
@@ -19,22 +22,18 @@
     }
 
     ul ul {
-        padding-left: 2.5rem;
+        padding-left: 1.5rem;
     }
 
     li a {
         font-size: 0.9rem;
-        padding: 5px 10px;
+        padding: 5px 0;
         display: block;
         text-decoration: none;
         color: $text-color;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-
-        @include media-breakpoint-up(xl) {
-            font-size: 1rem;
-        }
 
         &:hover {
             text-decoration: underline;
@@ -61,8 +60,7 @@
 }
 
 .title {
-    padding-bottom: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 
     i, a {
         margin-right: 7px;
@@ -78,23 +76,34 @@
 
     .btn-toolbar {
         margin: 0;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
+
+        @include media-breakpoint-down(md) {
+            margin-bottom: 20px;
+        }
 
         .btn-group {
             margin-left: 0;
             margin-right: 15px;
+            flex-wrap: wrap;
 
             @include media-breakpoint-down(md) {
                 margin-bottom: 10px;
             }
 
+            button {
+                white-space: nowrap;
+                flex-grow: 0;
+            }
+
             &.icons {
                 button {
-                    padding: 6px 10px 4px 10px;
+                    padding-top: 6px;
+                    padding-bottom: 2px;
                 }
 
                 i {
-                    font-size: 1.4rem;
+                    font-size: 1.1rem;
                 }
             }
         }
@@ -103,49 +112,70 @@
     .folder-contents {
         min-height: 350px;
 
+        .custom-browser-row {
+            display: flex;
+            flex-flow: row wrap;
+
+            @supports (display: grid) {
+                display: grid;
+                grid-gap: 25px 15px;
+                grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+
+                @include media-breakpoint-down(xs) {
+                    grid-gap: 20px 10px;
+                }
+            }
+        }
+
         .grid-folder,
         .grid-file {
-            margin-bottom: 60px;
+            position: relative;
+            margin: 0 15px 25px 0;
+            flex-basis: 180px;
 
-            @include media-breakpoint-down(md) {
-                &:nth-child(2n+1) {
-                    clear: both;
-                }
-            }
-
-            @include media-breakpoint-between(md, lg) {
-                &:nth-child(3n+1) {
-                    clear: both;
-                }
-            }
-
-            @include media-breakpoint-up(xl) {
-                &:nth-child(4n+1) {
-                    clear: both;
-                }
+            @supports (display: grid) {
+                margin: 0;
+                flex-basis: unset;
             }
 
             a.file-preview {
                 display: block;
                 background: #fff;
                 text-align: center;
-                padding: 15px;
+                padding: 10px;
                 border: 1px solid $border-color;
-                margin-bottom: 10px;
+                border-radius: $border-radius;
                 transition: border-color 0.1s;
+                width: 100%;
 
                 &:hover,
                 &:focus {
                     border-color: $primary;
                 }
 
-                img {
+                .preview-img-wrap {
+                    max-width: 120px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    object-fit: contain;
                     margin: auto;
+
+                    img {
+                        margin: auto;
+                    }
                 }
             }
 
             .file-name {
                 text-align: center;
+                font-size: .8rem;
+                margin-top: 5px;
+                overflow-wrap: break-word;
+
+                @include media-breakpoint-down(xs) {
+                    font-size: .75rem;
+                }
 
                 a {
                     color: $text-color;
@@ -158,8 +188,12 @@
             }
         }
 
+        .grid-file {
+            display: flex;
+        }
+
         .grid-folder {
-            .file-preview {
+            a.file-preview {
                 padding: 30px 15px;
             }
 
@@ -338,7 +372,7 @@
 .file-cog-btn {
     padding: 0;
     position: absolute;
-    right: 25px;
+    right: 10px;
     top: 10px;
     width: 20px;
 }

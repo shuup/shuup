@@ -22,8 +22,8 @@ import * as remote from "./util/remote";
 export function view(ctrl) {
     return m("div.container-fluid", [
         m("div.row", [
-            m("div.col-md-3.page-inner-navigation.folder-tree", folderTree(ctrl)),
-            m("div.col-md-9.page-content", m("div.content-block", [
+            m("div.col.page-inner-navigation.folder-tree", folderTree(ctrl)),
+            m("div.col.page-content", m("div.content-block", [
                 m("div.title", folderBreadcrumbs(ctrl)),
                 m("div.content", folderView(ctrl))
             ]))
