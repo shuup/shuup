@@ -18,6 +18,9 @@
                 <button class="btn btn-info deselect-all-permissions" type="button">
                     {{ _("Deselect all permissions") }}
                 </button>
+                <button class="btn btn-info toggle-collapse" type="button">
+                    {{ _("Open all permission groups") }}
+                </button>
             </div>
             <div class="modules-permissions">
                 {% for module in form.admin_modules %}
@@ -125,6 +128,26 @@
         });
         $(".deselect-all-permissions").on("click", function(evt) {
             $(".modules-permissions input[type='checkbox']").prop("checked", false);
+        });
+        $(".toggle-collapse").on("click", function (evt) {
+            // Reference from: https://stackoverflow.com/a/42538464/9835872
+            var target = $('.modules-permissions .collapse');
+
+            if ($(this).data("isOpen")) {
+                target.collapse("hide");
+                $(this).data("isOpen", false);
+                $(this).text($(this).data("openText"));
+            } else {
+                target.removeData("bs.collapse")
+                    .collapse({ parent: "", toggle: false })
+                    .collapse("show")
+                    .removeData("bs.collapse")
+                    .collapse({ parent: "#permissions-accordion", toggle: false });
+
+                $(this).data("isOpen", true);
+                $(this).data("openText", $(this).text());
+                $(this).text("{{ _("Close all permission groups") }}");
+            }
         });
     })();
 </script>
