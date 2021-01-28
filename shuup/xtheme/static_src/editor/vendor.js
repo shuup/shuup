@@ -16,7 +16,8 @@ select2($);
 const _ = require('lodash');
 window._ = _;
 
-window.Sortable = require('sortablejs');
+const Sortable = require('sortablejs');
+window.Sortable = Sortable.default || Sortable;
 
 require('bootstrap');
 require("summernote/dist/summernote.js");
