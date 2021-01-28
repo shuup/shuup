@@ -8,12 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.13] - 2021-01-28
+
 ### Added
 
 - Admin: Add an open/close all groups button to 'Granular Permission Groups' list.
 
 ### Fixed
 
+- Admin: Update styling for media browser
+- Admin: Ensure media browser images are squares without cropping
+- Xtheme: fix sortable import for static resources
 - Admin: Gracefully handle the error when trying to delete a PROTECTED MediaFolder.
 
 ## [2.3.12] - 2021-01-26
