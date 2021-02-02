@@ -10,7 +10,9 @@
                 {{ render_language_changer() }}
             </ul>
             <ul class="pull-right" id="navigation-basket-partial">
-                {{ render_basket_partial(request.basket) }}
+                {%- cache 600 request.basket.get_cache_key() request.session.session_key -%}
+                    {{ render_basket_partial(request.basket) }}
+                {%- endcache -%}
             </ul>
         </div>
     </div>
