@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -19,10 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
-msgid "Plain text"
+msgid "HTML"
 msgstr ""
 
-msgid "HTML"
+msgid "Plain text"
 msgstr ""
 
 msgid "Subject"
@@ -390,16 +390,13 @@ msgstr ""
 msgid "Edit Step"
 msgstr ""
 
-msgid "Done"
+msgid "Save changes"
 msgstr ""
 
 msgid "Please correct the errors below."
 msgstr ""
 
 msgid "Variables"
-msgstr ""
-
-msgid "Save changes"
 msgstr ""
 
 msgid "Script Template: {}"
