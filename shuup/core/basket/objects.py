@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import hashlib
+import json
 from collections import Counter
 from decimal import Decimal
 from uuid import uuid4
@@ -17,6 +19,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.basket.storage import BasketCompatibilityError, get_storage
+from shuup.core.fields.tagged_json import TaggedJSONEncoder
 from shuup.core.models import (
     AnonymousContact, Contact, MutableAddress, OrderLineType, PaymentMethod,
     PersonContact, ShippingMethod, ShopProduct
@@ -123,6 +126,8 @@ class BaseBasket(OrderSource):
 
         self._shipping_address = None
         self._billing_address = None
+        self._shipping_method = None
+        self._payment_method = None
         self._customer_comment = ""
         self.creator = getattr(request, "user", None)
 
@@ -132,6 +137,12 @@ class BaseBasket(OrderSource):
         # not cached.
         self.dirty = False
         self.uncache()  # Set empty values for cache variables
+
+    def get_cache_key(self):
+        self._load()
+        return hashlib.md5(
+            json.dumps(self._data, cls=TaggedJSONEncoder, sort_keys=True).encode("utf-8")
+        ).hexdigest()
 
     def uncache(self):
         super(BaseBasket, self).uncache()
@@ -237,13 +248,17 @@ class BaseBasket(OrderSource):
         if self._customer or isinstance(self._customer, AnonymousContact):
             return self._customer
 
+        customer = None
         customer_id = self._get_value_from_data("customer_id")
-        if customer_id:
-            if customer_id == ANONYMOUS_ID:
-                return AnonymousContact()
-            return Contact.objects.get(pk=customer_id)
+        if customer_id and customer_id == ANONYMOUS_ID:
+            customer = AnonymousContact()
+        elif customer_id:
+            customer = Contact.objects.get(pk=customer_id)
+        else:
+            customer = getattr(self.request, "customer", AnonymousContact())
 
-        return getattr(self.request, "customer", AnonymousContact())
+        self._customer = customer
+        return self._customer
 
     @customer.setter
     def customer(self, value):
@@ -259,13 +274,17 @@ class BaseBasket(OrderSource):
         if self._orderer or isinstance(self._orderer, AnonymousContact):
             return self._orderer
 
+        orderer = None
         orderer_id = self._get_value_from_data("orderer_id")
-        if orderer_id:
-            if orderer_id == ANONYMOUS_ID:
-                return AnonymousContact()
-            return PersonContact.objects.get(pk=orderer_id)
+        if orderer_id and orderer_id == ANONYMOUS_ID:
+            orderer = AnonymousContact()
+        elif orderer_id:
+            orderer = PersonContact.objects.get(pk=orderer_id)
+        else:
+            orderer = getattr(self.request, "person", AnonymousContact())
 
-        return getattr(self.request, "person", AnonymousContact())
+        self._orderer = orderer
+        return self._orderer
 
     @orderer.setter
     def orderer(self, value):
@@ -280,13 +299,18 @@ class BaseBasket(OrderSource):
         if self._shipping_address:
             return self._shipping_address
 
+        shipping_address = None
         shipping_address_id = self._get_value_from_data("shipping_address_id")
         if shipping_address_id:
-            return MutableAddress.objects.get(pk=shipping_address_id)
+            shipping_address = MutableAddress.objects.get(pk=shipping_address_id)
 
-        shipping_address_data = self._get_value_from_data("shipping_address_data")
-        if shipping_address_data:
-            return MutableAddress.from_data(shipping_address_data)
+        if not shipping_address:
+            shipping_address_data = self._get_value_from_data("shipping_address_data")
+            if shipping_address_data:
+                shipping_address = MutableAddress.from_data(shipping_address_data)
+
+        self._shipping_address = shipping_address
+        return shipping_address
 
     @shipping_address.setter
     def shipping_address(self, value):
@@ -305,13 +329,18 @@ class BaseBasket(OrderSource):
         if self._billing_address:
             return self._billing_address
 
+        billing_address = None
         billing_address_id = self._get_value_from_data("billing_address_id")
         if billing_address_id:
-            return MutableAddress.objects.get(pk=billing_address_id)
+            billing_address = MutableAddress.objects.get(pk=billing_address_id)
 
-        billing_address_data = self._get_value_from_data("billing_address_data")
-        if billing_address_data:
-            return MutableAddress.from_data(billing_address_data)
+        if not billing_address:
+            billing_address_data = self._get_value_from_data("billing_address_data")
+            if billing_address_data:
+                billing_address = MutableAddress.from_data(billing_address_data)
+
+        self._billing_address = billing_address
+        return self._billing_address
 
     @billing_address.setter
     def billing_address(self, value):
@@ -327,11 +356,21 @@ class BaseBasket(OrderSource):
 
     @property
     def shipping_method(self):
+        if (
+            self._shipping_method and
+            self.shipping_method_id and
+            self._shipping_method.pk == int(self.shipping_method_id)
+        ):
+            return self._shipping_method
+
         if not self.shipping_method_id:
             self.shipping_method_id = self._get_value_from_data("shipping_method_id")
 
+        shipping_method = None
         if self.shipping_method_id:
-            return ShippingMethod.objects.filter(pk=self.shipping_method_id).first()
+            shipping_method = ShippingMethod.objects.filter(pk=self.shipping_method_id).first()
+            self._shipping_method = shipping_method
+        return shipping_method
 
     @shipping_method.setter
     def shipping_method(self, shipping_method):
@@ -340,11 +379,21 @@ class BaseBasket(OrderSource):
 
     @property
     def payment_method(self):
+        if (
+            self._payment_method and
+            self.payment_method_id and
+            self._payment_method.pk == int(self.payment_method_id)
+        ):
+            return self._payment_method
+
         if not self.payment_method_id:
             self.payment_method_id = self._get_value_from_data("payment_method_id")
 
+        payment_method = None
         if self.payment_method_id:
-            return PaymentMethod.objects.filter(pk=self.payment_method_id).first()
+            payment_method = PaymentMethod.objects.filter(pk=self.payment_method_id).first()
+            self._payment_method = payment_method
+        return payment_method
 
     @payment_method.setter
     def payment_method(self, payment_method):
@@ -356,7 +405,9 @@ class BaseBasket(OrderSource):
         if self._customer_comment:
             return self._customer_comment
 
-        return self._get_value_from_data("customer_comment")
+        customer_comment = self._get_value_from_data("customer_comment")
+        self._customer_comment = customer_comment
+        return self._customer_comment
 
     @customer_comment.setter
     def customer_comment(self, value):
