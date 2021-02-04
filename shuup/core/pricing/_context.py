@@ -61,5 +61,4 @@ class PricingContext(PricingContextable):
         self.supplier = supplier
         if basket:
             assert basket.shop == shop, "shop must match with the basket"
-            assert basket.customer == customer, "customer must match with the basket"
         self.time = (time if time is not None else now())

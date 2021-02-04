@@ -37,6 +37,7 @@ def test_set_customer_with_custom_basket_lines(rf):
 
         base_unit_price = basket.shop.create_price("10.99")
 
+        cache_key = basket.get_cache_key()
         basket.add_line(
             text="Custom Line",
             type=OrderLineType.OTHER,
@@ -46,12 +47,16 @@ def test_set_customer_with_custom_basket_lines(rf):
             base_unit_price=base_unit_price,
             extra={"this is purely extra": "oh is it"}
         )
-
+        assert cache_key != basket.get_cache_key()
+        cache_key = basket.get_cache_key()
         basket.customer = customer
+        assert cache_key != basket.get_cache_key()
+        cache_key = basket.get_cache_key()
         assert basket.customer_comment is None
         basket.customer_comment = customer_comment
         assert basket.payment_method is None
         assert basket.shipping_method is None
+        assert cache_key != basket.get_cache_key()
         basket.payment_method = payment_method
         basket.shipping_method = shipping_method
         basket.refresh_lines()

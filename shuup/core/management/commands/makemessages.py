@@ -29,8 +29,10 @@ KEYWORDS = dict(babel.messages.extract.DEFAULT_KEYWORDS, **{
 
 JINJA_EXTENSIONS = [
     'jinja2.ext.with_',
+    'jinja2.ext.do',
     'jinja2.ext.loopcontrols',
     'django_jinja.builtins.extensions.CsrfExtension',
+    'django_jinja.builtins.extensions.CacheExtension',
     'shuup.xtheme.parsing.LayoutPartExtension',
     'shuup.xtheme.parsing.PlaceholderExtension',
     'shuup.xtheme.parsing.PluginExtension',

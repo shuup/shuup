@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 10:59+0000\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -539,6 +539,9 @@ msgstr ""
 msgid ""
 "Can't rename this folder, either you don't have permssion to do it or it's a "
 "shared folder between more then one shop or it has a owner"
+msgstr ""
+
+msgid "This folder is protected and cannot be deleted."
 msgstr ""
 
 msgid ""
@@ -1565,6 +1568,9 @@ msgstr ""
 msgid "New user"
 msgstr ""
 
+msgid "Send Reset Password Email"
+msgstr ""
+
 #, python-format
 msgid ""
 "\n"
@@ -1876,12 +1882,6 @@ msgid "Menu"
 msgstr ""
 
 msgid "Search for"
-msgstr ""
-
-msgid "Go to dashboard"
-msgstr ""
-
-msgid "Go home"
 msgstr ""
 
 msgid "Hello"
@@ -3182,6 +3182,9 @@ msgstr ""
 msgid "Deselect all permissions"
 msgstr ""
 
+msgid "Open all permission groups"
+msgstr ""
+
 msgid "(All permissions granted)"
 msgstr ""
 
@@ -3202,6 +3205,9 @@ msgstr ""
 
 msgid ""
 "Select the permissions to enable access to specific features of the module."
+msgstr ""
+
+msgid "Close all permission groups"
 msgstr ""
 
 msgid "Error!"

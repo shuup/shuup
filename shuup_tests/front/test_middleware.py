@@ -194,3 +194,14 @@ def test_with_inactive_contact(rf, regular_user, admin_user):
     assert request.user == AnonymousUser()
     assert request.person == AnonymousContact()
     assert request.customer == AnonymousContact()
+
+
+@pytest.mark.django_db
+def test_with_statics(rf):
+    shop = get_default_shop()  # Create a shop
+
+    request = apply_request_middleware(rf.get("/static/test.png"))
+    assert not hasattr(request, "customer")
+
+    request = apply_request_middleware(rf.get("/"))
+    assert hasattr(request, "customer")

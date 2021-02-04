@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 10:59+0000\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1332,6 +1332,12 @@ msgid ""
 "in a month)"
 msgstr ""
 
+msgid "shop product"
+msgstr ""
+
+msgid "shop products"
+msgstr ""
+
 msgid ""
 "Error! Invalid display unit: Internal unit of the selected display unit does "
 "not match with the sales unit of the product."
@@ -1876,13 +1882,13 @@ msgstr ""
 msgid "available in countries"
 msgstr ""
 
-msgid "available in european countries"
+msgid "available in european union"
 msgstr ""
 
 msgid "unavailable in countries"
 msgstr ""
 
-msgid "unavailable in european countries"
+msgid "unavailable in european union"
 msgstr ""
 
 msgid "Service is not available without a defined country."
