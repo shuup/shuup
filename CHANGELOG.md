@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Changed
+
+- Admin: Disable scrolling on jquery datetime pickers
+
 ## [2.3.14] - 2021-02-04
 
 - Front: add template cache to basket partial
