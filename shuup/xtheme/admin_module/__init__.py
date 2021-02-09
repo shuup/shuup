@@ -62,7 +62,7 @@ class XthemeAdminModule(AdminModule):
         ]
 
     def get_help_blocks(self, request, kind):
-        theme = get_current_theme(request.shop)
+        theme = getattr(request, "theme", None) or get_current_theme(request.shop)
         if kind == "quicklink" and theme:
             yield SimpleHelpBlock(
                 text=_("Customize the look and feel of your shop"),
@@ -83,7 +83,8 @@ class XthemeAdminModule(AdminModule):
 
         if engine and isinstance(engine, Jinja2):  # The engine is what we expect...
             if isinstance(engine.env, XthemeEnvironment):  # ... and it's capable of loading themes...
-                if not get_current_theme(request.shop):  # ... but there's no theme active?!
+                if not (getattr(request, "theme", None) or get_current_theme(request.shop)):
+                    # ... but there's no theme active?!
                     # Panic!
                     yield Notification(
                         text=_("No theme is active. Click here to activate one."),

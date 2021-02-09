@@ -48,7 +48,7 @@ def get_view_config(context, global_type=False):
         else:
             view_name = "UnknownView"
         config = ViewConfig(
-            theme=get_current_theme(request.shop),
+            theme=getattr(request, "theme", None) or get_current_theme(request.shop),
             shop=request.shop,
             view_name=view_name,
             draft=is_edit_mode(request),

@@ -302,11 +302,11 @@ def valid_view(context):
     """
     view_class = getattr(context["view"], "__class__", None) if context.get("view") else None
     request = context.get("request")
-    if not view_class or not request:
+    if not (view_class and request):
         return False
 
     match = request.resolver_match
-    if not match or match.app_name == "shuup_admin":
+    if not (match and match.app_name != "shuup_admin"):
         return False
 
     from shuup.xtheme.views.editor import EditorView
@@ -322,7 +322,8 @@ def inject_global_snippet(context, content):
 
     from shuup.xtheme import get_current_theme
     from shuup.xtheme.models import Snippet, SnippetType
-    shop = get_shop(context["request"])
+    request = context["request"]
+    shop = getattr(request, "shop", None) or get_shop(context["request"])
 
     cache_key = GLOBAL_SNIPPETS_CACHE_KEY.format(shop_id=shop.id)
     snippets = cache.get(cache_key)
@@ -333,7 +334,7 @@ def inject_global_snippet(context, content):
 
     for snippet in snippets:
         if snippet.themes:
-            current_theme = get_current_theme(shop)
+            current_theme = getattr(request, "theme", None) or get_current_theme(shop)
             if current_theme and current_theme.identifier not in snippet.themes:
                 continue
 

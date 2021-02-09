@@ -53,7 +53,7 @@ def extra_view_dispatch(request, view):
     :return: A response of some kind.
     :rtype: django.http.HttpResponse
     """
-    theme = get_current_theme(request.shop)
+    theme = getattr(request, "theme", None) or get_current_theme(request.shop)
     view_func = get_view_by_name(theme, view)
     if not view_func:
         msg = "Error! %s/%s: Not found." % (getattr(theme, "identifier", None), view)

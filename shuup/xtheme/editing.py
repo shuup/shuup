@@ -78,7 +78,7 @@ def can_edit(context):
     if not (request and could_edit(request) and may_inject(context)):
         return False
 
-    return bool(get_current_theme(request.shop))
+    return bool(getattr(request, "theme", None) or get_current_theme(request.shop))
 
 
 def add_edit_resources(context):
@@ -102,7 +102,7 @@ def add_edit_resources(context):
 
     from .rendering import get_view_config  # avoid circular import
     view_config = get_view_config(context)
-    theme = get_current_theme(request.shop)
+    theme = getattr(request, "theme", None) or get_current_theme(request.shop)
     add_resource(context, "body_end", InlineScriptResource.from_vars("XthemeEditorConfig", {
         "commandUrl": command_url,
         "editUrl": edit_url,
