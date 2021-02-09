@@ -415,6 +415,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             return val
 
         shop_inst = self.shop_products.get(shop_id=shop.id)
+        shop_inst.product = self
+        shop_inst.shop = shop
         context_cache.set_cached_value(key, shop_inst)
         return shop_inst
 
