@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.signals import setting_changed
 
 from shuup.apps.provides import clear_provides_cache
+from shuup.gdpr.models import get_setting
 from shuup.testing.factories import get_default_shop
 from shuup.utils.importing import clear_load_cache
 from shuup.xtheme.testing import override_current_theme_class
@@ -34,6 +35,7 @@ def pytest_runtest_call(item):
     item.session._theme_overrider = override_current_theme_class(ClassicGrayTheme, get_default_shop())
     item.session._theme_overrider.__enter__()
     get_language_name.cache_clear()  # Clear language name lru_cache for each test
+    get_setting.cache_clear()
 
 
 def pytest_runtest_teardown(item, nextitem):
