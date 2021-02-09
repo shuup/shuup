@@ -33,7 +33,9 @@ def get_context_data(context, request, category, product_filters):
         shop=request.shop
     ).filter(
         **product_filters
-    ).filter(get_query_filters(request, category, data=data))
+    ).filter(
+        get_query_filters(request, category, data=data)
+    ).prefetch_related("sales_unit", "sales_unit__translations")
 
     products = get_product_queryset(products, request, category, data).distinct()
     products = post_filter_products(request, category, products, data)
