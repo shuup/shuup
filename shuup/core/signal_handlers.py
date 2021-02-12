@@ -16,7 +16,9 @@ from shuup.core.models import (
     DisplayUnit, PersonContact, Product, Shop, ShopProduct, Supplier, Tax,
     TaxClass
 )
-from shuup.core.models._contacts import get_price_display_options
+from shuup.core.models._contacts import (
+    get_groups_ids, get_price_display_options
+)
 from shuup.core.models._units import get_display_unit
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import context_cache_item_bumped, order_changed
@@ -69,6 +71,7 @@ def handle_supplier_post_save(sender, instance, **kwargs):
 
 def handle_contact_post_save(sender, instance, **kwargs):
     bump_internal_cache()
+    get_groups_ids.cache_clear()
 
 
 @receiver(order_creator_finished)

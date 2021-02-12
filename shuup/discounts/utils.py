@@ -32,7 +32,7 @@ def get_potential_discounts_for_product(context, product, available_only=True):
     product_id = product if isinstance(product, six.integer_types) else product.pk
 
     category_ids = list(Category.objects.filter(shop_products__product_id=product_id).values_list("id", flat=True))
-    group_ids = list(context.customer.groups.values_list("id", flat=True))
+    group_ids = list(context.customer.groups_ids)
 
     # Product condition is always applied
     condition_query = (Q(product__isnull=True) | Q(product_id=product_id))

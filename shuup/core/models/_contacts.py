@@ -50,6 +50,11 @@ def get_price_display_options(group):
     return (options.to_price_display() or PriceDisplayOptions())
 
 
+@lru_cache()
+def get_groups_ids(group):
+    return group.groups.values_list("pk", flat=True)
+
+
 class ContactGroupPriceDisplayQueryset(QuerySet):
     def for_group_and_shop(self, group, shop):
         obj = self.filter(group=group, shop=shop).first()
@@ -384,6 +389,10 @@ class Contact(PolymorphicShuupModel):
         if self.shops.filter(pk=shop.pk).exists():
             return True
         return self.registered_in(shop)
+
+    @property
+    def groups_ids(self):
+        return get_groups_ids(self) if self.pk else [self.default_group.pk]
 
 
 class CompanyContact(Contact):
