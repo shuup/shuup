@@ -15,6 +15,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
+from django.utils.lru_cache import lru_cache
 from django.utils.translation import pgettext
 from django.utils.translation import ugettext_lazy as _
 from parler.models import (
@@ -28,6 +29,18 @@ from shuup.utils.i18n import format_number
 from shuup.utils.numbers import bankers_round, parse_decimal_string
 
 from ._base import TranslatableShuupModel
+
+
+@lru_cache()
+def get_display_unit(sales_unit):
+    cache_key = "display_unit:sales_unit_{}_default_display_unit".format(sales_unit.pk)
+    default_display_unit = cache.get(cache_key)
+    if default_display_unit is None:
+        default_display_unit = sales_unit.display_units.filter(default=True).first()
+        # Set 0 to cache to prevent None values, which will not be a valid cache value
+        # 0 will be invalid below, hence we prevent another query here
+        cache.set(cache_key, default_display_unit or 0)
+    return default_display_unit
 
 
 # TODO: (2.0) Remove deprecated SalesUnit.short_name
@@ -107,16 +120,7 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
 
         :rtype: DisplayUnit
         """
-        cache_key = "display_unit:sales_unit_{}_default_display_unit".format(self.pk)
-        default_display_unit = cache.get(cache_key)
-
-        if default_display_unit is None:
-            default_display_unit = self.display_units.filter(default=True).first()
-            # Set 0 to cache to prevent None values, which will not be a valid cache value
-            # 0 will be invalid below, hence we prevent another query here
-            cache.set(cache_key, default_display_unit or 0)
-
-        return default_display_unit or SalesUnitAsDisplayUnit(self)
+        return (get_display_unit(self) if self.pk else None) or SalesUnitAsDisplayUnit(self)
 
 
 class SalesUnitTranslation(_ShortNameToSymbol, TranslatedFieldsModel):

@@ -11,6 +11,7 @@ from django.core.signals import setting_changed
 
 from shuup.apps.provides import clear_provides_cache
 from shuup.core.models._contacts import get_price_display_options
+from shuup.core.models._units import get_display_unit
 from shuup.gdpr.models import get_setting
 from shuup.testing.factories import get_default_shop
 from shuup.utils.importing import clear_load_cache
@@ -38,6 +39,7 @@ def pytest_runtest_call(item):
     get_language_name.cache_clear()  # Clear language name lru_cache for each test
     get_setting.cache_clear()
     get_price_display_options.cache_clear()
+    get_display_unit.cache_clear()
 
 def pytest_runtest_teardown(item, nextitem):
     if hasattr(item.session, "_theme_overrider"):
