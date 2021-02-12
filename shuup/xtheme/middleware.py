@@ -27,6 +27,7 @@ class XthemeMiddleware(MiddlewareMixin):
         shop = getattr(request, "shop", get_shop(request))
         theme = get_current_theme(shop)
         if theme:
+            request.theme = theme
             theme.set_current()
         else:
             log.error((_("Shop '{}' has no active theme")).format(shop))

@@ -162,11 +162,17 @@ def get_orderable_variation_children(product, request, variation_variables, supp
     orderable_variation_children = OrderedDict()
     orderable = 0
 
+    shop = request.shop
     product_queryset = product.variation_children.visible(
-        shop=request.shop, customer=request.customer
+        shop=shop, customer=request.customer
     ).values_list("pk", flat=True)
     all_combinations = list(product.get_all_available_combinations())
-    for shop_product in ShopProduct.objects.filter(shop=request.shop, product__id__in=product_queryset):
+    for shop_product in (
+        ShopProduct.objects.filter(
+            shop=shop, product__id__in=product_queryset
+        ).select_related("product").prefetch_related("suppliers")
+    ):
+        shop_product.shop = shop  # To avoid query on orderability checks
         combo_data = first(
             combo for combo in all_combinations if combo["result_product_pk"] == shop_product.product.id
         )

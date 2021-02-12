@@ -44,3 +44,4 @@ class AppConfig(shuup.apps.AppConfig):
     def ready(self):
         # connect receivers
         import shuup.gdpr.receivers  # noqa: F401
+        import shuup.gdpr.signal_handlers  # noqa: F401
