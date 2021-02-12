@@ -12,9 +12,10 @@ from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
 
 from shuup.core.models import (
-    Category, CompanyContact, ContactGroup, PersonContact, Product, Shop,
-    ShopProduct, Supplier, Tax, TaxClass
+    Category, CompanyContact, ContactGroup, ContactGroupPriceDisplay,
+    PersonContact, Product, Shop, ShopProduct, Supplier, Tax, TaxClass
 )
+from shuup.core.models._contacts import get_price_display_options
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import context_cache_item_bumped, order_changed
 from shuup.core.utils import context_cache
@@ -81,6 +82,10 @@ def on_order_changed(sender, order, **kwargs):
         line.supplier.module.update_stock(line.product_id)
 
 
+def handle_contact_group_price_display_post_save(sender, instance, **kwargs):
+    get_price_display_options.cache_clear()
+
+
 # connect signals to bump caches on Product and ShopProduct change
 m2m_changed.connect(
     handle_shop_product_post_save,
@@ -116,6 +121,12 @@ m2m_changed.connect(
     handle_contact_post_save,
     sender=ContactGroup.members.through,
     dispatch_uid="contact_group:change_members"
+)
+
+post_save.connect(
+    handle_contact_group_price_display_post_save,
+    sender=ContactGroupPriceDisplay,
+    dispatch_uid="shuup_contact_group_price_display_bump"
 )
 
 connection_created.connect(extend_sqlite_functions)

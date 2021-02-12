@@ -270,7 +270,7 @@ class PersonContactChoiceWidget(ContactChoiceWidget):
 
     @property
     def filter(self):
-        return json.dumps({"groups": [PersonContact.get_default_group().pk]})
+        return json.dumps({"groups": [PersonContact().default_group.pk]})
 
 
 class PackageProductChoiceWidget(ProductChoiceWidget):
