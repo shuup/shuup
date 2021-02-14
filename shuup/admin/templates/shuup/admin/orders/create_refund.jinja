@@ -19,6 +19,9 @@
     {{ bs3.field(form.text, form_group_class="form-group hidden") }}
     {{ bs3.field(form.amount, form_group_class="form-group hidden") }}
     {{ bs3.field(form.restock_products, form_group_class="form-group hidden") }}
+    {% if not is_supplier %}
+        {{ bs3.field(form.supplier, form_group_class="form-group hidden") }}
+    {% endif %}
 {% endmacro %}
 
 {% block content %}
@@ -88,6 +91,10 @@
                     $refund.find("input[id$='text']"), true);
                 window.setFormGroupVisibility(
                     $refund.find("input[id$='restock_products']"), false);
+                {% if not is_supplier %}
+                    window.setFormGroupVisibility(
+                        $refund.find("select[id$='supplier']"), true);
+                {% endif %}
             } else {
                 var line = LineData[lineId];
                 window.setFormGroupVisibility(
@@ -100,6 +107,10 @@
                     $refund.find("input[id$='restock_products']"), line && line["type"] === "product");
                 $refund.find("input[id$='quantity']").val(line? line.quantity : 0);
                 $refund.find("input[id$='amount']").val(line? line.amount : 0);
+                {% if not is_supplier %}
+                    window.setFormGroupVisibility(
+                        $refund.find("select[id$='supplier']"), false);
+                {% endif %}
             }
         };
 

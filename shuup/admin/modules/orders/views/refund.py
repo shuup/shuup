@@ -21,7 +21,7 @@ from shuup.core.excs import (
     InvalidRefundAmountException, NoRefundToCreateException,
     RefundExceedsAmountException
 )
-from shuup.core.models import Order, OrderLineType, Shop
+from shuup.core.models import Order, OrderLineType, Shop, Supplier
 from shuup.utils.django_compat import reverse
 from shuup.utils.money import Money
 
@@ -45,6 +45,11 @@ class RefundForm(forms.Form):
     restock_products = forms.BooleanField(required=False, initial=True, label=_("Restock products"), help_text=_(
             "If checked, the quantity is adding back into the sellable product inventory."
         )
+    )
+
+    supplier = forms.ModelChoiceField(
+        queryset=Supplier.objects.none(),
+        required=False
     )
 
     def clean_line_number(self):
@@ -107,6 +112,7 @@ class OrderCreateRefundView(UpdateView):
             line.ordering: self._get_line_data(self.object, line)
             for line in lines
         }
+        context["is_supplier"] = True if supplier else False
         return context
 
     def _get_line_data(self, order, line):
@@ -182,9 +188,14 @@ class OrderCreateRefundView(UpdateView):
 
         # Line orderings are zero-indexed, but shouldn't display that way
         choices = self._get_line_number_choices(get_supplier(self.request))
+        suppliers = Supplier.objects.filter(
+            id__in=self.object.lines.all().values_list("supplier__id", flat=True)
+        ).distinct()
         for form in formset.forms:
             form.fields["line_number"].choices = choices
+            form.fields["supplier"].queryset = suppliers
         formset.empty_form.fields["line_number"].choices = choices
+        formset.empty_form.fields["supplier"].queryset = suppliers
 
         return formset
 
@@ -211,6 +222,7 @@ class OrderCreateRefundView(UpdateView):
             refund_line_info["line"] = "amount"
             refund_line_info["text"] = data.get("text")
             refund_line_info["quantity"] = 1
+            refund_line_info["supplier"] = supplier or data.get("supplier")
         refund_line_info["amount"] = Money(amount_value, order.currency)
         return refund_line_info
 

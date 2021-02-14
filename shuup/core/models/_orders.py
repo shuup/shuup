@@ -800,6 +800,7 @@ class Order(MoneyPropped, models.Model):
             amount = refund.get("amount", zero)
             quantity = refund.get("quantity", 0)
             parent_line = refund.get("line", "amount")
+
             if not settings.SHUUP_ALLOW_ARBITRARY_REFUNDS and (not parent_line or parent_line == "amount"):
                 raise RefundArbitraryRefundsNotAllowedException
 
@@ -810,8 +811,13 @@ class Order(MoneyPropped, models.Model):
             assert quantity
 
             if parent_line == "amount":
+                refund_supplier = supplier
+
+                if not refund_supplier:
+                    refund_supplier = refund.get("refund_supplier")
+
                 refund_line = self._refund_amount(
-                    index, refund.get("text", _("Misc refund")), amount, tax_proportions, supplier=supplier)
+                    index, refund.get("text", _("Misc refund")), amount, tax_proportions, supplier=refund_supplier)
             else:
                 # ensure the amount to refund and the order line amount have the same signs
                 if ((amount > zero and parent_line.taxful_price.amount < zero) or
@@ -861,7 +867,8 @@ class Order(MoneyPropped, models.Model):
                     ordering=index,
                     base_unit_price_value=-(base_amount / (quantity or 1)),
                     quantity=quantity,
-                    supplier=parent_line.supplier
+                    supplier=parent_line.supplier,
+                    extra_data=refund.get("extra_data", None)
                 )
                 for line_tax in parent_line.taxes.all():
                     tax_base_amount = amount / (1 + parent_line.tax_rate)
