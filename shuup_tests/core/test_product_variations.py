@@ -122,3 +122,24 @@ def test_multivariable_variation():
     assert result1.pk == result2.pk
 
     assert len(parent.get_available_variation_results()) == (3 * 4 - 1)
+
+
+@pytest.mark.django_db
+def test_parent_mode_changes_to_normal_when_no_valid_children():
+    shop = get_default_shop()
+    parent = create_product("SimpleVarParent")
+    children = [create_product("SimpleVarChild-%d" % x) for x in range(10)]
+    for child in children:
+        child.link_to_parent(parent)
+        ShopProduct.objects.create(shop=shop, product=child, visibility=ShopProductVisibility.ALWAYS_VISIBLE)
+    parent.verify_mode()
+    assert parent.variation_children.count() == 10
+    assert parent.mode == ProductMode.SIMPLE_VARIATION_PARENT
+
+    # Delete all variation children
+    [product.soft_delete() for product in parent.variation_children.all()]
+
+    # Parent has no non-deleted variation children so it's turned back into a normal product
+    parent.verify_mode()
+    assert parent.variation_children.filter(deleted=False).count() == 0
+    assert parent.mode == ProductMode.NORMAL

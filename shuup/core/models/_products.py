@@ -630,7 +630,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             self.variation_children.clear()
         elif ProductVariationVariable.objects.filter(product=self).exists():
             self.mode = ProductMode.VARIABLE_VARIATION_PARENT
-        elif self.variation_children.exists():
+        elif self.variation_children.filter(deleted=False).exists():
             if ProductVariationResult.objects.filter(product=self).exists():
                 self.mode = ProductMode.VARIABLE_VARIATION_PARENT
             else:
