@@ -108,6 +108,9 @@ class PermissionChangeFormBase(forms.ModelForm):
 
     def clean(self):
         for field in ("is_staff", "is_superuser"):
+            if field not in self.cleaned_data:
+                continue
+
             flag = self.cleaned_data[field]
             if self.changing_user == self.instance and not flag:
                 self.add_error(field, _(
