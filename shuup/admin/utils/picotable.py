@@ -343,7 +343,7 @@ class Column(object):
 
     def check_different_types(self, value):
         if isinstance(value, ProductMedia):
-            return "<img src='/media/%s'>" % value.get_thumbnail()
+            return "<img src='%s'>" % value.get_thumbnail().url
 
         if isinstance(value, Image):
             thumbnailer = get_thumbnailer(value)

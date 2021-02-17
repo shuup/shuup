@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.lru_cache import lru_cache
 from django.utils.translation import activate, get_language
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
@@ -19,6 +20,14 @@ from shuup.gdpr.utils import get_active_consent_pages
 from shuup.simple_cms.models import Page
 
 GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER = "gdpr_anonymize"
+
+
+@lru_cache()
+def get_setting(shop):
+    instance, created = GDPRSettings.objects.get_or_create(shop=shop)
+    if created or not instance.safe_translation_getter("cookie_banner_content"):
+        instance.set_default_content()
+    return instance
 
 
 @python_2_unicode_compatible
@@ -87,10 +96,7 @@ class GDPRSettings(TranslatableModel):
 
     @classmethod
     def get_for_shop(cls, shop):
-        instance, created = cls.objects.get_or_create(shop=shop)
-        if created or not instance.safe_translation_getter("cookie_banner_content"):
-            instance.set_default_content()
-        return instance
+        return get_setting(shop)
 
 
 @python_2_unicode_compatible

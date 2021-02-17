@@ -133,7 +133,7 @@ class Theme(object):
                 raise ValueError(_("Theme identifiers must match."))
 
             self._theme_settings = theme_settings
-            self._shop = theme_settings.shop
+            self._shop = shop or theme_settings.shop
 
         elif shop:
             from shuup.xtheme.models import ThemeSettings
@@ -462,7 +462,7 @@ def get_theme_by_identifier(identifier, shop):
                 shop=shop
             )[0]
 
-            return theme_cls(theme_settings=theme_settings)
+            return theme_cls(theme_settings=theme_settings, shop=shop)
 
     return None  # No such thing.
 
@@ -515,7 +515,7 @@ def _get_current_theme(shop):
     if theme_settings:
         theme_cls = get_identifier_to_object_map("xtheme").get(theme_settings.theme_identifier)
         if theme_cls is not None:
-            theme = theme_cls(theme_settings=theme_settings)
+            theme = theme_cls(theme_settings=theme_settings, shop=shop)
         else:
             log.warn("Warning! The active theme %r is currently not installed.", theme_settings.theme_identifier)
 

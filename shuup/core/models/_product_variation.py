@@ -149,7 +149,11 @@ def get_all_available_combinations(product):
     values_by_variable = defaultdict(list)
     values = (
         ProductVariationVariableValue.objects.filter(variable__product=product)
-        .prefetch_related("variable").order_by("ordering")
+        .prefetch_related(
+            "translations",
+            "variable",
+            "variable__translations"
+        ).order_by("ordering")
     )
     for val in values:
         values_by_variable[val.variable].append(val)

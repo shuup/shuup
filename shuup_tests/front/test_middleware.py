@@ -8,6 +8,7 @@ import pytest
 from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.models import AnonymousUser
+from django.test import override_settings
 from django.utils import timezone
 
 import shuup.core.models
@@ -201,7 +202,14 @@ def test_with_statics(rf):
     shop = get_default_shop()  # Create a shop
 
     request = apply_request_middleware(rf.get("/static/test.png"))
-    assert not hasattr(request, "customer")
+    assert hasattr(request, "customer")  # Since debug is False
 
     request = apply_request_middleware(rf.get("/"))
     assert hasattr(request, "customer")
+
+    with override_settings(DEBUG=True):
+        request = apply_request_middleware(rf.get("/static/test.png"))
+        assert not hasattr(request, "customer")  # Since debug is True
+
+        request = apply_request_middleware(rf.get("/"))
+        assert hasattr(request, "customer")

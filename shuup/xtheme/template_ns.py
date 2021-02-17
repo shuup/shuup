@@ -57,7 +57,7 @@ class XthemeNamespace(object):
         :rtype: object
         """
         request = context["request"]
-        theme = get_current_theme(request.shop)
+        theme = getattr(request, "theme", None) or get_current_theme(request.shop)
         if theme:
             return theme.get_setting(name, default=default)
         return default

@@ -415,6 +415,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             return val
 
         shop_inst = self.shop_products.get(shop_id=shop.id)
+        shop_inst.product = self
+        shop_inst.shop = shop
         context_cache.set_cached_value(key, shop_inst)
         return shop_inst
 
@@ -628,7 +630,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             self.variation_children.clear()
         elif ProductVariationVariable.objects.filter(product=self).exists():
             self.mode = ProductMode.VARIABLE_VARIATION_PARENT
-        elif self.variation_children.exists():
+        elif self.variation_children.filter(deleted=False).exists():
             if ProductVariationResult.objects.filter(product=self).exists():
                 self.mode = ProductMode.VARIABLE_VARIATION_PARENT
             else:

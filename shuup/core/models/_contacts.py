@@ -12,6 +12,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import QuerySet
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.functional import cached_property
+from django.utils.lru_cache import lru_cache
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 from filer.fields.image import FilerImageField
@@ -40,6 +42,17 @@ PROTECTED_CONTACT_GROUP_IDENTIFIERS = [
     DEFAULT_PERSON_GROUP_IDENTIFIER,
     DEFAULT_ANONYMOUS_GROUP_IDENTIFIER
 ]
+
+
+@lru_cache()
+def get_price_display_options(group):
+    options = group.price_display_options.for_group_and_shop(group, shop=group.shop)
+    return (options.to_price_display() or PriceDisplayOptions())
+
+
+@lru_cache()
+def get_groups_ids(group):
+    return group.groups.values_list("pk", flat=True)
 
 
 class ContactGroupPriceDisplayQueryset(QuerySet):
@@ -132,11 +145,7 @@ class ContactGroup(TranslatableShuupModel):
         return self
 
     def get_price_display_options(self):
-        if self.pk:
-            options = self.price_display_options.for_group_and_shop(self, shop=self.shop)
-            if options:
-                return options.to_price_display()
-        return PriceDisplayOptions()
+        return (get_price_display_options(self) if self.pk else PriceDisplayOptions())
 
     def can_delete(self):
         return bool(
@@ -313,7 +322,7 @@ class Contact(PolymorphicShuupModel):
         if not group:
             groups_with_options = self.groups.with_price_display_options(shop)
             if groups_with_options:
-                default_group = self.get_default_group()
+                default_group = self.default_group
                 if groups_with_options.filter(pk=default_group.pk).exists():
                     group = default_group
                 else:
@@ -321,7 +330,7 @@ class Contact(PolymorphicShuupModel):
                     group = groups_with_options.first()
 
         if not group:
-            group = self.get_default_group()
+            group = self.default_group
 
         return get_price_display_options_for_group_and_shop(group, shop)
 
@@ -345,6 +354,10 @@ class Contact(PolymorphicShuupModel):
             }
         )
         return obj
+
+    @cached_property
+    def default_group(self):
+        return self.get_default_group()
 
     def add_to_shops(self, registration_shop, shops):
         """
@@ -376,6 +389,10 @@ class Contact(PolymorphicShuupModel):
         if self.shops.filter(pk=shop.pk).exists():
             return True
         return self.registered_in(shop)
+
+    @property
+    def groups_ids(self):
+        return get_groups_ids(self) if self.pk else [self.default_group.pk]
 
 
 class CompanyContact(Contact):
@@ -517,7 +534,7 @@ class AnonymousContact(Contact):
             "AnonymousContacts don't exist in the database, silly."
         )
 
-    @property
+    @cached_property
     def groups(self):
         """
         Contact groups accessor for anonymous contact.
@@ -535,7 +552,7 @@ class AnonymousContact(Contact):
 
         :rtype: django.db.QuerySet
         """
-        self.get_default_group()  # Make sure group exists
+        self.default_group  # Make sure group exists
         return ContactGroup.objects.filter(identifier=self.default_contact_group_identifier)
 
 
