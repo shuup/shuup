@@ -43,8 +43,8 @@
                                 {% set active = " active" if style_definition.stylesheet == active_stylesheet else "" %}
                                 <div class="col-md-4 theme-screenshot{{ active }}" data-identifier="{{ style_definition.identifier }}">
                                     <div class="theme-name">{{ style_definition.name }}</div>
-                                    <a class="theme-image lightbox" href="{{ STATIC_URL }}{{ image }}">
-                                        <img src="{{ STATIC_URL }}{{ image }}">
+                                    <a class="theme-image lightbox" href="{{ static(image) }}">
+                                        <img src="{{ static(image) }}">
                                     </a>
                                     <div class="tools">
                                         <button

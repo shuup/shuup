@@ -12,6 +12,11 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Core: Turn variation parent mode back to normal if it has no non-deleted children
 
+### Fixed
+
+- Do not rely on STATIC_URL and MEDIA_URL while formatting static and media urls
+
+
 ## [2.3.14] - 2021-02-04
 
 - Front: add template cache to basket partial

@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
+from django.templatetags.static import static
 
 from shuup.admin.utils.permissions import has_permission
 from shuup.utils.i18n import get_current_babel_locale
@@ -49,5 +50,5 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
             "timeInputFormat": settings.SHUUP_ADMIN_TIME_INPUT_FORMAT,
             "datetimeInputStep": settings.SHUUP_ADMIN_DATETIME_INPUT_STEP,
             "dateInputLocale": get_current_babel_locale().language,
-            "staticPrefix": settings.STATIC_URL,
+            "staticPrefix": static(""),
         }

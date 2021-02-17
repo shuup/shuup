@@ -69,7 +69,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
     """
 
     def process_request(self, request):
-        if (
+        if settings.DEBUG and (
             request.path.startswith(settings.MEDIA_URL) or
             request.path.startswith(settings.STATIC_URL)
         ):
@@ -192,10 +192,13 @@ class ShuupFrontMiddleware(MiddlewareMixin):
             request.LANGUAGE_CODE = translation.get_language()
 
     def _get_maintenance_response(self, request, view_func):
-        if settings.DEBUG:
-            # Allow media and static accesses in debug mode
-            if request.path.startswith("/media") or request.path.startswith("/static"):
-                return None
+        # Allow media and static accesses in debug mode
+        if settings.DEBUG and (
+            request.path.startswith(settings.MEDIA_URL) or
+            request.path.startswith(settings.STATIC_URL)
+        ):
+            return None
+
         if getattr(view_func, "maintenance_mode_exempt", False):
             return None
         if "login" in view_func.__name__:
