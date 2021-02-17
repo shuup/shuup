@@ -236,7 +236,7 @@ class ProductSelectionPlugin(TemplatedPlugin):
             products_qs = Product.objects.listed(
                 shop=request.shop,
                 customer=request.customer
-            ).filter(shop_products__pk__in=products)
+            ).filter(pk__in=products)
 
         return {
             "request": request,

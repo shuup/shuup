@@ -203,7 +203,7 @@ def test_image_plugin_choice_widget_get_object():
 
 
 @pytest.mark.django_db
-def test_product_selection_plugin(rf):
+def test_product_selection_plugin_v1(rf):
     shop = get_default_shop()
     p1 = create_product("p1", shop, get_default_supplier(), "10")
     p2 = create_product("p2", shop, get_default_supplier(), "20")
@@ -216,7 +216,7 @@ def test_product_selection_plugin(rf):
 
     context = get_context(rf)
     plugin = ProductSelectionPlugin({
-        "products": [sp1.pk, sp2.pk, sp3.pk]
+        "products": [sp1.product.pk, sp2.product.pk, sp3.product.pk]
     })
     context_products = plugin.get_context_data(context)["products"]
     assert p1 in context_products
@@ -282,7 +282,7 @@ def test_product_hightlight_plugin(rf, highlight_type, orderable):
 
 
 @pytest.mark.django_db
-def test_product_selection_plugin(rf):
+def test_product_selection_plugin_v2(rf):
     shop = get_default_shop()
     p1 = create_product("p1", shop, get_default_supplier(), "10")
     p2 = create_product("p2", shop, get_default_supplier(), "20")
@@ -295,7 +295,7 @@ def test_product_selection_plugin(rf):
 
     context = get_context(rf)
     plugin = ProductSelectionPlugin({
-        "products": [sp1.pk, sp2.pk, sp3.pk]
+        "products": [sp1.product.pk, sp2.product.pk, sp3.product.pk]
     })
     context_products = plugin.get_context_data(context)["products"]
     assert p1 in context_products

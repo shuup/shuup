@@ -113,7 +113,7 @@ def test_product_selection_plugin(rf):
     sp3 = p3.get_shop_instance(shop)
 
     plugin = ProductSelectionPlugin({
-        "products": [sp1.pk, sp2.pk, sp3.pk],
+        "products": [sp1.product.pk, sp2.product.pk, sp3.product.pk],
         "cache_timeout": 120
     })
     plugin_context = plugin.get_context_data(get_context(rf, is_ajax=False))
