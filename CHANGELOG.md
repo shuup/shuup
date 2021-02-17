@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Admin: Disable scrolling on jquery datetime pickers
 - Core: Turn variation parent mode back to normal if it has no non-deleted children
 
 ### Fixed
