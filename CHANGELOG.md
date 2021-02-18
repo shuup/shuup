@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.16] - 2021-02-18
+
 ### Fixed
 
 - Xtheme: fix wrong queryset that was fetching different products from the selection
