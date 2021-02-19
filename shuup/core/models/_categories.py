@@ -85,6 +85,12 @@ class CategoryManager(TreeManager, TranslatableManager):
         if shop:
             qs = qs.filter(shops=shop)
         return qs
+    
+    def get_visible(self, language=None, shop=None):
+        qs = (self.language(language) if language else self).filter(status=CategoryStatus.VISIBLE)
+        if shop:
+            qs = qs.filter(shops=shop)
+        return qs
 
 
 @python_2_unicode_compatible

@@ -140,8 +140,11 @@ class MultiselectAjaxView(TemplateView):
         # make sure to filter the search by the current supplier
         supplier = get_supplier(request)
 
-        if search_mode == "visible" and issubclass(cls, Category):
-            qs = cls.objects.all_visible(self.request.customer, shop=self.request.shop)
+        if issubclass(cls, Category):
+            if search_mode == "visible": 
+                qs = cls.objects.all_visible(self.request.customer, shop=self.request.shop)
+            else:
+                qs = cls.objects.get_visible(shop=shop)
         elif search_mode == "enabled" and issubclass(cls, Supplier):
             qs = cls.objects.enabled(shop=shop)
         elif hasattr(cls.objects, "all_except_deleted"):
