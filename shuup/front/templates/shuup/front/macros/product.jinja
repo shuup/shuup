@@ -34,7 +34,7 @@ Inheritance order for product macors:
                     {% if product_image and primary_image_thumb %}
                         {% set image_url = primary_image_thumb %}
                     {% else %}
-                        {% set image_url = STATIC_URL ~ "shuup/front/img/no_image.png" %}
+                        {% set image_url = static('shuup/front/img/no_image.png') %}
                     {% endif %}
                     <div class="image" style="background-image:url('{{ image_url }}')"></div>
                 </div>

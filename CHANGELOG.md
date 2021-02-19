@@ -13,6 +13,34 @@ List all changes after the last release here (newer on top). Each change on a se
 - Admin: add supplier selection when admin and staff make refund
 - Admin: add possibility to add extra data to refund order lines
 
+## [2.3.16] - 2021-02-18
+
+### Fixed
+
+- Xtheme: fix wrong queryset that was fetching different products from the selection
+
+## [2.3.15] - 2021-02-17
+
+### Changed
+
+- Admin: Disable scrolling on jquery datetime pickers
+- Core: Turn variation parent mode back to normal if it has no non-deleted children
+- Core: add cached property groups_ids for Contact
+- Core: add lru_cache to display unit
+- Core: make some Contact properties cached
+- Front: optimize queries for orderable variations fetch
+- Core: set shop and product for shop instance to prevent query
+- Front: prefetch sales units for category view
+- Lock cryptography version for test builds
+- Use shop instead theme settings shop when initializing theme
+- Xtheme: save current theme to request for later usage
+- GDPR: add lru_cache for shop_setting getter
+
+### Fixed
+
+- Admin: fix bug in user permission view
+- Do not rely on STATIC_URL and MEDIA_URL while formatting static and media urls
+
 ## [2.3.14] - 2021-02-04
 
 - Front: add template cache to basket partial
