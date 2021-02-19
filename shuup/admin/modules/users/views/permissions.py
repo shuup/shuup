@@ -111,7 +111,7 @@ class PermissionChangeFormBase(forms.ModelForm):
             if field not in self.cleaned_data:
                 continue
 
-            flag = self.cleaned_data[field]
+            flag = self.cleaned_data.get(field, None)
             if self.changing_user == self.instance and not flag:
                 self.add_error(field, _(
                     "You can't unset this status for yourself "
