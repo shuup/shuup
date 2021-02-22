@@ -45,7 +45,7 @@
     "jquery-datetimepicker": "^2.5.20",
     "jquery.easing": "^1.4.1",
     "jquery.scrollbar": "^0.2.11",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.21",
     "masonry-layout": "^4.2.2",
     "mithril": "^0.2.0",
     "npm-font-open-sans": "^1.1.0",
