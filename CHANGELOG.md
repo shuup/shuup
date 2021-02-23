@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Core: Adding normal products with only deleted children to basket
+
 ## [2.3.16] - 2021-02-18
 
 ### Fixed
