@@ -38,6 +38,11 @@ class OrderModule(AdminModule):
                 name="order.delete-shipment"
             ),
             admin_url(
+                r"^shipments/(?P<pk>\d+)/set-sent/$",
+                "shuup.admin.modules.orders.views.ShipmentSetSentView",
+                name="order.set-shipment-sent"
+            ),
+            admin_url(
                 r"^orders/(?P<pk>\d+)/create-payment/$",
                 "shuup.admin.modules.orders.views.OrderCreatePaymentView",
                 name="order.create-payment"

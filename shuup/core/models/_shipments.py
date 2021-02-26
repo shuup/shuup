@@ -19,7 +19,7 @@ from shuup.core.fields import (
     InternalIdentifierField, MeasurementField, QuantityField
 )
 from shuup.core.models import ShuupModel
-from shuup.core.signals import shipment_deleted
+from shuup.core.signals import shipment_deleted, shipment_sent
 from shuup.core.utils.units import get_shuup_volume_unit
 from shuup.utils.analog import define_log_model
 
@@ -124,6 +124,9 @@ class Shipment(ShuupModel):
     def is_deleted(self):
         return bool(self.status == ShipmentStatus.DELETED)
 
+    def is_sent(self):
+        return bool(self.status == ShipmentStatus.SENT)
+
     def cache_values(self):
         """
         (Re)cache `.volume` and `.weight` for this Shipment from within the ShipmentProducts.
@@ -139,6 +142,17 @@ class Shipment(ShuupModel):
     @property
     def total_products(self):
         return (self.products.aggregate(quantity=models.Sum("quantity"))["quantity"] or 0)
+
+    def set_sent(self):
+        """
+        Mark the shipment as sent.
+        """
+        if self.status == ShipmentStatus.SENT:
+            return
+
+        self.status = ShipmentStatus.SENT
+        self.save()
+        shipment_sent.send(sender=type(self), order=self.order, shipment=self)
 
     def set_received(self, purchase_prices=None, created_by=None):
         """

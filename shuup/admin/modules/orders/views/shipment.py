@@ -193,3 +193,24 @@ class ShipmentDeleteView(DetailView):
         shipment.soft_delete()
         messages.success(request, _("Shipment %s has been deleted.") % shipment.pk)
         return HttpResponseRedirect(self.get_success_url())
+
+
+class ShipmentSetSentView(DetailView):
+    model = Shipment
+    context_object_name = "shipment"
+
+    def get_queryset(self):
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Shipment.objects.filter(order__shop_id__in=shop_ids)
+
+    def get_success_url(self):
+        return get_model_url(self.get_object().order)
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, request, *args, **kwargs):
+        shipment = self.get_object()
+        shipment.set_sent()
+        messages.success(request, _("Shipment has been marked as sent."))
+        return HttpResponseRedirect(self.get_success_url())

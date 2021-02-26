@@ -8,11 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
-## [2.3.17] - 2021-02-23
-
 ### Added
 
 - Core: add shipment tracking url to shipment model
+- Admin: add shipment action to mark a shipment as sent
+
+## [2.3.17] - 2021-02-23
 
 ### Fixed
 
