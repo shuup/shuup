@@ -16,7 +16,9 @@ from shuup.core.signals import (
 )
 from shuup.notify.base import Event, Variable
 from shuup.notify.models import Script
-from shuup.notify.typology import Email, Enum, Language, Model, Phone
+from shuup.notify.typology import (
+    Email, Enum, Language, Model, Phone, Text, URL
+)
 
 # Common attributes that can be used with orders.
 ORDER_ATTRIBUTES = (
@@ -68,6 +70,8 @@ class ShipmentCreated(Event):
     shipment = Variable(_("Shipment"), type=Model("shuup.Shipment"))
     shipping_status = Variable(_("Order Shipping Status"), type=Enum(ShippingStatus))
     shipment_status = Variable(_("Shipment Status"), type=Enum(ShipmentStatus))
+    shipment_tracking_code = Variable(_("Shipment Tracking Code"), type=Text, required=False)
+    shipment_tracking_url = Variable(_("Shipment Tracking URL"), type=URL, required=False)
 
 
 class ShipmentDeleted(Event):
@@ -137,7 +141,9 @@ def send_shipment_created_notification(order, shipment, **kwargs):
         language=order.language,
         shipment=shipment,
         shipping_status=order.shipping_status,
-        shipment_status=shipment.status
+        shipment_status=shipment.status,
+        shipment_tracking_code=shipment.tracking_code,
+        shipment_tracking_url=shipment.tracking_url,
     ).run(shop=order.shop)
 
 
