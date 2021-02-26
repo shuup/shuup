@@ -62,7 +62,13 @@
         {% if shipment.tracking_code %}
             <tr>
                 <td>{% trans %}Tracking code{% endtrans %}</td>
-                <td>{{ shipment.tracking_code }}</td>
+                <td>
+                    {%- if shipment.tracking_url %}
+                    <a href="{{ shipment.tracking_url }}" target="_blank" rel="noopener">
+                    {% endif -%}
+                    {{- shipment.tracking_code -}}
+                    {%- if shipment.tracking_url %}</a>{% endif -%}
+                </td>
             </tr>
         {% endif %}
         {% if extra_fields %}

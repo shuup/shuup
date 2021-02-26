@@ -6,7 +6,7 @@
         {%- if not loop.last %}, {% endif -%}
     {%- endfor -%}
 {% endmacro %}
-    
+
 {% macro render_supplier_info(supplier, create_urls, delete_urls) %}
     {% set product_summary = order.get_product_summary(supplier) %}
     {% set ordered_total = product_summary.values()|sum("ordered")|number %}
@@ -59,16 +59,24 @@
                         <tr>
                             <th class="text-center">{% trans %}Products{% endtrans %}</th>
                             <th class="text-center">{% trans %}Tracking Code{% endtrans %}</th>
+                            <th class="text-center">{% trans %}Status{% endtrans %}</th>
                             <th class="text-center">{% trans %}Description{% endtrans %}</th>
                             <th class="text-center">{% trans %}Created{% endtrans %}</th>
-                            <th class="text-center">{% trans %}Delete{% endtrans %}</th>
+                            <th class="text-center">{% trans %}Actions{% endtrans %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for shipment in shipments %}
                             <tr>
                                 <td class="text-center">{{ render_products_cell(shipment) }}</td>
-                                <td class="text-center">{{ shipment.tracking_code }}</td>
+                                <td class="text-center">
+                                    {%- if shipment.tracking_url %}
+                                    <a href="{{ shipment.tracking_url }}" target="_blank" rel="noopener">
+                                    {% endif -%}
+                                    {{- shipment.tracking_code -}}
+                                    {%- if shipment.tracking_url %}</a>{% endif -%}
+                                </td>
+                                <td class="text-center">{{ shipment.status }}</td>
                                 <td class="text-center">{{ shipment.description }}</td>
                                 <td class="text-center">{{ shipment.created_on|datetime }}</td>
                                 <td class="text-center">
@@ -87,14 +95,12 @@
     </div>
 {% endmacro %}
 
-<div class="container">
 {% set create_urls = shipments_data.create_urls %}
 {% set delete_urls = shipments_data.delete_urls %}
 {% for supplier in shipments_data.suppliers %}
     {{ render_supplier_info(supplier, create_urls, delete_urls) }}
     {%- if not loop.last %}<hr>{% endif -%}
 {% endfor %}
-</div>
 
 {% block extra_js %}
     <script>

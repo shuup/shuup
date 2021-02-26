@@ -15,17 +15,6 @@
             {{ info_row(_("Tax Number"), order.tax_number) }}
             {{ price_row(_("Total Price"), order.taxful_total_price) }}
             {{ price_row(_("Total Price (taxless)"), order.taxless_total_price) }}
-            {% set tracking_codes = order.get_tracking_codes() %}
-            {% if tracking_codes %}
-                {{ info_row(_("Tracking codes"), render_objects(tracking_codes)) }}
-            {% endif %}
-        </table>
-    {% endcall %}
-{% endmacro %}
-
-{% macro status() %}
-    {% call content_block(_("Status")) %}
-        <table class="table table-condensed">
             {{ info_row(_("Order Status"), order.get_status_display()) }}
             {{ info_row(_("Payment Status"), order.get_payment_status_display()) }}
             {{ info_row(_("Shipping Status"), order.get_shipping_status_display()) }}
@@ -38,6 +27,42 @@
         {% for line in order.shipping_address %}
             {{ line }}<br>
         {% endfor %}
+    {% endcall %}
+{% endmacro %}
+
+{% macro render_products_cell(shipment) %}
+    {%- for shipment_product in shipment.products.all() -%}
+        {% set product = shipment_product.product %}
+        {% set unit = product.sales_unit %}
+        {{- product.name -}}&nbsp;({{- unit.round(shipment_product.quantity) -}})
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{% endmacro %}
+
+{% macro sent_shipments(shipments) %}
+    {% call content_block(_("Shipments")) %}
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>{{ _("Identifier") }}</th>
+                    <th>{{ _("Products") }}</th>
+                    <th class="text-center">{{ _("Tracking code") }}</th>
+                </tr>
+            </thead>
+            {% for shipment in shipments %}
+            <tr>
+                <td>{{ shipment.identifier or '' }}</td>
+                <td>{{ render_products_cell(shipment) }}</td>
+                <td class="text-center">
+                    {%- if shipment.tracking_url %}
+                    <a href="{{ shipment.tracking_url }}" target="_blank" rel="noopener">
+                    {% endif -%}
+                    {{- shipment.tracking_code -}}
+                    {%- if shipment.tracking_url %}</a>{% endif -%}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
     {% endcall %}
 {% endmacro %}
 
