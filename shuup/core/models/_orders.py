@@ -1201,6 +1201,9 @@ class Order(MoneyPropped, models.Model):
     def get_tracking_codes(self):
         return [shipment.tracking_code for shipment in self.shipments.all_except_deleted() if shipment.tracking_code]
 
+    def get_sent_shipments(self):
+        return self.shipments.all_except_deleted().sent()
+
     def can_edit(self):
         return (
             settings.SHUUP_ALLOW_EDITING_ORDER

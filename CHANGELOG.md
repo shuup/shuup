@@ -10,6 +10,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ## [2.3.17] - 2021-02-23
 
+### Added
+
+- Core: add shipment tracking url to shipment model
+
 ### Fixed
 
 - Core: Adding normal products with only deleted children to basket

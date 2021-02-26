@@ -34,11 +34,11 @@ class ShipmentStatus(Enum):
     DELETED = 20
 
     class Labels:
-        NOT_SENT = _("not sent")
-        SENT = _("sent")
-        RECEIVED = _("received")
-        ERROR = _("error")
-        DELETED = _("deleted")
+        NOT_SENT = _("Not sent")
+        SENT = _("Sent")
+        RECEIVED = _("Received")
+        ERROR = _("Error")
+        DELETED = _("Deleted")
 
 
 class ShipmentType(Enum):
@@ -50,10 +50,12 @@ class ShipmentType(Enum):
         IN = _("incoming")
 
 
-class ShipmentManager(models.Manager):
-
+class ShipmentQueryset(models.QuerySet):
     def all_except_deleted(self, language=None, shop=None):
         return self.exclude(status=ShipmentStatus.DELETED)
+
+    def sent(self):
+        return self.filter(status=ShipmentStatus.SENT)
 
 
 class Shipment(ShuupModel):
@@ -66,6 +68,7 @@ class Shipment(ShuupModel):
     created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created on"))
     status = EnumIntegerField(ShipmentStatus, default=ShipmentStatus.NOT_SENT, verbose_name=_("status"))
     tracking_code = models.CharField(max_length=64, blank=True, verbose_name=_("tracking code"))
+    tracking_url = models.URLField(blank=True, verbose_name=_("tracking url"))
     description = models.CharField(max_length=255, blank=True, verbose_name=_("description"))
     volume = MeasurementField(
         unit=get_shuup_volume_unit(),
@@ -77,9 +80,8 @@ class Shipment(ShuupModel):
     )
     identifier = InternalIdentifierField(unique=True)
     type = EnumIntegerField(ShipmentType, default=ShipmentType.OUT, verbose_name=_("type"))
-    # TODO: documents = models.ManyToManyField(FilerFile)
 
-    objects = ShipmentManager()
+    objects = ShipmentQueryset.as_manager()
 
     class Meta:
         verbose_name = _('shipment')

@@ -30,6 +30,7 @@ class ShipmentForm(ModifiableFormMixin, forms.Form):
 
     description = forms.CharField(required=False)
     tracking_code = forms.CharField(required=False)
+    tracking_url = forms.URLField(required=False, label=_("Tracking URL"))
 
 
 class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
@@ -146,6 +147,7 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             order=order,
             supplier_id=self._get_supplier_id(),
             tracking_code=form.cleaned_data.get("tracking_code"),
+            tracking_url=form.cleaned_data.get("tracking_url"),
             description=form.cleaned_data.get("description"))
         has_extension_errors = self.form_valid_hook(form, unsaved_shipment)
 
