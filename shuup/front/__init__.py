@@ -33,6 +33,7 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.notify_events:OrderStatusChanged",
             "shuup.front.notify_events:ShipmentCreated",
             "shuup.front.notify_events:ShipmentDeleted",
+            "shuup.front.notify_events:ShipmentSent",
             "shuup.front.notify_events:PaymentCreated",
             "shuup.front.notify_events:RefundCreated",
         ],

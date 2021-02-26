@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Front: create shipment sent notify event
 - Core: add shipment tracking url to shipment model
 - Admin: add shipment action to mark a shipment as sent
 

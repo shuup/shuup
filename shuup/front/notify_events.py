@@ -12,7 +12,7 @@ from shuup.core.models import PaymentStatus, ShipmentStatus, ShippingStatus
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import (
     order_status_changed, payment_created, refund_created,
-    shipment_created_and_processed, shipment_deleted
+    shipment_created_and_processed, shipment_deleted, shipment_sent
 )
 from shuup.notify.base import Event, Variable
 from shuup.notify.models import Script
@@ -72,6 +72,11 @@ class ShipmentCreated(Event):
     shipment_status = Variable(_("Shipment Status"), type=Enum(ShipmentStatus))
     shipment_tracking_code = Variable(_("Shipment Tracking Code"), type=Text, required=False)
     shipment_tracking_url = Variable(_("Shipment Tracking URL"), type=URL, required=False)
+
+
+class ShipmentSent(ShipmentCreated):
+    identifier = "shipment_sent"
+    name = _("Shipment Sent")
 
 
 class ShipmentDeleted(Event):
@@ -135,6 +140,21 @@ def send_order_received_notification(order, **kwargs):
 @receiver(shipment_created_and_processed)
 def send_shipment_created_notification(order, shipment, **kwargs):
     ShipmentCreated(
+        order=order,
+        customer_email=order.email,
+        customer_phone=order.phone,
+        language=order.language,
+        shipment=shipment,
+        shipping_status=order.shipping_status,
+        shipment_status=shipment.status,
+        shipment_tracking_code=shipment.tracking_code,
+        shipment_tracking_url=shipment.tracking_url,
+    ).run(shop=order.shop)
+
+
+@receiver(shipment_sent)
+def send_shipment_sent_notification(order, shipment, **kwargs):
+    ShipmentSent(
         order=order,
         customer_email=order.email,
         customer_phone=order.phone,
