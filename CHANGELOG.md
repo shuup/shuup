@@ -8,11 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.3.18] - 2021-03-01
+
 ### Added
 
 - Front: create shipment sent notify event
 - Core: add shipment tracking url to shipment model
 - Admin: add shipment action to mark a shipment as sent
+
+### Changed
+
+- Admin: fix product module not to fail on object does not exists
+- Front: update media upload URL from "media-upload/" to "upload-media/"
+- Core: bump attribute name to 256 characters
+
 
 ## [2.3.17] - 2021-02-23
 
