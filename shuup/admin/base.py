@@ -298,7 +298,7 @@ class Section(object):
     order = 0
 
     @classmethod
-    def visible_for_object(cls, obj, request=None):
+    def visible_for_object(cls, obj, request):
         """
         Returns whether this sections must be visible for the provided object (e.g. `order`).
 
@@ -310,7 +310,7 @@ class Section(object):
         return False
 
     @classmethod
-    def get_context_data(cls, obj, request=None):
+    def get_context_data(cls, obj, request):
         """
         Returns additional information to be used in the template.
 
@@ -318,7 +318,6 @@ class Section(object):
 
         e.g. `context[admin_order_section.identifier] =
                 admin_order_section.get_context_data(self.object)`
-
 
         :type object: e.g. shuup.core.models.Order
         :type request: HttpRequest

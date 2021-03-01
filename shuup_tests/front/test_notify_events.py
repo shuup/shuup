@@ -14,6 +14,7 @@ import pytest
 import pytz
 
 from shuup.core.models import OrderStatus, OrderStatusManager
+from shuup.front.notify_events import ShipmentCreated, ShipmentDeleted, ShipmentSent
 from shuup.notify.models import Script
 from shuup.testing import factories
 from shuup.utils.i18n import get_locally_formatted_datetime
@@ -50,3 +51,39 @@ def test_class_refunded():
         order.status = OrderStatus.objects.get_default_processing()
         order.save()
         mocked.assert_not_called()
+
+
+@pytest.mark.django_db
+def test_shipment_events():
+    shop = factories.get_default_shop()
+    supplier = factories.get_default_supplier(shop)
+    customer = factories.create_random_person("en")
+    OrderStatusManager().ensure_default_statuses()
+
+    product = factories.create_product("p", shop, supplier, 1.0)
+    order = factories.create_order_with_product(product, supplier, 1, 1, shop=shop)
+
+    Script.objects.create(shop=shop, event_identifier=ShipmentCreated.identifier, name="Script 1", enabled=True)
+    Script.objects.create(shop=shop, event_identifier=ShipmentDeleted.identifier, name="Script 2", enabled=True)
+    Script.objects.create(shop=shop, event_identifier=ShipmentSent.identifier, name="Script 3", enabled=True)
+
+    def get_created_mocked_cls():
+        return mock.MagicMock(identifier=ShipmentCreated.identifier)
+
+    def get_sent_mocked_cls():
+        return mock.MagicMock(identifier=ShipmentSent.identifier)
+
+    def get_soft_mocked_cls():
+        return mock.MagicMock(identifier=ShipmentDeleted.identifier)
+
+    with mock.patch("shuup.front.notify_events.ShipmentCreated", new_callable=get_created_mocked_cls) as mocked1:
+        shipment = order.create_shipment({product: 1}, supplier=supplier)
+        mocked1.assert_called()
+
+    with mock.patch("shuup.front.notify_events.ShipmentSent", new_callable=get_sent_mocked_cls) as mocked2:
+        shipment.set_sent()
+        mocked2.assert_called()
+
+    with mock.patch("shuup.front.notify_events.ShipmentDeleted", new_callable=get_soft_mocked_cls) as mocked3:
+        shipment.soft_delete()
+        mocked3.assert_called()

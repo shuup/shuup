@@ -1,6 +1,6 @@
 {% extends "shuup/front/dashboard/dashboard.jinja" %}
 {% from "shuup/personal_order_history/macros/buttons.jinja" import render_action_buttons with context %}
-{% from "shuup/personal_order_history/macros/order_detail.jinja" import basic_info, shipping_address, billing_address, status, order_contents with context %}
+{% from "shuup/personal_order_history/macros/order_detail.jinja" import basic_info, shipping_address, billing_address, status, order_contents, sent_shipments with context %}
 
 {% block title %}{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{% endblock %}
 {% set main_title = _("Details of order %(identifier)s", identifier=order.identifier) %}
@@ -18,28 +18,31 @@
 {% block dashboard_content %}
     <h2 class="page-header">{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{{ render_action_buttons(order) }}</h2>
     <div class="row order-dashboard-container">
-        <div>
+        <div class="col-xs-12">
             {{ basic_info() }}
         </div>
         {% if order.shipping_address_id and order.billing_address_id %}
-            <div class="col-sm-6 col-md-3">
+            <div class="col-sm-6">
                 {{ shipping_address() }}
             </div>
-            <div class="col-sm-6 col-md-3">
+            <div class="col-sm-6">
                 {{ billing_address() }}
             </div>
         {% elif order.shipping_address_id %}
-            <div class="col-md-6">
+            <div class="col-xs-12-6">
                 {{ shipping_address() }}
             </div>
         {% elif order.billing_address_id %}
-            <div class="col-md-6">
+            <div class="col-xs-12">
                 {{ billing_address() }}
             </div>
         {% endif %}
-        <div class="col-sm-12 col-md-6">
-            {{ status() }}
-        </div>
+        {% set _sent_shipments = order.get_sent_shipments() %}
+        {% if _sent_shipments.exists() %}
+            <div class="col-xs-12">
+                {{ sent_shipments(_sent_shipments) }}
+            </div>
+        {% endif %}
         <div class="col-sm-12">
             {{ order_contents() }}
         </div>
