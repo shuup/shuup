@@ -155,12 +155,12 @@ class ProductModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         if isinstance(object, Product):
-            if not shop:
-                try:
+            try:
+                if not shop:
                     shop = object.shop_products.first().shop
-                except ObjectDoesNotExist:
-                    return None
-            object = object.get_shop_instance(shop)
+                object = object.get_shop_instance(shop)
+            except ObjectDoesNotExist:
+                return None
         return derive_model_url(ShopProduct, "shuup_admin:shop_product", object, kind)
 
 

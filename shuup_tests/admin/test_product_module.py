@@ -34,7 +34,7 @@ from shuup.core.models import (
 from shuup.importer.admin_module import ImportAdminModule
 from shuup.testing.factories import (
     create_product, create_random_user, get_default_product, get_default_shop,
-    get_default_supplier
+    get_default_supplier, get_shop as create_shop
 )
 from shuup.testing.factories import get_shop as get_new_shop
 from shuup.testing.utils import apply_request_middleware
@@ -221,3 +221,20 @@ def test_product_edit_view_multiplessuppliers(rf, admin_user):
         with pytest.raises(Http404):
             view_func(request, pk=shop_product.pk)
         view_func(request, pk=shop_product_with_supplier.pk)
+
+
+@pytest.mark.django_db
+def test_product_module_get_model_url(rf, admin_user):
+    shop1 = create_shop(identifier="shop1", enabled=True)
+    shop2 = create_shop(identifier="shop2", enabled=True)
+
+    product = create_product("product1", shop=shop1)
+
+    module = ProductModule()
+
+    assert module.get_model_url(product, "edit")
+    assert module.get_model_url(product, "edit", shop1)
+    assert module.get_model_url(product, "edit", shop2) is None
+
+    ShopProduct.objects.create(shop=shop2, product=product)
+    assert module.get_model_url(product, "edit", shop2)
