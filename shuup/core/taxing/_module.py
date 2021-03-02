@@ -5,12 +5,21 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
+from collections import defaultdict
 from itertools import chain
 
 import six
 from django.conf import settings
+from django.db import models, transaction
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.apps.provides import load_module
+from shuup.core.excs import (
+    InvalidRefundAmountException, RefundArbitraryRefundsNotAllowedException,
+    RefundExceedsAmountException, RefundExceedsQuantityException
+)
+from shuup.core.pricing import TaxfulPrice
+from shuup.utils.money import Money
 
 from ._context import TaxingContext
 from .utils import get_tax_class_proportions
@@ -162,3 +171,162 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         :rtype: shuup.core.taxing.TaxedPrice
         """
         pass
+
+    def _get_tax_class_proportions(self, order):
+        product_lines = order.lines.products()
+
+        zero = Money(0, order.currency)
+
+        total_by_tax_class = defaultdict(lambda: zero)
+        total = zero
+
+        for line in product_lines:
+            total_by_tax_class[line.product.tax_class] += line.price
+            total += line.price
+
+        if not total:
+            # Can't calculate proportions, if total is zero
+            return []
+
+        return [
+            (tax_class, tax_class_total / total)
+            for (tax_class, tax_class_total) in total_by_tax_class.items()
+        ]
+
+    def _refund_amount(self, context, order, index, text, amount, tax_proportions, supplier=None):
+        taxes = (list(chain.from_iterable(
+            self.get_taxed_price(context, TaxfulPrice(amount * factor), tax_class).taxes
+            for (tax_class, factor) in tax_proportions)))
+
+        base_amount = amount
+        if not order.prices_include_tax:
+            base_amount /= (1 + sum([tax.tax.rate for tax in taxes]))
+
+        from shuup.core.models import OrderLine, OrderLineType
+        refund_line = OrderLine.objects.create(
+            text=text,
+            order=order,
+            type=OrderLineType.REFUND,
+            ordering=index,
+            base_unit_price_value=-base_amount,
+            quantity=1,
+            supplier=supplier
+        )
+        for line_tax in taxes:
+            refund_line.taxes.create(
+                tax=line_tax.tax,
+                name=_("Refund for %s" % line_tax.name),
+                amount_value=-line_tax.amount,
+                base_amount_value=-line_tax.base_amount,
+                ordering=1
+            )
+        return refund_line
+
+    @transaction.atomic  # noqa (C901) FIXME: simply this
+    def create_refund_lines(self, order, supplier, created_by, refund_data):
+        context = self.get_context_from_order_source(order)
+
+        lines = order.lines.all()
+        if supplier:
+            lines = lines.filter(supplier=supplier)
+
+        index = lines.aggregate(models.Max("ordering"))["ordering__max"]
+        tax_proportions = self._get_tax_class_proportions(order)
+
+        refund_lines = []
+
+        product_summary = order.get_product_summary(supplier)
+        available_for_refund = order.get_total_unrefunded_amount(supplier=supplier)
+        zero = Money(0, order.currency)
+        total_refund_amount = zero
+
+        for refund in refund_data:
+            index += 1
+            amount = refund.get("amount", zero)
+            quantity = refund.get("quantity", 0)
+            parent_line = refund.get("line", "amount")
+            if not settings.SHUUP_ALLOW_ARBITRARY_REFUNDS and (not parent_line or parent_line == "amount"):
+                raise RefundArbitraryRefundsNotAllowedException
+
+            restock_products = refund.get("restock_products")
+            refund_line = None
+
+            assert parent_line
+            assert quantity
+
+            if parent_line == "amount":
+                refund_line = self._refund_amount(
+                    context, order, index, refund.get("text", _("Misc refund")),
+                    amount, tax_proportions, supplier=supplier
+                )
+            else:
+                # ensure the amount to refund and the order line amount have the same signs
+                if ((amount > zero and parent_line.taxful_price.amount < zero) or
+                   (amount < zero and parent_line.taxful_price.amount > zero)):
+                    raise InvalidRefundAmountException
+
+                if abs(amount) > abs(parent_line.max_refundable_amount):
+                    raise RefundExceedsAmountException
+
+                # If restocking products, calculate quantity of products to restock
+                product = parent_line.product
+
+                # ensure max refundable quantity is respected for products
+                if product and quantity > parent_line.max_refundable_quantity:
+                    raise RefundExceedsQuantityException
+
+                if restock_products and quantity and product:
+                    from shuup.core.suppliers.enums import StockAdjustmentType
+                    # restock from the unshipped quantity first
+                    unshipped_quantity_to_restock = min(quantity, product_summary[product.pk]["unshipped"])
+                    shipped_quantity_to_restock = min(
+                        quantity - unshipped_quantity_to_restock,
+                        product_summary[product.pk]["ordered"] - product_summary[product.pk]["refunded"])
+
+                    if unshipped_quantity_to_restock > 0:
+                        product_summary[product.pk]["unshipped"] -= unshipped_quantity_to_restock
+                        if parent_line.supplier.stock_managed:
+                            parent_line.supplier.adjust_stock(
+                                product.id,
+                                unshipped_quantity_to_restock,
+                                created_by=created_by,
+                                type=StockAdjustmentType.RESTOCK_LOGICAL)
+                    if shipped_quantity_to_restock > 0 and parent_line.supplier.stock_managed:
+                        parent_line.supplier.adjust_stock(
+                            product.id,
+                            shipped_quantity_to_restock,
+                            created_by=created_by,
+                            type=StockAdjustmentType.RESTOCK)
+                    product_summary[product.pk]["refunded"] += quantity
+
+                base_amount = amount if order.prices_include_tax else amount / (1 + parent_line.tax_rate)
+
+                from shuup.core.models import OrderLine, OrderLineType
+                refund_line = OrderLine.objects.create(
+                    text=_("Refund for %s" % parent_line.text),
+                    order=order,
+                    type=OrderLineType.REFUND,
+                    parent_line=parent_line,
+                    ordering=index,
+                    base_unit_price_value=-(base_amount / (quantity or 1)),
+                    quantity=quantity,
+                    supplier=parent_line.supplier
+                )
+                for line_tax in parent_line.taxes.all():
+                    tax_base_amount = amount / (1 + parent_line.tax_rate)
+                    tax_amount = tax_base_amount * line_tax.tax.rate
+                    refund_line.taxes.create(
+                        tax=line_tax.tax,
+                        name=_("Refund for %s" % line_tax.name),
+                        amount_value=-tax_amount,
+                        base_amount_value=-tax_base_amount,
+                        ordering=line_tax.ordering
+                    )
+
+            total_refund_amount += refund_line.taxful_price.amount
+            refund_lines.append(refund_line)
+
+        if abs(total_refund_amount) > available_for_refund:
+            raise RefundExceedsAmountException
+
+        return refund_lines
