@@ -235,6 +235,7 @@ class ShopProductForm(MultiLanguageModelForm):
                     initial=initial_suppliers,
                     attrs={"data-search-mode": "enabled"}
                 ),
+                label=self.fields["suppliers"].label,
                 required=False
             )
         else:
@@ -249,12 +250,14 @@ class ShopProductForm(MultiLanguageModelForm):
                     initial=(self.instance.primary_category if self.instance.pk else None),
                     attrs={"data-placeholder": ugettext("Select a category")}
                 ),
+                label=self.fields["primary_category"].label,
                 required=False
             )
             self.fields["categories"] = Select2ModelMultipleField(
                 initial=initial_categories,
                 model=Category,
                 widget=QuickAddCategoryMultiSelect(initial=initial_categories),
+                label=self.fields["categories"].label,
                 required=False
             )
         else:

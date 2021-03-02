@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: add option to hide font selection and always paste plain text in summernote editors
 
+### Fixed
+
+- Added missing labels to product category and supplier fields
+
 ## [2.3.18] - 2021-03-01
 
 ### Added
