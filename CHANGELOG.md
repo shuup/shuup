@@ -8,9 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+
+## [2.4.0] - 2021-03-02
+
 ### Added
 
 - Admin: add option to hide font selection and always paste plain text in summernote editors
+
+### Changed
+
+- Core: move refund order line logic to tax module
+  - Since each refund line you need to take care of the taxes it is
+  more logical if the tax module handles the whole thing. With some
+  3rd party taxation tool you need an option to handle refund taxes
+  in different way.
 
 ### Fixed
 
