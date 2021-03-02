@@ -79,20 +79,36 @@
         {% endblock %}
         {% block post_content %}{% endblock %}
         {% endif %}
-        <script src="{{ shuup_static("shuup_admin/js/vendor.js") }}"></script>
-        <script src="{{ shuup_static("shuup_admin/js/base.js") }}"></script>
-        {% block extra_js %}{% endblock %}
-        {% if messages %}
+
+        <script src="{{ shuup_static('shuup_admin/js/vendor.js') }}"></script>
+        <script src="{{ shuup_static('shuup_admin/js/base.js') }}"></script>
+
+        {% block init_scripts %}
         <script>
-            (function(){
-                if(!window.Messages) return;
-                {% for message in messages -%}Messages.enqueue({
-                    tags: {{ message.tags|json }},
-                    text: {{ (message.tags.capitalize() ~ "! " ~ message.message)|json }}
-                });{% endfor %}
-            }());
+            if (window.ShuupAdminEditors) {
+                window.ShuupAdminEditors.activateEditors(".summernote-editor");
+            }
         </script>
-        {% endif %}
-        <script>$(function() {window.runTour();});</script>
+        {% endblock %}
+
+        {% block extra_js %}{% endblock %}
+
+        {% block messages %}
+            {% if messages %}
+            <script>
+                (function(){
+                    if(!window.Messages) return;
+                    {% for message in messages -%}Messages.enqueue({
+                        tags: {{ message.tags|json }},
+                        text: {{ (message.tags.capitalize() ~ "! " ~ message.message)|json }}
+                    });{% endfor %}
+                }());
+            </script>
+            {% endif %}
+        {% endblock %}
+
+        {% block tour %}
+            <script>$(function() {window.runTour();});</script>
+        {% endblock %}
     </body>
 </html>

@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Admin: add option to hide font selection and always paste plain text in summernote editors
+
 ## [2.3.18] - 2021-03-01
 
 ### Added
