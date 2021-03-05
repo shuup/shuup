@@ -11,13 +11,14 @@ from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
     TextFilter
 )
 from shuup.admin.utils.views import PicotableListView
-from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
+from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus, Shipment, ShipmentStatus, ShipmentProduct
 from shuup.utils.django_compat import reverse
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
@@ -91,3 +92,38 @@ class OrderListView(PicotableListView):
             {"title": _(u"Total"), "text": item.get("taxful_total_price_value")},
             {"title": _(u"Status"), "text": item.get("status")}
         ]
+
+
+class ShipmentListView(PicotableListView):
+    model = Shipment
+    default_columns = [
+        Column("id", _(u"ID"), linked=True),
+        Column("order_id", _(u"Order"), display="get_order_name", raw=True),
+        Column("id", _(u"Content"), display="get_content", raw=True),
+        Column("tracking_code", _(u"Tracking Code"), allow_highlight=True),
+        Column("status", _(u"Status"), display="create_action_buttons", raw=True),
+        # Column("order", _("Actions"), display="create_action_buttons", raw=True)
+    ]
+
+    def get_order_name(self, instance):
+        return instance.order.__str__()
+
+    def get_content(self, instance):
+        query = ShipmentProduct.objects.filter(shipment=instance)
+        product = ""
+        for i in query:
+            product = product + f"{i.product} ({i.quantity})"
+        return product
+
+    def create_action_buttons(self, instance):
+        if instance.status == ShipmentStatus.SENT:
+            return instance.status.name
+        return '<a class="btn btn-info btn-sm" href="/s/s" onclick="handleSetSent(event, this)"><i class="fa fa-truck"></i> Mark as sent</a>'
+
+    def __init__(self):
+        super(ShipmentListView, self).__init__()
+        self.columns = self.default_columns
+    def get_queryset(self):
+        if get_supplier(self.request) is None:
+            return super(ShipmentListView, self).get_queryset().exclude(status=20)
+        return super(ShipmentListView, self).get_queryset().exclude(status=20).filter(supplier=get_supplier(self.request))

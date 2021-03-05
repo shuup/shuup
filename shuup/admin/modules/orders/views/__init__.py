@@ -9,7 +9,7 @@
 from .addresses import OrderAddressEditView
 from .detail import OrderDetailView, OrderSetStatusView
 from .edit import OrderEditView, UpdateAdminCommentView
-from .list import OrderListView
+from .list import OrderListView, ShipmentListView
 from .log import NewLogEntryView
 from .payment import (
     OrderCreatePaymentView, OrderDeletePaymentView, OrderSetPaidView
@@ -25,5 +25,5 @@ __all__ = [
     "OrderListView", "OrderCreatePaymentView", "OrderCreateFullRefundView",
     "OrderCreateRefundView", "OrderCreateShipmentView", "OrderSetPaidView",
     "OrderSetStatusView", "OrderStatusEditView", "OrderStatusListView", "ShipmentDeleteView",
-    "UpdateAdminCommentView", "OrderDeletePaymentView", "ShipmentSetSentView"
+    "UpdateAdminCommentView", "OrderDeletePaymentView", "ShipmentSetSentView", "ShipmentListView"
 ]
