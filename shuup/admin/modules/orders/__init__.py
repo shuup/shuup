@@ -43,6 +43,11 @@ class OrderModule(AdminModule):
                 name="order.set-shipment-sent"
             ),
             admin_url(
+                r"^shipments/$",
+                "shuup.admin.modules.orders.views.ShipmentListView",
+                name="order.shipments-list"
+            ),
+            admin_url(
                 r"^orders/(?P<pk>\d+)/create-payment/$",
                 "shuup.admin.modules.orders.views.OrderCreatePaymentView",
                 name="order.create-payment"
