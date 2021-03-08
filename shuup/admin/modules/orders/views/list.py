@@ -9,6 +9,8 @@ from __future__ import unicode_literals
 
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
@@ -99,11 +101,24 @@ class ShipmentListView(PicotableListView):
     default_columns = [
         Column("id", _(u"ID"), linked=True),
         Column("order_id", _(u"Order"), display="get_order_name", raw=True),
-        Column("id", _(u"Content"), display="get_content", raw=True),
-        Column("tracking_code", _(u"Tracking Code"), allow_highlight=True),
+        Column("get_content", _(u"Content"), display="get_content", raw=True),
+        Column("supplier_id", _(u"Supplier"), display="get_supplier", raw=True),
+        Column("tracking_code", _(u"Tracking Code"), display="tracking_code_url", raw=True),
         Column("status", _(u"Status"), display="create_action_buttons", raw=True),
-        # Column("order", _("Actions"), display="create_action_buttons", raw=True)
     ]
+
+    def get_context_data(self):
+        context = super(ShipmentListView, self).get_context_data()
+        context["listview"] = True
+        return context
+
+    def tracking_code_url(self, instance):
+        if instance.tracking_url:
+            return f"<a href='{instance.tracking_url}'>{instance.tracking_code}</a>"
+        return instance.tracking_code
+
+    def get_supplier(self, instance):
+        return instance.supplier.name
 
     def get_order_name(self, instance):
         return instance.order.__str__()
@@ -118,12 +133,26 @@ class ShipmentListView(PicotableListView):
     def create_action_buttons(self, instance):
         if instance.status == ShipmentStatus.SENT:
             return instance.status.name
-        return '<a class="btn btn-info btn-sm" href="/s/s" onclick="handleSetSent(event, this)"><i class="fa fa-truck"></i> Mark as sent</a>'
+        return f'<a class="btn btn-info btn-sm set_shipment_status" \
+            href="{reverse("shuup_admin:order.shipments-list")}" shipment_id="{instance.id}" \
+            onclick="handleSetSent(event, this)"><i class="fa fa-truck"></i> Mark as sent</a>'
 
     def __init__(self):
         super(ShipmentListView, self).__init__()
         self.columns = self.default_columns
     def get_queryset(self):
         if get_supplier(self.request) is None:
-            return super(ShipmentListView, self).get_queryset().exclude(status=20)
-        return super(ShipmentListView, self).get_queryset().exclude(status=20).filter(supplier=get_supplier(self.request))
+            return super(ShipmentListView, self).get_queryset().exclude(status=ShipmentStatus.DELETED)
+        return super(ShipmentListView, self).get_queryset().exclude(status=ShipmentStatus.DELETED).filter(supplier=get_supplier(self.request))
+
+    def get_object_abstract(self, instance, item):
+        return [
+            {"text": "%s" % instance, "class": "header"},
+            {"title": _(u"Content"), "text": item.get("get_content")},
+        ]
+    def post(self, request, *args, **kwargs):
+        shipment = Shipment.objects.get(pk=request.POST['shipment_id'])
+        shipment.set_sent()
+        message = _(f"Shipment status changed to {ShipmentStatus.SENT}.")
+        messages.success(self.request, message)
+        return HttpResponseRedirect(reverse("shuup_admin:order.shipments-list"))
