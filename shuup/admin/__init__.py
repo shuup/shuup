@@ -21,6 +21,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.product_types:ProductTypeModule",
             "shuup.admin.modules.media:MediaModule",
             "shuup.admin.modules.orders:OrderModule",
+            "shuup.admin.modules.orders:ShipmentModule",
             "shuup.admin.modules.orders:OrderStatusModule",
             "shuup.admin.modules.taxes:TaxModule",
             "shuup.admin.modules.categories:CategoryModule",

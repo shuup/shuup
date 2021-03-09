@@ -43,11 +43,6 @@ class OrderModule(AdminModule):
                 name="order.set-shipment-sent"
             ),
             admin_url(
-                r"^shipments/$",
-                "shuup.admin.modules.orders.views.ShipmentListView",
-                name="order.shipments-list"
-            ),
-            admin_url(
                 r"^orders/(?P<pk>\d+)/create-payment/$",
                 "shuup.admin.modules.orders.views.OrderCreatePaymentView",
                 name="order.create-payment"
@@ -212,3 +207,27 @@ class OrderStatusModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(OrderStatus, "shuup_admin:order_status", object, kind)
+
+
+class ShipmentModule(AdminModule):
+    name = _("Shipments")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:order.shipments-list")
+    def get_urls(self):
+        return [
+            admin_url(
+                r"^shipments/$",
+                "shuup.admin.modules.orders.views.ShipmentListView",
+                name="order.shipments-list"
+            ),
+        ]
+
+    def get_menu_entries(self, request):
+        return [
+            MenuEntry(
+                text=_("Shipments"),
+                icon="fa fa-shopping-cart",
+                url="shuup_admin:order.shipments-list",
+                category=ORDERS_MENU_CATEGORY,
+                aliases=[_("Shipments list")]
+            ),
+        ]
