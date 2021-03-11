@@ -69,6 +69,8 @@ def process_data(rows):
     data = []
     if not len(data):
         for y, row in enumerate(rows):
+            if not any(row):  # Ignore any fully cleared rows
+                continue
             if y == 0:
                 headers = [x.lower().strip() for x in row if x]
                 continue
