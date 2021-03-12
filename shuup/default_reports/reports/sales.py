@@ -36,7 +36,7 @@ class SalesReport(OrderReportMixin, ShuupReportBase):
         return localtime(entity.order_date).date()
 
     def get_data(self):
-        orders = self.get_objects().order_by("-order_date")
+        orders = self.get_objects().order_by("-order_date")[:self.queryset_row_limit]
         data = []
         # TODO: maybe make raw sql query in future
         for order_date, orders_group in itertools.groupby(orders, key=self.extract_date):

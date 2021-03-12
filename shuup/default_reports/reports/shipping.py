@@ -39,7 +39,7 @@ class ShippingReport(OrderReportMixin, ShuupReportBase):
         if carrier:
             filters &= Q(shipping_method__carrier__in=carrier)
 
-        orders = super(ShippingReport, self).get_objects().filter(filters)
+        orders = super(ShippingReport, self).get_objects().filter(filters)[:self.queryset_row_limit]
         order_lines = OrderLine.objects.shipping().filter(order__in=orders)
 
         return order_lines.select_related(
@@ -50,7 +50,7 @@ class ShippingReport(OrderReportMixin, ShuupReportBase):
             "base_unit_price_value",
             "discount_amount_value",
             "quantity"
-        ).order_by("order__shipping_method__carrier_id", "order__shipping_method_id")
+        ).order_by("order__shipping_method__carrier_id", "order__shipping_method_id")[:self.queryset_row_limit]
 
     def get_data(self):
         data = []

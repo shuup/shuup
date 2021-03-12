@@ -14,6 +14,7 @@ from decimal import Decimal
 import six
 from django.utils.functional import Promise
 from django.utils.timezone import get_current_timezone, make_aware
+from django.conf import settings
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
@@ -30,7 +31,8 @@ class ShuupReportBase(object):
 
     filename_template = None
     icon = "fa-money"
-
+    queryset_row_limit = settings.DEFAULT_REPORTS_ITEM_LIMIT
+    
     form_class = BaseReportForm
 
     def __init__(self, **kwargs):

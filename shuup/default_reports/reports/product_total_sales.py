@@ -33,8 +33,9 @@ class ProductSalesReport(OrderReportMixin, ShuupReportBase):
 
     def get_objects(self):
         order_line_qs = OrderLine.objects.products().filter(order__in=super(ProductSalesReport, self).get_objects())
-        return order_line_qs.select_related("product").prefetch_related("taxes").order_by("product__id")
-
+        return order_line_qs.select_related("product").prefetch_related(
+            "taxes").order_by("product__id")[:self.queryset_row_limit]
+            
     def get_data(self):
         data = []
 
