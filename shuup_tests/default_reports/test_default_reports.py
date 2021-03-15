@@ -23,13 +23,13 @@ from pytz import timezone
 
 from shuup.apps.provides import override_provides
 from shuup.core.models import (
-    CustomCarrier, FixedCostBehaviorComponent, get_person_contact, Order
+    CustomCarrier, FixedCostBehaviorComponent, get_person_contact, Order, OrderLine, OrderLineType
 )
 from shuup.core.order_creator import OrderCreator
 from shuup.default_reports.reports import (
     CustomerSalesReport, NewCustomersReport, ProductSalesReport,
     RefundedSalesReport, SalesPerHour, SalesReport, ShippingReport,
-    TaxesReport, TotalSales
+    TaxesReport, TotalSales, OrdersReport, OrderLineReport
 )
 from shuup.reports.admin_module.views import ReportView
 from shuup.reports.forms import DateRangeChoices
@@ -115,6 +115,41 @@ def test_total_sales_report(rf):
     assert return_data.get("name") == test_info.shop.name
     assert int(return_data.get("order_amount")) == 1
     assert str(test_info.expected_taxful_total) in return_data.get("total_sales")
+
+
+@pytest.mark.django_db
+def test_orders_report(rf):
+    test_info = initialize_simple_report(OrdersReport)
+    assert force_text(OrdersReport.title) in test_info.json_data.get("heading")
+    return_data = test_info.json_data.get("tables")[0].get("data")[0]
+    assert return_data.get("status") == test_info.order.status.name
+    assert return_data.get("order_line_quantity") == str(test_info.order.lines.count())
+    assert return_data.get("customer") == test_info.order.get_customer_name()
+
+@pytest.mark.django_db
+def test_order_line_report(rf):
+    test_info = initialize_simple_report(OrderLineReport, {"order_line_type": [1]})
+    assert force_text(OrderLineReport.title) in test_info.json_data.get("heading")
+    return_data = test_info.json_data.get("tables")[0].get("data")[0]
+    assert len(test_info.json_data.get("tables")[0].get("columns")) == 8
+    assert len(test_info.json_data["tables"][0]["data"]) == OrderLine.objects.filter(type=1).count()
+
+    test_info = initialize_simple_report(OrderLineReport, {"order_line_type": [1,2]})
+    assert force_text(OrderLineReport.title) in test_info.json_data.get("heading")
+    return_data = test_info.json_data.get("tables")[0].get("data")[0]
+    assert len(test_info.json_data.get("tables")[0].get("columns")) == 8
+    assert len(test_info.json_data["tables"][0]["data"]) == OrderLine.objects.filter(type__in=[1,2]).count()
+
+    supplier = get_default_supplier()
+    test_info = initialize_simple_report(OrderLineReport, {"supplier": [supplier.pk]})
+    assert force_text(OrderLineReport.title) in test_info.json_data.get("heading")
+    return_data = test_info.json_data.get("tables")[0].get("data")[0]
+    assert len(test_info.json_data["tables"][0]["data"]) == OrderLine.objects.filter(supplier=supplier).count()
+
+    test_info = initialize_simple_report(OrderLineReport, {"order_status": [1]})
+    assert force_text(OrderLineReport.title) in test_info.json_data.get("heading")
+    return_data = test_info.json_data.get("tables")[0].get("data")[0]
+    assert len(test_info.json_data["tables"][0]["data"]) == OrderLine.objects.filter(order__status__in=[1]).count()
 
 
 @pytest.mark.django_db
