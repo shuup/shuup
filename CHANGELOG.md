@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Admin: add contact CSV exporter
+
 ### Fixed
 
+- Admin: prevent exporting products that are not accessible by the current user
 - Fix 'Customize Your Admin Menu' redirecting to the supplier specific edit page on saving.
 - Admin: Fix picotable mobile styling to default to full-width
 

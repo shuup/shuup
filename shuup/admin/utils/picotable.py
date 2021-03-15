@@ -7,24 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import unicodecsv as csv
 import datetime
 import json
-import bleach
 import six
-
 from django.core.paginator import EmptyPage, Paginator
 from django.db.models import Manager, Q, QuerySet
 from django.http.response import HttpResponse, JsonResponse
 from django.template.defaultfilters import yesno
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import View
 from easy_thumbnails.files import get_thumbnailer
 from filer.models import Image
 
-import shuup.admin.modules.settings.view_settings as settings
-from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.urls import get_model_url, NoModelUrl
+from shuup.admin.utils.urls import NoModelUrl, get_model_url
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import ProductMedia
 from shuup.utils.dates import try_parse_datetime
@@ -45,9 +41,13 @@ def maybe_callable(thing, context=None):
         return thing
 
     if isinstance(thing, six.string_types):
-        thing = getattr(context, thing, None)
-        if callable(thing):
-            return thing
+        callable_thing = getattr(context, thing, None)
+        if callable(callable_thing):
+            # prevent returning a callable that is defined in a base View class
+            # this won't allow leaking methods like: dispatch, options, get, post etc
+            base_view_thing = getattr(View, thing, None)
+            if not callable(base_view_thing):
+                return callable_thing
 
     return None
 
@@ -460,6 +460,7 @@ class Picotable(object):
         }
         for column in self.columns:
             out[column.id] = column.get_display_value(context=self.context, object=object)
+
         out["type"] = type(object).__name__
         out["_abstract"] = self.get_object_abstract(object, item=out) if callable(self.get_object_abstract) else None
         return out
@@ -717,37 +718,4 @@ class PicotableJavascriptMassAction(PicotableMassAction):
     callback = None
 
     def get_action_info(self, request):
-        return {
-            "callback": self.callback
-        }
-
-
-class BaseExportCSVMassAction(PicotableFileMassAction):
-    label = _("Export CSV")
-    model = None
-    filename = None
-    Viewclass = None
-
-    def process(self, request, ids):
-        shop = get_shop(request)
-        if isinstance(ids, six.string_types) and ids == "all":
-            query = Q(shop=shop)
-        else:
-            query = Q(pk__in=ids, shop=shop)
-
-        queryset = self.model.objects.filter(query)
-        view_settings = settings.ViewSettings(self.model, self.Viewclass.default_columns, self.Viewclass())
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = f'attachment; filename="{self.filename}.csv"'
-        writer = csv.writer(response, delimiter=";", encoding='utf-8')
-        writer.writerow([col.title for col in view_settings.columns])
-        for item in queryset:
-            row = []
-            for dr in view_settings.columns:
-                if dr.get_display_value(view_settings.view_context, item):
-                    row.append(bleach.clean(dr.get_display_value(view_settings.view_context, item)))
-                else:
-                    row.append("No data")
-            writer.writerow(row)
-
-        return response
+        return {"callback": self.callback}
