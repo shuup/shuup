@@ -138,7 +138,6 @@
                 var input = document.createElement("input");
                 input.type = "hidden";
                 input.name = "csrfmiddlewaretoken";
-                input.id = "language-field";
                 input.value = "{{ csrf_token }}";
                 form.appendChild(input);
                 document.body.appendChild(form);

@@ -9,19 +9,15 @@ from __future__ import unicode_literals
 
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponseRedirect
-from django.contrib import messages
-from django.template.loader import render_to_string
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
     TextFilter
 )
 from shuup.admin.utils.views import PicotableListView
-from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus, Shipment, ShipmentStatus, ShipmentProduct
+from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
 from shuup.utils.django_compat import reverse
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
@@ -29,10 +25,10 @@ from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 class OrderListView(PicotableListView):
     model = Order
     default_columns = [
-        Column("identifier", _(u"Order"), linked=True, filter_config=TextFilter(operator="startswith")),
-        Column("order_date", _(u"Order Date"), display="format_order_date", filter_config=DateRangeFilter()),
+        Column("identifier", _("Order"), linked=True, filter_config=TextFilter(operator="startswith")),
+        Column("order_date", _("Order Date"), display="format_order_date", filter_config=DateRangeFilter()),
         Column(
-            "customer", _(u"Customer"), display="format_customer_name",
+            "customer", _("Customer"), display="format_customer_name",
             filter_config=MultiFieldTextFilter(
                 filter_fields=(
                     "customer__email", "customer__name", "billing_address__name",
@@ -41,12 +37,12 @@ class OrderListView(PicotableListView):
             )
         ),
         Column(
-            "status", _(u"Status"), filter_config=ChoicesFilter(choices=OrderStatus.objects.all()),
+            "status", _("Status"), filter_config=ChoicesFilter(choices=OrderStatus.objects.all()),
         ),
-        Column("payment_status", _(u"Payment Status"), filter_config=ChoicesFilter(choices=PaymentStatus.choices)),
-        Column("shipping_status", _(u"Shipping Status"), filter_config=ChoicesFilter(choices=ShippingStatus.choices)),
+        Column("payment_status", _("Payment Status"), filter_config=ChoicesFilter(choices=PaymentStatus.choices)),
+        Column("shipping_status", _("Shipping Status"), filter_config=ChoicesFilter(choices=ShippingStatus.choices)),
         Column(
-            "taxful_total_price_value", _(u"Total"), sort_field="taxful_total_price_value",
+            "taxful_total_price_value", _("Total"), sort_field="taxful_total_price_value",
             display="format_taxful_total_price", class_name="text-right",
             filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
         ),
@@ -92,71 +88,6 @@ class OrderListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _(u"Total"), "text": item.get("taxful_total_price_value")},
-            {"title": _(u"Status"), "text": item.get("status")}
+            {"title": _("Total"), "text": item.get("taxful_total_price_value")},
+            {"title": _("Status"), "text": item.get("status")}
         ]
-
-
-class ShipmentListView(PicotableListView):
-    model = Shipment
-    template_name = "shuup/admin/orders/shipment_picotable.jinja"
-    default_columns = [
-        Column("id", _(u"ID"), linked=True),
-        Column("order_id", _(u"Order"), display="get_order_name", raw=True),
-        Column("get_content", _(u"Content"), display="get_content", raw=True),
-        Column("supplier_id", _(u"Supplier"), display="get_supplier", raw=True),
-        Column("tracking_code", _(u"Tracking Code"), display="tracking_code_url", raw=True),
-        Column("status", _(u"Status"), display="create_action_buttons", raw=True),
-    ]
-
-    def tracking_code_url(self, instance):
-        if instance.tracking_url:
-            return f"<a href='{instance.tracking_url}'>{instance.tracking_code}</a>"
-        return instance.tracking_code
-
-    def get_supplier(self, instance):
-        return instance.supplier.name
-
-    def get_order_name(self, instance):
-        return instance.order.__str__()
-
-    def get_content(self, instance):
-        query = ShipmentProduct.objects.filter(shipment=instance)
-        product = ""
-        for i in query:
-            product = product + f"{i.product} ({i.quantity})"
-        return product
-
-    def create_action_buttons(self, instance):
-        if instance.status == ShipmentStatus.SENT:
-            return instance.status.name
-        context = {
-            "url": reverse("shuup_admin:order.shipments-list"),
-            "shipment_id": instance.id
-        }
-        return render_to_string("shuup/admin/orders/_set_shipments_status_button.jinja", context)
-
-    def __init__(self):
-        super(ShipmentListView, self).__init__()
-        self.columns = self.default_columns
-
-    def get_queryset(self):
-        if get_supplier(self.request) is None:
-            return super(ShipmentListView, self).get_queryset().exclude(status=ShipmentStatus.DELETED)
-        return super(ShipmentListView, self).get_queryset().exclude(status=ShipmentStatus.DELETED).filter(supplier=get_supplier(self.request))
-
-
-    def get_object_abstract(self, instance, item):
-        return [
-            {"text": "Shipment %s (%s)" % (instance.id, self.get_order_name(instance)), "class": "header"},
-            {"title": _(u"Supplier"), "text": self.get_supplier(instance)},
-            {"title": _(u"Content"), "text": item.get("get_content")},
-            {"title": _(u"Tracking code"), "text": " ", "raw": self.tracking_code_url(instance)},
-            {"title": _(u"Status"), "text": " ", "raw": self.create_action_buttons(instance)}
-        ]
-    def post(self, request, *args, **kwargs):
-        shipment = Shipment.objects.get(pk=request.POST['shipment_id'])
-        shipment.set_sent()
-        message = _(f"Shipment status changed to {ShipmentStatus.SENT}.")
-        messages.success(self.request, message)
-        return HttpResponseRedirect(reverse("shuup_admin:order.shipments-list"))
