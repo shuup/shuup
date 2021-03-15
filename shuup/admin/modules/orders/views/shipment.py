@@ -254,26 +254,28 @@ class ShipmentListView(PicotableListView):
             return str(instance.order)
 
     def get_content(self, instance):
-        shipment_products = ShipmentProduct.objects.filter(shipment=instance)
-        content = ""
+        shipment_products = ShipmentProduct.objects.filter(shipment=instance).select_related(
+            "product", "product__sales_unit"
+        )
+        content = []
 
         for shipment_product in shipment_products:
             unit = UnitInterface(shipment_product.product.sales_unit)
             quantity = unit.render_quantity(shipment_product.quantity)
-            content += f"{shipment_product.product} ({quantity})"
-
-        return content
+            content.append(f"{shipment_product.product} ({quantity})")
+        return ", ".join(content)
 
     def create_action_buttons(self, instance):
-        if instance.status not in (ShipmentStatus.SENT, ShipmentStatus.ERROR):
-            url = "{base_url}?next={next_url}".format(
-                base_url=reverse("shuup_admin:order.set-shipment-sent", kwargs={"pk": instance.pk}),
-                next_url=reverse('shuup_admin:order.shipments.list')
-            )
-            return render_to_string("shuup/admin/orders/_set_shipments_status_button.jinja", {
-                "shipment_id": instance.pk,
-                "url": url,
-            })
+        if instance.order.shipping_method and instance.order.shipping_method.carrier.uses_default_shipments_manager:
+            if instance.status not in (ShipmentStatus.SENT, ShipmentStatus.ERROR):
+                url = "{base_url}?next={next_url}".format(
+                    base_url=reverse("shuup_admin:order.set-shipment-sent", kwargs={"pk": instance.pk}),
+                    next_url=reverse('shuup_admin:order.shipments.list')
+                )
+                return render_to_string("shuup/admin/orders/_set_shipments_status_button.jinja", {
+                    "shipment_id": instance.pk,
+                    "url": url,
+                })
         return instance.status.label
 
     def __init__(self):
@@ -281,7 +283,9 @@ class ShipmentListView(PicotableListView):
         self.columns = self.default_columns
 
     def get_queryset(self):
-        queryset = super().get_queryset().exclude(status=ShipmentStatus.DELETED)
+        queryset = super().get_queryset().exclude(status=ShipmentStatus.DELETED).select_related(
+            "order", "order__shipping_method"
+        )
         supplier = get_supplier(self.request)
         if supplier:
             queryset = queryset.filter(supplier=supplier)

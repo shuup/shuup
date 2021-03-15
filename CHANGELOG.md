@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Core: add attribute in Carrier model to control whether to manage shipments using default behavior
 - Admin: add shipment list view to list all shipments
 
 ### Fixed
