@@ -5,14 +5,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from collections import defaultdict
-
+import json
 import pytest
 import six
+
+from collections import defaultdict
 
 from django.test.client import Client
 from django.template import loader
 
+from django.urls import reverse
 from shuup.admin.modules.orders.sections import ShipmentSection
 from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.core.models import ShippingMode, Supplier, ShipmentStatus
@@ -20,11 +22,12 @@ from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_product,
     create_random_user, get_default_permission_group, get_default_shop
 )
+from shuup.admin.modules.orders.views.shipment import ShipmentListView
 from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
-def test_order_shipment_section(rf, admin_user):
+def test_order_shipments(rf, admin_user):
     shop = get_default_shop()
     supplier1 = Supplier.objects.create(identifier="1", name="supplier1")
     supplier1.shops.add(shop)
@@ -152,6 +155,17 @@ def test_order_shipment_section(rf, admin_user):
 
     # We still should see the order shipment section since existing shipments
     assert ShipmentSection.visible_for_object(order, request)
+
+    # list all shipments in shipments list view
+    response = client.get("{}?jq={}".format(
+        reverse("shuup_admin:order.shipments.list"),
+        json.dumps({"perPage": 10, "page": 1})
+    ))
+    assert response.status_code == 200
+    data = json.loads(response.content)
+    assert len(data["items"]) == 3
+    for item in data["items"]:
+        assert item["status"] == "Sent"
 
     # Let's delete all shipments since both products is unshipped and we
     # don't need those.
