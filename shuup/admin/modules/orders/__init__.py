@@ -132,9 +132,11 @@ class OrderModule(AdminModule):
             ),
             MenuEntry(
                 text=_("Shipments"),
+                icon="fa fa-truck",
                 url="shuup_admin:order.shipments.list",
                 category=ORDERS_MENU_CATEGORY,
-                ordering=2
+                ordering=2,
+                aliases=[_("Show shipments")]
             )
         ]
 
