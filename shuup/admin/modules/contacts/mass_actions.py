@@ -6,10 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.utils.picotable import PicotableRedirectMassAction, BaseExportCSVMassAction
-from shuup.utils.django_compat import reverse
 from shuup.admin.modules.contacts.views.list import ContactListView
+from shuup.admin.utils.mass_action import BaseExportCSVMassAction
+from shuup.admin.utils.picotable import PicotableRedirectMassAction
 from shuup.core.models import Contact
+from shuup.utils.django_compat import reverse
 
 
 class EditContactsAction(PicotableRedirectMassAction):
@@ -25,7 +26,7 @@ class EditContactGroupsAction(PicotableRedirectMassAction):
 
 
 class ExportContactsCSVAction(BaseExportCSVMassAction):
-    identifier = "mass_action_contact_simple_csv"
+    identifier = "mass_action_export_contact_csv"
     model = Contact
-    Viewclass = ContactListView
-    filename= "contacts.csv"
+    view_class = ContactListView
+    filename = "contacts.csv"

@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Admin: add contact CSV exporter
+
 ### Fixed
 
+- Admin: prevent exporting products that are not accessible by the current user
 - Importer: Ignore rows without any data
 
 ## [2.4.0] - 2021-03-02

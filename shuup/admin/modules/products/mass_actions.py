@@ -5,16 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import unicodecsv as csv
 from django.db.models import Q
-from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 from six import string_types
 
 from shuup.admin.modules.products.views.list import ProductListView
 from shuup.admin.shop_provider import get_shop
+from shuup.admin.utils.mass_action import BaseExportCSVMassAction
 from shuup.admin.utils.picotable import (
-    PicotableFileMassAction, PicotableMassAction, PicotableRedirectMassAction, BaseExportCSVMassAction
+    PicotableMassAction, PicotableRedirectMassAction
 )
 from shuup.core.models import ShopProduct, ShopProductVisibility
 from shuup.core.utils import context_cache
@@ -55,10 +54,10 @@ class InvisibleMassAction(PicotableMassAction):
 
 
 class ExportProductsCSVAction(BaseExportCSVMassAction):
-    identifier = "mass_action_product_simple_csv"
+    identifier = "mass_action_export_product_csv"
     model = ShopProduct
-    Viewclass = ProductListView
-    filename= "products.csv"
+    view_class = ProductListView
+    filename = "products.csv"
 
 
 class EditProductAttributesAction(PicotableRedirectMassAction):
