@@ -7,13 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from functools import lru_cache
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import QuerySet
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
-from django.utils.lru_cache import lru_cache
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 from filer.fields.image import FilerImageField

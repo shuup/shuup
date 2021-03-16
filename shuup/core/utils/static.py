@@ -5,9 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from functools import lru_cache
 from logging import getLogger
-
-from django.utils.lru_cache import lru_cache
 
 LOGGER = getLogger(__name__)
 
