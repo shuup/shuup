@@ -1,0 +1,24 @@
+{% extends "shuup/admin/base_picotable.jinja" %}
+
+{% block extra_js %}
+    <script src="{{ shuup_static('shuup_admin/js/picotable.js') }}"></script>
+    <script>
+        function handleSetSent(event, link) {
+            event.preventDefault();
+            var warningMessage = "{% trans %}Do you want to mark this shipment as sent?{% endtrans %}";
+            if (confirm(warningMessage)) {
+                var form = document.createElement("form");
+                form.method = "POST";
+                form.action = $(link).attr("href");
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "csrfmiddlewaretoken";
+                input.value = "{{ csrf_token }}";
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+            return false;
+        }
+</script>
+{% endblock %}

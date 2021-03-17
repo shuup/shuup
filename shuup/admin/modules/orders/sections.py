@@ -69,6 +69,10 @@ class ShipmentSection(Section):
 
     @staticmethod
     def visible_for_object(order, request=None):
+        if not order.shipping_method:
+            return False
+        if not order.shipping_method.carrier.uses_default_shipments_manager:
+            return False
         return (
             order.has_products_requiring_shipment() or
             Shipment.objects.all_except_deleted().filter(order=order).exists()

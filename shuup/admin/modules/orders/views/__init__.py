@@ -16,7 +16,8 @@ from .payment import (
 )
 from .refund import OrderCreateFullRefundView, OrderCreateRefundView
 from .shipment import (
-    OrderCreateShipmentView, ShipmentDeleteView, ShipmentSetSentView
+    OrderCreateShipmentView, ShipmentDeleteView, ShipmentListView,
+    ShipmentSetSentView
 )
 from .status import OrderStatusEditView, OrderStatusListView
 
@@ -25,5 +26,5 @@ __all__ = [
     "OrderListView", "OrderCreatePaymentView", "OrderCreateFullRefundView",
     "OrderCreateRefundView", "OrderCreateShipmentView", "OrderSetPaidView",
     "OrderSetStatusView", "OrderStatusEditView", "OrderStatusListView", "ShipmentDeleteView",
-    "UpdateAdminCommentView", "OrderDeletePaymentView", "ShipmentSetSentView"
+    "UpdateAdminCommentView", "OrderDeletePaymentView", "ShipmentSetSentView", "ShipmentListView"
 ]
