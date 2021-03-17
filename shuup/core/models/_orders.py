@@ -21,7 +21,7 @@ from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from enumfields import Enum, EnumIntegerField
+from enumfields import Enum, EnumIntegerField, EnumField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
@@ -47,7 +47,8 @@ from shuup.core.signals import (
     shipment_created,
     shipment_created_and_processed,
 )
-from shuup.utils.analog import LogEntryKind, define_log_model
+from django.contrib.auth.models import User
+from shuup.utils.analog import define_log_model, LogEntryKind
 from shuup.utils.dates import local_now, to_aware
 from shuup.utils.django_compat import force_text
 from shuup.utils.money import Money
@@ -191,7 +192,9 @@ class OrderStatus(TranslatableModel, models.Model):
         # DefaultOrderStatus, db_index=True,
         [OrderStatusRole.NONE, OrderStatusRole.INITIAL, OrderStatusRole.PROCESSING, OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED], 
         db_index=True,
-        verbose_name=_('allowed next statuses'))
+        verbose_name=_('allowed next statuses'),
+        null=True
+    )
 
     class Meta:
         unique_together = ("identifier", "role")
@@ -231,7 +234,7 @@ class OrderStatusHistory(models.Model):
     description = models.TextField(max_length=200, db_index=True, blank=True, null=True, verbose_name=_('description')),
 
     creator = UnsavedForeignKey(
-        settings.AUTH_USER_MODEL, related_name='orders_created', blank=True, null=True,
+        settings.AUTH_USER_MODEL, related_name='order_status_history_created', blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('creating user'))
     
@@ -1203,7 +1206,7 @@ class Order(MoneyPropped, models.Model):
         valid_statuses = [OrderStatusRole.NONE, OrderStatusRole.INITIAL, OrderStatusRole.PROCESSING, 
                            OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED]
         
-        if not next_status or next_status not in valid_statuses 
+        if not next_status or next_status not in valid_statuses \
             or next_status == OrderStatusRole.INITIAL:
             return False
         
@@ -1212,7 +1215,7 @@ class Order(MoneyPropped, models.Model):
         # 1. `INITIAL -> PROCESSING -> COMPLETE`
         # 2. `INITIAL -> PROCESSING -> CANCELED`
         # 3. `INITIAL -> CANCELED`
-        if curr_role in [OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED] 
+        if curr_role in [OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED] \
             or (curr_role == OrderStatusRole.PROCESSING and next_status == OrderStatusRole.INITIAL):
             return False
 
