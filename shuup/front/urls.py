@@ -62,7 +62,7 @@ urlpatterns = [
     url(r'^force-company-contact/$', login_required(force_company_contact), name="force-company-contact"),
     url(r'^force-person-contact/$', login_required(force_person_contact), name="force-person-contact"),
     url(r'^stop-impersonating/$', login_required(stop_impersonating), name="stop-impersonating"),
-    url(r'^media-upload/$', login_required(media_upload), name="media-upload"),
+    url(r'^upload-media/$', login_required(media_upload), name="media-upload"),
     url(r'^order/payment/(?P<pk>.+?)/(?P<key>.+?)/$',
         csrf_exempt(ProcessPaymentView.as_view()),
         kwargs={"mode": "payment"},

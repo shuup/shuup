@@ -8,6 +8,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Core: add attribute in Carrier model to control whether to manage shipments using default behavior
+- Admin: add shipment list view to list all shipments
+
+### Fixed
+
+- Importer: Ignore rows without any data
+
+## [2.4.0] - 2021-03-02
+
+### Added
+
+- Admin: add option to hide font selection and always paste plain text in summernote editors
+
+### Changed
+
+- Core: move refund order line logic to tax module
+  - Since each refund line you need to take care of the taxes it is
+  more logical if the tax module handles the whole thing. With some
+  3rd party taxation tool you need an option to handle refund taxes
+  in different way.
+
+### Fixed
+
+- Added missing labels to product category and supplier fields
+
+## [2.3.18] - 2021-03-01
+
+### Added
+
+- Front: create shipment sent notify event
+- Core: add shipment tracking url to shipment model
+- Admin: add shipment action to mark a shipment as sent
+
+### Changed
+
+- Admin: fix product module not to fail on object does not exists
+- Front: update media upload URL from "media-upload/" to "upload-media/"
+- Core: bump attribute name to 256 characters
+
+
+## [2.3.17] - 2021-02-23
+
+### Fixed
+
+- Core: Adding normal products with only deleted children to basket
+
+### Removed
+
+- Front: remove templatecache around basket partial as not stable with custom baskets
+
 ## [2.3.16] - 2021-02-18
 
 ### Fixed

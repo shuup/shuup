@@ -12,11 +12,13 @@ from shuup.core.models import PaymentStatus, ShipmentStatus, ShippingStatus
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import (
     order_status_changed, payment_created, refund_created,
-    shipment_created_and_processed, shipment_deleted
+    shipment_created_and_processed, shipment_deleted, shipment_sent
 )
 from shuup.notify.base import Event, Variable
 from shuup.notify.models import Script
-from shuup.notify.typology import Email, Enum, Language, Model, Phone
+from shuup.notify.typology import (
+    Email, Enum, Language, Model, Phone, Text, URL
+)
 
 # Common attributes that can be used with orders.
 ORDER_ATTRIBUTES = (
@@ -68,6 +70,13 @@ class ShipmentCreated(Event):
     shipment = Variable(_("Shipment"), type=Model("shuup.Shipment"))
     shipping_status = Variable(_("Order Shipping Status"), type=Enum(ShippingStatus))
     shipment_status = Variable(_("Shipment Status"), type=Enum(ShipmentStatus))
+    shipment_tracking_code = Variable(_("Shipment Tracking Code"), type=Text, required=False)
+    shipment_tracking_url = Variable(_("Shipment Tracking URL"), type=URL, required=False)
+
+
+class ShipmentSent(ShipmentCreated):
+    identifier = "shipment_sent"
+    name = _("Shipment Sent")
 
 
 class ShipmentDeleted(Event):
@@ -137,7 +146,24 @@ def send_shipment_created_notification(order, shipment, **kwargs):
         language=order.language,
         shipment=shipment,
         shipping_status=order.shipping_status,
-        shipment_status=shipment.status
+        shipment_status=shipment.status,
+        shipment_tracking_code=shipment.tracking_code,
+        shipment_tracking_url=shipment.tracking_url,
+    ).run(shop=order.shop)
+
+
+@receiver(shipment_sent)
+def send_shipment_sent_notification(order, shipment, **kwargs):
+    ShipmentSent(
+        order=order,
+        customer_email=order.email,
+        customer_phone=order.phone,
+        language=order.language,
+        shipment=shipment,
+        shipping_status=order.shipping_status,
+        shipment_status=shipment.status,
+        shipment_tracking_code=shipment.tracking_code,
+        shipment_tracking_url=shipment.tracking_url,
     ).run(shop=order.shop)
 
 

@@ -80,6 +80,10 @@ class Carrier(ServiceProvider):
     rather through a concrete subclass.
     """
 
+    # Flags whether the order shipments should be managed
+    # by the default shipment section.
+    uses_default_shipments_manager = True
+
     service_model = ShippingMethod
 
     def delete(self, *args, **kwargs):

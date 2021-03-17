@@ -551,7 +551,7 @@ class BaseBasket(OrderSource):
         return self._orderable_lines_cache
 
     def _initialize_product_line_data(self, product, supplier, shop, quantity=0):
-        if product.variation_children.count():
+        if product.variation_children.filter(deleted=False).exists():
             raise ValueError("Error! Add a variation parent to the basket is not allowed.")
 
         return {

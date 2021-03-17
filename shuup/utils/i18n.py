@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from functools import lru_cache, wraps
+
 import babel
 import babel.numbers
 from babel import UnknownLocaleError
@@ -12,10 +14,25 @@ from babel.dates import format_datetime
 from babel.numbers import format_currency, format_decimal, parse_pattern
 from django.apps import apps
 from django.utils import translation
-from django.utils.lru_cache import lru_cache
 from django.utils.timezone import localtime
 from django.utils.translation import get_language
 from django.views.decorators.cache import cache_page
+
+
+def lang_lru_cache(func):
+    """Language aware least recently used cache decorator"""
+
+    @lru_cache()
+    def cached(*args, __lang=None, **kwargs):
+        return func(*args, **kwargs)
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return cached(*args, **kwargs, __lang=translation.get_language())
+
+    wrapper.cache_clear = cached.cache_clear
+
+    return wrapper
 
 
 @lru_cache()
@@ -120,7 +137,7 @@ def format_money(amount, digits=None, widen=0, locale=None):
     return format_currency(amount.value, amount.currency, pattern, loc, currency_digits=False)
 
 
-@lru_cache()
+@lang_lru_cache
 def get_language_name(language_code):
     """
     Get a language's name in the currently active locale.

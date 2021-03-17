@@ -6,8 +6,8 @@
         {%- if not loop.last %}, {% endif -%}
     {%- endfor -%}
 {% endmacro %}
-    
-{% macro render_supplier_info(supplier, create_urls, delete_urls) %}
+
+{% macro render_supplier_info(supplier, create_urls, delete_urls, set_sent_urls) %}
     {% set product_summary = order.get_product_summary(supplier) %}
     {% set ordered_total = product_summary.values()|sum("ordered")|number %}
     {% set shipped_total = product_summary.values()|sum("shipped")|number %}
@@ -59,22 +59,35 @@
                         <tr>
                             <th class="text-center">{% trans %}Products{% endtrans %}</th>
                             <th class="text-center">{% trans %}Tracking Code{% endtrans %}</th>
+                            <th class="text-center">{% trans %}Status{% endtrans %}</th>
                             <th class="text-center">{% trans %}Description{% endtrans %}</th>
                             <th class="text-center">{% trans %}Created{% endtrans %}</th>
-                            <th class="text-center">{% trans %}Delete{% endtrans %}</th>
+                            <th class="text-center">{% trans %}Actions{% endtrans %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for shipment in shipments %}
                             <tr>
                                 <td class="text-center">{{ render_products_cell(shipment) }}</td>
-                                <td class="text-center">{{ shipment.tracking_code }}</td>
+                                <td class="text-center">
+                                    {%- if shipment.tracking_url %}
+                                    <a href="{{ shipment.tracking_url }}" target="_blank" rel="noopener">
+                                    {% endif -%}
+                                    {{- shipment.tracking_code -}}
+                                    {%- if shipment.tracking_url %}</a>{% endif -%}
+                                </td>
+                                <td class="text-center">{{ shipment.status }}</td>
                                 <td class="text-center">{{ shipment.description }}</td>
-                                <td class="text-center">{{ shipment.created_on|datetime }}</td>
+                                <td class="text-center">{{ shipment.created_on|datetime(format="short") }}</td>
                                 <td class="text-center">
                                     {% if delete_urls.get(shipment.id) and not shipment.is_deleted() %}
-                                    <a href="{{ delete_urls.get(shipment.id) }}" onclick="handleDelete(event, this)">
-                                        <i class="fa fa-trash"></i>
+                                    <a class="btn btn-danger btn-sm" href="{{ delete_urls.get(shipment.id) }}" onclick="handleDelete(event, this)">
+                                        <i class="fa fa-trash"></i> {{ _("Delete") }}
+                                    </a>
+                                    {% endif %}
+                                    {% if set_sent_urls.get(shipment.id) and not shipment.is_sent() %}
+                                    <a class="btn btn-info btn-sm" href="{{ set_sent_urls.get(shipment.id) }}" onclick="handleSetSent(event, this)">
+                                        <i class="fa fa-truck"></i> {{ _("Mark as sent") }}
                                     </a>
                                     {% endif %}
                                 </td>
@@ -87,14 +100,13 @@
     </div>
 {% endmacro %}
 
-<div class="container">
 {% set create_urls = shipments_data.create_urls %}
 {% set delete_urls = shipments_data.delete_urls %}
+{% set set_sent_urls = shipments_data.set_sent_urls %}
 {% for supplier in shipments_data.suppliers %}
-    {{ render_supplier_info(supplier, create_urls, delete_urls) }}
+    {{ render_supplier_info(supplier, create_urls, delete_urls, set_sent_urls) }}
     {%- if not loop.last %}<hr>{% endif -%}
 {% endfor %}
-</div>
 
 {% block extra_js %}
     <script>
@@ -109,6 +121,23 @@
                 input.type = "hidden";
                 input.name = "csrfmiddlewaretoken";
                 input.id = "language-field";
+                input.value = "{{ csrf_token }}";
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+            return false;
+        }
+        function handleSetSent(event, link) {
+            event.preventDefault();
+            var warningMessage = "{% trans %}Do you want to mark this shipment as sent?{% endtrans %}";
+            if (confirm(warningMessage)) {
+                var form = document.createElement("form");
+                form.method = "POST";
+                form.action = $(link).attr("href");
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "csrfmiddlewaretoken";
                 input.value = "{{ csrf_token }}";
                 form.appendChild(input);
                 document.body.appendChild(form);

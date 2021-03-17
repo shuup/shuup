@@ -38,6 +38,16 @@ class OrderModule(AdminModule):
                 name="order.delete-shipment"
             ),
             admin_url(
+                r"^shipments/(?P<pk>\d+)/set-sent/$",
+                "shuup.admin.modules.orders.views.ShipmentSetSentView",
+                name="order.set-shipment-sent"
+            ),
+            admin_url(
+                r"^shipments/$",
+                "shuup.admin.modules.orders.views.ShipmentListView",
+                name="order.shipments.list"
+            ),
+            admin_url(
                 r"^orders/(?P<pk>\d+)/create-payment/$",
                 "shuup.admin.modules.orders.views.OrderCreatePaymentView",
                 name="order.create-payment"
@@ -119,6 +129,14 @@ class OrderModule(AdminModule):
                 category=ORDERS_MENU_CATEGORY,
                 ordering=1,
                 aliases=[_("Show orders")]
+            ),
+            MenuEntry(
+                text=_("Shipments"),
+                icon="fa fa-truck",
+                url="shuup_admin:order.shipments.list",
+                category=ORDERS_MENU_CATEGORY,
+                ordering=2,
+                aliases=[_("Show shipments")]
             )
         ]
 

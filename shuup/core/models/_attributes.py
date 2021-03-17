@@ -118,7 +118,7 @@ class Attribute(TranslatableModel):
             "Attributes can be shown on the product detail page or can be used to enhance product search results."))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64, verbose_name=_("name"), help_text=_(
+        name=models.CharField(max_length=256, verbose_name=_("name"), help_text=_(
             "The attribute name. "
             "Product attributes can be used to list the various features of a product and can be shown on the "
             "product detail page. The product attributes for a product are determined by the product type and can "
