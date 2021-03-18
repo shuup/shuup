@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from .customer_sales import CustomerSalesReport
 from .new_customers import NewCustomersReport
+from .orders import OrderLineReport, OrdersReport
 from .product_total_sales import ProductSalesReport
 from .refunds import RefundedSalesReport
 from .sales import SalesReport
@@ -25,4 +26,6 @@ __all__ = [
     "ShippingReport",
     "TaxesReport",
     "TotalSales",
+    "OrdersReport",
+    "OrderLineReport"
 ]
