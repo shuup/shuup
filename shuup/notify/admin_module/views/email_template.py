@@ -56,6 +56,7 @@ class EmailTemplateDeleteView(DetailView):
 
 class EmailTemplateListView(PicotableListView):
     model = EmailTemplate
+    url_identifier = "notify.email_template"
     default_columns = [
         Column(
             "name",
