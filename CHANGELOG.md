@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Notify: Fix so there is no 500 error when accessing EmailTemplate settings page
+
 ### Added
 
 - Core: add attribute in Carrier model to control whether to manage shipments using default behavior
