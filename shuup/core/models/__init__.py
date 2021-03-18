@@ -15,6 +15,9 @@ from ._base import (
     PolymorphicShuupModel, PolymorphicTranslatableShuupModel, ShuupModel,
     TranslatableShuupModel
 )
+from ._background_tasks import (
+    BackgroundTask, BackgroundTaskExecution, BackgroundTaskExecutionStatus
+)
 from ._basket import Basket
 from ._categories import Category, CategoryStatus, CategoryVisibility
 from ._configurations import ConfigurationItem
@@ -84,6 +87,9 @@ __all__ = [
     "Attribute",
     "AttributeType",
     "AttributeVisibility",
+    "BackgroundTask",
+    "BackgroundTaskExecution",
+    "BackgroundTaskExecutionStatus",
     "Basket",
     "Carrier",
     "Category",
