@@ -6,7 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
+from uuid import uuid4
 
+from shuup.core.models import BackgroundTask
 from shuup.utils.importing import cached_load, load
 
 
@@ -19,9 +21,12 @@ class TaskNotSerializableError(Exception):
 
 class Task:
     function = ""  # str
+    identifier = ""  # str
+    stored = False  # bool
+    queue = "main"  # str
     kwargs = None  # Optional[Dict[str, Any]]
 
-    def __init__(self, function, **kwargs):
+    def __init__(self, function, identifier, stored=False, queue='default', main, **kwargs):
         """
         :param function: A string that represents the function specification.
             It will be locaded dynamically and executed passing the given kwargs.
@@ -40,11 +45,14 @@ class Task:
             raise TaskNotSerializableError("Task kwargs is not serializable.")
 
         self.function = function
+        self.identifier = identifier
+        self.main = main
+        self.stored = stored
         self.kwargs = kwargs
 
 
 class TaskRunner:
-    def create_task(self, function, **kwargs):
+    def create_task(self, function, stored=False, queue='default', **kwargs):
         """
         Create a task to run.
 
@@ -68,8 +76,15 @@ class DefaultTaskRunner(TaskRunner):
     This task runner will execute the tasks received synchronously.
     """
 
-    def create_task(self, function, **kwargs):
-        return Task(function, **kwargs)
+    def create_task(self, function, stored=False, queue='default', **kwargs):
+        if(stored):
+            task_identifier = uuid4().hex
+            background = BackgroundTask.objects.create(
+                queue=queue,
+                identifier=task_identifier,
+                function=function
+            )
+        return Task(function, stored, queue, **kwargs)
 
     def run_task(self, task):
         function = load(task.function)
