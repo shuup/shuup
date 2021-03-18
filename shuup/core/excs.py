@@ -19,6 +19,8 @@ class NoShippingAddressException(Exception):
 class NoProductsToShipException(Exception):
     pass
 
+class InvalidOrderStatusError(Exception):
+    pass
 
 class NoPaymentToCreateException(Exception):
     pass

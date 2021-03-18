@@ -6,15 +6,18 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
-
+from django_currentuser.middleware import (
+    get_current_user, get_current_authenticated_user)
+from django_currentuser.db.models import CurrentUserField
 import datetime
 from collections import defaultdict
 from decimal import Decimal
-
+from django.dispatch import receiver
 import six
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
+from django.apps import apps
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
@@ -28,7 +31,8 @@ from parler.models import TranslatableModel, TranslatedFields
 from shuup.core import taxing
 from shuup.core.excs import (
     NoPaymentToCreateException, NoProductsToShipException,
-    NoRefundToCreateException, NoShippingAddressException
+    NoRefundToCreateException, NoShippingAddressException,
+    InvalidOrderStatusError
 )
 from shuup.core.fields import (
     CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
@@ -110,6 +114,9 @@ class DefaultOrderStatus(Enum):
         COMPLETE = _('Complete')
         CANCELED = _('Canceled')
         PROCESSING = _('In Progress')
+        
+        def __str__(self):
+            return str(self.value)
 
 
 class OrderStatusQuerySet(TranslatableQuerySet):
@@ -139,6 +146,48 @@ class OrderStatusQuerySet(TranslatableQuerySet):
     def get_default_complete(self):
         return self._default_for_role(OrderStatusRole.COMPLETE)
 
+# get user login 
+@python_2_unicode_compatible
+class UserLogin(models.Model):
+    created_by = CurrentUserField()
+
+             
+@python_2_unicode_compatible
+class orderStatusHistory(models.Model):
+
+    orderId= models.IntegerField( blank=True, null=True,)  
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on history'))
+    next_status = models.TextField(max_length=100, blank=True, default="",verbose_name=_('next_status'))
+    previous_status = models.TextField(max_length=100, blank=True, default="",verbose_name=_('previous_status'))
+    description = models.TextField(blank=True,null=True, verbose_name=_('description history'))
+    modified_by = UnsavedForeignKey(
+        settings.AUTH_USER_MODEL, related_name='orders_history_modified', blank=True, null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_('modifier user history'))
+
+    
+    def saveHistoryStatus(self, Order_id, status_id, old_status, *args, **kwargs):
+        OrdertoSave = orderStatusHistory()        
+        userLogin = UserLogin()
+        self.modified_by= userLogin.created_by        
+        self.orderId = int(Order_id )
+        current_status= int(status_id )    
+        self.next_status =int(status_id )
+        self.previous_status = int(old_status)           
+
+        all_history = orderStatusHistory.objects.all()
+
+        # check all record empty or not 
+        if all_history:
+            # get the latest record in db
+            latest_record = orderStatusHistory.objects.latest('created_on')               
+            # condition to prevent duplicate order status history when creating new order 
+            if latest_record.orderId == int(Order_id ) and current_status == latest_record.next_status and latest_record.next_status ==1:
+                pass       
+            else:   
+                super(orderStatusHistory, self).save(*args, **kwargs)
+        else:
+            super(orderStatusHistory, self).save(*args, **kwargs)    
 
 @python_2_unicode_compatible
 class OrderStatus(TranslatableModel):
@@ -166,6 +215,9 @@ class OrderStatus(TranslatableModel):
         public_name=models.CharField(
             verbose_name=_('public name'), max_length=64, help_text=_("The name shown to the customers in shop front."))
     )
+    allowed_next_status = models.ManyToManyField("OrderStatus",blank=True,null=True, )
+    # For further reference
+    # on_delete=models.CASCADE,related_name="allowed_next_status" 
 
     class Meta:
         unique_together = ("identifier", "role")
@@ -181,7 +233,8 @@ class OrderStatus(TranslatableModel):
             # If this status is the default, make the others for this role non-default.
             OrderStatus.objects.filter(role=self.role).exclude(pk=self.pk).update(default=False)
 
-
+    
+    
 class OrderStatusManager(object):
     def __init__(self):
         self.default_statuses = [
@@ -240,11 +293,21 @@ class OrderStatusManager(object):
         }
 
         for status in OrderStatus.objects.all():
+            if status.id ==1:
+                status2 = OrderStatus.objects.get(id=2)
+                status4 = OrderStatus.objects.get(id=4)
+                status.allowed_next_status.add(status2.id,status4.id)
+
+            elif status.id ==2:
+                status3 = OrderStatus.objects.get(id=3)
+                status4 = OrderStatus.objects.get(id=4)
+                status.allowed_next_status.add(status3.id,status4.id)                
+
             if status.identifier not in update_map:
                 continue
-            status.identifier = update_map[status.identifier]
+            status.identifier = update_map[status.identifier]            
             status.save()
-
+            
         for i, defaults in enumerate(self.default_statuses):
             defaults["ordering"] = i
             status = OrderStatus.objects.filter(identifier=defaults["identifier"]).first()
@@ -294,7 +357,7 @@ class OrderQuerySet(models.QuerySet):
 
 
 @python_2_unicode_compatible
-class Order(MoneyPropped, models.Model):
+class Order(MoneyPropped, models.Model):    
     # Identification
     shop = UnsavedForeignKey("Shop", on_delete=models.PROTECT, verbose_name=_('shop'))
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on'))
@@ -358,7 +421,7 @@ class Order(MoneyPropped, models.Model):
     shipping_status = EnumIntegerField(
         ShippingStatus, db_index=True, default=ShippingStatus.NOT_SHIPPED,
         verbose_name=_('shipping status'))
-
+    
     # Methods
     payment_method = UnsavedForeignKey(
         "PaymentMethod", related_name="payment_orders", blank=True, null=True,
@@ -540,7 +603,16 @@ class Order(MoneyPropped, models.Model):
         order_changed.send(type(self), order=self)
 
         if self.status != old_status:
-            order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
+            for num, i in enumerate(DefaultOrderStatus,start=0):
+
+                if str(i.label) == str(old_status):
+                    old_status_role=num
+
+                    break
+            obj_old_status = OrderStatus.objects.get(role=old_status_role)
+            next_status = OrderStatus.objects.get(id=self.status_id)
+
+            self.change_status(next_status, obj_old_status.id )
 
     def delete(self, using=None):
         if not self.deleted:
@@ -1045,7 +1117,7 @@ class Order(MoneyPropped, models.Model):
             if summary_datum['unshipped']
         )
 
-    def get_status_display(self):
+    def get_status_display(self):      
         return force_text(self.status)
 
     def get_payment_method_display(self):
@@ -1091,6 +1163,7 @@ class Order(MoneyPropped, models.Model):
             if m.is_available_for(self)
         ]
 
+    
     def get_available_payment_methods(self):
         """
         Get available payment methods.
@@ -1105,6 +1178,39 @@ class Order(MoneyPropped, models.Model):
             in PaymentMethod.objects.available(shop=self.shop, products=product_ids)
             if m.is_available_for(self)
         ]
+   
+    def validateOrderStatusChange(self, next_status: OrderStatus, old_status_id: str):
+        if not next_status:
+            return False 
+        all_next_Status= OrderStatus.allowed_next_status.through.objects.all()
 
+        for i in all_next_Status:
 
+            # check next status is part of allowed next status 
+            if int(old_status_id) == i.from_orderstatus_id and next_status.id == i.to_orderstatus_id:
+
+                return True
+
+            # Completeted Order 
+            elif next_status.id == 3:
+
+                return True
+            # cancel order 
+            elif next_status.id == 4:
+ 
+                return True
+            # exception when next status bigger than allowed next status id. 
+            elif next_status.id == i.from_orderstatus_id and next_status.id > i.to_orderstatus_id:         
+                return False       
+        
+    def change_status(self, next_status: OrderStatus, old_status_id: str,user: UserLogin=None, ):        
+            
+        if not self.validateOrderStatusChange(next_status,old_status_id):
+
+            raise InvalidOrderStatusError(" Invalid Order Status Error  ")
+                
+        # create new record in ordersStatusHistory
+        new_ordersStatusHistory = orderStatusHistory()
+        new_ordersStatusHistory.saveHistoryStatus(self.id ,self.status_id,old_status_id)            
+      
 OrderLogEntry = define_log_model(Order)

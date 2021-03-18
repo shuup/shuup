@@ -52,7 +52,17 @@ class OrderDetailToolbar(Toolbar):
 
     def _build_order_set_state_button(self):
         set_status_menu_items = []
-        for status in OrderStatus.objects.filter(is_active=True).exclude(pk=self.order.status.pk).order_by("ordering"):
+        all_next_Status= OrderStatus.allowed_next_status.through.objects.all()
+        
+        arr_allowed_status =[]
+        for i in all_next_Status:
+            
+            if int(i.from_orderstatus_id) == int(self.order.status_id):
+                arr_allowed_status.append(i.to_orderstatus_id)
+        arr_allowed_status.sort()        
+  
+        for i in arr_allowed_status:
+            status = OrderStatus.objects.get(id=i)
             btn = PostActionDropdownItem(
                 post_url=reverse("shuup_admin:order.set-status", kwargs={"pk": self.order.pk}),
                 name="status",
