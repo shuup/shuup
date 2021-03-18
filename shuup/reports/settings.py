@@ -6,5 +6,5 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-# This default value is used to get the number of reported item 
+#: Defines the maximum number of items that will be rendered by a report
 DEFAULT_REPORTS_ITEM_LIMIT = 2000

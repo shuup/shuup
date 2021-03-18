@@ -7,12 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.core.models import OrderLineType
 from shuup.default_reports.forms import OrderLineReportForm, OrderReportForm
 from shuup.default_reports.mixins import OrderLineReportMixin, OrderReportMixin
 from shuup.reports.report import ShuupReportBase
-from shuup.utils.i18n import get_locally_formatted_datetime
-from shuup.core.models import OrderLineType
-from shuup.utils.i18n import format_money
+from shuup.utils.i18n import format_money, get_locally_formatted_datetime
+
 
 class OrdersReport(OrderReportMixin, ShuupReportBase):
     identifier = "orders_report"
