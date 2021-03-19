@@ -192,13 +192,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     model = ShopProduct
     context_object_name = "product"
     template_name = "shuup/admin/products/edit.jinja"
-    base_form_part_classes = [
-        ProductBaseFormPart,
-        ShopProductFormPart,
-        ProductAttributeFormPart,
-        ProductImageMediaFormPart,
-        ProductMediaFormPart
-    ]
+    base_form_part_classes = []
     form_part_class_provide_key = "admin_product_form_part"
     add_form_errors_as_messages = True
 

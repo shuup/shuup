@@ -15,6 +15,13 @@ class ShuupAdminAppConfig(AppConfig):
     label = "shuup_admin"
     required_installed_apps = ["bootstrap3"]
     provides = {
+        "admin_product_form_part": [
+            "shuup.admin.modules.products.views.edit.ProductBaseFormPart",
+            "shuup.admin.modules.products.views.edit.ShopProductFormPart",
+            "shuup.admin.modules.products.views.edit.ProductAttributeFormPart",
+            "shuup.admin.modules.products.views.edit.ProductImageMediaFormPart",
+            "shuup.admin.modules.products.views.edit.ProductMediaFormPart",
+        ],
         "admin_module": [
             "shuup.admin.modules.system:SystemModule",
             "shuup.admin.modules.products:ProductModule",
