@@ -46,7 +46,6 @@ def test_login_with_invalid_password(client, regular_user, rf):
         REDIRECT_FIELD_NAME: redirect_target,
     })
 
-    print(response.get("location"))
     assert not response.get("location")  # No redirect since errors
 
     request = rf.get("/")
