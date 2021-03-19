@@ -5,10 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from datetime import datetime
 import json
 from uuid import uuid4
 
-from shuup.core.models import BackgroundTask
+from shuup.core.models import BackgroundTask, Shop, Supplier, BackgroundTaskExecution
 from shuup.utils.importing import cached_load, load
 
 
@@ -26,7 +27,7 @@ class Task:
     queue = "main"  # str
     kwargs = None  # Optional[Dict[str, Any]]
 
-    def __init__(self, function, identifier, stored=False, queue='default', main, **kwargs):
+    def __init__(self, function, identifier, stored=False, queue='default', **kwargs):
         """
         :param function: A string that represents the function specification.
             It will be locaded dynamically and executed passing the given kwargs.
@@ -79,14 +80,38 @@ class DefaultTaskRunner(TaskRunner):
     def create_task(self, function, stored=False, queue='default', **kwargs):
         if(stored):
             task_identifier = uuid4().hex
+
+            background_data = {
+                queue: queue,
+                identifier: task_identifier,
+                function: function
+            }
+
+            if 'shop_id' in kwargs and kwargs['shop_id']:
+                background_data['shop'] = Shop.objects.filter(kwargs['shop_id']).first()
+            if 'supplier_id' in kwargs and kwargs['supplier_id']:
+                supplier = Supplier.objects.filter(kwargs).first()
+                background_data['supplier'] = supplier
+
             background = BackgroundTask.objects.create(
                 queue=queue,
                 identifier=task_identifier,
-                function=function
+                function=function,
             )
         return Task(function, stored, queue, **kwargs)
 
     def run_task(self, task):
+        task_identifier = task.identifier
+
+        bg_task_qs = BackgroundTask.objects.filter(identifier=task_identifier)
+        if bg_task_qs.exists():
+            bg_task = bg_task_qs.first()
+            started_on = datetime.now()
+            bg_task_exec = BackgroundTaskExecution.objects.create(
+                started_on=started_on,
+                background_task=bg_task
+            )
+
         function = load(task.function)
         return function(**task.kwargs)
 

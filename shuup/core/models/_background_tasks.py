@@ -37,7 +37,7 @@ class BackgroundTask(models.Model):
     )
     arguments = JSONField(blank=True, null=True, verbose_name=_('arguments'))
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop",
-                             verbose_name=_("shop"), related_name="background_tasks")
+                             verbose_name=_("shop"), related_name="background_tasks", null=True)
     supplier = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Supplier",
                                  verbose_name=_("supplier"), related_name="background_tasks", null=True)
     user = models.ForeignKey(on_delete=models.CASCADE, to=User, verbose_name=_("user"),
