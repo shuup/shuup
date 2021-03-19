@@ -51,7 +51,7 @@ toml==0.10.2              # via shuup
 typing-extensions==3.7.4.3  # via importlib-metadata
 unicodecsv==0.14.1        # via shuup
 unidecode==1.1.2          # via django-filer
-urllib3==1.26.2           # via requests
+urllib3==1.26.3           # via requests
 webencodings==0.5.1       # via bleach
 xlrd==2.0.1               # via shuup
 zipp==3.4.0               # via importlib-metadata
