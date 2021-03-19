@@ -8,9 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
-### Fixed
+### Changed
 
-- Notify: Fix so there is no 500 error when accessing EmailTemplate settings page
+- Core: undeprecate signals for ShopProduct model
 
 ### Added
 
@@ -19,6 +19,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Notify: Fix so there is no 500 error when accessing EmailTemplate settings page
 - Taxes: fallback location to billing address when shipping address is not available
 - Importer: Ignore rows without any data
 
