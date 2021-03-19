@@ -188,13 +188,7 @@ class OrderStatus(TranslatableModel, models.Model):
         ),
     )
 
-    allowed_next_statuses = EnumField(
-        # DefaultOrderStatus, db_index=True,
-        [OrderStatusRole.NONE, OrderStatusRole.INITIAL, OrderStatusRole.PROCESSING, OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED], 
-        db_index=True,
-        verbose_name=_('allowed next statuses'),
-        null=True
-    )
+    allowed_next_statuses = models.ManyToManyField('self', verbose_name=_("allowed next statuses"), symmetrical=False)
 
     class Meta:
         unique_together = ("identifier", "role")
@@ -210,6 +204,7 @@ class OrderStatus(TranslatableModel, models.Model):
             # If this status is the default, make the others for this role non-default.
             OrderStatus.objects.filter(role=self.role).exclude(pk=self.pk).update(default=False)
 
+
 class OrderStatusHistory(models.Model):
     order = models.ForeignKey(
         "Order", related_name='order_history',
@@ -222,13 +217,13 @@ class OrderStatusHistory(models.Model):
         blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('previous order status')),
-    
+
     next_order_status = models.ForeignKey(
         "OrderStatus", related_name='next_order_status',
         blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('next order status')),
-    
+
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on')),
 
     description = models.TextField(max_length=200, db_index=True, blank=True, null=True, verbose_name=_('description')),
@@ -237,7 +232,8 @@ class OrderStatusHistory(models.Model):
         settings.AUTH_USER_MODEL, related_name='order_status_history_created', blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('creating user'))
-    
+
+
 class OrderStatusManager(object):
     def __init__(self):
         self.default_statuses = [
@@ -312,6 +308,30 @@ class OrderStatusManager(object):
                 status.save()
             else:
                 OrderStatus.objects.create(**defaults)
+
+        order_status_qs = OrderStatus.objects.all()
+
+        for order_status in order_status_qs:
+            allowed_status_list = []
+            if order_status.identifier == DefaultOrderStatus.INITIAL.value:
+                allowed_status_list = [
+                    DefaultOrderStatus.PROCESSING.value,
+                    DefaultOrderStatus.COMPLETE.value,
+                    DefaultOrderStatus.CANCELED.value
+                ]
+            elif order_status.identifier == DefaultOrderStatus.PROCESSING.value:
+                allowed_status_list = [
+                    DefaultOrderStatus.COMPLETE.value,
+                    DefaultOrderStatus.CANCELED.value
+                ]
+
+            if (allowed_status_list):
+                allowed_queryset = OrderStatus.objects.filter(
+                    identifier__in=allowed_status_list
+                )
+                order_status.allowed_next_statuses.add(
+                    *allowed_queryset
+                )
 
 
 class OrderQuerySet(models.QuerySet):
@@ -1202,47 +1222,46 @@ class Order(MoneyPropped, models.Model):
         ]
 
     # check whether user can be able to change status of order
-    def validateOrderStatusChange(self, next_status: OrderStatus):
-        valid_statuses = [OrderStatusRole.NONE, OrderStatusRole.INITIAL, OrderStatusRole.PROCESSING, 
-                           OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED]
-        
+    def validate_order_status_change(self, next_status: OrderStatus):
+        valid_statuses = [OrderStatusRole.NONE, OrderStatusRole.INITIAL, OrderStatusRole.PROCESSING,
+                          OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED]
+
         if not next_status or next_status not in valid_statuses \
-            or next_status == OrderStatusRole.INITIAL:
+                or next_status == OrderStatusRole.INITIAL:
             return False
-        
+
         curr_role = self.status.role
         # valid follow of change status:
         # 1. `INITIAL -> PROCESSING -> COMPLETE`
         # 2. `INITIAL -> PROCESSING -> CANCELED`
         # 3. `INITIAL -> CANCELED`
         if curr_role in [OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED] \
-            or (curr_role == OrderStatusRole.PROCESSING and next_status == OrderStatusRole.INITIAL):
+                or (curr_role == OrderStatusRole.PROCESSING and next_status == OrderStatusRole.INITIAL):
             return False
 
         return True
 
     def change_status(self, next_status: OrderStatus, user: User = None, description: str = None):
         # validate next_status is valid or not
-        # if not next_status or next_status != self.status.allowed_next_statuses:
-        #     raise InvalidOrderStatusError("Error! Can not change status to this status")
 
-        if not self.validateOrderStatusChange(next_status):
+        if not self.validate_order_status_change(next_status):
             raise InvalidOrderStatusError("Error! Can not change status to this status")
-        
+
         try:
             # update new status of oder
             self.status = next_status
 
             # create a new OrderStatusHistory entry
             order_history = OrderStatusHistory(order=self, previous_order_status=self.status, next_order_status=next_status,
-                             description=description,
-                             creator=user
-                             )
+                                               description=description,
+                                               creator=user
+                                               )
             order_history.save()
 
             # end OrderStatusHistory creatation
             order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
         except Exception as changeStatusError:
             raise changeStatusError
+
 
 OrderLogEntry = define_log_model(Order)

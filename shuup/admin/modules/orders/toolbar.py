@@ -19,7 +19,7 @@ from shuup.admin.toolbar import (
     URLActionButton,
 )
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import OrderStatus
+from shuup.core.models import OrderStatus, DefaultOrderStatus, OrderStatusRole
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.django_compat import reverse
 
@@ -54,8 +54,11 @@ class OrderDetailToolbar(Toolbar):
             )
 
     def _build_order_set_state_button(self):
+        # current_status_ordering = self.order.status.ordering
+        # excluded_pk = [self.order.status.pk]
+        # if(current_status in [OrderStatus])
         set_status_menu_items = []
-        for status in OrderStatus.objects.filter(is_active=True).exclude(pk=self.order.status.pk).order_by("ordering"):
+        for status in self.order.status.allowed_next_statuses.all().order_by("ordering"):
             btn = PostActionDropdownItem(
                 post_url=reverse("shuup_admin:order.set-status", kwargs={"pk": self.order.pk}),
                 name="status",
