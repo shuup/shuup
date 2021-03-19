@@ -18,7 +18,9 @@ from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import TaxModule
 from shuup.core.taxing.utils import stacked_value_added_taxes
-from shuup.testing.factories import get_shop, get_tax
+from shuup.testing.factories import (
+    get_shop, get_tax, get_default_product, get_default_supplier
+)
 
 TAX_MODULE_SPEC = [__name__ + ":IrvineCaliforniaTaxation"]
 
@@ -48,7 +50,11 @@ def test_stacked_tax_taxless_price():
     source = OrderSource(get_shop(prices_include_tax=False))
     assert source.prices_include_tax is False
     source.add_line(
-        type=OrderLineType.OTHER, quantity=1, base_unit_price=source.create_price(10)
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        type=OrderLineType.PRODUCT,
+        quantity=1,
+        base_unit_price=source.create_price(10)
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHUUP_TAX_MODULE="irvine"):
@@ -76,7 +82,11 @@ def test_stacked_tax_taxful_price():
     source = OrderSource(shop)
     assert source.prices_include_tax
     source.add_line(
-        type=OrderLineType.OTHER, quantity=1, base_unit_price=source.create_price(20)
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        type=OrderLineType.PRODUCT,
+        quantity=1,
+        base_unit_price=source.create_price(20)
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHUUP_TAX_MODULE="irvine"):

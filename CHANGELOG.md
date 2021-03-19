@@ -19,6 +19,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Taxes: fallback location to billing address when shipping address is not available
 - Importer: Ignore rows without any data
 
 ## [2.4.0] - 2021-03-02
