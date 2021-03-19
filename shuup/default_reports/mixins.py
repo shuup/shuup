@@ -32,7 +32,7 @@ class OrderReportMixin(object):
         return queryset.order_by("order_date")
 
 
-class OrderLineReportMixin(object): # report
+class OrderLineReportMixin(object):
     def get_objects(self):
         (start, end) = to_datetime_range(self.start_date, self.end_date)
         queryset = OrderLine.objects.filter(created_on__range=(start, end))
@@ -47,4 +47,3 @@ class OrderLineReportMixin(object): # report
         if order_status:
             filters &= Q(order__status__in=order_status)
         return queryset.filter(filters).order_by("created_on")
-        

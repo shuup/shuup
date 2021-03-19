@@ -32,7 +32,7 @@ class ShuupReportBase(object):
     filename_template = None
     icon = "fa-money"
     queryset_row_limit = settings.DEFAULT_REPORTS_ITEM_LIMIT
-    
+
     form_class = BaseReportForm
 
     def __init__(self, **kwargs):

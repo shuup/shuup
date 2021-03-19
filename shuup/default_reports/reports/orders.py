@@ -14,6 +14,7 @@ from shuup.utils.i18n import get_locally_formatted_datetime
 from shuup.core.models import OrderLineType
 from shuup.utils.i18n import format_money
 
+
 class OrdersReport(OrderReportMixin, ShuupReportBase):
     identifier = "orders_report"
     title = _("Orders Report")
