@@ -125,6 +125,7 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
 
         # force recalculate lines
         self.basket.uncache()
+        self.basket.get_final_lines(with_taxes=True)
 
     def get_form_kwargs(self):
         kwargs = super(MethodsPhase, self).get_form_kwargs()

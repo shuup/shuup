@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Front: Add so `basket.get_final_lines(with_taxes=True)` gets called after selecting shipping- and payment method.
+  Reason for this is so all the taxes gets calculated before end customers fills in their payment details
+
 ### Changed
 
 - Core: undeprecate signals for ShopProduct model
