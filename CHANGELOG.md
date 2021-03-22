@@ -12,6 +12,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Front: Add so `basket.get_final_lines(with_taxes=True)` gets called after selecting shipping- and payment method.
+  Reason for this is so all the taxes gets calculated before end customers fills in their payment details
 - Core: undeprecate signals for ShopProduct model
 
 ### Added
