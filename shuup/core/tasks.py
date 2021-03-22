@@ -17,6 +17,7 @@ class TaskNotSerializableError(Exception):
     """
     Raised when the task can't be serialized.
     """
+
     pass
 
 
@@ -24,10 +25,10 @@ class Task:
     function = ""  # str
     identifier = ""  # str
     stored = False  # bool
-    queue = "main"  # str
+    queue = "default"  # str
     kwargs = None  # Optional[Dict[str, Any]]
 
-    def __init__(self, function, identifier, stored=False, queue='default', **kwargs):
+    def __init__(self, function, identifier, stored=False, queue="default", **kwargs):
         """
         :param function: A string that represents the function specification.
             It will be locaded dynamically and executed passing the given kwargs.
@@ -47,13 +48,13 @@ class Task:
 
         self.function = function
         self.identifier = identifier
-        self.main = main
+        self.queue = queue
         self.stored = stored
         self.kwargs = kwargs
 
 
 class TaskRunner:
-    def create_task(self, function, stored=False, queue='default', **kwargs):
+    def create_task(self, function, stored=False, queue="default", **kwargs):
         """
         Create a task to run.
 
@@ -77,28 +78,24 @@ class DefaultTaskRunner(TaskRunner):
     This task runner will execute the tasks received synchronously.
     """
 
-    def create_task(self, function, stored=False, queue='default', **kwargs):
-        if(stored):
-            task_identifier = uuid4().hex
+    def create_task(self, function, stored=False, queue="default", **kwargs):
+        task_identifier = uuid4().hex
+        if stored:
 
-            background_data = {
-                queue: queue,
-                identifier: task_identifier,
-                function: function
-            }
+            background_data = {"queue": queue, "identifier": task_identifier, "function": function}
 
-            if 'shop_id' in kwargs and kwargs['shop_id']:
-                background_data['shop'] = Shop.objects.filter(kwargs['shop_id']).first()
-            if 'supplier_id' in kwargs and kwargs['supplier_id']:
+            if "shop_id" in kwargs and kwargs["shop_id"]:
+                background_data["shop"] = Shop.objects.filter(kwargs["shop_id"]).first()
+            if "supplier_id" in kwargs and kwargs["supplier_id"]:
                 supplier = Supplier.objects.filter(kwargs).first()
-                background_data['supplier'] = supplier
+                background_data["supplier"] = supplier
 
-            background = BackgroundTask.objects.create(
+            BackgroundTask.objects.create(
                 queue=queue,
                 identifier=task_identifier,
                 function=function,
             )
-        return Task(function, stored, queue, **kwargs)
+        return Task(function, task_identifier, stored, queue, **kwargs)
 
     def run_task(self, task):
         task_identifier = task.identifier
@@ -108,12 +105,32 @@ class DefaultTaskRunner(TaskRunner):
             bg_task = bg_task_qs.first()
             started_on = datetime.now()
             bg_task_exec = BackgroundTaskExecution.objects.create(
-                started_on=started_on,
-                background_task=bg_task
+                started_on=started_on, background_task=bg_task
             )
 
         function = load(task.function)
-        return function(**task.kwargs)
+        success = True
+        try:
+            result = function(**task.kwargs)
+        except Exception as e:
+            success = False
+            result = e
+        finally:
+            if bg_task_exec:
+                self.update_task_execution(bg_task_exec, success, result)
+
+        return result
+
+    def update_task_execution(
+        self, task_exec: BackgroundTaskExecution, success, result, *args, **kwargs
+    ):
+        ended_on = datetime.now()
+        task_exec.ended_on = ended_on
+        if success:
+            task_exec.result = result
+        else:
+            task_exec.error_log = result
+        task_exec.save()
 
 
 def get_task_runner():
