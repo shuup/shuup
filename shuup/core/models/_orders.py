@@ -147,7 +147,7 @@ class OrderStatusQuerySet(TranslatableQuerySet):
 
 
 @python_2_unicode_compatible
-class OrderStatus(TranslatableModel, models.Model):
+class OrderStatus(TranslatableModel):
     identifier = InternalIdentifierField(
         db_index=True,
         blank=False,
@@ -224,9 +224,9 @@ class OrderStatusHistory(models.Model):
         on_delete=models.PROTECT,
         verbose_name=_('next order status')),
 
-    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on')),
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on')),
 
-    description = models.TextField(max_length=200, db_index=True, blank=True, null=True, verbose_name=_('description')),
+    description = models.TextField(max_length=200, blank=True, null=True, verbose_name=_('description')),
 
     creator = UnsavedForeignKey(
         settings.AUTH_USER_MODEL, related_name='order_status_history_created', blank=True, null=True,
@@ -657,9 +657,6 @@ class Order(MoneyPropped, models.Model):
             self._cache_contact_values_post_create()
 
         order_changed.send(type(self), order=self)
-
-        # if self.status != old_status:
-        #     order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
 
     def delete(self, using=None):
         if not self.deleted:
@@ -1221,47 +1218,27 @@ class Order(MoneyPropped, models.Model):
             m for m in PaymentMethod.objects.available(shop=self.shop, products=product_ids) if m.is_available_for(self)
         ]
 
-    # check whether user can be able to change status of order
-    def validate_order_status_change(self, next_status: OrderStatus):
-        valid_statuses = [OrderStatusRole.NONE, OrderStatusRole.INITIAL, OrderStatusRole.PROCESSING,
-                          OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED]
-
-        if not next_status or next_status not in valid_statuses \
-                or next_status == OrderStatusRole.INITIAL:
-            return False
-
-        curr_role = self.status.role
-        # valid follow of change status:
-        # 1. `INITIAL -> PROCESSING -> COMPLETE`
-        # 2. `INITIAL -> PROCESSING -> CANCELED`
-        # 3. `INITIAL -> CANCELED`
-        if curr_role in [OrderStatusRole.COMPLETE, OrderStatusRole.CANCELED] \
-                or (curr_role == OrderStatusRole.PROCESSING and next_status == OrderStatusRole.INITIAL):
-            return False
-
-        return True
-
     def change_status(self, next_status: OrderStatus, user: User = None, description: str = None):
         # validate next_status is valid or not
 
-        if not self.validate_order_status_change(next_status):
-            raise InvalidOrderStatusError("Error! Can not change status to this status")
+        if not self.status.allowed_next_statuses.filter(identifier=next_status.identifier).exists():
+            raise InvalidOrderStatusError(_("Error! Can not change to this status"))
 
-        try:
-            # update new status of oder
-            self.status = next_status
+        # update new status of oder
+        self.status = next_status
 
-            # create a new OrderStatusHistory entry
-            order_history = OrderStatusHistory(order=self, previous_order_status=self.status, next_order_status=next_status,
-                                               description=description,
-                                               creator=user
-                                               )
-            order_history.save()
+        # create a new OrderStatusHistory entry
+        order_history = OrderStatusHistory(
+            order=self,
+            previous_order_status=self.status,
+            next_order_status=next_status,
+            description=description,
+            creator=user
+        )
+        order_history.save()
 
-            # end OrderStatusHistory creatation
-            order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
-        except Exception as changeStatusError:
-            raise changeStatusError
+        # end OrderStatusHistory creatation
+        order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
 
 
 OrderLogEntry = define_log_model(Order)
