@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -39,7 +39,7 @@ VERSION_FILE = os.path.join(TOPDIR, "shuup", "_version.py")
 NAME = "shuup"
 VERSION = "2.5.0.post0.dev"
 DESCRIPTION = "E-Commerce Platform"
-AUTHOR = "Shoop Commerce Ltd."
+AUTHOR = "Shuup Commerce Inc."
 AUTHOR_EMAIL = "shuup@shuup.com"
 URL = "http://shuup.com/"
 DOWNLOAD_URL_TEMPLATE = (

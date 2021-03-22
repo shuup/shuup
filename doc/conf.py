@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -51,7 +51,7 @@ patch_for_introspection()
 # -- General configuration ------------------------------------------------
 
 project = "Shuup"
-copyright = "2021, Shoop Commerce Ltd."
+copyright = "2021, Shuup Commerce Inc."
 
 extensions = [
     "djangodocs",
@@ -241,7 +241,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ("index", "Shuup.tex", "Shuup Documentation", "Shoop Commerce Ltd.", "manual"),
+    ("index", "Shuup.tex", "Shuup Documentation", "Shuup Commerce Inc.", "manual"),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -269,7 +269,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [("index", "shuup", "Shuup Documentation", ["Shoop Commerce Ltd."], 1)]
+man_pages = [("index", "shuup", "Shuup Documentation", ["Shuup Commerce Inc."], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -285,7 +285,7 @@ texinfo_documents = [
         "index",
         "Shuup",
         "Shuup Documentation",
-        "Shoop Commerce Ltd.",
+        "Shuup Commerce Inc.",
         "Shuup",
         "One line description of project.",
         "Miscellaneous",
