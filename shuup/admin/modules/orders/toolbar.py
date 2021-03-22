@@ -19,7 +19,7 @@ from shuup.admin.toolbar import (
     URLActionButton,
 )
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import OrderStatus, DefaultOrderStatus, OrderStatusRole
+from shuup.core.models import OrderStatus
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.django_compat import reverse
 
