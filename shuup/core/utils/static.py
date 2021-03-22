@@ -21,11 +21,14 @@ def get_shuup_static_url(path, package=None):
         version as a base.
     """
     from django.templatetags.static import static
+
     from shuup import __version__
+
     version = __version__
 
     if package:
         import pkg_resources
+
         try:
             distribution = pkg_resources.get_distribution(package)
             if distribution:

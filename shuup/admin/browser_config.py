@@ -37,8 +37,9 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
             "menu_toggle": "shuup_admin:menu_toggle",
             "add_media": (
                 ("shuup_admin:shop_product.add_media", (), {"pk": 99999})
-                if has_permission(request.user, "shop_product.add_media") else None
-            )
+                if has_permission(request.user, "shop_product.add_media")
+                else None
+            ),
         }
 
     @classmethod

@@ -23,7 +23,7 @@ class DiscountModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^discounts",
             view_template="shuup.discounts.admin.views.Discount%sView",
-            name_template="discounts.%s"
+            name_template="discounts.%s",
         )
 
     def get_menu_entries(self, request):
@@ -33,7 +33,7 @@ class DiscountModule(AdminModule):
                 icon="fa fa-percent",
                 url="shuup_admin:discounts.list",
                 category=CAMPAIGNS_MENU_CATEGORY,
-                ordering=4
+                ordering=4,
             ),
         ]
 
@@ -48,15 +48,13 @@ class DiscountArchiveModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^archived_discounts",
-                "shuup.discounts.admin.views.ArchivedDiscountListView",
-                name="discounts.archive"
+                "^archived_discounts", "shuup.discounts.admin.views.ArchivedDiscountListView", name="discounts.archive"
             ),
             admin_url(
                 r"^discounts/(?P<pk>\d+)/delete/$",
                 "shuup.discounts.admin.views.DiscountDeleteView",
-                name="discounts.delete"
-            )
+                name="discounts.delete",
+            ),
         ]
 
     def get_menu_entries(self, request):
@@ -66,6 +64,6 @@ class DiscountArchiveModule(AdminModule):
                 icon="fa fa-percent",
                 url="shuup_admin:discounts.archive",
                 category=CAMPAIGNS_MENU_CATEGORY,
-                ordering=5
+                ordering=5,
             )
         ]

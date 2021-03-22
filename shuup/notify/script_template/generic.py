@@ -22,30 +22,30 @@ class GenericScriptTemplateEmailContentForm(forms.Form):
     """
     Generic form which contains the content of a email: subject and body.
     """
-    subject = forms.CharField(label=_("Subject"),
-                              help_text=_("The subject of the email"))
-    body = forms.CharField(label=_("Email content"),
-                           widget=TextEditorWidget,
-                           help_text=_("The content of the email."))
+
+    subject = forms.CharField(label=_("Subject"), help_text=_("The subject of the email"))
+    body = forms.CharField(label=_("Email content"), widget=TextEditorWidget, help_text=_("The content of the email."))
 
 
 class GenericScriptTemplateEmailForm(forms.Form):
     """
     Generic form which contains a destination of the email.
     """
+
     SEND_TO_CHOICES = [
         ("customer", _("Customer")),
         ("other", _("Other destination")),
     ]
-    send_to = forms.ChoiceField(label=_("Send to?"),
-                                initial="customer",
-                                choices=SEND_TO_CHOICES,
-                                widget=forms.Select(attrs={'class': 'no-select2'}),
-                                help_text=_("You can send this email to the customer or to "
-                                            "other email of your choice."))
-    recipient = forms.EmailField(label=_("Destination"),
-                                 required=False,
-                                 help_text=_("Fill with the destination email address."))
+    send_to = forms.ChoiceField(
+        label=_("Send to?"),
+        initial="customer",
+        choices=SEND_TO_CHOICES,
+        widget=forms.Select(attrs={"class": "no-select2"}),
+        help_text=_("You can send this email to the customer or to " "other email of your choice."),
+    )
+    recipient = forms.EmailField(
+        label=_("Destination"), required=False, help_text=_("Fill with the destination email address.")
+    )
 
     def clean(self):
         cleaned_data = super(GenericScriptTemplateEmailForm, self).clean()
@@ -53,8 +53,9 @@ class GenericScriptTemplateEmailForm(forms.Form):
         recipient = cleaned_data.get("recipient")
 
         if send_to == "other" and not recipient:
-            self.add_error('recipient', _("Recipient is a required field when you don't want to "
-                                          "send the email to customer."))
+            self.add_error(
+                "recipient", _("Recipient is a required field when you don't want to " "send the email to customer.")
+            )
         return cleaned_data
 
 
@@ -71,6 +72,7 @@ class GenericSendEmailScriptTemplate(BaseScriptTemplate):
     :ivar: django.form.Form base_form_class: the main form, not included in the group of translation fields.
     :ivar: django.form.Form multilingual_form_class: the form which will be created for each available language.
     """
+
     template_name = "notify/admin/generic_script_template.jinja"
     extra_js_template_name = "notify/admin/generic_script_template_extra_js.jinja"
     base_form_class = GenericScriptTemplateEmailForm
@@ -94,7 +96,7 @@ class GenericSendEmailScriptTemplate(BaseScriptTemplate):
             action_data["template_data"][language] = {
                 "content_type": "html",
                 "subject": form_lang.cleaned_data.get("subject", form_lang.initial.get("subject", "")).strip(),
-                "body": form_lang.cleaned_data.get("body", form_lang.initial.get("body", "")).strip()
+                "body": form_lang.cleaned_data.get("body", form_lang.initial.get("body", "")).strip(),
             }
 
         send_mail_action = SendEmail(action_data)
@@ -138,13 +140,10 @@ class GenericSendEmailScriptTemplate(BaseScriptTemplate):
                         send_email = action
                         break
 
-            send_to_customer = (send_email.data.get("recipient", {}).get("variable") == "customer_email")
+            send_to_customer = send_email.data.get("recipient", {}).get("variable") == "customer_email"
             recipient = "" if send_to_customer else send_email.data["recipient"].get("constant", "")
 
-            initial = {
-                "base-recipient": recipient,
-                "base-send_to": "customer" if send_to_customer else "other"
-            }
+            initial = {"base-recipient": recipient, "base-send_to": "customer" if send_to_customer else "other"}
 
             for language, data in send_email.data["template_data"].items():
                 for data_key, data_value in data.items():

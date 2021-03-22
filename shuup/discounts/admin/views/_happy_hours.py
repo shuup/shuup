@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import datetime
-
 from django import forms
 from django.contrib import messages
 from django.db import transaction
@@ -32,8 +31,11 @@ class HappyHourListView(PicotableListView):
 
     default_columns = [
         Column(
-            "name", _("Happy Hour Name"), sort_field="name", display="name",
-            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))
+            "name",
+            _("Happy Hour Name"),
+            sort_field="name",
+            display="name",
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         )
     ]
 
@@ -64,16 +66,18 @@ def _create_time_ranges_from_data(happy_hour, weekdays, from_hour, to_hour):
     for weekday in weekdays.split(","):
         if to_hour < from_hour:
             matching_day = int(weekday)
-            tomorrow = (matching_day + 1 if matching_day < 6 else 0)
+            tomorrow = matching_day + 1 if matching_day < 6 else 0
             parent = TimeRange.objects.create(
-                happy_hour=happy_hour, from_hour=from_hour, to_hour=datetime.time(hour=23, minute=59),
-                weekday=matching_day)
+                happy_hour=happy_hour,
+                from_hour=from_hour,
+                to_hour=datetime.time(hour=23, minute=59),
+                weekday=matching_day,
+            )
             TimeRange.objects.create(
-                happy_hour=happy_hour, parent=parent, from_hour=datetime.time(hour=0), to_hour=to_hour,
-                weekday=tomorrow)
+                happy_hour=happy_hour, parent=parent, from_hour=datetime.time(hour=0), to_hour=to_hour, weekday=tomorrow
+            )
         else:
-            TimeRange.objects.create(
-                happy_hour=happy_hour, from_hour=from_hour, to_hour=to_hour, weekday=int(weekday))
+            TimeRange.objects.create(happy_hour=happy_hour, from_hour=from_hour, to_hour=to_hour, weekday=int(weekday))
 
 
 class HappyHourForm(forms.ModelForm):
@@ -83,7 +87,7 @@ class HappyHourForm(forms.ModelForm):
 
     class Meta:
         model = HappyHour
-        exclude = ("shops", )
+        exclude = ("shops",)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -95,9 +99,9 @@ class HappyHourForm(forms.ModelForm):
                 label=_("Product Discounts"),
                 help_text=_("Select discounts for this happy hour."),
                 model=Discount,
-                required=False
+                required=False,
             )
-            initial_discounts = (self.instance.discounts.all() if self.instance.pk else [])
+            initial_discounts = self.instance.discounts.all() if self.instance.pk else []
             self.fields["discounts"].initial = initial_discounts
             self.fields["discounts"].widget.choices = [
                 (discount.pk, force_text(discount)) for discount in initial_discounts
@@ -117,7 +121,7 @@ class HappyHourForm(forms.ModelForm):
         help_texts = [
             ("from_hour", _("12pm is considered noon and 12am as midnight. Start hour is included to the discount.")),
             ("to_hour", _("12pm is considered noon and 12am as midnight. End hours is included to the discount.")),
-            ("weekdays", _("Weekdays the happy hour is active."))
+            ("weekdays", _("Weekdays the happy hour is active.")),
         ]
         for field, help_text in help_texts:
             self.fields[field].help_text = help_text
@@ -155,8 +159,8 @@ class HappyHourEditView(CreateOrUpdateView):
     def get_toolbar(self):
         object = self.get_object()
         delete_url = (
-            reverse_lazy("shuup_admin:discounts_happy_hour.delete", kwargs={"pk": object.pk})
-            if object.pk else None)
+            reverse_lazy("shuup_admin:discounts_happy_hour.delete", kwargs={"pk": object.pk}) if object.pk else None
+        )
         return get_default_edit_toolbar(self, self.get_save_form_id(), delete_url=delete_url)
 
     def get_form_kwargs(self):

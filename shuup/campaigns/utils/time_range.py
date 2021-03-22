@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 from django.utils import timezone
 
 
@@ -29,14 +28,10 @@ def is_in_time_range(date, hour_start, hour_end, valid_weekdays):
     current_local_weekday = current_local_dt.date().weekday()
 
     start_datetime = timezone.get_current_timezone().localize(
-        datetime.datetime.combine(
-            current_local_dt.date(), hour_start
-        )
+        datetime.datetime.combine(current_local_dt.date(), hour_start)
     )
     end_datetime = timezone.get_current_timezone().localize(
-        datetime.datetime.combine(
-            current_local_dt.date(), hour_end
-        )
+        datetime.datetime.combine(current_local_dt.date(), hour_end)
     )
 
     valid_date_ranges = []

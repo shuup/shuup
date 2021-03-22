@@ -43,8 +43,7 @@ class ModelCachingDescriptor(object):
         elif isinstance(value, self.queryset.model):
             if not value.pk:
                 raise ValueError(
-                    "Error! Can't assign unsaved model `%r` in a `ModelCachingDescriptor(%s)`."
-                    % (value, self.name)
+                    "Error! Can't assign unsaved model `%r` in a `ModelCachingDescriptor(%s)`." % (value, self.name)
                 )
             setattr(instance, self.id_name, value.pk)
             setattr(instance, self.object_name, value)

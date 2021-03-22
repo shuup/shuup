@@ -21,19 +21,20 @@ class Price(Money):
     `~shuup.utils.money.Money.currency`.  To get the bare Money amount
     of a `Price`, use the `amount` property.
     """
+
     includes_tax = None
 
     def __new__(cls, value="0", *args, **kwargs):
         if cls == Price:
-            raise TypeError('Error! Do not create direct instances of Price.')
+            raise TypeError("Error! Do not create direct instances of Price.")
         return super(Price, cls).__new__(cls, value, *args, **kwargs)
 
     def unit_matches_with(self, other):
         if not super(Price, self).unit_matches_with(other):
             return False
-        self_includes_tax = getattr(self, 'includes_tax', None)
-        other_includes_tax = getattr(other, 'includes_tax', None)
-        return (self_includes_tax == other_includes_tax)
+        self_includes_tax = getattr(self, "includes_tax", None)
+        other_includes_tax = getattr(other, "includes_tax", None)
+        return self_includes_tax == other_includes_tax
 
     @property
     def amount(self):
@@ -48,7 +49,7 @@ class Price(Money):
     def from_data(cls, value, currency, includes_tax=None):
         if includes_tax is None:
             if cls.includes_tax is None:
-                msg = 'Error! Missing includes_tax argument for %s.from_data.'
+                msg = "Error! Missing includes_tax argument for %s.from_data."
                 raise TypeError(msg % (cls.__name__,))
             includes_tax = cls.includes_tax
         if includes_tax:
@@ -57,8 +58,8 @@ class Price(Money):
             return TaxlessPrice(value, currency)
 
     def __str__(self):
-        incl = 'incl.' if self.includes_tax else 'excl.'
-        return '%s (%s tax)' % (super(Price, self).__str__(), incl)
+        incl = "incl." if self.includes_tax else "excl."
+        return "%s (%s tax)" % (super(Price, self).__str__(), incl)
 
 
 class TaxfulPrice(Price):
@@ -67,6 +68,7 @@ class TaxfulPrice(Price):
 
     Check the base class, :obj:`Price`,  for more info.
     """
+
     includes_tax = True
 
 
@@ -76,4 +78,5 @@ class TaxlessPrice(Price):
 
     Check the base class, :obj:`Price`,  for more info.
     """
+
     includes_tax = False

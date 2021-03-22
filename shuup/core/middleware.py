@@ -13,7 +13,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.shop_provider import get_shop
-from shuup.utils.django_compat import force_text, MiddlewareMixin
+from shuup.utils.django_compat import MiddlewareMixin, force_text
 from shuup.utils.excs import ExceptionalResponse, Problem
 
 
@@ -25,34 +25,42 @@ class ExceptionMiddleware(MiddlewareMixin):
         if isinstance(exception, (ValidationError, Problem)):
             status_code = 400
             if request.is_ajax():
-                return JsonResponse({
-                    "error": force_text(exception),
-                    "code": getattr(exception, "code", None)
-                }, status=status_code)
-            return render(request, self._get_problem_templates(request), status=status_code, context={
-                "title": getattr(exception, "title", None) or _("Error!"),
-                "message": exception.message,
-                "exception": exception,
-            })
+                return JsonResponse(
+                    {"error": force_text(exception), "code": getattr(exception, "code", None)}, status=status_code
+                )
+            return render(
+                request,
+                self._get_problem_templates(request),
+                status=status_code,
+                context={
+                    "title": getattr(exception, "title", None) or _("Error!"),
+                    "message": exception.message,
+                    "exception": exception,
+                },
+            )
 
     def _get_problem_templates(self, request):
         templates = []
         try:
             app_name = force_text(request.resolver_match.app_name)
             namespace = force_text(request.resolver_match.namespace)
-            templates.extend([
-                "%s/problem.jinja" % app_name,
-                "%s/problem.jinja" % app_name.replace("_", "/"),
-                "%s/problem.jinja" % namespace,
-                "%s/problem.jinja" % namespace.replace("_", "/"),
-            ])
+            templates.extend(
+                [
+                    "%s/problem.jinja" % app_name,
+                    "%s/problem.jinja" % app_name.replace("_", "/"),
+                    "%s/problem.jinja" % namespace,
+                    "%s/problem.jinja" % namespace.replace("_", "/"),
+                ]
+            )
         except (AttributeError, NameError):  # No resolver match? :(
             pass
-        templates.extend([
-            "shuup/front/problem.jinja",
-            "problem.jinja",
-            "problem.html",
-        ])
+        templates.extend(
+            [
+                "shuup/front/problem.jinja",
+                "problem.jinja",
+                "problem.html",
+            ]
+        )
         return templates
 
 

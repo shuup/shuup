@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
@@ -25,12 +24,12 @@ def _fetch_static_resource_str(resource_file):
     resource_path = os.path.realpath(os.path.join(settings.STATIC_ROOT, resource_file))
     if not resource_path.startswith(os.path.realpath(settings.STATIC_ROOT)):
         raise ValueError(
-            "Error! Possible file system traversal shenanigan detected with path: `%(path)s`."
-            % {"path": resource_file}
+            "Error! Possible file system traversal shenanigan detected with path: `%(path)s`." % {"path": resource_file}
         )
 
     if not os.path.isfile(resource_path):
         from django.contrib.staticfiles import finders
+
         resource_path = finders.find(resource_file)
 
     if not resource_path:
@@ -57,14 +56,10 @@ def html_to_pdf(html, stylesheet_paths=[]):
     stylesheets = []
     for stylesheet_path in stylesheet_paths:
         stylesheets.append(weasyprint.CSS(string=_fetch_static_resource_str(stylesheet_path)))
-    return weasyprint.HTML(
-        string=html, url_fetcher=_custom_url_fetcher
-    ).write_pdf(
-        stylesheets=stylesheets
-    )
+    return weasyprint.HTML(string=html, url_fetcher=_custom_url_fetcher).write_pdf(stylesheets=stylesheets)
 
 
 def wrap_pdf_in_response(pdf_data):
-    response = HttpResponse(content_type='application/pdf')
+    response = HttpResponse(content_type="application/pdf")
     response.write(pdf_data)
     return response

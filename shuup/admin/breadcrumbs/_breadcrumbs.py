@@ -39,7 +39,7 @@ class Breadcrumbs(object):
 
         url_names = (
             request.resolver_match.url_name,
-            "%s:%s" % (request.resolver_match.app_name, request.resolver_match.url_name)
+            "%s:%s" % (request.resolver_match.app_name, request.resolver_match.url_name),
         )
         url_admin_module = _get_admin_module_for_url(url_names)
 
@@ -55,11 +55,7 @@ class Breadcrumbs(object):
 
         # See if we have a title for the synthesized entry in the context.
         view = context.get("view")  # This should be the CBV view object.
-        title = (
-            context.get("title") or
-            context.get("breadcrumb_title") or
-            (view and getattr(view, "title", None))
-        )
+        title = context.get("title") or context.get("breadcrumb_title") or (view and getattr(view, "title", None))
 
         if title:
             current_view_entry.text = force_text(title)
@@ -92,7 +88,5 @@ class Breadcrumbs(object):
         if not len(self.entries):
             return
 
-        entries = ([
-            MenuEntry(_("Home"), url="shuup_admin:dashboard")
-        ] + self.entries)
+        entries = [MenuEntry(_("Home"), url="shuup_admin:dashboard")] + self.entries
         return entries

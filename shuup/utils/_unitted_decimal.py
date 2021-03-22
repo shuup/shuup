@@ -21,6 +21,7 @@ class UnittedDecimal(decimal.Decimal):
     where `TaxfulPrice` and `TaxlessPrice` are subclasses of
     `UnittedDecimal`.
     """
+
     @property
     def value(self):
         """
@@ -32,7 +33,7 @@ class UnittedDecimal(decimal.Decimal):
 
     def __repr__(self):
         decimal_repr = super(UnittedDecimal, self).__repr__()
-        return decimal_repr.replace('Decimal', type(self).__name__)
+        return decimal_repr.replace("Decimal", type(self).__name__)
 
     def unit_matches_with(self, other):
         """
@@ -95,7 +96,7 @@ class UnittedDecimal(decimal.Decimal):
 
     def __mul__(self, other, **kwargs):
         if isinstance(other, UnittedDecimal):
-            raise TypeError('Error! Cannot multiply %r with %r.' % (self, other))
+            raise TypeError("Error! Cannot multiply %r with %r." % (self, other))
         return self.new(super(UnittedDecimal, self).__mul__(other, **kwargs))
 
     def __radd__(self, other, **kwargs):
@@ -118,7 +119,7 @@ class UnittedDecimal(decimal.Decimal):
     def __rtruediv__(self, other, **kwargs):
         if not isinstance(other, UnittedDecimal):
             type_name = type(self).__name__
-            raise TypeError('Error! Cannot divide non-{0} with {0}.'.format(type_name))
+            raise TypeError("Error! Cannot divide non-{0} with {0}.".format(type_name))
         self._check_units_match(other)
         return super(UnittedDecimal, self).__rtruediv__(other, **kwargs)
 
@@ -128,7 +129,7 @@ class UnittedDecimal(decimal.Decimal):
     def __floordiv__(self, other, **kwargs):
         if not isinstance(other, UnittedDecimal):
             type_name = type(self).__name__
-            msg = 'Error! Cannot floor-div {0} with non-{0}.'.format(type_name)
+            msg = "Error! Cannot floor-div {0} with non-{0}.".format(type_name)
             raise TypeError(msg)
         self._check_units_match(other)
         return super(UnittedDecimal, self).__floordiv__(other, **kwargs)
@@ -136,7 +137,7 @@ class UnittedDecimal(decimal.Decimal):
     def __rfloordiv__(self, other, **kwargs):
         if not isinstance(other, UnittedDecimal):
             type_name = type(self).__name__
-            msg = 'Error! Cannot floor-div non-{0} with {0}.'.format(type_name)
+            msg = "Error! Cannot floor-div non-{0} with {0}.".format(type_name)
             raise TypeError(msg)
         self._check_units_match(other)
         return super(UnittedDecimal, self).__rfloordiv__(other, **kwargs)
@@ -144,21 +145,21 @@ class UnittedDecimal(decimal.Decimal):
     def __mod__(self, other, **kwargs):
         if not isinstance(other, UnittedDecimal):
             type_name = type(self).__name__
-            raise TypeError('Error! Cannot modulo {0} with non-{0}.'.format(type_name))
+            raise TypeError("Error! Cannot modulo {0} with non-{0}.".format(type_name))
         self._check_units_match(other)
         return self.new(super(UnittedDecimal, self).__mod__(other, **kwargs))
 
     def __divmod__(self, other, **kwargs):
         if not isinstance(other, UnittedDecimal):
             type_name = type(self).__name__
-            raise TypeError('Error! Cannot divmod {0} with non-{0}.'.format(type_name))
+            raise TypeError("Error! Cannot divmod {0} with non-{0}.".format(type_name))
         self._check_units_match(other)
         (div, mod) = super(UnittedDecimal, self).__divmod__(other, **kwargs)
         return (div, self.new(mod))
 
     def __pow__(self, other, **kwargs):
         type_name = type(self).__name__
-        raise TypeError('Error! {} cannot be powered.'.format(type_name))
+        raise TypeError("Error! {} cannot be powered.".format(type_name))
 
     def __neg__(self, **kwargs):
         return self.new(super(UnittedDecimal, self).__neg__(**kwargs))
@@ -199,11 +200,12 @@ class UnitMixupError(TypeError):
     :ivar UnittedDecimal obj1: Involved object 1.
     :ivar Any obj2: Involved object 2.
     """
-    def __init__(self, obj1, obj2, msg='Unit mixup'):
+
+    def __init__(self, obj1, obj2, msg="Unit mixup"):
         self.obj1 = obj1
         self.obj2 = obj2
         super(UnitMixupError, self).__init__(msg)
 
     def __str__(self):
         super_str = super(UnitMixupError, self).__str__()
-        return '%s: %r vs %r' % (super_str, self.obj1, self.obj2)
+        return "%s: %r vs %r" % (super_str, self.obj1, self.obj2)

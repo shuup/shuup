@@ -8,7 +8,6 @@
 from __future__ import unicode_literals, with_statement
 
 import decimal
-
 from django.db import models
 from django.http.response import HttpResponseRedirect
 from django.utils.timezone import now
@@ -26,23 +25,27 @@ from ._service_behavior import StaffOnlyBehaviorComponent
 
 class PaymentMethod(Service):
     payment_processor = models.ForeignKey(
-        "PaymentProcessor", null=True, blank=True, on_delete=models.SET_NULL,
-        verbose_name=_("payment processor"))
+        "PaymentProcessor", null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_("payment processor")
+    )
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=100, verbose_name=_("name"), help_text=_(
-                "The payment method name. This name is shown to the customers on checkout."
-            )
+        name=models.CharField(
+            max_length=100,
+            verbose_name=_("name"),
+            help_text=_("The payment method name. This name is shown to the customers on checkout."),
         ),
         description=models.CharField(
-            max_length=500, blank=True, verbose_name=_("description"), help_text=_(
+            max_length=500,
+            blank=True,
+            verbose_name=_("description"),
+            help_text=_(
                 "The description of the payment method. This description is shown to the customers on checkout."
-            )
+            ),
         ),
     )
 
     line_type = OrderLineType.PAYMENT
-    provider_attr = 'payment_processor'
+    provider_attr = "payment_processor"
     shop_product_m2m = "payment_methods"
 
     class Meta:
@@ -117,8 +120,7 @@ class PaymentProcessor(ServiceProvider):
 
     def _create_service(self, choice_identifier, **kwargs):
         labels = kwargs.pop("labels", None)
-        service = PaymentMethod.objects.create(
-            payment_processor=self, choice_identifier=choice_identifier, **kwargs)
+        service = PaymentMethod.objects.create(payment_processor=self, choice_identifier=choice_identifier, **kwargs)
         if labels:
             service.labels.set(labels)
         return service
@@ -128,6 +130,7 @@ class PaymentUrls(object):
     """
     Container for URLs used in payment processing.
     """
+
     def __init__(self, payment_url, return_url, cancel_url):
         self.payment_url = payment_url
         self.return_url = return_url
@@ -156,37 +159,40 @@ class CustomPaymentProcessor(PaymentProcessor):
     """
 
     rounding_quantize = models.DecimalField(
-        max_digits=36, decimal_places=9, default=decimal.Decimal('0.05'), verbose_name=_("rounding quantize"),
-        help_text=_("Choose rounding quantize (precision) for cash payment."))
+        max_digits=36,
+        decimal_places=9,
+        default=decimal.Decimal("0.05"),
+        verbose_name=_("rounding quantize"),
+        help_text=_("Choose rounding quantize (precision) for cash payment."),
+    )
     rounding_mode = EnumField(
-        RoundingMode, max_length=50, default=RoundingMode.ROUND_HALF_UP, verbose_name=_("rounding mode"),
-        help_text=_("Choose rounding mode for cash payment."))
+        RoundingMode,
+        max_length=50,
+        default=RoundingMode.ROUND_HALF_UP,
+        verbose_name=_("rounding mode"),
+        help_text=_("Choose rounding mode for cash payment."),
+    )
 
     class Meta:
         verbose_name = _("custom payment processor")
         verbose_name_plural = _("custom payment processors")
 
     def get_service_choices(self):
-        return [
-            ServiceChoice('manual', _("Manually processed payment")),
-            ServiceChoice('cash', _("Cash payment"))
-        ]
+        return [ServiceChoice("manual", _("Manually processed payment")), ServiceChoice("cash", _("Cash payment"))]
 
     def _create_service(self, choice_identifier, **kwargs):
-        service = super(CustomPaymentProcessor, self)._create_service(
-            choice_identifier, **kwargs)
-        if choice_identifier == 'cash':
-            service.behavior_components.add(
-                StaffOnlyBehaviorComponent.objects.create())
+        service = super(CustomPaymentProcessor, self)._create_service(choice_identifier, **kwargs)
+        if choice_identifier == "cash":
+            service.behavior_components.add(StaffOnlyBehaviorComponent.objects.create())
         return service
 
     def process_payment_return_request(self, service, order, request):
-        if service == 'cash':
+        if service == "cash":
             if not order.is_paid():
                 order.create_payment(
                     order.taxful_total_price,
                     payment_identifier="Cash-%s" % now().isoformat(),
-                    description="Cash Payment"
+                    description="Cash Payment",
                 )
 
 

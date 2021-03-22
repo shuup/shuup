@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import random
-
 from django import forms
 from django.conf import settings as django_settings
 from django.contrib import messages
@@ -23,18 +22,23 @@ from django.views.generic.detail import DetailView
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import (
-    DropdownActionButton, DropdownDivider, DropdownItem,
-    get_default_edit_toolbar, PostActionButton, Toolbar
+    DropdownActionButton,
+    DropdownDivider,
+    DropdownItem,
+    PostActionButton,
+    Toolbar,
+    get_default_edit_toolbar,
 )
 from shuup.admin.utils.permissions import has_permission
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
 from shuup.front.apps.registration.signals import user_reactivated
-from shuup.utils.django_compat import force_text, NoReverseMatch, reverse
+from shuup.utils.django_compat import NoReverseMatch, force_text, reverse
 from shuup.utils.excs import Problem
 from shuup.utils.text import flatten
 
-NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _("""
+NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _(
+    """
     Welcome %(first_name)s!
 
     You've been added as an administrator to %(shop_url)s. Here are some details:
@@ -42,7 +46,8 @@ NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _("""
         Login url: %(admin_url)s
         Your username: '%(username)s'
         Your password: Please contact your admin.
-""")
+"""
+)
 
 
 def get_front_url():
@@ -64,16 +69,16 @@ def get_admin_url():
 
 
 class BaseUserForm(forms.ModelForm):
-    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput, help_text=_(
-        "The user password."
-    ))
+    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput, help_text=_("The user password."))
     permission_info = forms.CharField(
         label=_("Main Permissions"),
         widget=forms.TextInput(attrs={"readonly": True, "disabled": True}),
         required=False,
-        help_text=_("Two fundamental permissions: Access to Admin Panel and "
-                    "Superuser status rights. Go to user account -> `Actions` "
-                    "-> `Edit Main Permissions` to change these.")
+        help_text=_(
+            "Two fundamental permissions: Access to Admin Panel and "
+            "Superuser status rights. Go to user account -> `Actions` "
+            "-> `Edit Main Permissions` to change these."
+        ),
     )
     permission_groups = forms.CharField(
         label=_("Granular Permission Groups"),
@@ -86,7 +91,7 @@ class BaseUserForm(forms.ModelForm):
             "Permissions` to add them to a specific user. Will not influence "
             "Superusers as they already have all the rights and can't be "
             "stripped of them without removing Superuser status first."
-        )
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -100,10 +105,17 @@ class BaseUserForm(forms.ModelForm):
         if self.instance.pk:
             # Changing the password for an existing user requires more confirmation
             self.fields.pop("password")
-            self.initial["permission_info"] = ", ".join(force_text(perm) for perm in [
-                _("Access to Admin Panel") if getattr(self.instance, 'is_staff', None) else "",
-                _("Superuser (Full rights)") if getattr(self.instance, 'is_superuser', None) else "",
-            ] if perm) or _("No Main Permissions selected.")
+            self.initial["permission_info"] = (
+                ", ".join(
+                    force_text(perm)
+                    for perm in [
+                        _("Access to Admin Panel") if getattr(self.instance, "is_staff", None) else "",
+                        _("Superuser (Full rights)") if getattr(self.instance, "is_superuser", None) else "",
+                    ]
+                    if perm
+                )
+                or _("No Main Permissions selected.")
+            )
             if hasattr(self.instance, "groups"):
                 group_names = [force_text(group) for group in self.instance.groups.all()]
                 if group_names:
@@ -124,15 +136,15 @@ class BaseUserForm(forms.ModelForm):
                         "Send an email to the user to let them know they've "
                         "been added as a shop user. Applicable only for users "
                         "with Access to Admin Panel status."
-                    )
+                    ),
                 )
 
     def clean(self):
         cleaned_data = super(BaseUserForm, self).clean()
         if (
-            cleaned_data.get("send_confirmation") and
-            cleaned_data.get("is_staff") and
-            not self.cleaned_data.get("email")
+            cleaned_data.get("send_confirmation")
+            and cleaned_data.get("is_staff")
+            and not self.cleaned_data.get("email")
         ):
             raise forms.ValidationError({"email": _("Please enter an email to send a confirmation to.")})
 
@@ -162,90 +174,100 @@ class UserDetailToolbar(Toolbar):
         user = self.user
         change_password_button = DropdownItem(
             url=reverse("shuup_admin:user.change-password", kwargs={"pk": user.pk}),
-            text=_(u"Change Password"), icon="fa fa-exchange",
-            required_permissions=["user.change-password"]
+            text=_("Change Password"),
+            icon="fa fa-exchange",
+            required_permissions=["user.change-password"],
         )
         reset_password_button = DropdownItem(
             url=reverse("shuup_admin:user.reset-password", kwargs={"pk": user.pk}),
-            disable_reason=(_("User has no email address") if not getattr(user, 'email', '') else None),
-            text=_(u"Send Password Reset Email"), icon="fa fa-envelope",
-            required_permissions=["user.reset-password"]
+            disable_reason=(_("User has no email address") if not getattr(user, "email", "") else None),
+            text=_("Send Password Reset Email"),
+            icon="fa fa-envelope",
+            required_permissions=["user.reset-password"],
         )
         permissions_button = DropdownItem(
             url=reverse("shuup_admin:user.change-permissions", kwargs={"pk": user.pk}),
-            text=_(u"Edit Main Permissions"), icon="fa fa-lock", required_permissions=["user.change-permissions"]
+            text=_("Edit Main Permissions"),
+            icon="fa fa-lock",
+            required_permissions=["user.change-permissions"],
         )
-        menu_items = [
-            change_password_button,
-            reset_password_button,
-            permissions_button,
-            DropdownDivider()
-        ]
+        menu_items = [change_password_button, reset_password_button, permissions_button, DropdownDivider()]
 
         person_contact = PersonContact.objects.filter(user=user).first()
         if person_contact:
             contact_url = reverse("shuup_admin:contact.detail", kwargs={"pk": person_contact.pk})
-            menu_items.append(DropdownItem(
-                url=contact_url,
-                icon="fa fa-search",
-                text=_("Contact Details"),
-                required_permissions=["contact.detail"]
-            ))
+            menu_items.append(
+                DropdownItem(
+                    url=contact_url,
+                    icon="fa fa-search",
+                    text=_("Contact Details"),
+                    required_permissions=["contact.detail"],
+                )
+            )
         else:
             contact_url = reverse("shuup_admin:contact.new") + "?type=person&user_id=%s" % user.pk
-            menu_items.append(DropdownItem(
-                url=contact_url,
-                icon="fa fa-plus",
-                text=_(u"New Contact"),
-                tooltip=_("Create a new contact and associate it with this user"),
-                required_permissions=["contact.new"]
-            ))
-        self.append(DropdownActionButton(
-            menu_items,
-            icon="fa fa-star",
-            text=_(u"Actions"),
-            extra_css_class="btn-info",
-        ))
+            menu_items.append(
+                DropdownItem(
+                    url=contact_url,
+                    icon="fa fa-plus",
+                    text=_("New Contact"),
+                    tooltip=_("Create a new contact and associate it with this user"),
+                    required_permissions=["contact.new"],
+                )
+            )
+        self.append(
+            DropdownActionButton(
+                menu_items,
+                icon="fa fa-star",
+                text=_("Actions"),
+                extra_css_class="btn-info",
+            )
+        )
         if not user.is_active:
-            self.append(PostActionButton(
-                post_url=self.request.path,
-                name="set_is_active",
-                value="1",
-                icon="fa fa-check-circle",
-                text=_(u"Activate User"),
-                extra_css_class="btn-gray",
-            ))
+            self.append(
+                PostActionButton(
+                    post_url=self.request.path,
+                    name="set_is_active",
+                    value="1",
+                    icon="fa fa-check-circle",
+                    text=_("Activate User"),
+                    extra_css_class="btn-gray",
+                )
+            )
         else:
-            self.append(PostActionButton(
-                post_url=self.request.path,
-                name="set_is_active",
-                value="0",
-                icon="fa fa-times-circle",
-                text=_(u"Deactivate User"),
-                extra_css_class="btn-gray",
-            ))
+            self.append(
+                PostActionButton(
+                    post_url=self.request.path,
+                    name="set_is_active",
+                    value="0",
+                    icon="fa fa-times-circle",
+                    text=_("Deactivate User"),
+                    extra_css_class="btn-gray",
+                )
+            )
 
         current_user = self.request.user
-        is_current_user_superuser_or_staff = (
-            getattr(current_user, "is_superuser", False) or
-            getattr(current_user, "is_staff", False)
+        is_current_user_superuser_or_staff = getattr(current_user, "is_superuser", False) or getattr(
+            current_user, "is_staff", False
         )
-        can_impersonate = bool(
-            is_current_user_superuser_or_staff and user.is_active and not user.is_superuser
-        )
+        can_impersonate = bool(is_current_user_superuser_or_staff and user.is_active and not user.is_superuser)
 
-        if (can_impersonate and get_front_url() and not user.is_staff):
-            self.append(PostActionButton(
-                post_url=reverse("shuup_admin:user.login-as", kwargs={"pk": user.pk}),
-                text=_(u"Login as User"),
-                extra_css_class="btn-gray"
-            ))
-        elif (can_impersonate and get_admin_url() and user.is_staff):
-            self.append(PostActionButton(
-                post_url=reverse("shuup_admin:user.login-as-staff", kwargs={"pk": user.pk}),
-                text=_(u"Login as Staff User"),
-                extra_css_class="btn-gray"
-            ))
+        if can_impersonate and get_front_url() and not user.is_staff:
+            self.append(
+                PostActionButton(
+                    post_url=reverse("shuup_admin:user.login-as", kwargs={"pk": user.pk}),
+                    text=_("Login as User"),
+                    extra_css_class="btn-gray",
+                )
+            )
+        elif can_impersonate and get_admin_url() and user.is_staff:
+            self.append(
+                PostActionButton(
+                    post_url=reverse("shuup_admin:user.login-as-staff", kwargs={"pk": user.pk}),
+                    text=_("Login as Staff User"),
+                    extra_css_class="btn-gray",
+                )
+            )
         # TODO: Add extensibility
 
 
@@ -312,27 +334,28 @@ class UserDetailView(CreateOrUpdateView):
         if contact and not contact.user:
             contact.user = self.object
             contact.save()
-            messages.info(self.request, _(u"Info! User bound to contact %(contact)s.") % {"contact": contact})
+            messages.info(self.request, _("Info! User bound to contact %(contact)s.") % {"contact": contact})
 
         if getattr(self.object, "is_staff", False) and form.cleaned_data.get("send_confirmation"):
             shop_url = "%s://%s/" % (self.request.scheme, self.request.get_host())
             admin_url = self.request.build_absolute_uri(reverse("shuup_admin:login"))
             send_mail(
                 subject=_("You've been added as an admin user to `%s`." % shop_url),
-                message=NEW_USER_EMAIL_CONFIRMATION_TEMPLATE % {
+                message=NEW_USER_EMAIL_CONFIRMATION_TEMPLATE
+                % {
                     "first_name": getattr(self.object, "first_name") or getattr(self.object, "username", _("User")),
                     "shop_url": shop_url,
                     "admin_url": admin_url,
-                    "username": getattr(self.object, "username") or getattr(self.object.email)
+                    "username": getattr(self.object, "username") or getattr(self.object.email),
                 },
                 from_email=django_settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[self.object.email]
+                recipient_list=[self.object.email],
             )
 
     def _handle_set_is_active(self):
         state = bool(int(self.request.POST["set_is_active"]))
         if not state:
-            if (getattr(self.object, 'is_superuser', False) and not getattr(self.request.user, 'is_superuser', False)):
+            if getattr(self.object, "is_superuser", False) and not getattr(self.request.user, "is_superuser", False):
                 raise Problem(_("You can not deactivate a Superuser. Remove Superuser status first."))
             if self.object == self.request.user:
                 raise Problem(_("You can not deactivate yourself. Use another account."))
@@ -347,10 +370,10 @@ class UserDetailView(CreateOrUpdateView):
             self.object.contact.is_active = state
             self.object.contact.save(update_fields=("is_active",))
 
-        messages.success(self.request, _("%(user)s is now %(state)s.") % {
-            "user": self.object,
-            "state": _("active") if state else _("inactive")
-        })
+        messages.success(
+            self.request,
+            _("%(user)s is now %(state)s.") % {"user": self.object, "state": _("active") if state else _("inactive")},
+        )
         return HttpResponseRedirect(self.request.path)
 
     def post(self, request, *args, **kwargs):
@@ -381,8 +404,7 @@ def _check_for_login_as_permissions(shop, impersonator_user, user, permission_st
     if not (getattr(impersonator_user, "is_superuser", False) or getattr(impersonator_user, "is_staff", False)):
         raise PermissionDenied
     if not (
-        getattr(impersonator_user, "is_superuser", False) or
-        shop.staff_members.filter(id=impersonator_user.pk).exists()
+        getattr(impersonator_user, "is_superuser", False) or shop.staff_members.filter(id=impersonator_user.pk).exists()
     ):
         raise PermissionDenied
     if not has_permission(impersonator_user, permission_str):
@@ -406,10 +428,9 @@ class LoginAsUserView(DetailView):
         shop = get_shop(request)
 
         _check_for_login_as_problems(redirect_url, impersonator_user, user)
-        _check_for_login_as_permissions(
-            shop, impersonator_user, user, self.permission_str, self.can_impersonate_staff)
+        _check_for_login_as_permissions(shop, impersonator_user, user, self.permission_str, self.can_impersonate_staff)
 
-        if not hasattr(user, 'backend'):
+        if not hasattr(user, "backend"):
             for backend in django_settings.AUTHENTICATION_BACKENDS:
                 if user == load_backend(backend).get_user(user.pk):
                     user.backend = backend

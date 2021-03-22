@@ -12,8 +12,11 @@ from bs4 import BeautifulSoup
 from shuup.core.models import Category, CategoryStatus, ShopProduct
 from shuup.front.views.category import AllCategoriesView
 from shuup.testing.factories import (
-    create_product,  get_default_category, get_default_product,
-    get_default_shop, get_default_supplier
+    create_product,
+    get_default_category,
+    get_default_product,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
@@ -45,9 +48,7 @@ def test_all_categories_view(rf, admin_user):
         # Add random categories expect default category which we will make
         # hidden to make sure that products linked to hidden categories are
         # not listed
-        shop_product.categories.set(
-            Category.objects.exclude(id=category.pk).order_by("?")[:i]
-        )
+        shop_product.categories.set(Category.objects.exclude(id=category.pk).order_by("?")[:i])
 
     _check_product_count(request, new_product_count)
 

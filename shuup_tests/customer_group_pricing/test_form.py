@@ -9,26 +9,23 @@ import pytest
 from django.conf import settings
 
 from shuup.core.models import ContactGroup, Shop
-from shuup.customer_group_pricing.admin_form_part import \
-    CustomerGroupPricingForm, CustomerGroupDiscountForm
+from shuup.customer_group_pricing.admin_form_part import CustomerGroupDiscountForm, CustomerGroupPricingForm
 from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
-from shuup.testing.factories import (
-    create_product, get_default_customer_group, get_default_shop
-)
+from shuup.testing.factories import create_product, get_default_customer_group, get_default_shop
 from shuup_tests.utils.forms import get_form_data
 
-pytestmark = pytest.mark.skipif("shuup.customer_group_pricing" not in settings.INSTALLED_APPS,
-                                reason="customer_group_pricing not installed")
+pytestmark = pytest.mark.skipif(
+    "shuup.customer_group_pricing" not in settings.INSTALLED_APPS, reason="customer_group_pricing not installed"
+)
+
 
 def _get_test_product():
     shop = get_default_shop()
     product = create_product("Just-A-Pricing-Product", shop, default_price=200)
-    CgpPrice.objects.create(
-        product=product, shop=shop, group=get_default_customer_group(),
-        price_value=250)
+    CgpPrice.objects.create(product=product, shop=shop, group=get_default_customer_group(), price_value=250)
     CgpDiscount.objects.create(
-        product=product, shop=shop, group=get_default_customer_group(),
-        discount_amount_value=100)
+        product=product, shop=shop, group=get_default_customer_group(), discount_amount_value=100
+    )
     return product
 
 

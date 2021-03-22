@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import logging
-
 import six
 from django.db.models.query import QuerySet
 
@@ -30,12 +29,7 @@ cond_op_to_func_map = {
 
 class Step(object):
     def __init__(
-            self,
-            conditions=(),
-            actions=(),
-            next=StepNext.CONTINUE,
-            cond_op=StepConditionOperator.ALL,
-            enabled=True
+        self, conditions=(), actions=(), next=StepNext.CONTINUE, cond_op=StepConditionOperator.ALL, enabled=True
     ):
         self._conditions = conditions
         self._actions = actions

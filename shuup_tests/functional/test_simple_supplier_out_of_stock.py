@@ -5,16 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import random
-
 import pytest
+import random
 
 from shuup.core.models import AnonymousContact, Shipment, ShopProductVisibility
 from shuup.core.signals import stocks_updated
-from shuup.testing.factories import (
-    create_order_with_product, create_product, create_random_person,
-    get_default_shop
-)
+from shuup.testing.factories import create_order_with_product, create_product, create_random_person, get_default_shop
 from shuup.testing.receivers import shop_product_orderability_check
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 
@@ -24,8 +20,7 @@ from shuup_tests.simple_supplier.utils import get_simple_supplier
 def test_simple_supplier_out_of_stock(rf, anonymous, hide_unorderable_product):
     if hide_unorderable_product:
         # Connect signal to hide products when they become unorderable
-        stocks_updated.connect(
-            receiver=shop_product_orderability_check, dispatch_uid="shop_product_orderability_check")
+        stocks_updated.connect(receiver=shop_product_orderability_check, dispatch_uid="shop_product_orderability_check")
 
     supplier = get_simple_supplier()
     shop = get_default_shop()
@@ -81,7 +76,8 @@ def test_simple_supplier_out_of_stock(rf, anonymous, hide_unorderable_product):
         assert not shop_product.is_orderable(supplier, customer, 1)
         # Disconnect signal just in case...
         stocks_updated.disconnect(
-            receiver=shop_product_orderability_check, dispatch_uid="shop_product_orderability_check")
+            receiver=shop_product_orderability_check, dispatch_uid="shop_product_orderability_check"
+        )
     else:
         assert shop_product.is_visible(customer)
         assert not shop_product.is_purchasable(supplier, customer, 1)

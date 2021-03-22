@@ -8,20 +8,17 @@
 import os
 import re
 import sys
-
 from babel.messages.pofile import read_po
-from six import print_
-
 from rope.base.codeanalyze import ChangeCollector
 from rope.base.project import Project
 from rope.refactor.restructure import Restructure
 from rope.refactor.similarfinder import CodeTemplate
+from six import print_
 
 safe_double_quote_re = re.compile(r"^[\w ]+$", re.UNICODE)
 
 
 class LanguageTwist(CodeTemplate):
-
     def __init__(self, po_file):
         with open(po_file, "rb") as in_f:
             self.catalog = read_po(in_f)
@@ -67,5 +64,5 @@ def main():
     prj.do(twist_set)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

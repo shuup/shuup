@@ -21,9 +21,7 @@ from shuup.admin.base import MenuEntry
 from shuup.admin.forms.widgets import MediaChoiceWidget
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import get_model_url
-from shuup.core.models import (
-    Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
-)
+from shuup.core.models import Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
 from shuup.utils.django_compat import force_text
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
@@ -41,7 +39,7 @@ class ProductMediaForm(MultiLanguageModelForm):
             "public",
             "purchased",
             "title",
-            "description"
+            "description",
         )
 
     def __init__(self, **kwargs):
@@ -82,18 +80,14 @@ class ProductMediaEditView(UpdateView):
 
     Currently sort of utilitarian and confusing.
     """
+
     model = Product
     template_name = "shuup/admin/products/edit_media.jinja"
     context_object_name = "product"
     form_class = ProductMediaFormSet
 
     def get_breadcrumb_parents(self):
-        return [
-            MenuEntry(
-                text="%s" % self.object,
-                url=get_model_url(self.object, shop=self.request.shop)
-            )
-        ]
+        return [MenuEntry(text="%s" % self.object, url=get_model_url(self.object, shop=self.request.shop))]
 
     def get_object(self, queryset=None):
         if not self.kwargs.get(self.pk_url_kwarg):
@@ -107,14 +101,17 @@ class ProductMediaEditView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(ProductMediaEditView, self).get_context_data(**kwargs)
         context["title"] = _("Edit Media: %s") % self.object
-        context["toolbar"] = Toolbar([
-            PostActionButton(
-                icon="fa fa-save",
-                form_id="media_form",
-                text=_("Save"),
-                extra_css_class="btn-success",
-            ),
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                PostActionButton(
+                    icon="fa fa-save",
+                    form_id="media_form",
+                    text=_("Save"),
+                    extra_css_class="btn-success",
+                ),
+            ],
+            view=self,
+        )
         return context
 
     def get_form_kwargs(self):
@@ -134,6 +131,7 @@ class ProductMediaBulkAdderView(View):
     """
     Adds media in bulk to a pre-existing product.
     """
+
     @atomic
     def post(self, *args, **kwargs):
         ids = self.request.POST.getlist("file_ids")
@@ -149,7 +147,8 @@ class ProductMediaBulkAdderView(View):
         shop_product = ShopProduct.objects.filter(pk=shop_product_id, shop_id=shop_id).first()
         if not shop_product:
             return JsonResponse(
-                {"response": "error", "message": "Error! Invalid shop product id `%s`." % shop_product_id}, status=400)
+                {"response": "error", "message": "Error! Invalid shop product id `%s`." % shop_product_id}, status=400
+            )
         if kind == "images":
             kind = ProductMediaKind.IMAGE
         elif kind == "media":
@@ -166,24 +165,17 @@ class ProductMediaBulkAdderView(View):
 
         for file_id in ids:
             if not ProductMedia.objects.filter(
-                    product_id=shop_product.product_id,
-                    file_id=file_id,
-                    kind=kind,
-                    shops__in=[shop_id]).exists():
+                product_id=shop_product.product_id, file_id=file_id, kind=kind, shops__in=[shop_id]
+            ).exists():
                 image = ProductMedia.objects.create(
                     product_id=shop_product.product_id,
                     file_id=file_id,
                     kind=kind,
                 )
                 image.shops.add(shop_id)
-                added.append({
-                    "product": image.product_id,
-                    "file": int(file_id),
-                    "kind": kind.value,
-                    "product_media": image.pk
-                })
-        return JsonResponse({
-            "response": "success",
-            "added": added,
-            "message": force_text(_("Files added to the product."))
-        })
+                added.append(
+                    {"product": image.product_id, "file": int(file_id), "kind": kind.value, "product_media": image.pk}
+                )
+        return JsonResponse(
+            {"response": "success", "added": added, "message": force_text(_("Files added to the product."))}
+        )

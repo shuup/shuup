@@ -33,7 +33,7 @@ def filter_form_field_choices(field, predicate, invert=False):
         allowed_values = set(predicate)
 
         def predicate(pair):
-            return (pair[0] in allowed_values)
+            return pair[0] in allowed_values
 
     if invert:
         choices = [pair for pair in field.choices if not predicate(pair)]
@@ -67,12 +67,7 @@ def add_form_errors_as_messages(request, form):
 
 
 def flatatt_filter(attrs):
-    attrs = dict(
-        (key, value)
-        for (key, value)
-        in six.iteritems(attrs)
-        if key and value
-    )
+    attrs = dict((key, value) for (key, value) in six.iteritems(attrs) if key and value)
     return flatatt(attrs)
 
 

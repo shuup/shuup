@@ -9,19 +9,22 @@ import pytest
 
 from shuup.xtheme import Plugin
 from shuup.xtheme.resources import (
-    add_resource, inject_resources, InlineMarkupResource, InlineScriptResource,
-    RESOURCE_CONTAINER_VAR_NAME, ResourceContainer, JinjaMarkupResource
+    RESOURCE_CONTAINER_VAR_NAME,
+    InlineMarkupResource,
+    InlineScriptResource,
+    JinjaMarkupResource,
+    ResourceContainer,
+    add_resource,
+    inject_resources,
 )
 from shuup.xtheme.testing import override_current_theme_class
-from shuup_tests.xtheme.utils import (
-    get_jinja2_engine, get_request, get_test_template_bits, plugin_override
-)
+from shuup_tests.xtheme.utils import get_jinja2_engine, get_request, get_test_template_bits, plugin_override
 
 
 class ResourceInjectorPlugin(Plugin):
     identifier = "inject"
     message = "I've injected some resources into this page."
-    meta_markup = "<meta data-meta=\"so meta\">"
+    meta_markup = '<meta data-meta="so meta">'
     editor_form_class = None  # Explicitly no form class here :)
 
     def render(self, context):
@@ -42,9 +45,9 @@ class ResourceInjectorPlugin(Plugin):
 
 def test_injecting_into_weird_places():
     request = get_request()
-    (template, layout, gibberish, ctx) = get_test_template_bits(request, **{
-        RESOURCE_CONTAINER_VAR_NAME: ResourceContainer()
-    })
+    (template, layout, gibberish, ctx) = get_test_template_bits(
+        request, **{RESOURCE_CONTAINER_VAR_NAME: ResourceContainer()}
+    )
     with pytest.raises(ValueError):
         add_resource(ctx, "yes", "hello.js")
 

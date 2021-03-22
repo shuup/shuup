@@ -27,5 +27,5 @@ __all__ = [
     "TaxesReport",
     "TotalSales",
     "OrdersReport",
-    "OrderLineReport"
+    "OrderLineReport",
 ]

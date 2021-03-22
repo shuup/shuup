@@ -25,49 +25,36 @@ class UserModule(AdminModule):
             admin_url(
                 r"^users/(?P<pk>\d+)/change-password/$",
                 "shuup.admin.modules.users.views.UserChangePasswordView",
-                name="user.change-password"
+                name="user.change-password",
             ),
             admin_url(
                 r"^users/(?P<pk>\d+)/reset-password/$",
                 "shuup.admin.modules.users.views.UserResetPasswordView",
-                name="user.reset-password"
+                name="user.reset-password",
             ),
             admin_url(
                 r"^users/(?P<pk>\d+)/change-permissions/$",
                 "shuup.admin.modules.users.views.UserChangePermissionsView",
-                name="user.change-permissions"
+                name="user.change-permissions",
             ),
+            admin_url(r"^users/(?P<pk>\d+)/$", "shuup.admin.modules.users.views.UserDetailView", name="user.detail"),
             admin_url(
-                r"^users/(?P<pk>\d+)/$",
-                "shuup.admin.modules.users.views.UserDetailView",
-                name="user.detail"
+                r"^users/new/$", "shuup.admin.modules.users.views.UserDetailView", kwargs={"pk": None}, name="user.new"
             ),
+            admin_url(r"^users/$", "shuup.admin.modules.users.views.UserListView", name="user.list"),
             admin_url(
-                r"^users/new/$",
-                "shuup.admin.modules.users.views.UserDetailView",
-                kwargs={"pk": None},
-                name="user.new"
-            ),
-            admin_url(
-                r"^users/$",
-                "shuup.admin.modules.users.views.UserListView",
-                name="user.list"
-            ),
-            admin_url(
-                r"^users/(?P<pk>\d+)/login/$",
-                "shuup.admin.modules.users.views.LoginAsUserView",
-                name="user.login-as"
+                r"^users/(?P<pk>\d+)/login/$", "shuup.admin.modules.users.views.LoginAsUserView", name="user.login-as"
             ),
             admin_url(
                 r"^users/(?P<pk>\d+)/login/staff/$",
                 "shuup.admin.modules.users.views.LoginAsStaffUserView",
-                name="user.login-as-staff"
+                name="user.login-as-staff",
             ),
             admin_url(
                 r"^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
-                name="user.list_settings"
-            )
+                name="user.list_settings",
+            ),
         ]
 
     def get_menu_entries(self, request):
@@ -77,38 +64,29 @@ class UserModule(AdminModule):
                 icon="fa fa-users",
                 url="shuup_admin:user.list",
                 category=SETTINGS_MENU_CATEGORY,
-                ordering=1
+                ordering=1,
             )
         ]
 
     def get_search_results(self, request, query):
         minimum_query_length = 3
         if len(query) >= minimum_query_length:
-            users = get_user_model().objects.filter(
-                Q(username__icontains=query) |
-                Q(email=query)
-            )
+            users = get_user_model().objects.filter(Q(username__icontains=query) | Q(email=query))
             for i, user in enumerate(users[:10]):
                 relevance = 100 - i
                 yield SearchResult(
-                    text=six.text_type(user),
-                    url=get_model_url(user),
-                    category=_("Contacts"),
-                    relevance=relevance
+                    text=six.text_type(user), url=get_model_url(user), category=_("Contacts"), relevance=relevance
                 )
 
     def get_help_blocks(self, request, kind):
         yield SimpleHelpBlock(
             text=_("Add some users to help manage your shop"),
-            actions=[{
-                "text": _("New user"),
-                "url": self.get_model_url(get_user_model(), "new")
-            }],
+            actions=[{"text": _("New user"), "url": self.get_model_url(get_user_model(), "new")}],
             priority=3,
             category=HelpBlockCategory.CONTACTS,
             icon_url="shuup_admin/img/users.png",
             done=request.shop.staff_members.exclude(id=request.user.id).exists() if kind == "setup" else False,
-            required=False
+            required=False,
         )
 
     def get_model_url(self, object, kind, shop=None):

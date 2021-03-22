@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import os
-
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,17 +27,14 @@ class SampleDataAdminModule(AdminModule):
             admin_url(
                 "^sample_data/$",
                 "shuup.testing.modules.sample_data.views.ConsolidateSampleObjectsView",
-                name="sample_data"
+                name="sample_data",
             )
         ]
 
     def get_menu_entries(self, request):
         return [
             MenuEntry(
-                text="Sample Data",
-                category=SETTINGS_MENU_CATEGORY,
-                url="shuup_admin:sample_data",
-                icon="fa fa-star"
+                text="Sample Data", category=SETTINGS_MENU_CATEGORY, url="shuup_admin:sample_data", icon="fa fa-star"
             )
         ]
 
@@ -50,15 +46,17 @@ class SampleDataAdminModule(AdminModule):
         # multi-shop not supported
         if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             from shuup.admin.shop_provider import get_shop
+
             shop = get_shop(request)
 
             if sample_manager.has_installed_samples(shop):
-                messages.warning(request, _("There is a sample data installed. "
-                                            "Search `Sample Data` for more information."))
+                messages.warning(
+                    request, _("There is a sample data installed. " "Search `Sample Data` for more information.")
+                )
 
                 yield Notification(
                     _("There is a sample data installed. Click here to consolidate or delete them."),
                     title=_("Sample Data"),
                     kind="warning",
-                    url="shuup_admin:sample_data"
+                    url="shuup_admin:sample_data",
                 )

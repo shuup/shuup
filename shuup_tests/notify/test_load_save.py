@@ -10,8 +10,8 @@ from django.utils.encoding import force_text
 
 from shuup.notify.models import Script
 from shuup.notify.script import Step
-from shuup_tests.notify.fixtures import ATestEvent, TEST_STEP_DATA
 from shuup.testing import factories
+from shuup_tests.notify.fixtures import TEST_STEP_DATA, ATestEvent
 
 
 @pytest.mark.django_db

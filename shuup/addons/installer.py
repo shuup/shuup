@@ -20,6 +20,7 @@ def get_pip_path():
     """
     try:
         from virtualenv import path_locations
+
         (home_dir, lib_dir, inc_dir, bin_dir) = path_locations(sys.prefix)
         return os.path.join(bin_dir, "pip")
     except ImportError:
@@ -32,15 +33,7 @@ class PackageInstaller(object):
         self._log_buffer = b""
 
     def install_package(self, package_path):
-        cmd = [
-            get_pip_path(),
-            "install",
-            "--upgrade",
-            "--verbose",
-            "--require-venv",
-            "--no-cache-dir",
-            package_path
-        ]
+        cmd = [get_pip_path(), "install", "--upgrade", "--verbose", "--require-venv", "--no-cache-dir", package_path]
         pipe = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
@@ -63,4 +56,4 @@ def _is_shell_needed_for_subprocess_calls():
     Essentially return True for Windows and False otherwise.  See
     http://bugs.python.org/issue6689 for details.
     """
-    return (os.name == 'nt')
+    return os.name == "nt"

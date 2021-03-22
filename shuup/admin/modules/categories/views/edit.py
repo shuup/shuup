@@ -6,9 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
-from shuup.admin.modules.categories.form_parts import (
-    CategoryBaseFormPart, CategoryProductFormPart
-)
+from shuup.admin.modules.categories.form_parts import CategoryBaseFormPart, CategoryProductFormPart
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.tour import is_tour_complete

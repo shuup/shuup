@@ -5,9 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal
-
 import pytest
+from decimal import Decimal
 from django.test.utils import override_settings
 from django.utils.translation import activate
 
@@ -15,10 +14,16 @@ from shuup.core.fields.utils import ensure_decimal_places
 from shuup.core.models import CustomerTaxGroup, OrderLineType
 from shuup.core.order_creator import OrderCreator, TaxesNotCalculated
 from shuup.testing.factories import (
-    create_product, create_random_person, get_address,
-    get_default_payment_method, get_default_product,
-    get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_default_tax, get_initial_order_status
+    create_product,
+    create_random_person,
+    get_address,
+    get_default_payment_method,
+    get_default_product,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_default_tax,
+    get_initial_order_status,
 )
 from shuup.utils.money import Money
 from shuup.utils.numbers import bankers_round
@@ -70,7 +75,6 @@ def test_calculate_taxes_automatically_setting():
         source.calculate_taxes_or_raise()
         assert source._taxes_calculated == True
 
-
     with override_settings(SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=False):
         source = get_source()
         source.get_final_lines()
@@ -79,10 +83,10 @@ def test_calculate_taxes_automatically_setting():
         with pytest.raises(TaxesNotCalculated):
             source.calculate_taxes_or_raise()
 
+
 @pytest.mark.django_db
 def test_broken_order(admin_user):
-    """
-    """
+    """"""
     quantities = [44, 23, 65]
     expected = sum(quantities) * 50
     expected_based_on = expected / 1.5
@@ -148,7 +152,9 @@ def test_broken_order(admin_user):
     assert source.taxless_total_price.value == expected_based_on
     assert summary.taxful.value == source.taxful_total_price.value
 
-    assert summary.tax_amount == Money(bankers_round(source.taxful_total_price.value - source.taxless_total_price.value), currency)
+    assert summary.tax_amount == Money(
+        bankers_round(source.taxful_total_price.value - source.taxless_total_price.value), currency
+    )
     assert summary.taxful == summary.raw_based_on + summary.tax_amount
 
     assert summary.tax_rate == tax.rate

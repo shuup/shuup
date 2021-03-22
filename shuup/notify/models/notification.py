@@ -17,7 +17,7 @@ from jsonfield.fields import JSONField
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.notify.enums import Priority, RecipientType
-from shuup.utils.django_compat import is_anonymous, NoReverseMatch, reverse
+from shuup.utils.django_compat import NoReverseMatch, is_anonymous, reverse
 
 
 class NotificationManager(models.Manager):
@@ -28,9 +28,9 @@ class NotificationManager(models.Manager):
         if not (user and not is_anonymous(user)):
             return self.none()
 
-        q = (Q(recipient_type=RecipientType.SPECIFIC_USER) & Q(recipient=user))
+        q = Q(recipient_type=RecipientType.SPECIFIC_USER) & Q(recipient=user)
 
-        if getattr(user, 'is_superuser', False):
+        if getattr(user, "is_superuser", False):
             q |= Q(recipient_type=RecipientType.ADMINS)
 
         return self.filter(q)
@@ -43,24 +43,34 @@ class Notification(models.Model):
     """
     A model for persistent notifications to be shown in the admin, etc.
     """
+
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"))
-    recipient_type = EnumIntegerField(RecipientType, default=RecipientType.ADMINS, verbose_name=_('recipient type'))
+    recipient_type = EnumIntegerField(RecipientType, default=RecipientType.ADMINS, verbose_name=_("recipient type"))
     recipient = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL,
-        verbose_name=_('recipient')
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        verbose_name=_("recipient"),
     )
-    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
-    message = models.CharField(max_length=140, editable=False, default="", verbose_name=_('message'))
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
+    message = models.CharField(max_length=140, editable=False, default="", verbose_name=_("message"))
     identifier = InternalIdentifierField(unique=False)
-    priority = EnumIntegerField(Priority, default=Priority.NORMAL, db_index=True, verbose_name=_('priority'))
+    priority = EnumIntegerField(Priority, default=Priority.NORMAL, db_index=True, verbose_name=_("priority"))
     _data = JSONField(blank=True, null=True, editable=False, db_column="data")
 
-    marked_read = models.BooleanField(db_index=True, editable=False, default=False, verbose_name=_('marked read'))
+    marked_read = models.BooleanField(db_index=True, editable=False, default=False, verbose_name=_("marked read"))
     marked_read_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True, editable=False, related_name="+", on_delete=models.SET_NULL,
-        verbose_name=_('marked read by')
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        verbose_name=_("marked read by"),
     )
-    marked_read_on = models.DateTimeField(null=True, blank=True, verbose_name=_('marked read on'))
+    marked_read_on = models.DateTimeField(null=True, blank=True, verbose_name=_("marked read on"))
 
     objects = NotificationManager()
 
@@ -81,7 +91,7 @@ class Notification(models.Model):
         self.marked_read = True
         self.marked_read_by = user
         self.marked_read_on = now()
-        self.save(update_fields=('marked_read', 'marked_read_by', 'marked_read_on'))
+        self.save(update_fields=("marked_read", "marked_read_by", "marked_read_on"))
         return True
 
     @property

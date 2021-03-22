@@ -6,22 +6,33 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.http.response import Http404
 
 from shuup.admin.modules.orders.views import (
-    NewLogEntryView, OrderAddressEditView, OrderCreatePaymentView,
-    OrderDeletePaymentView, OrderDetailView, OrderSetPaidView,
-    OrderSetStatusView, OrderCreateShipmentView, ShipmentDeleteView,
-    UpdateAdminCommentView, OrderCreateRefundView, OrderCreateFullRefundView
+    NewLogEntryView,
+    OrderAddressEditView,
+    OrderCreateFullRefundView,
+    OrderCreatePaymentView,
+    OrderCreateRefundView,
+    OrderCreateShipmentView,
+    OrderDeletePaymentView,
+    OrderDetailView,
+    OrderSetPaidView,
+    OrderSetStatusView,
+    ShipmentDeleteView,
+    UpdateAdminCommentView,
 )
-from shuup.core.models import (
-    Order, OrderLogEntry, OrderStatus, OrderStatusRole, ShippingStatus
-)
+from shuup.core.models import Order, OrderLogEntry, OrderStatus, OrderStatusRole, ShippingStatus
 from shuup.testing.factories import (
-    create_order_with_product, create_product, create_random_order,
-    create_random_person, create_random_user, get_default_product,
-    get_default_shop, get_default_supplier, get_shop
+    create_order_with_product,
+    create_product,
+    create_random_order,
+    create_random_person,
+    create_random_user,
+    get_default_product,
+    get_default_shop,
+    get_default_supplier,
+    get_shop,
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -175,7 +186,7 @@ def test_view_availability(admin_user, rf):
 
     # Create shipment to test delete shipment view
     shipment = order.create_shipment_of_all_products(supplier)
-    
+
     def test_shipment_delete_view(shipment, shop, user):
         request = apply_request_middleware(rf.post("/"), user=user, shop=shop)
         response = ShipmentDeleteView.as_view()(request, pk=shipment.pk, supplier_pk=supplier.pk)
@@ -183,7 +194,7 @@ def test_view_availability(admin_user, rf):
     test_shipment_delete_view(shipment, shop_one, simone)
     test_shipment_delete_view(shipment, shop_one, peter)
     with pytest.raises(Http404):
-        test_shipment_delete_view(shipment, shop_two, calle)  
+        test_shipment_delete_view(shipment, shop_two, calle)
 
     # Create payment to test refund and delete payment view
     order.create_payment(order.taxful_total_price)

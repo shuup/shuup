@@ -10,9 +10,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.modules.contacts.forms import (
-    CompanyContactBaseForm, PersonContactBaseForm
-)
+from shuup.admin.modules.contacts.forms import CompanyContactBaseForm, PersonContactBaseForm
 from shuup.core.models import PersonContact
 from shuup.utils.excs import Problem
 from shuup.utils.form_group import FormDef
@@ -28,7 +26,7 @@ class CompanyContactBaseFormPart(FormPart):
             CompanyContactBaseForm,
             template_name="shuup/admin/contacts/_edit_base_form.jinja",
             required=True,
-            kwargs={"instance": self.object if self.object.pk else None, "request": self.request}
+            kwargs={"instance": self.object if self.object.pk else None, "request": self.request},
         )
 
     def form_valid(self, form):
@@ -58,7 +56,8 @@ class PersonContactBaseFormPart(FormPart):
             kwargs={
                 "instance": self.object if self.object.pk else None,
                 "user": self.get_user(),
-                "request": self.request}
+                "request": self.request,
+            },
         )
 
     def form_valid(self, form):
@@ -73,17 +72,23 @@ class ContactAddressesFormPart(FormPart):
         initial = {}  # TODO: should we do this? model_to_dict(self.object, AddressForm._meta.fields)
         address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
         yield FormDef(
-            name="shipping_address", form_class=address_form_class,
-            required=False, kwargs={"instance": self.object.default_shipping_address, "initial": initial}
+            name="shipping_address",
+            form_class=address_form_class,
+            required=False,
+            kwargs={"instance": self.object.default_shipping_address, "initial": initial},
         )
         yield FormDef(
-            name="billing_address", form_class=address_form_class,
-            required=False, kwargs={"instance": self.object.default_billing_address, "initial": initial}
+            name="billing_address",
+            form_class=address_form_class,
+            required=False,
+            kwargs={"instance": self.object.default_billing_address, "initial": initial},
         )
         # Using a pseudo formdef to group the two actual formdefs...
         yield TemplatedFormDef(
-            name="addresses", form_class=forms.Form,
-            required=False, template_name="shuup/admin/contacts/_edit_addresses_form.jinja"
+            name="addresses",
+            form_class=forms.Form,
+            required=False,
+            template_name="shuup/admin/contacts/_edit_addresses_form.jinja",
         )
 
     def form_valid(self, form):

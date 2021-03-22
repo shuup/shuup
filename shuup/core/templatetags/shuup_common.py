@@ -16,12 +16,10 @@ Common helpers for Shuup templates.
 
 from __future__ import unicode_literals
 
-from datetime import date
-from json import dumps as json_dump
-
 import bleach
 from babel.dates import format_date, format_datetime, format_time
 from babel.numbers import format_decimal
+from datetime import date
 from django.conf import settings
 from django.template.defaultfilters import linebreaks
 from django.utils import translation
@@ -30,10 +28,9 @@ from django.utils.timezone import localtime
 from django_jinja import library
 from jinja2 import Undefined
 from jinja2.utils import contextfunction
+from json import dumps as json_dump
 
-from shuup.utils.i18n import (
-    format_money, format_percent, get_current_babel_locale
-)
+from shuup.utils.i18n import format_money, format_percent, get_current_babel_locale
 from shuup.utils.serialization import ExtendedJSONEncoder
 
 
@@ -170,6 +167,7 @@ def get_shop_configuration(context, name, default=None):
     :type default: Any
     """
     from shuup import configuration
+
     return configuration.get(context.get("request").shop, name, default)
 
 
@@ -182,12 +180,14 @@ def get_global_configuration(name, default=None):
     :type default: Any
     """
     from shuup import configuration
+
     return configuration.get(None, name, default)
 
 
 @library.global_function
 def get_shuup_version():
     from shuup import __version__
+
     return __version__
 
 
@@ -201,4 +201,5 @@ def shuup_static(path, package=None):
         version as a base.
     """
     from shuup.core.utils.static import get_shuup_static_url
+
     return get_shuup_static_url(path, package)

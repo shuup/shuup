@@ -13,9 +13,7 @@ class AuthAppConfig(AppConfig):
     label = "shuup_front.auth"
 
     provides = {
-        "front_urls": [
-            "shuup.front.apps.auth.urls:urlpatterns"
-        ],
+        "front_urls": ["shuup.front.apps.auth.urls:urlpatterns"],
     }
 
 

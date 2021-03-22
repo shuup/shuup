@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
 import django.db.models.deletion
+import enumfields.fields
 import jsonfield.fields
 from django.conf import settings
-import enumfields.fields
+from django.db import migrations, models
+
 import shuup.utils.analog
 
 

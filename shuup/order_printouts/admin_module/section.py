@@ -17,10 +17,12 @@ except ImportError:
     weasyprint = None
 
 
-EMAIL_DEFAULT_BODY = _("""Important information regarding your order, see attachment.
+EMAIL_DEFAULT_BODY = _(
+    """Important information regarding your order, see attachment.
 
 Best Regards,
-%(shop)s""")
+%(shop)s"""
+)
 
 
 class PrintoutsSection(Section):
@@ -45,6 +47,6 @@ class PrintoutsSection(Section):
         data = {
             "to": recipient,
             "subject": _("%(shop)s: Order %(pk)s") % {"shop": obj.shop.name, "pk": obj.pk},
-            "body": (EMAIL_DEFAULT_BODY % {"shop": obj.shop.name}).strip()
+            "body": (EMAIL_DEFAULT_BODY % {"shop": obj.shop.name}).strip(),
         }
         return {"email_form": PrintoutsEmailForm(initial=data), "can_create_pdf": bool(weasyprint)}

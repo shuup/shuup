@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 import datetime
 import json
-
 import six
 from django.core.paginator import EmptyPage, Paginator
 from django.db.models import Manager, Q, QuerySet
@@ -20,7 +19,7 @@ from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.files import get_thumbnailer
 from filer.models import Image
 
-from shuup.admin.utils.urls import get_model_url, NoModelUrl
+from shuup.admin.utils.urls import NoModelUrl, get_model_url
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import ProductMedia
 from shuup.utils.dates import try_parse_datetime
@@ -93,9 +92,7 @@ class ChoicesFilter(Filter):
         if isinstance(choices, QuerySet):
             choices = [(c.pk, c) for c in choices]
         return [("_all", "---------")] + [
-            (force_text(value, strings_only=True), force_text(display))
-            for (value, display)
-            in choices
+            (force_text(value, strings_only=True), force_text(display)) for (value, display) in choices
         ]
 
     def to_json(self, context):
@@ -103,10 +100,7 @@ class ChoicesFilter(Filter):
         default_choice = self.default
         if default_choice is None and choices:
             default_choice = choices[0][0]
-        return {
-            "choices": choices,
-            "defaultChoice": default_choice
-        }
+        return {"choices": choices, "defaultChoice": default_choice}
 
     def filter_queryset(self, queryset, column, value, context):
         if value == "_all":
@@ -153,12 +147,14 @@ class RangeFilter(Filter):
 
     def to_json(self, context):
         return {
-            "range": compact({
-                "min": maybe_call(self.min, context=context),
-                "max": maybe_call(self.max, context=context),
-                "step": maybe_call(self.step, context=context),
-                "type": self.field_type,
-            })
+            "range": compact(
+                {
+                    "min": maybe_call(self.min, context=context),
+                    "max": maybe_call(self.max, context=context),
+                    "step": maybe_call(self.step, context=context),
+                    "type": self.field_type,
+                }
+            )
         }
 
     def filter_queryset(self, queryset, column, value, context):
@@ -184,7 +180,6 @@ class RangeFilter(Filter):
 
 
 class DateRangeFilter(RangeFilter):
-
     def __init__(self, *args, **kwargs):
         super(DateRangeFilter, self).__init__(*args, **kwargs)
         if not self.field_type:
@@ -192,10 +187,7 @@ class DateRangeFilter(RangeFilter):
 
     def filter_queryset(self, queryset, column, value, context):
         if value:
-            value = {
-                "min": try_parse_datetime(value.get("min")),
-                "max": try_parse_datetime(value.get("max"))
-            }
+            value = {"min": try_parse_datetime(value.get("min")), "max": try_parse_datetime(value.get("max"))}
         return super(DateRangeFilter, self).filter_queryset(queryset, column, value, context)
 
 
@@ -220,10 +212,12 @@ class TextFilter(Filter):
 
     def to_json(self, context):
         return {
-            "text": compact({
-                "type": self.field_type,
-                "placeholder": force_text(self.placeholder) if self.placeholder else None,
-            })
+            "text": compact(
+                {
+                    "type": self.field_type,
+                    "placeholder": force_text(self.placeholder) if self.placeholder else None,
+                }
+            )
         }
 
     def filter_queryset(self, queryset, column, value, context):
@@ -254,14 +248,10 @@ class MultiFieldTextFilter(TextFilter):
         return queryset
 
 
-true_or_false_filter = ChoicesFilter([
-    (False, _("no")),
-    (True, _("yes"))
-])
+true_or_false_filter = ChoicesFilter([(False, _("no")), (True, _("yes"))])
 
 
 class Column(object):
-
     def __init__(self, id, title, **kwargs):
         self.id = id
         self.title = title
@@ -393,7 +383,7 @@ class Picotable(object):
 
     def _get_default_filter(self, column):
         filter_config = getattr(column, "filter_config")
-        if(filter_config and hasattr(filter_config, "default") and filter_config.default is not None):
+        if filter_config and hasattr(filter_config, "default") and filter_config.default is not None:
             field = filter_config.filter_field or column.id
             return (field, filter_config.default)
         else:
@@ -413,7 +403,7 @@ class Picotable(object):
         if ordered is not None and not ordered:
             queryset = self.queryset.order_by("-id")
 
-        filters = (query.get("filters") or self._get_default_filters())
+        filters = query.get("filters") or self._get_default_filters()
         for column, value in six.iteritems(filters):
             column = self.columns_by_id.get(column)
             if column:
@@ -421,7 +411,7 @@ class Picotable(object):
 
         sort = query.get("sort")
         if sort:
-            desc = (sort[0] == "-")
+            desc = sort[0] == "-"
             column = self.columns_by_id.get(sort[1:])
             if not (column and column.sortable):
                 raise ValueError("Error! Can't sort by column %r." % sort[1:])
@@ -445,11 +435,12 @@ class Picotable(object):
             },
             "massActions": self.mass_actions,
             "items": [self.process_item(item) for item in page],
-            "itemInfo": _("Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s") % {
+            "itemInfo": _("Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s")
+            % {
                 "per_page": min(paginator.per_page, paginator.count),
                 "n_items": paginator.count,
                 "verbose_name_plural": self.get_verbose_name_plural(),
-            }
+            },
         }
         return out
 
@@ -460,12 +451,12 @@ class Picotable(object):
             "_id": object.id,
             "_url": object_url,
             "_linked_in_mobile": True if object_url else False,
-            "_extra": object_extra
+            "_extra": object_extra,
         }
         for column in self.columns:
             out[column.id] = column.get_display_value(context=self.context, object=object)
         out["type"] = type(object).__name__
-        out["_abstract"] = (self.get_object_abstract(object, item=out) if callable(self.get_object_abstract) else None)
+        out["_abstract"] = self.get_object_abstract(object, item=out) if callable(self.get_object_abstract) else None
         return out
 
     def get_verbose_name_plural(self):
@@ -493,7 +484,7 @@ class PicotableViewMixin(object):
             columns=self.columns,
             mass_actions=mass_actions,
             queryset=self.get_queryset(),
-            context=self
+            context=self,
         )
         return JsonResponse(pico.get_data(json.loads(query_json)), encoder=ExtendedJSONEncoder)
 
@@ -593,10 +584,7 @@ class PicotableViewMixin(object):
             if extra_data and isinstance(extra_data, dict):
                 action_data.update(extra_data)
 
-            action_data.update({
-                "key": obj.identifier,
-                "value": obj.label
-            })
+            action_data.update({"key": obj.identifier, "value": obj.label})
             actions.append(action_data)
         return actions
 
@@ -611,6 +599,7 @@ class PicotableMassAction(object):
     * `shuup.admin.modules.orders.mass_actions.CancelOrderAction`
     * `shuup.admin.modules.products.mass_actions.VisibleMassAction`
     """
+
     label = _("Mass Action")
     identifier = "mass_action"
 
@@ -660,6 +649,7 @@ class PicotableFileMassAction(PicotableMassAction):
     * `shuup.admin.modules.orders.mass_actions.OrderConfirmationPdfAction`
     * `shuup.admin.modules.products.mass_actions.FileResponseAction`
     """
+
     def process(self, request, ids):
         """
         Process and return `HttpResponse`.
@@ -694,6 +684,7 @@ class PicotableRedirectMassAction(PicotableMassAction):
     * `shuup.admin.modules.contacts.mass_actions.EditContactsAction`
     * `shuup.admin.modules.products.mass_actions.EditProductAttributesAction`
     """
+
     redirect_url = None
 
     def process(self, request, ids):
@@ -702,10 +693,7 @@ class PicotableRedirectMassAction(PicotableMassAction):
 
     def get_action_info(self, request):
         if self.redirect_url:
-            return {
-                "redirects": True,
-                "redirect_url": self.redirect_url
-            }
+            return {"redirects": True, "redirect_url": self.redirect_url}
 
         return {}
 
@@ -720,9 +708,8 @@ class PicotableJavascriptMassAction(PicotableMassAction):
     Set the function call in `callback`, e.g. `deleteProducts`.
     The mass action will then invoce the callback as `deleteProducts(ids)`
     """
+
     callback = None
 
     def get_action_info(self, request):
-        return {
-            "callback": self.callback
-        }
+        return {"callback": self.callback}

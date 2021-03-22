@@ -6,15 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
 import selenium
 
-from shuup.utils.django_compat import reverse
-
-from shuup.testing.browser_utils import wait_until_condition, wait_until_appeared
+from shuup.testing.browser_utils import initialize_admin_browser_test, wait_until_appeared, wait_until_condition
 from shuup.testing.factories import get_default_shop
-from shuup.testing.browser_utils import initialize_admin_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -39,7 +36,6 @@ def test_menu(browser, admin_user, live_server, settings):
         # 10% of time in my local environment, but main reason for this
         # is Travis.
         browser.find_by_css(".quicklinks a").first.click()
-
 
     wait_until_appeared(browser, ".item-category.item-active")
     browser.find_by_css(".menu-list li a")[2].click()

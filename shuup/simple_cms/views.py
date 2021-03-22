@@ -42,7 +42,7 @@ class PageView(DetailView):
 
         self.object.set_current_language(get_language())
         if self.object.url != self.kwargs[self.slug_url_kwarg]:  # Wrong URL, hm!
-            return HttpResponseRedirect(reverse('shuup:cms_page', kwargs={"url": self.object.url}))
+            return HttpResponseRedirect(reverse("shuup:cms_page", kwargs={"url": self.object.url}))
 
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
@@ -52,7 +52,7 @@ class PageView(DetailView):
         return [object.template_name]
 
     def get_queryset(self):
-        if getattr(self.request.user, 'is_superuser', False):
+        if getattr(self.request.user, "is_superuser", False):
             # Superusers may see all pages despite their visibility status
             return self.model.objects.for_shop(self.request.shop).filter(deleted=False)
         return self.model.objects.visible(self.request.shop, user=self.request.user)

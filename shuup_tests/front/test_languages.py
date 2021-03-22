@@ -5,15 +5,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shuup.utils.django_compat import reverse
 from django.test.utils import override_settings
 from django.utils.translation import activate, get_language
 
 from shuup.core import cache
-from shuup.front.utils.translation import (
-    get_shop_available_languages, set_shop_available_languages
-)
+from shuup.front.utils.translation import get_shop_available_languages, set_shop_available_languages
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 
@@ -28,14 +26,9 @@ def test_shop_available_languages(admin_user):
     client = SmartClient()
 
     with override_settings(
-        LANGUAGES=[
-            ("it", "Italian"),
-            ("fr", "French"),
-            ("fi", "Finnish"),
-            ("pt", "Portuguese")
-        ],
+        LANGUAGES=[("it", "Italian"), ("fr", "French"), ("fi", "Finnish"), ("pt", "Portuguese")],
         LANGUAGE_CODE="it",
-        PARLER_DEFAULT_LANGUAGE_CODE = "it"
+        PARLER_DEFAULT_LANGUAGE_CODE="it",
     ):
         # there is no language set for the shop, the first one will be used
         response = client.get(reverse("shuup:index"))
@@ -84,7 +77,7 @@ def test_shop_remove_available_languages(admin_user):
             ("fi", "Finnish"),
         ],
         LANGUAGE_CODE="en",
-        PARLER_DEFAULT_LANGUAGE_CODE = "en"
+        PARLER_DEFAULT_LANGUAGE_CODE="en",
     ):
         # there is no language set for the shop, the first one will be used
         response = client.get(reverse("shuup:index"))
@@ -120,14 +113,9 @@ def test_admin_set_shop_language(admin_user):
     client.login(username=admin_user.username, password="admin")
 
     with override_settings(
-        LANGUAGES=[
-            ("it", "Italian"),
-            ("fr", "French"),
-            ("fi", "Finnish"),
-            ("pt-br", "Portuguese (Brazil)")
-        ],
+        LANGUAGES=[("it", "Italian"), ("fr", "French"), ("fi", "Finnish"), ("pt-br", "Portuguese (Brazil)")],
         LANGUAGE_CODE="it",
-        PARLER_DEFAULT_LANGUAGE_CODE = "it"
+        PARLER_DEFAULT_LANGUAGE_CODE="it",
     ):
         assert get_shop_available_languages(shop) == []
         edit_url = reverse("shuup_admin:shop.edit", kwargs=dict(pk=shop.id))
@@ -147,7 +135,7 @@ def test_admin_set_shop_language(admin_user):
             "product_list_facets-filter_products_by_manufacturer_ordering": "1",
             "product_list_facets-filter_products_by_variation_value_ordering": "1",
             "order_configuration-order_reference_number_length": "20",
-            "order_configuration-order_reference_number_prefix": "10"
+            "order_configuration-order_reference_number_prefix": "10",
         }
         response = client.post(edit_url, data=payload)
         assert response.status_code == 302

@@ -52,11 +52,7 @@ class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore
         :return: SavedViewConfig (possibly not saved).
         :rtype: SavedViewConfig
         """
-        svc_kwargs = dict(
-            theme_identifier=theme.identifier,
-            shop=shop,
-            view_name=view_name
-        )
+        svc_kwargs = dict(theme_identifier=theme.identifier, shop=shop, view_name=view_name)
         svc_qs = SavedViewConfig.objects.filter(**svc_kwargs).order_by("-id")
         if draft:  # In draft mode? Try loading drafts first
             model = svc_qs.filter(status=SavedViewConfigStatus.CURRENT_DRAFT).first()
@@ -90,14 +86,15 @@ class SavedViewConfigStatus(Enum):
       is copied into a new CURRENT_DRAFT version.
 
     """
+
     CURRENT_DRAFT = 1
     OLD_VERSION = 2
     PUBLIC = 3
 
     class Labels:
-        CURRENT_DRAFT = _('current draft')
-        OLD_VERSION = _('old version')
-        PUBLIC = _('public')
+        CURRENT_DRAFT = _("current draft")
+        OLD_VERSION = _("old version")
+        PUBLIC = _("public")
 
 
 class SavedViewConfig(models.Model):
@@ -118,9 +115,7 @@ class SavedViewConfig(models.Model):
         if not self.draft:
             raise ValueError("Error! Unable to publish a non-draft view configuration.")
         self.__class__.objects.filter(
-            shop=self.shop,
-            theme_identifier=self.theme_identifier,
-            view_name=self.view_name
+            shop=self.shop, theme_identifier=self.theme_identifier, view_name=self.view_name
         ).update(status=SavedViewConfigStatus.OLD_VERSION)
         self.status = SavedViewConfigStatus.PUBLIC
         self.save()
@@ -183,14 +178,20 @@ class Snippet(models.Model):
     """
     Inject snippet code globally filtering by themes if configured.
     """
+
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="snippets")
     location = models.CharField(max_length=64, verbose_name=_("location"))
     snippet_type = models.CharField(max_length=20, verbose_name=_("snippet type"), choices=SnippetTypeChoices)
     snippet = models.TextField(verbose_name=_("snippet"))
     # list of theme identifiers that will be have this sniipet injected, if None, it means all themes
-    themes = SeparatedValuesField(verbose_name=_("themes"), blank=True, null=True, help_text=_(
-        "Select the themes that will have this snippet injected. Leave the field blank to inject in all themes."
-    ))
+    themes = SeparatedValuesField(
+        verbose_name=_("themes"),
+        blank=True,
+        null=True,
+        help_text=_(
+            "Select the themes that will have this snippet injected. Leave the field blank to inject in all themes."
+        ),
+    )
 
     class Meta:
         verbose_name = _("Snippet")

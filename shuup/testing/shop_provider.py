@@ -13,7 +13,6 @@ SHOP_SESSION_KEY = "admin_shop"
 
 
 class TestingAdminShopProvider(object):
-
     def get_shop(self, request):
         return Shop.objects.first()
 

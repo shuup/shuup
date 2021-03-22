@@ -8,18 +8,15 @@
 from __future__ import unicode_literals
 
 import abc
+import six
 from abc import abstractmethod
 from collections import OrderedDict
-
-import six
 from django.utils.text import camel_case_to_spaces
 from jinja2.exceptions import TemplateError
 
 from shuup.apps.provides import get_identifier_to_object_map
-from shuup.notify.enums import (
-    ConstantUse, TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
-)
-from shuup.notify.template import render_in_context, Template
+from shuup.notify.enums import UNILINGUAL_TEMPLATE_LANGUAGE, ConstantUse, TemplateUse
+from shuup.notify.template import Template, render_in_context
 from shuup.utils.django_compat import force_text
 from shuup.utils.importing import cached_load
 from shuup.utils.text import snake_case, space_case
@@ -97,24 +94,21 @@ class Variable(object):
 
     def get_matching_types(self, variable_dict):
         return set(
-            name
-            for name, variable
-            in six.iteritems(variable_dict)
-            if self.type.is_coercible_from(variable.type)
+            name for name, variable in six.iteritems(variable_dict) if self.type.is_coercible_from(variable.type)
         )
 
 
 class Binding(Variable):
-    def __init__(self,
-                 name, type=Type, required=False,
-                 help_text="", constant_use=ConstantUse.VARIABLE_ONLY, default=None):
+    def __init__(
+        self, name, type=Type, required=False, help_text="", constant_use=ConstantUse.VARIABLE_ONLY, default=None
+    ):
         super(Binding, self).__init__(name=name, type=type, required=required, help_text=help_text)
         self.constant_use = constant_use
         self.default = default
 
     @property
     def accepts_any_type(self):
-        return (not self.type.identifier)
+        return not self.type.identifier
 
     @property
     def allow_constant(self):
@@ -204,8 +198,7 @@ class ScriptItem(Base):
     def __init__(self, data, validate=True):
         if not self.identifier:  # pragma: no cover
             raise ValueError(
-                "Error! Attempting to initialize %s without an identifier: %r." %
-                (self.__class__.__name__, self)
+                "Error! Attempting to initialize %s without an identifier: %r." % (self.__class__.__name__, self)
             )
         self.data = data
         if validate:
@@ -356,6 +349,7 @@ class ScriptTemplate(six.with_metaclass(abc.ABCMeta)):
     :ivar str extra_js_template_name: template with extra JavaScript code to use when rendering the form, if needed.
     :ivar django.http.request.HttpRequest : http request.
     """
+
     identifier = ""
     event = None
     name = ""
@@ -449,7 +443,7 @@ class ScriptTemplate(six.with_metaclass(abc.ABCMeta)):
         Returns the keyword arguments for instantiating the configuration form.
         """
         return {
-            'initial': self.get_initial(),
+            "initial": self.get_initial(),
         }
 
     def get_context_data(self):

@@ -15,8 +15,16 @@ class ProductStockStatus(ProductCachingObject):
     error = None
     stock_managed = False
 
-    def __init__(self, product=None, product_id=None, logical_count=0,
-                 physical_count=0, message=None, error=None, stock_managed=False):
+    def __init__(
+        self,
+        product=None,
+        product_id=None,
+        logical_count=0,
+        physical_count=0,
+        message=None,
+        error=None,
+        stock_managed=False,
+    ):
         if product_id:
             self.product_id = product_id
         else:

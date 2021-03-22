@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
 import enumfields.fields
-import shuup.core.fields
+from django.db import migrations, models
+
 import shuup.campaigns.models.basket_conditions
+import shuup.core.fields
 
 
 class Migration(migrations.Migration):

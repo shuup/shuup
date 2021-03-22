@@ -7,18 +7,22 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.utils.django_compat import reverse
-
 from shuup.apps.provides import override_provides
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse
 from shuup.xtheme import get_current_theme
 from shuup.xtheme.layout import (
-    AnonymousContactLayout, ContactLayout, PersonContactLayout,
-    CompanyContactLayout, CategoryLayout, ProductLayout, Layout
+    AnonymousContactLayout,
+    CategoryLayout,
+    CompanyContactLayout,
+    ContactLayout,
+    Layout,
+    PersonContactLayout,
+    ProductLayout,
 )
 from shuup.xtheme.layout.utils import get_layout_data_key
 from shuup.xtheme.view_config import ViewConfig
-from shuup_tests.utils import printable_gibberish, SmartClient
+from shuup_tests.utils import SmartClient, printable_gibberish
 from shuup_tests.xtheme.utils import get_request
 
 
@@ -80,7 +84,7 @@ def test_product_layout():
     _assert_empty_layout(layout, placeholder_name)
 
     _add_plugin_and_test_save(vc, layout, placeholder_name, context)
-    
+
     # Make sure layout only available for this one product
     new_product = factories.create_product("new_test")
     context = {"product": new_product}
@@ -343,14 +347,8 @@ def _add_basic_plugin(layout, plugin_text):
 def _assert_layout_content_for_basic_plugin(layout, placeholder_name, plugin_text):
     serialized = layout.serialize()
     expected = {
-        'name': placeholder_name,
-        'rows': [
-            {
-                'cells': [
-                    {'config': {'text': plugin_text}, 'plugin': 'text', 'sizes': {"md": 8}}
-                ]
-            }
-        ]
+        "name": placeholder_name,
+        "rows": [{"cells": [{"config": {"text": plugin_text}, "plugin": "text", "sizes": {"md": 8}}]}],
     }
     assert bool(serialized == expected)
 

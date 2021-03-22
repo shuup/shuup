@@ -109,6 +109,6 @@ class DashboardChartBlock(DashboardBlock):
             "title": force_text(chart.title),
             "id": self.id,
             "config": chart.get_config_json(),
-            "icon": "fa-line-chart"
+            "icon": "fa-line-chart",
         }
         return content

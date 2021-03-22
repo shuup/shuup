@@ -30,5 +30,6 @@ def test_init_empty_fails():
     with pytest.raises(ValueError):
         Event()
 
+
 def test_auto_name():
     assert ATestEvent.name == "Test Event"

@@ -7,27 +7,30 @@
 # LICENSE file in the root directory of this source tree.
 
 import json
-
 import pytest
 from django.test import override_settings
 from django.utils.translation import activate, get_language
 
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.core.models import (
-    Category, CompanyContact, PersonContact, Product, ProductMode,
-    SalesUnit, ShopProduct, ShopProductVisibility, CategoryStatus, Supplier
+    Category,
+    CategoryStatus,
+    CompanyContact,
+    PersonContact,
+    Product,
+    ProductMode,
+    SalesUnit,
+    ShopProduct,
+    ShopProductVisibility,
+    Supplier,
 )
-from shuup.testing.factories import create_product, get_default_shop, get_shop, create_random_user
+from shuup.testing.factories import create_product, create_random_user, get_default_shop, get_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
 
 
-
 def _get_search_results(rf, view, model_name, search_str, user, search_mode=None, sales_units=None, shop=None):
-    data = {
-        "model": model_name,
-        "search": search_str
-    }
+    data = {"model": model_name, "search": search_str}
     if search_mode:
         data.update({"searchMode": search_mode})
 
@@ -83,7 +86,7 @@ def test_ajax_select_view_with_products(rf, admin_user):
 
     activate("fi")
     results = _get_search_results(rf, view, "shuup.Product", "product", admin_user)
-    assert get_language() == 'fi'
+    assert get_language() == "fi"
     assert len(results) == 1
     assert results[0].get("id") == product.id
     assert results[0].get("name") == product_name_fi
@@ -99,7 +102,8 @@ def test_ajax_select_view_with_products(rf, admin_user):
     supplier1 = Supplier.objects.create(name="supplier1", enabled=True)
     supplier1.shops.add(shop)
     product = create_product(
-        "test-product", shop, default_price="200", supplier=supplier1, mode=ProductMode.SIMPLE_VARIATION_PARENT)
+        "test-product", shop, default_price="200", supplier=supplier1, mode=ProductMode.SIMPLE_VARIATION_PARENT
+    )
     results = _get_search_results(rf, view, "shuup.Product", "  product  ", admin_user, "parent_product")
     assert len(results) == 1
 
@@ -107,7 +111,8 @@ def test_ajax_select_view_with_products(rf, admin_user):
     supplier2 = Supplier.objects.create(name="supplier2", enabled=False)
     supplier2.shops.add(shop2)
     product2 = create_product(
-        "test-product-two", shop2, default_price="200", supplier=supplier2, mode=ProductMode.SIMPLE_VARIATION_PARENT)
+        "test-product-two", shop2, default_price="200", supplier=supplier2, mode=ProductMode.SIMPLE_VARIATION_PARENT
+    )
     results = _get_search_results(rf, view, "shuup.Product", "  product  ", admin_user, "parent_product")
     assert len(results) == 1
 
@@ -129,7 +134,7 @@ def test_multi_select_with_main_products(rf, admin_user):
             assert child.mode == ProductMode.VARIATION_CHILD
 
     assert parent.variation_children.count() == 4 * 3
-    assert Product.objects.count() == 4*3 + 1
+    assert Product.objects.count() == 4 * 3 + 1
 
     results = _get_search_results(rf, view, "shuup.Product", "test", admin_user)
     assert len(results) == Product.objects.count()
@@ -169,7 +174,7 @@ def test_multi_select_with_sellable_only_products(rf, admin_user):
     assert len(results) == Product.objects.count()
 
     results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
-    assert len(results) ==  Product.objects.count() - 1
+    assert len(results) == Product.objects.count() - 1
 
     create_product("test1", shop=shop, **{"name": "test 123"})
     results = _get_search_results(rf, view, "shuup.Product", "test", admin_user, "sellable_mode_only")
@@ -208,7 +213,6 @@ def test_multi_select_with_product_sales_unit(rf, admin_user):
     oz = SalesUnit.objects.create(symbol="oz", name="Ounce")
     create_product("oz", shop=shop, **{"name": "Ounce Product", "sales_unit": oz})
 
-
     view = MultiselectAjaxView.as_view()
 
     results = _get_search_results(rf, view, "shuup.Product", "Product", admin_user)
@@ -225,9 +229,7 @@ def test_multi_select_with_product_sales_unit(rf, admin_user):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("contact_cls", [
-    PersonContact, CompanyContact
-])
+@pytest.mark.parametrize("contact_cls", [PersonContact, CompanyContact])
 def test_ajax_select_view_with_contacts(rf, contact_cls, admin_user):
     shop = get_default_shop()
     view = MultiselectAjaxView.as_view()
@@ -265,9 +267,7 @@ def test_ajax_select_view_with_contacts(rf, contact_cls, admin_user):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("contact_cls", [
-    PersonContact, CompanyContact
-])
+@pytest.mark.parametrize("contact_cls", [PersonContact, CompanyContact])
 def test_ajax_select_view_with_contacts_multipleshop(rf, contact_cls):
     shop1 = get_default_shop()
     shop2 = get_shop(identifier="shop2")

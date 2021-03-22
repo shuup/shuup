@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.forms.formsets import BaseFormSet, DELETION_FIELD_NAME
+from django.forms.formsets import DELETION_FIELD_NAME, BaseFormSet
 
 
 class ProductChildBaseFormSet(BaseFormSet):

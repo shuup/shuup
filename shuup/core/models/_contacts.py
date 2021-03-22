@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from functools import lru_cache
-
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -18,14 +16,13 @@ from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 from filer.fields.image import FilerImageField
+from functools import lru_cache
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 from timezone_field.fields import TimeZoneField
 
 from shuup import configuration
-from shuup.core.fields import (
-    InternalIdentifierField, LanguageField, PolymorphicJSONField
-)
+from shuup.core.fields import InternalIdentifierField, LanguageField, PolymorphicJSONField
 from shuup.core.pricing import PriceDisplayOptions
 from shuup.core.utils.users import is_user_all_seeing
 from shuup.utils.analog import define_log_model
@@ -41,14 +38,14 @@ DEFAULT_ANONYMOUS_GROUP_IDENTIFIER = "default_anonymous_group"
 PROTECTED_CONTACT_GROUP_IDENTIFIERS = [
     DEFAULT_COMPANY_GROUP_IDENTIFIER,
     DEFAULT_PERSON_GROUP_IDENTIFIER,
-    DEFAULT_ANONYMOUS_GROUP_IDENTIFIER
+    DEFAULT_ANONYMOUS_GROUP_IDENTIFIER,
 ]
 
 
 @lru_cache()
 def get_price_display_options(group):
     options = group.price_display_options.for_group_and_shop(group, shop=group.shop)
-    return (options.to_price_display() or PriceDisplayOptions())
+    return options.to_price_display() or PriceDisplayOptions()
 
 
 @lru_cache()
@@ -67,13 +64,11 @@ class ContactGroupPriceDisplayQueryset(QuerySet):
 class ContactGroupPriceDisplay(models.Model):
     shop = models.ForeignKey(on_delete=models.CASCADE, to="Shop", related_name="price_display_options", null=True)
     group = models.ForeignKey(on_delete=models.CASCADE, to="ContactGroup", related_name="price_display_options")
-    show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
+    show_pricing = models.BooleanField(verbose_name=_("show as pricing option"), default=True)
     show_prices_including_taxes = models.NullBooleanField(
-        default=None, null=True, blank=True,
-        verbose_name=_("show prices including taxes"))
-    hide_prices = models.NullBooleanField(
-        default=None, null=True, blank=True,
-        verbose_name=_("hide prices"))
+        default=None, null=True, blank=True, verbose_name=_("show prices including taxes")
+    )
+    hide_prices = models.NullBooleanField(default=None, null=True, blank=True, verbose_name=_("hide prices"))
 
     objects = ContactGroupPriceDisplayQueryset.as_manager()
 
@@ -82,9 +77,12 @@ class ContactGroupPriceDisplay(models.Model):
         return _("Price Display Options for Contact Group %s") % group_name
 
     class Meta:
-        verbose_name = _('contact group price display')
-        verbose_name_plural = _('contact group price displays')
-        unique_together = ("shop", "group",)
+        verbose_name = _("contact group price display")
+        verbose_name_plural = _("contact group price displays")
+        unique_together = (
+            "shop",
+            "group",
+        )
 
     def to_price_display(self):
         return PriceDisplayOptions(
@@ -96,8 +94,8 @@ class ContactGroupPriceDisplay(models.Model):
 class ContactGroupQuerySet(TranslatableQuerySet):
     def with_price_display_options(self, shop):
         return self.filter(
-            models.Q(price_display_options__show_prices_including_taxes__isnull=False) |
-            models.Q(price_display_options__hide_prices__isnull=False)
+            models.Q(price_display_options__show_prices_including_taxes__isnull=False)
+            | models.Q(price_display_options__hide_prices__isnull=False)
         ).filter(price_display_options__shop=shop)
 
     def all_except_defaults(self):
@@ -107,26 +105,31 @@ class ContactGroupQuerySet(TranslatableQuerySet):
 class ContactGroup(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
     shop = models.ForeignKey(
-        on_delete=models.CASCADE, to="Shop", related_name="contact_groups", verbose_name=_("shop"), null=True)
-    members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
+        on_delete=models.CASCADE, to="Shop", related_name="contact_groups", verbose_name=_("shop"), null=True
+    )
+    members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_("members"), blank=True)
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=256, verbose_name=_('name'), help_text=_(
-            "The contact group name. "
-            "Contact groups can be used to target sales and campaigns to a specific set of users."
-        )),
+        name=models.CharField(
+            max_length=256,
+            verbose_name=_("name"),
+            help_text=_(
+                "The contact group name. "
+                "Contact groups can be used to target sales and campaigns to a specific set of users."
+            ),
+        ),
     )
 
     objects = ContactGroupQuerySet.as_manager()
 
     class Meta:
-        verbose_name = _('contact group')
-        verbose_name_plural = _('contact groups')
+        verbose_name = _("contact group")
+        verbose_name_plural = _("contact groups")
 
     def clean(self):
         super(ContactGroup, self).clean()
         shop = getattr(self, "shop", None)
-        is_default = (self.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS)
+        is_default = self.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS
         if is_default and shop:
             raise ValidationError(_("Cannot set shop for default Contact Group."), code="contact_group_default_shop")
 
@@ -138,21 +141,24 @@ class ContactGroup(TranslatableShuupModel):
     def set_price_display_options(self, **kwargs):
         shop = kwargs.get("shop", self.shop)
         ContactGroupPriceDisplay.objects.update_or_create(
-            shop=shop, group=self, defaults=dict(
+            shop=shop,
+            group=self,
+            defaults=dict(
                 show_prices_including_taxes=kwargs.get("show_prices_including_taxes", None),
                 show_pricing=kwargs.get("show_pricing", True),
-                hide_prices=kwargs.get("hide_prices", None)
-            ))
+                hide_prices=kwargs.get("hide_prices", None),
+            ),
+        )
         return self
 
     def get_price_display_options(self):
-        return (get_price_display_options(self) if self.pk else PriceDisplayOptions())
+        return get_price_display_options(self) if self.pk else PriceDisplayOptions()
 
     def can_delete(self):
         return bool(
-            self.pk and
-            self.identifier not in PROTECTED_CONTACT_GROUP_IDENTIFIERS and
-            not self.customer_group_orders.count()
+            self.pk
+            and self.identifier not in PROTECTED_CONTACT_GROUP_IDENTIFIERS
+            and not self.customer_group_orders.count()
         )
 
     def delete(self, *args, **kwargs):
@@ -162,7 +168,7 @@ class ContactGroup(TranslatableShuupModel):
 
     @property
     def is_protected(self):
-        return (self.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS)
+        return self.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS
 
     # TOOD: Remove these backwards compatibilities of sorts
     @property
@@ -186,92 +192,141 @@ class Contact(PolymorphicShuupModel):
     default_contact_group_identifier = None
     default_contact_group_name = None
 
-    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
     modified_on = models.DateTimeField(
-        auto_now=True, editable=False, db_index=True, null=True, verbose_name=_('modified on'))
+        auto_now=True, editable=False, db_index=True, null=True, verbose_name=_("modified on")
+    )
     identifier = InternalIdentifierField(unique=True, null=True, blank=True)
-    is_active = models.BooleanField(default=True, db_index=True, verbose_name=_('active'), help_text=_(
-        "Enable this if the contact is an active customer."
-    ))
-    shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_('shops'), help_text=_(
-        "Inform which shops have access to this contact."
-    ))
+    is_active = models.BooleanField(
+        default=True,
+        db_index=True,
+        verbose_name=_("active"),
+        help_text=_("Enable this if the contact is an active customer."),
+    )
+    shops = models.ManyToManyField(
+        "shuup.Shop",
+        blank=True,
+        verbose_name=_("shops"),
+        help_text=_("Inform which shops have access to this contact."),
+    )
 
     registration_shop = models.ForeignKey(
-        on_delete=models.CASCADE, to="Shop", related_name="registrations",
-        verbose_name=_("registration shop"), null=True)
+        on_delete=models.CASCADE,
+        to="Shop",
+        related_name="registrations",
+        verbose_name=_("registration shop"),
+        null=True,
+    )
 
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(
-        "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('shipping address'),
-        on_delete=models.PROTECT
+        "MutableAddress",
+        null=True,
+        blank=True,
+        related_name="+",
+        verbose_name=_("shipping address"),
+        on_delete=models.PROTECT,
     )
     default_billing_address = models.ForeignKey(
-        "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('billing address'),
-        on_delete=models.PROTECT
+        "MutableAddress",
+        null=True,
+        blank=True,
+        related_name="+",
+        verbose_name=_("billing address"),
+        on_delete=models.PROTECT,
     )
     default_shipping_method = models.ForeignKey(
-        "ShippingMethod", verbose_name=_('default shipping method'), blank=True, null=True, on_delete=models.SET_NULL
+        "ShippingMethod", verbose_name=_("default shipping method"), blank=True, null=True, on_delete=models.SET_NULL
     )
     default_payment_method = models.ForeignKey(
-        "PaymentMethod", verbose_name=_('default payment method'), blank=True, null=True, on_delete=models.SET_NULL
+        "PaymentMethod", verbose_name=_("default payment method"), blank=True, null=True, on_delete=models.SET_NULL
     )
 
-    _language = LanguageField(verbose_name=_('language'), blank=True, help_text=_(
-        "The primary language to be used in all communications with the contact."
-    ))
-    marketing_permission = models.BooleanField(default=False, verbose_name=_('marketing permission'), help_text=_(
-        "Enable this if the contact can receive marketing and promotional materials."
-    ))
-    phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'), help_text=_(
-        "The primary phone number of the contact."
-    ))
-    www = models.URLField(max_length=128, blank=True, verbose_name=_('web address'), help_text=_(
-        "The web address of the contact, if any."
-    ))
-    timezone = TimeZoneField(blank=True, null=True, verbose_name=_('time zone'), help_text=_(
-        "The timezone in which the contact resides. This can be used to target the delivery of promotional materials "
-        "at a particular time."
-    ))
-    prefix = models.CharField(verbose_name=_('name prefix'), max_length=64, blank=True, help_text=_(
-        "The name prefix of the contact. For example, Mr, Mrs, Dr, etc."
-    ))
-    name = models.CharField(max_length=256, verbose_name=_('name'), help_text=_("The contact name"))
-    suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True, help_text=_(
-        "The name suffix of the contact. For example, Sr, Jr, etc."
-    ))
-    name_ext = models.CharField(max_length=256, blank=True, verbose_name=_('name extension'))
-    email = models.EmailField(max_length=256, blank=True, verbose_name=_('email'), help_text=_(
-        "The email that will receive order confirmations and promotional materials (if permitted)."
-    ))
+    _language = LanguageField(
+        verbose_name=_("language"),
+        blank=True,
+        help_text=_("The primary language to be used in all communications with the contact."),
+    )
+    marketing_permission = models.BooleanField(
+        default=False,
+        verbose_name=_("marketing permission"),
+        help_text=_("Enable this if the contact can receive marketing and promotional materials."),
+    )
+    phone = models.CharField(
+        max_length=64, blank=True, verbose_name=_("phone"), help_text=_("The primary phone number of the contact.")
+    )
+    www = models.URLField(
+        max_length=128,
+        blank=True,
+        verbose_name=_("web address"),
+        help_text=_("The web address of the contact, if any."),
+    )
+    timezone = TimeZoneField(
+        blank=True,
+        null=True,
+        verbose_name=_("time zone"),
+        help_text=_(
+            "The timezone in which the contact resides. "
+            "This can be used to target the delivery of promotional materials at a particular time."
+        ),
+    )
+    prefix = models.CharField(
+        verbose_name=_("name prefix"),
+        max_length=64,
+        blank=True,
+        help_text=_("The name prefix of the contact. For example, Mr, Mrs, Dr, etc."),
+    )
+    name = models.CharField(max_length=256, verbose_name=_("name"), help_text=_("The contact name"))
+    suffix = models.CharField(
+        verbose_name=_("name suffix"),
+        max_length=64,
+        blank=True,
+        help_text=_("The name suffix of the contact. For example, Sr, Jr, etc."),
+    )
+    name_ext = models.CharField(max_length=256, blank=True, verbose_name=_("name extension"))
+    email = models.EmailField(
+        max_length=256,
+        blank=True,
+        verbose_name=_("email"),
+        help_text=_("The email that will receive order confirmations and promotional materials (if permitted)."),
+    )
     tax_group = models.ForeignKey(
-        "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group'),
+        "CustomerTaxGroup",
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_("tax group"),
         help_text=_(
             "Select the contact tax group to use for this contact. "
             "Tax groups can be used to customize the tax rules the that apply to any of this contact's "
             "orders. Tax groups are defined in `Customer Tax Groups` and can be applied to tax rules "
             "in `Tax Rules`."
-        )
+        ),
     )
-    merchant_notes = models.TextField(blank=True, verbose_name=_('merchant notes'), help_text=_(
-        "Enter any private notes for this customer that are only accessible in Shuup admin."
-    ))
+    merchant_notes = models.TextField(
+        blank=True,
+        verbose_name=_("merchant notes"),
+        help_text=_("Enter any private notes for this customer that are only accessible in Shuup admin."),
+    )
     account_manager = models.ForeignKey(
-        on_delete=models.CASCADE, to="PersonContact", blank=True, null=True, verbose_name=_('account manager'))
+        on_delete=models.CASCADE, to="PersonContact", blank=True, null=True, verbose_name=_("account manager")
+    )
     options = PolymorphicJSONField(blank=True, null=True, verbose_name=_("options"))
     picture = FilerImageField(
-        verbose_name=_("picture"), blank=True, null=True, related_name="picture", on_delete=models.SET_NULL,
-        help_text=_(
-            "Contact picture. Can be used alongside contact profile, reviews and messages for example."
-        )
+        verbose_name=_("picture"),
+        blank=True,
+        null=True,
+        related_name="picture",
+        on_delete=models.SET_NULL,
+        help_text=_("Contact picture. Can be used alongside contact profile, reviews and messages for example."),
     )
 
     def __str__(self):
         return self.full_name
 
     class Meta:
-        verbose_name = _('contact')
-        verbose_name_plural = _('contacts')
+        verbose_name = _("contact")
+        verbose_name_plural = _("contacts")
 
     def __init__(self, *args, **kwargs):
         if self.default_tax_group_getter:
@@ -349,10 +404,7 @@ class Contact(PolymorphicShuupModel):
         :rtype: core.models.ContactGroup
         """
         obj, created = ContactGroup.objects.get_or_create(
-            identifier=cls.default_contact_group_identifier,
-            defaults={
-                "name": cls.default_contact_group_name
-            }
+            identifier=cls.default_contact_group_identifier, defaults={"name": cls.default_contact_group_name}
         )
         return obj
 
@@ -382,7 +434,7 @@ class Contact(PolymorphicShuupModel):
             self.save()
 
     def registered_in(self, shop):
-        return (self.registration_shop == shop)
+        return self.registration_shop == shop
 
     def in_shop(self, shop, only_registration=False):
         if only_registration:
@@ -402,17 +454,15 @@ class CompanyContact(Contact):
     default_contact_group_name = _("Company Contacts")
 
     members = models.ManyToManyField(
-        "Contact", related_name="company_memberships", blank=True,
-        verbose_name=_('members')
+        "Contact", related_name="company_memberships", blank=True, verbose_name=_("members")
     )
     tax_number = models.CharField(
-        max_length=64, blank=True,
-        verbose_name=_("tax number"),
-        help_text=_("e.g. EIN in US or VAT code in Europe"))
+        max_length=64, blank=True, verbose_name=_("tax number"), help_text=_("e.g. EIN in US or VAT code in Europe")
+    )
 
     class Meta:
-        verbose_name = _('company')
-        verbose_name_plural = _('companies')
+        verbose_name = _("company")
+        verbose_name_plural = _("companies")
 
     @property
     def full_name(self):
@@ -426,10 +476,10 @@ class Gender(Enum):
     OTHER = "o"
 
     class Labels:
-        UNDISCLOSED = _('undisclosed')
-        MALE = _('male')
-        FEMALE = _('female')
-        OTHER = _('other')
+        UNDISCLOSED = _("undisclosed")
+        MALE = _("male")
+        FEMALE = _("female")
+        OTHER = _("other")
 
 
 class PersonContact(Contact):
@@ -438,33 +488,41 @@ class PersonContact(Contact):
     default_contact_group_name = _("Person Contacts")
 
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="contact",
-        on_delete=models.CASCADE, verbose_name=_('user')
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        related_name="contact",
+        on_delete=models.CASCADE,
+        verbose_name=_("user"),
     )
-    gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4, verbose_name=_('gender'), help_text=_(
-        "The gender of the contact."
-    ))
-    birth_date = models.DateField(blank=True, null=True, verbose_name=_('birth date'), help_text=_(
-        "The birth date of the contact."
-    ))
-    first_name = models.CharField(max_length=120, blank=True, verbose_name=_('first name'), help_text=_(
-        "The first name of the contact."
-    ))
-    last_name = models.CharField(max_length=120, blank=True, verbose_name=_('last name'), help_text=_(
-        "The last name of the contact."
-    ))
+    gender = EnumField(
+        Gender,
+        default=Gender.UNDISCLOSED,
+        max_length=4,
+        verbose_name=_("gender"),
+        help_text=_("The gender of the contact."),
+    )
+    birth_date = models.DateField(
+        blank=True, null=True, verbose_name=_("birth date"), help_text=_("The birth date of the contact.")
+    )
+    first_name = models.CharField(
+        max_length=120, blank=True, verbose_name=_("first name"), help_text=_("The first name of the contact.")
+    )
+    last_name = models.CharField(
+        max_length=120, blank=True, verbose_name=_("last name"), help_text=_("The last name of the contact.")
+    )
     # TODO: Figure out how/when/if the name and email fields are updated from users
 
     class Meta:
-        verbose_name = _('person')
-        verbose_name_plural = _('persons')
+        verbose_name = _("person")
+        verbose_name_plural = _("persons")
 
     def __init__(self, *args, **kwargs):
-        name = kwargs.get('name')
+        name = kwargs.get("name")
         if name:
             (first_name, last_name) = _split_name(name)
-            kwargs['first_name'] = first_name
-            kwargs['last_name'] = last_name
+            kwargs["first_name"] = first_name
+            kwargs["last_name"] = last_name
         super(PersonContact, self).__init__(*args, **kwargs)
 
     @property
@@ -491,10 +549,10 @@ class PersonContact(Contact):
             if not self.name:
                 self.name = user.get_full_name()
             if not self.email:
-                self.email = getattr(user, 'email', '')
+                self.email = getattr(user, "email", "")
             if not self.first_name and not self.last_name:
-                self.first_name = getattr(user, 'first_name', '')
-                self.last_name = getattr(user, 'last_name', '')
+                self.first_name = getattr(user, "first_name", "")
+                self.last_name = getattr(user, "last_name", "")
 
         return super(PersonContact, self).save(*args, **kwargs)
 
@@ -525,8 +583,7 @@ class AnonymousContact(Contact):
 
     def save(self, *args, **kwargs):
         raise NotImplementedError(
-            "Error! Not implemented: `AnonymousContact` -> `save()`. "
-            "AnonymousContacts aren't saveable, silly."
+            "Error! Not implemented: `AnonymousContact` -> `save()`. " "AnonymousContacts aren't saveable, silly."
         )
 
     def delete(self, *args, **kwargs):
@@ -559,7 +616,7 @@ class AnonymousContact(Contact):
 
 def _split_name(full_name):
     names = full_name.rsplit(" ", 1)
-    return (names if len(names) == 2 else [full_name, ""])
+    return names if len(names) == 2 else [full_name, ""]
 
 
 def get_person_contact(user):
@@ -583,10 +640,10 @@ def get_person_contact(user):
         return AnonymousContact()
 
     defaults = {
-        'is_active': user.is_active,
-        'first_name': getattr(user, 'first_name', ''),
-        'last_name': getattr(user, 'last_name', ''),
-        'email': getattr(user, 'email', ''),
+        "is_active": user.is_active,
+        "first_name": getattr(user, "first_name", ""),
+        "last_name": getattr(user, "last_name", ""),
+        "email": getattr(user, "email", ""),
     }
     return PersonContact.objects.get_or_create(user=user, defaults=defaults)[0]
 
@@ -643,16 +700,19 @@ def get_price_displays_for_shop(shop):
     for_shop = ContactGroupPriceDisplay.objects.filter(shop=shop)
     ids = [i.id for i in for_shop.all()]
     identifiers = [i.group.identifier for i in for_shop.all()]
-    defaults = ContactGroupPriceDisplay.objects.filter(
-        shop__isnull=True, group__identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS
-    ).exclude(group__identifier__in=identifiers).exclude(pk__in=ids).values_list("id", flat=True)
-    return ContactGroupPriceDisplay.objects.filter(pk__in=list(ids)+list(defaults))
+    defaults = (
+        ContactGroupPriceDisplay.objects.filter(
+            shop__isnull=True, group__identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS
+        )
+        .exclude(group__identifier__in=identifiers)
+        .exclude(pk__in=ids)
+        .values_list("id", flat=True)
+    )
+    return ContactGroupPriceDisplay.objects.filter(pk__in=list(ids) + list(defaults))
 
 
 def get_groups_for_price_display_create(shop):
-    default_groups = ContactGroup.objects.filter(
-        shop__isnull=True, identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS
-    )
+    default_groups = ContactGroup.objects.filter(shop__isnull=True, identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS)
     used_in_shop = ContactGroupPriceDisplay.objects.filter(shop=shop)
 
     if not used_in_shop.exists():
@@ -663,9 +723,10 @@ def get_groups_for_price_display_create(shop):
     used_identifiers = [g.identifier for g in used_groups]
 
     available = ContactGroup.objects.filter(shop=shop).exclude(id__in=used_ids).values_list("id", flat=True)
-    defaults = default_groups.exclude(
-        identifier__in=used_identifiers).exclude(pk__in=used_ids).values_list("id", flat=True)
-    return ContactGroup.objects.filter(pk__in=list(available)+list(defaults))
+    defaults = (
+        default_groups.exclude(identifier__in=used_identifiers).exclude(pk__in=used_ids).values_list("id", flat=True)
+    )
+    return ContactGroup.objects.filter(pk__in=list(available) + list(defaults))
 
 
 CompanyContactLogEntry = define_log_model(CompanyContact)

@@ -7,9 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 
 from .base_forms import (
-    BaseProductMediaForm, ProductAttributesForm, ProductBaseForm,
-    ProductImageMediaForm, ProductImageMediaFormSet, ProductMediaForm,
-    ProductMediaFormSet, ShopProductForm
+    BaseProductMediaForm,
+    ProductAttributesForm,
+    ProductBaseForm,
+    ProductImageMediaForm,
+    ProductImageMediaFormSet,
+    ProductMediaForm,
+    ProductMediaFormSet,
+    ShopProductForm,
 )
 from .package_forms import PackageChildForm, PackageChildFormSet
 

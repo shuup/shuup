@@ -13,10 +13,7 @@ from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import Column, DateRangeFilter, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.discounts.models import Discount
-from shuup.utils.i18n import (
-    format_money, format_number, format_percent,
-    get_locally_formatted_datetime
-)
+from shuup.utils.i18n import format_money, format_number, format_percent, get_locally_formatted_datetime
 
 
 class DiscountListView(PicotableListView):
@@ -25,40 +22,51 @@ class DiscountListView(PicotableListView):
 
     default_columns = [
         Column(
-            "name", _("Discount Name"), sort_field="name", display="name",
-            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))
+            "name",
+            _("Discount Name"),
+            sort_field="name",
+            display="name",
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         ),
         Column(
-            "product__translations__name", _("Product"), display="product",
-            filter_config=TextFilter(filter_field="product__translations__name", placeholder=_("Filter by product..."))
+            "product__translations__name",
+            _("Product"),
+            display="product",
+            filter_config=TextFilter(filter_field="product__translations__name", placeholder=_("Filter by product...")),
         ),
         Column(
-            "category", _("Category"), display="category",
+            "category",
+            _("Category"),
+            display="category",
             filter_config=TextFilter(
-                filter_field="category__translations__name", placeholder=_("Filter by category..."))
+                filter_field="category__translations__name", placeholder=_("Filter by category...")
+            ),
         ),
         Column(
-            "contact_group", _("Contact Group"), display="contact_group",
+            "contact_group",
+            _("Contact Group"),
+            display="contact_group",
             filter_config=TextFilter(
-                filter_field="contact_group__translations__name", placeholder=_("Filter by contact group..."))
+                filter_field="contact_group__translations__name", placeholder=_("Filter by contact group...")
+            ),
         ),
         Column(
-            "contact", _("Contact"), display="contact",
-            filter_config=TextFilter(filter_field="contact__translations__name", placeholder=_("Filter by contact..."))
+            "contact",
+            _("Contact"),
+            display="contact",
+            filter_config=TextFilter(filter_field="contact__translations__name", placeholder=_("Filter by contact...")),
         ),
         Column(
-            "coupon_code", _("Coupon code"), display="coupon_code",
-            filter_config=TextFilter(filter_field="coupon_code__code", placeholder=_("Filter by coupon code..."))
+            "coupon_code",
+            _("Coupon code"),
+            display="coupon_code",
+            filter_config=TextFilter(filter_field="coupon_code__code", placeholder=_("Filter by coupon code...")),
         ),
         Column("discount_effect", _("Effect"), display="get_discount_effect"),
-        Column(
-            "end_datetime", _("End Date and Time"), display="format_end_datetime", filter_config=DateRangeFilter()
-        )
+        Column("end_datetime", _("End Date and Time"), display="format_end_datetime", filter_config=DateRangeFilter()),
     ]
 
-    mass_actions = [
-        "shuup.discounts.admin.mass_actions:ArchiveMassAction"
-    ]
+    mass_actions = ["shuup.discounts.admin.mass_actions:ArchiveMassAction"]
 
     toolbar_buttons_provider_key = "discount_list_toolbar_provider"
     mass_actions_provider_key = "discount_list_actions_provider"
@@ -72,17 +80,21 @@ class DiscountListView(PicotableListView):
         if instance.discount_amount_value:
             effects.append(
                 "- %s" % format_money(shop.create_price(instance.discount_amount_value))
-                if shop else format_number(instance.discount_amount_value))
+                if shop
+                else format_number(instance.discount_amount_value)
+            )
 
         if instance.discounted_price_value:
             effects.append(
                 format_money(shop.create_price(instance.discounted_price_value))
-                if shop else format_number(instance.discounted_price_value))
+                if shop
+                else format_number(instance.discounted_price_value)
+            )
 
         if instance.discount_percentage:
             effects.append(format_percent(instance.discount_percentage))
 
-        return ','.join(effects)
+        return ",".join(effects)
 
     def format_end_datetime(self, instance, *args, **kwargs):
         return get_locally_formatted_datetime(instance.end_datetime) if instance.end_datetime else ""

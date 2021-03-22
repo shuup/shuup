@@ -11,7 +11,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import MenuEntry
-from shuup.admin.toolbar import get_default_edit_toolbar, URLActionButton
+from shuup.admin.toolbar import URLActionButton, get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
@@ -30,13 +30,12 @@ class ServiceProviderEditView(CreateOrUpdateView):
 
     @property
     def title(self):
-        return _(u"Edit %(model)s") % {"model": self.model._meta.verbose_name}
+        return _("Edit %(model)s") % {"model": self.model._meta.verbose_name}
 
     def get_breadcrumb_parents(self):
         return [
             MenuEntry(
-                text=force_text(self.model._meta.verbose_name_plural).title(),
-                url="shuup_admin:service_provider.list"
+                text=force_text(self.model._meta.verbose_name_plural).title(), url="shuup_admin:service_provider.list"
             )
         ]
 
@@ -51,7 +50,7 @@ class ServiceProviderEditView(CreateOrUpdateView):
     def _get_concrete_form(self, form_infos):
         form_info = form_infos.get_by_object(self.object)
         self.form_class = form_info.form_class
-        return self. _get_form(form_infos, form_info, type_enabled=False)
+        return self._get_form(form_infos, form_info, type_enabled=False)
 
     def _get_type_choice_form(self, form_infos):
         selected_type = self.request.GET.get("type")
@@ -60,7 +59,7 @@ class ServiceProviderEditView(CreateOrUpdateView):
             form_info = list(form_infos.values())[0]
         self.form_class = form_info.form_class
         self.object = form_info.model()
-        return self. _get_form(form_infos, form_info, type_enabled=True)
+        return self._get_form(form_infos, form_info, type_enabled=True)
 
     def _get_form(self, form_infos, selected, type_enabled):
         form = self.form_class(**self.get_form_kwargs())
@@ -72,10 +71,10 @@ class ServiceProviderEditView(CreateOrUpdateView):
             help_text=_(
                 "The service provider type. "
                 "This can be any of the shipping carriers or payment processors configured for your shop."
-            )
+            ),
         )
         if not type_enabled:
-            type_field.widget.attrs['disabled'] = True
+            type_field.widget.attrs["disabled"] = True
         form.fields["type"] = type_field
         return form
 
@@ -88,14 +87,15 @@ class ServiceProviderEditView(CreateOrUpdateView):
         delete_url = reverse_lazy("shuup_admin:service_provider.delete", kwargs={"pk": object.pk})
         toolbar = get_default_edit_toolbar(self, save_form_id, delete_url=delete_url)
         if self.object.pk:
-            toolbar.append(URLActionButton(
-                text=_("Create {service_name}").format(
-                    service_name=self.object.service_model._meta.verbose_name),
-                icon="fa fa-plus",
-                url="{model_url}?provider={id}".format(
-                    model_url=get_model_url(self.object.service_model, "new"),
-                    id=self.object.id),
-                extra_css_class="btn-primary"
-            ))
+            toolbar.append(
+                URLActionButton(
+                    text=_("Create {service_name}").format(service_name=self.object.service_model._meta.verbose_name),
+                    icon="fa fa-plus",
+                    url="{model_url}?provider={id}".format(
+                        model_url=get_model_url(self.object.service_model, "new"), id=self.object.id
+                    ),
+                    extra_css_class="btn-primary",
+                )
+            )
 
         return toolbar

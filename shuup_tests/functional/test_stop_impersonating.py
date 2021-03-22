@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.contrib.auth import get_user
 
 from shuup.admin.modules.users.views import LoginAsUserView

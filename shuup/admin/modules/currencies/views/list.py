@@ -21,17 +21,19 @@ class CurrencyListView(PicotableListView):
     default_columns = [
         Column("name", _("Name"), display="get_currency_display", sortable=False),
         Column(
-            "code", _(u"Code"), sort_field="code",
+            "code",
+            _("Code"),
+            sort_field="code",
             filter_config=TextFilter(
                 filter_field="code",
                 placeholder=_("Filter by code"),
-            )
+            ),
         ),
         Column(
             "decimal_places",
             _("Decimal places"),
             display="format_decimal_places",
-        )
+        ),
     ]
     toolbar_buttons_provider_key = "currency_list_toolbar_provider"
     mass_actions_provider_key = "currency_list_mass_actions_provider"

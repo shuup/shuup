@@ -9,9 +9,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.utils.picotable import (
-    Column, TextFilter, true_or_false_filter
-)
+from shuup.admin.utils.picotable import Column, TextFilter, true_or_false_filter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
 from shuup.utils.i18n import format_percent
@@ -28,16 +26,18 @@ class TaxListView(PicotableListView):
 
     default_columns = [
         Column(
-            "name", _("Name"), sort_field="translations__name",
+            "name",
+            _("Name"),
+            sort_field="translations__name",
             filter_config=TextFilter(
                 filter_field="translations__name",
                 placeholder=_("Filter by name..."),
             ),
         ),
-        Column("code", _(u"Code")),
+        Column("code", _("Code")),
         Column("rate", _("Rate"), display=_format_rate),
         # Column("amount", _(u"Amount")),
-        Column("enabled", _(u"Enabled"), filter_config=true_or_false_filter),
+        Column("enabled", _("Enabled"), filter_config=true_or_false_filter),
     ]
     toolbar_buttons_provider_key = "tax_list_toolbar_provider"
     mass_actions_provider_key = "tax_list_mass_actions_provider"
@@ -48,7 +48,9 @@ class CustomerTaxGroupListView(PicotableListView):
 
     default_columns = [
         Column(
-            "name", _("Name"), sort_field="translations__name",
+            "name",
+            _("Name"),
+            sort_field="translations__name",
             filter_config=TextFilter(
                 filter_field="translations__name",
                 placeholder=_("Filter by name..."),
@@ -62,7 +64,9 @@ class TaxClassListView(PicotableListView):
 
     default_columns = [
         Column(
-            "name", _("Name"), sort_field="translations__name",
+            "name",
+            _("Name"),
+            sort_field="translations__name",
             filter_config=TextFilter(
                 filter_field="translations__name",
                 placeholder=_("Filter by name..."),

@@ -11,9 +11,7 @@ from django.db.transaction import atomic
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
-from shuup.admin.utils.views import (
-    check_and_raise_if_only_one_allowed, CreateOrUpdateView
-)
+from shuup.admin.utils.views import CreateOrUpdateView, check_and_raise_if_only_one_allowed
 from shuup.core.models import Supplier
 from shuup.utils.django_compat import reverse
 

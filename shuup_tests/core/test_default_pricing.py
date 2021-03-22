@@ -10,10 +10,7 @@ from django.conf import settings
 
 from shuup.core.pricing import get_pricing_module
 from shuup.core.pricing.default_pricing import DefaultPricingModule
-from shuup.testing.factories import (
-    create_product, create_random_person, get_default_customer_group,
-    get_default_shop
-)
+from shuup.testing.factories import create_product, create_random_person, get_default_customer_group, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 
 original_pricing_module = settings.SHUUP_PRICING_MODULE

@@ -19,5 +19,5 @@ __all__ = [
     "PaymentWithCheckoutPhase",
     "PseudoPaymentProcessor",
     "SupplierPrice",
-    "UltraFilter"
+    "UltraFilter",
 ]

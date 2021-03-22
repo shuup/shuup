@@ -6,24 +6,23 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from decimal import Decimal
 
-from shuup.core.models import OrderLine
-from shuup.core.models import OrderLineType
-from shuup.core.models import Shop
-from shuup.core.models import ShopStatus
+from shuup.core.models import OrderLine, OrderLineType, Shop, ShopStatus
 from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product,
-    get_default_shop, get_default_supplier
+    add_product_to_order,
+    create_empty_order,
+    create_product,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.utils.numbers import bankers_round
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 PRICE_SPEC = [
-    ([1,2,3,4]),
-    ([1,2,3,6]),
-    ([1,2,3,8]),
+    ([1, 2, 3, 4]),
+    ([1, 2, 3, 6]),
+    ([1, 2, 3, 8]),
     ([1.23223, 12.24442, 42.26233]),
     ([1223.46636, 13.24655, 411.234554]),
     ([101.74363, 12.99346, 4222.57422]),
@@ -49,7 +48,7 @@ def test_rounding(prices):
             quantity=1,
             text="Thing",
             ordering=x,
-            base_unit_price=order.shop.create_price(price)
+            base_unit_price=order.shop.create_price(price),
         )
         ol.save()
     order.cache_prices()
@@ -77,11 +76,7 @@ def test_rounding(prices):
 @pytest.mark.django_db
 def test_order_source_rounding(prices):
     shop = Shop.objects.create(
-        name="test",
-        identifier="test",
-        status=ShopStatus.ENABLED,
-        public_name="test",
-        prices_include_tax=False
+        name="test", identifier="test", status=ShopStatus.ENABLED, public_name="test", prices_include_tax=False
     )
     expected = 0
     for p in prices:
@@ -125,12 +120,17 @@ def test_rounding_with_taxes(prices):
 
     order = create_empty_order(shop=shop)
     order.save()
-    product = create_product("test_sku",  shop=shop, supplier=supplier)
+    product = create_product("test_sku", shop=shop, supplier=supplier)
     tax_rate = Decimal("0.22222")
     for x, price in enumerate(prices):
         add_product_to_order(
-            order, supplier, product, quantity=Decimal("2.22"),
-            taxless_base_unit_price=Decimal(price), tax_rate=tax_rate)
+            order,
+            supplier,
+            product,
+            quantity=Decimal("2.22"),
+            taxless_base_unit_price=Decimal(price),
+            tax_rate=tax_rate,
+        )
     order.cache_prices()
     for x, order_line in enumerate(order.lines.all().order_by("ordering")):
         # Check that total prices calculated from priceful parts still matches
@@ -140,8 +140,8 @@ def test_rounding_with_taxes(prices):
 
 
 def _get_taxless_price(line):
-    return bankers_round(line.taxless_base_unit_price*line.quantity - line.taxless_discount_amount, 2)
+    return bankers_round(line.taxless_base_unit_price * line.quantity - line.taxless_discount_amount, 2)
 
 
 def _get_taxful_price(line):
-    return bankers_round(line.taxful_base_unit_price*line.quantity - line.taxful_discount_amount, 2)
+    return bankers_round(line.taxful_base_unit_price * line.quantity - line.taxful_discount_amount, 2)

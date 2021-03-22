@@ -28,7 +28,7 @@ def test_tax_edit_view_works_at_all(rf, admin_user):
             view_func = TaxClassEditView.as_view()
             response = view_func(request, pk=default_tax_class.pk)
             response.render()
-            assert (default_tax_class.name in force_text(response.content))
+            assert default_tax_class.name in force_text(response.content)
             response = view_func(request, pk=None)  # "new mode"
             response.render()
             assert response.content

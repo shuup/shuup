@@ -25,13 +25,13 @@ SHUUP_SETUP_WIZARD_PANE_SPEC = []
 #: Spec which defines a function that loads and returns discovered admin modules.
 #: This function should return a list of `shuup.admin.base.AdminModule`.
 #:
-SHUUP_GET_ADMIN_MODULES_SPEC = ("shuup.admin.module_registry.get_admin_modules")
+SHUUP_GET_ADMIN_MODULES_SPEC = "shuup.admin.module_registry.get_admin_modules"
 
 #: Spec which defines the Shop provider.
 #: The shop provider is the interface responsible for fetching and setting
 #: the active shop in the admin module.
 #:
-SHUUP_ADMIN_SHOP_PROVIDER_SPEC = ("shuup.admin.shop_provider.AdminShopProvider")
+SHUUP_ADMIN_SHOP_PROVIDER_SPEC = "shuup.admin.shop_provider.AdminShopProvider"
 
 #: URL address to Shuup Merchant Documentation and Guide.
 #: The URL must end with a slash.
@@ -44,8 +44,7 @@ SHUUP_ADMIN_MINIMUM_INPUT_LENGTH_SEARCH = 3
 
 #: Spec that defines the Supplier Provider for a given request.
 #:
-SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC = (
-    "shuup.admin.supplier_provider.DefaultSupplierProvider")
+SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC = "shuup.admin.supplier_provider.DefaultSupplierProvider"
 
 #: The input format to be used in date pickers.
 #:
@@ -71,7 +70,7 @@ SHUUP_ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS = []
 #: Get front URL for admin panel navigation bar. Can be useful for example to
 #: override a custom domain logic when admin panel is used
 #: from the shared marketplace URL.
-SHUUP_ADMIN_NAVIGATION_GET_FRONT_URL_SPEC = ("shuup.admin.utils.urls.get_front_url")
+SHUUP_ADMIN_NAVIGATION_GET_FRONT_URL_SPEC = "shuup.admin.utils.urls.get_front_url"
 
 #: Indicates which objects `select` fields should load options asynchronously.
 #:
@@ -81,14 +80,11 @@ SHUUP_ADMIN_NAVIGATION_GET_FRONT_URL_SPEC = ("shuup.admin.utils.urls.get_front_u
 #:
 #: When disabled, the options will be generated during the first page load.
 #:
-SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC = {
-    "categories": True,
-    "suppliers": True
-}
+SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC = {"categories": True, "suppliers": True}
 
 #: Indicates the authentication form class, which should be used in login views inside Admin.
 #:
-SHUUP_ADMIN_AUTH_FORM_SPEC = ("shuup.admin.forms.EmailAuthenticationForm")
+SHUUP_ADMIN_AUTH_FORM_SPEC = "shuup.admin.forms.EmailAuthenticationForm"
 
 #: To which view redirect impersonator when login as regular user
 #:

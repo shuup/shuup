@@ -16,21 +16,17 @@ class CustomerGroupPricingAppConfig(shuup.apps.AppConfig):
     verbose_name = _("Shuup Customer Group Pricing")
     label = "shuup_customer_group_pricing"
     provides = {
-        "pricing_module": [
-            __name__ + ".module:CustomerGroupPricingModule"
-        ],
-        "discount_module": [
-            __name__ + ".module:CustomerGroupDiscountModule"
-        ],
+        "pricing_module": [__name__ + ".module:CustomerGroupPricingModule"],
+        "discount_module": [__name__ + ".module:CustomerGroupDiscountModule"],
         "admin_product_form_part": [
             __name__ + ".admin_form_part:CustomerGroupPricingFormPart",
-            __name__ + ".admin_form_part:CustomerGroupPricingDiscountFormPart"
+            __name__ + ".admin_form_part:CustomerGroupPricingDiscountFormPart",
         ],
     }
 
     def ready(self):
         # connect signals
-        import shuup.customer_group_pricing.signal_handers    # noqa F401
+        import shuup.customer_group_pricing.signal_handers  # noqa F401
 
 
 default_app_config = __name__ + ".CustomerGroupPricingAppConfig"

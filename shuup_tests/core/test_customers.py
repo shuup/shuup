@@ -7,18 +7,21 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import (
-    AnonymousContact, CompanyContact, CustomerTaxGroup,
-    get_person_contact, PersonContact
-)
+from shuup.core.models import AnonymousContact, CompanyContact, CustomerTaxGroup, PersonContact, get_person_contact
 from shuup.testing.factories import (
-    create_random_company, create_random_person, DEFAULT_IDENTIFIER,
-    DEFAULT_NAME, get_default_customer_group
+    DEFAULT_IDENTIFIER,
+    DEFAULT_NAME,
+    create_random_company,
+    create_random_person,
+    get_default_customer_group,
 )
+
 
 @pytest.mark.django_db
 def test_customers(django_user_model):
-    users = [django_user_model.objects.create_user('Joe-%d' % x, 'joe%d@example.com' % x, 'password') for x in range(10)]
+    users = [
+        django_user_model.objects.create_user("Joe-%d" % x, "joe%d@example.com" % x, "password") for x in range(10)
+    ]
     group = get_default_customer_group()
     assert str(group) == DEFAULT_NAME
     for user in users:
@@ -32,7 +35,9 @@ def test_customers(django_user_model):
 
 @pytest.mark.django_db
 def test_companies(django_user_model):
-    peons = [django_user_model.objects.create_user('Peon-%d' % x, 'Peon%d@example.com' % x, 'password') for x in range(10)]
+    peons = [
+        django_user_model.objects.create_user("Peon-%d" % x, "Peon%d@example.com" % x, "password") for x in range(10)
+    ]
     for cx in range(10):
         company = CompanyContact.objects.create(name="Company %d" % cx, tax_number="FI2101%d" % cx)
         assert str(company)
@@ -63,11 +68,14 @@ def test_customer_tax_group3(rf, admin_user):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("contact_cls,create_contact", [
-    (AnonymousContact, AnonymousContact),
-    (PersonContact, create_random_person),
-    (CompanyContact, create_random_company)
-])
+@pytest.mark.parametrize(
+    "contact_cls,create_contact",
+    [
+        (AnonymousContact, AnonymousContact),
+        (PersonContact, create_random_person),
+        (CompanyContact, create_random_company),
+    ],
+)
 def test_default_groups(contact_cls, create_contact):
     new_contact = create_contact()
     assert new_contact.groups.count() == 1

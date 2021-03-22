@@ -6,14 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user, get_user_model
 from django.contrib.auth.models import Group as PermissionGroup
 from django.core import mail
 from django.core.exceptions import PermissionDenied
-from shuup.utils.django_compat import reverse
 from django.forms.models import modelform_factory
 from django.http.response import Http404
 from django.test import override_settings
@@ -22,8 +20,11 @@ from mock import patch
 from rest_framework.serializers import raise_errors_on_nested_writes
 
 from shuup.admin.modules.users.views import (
-    LoginAsStaffUserView, LoginAsUserView, UserChangePermissionsView,
-    UserDetailView, UserListView
+    LoginAsStaffUserView,
+    LoginAsUserView,
+    UserChangePermissionsView,
+    UserDetailView,
+    UserListView,
 )
 from shuup.admin.modules.users.views.permissions import PermissionChangeFormBase
 from shuup.admin.template_helpers.shuup_admin import get_logout_url
@@ -31,11 +32,15 @@ from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.admin.views.impersonate import stop_impersonating_staff
 from shuup.core.models import Contact, get_person_contact
 from shuup.testing.factories import (
-    create_random_person, create_random_user, get_default_permission_group,
-    get_default_shop, UserFactory
+    UserFactory,
+    create_random_person,
+    create_random_user,
+    get_default_permission_group,
+    get_default_shop,
 )
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 from shuup.utils.excs import Problem
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.utils.fixtures import regular_user
@@ -48,7 +53,7 @@ def test_user_detail_works_at_all(rf, admin_user):
         username=printable_gibberish(20),
         first_name=printable_gibberish(10),
         last_name=printable_gibberish(10),
-        password="suihku"
+        password="suihku",
     )
     view_func = UserDetailView.as_view()
     response = view_func(apply_request_middleware(rf.get("/"), user=admin_user), pk=user.pk)
@@ -66,7 +71,7 @@ def test_user_detail_works_at_all(rf, admin_user):
         last_name=printable_gibberish(10),
         password="suihku",
         is_staff=True,
-        is_superuser=False
+        is_superuser=False,
     )
     shop.staff_members.add(user)
     # non superusers can't see superusers
@@ -81,7 +86,7 @@ def test_user_detail_and_login_as_url(rf, admin_user):
         username=printable_gibberish(20),
         first_name=printable_gibberish(10),
         last_name=printable_gibberish(10),
-        password="suihkuunheti"
+        password="suihkuunheti",
     )
     view_func = UserDetailView.as_view()
     response = view_func(apply_request_middleware(rf.get("/"), user=admin_user), pk=user.pk)
@@ -108,7 +113,7 @@ def test_user_detail_as_staff_and_login_as_url(rf, admin_user):
         first_name=printable_gibberish(10),
         last_name=printable_gibberish(10),
         password="suihkuunheti",
-        is_staff=True
+        is_staff=True,
     )
     view_func = UserDetailView.as_view()
     response = view_func(apply_request_middleware(rf.get("/"), user=admin_user), pk=user.pk)
@@ -136,7 +141,7 @@ def test_user_list(rf, admin_user):
         last_name=printable_gibberish(10),
         password="suihku",
         is_staff=True,
-        is_superuser=False
+        is_superuser=False,
     )
     shop.staff_members.add(user)
     view_func = UserListView.as_view()
@@ -160,29 +165,45 @@ def test_user_create(rf, admin_user):
     shop = get_default_shop()
     view_func = UserDetailView.as_view()
     before_count = get_user_model().objects.count()
-    response = view_func(apply_request_middleware(rf.post("/", {
-        "username": "test",
-        "email": "test@test.com",
-        "first_name": "test",
-        "last_name": "test",
-        "password": "test",
-        "send_confirmation": True
-    }), user=admin_user))
+    response = view_func(
+        apply_request_middleware(
+            rf.post(
+                "/",
+                {
+                    "username": "test",
+                    "email": "test@test.com",
+                    "first_name": "test",
+                    "last_name": "test",
+                    "password": "test",
+                    "send_confirmation": True,
+                },
+            ),
+            user=admin_user,
+        )
+    )
     assert response.status_code == 302
     assert get_user_model().objects.count() == before_count + 1
     last_user = get_user_model().objects.last()
     assert last_user not in shop.staff_members.all()
     assert not len(mail.outbox), "mail not sent since user is not staff"
 
-    response = view_func(apply_request_middleware(rf.post("/", {
-        "username": "test3",
-        "email": "test3@test.com",
-        "first_name": "test",
-        "last_name": "test",
-        "password": "test",
-        "is_staff": True,
-        "send_confirmation": True
-    }), user=admin_user))
+    response = view_func(
+        apply_request_middleware(
+            rf.post(
+                "/",
+                {
+                    "username": "test3",
+                    "email": "test3@test.com",
+                    "first_name": "test",
+                    "last_name": "test",
+                    "password": "test",
+                    "is_staff": True,
+                    "send_confirmation": True,
+                },
+            ),
+            user=admin_user,
+        )
+    )
     assert response.status_code == 302
     assert get_user_model().objects.count() == before_count + 2
     last_user = get_user_model().objects.last()
@@ -195,7 +216,7 @@ def test_user_create(rf, admin_user):
         last_name=printable_gibberish(10),
         password="suihku",
         is_staff=True,
-        is_superuser=False
+        is_superuser=False,
     )
     response = view_func(apply_request_middleware(rf.get("/"), user=user, skip_session=True))
     assert response.status_code == 200
@@ -205,34 +226,38 @@ def test_user_create(rf, admin_user):
 
     # remove user staff permission
     view_func = UserChangePermissionsView.as_view()
-    response = view_func(apply_request_middleware(rf.post("/", {
-        "is_staff": False
-    }), user=admin_user), pk=last_user.id)
+    response = view_func(apply_request_middleware(rf.post("/", {"is_staff": False}), user=admin_user), pk=last_user.id)
     assert response.status_code == 302
     last_user = get_user_model().objects.last()
     assert last_user not in shop.staff_members.all()
 
     # add again, the member should not be inside shop staff member list
     view_func = UserChangePermissionsView.as_view()
-    response = view_func(apply_request_middleware(rf.post("/", {
-        "is_staff": True
-    }), user=admin_user), pk=last_user.id)
+    response = view_func(apply_request_middleware(rf.post("/", {"is_staff": True}), user=admin_user), pk=last_user.id)
     assert response.status_code == 302
     last_user = get_user_model().objects.last()
     assert last_user not in shop.staff_members.all()
 
     # create a superuser
     view_func = UserDetailView.as_view()
-    response = view_func(apply_request_middleware(rf.post("/", {
-        "username": "test4",
-        "email": "test4@test.com",
-        "first_name": "test",
-        "last_name": "test",
-        "password": "test",
-        "is_staff": True,
-        "is_superuser": True,
-        "send_confirmation": False
-    }), user=admin_user))
+    response = view_func(
+        apply_request_middleware(
+            rf.post(
+                "/",
+                {
+                    "username": "test4",
+                    "email": "test4@test.com",
+                    "first_name": "test",
+                    "last_name": "test",
+                    "password": "test",
+                    "is_staff": True,
+                    "is_superuser": True,
+                    "send_confirmation": False,
+                },
+            ),
+            user=admin_user,
+        )
+    )
     assert response.status_code == 302
     assert get_user_model().objects.count() == before_count + 4
     last_user = get_user_model().objects.last()
@@ -240,15 +265,24 @@ def test_user_create(rf, admin_user):
     assert last_user not in shop.staff_members.all()
 
     # change the superuser
-    response = view_func(apply_request_middleware(rf.post("/", {
-        "username": "test487",
-        "email": "test4@test.com",
-        "first_name": "test2",
-        "last_name": "test",
-        "password": "test",
-        "is_staff": True,
-        "is_superuser": True,
-    }), user=admin_user), pk=last_user.pk)
+    response = view_func(
+        apply_request_middleware(
+            rf.post(
+                "/",
+                {
+                    "username": "test487",
+                    "email": "test4@test.com",
+                    "first_name": "test2",
+                    "last_name": "test",
+                    "password": "test",
+                    "is_staff": True,
+                    "is_superuser": True,
+                },
+            ),
+            user=admin_user,
+        ),
+        pk=last_user.pk,
+    )
     assert response.status_code == 302
     assert get_user_model().objects.count() == before_count + 4
     last_user = get_user_model().objects.last()
@@ -266,10 +300,7 @@ def test_user_permission_view_as_staff_user(rf, admin_user):
 
     # Staff shouldn't be able to see superuser status
     view_func = UserChangePermissionsView.as_view()
-    response = view_func(
-        apply_request_middleware(rf.get("/"), user=staff),
-        pk=user.id
-    )
+    response = view_func(apply_request_middleware(rf.get("/"), user=staff), pk=user.id)
     assert response.status_code == 200
     response.render()
     assert "Superuser (Full rights) status" not in force_text(response.content)
@@ -277,10 +308,7 @@ def test_user_permission_view_as_staff_user(rf, admin_user):
     # Superuser can see the superuser status
     assert admin_user.is_superuser
     view_func = UserChangePermissionsView.as_view()
-    response = view_func(
-        apply_request_middleware(rf.get("/"), user=admin_user),
-        pk=user.id
-    )
+    response = view_func(apply_request_middleware(rf.get("/"), user=admin_user), pk=user.id)
     assert response.status_code == 200
     response.render()
     assert "Superuser (Full rights) status" in force_text(response.content)
@@ -328,9 +356,7 @@ def test_user_detail_contact_seed(rf, admin_user):
 def test_user_permission_form_changes_group(rf, admin_user, regular_user):
     get_default_shop()
     form_class = modelform_factory(
-        model=get_user_model(),
-        form=PermissionChangeFormBase,
-        fields=("is_staff", "is_superuser")
+        model=get_user_model(), form=PermissionChangeFormBase, fields=("is_staff", "is_superuser")
     )
 
     assert not regular_user.groups.all()
@@ -390,7 +416,7 @@ def test_login_as_user_errors(rf, admin_user, regular_user):
 def test_login_as_staff_member(rf):
     shop = get_default_shop()
     staff_user = UserFactory(is_staff=True)
-    permission_group =  get_default_permission_group()
+    permission_group = get_default_permission_group()
     staff_user.groups.add(permission_group)
     shop.staff_members.add(staff_user)
 
@@ -457,7 +483,7 @@ def test_login_as_without_front_url(rf, admin_user, regular_user):
 def test_login_as_requires_staff_member(rf, regular_user):
     shop = get_default_shop()
     staff_user = UserFactory(is_staff=True)
-    permission_group =  get_default_permission_group()
+    permission_group = get_default_permission_group()
     staff_user.groups.add(permission_group)
 
     def do_nothing(request, shop=None):
@@ -543,7 +569,7 @@ def test_login_as_staff_as_staff(rf):
     """
     shop = get_default_shop()
     staff_user1 = UserFactory(is_staff=True)
-    permission_group =  get_default_permission_group()
+    permission_group = get_default_permission_group()
     staff_user1.groups.add(permission_group)
     shop.staff_members.add(staff_user1)
 

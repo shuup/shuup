@@ -11,9 +11,7 @@ import six
 from django.utils.translation import override
 
 from shuup.core import cache
-from shuup.utils.i18n import (
-    get_language_name, is_existing_language, remove_extinct_languages
-)
+from shuup.utils.i18n import get_language_name, is_existing_language, remove_extinct_languages
 
 LANGUAGES = {
     0: ("en", True),  # English
@@ -28,7 +26,6 @@ LANGUAGES = {
     9: ("sv", True),  # swedish
     10: ("", False),  # empty.. doh
 }
-
 
 
 def test_get_language_name_1():

@@ -26,19 +26,19 @@ class ClassicGrayTheme(BaseThemeFieldsMixin, Theme):
             "identifier": "default",
             "stylesheet": "shuup/front/css/style.css",
             "name": _("Default"),
-            "images": ["shuup/front/img/no_image.png"]
+            "images": ["shuup/front/img/no_image.png"],
         },
         {
             "identifier": "midnight_blue",
             "stylesheet": "shuup/classic_gray/blue/style.css",
             "name": _("Midnight Blue"),
-            "images": ["shuup/front/img/no_image.png"]
+            "images": ["shuup/front/img/no_image.png"],
         },
         {
             "identifier": "candy_pink",
             "stylesheet": "shuup/classic_gray/pink/style.css",
             "name": _("Candy Pink"),
-            "images": ["shuup/front/img/no_image.png"]
+            "images": ["shuup/front/img/no_image.png"],
         },
     ]
 
@@ -52,12 +52,14 @@ class ClassicGrayTheme(BaseThemeFieldsMixin, Theme):
 
     def get_view(self, view_name):
         import shuup.front.themes.views as views
+
         return getattr(views, view_name, None)
 
     def _format_cms_links(self, shop, **query_kwargs):
         if "shuup.simple_cms" not in django.conf.settings.INSTALLED_APPS:
             return
         from shuup.simple_cms.models import Page
+
         for page in Page.objects.visible(shop).filter(**query_kwargs):
             yield {"url": "/%s" % page.url, "text": force_text(page)}
 

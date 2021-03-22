@@ -8,20 +8,15 @@
 from __future__ import unicode_literals
 
 import datetime
-from decimal import Decimal
-
 import pytest
+from decimal import Decimal
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import override_settings
 from django.utils.translation import get_language
 
-from shuup.core.models import (
-    Attribute, AttributeType, AttributeVisibility, Product, ProductAttribute
-)
+from shuup.core.models import Attribute, AttributeType, AttributeVisibility, Product, ProductAttribute
 from shuup.core.models._attributes import NoSuchAttributeHere
-from shuup.testing.factories import (
-    ATTR_SPECS, create_product, get_default_attribute_set, get_default_product
-)
+from shuup.testing.factories import ATTR_SPECS, create_product, get_default_attribute_set, get_default_product
 
 
 def _populate_applied_attribute(aa):
@@ -77,10 +72,10 @@ def _populate_applied_attribute(aa):
         assert aa.attribute.is_translated
         with override_settings(LANGUAGES=[(x, x) for x in ("en", "fi", "ga", "ja")]):
             versions = {
-                "en": u"science fiction",
-                "fi": u"tieteiskirjallisuus",
-                "ga": u"ficsean eolaíochta",
-                "ja": u"空想科学小説",
+                "en": "science fiction",
+                "fi": "tieteiskirjallisuus",
+                "ga": "ficsean eolaíochta",
+                "ja": "空想科学小説",
             }
             for language_code, text in versions.items():
                 aa.set_current_language(language_code)
@@ -88,7 +83,9 @@ def _populate_applied_attribute(aa):
                 aa.save()
                 assert aa.value == text, "Translated strings work"
             for language_code, text in versions.items():
-                assert aa.safe_translation_getter("translated_string_value", language_code=language_code) == text, "%s translation is safe" % language_code
+                assert aa.safe_translation_getter("translated_string_value", language_code=language_code) == text, (
+                    "%s translation is safe" % language_code
+                )
 
             aa.set_current_language("xx")
             assert aa.value == "", "untranslated version yields an empty string"
@@ -132,14 +129,23 @@ def test_applied_attributes():
         applied_attr_cls=ProductAttribute,
         targets=[product],
         attribute_identifiers=[a["identifier"] for a in ATTR_SPECS],
-        language=get_language()
+        language=get_language(),
     )
-    assert (get_language(), "bogomips",) in product._attr_cache, "integer attribute in cache"
+    assert (
+        get_language(),
+        "bogomips",
+    ) in product._attr_cache, "integer attribute in cache"
     assert product.get_attribute_value("bogomips") == 480, "integer attribute value in cache"
-    assert product.get_attribute_value("ba:gelmips", default="Britta") == "Britta", "non-existent attributes return default value"
+    assert (
+        product.get_attribute_value("ba:gelmips", default="Britta") == "Britta"
+    ), "non-existent attributes return default value"
     assert product._attr_cache[(get_language(), "ba:gelmips")] is NoSuchAttributeHere, "cache miss saved"
-    attr_info = product.get_all_attribute_info(language=get_language(), visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE)
-    assert set(attr_info.keys()) <= set(a["identifier"] for a in ATTR_SPECS), "get_all_attribute_info gets all attribute info"
+    attr_info = product.get_all_attribute_info(
+        language=get_language(), visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE
+    )
+    assert set(attr_info.keys()) <= set(
+        a["identifier"] for a in ATTR_SPECS
+    ), "get_all_attribute_info gets all attribute info"
 
 
 @pytest.mark.django_db
@@ -156,7 +162,6 @@ def test_get_set_attribute():
 
     with pytest.raises(ObjectDoesNotExist):
         product.set_attribute_value("keppi", "stick")
-
 
 
 def test_saving_invalid_attribute():

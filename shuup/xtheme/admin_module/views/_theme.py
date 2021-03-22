@@ -15,15 +15,13 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.toolbar import get_default_edit_toolbar, URLActionButton
+from shuup.admin.toolbar import URLActionButton, get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.core import cache
 from shuup.utils.django_compat import reverse
 from shuup.utils.importing import cached_load
-from shuup.xtheme._theme import (
-    get_theme_by_identifier, get_theme_cache_key, set_current_theme
-)
+from shuup.xtheme._theme import get_theme_by_identifier, get_theme_cache_key, set_current_theme
 from shuup.xtheme.models import ThemeSettings
 
 
@@ -31,6 +29,7 @@ class ActivationForm(forms.Form):
     """
     A very simple form for activating a theme.
     """
+
     activate = forms.CharField(label=_("activate"))
     selected_style = forms.CharField(required=False, widget=forms.HiddenInput())
 
@@ -43,20 +42,20 @@ class ThemeWizardPane(WizardPane):
 
     def valid(self):
         from shuup.admin.utils.permissions import has_permission
+
         return has_permission(self.request.user, "telemetry")
 
     def visible(self):
-        return (ThemeSettings.objects.filter(active=False, shop=self.object).count() == 0)
+        return ThemeSettings.objects.filter(active=False, shop=self.object).count() == 0
 
     def get_form_defs(self):
         shop = self.object
         context = cached_load("SHUUP_XTHEME_ADMIN_THEME_CONTEXT")(shop)
         context.update({"shop": shop})
 
-        current_theme_class = (context["current_theme"] or context["theme_classes"][0])
+        current_theme_class = context["current_theme"] or context["theme_classes"][0]
         current_theme_settings = ThemeSettings.objects.get_or_create(
-            shop=shop,
-            theme_identifier=current_theme_class.identifier
+            shop=shop, theme_identifier=current_theme_class.identifier
         )[0]
         context["active_stylesheet"] = current_theme_settings.data.get("settings", {}).get("stylesheet", None)
 
@@ -65,20 +64,15 @@ class ThemeWizardPane(WizardPane):
                 template_name="shuup/xtheme/admin/wizard.jinja",
                 name="theme",
                 form_class=ActivationForm,
-                context=context
+                context=context,
             )
         ]
 
     def form_valid(self, form):
         identifier = form["theme"].cleaned_data["activate"]
-        data = {
-            "settings": {
-               "stylesheet": form["theme"].cleaned_data["selected_style"]
-            }
-        }
+        data = {"settings": {"stylesheet": form["theme"].cleaned_data["selected_style"]}}
         theme_settings, created = ThemeSettings.objects.get_or_create(
-            theme_identifier=identifier,
-            shop=get_shop(self.request)
+            theme_identifier=identifier, shop=get_shop(self.request)
         )
         if created:
             theme_settings.data = data
@@ -94,6 +88,7 @@ class ThemeConfigView(FormView):
     """
     A view for listing and activating themes.
     """
+
     template_name = "shuup/xtheme/admin/config.jinja"
     form_class = ActivationForm
 
@@ -114,6 +109,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
     """
     A view for configuring a single theme.
     """
+
     model = ThemeSettings
     template_name = "shuup/xtheme/admin/config_detail.jinja"
     form_class = forms.Form
@@ -122,8 +118,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
 
     def get_object(self, queryset=None):
         return ThemeSettings.objects.get_or_create(
-            theme_identifier=self.kwargs["theme_identifier"],
-            shop=get_shop(self.request)
+            theme_identifier=self.kwargs["theme_identifier"], shop=get_shop(self.request)
         )[0]
 
     def get_theme(self):
@@ -133,10 +128,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         :return: Theme object.
         :rtype: shuup.xtheme.Theme
         """
-        return get_theme_by_identifier(
-            identifier=self.kwargs["theme_identifier"],
-            shop=get_shop(self.request)
-        )
+        return get_theme_by_identifier(identifier=self.kwargs["theme_identifier"], shop=get_shop(self.request))
 
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigDetailView, self).get_context_data(**kwargs)
@@ -157,9 +149,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         return self.get_theme().get_configuration_form(form_kwargs=self.get_form_kwargs())
 
     def get_success_url(self):
-        return reverse("shuup_admin:xtheme.config_detail", kwargs={
-            "theme_identifier": self.object.theme_identifier
-        })
+        return reverse("shuup_admin:xtheme.config_detail", kwargs={"theme_identifier": self.object.theme_identifier})
 
     def save_form(self, form):
         super(ThemeConfigDetailView, self).save_form(form)
@@ -172,7 +162,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
                 text=_("Custom CSS/JS"),
                 icon="fa fa-magic",
                 url=reverse("shuup_admin:xtheme_snippet.list"),
-                extra_css_class="btn-info"
+                extra_css_class="btn-info",
             )
         )
         return toolbar

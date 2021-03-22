@@ -39,7 +39,7 @@ class BasketCommandDispatcher(object):
         self.request = request
         self.ajax = self.request.is_ajax()
         # :type self.basket: BaseBasket
-        self.basket = (basket or request.basket)
+        self.basket = basket or request.basket
 
     def get_command_handler(self, command):
         handler = getattr(self.commands_module, "handle_%s" % command.lower(), None)
@@ -47,7 +47,8 @@ class BasketCommandDispatcher(object):
             return handler
 
         for receiver, handler in get_basket_command_handler.send(
-                BasketCommandDispatcher, command=command, instance=self):
+            BasketCommandDispatcher, command=command, instance=self
+        ):
             if handler and callable(handler):
                 return handler
 
@@ -67,7 +68,7 @@ class BasketCommandDispatcher(object):
         try:
             handler = self.get_command_handler(command)
             if not handler or not callable(handler):
-                raise Problem(_(u"Error! Invalid command `%s`.") % command)
+                raise Problem(_("Error! Invalid command `%s`.") % command)
             kwargs.pop("csrfmiddlewaretoken", None)  # The CSRF token should never be passed as a kwarg
             kwargs.pop("command", None)  # Nor the command
             kwargs.update(request=self.request, basket=self.basket)
@@ -81,7 +82,7 @@ class BasketCommandDispatcher(object):
             msg = exc.message if hasattr(exc, "message") else exc
             response = {
                 "error": force_text(msg, errors="ignore"),
-                "code": force_text(getattr(exc, "code", None) or "", errors="ignore")
+                "code": force_text(getattr(exc, "code", None) or "", errors="ignore"),
             }
 
         response = self.postprocess_response(command, kwargs, response)
@@ -89,7 +90,7 @@ class BasketCommandDispatcher(object):
         if self.ajax:
             return JsonResponse(response)
 
-        return_url = (response.get("return") or kwargs.get("return"))
+        return_url = response.get("return") or kwargs.get("return")
         if return_url and return_url.startswith("/"):
             return HttpResponseRedirect(return_url)
         return redirect("shuup:basket")
@@ -112,10 +113,7 @@ class BasketCommandDispatcher(object):
             # create a copy
             kwargs = dict(
                 basket_command_middleware().preprocess_kwargs(
-                    basket=self.basket,
-                    request=self.request,
-                    command=command,
-                    kwargs=kwargs
+                    basket=self.basket, request=self.request, command=command, kwargs=kwargs
                 )
             )
 
@@ -138,11 +136,7 @@ class BasketCommandDispatcher(object):
 
             response = dict(
                 basket_command_middleware().postprocess_response(
-                    basket=self.basket,
-                    request=self.request,
-                    command=command,
-                    kwargs=kwargs,
-                    response=response
+                    basket=self.basket, request=self.request, command=command, kwargs=kwargs, response=response
                 )
             )
 

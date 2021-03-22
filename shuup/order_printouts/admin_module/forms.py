@@ -15,8 +15,4 @@ class PrintoutsEmailForm(forms.Form):
     body = forms.CharField(max_length=512, widget=forms.Textarea)
 
     class Meta:
-        labels = {
-            "to": _("To"),
-            "subject": _("Email Subject"),
-            "body": _("Email Body")
-        }
+        labels = {"to": _("To"), "subject": _("Email Subject"), "body": _("Email Body")}

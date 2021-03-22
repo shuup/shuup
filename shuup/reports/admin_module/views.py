@@ -52,7 +52,7 @@ class ReportView(FormView):
             label=_("Type"),
             required=True,
             initial=selected.identifier,
-            help_text=_("Select the type of report to run.")
+            help_text=_("Select the type of report to run."),
         )
         form.fields["report"] = report_field
         return form

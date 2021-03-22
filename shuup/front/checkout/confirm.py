@@ -5,14 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from logging import getLogger
-
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
+from logging import getLogger
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import OrderStatus
@@ -52,10 +51,11 @@ class ConfirmForm(forms.Form):
                 setattr(self.fields[field], prop, properties[prop])
 
     def clean(self):
-        product_ids = set(self.cleaned_data.get('product_ids', "").split(','))
+        product_ids = set(self.cleaned_data.get("product_ids", "").split(","))
         if product_ids != self.current_product_ids:
             raise forms.ValidationError(
-                _("There has been a change in product availability. Please review your cart and reconfirm your order."))
+                _("There has been a change in product availability. Please review your cart and reconfirm your order.")
+            )
 
 
 class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
@@ -93,8 +93,8 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         errors = list(basket.get_validation_errors())
         context["basket"] = basket
         context["errors"] = errors
-        context["orderable"] = (not errors)
-        context["product_ids"] = ','.join(self._get_product_ids())
+        context["orderable"] = not errors
+        context["product_ids"] = ",".join(self._get_product_ids())
         return context
 
     def form_valid(self, form):

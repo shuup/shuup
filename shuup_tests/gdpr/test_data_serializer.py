@@ -5,10 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from uuid import uuid4
-
 import pytest
 from django.utils.translation import activate
+from uuid import uuid4
 
 from shuup.core.models import Basket
 from shuup.front.models import StoredBasket
@@ -55,7 +54,7 @@ def test_serialize_data():
                 creator=customer.user,
                 currency=shop.currency,
                 data={"items": []},
-                prices_include_tax=shop.prices_include_tax
+                prices_include_tax=shop.prices_include_tax,
             )
         )
         core_baskets.append(
@@ -67,7 +66,7 @@ def test_serialize_data():
                 creator=customer.user,
                 currency=shop.currency,
                 data={"items": []},
-                prices_include_tax=shop.prices_include_tax
+                prices_include_tax=shop.prices_include_tax,
             )
         )
 

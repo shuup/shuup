@@ -14,49 +14,40 @@ from django.utils.translation import ugettext_lazy as _
 from django_countries import Countries
 
 from shuup.admin.forms import ShuupAdminForm
-from shuup.admin.forms.widgets import (
-    QuickAddLabelMultiSelect, TextEditorWidget
-)
+from shuup.admin.forms.widgets import QuickAddLabelMultiSelect, TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.core.models import (
-    Carrier, CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
-    GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
-    PaymentMethod, PaymentProcessor, ServiceProvider, ShippingMethod,
-    StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
-    WeightLimitsBehaviorComponent
+    Carrier,
+    CountryLimitBehaviorComponent,
+    FixedCostBehaviorComponent,
+    GroupAvailabilityBehaviorComponent,
+    OrderTotalLimitBehaviorComponent,
+    PaymentMethod,
+    PaymentProcessor,
+    ServiceProvider,
+    ShippingMethod,
+    StaffOnlyBehaviorComponent,
+    WaivingCostBehaviorComponent,
+    WeightLimitsBehaviorComponent,
 )
 
 
 def get_service_providers_filters(request, payment_method=None):
-    shop_filter = Q(
-        Q(shops__isnull=True) |
-        Q(shops=get_shop(request))
-    )
+    shop_filter = Q(Q(shops__isnull=True) | Q(shops=get_shop(request)))
     if payment_method and payment_method.pk and payment_method.supplier:
         return shop_filter & Q(
-            Q(supplier__isnull=True) |
-            Q(supplier=get_supplier(request)) |
-            Q(supplier=payment_method.supplier)
+            Q(supplier__isnull=True) | Q(supplier=get_supplier(request)) | Q(supplier=payment_method.supplier)
         )
 
-    return shop_filter & Q(
-        Q(supplier__isnull=True) |
-        Q(supplier=get_supplier(request))
-    )
+    return shop_filter & Q(Q(supplier__isnull=True) | Q(supplier=get_supplier(request)))
 
 
 class BaseMethodForm(ShuupAdminForm):
     class Meta:
         model = None
-        exclude = [
-            "identifier", "behavior_components", "old_module_identifier",
-            "old_module_data", "shop"
-        ]
-        base_fields = [
-            "choice_identifier", "name", "description", "enabled",
-            "logo", "tax_class", "labels", "supplier"
-        ]
+        exclude = ["identifier", "behavior_components", "old_module_identifier", "old_module_data", "shop"]
+        base_fields = ["choice_identifier", "name", "description", "enabled", "logo", "tax_class", "labels", "supplier"]
         widgets = {
             "description": TextEditorWidget(),
             "labels": QuickAddLabelMultiSelect(),
@@ -73,16 +64,18 @@ class BaseMethodForm(ShuupAdminForm):
             choices=_get_service_choices(self.service_provider),
             required=bool(self.service_provider),
             label=_("Service"),
-            help_text=_("Select a service to use for this service provider.")
+            help_text=_("Select a service to use for this service provider."),
         )
         self.fields[self.service_provider_attr].required = True
 
     def get_service_provider(self, id):
         if not id:
             return
-        return ServiceProvider.objects.filter(
-            get_service_providers_filters(self.request, self.instance)
-        ).filter(pk=id).first()
+        return (
+            ServiceProvider.objects.filter(get_service_providers_filters(self.request, self.instance))
+            .filter(pk=id)
+            .first()
+        )
 
     @property
     def service_provider(self):
@@ -93,7 +86,7 @@ class BaseMethodForm(ShuupAdminForm):
         setattr(self.instance, self.service_provider_attr, value)
 
     def _save_master(self, commit=True):
-        self.cleaned_data['shop'] = self.request.shop
+        self.cleaned_data["shop"] = self.request.shop
         if self.instance.pk:
             return super(BaseMethodForm, self)._save_master(commit)
 
@@ -115,6 +108,7 @@ class AlwaysChangedModelForm(forms.ModelForm):
     """
     ModelForm that can be saved if it is empty or has unchanged lines on creation
     """
+
     def has_changed(self, *args, **kwargs):
         if self.instance.pk is None:
             return True
@@ -129,8 +123,7 @@ class ShippingMethodForm(BaseMethodForm):
         fields = ["carrier"] + BaseMethodForm.Meta.base_fields
         help_texts = {
             "carrier": _(
-                "The carrier to use for this shipping method. "
-                "Select a carrier before filling other fields."
+                "The carrier to use for this shipping method. " "Select a carrier before filling other fields."
             )
         }
 
@@ -174,10 +167,7 @@ class WaivingCostBehaviorComponentForm(ShuupAdminForm):
     class Meta:
         model = WaivingCostBehaviorComponent
         exclude = ["identifier"]
-        labels = {
-            "price_value": _("Price"),
-            "waive_limit_value": _("Waive limit")
-        }
+        labels = {"price_value": _("Price"), "waive_limit_value": _("Waive limit")}
 
 
 class WeightLimitsBehaviorComponentForm(forms.ModelForm):
@@ -206,9 +196,11 @@ class OrderTotalLimitBehaviorComponentForm(forms.ModelForm):
 
 class CountryLimitBehaviorComponentForm(forms.ModelForm):
     available_in_countries = forms.MultipleChoiceField(
-        choices=Countries, label=_("Available in countries"), required=False)
+        choices=Countries, label=_("Available in countries"), required=False
+    )
     unavailable_in_countries = forms.MultipleChoiceField(
-        choices=Countries, label=_("Unavailable in countries"), required=False)
+        choices=Countries, label=_("Unavailable in countries"), required=False
+    )
 
     class Meta:
         model = CountryLimitBehaviorComponent
@@ -217,7 +209,7 @@ class CountryLimitBehaviorComponentForm(forms.ModelForm):
             "available_in_countries": _("Select accepted countries for this service."),
             "available_in_european_countries": _("Select this to accept all countries in EU."),
             "unavailable_in_countries": _("Select restricted countries for this service."),
-            "unavailable_in_european_countries": _("Select this to restrict this service for countries in EU")
+            "unavailable_in_european_countries": _("Select this to restrict this service for countries in EU"),
         }
 
     def __init__(self, **kwargs):

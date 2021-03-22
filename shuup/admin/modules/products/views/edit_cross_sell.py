@@ -68,33 +68,32 @@ class ProductCrossSellEditView(UpdateView):
     form_class = ProductCrossSellFormSet
 
     def get_breadcrumb_parents(self):
-        return [
-            MenuEntry(
-                text="%s" % self.object,
-                url=get_model_url(self.object, shop=self.request.shop)
-            )
-        ]
+        return [MenuEntry(text="%s" % self.object, url=get_model_url(self.object, shop=self.request.shop))]
 
     def get_context_data(self, **kwargs):
         context = super(ProductCrossSellEditView, self).get_context_data(**kwargs)
         context["title"] = _("Edit Cross-Sell: %s") % self.object
-        context["toolbar"] = Toolbar([
-            PostActionButton(
-                icon="fa fa-save",
-                form_id="xsell_form",
-                text=_("Save"),
-                extra_css_class="btn-success",
-            ),
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                PostActionButton(
+                    icon="fa fa-save",
+                    form_id="xsell_form",
+                    text=_("Save"),
+                    extra_css_class="btn-success",
+                ),
+            ],
+            view=self,
+        )
         return context
 
     def get_form_kwargs(self):
         kwargs = super(ProductCrossSellEditView, self).get_form_kwargs()
         instance = kwargs.pop("instance", None)
-        kwargs["queryset"] = ProductCrossSell.objects. \
-            filter(product1=instance). \
-            exclude(type=ProductCrossSellType.COMPUTED). \
-            order_by("weight")
+        kwargs["queryset"] = (
+            ProductCrossSell.objects.filter(product1=instance)
+            .exclude(type=ProductCrossSellType.COMPUTED)
+            .order_by("weight")
+        )
         kwargs["product"] = instance
         return kwargs
 

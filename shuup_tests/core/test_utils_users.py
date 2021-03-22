@@ -6,9 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.utils.users import (
-    is_user_all_seeing, toggle_all_seeing_for_user
-)
+from shuup.core.utils.users import is_user_all_seeing, toggle_all_seeing_for_user
 
 
 @pytest.mark.django_db

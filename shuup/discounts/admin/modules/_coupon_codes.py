@@ -21,16 +21,17 @@ class CouponCodeModule(AdminModule):
 
     def get_urls(self):
         from shuup.admin.urls import admin_url
+
         delete = admin_url(
             r"^discounts_coupon_codes/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.CouponCodeDeleteView",
-            name="discounts_coupon_codes.delete"
+            name="discounts_coupon_codes.delete",
         )
 
         return [delete] + get_edit_and_list_urls(
             url_prefix="^discounts_coupon_codes",
             view_template="shuup.discounts.admin.views.CouponCode%sView",
-            name_template="discounts_coupon_codes.%s"
+            name_template="discounts_coupon_codes.%s",
         )
 
     def get_menu_entries(self, request):
@@ -40,7 +41,7 @@ class CouponCodeModule(AdminModule):
                 icon="fa fa-percent",
                 url="shuup_admin:discounts_coupon_codes.list",
                 category=CAMPAIGNS_MENU_CATEGORY,
-                ordering=8
+                ordering=8,
             )
         ]
 

@@ -17,15 +17,10 @@ class TextPlugin(Plugin):
     """
     Very basic Markdown rendering plugin.
     """
+
     identifier = "text"
     name = "Text"
-    fields = [
-        ("text", TranslatableField(
-            label=_("text"),
-            required=False,
-            widget=TextEditorWidget
-        ))
-    ]
+    fields = [("text", TranslatableField(label=_("text"), required=False, widget=TextEditorWidget))]
 
     def render(self, context):  # doccov: ignore
         text = self.get_translated_value("text", default="")

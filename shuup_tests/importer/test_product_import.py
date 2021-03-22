@@ -4,27 +4,28 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import os
-from decimal import Decimal
-
 import mock
+import os
 import pytest
+from decimal import Decimal
 from django.conf import settings
 from django.utils.encoding import force_text
 from django.utils.translation import activate
 from six import BytesIO
 
-from shuup.core.models import (
-    Category, Manufacturer, MediaFile, Product, ShopProduct
-)
+from shuup.core.models import Category, Manufacturer, MediaFile, Product, ShopProduct
 from shuup.default_importer.importers import ProductImporter
 from shuup.importer.importing import DataImporter
 from shuup.importer.transforms import transform_file
 from shuup.importer.utils.importer import ImportMode
 from shuup.simple_supplier.models import StockAdjustment
 from shuup.testing.factories import (
-    get_default_product_type, get_default_sales_unit, get_default_shop,
-    get_default_supplier, get_default_tax_class, get_shop
+    get_default_product_type,
+    get_default_sales_unit,
+    get_default_shop,
+    get_default_supplier,
+    get_default_tax_class,
+    get_shop,
 )
 from shuup.testing.image_generator import generate_image
 from shuup.utils.filer import filer_image_from_data
@@ -38,21 +39,26 @@ def _create_random_media_file(shop, file_path):
     pil_image = generate_image(2, 2)
     sio = BytesIO()
     pil_image.save(sio, "JPEG", quality=45)
-    filer_file = filer_image_from_data(
-        request=None,
-        path=path,
-        file_name=name,
-        file_data=sio.getvalue()
-    )
+    filer_file = filer_image_from_data(request=None, path=path, file_name=name, file_data=sio.getvalue())
     media_file = MediaFile.objects.create(file=filer_file)
     media_file.shops.add(shop)
     return media_file
 
 
-@pytest.mark.parametrize("filename", ["sample_import.xlsx", "sample_import.csv",
-                                      "sample_import2.csv", "sample_import3.csv",
-                                      "sample_import4.csv", "sample_import5.csv",
-                                      "sample_import.xls", images_file, bom_file])
+@pytest.mark.parametrize(
+    "filename",
+    [
+        "sample_import.xlsx",
+        "sample_import.csv",
+        "sample_import2.csv",
+        "sample_import3.csv",
+        "sample_import4.csv",
+        "sample_import5.csv",
+        "sample_import.xls",
+        images_file,
+        bom_file,
+    ],
+)
 @pytest.mark.django_db
 def test_sample_import_all_match(filename, rf):
     activate("en")
@@ -64,14 +70,14 @@ def test_sample_import_all_match(filename, rf):
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     if filename == bom_file:
         import codecs
+
         bytes = min(32, os.path.getsize(path))
-        raw = open(path, 'rb').read(bytes)
+        raw = open(path, "rb").read(bytes)
         assert raw.startswith(codecs.BOM_UTF8)
 
     transformed_data = transform_file(filename.split(".")[1], path)
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
 
@@ -120,7 +126,7 @@ def test_sample_import_all_match(filename, rf):
             assert product.media.count() == 3
 
         assert shop_product.primary_category.pk == 1
-        assert [c.pk for c in shop_product.categories.all()] == [1,2]
+        assert [c.pk for c in shop_product.categories.all()] == [1, 2]
 
 
 @pytest.mark.django_db
@@ -134,8 +140,7 @@ def test_sample_import_shop_relation(rf):
     path = os.path.join(os.path.dirname(__file__), "data", "product", "complex_import.xlsx")
     transformed_data = transform_file("xlsx", path)
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
     importer.do_import(ImportMode.CREATE_UPDATE)
@@ -150,10 +155,18 @@ def test_sample_import_shop_relation(rf):
             assert shop in product.manufacturer.shops.all()
 
 
-@pytest.mark.parametrize("filename", ["sample_import.xlsx", "sample_import.csv",
-                                      "sample_import2.csv", "sample_import3.csv",
-                                      "sample_import4.csv", "sample_import5.csv",
-                                      "sample_import.xls"])
+@pytest.mark.parametrize(
+    "filename",
+    [
+        "sample_import.xlsx",
+        "sample_import.csv",
+        "sample_import2.csv",
+        "sample_import3.csv",
+        "sample_import4.csv",
+        "sample_import5.csv",
+        "sample_import.xls",
+    ],
+)
 @pytest.mark.django_db
 def test_sample_import_all_match_all_shops(filename, rf):
     activate("en")
@@ -169,8 +182,7 @@ def test_sample_import_all_match_all_shops(filename, rf):
 
     for shop in [shop1, shop2]:
         importer = ProductImporter(
-            transformed_data,
-            ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+            transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
         )
         importer.process_data()
 
@@ -212,8 +224,7 @@ def test_sample_import_images_errors(rf):
     path = os.path.join(os.path.dirname(__file__), "data", "product", "sample_import_images_error.csv")
     transformed_data = transform_file("csv", path)
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
 
@@ -236,8 +247,7 @@ def test_sample_ignore_column(rf):
     path = os.path.join(os.path.dirname(__file__), "data", "product", "sample_import_ignore.csv")
     transformed_data = transform_file("csv", path)
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
 
@@ -267,8 +277,7 @@ def test_sample_import_no_match(rf, stock_managed):
     transformed_data = transform_file(filename.split(".")[1], path)
 
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
     assert len(importer.unmatched_fields) == 1
@@ -324,8 +333,7 @@ def import_categoryfile(rf, filename, expected_category_count, map_from=None, ma
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
     if map_from:
@@ -352,7 +360,7 @@ def test_strange_category_name(rf):
         filename="strange_category_name.xlsx",
         expected_category_count=1,
         map_from="mycat",
-        map_to="shuup.core.models.ShopProduct:categories"
+        map_to="shuup.core.models.ShopProduct:categories",
     )
 
 
@@ -368,7 +376,7 @@ def test_strange_category_names(rf):
         filename="strange_categories.xlsx",
         expected_category_count=2,
         map_from="mycats",
-        map_to="shuup.core.models.ShopProduct:categories"
+        map_to="shuup.core.models.ShopProduct:categories",
     )
 
 
@@ -383,11 +391,11 @@ PRODUCT_DATA = [
         "product_type": "Perhipal",
         "visibility": "Always Visible",
         "tax_class": "Default Tax",
-        "manufacturer": "Shuup"
+        "manufacturer": "Shuup",
     },
     {
         "sku": "test-sku2",
-        "name": "42\" Plasma TV",
+        "name": '42" Plasma TV',
         "price": "120.22",
         "description": "This huge <b>TV</b> Has plasma in it",
         "categories": ["Televisions", "Plasma TV's"],
@@ -407,7 +415,7 @@ PRODUCT_DATA = [
         "product_type": "Perhipal",
         "visibility": "Always Visible",
         "tax_class": "Default Tax",
-        "manufacturer": "RoboShuup"
+        "manufacturer": "RoboShuup",
     },
     {
         "sku": "test-sku4",
@@ -419,7 +427,7 @@ PRODUCT_DATA = [
         "product_type": "Mancave",
         "visibility": "Always Visible",
         "tax_class": "Cheap Tax",
-        "manufacturer": "Golden Shuup"
+        "manufacturer": "Golden Shuup",
     },
     {
         "sku": "test-sku5",
@@ -431,7 +439,7 @@ PRODUCT_DATA = [
         "product_type": "Mancave",
         "visibility": "Searchable",
         "tax_class": "Cheap Tax",
-        "manufacturer": "Shuup In Space"
+        "manufacturer": "Shuup In Space",
     },
     {
         "sku": "test-sku6",
@@ -443,9 +451,11 @@ PRODUCT_DATA = [
         "product_type": "Mancave",
         "visibility": "Searchable",
         "tax_class": "Cheap Tax",
-        "manufacturer": None
-    }
+        "manufacturer": None,
+    },
 ]
+
+
 @pytest.mark.django_db
 def test_complex_import(rf):
     filename = "complex_import.xlsx"
@@ -459,8 +469,7 @@ def test_complex_import(rf):
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
 

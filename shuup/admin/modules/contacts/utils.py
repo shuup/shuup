@@ -12,8 +12,11 @@ from shuup.admin.shop_provider import get_shop
 
 
 def request_limited(request):
-    return (settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP and
-            not request.user.is_superuser)
+    return (
+        settings.SHUUP_ENABLE_MULTIPLE_SHOPS
+        and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP
+        and not request.user.is_superuser
+    )
 
 
 def check_contact_permission(request, contact):

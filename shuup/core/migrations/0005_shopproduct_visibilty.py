@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-from shuup.core.models._product_shops import ShopProductVisibility
 import enumfields.fields
+from django.db import migrations, models
+
+from shuup.core.models._product_shops import ShopProductVisibility
 
 
 def shop_product_visibility(apps, schema_editor):

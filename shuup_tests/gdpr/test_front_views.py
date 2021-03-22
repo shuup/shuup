@@ -7,18 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth.models import AnonymousUser
-from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import PersonContact, Shop
 from shuup.gdpr.models import GDPRSettings
-from shuup.gdpr.utils import ensure_gdpr_privacy_policy, \
-    create_initial_required_cookie_category, is_documents_consent_in_sync
+from shuup.gdpr.utils import (
+    create_initial_required_cookie_category,
+    ensure_gdpr_privacy_policy,
+    is_documents_consent_in_sync,
+)
 from shuup.gdpr.views import GDPRCookieConsentView, GDPRPolicyConsentView
 from shuup.simple_cms.models import Page
-
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 
@@ -60,8 +62,9 @@ def test_serialize_data():
     assert response._headers["content-disposition"][0] == "Content-Disposition"
     assert response.status_code == 200
 
-    from shuup.tasks.models import Task, TaskType
     from shuup.gdpr.models import GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER
+    from shuup.tasks.models import Task, TaskType
+
     response = client.post(reverse("shuup:gdpr_anonymize_account"))
     assert response.status_code == 302
     assert response.url.endswith(reverse("shuup:index"))
@@ -73,7 +76,7 @@ def test_serialize_data():
 
     refreshed_customer = PersonContact.objects.get(id=customer.id)
     assert refreshed_customer.is_active is False
-    assert refreshed_customer.name == customer.name     # nothing changed yet
+    assert refreshed_customer.name == customer.name  # nothing changed yet
 
 
 @pytest.mark.django_db

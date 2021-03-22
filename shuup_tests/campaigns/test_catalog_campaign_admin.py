@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import datetime
-
 import pytest
 import pytz
 from django.test import override_settings
@@ -28,7 +27,7 @@ DEFAULT_CONDITION_FORMS = [
 DEFAULT_FILTER_FORMS = [
     "shuup.campaigns.admin_module.forms:ProductTypeFilterForm",
     "shuup.campaigns.admin_module.forms:ProductFilterForm",
-    "shuup.campaigns.admin_module.forms:CategoryFilterForm"
+    "shuup.campaigns.admin_module.forms:CategoryFilterForm",
 ]
 
 DEFAULT_EFFECT_FORMS = [
@@ -92,7 +91,7 @@ def test_campaign_creation(rf, admin_user):
             "base-public_name__en": "Test Campaign",
             "base-shop": get_default_shop().id,
             "base-active": True,
-            "base-basket_line_text": "Test campaign activated!"
+            "base-basket_line_text": "Test campaign activated!",
         }
         campaigns_before = CatalogCampaign.objects.count()
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
@@ -123,7 +122,7 @@ def test_campaign_edit_save(rf, admin_user):
             "base-active": True,
             "base-basket_line_text": "Test campaign activated!",
             "base-start_datetime": datetime.datetime(year=2016, month=6, day=19),
-            "base-end_datetime": new_end_datetime
+            "base-end_datetime": new_end_datetime,
         }
         methods_before = CatalogCampaign.objects.count()
         # Conditions, effects and effects is tested separately
@@ -161,7 +160,7 @@ def test_campaign_end_date(rf, admin_user):
             "base-active": True,
             "base-basket_line_text": "Test campaign activated!",
             "base-start_datetime": datetime.datetime(year=2016, month=6, day=19),
-            "base-end_datetime": datetime.datetime(year=2016, month=6, day=10)
+            "base-end_datetime": datetime.datetime(year=2016, month=6, day=10),
         }
         methods_before = CatalogCampaign.objects.count()
         # Conditions, effects and effects is tested separately

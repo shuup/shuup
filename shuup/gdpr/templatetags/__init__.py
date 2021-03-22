@@ -5,9 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import json
-
 import jinja2
+import json
 from django.conf import settings
 from django_jinja import library
 
@@ -17,6 +16,7 @@ from shuup.gdpr.utils import get_active_consent_pages
 class GDPRNamespace(object):
     def is_enabled(self, request, **kwargs):
         from shuup.gdpr.models import GDPRSettings
+
         return GDPRSettings.get_for_shop(request.shop).enabled
 
     def get_documents(self, request, **kwargs):

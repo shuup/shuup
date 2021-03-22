@@ -11,12 +11,14 @@ from shuup.core import cache
 
 
 def test_cache_api():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
 
         key = "test_prefix:123"

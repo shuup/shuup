@@ -6,25 +6,31 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import time
-
 import pytest
+import time
 from django.contrib.auth.models import Group, Permission
-from shuup.utils.django_compat import reverse
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_permission_object_from_string, set_permissions_for_group
+    get_default_model_permissions,
+    get_permission_object_from_string,
+    set_permissions_for_group,
 )
 from shuup.core.models import Category, Product, Shop, ShopProduct
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    wait_until_appeared,
+    wait_until_condition,
 )
 from shuup.testing.factories import (
-    create_random_user, get_default_product_type, get_default_sales_unit,
-    get_default_shop, get_default_tax_class
+    create_random_user,
+    get_default_product_type,
+    get_default_sales_unit,
+    get_default_shop,
+    get_default_tax_class,
 )
-from shuup.testing.browser_utils import initialize_admin_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -54,7 +60,7 @@ def test_quick_add(browser, admin_user, live_server, settings):
     click_element(browser, "#id_shop%d-primary_category ~ .quick-add-btn a.btn" % shop.id)
     wait_until_appeared(browser, "#create-object-iframe")
 
-    with browser.get_iframe('create-object-iframe') as iframe:
+    with browser.get_iframe("create-object-iframe") as iframe:
         assert Category.objects.count() == 0
         wait_until_appeared(iframe, "input[name='base-name__en']")
         iframe.fill("base-name__en", "Test Category")
@@ -68,7 +74,7 @@ def test_quick_add(browser, admin_user, live_server, settings):
     # click to edit the button
     click_element(browser, "#id_shop%d-primary_category ~ .edit-object-btn a.btn" % shop.id)
 
-    with browser.get_iframe('create-object-iframe') as iframe:
+    with browser.get_iframe("create-object-iframe") as iframe:
         wait_until_appeared(iframe, "input[name='base-name__en']")
         new_cat_name = "Changed Name"
         iframe.fill("base-name__en", new_cat_name)
@@ -123,7 +129,7 @@ def test_edit_button_no_permission(browser, admin_user, live_server, settings):
     wait_until_appeared(browser, "#create-object-iframe")
 
     # no permission to add category
-    with browser.get_iframe('create-object-iframe') as iframe:
+    with browser.get_iframe("create-object-iframe") as iframe:
         error = "Can't view this page. You do not have the required permissions: category.new"
         wait_until_condition(iframe, condition=lambda x: x.is_text_present(error))
 
@@ -140,7 +146,7 @@ def test_edit_button_no_permission(browser, admin_user, live_server, settings):
     wait_until_appeared(browser, "#create-object-iframe")
 
     # add the category
-    with browser.get_iframe('create-object-iframe') as iframe:
+    with browser.get_iframe("create-object-iframe") as iframe:
         assert Category.objects.count() == 0
         wait_until_appeared(iframe, "input[name='base-name__en']")
         iframe.fill("base-name__en", "Test Category")
@@ -160,7 +166,7 @@ def test_edit_button_no_permission(browser, admin_user, live_server, settings):
     click_element(browser, "#id_shop%d-primary_category ~ .edit-object-btn a.btn" % shop.id)
 
     # no permission to edit category
-    with browser.get_iframe('create-object-iframe') as iframe:
+    with browser.get_iframe("create-object-iframe") as iframe:
         error = "Can't view this page. You do not have the required permission(s): `category.edit`."
         wait_until_condition(iframe, condition=lambda x: x.is_text_present(error))
 
@@ -174,7 +180,7 @@ def test_edit_button_no_permission(browser, admin_user, live_server, settings):
     wait_until_appeared(browser, "#create-object-iframe")
 
     new_cat_name = "Changed Name"
-    with browser.get_iframe('create-object-iframe') as iframe:
+    with browser.get_iframe("create-object-iframe") as iframe:
         wait_until_appeared(iframe, "input[name='base-name__en']")
         iframe.fill("base-name__en", new_cat_name)
         time.sleep(3)  # Let's just wait here to the iFrame to open fully (for Chrome and headless)

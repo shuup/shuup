@@ -6,19 +6,14 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
-from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.core import cache
 from shuup.core.models import ShopProduct
-from shuup.testing.browser_utils import wait_until_condition
-from shuup.testing.factories import (
-    create_product, get_default_category, get_default_shop,
-    get_default_supplier
-)
-from shuup.testing.browser_utils import initialize_front_browser_test
+from shuup.testing.browser_utils import initialize_front_browser_test, wait_until_condition
+from shuup.testing.factories import create_product, get_default_category, get_default_shop, get_default_supplier
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -29,11 +24,13 @@ def test_product_descriptions(browser, live_server, settings):
     activate("en")
     cache.clear()
     shop = get_default_shop()
-    product = create_product("product1",
-                             shop=shop,
-                             description="<b>My HTML description</b>",
-                             short_description="some short of description instead",
-                             supplier=get_default_supplier())
+    product = create_product(
+        "product1",
+        shop=shop,
+        description="<b>My HTML description</b>",
+        short_description="some short of description instead",
+        supplier=get_default_supplier(),
+    )
     sp = ShopProduct.objects.get(product=product, shop=shop)
     sp.primary_category = get_default_category()
     sp.categories.add(get_default_category())

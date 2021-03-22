@@ -10,8 +10,7 @@ from bootstrap3.renderers import FormRenderer
 from django.utils.safestring import mark_safe
 from django_jinja import library
 
-from shuup.admin.template_helpers import \
-    shuup_admin as shuup_admin_template_helpers
+from shuup.admin.template_helpers import shuup_admin as shuup_admin_template_helpers
 from shuup.admin.utils.bs3_renderers import AdminFieldRenderer
 
 

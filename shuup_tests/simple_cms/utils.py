@@ -10,7 +10,6 @@ import uuid
 from shuup.simple_cms.models import Page
 from shuup.utils.i18n import get_language_name
 
-
 CONTENT = """
 <h1>Bacon ipsum dolor amet doner ham brisket</h1>
 

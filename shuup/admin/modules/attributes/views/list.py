@@ -18,14 +18,18 @@ from shuup.core.models import Attribute, AttributeType, AttributeVisibility
 class AttributeListView(PicotableListView):
     model = Attribute
     default_columns = [
-        Column("identifier", _("Identifier"), filter_config=TextFilter(
-            filter_field="identifier",
-            placeholder=_("Filter by identifier...")
-        )),
-        Column("name", _("Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
-            filter_field="translations__name",
-            placeholder=_("Filter by name...")
-        )),
+        Column(
+            "identifier",
+            _("Identifier"),
+            filter_config=TextFilter(filter_field="identifier", placeholder=_("Filter by identifier...")),
+        ),
+        Column(
+            "name",
+            _("Name"),
+            sort_field="translations__name",
+            display="name",
+            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name...")),
+        ),
         Column("type", _("Type"), filter_config=ChoicesFilter(AttributeType.choices)),
         Column("visibility_mode", _("Visibility Mode"), filter_config=ChoicesFilter(AttributeVisibility.choices)),
         Column("searchable", _("Searchable")),

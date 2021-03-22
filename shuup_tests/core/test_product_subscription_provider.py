@@ -5,14 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal
 import pytest
+from decimal import Decimal
 
 from shuup.apps.provides import override_provides
-from shuup.core.utils.product_subscription import (
-    get_product_subscription_options,
-    ProductSubscriptionContext
-)
+from shuup.core.utils.product_subscription import ProductSubscriptionContext, get_product_subscription_options
 from shuup.testing import factories
 
 
@@ -23,9 +20,10 @@ def test_product_subscription_provider():
     supplier = factories.get_default_supplier()
     product = factories.create_product("product", shop, supplier, 10)
 
-    with override_provides("product_subscription_option_provider", [
-        "shuup.testing.subscription_option_provider.TestSubscriptionOptionProvider"
-    ]):
+    with override_provides(
+        "product_subscription_option_provider",
+        ["shuup.testing.subscription_option_provider.TestSubscriptionOptionProvider"],
+    ):
         context = ProductSubscriptionContext(shop, product, supplier)
         plans = list(get_product_subscription_options(context))
 

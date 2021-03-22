@@ -13,21 +13,13 @@ class ShuupSimpleSupplierAppConfig(AppConfig):
     verbose_name = "Shuup Simple Supplier"
     label = "simple_supplier"
     provides = {
-        "supplier_module": [
-            "shuup.simple_supplier.module:SimpleSupplierModule"
-        ],
-        "admin_product_form_part": [
-            "shuup.simple_supplier.admin_module.forms:SimpleSupplierFormPart"
-        ],
-        "admin_module": [
-            "shuup.simple_supplier.admin_module:StocksAdminModule"
-        ],
-        "notify_event": [
-            "shuup.simple_supplier.notify_events:AlertLimitReached"
-        ],
+        "supplier_module": ["shuup.simple_supplier.module:SimpleSupplierModule"],
+        "admin_product_form_part": ["shuup.simple_supplier.admin_module.forms:SimpleSupplierFormPart"],
+        "admin_module": ["shuup.simple_supplier.admin_module:StocksAdminModule"],
+        "notify_event": ["shuup.simple_supplier.notify_events:AlertLimitReached"],
         "notify_script_template": [
             "shuup.simple_supplier.notify_script_template:StockLimitEmailScriptTemplate",
-        ]
+        ],
     }
 
     def ready(self):

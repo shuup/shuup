@@ -22,8 +22,7 @@ class CheckoutPhaseViewMixin(object):
     previous_phase = None  # set as an instance variable
     request = None  # exists via being a view
 
-    def __init__(self, checkout_process=None, horizontal_template=True,
-                 *args, **kwargs):
+    def __init__(self, checkout_process=None, horizontal_template=True, *args, **kwargs):
         """
         Initialize a checkout phase view.
 
@@ -37,8 +36,8 @@ class CheckoutPhaseViewMixin(object):
         # TODO: (2.0) Make checkout_process argument mandatory
         if not checkout_process:
             warnings.warn(
-                "Warning! Using checkout view without a checkout process is deprecated.",
-                DeprecationWarning, 2)
+                "Warning! Using checkout view without a checkout process is deprecated.", DeprecationWarning, 2
+            )
 
         self._checkout_process = checkout_process
         self.horizontal_template = horizontal_template
@@ -77,7 +76,7 @@ class CheckoutPhaseViewMixin(object):
         if self.next_phase:
             return self.checkout_process.get_phase_url(self.next_phase)
         next_obj = super(CheckoutPhaseViewMixin, self)
-        if hasattr(next_obj, 'get_success_url'):
+        if hasattr(next_obj, "get_success_url"):
             return next_obj.get_success_url(*args, **kwargs)
 
     def get_url(self):
@@ -101,14 +100,9 @@ class CheckoutPhaseViewMixin(object):
     def get_context_data(self, **kwargs):
         context = super(CheckoutPhaseViewMixin, self).get_context_data(**kwargs)
         context["current_phase_url"] = self.get_url()
-        context["next_phase_url"] = (self.next_phase.get_url()
-                                     if self.next_phase else None)
-        context["previous_phase_url"] = (self.previous_phase.get_url()
-                                         if self.previous_phase else None)
-        context["phase_urls"] = {
-            phase.identifier: phase.get_url()
-            for phase in self.phases
-        }
+        context["next_phase_url"] = self.next_phase.get_url() if self.next_phase else None
+        context["previous_phase_url"] = self.previous_phase.get_url() if self.previous_phase else None
+        context["phase_urls"] = {phase.identifier: phase.get_url() for phase in self.phases}
         return context
 
     @classmethod
@@ -123,11 +117,8 @@ class CheckoutPhaseViewMixin(object):
 
 
 def _get_dummy_checkout_process(phase):
-    phase_specs = ['{0.__module__}:{0.__name__}'.format(type(phase))]
-    phase_kwargs = {
-        key: getattr(phase, key)
-        for key in ['request', 'args', 'kwargs'] if hasattr(phase, key)
-    }
+    phase_specs = ["{0.__module__}:{0.__name__}".format(type(phase))]
+    phase_kwargs = {key: getattr(phase, key) for key in ["request", "args", "kwargs"] if hasattr(phase, key)}
     checkout_process = CheckoutProcess(phase_specs, phase_kwargs)
     checkout_process._phases = [phase]
     checkout_process.horizontal_template = phase.horizontal_template

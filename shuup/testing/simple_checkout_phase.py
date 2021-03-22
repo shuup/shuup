@@ -9,9 +9,7 @@
 from django import forms
 from django.views.generic.edit import FormView
 
-from shuup.front.checkout import (
-    BasicServiceCheckoutPhaseProvider, CheckoutPhaseViewMixin
-)
+from shuup.front.checkout import BasicServiceCheckoutPhaseProvider, CheckoutPhaseViewMixin
 
 from .models import CarrierWithCheckoutPhase, PaymentWithCheckoutPhase
 

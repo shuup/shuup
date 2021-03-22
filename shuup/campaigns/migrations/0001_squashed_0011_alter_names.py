@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import re
-
 import django.core.validators
 import django.db.models.deletion
 import enumfields.fields
 import jsonfield.fields
 import parler.models
+import re
 from django.conf import settings
 from django.db import migrations, models
 

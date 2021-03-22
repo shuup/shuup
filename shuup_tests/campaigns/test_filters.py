@@ -6,22 +6,16 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from decimal import Decimal
-
 from django.test import override_settings
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
 
 from shuup.campaigns.models import CatalogCampaign
-from shuup.campaigns.models.catalog_filters import (
-   CategoryFilter, ProductFilter, ProductTypeFilter
-)
+from shuup.campaigns.models.catalog_filters import CategoryFilter, ProductFilter, ProductTypeFilter
 from shuup.campaigns.models.product_effects import ProductDiscountPercentage
 from shuup.core.models import Category, ProductMode, ShopProduct
 from shuup.front.basket import get_basket
-from shuup.testing.factories import (
-    create_product, get_default_category, get_default_supplier,
-    get_shipping_method
-)
+from shuup.testing.factories import create_product, get_default_category, get_default_supplier, get_shipping_method
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
 

@@ -26,6 +26,7 @@ class RequestPasswordView(FormView):
 
     def get_form_class(self):
         from shuup.admin.forms._auth import RequestPasswordForm
+
         return RequestPasswordForm
 
     def get_success_url(self):
@@ -50,6 +51,7 @@ class ResetPasswordView(FormView):
 
     def get_form_class(self):
         from django.contrib.auth.forms import SetPasswordForm
+
         return SetPasswordForm
 
     def get_form_kwargs(self):
@@ -71,7 +73,7 @@ class ResetPasswordView(FormView):
         user = self.get_target_user()
         token = self.kwargs["token"]
 
-        valid = (user is not None and self.token_generator.check_token(user, token))
+        valid = user is not None and self.token_generator.check_token(user, token)
         if not valid:
             raise Problem(_("This recovery link is invalid."))
 

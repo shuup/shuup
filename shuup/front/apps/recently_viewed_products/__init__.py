@@ -13,8 +13,8 @@ import shuup.apps
 
 class AppConfig(shuup.apps.AppConfig):
     name = __name__
-    verbose_name = _('Shuup Frontend - Recently Viewed Products')
-    label = 'shuup_front.recently_viewed_products'
+    verbose_name = _("Shuup Frontend - Recently Viewed Products")
+    label = "shuup_front.recently_viewed_products"
 
     provides = {
         "xtheme_plugin": [
@@ -24,4 +24,4 @@ class AppConfig(shuup.apps.AppConfig):
     }
 
 
-default_app_config = __name__ + '.AppConfig'
+default_app_config = __name__ + ".AppConfig"

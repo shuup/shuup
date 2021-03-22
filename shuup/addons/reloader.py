@@ -29,12 +29,14 @@ class UwsgiReloadMethod(ReloadMethod):
     def is_viable(self):
         try:
             import uwsgi
+
             return callable(uwsgi.reload)
         except ImportError:  # Not uWSGI or not a supported version
             return False
 
     def execute(self):
         import uwsgi
+
         uwsgi.reload()
 
 
@@ -44,9 +46,9 @@ class DevServerReloadMethod(ReloadMethod):
 
     def is_viable(self):
         return (
-            ("runserver" in sys.argv or "devserver" in sys.argv) and
-            ("noreload" not in sys.argv) and
-            os.environ.get("RUN_MAIN")
+            ("runserver" in sys.argv or "devserver" in sys.argv)
+            and ("noreload" not in sys.argv)
+            and os.environ.get("RUN_MAIN")
         )
 
     def execute(self):
@@ -78,7 +80,7 @@ class GunicornReloadMethod(ReloadMethod):
 
     def is_parent_an_unicorn(self):
         try:
-            return ("gunicorn" in open("/proc/%s/cmdline" % os.getppid(), "r").read())
+            return "gunicorn" in open("/proc/%s/cmdline" % os.getppid(), "r").read()
         except (AttributeError, IOError):
             return False
 
@@ -86,6 +88,7 @@ class GunicornReloadMethod(ReloadMethod):
         # See if we have Gunicorn available
         try:
             import gunicorn
+
             assert gunicorn  # Yup, unicorns alright!
         except ImportError:
             return False
@@ -95,6 +98,7 @@ class GunicornReloadMethod(ReloadMethod):
     def execute(self):
         import os
         import signal
+
         if self.is_parent_an_unicorn():
             os.kill(os.getppid(), signal.SIGHUP)
         raise ValueError("Error! My parent doesn't look like an unicorn.")

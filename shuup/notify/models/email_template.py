@@ -16,7 +16,7 @@ class EmailTemplate(models.Model):
         help_text=_(
             "Enter the base HTML template to be used in emails. "
             "Mark the place to inject the email content using the variable `%html_body%` inside the body."
-        )
+        ),
     )
 
     class Meta:

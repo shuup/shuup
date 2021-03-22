@@ -5,9 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from datetime import timedelta
-
 import pytest
+from datetime import timedelta
 from django.utils.timezone import now
 
 from shuup.core.models import CategoryStatus
@@ -59,7 +58,7 @@ def test_product_selection_plugin(rf):
         start_datetime=now() - timedelta(days=10),
         end_datetime=now() + timedelta(days=1),
         product=p5,
-        category=category1
+        category=category1,
     )
     discount1.shops.add(shop)
 
@@ -69,7 +68,7 @@ def test_product_selection_plugin(rf):
         active=True,
         start_datetime=now() - timedelta(days=10),
         end_datetime=now() + timedelta(days=1),
-        category=category2
+        category=category2,
     )
     discount2.shops.add(shop)
 
@@ -79,7 +78,7 @@ def test_product_selection_plugin(rf):
         active=True,
         start_datetime=now() - timedelta(days=10),
         end_datetime=now() + timedelta(days=1),
-        category=category2
+        category=category2,
     )
 
     context = get_context(rf)
@@ -140,11 +139,11 @@ def test_product_selection_plugin(rf):
                 "general-cell_width": "8",
                 "general-cell_align": "pull-right",
                 "plugin-discounts": [discount1.pk, discount2.pk],
-                "plugin-count": 6
+                "plugin-count": 6,
             },
             layout_cell=cell,
             theme=theme,
-            request=apply_request_middleware(rf.get("/"))
+            request=apply_request_middleware(rf.get("/")),
         )
         assert lcfg.is_valid()
         lcfg.save()

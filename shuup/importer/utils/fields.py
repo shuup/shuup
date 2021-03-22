@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 import re
 import unicodedata
-
 from django.db import models
 
 from shuup.utils.django_compat import force_text
@@ -58,7 +57,13 @@ def get_global_aliases():
         "slug": ["url_key", "url"],
         "phone": ["telephone"],
         "postal_code": [
-            "postcode", "postalcode",
-            "address_postcode", "address_postalcode", "address_postal_code",
-            "address[postcode]", "address[postalcode]", "address[postal_code]"],
+            "postcode",
+            "postalcode",
+            "address_postcode",
+            "address_postalcode",
+            "address_postal_code",
+            "address[postcode]",
+            "address[postalcode]",
+            "address[postal_code]",
+        ],
     }

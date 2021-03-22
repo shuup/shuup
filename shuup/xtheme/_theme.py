@@ -9,13 +9,10 @@ import logging
 import threading
 import warnings
 from contextlib import contextmanager
-
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.apps.provides import (
-    get_identifier_to_object_map, get_provide_objects
-)
+from shuup.apps.provides import get_identifier_to_object_map, get_provide_objects
 from shuup.core import cache
 from shuup.utils.deprecation import RemovedInFutureShuupWarning
 from shuup.utils.importing import load
@@ -137,6 +134,7 @@ class Theme(object):
 
         elif shop:
             from shuup.xtheme.models import ThemeSettings
+
             self._shop = shop
             self._theme_settings = ThemeSettings.objects.get_or_create(theme_identifier=self.identifier, shop=shop)[0]
 
@@ -193,6 +191,7 @@ class Theme(object):
                   several times.
         """
         self.settings_obj.update_settings(dict(*args, **kwargs))
+
     set_settings.alters_data = True
 
     def set_setting(self, key, value):
@@ -205,6 +204,7 @@ class Theme(object):
         :type value: object
         """
         self.settings_obj.update_settings({key: value})
+
     set_setting.alters_data = True
 
     def get_configuration_form(self, form_kwargs):
@@ -218,6 +218,7 @@ class Theme(object):
         :rtype: django.forms.ModelForm
         """
         from .forms import GenericThemeForm
+
         return GenericThemeForm(theme=self, **form_kwargs)
 
     def get_view(self, view_name):
@@ -269,10 +270,7 @@ class Theme(object):
 
         for plugin_spec in self.plugins:
             plugin = load(plugin_spec)
-            choices.append((
-                plugin.identifier,
-                getattr(plugin, "name", None) or plugin.identifier
-            ))
+            choices.append((plugin.identifier, getattr(plugin, "name", None) or plugin.identifier))
         choices.sort(key=lambda v: v[1])
         return choices
 
@@ -293,10 +291,7 @@ class Theme(object):
 
         for plugin in get_provide_objects("xtheme_plugin"):
             if plugin.identifier:
-                choices.append((
-                    plugin.identifier,
-                    getattr(plugin, "name", None) or plugin.identifier
-                ))
+                choices.append((plugin.identifier, getattr(plugin, "name", None) or plugin.identifier))
         choices.sort(key=lambda v: v[1])
         return choices
 
@@ -320,7 +315,9 @@ class Theme(object):
         else:
             warnings.warn(
                 "Warning! Using list of tuples in `theme.stylesheets` will deprecate "
-                "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
+                "in Shuup 0.5.7. Use list of dictionaries instead.",
+                RemovedInFutureShuupWarning,
+            )
         return False
 
     def get_default_style(self):
@@ -332,14 +329,13 @@ class Theme(object):
         if old_style:
             warnings.warn(
                 "Warning! Using list of tuples in `theme.stylesheets` will deprecate "
-                "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
+                "in Shuup 0.5.7. Use list of dictionaries instead.",
+                RemovedInFutureShuupWarning,
+            )
 
             # just return this, no identifier available
             stylesheet, name = self.stylesheets[0]
-            return {
-                "stylesheet": stylesheet,
-                "name": name
-            }
+            return {"stylesheet": stylesheet, "name": name}
 
         if not self.default_style_identifier:
             return self.stylesheets[0]
@@ -384,16 +380,15 @@ def override_current_theme_class(theme_class=_not_set, shop=None):
     """
     # Circular import avoidance:
     from shuup.xtheme.views.extra import clear_view_cache
+
     old_theme_class = cache.get(get_theme_cache_key(shop))
 
     if theme_class is _not_set or not theme_class:
         cache.set(get_theme_cache_key(shop), None)
     else:
         from shuup.xtheme.models import ThemeSettings
-        theme_settings = ThemeSettings.objects.get_or_create(
-            shop=shop,
-            theme_identifier=theme_class.identifier
-        )[0]
+
+        theme_settings = ThemeSettings.objects.get_or_create(shop=shop, theme_identifier=theme_class.identifier)[0]
         theme = theme_class(theme_settings)
         set_middleware_current_theme(theme)
         cache.set(get_theme_cache_key(shop), theme)
@@ -428,7 +423,7 @@ def get_current_theme(shop):
 
 
 def set_middleware_current_theme(theme):
-    """"
+    """ "
     Set the theme as the current for this thread.
     """
     _xtheme_middleware_state.theme = theme
@@ -457,10 +452,8 @@ def get_theme_by_identifier(identifier, shop):
     for theme_cls in get_provide_objects("xtheme"):
         if theme_cls.identifier == identifier:
             from shuup.xtheme.models import ThemeSettings
-            theme_settings = ThemeSettings.objects.get_or_create(
-                theme_identifier=identifier,
-                shop=shop
-            )[0]
+
+            theme_settings = ThemeSettings.objects.get_or_create(theme_identifier=identifier, shop=shop)[0]
 
             return theme_cls(theme_settings=theme_settings, shop=shop)
 
@@ -493,6 +486,7 @@ def _get_current_theme(shop):
     try:
         # Ensure this module can be imported from anywhere by lazily importing the model
         from shuup.xtheme.models import ThemeSettings
+
         theme_settings = ThemeSettings.objects.filter(active=True, shop=shop).first()
 
         # no active found, take the first and activate

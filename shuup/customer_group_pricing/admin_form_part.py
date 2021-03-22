@@ -20,7 +20,7 @@ class CustomerGroupPricingForm(forms.Form):
     def __init__(self, **kwargs):
         self.product = kwargs.pop("product", None)
         self.request = kwargs.pop("request", None)
-        self.shop = kwargs.pop('shop', None)
+        self.shop = kwargs.pop("shop", None)
         super(CustomerGroupPricingForm, self).__init__(**kwargs)
         self.groups = []
         if not self.shop:
@@ -29,18 +29,17 @@ class CustomerGroupPricingForm(forms.Form):
             self._build_fields()
 
     def _build_fields(self):
-        self.groups = list(ContactGroup.objects.filter(
-            Q(price_display_options__show_pricing=True) |
-            Q(
-                id__in=CgpPrice.objects.filter(product=self.product)
-                .values_list("group_id", flat=True)
-            )
-        ).distinct())
+        self.groups = list(
+            ContactGroup.objects.filter(
+                Q(price_display_options__show_pricing=True)
+                | Q(id__in=CgpPrice.objects.filter(product=self.product).values_list("group_id", flat=True))
+            ).distinct()
+        )
         prices_by_shop_and_group = dict(
             ((shop_id or 0, group_id or 0), price)
-            for (shop_id, group_id, price)
-            in CgpPrice.objects.filter(product=self.product)
-            .values_list("shop_id", "group_id", "price_value")
+            for (shop_id, group_id, price) in CgpPrice.objects.filter(product=self.product).values_list(
+                "shop_id", "group_id", "price_value"
+            )
         )
 
         for group in self.groups:
@@ -48,17 +47,15 @@ class CustomerGroupPricingForm(forms.Form):
             name = self._get_field_name(shop_group_id_tuple)
             price = prices_by_shop_and_group.get(shop_group_id_tuple)
             price_field = forms.DecimalField(
-                min_value=0, initial=price,
+                min_value=0,
+                initial=price,
                 label=(_("Price (%(shop)s/%(group)s)") % {"shop": self.shop, "group": group}),
-                required=False
+                required=False,
             )
             self.fields[name] = price_field
 
     def _get_id_tuple(self, shop, group):
-        return (
-            shop.id if shop else 0,
-            group.id if group else 0
-        )
+        return (shop.id if shop else 0, group.id if group else 0)
 
     def _get_field_name(self, id_tuple):
         return "s_%d_g_%d" % id_tuple
@@ -67,13 +64,13 @@ class CustomerGroupPricingForm(forms.Form):
         shop_group_id_tuple = self._get_id_tuple(shop, group)
         name = self._get_field_name(shop_group_id_tuple)
         value = self.cleaned_data.get(name)
-        clear = (value is None or value < 0)
+        clear = value is None or value < 0
         if clear:
             CgpPrice.objects.filter(product=self.product, group=group, shop=shop).delete()
         else:
             (spp, created) = CgpPrice.objects.get_or_create(
-                product=self.product, group=group, shop=shop,
-                defaults={'price_value': value})
+                product=self.product, group=group, shop=shop, defaults={"price_value": value}
+            )
             if not created:
                 spp.price_value = value
                 spp.save()
@@ -99,7 +96,7 @@ class CustomerGroupDiscountForm(forms.Form):
     def __init__(self, **kwargs):
         self.product = kwargs.pop("product", None)
         self.request = kwargs.pop("request", None)
-        self.shop = kwargs.pop('shop', None)
+        self.shop = kwargs.pop("shop", None)
         super(CustomerGroupDiscountForm, self).__init__(**kwargs)
         self.groups = []
 
@@ -110,18 +107,17 @@ class CustomerGroupDiscountForm(forms.Form):
             self._build_fields()
 
     def _build_fields(self):
-        self.groups = list(ContactGroup.objects.filter(
-            Q(price_display_options__show_pricing=True) |
-            Q(
-                id__in=CgpDiscount.objects.filter(product=self.product)
-                .values_list("group_id", flat=True)
-            )
-        ).distinct())
+        self.groups = list(
+            ContactGroup.objects.filter(
+                Q(price_display_options__show_pricing=True)
+                | Q(id__in=CgpDiscount.objects.filter(product=self.product).values_list("group_id", flat=True))
+            ).distinct()
+        )
         discounts_by_shop_and_group = dict(
             ((shop_id or 0, group_id or 0), discount_amount)
-            for (shop_id, group_id, discount_amount)
-            in CgpDiscount.objects.filter(product=self.product)
-            .values_list("shop_id", "group_id", "discount_amount_value")
+            for (shop_id, group_id, discount_amount) in CgpDiscount.objects.filter(product=self.product).values_list(
+                "shop_id", "group_id", "discount_amount_value"
+            )
         )
 
         for group in self.groups:
@@ -129,17 +125,15 @@ class CustomerGroupDiscountForm(forms.Form):
             name = self._get_field_name(shop_group_id_tuple)
             discount_amount = discounts_by_shop_and_group.get(shop_group_id_tuple)
             discount_amount_field = forms.DecimalField(
-                min_value=0, initial=discount_amount,
+                min_value=0,
+                initial=discount_amount,
                 label=(_("Discount (%(shop)s/%(group)s)") % {"shop": self.shop, "group": group}),
-                required=False
+                required=False,
             )
             self.fields[name] = discount_amount_field
 
     def _get_id_tuple(self, shop, group):
-        return (
-            shop.id if shop else 0,
-            group.id if group else 0
-        )
+        return (shop.id if shop else 0, group.id if group else 0)
 
     def _get_field_name(self, id_tuple):
         return "s_%d_g_%d" % id_tuple
@@ -148,13 +142,13 @@ class CustomerGroupDiscountForm(forms.Form):
         shop_group_id_tuple = self._get_id_tuple(shop, group)
         name = self._get_field_name(shop_group_id_tuple)
         value = self.cleaned_data.get(name)
-        clear = (value is None or value < 0)
+        clear = value is None or value < 0
         if clear:
             CgpDiscount.objects.filter(product=self.product, group=group, shop=shop).delete()
         else:
             (spd, created) = CgpDiscount.objects.get_or_create(
-                product=self.product, group=group, shop=shop,
-                defaults={'discount_amount_value': value})
+                product=self.product, group=group, shop=shop, defaults={"discount_amount_value": value}
+            )
             if not created:
                 spd.discount_amount_value = value
                 spd.save()
@@ -185,7 +179,7 @@ class CustomerGroupPricingFormPart(FormPart):
             form_class=CustomerGroupPricingForm,
             template_name="shuup/admin/customer_group_pricing/price_form_part.jinja",
             required=False,
-            kwargs={"product": self.object.product, "request": self.request}
+            kwargs={"product": self.object.product, "request": self.request},
         )
 
     def form_valid(self, form):
@@ -201,7 +195,7 @@ class CustomerGroupPricingDiscountFormPart(FormPart):
             form_class=CustomerGroupDiscountForm,
             template_name="shuup/admin/customer_group_pricing/discount_form_part.jinja",
             required=False,
-            kwargs={"product": self.object.product, "request": self.request}
+            kwargs={"product": self.object.product, "request": self.request},
         )
 
     def form_valid(self, form):

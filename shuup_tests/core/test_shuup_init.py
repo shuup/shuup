@@ -6,9 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.core.management import call_command
 from django.utils.translation import activate
+
 from shuup.core.models import Currency, Shop, Supplier
 
 

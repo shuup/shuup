@@ -13,9 +13,7 @@
 #: `shuup.core.models.Shop` and should return `current_theme_classes`
 #: and `current_theme` for context, where `current_theme_classes`
 #: is a list of `shuup.xtheme.models.ThemeSettings`.
-SHUUP_XTHEME_ADMIN_THEME_CONTEXT = (
-    "shuup.xtheme.admin_module.utils.get_theme_context"
-)
+SHUUP_XTHEME_ADMIN_THEME_CONTEXT = "shuup.xtheme.admin_module.utils.get_theme_context"
 
 #: Spec to control Xtheme resource injections.
 #:

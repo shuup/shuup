@@ -8,19 +8,18 @@
 from __future__ import unicode_literals
 
 import datetime
-import random
-import uuid
-from decimal import Decimal
-
 import factory
 import factory.fuzzy as fuzzy
 import faker
+import random
 import six
+import uuid
+from decimal import Decimal
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as PermissionGroup
 from django.core.files.base import ContentFile
-from django.core.validators import validate_email, ValidationError
+from django.core.validators import ValidationError, validate_email
 from django.db.transaction import atomic
 from django.utils.text import slugify
 from django.utils.timezone import now
@@ -33,14 +32,44 @@ from six import BytesIO
 from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
-    AnonymousContact, Attribute, AttributeType, AttributeVisibility, Basket,
-    Category, CategoryStatus, CompanyContact, Contact, ContactGroup, Currency,
-    CustomCarrier, CustomPaymentProcessor, FixedCostBehaviorComponent,
-    Manufacturer, MutableAddress, Order, OrderLine, OrderLineTax,
-    OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product,
-    ProductMedia, ProductMediaKind, ProductType, SalesUnit, ShippingMethod,
-    Shop, ShopProduct, ShopProductVisibility, ShopStatus, Supplier,
-    SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
+    AnonymousContact,
+    Attribute,
+    AttributeType,
+    AttributeVisibility,
+    Basket,
+    Category,
+    CategoryStatus,
+    CompanyContact,
+    Contact,
+    ContactGroup,
+    Currency,
+    CustomCarrier,
+    CustomPaymentProcessor,
+    FixedCostBehaviorComponent,
+    Manufacturer,
+    MutableAddress,
+    Order,
+    OrderLine,
+    OrderLineTax,
+    OrderLineType,
+    OrderStatus,
+    PaymentMethod,
+    PersonContact,
+    Product,
+    ProductMedia,
+    ProductMediaKind,
+    ProductType,
+    SalesUnit,
+    ShippingMethod,
+    Shop,
+    ShopProduct,
+    ShopProductVisibility,
+    ShopStatus,
+    Supplier,
+    SupplierType,
+    Tax,
+    TaxClass,
+    WaivingCostBehaviorComponent,
 )
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
@@ -59,12 +88,12 @@ DEFAULT_CURRENCY = "EUR"
 
 DEFAULT_ADDRESS_DATA = dict(
     prefix="Sir",
-    name=u"Dog Hello",
+    name="Dog Hello",
     suffix=", Esq.",
     postal_code="K9N",
     street="Woof Ave.",
     city="Dog Fort",
-    country="FR"
+    country="FR",
 )
 
 COUNTRY_CODES = sorted(COUNTRIES.keys())
@@ -76,16 +105,16 @@ class FuzzyBoolean(fuzzy.BaseFuzzyAttribute):
         super(FuzzyBoolean, self).__init__()
 
     def fuzz(self):
-        return (random.random() < self.probability)
+        return random.random() < self.probability
 
 
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = settings.AUTH_USER_MODEL
 
-    username = factory.Sequence(lambda n: 'user%s' % n)
-    email = factory.Sequence(lambda n: 'user{0}@example.shuup.com'.format(n))
-    password = factory.PostGenerationMethodCall('set_password', 'test')
+    username = factory.Sequence(lambda n: "user%s" % n)
+    email = factory.Sequence(lambda n: "user{0}@example.shuup.com".format(n))
+    password = factory.PostGenerationMethodCall("set_password", "test")
     first_name = fuzzy.FuzzyText(length=4, prefix="First Name ")
     last_name = fuzzy.FuzzyText(length=4, prefix="Last Name ")
 
@@ -96,7 +125,7 @@ class CompanyFactory(DjangoModelFactory):
 
     name = fuzzy.FuzzyText()
     tax_number = fuzzy.FuzzyText()
-    email = factory.Sequence(lambda n: 'company%d@example.shuup.com' % n)
+    email = factory.Sequence(lambda n: "company%d@example.shuup.com" % n)
 
 
 class ShopFactory(DjangoModelFactory):
@@ -112,7 +141,7 @@ class ProductTypeFactory(DjangoModelFactory):
     class Meta:
         model = ProductType
 
-    identifier = factory.Sequence(lambda n: 'type_%d' % n)
+    identifier = factory.Sequence(lambda n: "type_%d" % n)
     name = fuzzy.FuzzyText(length=6, prefix="Product Type ")
 
 
@@ -128,7 +157,7 @@ class CategoryFactory(DjangoModelFactory):
     class Meta:
         model = Category
 
-    identifier = factory.Sequence(lambda n: 'category%d' % n)
+    identifier = factory.Sequence(lambda n: "category%d" % n)
     name = fuzzy.FuzzyText(length=6, prefix="Category ")
     status = fuzzy.FuzzyChoice([CategoryStatus.INVISIBLE, CategoryStatus.VISIBLE, CategoryStatus.VISIBLE])
 
@@ -150,12 +179,14 @@ class ShopProductFactory(DjangoModelFactory):
         model = ShopProduct
 
     purchasable = FuzzyBoolean(probability=1)
-    visibility = fuzzy.FuzzyChoice([
-        ShopProductVisibility.NOT_VISIBLE,
-        ShopProductVisibility.LISTED,
-        ShopProductVisibility.SEARCHABLE,
-        ShopProductVisibility.ALWAYS_VISIBLE
-    ])
+    visibility = fuzzy.FuzzyChoice(
+        [
+            ShopProductVisibility.NOT_VISIBLE,
+            ShopProductVisibility.LISTED,
+            ShopProductVisibility.SEARCHABLE,
+            ShopProductVisibility.ALWAYS_VISIBLE,
+        ]
+    )
     default_price_value = fuzzy.FuzzyDecimal(0, 500)
 
 
@@ -164,17 +195,9 @@ def _generate_product_image(product):
     sio = BytesIO()
     image.save(sio, format="JPEG", quality=75)
     filer_file = filer_image_from_data(
-        request=None,
-        path="ProductImages/Mock",
-        file_name="%s.jpg" % product.sku,
-        file_data=sio.getvalue(),
-        sha1=True
+        request=None, path="ProductImages/Mock", file_name="%s.jpg" % product.sku, file_data=sio.getvalue(), sha1=True
     )
-    media = ProductMedia.objects.create(
-        product=product,
-        kind=ProductMediaKind.IMAGE,
-        file=filer_file
-    )
+    media = ProductMedia.objects.create(product=product, kind=ProductMediaKind.IMAGE, file=filer_file)
     media.shops.set(Shop.objects.all())
     media.save()
     return media
@@ -251,7 +274,7 @@ def get_default_product_type():
     if not product_type:
         product_type = ProductType.objects.create(identifier=DEFAULT_IDENTIFIER, name="Default Product Type")
         assert product_type.pk, "product type was saved"
-        assert (product_type.identifier == "default"), "product type has requested identifier"
+        assert product_type.identifier == "default", "product type has requested identifier"
         for attr in get_default_attribute_set():
             product_type.attributes.add(attr)
     return product_type
@@ -262,7 +285,7 @@ def get_default_manufacturer():
     if not manufacturer:
         manufacturer = Manufacturer.objects.create(identifier=DEFAULT_IDENTIFIER, name="Default Manufacturer")
         assert manufacturer.pk, "manufacturer was saved"
-        assert (manufacturer.identifier == "default"), "manufacturer has requested identifier"
+        assert manufacturer.identifier == "default", "manufacturer has requested identifier"
     return manufacturer
 
 
@@ -274,8 +297,8 @@ def get_tax(code, name, rate=None, amount=None):
             code=code,
             name=name,
             rate=Decimal(rate) if rate is not None else None,
-            amount_value=getattr(amount, 'value', None),
-            currency=getattr(amount, 'currency', None),
+            amount_value=getattr(amount, "value", None),
+            currency=getattr(amount, "currency", None),
         )
         assert tax.pk
         assert name in str(tax)
@@ -317,10 +340,7 @@ def get_default_tax_class():
 def get_currency(code, digits=2):
     currency = Currency.objects.filter(code=code).first()
     if not currency:
-        currency = Currency.objects.create(
-            code=code,
-            decimal_places=digits
-        )
+        currency = Currency.objects.create(code=code, decimal_places=digits)
         assert currency.pk
     return currency
 
@@ -335,6 +355,7 @@ def get_custom_payment_processor():
 
 def get_payment_processor_with_checkout_phase():
     from .models import PaymentWithCheckoutPhase
+
     return _get_service_provider(PaymentWithCheckoutPhase)
 
 
@@ -359,9 +380,7 @@ def get_default_payment_method():
 
 
 def get_payment_method(shop=None, price=None, waive_at=None, name=None):
-    return _get_service(
-        PaymentMethod, CustomPaymentProcessor, name=name,
-        shop=shop, price=price, waive_at=waive_at)
+    return _get_service(PaymentMethod, CustomPaymentProcessor, name=name, shop=shop, price=price, waive_at=waive_at)
 
 
 def get_default_shipping_method():
@@ -369,14 +388,10 @@ def get_default_shipping_method():
 
 
 def get_shipping_method(shop=None, price=None, waive_at=None, name=None):
-    return _get_service(
-        ShippingMethod, CustomCarrier, name=name,
-        shop=shop, price=price, waive_at=waive_at)
+    return _get_service(ShippingMethod, CustomCarrier, name=name, shop=shop, price=price, waive_at=waive_at)
 
 
-def _get_service(
-        service_model, provider_model, name,
-        shop=None, price=None, waive_at=None):
+def _get_service(service_model, provider_model, name, shop=None, price=None, waive_at=None):
     default_shop = get_default_shop()
     if shop is None:
         shop = default_shop
@@ -388,17 +403,19 @@ def _get_service(
     if not service:
         provider = _get_service_provider(provider_model)
         service = provider.create_service(
-            None, identifier=identifier, shop=shop, enabled=True,
+            None,
+            identifier=identifier,
+            shop=shop,
+            enabled=True,
             name=(name or service_model.__name__),
             tax_class=get_default_tax_class(),
         )
         if price and waive_at is None:
-            service.behavior_components.add(
-                FixedCostBehaviorComponent.objects.create(price_value=price))
+            service.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=price))
         elif price:
             service.behavior_components.add(
-                WaivingCostBehaviorComponent.objects.create(
-                    price_value=price, waive_limit_value=waive_at))
+                WaivingCostBehaviorComponent.objects.create(price_value=price, waive_limit_value=waive_at)
+            )
     assert service.pk and service.identifier == identifier
     assert service.shop == shop
     return service
@@ -427,10 +444,7 @@ def get_default_supplier(shop=None):
 
 def get_supplier(module_identifier, shop=None, **kwargs):
     supplier = Supplier.objects.create(
-        name=DEFAULT_NAME,
-        module_identifier=module_identifier,
-        type=SupplierType.INTERNAL,
-        **kwargs
+        name=DEFAULT_NAME, module_identifier=module_identifier, type=SupplierType.INTERNAL, **kwargs
     )
     if shop:
         supplier.shops.add(shop)
@@ -446,7 +460,7 @@ def get_default_shop():
             status=ShopStatus.ENABLED,
             public_name=DEFAULT_NAME,
             currency=get_default_currency().code,
-            domain="default.shuup.com"
+            domain="default.shuup.com",
         )
         assert str(shop) == DEFAULT_NAME
     return shop
@@ -474,8 +488,8 @@ def get_shop(prices_include_tax=True, currency=DEFAULT_CURRENCY, identifier=None
 def complete_product(product):
     image = get_random_filer_image()
     media = ProductMedia.objects.create(
-        product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True,
-        public=True)
+        product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True, public=True
+    )
     product.primary_image = media
     product.save()
     assert product.primary_image_id
@@ -506,22 +520,14 @@ def get_default_sales_unit():
     unit = default_by_identifier(SalesUnit)
     if not unit:
         unit = SalesUnit.objects.create(
-            identifier=DEFAULT_IDENTIFIER,
-            decimals=0,
-            name=DEFAULT_NAME,
-            symbol=DEFAULT_NAME[:3].lower()
+            identifier=DEFAULT_IDENTIFIER, decimals=0, name=DEFAULT_NAME, symbol=DEFAULT_NAME[:3].lower()
         )
         assert str(unit) == DEFAULT_NAME
     return unit
 
 
 def get_fractional_sales_unit():
-    return SalesUnit.objects.create(
-        identifier="fractional",
-        decimals=2,
-        name="Fractional unit",
-        short_name="fra"
-    )
+    return SalesUnit.objects.create(identifier="fractional", decimals=2, name="Fractional unit", short_name="fra")
 
 
 def get_default_category():
@@ -550,8 +556,8 @@ def get_completed_order_status():
 def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
     if default_price is not None:
         default_price = shop.create_price(default_price)
-    if 'fractional' in attrs:
-        attrs.pop('fractional')
+    if "fractional" in attrs:
+        attrs.pop("fractional")
         get_sales_unit = get_fractional_sales_unit
     else:
         get_sales_unit = get_default_sales_unit
@@ -566,7 +572,7 @@ def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
         depth=100,
         net_weight=100,
         gross_weight=100,
-        sales_unit=get_sales_unit()
+        sales_unit=get_sales_unit(),
     )
     product_attrs.update(attrs)
     product = Product(**product_attrs)
@@ -574,8 +580,7 @@ def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
     product.save()
     if shop:
         sp = ShopProduct.objects.create(
-            product=product, shop=shop, default_price=default_price,
-            visibility=ShopProductVisibility.ALWAYS_VISIBLE
+            product=product, shop=shop, default_price=default_price, visibility=ShopProductVisibility.ALWAYS_VISIBLE
         )
         if supplier:
             sp.suppliers.add(supplier)
@@ -603,7 +608,7 @@ def create_empty_order(prices_include_tax=False, shop=None):
         billing_address=get_address(name="Mony Doge").to_immutable(),
         shipping_address=get_address(name="Shippy Doge").to_immutable(),
         order_date=now(),
-        status=get_initial_order_status()
+        status=get_initial_order_status(),
     )
     return order
 
@@ -612,13 +617,12 @@ def add_product_to_order(order, supplier, product, quantity, taxless_base_unit_p
     if not pricing_context:
         pricing_context = _get_pricing_context(order.shop, order.customer)
     product_order_line = OrderLine(order=order)
-    update_order_line_from_product(pricing_context,
-                                   order_line=product_order_line,
-                                   product=product, quantity=quantity,
-                                   supplier=supplier)
+    update_order_line_from_product(
+        pricing_context, order_line=product_order_line, product=product, quantity=quantity, supplier=supplier
+    )
     base_unit_price = order.shop.create_price(taxless_base_unit_price)
     if order.prices_include_tax:
-        base_unit_price *= (1 + tax_rate)
+        base_unit_price *= 1 + tax_rate
     product_order_line.base_unit_price = order.shop.create_price(base_unit_price)
     product_order_line.save()
 
@@ -634,9 +638,7 @@ def add_product_to_order(order, supplier, product, quantity, taxless_base_unit_p
     product_order_line.taxes.add(order_line_tax)
 
 
-def create_order_with_product(
-        product, supplier, quantity, taxless_base_unit_price, tax_rate=0, n_lines=1,
-        shop=None):
+def create_order_with_product(product, supplier, quantity, taxless_base_unit_price, tax_rate=0, n_lines=1, shop=None):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
@@ -663,10 +665,7 @@ def get_random_filer_image():
 
 
 def get_faker(providers, locale="en"):
-    providers = [
-        ("faker.providers.%s" % provider if ("." not in provider) else provider)
-        for provider in providers
-        ]
+    providers = [("faker.providers.%s" % provider if ("." not in provider) else provider) for provider in providers]
     locale = locale or (random.choice(["en_US"] + list(find_available_locales(providers))))
     fake = faker.Factory.create(locale=locale)
     fake.locale = locale
@@ -693,7 +692,7 @@ def create_random_address(fake=None, save=True, **values):
         fake = get_faker(["person", "address"])
     empty = str  # i.e. constructor for empty string
     values.setdefault("name", fake.name())
-    values.setdefault("street", fake.address().replace('\n', ' '))
+    values.setdefault("street", fake.address().replace("\n", " "))
     values.setdefault("city", fake.city())
     values.setdefault("region", getattr(fake, "state", empty)())
     values.setdefault("country", random.choice(COUNTRY_CODES))
@@ -752,7 +751,7 @@ def create_random_person(locale="en", minimum_name_comp_len=0, shop=None):
         default_shipping_address=address,
         default_billing_address=address,
         gender=random.choice("mfuo"),
-        language=fake.language
+        language=fake.language,
     )
     if shop:
         contact.add_to_shop(shop)
@@ -765,11 +764,7 @@ def create_random_contact_group(shop=None):
     identifier = "%s-%s" % (ContactGroup.objects.count() + 1, name.lower().replace(" ", "-"))
     if not shop:
         shop = get_default_shop()
-    return ContactGroup.objects.create(
-        identifier=identifier,
-        shop=shop,
-        name=name,
-    ).set_price_display_options(
+    return ContactGroup.objects.create(identifier=identifier, shop=shop, name=name,).set_price_display_options(
         show_pricing=random.choice([True, False]),
         show_prices_including_taxes=random.choice([True, False]),
         hide_prices=random.choice([True, False]),
@@ -790,7 +785,7 @@ def create_random_company(shop=None):
         name=name,
         default_shipping_address=address,
         default_billing_address=address,
-        language=language
+        language=language,
     )
     if shop:
         contact.add_to_shop(shop)
@@ -798,8 +793,14 @@ def create_random_company(shop=None):
 
 
 def create_random_order(  # noqa
-        customer=None, products=(), completion_probability=0, shop=None, random_products=True,
-        create_payment_for_order_total=False, order_date=None):
+    customer=None,
+    products=(),
+    completion_probability=0,
+    shop=None,
+    random_products=True,
+    create_payment_for_order_total=False,
+    order_date=None,
+):
     if not customer:
         customer = Contact.objects.all().order_by("?").first()
 
@@ -826,9 +827,7 @@ def create_random_order(  # noqa
     source.status = get_initial_order_status()
 
     if not products:
-        products = list(
-            Product.objects.listed(source.shop, customer).order_by("?")[:40]
-        )
+        products = list(Product.objects.listed(source.shop, customer).order_by("?")[:40])
 
     if random_products:
         quantity = random.randint(3, 10)
@@ -853,7 +852,7 @@ def create_random_order(  # noqa
             base_unit_price=price_info.base_unit_price,
             discount_amount=price_info.discount_amount,
             sku=product.sku,
-            text=product.safe_translation_getter("name", any_language=True)
+            text=product.safe_translation_getter("name", any_language=True),
         )
         assert line.price == price_info.price
 
@@ -894,9 +893,7 @@ def create_random_product_attribute():
 def create_random_user(locale="en", **kwargs):
     user_model = get_user_model()
     faker = get_faker(["person"], locale)
-    params = {
-        user_model.USERNAME_FIELD: slugify(faker.first_name())
-    }
+    params = {user_model.USERNAME_FIELD: slugify(faker.first_name())}
     params.update(kwargs or {})
     return user_model.objects.create(**params)
 
@@ -917,12 +914,9 @@ def get_all_seeing_key(user_or_contact):
 
 
 def get_basket(shop=None):
-    shop = (shop or get_default_shop())
+    shop = shop or get_default_shop()
     return Basket.objects.create(
-        key=uuid.uuid1().hex,
-        shop=shop,
-        prices_include_tax=shop.prices_include_tax,
-        currency=shop.currency
+        key=uuid.uuid1().hex, shop=shop, prices_include_tax=shop.prices_include_tax, currency=shop.currency
     )
 
 

@@ -10,12 +10,8 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.toolbar import (
-    JavaScriptActionButton, Toolbar, URLActionButton
-)
-from shuup.admin.utils.picotable import (
-    Column, TextFilter, true_or_false_filter
-)
+from shuup.admin.toolbar import JavaScriptActionButton, Toolbar, URLActionButton
+from shuup.admin.utils.picotable import Column, TextFilter, true_or_false_filter
 from shuup.admin.utils.views import PicotableListView
 from shuup.notify.admin_module.utils import get_name_map
 from shuup.notify.models.script import Script
@@ -43,22 +39,24 @@ class ScriptListView(PicotableListView):
         return self._event_identifier_names.get(instance.event_identifier, instance.event_identifier)
 
     def get_toolbar(self):
-        return Toolbar([
-            URLActionButton(
-                text=_("New Script"), icon="fa fa-plus", extra_css_class="btn-success",
-                url=reverse("shuup_admin:notify.script.new")
-            ),
-            JavaScriptActionButton(
-                text=_("New From Template"), icon="fa fa-book",
-                onclick="showScriptTemplates()"
-            )
-        ], view=self)
+        return Toolbar(
+            [
+                URLActionButton(
+                    text=_("New Script"),
+                    icon="fa fa-plus",
+                    extra_css_class="btn-success",
+                    url=reverse("shuup_admin:notify.script.new"),
+                ),
+                JavaScriptActionButton(text=_("New From Template"), icon="fa fa-book", onclick="showScriptTemplates()"),
+            ],
+            view=self,
+        )
 
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
             {"title": _("Event"), "text": item.get("event_identifier")},
-            {"title": _("Enabled"), "text": item.get("enabled")}
+            {"title": _("Enabled"), "text": item.get("enabled")},
         ]
 
     def get_queryset(self):

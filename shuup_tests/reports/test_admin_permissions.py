@@ -5,31 +5,32 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
 from django.utils.encoding import force_text
 
-from shuup.apps.provides import override_provides
 from shuup.admin.module_registry import replace_modules
 from shuup.admin.utils.permissions import set_permissions_for_group
+from shuup.apps.provides import override_provides
 from shuup.default_reports.reports.sales import SalesReport
-from shuup.default_reports.reports.total_sales import TotalSales
 from shuup.default_reports.reports.sales_per_hour import SalesPerHour
+from shuup.default_reports.reports.total_sales import TotalSales
 from shuup.reports.admin_module import ReportsAdminModule
 from shuup.reports.admin_module.views import ReportView
 from shuup.testing.factories import (
-    get_default_shop, get_default_staff_user, get_default_permission_group,
-    get_default_tax_class
+    get_default_permission_group,
+    get_default_shop,
+    get_default_staff_user,
+    get_default_tax_class,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.admin.utils import admin_only_urls
 
-
 REPORTS = [
     "shuup.default_reports.reports.sales:SalesReport",
     "shuup.default_reports.reports.total_sales:TotalSales",
-    "shuup.default_reports.reports.sales_per_hour:SalesPerHour"
+    "shuup.default_reports.reports.sales_per_hour:SalesPerHour",
 ]
+
 
 @pytest.mark.django_db
 def test_reports_admin_permissions(rf):

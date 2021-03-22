@@ -20,11 +20,12 @@ class ProductTypeListView(PicotableListView):
     default_columns = [
         Column(
             "name",
-            _(u"Name"),
+            _("Name"),
             sort_field="translations__name",
             display="name",
-            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name..."))),
-        Column("n_attributes", _(u"Number of Attributes")),
+            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name...")),
+        ),
+        Column("n_attributes", _("Number of Attributes")),
     ]
     toolbar_buttons_provider_key = "product_type_list_toolbar_provider"
     mass_actions_provider_key = "product_type_list_mass_actions_provider"

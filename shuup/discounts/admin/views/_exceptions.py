@@ -29,15 +29,16 @@ class AvailabilityExceptionListView(PicotableListView):
 
     default_columns = [
         Column(
-            "name", _("Exception Name"), sort_field="name", display="name",
-            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))
+            "name",
+            _("Exception Name"),
+            sort_field="name",
+            display="name",
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         ),
         Column(
             "start_datetime", _("Start Date and Time"), display="format_start_datetime", filter_config=DateRangeFilter()
         ),
-        Column(
-            "end_datetime", _("End Date and Time"), display="format_end_datetime", filter_config=DateRangeFilter()
-        )
+        Column("end_datetime", _("End Date and Time"), display="format_end_datetime", filter_config=DateRangeFilter()),
     ]
 
     def get_queryset(self):
@@ -53,7 +54,7 @@ class AvailabilityExceptionListView(PicotableListView):
 class AvailabilityExceptionForm(forms.ModelForm):
     class Meta:
         model = AvailabilityException
-        exclude = ("shops", )
+        exclude = ("shops",)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -65,9 +66,9 @@ class AvailabilityExceptionForm(forms.ModelForm):
                 label=_("Product Discounts"),
                 help_text=_("Select discounts to be ignored on given time frame."),
                 model=Discount,
-                required=False
+                required=False,
             )
-            initial_discounts = (self.instance.discounts.all() if self.instance.pk else [])
+            initial_discounts = self.instance.discounts.all() if self.instance.pk else []
             self.fields["discounts"].initial = initial_discounts
             self.fields["discounts"].widget.choices = [
                 (discount.pk, force_text(discount)) for discount in initial_discounts
@@ -80,9 +81,7 @@ class AvailabilityExceptionForm(forms.ModelForm):
         if "discounts" in self.fields:
             data = self.cleaned_data
             discount_ids = data.get("discounts", [])
-            instance.discounts.set(
-                Discount.objects.filter(shops=self.shop, id__in=discount_ids)
-            )
+            instance.discounts.set(Discount.objects.filter(shops=self.shop, id__in=discount_ids))
 
         return instance
 
@@ -100,7 +99,9 @@ class AvailabilityExceptionEditView(CreateOrUpdateView):
         object = self.get_object()
         delete_url = (
             reverse_lazy("shuup_admin:discounts_availability_exception.delete", kwargs={"pk": object.pk})
-            if object.pk else None)
+            if object.pk
+            else None
+        )
         return get_default_edit_toolbar(self, self.get_save_form_id(), delete_url=delete_url)
 
     def get_form_kwargs(self):

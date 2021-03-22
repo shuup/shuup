@@ -6,18 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 
 from shuup.admin.modules.products.mass_actions import InvisibleMassAction
-from shuup.admin.modules.products.views import (
-    ProductListView, ProductMassEditView
-)
+from shuup.admin.modules.products.views import ProductListView, ProductMassEditView
 from shuup.core.models import Product, ShopProductVisibility
-from shuup.testing.factories import (
-    create_product, get_default_category, get_default_shop,
-    get_default_supplier
-)
+from shuup.testing.factories import create_product, get_default_category, get_default_shop, get_default_supplier
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
 
@@ -60,10 +54,7 @@ def test_mass_edit_products2(rf, admin_user):
     # ensure no categories set
     assert shop_product1.primary_category is None
     assert shop_product2.primary_category is None
-    payload = {
-        "action": InvisibleMassAction().identifier,
-        "values": [shop_product1.pk, shop_product2.pk]
-    }
+    payload = {"action": InvisibleMassAction().identifier, "values": [shop_product1.pk, shop_product2.pk]}
     request = apply_request_middleware(rf.post("/"), user=admin_user)
     request._body = json.dumps(payload).encode("UTF-8")
     view = ProductListView.as_view()

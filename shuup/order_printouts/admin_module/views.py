@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 from django.core.mail import EmailMessage
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
@@ -63,8 +62,12 @@ def send_delivery_email(request, shipment_pk):
     if form.is_valid():
         data = form.cleaned_data
         _send_printouts_email(
-            [data["to"]], data["subject"], data["body"],
-            _get_delivery_html(request, shipment.order, shipment), "delivery.pdf")
+            [data["to"]],
+            data["subject"],
+            data["body"],
+            _get_delivery_html(request, shipment.order, shipment),
+            "delivery.pdf",
+        )
     return JsonResponse({"success": "Success!"})
 
 
@@ -77,8 +80,8 @@ def send_confirmation_email(request, order_pk):
     if form.is_valid():
         data = form.cleaned_data
         _send_printouts_email(
-            [data["to"]], data["subject"], data["body"],
-            _get_confirmation_html(request, order), "confirmation.pdf")
+            [data["to"]], data["subject"], data["body"], _get_confirmation_html(request, order), "confirmation.pdf"
+        )
     return JsonResponse({"success": "Success!"})
 
 
@@ -87,11 +90,12 @@ def _get_delivery_html(request, order, shipment, html_mode=False):
         "shipment": shipment,
         "order": order,
         "method_lines": OrderLine.objects.filter(
-            order_id=order.id, type__in=[OrderLineType.PAYMENT, OrderLineType.SHIPPING]).order_by("ordering"),
+            order_id=order.id, type__in=[OrderLineType.PAYMENT, OrderLineType.SHIPPING]
+        ).order_by("ordering"),
         "today": datetime.date.today(),
         "header": "%s | %s | %s %s" % (_("Delivery slip"), order.shop.name, _("Order"), order.pk),
         "footer": _get_footer_information(order.shop),
-        "html_mode": html_mode
+        "html_mode": html_mode,
     }
 
     provided_information = {}
@@ -99,7 +103,7 @@ def _get_delivery_html(request, order, shipment, html_mode=False):
         info = provided_info(order, shipment)
         if info.provides_extra_fields():
             provided_information.update(info.extra_fields)
-    context['extra_fields'] = provided_information
+    context["extra_fields"] = provided_information
 
     return render_to_string("shuup/order_printouts/admin/delivery_pdf.jinja", context=context, request=request)
 
@@ -110,7 +114,7 @@ def _get_confirmation_html(request, order, html_mode=False):
         "today": datetime.date.today(),
         "header": "%s | %s | %s %s" % (_("Order confirmation"), order.shop.name, _("Order"), order.pk),
         "footer": _get_footer_information(order.shop),
-        "html_mode": html_mode
+        "html_mode": html_mode,
     }
     return render_to_string("shuup/order_printouts/admin/confirmation_pdf.jinja", context=context, request=request)
 
@@ -126,7 +130,7 @@ def _get_footer_information(shop):
         address.city,
         address.country.name,
         address.phone,
-        address.email
+        address.email,
     )
 
 

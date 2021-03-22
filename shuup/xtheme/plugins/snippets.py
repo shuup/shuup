@@ -9,21 +9,26 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.xtheme import Plugin, resources
-from shuup.xtheme.resources import add_resource, JinjaMarkupResource
+from shuup.xtheme.resources import JinjaMarkupResource, add_resource
 
 
 class SnippetsPlugin(Plugin):
     """
     Simple plugin class for including snippets and resources on the page, mostly for simple integrations.
     """
+
     identifier = "snippets"
     name = _("Snippets")
     fields = [
         ("in_place", forms.CharField(label=_("In-Place Snippet"), widget=forms.Textarea, required=False)),
-        ("head_end", forms.CharField(label=_("Resource snippet for end of head"), widget=forms.Textarea,
-                                     required=False)),
-        ("body_start", forms.CharField(label=_("Resource snippet for beginning of body"), widget=forms.Textarea,
-                                       required=False)),
+        (
+            "head_end",
+            forms.CharField(label=_("Resource snippet for end of head"), widget=forms.Textarea, required=False),
+        ),
+        (
+            "body_start",
+            forms.CharField(label=_("Resource snippet for beginning of body"), widget=forms.Textarea, required=False),
+        ),
         ("body_end", forms.CharField(label=_("Resource for end of body"), widget=forms.Textarea, required=False)),
     ]
 

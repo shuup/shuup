@@ -28,8 +28,12 @@ class CouponCodeListView(PicotableListView):
 
     default_columns = [
         Column(
-            "code", _("Code"), sort_field="code", display="code", linked=True,
-            filter_config=TextFilter(operator="startswith")
+            "code",
+            _("Code"),
+            sort_field="code",
+            display="code",
+            linked=True,
+            filter_config=TextFilter(operator="startswith"),
         ),
         Column("usages", _("Usages"), display="get_usages"),
         Column("usage_limit_customer", _("Usages Limit per contact")),
@@ -61,9 +65,9 @@ class CouponCodeForm(forms.ModelForm):
                 label=_("Product Discounts"),
                 help_text=_("Select discounts linked to this coupon code."),
                 model=Discount,
-                required=False
+                required=False,
             )
-            initial_discounts = (self.instance.coupon_code_discounts.all() if self.instance.pk else [])
+            initial_discounts = self.instance.coupon_code_discounts.all() if self.instance.pk else []
             self.fields["coupon_code_discounts"].initial = initial_discounts
             self.fields["coupon_code_discounts"].widget.choices = [
                 (discount.pk, force_text(discount)) for discount in initial_discounts
@@ -95,8 +99,8 @@ class CouponCodeEditView(CreateOrUpdateView):
     def get_toolbar(self):
         object = self.get_object()
         delete_url = (
-            reverse_lazy("shuup_admin:discounts_coupon_codes.delete", kwargs={"pk": object.pk})
-            if object.pk else None)
+            reverse_lazy("shuup_admin:discounts_coupon_codes.delete", kwargs={"pk": object.pk}) if object.pk else None
+        )
         return get_default_edit_toolbar(self, self.get_save_form_id(), delete_url=delete_url)
 
     def get_form_kwargs(self):

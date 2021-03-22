@@ -43,11 +43,7 @@ class GuideAdminModule(AdminModule):
         else:
             url = manipulate_query_string(settings.SHUUP_GUIDE_LINK_URL, q=query)
             yield SearchResult(
-                text=_("Search guide for: \"%s\"") % query,
-                url=url,
-                is_action=True,
-                relevance=0,
-                target="_blank"
+                text=_('Search guide for: "%s"') % query, url=url, is_action=True, relevance=0, target="_blank"
             )
 
     def get_required_permissions(self):

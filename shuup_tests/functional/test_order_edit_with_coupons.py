@@ -9,26 +9,28 @@ from __future__ import unicode_literals
 
 import decimal
 import json
-
 import pytest
 from django.core import serializers
 
 from shuup.admin.modules.orders.views.edit import OrderEditView
 from shuup.campaigns.models import BasketCampaign, Coupon
-from shuup.campaigns.models.basket_conditions import \
-    BasketTotalProductAmountCondition
+from shuup.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
 from shuup.campaigns.models.basket_effects import BasketDiscountAmount
 from shuup.core.models import Order, OrderLineType, Tax, TaxClass
 from shuup.core.order_creator import OrderCreator
 from shuup.default_tax.models import TaxRule
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
-    create_product, create_random_person, create_random_user,
-    get_default_supplier, get_initial_order_status, get_payment_method,
-    get_shipping_method, UserFactory
+    UserFactory,
+    create_product,
+    create_random_person,
+    create_random_user,
+    get_default_supplier,
+    get_initial_order_status,
+    get_payment_method,
+    get_shipping_method,
 )
-from shuup_tests.admin.test_order_creator import \
-    get_frontend_request_for_command
+from shuup_tests.admin.test_order_creator import get_frontend_request_for_command
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import assert_contains, printable_gibberish
 
@@ -96,13 +98,7 @@ def _get_order_with_coupon(request, initial_status, condition_product_count=1):
     basket.shipping_method = get_shipping_method(shop=shop)  # For shippable products
 
     dc = Coupon.objects.create(code="TEST", active=True)
-    campaign = BasketCampaign.objects.create(
-        shop=shop,
-        name="test",
-        public_name="test",
-        coupon=dc,
-        active=True
-    )
+    campaign = BasketCampaign.objects.create(shop=shop, name="test", public_name="test", coupon=dc, active=True)
 
     BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
 
@@ -119,8 +115,10 @@ def _get_order_with_coupon(request, initial_status, condition_product_count=1):
     assert OrderLineType.DISCOUNT in [l.type for l in order.lines.all()]
     return order
 
+
 def _encode_address(address):
     return json.loads(serializers.serialize("json", [address]))[0].get("fields")
+
 
 def _get_frontend_order_state(shop, contact):
     tax = Tax.objects.create(code="test_code", rate=decimal.Decimal("0.20"), name="Default")
@@ -129,22 +127,22 @@ def _get_frontend_order_state(shop, contact):
     rule.tax_classes.add(tax_class)
     rule.save()
     supplier = get_default_supplier(shop)
-    product = create_product(
-        sku=printable_gibberish(),
-        supplier=supplier,
-        shop=shop
-    )
+    product = create_product(sku=printable_gibberish(), supplier=supplier, shop=shop)
     product.tax_class = tax_class
     product.save()
     lines = [
         {
-            "id": "x", "type": "product", "product": {"id": product.id},
-            "quantity": "32", "baseUnitPrice": 50, 'supplier': {'name': supplier.name, 'id': supplier.id}
+            "id": "x",
+            "type": "product",
+            "product": {"id": product.id},
+            "quantity": "32",
+            "baseUnitPrice": 50,
+            "supplier": {"name": supplier.name, "id": supplier.id},
         }
     ]
 
     state = {
-         "customer": {
+        "customer": {
             "id": contact.id if contact else None,
             "billingAddress": _encode_address(contact.default_billing_address) if contact else {},
             "shippingAddress": _encode_address(contact.default_shipping_address) if contact else {},
@@ -159,8 +157,8 @@ def _get_frontend_order_state(shop, contact):
                 "id": shop.id,
                 "name": shop.safe_translation_getter("name"),
                 "currency": shop.currency,
-                "priceIncludeTaxes": shop.prices_include_tax
+                "priceIncludeTaxes": shop.prices_include_tax,
             }
-        }
+        },
     }
     return state

@@ -20,15 +20,10 @@ from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages
 from shuup.admin.utils.picotable import Column
-from shuup.admin.utils.urls import get_model_url, NoModelUrl
+from shuup.admin.utils.urls import NoModelUrl, get_model_url
 from shuup.admin.utils.views import PicotableListView
-from shuup.core.excs import (
-    NoProductsToShipException, NoShippingAddressException
-)
-from shuup.core.models import (
-    Order, Product, Shipment, ShipmentProduct, ShipmentStatus, Shop,
-    UnitInterface
-)
+from shuup.core.excs import NoProductsToShipException, NoShippingAddressException
+from shuup.core.models import Order, Product, Shipment, ShipmentProduct, ShipmentStatus, Shop, UnitInterface
 from shuup.utils.django_compat import reverse
 from shuup.utils.excs import Problem
 
@@ -54,14 +49,17 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(OrderCreateShipmentView, self).get_context_data(**kwargs)
         context["title"] = _("Create Shipment -- %s") % context["order"]
-        context["toolbar"] = Toolbar([
-            PostActionButton(
-                icon="fa fa-check-circle",
-                form_id="create_shipment",
-                text=_("Create Shipment"),
-                extra_css_class="btn-success",
-            ),
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                PostActionButton(
+                    icon="fa fa-check-circle",
+                    form_id="create_shipment",
+                    text=_("Create Shipment"),
+                    extra_css_class="btn-success",
+                ),
+            ],
+            view=self,
+        )
         return context
 
     def get_form_kwargs(self):
@@ -81,17 +79,19 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         form.product_summary = order.get_product_summary(supplier=supplier_id)
         form.product_names = dict(
             (product_id, text)
-            for (product_id, text)
-            in order.lines.exclude(product=None).values_list("product_id", "text")
+            for (product_id, text) in order.lines.exclude(product=None).values_list("product_id", "text")
         )
         for product_id, info in sorted(six.iteritems(form.product_summary)):
             product_name = _("%(product_name)s (%(supplier)s)") % {
                 "product_name": form.product_names.get(product_id, "Product %s" % product_id),
-                "supplier": ", ".join(info["suppliers"])
+                "supplier": ", ".join(info["suppliers"]),
             }
 
             unshipped_count = info["unshipped"]
-            attrs = {"data-max": unshipped_count, "class": "form-control text-right", }
+            attrs = {
+                "data-max": unshipped_count,
+                "class": "form-control text-right",
+            }
             if unshipped_count == 0:
                 attrs["disabled"] = "disabled"
             field = forms.DecimalField(
@@ -100,7 +100,7 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
                 max_value=unshipped_count,
                 initial=0,
                 label=product_name,
-                widget=forms.TextInput(attrs=attrs)
+                widget=forms.TextInput(attrs=attrs),
             )
             field_key = "q_%s" % product_id
             form.fields[field_key] = field
@@ -127,10 +127,7 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         :return: Saved, complete Shipment object.
         :rtype: shuup.core.models.Shipment
         """
-        return order.create_shipment(
-            product_quantities=product_quantities,
-            shipment=shipment
-        )
+        return order.create_shipment(product_quantities=product_quantities, shipment=shipment)
 
     def get_success_url(self):
         return get_model_url(self.object)
@@ -138,17 +135,14 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
     def form_valid(self, form):
         product_ids_to_quantities = dict(
             (int(key.replace("q_", "")), value)
-            for (key, value)
-            in six.iteritems(form.cleaned_data)
+            for (key, value) in six.iteritems(form.cleaned_data)
             if key.startswith("q_") and (value > 0 if value else False)
         )
         order = self.object
 
         product_map = Product.objects.in_bulk(set(product_ids_to_quantities.keys()))
         products_to_quantities = dict(
-            (product_map[product_id], quantity)
-            for (product_id, quantity)
-            in six.iteritems(product_ids_to_quantities)
+            (product_map[product_id], quantity) for (product_id, quantity) in six.iteritems(product_ids_to_quantities)
         )
 
         unsaved_shipment = Shipment(
@@ -156,7 +150,8 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             supplier_id=self._get_supplier_id(),
             tracking_code=form.cleaned_data.get("tracking_code"),
             tracking_url=form.cleaned_data.get("tracking_url"),
-            description=form.cleaned_data.get("description"))
+            description=form.cleaned_data.get("description"),
+        )
         has_extension_errors = self.form_valid_hook(form, unsaved_shipment)
 
         if has_extension_errors:
@@ -164,9 +159,7 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
 
         try:
             shipment = self.create_shipment(
-                order=order,
-                product_quantities=products_to_quantities,
-                shipment=unsaved_shipment
+                order=order, product_quantities=products_to_quantities, shipment=unsaved_shipment
             )
         except Problem as problem:
             messages.error(self.request, problem)
@@ -270,12 +263,15 @@ class ShipmentListView(PicotableListView):
             if instance.status not in (ShipmentStatus.SENT, ShipmentStatus.ERROR):
                 url = "{base_url}?next={next_url}".format(
                     base_url=reverse("shuup_admin:order.set-shipment-sent", kwargs={"pk": instance.pk}),
-                    next_url=reverse('shuup_admin:order.shipments.list')
+                    next_url=reverse("shuup_admin:order.shipments.list"),
                 )
-                return render_to_string("shuup/admin/orders/_set_shipments_status_button.jinja", {
-                    "shipment_id": instance.pk,
-                    "url": url,
-                })
+                return render_to_string(
+                    "shuup/admin/orders/_set_shipments_status_button.jinja",
+                    {
+                        "shipment_id": instance.pk,
+                        "url": url,
+                    },
+                )
         return instance.status.label
 
     def __init__(self):
@@ -283,8 +279,11 @@ class ShipmentListView(PicotableListView):
         self.columns = self.default_columns
 
     def get_queryset(self):
-        queryset = super().get_queryset().exclude(status=ShipmentStatus.DELETED).select_related(
-            "order", "order__shipping_method"
+        queryset = (
+            super()
+            .get_queryset()
+            .exclude(status=ShipmentStatus.DELETED)
+            .select_related("order", "order__shipping_method")
         )
         supplier = get_supplier(self.request)
         if supplier:
@@ -298,5 +297,5 @@ class ShipmentListView(PicotableListView):
             {"title": _("Supplier"), "text": item.get("supplier")},
             {"title": _("Content"), "text": item.get("get_content")},
             {"title": _("Tracking code"), "text": " ", "raw": item.get("tracking_code")},
-            {"title": _("Status"), "text": " ", "raw": item.get("status")}
+            {"title": _("Status"), "text": " ", "raw": item.get("status")},
         ]

@@ -6,15 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import hashlib
-
 import pytest
 from django.test import override_settings
 
 from shuup import configuration
 from shuup.core.models import ConfigurationItem
-from shuup.core.models._order_utils import (
-    get_order_identifier, get_reference_number,
-)
+from shuup.core.models._order_utils import get_order_identifier, get_reference_number
 from shuup.testing.factories import create_empty_order, get_default_shop
 
 
@@ -40,10 +37,7 @@ def test_refno_generation(method):
 
 @pytest.mark.django_db
 def test_custom_refno_generation():
-    methods = (
-        custom_refno_gen,
-        "%s.%s" % (__name__, custom_refno_gen.__name__)
-    )
+    methods = (custom_refno_gen, "%s.%s" % (__name__, custom_refno_gen.__name__))
     for method in methods:
         with override_settings(SHUUP_REFERENCE_NUMBER_METHOD=method):
             order = create_empty_order()
@@ -55,10 +49,7 @@ def test_custom_refno_generation():
 
 @pytest.mark.django_db
 def test_custom_ident_generation():
-    methods = (
-        custom_ident_gen,
-        "%s.%s" % (__name__, custom_ident_gen.__name__)
-    )
+    methods = (custom_ident_gen, "%s.%s" % (__name__, custom_ident_gen.__name__))
     for method in methods:
         with override_settings(SHUUP_ORDER_IDENTIFIER_METHOD=method):
             order = create_empty_order()
@@ -83,7 +74,7 @@ def test_ref_lengths():
     order.save()
 
     ref_number = get_reference_number(order)  # by default we return "unique"
-    assert len(ref_number) == 17 + 1 # unique ref + checksum
+    assert len(ref_number) == 17 + 1  # unique ref + checksum
 
     order.reference_number = None
     order.save()

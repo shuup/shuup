@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from decimal import Decimal
-
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from six import iteritems
@@ -65,6 +64,7 @@ class OrderSourceSupplierValidator(object):
                     continue
 
                 for error in shop_product.get_orderability_errors(
-                        supplier=supplier, quantity=quantity, customer=order_source.customer):
+                    supplier=supplier, quantity=quantity, customer=order_source.customer
+                ):
                     error.message = "%s: %s" % (product.name, error.message)
                     yield error

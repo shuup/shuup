@@ -7,9 +7,7 @@
 import pytest
 
 from shuup.core.models import get_company_contact, get_person_contact
-from shuup.front.views.misc import (
-    force_anonymous_contact, force_company_contact, force_person_contact
-)
+from shuup.front.views.misc import force_anonymous_contact, force_company_contact, force_person_contact
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 

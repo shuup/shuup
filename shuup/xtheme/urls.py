@@ -11,8 +11,10 @@ from shuup.xtheme.views.command import command_dispatch
 from shuup.xtheme.views.editor import EditorView
 from shuup.xtheme.views.extra import extra_view_dispatch
 from shuup.xtheme.views.plugins import (
-    get_category_products_highlight, get_product_cross_sell_highlight,
-    get_product_highlight, get_prouduct_selections_highlight
+    get_category_products_highlight,
+    get_product_cross_sell_highlight,
+    get_product_highlight,
+    get_prouduct_selections_highlight,
 )
 
 urlpatterns = [

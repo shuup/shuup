@@ -11,10 +11,23 @@ from enumfields.drf.fields import EnumField
 from rest_framework import serializers
 
 from shuup.core.models import (
-    Basket, CompanyContact, CompanyContactLogEntry, Contact,
-    ContactGroupLogEntry, Gender, MutableAddress, Order, OrderLine,
-    OrderLineType, PaymentStatus, PersonContact, PersonContactLogEntry,
-    SavedAddress, SavedAddressRole, SavedAddressStatus, ShippingStatus
+    Basket,
+    CompanyContact,
+    CompanyContactLogEntry,
+    Contact,
+    ContactGroupLogEntry,
+    Gender,
+    MutableAddress,
+    Order,
+    OrderLine,
+    OrderLineType,
+    PaymentStatus,
+    PersonContact,
+    PersonContactLogEntry,
+    SavedAddress,
+    SavedAddressRole,
+    SavedAddressStatus,
+    ShippingStatus,
 )
 from shuup.front.models import StoredBasket
 from shuup.gdpr.models import GDPRCookieCategory, GDPRUserConsent
@@ -66,7 +79,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        exclude = ("password",)     # TODO: should we also return this?
+        exclude = ("password",)  # TODO: should we also return this?
 
 
 class AddressSerializer(serializers.ModelSerializer):

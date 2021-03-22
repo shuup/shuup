@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 
 import abc
-
 import six
 
 from shuup.apps.provides import get_provide_objects
@@ -46,8 +45,9 @@ class BasicServiceCheckoutPhaseProvider(ServiceCheckoutPhaseProvider):
     provide a checkout phase for certain service provider type just by
     initializing some predefined class.
     """
+
     phase_class = None  # override in subclass
-    service_provider_class = None   # override in subclass
+    service_provider_class = None  # override in subclass
 
     def get_checkout_phase(self, checkout_process, service):
         """
@@ -60,8 +60,7 @@ class BasicServiceCheckoutPhaseProvider(ServiceCheckoutPhaseProvider):
         assert issubclass(self.phase_class, CheckoutPhaseViewMixin)
         assert issubclass(self.service_provider_class, ServiceProvider)
         if isinstance(service.provider, self.service_provider_class):
-            return checkout_process.instantiate_phase_class(
-                self.phase_class, service=service)
+            return checkout_process.instantiate_phase_class(self.phase_class, service=service)
         return None
 
 

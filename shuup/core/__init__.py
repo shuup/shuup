@@ -23,18 +23,17 @@ class ShuupCoreAppConfig(AppConfig):
         "filer",
     )
     provides = {
-        "pricing_module": [
-            "shuup.core.pricing.default_pricing:DefaultPricingModule"
-        ],
+        "pricing_module": ["shuup.core.pricing.default_pricing:DefaultPricingModule"],
         "order_source_validator": [
             "shuup.core.order_creator:OrderSourceMinTotalValidator",
             "shuup.core.order_creator:OrderSourceMethodsUnavailabilityReasonsValidator",
             "shuup.core.order_creator:OrderSourceSupplierValidator",
-        ]
+        ],
     }
 
     def ready(self):
         from django.conf import settings
+
         if not getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE", None):
             raise MissingSettingException("PARLER_DEFAULT_LANGUAGE_CODE must be set.")
         if not getattr(settings, "PARLER_LANGUAGES", None):
@@ -42,14 +41,16 @@ class ShuupCoreAppConfig(AppConfig):
 
         # set money precision provider function
         from .models import get_currency_precision
+
         money.set_precision_provider(get_currency_precision)
 
         if django.conf.settings.SHUUP_ERROR_PAGE_HANDLERS_SPEC:
             from .error_handling import install_error_handlers
+
             install_error_handlers()
 
         # connect signals
-        import shuup.core.signal_handlers    # noqa: F401
+        import shuup.core.signal_handlers  # noqa: F401
 
 
 default_app_config = "shuup.core.ShuupCoreAppConfig"

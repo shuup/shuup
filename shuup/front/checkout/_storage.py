@@ -10,7 +10,7 @@ class CheckoutPhaseStorage(object):
     def __init__(self, request, phase_identifier):
         self.request = request
         self.phase_identifier = phase_identifier
-        self._key_prefix = 'checkout_{}:'.format(phase_identifier)
+        self._key_prefix = "checkout_{}:".format(phase_identifier)
 
     def reset(self):
         keys_to_pop = set(self._key_prefix + key for key in self.keys())

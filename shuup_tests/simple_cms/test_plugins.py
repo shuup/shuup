@@ -7,8 +7,9 @@
 import pytest
 
 from shuup.simple_cms.plugins import PageLinksPlugin
-from shuup_tests.front.fixtures import get_jinja_context
 from shuup.testing.factories import get_default_shop
+from shuup_tests.front.fixtures import get_jinja_context
+
 from .utils import create_page
 
 

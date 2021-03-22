@@ -10,9 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.modules.services.forms import (
-    PaymentMethodForm, ShippingMethodForm
-)
+from shuup.admin.modules.services.forms import PaymentMethodForm, ShippingMethodForm
 
 
 class ServiceBaseFormPart(FormPart):
@@ -28,7 +26,7 @@ class ServiceBaseFormPart(FormPart):
             self.form,
             required=True,
             template_name="shuup/admin/services/_edit_base_form.jinja",
-            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request}
+            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request},
         )
 
     def form_valid(self, form):

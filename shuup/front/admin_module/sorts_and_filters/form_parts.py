@@ -11,9 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.apps.provides import get_provide_objects
-from shuup.front.utils.sorts_and_filters import (
-    FORM_MODIFIER_PROVIDER_KEY, get_configuration, set_configuration
-)
+from shuup.front.utils.sorts_and_filters import FORM_MODIFIER_PROVIDER_KEY, get_configuration, set_configuration
 
 
 class ConfigurationForm(forms.Form):
@@ -39,7 +37,8 @@ class ConfigurationShopFormPart(FormPart):
             form_class=self.form,
             template_name="shuup/front/admin/sorts_and_filters.jinja",
             required=False,
-            kwargs={"initial": get_configuration(shop=self.object)})
+            kwargs={"initial": get_configuration(shop=self.object)},
+        )
 
     def form_valid(self, form):
         if self.name in form.forms and form[self.name].has_changed():
@@ -50,7 +49,7 @@ class ConfigurationCategoryForm(ConfigurationForm):
     override_default_configuration = forms.BooleanField(
         label=_("Override shop's default configuration"),
         required=False,
-        help_text=_("If checked, this configuration will be used instead of the shop's default configuration.")
+        help_text=_("If checked, this configuration will be used instead of the shop's default configuration."),
     )
 
 
@@ -67,7 +66,8 @@ class ConfigurationCategoryFormPart(FormPart):
             form_class=self.form,
             template_name="shuup/front/admin/sorts_and_filters_category.jinja",
             required=False,
-            kwargs={"initial": get_configuration(category=self.object, force_category_override=True)})
+            kwargs={"initial": get_configuration(category=self.object, force_category_override=True)},
+        )
 
     def form_valid(self, form):
         if self.name in form.forms and form[self.name].has_changed():

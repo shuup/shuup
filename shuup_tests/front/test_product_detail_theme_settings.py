@@ -6,18 +6,17 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
-from shuup.utils.django_compat import reverse
 
 from shuup.testing import factories
 from shuup.themes.classic_gray.theme import ClassicGrayTheme
+from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
 
 
 def _get_product_detail_soup(client, product):
-    url = reverse('shuup:product', kwargs={'pk': product.pk, 'slug': product.slug})
+    url = reverse("shuup:product", kwargs={"pk": product.pk, "slug": product.slug})
     response = client.get(url)
     return BeautifulSoup(response.content)
 

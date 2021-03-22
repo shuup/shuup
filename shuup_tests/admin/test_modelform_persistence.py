@@ -17,18 +17,13 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 class MultiProductForm(MultiLanguageModelForm):
     class Meta:
         model = Product
-        fields = (
-            "barcode",  # Regular field
-            "name"
-        )
+        fields = ("barcode", "name")  # Regular field
 
 
 class SingleProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = (
-            "barcode",  # Regular field
-        )
+        fields = ("barcode",)  # Regular field
 
 
 @pytest.mark.django_db

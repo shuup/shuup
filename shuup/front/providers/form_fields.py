@@ -29,7 +29,6 @@ class FormFieldDefinition(object):
 
 
 class FormFieldProvider(object):
-
     def __init__(self, **kwargs):
         for k, v in kwargs:
             setattr(self, k, v)

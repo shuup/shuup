@@ -9,12 +9,12 @@ from __future__ import unicode_literals
 
 import pytest
 from bs4 import BeautifulSoup
-from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import Supplier
 from shuup.testing import factories
 from shuup.testing.models import SupplierPrice
+from shuup.utils.django_compat import reverse
 
 
 @pytest.mark.django_db
@@ -39,10 +39,8 @@ def test_product_price(client):
         for name, price in supplier_data:
             supplier = Supplier.objects.get(name=name)
             response = client.get(
-                reverse('shuup:xtheme_extra_view', kwargs={
-                        'view': 'product_price'
-                    }
-                ) + "?id=%s&quantity=%s&supplier=%s" % (product.pk, 1, supplier.pk)
+                reverse("shuup:xtheme_extra_view", kwargs={"view": "product_price"})
+                + "?id=%s&quantity=%s&supplier=%s" % (product.pk, 1, supplier.pk)
             )
             soup = BeautifulSoup(response.content)
             price_span = soup.find("span", {"class": "product-price"})

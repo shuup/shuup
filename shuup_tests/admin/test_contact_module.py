@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 from django.http.response import Http404
 from django.test.utils import override_settings
@@ -16,8 +15,11 @@ from shuup.admin.modules.contacts.views.detail import ContactDetailView
 from shuup.admin.modules.contacts.views.list import ContactListView
 from shuup.core.models import Contact, get_person_contact
 from shuup.testing.factories import (
-    create_random_company, create_random_person, create_random_user,
-    get_default_shop, get_shop
+    create_random_company,
+    create_random_person,
+    create_random_user,
+    get_default_shop,
+    get_shop,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import empty_iterable
@@ -168,4 +170,6 @@ def test_contact_list_multiple_shop(rf, admin_user):
     assert contact1.pk in contacts
     assert contact2.pk in contacts
     assert contact3.pk in contacts
-    assert superuser_contact.pk not in contacts # Superuser must edit the filter values in order to see other superuser contacts.
+    assert (
+        superuser_contact.pk not in contacts
+    )  # Superuser must edit the filter values in order to see other superuser contacts.

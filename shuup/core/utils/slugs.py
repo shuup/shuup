@@ -31,5 +31,5 @@ def generate_multilanguage_slugs(object, name_getter, slug_length=128):
 
         name = force_text(name_getter(object, translation))
         slug = slugify(name)
-        translation.slug = (slug[:slug_length] if slug else None)
+        translation.slug = slug[:slug_length] if slug else None
         translation.save()

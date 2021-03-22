@@ -13,15 +13,13 @@ import shuup.apps
 
 class AppConfig(shuup.apps.AppConfig):
     name = __name__
-    verbose_name = _('Shuup Frontend - Saved Baskets')
-    label = 'shuup_front.saved_baskets'
+    verbose_name = _("Shuup Frontend - Saved Baskets")
+    label = "shuup_front.saved_baskets"
 
     provides = {
-        'front_urls': [__name__ + '.urls:urlpatterns'],
-        'customer_dashboard_items': [
-            __name__ + '.dashboard_items:SavedCartsItem'
-        ],
+        "front_urls": [__name__ + ".urls:urlpatterns"],
+        "customer_dashboard_items": [__name__ + ".dashboard_items:SavedCartsItem"],
     }
 
 
-default_app_config = __name__ + '.AppConfig'
+default_app_config = __name__ + ".AppConfig"

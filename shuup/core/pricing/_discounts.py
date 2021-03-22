@@ -5,7 +5,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
-
 import six
 
 from shuup.apps.provides import load_module_instances
@@ -52,10 +51,7 @@ class DiscountModule(six.with_metaclass(abc.ABCMeta)):
         :type steps: list[PriceInfo]
         :rtype: list[PriceInfo]
         """
-        return [
-            self.discount_price(context, product, price_info)
-            for price_info in steps
-        ]
+        return [self.discount_price(context, product, price_info) for price_info in steps]
 
     def discount_prices(self, context, products, price_infos):
         """
@@ -86,7 +82,4 @@ class DiscountModule(six.with_metaclass(abc.ABCMeta)):
         :rtype: dict[int,list[PriceInfo]]
         """
         pks_and_products = ((getattr(x, "pk", x), x) for x in products)
-        return {
-            pk: self.get_pricing_steps(context, product, steps[pk])
-            for (pk, product) in pks_and_products
-        }
+        return {pk: self.get_pricing_steps(context, product, steps[pk]) for (pk, product) in pks_and_products}

@@ -26,7 +26,7 @@ class BaseSettingsFormPart(FormPart):
             self.form,
             required=False,
             template_name="shuup/front/admin/settings_base.jinja",
-            kwargs={"request": self.request}
+            kwargs={"request": self.request},
         )
 
     def form_valid(self, form):

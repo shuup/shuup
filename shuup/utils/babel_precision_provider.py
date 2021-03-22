@@ -8,10 +8,9 @@
 
 from __future__ import unicode_literals
 
+import babel.core
 import decimal
 from collections import defaultdict
-
-import babel.core
 
 _cache = None
 _default = None
@@ -34,12 +33,9 @@ def get_precision(currency):
 
 
 def _generate_cache():
-    currency_fractions = babel.core.get_global('currency_fractions')
-    values = {
-        currency: decimal.Decimal('0.1') ** data[0]
-        for (currency, data) in currency_fractions.items()
-    }
-    default = values.pop('DEFAULT')
+    currency_fractions = babel.core.get_global("currency_fractions")
+    values = {currency: decimal.Decimal("0.1") ** data[0] for (currency, data) in currency_fractions.items()}
+    default = values.pop("DEFAULT")
     cache = defaultdict(lambda: default)
     cache.update(values)
     return cache

@@ -8,11 +8,10 @@
 from __future__ import unicode_literals, with_statement
 
 import codecs
-import os
-import sys
-
 import openpyxl
+import os
 import six
+import sys
 import xlrd
 from django.conf import settings
 from django.utils.encoding import force_text
@@ -104,8 +103,7 @@ def transform_file(mode, filename, data=None):
             data, got_data = py2_read_file(data, filename)
     else:
         raise NotImplementedError(
-            "Error! Not implemented: `TransformedData` -> "
-            "`transform_file()` -> mode `%s` is not implemented." % mode
+            "Error! Not implemented: `TransformedData` -> " "`transform_file()` -> mode `%s` is not implemented." % mode
         )
 
     headers = data[0].keys() if len(data) else []
@@ -134,10 +132,10 @@ def py3_read_file(data, filename):
     data = []
 
     bytes = min(32, os.path.getsize(filename))
-    raw = open(filename, 'rb').read(bytes)
+    raw = open(filename, "rb").read(bytes)
 
     if raw.startswith(codecs.BOM_UTF8):
-        encoding = 'utf-8-sig'
+        encoding = "utf-8-sig"
     else:
         encoding = "utf-8"
 

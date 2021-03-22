@@ -4,23 +4,17 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import zipfile
-
 import six
+import zipfile
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from six import BytesIO
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.picotable import (
-    PicotableFileMassAction, PicotableMassAction
-)
+from shuup.admin.utils.picotable import PicotableFileMassAction, PicotableMassAction
 from shuup.core.models import Order, Shipment
-from shuup.order_printouts.admin_module.views import (
-    get_confirmation_pdf, get_delivery_pdf
-)
+from shuup.order_printouts.admin_module.views import get_confirmation_pdf, get_delivery_pdf
 from shuup.utils.django_compat import force_text
 
 
@@ -50,14 +44,14 @@ class OrderConfirmationPdfAction(PicotableFileMassAction):
         if len(ids) == 1:
             try:
                 response = get_confirmation_pdf(request, ids[0])
-                response['Content-Disposition'] = 'attachment; filename=order_%s_confirmation.pdf' % ids[0]
+                response["Content-Disposition"] = "attachment; filename=order_%s_confirmation.pdf" % ids[0]
                 return response
             except Exception as e:
                 msg = e.message if hasattr(e, "message") else e
                 return JsonResponse({"error": force_text(msg)}, status=400)
 
         buff = BytesIO()
-        archive = zipfile.ZipFile(buff, 'w', zipfile.ZIP_DEFLATED)
+        archive = zipfile.ZipFile(buff, "w", zipfile.ZIP_DEFLATED)
         added = 0
         errors = []
         for id in ids:
@@ -75,8 +69,8 @@ class OrderConfirmationPdfAction(PicotableFileMassAction):
             buff.flush()
             ret_zip = buff.getvalue()
             buff.close()
-            response = HttpResponse(content_type='application/zip')
-            response['Content-Disposition'] = 'attachment; filename=order_confirmation_pdf.zip'
+            response = HttpResponse(content_type="application/zip")
+            response["Content-Disposition"] = "attachment; filename=order_confirmation_pdf.zip"
             response.write(ret_zip)
             return response
         return JsonResponse({"errors": errors}, status=400)
@@ -94,13 +88,13 @@ class OrderDeliveryPdfAction(PicotableFileMassAction):
             try:
                 shipment_id = shipment_ids.pop()
                 response = get_delivery_pdf(request, shipment_id)
-                response['Content-Disposition'] = 'attachment; filename=shipment_%s_delivery.pdf' % shipment_id
+                response["Content-Disposition"] = "attachment; filename=shipment_%s_delivery.pdf" % shipment_id
                 return response
             except Exception as e:
                 msg = e.message if hasattr(e, "message") else e
                 return JsonResponse({"error": force_text(msg)})
         buff = BytesIO()
-        archive = zipfile.ZipFile(buff, 'w', zipfile.ZIP_DEFLATED)
+        archive = zipfile.ZipFile(buff, "w", zipfile.ZIP_DEFLATED)
 
         added = 0
         errors = []
@@ -119,8 +113,8 @@ class OrderDeliveryPdfAction(PicotableFileMassAction):
             buff.flush()
             ret_zip = buff.getvalue()
             buff.close()
-            response = HttpResponse(content_type='application/zip')
-            response['Content-Disposition'] = 'attachment; filename=order_delivery_pdf.zip'
+            response = HttpResponse(content_type="application/zip")
+            response["Content-Disposition"] = "attachment; filename=order_delivery_pdf.zip"
             response.write(ret_zip)
             return response
         return JsonResponse({"errors": errors})

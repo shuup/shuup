@@ -14,10 +14,10 @@ from shuup.core.models import CustomCarrier, CustomPaymentProcessor
 class CustomCarrierForm(ShuupAdminForm):
     class Meta:
         model = CustomCarrier
-        exclude = ("identifier", )
+        exclude = ("identifier",)
 
 
 class CustomPaymentProcessorForm(ShuupAdminForm):
     class Meta:
         model = CustomPaymentProcessor
-        exclude = ("identifier", )
+        exclude = ("identifier",)

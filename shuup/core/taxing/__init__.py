@@ -8,9 +8,7 @@ from shuup.utils import update_module_attributes
 
 from ._context import TaxingContext
 from ._line_tax import LineTax, SourceLineTax
-from ._module import (
-    get_tax_module, should_calculate_taxes_automatically, TaxModule
-)
+from ._module import TaxModule, get_tax_module, should_calculate_taxes_automatically
 from ._price import TaxedPrice
 from ._tax_summary import TaxSummary
 from ._taxable import TaxableItem

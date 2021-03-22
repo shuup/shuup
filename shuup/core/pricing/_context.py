@@ -7,7 +7,6 @@
 from __future__ import unicode_literals
 
 import abc
-
 import six
 from django.http import HttpRequest
 from django.utils.timezone import now
@@ -31,6 +30,7 @@ class PricingContextable(six.with_metaclass(abc.ABCMeta)):
     type specifiers, since we want to allow passing `HttpRequest` as a
     pricing context even though it is not a `PricingContext`.
     """
+
     pass
 
 
@@ -41,6 +41,7 @@ class PricingContext(PricingContextable):
     """
     Context for pricing.
     """
+
     def __init__(self, shop, customer, time=None, basket=None, supplier=None):
         """
         Initialize pricing context for shop and customer.
@@ -52,8 +53,7 @@ class PricingContext(PricingContextable):
         :type supplier: shuup.core.models.Supplier|None
         """
         assert shop is not None, "shop is required"
-        assert customer is not None, (
-            "customer is required (may be AnonymousContact though)")
+        assert customer is not None, "customer is required (may be AnonymousContact though)"
 
         self.shop = shop
         self.customer = customer
@@ -61,4 +61,4 @@ class PricingContext(PricingContextable):
         self.supplier = supplier
         if basket:
             assert basket.shop == shop, "shop must match with the basket"
-        self.time = (time if time is not None else now())
+        self.time = time if time is not None else now()

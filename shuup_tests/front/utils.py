@@ -9,9 +9,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 
 from shuup.apps.provides import get_provide_objects
-from shuup.front.providers import (
-    FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
-)
+from shuup.front.providers import FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
 from shuup.testing.factories import create_package_product
 
 
@@ -40,10 +38,7 @@ class FieldTestProvider(FormFieldProvider):
     error_msg = "Error! You must accept this in order to register or authenticate."
 
     def get_fields(self, **kwargs):
-        field = forms.BooleanField(
-            label=_(self.label),
-            error_messages=dict(required=_(self.error_msg))
-        )
+        field = forms.BooleanField(label=_(self.label), error_messages=dict(required=_(self.error_msg)))
         definition = FormFieldDefinition(name=self.key, field=field)
         return [definition]
 
@@ -82,7 +77,7 @@ def change_company_signal(sender, request, user, company, *args, **kwargs):
 def login_allowed_signal(sender, request, user, *args, **kwargs):
     raise forms.ValidationError(
         "nope",
-        code='login_allowed_signal',
+        code="login_allowed_signal",
     )
 
 

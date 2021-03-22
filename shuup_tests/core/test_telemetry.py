@@ -7,28 +7,38 @@
 # LICENSE file in the root directory of this source tree.
 import datetime
 import json
-
+import pytest
 import requests
 from django.test.utils import override_settings
 from django.utils.timezone import now
+from mock import patch
 from requests.models import Response
 
-import pytest
-from mock import patch
 from shuup.admin.modules.system import SystemModule
 from shuup.admin.views.dashboard import DashboardView
 from shuup.core.models import PersistentCacheEntry
 from shuup.core.telemetry import (
-    get_daily_data, get_daily_data_for_day, get_installation_key,
-    get_last_submission_time, get_telemetry_data, INSTALLATION_KEY_KWARGS,
-    is_opt_out, LAST_DATA_KWARGS, set_opt_out,TelemetryNotSent,
-    try_send_telemetry
+    INSTALLATION_KEY_KWARGS,
+    LAST_DATA_KWARGS,
+    TelemetryNotSent,
+    get_daily_data,
+    get_daily_data_for_day,
+    get_installation_key,
+    get_last_submission_time,
+    get_telemetry_data,
+    is_opt_out,
+    set_opt_out,
+    try_send_telemetry,
 )
 from shuup.testing.factories import (
-    create_empty_order, create_order_with_product,
-    create_product, create_random_company,
-    get_default_shop, get_default_supplier,
-    UserFactory)
+    UserFactory,
+    create_empty_order,
+    create_order_with_product,
+    create_product,
+    create_random_company,
+    get_default_shop,
+    get_default_supplier,
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
 
@@ -132,6 +142,7 @@ def test_disable(rf, admin_user):
 def test_graceful_error(admin_user):
     def thrower(*args, **kwargs):
         raise ValueError("Error! aaaagh")
+
     with override_settings(SHUUP_TELEMETRY_ENABLED=True):
         with patch.object(requests, "post", thrower) as requestor:
             _clear_telemetry_submission()
@@ -204,13 +215,16 @@ def _create_total_paid_sales(shop, day):
     assert order.is_paid()
 
 
-@pytest.mark.parametrize("data_key, data_value, create_object", [
-    ("orders", 1, _create_order_for_day),
-    ("products", 1, _create_product_for_day),
-    ("contacts", 1, _create_customer_for_day),
-    ("total_sales", 10, _create_total_sales),
-    ("total_paid_sales", 10, _create_total_paid_sales),
-])
+@pytest.mark.parametrize(
+    "data_key, data_value, create_object",
+    [
+        ("orders", 1, _create_order_for_day),
+        ("products", 1, _create_product_for_day),
+        ("contacts", 1, _create_customer_for_day),
+        ("total_sales", 10, _create_total_sales),
+        ("total_paid_sales", 10, _create_total_paid_sales),
+    ],
+)
 @pytest.mark.django_db
 def test_telemetry_daily_data_components(data_key, data_value, create_object):
     shop = get_default_shop()

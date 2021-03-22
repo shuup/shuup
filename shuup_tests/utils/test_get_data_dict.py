@@ -7,8 +7,8 @@
 import json
 import pytest
 
-from shuup.utils.models import get_data_dict
 from shuup.testing import factories
+from shuup.utils.models import get_data_dict
 
 
 @pytest.mark.django_db

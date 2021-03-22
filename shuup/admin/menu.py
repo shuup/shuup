@@ -7,8 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.utils.datastructures import OrderedDict
-from django.utils.translation import get_language
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 
 from shuup import configuration
 from shuup.admin.base import BaseMenuEntry
@@ -100,6 +99,7 @@ class _MenuCategory(BaseMenuEntry):
     """
     Internal menu category object.
     """
+
     def __init__(self, identifier, name, icon):
         self.identifier = identifier
         self.name = name
@@ -118,10 +118,7 @@ def customize_menu(entries, request):  # noqa (C901)
     """
     Merge system menu with customized admin menu
     """
-    customized_admin_menu = configuration.get(
-        None,
-        CUSTOM_ADMIN_MENU_USER_PREFIX.format(request.user.pk)
-    )
+    customized_admin_menu = configuration.get(None, CUSTOM_ADMIN_MENU_USER_PREFIX.format(request.user.pk))
     if not customized_admin_menu:
         supplier = get_supplier(request)
         if supplier:
@@ -137,8 +134,7 @@ def customize_menu(entries, request):  # noqa (C901)
         current language and fallback to first stored configuration
         """
         customized_admin_menu = customized_admin_menu.get(
-            get_language(),
-            customized_admin_menu.get(first(customized_admin_menu))
+            get_language(), customized_admin_menu.get(first(customized_admin_menu))
         )
 
     if customized_admin_menu:
@@ -149,20 +145,20 @@ def customize_menu(entries, request):  # noqa (C901)
             it can be when menu entry was removed from system
             """
             indexes = []
-            for index, entry in enumerate(menu.get('entries', [])):
+            for index, entry in enumerate(menu.get("entries", [])):
                 unset_mismatched(entry)
                 if isinstance(entry, dict):
                     indexes.append(index)
             for index in indexes[::-1]:
-                del menu['entries'][index]
+                del menu["entries"][index]
 
         def find_entry(menu, entry):
             """
             find recursively entry in menu
             """
-            if menu['id'] == entry.id:
+            if menu["id"] == entry.id:
                 return menu
-            for node in menu.get('entries', []):
+            for node in menu.get("entries", []):
                 n = find_entry(node, entry)
                 if n:
                     return n
@@ -172,13 +168,13 @@ def customize_menu(entries, request):  # noqa (C901)
             Find and replace customized entry with system menu entry
             set entry name, hidden flag from customized menu entry
             """
-            custom_entries = customized_menu.get('entries', [])
+            custom_entries = customized_menu.get("entries", [])
             for index, node in enumerate(custom_entries):
-                if node['id'] == entry.id:
+                if node["id"] == entry.id:
                     custom_entry = custom_entries[index]
-                    entry.name = custom_entry['name']
-                    entry.is_hidden = custom_entry['is_hidden']
-                    entry.entries = custom_entry.get('entries', [])
+                    entry.name = custom_entry["name"]
+                    entry.is_hidden = custom_entry["is_hidden"]
+                    entry.entries = custom_entry.get("entries", [])
                     entry.ordering = index
                     custom_entries[index] = entry
                     return custom_entries[index]
@@ -198,7 +194,7 @@ def customize_menu(entries, request):  # noqa (C901)
                 if not custom_entry:
                     parent_menu = find_entry(customized_menu, menu)
                     if parent_menu:
-                        parent_menu.get('entries', []).append(entry)
+                        parent_menu.get("entries", []).append(entry)
                         indexes.append(index)
                 else:
                     indexes.append(index)
@@ -208,22 +204,22 @@ def customize_menu(entries, request):  # noqa (C901)
             return menu
 
         customized_menu = {
-            'id': 'root',
-            'name': 'root',
-            'entries': customized_admin_menu,
+            "id": "root",
+            "name": "root",
+            "entries": customized_admin_menu,
         }
         system_menu = BaseMenuEntry()
-        system_menu.identifier = 'root'
+        system_menu.identifier = "root"
         system_menu.entries = entries
         transform_menu(customized_menu, system_menu)
         unset_mismatched(customized_menu)
 
-        return customized_menu['entries'] + system_menu['entries']
+        return customized_menu["entries"] + system_menu["entries"]
     else:
         return entries
 
 
-def get_menu_entry_categories(request): # noqa (C901)
+def get_menu_entry_categories(request):  # noqa (C901)
     menu_categories = OrderedDict()
 
     # Update main menu from provides
@@ -253,7 +249,7 @@ def get_menu_entry_categories(request): # noqa (C901)
         if get_missing_permissions(request.user, module.get_required_permissions()):
             continue
 
-        for entry in (module.get_menu_entries(request=request) or ()):
+        for entry in module.get_menu_entries(request=request) or ():
             category = menu_categories.get(entry.category)
             if not category:
                 category_identifier = force_text(entry.category or module.name)
@@ -262,7 +258,7 @@ def get_menu_entry_categories(request): # noqa (C901)
                     menu_categories[category_identifier] = category = _MenuCategory(
                         identifier=category_identifier,
                         name=category_identifier,
-                        icon=menu_category_icons.get(category_identifier, "fa fa-circle")
+                        icon=menu_category_icons.get(category_identifier, "fa fa-circle"),
                     )
             category.entries.append(entry)
             all_categories.add(category)

@@ -6,21 +6,17 @@
 # LICENSE file in the root directory of this source tree.
 # test that admin actually saves catalog
 import pytest
-
 from bs4 import BeautifulSoup
 from django.http.response import Http404
 from django.test import override_settings
 
 from shuup.admin.supplier_provider import get_supplier
 from shuup.apps.provides import override_provides
-from shuup.campaigns.admin_module.views import (
-    BasketCampaignEditView, BasketCampaignListView
-)
+from shuup.campaigns.admin_module.views import BasketCampaignEditView, BasketCampaignListView
 from shuup.campaigns.models.campaigns import BasketCampaign
 from shuup.core.models import Supplier
 from shuup.testing.factories import create_random_user, get_default_shop
 from shuup.testing.utils import apply_request_middleware
-
 
 DEFAULT_CONDITION_FORMS = [
     "shuup.campaigns.admin_module.forms:BasketTotalProductAmountConditionForm",
@@ -80,7 +76,7 @@ def test_campaign_creation_for_supplier(rf, admin_user):
     """
     shop = get_default_shop()
     supplier = Supplier.objects.create(identifier=admin_user.username)
-    
+
     another_superuser = create_random_user(is_superuser=True, is_staff=True)
     supplier2 = Supplier.objects.create(identifier=another_superuser.username)
 
@@ -93,7 +89,7 @@ def test_campaign_creation_for_supplier(rf, admin_user):
                 "base-public_name__en": "Test Campaign",
                 "base-shop": shop.id,
                 "base-active": True,
-                "base-basket_line_text": "Test campaign activated!"
+                "base-basket_line_text": "Test campaign activated!",
             }
             campaigns_before = BasketCampaign.objects.count()
             request = apply_request_middleware(rf.post("/", data=data), user=admin_user)

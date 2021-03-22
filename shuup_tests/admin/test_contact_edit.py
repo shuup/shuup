@@ -11,18 +11,16 @@ from django.http.response import Http404
 from django.test.utils import override_settings
 
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.modules.contacts.forms import (
-    CompanyContactBaseForm, PersonContactBaseForm
-)
-from shuup.admin.modules.contacts.views import (
-    ContactDetailView, ContactEditView, ContactListView
-)
-from shuup.core.models import (
-    CompanyContact, Gender, get_person_contact, PersonContact
-)
+from shuup.admin.modules.contacts.forms import CompanyContactBaseForm, PersonContactBaseForm
+from shuup.admin.modules.contacts.views import ContactDetailView, ContactEditView, ContactListView
+from shuup.core.models import CompanyContact, Gender, PersonContact, get_person_contact
 from shuup.testing.factories import (
-    create_random_company, create_random_person, create_random_user, get_shop,
-    get_default_shop)
+    create_random_company,
+    create_random_person,
+    create_random_user,
+    get_default_shop,
+    get_shop,
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
 
@@ -39,11 +37,11 @@ def test_person_contact_create_form(rf, admin_user):
     test_last_name = printable_gibberish()
 
     request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
-    contact_base_form = PersonContactBaseForm(request=request, data={
-        "first_name": test_first_name,
-        "last_name": test_last_name,
-        "gender": Gender.UNDISCLOSED.value
-    }, user=user)
+    contact_base_form = PersonContactBaseForm(
+        request=request,
+        data={"first_name": test_first_name, "last_name": test_last_name, "gender": Gender.UNDISCLOSED.value},
+        user=user,
+    )
 
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
@@ -69,11 +67,11 @@ def test_person_contact_edit_form(rf, admin_user):
     new_first_name = "test first name"
     new_name = "%s %s" % (new_first_name, person.last_name)
     request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
-    contact_base_form = PersonContactBaseForm(request=request, instance=person, data={
-        "first_name": "test first name",
-        "last_name": person.last_name,
-        "gender": person.gender.value
-    })
+    contact_base_form = PersonContactBaseForm(
+        request=request,
+        instance=person,
+        data={"first_name": "test first name", "last_name": person.last_name, "gender": person.gender.value},
+    )
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, PersonContact)
@@ -94,11 +92,11 @@ def test_person_contact_edit_form_2(rf, admin_user):
     new_first_name = "test first name"
     new_name = "%s %s" % (new_first_name, person.last_name)
     request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
-    contact_base_form = PersonContactBaseForm(request=request, instance=person, data={
-        "first_name": "test first name",
-        "last_name": person.last_name,
-        "gender": person.gender.value
-    })
+    contact_base_form = PersonContactBaseForm(
+        request=request,
+        instance=person,
+        data={"first_name": "test first name", "last_name": person.last_name, "gender": person.gender.value},
+    )
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, PersonContact)
@@ -108,14 +106,18 @@ def test_person_contact_edit_form_2(rf, admin_user):
     assert person.registered_in(shop)
     assert person.in_shop(shop, True)
 
+
 @pytest.mark.django_db
 def test_company_contact_create_form(rf, admin_user):
     shop = get_default_shop()
     company_name = "test company"
     request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
-    contact_base_form = CompanyContactBaseForm(request=request, data={
-        "name": company_name,
-    })
+    contact_base_form = CompanyContactBaseForm(
+        request=request,
+        data={
+            "name": company_name,
+        },
+    )
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, CompanyContact)
@@ -134,9 +136,13 @@ def test_company_contact_edit_form(rf, admin_user):
     assert not company.in_shop(shop, True)
     request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
     new_company_name = "test company"
-    contact_base_form = CompanyContactBaseForm(request=request, instance=company, data={
-        "name": new_company_name,
-    })
+    contact_base_form = CompanyContactBaseForm(
+        request=request,
+        instance=company,
+        data={
+            "name": new_company_name,
+        },
+    )
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, CompanyContact)
@@ -145,6 +151,7 @@ def test_company_contact_edit_form(rf, admin_user):
     assert company.in_shop(shop)
     assert company.registered_in(shop)
     assert company.in_shop(shop, True)
+
 
 @pytest.mark.django_db
 def test_company_contact_edit_form_2(rf, admin_user):
@@ -155,9 +162,13 @@ def test_company_contact_edit_form_2(rf, admin_user):
     assert company.in_shop(shop, True)
     request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
     new_company_name = "test company"
-    contact_base_form = CompanyContactBaseForm(request=request, instance=company, data={
-        "name": new_company_name,
-    })
+    contact_base_form = CompanyContactBaseForm(
+        request=request,
+        instance=company,
+        data={
+            "name": new_company_name,
+        },
+    )
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, CompanyContact)
@@ -250,14 +261,13 @@ def test_contact_company_edit_multishop(rf):
         assert company.registered_in(shop1)
         assert company.in_shop(shop1)
 
-
         # save contact under shop 1
         request = apply_request_middleware(rf.post("/"), user=staff_user, shop=shop1)
-        contact_base_form = PersonContactBaseForm(request=request, instance=contact, data={
-            "first_name": "test first name",
-            "last_name": contact.last_name,
-            "gender": contact.gender.value
-        })
+        contact_base_form = PersonContactBaseForm(
+            request=request,
+            instance=contact,
+            data={"first_name": "test first name", "last_name": contact.last_name, "gender": contact.gender.value},
+        )
         assert contact_base_form.is_valid(), contact_base_form.errors
         contact_base_form.save()
         contact.refresh_from_db()
@@ -269,9 +279,13 @@ def test_contact_company_edit_multishop(rf):
 
         # save company under shop 2
         request = apply_request_middleware(rf.post("/"), user=staff_user, shop=shop2)
-        form = CompanyContactBaseForm(request=request, instance=company, data={
-            "name": "eww",
-        })
+        form = CompanyContactBaseForm(
+            request=request,
+            instance=company,
+            data={
+                "name": "eww",
+            },
+        )
         assert form.is_valid(), form.errors
         form.save()
         company.refresh_from_db()

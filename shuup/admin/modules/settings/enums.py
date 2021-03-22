@@ -17,6 +17,6 @@ class OrderReferenceNumberMethod(Enum):
     SHOP_RUNNING = "shop_running"
 
     class Labels:
-        UNIQUE = _('unique')
-        RUNNING = _('running')
-        SHOP_RUNNING = _('shop running')
+        UNIQUE = _("unique")
+        RUNNING = _("running")
+        SHOP_RUNNING = _("shop running")

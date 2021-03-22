@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import logging
-
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.shop_provider import get_shop
@@ -23,6 +22,7 @@ class XthemeMiddleware(MiddlewareMixin):
     This middleware requires the ShuupMiddleware or some other that
     can set the current shop in the request
     """
+
     def process_request(self, request):
         shop = getattr(request, "shop", get_shop(request))
         theme = get_current_theme(shop)

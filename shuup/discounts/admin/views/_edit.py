@@ -14,28 +14,32 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import MenuEntry
 from shuup.admin.forms.fields import PercentageField
 from shuup.admin.forms.widgets import (
-    ContactChoiceWidget, ProductChoiceWidget, QuickAddCategorySelect,
-    QuickAddContactGroupSelect
+    ContactChoiceWidget,
+    ProductChoiceWidget,
+    QuickAddCategorySelect,
+    QuickAddContactGroupSelect,
 )
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Category, ContactGroup, Supplier
 from shuup.discounts.admin.widgets import (
-    QuickAddAvailabilityExceptionMultiSelect, QuickAddCouponCodeSelect,
-    QuickAddHappyHourMultiSelect
+    QuickAddAvailabilityExceptionMultiSelect,
+    QuickAddCouponCodeSelect,
+    QuickAddHappyHourMultiSelect,
 )
-from shuup.discounts.models import (
-    AvailabilityException, CouponCode, Discount, HappyHour
-)
+from shuup.discounts.models import AvailabilityException, CouponCode, Discount, HappyHour
 from shuup.utils.django_compat import reverse_lazy
 
 
 class DiscountForm(forms.ModelForm):
     discount_percentage = PercentageField(
-        max_digits=6, decimal_places=5, required=False,
+        max_digits=6,
+        decimal_places=5,
+        required=False,
         label=_("Discount percentage"),
-        help_text=_("The discount percentage for this discount."))
+        help_text=_("The discount percentage for this discount."),
+    )
 
     class Meta:
         model = Discount
@@ -45,7 +49,7 @@ class DiscountForm(forms.ModelForm):
             "contact_group": QuickAddContactGroupSelect(editable_model="shuup.ContactGroup"),
             "coupon_code": QuickAddCouponCodeSelect(editable_model="discounts.CouponCode"),
             "availability_exceptions": QuickAddAvailabilityExceptionMultiSelect(),
-            "happy_hours": QuickAddHappyHourMultiSelect()
+            "happy_hours": QuickAddHappyHourMultiSelect(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -84,23 +88,13 @@ class DiscountEditView(CreateOrUpdateView):
 
     def get_breadcrumb_parents(self):
         if not self.object.active:
-            return [
-                MenuEntry(
-                    text=_("Archived Product Discounts"),
-                    url="shuup_admin:discounts.archive"
-                )
-            ]
+            return [MenuEntry(text=_("Archived Product Discounts"), url="shuup_admin:discounts.archive")]
 
         return [
-            MenuEntry(
-                text=force_text(self.model._meta.verbose_name_plural).title(),
-                url="shuup_admin:discounts.list"
-            )
+            MenuEntry(text=force_text(self.model._meta.verbose_name_plural).title(), url="shuup_admin:discounts.list")
         ]
 
     def get_toolbar(self):
         object = self.get_object()
-        delete_url = (
-            reverse_lazy("shuup_admin:discounts.delete", kwargs={"pk": object.pk})
-            if object.pk else None)
+        delete_url = reverse_lazy("shuup_admin:discounts.delete", kwargs={"pk": object.pk}) if object.pk else None
         return get_default_edit_toolbar(self, self.get_save_form_id(), delete_url=delete_url)

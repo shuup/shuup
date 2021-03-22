@@ -18,11 +18,12 @@ class ServiceProviderListView(PicotableListView):
     model = ServiceProvider
     default_columns = [
         Column(
-            "name", _("Name"), sort_field="base_translations__name",
-            filter_config=TextFilter(
-                filter_field="base_translations__name",
-                placeholder=_("Filter by name..."))),
-        Column("type", _(u"Type"), display="get_type_display", sortable=False),
+            "name",
+            _("Name"),
+            sort_field="base_translations__name",
+            filter_config=TextFilter(filter_field="base_translations__name", placeholder=_("Filter by name...")),
+        ),
+        Column("type", _("Type"), display="get_type_display", sortable=False),
     ]
     toolbar_buttons_provider_key = "service_provider_list_toolbar_provider"
     mass_actions_provider_key = "service_provider_mass_actions_provider"

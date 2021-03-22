@@ -17,8 +17,10 @@ from django.utils.translation import ugettext_lazy as _
 class HappyHour(models.Model):
     shops = models.ManyToManyField("shuup.Shop", blank=True, db_index=True, verbose_name=_("shops"))
     name = models.CharField(
-        max_length=120, verbose_name=_("name"),
-        help_text=_("The name for this HappyHour. Used internally with exception lists for filtering."))
+        max_length=120,
+        verbose_name=_("name"),
+        help_text=_("The name for this HappyHour. Used internally with exception lists for filtering."),
+    )
 
     def __str__(self):
         return self.name
@@ -31,9 +33,11 @@ class HappyHour(models.Model):
 @python_2_unicode_compatible
 class TimeRange(models.Model):
     happy_hour = models.ForeignKey(
-        on_delete=models.CASCADE, to="discounts.HappyHour", related_name="time_ranges", verbose_name=_("happy hour"))
+        on_delete=models.CASCADE, to="discounts.HappyHour", related_name="time_ranges", verbose_name=_("happy hour")
+    )
     parent = models.ForeignKey(
-        "self", blank=True, null=True, related_name="children", on_delete=models.CASCADE, verbose_name=_("parent"))
+        "self", blank=True, null=True, related_name="children", on_delete=models.CASCADE, verbose_name=_("parent")
+    )
     from_hour = models.TimeField(verbose_name=_("from hour"), db_index=True)
     to_hour = models.TimeField(verbose_name=_("to hour"), db_index=True)
     weekday = models.IntegerField(verbose_name=_("weekday"), db_index=True)
@@ -42,15 +46,14 @@ class TimeRange(models.Model):
         return "%s-%s for %s" % (self.weekday, self.pk, self.happy_hour)
 
     class Meta:
-        verbose_name = _('time range')
-        verbose_name_plural = _('time ranges')
-        ordering = ['weekday', 'from_hour']
+        verbose_name = _("time range")
+        verbose_name_plural = _("time ranges")
+        ordering = ["weekday", "from_hour"]
 
     def save(self, **kwargs):
         if self.to_hour < self.from_hour:
             raise ValidationError(
-                _("The value of the field `to hour` has to be later than that of `from hour`."),
-                code="time_range_error"
+                _("The value of the field `to hour` has to be later than that of `from hour`."), code="time_range_error"
             )
 
         return super(TimeRange, self).save(**kwargs)

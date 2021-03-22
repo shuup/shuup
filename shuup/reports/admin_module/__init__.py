@@ -20,21 +20,12 @@ class ReportsAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:reports.list")
 
     def get_urls(self):
-        return [
-            admin_url(
-                "^reports/$",
-                "shuup.reports.admin_module.views.ReportView",
-                name="reports.list"
-            )
-        ]
+        return [admin_url("^reports/$", "shuup.reports.admin_module.views.ReportView", name="reports.list")]
 
     def get_menu_entries(self, request):
         return [
             MenuEntry(
-                text=self.name,
-                icon="fa fa-image",
-                url="shuup_admin:reports.list",
-                category=REPORTS_MENU_CATEGORY
+                text=self.name, icon="fa fa-image", url="shuup_admin:reports.list", category=REPORTS_MENU_CATEGORY
             )
         ]
 

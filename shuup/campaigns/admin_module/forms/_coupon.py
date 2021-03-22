@@ -18,14 +18,7 @@ class CouponForm(forms.ModelForm):
 
     class Meta:
         model = Coupon
-        fields = [
-            'code',
-            'usage_limit_customer',
-            'usage_limit',
-            'active',
-            'shop',
-            'supplier'
-        ]
+        fields = ["code", "usage_limit_customer", "usage_limit", "active", "shop", "supplier"]
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")

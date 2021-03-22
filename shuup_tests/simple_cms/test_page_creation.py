@@ -17,11 +17,11 @@ from shuup_tests.utils.forms import get_form_data
 
 @pytest.mark.django_db
 def test_url_uniqueness(rf):
-    page = create_page(url='bacon', shop=get_default_shop())
+    page = create_page(url="bacon", shop=get_default_shop())
     with pytest.raises(ValidationError):
-        page = create_page(url='bacon', shop=get_default_shop())
+        page = create_page(url="bacon", shop=get_default_shop())
     page.soft_delete()
-    page_two = create_page(url='bacon', shop=get_default_shop())
+    page_two = create_page(url="bacon", shop=get_default_shop())
     with transaction.atomic():
         mpage = create_multilanguage_page(url="cheese", shop=get_default_shop())
         with pytest.raises(ValidationError):
@@ -40,24 +40,28 @@ def test_page_form(rf, admin_user):
     assert not form.is_bound
 
     data = get_form_data(form)
-    data.update({
-        "available_from": "",
-        "available_to": "",
-        "content__en": "",
-        "content__fi": "suomi",
-        "content__ja": "",
-        "identifier": "",
-        "title__en": "",
-        "title__fi": "",
-        "title__ja": "",
-        "url__en": "",
-        "url__fi": "suomi",
-        "url__ja": "",
-    })
+    data.update(
+        {
+            "available_from": "",
+            "available_to": "",
+            "content__en": "",
+            "content__fi": "suomi",
+            "content__ja": "",
+            "identifier": "",
+            "title__en": "",
+            "title__fi": "",
+            "title__ja": "",
+            "url__en": "",
+            "url__fi": "suomi",
+            "url__ja": "",
+        }
+    )
 
     form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data))
     form.full_clean()
-    assert "title__fi" in form.errors  # We get an error because all of a given language's fields must be filled if any are
+    assert (
+        "title__fi" in form.errors
+    )  # We get an error because all of a given language's fields must be filled if any are
     data["title__fi"] = "suomi"
     form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data))
     form.full_clean()
@@ -102,7 +106,7 @@ def test_page_form(rf, admin_user):
     # add finnish urls, it should not be possible to enter original url
     data.update({"title__fi": "englaish", "url__fi": original_url, "content__fi": "ennnn ennnn ennnnnnn-nn-n-n"})
 
-    assert data["url__fi"] == data["url__en"] # both urls are same, should raise two errors
+    assert data["url__fi"] == data["url__en"]  # both urls are same, should raise two errors
 
     form = form_class(**dict(request=request, languages=settings.LANGUAGES, data=data, instance=page))
     form.full_clean()

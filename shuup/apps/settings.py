@@ -35,8 +35,8 @@ def _declare_setting(app_name, module, name, default):
     if name in _KNOWN_SETTINGS:
         other_app = _KNOWN_SETTINGS[name].app_name
         raise ImproperlyConfigured(
-            'Error! Apps `%s` and `%s` define the same setting `%s`.' % (
-                other_app, app_name, name))
+            "Error! Apps `%s` and `%s` define the same setting `%s`." % (other_app, app_name, name)
+        )
     _KNOWN_SETTINGS[name] = Setting(
         name=name,
         default=default,
@@ -62,12 +62,12 @@ class Setting(object):
         self.module = module
 
     def __repr__(self):
-        items = ('%s=%r' % (k, v) for (k, v) in self.__dict__.items())
-        return '%s(%s)' % (type(self).__name__, ', '.join(items))
+        items = ("%s=%r" % (k, v) for (k, v) in self.__dict__.items())
+        return "%s(%s)" % (type(self).__name__, ", ".join(items))
 
 
 def _is_valid_setting_name(name):
-    return name.isupper() and not name.startswith('_')
+    return name.isupper() and not name.startswith("_")
 
 
 def validate_templates_configuration():
@@ -98,7 +98,7 @@ def validate_templates_configuration():
             if options.get("match_extension") != ".jinja":
                 raise ImproperlyConfigured(
                     "Error! You have the django_jinja backend configured, but it is not configured to "
-                    "render `.jinja` templates. Set `OPTIONS.match_extension` to \".jinja\"."
+                    'render `.jinja` templates. Set `OPTIONS.match_extension` to ".jinja".'
                 )
             return True
     raise ImproperlyConfigured(
@@ -110,6 +110,7 @@ def validate_templates_configuration():
 def reload_apps():
     import django
     from django.contrib.staticfiles.finders import get_finder
+
     # Clear cache for any AppDirectoriesFinder instance.
     # This should be done before Django apps is reloaded.
     get_finder.cache_clear()

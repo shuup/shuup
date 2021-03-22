@@ -5,11 +5,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shuup.utils.django_compat import reverse
 
 from shuup.simple_cms.models import Page, PageOpenGraphType
 from shuup.testing import factories
 from shuup.testing.soup_utils import extract_form_fields
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 
@@ -48,21 +48,23 @@ def test_opengrah_admin(admin_user):
 
     # set some open graph info
     random_image = factories.get_random_filer_image()
-    payload.update({
-        "opengraph-title__en": "OG Title",
-        "opengraph-tags__en": "OG Tags",
-        "opengraph-section__en": "OG Section",
-        "opengraph-description__en": "OG DESC",
-        "opengraph-article_author__en": "OG AuthorName",
-        "opengraph-og_type": PageOpenGraphType.Article.value,
-        "opengraph-image": random_image.pk
-    })
+    payload.update(
+        {
+            "opengraph-title__en": "OG Title",
+            "opengraph-tags__en": "OG Tags",
+            "opengraph-section__en": "OG Section",
+            "opengraph-description__en": "OG DESC",
+            "opengraph-article_author__en": "OG AuthorName",
+            "opengraph-og_type": PageOpenGraphType.Article.value,
+            "opengraph-image": random_image.pk,
+        }
+    )
 
     response = client.post(reverse("shuup_admin:simple_cms.page.edit", kwargs=dict(pk=page.pk)), data=payload)
     assert response.status_code == 302
     assert Page.objects.count() == 1
     page = Page.objects.first()
-    str(page.open_graph)    # just for coverage
+    str(page.open_graph)  # just for coverage
     assert page.open_graph.title == payload["opengraph-title__en"]
     assert page.open_graph.tags == payload["opengraph-tags__en"]
     assert page.open_graph.section == payload["opengraph-section__en"]

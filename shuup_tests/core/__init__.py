@@ -9,8 +9,8 @@ from shuup.apps import AppConfig
 
 
 class AppConfig(AppConfig):
-    name = 'shuup_tests.core'
-    label = 'shuup_tests_core'
+    name = "shuup_tests.core"
+    label = "shuup_tests_core"
 
     provides = {
         "module_test_module": [
@@ -20,4 +20,4 @@ class AppConfig(AppConfig):
     }
 
 
-default_app_config = 'shuup_tests.core.AppConfig'
+default_app_config = "shuup_tests.core.AppConfig"

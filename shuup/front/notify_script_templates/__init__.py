@@ -7,9 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 
 from .generics import (
-    OrderConfirmationEmailScriptTemplate, PaymentCreatedEmailScriptTemplate,
-    RefundCreatedEmailScriptTemplate, ShipmentCreatedEmailScriptTemplate,
-    ShipmentDeletedEmailScriptTemplate
+    OrderConfirmationEmailScriptTemplate,
+    PaymentCreatedEmailScriptTemplate,
+    RefundCreatedEmailScriptTemplate,
+    ShipmentCreatedEmailScriptTemplate,
+    ShipmentDeletedEmailScriptTemplate,
 )
 
 __all__ = [
@@ -17,5 +19,5 @@ __all__ = [
     "PaymentCreatedEmailScriptTemplate",
     "RefundCreatedEmailScriptTemplate",
     "ShipmentDeletedEmailScriptTemplate",
-    "ShipmentCreatedEmailScriptTemplate"
+    "ShipmentCreatedEmailScriptTemplate",
 ]

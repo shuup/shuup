@@ -8,7 +8,7 @@
 from shuup.testing.factories import get_default_shop
 from shuup.testing.themes import ShuupTestingTheme
 from shuup.testing.themes.plugins import HighlightTestPlugin
-from shuup.xtheme import templated_plugin_factory, TemplatedPlugin
+from shuup.xtheme import TemplatedPlugin, templated_plugin_factory
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.xtheme.utils import get_jinja2_engine, plugin_override
@@ -27,17 +27,17 @@ def test_plugin_choices():
 def test_templated_plugin():
     jeng = get_jinja2_engine()
 
-    my_plugin_class = templated_plugin_factory("MyPlugin", "templated_plugin.jinja",
+    my_plugin_class = templated_plugin_factory(
+        "MyPlugin",
+        "templated_plugin.jinja",
         inherited_variables=("name",),
         config_copied_variables=("greeting",),
-        engine=jeng
+        engine=jeng,
     )
     top_context = {
         "name": printable_gibberish(),
     }
-    config = {
-        "greeting": "Good day"
-    }
+    config = {"greeting": "Good day"}
     plugin = my_plugin_class(config=config)
     assert isinstance(plugin, TemplatedPlugin)
     with override_current_theme_class(None):

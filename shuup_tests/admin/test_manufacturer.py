@@ -7,9 +7,7 @@
 import pytest
 from django.test.utils import override_settings
 
-from shuup.admin.modules.manufacturers.views import (
-    ManufacturerEditView, ManufacturerListView, ManufacturerDeleteView
-)
+from shuup.admin.modules.manufacturers.views import ManufacturerDeleteView, ManufacturerEditView, ManufacturerListView
 from shuup.admin.shop_provider import set_shop
 from shuup.core.models import Manufacturer
 from shuup.testing import factories
@@ -47,9 +45,7 @@ def test_manufacturer_delete(rf, admin_user):
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=False):
         shop1 = factories.get_default_shop()
         shop1.staff_members.add(admin_user)
-        manu = Manufacturer.objects.create(
-            name="manuf 1"
-        )
+        manu = Manufacturer.objects.create(name="manuf 1")
         manu.shops.add(shop1)
         manu.save()
 
@@ -86,7 +82,7 @@ def test_manufacturer_admin_multishop_shop(rf, staff_user, admin_user, superuser
 
         for view_class in (ManufacturerEditView, ManufacturerListView):
             view_instance = view_class()
-            view_instance.request= request
+            view_instance.request = request
 
             assert view_instance.get_queryset().count() == 1
             if superuser:
@@ -108,7 +104,7 @@ def test_manufacturer_admin_multishop_shop(rf, staff_user, admin_user, superuser
 
         for view_class in (ManufacturerEditView, ManufacturerListView):
             view_instance = view_class()
-            view_instance.request= request
+            view_instance.request = request
 
             assert view_instance.get_queryset().count() == (2 if superuser else 1)
 

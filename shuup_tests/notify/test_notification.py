@@ -7,33 +7,36 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth.models import AnonymousUser
-from shuup.utils.django_compat import reverse, set_urlconf
 
 from shuup.notify.actions.notification import AddNotification
 from shuup.notify.enums import Priority, RecipientType
 from shuup.notify.models.notification import Notification
 from shuup.notify.script import Context
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse, set_urlconf
 from shuup_tests.notify.utils import make_bind_data
 from shuup_tests.utils import very_recently
 from shuup_tests.utils.fixtures import regular_user
 
 __all__ = ["regular_user"]  # fix qa kvetch
 
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("specific_user", (False, True))
 def test_notification(admin_user, specific_user):
-    AddNotification(make_bind_data(
-        variables={"priority": "priority"},
-        constants={
-            "message": "Hi {{ name }}!",
-            "message_identifier": "hi mom",
-            "url": "http://burymewithmymoney.com/",
-            "recipient_type": (RecipientType.SPECIFIC_USER if specific_user else RecipientType.ADMINS),
-            "recipient": (admin_user if specific_user else None),
-            "priority": Priority.CRITICAL
-        }
-    )).execute(Context.from_variables(name="Justin Case", shop=factories.get_default_shop()))
+    AddNotification(
+        make_bind_data(
+            variables={"priority": "priority"},
+            constants={
+                "message": "Hi {{ name }}!",
+                "message_identifier": "hi mom",
+                "url": "http://burymewithmymoney.com/",
+                "recipient_type": (RecipientType.SPECIFIC_USER if specific_user else RecipientType.ADMINS),
+                "recipient": (admin_user if specific_user else None),
+                "priority": Priority.CRITICAL,
+            },
+        )
+    ).execute(Context.from_variables(name="Justin Case", shop=factories.get_default_shop()))
     notif = Notification.objects.last()
     assert isinstance(notif, Notification)
     if specific_user:
@@ -62,12 +65,14 @@ def test_no_notifs_for_anon(regular_user):
 @pytest.mark.django_db
 def test_misconfigured_add_notification_is_noop():
     n_notifs = Notification.objects.count()
-    AddNotification(make_bind_data(
-        constants={
-            "recipient_type": RecipientType.SPECIFIC_USER,
-            "message": "This'll never get delivered!",
-        }
-    )).execute(Context())
+    AddNotification(
+        make_bind_data(
+            constants={
+                "recipient_type": RecipientType.SPECIFIC_USER,
+                "message": "This'll never get delivered!",
+            }
+        )
+    ).execute(Context())
     assert Notification.objects.count() == n_notifs
 
 

@@ -81,4 +81,4 @@ def get_logout_url(context, *args, **kwargs):
             return logout_url
 
     logout_url = get_url("shuup:logout", *args, **kwargs)
-    return (logout_url if logout_url else "/logout")
+    return logout_url if logout_url else "/logout"

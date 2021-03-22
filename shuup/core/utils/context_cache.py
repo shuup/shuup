@@ -13,9 +13,9 @@ from parler.managers import TranslatableQuerySet
 from shuup.core import cache
 
 try:
-    from urllib.parse import urlparse, parse_qs
+    from urllib.parse import parse_qs, urlparse
 except ImportError:  # Py2 fallback
-    from urlparse import urlparse, parse_qs
+    from urlparse import parse_qs, urlparse
 
 HASHABLE_KEYS = ["customer_groups", "customer", "shop"]
 
@@ -70,7 +70,7 @@ def bump_cache_for_shop_product(instance, shop=None):
     :param shop_product: shop product object or shop product object id
     :type shop_product: shuup.core.models.ShopProduct
     """
-    from shuup.core.models import ShopProduct, ProductPackageLink, Product
+    from shuup.core.models import Product, ProductPackageLink, ShopProduct
 
     if isinstance(instance, ShopProduct):
         shop_product_ids = [instance.pk]
@@ -81,16 +81,12 @@ def bump_cache_for_shop_product(instance, shop=None):
 
     # Get all normal products linked to passed
     # shop product id
-    product_ids = Product.objects.filter(
-        shop_products__id__in=shop_product_ids
-    ).values_list("id", flat=True)
+    product_ids = Product.objects.filter(shop_products__id__in=shop_product_ids).values_list("id", flat=True)
 
     # Get all affect variation parent ids just in
     # case passed shop product ids includes child
     # products we need to bump simplings
-    variation_parent_ids = Product.objects.filter(
-        id__in=product_ids
-    ).values_list("variation_parent_id", flat=True)
+    variation_parent_ids = Product.objects.filter(id__in=product_ids).values_list("variation_parent_id", flat=True)
 
     # Get all packages or products in any package
     package_product_ids = ProductPackageLink.objects.filter(
@@ -100,16 +96,16 @@ def bump_cache_for_shop_product(instance, shop=None):
     # All above querysets should in theory be lazy and executed once
     # here
     product_ids_to_bump = Product.objects.filter(
-        Q(id__in=product_ids) |
-        Q(variation_parent_id__in=product_ids) |
-        Q(variation_parent_id__in=variation_parent_ids) |
-        Q(id__in=set(value for pair_of_values in package_product_ids for value in pair_of_values)
-          )).values_list("id", flat=True)
+        Q(id__in=product_ids)
+        | Q(variation_parent_id__in=product_ids)
+        | Q(variation_parent_id__in=variation_parent_ids)
+        | Q(id__in=set(value for pair_of_values in package_product_ids for value in pair_of_values))
+    ).values_list("id", flat=True)
 
     # One extra query should be better what we have now
-    shop_product_ids_to_bump = ShopProduct.objects.filter(
-        product_id__in=product_ids_to_bump
-    ).values_list("id", flat=True)
+    shop_product_ids_to_bump = ShopProduct.objects.filter(product_id__in=product_ids_to_bump).values_list(
+        "id", flat=True
+    )
 
     bump_cache_for_item_ids(shop_product_ids_to_bump, "shuup-shopproduct", ShopProduct, shop)
     bump_cache_for_item_ids(product_ids_to_bump, "shuup-product", Product, shop)
@@ -130,7 +126,7 @@ def bump_cache_for_product(product, shop=None):
     from shuup.core.models import ShopProduct
 
     if not isinstance(product, list):
-        product_id = (product.id if hasattr(product, "id") else product)
+        product_id = product.id if hasattr(product, "id") else product
         products = [product_id]
     else:
         products = product
@@ -267,7 +263,7 @@ def _get_cached_value_from_context(context, key, value):
     return cached_value
 
 
-def _get_items_from_context(context):   # noqa (C901)
+def _get_items_from_context(context):  # noqa (C901)
     items = {}
 
     def handle_item(context, key, value):

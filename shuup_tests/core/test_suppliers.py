@@ -9,8 +9,10 @@ import pytest
 
 from shuup.core.models import Supplier
 from shuup.testing.factories import (
-    create_random_person, get_default_shop, get_default_shop_product,
-    get_default_supplier
+    create_random_person,
+    get_default_shop,
+    get_default_shop_product,
+    get_default_supplier,
 )
 
 

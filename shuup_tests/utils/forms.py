@@ -5,10 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from itertools import chain
-
 from django.core.exceptions import ValidationError
 from django.forms import BaseFormSet
+from itertools import chain
 
 from shuup.utils.form_group import FormGroup
 

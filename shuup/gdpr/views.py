@@ -9,24 +9,21 @@ from __future__ import unicode_literals
 
 import json
 import re
-
 from django.contrib import messages
 from django.db.transaction import atomic
-from django.http import (
-    HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-)
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView, View
 
-from shuup.core.models import get_person_contact, Order
+from shuup.core.models import Order, get_person_contact
 from shuup.front.views.dashboard import DashboardViewMixin
-from shuup.gdpr.models import (
-    GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER, GDPRCookieCategory
-)
+from shuup.gdpr.models import GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER, GDPRCookieCategory
 from shuup.gdpr.utils import (
-    add_consent_to_response_cookie, create_user_consent_for_all_documents,
-    get_active_consent_pages, get_cookie_consent_data,
-    is_documents_consent_in_sync
+    add_consent_to_response_cookie,
+    create_user_consent_for_all_documents,
+    get_active_consent_pages,
+    get_cookie_consent_data,
+    is_documents_consent_in_sync,
 )
 from shuup.simple_cms.models import Page
 from shuup.utils.analog import LogEntryKind
@@ -78,7 +75,7 @@ class GDPRPolicyConsentView(View):
         if document:
             if not is_documents_consent_in_sync(shop, user):
                 return HttpResponseNotFound()
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', "/"))
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
         return HttpResponseNotFound()
 
 
@@ -106,9 +103,11 @@ class GDPRDownloadDataView(View):
             return HttpResponseNotFound()
 
         self.request.person.add_log_entry(
-            "Info! User personal data download requested.", kind=LogEntryKind.NOTE, user=self.request.user)
+            "Info! User personal data download requested.", kind=LogEntryKind.NOTE, user=self.request.user
+        )
 
         from shuup.gdpr.utils import get_all_contact_data
+
         data = json.dumps(get_all_contact_data(self.request.person))
         response = HttpResponse(data, content_type="application/json")
         response["Content-Disposition"] = "attachment; filename=user_data.json"
@@ -121,15 +120,17 @@ class GDPRAnonymizeView(View):
             return HttpResponseNotFound()
 
         self.request.person.add_log_entry(
-            "Info! User anonymization requested.", kind=LogEntryKind.NOTE, user=request.user)
+            "Info! User anonymization requested.", kind=LogEntryKind.NOTE, user=request.user
+        )
 
         with atomic():
             from shuup.tasks.models import TaskType
             from shuup.tasks.utils import create_task
+
             task_type = TaskType.objects.get_or_create(
                 shop=request.shop,
                 identifier=GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER,
-                defaults=dict(name=_("GDPR: Anonymize"))
+                defaults=dict(name=_("GDPR: Anonymize")),
             )[0]
             contact = get_person_contact(request.user)
             create_task(
@@ -137,7 +138,7 @@ class GDPRAnonymizeView(View):
                 contact,
                 task_type,
                 _("GDPR: Anonymize contact"),
-                _("Customer ID {customer_id} requested to be anonymized.").format(**dict(customer_id=contact.id))
+                _("Customer ID {customer_id} requested to be anonymized.").format(**dict(customer_id=contact.id)),
             )
 
             contact.is_active = False

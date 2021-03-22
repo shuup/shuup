@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import logging
-
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -46,7 +45,7 @@ class DictStoredBasket(object):
         self.shop_id = shop_id
         self.currency = currency
         self.prices_include_tax = prices_include_tax
-        self.data = (data or {})
+        self.data = data or {}
 
     @classmethod
     def from_basket_and_data(cls, basket, data):

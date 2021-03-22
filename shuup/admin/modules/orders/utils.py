@@ -18,7 +18,7 @@ class OrderInformation(object):
         """
         Override to add business logic if the order should show this information row.
         """
-        return (self.information is not None)
+        return self.information is not None
 
     @property
     def information(self):

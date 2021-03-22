@@ -10,8 +10,7 @@ from __future__ import unicode_literals
 import six
 from django.contrib import messages
 
-from shuup.core.basket.update_methods import \
-    BasketUpdateMethods as CoreBasketUpdateMethods
+from shuup.core.basket.update_methods import BasketUpdateMethods as CoreBasketUpdateMethods
 
 
 class BasketUpdateMethods(CoreBasketUpdateMethods):

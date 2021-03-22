@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 import re
 from difflib import SequenceMatcher
-
 from django import forms
 from django.conf import settings
 from django.db.models import Q
@@ -31,7 +30,7 @@ def get_query_words(query):
     :rtype: list
     """
     word_finder = re.compile(r'"([^"]+)"|(\S+)').findall
-    normalize_spaces = re.compile(r'\s{2,}').sub
+    normalize_spaces = re.compile(r"\s{2,}").sub
     words = []
     for word in word_finder(query):
         found_word = word[0] or word[1]
@@ -60,24 +59,22 @@ def get_product_ids_for_query_str(request, query_str, limit, product_ids=[]):
         return []
 
     entry_query = get_compiled_query(query_str, settings.SHUUP_SIMPLE_SEARCH_FIELDS)
-    return list(Product.objects.searchable(
-        shop=request.shop,
-        customer=request.customer
-    ).exclude(
-        id__in=product_ids
-    ).filter(entry_query).distinct().values_list("pk", flat=True))[:(limit-len(product_ids))]
+    return list(
+        Product.objects.searchable(shop=request.shop, customer=request.customer)
+        .exclude(id__in=product_ids)
+        .filter(entry_query)
+        .distinct()
+        .values_list("pk", flat=True)
+    )[: (limit - len(product_ids))]
 
 
 def get_search_product_ids(request, query, limit=settings.SHUUP_SIMPLE_SEARCH_LIMIT):
     query = query.strip().lower()
-    cache_key_elements = {
-        "query": query,
-        "shop": request.shop.pk,
-        "customer": request.customer.pk
-    }
+    cache_key_elements = {"query": query, "shop": request.shop.pk, "customer": request.customer.pk}
 
     key, val = context_cache.get_cached_value(
-        identifier="simple_search", item=None, context=request, cache_key_elements=cache_key_elements)
+        identifier="simple_search", item=None, context=request, cache_key_elements=cache_key_elements
+    )
     if val is not None:
         return val
 
@@ -124,7 +121,7 @@ class FilterProductListByQuery(ProductListFormModifier):
 
         def _get_product_distance_to_query_str(product):
             ratio = SequenceMatcher(None, product.name, query_str).quick_ratio()
-            return (1/ratio if ratio else 0)
+            return 1 / ratio if ratio else 0
 
         sorter = _get_product_distance_to_query_str
         products = sorted(products, key=sorter)

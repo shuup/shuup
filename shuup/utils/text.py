@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 import re
 import unicodedata
-
 from django.utils.encoding import force_str, force_text
 
 __all__ = (
@@ -93,7 +92,7 @@ def space_case(value):
     return " ".join(s.lower() for s in WORD_SEP_RE.split(force_text(value)) if s)
 
 
-def force_ascii(string, method='backslashreplace'):
+def force_ascii(string, method="backslashreplace"):
     """
     Force given string to ASCII str.
 
@@ -106,4 +105,4 @@ def force_ascii(string, method='backslashreplace'):
     :type method: str
     :rtype: str
     """
-    return force_str(force_text(string).encode('ascii', errors=method))
+    return force_str(force_text(string).encode("ascii", errors=method))

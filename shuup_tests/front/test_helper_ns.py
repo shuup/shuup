@@ -16,8 +16,6 @@ class TestNs:
 
 
 def test_extendable_helper_ns():
-    with override_provides("front_template_helper_namespace", [
-        "%s:TestNs" % __name__
-    ]):
+    with override_provides("front_template_helper_namespace", ["%s:TestNs" % __name__]):
         ns = _get_helpers()
         assert ns.badgers.snake()

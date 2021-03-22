@@ -27,63 +27,85 @@ class ProductMediaKind(Enum):
     SAMPLE = 4
 
     class Labels:
-        GENERIC_FILE = _('file')
-        IMAGE = _('image')
-        DOCUMENTATION = _('documentation')
-        SAMPLE = _('sample')
+        GENERIC_FILE = _("file")
+        IMAGE = _("image")
+        DOCUMENTATION = _("documentation")
+        SAMPLE = _("sample")
 
 
 @python_2_unicode_compatible
 class ProductMedia(TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
-    product = models.ForeignKey("Product", related_name="media", on_delete=models.CASCADE, verbose_name=_('product'))
-    shops = models.ManyToManyField("Shop", related_name="product_media", verbose_name=_('shops'), help_text=_(
-            "Select which shops you would like the product media to be visible in."
-        )
+    product = models.ForeignKey("Product", related_name="media", on_delete=models.CASCADE, verbose_name=_("product"))
+    shops = models.ManyToManyField(
+        "Shop",
+        related_name="product_media",
+        verbose_name=_("shops"),
+        help_text=_("Select which shops you would like the product media to be visible in."),
     )
     kind = EnumIntegerField(
-        ProductMediaKind, db_index=True, default=ProductMediaKind.GENERIC_FILE, verbose_name=_('kind'), help_text=_(
+        ProductMediaKind,
+        db_index=True,
+        default=ProductMediaKind.GENERIC_FILE,
+        verbose_name=_("kind"),
+        help_text=_(
             "Select what type the media is. It can either be a normal file, part of the documentation, or a sample."
-        )
+        ),
     )
-    file = FilerFileField(blank=True, null=True, verbose_name=_('file'), on_delete=models.CASCADE)
+    file = FilerFileField(blank=True, null=True, verbose_name=_("file"), on_delete=models.CASCADE)
     external_url = models.URLField(
-        blank=True, null=True, verbose_name=_('URL'),
-        help_text=_("Enter URL to external file. If this field is filled, the selected media doesn't apply.")
+        blank=True,
+        null=True,
+        verbose_name=_("URL"),
+        help_text=_("Enter URL to external file. If this field is filled, the selected media doesn't apply."),
     )
-    ordering = models.IntegerField(default=0, verbose_name=_('ordering'), help_text=_(
+    ordering = models.IntegerField(
+        default=0,
+        verbose_name=_("ordering"),
+        help_text=_(
             "You can assign numerical values to images to tell the order in which they "
             "shall be displayed on the product page."
-        )
+        ),
     )
     # Status
     enabled = models.BooleanField(db_index=True, default=True, verbose_name=_("enabled"))
     public = models.BooleanField(
-        default=True, blank=True, verbose_name=_('public (shown on product page)'), help_text=_(
-            "Enable this if you want this image be shown on the product page. Enabled by default."
-        )
+        default=True,
+        blank=True,
+        verbose_name=_("public (shown on product page)"),
+        help_text=_("Enable this if you want this image be shown on the product page. Enabled by default."),
     )
     purchased = models.BooleanField(
-        default=False, blank=True, verbose_name=_('purchased (shown for finished purchases)'), help_text=_(
-            "Enable this if you want the product media to be shown for completed purchases."
-        )
+        default=False,
+        blank=True,
+        verbose_name=_("purchased (shown for finished purchases)"),
+        help_text=_("Enable this if you want the product media to be shown for completed purchases."),
     )
 
     translations = TranslatedFields(
-        title=models.CharField(blank=True, max_length=128, verbose_name=_('title'), help_text=_(
+        title=models.CharField(
+            blank=True,
+            max_length=128,
+            verbose_name=_("title"),
+            help_text=_(
                 "Choose a title for your product media. This will help it be found in your store and on the web."
-            )
+            ),
         ),
-        description=models.TextField(blank=True, verbose_name=_('description'), help_text=_(
+        description=models.TextField(
+            blank=True,
+            verbose_name=_("description"),
+            help_text=_(
                 "Write a description for your product media. This will help it be found in your store and on the web."
-            )
+            ),
         ),
     )
 
     class Meta:
-        verbose_name = _('product attachment')
-        verbose_name_plural = _('product attachments')
-        ordering = ["ordering", ]
+        verbose_name = _("product attachment")
+        verbose_name_plural = _("product attachments")
+        ordering = [
+            "ordering",
+        ]
 
     def __str__(self):  # pragma: no cover
         return self.effective_title
@@ -100,7 +122,7 @@ class ProductMedia(TranslatableModel):
         if self.external_url:
             return self.external_url
 
-        return _('attachment')
+        return _("attachment")
 
     @property
     def url(self):

@@ -24,14 +24,11 @@ class ServiceWizardFormDef(TemplatedWizardFormDef):
             "name": name,
             "kwargs": {
                 "instance": form_class._meta.model.objects.first(),
-                "languages": configuration.get(shop, "languages", settings.LANGUAGES)
-            }
+                "languages": configuration.get(shop, "languages", settings.LANGUAGES),
+            },
         }
         super(ServiceWizardFormDef, self).__init__(
-            form_class=form_class,
-            template_name=template_name,
-            extra_js=extra_js,
-            **form_def_kwargs
+            form_class=form_class, template_name=template_name, extra_js=extra_js, **form_def_kwargs
         )
 
     def visible(self):
@@ -46,7 +43,7 @@ class ManualShippingWizardFormDef(ServiceWizardFormDef):
             name="manual_shipping",
             form_class=ManualShippingWizardForm,
             template_name="shuup/admin/service_providers/_wizard_manual_shipping_form.jinja",
-            request=request
+            request=request,
         )
 
 
@@ -58,5 +55,5 @@ class ManualPaymentWizardFormDef(ServiceWizardFormDef):
             name="manual_payment",
             form_class=ManualPaymentWizardForm,
             template_name="shuup/admin/service_providers/_wizard_manual_payment_form.jinja",
-            request=request
+            request=request,
         )

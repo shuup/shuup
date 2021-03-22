@@ -5,16 +5,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 from django.http.response import Http404
 from django.test import override_settings
 
 from shuup.admin.shop_provider import set_shop
 from shuup.core.models import Shop
-from shuup.discounts.admin.views import (
-    CouponCodeDeleteView, CouponCodeEditView, CouponCodeListView
-)
+from shuup.discounts.admin.views import CouponCodeDeleteView, CouponCodeEditView, CouponCodeListView
 from shuup.discounts.models import CouponCode, Discount
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -129,11 +126,8 @@ def _test_coupon_code_list_view(rf, index):
 
     view_func = CouponCodeListView.as_view()
     request = apply_request_middleware(
-        rf.get("/", {
-            "jq": json.dumps({"perPage": 100, "page": 1})
-        }),
-        user=staff_user,
-        shop=shop)
+        rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=staff_user, shop=shop
+    )
     set_shop(request, shop)
     response = view_func(request)
     if hasattr(response, "render"):
@@ -160,11 +154,8 @@ def test_coupon_codes_admin_list_view(rf, admin_user):
         # Superuser gets same data as shop staff
         shop = Shop.objects.exclude(identifier=factories.DEFAULT_IDENTIFIER).order_by("?").first()
         request = apply_request_middleware(
-            rf.get("/", {
-                "jq": json.dumps({"perPage": 100, "page": 1})
-            }),
-            user=admin_user,
-            shop=shop)
+            rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user, shop=shop
+        )
         set_shop(request, shop)
         view_instance = CouponCodeListView()
         view_instance.request = request

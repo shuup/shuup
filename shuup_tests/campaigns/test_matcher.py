@@ -9,13 +9,9 @@
 import pytest
 
 from shuup.apps.provides import override_provides
-from shuup.campaigns.utils.matcher import (
-    get_matching_for_product, ProductCampaignMatcher
-)
+from shuup.campaigns.utils.matcher import ProductCampaignMatcher, get_matching_for_product
 from shuup.core.models import Category
-from shuup.testing.factories import (
-    create_product, create_random_person, get_default_shop
-)
+from shuup.testing.factories import create_product, create_random_person, get_default_shop
 from shuup.testing.models import UltraFilter
 
 

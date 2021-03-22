@@ -16,5 +16,5 @@ __all__ = [
     "PaymentMethodListView",
     "ShippingMethodDeleteView",
     "ShippingMethodEditView",
-    "ShippingMethodListView"
+    "ShippingMethodListView",
 ]

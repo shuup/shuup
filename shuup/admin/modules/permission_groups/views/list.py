@@ -20,10 +20,10 @@ class PermissionGroupListView(PicotableListView):
     default_columns = [
         Column(
             "name",
-            _(u"Name"),
+            _("Name"),
             sort_field="name",
             display="name",
-            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         ),
     ]
     toolbar_buttons_provider_key = "permission_group_list_toolbar_provider"
@@ -36,8 +36,11 @@ class PermissionGroupListView(PicotableListView):
             settings_button = SettingsActionButton.for_model(self.model, return_url="permission_group")
         else:
             settings_button = None
-        context["toolbar"] = Toolbar([
-            NewActionButton("shuup_admin:permission_group.new", text=_("Create new Permission Group")),
-            settings_button
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                NewActionButton("shuup_admin:permission_group.new", text=_("Create new Permission Group")),
+                settings_button,
+            ],
+            view=self,
+        )
         return context

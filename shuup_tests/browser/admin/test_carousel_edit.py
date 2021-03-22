@@ -6,16 +6,18 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
 
 from shuup.admin.utils.tour import is_tour_complete
+from shuup.front.apps.carousel.models import Carousel
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_condition, wait_until_appeared
+    click_element,
+    initialize_admin_browser_test,
+    move_to_element,
+    wait_until_appeared,
+    wait_until_condition,
 )
-from shuup.testing.browser_utils import initialize_admin_browser_test
-from shuup.front.apps.carousel.models import Carousel
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -127,7 +129,9 @@ def test_carousel_multi_slide(browser, admin_user, live_server, settings):
         browser.find_by_css("[name='slides-%d-caption__en']" % slide_id).fill("Slide")
         click_element(browser, "[name='slides-%d-category_link'] + .select2" % slide_id)
         wait_until_appeared(browser, ".select2-container #select2-id_slides-%d-category_link-results li" % slide_id)
-        click_element(browser, ".select2-container #select2-id_slides-%d-category_link-results li:last-child" % slide_id)
+        click_element(
+            browser, ".select2-container #select2-id_slides-%d-category_link-results li:last-child" % slide_id
+        )
 
         browser.find_by_css("#id_slides-%d-image__en-dropzone" % slide_id).click()
         wait_until_condition(browser, lambda b: len(b.windows) == 2)

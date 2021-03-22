@@ -14,19 +14,16 @@ from django.http.response import HttpResponseForbidden, JsonResponse
 from django.utils.translation import ugettext as _
 
 from shuup.core.shop_provider import get_shop
-from shuup.utils.filer import (
-    ensure_media_file, filer_file_to_json_dict, filer_image_from_upload,
-    get_or_create_folder
-)
+from shuup.utils.filer import ensure_media_file, filer_file_to_json_dict, filer_image_from_upload, get_or_create_folder
 
 
 def file_size_validator(value):
     size = getattr(value, "size", None)
     if size and settings.SHUUP_FRONT_MAX_UPLOAD_SIZE and settings.SHUUP_FRONT_MAX_UPLOAD_SIZE < size:
         raise ValidationError(
-            _("Maximum file size reached (%(size)s MB).") %
-            {"size": settings.SHUUP_FRONT_MAX_UPLOAD_SIZE / 1000 / 1000},
-            code="file_max_size_reached"
+            _("Maximum file size reached (%(size)s MB).")
+            % {"size": settings.SHUUP_FRONT_MAX_UPLOAD_SIZE / 1000 / 1000},
+            code="file_max_size_reached",
         )
 
     return value
@@ -44,7 +41,7 @@ def media_upload(request, *args, **kwargs):
     folder = get_or_create_folder(shop, "/contacts")
     form = UploadImageForm(request.POST, request.FILES)
     if form.is_valid():
-        filer_file = filer_image_from_upload(request, path=folder, upload_data=request.FILES['file'])
+        filer_file = filer_image_from_upload(request, path=folder, upload_data=request.FILES["file"])
     else:
         error_messages = []
         for validation_error in form.errors.as_data().get("file", []):

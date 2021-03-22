@@ -7,20 +7,17 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from decimal import Decimal
-
 import pytest
 import six
-from shuup.utils.django_compat import reverse
+from decimal import Decimal
 
 from shuup.core.models import Product, ShopProduct, Supplier
 from shuup.front.themes.views._product_price import ProductPriceView
 from shuup.front.utils.product import get_product_context
-from shuup.testing.factories import (
-    create_product, get_default_product, get_default_shop, get_default_supplier
-)
-from shuup_tests import supplier_prices
+from shuup.testing.factories import create_product, get_default_product, get_default_shop, get_default_supplier
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
+from shuup_tests import supplier_prices
 
 
 @pytest.mark.django_db

@@ -21,24 +21,18 @@ class CustomerGroupPricingModule(PricingModule):
 
     def get_price_info(self, context, product, quantity=1):
         shop = context.shop
-        product_id = (product if isinstance(product, six.integer_types) else product.pk)
-        default_price_values = list(ShopProduct.objects.filter(
-            product_id=product_id, shop=shop).values_list("default_price_value", flat=True))
+        product_id = product if isinstance(product, six.integer_types) else product.pk
+        default_price_values = list(
+            ShopProduct.objects.filter(product_id=product_id, shop=shop).values_list("default_price_value", flat=True)
+        )
 
         if len(default_price_values) == 0:  # No shop product
             return PriceInfo(price=shop.create_price(0), base_price=shop.create_price(0), quantity=quantity)
         else:
             default_price = default_price_values[0] or 0
 
-        filter = Q(
-            product_id=product_id, shop=shop,
-            price_value__gt=0,
-            group__in=context.customer.groups.all())
-        result = (
-            CgpPrice.objects.filter(filter)
-            .order_by("price_value")[:1]
-            .values_list("price_value", flat=True)
-        )
+        filter = Q(product_id=product_id, shop=shop, price_value__gt=0, group__in=context.customer.groups.all())
+        result = CgpPrice.objects.filter(filter).order_by("price_value")[:1].values_list("price_value", flat=True)
 
         if result:
             price = result[0]
@@ -65,12 +59,16 @@ class CustomerGroupDiscountModule(DiscountModule):
         shop = context.shop
         product_id = product if isinstance(product, six.integer_types) else product.pk
 
-        cgp_discount = CgpDiscount.objects.filter(
-            shop_id=shop.id,
-            product_id=product_id,
-            group__in=context.customer.groups.all(),
-            discount_amount_value__gt=0,
-        ).order_by("-discount_amount_value").first()
+        cgp_discount = (
+            CgpDiscount.objects.filter(
+                shop_id=shop.id,
+                product_id=product_id,
+                group__in=context.customer.groups.all(),
+                discount_amount_value__gt=0,
+            )
+            .order_by("-discount_amount_value")
+            .first()
+        )
 
         if cgp_discount:
             total_discount = cgp_discount.discount_amount * price_info.quantity

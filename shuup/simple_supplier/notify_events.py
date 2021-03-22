@@ -5,9 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from time import time
-
 from django.utils.translation import ugettext_lazy as _
+from time import time
 
 from shuup.core import cache
 from shuup.notify.base import Event, Variable
@@ -34,7 +33,7 @@ class AlertLimitReached(Event):
             "in the last 24 hours for the same product and supplier. "
             "This is useful to prevent sending identical notifications in a short "
             "period of time."
-        )
+        ),
     )
 
     def __init__(self, **variable_values):
@@ -43,7 +42,7 @@ class AlertLimitReached(Event):
 
         if last_dispatch_time:
             last_dispatch = int((time() - last_dispatch_time) / 60 / 60)
-            variable_values["dispatched_last_24hs"] = (last_dispatch < 24)
+            variable_values["dispatched_last_24hs"] = last_dispatch < 24
         else:
             variable_values["dispatched_last_24hs"] = False
 

@@ -6,20 +6,19 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
+import pytest
 import time
 
-import pytest
-from shuup.utils.django_compat import reverse
-
 from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_appeared,
-    wait_until_appeared_xpath, wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    move_to_element,
+    wait_until_appeared,
+    wait_until_appeared_xpath,
+    wait_until_condition,
 )
-from shuup.testing.factories import (
-    create_product, create_random_person, get_default_shop,
-    get_default_supplier
-)
-from shuup.testing.browser_utils import initialize_admin_browser_test
+from shuup.testing.factories import create_product, create_random_person, get_default_shop, get_default_supplier
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -44,22 +43,22 @@ list_view_settings = {
         "default_column_count": 7,
         "addable_fields": [(1, "Account Manager")],
         "creator": create_contacts,
-        "test_pagination": True
+        "test_pagination": True,
     },
     "shop_product": {
         "page_header": "Shop Products",
         "default_column_count": 7,
         "addable_fields": [(22, "Product Gtin"), (3, "Default Price")],
         "creator": create_products,
-        "test_pagination": False
+        "test_pagination": False,
     },
     "permission_group": {
         "page_header": "Permission Groups",
         "default_column_count": 1,
         "addable_fields": [(2, "Permissions"), (1, "Id")],  # use reverse order due idx
         "creator": None,
-        "test_pagination": False
-    }
+        "test_pagination": False,
+    },
 }
 
 
@@ -95,7 +94,7 @@ def _test_pagination(browser):
 
     _goto_page(browser, 3)
     items = _get_pagination_content(browser)
-    _assert_pagination_content(items, ["Previous", "1", "2", "3", "4", "5",  ellipses, "10", "Next"])
+    _assert_pagination_content(items, ["Previous", "1", "2", "3", "4", "5", ellipses, "10", "Next"])
 
     _goto_page(browser, 5)
     items = _get_pagination_content(browser)
@@ -184,6 +183,6 @@ def _check_picotable_item_info(browser, creator):
     if creator:
         wait_until_appeared(browser, ".picotable-item-info")
     else:
-        wait_until_condition(browser, condition=lambda x: x.is_text_present(
-            "There are no granular permission groups to show")
+        wait_until_condition(
+            browser, condition=lambda x: x.is_text_present("There are no granular permission groups to show")
         )

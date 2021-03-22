@@ -17,6 +17,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         from django.conf import settings
         from jinja2.filters import do_striptags
+
         from shuup.core.models import Product
 
         for product in Product.objects.all():

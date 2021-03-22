@@ -16,7 +16,7 @@ from shuup.discounts.models import Discount
 
 
 def _get_query(ids):
-    return (Q() if (isinstance(ids, string_types) and ids == "all") else Q(pk__in=ids))
+    return Q() if (isinstance(ids, string_types) and ids == "all") else Q(pk__in=ids)
 
 
 class ArchiveMassAction(PicotableMassAction):

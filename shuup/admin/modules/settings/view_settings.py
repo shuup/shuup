@@ -12,19 +12,11 @@ from django.db.models import BooleanField, CharField, ForeignKey
 from enumfields import EnumIntegerField
 
 from shuup import configuration
-from shuup.admin.utils.picotable import (
-    ChoicesFilter, Column, TextFilter, true_or_false_filter
-)
+from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter, true_or_false_filter
 from shuup.apps.provides import get_provide_objects
 from shuup.utils.importing import load
 
-INVALID_FIELDS = [
-    "ptr",
-    "ctype",
-    "key",
-    "label"
-    "master"
-]
+INVALID_FIELDS = ["ptr", "ctype", "key", "label" "master"]
 
 
 class ViewSettings(object):
@@ -186,7 +178,7 @@ class ViewSettings(object):
             field_name,
             sort_field=display,
             display=display,
-            filter_config=TextFilter(filter_field=filter_field, placeholder=field_name)
+            filter_config=TextFilter(filter_field=filter_field, placeholder=field_name),
         )
         return self.handle_special_column(field, column)[0]
 
@@ -209,9 +201,7 @@ class ViewSettings(object):
         display = "%s__%s" % (identifier, field.name) if identifier else field.name
 
         column = Column(
-            "%s_%s" % ((identifier if identifier else model.__name__.lower()), field.name),
-            field_name,
-            display=display
+            "%s_%s" % ((identifier if identifier else model.__name__.lower()), field.name), field_name, display=display
         )
 
         column, is_special = self.handle_special_column(field, column)

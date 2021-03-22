@@ -11,9 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.urls import (
-    admin_url, derive_model_url, get_edit_and_list_urls
-)
+from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Manufacturer
 
 
@@ -26,12 +24,12 @@ class ManufacturerModule(AdminModule):
             admin_url(
                 r"^manufacturer/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.manufacturers.views.ManufacturerDeleteView",
-                name="manufacturer.delete"
+                name="manufacturer.delete",
             )
         ] + get_edit_and_list_urls(
             url_prefix="^manufacturers",
             view_template="shuup.admin.modules.manufacturers.views.Manufacturer%sView",
-            name_template="manufacturer.%s"
+            name_template="manufacturer.%s",
         )
 
     def get_menu_entries(self, request):
@@ -41,7 +39,7 @@ class ManufacturerModule(AdminModule):
                 icon="fa fa-building",
                 url="shuup_admin:manufacturer.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=4
+                ordering=4,
             ),
         ]
 

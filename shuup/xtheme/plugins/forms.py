@@ -5,10 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import six
 from collections import OrderedDict
 from copy import deepcopy
-
-import six
 from django import forms
 from django.conf import settings
 

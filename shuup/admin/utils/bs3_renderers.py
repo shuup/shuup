@@ -13,7 +13,6 @@ from django.forms import DateField, DateTimeField, ModelMultipleChoiceField
 
 
 class AdminFieldRenderer(FieldRenderer):
-
     def __init__(self, field, **kwargs):
         self.render_label = bool(kwargs.pop("render_label", True))
         self.set_placeholder = bool(kwargs.pop("set_placeholder", True))
@@ -47,24 +46,25 @@ class AdminFieldRenderer(FieldRenderer):
         return super(AdminFieldRenderer, self).get_label()
 
     def add_class_attrs(self, *args, **kwargs):
-        widget = kwargs.get('widget') or self.widget
+        widget = kwargs.get("widget") or self.widget
         super(AdminFieldRenderer, self).add_class_attrs(*args, **kwargs)
         if self.widget_class:
-            classes = widget.attrs.get('class', '')
+            classes = widget.attrs.get("class", "")
             classes = add_css_class(classes, self.widget_class)
-            widget.attrs['class'] = classes
+            widget.attrs["class"] = classes
 
     def add_help_attrs(self, *args, **kwargs):
-        widget = kwargs.get('widget') or self.widget
+        widget = kwargs.get("widget") or self.widget
         super(AdminFieldRenderer, self).add_help_attrs(*args, **kwargs)
         if not widget.attrs.get("title"):
             widget.attrs.pop("title", None)  # Remove the empty attribute
 
         if not self.show_help_block:  # Remove field help to avoid rendering `help-block`
-            self.field_help = ''
+            self.field_help = ""
 
     def append_to_field(self, html):
         from django.template import loader as template_loader
+
         edit_button = template_loader.render_to_string("shuup/admin/forms/widgets/edit_button.jinja", {"field": self})
         help_text = template_loader.render_to_string("shuup/admin/forms/widgets/help_text.jinja", {"field": self})
         return "".join([html, edit_button.strip(), help_text.strip()])

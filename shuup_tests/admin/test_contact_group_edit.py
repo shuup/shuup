@@ -6,20 +6,20 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shuup.utils.django_compat import reverse
 from django.forms import formset_factory
 from django.utils.encoding import force_text
 
 from shuup.admin.modules.contact_groups.views import ContactGroupEditView
-from shuup.admin.modules.contact_groups.views.forms import (
-    ContactGroupMembersForm, ContactGroupMembersFormSet
-)
+from shuup.admin.modules.contact_groups.views.forms import ContactGroupMembersForm, ContactGroupMembersFormSet
 from shuup.core.models import AnonymousContact
 from shuup.testing.factories import (
-    create_random_company, create_random_person, get_default_customer_group,
-    get_default_shop
+    create_random_company,
+    create_random_person,
+    get_default_customer_group,
+    get_default_shop,
 )
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils.forms import get_form_data
 
 
@@ -47,11 +47,14 @@ def check_for_delete(request, contact_group, can_delete):
     assert bool(delete_url in force_text(response.content)) == can_delete
 
 
-@pytest.mark.parametrize("contact", [
-    AnonymousContact,
-    create_random_company,
-    create_random_person,
-])
+@pytest.mark.parametrize(
+    "contact",
+    [
+        AnonymousContact,
+        create_random_company,
+        create_random_person,
+    ],
+)
 @pytest.mark.django_db
 def test_protected_contact_groups(rf, admin_user, contact):
     get_default_shop()

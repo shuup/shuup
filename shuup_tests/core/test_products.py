@@ -6,30 +6,33 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from datetime import timedelta
-
 import pytest
+from datetime import timedelta
 from django.utils.timezone import now
 
 from shuup import configuration
-from shuup.core.models import (
-    AnonymousContact, get_person_contact, Product, ProductVisibility,
-    ShopProductVisibility
-)
+from shuup.core.models import AnonymousContact, Product, ProductVisibility, ShopProductVisibility, get_person_contact
 from shuup.testing.factories import (
-    create_product, get_all_seeing_key, get_default_customer_group,
-    get_default_shop, get_default_shop_product, get_default_supplier
+    create_product,
+    get_all_seeing_key,
+    get_default_customer_group,
+    get_default_shop,
+    get_default_shop_product,
+    get_default_supplier,
 )
 from shuup_tests.core.utils import modify
 from shuup_tests.utils.fixtures import regular_user
 
 
-@pytest.mark.parametrize("visibility,show_in_list,show_in_search", [
-    (ShopProductVisibility.NOT_VISIBLE, False, False),
-    (ShopProductVisibility.SEARCHABLE, False, True),
-    (ShopProductVisibility.LISTED, True, False),
-    (ShopProductVisibility.ALWAYS_VISIBLE, True, True),
-])
+@pytest.mark.parametrize(
+    "visibility,show_in_list,show_in_search",
+    [
+        (ShopProductVisibility.NOT_VISIBLE, False, False),
+        (ShopProductVisibility.SEARCHABLE, False, True),
+        (ShopProductVisibility.LISTED, True, False),
+        (ShopProductVisibility.ALWAYS_VISIBLE, True, True),
+    ],
+)
 @pytest.mark.django_db
 def test_product_query(visibility, show_in_list, show_in_search, admin_user, regular_user):
     shop = get_default_shop()
@@ -117,10 +120,13 @@ def test_get_prices_children(rf, regular_user):
     assert len(prices) == 1
 
 
-@pytest.mark.parametrize("available_until,visible", [
-    (now() + timedelta(days=2), True),
-    (now() - timedelta(days=2), False),
-])
+@pytest.mark.parametrize(
+    "available_until,visible",
+    [
+        (now() + timedelta(days=2), True),
+        (now() - timedelta(days=2), False),
+    ],
+)
 @pytest.mark.django_db
 def test_product_available(admin_user, regular_user, available_until, visible):
     shop = get_default_shop()

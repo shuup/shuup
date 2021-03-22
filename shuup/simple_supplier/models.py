@@ -19,6 +19,7 @@ from shuup.utils.properties import PriceProperty
 
 def _get_currency():
     from shuup.core.models import Shop
+
     if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
         return Shop.objects.first().currency
     return settings.SHUUP_HOME_CURRENCY
@@ -26,6 +27,7 @@ def _get_currency():
 
 def _get_prices_include_tax():
     from shuup.core.models import Shop
+
     if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
         return Shop.objects.first().prices_include_tax
     return False
@@ -33,16 +35,19 @@ def _get_prices_include_tax():
 
 class StockAdjustment(models.Model):
     product = models.ForeignKey(
-        "shuup.Product", related_name="stock_adjustments", on_delete=models.CASCADE, verbose_name=_("product"))
+        "shuup.Product", related_name="stock_adjustments", on_delete=models.CASCADE, verbose_name=_("product")
+    )
     supplier = models.ForeignKey("shuup.Supplier", on_delete=models.CASCADE, verbose_name=_("supplier"))
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.PROTECT, verbose_name=_("created by"))
+        settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.PROTECT, verbose_name=_("created by")
+    )
     delta = QuantityField(default=0, verbose_name=_("delta"))
     purchase_price_value = MoneyValueField(default=0)
     purchase_price = PriceProperty("purchase_price_value", "currency", "includes_tax")
     type = EnumIntegerField(
-        StockAdjustmentType, db_index=True, default=StockAdjustmentType.INVENTORY, verbose_name=_("type"))
+        StockAdjustmentType, db_index=True, default=StockAdjustmentType.INVENTORY, verbose_name=_("type")
+    )
 
     @cached_property
     def currency(self):
@@ -55,14 +60,19 @@ class StockAdjustment(models.Model):
 
 class StockCount(models.Model):
     alert_limit = QuantityField(default=0, editable=False, verbose_name=_("alert limit"))
-    stock_managed = models.BooleanField(verbose_name=_("stock managed"), default=True, help_text=_(
-        "Use this to override the supplier default stock behavior per product."
-    ))
+    stock_managed = models.BooleanField(
+        verbose_name=_("stock managed"),
+        default=True,
+        help_text=_("Use this to override the supplier default stock behavior per product."),
+    )
     product = models.ForeignKey(
-        "shuup.Product", related_name="simple_supplier_stock_count",
-        editable=False, on_delete=models.CASCADE, verbose_name=_("product"))
-    supplier = models.ForeignKey(
-        "shuup.Supplier", editable=False, on_delete=models.CASCADE, verbose_name=_("supplier"))
+        "shuup.Product",
+        related_name="simple_supplier_stock_count",
+        editable=False,
+        on_delete=models.CASCADE,
+        verbose_name=_("product"),
+    )
+    supplier = models.ForeignKey("shuup.Supplier", editable=False, on_delete=models.CASCADE, verbose_name=_("supplier"))
     logical_count = QuantityField(default=0, editable=False, verbose_name=_("logical count"))
     physical_count = QuantityField(default=0, editable=False, verbose_name=_("physical count"))
     stock_value_value = MoneyValueField(default=0)
@@ -82,4 +92,4 @@ class StockCount(models.Model):
 
     @property
     def stock_unit_price_value(self):
-        return (self.stock_value_value / self.logical_count if self.logical_count else 0)
+        return self.stock_value_value / self.logical_count if self.logical_count else 0

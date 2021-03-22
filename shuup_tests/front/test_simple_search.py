@@ -13,14 +13,12 @@ from shuup.core import cache
 from shuup.core.models import ProductVisibility, ShopProductVisibility
 from shuup.front.apps.simple_search.forms import get_search_product_ids
 from shuup.front.apps.simple_search.views import SearchView
-from shuup.testing.factories import (
-    create_product, create_random_person, get_default_product,
-    get_default_shop
-)
+from shuup.testing.factories import create_product, create_random_person, get_default_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 
 UNLIKELY_STRING = "TJiCrQWaGChYNathovfViXPWO"
 NO_RESULTS_FOUND_STRING = "No results found"
+
 
 @pytest.mark.django_db
 def test_simple_search_get_ids_works(rf):
@@ -53,17 +51,13 @@ def test_simple_search_word_finder(rf):
     name = "Savage Garden"
     sku = UNLIKELY_STRING
     prod = create_product(
-        sku=sku,
-        name=name,
-        keywords="truly, madly, deeply",
-        description="Descriptive text",
-        shop=get_default_shop()
+        sku=sku, name=name, keywords="truly, madly, deeply", description="Descriptive text", shop=get_default_shop()
     )
 
     resp = view(apply_request_middleware(rf.get("/")))
     assert prod not in resp.context_data["object_list"], "No query no results"
 
-    partial_sku = sku[:int(len(sku)/2)]
+    partial_sku = sku[: int(len(sku) / 2)]
     valid_searches = ["Savage", "savage", "truly", "madly", "truly madly", "truly garden", "text", sku, partial_sku]
     for query in valid_searches:
         resp = view(apply_request_middleware(rf.get("/", {"q": query})))
@@ -75,12 +69,15 @@ def test_simple_search_word_finder(rf):
         assert name not in resp.rendered_content
 
 
-@pytest.mark.parametrize("visibility,show_in_search", [
-    (ShopProductVisibility.NOT_VISIBLE, False),
-    (ShopProductVisibility.LISTED, False),
-    (ShopProductVisibility.SEARCHABLE, True),
-    (ShopProductVisibility.ALWAYS_VISIBLE, True),
-])
+@pytest.mark.parametrize(
+    "visibility,show_in_search",
+    [
+        (ShopProductVisibility.NOT_VISIBLE, False),
+        (ShopProductVisibility.LISTED, False),
+        (ShopProductVisibility.SEARCHABLE, True),
+        (ShopProductVisibility.ALWAYS_VISIBLE, True),
+    ],
+)
 @pytest.mark.django_db
 def test_product_searchability(rf, visibility, show_in_search):
     cache.clear()

@@ -34,7 +34,7 @@ class CompanyContactLayout(Layout):
 
     def is_valid_context(self, context):
         customer = get_customer_from_context(context)
-        return (isinstance(customer, CompanyContact) if customer else False)
+        return isinstance(customer, CompanyContact) if customer else False
 
     def get_layout_data_suffix(self, context):
         return self.identifier
@@ -62,7 +62,7 @@ class PersonContactLayout(Layout):
 
     def is_valid_context(self, context):
         customer = get_customer_from_context(context)
-        return (isinstance(customer, PersonContact) if customer else False)
+        return isinstance(customer, PersonContact) if customer else False
 
     def get_layout_data_suffix(self, context):
         return self.identifier

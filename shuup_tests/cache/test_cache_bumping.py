@@ -10,16 +10,14 @@ Tests for utils.price_display and the price filters.
 
 import pytest
 import pytz
-
 from datetime import datetime
 from mock import patch
 
 from shuup.core.models import Supplier, get_person_contact
 from shuup.core.utils import context_cache
-from shuup.core.utils.price_cache import get_cached_price_info, cache_price_info
-from shuup.testing.utils import apply_request_middleware
-
+from shuup.core.utils.price_cache import cache_price_info, get_cached_price_info
 from shuup.testing import factories
+from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
@@ -44,23 +42,18 @@ def test_bump_caches_signal(rf):
                 supplier=factories.get_default_supplier(),
                 stock_managed=bool(factories.get_default_supplier() and factories.get_default_supplier().stock_managed),
                 quantity=1,
-                allow_cache=True)
+                allow_cache=True,
+            )
 
             assert val == None
 
     with patch("django.utils.timezone.now", new=lambda: now):
         product1 = factories.create_product(
-            "product",
-            shop=shop1,
-            supplier=factories.get_default_supplier(),
-            default_price=initial_price
+            "product", shop=shop1, supplier=factories.get_default_supplier(), default_price=initial_price
         )
 
         product2 = factories.create_product(
-            "product2",
-            shop=shop2,
-            supplier=factories.get_default_supplier(),
-            default_price=20
+            "product2", shop=shop2, supplier=factories.get_default_supplier(), default_price=20
         )
 
         user = factories.create_random_user()

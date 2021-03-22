@@ -18,7 +18,7 @@ from shuup.testing.factories import get_default_shop
 
 def get_request(path="/", user=None):
     request = RequestFactory().get(path)
-    request.user = (user or AnonymousUser())
+    request.user = user or AnonymousUser()
     return request
 
 
@@ -30,7 +30,7 @@ def get_request_with_basket(path="/", user=None, ajax=False):
     ShuupFrontMiddleware().process_request(request)
     request.session = {}
     if ajax:
-        request.META['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+        request.META["HTTP_X_REQUESTED_WITH"] = "XMLHttpRequest"
     return request
 
 

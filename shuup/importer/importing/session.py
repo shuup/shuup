@@ -37,7 +37,7 @@ class DataImporterRowSession(object):
 
     def save(self):
         try:
-            self.instance._meta.get_field('shop')
+            self.instance._meta.get_field("shop")
             self.instance.shop = self.shop
         except FieldDoesNotExist:
             pass

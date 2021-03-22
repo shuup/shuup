@@ -20,7 +20,7 @@ class ArchivedDiscountListView(DiscountListView):
 
     mass_actions = [
         "shuup.discounts.admin.mass_actions:UnarchiveMassAction",
-        "shuup.discounts.admin.mass_actions:DeleteMassAction"
+        "shuup.discounts.admin.mass_actions:DeleteMassAction",
     ]
 
     def get_queryset(self):

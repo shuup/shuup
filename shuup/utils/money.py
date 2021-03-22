@@ -9,7 +9,7 @@ import decimal
 
 from . import babel_precision_provider, numbers
 
-DEFAULT_PRECISION = decimal.Decimal('0.01')
+DEFAULT_PRECISION = decimal.Decimal("0.01")
 
 
 class Money(numbers.UnittedDecimal):
@@ -39,10 +39,10 @@ class Money(numbers.UnittedDecimal):
         :param str|None currency:
           Currency as ISO-4217 code (3-letter string) or None.
         """
-        if currency is None and hasattr(value, 'currency'):
+        if currency is None and hasattr(value, "currency"):
             currency = value.currency
         if not currency:
-            raise TypeError('Error! %s: currency must be given.' % cls.__name__)
+            raise TypeError("Error! %s: currency must be given." % cls.__name__)
         instance = super(Money, cls).__new__(cls, value, *args, **kwargs)
         instance.currency = currency
         return instance
@@ -62,7 +62,7 @@ class Money(numbers.UnittedDecimal):
         return cls(value, currency)
 
     def unit_matches_with(self, other):
-        return (self.currency == getattr(other, 'currency', None))
+        return self.currency == getattr(other, "currency", None)
 
     def new(self, value):
         return type(self)(value, currency=self.currency)
@@ -110,12 +110,12 @@ _precision_provider = babel_precision_provider.get_precision
 
 def _get_precision(currency, digits):
     if digits is None:
-        return (_precision_provider(currency) or DEFAULT_PRECISION)
+        return _precision_provider(currency) or DEFAULT_PRECISION
     precision = _digits_to_precision.get(digits)
     if precision is None:
-        precision = decimal.Decimal('0.1') ** digits
+        precision = decimal.Decimal("0.1") ** digits
         _digits_to_precision[digits] = precision
     return precision
 
 
-_digits_to_precision = {2: decimal.Decimal('0.01')}
+_digits_to_precision = {2: decimal.Decimal("0.01")}

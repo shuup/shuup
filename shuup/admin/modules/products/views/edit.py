@@ -12,24 +12,22 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.transaction import atomic
-from django.utils.translation import get_language
-from django.utils.translation import ugettext as _
+from django.utils.translation import get_language, ugettext as _
 
-from shuup.admin.form_part import (
-    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
-)
+from shuup.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shuup.admin.modules.products.forms import (
-    ProductAttributesForm, ProductBaseForm, ProductImageMediaFormSet,
-    ProductMediaFormSet, ShopProductForm
+    ProductAttributesForm,
+    ProductBaseForm,
+    ProductImageMediaFormSet,
+    ProductMediaFormSet,
+    ShopProductForm,
 )
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import (
-    Product, ProductType, SalesUnit, ShopProduct, Supplier, TaxClass
-)
+from shuup.core.models import Product, ProductType, SalesUnit, ShopProduct, Supplier, TaxClass
 
 from .toolbars import EditProductToolbar
 
@@ -47,15 +45,12 @@ class ProductBaseFormPart(FormPart):
                 "instance": self.object.product,
                 "languages": settings.LANGUAGES,
                 "initial": self.get_initial(),
-                "request": self.request
-            }
+                "request": self.request,
+            },
         )
 
         yield TemplatedFormDef(
-            "base_extra",
-            forms.Form,
-            template_name="shuup/admin/products/_edit_extra_base_form.jinja",
-            required=False
+            "base_extra", forms.Form, template_name="shuup/admin/products/_edit_extra_base_form.jinja", required=False
         )
 
     def form_valid(self, form_group):
@@ -66,7 +61,7 @@ class ProductBaseFormPart(FormPart):
     def get_sku(self):
         sku = self.request.GET.get("sku", "")
         if not sku:
-            last_id = Product.objects.values_list('id', flat=True).first()
+            last_id = Product.objects.values_list("id", flat=True).first()
             sku = last_id + 1 if last_id else 1
         return sku
 
@@ -79,7 +74,7 @@ class ProductBaseFormPart(FormPart):
                 "sku": self.get_sku(),
                 "type": ProductType.objects.first(),
                 "tax_class": TaxClass.objects.first(),
-                "sales_unit": SalesUnit.objects.first()
+                "sales_unit": SalesUnit.objects.first(),
             }
 
 
@@ -100,8 +95,8 @@ class ShopProductFormPart(FormPart):
                 "instance": self.object,
                 "initial": self.get_initial(),
                 "request": self.request,
-                "languages": settings.LANGUAGES
-            }
+                "languages": settings.LANGUAGES,
+            },
         )
 
         # the hidden extra form template that uses ShopProductForm
@@ -109,7 +104,7 @@ class ShopProductFormPart(FormPart):
             "shop%d_extra" % self.shop.pk,
             forms.Form,
             template_name="shuup/admin/products/_edit_extra_shop_form.jinja",
-            required=False
+            required=False,
         )
 
     def form_valid(self, form):
@@ -130,9 +125,7 @@ class ShopProductFormPart(FormPart):
 
     def get_initial(self):
         if not self.object.pk:
-            return {
-                "suppliers": [Supplier.objects.enabled(shop=get_shop(self.request)).first()]
-            }
+            return {"suppliers": [Supplier.objects.enabled(shop=get_shop(self.request)).first()]}
 
     def has_perm(self):
         return True  # Right form parts are defined at init
@@ -149,7 +142,7 @@ class ProductAttributeFormPart(FormPart):
             ProductAttributesForm,
             template_name="shuup/admin/products/_edit_attribute_form.jinja",
             required=False,
-            kwargs={"product": self.object.product, "languages": settings.LANGUAGES}
+            kwargs={"product": self.object.product, "languages": settings.LANGUAGES},
         )
 
     def form_valid(self, form):
@@ -167,7 +160,7 @@ class BaseProductMediaFormPart(FormPart):
             self.formset,
             template_name="shuup/admin/products/_edit_media_form.jinja",
             required=False,
-            kwargs={"product": self.object.product, "languages": settings.LANGUAGES, "request": self.request}
+            kwargs={"product": self.object.product, "languages": settings.LANGUAGES, "request": self.request},
         )
 
     def form_valid(self, form):
@@ -230,11 +223,13 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
             try:
                 shop_product = self.object
                 orderability_errors.extend(
-                    ["%s: %s" % (shop.name, msg.message)
+                    [
+                        "%s: %s" % (shop.name, msg.message)
                         for msg in shop_product.get_orderability_errors(
-                        supplier=None,
-                        quantity=shop_product.minimum_purchase_quantity,
-                        customer=None)])
+                            supplier=None, quantity=shop_product.minimum_purchase_quantity, customer=None
+                        )
+                    ]
+                )
             except ObjectDoesNotExist:
                 orderability_errors.extend(["Error! %s: %s" % (shop.name, _("Product is not available."))])
         context["orderability_errors"] = orderability_errors

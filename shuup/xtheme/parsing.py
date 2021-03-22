@@ -95,6 +95,7 @@ class _PlaceholderManagingExtension(Extension):
     Superclass (could be mixin) with helpers for getting the currently
     active layout object from a parser.
     """
+
     def _get_layout(self, parser, accept_none=False):
         """
         Get the currently managed Layout from the parser.
@@ -130,10 +131,8 @@ class _PlaceholderManagingExtension(Extension):
         curr_layout = self._get_layout(parser, accept_none=True)
         if curr_layout is not None:
             raise NestingError(
-                "Error! Can't nest `placeholder`s! (Currently in `%r`, trying to start `%r`)." % (
-                    curr_layout.placeholder_name,
-                    placeholder_name
-                )
+                "Error! Can't nest `placeholder`s! (Currently in `%r`, trying to start `%r`)."
+                % (curr_layout.placeholder_name, placeholder_name)
             )
         layout = Layout(None, placeholder_name=placeholder_name)
         parser._xtheme_placeholder_layout = layout
@@ -186,7 +185,8 @@ class PlaceholderExtension(_PlaceholderManagingExtension):
       but an included or base template that is rendered by different views
       will).
     """
-    tags = set(['placeholder'])
+
+    tags = set(["placeholder"])
 
     def parse(self, parser):
         """
@@ -207,7 +207,7 @@ class PlaceholderExtension(_PlaceholderManagingExtension):
         else:
             placeholder_name = six.text_type(parse_constantlike(self.environment, parser))
         self._new_layout(parser, placeholder_name)
-        parser.parse_statements(['name:endplaceholder'], drop_needle=True)
+        parser.parse_statements(["name:endplaceholder"], drop_needle=True)
         # Body parsing will have, as a side effect, populated the current layout
         layout = self._end_layout(parser)
         args = [
@@ -216,7 +216,7 @@ class PlaceholderExtension(_PlaceholderManagingExtension):
             Const(parser.name),
             Const(global_type),
         ]
-        return Output([self.call_method('_render_placeholder', args)]).set_lineno(lineno)
+        return Output([self.call_method("_render_placeholder", args)]).set_lineno(lineno)
 
     @contextfunction
     def _render_placeholder(self, context, placeholder_name, layout, template_name, global_type):
@@ -247,7 +247,7 @@ class LayoutPartExtension(_PlaceholderManagingExtension):
       row and a single column.
     """
 
-    tags = set(['column', 'row'])
+    tags = set(["column", "row"])
 
     def parse(self, parser):
         """
@@ -311,7 +311,8 @@ class PluginExtension(_PlaceholderManagingExtension):
       the template incurs whatever performance hit there is in parsing
       TOML; the Jinja2 bccache should take care of the rest.
     """
-    tags = set(['plugin'])
+
+    tags = set(["plugin"])
 
     def parse(self, parser):
         """
@@ -324,7 +325,7 @@ class PluginExtension(_PlaceholderManagingExtension):
         """
         lineno = next(parser.stream).lineno
         name = parse_constantlike(self.environment, parser)  # Parse the plugin name.
-        body = parser.parse_statements(['name:endplugin'], drop_needle=True)
+        body = parser.parse_statements(["name:endplugin"], drop_needle=True)
         layout = self._get_layout(parser)
         config = None
         if body:

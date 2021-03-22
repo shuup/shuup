@@ -12,12 +12,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.modules.contacts.form_parts import (
-    CompanyContactBaseFormPart, ContactAddressesFormPart,
-    PersonContactBaseFormPart
+    CompanyContactBaseFormPart,
+    ContactAddressesFormPart,
+    PersonContactBaseFormPart,
 )
-from shuup.admin.modules.contacts.utils import (
-    check_contact_permission, request_limited
-)
+from shuup.admin.modules.contacts.utils import check_contact_permission, request_limited
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
@@ -80,9 +79,7 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
 
     def get_toolbar(self):
         toolbar = get_default_edit_toolbar(
-            self,
-            self.get_save_form_id(),
-            discard_url=(get_model_url(self.object) if self.object.pk else None)
+            self, self.get_save_form_id(), discard_url=(get_model_url(self.object) if self.object.pk else None)
         )
 
         for button in get_provide_objects("admin_contact_edit_toolbar_button"):

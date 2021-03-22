@@ -8,7 +8,7 @@
 from django.forms import Select, SelectMultiple
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.utils.django_compat import force_text, NoReverseMatch
+from shuup.utils.django_compat import NoReverseMatch, force_text
 
 
 class NoModel(object):

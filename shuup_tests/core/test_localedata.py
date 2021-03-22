@@ -7,9 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import datetime
-
 import babel
+import datetime
 import pytest
 from babel.dates import format_date
 
@@ -18,18 +17,17 @@ from shuup.utils.i18n import format_money
 from shuup.utils.money import Money
 
 
-@pytest.mark.parametrize("locale_name,expected", [
-    ("fi_FI", "maalis 1980"),
-    ("en_US", "Mar 1980"),
-    ("sv", "mars 1980"),
-])
+@pytest.mark.parametrize(
+    "locale_name,expected",
+    [
+        ("fi_FI", "maalis 1980"),
+        ("en_US", "Mar 1980"),
+        ("sv", "mars 1980"),
+    ],
+)
 def test_year_and_month(locale_name, expected):
     locale = babel.Locale.parse(locale_name)
-    formatted = format_date(
-        datetime.date(1980, 3, 1),
-        format=get_year_and_month_format(locale),
-        locale=locale
-    )
+    formatted = format_date(datetime.date(1980, 3, 1), format=get_year_and_month_format(locale), locale=locale)
     assert formatted == expected
 
 

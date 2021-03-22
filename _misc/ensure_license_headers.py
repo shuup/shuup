@@ -12,9 +12,8 @@ from __future__ import unicode_literals
 
 import argparse
 import os
-import sys
-
 import sanity_utils
+import sys
 
 HEADER = """
 This file is part of Shuup.
@@ -25,21 +24,15 @@ This source code is licensed under the OSL-3.0 license found in the
 LICENSE file in the root directory of this source tree.
 """.strip()
 
-PY_HEADER = '\n'.join(('# ' + line).strip() for line in HEADER.splitlines())
-JS_HEADER = (
-    '/**\n' +
-    '\n'.join((' * ' + line).rstrip() for line in HEADER.splitlines()) +
-    '\n */')
+PY_HEADER = "\n".join(("# " + line).strip() for line in HEADER.splitlines())
+JS_HEADER = "/**\n" + "\n".join((" * " + line).rstrip() for line in HEADER.splitlines()) + "\n */"
 
-PY_HEADER_LINES = PY_HEADER.encode('utf-8').splitlines()
-JS_HEADER_LINES = JS_HEADER.encode('utf-8').splitlines()
+PY_HEADER_LINES = PY_HEADER.encode("utf-8").splitlines()
+JS_HEADER_LINES = JS_HEADER.encode("utf-8").splitlines()
 
 
 def get_adders():
-    return {
-        '.py': add_header_to_python_file,
-        '.js': add_header_to_javascript_file
-    }
+    return {".py": add_header_to_python_file, ".js": add_header_to_javascript_file}
 
 
 def main():
@@ -63,19 +56,19 @@ def process_files(paths, adders, verbose, write):
     for path in sorted(paths):
         if os.stat(path).st_size == 0:
             if verbose:
-                print('[+]:%-*s: File is empty' % (width, path))  # noqa
+                print("[+]:%-*s: File is empty" % (width, path))  # noqa
         elif not has_header(path):
             missing.add(path)
 
             if write:
                 adder = adders[os.path.splitext(path)[1]]
                 adder(path)
-                print('[!]:%-*s: Modified' % (width, path))  # noqa
+                print("[!]:%-*s: Modified" % (width, path))  # noqa
             else:
-                print('[!]:%-*s: Requires license header' % (width, path))  # noqa
+                print("[!]:%-*s: Requires license header" % (width, path))  # noqa
         else:
             if verbose:
-                print('[+]:%-*s: File has license header' % (width, path))  # noqa
+                print("[+]:%-*s: File has license header" % (width, path))  # noqa
     return missing
 
 
@@ -87,7 +80,7 @@ def find_files(roots, extensions):
             root,
             generated_resources=generated_resources,
             allowed_extensions=extensions,
-            ignored_dirs=sanity_utils.IGNORED_DIRS + ["migrations"]
+            ignored_dirs=sanity_utils.IGNORED_DIRS + ["migrations"],
         ):
             if not is_file_ignored(file):
                 paths.add(file)
@@ -97,14 +90,11 @@ def find_files(roots, extensions):
 
 def is_file_ignored(filepath):
     filepath = filepath.replace(os.sep, "/")
-    return (
-        ('vendor' in filepath) or
-        ('doc/_ext/djangodocs.py' in filepath)
-    )
+    return ("vendor" in filepath) or ("doc/_ext/djangodocs.py" in filepath)
 
 
 def has_header(path):
-    with open(path, 'rb') as fp:
+    with open(path, "rb") as fp:
         return b"This file is part of Shuup." in fp.read(256)
 
 
@@ -112,9 +102,9 @@ def add_header_to_python_file(path):
     lines = get_lines(path)
     if lines:
         i = 0
-        if lines[i].startswith(b'#!'):
+        if lines[i].startswith(b"#!"):
             i += 1
-        if i < len(lines) and b'coding' in lines[i]:
+        if i < len(lines) and b"coding" in lines[i]:
             i += 1
 
         new_lines = lines[:i] + PY_HEADER_LINES + lines[i:]
@@ -129,7 +119,7 @@ def add_header_to_javascript_file(path):
 
 
 def get_lines(path):
-    with open(path, 'rb') as fp:
+    with open(path, "rb") as fp:
         contents = fp.read()
     if not contents.strip():
         return []
@@ -137,10 +127,10 @@ def get_lines(path):
 
 
 def write_lines(path, new_lines):
-    with open(path, 'wb') as fp:
+    with open(path, "wb") as fp:
         for line in new_lines:
-            fp.write(line + b'\n')
+            fp.write(line + b"\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

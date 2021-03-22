@@ -10,9 +10,7 @@ from __future__ import unicode_literals
 from shuup.utils import update_module_attributes
 
 from ._process import CheckoutProcess, VerticalCheckoutProcess
-from ._services import (
-    BasicServiceCheckoutPhaseProvider, ServiceCheckoutPhaseProvider
-)
+from ._services import BasicServiceCheckoutPhaseProvider, ServiceCheckoutPhaseProvider
 from ._view_mixin import CheckoutPhaseViewMixin
 
 __all__ = [

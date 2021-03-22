@@ -7,7 +7,6 @@
 from __future__ import unicode_literals
 
 from collections import OrderedDict
-
 from django.core.exceptions import ImproperlyConfigured
 from django.http.response import Http404
 
@@ -30,7 +29,7 @@ class CheckoutProcess(object):
         self.phase_specs = phase_specs
         self.phase_kwargs = phase_kwargs
         self.view = view
-        self.request = self.phase_kwargs.get('request')
+        self.request = self.phase_kwargs.get("request")
 
     @property
     def phases(self):
@@ -47,11 +46,7 @@ class CheckoutProcess(object):
         kwargs = {}
         kwargs.update(self.phase_kwargs)
         kwargs.update(extra_kwargs)
-        phase = phase_class(
-            checkout_process=self,
-            horizontal_template=self.horizontal_template,
-            **kwargs
-        )
+        phase = phase_class(checkout_process=self, horizontal_template=self.horizontal_template, **kwargs)
         return phase
 
     def _load_phases(self):
@@ -117,7 +112,7 @@ class CheckoutProcess(object):
         This is exposed as a public API for the benefit of phases that need to do sub-phase
         initialization and dispatching, such as method phases.
         """
-        current_phase = (current_phase or target_phase)
+        current_phase = current_phase or target_phase
         target_phase.previous_phase = self.get_previous_phase(current_phase, target_phase)
         target_phase.next_phase = self.get_next_phase(current_phase, target_phase)
         target_phase.phases = self.phases
@@ -145,8 +140,8 @@ class CheckoutProcess(object):
     def get_phase_url(self, phase):
         # The self.view is optional for backward compatibility
         if not self.view:
-            url_kwargs = {'phase': phase.identifier}
-            return reverse('shuup:checkout', kwargs=url_kwargs)
+            url_kwargs = {"phase": phase.identifier}
+            return reverse("shuup:checkout", kwargs=url_kwargs)
         return self.view.get_phase_url(phase)
 
     @property

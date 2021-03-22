@@ -20,27 +20,22 @@ class ImportAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:importer.import")
 
     def get_extra_permissions(self):
-        return [
-            importer.get_permission_identifier()
-            for importer in get_provide_objects("importers")
-        ]
+        return [importer.get_permission_identifier() for importer in get_provide_objects("importers")]
 
     def get_urls(self):
         return [
             admin_url(
-                "^importer/import$",
-                "shuup.importer.admin_module.import_views.ImportView",
-                name="importer.import"
+                "^importer/import$", "shuup.importer.admin_module.import_views.ImportView", name="importer.import"
             ),
             admin_url(
                 "^importer/import/process$",
                 "shuup.importer.admin_module.import_views.ImportProcessView",
-                name="importer.import_process"
+                name="importer.import_process",
             ),
             admin_url(
                 "^importer/example$",
                 "shuup.importer.admin_module.import_views.ExampleFileDownloadView",
-                name="importer.download_example"
+                name="importer.download_example",
             ),
         ]
 
@@ -50,6 +45,6 @@ class ImportAdminModule(AdminModule):
                 text=_("Data Import"),
                 category=SETTINGS_MENU_CATEGORY,
                 url="shuup_admin:importer.import",
-                icon="fa fa-star"
+                icon="fa fa-star",
             )
         ]

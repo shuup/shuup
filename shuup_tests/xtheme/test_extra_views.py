@@ -18,12 +18,14 @@ from shuup_tests.xtheme.utils import H2G2Theme
 
 
 def test_xtheme_extra_views(rf):
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         with override_current_theme_class(H2G2Theme, get_default_shop()):
             request = rf.get("/", {"name": "Arthur Dent"})
@@ -39,12 +41,14 @@ def test_xtheme_extra_views(rf):
 
 
 def test_xtheme_extra_view_exceptions(rf):
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         with override_current_theme_class(H2G2Theme, get_default_shop()):
             request = rf.get("/")

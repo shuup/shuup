@@ -10,10 +10,8 @@ from django.http import HttpResponseRedirect
 from django.views.generic import UpdateView
 
 from shuup.admin.base import MenuEntry
-from shuup.admin.form_part import (
-    FormPart, FormPartsViewMixin, TemplatedFormDef
-)
-from shuup.admin.toolbar import get_default_edit_toolbar, Toolbar
+from shuup.admin.form_part import FormPart, FormPartsViewMixin, TemplatedFormDef
+from shuup.admin.toolbar import Toolbar, get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.models import Product
 from shuup.utils.django_compat import reverse
@@ -30,7 +28,7 @@ class ProductChildrenBaseFormPart(FormPart):
             form,
             template_name=template_name,
             required=False,
-            kwargs={"parent_product": self.object, "request": self.request}
+            kwargs={"parent_product": self.object, "request": self.request},
         )
 
     def form_valid(self, form):
@@ -62,18 +60,11 @@ class ProductParentBaseView(FormPartsViewMixin, UpdateView):
         parent = self.object.get_all_package_parents().first()
         if parent:
             # By default, redirect to the first parent
-            return HttpResponseRedirect(
-                reverse("shuup_admin:shop_product.edit_package", kwargs={"pk": parent.id})
-            )
+            return HttpResponseRedirect(reverse("shuup_admin:shop_product.edit_package", kwargs={"pk": parent.id}))
         return super(ProductParentBaseView, self).dispatch(request, *args, **kwargs)
 
     def get_breadcrumb_parents(self):
-        return [
-            MenuEntry(
-                text=self.object,
-                url=get_model_url(self.object, shop=self.request.shop)
-            )
-        ]
+        return [MenuEntry(text=self.object, url=get_model_url(self.object, shop=self.request.shop))]
 
     def post(self, request, *args, **kwargs):
         command = request.POST.get("command")

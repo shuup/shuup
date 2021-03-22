@@ -35,14 +35,17 @@ class OrderCreatePaymentView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(OrderCreatePaymentView, self).get_context_data(**kwargs)
         context["title"] = _("Create Payment -- %s") % context["order"]
-        context["toolbar"] = Toolbar([
-            PostActionButton(
-                icon="fa fa-check-circle",
-                form_id="create_payment",
-                text=_("Create Payment"),
-                extra_css_class="btn-success",
-            ),
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                PostActionButton(
+                    icon="fa fa-check-circle",
+                    form_id="create_payment",
+                    text=_("Create Payment"),
+                    extra_css_class="btn-success",
+                ),
+            ],
+            view=self,
+        )
         return context
 
     def get_form_kwargs(self):

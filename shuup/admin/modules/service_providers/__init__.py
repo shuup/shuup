@@ -12,9 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.urls import (
-    admin_url, derive_model_url, get_edit_and_list_urls
-)
+from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shuup.core.models import ServiceProvider
 
 
@@ -27,12 +25,12 @@ class ServiceProviderModule(AdminModule):
             admin_url(
                 r"^service_provider/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.service_providers.views.ServiceProviderDeleteView",
-                name="service_provider.delete"
+                name="service_provider.delete",
             )
         ] + get_edit_and_list_urls(
             url_prefix="^service_provider",
             view_template="shuup.admin.modules.service_providers.views.ServiceProvider%sView",
-            name_template="service_provider.%s"
+            name_template="service_provider.%s",
         )
 
     def get_menu_category_icons(self):
@@ -45,7 +43,7 @@ class ServiceProviderModule(AdminModule):
                 icon="fa fa-truck",
                 url="shuup_admin:service_provider.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=3
+                ordering=3,
             )
         ]
 

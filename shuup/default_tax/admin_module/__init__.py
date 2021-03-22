@@ -23,7 +23,7 @@ class TaxRulesAdminModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^default-tax/rules",
             view_template="shuup.default_tax.admin_module.views.TaxRule%sView",
-            name_template="default_tax.tax_rule.%s"
+            name_template="default_tax.tax_rule.%s",
         )
 
     def get_menu_entries(self, request):
@@ -34,7 +34,7 @@ class TaxRulesAdminModule(AdminModule):
                 url="shuup_admin:default_tax.tax_rule.list",
                 category=SETTINGS_MENU_CATEGORY,
                 ordering=4,
-                aliases=[_("Show tax rules")]
+                aliases=[_("Show tax rules")],
             )
         ]
 

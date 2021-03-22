@@ -23,16 +23,13 @@ class SupplierListView(PicotableListView):
     default_columns = [
         Column(
             "name",
-            _(u"Name"),
+            _("Name"),
             sort_field="name",
             display="name",
-            filter_config=TextFilter(
-                filter_field="name",
-                placeholder=_("Filter by name...")
-            )
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         ),
-        Column("type", _(u"Type")),
-        Column("module_identifier", _(u"Module"), display="get_module_display", sortable=True)
+        Column("type", _("Type")),
+        Column("module_identifier", _("Module"), display="get_module_display", sortable=True),
     ]
     toolbar_buttons_provider_key = "supplier_list_toolbar_provider"
     mass_actions_provider_key = "supplier_list_mass_actions_provider"

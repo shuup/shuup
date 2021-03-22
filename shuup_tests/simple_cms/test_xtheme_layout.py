@@ -6,17 +6,16 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 import pytest
 from django.conf import settings
-from shuup.utils.django_compat import reverse
 
 from shuup.simple_cms.layout import PageLayout
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse
 from shuup.xtheme import get_current_theme
 from shuup.xtheme.layout.utils import get_layout_data_key
 from shuup.xtheme.view_config import ViewConfig
-from shuup_tests.utils import printable_gibberish, SmartClient
+from shuup_tests.utils import SmartClient, printable_gibberish
 
 from .utils import create_page
 

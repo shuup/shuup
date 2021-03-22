@@ -13,9 +13,7 @@ from django.utils.translation import activate
 
 from shuup.admin.modules.services.forms import PaymentMethodForm
 from shuup.admin.modules.shops.forms import ShopBaseForm, ShopWizardForm
-from shuup.testing.factories import (
-    get_default_payment_method, get_default_shop
-)
+from shuup.testing.factories import get_default_payment_method, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.forms import get_form_data
 
@@ -74,8 +72,9 @@ def test_default_language_english():
 
 @pytest.mark.django_db
 def test_model_form_partially_translated(rf, admin_user):
-    with override_settings(**{"LANGUAGES": (("en", "en"), ("fi", "fi"), ("ja", "ja")),
-                              "PARLER_DEFAULT_LANGUAGE_CODE": "en"}):
+    with override_settings(
+        **{"LANGUAGES": (("en", "en"), ("fi", "fi"), ("ja", "ja")), "PARLER_DEFAULT_LANGUAGE_CODE": "en"}
+    ):
         activate("en")
         get_default_shop()
         request = apply_request_middleware(rf.get("/"), user=admin_user)

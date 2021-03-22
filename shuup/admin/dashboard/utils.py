@@ -7,10 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 import datetime
 import time
+from django.utils.timezone import now
 from heapq import heappop, heappush
 from itertools import islice
-
-from django.utils.timezone import now
 
 from shuup.admin.module_registry import get_modules
 

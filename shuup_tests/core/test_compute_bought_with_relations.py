@@ -7,16 +7,16 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 import six
-
 from django.core.management import call_command
 
 from shuup.core.models import Product, ProductCrossSell, ShopProduct
-from shuup.core.utils.product_bought_with_relations import (
-    add_bought_with_relations_for_product
-)
+from shuup.core.utils.product_bought_with_relations import add_bought_with_relations_for_product
 from shuup.testing.factories import (
-    add_product_to_order, create_order_with_product, create_product,
-    get_default_shop, get_default_supplier
+    add_product_to_order,
+    create_order_with_product,
+    create_product,
+    get_default_shop,
+    get_default_supplier,
 )
 
 
@@ -54,11 +54,7 @@ def test_product_relations_max_quantity(rf):
     for i, quantity in enumerate(quantities):
         order = create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=6, shop=shop)
         add_product_to_order(
-            order,
-            supplier,
-            create_product("product-%s" % i, shop),
-            quantity=quantity,
-            taxless_base_unit_price=6
+            order, supplier, create_product("product-%s" % i, shop), quantity=quantity, taxless_base_unit_price=6
         )
 
     assert ProductCrossSell.objects.count() == 0
@@ -79,7 +75,7 @@ def _init_test_with_variations():
         },
         "hoodie": {
             "colors": ["black"],
-        }
+        },
     }
     for key, data in six.iteritems(product_data):
         parent = create_product(key, shop=shop)
@@ -93,7 +89,7 @@ def _init_test_with_variations():
                 child = create_product(sku, shop=shop, supplier=supplier)
                 child.link_to_parent(parent, variables={"color": color})
 
-    assert Product.objects.count()  == 5
+    assert Product.objects.count() == 5
 
     black_t_shirt = Product.objects.filter(sku="t-shirt-black").first()
     black_hoodie = Product.objects.filter(sku="hoodie-black").first()

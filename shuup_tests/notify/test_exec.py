@@ -54,10 +54,14 @@ def test_conditionless_step_executes():
 
 @pytest.mark.parametrize("cond_op", list(StepConditionOperator))
 def test_condops(cond_op):
-    step = Step(cond_op=cond_op, conditions=[
-        NonEmpty({"v": {"variable": "a"}}),
-        NonEmpty({"v": {"variable": "b"}}),
-    ], actions=[SetDebugFlag({})])
+    step = Step(
+        cond_op=cond_op,
+        conditions=[
+            NonEmpty({"v": {"variable": "a"}}),
+            NonEmpty({"v": {"variable": "b"}}),
+        ],
+        actions=[SetDebugFlag({})],
+    )
     context = Context.from_variables(a=True, b=False)
     step.execute(context)
     if cond_op == StepConditionOperator.ALL:
@@ -71,10 +75,14 @@ def test_condops(cond_op):
 
 
 def test_none_condop():
-    step = Step(cond_op=StepConditionOperator.NONE, conditions=[
-        NonEmpty({"v": {"variable": "a"}}),
-        NonEmpty({"v": {"variable": "b"}}),
-    ], actions=[SetDebugFlag({})])
+    step = Step(
+        cond_op=StepConditionOperator.NONE,
+        conditions=[
+            NonEmpty({"v": {"variable": "a"}}),
+            NonEmpty({"v": {"variable": "b"}}),
+        ],
+        actions=[SetDebugFlag({})],
+    )
     context = Context.from_variables(a=False, b=False)
     step.execute(context)
     assert context.get("debug")

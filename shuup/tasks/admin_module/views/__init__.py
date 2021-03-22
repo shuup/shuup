@@ -5,9 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from .edit import (
-    TaskDeleteView, TaskEditView, TaskSetStatusView, TaskTypeEditView
-)
+from .edit import TaskDeleteView, TaskEditView, TaskSetStatusView, TaskTypeEditView
 from .list import TaskListView, TaskTypeListView
 
 __all__ = [
@@ -16,5 +14,5 @@ __all__ = [
     "TaskDeleteView",
     "TaskSetStatusView",
     "TaskTypeListView",
-    "TaskTypeEditView"
+    "TaskTypeEditView",
 ]

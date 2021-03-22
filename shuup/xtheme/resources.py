@@ -9,13 +9,12 @@ from __future__ import unicode_literals
 
 import os
 import re
-from logging import getLogger
-
 import six
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from jinja2.utils import contextfunction
+from logging import getLogger
 
 from shuup.core import cache
 from shuup.core.fields import TaggedJSONEncoder
@@ -26,36 +25,12 @@ from shuup.xtheme.utils import get_html_attrs
 LOGGER = getLogger(__name__)
 
 LOCATION_INFO = {
-    "head_end": {
-        "name": _("End of head"),
-        "regex": re.compile(r"</head>", re.I),
-        "placement": "pre"
-    },
-    "head_start": {
-        "name": _("Start of head"),
-        "regex": re.compile(r"<head[^>]*>", re.I),
-        "placement": "post"
-    },
-    "body_end": {
-        "name": _("End of body"),
-        "regex": re.compile(r"</body>", re.I),
-        "placement": "pre"
-    },
-    "body_start": {
-        "name": _("Start of body"),
-        "regex": re.compile(r"<body[^>]*>", re.I),
-        "placement": "post"
-    },
-    "content_start": {
-        "name": _("Content start"),
-        "regex": re.compile(r"^.*", re.I),
-        "placement": "pre"
-    },
-    "content_end": {
-        "name": _("Content end"),
-        "regex": re.compile(r".*$", re.I),
-        "placement": "post"
-    }
+    "head_end": {"name": _("End of head"), "regex": re.compile(r"</head>", re.I), "placement": "pre"},
+    "head_start": {"name": _("Start of head"), "regex": re.compile(r"<head[^>]*>", re.I), "placement": "post"},
+    "body_end": {"name": _("End of body"), "regex": re.compile(r"</body>", re.I), "placement": "pre"},
+    "body_start": {"name": _("Start of body"), "regex": re.compile(r"<body[^>]*>", re.I), "placement": "post"},
+    "content_start": {"name": _("Content start"), "regex": re.compile(r"^.*", re.I), "placement": "pre"},
+    "content_end": {"name": _("Content end"), "regex": re.compile(r".*$", re.I), "placement": "post"},
 }
 
 KNOWN_LOCATIONS = set(LOCATION_INFO.keys())
@@ -70,6 +45,7 @@ class InlineScriptResource(six.text_type):
 
     The contents are rendered inside a ``<script>`` tag.
     """
+
     @classmethod
     def from_vars(cls, var_name, *args, **kwargs):
         """
@@ -91,6 +67,7 @@ class JinjaMarkupResource(object):
     """
     A Jinja markup resource.
     """
+
     def __init__(self, template, context):
         self.template = template
         self.context = context
@@ -104,6 +81,7 @@ class JinjaMarkupResource(object):
             return template
 
         from django.template import engines
+
         for engine_name in engines:
             engine = engines[engine_name]
             try:
@@ -113,7 +91,7 @@ class JinjaMarkupResource(object):
                 return force_text(_("(Error while rendering.)"))
 
     def __eq__(self, other):
-        return (self.render() == other)
+        return self.render() == other
 
 
 class InlineMarkupResource(six.text_type):
@@ -138,6 +116,7 @@ class ResourceContainer(object):
     `~shuup.xtheme.engine.XthemeTemplate` (akin to how `django-jinja`'s Template injects
     `request` and `csrf_token`).
     """
+
     def __init__(self):
         self.resources = {}
 
@@ -208,6 +187,7 @@ class ResourceContainer(object):
         resource = force_text(resource)
 
         from six.moves.urllib.parse import urlparse
+
         file_path = urlparse(resource)
         file_name = os.path.basename(file_path.path)
 
@@ -310,6 +290,7 @@ def valid_view(context):
         return False
 
     from shuup.xtheme.views.editor import EditorView
+
     if issubclass(view_class, EditorView):
         return False
 
@@ -322,6 +303,7 @@ def inject_global_snippet(context, content):
 
     from shuup.xtheme import get_current_theme
     from shuup.xtheme.models import Snippet, SnippetType
+
     request = context["request"]
     shop = getattr(request, "shop", None) or get_shop(context["request"])
 

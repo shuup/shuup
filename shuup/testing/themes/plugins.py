@@ -18,7 +18,7 @@ class HighlightTestPlugin(TemplatedPlugin):
     template_name = "shuup_testing/highlight_plugin.jinja"
     fields = [
         ("title", forms.CharField(required=False, initial="")),
-        ("count", forms.IntegerField(min_value=1, initial=8))
+        ("count", forms.IntegerField(min_value=1, initial=8)),
     ]
 
     def get_context_data(self, context):
@@ -27,5 +27,5 @@ class HighlightTestPlugin(TemplatedPlugin):
         return {
             "request": context["request"],
             "title": self.config.get("title"),
-            "products": Product.objects.all()[:count]
+            "products": Product.objects.all()[:count],
         }

@@ -10,17 +10,12 @@ from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.forms.widgets import (
-    QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect,
-    TextEditorWidget
-)
+from shuup.admin.forms.widgets import QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect, TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.gdpr.utils import get_possible_consent_pages
 from shuup.utils.django_compat import reverse_lazy
-from shuup.utils.multilanguage_model_form import (
-    MultiLanguageModelForm, to_language_codes
-)
+from shuup.utils.multilanguage_model_form import MultiLanguageModelForm, to_language_codes
 
 
 class QuickAddPageSelect(QuickAddRelatedObjectSelect):
@@ -40,7 +35,7 @@ class GDPRSettingsForm(MultiLanguageModelForm):
             "cookie_banner_content": TextEditorWidget(),
             "cookie_privacy_excerpt": TextEditorWidget(),
             "privacy_policy_page": QuickAddPageSelect(editable_model="shuup_simple_cms.Page"),
-            "consent_pages": QuickAddPageMultiSelect()
+            "consent_pages": QuickAddPageMultiSelect(),
         }
 
     def __init__(self, **kwargs):
@@ -68,11 +63,7 @@ class GDPRBaseFormPart(FormPart):
             GDPRSettingsForm,
             template_name="shuup/admin/gdpr/edit_base_form_part.jinja",
             required=True,
-            kwargs={
-                "instance": self.object,
-                "languages": settings.LANGUAGES,
-                "request": self.request
-            }
+            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request},
         )
 
     def form_valid(self, form):
@@ -93,8 +84,7 @@ class GDPRCookieCategoryFormSet(BaseModelFormSet):
 
     def __init__(self, *args, **kwargs):
         self.shop = kwargs.pop("shop")
-        self.default_language = kwargs.pop(
-            "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
+        self.default_language = kwargs.pop("default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
         self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
         kwargs.pop("empty_permitted", None)  # this is unknown to formset
         super(GDPRCookieCategoryFormSet, self).__init__(*args, **kwargs)
@@ -126,7 +116,7 @@ class GDPRCookieCategoryFormPart(FormPart):
             kwargs={
                 "shop": self.object.shop,
                 "languages": settings.LANGUAGES,
-            }
+            },
         )
 
     def form_valid(self, form):

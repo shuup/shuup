@@ -13,17 +13,19 @@ from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
-from shuup.campaigns.models.campaigns import (
-    BasketCampaign, CatalogCampaign, Coupon
-)
+from shuup.campaigns.models.campaigns import BasketCampaign, CatalogCampaign, Coupon
 from shuup.utils.i18n import get_current_babel_locale
 
 
 class CampaignListView(PicotableListView):
     default_columns = [
         Column(
-            "name", _(u"Title"), sort_field="name", display="name", linked=True,
-            filter_config=TextFilter(operator="startswith")
+            "name",
+            _(u"Title"),
+            sort_field="name",
+            display="name",
+            linked=True,
+            filter_config=TextFilter(operator="startswith"),
         ),
         Column("start_datetime", _("Starts")),
         Column("end_datetime", _("Ends")),
@@ -63,10 +65,13 @@ class CatalogCampaignListView(CampaignListView):
             settings_button = SettingsActionButton.for_model(self.model, return_url="catalog_campaign")
         else:
             settings_button = None
-        context["toolbar"] = Toolbar([
-            NewActionButton("shuup_admin:catalog_campaign.new", text=_("Create new Catalog Campaign")),
-            settings_button
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                NewActionButton("shuup_admin:catalog_campaign.new", text=_("Create new Catalog Campaign")),
+                settings_button,
+            ],
+            view=self,
+        )
         return context
 
 
@@ -79,10 +84,10 @@ class BasketCampaignListView(CampaignListView):
             settings_button = SettingsActionButton.for_model(self.model, return_url="basket_campaign")
         else:
             settings_button = None
-        context["toolbar"] = Toolbar([
-            NewActionButton("shuup_admin:basket_campaign.new", text=_("Create new Basket Campaign")),
-            settings_button
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [NewActionButton("shuup_admin:basket_campaign.new", text=_("Create new Basket Campaign")), settings_button],
+            view=self,
+        )
         return context
 
     def get_queryset(self):
@@ -97,8 +102,12 @@ class CouponListView(PicotableListView):
     model = Coupon
     default_columns = [
         Column(
-            "code", _(u"Code"), sort_field="code", display="code", linked=True,
-            filter_config=TextFilter(operator="startswith")
+            "code",
+            _(u"Code"),
+            sort_field="code",
+            display="code",
+            linked=True,
+            filter_config=TextFilter(operator="startswith"),
         ),
         Column("usages", _("Usages"), display="get_usages"),
         Column("usage_limit_customer", _("Usages Limit per contact")),
@@ -117,10 +126,9 @@ class CouponListView(PicotableListView):
             settings_button = SettingsActionButton.for_model(self.model, return_url="coupon")
         else:
             settings_button = None
-        context["toolbar"] = Toolbar([
-            NewActionButton("shuup_admin:coupon.new", text=_("Create new Coupon")),
-            settings_button
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [NewActionButton("shuup_admin:coupon.new", text=_("Create new Coupon")), settings_button], view=self
+        )
         return context
 
     def get_queryset(self):

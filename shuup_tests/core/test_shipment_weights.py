@@ -9,8 +9,11 @@ import decimal
 import pytest
 
 from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product,
-    get_default_shop, get_default_supplier
+    add_product_to_order,
+    create_empty_order,
+    create_product,
+    get_default_shop,
+    get_default_supplier,
 )
 
 
@@ -31,9 +34,7 @@ def test_shipment_weights_ship_all():
     supplier = get_default_supplier()
     order = _get_order(shop, supplier)
     shipment = order.create_shipment_of_all_products(supplier=supplier)
-    assert shipment.weight == sum(
-        [_get_weight_from_product_data(product_data) for product_data in _get_product_data()]
-    )
+    assert shipment.weight == sum([_get_weight_from_product_data(product_data) for product_data in _get_product_data()])
 
 
 def _get_weight_from_product_data(product_data):
@@ -47,11 +48,8 @@ def _get_order(shop, supplier):
     for product_data in _get_product_data():
         quantity = product_data.pop("quantity")
         product = create_product(
-            sku=product_data.pop("sku"),
-            shop=shop,
-            supplier=supplier,
-            default_price=3.33,
-            **product_data)
+            sku=product_data.pop("sku"), shop=shop, supplier=supplier, default_price=3.33, **product_data
+        )
         add_product_to_order(order, supplier, product, quantity=quantity, taxless_base_unit_price=1)
     order.cache_prices()
     order.check_all_verified()
@@ -65,18 +63,18 @@ def _get_product_data():
             "sku": "sku1234",
             "net_weight": decimal.Decimal("1"),
             "gross_weight": decimal.Decimal("43.34257"),
-            "quantity": decimal.Decimal("43")
+            "quantity": decimal.Decimal("43"),
         },
         {
             "sku": "sku4321",
             "net_weight": decimal.Decimal("11.342569"),
             "gross_weight": decimal.Decimal("11.34257"),
-            "quantity": decimal.Decimal("1.3245")
+            "quantity": decimal.Decimal("1.3245"),
         },
         {
             "sku": "sku1111",
             "net_weight": decimal.Decimal("0.00"),
             "gross_weight": decimal.Decimal("0.00"),
-            "quantity": decimal.Decimal("100")
-        }
+            "quantity": decimal.Decimal("100"),
+        },
     ]

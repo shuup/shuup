@@ -5,12 +5,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
-from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import ShopStatus
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 

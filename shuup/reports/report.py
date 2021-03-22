@@ -7,11 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import six
 from collections import OrderedDict
 from datetime import datetime, timedelta
 from decimal import Decimal
-
-import six
 from django.conf import settings
 from django.utils.functional import Promise
 from django.utils.timezone import get_current_timezone, make_aware
@@ -80,6 +79,7 @@ class ShuupReportBase(object):
     def is_available(cls, request):
         try:
             from shuup.admin.utils.permissions import has_permission
+
             return has_permission(request.user, cls.identifier)
         except ImportError:
             return True
@@ -96,12 +96,7 @@ class ShuupReportBase(object):
         self.schema = s
 
     def get_return_data(self, data, has_totals=True):
-        return {
-            "start": self.start_date,
-            "end": self.end_date,
-            "data": data,
-            "has_totals": has_totals
-        }
+        return {"start": self.start_date, "end": self.end_date, "data": data, "has_totals": has_totals}
 
     def dict_getter(self, c, datum):
         return datum.get(c["key"])

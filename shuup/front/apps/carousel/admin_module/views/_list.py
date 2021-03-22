@@ -23,7 +23,7 @@ class CarouselListView(PicotableListView):
             _("Name"),
             sort_field="name",
             display="name",
-            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         ),
     ]
 

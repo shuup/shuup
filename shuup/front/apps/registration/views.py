@@ -23,8 +23,8 @@ from shuup.front.utils.companies import allow_company_registration
 
 def activation_complete(request):
     messages.success(request, _("Activation successful"))
-    if urls.has_url('shuup:customer_edit'):
-        return redirect('shuup:customer_edit')
+    if urls.has_url("shuup:customer_edit"):
+        return redirect("shuup:customer_edit")
     else:
         return redirect(settings.LOGIN_REDIRECT_URL)
 
@@ -32,7 +32,8 @@ def activation_complete(request):
 def registration_complete(request):
     if settings.SHUUP_REGISTRATION_REQUIRES_ACTIVATION:
         messages.success(
-            request, _("Registration complete. Please follow the instructions sent to your email address."))
+            request, _("Registration complete. Please follow the instructions sent to your email address.")
+        )
     return redirect(settings.LOGIN_REDIRECT_URL)
 
 
@@ -40,13 +41,10 @@ class RegistrationViewMixin(object):
     template_name = "shuup/registration/register.jinja"
 
     def get_success_url(self, *args, **kwargs):
-        url = (
-            self.request.GET.get(REDIRECT_FIELD_NAME) or
-            self.request.POST.get(REDIRECT_FIELD_NAME)
-        )
+        url = self.request.GET.get(REDIRECT_FIELD_NAME) or self.request.POST.get(REDIRECT_FIELD_NAME)
         if url and is_safe_url(url, self.request.get_host()):
             return url
-        return ('shuup:registration_complete', (), {})
+        return ("shuup:registration_complete", (), {})
 
     def get_form_kwargs(self):
         kwargs = super(RegistrationViewMixin, self).get_form_kwargs()
@@ -101,4 +99,4 @@ class ActivationView(default_views.ActivationView):
     template_name = "shuup/registration/activation_failed.jinja"
 
     def get_success_url(self, *args, **kwargs):
-        return ('shuup:registration_activation_complete', (), {})
+        return ("shuup:registration_activation_complete", (), {})

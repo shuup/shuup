@@ -12,7 +12,7 @@ from django.utils.translation import ugettext as _
 class NameMixin(object):
     @property
     def split_name(self):
-        return (self.name.strip() or _('First Last')).split(None, 1)
+        return (self.name.strip() or _("First Last")).split(None, 1)
 
     @property
     def first_name(self):

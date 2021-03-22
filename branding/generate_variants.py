@@ -10,7 +10,6 @@ import os
 import re
 import subprocess
 import tempfile
-
 from PIL import Image
 
 
@@ -42,8 +41,10 @@ class VariantProcessor:
             command = [
                 self.inkscape,
                 "--without-gui",
-                "-f", tmpfile.name,
-                "-e", png_filename,
+                "-f",
+                tmpfile.name,
+                "-e",
+                png_filename,
                 "--export-area-drawing",
                 "--export-area-snap",
             ]
@@ -76,9 +77,9 @@ class VariantProcessor:
     def process(self, input_files, formats):
         for input_spec in input_files:
             for format in formats:
-                info = update({}, {
-                    "base": os.path.splitext(os.path.basename(input_spec["input"]))[0]
-                }, format, input_spec)
+                info = update(
+                    {}, {"base": os.path.splitext(os.path.basename(input_spec["input"]))[0]}, format, input_spec
+                )
                 self.process_single_info(info)
 
 
@@ -97,10 +98,10 @@ formats = [
 
 def cmdline():
     ap = argparse.ArgumentParser(usage="Generate variant images of SVGs.")
-    ap.add_argument("--inkscape", dest="inkscape", default="inkscape",
-                    help="Path to Inkscape executable", metavar="BIN")
-    ap.add_argument("-d", "--dir", dest="output_directory", default="variants",
-                    help="Output directory", metavar="DIR")
+    ap.add_argument(
+        "--inkscape", dest="inkscape", default="inkscape", help="Path to Inkscape executable", metavar="BIN"
+    )
+    ap.add_argument("-d", "--dir", dest="output_directory", default="variants", help="Output directory", metavar="DIR")
     args = ap.parse_args()
     vp = VariantProcessor(output_directory=args.output_directory, inkscape=args.inkscape)
     vp.process(input_files, formats)

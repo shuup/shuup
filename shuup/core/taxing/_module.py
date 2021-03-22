@@ -5,19 +5,20 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
-from collections import defaultdict
-from itertools import chain
-from typing import TYPE_CHECKING, Union
-
 import six
+from collections import defaultdict
 from django.conf import settings
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
+from itertools import chain
+from typing import TYPE_CHECKING, Union
 
 from shuup.apps.provides import load_module
 from shuup.core.excs import (
-    InvalidRefundAmountException, RefundArbitraryRefundsNotAllowedException,
-    RefundExceedsAmountException, RefundExceedsQuantityException
+    InvalidRefundAmountException,
+    RefundArbitraryRefundsNotAllowedException,
+    RefundExceedsAmountException,
+    RefundExceedsQuantityException,
 )
 from shuup.core.pricing import TaxfulPrice
 from shuup.utils.money import Money
@@ -57,6 +58,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
     """
     Module for calculating taxes.
     """
+
     identifier = None
     name = None
 
@@ -69,20 +71,14 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
 
     def get_context_from_data(self, **context_data):
         customer = context_data.get("customer")
-        customer_tax_group = (
-            context_data.get("customer_tax_group") or
-            (customer.tax_group if customer else None)
-        )
-        customer_tax_number = (
-            context_data.get("customer_tax_number") or
-            getattr(customer, "tax_number", None)
-        )
+        customer_tax_group = context_data.get("customer_tax_group") or (customer.tax_group if customer else None)
+        customer_tax_number = context_data.get("customer_tax_number") or getattr(customer, "tax_number", None)
         location = (
-            context_data.get("location") or
-            context_data.get("shipping_address") or
-            (customer.default_shipping_address if customer else None) or
-            context_data.get("billing_address") or
-            (customer.default_billing_address if customer else None)
+            context_data.get("location")
+            or context_data.get("shipping_address")
+            or (customer.default_shipping_address if customer else None)
+            or context_data.get("billing_address")
+            or (customer.default_billing_address if customer else None)
         )
         return self.taxing_context_class(
             customer_tax_group=customer_tax_group,
@@ -102,6 +98,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
 
         elif isinstance(source, Order):
             from shuup.core.models import ShippingMode
+
             # if there is some line that is shippable, use the shipping address
             if source.lines.products().filter(product__shipping_mode=ShippingMode.SHIPPED).exists():
                 location = source.shipping_address
@@ -139,8 +136,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
 
         if lines_without_tax_class:
             tax_class_proportions = get_tax_class_proportions(taxed_lines)
-            self._add_proportional_taxes(
-                context, tax_class_proportions, lines_without_tax_class)
+            self._add_proportional_taxes(context, tax_class_proportions, lines_without_tax_class)
 
     def _add_proportional_taxes(self, context, tax_class_proportions, lines):
         if not tax_class_proportions:
@@ -148,9 +144,12 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
 
         for line in lines:
             price = line.price
-            line.taxes = list(chain.from_iterable(
-                self.get_taxed_price(context, price * factor, tax_class).taxes
-                for (tax_class, factor) in tax_class_proportions))
+            line.taxes = list(
+                chain.from_iterable(
+                    self.get_taxed_price(context, price * factor, tax_class).taxes
+                    for (tax_class, factor) in tax_class_proportions
+                )
+            )
 
     def _get_line_taxes(self, context, line):
         """
@@ -214,21 +213,22 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
             # Can't calculate proportions, if total is zero
             return []
 
-        return [
-            (tax_class, tax_class_total / total)
-            for (tax_class, tax_class_total) in total_by_tax_class.items()
-        ]
+        return [(tax_class, tax_class_total / total) for (tax_class, tax_class_total) in total_by_tax_class.items()]
 
     def _refund_amount(self, context, order, index, text, amount, tax_proportions, supplier=None):
-        taxes = (list(chain.from_iterable(
-            self.get_taxed_price(context, TaxfulPrice(amount * factor), tax_class).taxes
-            for (tax_class, factor) in tax_proportions)))
+        taxes = list(
+            chain.from_iterable(
+                self.get_taxed_price(context, TaxfulPrice(amount * factor), tax_class).taxes
+                for (tax_class, factor) in tax_proportions
+            )
+        )
 
         base_amount = amount
         if not order.prices_include_tax:
-            base_amount /= (1 + sum([tax.tax.rate for tax in taxes]))
+            base_amount /= 1 + sum([tax.tax.rate for tax in taxes])
 
         from shuup.core.models import OrderLine, OrderLineType
+
         refund_line = OrderLine.objects.create(
             text=text,
             order=order,
@@ -236,7 +236,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
             ordering=index,
             base_unit_price_value=-base_amount,
             quantity=1,
-            supplier=supplier
+            supplier=supplier,
         )
         for line_tax in taxes:
             refund_line.taxes.create(
@@ -244,7 +244,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
                 name=_("Refund for %s" % line_tax.name),
                 amount_value=-line_tax.amount,
                 base_amount_value=-line_tax.base_amount,
-                ordering=1
+                ordering=1,
             )
         return refund_line
 
@@ -282,13 +282,19 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
 
             if parent_line == "amount":
                 refund_line = self._refund_amount(
-                    context, order, index, refund.get("text", _("Misc refund")),
-                    amount, tax_proportions, supplier=supplier
+                    context,
+                    order,
+                    index,
+                    refund.get("text", _("Misc refund")),
+                    amount,
+                    tax_proportions,
+                    supplier=supplier,
                 )
             else:
                 # ensure the amount to refund and the order line amount have the same signs
-                if ((amount > zero and parent_line.taxful_price.amount < zero) or
-                   (amount < zero and parent_line.taxful_price.amount > zero)):
+                if (amount > zero and parent_line.taxful_price.amount < zero) or (
+                    amount < zero and parent_line.taxful_price.amount > zero
+                ):
                     raise InvalidRefundAmountException
 
                 if abs(amount) > abs(parent_line.max_refundable_amount):
@@ -303,11 +309,13 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
 
                 if restock_products and quantity and product:
                     from shuup.core.suppliers.enums import StockAdjustmentType
+
                     # restock from the unshipped quantity first
                     unshipped_quantity_to_restock = min(quantity, product_summary[product.pk]["unshipped"])
                     shipped_quantity_to_restock = min(
                         quantity - unshipped_quantity_to_restock,
-                        product_summary[product.pk]["ordered"] - product_summary[product.pk]["refunded"])
+                        product_summary[product.pk]["ordered"] - product_summary[product.pk]["refunded"],
+                    )
 
                     if unshipped_quantity_to_restock > 0:
                         product_summary[product.pk]["unshipped"] -= unshipped_quantity_to_restock
@@ -316,18 +324,21 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
                                 product.id,
                                 unshipped_quantity_to_restock,
                                 created_by=created_by,
-                                type=StockAdjustmentType.RESTOCK_LOGICAL)
+                                type=StockAdjustmentType.RESTOCK_LOGICAL,
+                            )
                     if shipped_quantity_to_restock > 0 and parent_line.supplier.stock_managed:
                         parent_line.supplier.adjust_stock(
                             product.id,
                             shipped_quantity_to_restock,
                             created_by=created_by,
-                            type=StockAdjustmentType.RESTOCK)
+                            type=StockAdjustmentType.RESTOCK,
+                        )
                     product_summary[product.pk]["refunded"] += quantity
 
                 base_amount = amount if order.prices_include_tax else amount / (1 + parent_line.tax_rate)
 
                 from shuup.core.models import OrderLine, OrderLineType
+
                 refund_line = OrderLine.objects.create(
                     text=_("Refund for %s" % parent_line.text),
                     order=order,
@@ -336,7 +347,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
                     ordering=index,
                     base_unit_price_value=-(base_amount / (quantity or 1)),
                     quantity=quantity,
-                    supplier=parent_line.supplier
+                    supplier=parent_line.supplier,
                 )
                 for line_tax in parent_line.taxes.all():
                     tax_base_amount = amount / (1 + parent_line.tax_rate)
@@ -346,7 +357,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
                         name=_("Refund for %s" % line_tax.name),
                         amount_value=-tax_amount,
                         base_amount_value=-tax_base_amount,
-                        ordering=line_tax.ordering
+                        ordering=line_tax.ordering,
                     )
 
             total_refund_amount += refund_line.taxful_price.amount

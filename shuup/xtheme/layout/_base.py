@@ -107,7 +107,7 @@ class LayoutCell(object):
             config=data.get("config"),
             sizes=data.get("sizes"),
             align=data.get("align", ""),
-            extra_classes=data.get("extra_classes", "")
+            extra_classes=data.get("extra_classes", ""),
         )
 
     def serialize(self):
@@ -117,19 +117,24 @@ class LayoutCell(object):
         :return: Layout cell data dict.
         :rtype: dict
         """
-        return dict((k, v) for (k, v) in (
-            ("plugin", self.plugin_identifier),
-            ("config", self.config),
-            ("sizes", self.sizes),
-            ("align", self.align),
-            ("extra_classes", self.extra_classes),
-        ) if k and v)
+        return dict(
+            (k, v)
+            for (k, v) in (
+                ("plugin", self.plugin_identifier),
+                ("config", self.config),
+                ("sizes", self.sizes),
+                ("align", self.align),
+                ("extra_classes", self.extra_classes),
+            )
+            if k and v
+        )
 
 
 class LayoutRow(object):
     """
     A single row in a layout. Maps to Bootstrap's `row` class.
     """
+
     # TODO: Add responsive hiding to full rows?
 
     def __init__(self, theme, cells=None):
@@ -179,9 +184,7 @@ class LayoutRow(object):
         :return: Layout row data dict.
         :rtype: dict
         """
-        return {
-            "cells": [c.serialize() for c in self]
-        }
+        return {"cells": [c.serialize() for c in self]}
 
     def add_cell(self, sizes=None):
         """
@@ -201,6 +204,7 @@ class Layout(object):
     """
     The layout (row, cell and plugin configuration) for a single placeholder.
     """
+
     identifier = "xtheme-default-layout"
     row_class = "row"
     cell_class_template = "col-%(breakpoint)s-%(width)s"
@@ -267,11 +271,7 @@ class Layout(object):
         :rtype: Layout
         """
         rows = [LayoutRow.unserialize(theme, row_data) for row_data in data["rows"]]
-        return cls(
-            theme,
-            placeholder_name=data.get("name") or placeholder_name,
-            rows=rows
-        )
+        return cls(theme, placeholder_name=data.get("name") or placeholder_name, rows=rows)
 
     def serialize(self):
         """
@@ -280,10 +280,7 @@ class Layout(object):
         :return: Layout data dict.
         :rtype: dict
         """
-        return {
-            "rows": [r.serialize() for r in self.rows],
-            "name": self.placeholder_name
-        }
+        return {"rows": [r.serialize() for r in self.rows], "name": self.placeholder_name}
 
     def __iter__(self):
         """
@@ -459,7 +456,7 @@ class Layout(object):
         to_x = int(to_x)
         to_y = int(to_y)
 
-        if not (0 <= from_y < len(self.rows)) or not(0 <= from_x < len(self.rows[from_y])):
+        if not (0 <= from_y < len(self.rows)) or not (0 <= from_x < len(self.rows[from_y])):
             return False
         if not (0 <= to_y < len(self.rows)) or not (0 <= to_x <= len(self.rows[to_y])):
             return False

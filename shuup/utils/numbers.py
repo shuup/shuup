@@ -8,9 +8,8 @@
 from __future__ import unicode_literals
 
 import re
-from decimal import Decimal, ROUND_HALF_EVEN, ROUND_HALF_UP
-
 import six
+from decimal import ROUND_HALF_EVEN, ROUND_HALF_UP, Decimal
 
 from shuup.utils import update_module_attributes
 
@@ -41,7 +40,7 @@ def bankers_round(value, ndigits=0):
     return value.quantize(quantizer, rounding=ROUND_HALF_EVEN)
 
 
-def nickel_round(value, quant=Decimal('0.05'), rounding=ROUND_HALF_UP):
+def nickel_round(value, quant=Decimal("0.05"), rounding=ROUND_HALF_UP):
     """
     Round decimal value to nearest quant.
 
@@ -73,7 +72,7 @@ def strip_non_float_chars(s):
     return re.sub("[^-+0123456789.]+", "", six.text_type(s))
 
 
-_simple_decimal_rx = re.compile(r'^[-+]?(\d{1,50}\.\d{0,50}|\.?\d{1,50})$')
+_simple_decimal_rx = re.compile(r"^[-+]?(\d{1,50}\.\d{0,50}|\.?\d{1,50})$")
 
 raise_exception = object()
 
@@ -103,12 +102,8 @@ def parse_simple_decimal(value, error=raise_exception):
     :rtype: Decimal|type(error)
     :raises ValueError: on errors by default
     """
-    decoded_value = (
-        value.decode('ascii', errors='replace')
-        if six.PY2 and isinstance(value, bytes)
-        else value)
-    if not isinstance(decoded_value, six.text_type) or (
-            not _simple_decimal_rx.match(decoded_value)):
+    decoded_value = value.decode("ascii", errors="replace") if six.PY2 and isinstance(value, bytes) else value
+    if not isinstance(decoded_value, six.text_type) or (not _simple_decimal_rx.match(decoded_value)):
         if error is raise_exception:
             raise ValueError("Error! Value `%r` can't be parsed as a simple decimal." % (value,))
         return error

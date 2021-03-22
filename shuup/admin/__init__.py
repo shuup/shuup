@@ -46,7 +46,6 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.sales_units:SalesUnitModule",
             "shuup.admin.modules.sales_dashboard:SalesDashboardModule",
             "shuup.admin.modules.shops:ShopModule",
-
             "shuup.admin.modules.manufacturers:ManufacturerModule",
             "shuup.admin.modules.suppliers:SupplierModule",
             "shuup.admin.modules.support:ShuupSupportModule",
@@ -57,12 +56,10 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.menu:StaffAdminMenuModule",
             "shuup.admin.modules.menu:SupplierAdminMenuModule",
         ],
-        "admin_shop_form_part": [
-            "shuup.admin.modules.settings.form_parts.OrderConfigurationFormPart"
-        ],
+        "admin_shop_form_part": ["shuup.admin.modules.settings.form_parts.OrderConfigurationFormPart"],
         "service_provider_admin_form": [
             "shuup.admin.modules.service_providers.forms:CustomCarrierForm",
-            "shuup.admin.modules.service_providers.forms:CustomPaymentProcessorForm"
+            "shuup.admin.modules.service_providers.forms:CustomPaymentProcessorForm",
         ],
         "carrier_wizard_form_def": [
             "shuup.admin.modules.service_providers.wizard_form_defs:ManualShippingWizardFormDef"
@@ -95,28 +92,22 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.contacts.sections:OrdersContactSection",
             "shuup.admin.modules.contacts.sections:MembersContactSection",
         ],
-        "admin_product_section": [
-            "shuup.admin.modules.products.sections:ProductOrdersSection"
-        ],
+        "admin_product_section": ["shuup.admin.modules.products.sections:ProductOrdersSection"],
         "admin_order_toolbar_action_item": [
             "shuup.admin.modules.orders.toolbar:CreatePaymentAction",
             "shuup.admin.modules.orders.toolbar:SetPaidAction",
             "shuup.admin.modules.orders.toolbar:CreateRefundAction",
             "shuup.admin.modules.orders.toolbar:EditAddresses",
         ],
-        "admin_model_url_resolver": [
-            "shuup.admin.utils.urls.get_model_url"
-        ],
-        "admin_browser_config_provider": [
-            "shuup.admin.browser_config:DefaultBrowserConfigProvider"
-        ],
+        "admin_model_url_resolver": ["shuup.admin.utils.urls.get_model_url"],
+        "admin_browser_config_provider": ["shuup.admin.browser_config:DefaultBrowserConfigProvider"],
         "admin_supplier_form_part": [
             "shuup.admin.modules.suppliers.form_parts.SupplierBaseFormPart",
             "shuup.admin.modules.suppliers.form_parts.SupplierContactAddressFormPart",
         ],
         "user_list_mass_actions_provider": [
             "shuup.admin.modules.users.mass_actions.UserMassActionProvider",
-        ]
+        ],
     }
 
     def ready(self):

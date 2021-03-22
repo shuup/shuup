@@ -7,14 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.utils.django_compat import reverse
-
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.home import HomeView
 from shuup.admin.views.wizard import WizardView
 from shuup.apps.provides import override_provides
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 
 
 def get_blocks(rf, admin_user):
@@ -78,6 +77,7 @@ def test_product_blocks(rf, admin_user, settings):
     shop = get_default_shop()
     blocks = get_blocks(rf, admin_user)
     assert any(["New product" in action["text"] for b in blocks for action in b.actions])
+
 
 @pytest.mark.django_db
 def test_product_category_block(rf, admin_user):

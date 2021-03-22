@@ -28,5 +28,5 @@ class CategoryDeleteView(DetailView):
     def post(self, request, *args, **kwargs):
         category = self.get_object()
         category.soft_delete()
-        messages.success(request, _(u"%s has been deleted.") % category)
+        messages.success(request, _("%s has been deleted.") % category)
         return HttpResponseRedirect(reverse("shuup_admin:category.list"))

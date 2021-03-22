@@ -9,9 +9,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.utils.picotable import (
-    PicotableMassAction, PicotableMassActionProvider
-)
+from shuup.admin.utils.picotable import PicotableMassAction, PicotableMassActionProvider
 
 
 class DummyPicotableMassAction1(PicotableMassAction):
@@ -29,5 +27,5 @@ class DummyMassActionProvider(PicotableMassActionProvider):
     def get_mass_actions_for_view(cls, view):
         return [
             "shuup.testing.modules.mocker.mass_actions:DummyPicotableMassAction1",
-            "shuup.testing.modules.mocker.mass_actions:DummyPicotableMassAction2"
+            "shuup.testing.modules.mocker.mass_actions:DummyPicotableMassAction2",
         ]

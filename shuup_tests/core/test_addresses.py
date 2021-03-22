@@ -11,17 +11,13 @@ from django.core.exceptions import ValidationError
 from django.test import override_settings
 from django.utils.translation import override
 
-from shuup.core.models import (
-    get_person_contact, ImmutableAddress, MutableAddress, SavedAddress
-)
+from shuup.core.models import ImmutableAddress, MutableAddress, SavedAddress, get_person_contact
 from shuup.testing.factories import get_address
 from shuup.utils.models import get_data_dict
 
 
 def test_partial_address_fails():
-    address = MutableAddress(
-        name=u"Dog Hello"
-    )
+    address = MutableAddress(name=u"Dog Hello")
     with pytest.raises(ValidationError):
         address.full_clean()
 
@@ -86,8 +82,9 @@ def test_address_ownership(admin_user):
     assert six.text_type(saved) == saved.get_title(), u"str() is an alias for .get_title()"
     saved.full_clean()
     saved.save()
-    assert SavedAddress.objects.for_owner(get_person_contact(admin_user)).filter(address=address).exists(), \
-        "contacts can save addresses"
+    assert (
+        SavedAddress.objects.for_owner(get_person_contact(admin_user)).filter(address=address).exists()
+    ), "contacts can save addresses"
     assert SavedAddress.objects.for_owner(None).count() == 0, "Ownerless saved addresses aren't a real thing"
 
 
@@ -97,7 +94,9 @@ def test_home_country_in_address():
         with override_settings(SHUUP_ADDRESS_HOME_COUNTRY="US"):
             assert "Suomi" in str(finnish_address), "When home is not Finland, Finland appears in address string"
         with override_settings(SHUUP_ADDRESS_HOME_COUNTRY="FI"):
-            assert "Suomi" not in str(finnish_address), "When home is Finland, Finland does not appear in address string"
+            assert "Suomi" not in str(
+                finnish_address
+            ), "When home is Finland, Finland does not appear in address string"
 
 
 @pytest.mark.django_db
@@ -107,7 +106,7 @@ def test_immutable_addresses_from_data():
         "street": "Test street",
         "postal_code": "1234567",
         "city": "Test city",
-        "country": "US"
+        "country": "US",
     }
     immutable_address = ImmutableAddress.from_data(test_data)
     test_data.pop("postal_code")

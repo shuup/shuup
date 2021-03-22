@@ -61,18 +61,19 @@ def define_log_model(model_class):
 
     class_dict = {
         "target": models.ForeignKey(
-            model_class, related_name="log_entries", on_delete=models.CASCADE, verbose_name=_("target")),
+            model_class, related_name="log_entries", on_delete=models.CASCADE, verbose_name=_("target")
+        ),
         "__module__": model_class.__module__,
         "Meta": Meta,
         "logged_model": model_class,
     }
 
-    log_entry_class = type(str(log_model_name), (BaseLogEntry, ), class_dict)
+    log_entry_class = type(str(log_model_name), (BaseLogEntry,), class_dict)
 
     def _add_log_entry(self, message, identifier=None, kind=LogEntryKind.OTHER, user=None, extra=None, save=True):
         # You can also pass something that contains "user" as an
         # attribute for an user
-        user = (getattr(user, "user", user) or None)
+        user = getattr(user, "user", user) or None
         if not getattr(user, "pk", None):
             user = None
         log_entry = log_entry_class(

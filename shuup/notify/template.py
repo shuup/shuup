@@ -108,6 +108,7 @@ class Template(object):
                 rendered = self.render(language=language, fields=fields)
                 rendered["_language"] = language
                 return rendered
-        raise NoLanguageMatches("Error! No language in template matches any of languages `%r` for fields `%r`." % (
-            language_preferences, fields.keys()
-        ))
+        raise NoLanguageMatches(
+            "Error! No language in template matches any of languages `%r` for fields `%r`."
+            % (language_preferences, fields.keys())
+        )

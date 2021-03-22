@@ -5,9 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from shuup.admin.forms.quick_select import (
-    QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect
-)
+from shuup.admin.forms.quick_select import QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect
 from shuup.utils.django_compat import reverse_lazy
 
 

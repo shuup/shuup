@@ -19,11 +19,12 @@ class CgpBase(models.Model):
     product = models.ForeignKey("shuup.Product", related_name="+", on_delete=models.CASCADE, verbose_name=_("product"))
     shop = models.ForeignKey("shuup.Shop", db_index=True, on_delete=models.CASCADE, verbose_name=_("shop"))
     group = models.ForeignKey(
-        "shuup.ContactGroup", db_index=True, on_delete=models.CASCADE, verbose_name=_("contact group"))
+        "shuup.ContactGroup", db_index=True, on_delete=models.CASCADE, verbose_name=_("contact group")
+    )
 
     class Meta:
         abstract = True
-        unique_together = (('product', 'shop', 'group'),)
+        unique_together = (("product", "shop", "group"),)
 
 
 class CgpPrice(MoneyPropped, CgpBase):
@@ -32,8 +33,8 @@ class CgpPrice(MoneyPropped, CgpBase):
 
     class Meta(CgpBase.Meta):
         abstract = False
-        verbose_name = _(u"product price")
-        verbose_name_plural = _(u"product prices")
+        verbose_name = _("product price")
+        verbose_name_plural = _("product prices")
 
     def __repr__(self):
         return "<CgpPrice (p%s,s%s,g%s): price %s" % (
@@ -57,15 +58,15 @@ class CgpDiscount(MoneyPropped, CgpBase):
 
     class Meta(CgpBase.Meta):
         abstract = False
-        verbose_name = _(u"product discount")
-        verbose_name_plural = _(u"product discounts")
+        verbose_name = _("product discount")
+        verbose_name_plural = _("product discounts")
 
     def __repr__(self):
         return "<CgpDiscount (p%s,s%s,g%s): discount %s" % (
             self.product_id,
             self.shop_id,
             self.group_id,
-            self.discount_amount
+            self.discount_amount,
         )
 
     def save(self, *args, **kwargs):

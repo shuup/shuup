@@ -8,7 +8,6 @@
 from __future__ import absolute_import
 
 import hashlib
-
 import six
 from django import forms
 from django.conf import settings
@@ -28,17 +27,19 @@ def file_size_validator(value):
     if size and settings.SHUUP_MAX_UPLOAD_SIZE and settings.SHUUP_MAX_UPLOAD_SIZE < size:
         raise ValidationError(
             _("Maximum file size reached (%(size)s MB).") % {"size": settings.SHUUP_MAX_UPLOAD_SIZE / 1000 / 1000},
-            code="file_max_size_reached"
+            code="file_max_size_reached",
         )
 
     return value
 
 
 class UploadFileForm(forms.Form):
-    file = forms.FileField(validators=[
-        FileExtensionValidator(allowed_extensions=settings.SHUUP_ALLOWED_UPLOAD_EXTENSIONS),
-        file_size_validator
-    ])
+    file = forms.FileField(
+        validators=[
+            FileExtensionValidator(allowed_extensions=settings.SHUUP_ALLOWED_UPLOAD_EXTENSIONS),
+            file_size_validator,
+        ]
+    )
 
 
 class UploadImageForm(forms.Form):
@@ -88,16 +89,13 @@ def _filer_file_from_upload(model, request, path, upload_data, sha1=None):
         if upload:
             return upload
 
-    file_form_cls = modelform_factory(
-        model=model, fields=('original_filename', 'owner', 'file'))
+    file_form_cls = modelform_factory(model=model, fields=("original_filename", "owner", "file"))
     upload_form = file_form_cls(
         data={
-            'original_filename': upload_data.name,
-            'owner': (request.user.pk if (request and not request.user.is_anonymous) else None)
+            "original_filename": upload_data.name,
+            "owner": (request.user.pk if (request and not request.user.is_anonymous) else None),
         },
-        files={
-            'file': upload_data
-        }
+        files={"file": upload_data},
     )
     upload = upload_form.save(commit=False)
     upload.is_public = True
@@ -182,13 +180,15 @@ def filer_file_to_json_dict(file, user=None):
     assert file.is_public
 
     try:
-        thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
-            'size': (128, 128),
-            'crop': False,
-            'upscale': True,
-            'background': "#ffffff",
-            'subject_location': file.subject_location
-        })
+        thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail(
+            {
+                "size": (128, 128),
+                "crop": False,
+                "upscale": True,
+                "background": "#ffffff",
+                "subject_location": file.subject_location,
+            }
+        )
     except Exception:
         thumbnail = None
 
@@ -207,7 +207,7 @@ def filer_file_to_json_dict(file, user=None):
         "owner": True if user == file.owner else False,
         "thumbnail": (thumbnail.url if thumbnail else None),
         "date": file.uploaded_at.isoformat(),
-        **extra_permissions
+        **extra_permissions,
     }
 
 
@@ -239,7 +239,7 @@ def filer_folder_to_json_dict(folder, children=None, user=None):
         "owner": is_owned,
         "children": [filer_folder_to_json_dict(child, user=user) for child in children],
         "canSeeRoot": can_see_root_folder(user),
-        **extra_permissions
+        **extra_permissions,
     }
 
 

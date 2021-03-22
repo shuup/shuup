@@ -22,8 +22,9 @@ class BaseBasketCommandMiddleware:
         """
         return kwargs
 
-    def postprocess_response(self, basket: BaseBasket, request: HttpRequest,
-                             command: str, kwargs: dict, response: dict) -> dict:
+    def postprocess_response(
+        self, basket: BaseBasket, request: HttpRequest, command: str, kwargs: dict, response: dict
+    ) -> dict:
         """
         Mutate the `response` before it is returned by the command dispatcher.
         """

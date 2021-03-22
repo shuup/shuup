@@ -26,5 +26,5 @@ class MockContactSection(Section):
     @classmethod
     def get_context_data(cls, contact, request=None):
         context = {}
-        context['mock_context'] = "mock section context data"
+        context["mock_context"] = "mock section context data"
         return context

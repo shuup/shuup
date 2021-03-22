@@ -28,5 +28,5 @@ class CarouselDeleteView(DetailView):
         carousel = self.get_object()
         name = carousel.name
         carousel.delete()
-        messages.success(request, _(u"%s has been deleted.") % name)
+        messages.success(request, _("%s has been deleted.") % name)
         return HttpResponseRedirect(reverse("shuup_admin:carousel.list"))

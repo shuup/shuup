@@ -9,12 +9,17 @@ from django import forms
 from shuup.admin.forms.fields import WeekdayField
 from shuup.admin.forms.widgets import TimeInput
 from shuup.campaigns.models.basket_conditions import (
-    BasketMaxTotalAmountCondition, BasketMaxTotalProductAmountCondition,
-    BasketTotalAmountCondition, BasketTotalProductAmountCondition,
+    BasketMaxTotalAmountCondition,
+    BasketMaxTotalProductAmountCondition,
+    BasketTotalAmountCondition,
+    BasketTotalProductAmountCondition,
     BasketTotalUndiscountedProductAmountCondition,
-    CategoryProductsBasketCondition, ChildrenProductCondition,
-    ContactBasketCondition, ContactGroupBasketCondition, HourBasketCondition,
-    ProductsInBasketCondition
+    CategoryProductsBasketCondition,
+    ChildrenProductCondition,
+    ContactBasketCondition,
+    ContactGroupBasketCondition,
+    HourBasketCondition,
+    ProductsInBasketCondition,
 )
 from shuup.core.models import Category
 
@@ -69,7 +74,8 @@ class ChildrenProductConditionForm(BaseRuleModelForm):
     def __init__(self, *args, **kwargs):
         super(ChildrenProductConditionForm, self).__init__(*args, **kwargs)
         self.fields["product"].widget = forms.Select(
-            attrs={"data-model": "shuup.product", "data-search-mode": "parent_product"})
+            attrs={"data-model": "shuup.product", "data-search-mode": "parent_product"}
+        )
 
     class Meta(BaseRuleModelForm.Meta):
         model = ChildrenProductCondition

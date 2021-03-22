@@ -12,11 +12,8 @@ from django.conf import settings
 from django.contrib import messages
 from django.db.transaction import atomic
 from django.forms import HiddenInput
-from django.forms.formsets import (
-    BaseFormSet, DELETION_FIELD_NAME, formset_factory
-)
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ungettext
+from django.forms.formsets import DELETION_FIELD_NAME, BaseFormSet, formset_factory
+from django.utils.translation import ugettext_lazy as _, ungettext
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.forms.widgets import ContactChoiceWidget
@@ -28,7 +25,10 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 class ContactGroupBaseForm(MultiLanguageModelForm):
     class Meta:
         model = ContactGroup
-        fields = ("name", "shop",)
+        fields = (
+            "name",
+            "shop",
+        )
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -38,8 +38,9 @@ class ContactGroupBaseForm(MultiLanguageModelForm):
             queryset=Shop.objects.filter(pk=shop.id),
             initial=shop,
             widget=HiddenInput(),
-            label=_('shop'),
-            required=False)
+            label=_("shop"),
+            required=False,
+        )
 
     def clean_shop(self):
         return get_shop(self.request)
@@ -56,7 +57,7 @@ class ContactGroupBaseFormPart(FormPart):
             ContactGroupBaseForm,
             template_name="shuup/admin/contact_groups/_edit_base_contact_group_form.jinja",
             required=True,
-            kwargs={"instance": contact_group, "languages": settings.LANGUAGES, "request": self.request}
+            kwargs={"instance": contact_group, "languages": settings.LANGUAGES, "request": self.request},
         )
 
     def form_valid(self, form):
@@ -65,9 +66,7 @@ class ContactGroupBaseFormPart(FormPart):
 
 class ContactGroupMembersForm(forms.Form):
     member = forms.ModelChoiceField(
-        queryset=Contact.objects.all(),
-        widget=ContactChoiceWidget(empty_text=""),
-        label=_('member')
+        queryset=Contact.objects.all(), widget=ContactChoiceWidget(empty_text=""), label=_("member")
     )
 
 
@@ -99,12 +98,15 @@ class ContactGroupMembersFormSet(BaseFormSet):
         message_parts = []
         if members_to_add:
             add_count = len(members_to_add)
-            message_parts.append(ungettext("%(count)s member added", "%(count)s members added.",
-                                 add_count) % {"count": add_count})
+            message_parts.append(
+                ungettext("%(count)s member added", "%(count)s members added.", add_count) % {"count": add_count}
+            )
         if members_to_remove:
             remove_count = len(members_to_remove)
-            message_parts.append(ungettext("%(count)s member removed", "%(count)s members removed.",
-                                 remove_count) % {"count": remove_count})
+            message_parts.append(
+                ungettext("%(count)s member removed", "%(count)s members removed.", remove_count)
+                % {"count": remove_count}
+            )
         if message_parts and self.request:
             messages.success(self.request, ", ".join(message_parts) + ".")
 
@@ -137,7 +139,7 @@ class ContactGroupMembersFormPart(FormPart):
                 form,
                 template_name=template_name,
                 required=False,
-                kwargs={"contact_group": contact_group, "request": self.request}
+                kwargs={"contact_group": contact_group, "request": self.request},
             )
 
     def form_valid(self, form):

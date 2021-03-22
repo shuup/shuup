@@ -14,9 +14,7 @@ from django.views.generic import TemplateView
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.utils.wizard import (
-    load_setup_wizard_pane, load_setup_wizard_panes
-)
+from shuup.admin.utils.wizard import load_setup_wizard_pane, load_setup_wizard_panes
 from shuup.core.models import Shop
 from shuup.utils.django_compat import reverse
 from shuup.utils.form_group import FormDef, FormGroup
@@ -80,14 +78,10 @@ class WizardView(TemplateView):
             shop=shop,
             request=self.request,
             # if the user presses "previous" then "next" again, resubmit the form
-            visible_only=self.request.method == "GET"
+            visible_only=self.request.method == "GET",
         )
         if not panes and pane_id:
-            pane = load_setup_wizard_pane(
-                shop=shop,
-                request=self.request,
-                pane_id=pane_id
-            )
+            pane = load_setup_wizard_pane(shop=shop, request=self.request, pane_id=pane_id)
             if pane:
                 panes.append(pane)
         return panes
@@ -116,10 +110,7 @@ class WizardView(TemplateView):
     def get_form_group_for_pane(self, pane):
         kwargs = {}
         if self.request.method == "POST":
-            kwargs.update({
-                "data": self.request.POST,
-                "files": self.request.FILES
-            })
+            kwargs.update({"data": self.request.POST, "files": self.request.FILES})
         fg = _WizardFormGroup(pane.identifier, pane.title, pane.text, pane.icon, pane.can_skip, **kwargs)
         for form_def in pane.get_form_defs():
             fg.form_defs[form_def.name] = form_def

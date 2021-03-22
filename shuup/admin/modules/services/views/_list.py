@@ -10,9 +10,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.utils.picotable import (
-    Column, TextFilter, true_or_false_filter
-)
+from shuup.admin.utils.picotable import Column, TextFilter, true_or_false_filter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import PaymentMethod, ShippingMethod
 from shuup.utils.django_compat import force_text
@@ -23,15 +21,19 @@ class ServiceListView(PicotableListView):
     columns = []
     base_columns = [
         Column(
-            "name", _("Name"), sort_field="translations__name",
-            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name..."))
+            "name",
+            _("Name"),
+            sort_field="translations__name",
+            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name...")),
         ),
         Column(
-            "choice_identifier", _(u"Service choice"), display="format_service_choice",
+            "choice_identifier",
+            _("Service choice"),
+            display="format_service_choice",
             sortable=False,
         ),
-        Column("enabled", _(u"Enabled"), filter_config=true_or_false_filter),
-        Column("shop", _(u"Shop"))
+        Column("enabled", _("Enabled"), filter_config=true_or_false_filter),
+        Column("shop", _("Shop")),
     ]
     toolbar_buttons_provider_key = "service_list_toolbar_provider"
     mass_actions_provider_key = "service_list_mass_actions_provider"

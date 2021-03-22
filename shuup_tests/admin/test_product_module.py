@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 from django.http.response import Http404
 from django.test import override_settings
@@ -19,24 +18,26 @@ from shuup.admin.modules.media import MediaModule
 from shuup.admin.modules.product_types import ProductTypeModule
 from shuup.admin.modules.products import ProductModule
 from shuup.admin.modules.products.views import (
-    ProductDeleteView, ProductEditView, ProductListView,
-    ProductMediaBulkAdderView
+    ProductDeleteView,
+    ProductEditView,
+    ProductListView,
+    ProductMediaBulkAdderView,
 )
-from shuup.admin.modules.services import (
-    PaymentMethodModule, ShippingMethodModule
-)
+from shuup.admin.modules.services import PaymentMethodModule, ShippingMethodModule
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.views.search import get_search_results
-from shuup.core.models import (
-    Product, ProductMedia, ProductMediaKind, ProductVisibility, ShopProduct
-)
+from shuup.core.models import Product, ProductMedia, ProductMediaKind, ProductVisibility, ShopProduct
 from shuup.importer.admin_module import ImportAdminModule
 from shuup.testing.factories import (
-    create_product, create_random_user, get_default_product, get_default_shop,
-    get_default_supplier, get_shop as create_shop
+    create_product,
+    create_random_user,
+    get_default_product,
+    get_default_shop,
+    get_default_supplier,
+    get_shop as create_shop,
+    get_shop as get_new_shop,
 )
-from shuup.testing.factories import get_shop as get_new_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.admin.utils import admin_only_urls
 from shuup_tests.utils import empty_iterable
@@ -47,8 +48,18 @@ def test_product_module_search(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule, MediaModule,
-                          ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
+    with replace_modules(
+        [
+            CategoryModule,
+            ImportAdminModule,
+            ProductModule,
+            MediaModule,
+            ProductTypeModule,
+            ManufacturerModule,
+            PaymentMethodModule,
+            ShippingMethodModule,
+        ]
+    ):
         with admin_only_urls():
             default_product = get_default_product()
             model_url = get_model_url(default_product, shop=get_shop(request))
@@ -67,13 +78,23 @@ def test_product_edit_view_works_at_all(rf, admin_user):
     shop_product.save()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule, MediaModule,
-                          ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
+    with replace_modules(
+        [
+            CategoryModule,
+            ImportAdminModule,
+            ProductModule,
+            MediaModule,
+            ProductTypeModule,
+            ManufacturerModule,
+            PaymentMethodModule,
+            ShippingMethodModule,
+        ]
+    ):
         with admin_only_urls():
             view_func = ProductEditView.as_view()
             response = view_func(request, pk=shop_product.pk)
             response.render()
-            assert (product.sku in response.rendered_content)  # it's probable the SKU is there
+            assert product.sku in response.rendered_content  # it's probable the SKU is there
             response = view_func(request, pk=None)  # "new mode"
             assert response.rendered_content  # yeah, something gets rendered
 
@@ -85,13 +106,23 @@ def test_product_edit_view_with_params(rf, admin_user):
     name = "test name"
     request = apply_request_middleware(rf.get("/", {"name": name, "sku": sku}), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule, MediaModule,
-                          ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
+    with replace_modules(
+        [
+            CategoryModule,
+            ImportAdminModule,
+            ProductModule,
+            MediaModule,
+            ProductTypeModule,
+            ManufacturerModule,
+            PaymentMethodModule,
+            ShippingMethodModule,
+        ]
+    ):
         with admin_only_urls():
             view_func = ProductEditView.as_view()
             response = view_func(request)
-            assert (sku in response.rendered_content)  # it's probable the SKU is there
-            assert (name in response.rendered_content)  # it's probable the name is there
+            assert sku in response.rendered_content  # it's probable the SKU is there
+            assert name in response.rendered_content  # it's probable the name is there
 
 
 @pytest.mark.django_db
@@ -125,7 +156,9 @@ def test_product_media_bulk_adder(rf, admin_user):
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
     # bad request - invalid shop
-    request = apply_request_middleware(rf.post("/", {"shop_id": 0, "file_ids": [f.id], "kind": "media"}), user=admin_user, shop=shop)
+    request = apply_request_middleware(
+        rf.post("/", {"shop_id": 0, "file_ids": [f.id], "kind": "media"}), user=admin_user, shop=shop
+    )
     response = view_func(request, pk=shop_product.pk)
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
@@ -150,16 +183,20 @@ def test_product_media_bulk_adder(rf, admin_user):
     assert response.status_code == 400
     assert not ProductMedia.objects.count()
     # add one file
-    request = apply_request_middleware(rf.post("/", {"file_ids":[f.id], "kind": "media"}), user=admin_user, shop=shop)
+    request = apply_request_middleware(rf.post("/", {"file_ids": [f.id], "kind": "media"}), user=admin_user, shop=shop)
     response = view_func(request, pk=shop_product.pk)
     assert response.status_code == 200
     assert ProductMedia.objects.filter(product_id=product.pk, file_id=f.id, kind=ProductMediaKind.GENERIC_FILE).exists()
     # add two files but one already exists
-    request = apply_request_middleware(rf.post("/", {"file_ids":[f.id, f2.id], "kind": "media"}), user=admin_user, shop=shop)
+    request = apply_request_middleware(
+        rf.post("/", {"file_ids": [f.id, f2.id], "kind": "media"}), user=admin_user, shop=shop
+    )
     response = view_func(request, pk=shop_product.pk)
     assert response.status_code == 200
     assert ProductMedia.objects.count() == 2
-    assert ProductMedia.objects.filter(product_id=product.pk, file_id=f2.id, kind=ProductMediaKind.GENERIC_FILE).exists()
+    assert ProductMedia.objects.filter(
+        product_id=product.pk, file_id=f2.id, kind=ProductMediaKind.GENERIC_FILE
+    ).exists()
 
 
 @pytest.mark.django_db
@@ -213,9 +250,7 @@ def test_product_edit_view_multiplessuppliers(rf, admin_user):
     product_with_supplier = create_product(sku="product_with_supplier", shop=shop, supplier=supplier)
     shop_product_with_supplier = product_with_supplier.get_shop_instance(shop)
 
-    with override_settings(
-        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"
-    ):
+    with override_settings(SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"):
         request = apply_request_middleware(rf.get("/", HTTP_HOST=shop.domain), user=admin_user)
         view_func = ProductEditView.as_view()
         with pytest.raises(Http404):

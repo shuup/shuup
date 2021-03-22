@@ -25,7 +25,7 @@ class DefaultPricingModule(PricingModule):
         shop = context.shop
         shop_product = ShopProduct.objects.get(product=product, shop=shop)
 
-        default_price = (shop_product.default_price_value or 0)
+        default_price = shop_product.default_price_value or 0
 
         return PriceInfo(
             price=shop.create_price(default_price * quantity),

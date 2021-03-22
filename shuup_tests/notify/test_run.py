@@ -18,11 +18,18 @@ from shuup_tests.notify.fixtures import get_initialized_test_event
 @pytest.mark.django_db
 def test_run():
     event = get_initialized_test_event()
-    step = Step(actions=[AddOrderLogEntry({
-        "order": {"variable": "order"},
-        "message": {"constant": "It Works."},
-        "message_identifier": {"constant": "test_run"},
-    })], next=StepNext.STOP)
+    step = Step(
+        actions=[
+            AddOrderLogEntry(
+                {
+                    "order": {"variable": "order"},
+                    "message": {"constant": "It Works."},
+                    "message_identifier": {"constant": "test_run"},
+                }
+            )
+        ],
+        next=StepNext.STOP,
+    )
     script = Script(event_identifier=event.identifier, name="Test Script", shop=factories.get_default_shop())
     script.set_steps([step])
     script.save()
@@ -43,11 +50,18 @@ def test_run_multishop():
     shop1 = factories.get_default_shop()
     shop2 = factories.get_shop(identifier="shop2")
     event = get_initialized_test_event()
-    step = Step(actions=[AddOrderLogEntry({
-        "order": {"variable": "order"},
-        "message": {"constant": "It Works."},
-        "message_identifier": {"constant": "test_run"},
-    })], next=StepNext.STOP)
+    step = Step(
+        actions=[
+            AddOrderLogEntry(
+                {
+                    "order": {"variable": "order"},
+                    "message": {"constant": "It Works."},
+                    "message_identifier": {"constant": "test_run"},
+                }
+            )
+        ],
+        next=StepNext.STOP,
+    )
     script = Script(event_identifier=event.identifier, name="Test Script", shop=shop2, enabled=True)
     script.set_steps([step])
     script.save()

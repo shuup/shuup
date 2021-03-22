@@ -5,16 +5,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.contrib.auth import get_user_model
-from shuup.utils.django_compat import reverse
 
-from shuup.core.models import get_company_contact, get_person_contact, SavedAddress
+from shuup.core.models import SavedAddress, get_company_contact, get_person_contact
 from shuup.testing.factories import get_address, get_default_shop
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
-from shuup_tests.utils.fixtures import (
-    regular_user, REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME
-)
+from shuup_tests.utils.fixtures import REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME, regular_user
 
 User = get_user_model()
 
@@ -170,12 +167,12 @@ def delete_address(regular_user):
     address.save()
 
     sa = SavedAddress.objects.create(owner=contact, address=address)
-    delete_url = reverse("shuup:address_book_delete", kwargs={"pk":sa.pk})
+    delete_url = reverse("shuup:address_book_delete", kwargs={"pk": sa.pk})
     response, soup = client.response_and_soup(delete_url)
     assert response.status_code == 302
     assert "Cannot remove address" not in soup
 
-    user = User.objects.create_user('john', 'doe@example.com', 'doepassword')
+    user = User.objects.create_user("john", "doe@example.com", "doepassword")
     contact2 = get_person_contact(user)
     address2 = get_address()
     address2.save()

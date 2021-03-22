@@ -10,15 +10,14 @@ from django.http.response import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
-from shuup.core.models import (
-    Category, CategoryStatus, ShopProduct, ShopProductVisibility
-)
+from shuup.core.models import Category, CategoryStatus, ShopProduct, ShopProductVisibility
 
 
 class CategoryCopyVisibilityView(View):
     """
     Copy category visibility settings to all products with this category as the primary category.
     """
+
     @atomic
     def post(self, request, *args, **kwargs):
         try:

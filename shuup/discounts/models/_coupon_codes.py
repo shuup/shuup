@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import random
 import string
-
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -34,20 +33,37 @@ class CouponCode(models.Model):
 
     shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_("shops"))
     usage_limit_customer = models.PositiveIntegerField(
-        blank=True, null=True, verbose_name=_("usage limit per customer"),
-        help_text=_("Limit the amount of usages per a single customer."))
+        blank=True,
+        null=True,
+        verbose_name=_("usage limit per customer"),
+        help_text=_("Limit the amount of usages per a single customer."),
+    )
     usage_limit = models.PositiveIntegerField(
-        blank=True, null=True, verbose_name=_("usage limit"),
-        help_text=_("Set the absolute limit of usages for this coupon. "
-                    "If the limit is zero (0) coupon cannot be used."))
+        blank=True,
+        null=True,
+        verbose_name=_("usage limit"),
+        help_text=_(
+            "Set the absolute limit of usages for this coupon. " "If the limit is zero (0) coupon cannot be used."
+        ),
+    )
     active = models.BooleanField(default=True, verbose_name=_("active"))
 
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True,
-        related_name="+", on_delete=models.SET_NULL, verbose_name=_("created by"))
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        verbose_name=_("created by"),
+    )
     modified_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True,
-        related_name="+", on_delete=models.SET_NULL, verbose_name=_("modified by"))
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        verbose_name=_("modified by"),
+    )
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("modified on"))
@@ -59,7 +75,7 @@ class CouponCode(models.Model):
     def generate_code(cls, length=6):
         if length > 12:
             length = 12
-        return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
+        return "".join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
 
     @property
     def exhausted(self):
@@ -91,7 +107,7 @@ class CouponCode(models.Model):
         if self.usage_limit_customer:
             if not customer or customer.is_anonymous:
                 return False
-            if (self.usages.filter(order__customer=customer, coupon=self).count() >= self.usage_limit_customer):
+            if self.usages.filter(order__customer=customer, coupon=self).count() >= self.usage_limit_customer:
                 return False
 
         return not self.exhausted

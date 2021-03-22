@@ -15,11 +15,16 @@ from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
 
 
 class OrderedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
-    def __init__(self, queryset, required=True, widget=None, label=None,
-                 initial=None, help_text='', *args, **kwargs):
+    def __init__(self, queryset, required=True, widget=None, label=None, initial=None, help_text="", *args, **kwargs):
         super().__init__(
-            queryset, required=required, widget=widget, label=label,
-            initial=initial, help_text=help_text, *args, **kwargs
+            queryset,
+            required=required,
+            widget=widget,
+            label=label,
+            initial=initial,
+            help_text=help_text,
+            *args,
+            **kwargs
         )
 
         if initial:  # To show current choice order in plugin
@@ -68,23 +73,30 @@ class PageLinksPlugin(TemplatedPlugin):
     """
     A plugin for displaying links to visible CMS pages in the shop front
     """
+
     identifier = "simple_cms.page_links"
     name = _("CMS Page Links")
     template_name = "shuup/simple_cms/plugins/page_links.jinja"
     editor_form_class = PageLinksConfigForm
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
-        ("show_all_pages", forms.BooleanField(
-            label=_("Show all pages"),
-            required=False,
-            initial=True,
-            help_text=_("All pages are shown, even if not selected"),
-        )),
-        ("hide_expired", forms.BooleanField(
-            label=_("Hide expired pages"),
-            initial=False,
-            required=False,
-        )),
+        (
+            "show_all_pages",
+            forms.BooleanField(
+                label=_("Show all pages"),
+                required=False,
+                initial=True,
+                help_text=_("All pages are shown, even if not selected"),
+            ),
+        ),
+        (
+            "hide_expired",
+            forms.BooleanField(
+                label=_("Hide expired pages"),
+                initial=False,
+                required=False,
+            ),
+        ),
         "pages",
     ]
 

@@ -16,5 +16,5 @@ __all__ = [
     "ServiceProviderEditView",
     "ServiceProviderListView",
     "CarrierWizardPane",
-    "PaymentWizardPane"
+    "PaymentWizardPane",
 ]

@@ -44,8 +44,7 @@ def set(shop, key, value):
     :param value: Value to set.  Note: Must be JSON serializable.
     :type value: Any
     """
-    ConfigurationItem.objects.update_or_create(
-        shop=shop, key=key, defaults={"value": value})
+    ConfigurationItem.objects.update_or_create(shop=shop, key=key, defaults={"value": value})
     if shop:
         cache.set(_get_cache_key(shop), None)
     else:

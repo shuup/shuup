@@ -18,7 +18,7 @@ class GeneralForm(forms.Form):
 
 
 def make_form_group(**kwargs):
-    AddressForm = modelform_factory(MutableAddress, fields=("name", ))
+    AddressForm = modelform_factory(MutableAddress, fields=("name",))
     fg = FormGroup(**kwargs)
     fg.add_form_def("address1", AddressForm, required=True)
     fg.add_form_def("address2", AddressForm, required=False)

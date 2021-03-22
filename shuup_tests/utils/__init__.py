@@ -6,15 +6,14 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import contextlib
+import django.conf
 import logging
 import string
 import sys
 import types
 import uuid
-
-import django.conf
 from bs4 import BeautifulSoup
-from django.test import Client, override_settings, TestCase
+from django.test import Client, TestCase, override_settings
 from django.utils.crypto import get_random_string
 from django.utils.timezone import now
 
@@ -101,10 +100,10 @@ def error_does_not_exist(errors, code):
 
 
 def very_recently(datetime, how_recently=1):
-    return (abs(datetime - now()).total_seconds() < how_recently)
+    return abs(datetime - now()).total_seconds() < how_recently
 
 
-_test_case = TestCase('setUp')  # gotta pass something to the ctor.
+_test_case = TestCase("setUp")  # gotta pass something to the ctor.
 
 assert_contains = _test_case.assertContains
 assert_not_contains = _test_case.assertNotContains

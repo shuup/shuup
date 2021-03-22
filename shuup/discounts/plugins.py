@@ -19,6 +19,7 @@ class ProductSelectionConfigForm(GenericPluginForm):
     """
     A configuration form for the DiscountedProductsPlugin
     """
+
     def populate(self):
         """
         A custom populate method to display product choices
@@ -31,7 +32,7 @@ class ProductSelectionConfigForm(GenericPluginForm):
 
         discounts_qs = Discount.objects.filter(
             Q(shops=self.request.shop, active=True),
-            Q(Q(product__isnull=False) | Q(category__isnull=False, exclude_selected_category=False))
+            Q(Q(product__isnull=False) | Q(category__isnull=False, exclude_selected_category=False)),
         )
 
         self.fields["discounts"] = forms.ModelMultipleChoiceField(
@@ -42,7 +43,7 @@ class ProductSelectionConfigForm(GenericPluginForm):
                 "product or category linked are available."
             ),
             required=True,
-            initial=self.plugin.config.get("discounts", None)
+            initial=self.plugin.config.get("discounts", None),
         )
 
     def clean(self):
@@ -63,14 +64,18 @@ class DiscountedProductsPlugin(TemplatedPlugin):
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
-        ("orderable_only", forms.BooleanField(
-            label=_("Only show in-stock and orderable items"),
-            help_text=_(
-                "Warning: The final number of products can be lower than 'Count' "
-                "as it will filter out unorderable products from a set of 'Count' products."
+        (
+            "orderable_only",
+            forms.BooleanField(
+                label=_("Only show in-stock and orderable items"),
+                help_text=_(
+                    "Warning: The final number of products can be lower than 'Count' "
+                    "as it will filter out unorderable products from a set of 'Count' products."
+                ),
+                initial=True,
+                required=False,
             ),
-            initial=True, required=False
-        ))
+        ),
     ]
 
     def get_context_data(self, context):
@@ -87,8 +92,4 @@ class DiscountedProductsPlugin(TemplatedPlugin):
             )
             products = get_listed_products(context, count, orderable_only=orderable_only, extra_filters=extra_filters)
 
-        return {
-            "request": context["request"],
-            "title": self.get_translated_value("title"),
-            "products": products
-        }
+        return {"request": context["request"], "title": self.get_translated_value("title"), "products": products}

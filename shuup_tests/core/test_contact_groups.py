@@ -9,13 +9,17 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from shuup.core.models import (
-    AnonymousContact, ContactGroup, ContactGroupPriceDisplay,
-    get_person_contact, get_price_display_for_group_and_shop, PersonContact
+    AnonymousContact,
+    ContactGroup,
+    ContactGroupPriceDisplay,
+    PersonContact,
+    get_person_contact,
+    get_price_display_for_group_and_shop,
 )
 from shuup.core.pricing import PriceDisplayOptions
-from shuup.utils.django_compat import is_anonymous
 from shuup.testing.factories import get_default_shop, get_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import is_anonymous
 from shuup_tests.utils.fixtures import regular_user
 
 
@@ -57,7 +61,7 @@ def test_contact_groups(rf, regular_user):
     assert ContactGroupPriceDisplay.objects.count() == 2  # new one was created (shop + anonymous)
 
     g2 = ContactGroupPriceDisplay.objects.exclude(id=g1.id).first()
-    assert g2.group == group   # same group as before
+    assert g2.group == group  # same group as before
     assert g2.shop == shop
 
     assert group.price_display_options.count() == 2
@@ -87,13 +91,23 @@ def test_contact_groups(rf, regular_user):
     assert groups.count() == 2  # two groups
     assert not groups.filter(shop=shop).exists()  # still not exists as we are using defaults
     assert groups.filter(shop__isnull=True).count() == 2
-    assert groups.filter(identifier__in=[AnonymousContact.default_contact_group_identifier, PersonContact.default_contact_group_identifier]).count() == 2
+    assert (
+        groups.filter(
+            identifier__in=[
+                AnonymousContact.default_contact_group_identifier,
+                PersonContact.default_contact_group_identifier,
+            ]
+        ).count()
+        == 2
+    )
 
     assert ContactGroupPriceDisplay.objects.count() == 3  # no new ones created
 
     assert group.price_display_options.count() == 2  # all in same group
 
-    assert group.price_display_options.for_group_and_shop(group_with_shop, shop) not in group.price_display_options.all()
+    assert (
+        group.price_display_options.for_group_and_shop(group_with_shop, shop) not in group.price_display_options.all()
+    )
 
     assert ContactGroupPriceDisplay.objects.count() == 4  # new was created
 

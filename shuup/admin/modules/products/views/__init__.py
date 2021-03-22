@@ -22,5 +22,5 @@ __all__ = [
     "ProductPackageView",
     "ProductMediaEditView",
     "ProductMassEditView",
-    "ProductMediaBulkAdderView"
+    "ProductMediaBulkAdderView",
 ]

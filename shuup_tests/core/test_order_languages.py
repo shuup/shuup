@@ -9,12 +9,15 @@
 import pytest
 from django.test import override_settings
 
-from shuup.core.models import get_person_contact, MutableAddress, OrderLineType
+from shuup.core.models import MutableAddress, OrderLineType, get_person_contact
 from shuup.core.order_creator import OrderCreator
 from shuup.testing.factories import (
-    get_default_payment_method, get_default_product,
-    get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_initial_order_status
+    get_default_payment_method,
+    get_default_product,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_initial_order_status,
 )
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -61,6 +64,7 @@ def get_order_and_source(admin_user, product, language, language_fallback):
 
     return order, source
 
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("lang_code", ["en", "fi", "sv", "ja", "zh-hans", "pt-br", "it"])
 def test_order_language_fallbacks(rf, admin_user, lang_code):
@@ -77,7 +81,7 @@ def test_order_language_fallbacks(rf, admin_user, lang_code):
             6: ("es_419", lang_code),  # Latin American Spanish
             7: ("nds_NL", lang_code),  # Low Saxon
             8: ("arn", lang_code),  # Mapuche
-            9: ("sv", "sv")  # swedish
+            9: ("sv", "sv"),  # swedish
         }
         for x in range(10):
             language = languages[x][0]

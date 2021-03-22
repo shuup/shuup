@@ -6,16 +6,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import inspect
-
 from django.conf import settings
 from django.core.exceptions import MiddlewareNotUsed
 from django.utils.module_loading import import_string
 from django.utils.translation import activate, get_language
 
 from shuup.admin import shop_provider
-from shuup.utils.django_compat import (
-    get_middleware_classes, RegexPattern, set_urlconf, URLResolver
-)
+from shuup.utils.django_compat import RegexPattern, URLResolver, get_middleware_classes, set_urlconf
 
 
 def apply_request_middleware(request, **attrs):
@@ -42,7 +39,7 @@ def apply_request_middleware(request, **attrs):
         for key, value in attrs.items():
             setattr(request, key, value)
 
-        if hasattr(mw_instance, 'process_request'):
+        if hasattr(mw_instance, "process_request"):
             mw_instance.process_request(request)
 
         activate(current_language)
@@ -71,10 +68,10 @@ def apply_view_middleware(request):
     :return: The same request, massaged in-place.
     :rtype: django.http.HttpRequest
     """
-    urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
+    urlconf = getattr(request, "urlconf", settings.ROOT_URLCONF)
     set_urlconf(urlconf)
 
-    resolver = URLResolver(RegexPattern(r'^/'), urlconf)
+    resolver = URLResolver(RegexPattern(r"^/"), urlconf)
     resolver_match = resolver.resolve(request.path_info)
     callback, callback_args, callback_kwargs = resolver_match
     request.resolver_match = resolver_match
@@ -86,7 +83,7 @@ def apply_view_middleware(request):
         except MiddlewareNotUsed:
             continue
 
-        if hasattr(mw_instance, 'process_view'):
+        if hasattr(mw_instance, "process_view"):
             mw_instance.process_view(request, callback, callback_args, callback_kwargs)
 
     return request

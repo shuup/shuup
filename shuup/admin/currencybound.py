@@ -18,6 +18,7 @@ class CurrencyBound(object):
     `module_registry.register` (which is called at import because
     `admin.urls` calls `get_module_urls` at import).
     """
+
     def __init__(self, currency=None, *args, **kwargs):
         self._currency = currency
         super(CurrencyBound, self).__init__(*args, **kwargs)

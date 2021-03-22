@@ -6,9 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
-
 from django.test import override_settings
 
 from shuup.core.settings import SHUUP_ENABLE_MULTIPLE_SUPPLIERS
@@ -28,9 +26,7 @@ def test_list_view(rf, admin_user):
     shop_product.categories.add(shop_product.primary_category)
 
     view = load("shuup.admin.modules.products.views:ProductListView").as_view()
-    request = apply_request_middleware(rf.get("/", {
-        "jq": json.dumps({"perPage": 100, "page": 1})
-    }), user=admin_user)
+    request = apply_request_middleware(rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user)
     response = view(request)
     assert 200 <= response.status_code < 300
 
@@ -64,9 +60,9 @@ def test_list_view_with_multiple_suppliers(rf, admin_user):
 
     with override_settings(SHUUP_ENABLE_MULTIPLE_SUPPLIERS=True):
         view = load("shuup.admin.modules.products.views:ProductListView").as_view()
-        request = apply_request_middleware(rf.get("/", {
-            "jq": json.dumps({"perPage": 100, "page": 1})
-        }), user=admin_user)
+        request = apply_request_middleware(
+            rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user
+        )
         response = view(request)
         assert 200 <= response.status_code < 300
 
@@ -81,13 +77,11 @@ def test_list_view_with_multiple_suppliers(rf, admin_user):
         product_data2 = [item for item in data["items"] if item["_id"] == shop_product2.pk][0]
         assert product_data2["suppliers"] == factories.get_default_supplier().name
 
-    with override_settings(
-        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"
-    ):
+    with override_settings(SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"):
         view = load("shuup.admin.modules.products.views:ProductListView").as_view()
-        request = apply_request_middleware(rf.get("/", {
-            "jq": json.dumps({"perPage": 100, "page": 1})
-        }), user=admin_user)
+        request = apply_request_middleware(
+            rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user
+        )
         response = view(request)
         assert 200 <= response.status_code < 300
 

@@ -6,9 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from shuup.admin.forms.fields import WeekdayField
 from shuup.admin.forms.widgets import TimeInput
-from shuup.campaigns.models.context_conditions import (
-    ContactCondition, ContactGroupCondition, HourCondition
-)
+from shuup.campaigns.models.context_conditions import ContactCondition, ContactGroupCondition, HourCondition
 
 from ._base import BaseRuleModelForm
 

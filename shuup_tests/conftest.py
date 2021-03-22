@@ -10,15 +10,13 @@ from django.conf import settings
 from django.core.signals import setting_changed
 
 from shuup.apps.provides import clear_provides_cache
-from shuup.core.models._contacts import (
-    get_groups_ids, get_price_display_options
-)
+from shuup.core.models._contacts import get_groups_ids, get_price_display_options
 from shuup.core.models._units import get_display_unit
 from shuup.gdpr.models import get_setting
 from shuup.testing.factories import get_default_shop
+from shuup.utils.i18n import get_language_name
 from shuup.utils.importing import clear_load_cache
 from shuup.xtheme.testing import override_current_theme_class
-from shuup.utils.i18n import get_language_name
 
 
 def clear_caches(setting, **kwargs):
@@ -36,6 +34,7 @@ def pytest_runtest_call(item):
     # All tests are run with a theme override `shuup.themes.classic_gray.ClassicGrayTheme`.
     # To un-override, use `with override_current_theme_class()` (no arguments to re-enable database lookup)
     from shuup.themes.classic_gray.theme import ClassicGrayTheme
+
     item.session._theme_overrider = override_current_theme_class(ClassicGrayTheme, get_default_shop())
     item.session._theme_overrider.__enter__()
     get_language_name.cache_clear()  # Clear language name lru_cache for each test
@@ -62,22 +61,27 @@ def splinter_make_screenshot_on_failure():
 @pytest.fixture(autouse=True)
 def enable_db_access(db):
     from django.utils.translation import activate
+
     activate("en")
 
     # make sure the default cache is also cleared
     # it is used by third party apps like parler
     from django.core.cache import cache
+
     cache.clear()
 
     from shuup.core import cache
+
     cache.init_cache()
 
 
 # always make ShopProduct id different from Product id
 @pytest.fixture(autouse=True)
 def break_shop_product_id_sequence(db):
-    from shuup.core.models import ShopProduct
     from django.db import connection
+
+    from shuup.core.models import ShopProduct
+
     cursor = connection.cursor()
     cursor.execute("INSERT INTO SQLITE_SEQUENCE (name, seq) values ('%s', 1500)" % ShopProduct._meta.db_table)
 
@@ -85,4 +89,5 @@ def break_shop_product_id_sequence(db):
 @pytest.fixture()
 def staff_user():
     from django.contrib.auth import get_user_model
+
     return get_user_model().objects.create(is_staff=True, is_superuser=False, username="staff_user")

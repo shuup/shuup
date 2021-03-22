@@ -7,37 +7,37 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
-
 from django import forms
 from django.conf import settings
 from django.db.models import ProtectedError
 from django.test import override_settings
 from django.utils.encoding import force_text
+
 from shuup.admin.modules.services.base_form_part import ServiceBaseFormPart
 from shuup.admin.modules.services.forms import PaymentMethodForm, ShippingMethodForm
-from shuup.admin.modules.services.views import (
-    PaymentMethodEditView, ShippingMethodEditView
-)
+from shuup.admin.modules.services.views import PaymentMethodEditView, ShippingMethodEditView
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import override_provides
 from shuup.core.models import Label, PaymentMethod, ShippingMethod
 from shuup.testing.factories import (
-    create_empty_order, get_custom_carrier, get_custom_payment_processor,
-    get_default_payment_method, get_default_shipping_method, get_default_shop,
-    get_default_tax_class, get_default_supplier
+    create_empty_order,
+    get_custom_carrier,
+    get_custom_payment_processor,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_default_tax_class,
 )
 from shuup.testing.utils import apply_request_middleware
-
 
 DEFAULT_BEHAVIOR_FORMS = [
     "shuup.admin.modules.services.forms.FixedCostBehaviorComponentForm",
     "shuup.admin.modules.services.forms.WaivingCostBehaviorComponentForm",
-    "shuup.admin.modules.services.forms.WeightLimitsBehaviorComponentForm"
+    "shuup.admin.modules.services.forms.WeightLimitsBehaviorComponentForm",
 ]
 
-DEFAULT_BEHAVIOR_FORM_PARTS = [
-    "shuup.admin.modules.services.weight_based_pricing.WeightBasedPricingFormPart"
-]
+DEFAULT_BEHAVIOR_FORM_PARTS = ["shuup.admin.modules.services.weight_based_pricing.WeightBasedPricingFormPart"]
 
 
 def get_form_parts(request, view, object):
@@ -48,10 +48,10 @@ def get_form_parts(request, view, object):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("view,get_object", [
-    (PaymentMethodEditView, get_default_payment_method),
-    (ShippingMethodEditView, get_default_shipping_method)
-])
+@pytest.mark.parametrize(
+    "view,get_object",
+    [(PaymentMethodEditView, get_default_payment_method), (ShippingMethodEditView, get_default_shipping_method)],
+)
 def test_services_edit_view_formsets(rf, admin_user, view, get_object):
     get_default_shop()
     object = get_object()
@@ -72,10 +72,13 @@ def test_services_edit_view_formsets_in_new_mode(rf, admin_user, view):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("form_class,get_object,service_provider_attr", [
-    (PaymentMethodForm, get_default_payment_method, "payment_processor"),
-    (ShippingMethodForm, get_default_shipping_method, "carrier")
-])
+@pytest.mark.parametrize(
+    "form_class,get_object,service_provider_attr",
+    [
+        (PaymentMethodForm, get_default_payment_method, "payment_processor"),
+        (ShippingMethodForm, get_default_shipping_method, "carrier"),
+    ],
+)
 def test_choice_identifier_in_method_form(rf, admin_user, form_class, get_object, service_provider_attr):
     object = get_object()
     assert object.pk
@@ -98,10 +101,13 @@ def test_choice_identifier_in_method_form(rf, admin_user, form_class, get_object
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("view,model,service_provider_attr,get_provider", [
-    (PaymentMethodEditView, PaymentMethod, "payment_processor", get_custom_payment_processor),
-    (ShippingMethodEditView, ShippingMethod, "carrier", get_custom_carrier)
-])
+@pytest.mark.parametrize(
+    "view,model,service_provider_attr,get_provider",
+    [
+        (PaymentMethodEditView, PaymentMethod, "payment_processor", get_custom_payment_processor),
+        (ShippingMethodEditView, ShippingMethod, "carrier", get_custom_carrier),
+    ],
+)
 def test_method_creation(rf, admin_user, view, model, service_provider_attr, get_provider):
     """
     To make things little bit more simple let's use only english as
@@ -116,7 +122,7 @@ def test_method_creation(rf, admin_user, view, model, service_provider_attr, get
             "base-name__en": "Custom method",
             "base-shop": get_default_shop().id,
             "base-tax_class": get_default_tax_class().id,
-            "base-enabled": True
+            "base-enabled": True,
         }
         # Default provider CustomCarrier/CustomPaymentProcessor should be set in form init
         methods_before = model.objects.count()
@@ -130,10 +136,13 @@ def test_method_creation(rf, admin_user, view, model, service_provider_attr, get
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("view,model,service_provider_attr,get_provider", [
-    (PaymentMethodEditView, PaymentMethod, "payment_processor", get_custom_payment_processor),
-    (ShippingMethodEditView, ShippingMethod, "carrier", get_custom_carrier)
-])
+@pytest.mark.parametrize(
+    "view,model,service_provider_attr,get_provider",
+    [
+        (PaymentMethodEditView, PaymentMethod, "payment_processor", get_custom_payment_processor),
+        (ShippingMethodEditView, ShippingMethod, "carrier", get_custom_carrier),
+    ],
+)
 def test_method_creation_with_labels(rf, admin_user, view, model, service_provider_attr, get_provider):
     """
     To make things little bit more simple let's use only english as
@@ -154,7 +163,7 @@ def test_method_creation_with_labels(rf, admin_user, view, model, service_provid
             "base-shop": get_default_shop().id,
             "base-tax_class": get_default_tax_class().id,
             "base-enabled": True,
-            "base-labels": Label.objects.values_list("pk", flat=True)
+            "base-labels": Label.objects.values_list("pk", flat=True),
         }
         # Default provider CustomCarrier/CustomPaymentProcessor should be set in form init
         methods_before = model.objects.count()
@@ -169,10 +178,13 @@ def test_method_creation_with_labels(rf, admin_user, view, model, service_provid
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("view,model,get_object,service_provider_attr", [
-    (PaymentMethodEditView, PaymentMethod, get_default_payment_method, "payment_processor"),
-    (ShippingMethodEditView, ShippingMethod, get_default_shipping_method, "carrier")
-])
+@pytest.mark.parametrize(
+    "view,model,get_object,service_provider_attr",
+    [
+        (PaymentMethodEditView, PaymentMethod, get_default_payment_method, "payment_processor"),
+        (ShippingMethodEditView, ShippingMethod, get_default_shipping_method, "carrier"),
+    ],
+)
 def test_method_edit_save(rf, admin_user, view, model, get_object, service_provider_attr):
     """
     To make things little bit more simple let's use only english as
@@ -191,7 +203,7 @@ def test_method_edit_save(rf, admin_user, view, model, get_object, service_provi
             "base-tax_class": object.tax_class.id,
             "base-enabled": True,
             service_provider_attr_field: getattr(object, service_provider_attr).pk,
-            "base-choice_identifier": "manual"
+            "base-choice_identifier": "manual",
         }
         methods_before = model.objects.count()
         # Behavior components is tested at shuup.tests.admin.test_service_behavior_components
@@ -218,10 +230,13 @@ def check_for_delete(view, request, object):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("view_cls,get_method,method_attr", [
-    (PaymentMethodEditView, get_default_payment_method, "payment_method"),
-    (ShippingMethodEditView, get_default_shipping_method, "shipping_method")
-])
+@pytest.mark.parametrize(
+    "view_cls,get_method,method_attr",
+    [
+        (PaymentMethodEditView, get_default_payment_method, "payment_method"),
+        (ShippingMethodEditView, get_default_shipping_method, "shipping_method"),
+    ],
+)
 def test_delete_toolbar_button(rf, admin_user, view_cls, get_method, method_attr):
     method = get_method()
     assert method.can_delete()
@@ -242,10 +257,13 @@ def test_delete_toolbar_button(rf, admin_user, view_cls, get_method, method_attr
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("view,model,service_provider_attr,get_provider", [
-    (PaymentMethodEditView, PaymentMethod, "payment_processor", get_custom_payment_processor),
-    (ShippingMethodEditView, ShippingMethod, "carrier", get_custom_carrier)
-])
+@pytest.mark.parametrize(
+    "view,model,service_provider_attr,get_provider",
+    [
+        (PaymentMethodEditView, PaymentMethod, "payment_processor", get_custom_payment_processor),
+        (ShippingMethodEditView, ShippingMethod, "carrier", get_custom_carrier),
+    ],
+)
 def test_method_creation_with_supplier(rf, admin_user, view, model, service_provider_attr, get_provider):
     provider = get_provider()
     supplier = get_default_supplier()
@@ -263,7 +281,7 @@ def test_method_creation_with_supplier(rf, admin_user, view, model, service_prov
             "base-name__en": "Custom method",
             "base-shop": get_default_shop().id,
             "base-tax_class": get_default_tax_class().id,
-            "base-enabled": True
+            "base-enabled": True,
         }
         # Default provider CustomCarrier/CustomPaymentProcessor should be set in form init
         methods_before = model.objects.count()

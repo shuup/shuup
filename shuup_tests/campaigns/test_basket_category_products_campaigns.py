@@ -9,18 +9,11 @@ import pytest
 
 from shuup.campaigns.exceptions import CampaignsInvalidInstanceForCacheUpdate
 from shuup.campaigns.models import BasketCampaign
-from shuup.campaigns.models.basket_conditions import (
-    CategoryProductsBasketCondition, ComparisonOperator
-)
-from shuup.campaigns.models.basket_line_effects import (
-    DiscountFromCategoryProducts
-)
+from shuup.campaigns.models.basket_conditions import CategoryProductsBasketCondition, ComparisonOperator
+from shuup.campaigns.models.basket_line_effects import DiscountFromCategoryProducts
 from shuup.campaigns.signal_handlers import update_filter_cache
 from shuup.front.basket import get_basket
-from shuup.testing.factories import (
-    create_product, get_default_supplier, get_default_category,
-    get_shipping_method
-)
+from shuup.testing.factories import create_product, get_default_category, get_default_supplier, get_shipping_method
 from shuup_tests.campaigns import initialize_test
 
 
@@ -88,7 +81,8 @@ def test_category_products_effect_with_amount(rf):
     campaign.conditions.add(rule)
 
     DiscountFromCategoryProducts.objects.create(
-        campaign=campaign, category=category, discount_amount=discount_amount_value)
+        campaign=campaign, category=category, discount_amount=discount_amount_value
+    )
 
     assert rule.matches(basket, [])
     basket.uncache()
@@ -129,7 +123,8 @@ def test_category_products_effect_with_percentage(rf):
     campaign.conditions.add(rule)
 
     DiscountFromCategoryProducts.objects.create(
-        campaign=campaign, category=category, discount_percentage=discount_percentage)
+        campaign=campaign, category=category, discount_percentage=discount_percentage
+    )
 
     assert rule.matches(basket, [])
     basket.uncache()

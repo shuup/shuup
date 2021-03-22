@@ -38,6 +38,7 @@ class OrderRequiresVerificationView(DetailView):
         context = super(OrderRequiresVerificationView, self).get_context_data(**kwargs)
         if self.object.user and self.object.user.password == "//IMPLICIT//":
             from shuup.shop.views.activation_views import OneShotActivationForm
+
             context["activation_form"] = OneShotActivationForm()
         return context
 

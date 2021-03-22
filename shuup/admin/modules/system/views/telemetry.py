@@ -20,13 +20,15 @@ class TelemetryView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(TelemetryView, self).get_context_data(**kwargs)
-        context.update({
-            "opt_in": not telemetry.is_opt_out(),
-            "is_grace": telemetry.is_in_grace_period(),
-            "last_submission_time": telemetry.get_last_submission_time(),
-            "submission_data": telemetry.get_telemetry_data(request=self.request, indent=2),
-            "title": _("Telemetry")
-        })
+        context.update(
+            {
+                "opt_in": not telemetry.is_opt_out(),
+                "is_grace": telemetry.is_in_grace_period(),
+                "last_submission_time": telemetry.get_last_submission_time(),
+                "submission_data": telemetry.get_telemetry_data(request=self.request, indent=2),
+                "title": _("Telemetry"),
+            }
+        )
         return context
 
     def get(self, request, *args, **kwargs):
@@ -42,7 +44,6 @@ class TelemetryView(TemplateView):
 
 
 class TelemetryWizardForm(forms.Form):
-
     def __init__(self, **kwargs):
         self.shop = kwargs.pop("shop")
         super(TelemetryWizardForm, self).__init__(**kwargs)
@@ -51,7 +52,7 @@ class TelemetryWizardForm(forms.Form):
             label=_("Opt-in for telemetry"),
             required=False,
             initial=not telemetry.is_opt_out(),
-            widget=forms.CheckboxInput()
+            widget=forms.CheckboxInput(),
         )
 
     def save(self):
@@ -65,6 +66,7 @@ class TelemetryWizardPane(WizardPane):
     """
     Wizard Pane to add initial content pages and configure some behaviors of the shop
     """
+
     identifier = "telemetry"
     icon = "shuup_admin/img/configure.png"
     title = _("Telemetry")  # Shown in home action button
@@ -75,6 +77,7 @@ class TelemetryWizardPane(WizardPane):
 
     def valid(self):
         from shuup.admin.utils.permissions import has_permission
+
         return has_permission(self.request.user, "xtheme.config")
 
     def get_form_defs(self):
@@ -85,7 +88,7 @@ class TelemetryWizardPane(WizardPane):
             "is_grace": telemetry.is_in_grace_period(),
             "last_submission_time": telemetry.get_last_submission_time(),
             "submission_data": telemetry.get_telemetry_data(request=self.request, indent=2),
-            "title": _("Telemetry")
+            "title": _("Telemetry"),
         }
         form_defs.append(
             TemplatedWizardFormDef(
@@ -93,7 +96,7 @@ class TelemetryWizardPane(WizardPane):
                 template_name="shuup/admin/system/telemetry_wizard.jinja",
                 form_class=TelemetryWizardForm,
                 context=context,
-                kwargs={"shop": self.object}
+                kwargs={"shop": self.object},
             )
         )
         return form_defs

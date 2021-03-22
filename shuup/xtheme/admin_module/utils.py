@@ -25,7 +25,4 @@ def get_theme_context(shop):
         if theme_settings.active:
             active_theme = theme
 
-    return {
-        "theme_classes": sorted(themes, key=lambda t: (t.name or t.identifier)),
-        "current_theme": active_theme
-    }
+    return {"theme_classes": sorted(themes, key=lambda t: (t.name or t.identifier)), "current_theme": active_theme}

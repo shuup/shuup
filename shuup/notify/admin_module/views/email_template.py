@@ -23,9 +23,7 @@ class EmailTemplateForm(ShuupAdminFormNoTranslation):
     class Meta:
         model = EmailTemplate
         fields = ("name", "template")
-        widgets = {
-            "template": CodeEditorWithHTMLPreview
-        }
+        widgets = {"template": CodeEditorWithHTMLPreview}
 
 
 class EmailTemplateEditView(CreateOrUpdateView):
@@ -37,8 +35,7 @@ class EmailTemplateEditView(CreateOrUpdateView):
     def get_toolbar(self):
         object = self.get_object()
         delete_url = (
-            reverse_lazy("shuup_admin:notify.email_template.delete", kwargs={"pk": object.pk})
-            if object.pk else None
+            reverse_lazy("shuup_admin:notify.email_template.delete", kwargs={"pk": object.pk}) if object.pk else None
         )
         return get_default_edit_toolbar(self, self.get_save_form_id(), delete_url=delete_url)
 

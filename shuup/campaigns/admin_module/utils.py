@@ -12,9 +12,7 @@ from shuup.apps.provides import get_provide_objects
 def get_formparts_for_provide_key(user, provide_key):
     provide_objects = list(get_provide_objects(provide_key))
     missing_permissions = get_missing_permissions(user, [form.__name__ for form in provide_objects])
-    return [
-        provide_object for provide_object in provide_objects if provide_object.__name__ not in missing_permissions
-    ]
+    return [provide_object for provide_object in provide_objects if provide_object.__name__ not in missing_permissions]
 
 
 def get_extra_permissions_for_admin_module():
@@ -23,7 +21,7 @@ def get_extra_permissions_for_admin_module():
     provide_keys = [
         "campaign_basket_condition",
         "campaign_basket_discount_effect_form",
-        "campaign_basket_line_effect_form"
+        "campaign_basket_line_effect_form",
     ]
     permissions = set()
     for provide_key in provide_keys:

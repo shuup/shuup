@@ -5,20 +5,17 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shuup.admin.modules.services import PaymentMethodModule, ShippingMethodModule
-
-from shuup.admin.modules.manufacturers import ManufacturerModule
-
-from shuup.admin.modules.product_types import ProductTypeModule
 
 from shuup.admin.module_registry import replace_modules
 from shuup.admin.modules.categories import CategoryModule
-from shuup.admin.modules.products import ProductModule
+from shuup.admin.modules.manufacturers import ManufacturerModule
 from shuup.admin.modules.media import MediaModule
+from shuup.admin.modules.product_types import ProductTypeModule
+from shuup.admin.modules.products import ProductModule
 from shuup.admin.modules.products.views import ProductEditView
+from shuup.admin.modules.services import PaymentMethodModule, ShippingMethodModule
 from shuup.importer.admin_module import ImportAdminModule
-from shuup.testing.factories import create_product
-from shuup.testing.factories import get_default_shop
+from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.admin.utils import admin_only_urls
 
@@ -31,8 +28,18 @@ def test_campaigned_product_view(rf, admin_user):
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule, MediaModule,
-                          ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
+    with replace_modules(
+        [
+            CategoryModule,
+            ImportAdminModule,
+            ProductModule,
+            MediaModule,
+            ProductTypeModule,
+            ManufacturerModule,
+            PaymentMethodModule,
+            ShippingMethodModule,
+        ]
+    ):
         with admin_only_urls():
             render_product_view(shop_product, request)
             product2 = create_product("test-product2", shop)
@@ -43,6 +50,6 @@ def test_campaigned_product_view(rf, admin_user):
 def render_product_view(shop_product, request):
     view_func = ProductEditView.as_view()
     response = view_func(request, pk=shop_product.pk)
-    assert (shop_product.product.sku in response.rendered_content)  # it's probable the SKU is there
+    assert shop_product.product.sku in response.rendered_content  # it's probable the SKU is there
     response = view_func(request, pk=None)  # "new mode"
     assert response.rendered_content  # yeah, something gets rendered

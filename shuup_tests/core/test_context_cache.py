@@ -25,9 +25,7 @@ def test_get_items_from_dict_context():
     contact_group = factories.create_random_contact_group()
     contact_group.members.add(customer)
 
-    context = {
-        "customer": customer
-    }
+    context = {"customer": customer}
     items = _get_items_from_context(context)
     groups = context_cache._get_val(customer.groups.all())
     assert items["customer_groups"] == groups

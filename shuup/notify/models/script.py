@@ -21,16 +21,19 @@ from shuup.utils.analog import define_log_model
 @python_2_unicode_compatible
 class Script(models.Model):
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"))
-    event_identifier = models.CharField(max_length=64, blank=False, db_index=True, verbose_name=_('event identifier'))
+    event_identifier = models.CharField(max_length=64, blank=False, db_index=True, verbose_name=_("event identifier"))
     identifier = InternalIdentifierField(unique=True)
-    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
-    name = models.CharField(max_length=64, verbose_name=_('name'))
-    enabled = models.BooleanField(default=False, db_index=True, verbose_name=_('enabled'))
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
+    name = models.CharField(max_length=64, verbose_name=_("name"))
+    enabled = models.BooleanField(default=False, db_index=True, verbose_name=_("enabled"))
     _step_data = JSONField(default=[], db_column="step_data")
     template = models.CharField(
-        max_length=64, blank=True, null=True,
-        default=None, verbose_name=_('template identifier'),
-        help_text=_('the template identifier used to create this script')
+        max_length=64,
+        blank=True,
+        null=True,
+        default=None,
+        verbose_name=_("template identifier"),
+        help_text=_("the template identifier used to create this script"),
     )
 
     def get_steps(self):
@@ -39,6 +42,7 @@ class Script(models.Model):
         """
         if getattr(self, "_steps", None) is None:
             from shuup.notify.script import Step
+
             self._steps = [Step.unserialize(data) for data in self._step_data]
         return self._steps
 

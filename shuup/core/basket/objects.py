@@ -9,20 +9,25 @@ from __future__ import unicode_literals
 
 import hashlib
 import json
+import six
 from collections import Counter
 from decimal import Decimal
-from uuid import uuid4
-
-import six
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from uuid import uuid4
 
 from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.core.fields.tagged_json import TaggedJSONEncoder
 from shuup.core.models import (
-    AnonymousContact, Contact, MutableAddress, OrderLineType, PaymentMethod,
-    PersonContact, ShippingMethod, ShopProduct
+    AnonymousContact,
+    Contact,
+    MutableAddress,
+    OrderLineType,
+    PaymentMethod,
+    PersonContact,
+    ShippingMethod,
+    ShopProduct,
 )
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
@@ -74,7 +79,7 @@ class BasketLine(SourceLine):
         if self.product:
             return OrderLineType.PRODUCT
         else:
-            return (self.__dict__.get("type") or OrderLineType.OTHER)
+            return self.__dict__.get("type") or OrderLineType.OTHER
 
     @type.setter
     def type(self, type):
@@ -94,18 +99,18 @@ class BasketLine(SourceLine):
 
     @property
     def can_delete(self):
-        return (self.type == OrderLineType.PRODUCT and self.line_source != LineSource.DISCOUNT_MODULE)
+        return self.type == OrderLineType.PRODUCT and self.line_source != LineSource.DISCOUNT_MODULE
 
     @property
     def can_change_quantity(self):
-        return (self.type == OrderLineType.PRODUCT and self.line_source != LineSource.DISCOUNT_MODULE)
+        return self.type == OrderLineType.PRODUCT and self.line_source != LineSource.DISCOUNT_MODULE
 
 
 class _ExtraDataContainerProperty(object):
     def __init__(self, name):
         self.name = name
 
-    def __get__(self, instance: 'BaseBasket', *args, **kwargs):
+    def __get__(self, instance: "BaseBasket", *args, **kwargs):
         return instance._get_value_from_data(self.name, initialize_with={})
 
     def __set__(self, instance, value):
@@ -140,9 +145,7 @@ class BaseBasket(OrderSource):
 
     def get_cache_key(self):
         self._load()
-        return hashlib.md5(
-            json.dumps(self._data, cls=TaggedJSONEncoder, sort_keys=True).encode("utf-8")
-        ).hexdigest()
+        return hashlib.md5(json.dumps(self._data, cls=TaggedJSONEncoder, sort_keys=True).encode("utf-8")).hexdigest()
 
     def uncache(self):
         super(BaseBasket, self).uncache()
@@ -322,6 +325,7 @@ class BaseBasket(OrderSource):
                 self._set_value_to_data("shipping_address_data", None)
             else:
                 from shuup.utils.models import get_data_dict
+
                 self._set_value_to_data("shipping_address_data", get_data_dict(value))
 
     @property
@@ -352,14 +356,15 @@ class BaseBasket(OrderSource):
                 self._set_value_to_data("billing_address_data", None)
             else:
                 from shuup.utils.models import get_data_dict
+
                 self._set_value_to_data("billing_address_data", get_data_dict(value))
 
     @property
     def shipping_method(self):
         if (
-            self._shipping_method and
-            self.shipping_method_id and
-            self._shipping_method.pk == int(self.shipping_method_id)
+            self._shipping_method
+            and self.shipping_method_id
+            and self._shipping_method.pk == int(self.shipping_method_id)
         ):
             return self._shipping_method
 
@@ -374,16 +379,12 @@ class BaseBasket(OrderSource):
 
     @shipping_method.setter
     def shipping_method(self, shipping_method):
-        self.shipping_method_id = (shipping_method.id if shipping_method else None)
+        self.shipping_method_id = shipping_method.id if shipping_method else None
         self._set_value_to_data("shipping_method_id", self.shipping_method_id)
 
     @property
     def payment_method(self):
-        if (
-            self._payment_method and
-            self.payment_method_id and
-            self._payment_method.pk == int(self.payment_method_id)
-        ):
+        if self._payment_method and self.payment_method_id and self._payment_method.pk == int(self.payment_method_id):
             return self._payment_method
 
         if not self.payment_method_id:
@@ -397,7 +398,7 @@ class BaseBasket(OrderSource):
 
     @payment_method.setter
     def payment_method(self, payment_method):
-        self.payment_method_id = (payment_method.id if payment_method else None)
+        self.payment_method_id = payment_method.id if payment_method else None
         self._set_value_to_data("payment_method_id", self.payment_method_id)
 
     @property
@@ -414,9 +415,9 @@ class BaseBasket(OrderSource):
         self._customer_comment = value or ""
         self._set_value_to_data("customer_comment", value or "")
 
-    extra_data = _ExtraDataContainerProperty('extra_data')
-    shipping_data = _ExtraDataContainerProperty('shipping_data')
-    payment_data = _ExtraDataContainerProperty('payment_data')
+    extra_data = _ExtraDataContainerProperty("extra_data")
+    shipping_data = _ExtraDataContainerProperty("shipping_data")
+    payment_data = _ExtraDataContainerProperty("payment_data")
 
     @property
     def _data_lines(self):
@@ -493,7 +494,7 @@ class BaseBasket(OrderSource):
         self.dirty = bool(self.dirty or modified)
         return modified
 
-    def _cache_lines(self):     # noqa (C901)
+    def _cache_lines(self):  # noqa (C901)
         lines = [BasketLine.from_dict(self, line) for line in self._data_lines]
         lines_by_line_id = {}
         orderable_counter = Counter()
@@ -518,9 +519,8 @@ class BaseBasket(OrderSource):
                         for child_product, child_quantity in six.iteritems(quantity_map):
                             sp = child_product.get_shop_instance(shop=self.shop)
                             in_basket_child_qty = orderable_counter[child_product.id]
-                            total_child_qty = ((quantity * child_quantity) + in_basket_child_qty)
-                            if not sp.is_orderable(
-                                    line.supplier, self.customer, total_child_qty, allow_cache=False):
+                            total_child_qty = (quantity * child_quantity) + in_basket_child_qty
+                            if not sp.is_orderable(line.supplier, self.customer, total_child_qty, allow_cache=False):
                                 orderable = False
                                 break
                         if orderable:
@@ -663,11 +663,7 @@ class BaseBasket(OrderSource):
 
     def add_product_with_child_product(self, supplier, shop, product, child_product, quantity):
         parent_line = self.add_product(
-            supplier=supplier,
-            shop=shop,
-            product=product,
-            quantity=quantity,
-            force_new_line=True
+            supplier=supplier, shop=shop, product=product, quantity=quantity, force_new_line=True
         )
         child_line = self.add_product(
             supplier=supplier,
@@ -675,7 +671,7 @@ class BaseBasket(OrderSource):
             product=child_product,
             quantity=quantity,
             parent_line=parent_line,
-            force_new_line=True
+            force_new_line=True,
         )
         return (parent_line, child_line)
 
@@ -722,7 +718,7 @@ class BaseBasket(OrderSource):
                 yield line
 
     def _get_orderable(self):
-        return (sum(line.quantity for line in self.get_lines()) > 0)
+        return sum(line.quantity for line in self.get_lines()) > 0
 
     orderable = property(_get_orderable)
 
@@ -730,9 +726,7 @@ class BaseBasket(OrderSource):
         shipping_methods = self.get_available_shipping_methods()
         payment_methods = self.get_available_payment_methods()
 
-        advice = _(
-            "Try to remove some products from the basket "
-            "and order them separately.")
+        advice = _("Try to remove some products from the basket " "and order them separately.")
 
         if self.has_shippable_lines() and not shipping_methods:
             msg = _("Products in basket can't be shipped together. %s")
@@ -767,8 +761,8 @@ class BaseBasket(OrderSource):
         :rtype: list[ShippingMethod]
         """
         return [
-            m for m
-            in ShippingMethod.objects.available(shop=self.shop, products=self.product_ids)
+            m
+            for m in ShippingMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_available_for(self)
         ]
 
@@ -779,8 +773,8 @@ class BaseBasket(OrderSource):
         :rtype: list[PaymentMethod]
         """
         return [
-            m for m
-            in PaymentMethod.objects.available(shop=self.shop, products=self.product_ids)
+            m
+            for m in PaymentMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_available_for(self)
         ]
 

@@ -18,14 +18,12 @@ from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
 from mptt.querysets import TreeQuerySet
 from parler.managers import TranslatableQuerySet
-from parler.models import (
-    TranslatableManager, TranslatableModel, TranslatedFields
-)
+from parler.models import TranslatableManager, TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.signals import category_deleted
 from shuup.core.utils.slugs import generate_multilanguage_slugs
-from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.analog import LogEntryKind, define_log_model
 
 
 class CategoryStatus(Enum):
@@ -34,9 +32,9 @@ class CategoryStatus(Enum):
     DELETED = 2
 
     class Labels:
-        INVISIBLE = _('invisible')
-        VISIBLE = _('visible')
-        DELETED = _('deleted')
+        INVISIBLE = _("invisible")
+        VISIBLE = _("visible")
+        DELETED = _("deleted")
 
 
 class CategoryVisibility(Enum):
@@ -45,9 +43,9 @@ class CategoryVisibility(Enum):
     VISIBLE_TO_GROUPS = 3
 
     class Labels:
-        VISIBLE_TO_ALL = _('visible to all')
-        VISIBLE_TO_LOGGED_IN = _('visible to logged-in customers')
-        VISIBLE_TO_GROUPS = _('visible to certain customer groups')
+        VISIBLE_TO_ALL = _("visible to all")
+        VISIBLE_TO_LOGGED_IN = _("visible to logged-in customers")
+        VISIBLE_TO_GROUPS = _("visible to certain customer groups")
 
 
 class CategoryQuerySet(TranslatableQuerySet, TreeQuerySet):
@@ -90,76 +88,110 @@ class CategoryManager(TreeManager, TranslatableManager):
 @python_2_unicode_compatible
 class Category(MPTTModel, TranslatableModel):
     parent = TreeForeignKey(
-        'self', null=True, blank=True, related_name='children',
-        verbose_name=_('parent category'), on_delete=models.CASCADE, help_text=_(
-            "If your category is a sub-category of another category, you can link them here."
-        )
+        "self",
+        null=True,
+        blank=True,
+        related_name="children",
+        verbose_name=_("parent category"),
+        on_delete=models.CASCADE,
+        help_text=_("If your category is a sub-category of another category, you can link them here."),
     )
     shops = models.ManyToManyField(
-        "Shop", blank=True, related_name="categories", verbose_name=_("shops"), help_text=_(
-            "You can select which shops the category is visible in."
-        )
+        "Shop",
+        blank=True,
+        related_name="categories",
+        verbose_name=_("shops"),
+        help_text=_("You can select which shops the category is visible in."),
     )
     identifier = InternalIdentifierField(unique=True)
     status = EnumIntegerField(
-        CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.VISIBLE, help_text=_(
-            "Choose if you want this category to be visible in your store."
-        )
+        CategoryStatus,
+        db_index=True,
+        verbose_name=_("status"),
+        default=CategoryStatus.VISIBLE,
+        help_text=_("Choose if you want this category to be visible in your store."),
     )
-    image = FilerImageField(verbose_name=_('image'), blank=True, null=True, on_delete=models.SET_NULL, help_text=_(
-        "Category image. Will be shown in places defined by the graphical theme in use."
-    ))
-    ordering = models.IntegerField(default=0, verbose_name=_('ordering'), help_text=_(
+    image = FilerImageField(
+        verbose_name=_("image"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        help_text=_("Category image. Will be shown in places defined by the graphical theme in use."),
+    )
+    ordering = models.IntegerField(
+        default=0,
+        verbose_name=_("ordering"),
+        help_text=_(
             "You can assign numerical values to images to tell the order in which they "
             "shall be displayed on the vendor page. You can also use the `Organize` "
             "button in the list view to order them visually with a drag-and-drop."
-        )
+        ),
     )
     visibility = EnumIntegerField(
-        CategoryVisibility, db_index=True, default=CategoryVisibility.VISIBLE_TO_ALL,
-        verbose_name=_('visibility limitations'), help_text=_(
+        CategoryVisibility,
+        db_index=True,
+        default=CategoryVisibility.VISIBLE_TO_ALL,
+        verbose_name=_("visibility limitations"),
+        help_text=_(
             "You can choose to limit who sees your category based on whether they are logged in or if they are "
             "part of a certain customer group."
-        )
+        ),
     )
-    visible_in_menu = models.BooleanField(verbose_name=_("visible in menu"), default=True, help_text=_(
-        "Enable if this category should be visible in the store front's menu."
-    ))
+    visible_in_menu = models.BooleanField(
+        verbose_name=_("visible in menu"),
+        default=True,
+        help_text=_("Enable if this category should be visible in the store front's menu."),
+    )
     visibility_groups = models.ManyToManyField(
-        "ContactGroup", blank=True, verbose_name=_('visible for groups'), related_name=u"visible_categories",
+        "ContactGroup",
+        blank=True,
+        verbose_name=_("visible for groups"),
+        related_name=u"visible_categories",
         help_text=_(
             "Select the customer groups you want to see this category. "
             "There are three groups created by default: Company, Person, Anonymous. "
             "In addition you can also define custom groups by searching for `Contact Groups`."
-        )
+        ),
     )
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=128, verbose_name=_('name'), db_index=True, help_text=_(
+        name=models.CharField(
+            max_length=128,
+            verbose_name=_("name"),
+            db_index=True,
+            help_text=_(
                 "Enter a descriptive name for your product category. "
                 "Products can be found in the store front under the defined product category "
                 "either directly in menus or while searching."
-            )
+            ),
         ),
-        description=models.TextField(verbose_name=_('description'), blank=True, help_text=_(
+        description=models.TextField(
+            verbose_name=_("description"),
+            blank=True,
+            help_text=_(
                 "Give your product category a detailed description. "
                 "This will help shoppers find your products under that category in your store and on the web."
-                )
+            ),
         ),
-        slug=models.SlugField(blank=True, null=True, verbose_name=_('slug'), help_text=_(
-            "Enter a URL slug for your category. Slug is user- and search engine-friendly short text "
-            "used in a URL to identify and describe a resource. In this case it will determine "
-            "what your product category page URL in the browser address bar will look like. "
-            "A default will be created using the category name."
-        ))
+        slug=models.SlugField(
+            blank=True,
+            null=True,
+            verbose_name=_("slug"),
+            help_text=_(
+                "Enter a URL slug for your category. Slug is user- and search engine-friendly short text "
+                "used in a URL to identify and describe a resource. In this case it will determine "
+                "what your product category page URL in the browser address bar will look like. "
+                "A default will be created using the category name."
+            ),
+        ),
     )
 
     objects = CategoryManager()
 
     class Meta:
-        ordering = ('tree_id', 'lft')
-        verbose_name = _('category')
-        verbose_name_plural = _('categories')
+        ordering = ("tree_id", "lft")
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
 
     class MPTTMeta:
         order_insertion_by = ["ordering"]
@@ -168,13 +200,18 @@ class Category(MPTTModel, TranslatableModel):
         return self.get_hierarchy()
 
     def get_hierarchy(self, reverse=True):
-        return " / ".join([
-            ancestor.safe_translation_getter("name", any_language=True) or ancestor.identifier
-            for ancestor in self.get_ancestors(ascending=reverse, include_self=True).prefetch_related("translations")
-        ])
+        return " / ".join(
+            [
+                ancestor.safe_translation_getter("name", any_language=True) or ancestor.identifier
+                for ancestor in self.get_ancestors(ascending=reverse, include_self=True).prefetch_related(
+                    "translations"
+                )
+            ]
+        )
 
     def get_cached_children(self):
         from shuup.core import cache
+
         key = "category_cached_children:{}".format(self.pk)
         children = cache.get(key)
         if children is not None:
@@ -185,7 +222,7 @@ class Category(MPTTModel, TranslatableModel):
 
     def is_visible(self, customer):
         if customer and customer.is_all_seeing:
-            return (self.status != CategoryStatus.DELETED)
+            return self.status != CategoryStatus.DELETED
         if self.status != CategoryStatus.VISIBLE:
             return False
         if not customer or customer.is_anonymous:
@@ -233,6 +270,7 @@ class Category(MPTTModel, TranslatableModel):
 
         # bump children cache
         from shuup.core import cache
+
         cache.bump_version("category_cached_children")
 
         return rv

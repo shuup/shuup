@@ -10,9 +10,7 @@ from django import forms
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.core.models import Product, Supplier
 from shuup.simple_supplier.module import SimpleSupplierModule
-from shuup.simple_supplier.utils import (
-    get_stock_adjustment_div, get_stock_information_html
-)
+from shuup.simple_supplier.utils import get_stock_adjustment_div, get_stock_information_html
 
 
 class SimpleSupplierForm(forms.Form):
@@ -60,7 +58,7 @@ class SimpleSupplierFormPart(FormPart):
                 form_class=self.form,
                 template_name="shuup/simple_supplier/admin/product_form_part.jinja",
                 required=False,
-                kwargs={"product": self.object.product, "request": self.request}
+                kwargs={"product": self.object.product, "request": self.request},
             )
 
     def form_valid(self, form):

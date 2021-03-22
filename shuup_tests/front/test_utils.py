@@ -8,13 +8,11 @@
 import pytest
 
 from shuup.core import cache
-from shuup.core.models import Product, ShopProduct, ProductVariationVariable, ProductVariationVariableValue
-from shuup.front.utils.sorts_and_filters import get_product_queryset
+from shuup.core.models import Product, ProductVariationVariable, ProductVariationVariableValue, ShopProduct
 from shuup.front.utils.product import get_orderable_variation_children
+from shuup.front.utils.sorts_and_filters import get_product_queryset
 from shuup.front.utils.user import is_admin_user
-from shuup.testing.factories import (
-    create_product, get_default_shop, get_default_supplier
-)
+from shuup.testing.factories import create_product, get_default_shop, get_default_supplier
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_jinja_context
 from shuup_tests.utils.fixtures import regular_user
@@ -49,12 +47,16 @@ def test_get_orderable_variation_children(rf):
     parent = create_product("test-sku-1", shop=shop)
     variation_variable = ProductVariationVariable.objects.create(product=parent, identifier="color", name=variable_name)
     red_value = ProductVariationVariableValue.objects.create(variable=variation_variable, identifier="red", value="Red")
-    blue_value =ProductVariationVariableValue.objects.create(variable=variation_variable, identifier="blue", value="Blue")
+    blue_value = ProductVariationVariableValue.objects.create(
+        variable=variation_variable, identifier="blue", value="Blue"
+    )
     combinations = list(parent.get_all_available_combinations())
     assert len(combinations) == 2
     for combo in combinations:
         assert not combo["result_product_pk"]
-        child = create_product("xyz-%s" % combo["sku_part"], shop=shop, supplier=get_default_supplier(), default_price=20)
+        child = create_product(
+            "xyz-%s" % combo["sku_part"], shop=shop, supplier=get_default_supplier(), default_price=20
+        )
         child.link_to_parent(parent, combination_hash=combo["hash"])
 
     combinations = list(parent.get_all_available_combinations())
@@ -71,6 +73,7 @@ def test_get_orderable_variation_children(rf):
             assert var_variable == variation_variable
             assert red_value in var_values
             assert blue_value in var_values
+
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")

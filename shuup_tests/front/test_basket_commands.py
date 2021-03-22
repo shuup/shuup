@@ -5,32 +5,37 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal
-
 import pytest
+from decimal import Decimal
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect, JsonResponse
 
+from shuup.campaigns.models.basket_conditions import BasketTotalAmountCondition
+from shuup.campaigns.models.basket_effects import BasketDiscountAmount
+from shuup.campaigns.models.campaigns import BasketCampaign
 from shuup.core.basket.update_methods import BasketUpdateMethods
 from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import (
-    ProductMode, ProductVariationVariable, ProductVariationVariableValue,
-    SalesUnit, ShopProductVisibility, OrderLineType
+    OrderLineType,
+    ProductMode,
+    ProductVariationVariable,
+    ProductVariationVariableValue,
+    SalesUnit,
+    ShopProductVisibility,
 )
 from shuup.core.order_creator import OrderLineBehavior
-from shuup.campaigns.models.basket_conditions import BasketTotalAmountCondition
-from shuup.campaigns.models.campaigns import BasketCampaign
-from shuup.campaigns.models.basket_effects import BasketDiscountAmount
-
-from shuup.front.basket import commands as basket_commands
-from shuup.front.basket import get_basket, get_basket_command_dispatcher
+from shuup.front.basket import commands as basket_commands, get_basket, get_basket_command_dispatcher
 from shuup.front.basket.command_dispatcher import BasketCommandDispatcher
 from shuup.front.signals import get_basket_command_handler
 from shuup.testing.factories import (
-    complete_product, create_product, create_random_person,
-    get_default_product, get_default_shop, get_default_supplier
+    complete_product,
+    create_product,
+    create_random_person,
+    get_default_product,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_request_with_basket
@@ -53,7 +58,7 @@ def test_dne():
 
 @pytest.mark.django_db
 def test_add_and_remove_and_clear():
-    product = create_product('fractionable', fractional=True)
+    product = create_product("fractionable", fractional=True)
     complete_product(product)
     supplier = get_default_supplier()
     request = get_request_with_basket()
@@ -88,7 +93,7 @@ def test_add_and_remove_and_clear():
 @pytest.mark.django_db
 def test_add_and_invalid_product():
     shop = get_default_shop()
-    product = create_product('fractionable', fractional=True)
+    product = create_product("fractionable", fractional=True)
     complete_product(product)
     supplier = get_default_supplier()
     request = get_request_with_basket()
@@ -98,9 +103,9 @@ def test_add_and_invalid_product():
     product.get_shop_instance(shop).delete()
 
     with pytest.raises(ValidationError) as exc:
-        basket_commands.handle_add(request, basket, **{
-            "product_id": product.pk, "quantity": 1, "supplier_id": supplier.pk
-        })
+        basket_commands.handle_add(
+            request, basket, **{"product_id": product.pk, "quantity": 1, "supplier_id": supplier.pk}
+        )
     assert "Product is not available in this shop" in exc.value.message
 
 
@@ -120,7 +125,7 @@ def test_add_invalid_product():
 
     with pytest.raises(ValidationError) as excinfo:
         basket_commands.handle_add(request, basket, product_id=parent.pk, quantity=2)
-    assert excinfo.value.code == 'invalid_product'
+    assert excinfo.value.code == "invalid_product"
 
     child.unlink_from_parent()
     child.link_to_parent(parent, variables={"size": "XXL"})
@@ -129,7 +134,8 @@ def test_add_invalid_product():
 
     with pytest.raises(ValidationError) as excinfo:
         basket_commands.handle_add(request, basket, product_id=parent.pk, quantity=3)
-    assert excinfo.value.code == 'invalid_product'
+    assert excinfo.value.code == "invalid_product"
+
 
 @pytest.mark.django_db
 def test_ajax():
@@ -212,7 +218,7 @@ def test_complex_variation():
 def test_basket_update():
     request = get_request_with_basket()
     basket = request.basket
-    product = create_product('fractionable', fractional=True)
+    product = create_product("fractionable", fractional=True)
     complete_product(product)
     basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1.75)
     assert basket.product_count == 1.75
@@ -259,19 +265,14 @@ def test_basket_partial_quantity_update_all_product_counts():
     request = get_request_with_basket()
     basket = request.basket
 
-    pieces = SalesUnit.objects.create(
-        identifier="pieces", decimals=0, name="Pieces", symbol='pc.')
-    kilograms = SalesUnit.objects.create(
-        identifier="kilograms", decimals=3, name="Kilograms", symbol='kg')
-    cup = create_product(
-        sku="COFFEE-CUP-123", sales_unit=pieces, shop=shop, supplier=supplier)
-    beans = create_product(
-        sku="COFFEEBEANS3", sales_unit=kilograms, shop=shop, supplier=supplier)
+    pieces = SalesUnit.objects.create(identifier="pieces", decimals=0, name="Pieces", symbol="pc.")
+    kilograms = SalesUnit.objects.create(identifier="kilograms", decimals=3, name="Kilograms", symbol="kg")
+    cup = create_product(sku="COFFEE-CUP-123", sales_unit=pieces, shop=shop, supplier=supplier)
+    beans = create_product(sku="COFFEEBEANS3", sales_unit=kilograms, shop=shop, supplier=supplier)
     beans_shop_product = beans.get_shop_instance(shop)
-    beans_shop_product.minimum_purchase_quantity = Decimal('0.1')
+    beans_shop_product.minimum_purchase_quantity = Decimal("0.1")
     beans_shop_product.save()
-    pears = create_product(
-        sku="PEARS-27", sales_unit=kilograms, shop=shop, supplier=supplier)
+    pears = create_product(sku="PEARS-27", sales_unit=kilograms, shop=shop, supplier=supplier)
 
     add = basket_commands.handle_add
     update = basket_commands.handle_update
@@ -288,8 +289,8 @@ def test_basket_partial_quantity_update_all_product_counts():
     assert basket.product_line_count == 1
 
     # Basket update operations work by prefixing line id with operation
-    qty_update_cup = 'q_' + basket.get_lines()[0].line_id
-    delete_cup = 'delete_' + basket.get_lines()[0].line_id
+    qty_update_cup = "q_" + basket.get_lines()[0].line_id
+    delete_cup = "delete_" + basket.get_lines()[0].line_id
 
     # 3 cups
     update(request, basket, **{qty_update_cup: "3"})
@@ -298,42 +299,42 @@ def test_basket_partial_quantity_update_all_product_counts():
     assert basket.product_line_count == 1
 
     # 3 cups + 0.5 kg beans
-    add(request, basket, product_id=beans.pk, quantity='0.5')
-    assert basket.product_count == Decimal('3.5')
+    add(request, basket, product_id=beans.pk, quantity="0.5")
+    assert basket.product_count == Decimal("3.5")
     assert basket.smart_product_count == 4
     assert basket.product_line_count == 2
 
-    qty_update_beans = 'q_' + basket.get_lines()[1].line_id
-    delete_beans1 = 'delete_' + basket.get_lines()[1].line_id
+    qty_update_beans = "q_" + basket.get_lines()[1].line_id
+    delete_beans1 = "delete_" + basket.get_lines()[1].line_id
 
     # 1 cup + 2.520 kg beans
     update(request, basket, **{qty_update_cup: "1.0"})
     update(request, basket, **{qty_update_beans: "2.520"})
-    assert basket.product_count == Decimal('3.520')
+    assert basket.product_count == Decimal("3.520")
     assert basket.smart_product_count == 2
     assert basket.product_line_count == 2
 
     # 42 cups + 2.520 kg beans
     update(request, basket, **{qty_update_cup: "42"})
-    assert basket.product_count == Decimal('44.520')
+    assert basket.product_count == Decimal("44.520")
     assert basket.smart_product_count == 43
     assert basket.product_line_count == 2
 
     # 42 cups + 2.520 kg beans + 3.5 kg pears
-    add(request, basket, product_id=pears.pk, quantity='3.5')
-    assert basket.product_count == Decimal('48.020')
+    add(request, basket, product_id=pears.pk, quantity="3.5")
+    assert basket.product_count == Decimal("48.020")
     assert basket.smart_product_count == 44
     assert basket.product_line_count == 3
 
     # 42 cups + 3.5 kg pears
     update(request, basket, **{delete_beans1: "1"})
-    assert basket.product_count == Decimal('45.5')
+    assert basket.product_count == Decimal("45.5")
     assert basket.smart_product_count == 43
     assert basket.product_line_count == 2
 
     # 3.5 kg pears
     update(request, basket, **{delete_cup: "1"})
-    assert basket.product_count == Decimal('3.5')
+    assert basket.product_count == Decimal("3.5")
     assert basket.smart_product_count == 1
     assert basket.product_line_count == 1
 
@@ -411,11 +412,14 @@ def test_basket_update_with_package_product():
 @pytest.mark.django_db
 def test_custom_basket_command():
     ok = []
+
     def noop(**kwargs):
         ok.append(kwargs)
+
     def get_custom_command(command, **kwargs):
         if command == "test_custom_basket_command":
             return noop
+
     old_n_receivers = len(get_basket_command_handler.receivers)
     try:
         get_basket_command_handler.connect(get_custom_command, dispatch_uid="test_custom_basket_command")
@@ -461,15 +465,16 @@ def test_basket_update_with_discount():
     request = get_request_with_basket()
     basket = request.basket
     default_price = 10
-    product = create_product('fractionable', fractional=True, default_price=default_price, shop=basket.shop, supplier=supplier)
+    product = create_product(
+        "fractionable", fractional=True, default_price=default_price, shop=basket.shop, supplier=supplier
+    )
     discount_amount_value = 4
     basket_rule1 = BasketTotalAmountCondition.objects.create(value="2")
-    campaign = BasketCampaign.objects.create(
-        shop=basket.shop, public_name="test", name="test", active=True)
+    campaign = BasketCampaign.objects.create(shop=basket.shop, public_name="test", name="test", active=True)
     campaign.conditions.add(basket_rule1)
     campaign.save()
     BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount_value)
-    #basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1)
+    # basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1)
     basket.add_line(
         line_id="product-line",
         type=OrderLineType.PRODUCT,
@@ -491,7 +496,7 @@ def test_basket_update_with_discount():
         supplier=supplier,
         quantity=1,
         shop=basket.shop,
-        on_parent_change_behavior=OrderLineBehavior.SKIP
+        on_parent_change_behavior=OrderLineBehavior.SKIP,
     )
     line_id = basket.get_lines()[0].line_id
 
@@ -506,7 +511,7 @@ def test_basket_update_with_discount():
         supplier=supplier,
         quantity=1,
         shop=basket.shop,
-        on_parent_change_behavior=OrderLineBehavior.DELETE
+        on_parent_change_behavior=OrderLineBehavior.DELETE,
     )
     line_id = basket.get_lines()[0].line_id
 

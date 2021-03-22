@@ -8,7 +8,6 @@
 
 import pytest
 from django.conf import settings
-from shuup.utils.django_compat import reverse
 from django.utils.timezone import now
 from django.utils.translation import activate
 
@@ -17,6 +16,7 @@ from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.simple_cms.models import Page
 from shuup.testing import factories
 from shuup.testing.soup_utils import extract_form_fields
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 
@@ -47,30 +47,34 @@ def test_gdpr_admin_settings(client, admin_user):
     # create the settings with only basic options
     payload = extract_form_fields(response)
     payload.pop("base-consent_pages")
-    payload.update({
-        "base-enabled": True,
-        "base-privacy_policy_page": page.pk,
-        "base-cookie_banner_content__en": "Banner content",
-        "base-cookie_privacy_excerpt__en": "Cookie excerpt",
-        "cookie_categories-0-id": "",
-        "cookie_categories-0-always_active": 1,
-        "cookie_categories-0-name__en": "required",
-        "cookie_categories-0-how_is_used__en": "to work",
-        "cookie_categories-0-cookies": "sessionid"
-    })
+    payload.update(
+        {
+            "base-enabled": True,
+            "base-privacy_policy_page": page.pk,
+            "base-cookie_banner_content__en": "Banner content",
+            "base-cookie_privacy_excerpt__en": "Cookie excerpt",
+            "cookie_categories-0-id": "",
+            "cookie_categories-0-always_active": 1,
+            "cookie_categories-0-name__en": "required",
+            "cookie_categories-0-how_is_used__en": "to work",
+            "cookie_categories-0-cookies": "sessionid",
+        }
+    )
     response = client.post(admin_settings_url, data=payload)
     assert response.status_code == 302
 
     assert GDPRCookieCategory.objects.count() == 1
 
     # add one more cookie category
-    payload.update({
-        "cookie_categories-1-id": "",
-        "cookie_categories-1-always_active": 1,
-        "cookie_categories-1-name__en": "Maybe",
-        "cookie_categories-1-how_is_used__en": "to spy",
-        "cookie_categories-1-cookies": "_ga"
-    })
+    payload.update(
+        {
+            "cookie_categories-1-id": "",
+            "cookie_categories-1-always_active": 1,
+            "cookie_categories-1-name__en": "Maybe",
+            "cookie_categories-1-how_is_used__en": "to spy",
+            "cookie_categories-1-cookies": "_ga",
+        }
+    )
     client.post(admin_settings_url, data=payload)
     assert GDPRCookieCategory.objects.count() == 2
 

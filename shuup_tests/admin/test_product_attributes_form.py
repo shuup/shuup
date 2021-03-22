@@ -8,9 +8,8 @@
 from __future__ import unicode_literals
 
 import datetime
-from decimal import Decimal
-
 import pytest
+from decimal import Decimal
 from django.utils.timezone import make_aware, utc
 
 from shuup.admin.modules.products.forms import ProductAttributesForm
@@ -39,22 +38,27 @@ def test_product_attributes_form():
     paf = ProductAttributesForm(product=product, languages=("fi", "sv"), default_language="sv")
     assert paf.languages[0] == "sv"
 
-    assert compare_partial_dicts(paf.initial, {  # Check that things get loaded.
-        "bogomips": 6400,
-        "genre__fi": "Kauhu",
-        "genre__en": "Horror",
-        "release_date": VOGONY_DATE,
-        "time_to_finish": Decimal("12.05")
-    })
+    assert compare_partial_dicts(
+        paf.initial,
+        {  # Check that things get loaded.
+            "bogomips": 6400,
+            "genre__fi": "Kauhu",
+            "genre__en": "Horror",
+            "release_date": VOGONY_DATE,
+            "time_to_finish": Decimal("12.05"),
+        },
+    )
     form_data = get_form_data(paf)
-    form_data.update({  # Change, clear and add fields
-        "genre__sv": "Skräck",
-        "genre__en": "Terror",
-        "bogomips": "",
-        "release_date": "",
-        "awesome": "True",
-        "important_datetime": make_aware(datetime.datetime(2000, 1, 1, 1, 2, 3), utc)
-    })
+    form_data.update(
+        {  # Change, clear and add fields
+            "genre__sv": "Skräck",
+            "genre__en": "Terror",
+            "bogomips": "",
+            "release_date": "",
+            "awesome": "True",
+            "important_datetime": make_aware(datetime.datetime(2000, 1, 1, 1, 2, 3), utc),
+        }
+    )
     paf = ProductAttributesForm(product=product, languages=("fi", "sv"), default_language="sv", data=form_data)
     paf.full_clean()
     assert not paf.errors

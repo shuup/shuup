@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import json
-
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
@@ -18,9 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
 
-from shuup.admin.toolbar import (
-    get_discard_button, JavaScriptActionButton, Toolbar
-)
+from shuup.admin.toolbar import JavaScriptActionButton, Toolbar, get_discard_button
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import get_create_or_change_title
 from shuup.notify.admin_module.forms import ScriptItemEditForm
@@ -43,7 +40,7 @@ def script_item_editor(request):
         script_item=item_class.unserialize(init_data["data"], validate=False),
         event_class=Event.class_for_identifier(init_data["eventIdentifier"]),
         data=(request.POST if request.POST else None),
-        files=(request.FILES if request.FILES else None)
+        files=(request.FILES if request.FILES else None),
     )
     form.initial = form.get_initial()
     context = {
@@ -88,9 +85,11 @@ class ScriptAPI(object):
         return func(data)
 
     def handle_get_data(self, data):
-        return JsonResponse({
-            "steps": self.script.get_serialized_steps(),
-        })
+        return JsonResponse(
+            {
+                "steps": self.script.get_serialized_steps(),
+            }
+        )
 
     def handle_save_data(self, data):
         try:
@@ -118,11 +117,16 @@ class EditScriptContentView(DetailView):
         context["condition_infos"] = Condition.get_ui_info_map()
         context["cond_op_names"] = get_enum_choices_dict(StepConditionOperator)
         context["step_next_names"] = get_enum_choices_dict(StepNext)
-        context["toolbar"] = Toolbar([
-            JavaScriptActionButton(
-                text=_("Save"), icon="fa fa-save", extra_css_class="btn-success",
-                onclick="window.ScriptEditor.save();return false"
-            ),
-            get_discard_button(get_model_url(self.object, "edit"))
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                JavaScriptActionButton(
+                    text=_("Save"),
+                    icon="fa fa-save",
+                    extra_css_class="btn-success",
+                    onclick="window.ScriptEditor.save();return false",
+                ),
+                get_discard_button(get_model_url(self.object, "edit")),
+            ],
+            view=self,
+        )
         return context

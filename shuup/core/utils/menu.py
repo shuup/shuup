@@ -16,6 +16,7 @@ class MainMenuUpdater(object):
         ORDERS_MENU_CATEGORY: [{"identifier": "subscriptions", "title": _("Subscriptions")}]
     }
     """
+
     updates = {}
 
     def __init__(self, menu):

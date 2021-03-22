@@ -16,6 +16,7 @@ class SalesDashboardModule(CurrencyBound, AdminModule):
 
     def get_dashboard_blocks(self, request):
         import shuup.admin.modules.sales_dashboard.dashboard as dashboard
+
         currency = self.currency
         if not currency:
             shop = request.shop

@@ -11,8 +11,11 @@ import pytest
 
 from shuup.core.templatetags.shuup_common import money
 from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product,
-    get_default_shop, get_default_supplier
+    add_product_to_order,
+    create_empty_order,
+    create_product,
+    get_default_shop,
+    get_default_supplier,
 )
 
 
@@ -40,14 +43,15 @@ def _get_order(shop, supplier):
     for product_data in _get_product_data():
         quantity = product_data.pop("quantity")
         tax_rate = product_data.pop("tax_rate")
-        product = create_product(
-            sku=product_data.pop("sku"),
-            shop=shop,
-            supplier=supplier,
-            **product_data)
+        product = create_product(sku=product_data.pop("sku"), shop=shop, supplier=supplier, **product_data)
         add_product_to_order(
-            order, supplier, product, quantity=quantity,
-            taxless_base_unit_price=product_data["default_price"], tax_rate=tax_rate)
+            order,
+            supplier,
+            product,
+            quantity=quantity,
+            taxless_base_unit_price=product_data["default_price"],
+            tax_rate=tax_rate,
+        )
     order.cache_prices()
     order.check_all_verified()
     order.save()
@@ -60,30 +64,30 @@ def _get_product_data():
             "sku": "sku1234",
             "default_price": decimal.Decimal("14.756"),
             "quantity": decimal.Decimal("1"),
-            "tax_rate": decimal.Decimal("0.24")
+            "tax_rate": decimal.Decimal("0.24"),
         },
         {
             "sku": "sku12345",
             "default_price": decimal.Decimal("10"),
             "quantity": decimal.Decimal("5"),
-            "tax_rate": decimal.Decimal("0.24")
+            "tax_rate": decimal.Decimal("0.24"),
         },
         {
             "sku": "sku123456",
             "default_price": decimal.Decimal("14.756"),
             "quantity": decimal.Decimal("2"),
-            "tax_rate": decimal.Decimal("0.24")
+            "tax_rate": decimal.Decimal("0.24"),
         },
         {
             "sku": "sku1234567",
             "default_price": decimal.Decimal("8.8164"),
             "quantity": decimal.Decimal("1"),
-            "tax_rate": decimal.Decimal("0.14")
+            "tax_rate": decimal.Decimal("0.14"),
         },
         {
             "sku": "sku12345678",
             "default_price": decimal.Decimal("17.6328"),
             "quantity": decimal.Decimal("4"),
-            "tax_rate": decimal.Decimal("0.00")
-        }
+            "tax_rate": decimal.Decimal("0.00"),
+        },
     ]

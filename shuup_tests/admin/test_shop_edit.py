@@ -6,19 +6,23 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from shuup.utils.django_compat import reverse
+from django.test.utils import override_settings
 from django.utils.translation import activate
 
 from shuup import configuration
 from shuup.admin.modules.settings import consts
 from shuup.admin.modules.shops.views.edit import ShopBaseForm
-from django.test.utils import override_settings
 from shuup.core.models import ConfigurationItem, Shop, ShopStatus
 from shuup.testing.factories import (
-    create_product, create_random_order, create_random_person, get_currency,
-    get_default_shop, get_default_supplier
+    create_product,
+    create_random_order,
+    create_random_person,
+    get_currency,
+    get_default_shop,
+    get_default_supplier,
 )
-from shuup_tests.utils import printable_gibberish, SmartClient
+from shuup.utils.django_compat import reverse
+from shuup_tests.utils import SmartClient, printable_gibberish
 from shuup_tests.utils.forms import get_form_data
 
 
@@ -31,7 +35,7 @@ def test_protected_fields():
         status=ShopStatus.ENABLED,
         public_name="test shop",
         domain="derp",
-        currency="EUR"
+        currency="EUR",
     )
     get_currency("EUR")
     get_currency("USD")
@@ -79,7 +83,7 @@ def test_new_shop(rf, admin_user):
             "base-name__en": "New Shop",
             "base-status": "1",
             "base-currency": "EUR",
-            "base-domain": "shop2"
+            "base-domain": "shop2",
         }
         response = client.post(reverse("shuup_admin:shop.new"), data=payload)
         assert response.status_code == 302
@@ -130,7 +134,9 @@ def test_order_configuration(rf, admin_user):
     client.post(url, data=data)
 
     assert configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD) == 19
-    assert not configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD)  # None because disabled line 104, else 0
+    assert not configuration.get(
+        shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD
+    )  # None because disabled line 104, else 0
 
 
 def get_base_form_data(shop):

@@ -8,31 +8,35 @@
 import decimal
 import pytest
 
-from shuup.core.models import (
-    get_person_contact, OrderLineType, OrderTotalLimitBehaviorComponent
-)
+from shuup.core.models import OrderLineType, OrderTotalLimitBehaviorComponent, get_person_contact
 from shuup.testing.factories import (
-    create_product, get_address, get_payment_method,
-    get_shipping_method, get_default_supplier,
-    get_initial_order_status, get_shop
+    create_product,
+    get_address,
+    get_default_supplier,
+    get_initial_order_status,
+    get_payment_method,
+    get_shipping_method,
+    get_shop,
 )
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("min,max,price", [
-    (None, "10.32", decimal.Decimal("0.01")),
-    ("0", "10.32", decimal.Decimal("10.32")),
-    ("0", "10.32", decimal.Decimal("0")),
-    ("10.00", "50.00", decimal.Decimal("10.01")),
-    ("32.45678", None, decimal.Decimal("53.57")),
-    (None, None, decimal.Decimal("1000000"))
-])
+@pytest.mark.parametrize(
+    "min,max,price",
+    [
+        (None, "10.32", decimal.Decimal("0.01")),
+        ("0", "10.32", decimal.Decimal("10.32")),
+        ("0", "10.32", decimal.Decimal("0")),
+        ("10.00", "50.00", decimal.Decimal("10.01")),
+        ("32.45678", None, decimal.Decimal("53.57")),
+        (None, None, decimal.Decimal("1000000")),
+    ],
+)
 def test_order_total_behavior_available(admin_user, min, max, price):
     source, shipping_method = _get_source(admin_user, True, price)
     assert shipping_method.behavior_components.count() == 0
-    component = OrderTotalLimitBehaviorComponent.objects.create(
-        min_price_value=min, max_price_value=max)
+    component = OrderTotalLimitBehaviorComponent.objects.create(min_price_value=min, max_price_value=max)
     shipping_method.behavior_components.add(component)
 
     assert shipping_method.behavior_components.count() == 1
@@ -42,17 +46,19 @@ def test_order_total_behavior_available(admin_user, min, max, price):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("min,max,price", [
-    (None, "10.32", decimal.Decimal("10.33")),
-    ("10.00", "50.00", decimal.Decimal("5")),
-    ("10.00", "50.00", decimal.Decimal("62")),
-    ("32.45678", None, decimal.Decimal("20"))
-])
+@pytest.mark.parametrize(
+    "min,max,price",
+    [
+        (None, "10.32", decimal.Decimal("10.33")),
+        ("10.00", "50.00", decimal.Decimal("5")),
+        ("10.00", "50.00", decimal.Decimal("62")),
+        ("32.45678", None, decimal.Decimal("20")),
+    ],
+)
 def test_order_total_behavior_unavailable(admin_user, min, max, price):
     source, shipping_method = _get_source(admin_user, False, price)
     assert shipping_method.behavior_components.count() == 0
-    component = OrderTotalLimitBehaviorComponent.objects.create(
-        min_price_value=min, max_price_value=max)
+    component = OrderTotalLimitBehaviorComponent.objects.create(min_price_value=min, max_price_value=max)
     shipping_method.behavior_components.add(component)
 
     assert shipping_method.behavior_components.count() == 1
@@ -76,7 +82,7 @@ def _get_source(user, prices_include_taxes, total_price_value):
         sku="test-%s--%s" % (prices_include_taxes, total_price_value),
         shop=source.shop,
         supplier=supplier,
-        default_price=total_price_value
+        default_price=total_price_value,
     )
     source.add_line(
         type=OrderLineType.PRODUCT,

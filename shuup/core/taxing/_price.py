@@ -26,6 +26,7 @@ class TaxedPrice(object):
        (`list[shuup.core.taxing.LineTax]`)
        List of taxes applied to the price.
     """
+
     def __init__(self, taxful, taxless, taxes=None):
         """
         Initialize from given prices and taxes.

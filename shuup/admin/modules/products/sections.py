@@ -27,6 +27,7 @@ class ProductOrdersSection(Section):
             return has_product_id
 
         from shuup.admin.utils.permissions import has_permission
+
         return bool(has_product_id) and has_permission(request.user, "shop_product.edit")
 
     @classmethod

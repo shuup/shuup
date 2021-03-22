@@ -21,16 +21,17 @@ class HappyHourModule(AdminModule):
 
     def get_urls(self):
         from shuup.admin.urls import admin_url
+
         delete = admin_url(
             r"^discounts_happy_hour/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.HappyHourDeleteView",
-            name="discounts_happy_hour.delete"
+            name="discounts_happy_hour.delete",
         )
 
         return [delete] + get_edit_and_list_urls(
             url_prefix="^discounts_happy_hour",
             view_template="shuup.discounts.admin.views.HappyHour%sView",
-            name_template="discounts_happy_hour.%s"
+            name_template="discounts_happy_hour.%s",
         )
 
     def get_menu_entries(self, request):
@@ -40,7 +41,7 @@ class HappyHourModule(AdminModule):
                 icon="fa fa-percent",
                 url="shuup_admin:discounts_happy_hour.list",
                 category=CAMPAIGNS_MENU_CATEGORY,
-                ordering=7
+                ordering=7,
             )
         ]
 

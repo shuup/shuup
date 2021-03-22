@@ -52,12 +52,15 @@ class SystemSettingsView(FormPartsViewMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(SystemSettingsView, self).get_context_data(**kwargs)
-        context["toolbar"] = Toolbar([
-            PostActionButton(
-                icon="fa fa-check-circle",
-                form_id="settings_form",
-                text=_("Save system settings"),
-                extra_css_class="btn-success",
-            )
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                PostActionButton(
+                    icon="fa fa-check-circle",
+                    form_id="settings_form",
+                    text=_("Save system settings"),
+                    extra_css_class="btn-success",
+                )
+            ],
+            view=self,
+        )
         return context

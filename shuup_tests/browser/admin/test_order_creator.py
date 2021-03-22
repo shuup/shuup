@@ -7,23 +7,28 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 import os
-
 import pytest
-from shuup.utils.django_compat import reverse
 from splinter.exceptions import ElementDoesNotExist
 
 from shuup.admin.signals import object_created
 from shuup.core.models import Order
 from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_appeared,
-    wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    move_to_element,
+    wait_until_appeared,
+    wait_until_condition,
 )
 from shuup.testing.factories import (
-    create_product, create_random_person, get_default_payment_method,
-    get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_initial_order_status
+    create_product,
+    create_random_person,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_initial_order_status,
 )
-from shuup.testing.browser_utils import initialize_admin_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
@@ -93,13 +98,14 @@ def _visit_order_creator_view(browser, live_server):
     browser.visit("%s%s" % (live_server, url))
     assert browser.is_element_present_by_css("h1.main-header")
 
+
 def _test_language_change(browser):
     wait_until_condition(browser, lambda x: x.is_text_present("Customer Details"))
 
     # Make sure that the translations is handled correctly and change to Finnish
     browser.find_by_id("dropdownMenu").click()
     browser.find_by_xpath('//a[@data-value="fi"]').first.click()
-    wait_until_condition(browser, condition = lambda x: x.is_text_present("Asiakkaan tiedot"))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Asiakkaan tiedot"))
 
     # And back in English
     browser.find_by_id("dropdownMenu").click()
@@ -136,26 +142,25 @@ def _test_quick_add_lines(browser):
     assert browser.find_by_css("input[name='auto-add']").first.checked == True
     # add line automatically just by searching and finding direct match
     click_element(browser, "#quick-add .select2")
-    wait_until_condition(
-        browser, lambda x: len(browser.find_by_css("#quick-add .select2-container--open")) == 1)
+    wait_until_condition(browser, lambda x: len(browser.find_by_css("#quick-add .select2-container--open")) == 1)
     browser.find_by_css("input.select2-search__field").first.value = "test-sku1"
     wait_until_condition(browser, lambda x: len(x.find_by_css("#lines .list-group-item")) == 1)
     line_items = browser.find_by_css("#lines .list-group-item")
     assert len(browser.find_by_css("#quick-add .select2-container--open")) == 1, "select is open after add"
-    assert line_items.first.find_by_css('input[name="quantity"]').first.value == '1', "one piece added"
+    assert line_items.first.find_by_css('input[name="quantity"]').first.value == "1", "one piece added"
 
     browser.find_by_css("input.select2-search__field").first.value = "test-sku1"
-    wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="quantity"]').first.value == '2')
-    line_items = browser.find_by_id("lines").find_by_css('.list-group-item')
+    wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="quantity"]').first.value == "2")
+    line_items = browser.find_by_id("lines").find_by_css(".list-group-item")
     assert len(line_items) == 1, "only one line item exists"
-    assert line_items.first.find_by_css('input[name="quantity"]').first.value == '2', "two pieces added"
+    assert line_items.first.find_by_css('input[name="quantity"]').first.value == "2", "two pieces added"
 
     # add line automatically by searching and clicking on match
     browser.find_by_css("input.select2-search__field").first.value = "test-sku"
     wait_until_appeared(browser, ".select2-results__option[aria-selected='false']")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
-    wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="quantity"]').first.value == '3')
-    assert line_items.first.find_by_css('input[name="quantity"]').first.value == '3', "three pieces added"
+    wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="quantity"]').first.value == "3")
+    assert line_items.first.find_by_css('input[name="quantity"]').first.value == "3", "three pieces added"
 
     # add line manually
     browser.uncheck("auto-add")
@@ -164,14 +169,12 @@ def _test_quick_add_lines(browser):
     browser.find_by_css("input.select2-search__field").first.value = "test-sku0"
     wait_until_appeared(browser, ".select2-results__option[aria-selected='false']")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
-    wait_until_condition(browser, lambda x: len(x.find_by_css('#lines .list-group-item')) == 2)
-    line_items = browser.find_by_id("lines").find_by_css('.list-group-item')
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#lines .list-group-item")) == 2)
+    line_items = browser.find_by_id("lines").find_by_css(".list-group-item")
     assert len(line_items) == 2, "two line items exist"
 
     click_element(browser, "#lines .list-group-item:last-child .delete button")
-    wait_until_condition(
-        browser,
-        lambda x: len(x.find_by_css("#lines .list-group-item")) == 1)
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#lines .list-group-item")) == 1)
 
 
 def _test_customer_data(browser, person):
@@ -180,13 +183,12 @@ def _test_customer_data(browser, person):
     assert browser.find_by_css("input[name='save-address']").first.checked == True
     assert browser.find_by_css("input[name='ship-to-billing-address']").first.checked == False
     assert browser.find_by_css("input[name='order-for-company']").first.checked == False
-    assert not browser.find_by_css("input[name='billing-tax_number']").first['required']
+    assert not browser.find_by_css("input[name='billing-tax_number']").first["required"]
     browser.find_by_css("input[name=ship-to-billing-address]").check()
     assert browser.find_by_css("input[name=ship-to-billing-address]").first.checked
     browser.find_by_css("input[name='order-for-company']").check()
     assert browser.find_by_css("input[name='order-for-company']").first.checked
-    wait_until_condition(
-        browser, lambda x: x.find_by_css("input[name='billing-tax_number']").first['required'])
+    wait_until_condition(browser, lambda x: x.find_by_css("input[name='billing-tax_number']").first["required"])
     assert len(browser.find_by_css("input[name='shipping-name']")) == 0, "shipping address column is hidden"
 
     browser.find_by_css("input[name='order-for-company']").uncheck()
@@ -202,22 +204,19 @@ def _test_customer_data(browser, person):
     wait_until_condition(browser, lambda x: len(browser.windows) == 1, timeout=30)
     browser.windows.current = browser.windows[0]
     # check fields were set
-    wait_until_condition(
-        browser, lambda x: x.find_by_name("billing-name").value == person.name)
+    wait_until_condition(browser, lambda x: x.find_by_name("billing-name").value == person.name)
     assert browser.find_by_name("billing-name").value == person.name
     assert browser.find_by_name("billing-street").value == person.default_billing_address.street
     assert browser.find_by_name("billing-city").value == person.default_billing_address.city
     assert browser.find_by_name("billing-country").value == person.default_billing_address.country
     click_element(browser, "#clear-customer")
-    wait_until_condition(
-        browser, lambda x: "new customer" in x.find_by_css("#customer-description").text)
+    wait_until_condition(browser, lambda x: "new customer" in x.find_by_css("#customer-description").text)
 
 
 def _test_add_lines(browser):
-    line_items_before = browser.find_by_id("lines").find_by_css('.list-group-item')
+    line_items_before = browser.find_by_id("lines").find_by_css(".list-group-item")
     click_element(browser, "#add-line")
-    wait_until_condition(
-        browser, lambda x: len(x.find_by_css("#lines .list-group-item")) == len(line_items_before) + 1)
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#lines .list-group-item")) == len(line_items_before) + 1)
 
     # Make sure that the lines is present before
     # selecting product for the order line.
@@ -237,7 +236,10 @@ def _test_add_lines(browser):
     wait_until_condition(browser, lambda x: browser.windows.current.name == original_window_name, timeout=30)
 
     wait_until_condition(
-        browser, lambda x: x.find_by_css('#lines .list-group-item:last-child input[name="total"]').first.value == "10", timeout=100)
+        browser,
+        lambda x: x.find_by_css('#lines .list-group-item:last-child input[name="total"]').first.value == "10",
+        timeout=100,
+    )
     last_line_item = browser.find_by_css("#lines .list-group-item:last-child")
     assert last_line_item.find_by_css('input[name="quantity"]').first.value == "1", "1 piece added"
     assert last_line_item.find_by_css('input[name="total"]').first.value == "10", "line item total is 10"
@@ -260,7 +262,9 @@ def _test_confirm(browser):
     assert str(total) in browser.find_by_css(".order-footer h2").text, "order total is correct"
     click_element(browser, ".order-footer button")
     wait_until_appeared(browser, ".btn-danger")  # wait until the back button appears
-    assert len(browser.find_by_css("table tbody tr")) == 4, "1 line items, 2 methods, 1 total line shown in confirmation table"
+    assert (
+        len(browser.find_by_css("table tbody tr")) == 4
+    ), "1 line items, 2 methods, 1 total line shown in confirmation table"
     # click confirm
     click_element(browser, ".btn-success")
     wait_until_appeared(browser, "#details-section")

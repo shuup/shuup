@@ -37,17 +37,21 @@ class OrderAddressEditView(UpdateView):
         form_group.add_form_def(
             "billing_address",
             address_form_class,
-            kwargs={"initial": get_data_dict(order.billing_address) if order.billing_address else {}})
+            kwargs={"initial": get_data_dict(order.billing_address) if order.billing_address else {}},
+        )
         form_group.add_form_def(
             "shipping_address",
             address_form_class,
-            kwargs={"initial": get_data_dict(order.shipping_address) if order.shipping_address else {}})
+            kwargs={"initial": get_data_dict(order.shipping_address) if order.shipping_address else {}},
+        )
         return form_group
 
     def form_valid(self, form):
         order = self.get_object()
         for key, field_title in [
-                ("billing_address", _("Billing Address")), ("shipping_address", _("Shipping Address"))]:
+            ("billing_address", _("Billing Address")),
+            ("shipping_address", _("Shipping Address")),
+        ]:
             if not form[key].has_changed():
                 continue
             new_mutable_address = form[key].save()
@@ -57,12 +61,12 @@ class OrderAddressEditView(UpdateView):
             setattr(order, key, new_immutable_address)
             new_mutable_address.delete()
             order.save(update_fields=[key])
-            log_entry_message = _(
-                "%(field)s updated from: %(old_address)s") % {"field": field_title, "old_address": old_address}
+            log_entry_message = _("%(field)s updated from: %(old_address)s") % {
+                "field": field_title,
+                "old_address": old_address,
+            }
             order.add_log_entry(
-                log_entry_message[:256],
-                identifier=ADDRESS_EDITED_LOG_IDENTIFIER,
-                kind=LogEntryKind.EDIT
+                log_entry_message[:256], identifier=ADDRESS_EDITED_LOG_IDENTIFIER, kind=LogEntryKind.EDIT
             )
             messages.success(self.request, _("%(field)s were saved.") % {"field": field_title})
 
@@ -76,12 +80,15 @@ class OrderAddressEditView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(OrderAddressEditView, self).get_context_data(**kwargs)
         context["title"] = _("Save -- %s") % context["order"]
-        context["toolbar"] = Toolbar([
-            PostActionButton(
-                icon="fa fa-check-circle",
-                form_id="edit-addresses",
-                text=_("Save"),
-                extra_css_class="btn-primary",
-            ),
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                PostActionButton(
+                    icon="fa fa-check-circle",
+                    form_id="edit-addresses",
+                    text=_("Save"),
+                    extra_css_class="btn-primary",
+                ),
+            ],
+            view=self,
+        )
         return context

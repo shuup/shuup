@@ -14,8 +14,12 @@ from shuup.core.models import AnonymousContact, OrderLineType, Tax
 from shuup.core.order_creator import OrderCreator
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
-    create_package_product, create_product, get_default_shop,
-    get_default_supplier, get_default_tax_class, get_initial_order_status
+    create_package_product,
+    create_product,
+    get_default_shop,
+    get_default_supplier,
+    get_default_tax_class,
+    get_initial_order_status,
 )
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -96,11 +100,11 @@ def test_order_package_parent_links():
 
     lines = [prettify_order_line(line) for line in order.lines.all()]
     assert lines == [
-        '#0 10 x PackageParent',
-        '#1   10 x PackageChild-0, child of #0',
-        '#2   20 x PackageChild-1, child of #0',
-        '#3   30 x PackageChild-2, child of #0',
-        '#4   40 x PackageChild-3, child of #0',
+        "#0 10 x PackageParent",
+        "#1   10 x PackageChild-0, child of #0",
+        "#2   20 x PackageChild-1, child of #0",
+        "#3   30 x PackageChild-2, child of #0",
+        "#4   40 x PackageChild-3, child of #0",
     ]
 
 
@@ -110,7 +114,7 @@ def test_order_package_children_taxes():
     Test OrderCreator creates package parent links for child lines.
     """
     tax_class = get_default_tax_class()
-    tax = Tax.objects.create(rate='0.25', name="Da Tax")
+    tax = Tax.objects.create(rate="0.25", name="Da Tax")
     TaxRule.objects.create(tax=tax).tax_classes.add(tax_class)
 
     source = get_order_source_with_a_package()
@@ -122,14 +126,14 @@ def test_order_package_children_taxes():
     for line in order.lines.all():
         lines_and_taxes.append(prettify_order_line(line))
         for line_tax in line.taxes.all():
-            lines_and_taxes.append('  %s' % (line_tax,))
+            lines_and_taxes.append("  %s" % (line_tax,))
     assert lines_and_taxes == [
-        '#0 10 x PackageParent',
-        '  Da Tax: 20.000000000 EUR on 80.000000000 EUR',
-        '#1   10 x PackageChild-0, child of #0',
-        '#2   20 x PackageChild-1, child of #0',
-        '#3   30 x PackageChild-2, child of #0',
-        '#4   40 x PackageChild-3, child of #0',
+        "#0 10 x PackageParent",
+        "  Da Tax: 20.000000000 EUR on 80.000000000 EUR",
+        "#1   10 x PackageChild-0, child of #0",
+        "#2   20 x PackageChild-1, child of #0",
+        "#3   30 x PackageChild-2, child of #0",
+        "#4   40 x PackageChild-3, child of #0",
     ]
 
 
@@ -141,43 +145,53 @@ def test_order_creator_parent_linkage():
     source = BasketishOrderSource(get_default_shop())
     source.status = get_initial_order_status()
     source.add_line(
-        line_id='LINE1',
-        type=OrderLineType.OTHER, quantity=1,
-        sku='parent', text='Parent line',
+        line_id="LINE1",
+        type=OrderLineType.OTHER,
+        quantity=1,
+        sku="parent",
+        text="Parent line",
     )
     source.add_line(
-        line_id='LINE1.1',
-        parent_line_id='LINE1',
-        type=OrderLineType.OTHER, quantity=1,
-        sku='child1.1', text='Child line 1.1',
+        line_id="LINE1.1",
+        parent_line_id="LINE1",
+        type=OrderLineType.OTHER,
+        quantity=1,
+        sku="child1.1",
+        text="Child line 1.1",
     )
     source.add_line(
-        line_id='LINE1.2',
-        parent_line_id='LINE1',
-        type=OrderLineType.OTHER, quantity=1,
-        sku='child1.2', text='Child line 1.2',
+        line_id="LINE1.2",
+        parent_line_id="LINE1",
+        type=OrderLineType.OTHER,
+        quantity=1,
+        sku="child1.2",
+        text="Child line 1.2",
     )
     source.add_line(
-        line_id='LINE1.2.1',
-        parent_line_id='LINE1.2',
-        type=OrderLineType.OTHER, quantity=1,
-        sku='child1.2.1', text='Child line 1.2.1',
+        line_id="LINE1.2.1",
+        parent_line_id="LINE1.2",
+        type=OrderLineType.OTHER,
+        quantity=1,
+        sku="child1.2.1",
+        text="Child line 1.2.1",
     )
     source.add_line(
-        line_id='LINE1.3',
-        parent_line_id='LINE1',
-        type=OrderLineType.OTHER, quantity=1,
-        sku='child1.3', text='Child line 1.3',
+        line_id="LINE1.3",
+        parent_line_id="LINE1",
+        type=OrderLineType.OTHER,
+        quantity=1,
+        sku="child1.3",
+        text="Child line 1.3",
     )
     order = OrderCreator().create_order(source)
 
     lines = [prettify_order_line(line) for line in order.lines.all()]
     assert lines == [
-        '#0 1 x parent',
-        '#1   1 x child1.1, child of #0',
-        '#2   1 x child1.2, child of #0',
-        '#3     1 x child1.2.1, child of #2',
-        '#4   1 x child1.3, child of #0',
+        "#0 1 x parent",
+        "#1   1 x child1.1, child of #0",
+        "#2   1 x child1.2, child of #0",
+        "#3     1 x child1.2.1, child of #2",
+        "#4   1 x child1.3, child of #0",
     ]
 
 
@@ -187,10 +201,10 @@ def prettify_order_line(line):
     :rtype: str
     """
     parent = line.parent_line
-    parent_info = ', child of #{}'.format(parent.ordering) if parent else ''
-    return '#{num}{indent} {qty:d} x {sku}{parent_info}'.format(
+    parent_info = ", child of #{}".format(parent.ordering) if parent else ""
+    return "#{num}{indent} {qty:d} x {sku}{parent_info}".format(
         num=line.ordering,
-        indent=('  ' * get_line_level(line)),
+        indent=("  " * get_line_level(line)),
         qty=int(line.quantity),
         sku=line.sku,
         parent_info=parent_info,

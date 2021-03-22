@@ -7,26 +7,22 @@
 # LICENSE file in the root directory of this source tree.
 import argparse
 import ast
+import jinja2
 import linecache
 import logging
 import os
 import re
 import sys
 from collections import Counter
-
-import jinja2
 from django.utils.text import slugify
-
 from sanity_utils import find_files
 
-_paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
+_paragraph_re = re.compile(r"(?:\r\n|\r|\n){2,}")
 
 
 @jinja2.evalcontextfilter
 def nl2br(eval_ctx, value):
-    result = u'\n\n'.join(
-        u'<p>%s</p>' % p.replace('\n', '<br>\n')
-        for p in _paragraph_re.split(jinja2.escape(value)))
+    result = u"\n\n".join(u"<p>%s</p>" % p.replace("\n", "<br>\n") for p in _paragraph_re.split(jinja2.escape(value)))
     if eval_ctx.autoescape:
         result = jinja2.Markup(result)
     return result
@@ -109,43 +105,86 @@ REPORT_TEMPLATE = """
 </html>
 """.strip()
 
-IGNORED_FUNCTIONS = set([
-    '__abs__', '__add__', '__all__', '__and__',
-    '__builtins__', '__cached__', '__concat__', '__contains__',
-    '__delitem__', '__doc__', '__eq__', '__file__', '__floordiv__',
-    '__ge__', '__getitem__', '__gt__', '__iadd__', '__iand__',
-    '__iconcat__', '__ifloordiv__', '__ilshift__', '__imod__',
-    '__imul__', '__index__', '__inv__', '__invert__', '__ior__',
-    '__ipow__', '__irshift__', '__isub__', '__itruediv__', '__ixor__',
-    '__le__', '__loader__', '__lshift__', '__lt__', '__mod__',
-    '__mul__', '__name__', '__ne__', '__neg__', '__not__', '__or__',
-    '__package__', '__pos__', '__pow__', '__rshift__', '__setitem__',
-    '__spec__', '__sub__', '__truediv__', '__xor__',
-    # The usual suspects
-    '__str__',
-    '__repr__',
-    # CBV generics:
-    "dispatch",
-    "form_invalid",
-    "form_valid",
-    "get",
-    "get_context_data",
-    "get_form",
-    "get_form_class",
-    "get_form_kwargs",
-    "get_object",
-    "get_success_url",
-    "post",
-])
+IGNORED_FUNCTIONS = set(
+    [
+        "__abs__",
+        "__add__",
+        "__all__",
+        "__and__",
+        "__builtins__",
+        "__cached__",
+        "__concat__",
+        "__contains__",
+        "__delitem__",
+        "__doc__",
+        "__eq__",
+        "__file__",
+        "__floordiv__",
+        "__ge__",
+        "__getitem__",
+        "__gt__",
+        "__iadd__",
+        "__iand__",
+        "__iconcat__",
+        "__ifloordiv__",
+        "__ilshift__",
+        "__imod__",
+        "__imul__",
+        "__index__",
+        "__inv__",
+        "__invert__",
+        "__ior__",
+        "__ipow__",
+        "__irshift__",
+        "__isub__",
+        "__itruediv__",
+        "__ixor__",
+        "__le__",
+        "__loader__",
+        "__lshift__",
+        "__lt__",
+        "__mod__",
+        "__mul__",
+        "__name__",
+        "__ne__",
+        "__neg__",
+        "__not__",
+        "__or__",
+        "__package__",
+        "__pos__",
+        "__pow__",
+        "__rshift__",
+        "__setitem__",
+        "__spec__",
+        "__sub__",
+        "__truediv__",
+        "__xor__",
+        # The usual suspects
+        "__str__",
+        "__repr__",
+        # CBV generics:
+        "dispatch",
+        "form_invalid",
+        "form_valid",
+        "get",
+        "get_context_data",
+        "get_form",
+        "get_form_class",
+        "get_form_kwargs",
+        "get_object",
+        "get_success_url",
+        "post",
+    ]
+)
 
-IGNORED_CLASSES = set([
-    "Labels", "Meta",
-])
+IGNORED_CLASSES = set(
+    [
+        "Labels",
+        "Meta",
+    ]
+)
 
-IGNORED_FIRST_ARGS = set([
-    "self",
-    "cls"  # classmethods
-])
+IGNORED_FIRST_ARGS = set(["self", "cls"])  # classmethods
 
 IGNORED_ARGS = set([])
 
@@ -183,7 +222,7 @@ class GenericDocstringValidator(Validator):
         if docstring:
             if len(docstring) < 15:
                 yield "Error! Docstring is too short."
-            sep = (".\n" if "\n" in docstring else ".")
+            sep = ".\n" if "\n" in docstring else "."
             if sep not in docstring:
                 yield "Error! Docstring doesn't seem to have an opening sentence."
         else:
@@ -222,11 +261,7 @@ class ReturnValidator(Validator):
 
 
 class DocInfo(object):
-    validator_classes = [
-        GenericDocstringValidator,
-        ArgValidator,
-        ReturnValidator
-    ]
+    validator_classes = [GenericDocstringValidator, ArgValidator, ReturnValidator]
 
     def __init__(self, node, filename):
         self.node = node
@@ -237,7 +272,7 @@ class DocInfo(object):
             self.directives = directive_match.group(1).lower()
         self.name = getattr(node, "name", None) or ""
         self.docstring = (self.parse_docstring(node) or u"").strip()
-        self.named_args = ([a.arg for a in node.args.args] if hasattr(node, "args") else [])
+        self.named_args = [a.arg for a in node.args.args] if hasattr(node, "args") else []
         if self.named_args and self.named_args[0] in IGNORED_FIRST_ARGS:
             self.named_args.pop(0)
 
@@ -342,7 +377,7 @@ class DocCov(object):
                     self.log.info("Info! Skipping: %s" % filepath)
                     continue
                 self.filenames.add(filepath)
-        elif path.endswith('.py'):
+        elif path.endswith(".py"):
             self.filenames.add(path)
 
     def write_report(self, output_file):
@@ -350,43 +385,46 @@ class DocCov(object):
         common_prefix = os.path.commonprefix(self.objects_by_file.keys())
         grand_totals = Counter()
         for path, objects in sorted(self.objects_by_file.items()):
-            clean_path = path[len(common_prefix):].replace(os.sep, "/")
+            clean_path = path[len(common_prefix) :].replace(os.sep, "/")
             n_documented = sum([1 for m in objects.values() if m and m.valid])
             n_total = float(len(objects))
             n_undocumented = n_total - n_documented
 
-            file_totals = Counter({
-                "n_documented": n_documented,
-                "n_total": n_total,
-                "n_undocumented": n_undocumented
-            })
+            file_totals = Counter({"n_documented": n_documented, "n_total": n_total, "n_undocumented": n_undocumented})
 
             grand_totals += file_totals
 
             if n_total:
-                object_stats = [{
-                    "type": type,
-                    "line": line,
-                    "obj": obj,
-                    "klass": "success" if (docinfo and docinfo.valid) else "error",
-                    "docinfo": docinfo
-                } for ((line, type, obj), docinfo) in sorted(objects.items())]
-                template_file_list.append({
-                    "id": slugify(clean_path),
-                    "path": clean_path,
-                    "totals": file_totals,
-                    "percentage": round(n_documented / float(n_total) * 100, 1),
-                    "object_stats": object_stats
-                })
+                object_stats = [
+                    {
+                        "type": type,
+                        "line": line,
+                        "obj": obj,
+                        "klass": "success" if (docinfo and docinfo.valid) else "error",
+                        "docinfo": docinfo,
+                    }
+                    for ((line, type, obj), docinfo) in sorted(objects.items())
+                ]
+                template_file_list.append(
+                    {
+                        "id": slugify(clean_path),
+                        "path": clean_path,
+                        "totals": file_totals,
+                        "percentage": round(n_documented / float(n_total) * 100, 1),
+                        "object_stats": object_stats,
+                    }
+                )
 
         env = jinja2.Environment()
         env.filters["nl2br"] = nl2br
-        data = env.from_string(REPORT_TEMPLATE).render({
-            "percentage": round(grand_totals["n_documented"] / float(grand_totals["n_total"]) * 100, 2),
-            "grand_totals": grand_totals,
-            "files": template_file_list,
-            "files_by_percentage": sorted(template_file_list, key=lambda f: (f["percentage"], f["id"]))
-        })
+        data = env.from_string(REPORT_TEMPLATE).render(
+            {
+                "percentage": round(grand_totals["n_documented"] / float(grand_totals["n_total"]) * 100, 2),
+                "grand_totals": grand_totals,
+                "files": template_file_list,
+                "files_by_percentage": sorted(template_file_list, key=lambda f: (f["percentage"], f["id"])),
+            }
+        )
 
         output_file.write(data)
 
@@ -412,5 +450,5 @@ def main():
     dc.write_report(args.output)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

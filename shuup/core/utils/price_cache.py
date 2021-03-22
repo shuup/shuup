@@ -24,9 +24,7 @@ def _get_price_info_cache_key_params(context, item, quantity, **context_args):
     return dict(
         identifier="price_info_cache",
         item=_get_price_info_namespace_for_shop(shop_id),
-        context={
-            "customer": getattr(context, "customer", None)
-        },
+        context={"customer": getattr(context, "customer", None)},
         quantity=quantity,
         context_item=item,
         **context_args
@@ -53,8 +51,7 @@ def cache_many_price_info(context, item, quantity, prices_infos, **context_args)
         return
 
     key = context_cache.get_cache_key_for_context(
-        many=True,
-        **_get_price_info_cache_key_params(context, item, quantity, **context_args)
+        many=True, **_get_price_info_cache_key_params(context, item, quantity, **context_args)
     )
     context_cache.set_cached_value(key, prices_infos)
 
@@ -85,8 +82,7 @@ def get_many_cached_price_info(context, item, quantity=1, **context_args):
     :param float|Decimal quantity
     """
     key, prices_infos = context_cache.get_cached_value(
-        many=True,
-        **_get_price_info_cache_key_params(context, item, quantity, **context_args)
+        many=True, **_get_price_info_cache_key_params(context, item, quantity, **context_args)
     )
 
     if prices_infos:
@@ -96,6 +92,7 @@ def get_many_cached_price_info(context, item, quantity=1, **context_args):
             return None
 
         from django.utils.timezone import now
+
         now_timestamp = to_timestamp(now())
 
         # make sure to check all experiration dates
@@ -120,6 +117,7 @@ def get_cached_price_info(context, item, quantity=1, **context_args):
     )
 
     from django.utils.timezone import now
+
     now_ts = to_timestamp(now())
 
     # price has expired
@@ -136,6 +134,7 @@ def bump_price_info_cache(shop):
     :param int|Shop shop: the shop to be bump caches
     """
     from shuup.core.models import Shop
+
     shop_id = shop.pk if isinstance(shop, Shop) else int(shop)
     context_cache.bump_cache_for_item(_get_price_info_namespace_for_shop(shop_id))
 

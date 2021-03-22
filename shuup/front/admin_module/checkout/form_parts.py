@@ -11,21 +11,19 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.front.checkout.methods import (
-    PAYMENT_METHOD_REQUIRED_CONFIG_KEY, SHIPPING_METHOD_REQUIRED_CONFIG_KEY
-)
+from shuup.front.checkout.methods import PAYMENT_METHOD_REQUIRED_CONFIG_KEY, SHIPPING_METHOD_REQUIRED_CONFIG_KEY
 
 
 class CheckoutConfigurationForm(forms.Form):
     shipping_method_required = forms.BooleanField(
         required=False,
         label=_("Require shipping method"),
-        help_text=_("Whether to require the shipping method in checkout phases.")
+        help_text=_("Whether to require the shipping method in checkout phases."),
     )
     payment_method_required = forms.BooleanField(
         required=False,
         label=_("Require payment method"),
-        help_text=_("Whether to require the payment method in checkout phases.")
+        help_text=_("Whether to require the payment method in checkout phases."),
     )
 
 
@@ -39,14 +37,14 @@ class CheckoutShopFormPart(FormPart):
             return
         initial = {
             "shipping_method_required": configuration.get(self.object, SHIPPING_METHOD_REQUIRED_CONFIG_KEY, True),
-            "payment_method_required": configuration.get(self.object, PAYMENT_METHOD_REQUIRED_CONFIG_KEY, True)
+            "payment_method_required": configuration.get(self.object, PAYMENT_METHOD_REQUIRED_CONFIG_KEY, True),
         }
         yield TemplatedFormDef(
             name=self.name,
             form_class=self.form,
             template_name="shuup/front/admin/checkout.jinja",
             required=True,
-            kwargs={"initial": initial}
+            kwargs={"initial": initial},
         )
 
     def form_valid(self, form):

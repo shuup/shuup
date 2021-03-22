@@ -30,9 +30,7 @@ class DummyFileImporter(DataImporter):
     name = "Dummy File Importer"
     model = Contact
 
-    example_files = [
-        ImporterExampleFile("doesn_exit.csv", "text/csv")
-    ]
+    example_files = [ImporterExampleFile("doesn_exit.csv", "text/csv")]
 
     def get_related_models(self):
         return [Contact, PersonContact]

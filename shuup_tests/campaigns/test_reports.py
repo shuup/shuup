@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import json
-
 import pytest
 from babel.dates import format_date
 from django.utils.encoding import force_text
@@ -21,10 +20,16 @@ from shuup.core.order_creator import OrderCreator
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.writer import get_writer_instance
 from shuup.testing.factories import (
-    create_random_person, get_address, get_default_payment_method,
-    get_default_product, get_default_shipping_method, get_default_shop,
-    get_default_supplier, get_default_tax_class, get_initial_order_status,
-    OrderLineType
+    OrderLineType,
+    create_random_person,
+    get_address,
+    get_default_payment_method,
+    get_default_product,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_default_tax_class,
+    get_initial_order_status,
 )
 from shuup.utils.i18n import get_current_babel_locale
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
@@ -32,12 +37,10 @@ from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 def get_default_campaign(coupon, discount="20"):
     shop = get_default_shop()
-    campaign = BasketCampaign.objects.create(
-            shop=shop, public_name="test", name="test",
-            coupon=coupon, active=True
-    )
+    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", coupon=coupon, active=True)
     BasketDiscountAmount.objects.create(discount_amount=shop.create_price(discount), campaign=campaign)
     return campaign
+
 
 def seed_source(coupon, produce_price=10):
     source = BasketishOrderSource(get_default_shop())
@@ -58,7 +61,6 @@ def seed_source(coupon, produce_price=10):
     )
     source.add_code(coupon.code)
     return source
-
 
 
 @pytest.mark.django_db
@@ -111,14 +113,16 @@ def test_coupons_usage_report(rf):
         for dt in order.lines.discounts():
             discount += dt.taxful_price
 
-        expected_data.append({
-            "date": format_date(order.order_date, locale=get_current_babel_locale()),
-            "coupon": order.codes[0],
-            "order": str(order),
-            "taxful_total": str(order.taxful_total_price.as_rounded().value),
-            "taxful_subtotal": str((order.taxful_total_price - discount).as_rounded().value),
-            "total_discount": str(discount.as_rounded().value)
-        })
+        expected_data.append(
+            {
+                "date": format_date(order.order_date, locale=get_current_babel_locale()),
+                "coupon": order.codes[0],
+                "order": str(order),
+                "taxful_total": str(order.taxful_total_price.as_rounded().value),
+                "taxful_subtotal": str((order.taxful_total_price - discount).as_rounded().value),
+                "total_discount": str(discount.as_rounded().value),
+            }
+        )
 
     assert len(expected_data) == len(data)
 

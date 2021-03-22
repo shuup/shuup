@@ -15,9 +15,7 @@ from shuup.importer.utils.importer import ImportMode
 
 
 class ImportSettingsForm(forms.Form):
-    import_mode = EnumField(ImportMode).formfield(
-        initial=ImportMode.CREATE_UPDATE, label=_("Import mode")
-    )
+    import_mode = EnumField(ImportMode).formfield(initial=ImportMode.CREATE_UPDATE, label=_("Import mode"))
 
 
 class ImportForm(forms.Form):

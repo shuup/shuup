@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import django
 import pytest
-
 from bs4 import BeautifulSoup
 from django.test import override_settings
 from django.utils import version
@@ -15,9 +14,7 @@ from django.utils import version
 from shuup.admin.modules.service_providers.views import ServiceProviderEditView
 from shuup.apps.provides import override_provides
 from shuup.core.models import CustomCarrier, CustomPaymentProcessor
-from shuup.testing.factories import (
-    get_default_payment_method, get_default_shipping_method, get_default_shop
-)
+from shuup.testing.factories import get_default_payment_method, get_default_shipping_method, get_default_shop
 from shuup.testing.models import PseudoPaymentProcessor
 from shuup.testing.utils import apply_all_middleware
 
@@ -30,11 +27,14 @@ def get_bs_object_for_view(request, view, user, object=None):
     Also override ``service_provider_admin_form`` here to enable
     ``PseudoPaymentProcessor``
     """
-    with override_provides("service_provider_admin_form", [
-        "shuup.testing.service_forms.PseudoPaymentProcessorForm",
-        "shuup.admin.modules.service_providers.forms:CustomCarrierForm",
-        "shuup.admin.modules.service_providers.forms:CustomPaymentProcessorForm"
-    ]):
+    with override_provides(
+        "service_provider_admin_form",
+        [
+            "shuup.testing.service_forms.PseudoPaymentProcessorForm",
+            "shuup.admin.modules.service_providers.forms:CustomCarrierForm",
+            "shuup.admin.modules.service_providers.forms:CustomPaymentProcessorForm",
+        ],
+    ):
         request = apply_all_middleware(request, user=user)
         response = view(request, pk=object.pk if object else None)
         if hasattr(response, "render"):
@@ -43,11 +43,10 @@ def get_bs_object_for_view(request, view, user, object=None):
         return BeautifulSoup(response.content)
 
 
-@pytest.mark.parametrize("sp_model,type_param", [
-    (None, None),
-    (CustomCarrier, "shuup.customcarrier"),
-    (CustomPaymentProcessor, "shuup.custompaymentprocessor")
-])
+@pytest.mark.parametrize(
+    "sp_model,type_param",
+    [(None, None), (CustomCarrier, "shuup.customcarrier"), (CustomPaymentProcessor, "shuup.custompaymentprocessor")],
+)
 def test_new_service_providers_type_select(rf, admin_user, sp_model, type_param):
     """
     Test `ServiceProvideEditView`` with different types of
@@ -69,17 +68,14 @@ def test_new_service_providers_type_select(rf, admin_user, sp_model, type_param)
             assert type_param == selected_type
         else:
             assert selected_type in [
-                "shuup.customcarrier", "shuup.custompaymentprocessor",
-                "shuup_testing.pseudopaymentprocessor"
+                "shuup.customcarrier",
+                "shuup.custompaymentprocessor",
+                "shuup_testing.pseudopaymentprocessor",
             ]
 
         if sp_model:
             name = "Some provider"
-            data = {
-                "type": type_param,
-                "name__en": name,
-                "enabled": True
-            }
+            data = {"type": type_param, "name__en": name, "enabled": True}
             if selected_type == "shuup.custompaymentprocessor":
                 data["rounding_quantize"] = "0.05"
                 data["rounding_mode"] = "ROUND_HALF_UP"
@@ -106,18 +102,23 @@ def test_invalid_service_provider_type(rf, admin_user):
     type_select = provider_form.find("select", attrs={"id": "id_type"})
     options = []
     for option in type_select.findAll("option"):
-        options.append({
-            "selected": bool(option.get("selected")),
-            "value": option["value"],
-        })
+        options.append(
+            {
+                "selected": bool(option.get("selected")),
+                "value": option["value"],
+            }
+        )
 
     assert [x["selected"] for x in options] == [False, False, False]
 
 
-@pytest.mark.parametrize("type,extra_inputs", [
-    ("shuup.custompaymentprocessor", ["rounding_quantize"]),
-    ("shuup_testing.pseudopaymentprocessor", ["bg_color", "fg_color"])
-])
+@pytest.mark.parametrize(
+    "type,extra_inputs",
+    [
+        ("shuup.custompaymentprocessor", ["rounding_quantize"]),
+        ("shuup_testing.pseudopaymentprocessor", ["bg_color", "fg_color"]),
+    ],
+)
 def test_new_service_provider_form_fields(rf, admin_user, type, extra_inputs):
     """
     Test `ServiceProvideEditView`` fields in new mode. Based on type
@@ -139,11 +140,14 @@ def test_new_service_provider_form_fields(rf, admin_user, type, extra_inputs):
         assert rendered_fields == (base_inputs + extra_inputs)
 
 
-@pytest.mark.parametrize("sp_model,extra_inputs", [
-    (CustomCarrier, []),
-    (CustomPaymentProcessor, ["rounding_quantize"]),
-    (PseudoPaymentProcessor, ["bg_color", "fg_color"])
-])
+@pytest.mark.parametrize(
+    "sp_model,extra_inputs",
+    [
+        (CustomCarrier, []),
+        (CustomPaymentProcessor, ["rounding_quantize"]),
+        (PseudoPaymentProcessor, ["bg_color", "fg_color"]),
+    ],
+)
 def test_service_provide_edit_view(rf, admin_user, sp_model, extra_inputs):
     """
     Test that ``ServiceProvideEditView`` works with existing
@@ -169,10 +173,10 @@ def test_service_provide_edit_view(rf, admin_user, sp_model, extra_inputs):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_object,service_provider_attr", [
-    (get_default_shipping_method, "carrier"),
-    (get_default_payment_method, "payment_processor")
-])
+@pytest.mark.parametrize(
+    "get_object,service_provider_attr",
+    [(get_default_shipping_method, "carrier"), (get_default_payment_method, "payment_processor")],
+)
 def test_delete(get_object, service_provider_attr):
     method = get_object()
     method_cls = method.__class__

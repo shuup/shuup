@@ -8,21 +8,23 @@
 import json
 import pytest
 import six
-
 from collections import defaultdict
-
-from django.test.client import Client
 from django.template import loader
-
+from django.test.client import Client
 from django.urls import reverse
+
 from shuup.admin.modules.orders.sections import ShipmentSection
-from shuup.admin.utils.permissions import set_permissions_for_group
-from shuup.core.models import ShippingMode, Supplier, ShipmentStatus
-from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product,
-    create_random_user, get_default_permission_group, get_default_shop
-)
 from shuup.admin.modules.orders.views.shipment import ShipmentListView
+from shuup.admin.utils.permissions import set_permissions_for_group
+from shuup.core.models import ShipmentStatus, ShippingMode, Supplier
+from shuup.testing.factories import (
+    add_product_to_order,
+    create_empty_order,
+    create_product,
+    create_random_user,
+    get_default_permission_group,
+    get_default_shop,
+)
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -42,14 +44,7 @@ def test_order_shipments(rf, admin_user):
     shop_product2 = product1.get_shop_instance(shop=shop)
     shop_product2.suppliers.set([supplier2])
 
-    product_quantities = {
-        supplier1.pk: {
-            product1.pk: 20
-        },
-        supplier2.pk: {
-            product2.pk: 10
-        }
-    }
+    product_quantities = {supplier1.pk: {product1.pk: 20}, supplier2.pk: {product2.pk: 10}}
 
     def get_quantity(supplier, product):
         return product_quantities[supplier.pk][product.pk]
@@ -126,10 +121,13 @@ def test_order_shipments(rf, admin_user):
     assert len(context["set_sent_urls"].keys()) == 3
 
     # works fine while rendering
-    rendered_content = loader.render_to_string(ShipmentSection.template, context={
-        ShipmentSection.identifier: context,
-        "order": order,
-    })
+    rendered_content = loader.render_to_string(
+        ShipmentSection.template,
+        context={
+            ShipmentSection.identifier: context,
+            "order": order,
+        },
+    )
     all_urls = list(context["delete_urls"].values())
     all_urls.extend(list(context["set_sent_urls"].values()))
     for url in all_urls:
@@ -157,10 +155,9 @@ def test_order_shipments(rf, admin_user):
     assert ShipmentSection.visible_for_object(order, request)
 
     # list all shipments in shipments list view
-    response = client.get("{}?jq={}".format(
-        reverse("shuup_admin:order.shipments.list"),
-        json.dumps({"perPage": 10, "page": 1})
-    ))
+    response = client.get(
+        "{}?jq={}".format(reverse("shuup_admin:order.shipments.list"), json.dumps({"perPage": 10, "page": 1}))
+    )
     assert response.status_code == 200
     data = json.loads(response.content)
     assert len(data["items"]) == 3

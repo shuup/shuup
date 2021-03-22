@@ -14,6 +14,7 @@ class FormDefinition(object):
 
     These objects are to be returned when using `FormDefProvider`.
     """
+
     form_name = None
     form_class = None
     required = False

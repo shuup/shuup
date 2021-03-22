@@ -23,9 +23,9 @@ class RelaxedModelChoiceField(forms.ModelChoiceField):
                 if hasattr(self, "_choices"):
                     # Stringly [sic] typed comparison...
                     value = force_text(value)
-                    key = self.to_field_name or 'pk'
+                    key = self.to_field_name or "pk"
                     for (pk, obj) in self._choices:
-                        if force_text(pk) == value or force_text(getattr(obj, key, '')) == value:
+                        if force_text(pk) == value or force_text(getattr(obj, key, "")) == value:
                             if obj is None or isinstance(obj, self.queryset.model):
                                 return obj
             raise verr  # Just reraise the original exception then, but from here for clarity

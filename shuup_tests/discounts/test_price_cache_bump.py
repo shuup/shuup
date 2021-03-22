@@ -7,19 +7,14 @@
 """
 Tests for utils.price_display and the price filters.
 """
-from datetime import datetime, timedelta
-
 import pytest
 import pytz
+from datetime import datetime, timedelta
 from mock import patch
 
-from shuup.core.utils.price_cache import (
-    cache_price_info, get_cached_price_info
-)
+from shuup.core.utils.price_cache import cache_price_info, get_cached_price_info
 from shuup.discounts.exceptions import DiscountM2MChangeError
-from shuup.discounts.models import (
-    AvailabilityException, Discount, HappyHour, TimeRange
-)
+from shuup.discounts.models import AvailabilityException, Discount, HappyHour, TimeRange
 from shuup.discounts.signal_handers import handle_generic_m2m_changed
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -37,28 +32,22 @@ def test_bump_caches_signal(rf):
     shop2 = factories.get_shop(identifier="shop2", domain="shop2")
 
     product1 = factories.create_product(
-        "product",
-        shop=shop1,
-        supplier=factories.get_default_supplier(),
-        default_price=initial_price
+        "product", shop=shop1, supplier=factories.get_default_supplier(), default_price=initial_price
     )
 
     product2 = factories.create_product(
-        "product2",
-        shop=shop2,
-        supplier=factories.get_default_supplier(),
-        default_price=20
+        "product2", shop=shop2, supplier=factories.get_default_supplier(), default_price=20
     )
 
-    now = datetime(2018, 1, 1, 9, 0, tzinfo=pytz.UTC)   # 01/01/2018 09:00 AM
+    now = datetime(2018, 1, 1, 9, 0, tzinfo=pytz.UTC)  # 01/01/2018 09:00 AM
 
     with patch("django.utils.timezone.now", new=lambda: now):
         discount = Discount.objects.create(
             name="discount",
             active=True,
-            start_datetime=now-timedelta(days=10),
-            end_datetime=now+timedelta(days=10),
-            discounted_price_value=discounted_price
+            start_datetime=now - timedelta(days=10),
+            end_datetime=now + timedelta(days=10),
+            discounted_price_value=discounted_price,
         )
 
         request = apply_request_middleware(rf.get("/"))
@@ -102,8 +91,8 @@ def test_bump_caches_signal(rf):
 
         availability_exception = AvailabilityException.objects.create(
             name="ae1",
-            start_datetime=now+timedelta(days=20),
-            end_datetime=now+timedelta(days=30),
+            start_datetime=now + timedelta(days=20),
+            end_datetime=now + timedelta(days=30),
         )
         availability_exception.discounts.add(discount)
         assert_product1_is_not_cached()
@@ -130,7 +119,7 @@ def test_bump_caches_signal(rf):
             happy_hour=happy_hour,
             from_hour=(now - timedelta(hours=1)).time(),
             to_hour=(now + timedelta(hours=1)).time(),
-            weekday=now.weekday()
+            weekday=now.weekday(),
         )
         assert_product1_is_not_cached()
         assert_cache_product1(True)

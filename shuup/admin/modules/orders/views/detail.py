@@ -71,7 +71,8 @@ class OrderSetStatusView(DetailView):
         order.status = new_status
         order.save(update_fields=("status",))
         message = _("Order status changed: from `{old_status}` to `{new_status}`.").format(
-            old_status=old_status, new_status=new_status)
+            old_status=old_status, new_status=new_status
+        )
         order.add_log_entry(message, user=request.user, identifier="status_change")
         messages.success(self.request, message)
 

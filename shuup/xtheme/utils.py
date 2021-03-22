@@ -41,10 +41,5 @@ def get_html_attrs(attrs):
             return join_css_classes(value)
         return value
 
-    attrs = dict(
-        (key, _massage_attribute(value))
-        for (key, value)
-        in six.iteritems(attrs)
-        if key and value
-    )
+    attrs = dict((key, _massage_attribute(value)) for (key, value) in six.iteritems(attrs) if key and value)
     return flatatt(attrs)

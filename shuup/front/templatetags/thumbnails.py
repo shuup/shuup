@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import os
-
 import six
 from django.conf import settings
 from django_jinja import library
@@ -25,7 +24,7 @@ def process_thumbnailer_options(kwargs):
     options = {}
     options.update(default_options)
     options.update(kwargs)
-    size = options.setdefault('size', (128, 128))
+    size = options.setdefault("size", (128, 128))
     if isinstance(size, six.text_type):
         m = RE_SIZE.match(size)
         if m:
@@ -37,7 +36,9 @@ def process_thumbnailer_options(kwargs):
 
 def _get_cached_thumbnail_url(source, **kwargs):
     from filer.models.filemodels import File
+
     from shuup.core.models import ProductMedia
+
     kwargs_hash = hash(frozenset(kwargs.items()))
     cache_key = None
 
@@ -71,7 +72,7 @@ def thumbnail(source, alias=None, generate=True, **kwargs):
         return None
 
     if _is_svg(thumbnailer_instance):
-        return source.url if hasattr(source, 'url') else None
+        return source.url if hasattr(source, "url") else None
 
     if alias:
         options = aliases.get(alias, target=thumbnailer_instance.alias_target)

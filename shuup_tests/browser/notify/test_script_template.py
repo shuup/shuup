@@ -6,29 +6,28 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
-from shuup.utils.django_compat import reverse
 
 from shuup import configuration
 from shuup.apps.provides import override_provides
-from shuup.front.apps.registration.notify_events import (
-    RegistrationReceivedEmailScriptTemplate
-)
+from shuup.front.apps.registration.notify_events import RegistrationReceivedEmailScriptTemplate
 from shuup.front.notify_script_templates.generics import (
-    OrderConfirmationEmailScriptTemplate, PaymentCreatedEmailScriptTemplate,
-    RefundCreatedEmailScriptTemplate, ShipmentCreatedEmailScriptTemplate,
-    ShipmentDeletedEmailScriptTemplate
+    OrderConfirmationEmailScriptTemplate,
+    PaymentCreatedEmailScriptTemplate,
+    RefundCreatedEmailScriptTemplate,
+    ShipmentCreatedEmailScriptTemplate,
+    ShipmentDeletedEmailScriptTemplate,
 )
 from shuup.notify.models import Script
-from shuup.simple_supplier.notify_script_template import (
-    StockLimitEmailScriptTemplate
-)
+from shuup.simple_supplier.notify_script_template import StockLimitEmailScriptTemplate
 from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    move_to_element,
+    wait_until_condition,
 )
 from shuup.testing.notify_script_templates import DummyScriptTemplate
-from shuup.testing.browser_utils import initialize_admin_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -51,14 +50,17 @@ def post_initialize():
 @pytest.mark.browser
 @pytest.mark.djangodb
 @pytest.mark.django_db
-@pytest.mark.parametrize("script_template_cls", [
-    OrderConfirmationEmailScriptTemplate,
-    PaymentCreatedEmailScriptTemplate,
-    RefundCreatedEmailScriptTemplate,
-    ShipmentCreatedEmailScriptTemplate,
-    ShipmentDeletedEmailScriptTemplate,
-    RegistrationReceivedEmailScriptTemplate
-])
+@pytest.mark.parametrize(
+    "script_template_cls",
+    [
+        OrderConfirmationEmailScriptTemplate,
+        PaymentCreatedEmailScriptTemplate,
+        RefundCreatedEmailScriptTemplate,
+        ShipmentCreatedEmailScriptTemplate,
+        ShipmentDeletedEmailScriptTemplate,
+        RegistrationReceivedEmailScriptTemplate,
+    ],
+)
 def test_generic_script_template(browser, admin_user, live_server, settings, script_template_cls):
     initialize(browser, live_server, settings)
 
@@ -81,11 +83,13 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
     # click to create the script
-    browser.execute_script("""
+    browser.execute_script(
+        """
         $(document).ready(function(){
             $('#lang-en .summernote-editor').summernote('editor.insertText', 'NEW CONTENT');
         });
-    """)
+    """
+    )
     browser.find_by_id("id_en-subject").fill("custom subject!")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
@@ -104,14 +108,17 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-@pytest.mark.parametrize("script_template_cls", [
-    OrderConfirmationEmailScriptTemplate,
-    PaymentCreatedEmailScriptTemplate,
-    RefundCreatedEmailScriptTemplate,
-    ShipmentCreatedEmailScriptTemplate,
-    ShipmentDeletedEmailScriptTemplate,
-    RegistrationReceivedEmailScriptTemplate
-])
+@pytest.mark.parametrize(
+    "script_template_cls",
+    [
+        OrderConfirmationEmailScriptTemplate,
+        PaymentCreatedEmailScriptTemplate,
+        RefundCreatedEmailScriptTemplate,
+        ShipmentCreatedEmailScriptTemplate,
+        ShipmentDeletedEmailScriptTemplate,
+        RegistrationReceivedEmailScriptTemplate,
+    ],
+)
 def test_generic_custom_email_script_template(browser, admin_user, live_server, settings, script_template_cls):
     initialize(browser, live_server, settings)
 
@@ -133,7 +140,8 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     wait_until_condition(browser, lambda b: b.url.endswith(config_url), timeout=15)
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
-    browser.execute_script("""
+    browser.execute_script(
+        """
         $(document).ready(function(){
             // EN
             $("#id_en-subject").val("custom subject!");
@@ -144,11 +152,12 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
             $("#id_fi-subject").val("FINNISH subject!");
             $('#lang-fi .summernote-editor').summernote('editor.insertText', 'Hi Finland!');
         });
-    """)
+    """
+    )
 
     # fill form
     move_to_element(browser, "#id_base-send_to")
-    browser.select('base-send_to', 'other')
+    browser.select("base-send_to", "other")
     browser.find_by_id("id_base-recipient").fill("other@shuup.com")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
@@ -179,15 +188,17 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
     # fill form
-    browser.execute_script("""
+    browser.execute_script(
+        """
         $(document).ready(function(){
             $('#lang-en .summernote-editor').summernote('editor.insertText', 'Changed');
         });
-    """)
+    """
+    )
     browser.find_by_id("id_en-subject").fill("changed subject!")
 
     move_to_element(browser, "#id_base-send_to")
-    browser.select('base-send_to', 'customer')
+    browser.select("base-send_to", "customer")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
     # hit save
@@ -327,20 +338,23 @@ def test_dummy_script_editor(browser, admin_user, live_server, settings):
         browser.find_by_css(".btn-primary")[1].click()
         wait_until_condition(browser, lambda b: b.is_text_present("Send Email"))
         browser.find_by_css(".item-option .item-name")[2].click()
-        with browser.get_iframe('step-item-frame') as iframe:
+        with browser.get_iframe("step-item-frame") as iframe:
             iframe.find_by_id("id_b_recipient_c").fill("random@gmail.com")
             iframe.find_by_name("b_language_c").fill("English")
             click_element(iframe, ".btn.btn-success")
             wait_until_condition(iframe, lambda b: b.is_text_present("Please correct the errors below."))
             browser.find_by_css(".nav-link")[1].click()
-            wait_until_condition(iframe, lambda b: b.is_text_present("This field is missing content"))  # Assert that only the default shop language requires fields
-            if(len(settings.LANGUAGES) > 1):
+            wait_until_condition(
+                iframe, lambda b: b.is_text_present("This field is missing content")
+            )  # Assert that only the default shop language requires fields
+            if len(settings.LANGUAGES) > 1:
                 browser.find_by_css(".nav-link")[2].click()
-                assert not iframe.is_text_present("This field is missing content")  # Assert that another language doesn't contain content
+                assert not iframe.is_text_present(
+                    "This field is missing content"
+                )  # Assert that another language doesn't contain content
             browser.find_by_css(".nav-link")[1].click()
             iframe.find_by_id("id_t_en_subject").fill("Random subject")
             iframe.find_by_css(".note-editable.card-block").fill("<p>Lorem ipsum et cetera</p>")
             click_element(iframe, ".btn.btn-success")
             click_element(browser, ".btn.btn-success")
         wait_until_condition(browser, lambda b: b.is_text_present("send_email"))  # Check if email step has been added
-

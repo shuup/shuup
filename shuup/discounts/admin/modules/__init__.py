@@ -15,5 +15,5 @@ __all__ = [
     "CouponCodeModule",
     "DiscountModule",
     "HappyHourModule",
-    "DiscountArchiveModule"
+    "DiscountArchiveModule",
 ]

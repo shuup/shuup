@@ -4,9 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from shuup.campaigns.models.catalog_filters import (
-    CategoryFilter, ProductFilter, ProductTypeFilter
-)
+from shuup.campaigns.models.catalog_filters import CategoryFilter, ProductFilter, ProductTypeFilter
 
 from ._base import BaseRuleModelForm
 

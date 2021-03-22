@@ -12,9 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.urls import (
-    admin_url, derive_model_url, get_edit_and_list_urls
-)
+from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shuup.core.models import PaymentMethod, ShippingMethod
 
 
@@ -35,12 +33,10 @@ class ServiceModule(AdminModule):
             admin_url(
                 r"%s/(?P<pk>\d+)/delete/$" % self.url_prefix,
                 self.view_template % "Delete",
-                name=self.name_template % "delete"
+                name=self.name_template % "delete",
             )
         ] + get_edit_and_list_urls(
-            url_prefix=self.url_prefix,
-            view_template=self.view_template,
-            name_template=self.name_template
+            url_prefix=self.url_prefix, view_template=self.view_template, name_template=self.name_template
         )
 
     def get_menu_entries(self, request):
@@ -50,7 +46,7 @@ class ServiceModule(AdminModule):
                 url=self.menu_entry_url,
                 category=STOREFRONT_MENU_CATEGORY,
                 ordering=self.menu_ordering,
-                icon=self.icon
+                icon=self.icon,
             )
         ]
 

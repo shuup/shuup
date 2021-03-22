@@ -4,28 +4,25 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import csv, json, mock
-
+import csv
+import json
+import mock
 import pytest
-from django.http import HttpResponse
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.utils.translation import activate
-from shuup.admin.utils.picotable import (
-    PicotableMassAction, PicotableFileMassAction
-)
-from shuup.admin.modules.products.mass_actions import (
-    FileResponseAction, InvisibleMassAction, VisibleMassAction
-)
 
-from shuup.core.models import (
-    Product, Shop, ShopProduct, ShopStatus, ShopProductVisibility
-)
+from shuup.admin.modules.products.mass_actions import FileResponseAction, InvisibleMassAction, VisibleMassAction
+from shuup.admin.utils.picotable import PicotableFileMassAction, PicotableMassAction
+from shuup.core.models import Product, Shop, ShopProduct, ShopProductVisibility, ShopStatus
 from shuup.core.utils import context_cache
-
 from shuup.testing.factories import (
-    get_default_shop, get_default_supplier, create_product,
-    get_default_currency, get_default_product
+    create_product,
+    get_default_currency,
+    get_default_product,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
@@ -33,7 +30,6 @@ from shuup_tests.utils import printable_gibberish
 
 
 class TestPicotableMassAction(PicotableMassAction):
-
     def process(self, request, ids):
         ShopProduct.objects.filter(id__in=ids).update(purchasable=False)
 
@@ -43,10 +39,8 @@ def test_mass_actions(rf, admin_user):
     activate("en")
     shop = get_default_shop()
     supplier = get_default_supplier()
-    product1 = create_product(
-        printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
-    product2 = create_product(
-        printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
+    product1 = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
+    product2 = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
 
     shop_product1 = product1.get_shop_instance(shop)
     shop_product2 = product2.get_shop_instance(shop)
@@ -77,11 +71,19 @@ def test_mass_actions_product_ids_mixup(rf, admin_user):
     # ids does not match.
     default_price = shop.create_price(10)
     ShopProduct.objects.create(
-        product=product2, shop=shop, default_price=default_price,
-        visibility=ShopProductVisibility.ALWAYS_VISIBLE, name="SKU 1 product")
+        product=product2,
+        shop=shop,
+        default_price=default_price,
+        visibility=ShopProductVisibility.ALWAYS_VISIBLE,
+        name="SKU 1 product",
+    )
     ShopProduct.objects.create(
-        product=product1, shop=shop, default_price=default_price,
-        visibility=ShopProductVisibility.ALWAYS_VISIBLE, name="SKU 1 product")
+        product=product1,
+        shop=shop,
+        default_price=default_price,
+        visibility=ShopProductVisibility.ALWAYS_VISIBLE,
+        name="SKU 1 product",
+    )
 
     shop_product1 = product1.get_shop_instance(shop)
     shop_product2 = product2.get_shop_instance(shop)
@@ -89,9 +91,7 @@ def test_mass_actions_product_ids_mixup(rf, admin_user):
     assert shop_product2.pk != product2.pk
 
     view = load("shuup.admin.modules.products.views:ProductListView").as_view()
-    request = apply_request_middleware(rf.get("/", {
-        "jq": json.dumps({"perPage": 100, "page": 1})
-    }), user=admin_user)
+    request = apply_request_middleware(rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user)
     response = view(request)
     assert 200 <= response.status_code < 300
     data = json.loads(response.content.decode("utf-8"))
@@ -137,8 +137,9 @@ def test_mass_action_multishop(rf, admin_user):
             identifier=name,
             status=ShopStatus.ENABLED,
             public_name=name,
-            currency=get_default_currency().code
+            currency=get_default_currency().code,
         )
+
     shop_one = get_default_shop()
     shop_two = create_shop("foobar")
     product = get_default_product()
@@ -148,13 +149,13 @@ def test_mass_action_multishop(rf, admin_user):
     assert shop_product_one.visibility == ShopProductVisibility.ALWAYS_VISIBLE
     assert shop_product_two.visibility == ShopProductVisibility.ALWAYS_VISIBLE
     request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop_one)
-    InvisibleMassAction().process(request, 'all')
+    InvisibleMassAction().process(request, "all")
     shop_product_one.refresh_from_db()
     shop_product_two.refresh_from_db()
     assert shop_product_one.visibility == ShopProductVisibility.NOT_VISIBLE
     assert shop_product_two.visibility == ShopProductVisibility.ALWAYS_VISIBLE
     request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop_one)
-    VisibleMassAction().process(request, 'all')
+    VisibleMassAction().process(request, "all")
     shop_product_one.refresh_from_db()
     shop_product_two.refresh_from_db()
     assert shop_product_two.visibility == ShopProductVisibility.ALWAYS_VISIBLE

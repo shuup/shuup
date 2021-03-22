@@ -6,22 +6,27 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
-from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import OrderStatus, OrderStatusRole
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition,
-    wait_until_disappeared
+    click_element,
+    initialize_front_browser_test,
+    wait_until_appeared,
+    wait_until_condition,
+    wait_until_disappeared,
 )
 from shuup.testing.factories import (
-    create_product, get_default_payment_method, get_default_shipping_method,
-    get_default_shop, get_default_supplier, get_payment_method,
-    get_shipping_method
+    create_product,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_payment_method,
+    get_shipping_method,
 )
-from shuup.testing.browser_utils import initialize_front_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -42,12 +47,7 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
     pm = get_default_payment_method()
     sm = get_default_shipping_method()
     product = create_orderable_product(product_name, "test-123", price=100)
-    OrderStatus.objects.create(
-        identifier="initial",
-        role=OrderStatusRole.INITIAL,
-        name="initial",
-        default=True
-    )
+    OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -68,7 +68,7 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
     wait_until_condition(browser, lambda x: x.is_text_present("Shopping cart"))  # we are in basket page
     wait_until_condition(browser, lambda x: x.is_text_present(product_name))  # product is in basket
 
-    click_element(browser, "a[href='/checkout/']") # click link that leads to checkout
+    click_element(browser, "a[href='/checkout/']")  # click link that leads to checkout
 
     customer_name = "Test Tester"
     customer_street = "Test Street"
@@ -100,7 +100,9 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
 
     click_element(browser, ".btn.btn-primary.btn-lg.pull-right")  # click "continue" on methods page
 
-    wait_until_condition(browser, lambda x: x.is_text_present("Checkout: Confirmation"))  # we are indeed in confirmation page
+    wait_until_condition(
+        browser, lambda x: x.is_text_present("Checkout: Confirmation")
+    )  # we are indeed in confirmation page
 
     # See that all expected texts are present
     wait_until_condition(browser, lambda x: x.is_text_present(product_name))
@@ -121,7 +123,7 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
     wait_until_condition(browser, lambda x: x.is_text_present("Thank you for your order!"))  # order succeeded
 
 
-@pytest.mark.urls('shuup.testing.single_page_checkout_test_urls')
+@pytest.mark.urls("shuup.testing.single_page_checkout_test_urls")
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_browser_checkout_vertical(browser, live_server, settings):
@@ -132,12 +134,7 @@ def test_browser_checkout_vertical(browser, live_server, settings):
         pm = get_default_payment_method()
         sm = get_default_shipping_method()
         product = create_orderable_product(product_name, "test-123", price=100)
-        OrderStatus.objects.create(
-            identifier="initial",
-            role=OrderStatusRole.INITIAL,
-            name="initial",
-            default=True
-        )
+        OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
         # initialize test and go to front page
         browser = initialize_front_browser_test(browser, live_server)
@@ -157,7 +154,7 @@ def test_browser_checkout_vertical(browser, live_server, settings):
         wait_until_condition(browser, lambda x: x.is_text_present("Shopping cart"))  # we are in basket page
         wait_until_condition(browser, lambda x: x.is_text_present(product_name))  # product is in basket
 
-        click_element(browser, "a[href='/checkout/']") # click link that leads to checkout
+        click_element(browser, "a[href='/checkout/']")  # click link that leads to checkout
         wait_until_appeared(browser, "h4.panel-title")
         customer_name = "Test Tester"
         customer_street = "Test Street"
@@ -175,7 +172,9 @@ def test_browser_checkout_vertical(browser, live_server, settings):
 
         click_element(browser, "#addresses button[type='submit']")
 
-        click_element(browser, "#addresses button[type='submit']")  # This shouldn't submit since missing required fields
+        click_element(
+            browser, "#addresses button[type='submit']"
+        )  # This shouldn't submit since missing required fields
 
         # Fill rest of the fields
         browser.fill("shipping-name", customer_name)
@@ -212,7 +211,6 @@ def test_browser_checkout_vertical(browser, live_server, settings):
         wait_until_condition(browser, lambda x: x.is_text_present("Thank you for your order!"))  # order succeeded
 
 
-
 @pytest.mark.parametrize("delete_method", ["shipping", "payment"])
 @pytest.mark.browser
 @pytest.mark.djangodb
@@ -225,12 +223,7 @@ def test_browser_checkout_disable_methods(browser, live_server, settings, delete
     shipping_method = get_default_shipping_method()
 
     product = create_orderable_product(product_name, "test-123", price=100)
-    OrderStatus.objects.create(
-        identifier="initial",
-        role=OrderStatusRole.INITIAL,
-        name="initial",
-        default=True
-    )
+    OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -251,7 +244,7 @@ def test_browser_checkout_disable_methods(browser, live_server, settings, delete
     wait_until_condition(browser, lambda x: x.is_text_present("Shopping cart"))  # we are in basket page
     wait_until_condition(browser, lambda x: x.is_text_present(product_name))  # product is in basket
 
-    click_element(browser, "a[href='/checkout/']") # click link that leads to checkout
+    click_element(browser, "a[href='/checkout/']")  # click link that leads to checkout
 
     customer_name = "Test Tester"
     customer_street = "Test Street"
@@ -291,7 +284,9 @@ def test_browser_checkout_disable_methods(browser, live_server, settings, delete
     browser.find_by_css("input[name='payment_method'][value='%d']" % payment_method.pk).first.click()
 
     click_element(browser, ".btn.btn-primary.btn-lg.pull-right")  # click "continue" on methods page
-    wait_until_condition(browser, lambda x: x.is_text_present("Checkout: Confirmation"))  # we are indeed in confirmation page
+    wait_until_condition(
+        browser, lambda x: x.is_text_present("Checkout: Confirmation")
+    )  # we are indeed in confirmation page
 
     if delete_method == "payment":
         payment_method.delete()

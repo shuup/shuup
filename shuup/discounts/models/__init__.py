@@ -10,11 +10,4 @@ from ._coupon_codes import CouponCode, CouponUsage
 from ._discounts import Discount
 from ._happy_hours import HappyHour, TimeRange
 
-__all__ = [
-    "AvailabilityException",
-    "CouponCode",
-    "CouponUsage",
-    "HappyHour",
-    "Discount",
-    "TimeRange"
-]
+__all__ = ["AvailabilityException", "CouponCode", "CouponUsage", "HappyHour", "Discount", "TimeRange"]

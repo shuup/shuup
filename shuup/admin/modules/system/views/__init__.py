@@ -7,6 +7,4 @@
 # LICENSE file in the root directory of this source tree.
 from .telemetry import TelemetryWizardPane
 
-__all__ = [
-    "TelemetryWizardPane"
-]
+__all__ = ["TelemetryWizardPane"]

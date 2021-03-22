@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.toolbar import get_default_edit_toolbar, PostActionButton
+from shuup.admin.toolbar import PostActionButton, get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Attribute, ProductType
 from shuup.utils.django_compat import reverse_lazy
@@ -19,9 +19,13 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 class ProductTypeForm(MultiLanguageModelForm):
-    attributes = Select2MultipleField(model=Attribute, required=False, help_text=_(
-        "Select attributes that go with your product type. These are defined in Products Settings - Attributes."
-    ))
+    attributes = Select2MultipleField(
+        model=Attribute,
+        required=False,
+        help_text=_(
+            "Select attributes that go with your product type. These are defined in Products Settings - Attributes."
+        ),
+    )
 
     class Meta:
         model = ProductType
@@ -53,18 +57,24 @@ class ProductTypeEditView(CreateOrUpdateView):
     def get_toolbar(self):
         product_type = self.get_object()
         save_form_id = self.get_save_form_id()
-        delete_url = reverse_lazy(
-            "shuup_admin:product_type.delete", kwargs={"pk": product_type.pk}
-        ) if product_type.pk else None
+        delete_url = (
+            reverse_lazy("shuup_admin:product_type.delete", kwargs={"pk": product_type.pk}) if product_type.pk else None
+        )
         toolbar = get_default_edit_toolbar(self, save_form_id)
         if not delete_url:
             return toolbar
-        toolbar.append(PostActionButton(
-            post_url=delete_url,
-            text=_(u"Delete"),
-            icon="fa fa-trash",
-            extra_css_class="btn-danger",
-            confirm=_("Are you sure you wish to delete %s? Warrning: all related products will disappear from storefront until new value for product type is set!") % product_type,  # noqa
-            required_permissions=()
-        ))
+        toolbar.append(
+            PostActionButton(
+                post_url=delete_url,
+                text=_("Delete"),
+                icon="fa fa-trash",
+                extra_css_class="btn-danger",
+                confirm=_(
+                    "Are you sure you wish to delete %s? Warrning: all related products will disappear "
+                    "from storefront until new value for product type is set!"
+                )
+                % product_type,  # noqa
+                required_permissions=(),
+            )
+        )
         return toolbar

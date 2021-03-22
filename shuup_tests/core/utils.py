@@ -8,7 +8,6 @@
 
 
 class modify(object):
-
     def __init__(self, target, save=False, **attrs):
         self.attrs = attrs
         self.target = target

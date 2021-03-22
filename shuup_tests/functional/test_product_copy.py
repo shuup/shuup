@@ -6,10 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
-
 from bs4 import BeautifulSoup
+
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.modules.products.views.copy import ProductCopyView
 from shuup.core.models import Product, ProductMedia, ProductMediaKind

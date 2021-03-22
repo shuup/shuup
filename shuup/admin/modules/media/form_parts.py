@@ -21,7 +21,7 @@ class MediaFolderBaseFormPart(FormPart):
             required=False,
             kwargs={
                 "instance": self.object,
-            }
+            },
         )
 
     def form_valid(self, form):

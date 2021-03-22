@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import logging
-
 from django.core.mail.message import EmailMessage
 from django.template import engines
 from django.template.utils import InvalidTemplateEngineError
@@ -51,10 +50,12 @@ def send_simple_order_notification(sender, order, request, **kwargs):
         order.add_log_entry(
             "Error! Order Notification Email failed: %s." % exc,
             identifier=NOTIFICATION_ERROR_LOG_IDENTIFIER,
-            kind=LogEntryKind.ERROR)
+            kind=LogEntryKind.ERROR,
+        )
     else:
         LOG.info("Info! Order notification sent to %s." % message.to)
         order.add_log_entry(
             "Info! Order Notification Email was sent.",
             identifier=NOTIFICATION_SUCCESS_LOG_IDENTIFIER,
-            kind=LogEntryKind.ERROR)
+            kind=LogEntryKind.ERROR,
+        )

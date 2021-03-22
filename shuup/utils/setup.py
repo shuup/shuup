@@ -7,7 +7,6 @@
 
 
 class Setup(object):
-
     def __init__(self, load_from=None):
         self.commit(load_from)
 
@@ -41,8 +40,9 @@ class Setup(object):
             configure(setup)
         except Exception:  # pragma: no cover
             print("@" * 80)  # noqa
-            import traceback
             import sys
+            import traceback
+
             traceback.print_exc()
             print("@" * 80)  # noqa
             sys.exit(1)

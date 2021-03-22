@@ -15,8 +15,9 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import (
-    get_permissions_from_group, get_permissions_from_urls,
-    set_permissions_for_group
+    get_permissions_from_group,
+    get_permissions_from_urls,
+    set_permissions_for_group,
 )
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.utils.django_compat import force_text
@@ -36,7 +37,7 @@ class PermissionGroupForm(forms.ModelForm):
             initial=[member.pk for member in initial_members],
             required=False,
             label=_("Members"),
-            help_text=_("Set the users that belong to this Permission Group.")
+            help_text=_("Set the users that belong to this Permission Group."),
         )
         members_field.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
         self.fields["members"] = members_field
@@ -52,9 +53,7 @@ class PermissionGroupForm(forms.ModelForm):
             for required_permission in admin_module.get_required_permissions():
                 field_id = "perm:{}".format(required_permission)
                 self.fields[field_id] = forms.BooleanField(
-                    required=False,
-                    label=required_permission,
-                    initial=(required_permission in initial_permissions)
+                    required=False, label=required_permission, initial=(required_permission in initial_permissions)
                 )
                 admin_module.required_permissions_fields.append(field_id)
                 if required_permission in initial_permissions:
@@ -62,16 +61,13 @@ class PermissionGroupForm(forms.ModelForm):
                 else:
                     all_permissions_granted = False
 
-            extra_permissions = (
-                list(get_permissions_from_urls(admin_module.get_urls())) +
-                list(admin_module.get_extra_permissions())
+            extra_permissions = list(get_permissions_from_urls(admin_module.get_urls())) + list(
+                admin_module.get_extra_permissions()
             )
             for permission in extra_permissions:
                 field_id = "perm:{}".format(permission)
                 self.fields[field_id] = forms.BooleanField(
-                    required=False,
-                    label=permission,
-                    initial=(permission in initial_permissions)
+                    required=False, label=permission, initial=(permission in initial_permissions)
                 )
                 admin_module.per_view_permissions_fields.append(field_id)
                 if permission in initial_permissions:

@@ -26,17 +26,17 @@ class RefundedSalesReport(OrderReportMixin, ShuupReportBase):
     ]
 
     def get_data(self, **kwargs):
-        orders = super(RefundedSalesReport, self).get_objects().filter(
-            lines__type=OrderLineType.REFUND
-        ).distinct()[:self.queryset_row_limit]
+        orders = (
+            super(RefundedSalesReport, self)
+            .get_objects()
+            .filter(lines__type=OrderLineType.REFUND)
+            .distinct()[: self.queryset_row_limit]
+        )
 
         total_refunded = Money(0, self.shop.currency)
 
         for order in orders:
             total_refunded += order.get_total_refunded_amount()
 
-        data = [{
-            "refunded_orders": len(orders),
-            "total_refunded": total_refunded.value
-        }]
+        data = [{"refunded_orders": len(orders), "total_refunded": total_refunded.value}]
         return self.get_return_data(data, has_totals=False)

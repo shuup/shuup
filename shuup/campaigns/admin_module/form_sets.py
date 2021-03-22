@@ -10,8 +10,12 @@ from django.conf import settings
 from django.forms import BaseModelFormSet
 
 from shuup.campaigns.models import (
-    BasketCondition, BasketDiscountEffect, BasketLineEffect, CatalogFilter,
-    ContextCondition, ProductDiscountEffect
+    BasketCondition,
+    BasketDiscountEffect,
+    BasketLineEffect,
+    CatalogFilter,
+    ContextCondition,
+    ProductDiscountEffect,
 )
 from shuup.utils.multilanguage_model_form import TranslatableModelForm
 

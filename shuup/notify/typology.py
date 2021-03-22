@@ -20,12 +20,13 @@ class MultiEmailField(forms.Field):
     """
     From https://docs.djangoproject.com/en/1.11/ref/forms/validation/#form-field-default-cleaning
     """
+
     def validate(self, value):
         """Check if value consists only of valid emails."""
         # Use the parent's handling of required fields, etc.
         super().validate(value)
         if value:
-            for email in value.split(','):
+            for email in value.split(","):
                 if email:
                     validate_email(email)
 
@@ -171,7 +172,7 @@ class Enum(Type):
     def name(self):
         if self.enum_class:
             return camel_case_to_spaces(self.enum_class.__class__.__name__)
-        return u"<Invalid Enum>"
+        return "<Invalid Enum>"
 
     def __init__(self, enum_class):
         self.enum_class = enum_class

@@ -6,8 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from django.utils.translation import get_language_info, ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language_info, ugettext, ugettext_lazy as _
 
 from shuup import configuration
 

@@ -8,13 +8,11 @@
 import pytest
 
 from shuup.core.models import StaffOnlyBehaviorComponent
-from shuup.testing.factories import (
-    get_default_payment_method, get_default_shop
-)
+from shuup.testing.factories import get_default_payment_method, get_default_shop
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 from shuup_tests.utils.fixtures import regular_user
 
-regular_user = regular_user # noqa
+regular_user = regular_user  # noqa
 
 
 @pytest.mark.django_db

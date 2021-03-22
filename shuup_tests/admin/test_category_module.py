@@ -10,19 +10,15 @@ from django.db import transaction
 from django.test import override_settings
 
 from shuup.admin.modules.categories import CategoryModule
-from shuup.admin.modules.categories.forms import (
-    CategoryBaseForm, CategoryProductForm
-)
-from shuup.admin.modules.categories.views import (
-    CategoryCopyVisibilityView, CategoryEditView
-)
-from shuup.core.models import (
-    Category, CategoryStatus, CategoryVisibility, ProductMode,
-    ShopProductVisibility
-)
+from shuup.admin.modules.categories.forms import CategoryBaseForm, CategoryProductForm
+from shuup.admin.modules.categories.views import CategoryCopyVisibilityView, CategoryEditView
+from shuup.core.models import Category, CategoryStatus, CategoryVisibility, ProductMode, ShopProductVisibility
 from shuup.testing.factories import (
-    CategoryFactory, create_product, get_default_category,
-    get_default_customer_group, get_default_shop
+    CategoryFactory,
+    create_product,
+    get_default_category,
+    get_default_customer_group,
+    get_default_shop,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import empty_iterable
@@ -115,19 +111,17 @@ def test_products_form_add():
     category.save()
     product = create_product("test_product", shop=shop)
     shop_product = product.get_shop_instance(shop)
-    assert (category not in shop_product.categories.all())
-    data = {
-        "primary_products": ["%s" % product.id]
-    }
+    assert category not in shop_product.categories.all()
+    data = {"primary_products": ["%s" % product.id]}
     form = CategoryProductForm(shop=shop, category=category, data=data)
     form.full_clean()
     form.save()
     shop_product.refresh_from_db()
     product.refresh_from_db(())
-    assert (shop_product.primary_category == category)
-    assert (category in shop_product.categories.all())
-    assert (shop_product.visibility_limit.value == category.visibility.value)
-    assert (shop_product.visibility == ShopProductVisibility.NOT_VISIBLE)
+    assert shop_product.primary_category == category
+    assert category in shop_product.categories.all()
+    assert shop_product.visibility_limit.value == category.visibility.value
+    assert shop_product.visibility == ShopProductVisibility.NOT_VISIBLE
 
 
 @pytest.mark.django_db
@@ -137,18 +131,15 @@ def test_products_form_update_default_category():
     category.shops.add(shop)
     product = create_product("test_product", shop=shop)
     shop_product = product.get_shop_instance(shop)
-    assert (category not in shop_product.categories.all())
-    data = {
-        "primary_products": ["%s" % product.id],
-        "update_product_category": True
-    }
+    assert category not in shop_product.categories.all()
+    data = {"primary_products": ["%s" % product.id], "update_product_category": True}
     form = CategoryProductForm(shop=shop, category=category, data=data)
     form.full_clean()
     form.save()
     shop_product.refresh_from_db()
     product.refresh_from_db()
-    assert (shop_product.primary_category == category)
-    assert (category in shop_product.categories.all())
+    assert shop_product.primary_category == category
+    assert category in shop_product.categories.all()
 
 
 @pytest.mark.django_db
@@ -168,16 +159,14 @@ def test_products_form_add_multiple_products():
             child_product.link_to_parent(product)
         product_ids.append(product.id)
 
-    assert (category.shop_products.count() == 0)
-    data = {
-        "additional_products": ["%s" % product_id for product_id in product_ids]
-    }
+    assert category.shop_products.count() == 0
+    data = {"additional_products": ["%s" % product_id for product_id in product_ids]}
     form = CategoryProductForm(shop=shop, category=category, data=data)
     form.full_clean()
     form.save()
 
     category.refresh_from_db()
-    assert (category.shop_products.count() == 35)  # 15 normal products and 5 parents with 3 children each
+    assert category.shop_products.count() == 35  # 15 normal products and 5 parents with 3 children each
 
 
 @pytest.mark.django_db
@@ -192,22 +181,20 @@ def test_products_form_remove():
     shop_product.categories.add(category)
 
     shop_product.refresh_from_db()
-    assert (shop_product.primary_category == category)
-    assert (shop_product.categories.count() == 1)
-    assert (shop_product.categories.first() == category)
+    assert shop_product.primary_category == category
+    assert shop_product.categories.count() == 1
+    assert shop_product.categories.first() == category
 
-    data = {
-        "remove_products": ["%s" % product.id]
-    }
+    data = {"remove_products": ["%s" % product.id]}
     form = CategoryProductForm(shop=shop, category=category, data=data)
     form.full_clean()
     form.save()
 
     category.refresh_from_db()
-    assert (category.shop_products.count() == 0)
+    assert category.shop_products.count() == 0
     shop_product.refresh_from_db()
-    assert (shop_product.primary_category is None)
-    assert (shop_product.categories.count() == 0)
+    assert shop_product.primary_category is None
+    assert shop_product.categories.count() == 0
 
 
 @pytest.mark.django_db
@@ -229,26 +216,23 @@ def test_products_form_remove_with_parent():
     child_shop_product.save()
     child_shop_product.categories.add(category)
 
-
     shop_product.refresh_from_db()
-    assert (shop_product.primary_category == category)
-    assert (shop_product.categories.count() == 1)
-    assert (shop_product.categories.first() == category)
+    assert shop_product.primary_category == category
+    assert shop_product.categories.count() == 1
+    assert shop_product.categories.first() == category
 
-    assert (category.shop_products.count() == 2)
+    assert category.shop_products.count() == 2
 
-    data = {
-        "remove_products": ["%s" % product.id]
-    }
+    data = {"remove_products": ["%s" % product.id]}
     form = CategoryProductForm(shop=shop, category=category, data=data)
     form.full_clean()
     form.save()
 
     category.refresh_from_db()
-    assert (category.shop_products.count() == 0)
+    assert category.shop_products.count() == 0
     shop_product.refresh_from_db()
-    assert (shop_product.primary_category is None)
-    assert (shop_product.categories.count() == 0)
+    assert shop_product.primary_category is None
+    assert shop_product.categories.count() == 0
 
 
 @pytest.mark.django_db
@@ -261,7 +245,7 @@ def test_category_create(rf, admin_user):
             "base-name__en": cat_name,
             "base-status": CategoryStatus.VISIBLE.value,
             "base-visibility": CategoryVisibility.VISIBLE_TO_ALL.value,
-            "base-ordering": 1
+            "base-ordering": 1,
         }
         assert Category.objects.count() == 0
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user, shop=shop)
@@ -288,7 +272,7 @@ def test_category_create_with_parent(rf, admin_user):
             "base-status": CategoryStatus.VISIBLE.value,
             "base-visibility": CategoryVisibility.VISIBLE_TO_ALL.value,
             "base-ordering": 1,
-            "base-parent": default_category.pk
+            "base-parent": default_category.pk,
         }
         assert Category.objects.count() == 1
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user, shop=shop)

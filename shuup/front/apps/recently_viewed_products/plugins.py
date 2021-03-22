@@ -21,10 +21,10 @@ class RecentlyViewedProductsPlugin(TemplatedPlugin):
         context = super(RecentlyViewedProductsPlugin, self).get_context_data(context)
         request = context["request"]
         product_ids = [int(pid) for pid in request.COOKIES.get("rvp", "").split(",") if pid != ""]
-        context["products"] = sorted(Product.objects.listed(
-            customer=request.customer,
-            shop=request.shop
-        ).filter(id__in=product_ids), key=lambda p: product_ids.index(p.pk))
+        context["products"] = sorted(
+            Product.objects.listed(customer=request.customer, shop=request.shop).filter(id__in=product_ids),
+            key=lambda p: product_ids.index(p.pk),
+        )
         return context
 
 

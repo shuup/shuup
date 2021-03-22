@@ -33,18 +33,20 @@ class TotalSales(OrderReportMixin, ShuupReportBase):
         aggregation = orders.aggregate(
             customers=Count("customer", distinct=True),
             total=Sum("taxful_total_price_value"),
-            avg_sale=Avg("taxful_total_price_value")
+            avg_sale=Avg("taxful_total_price_value"),
         )
         total_sales_value = aggregation["total"] or 0
         customer_avg_sale = aggregation["avg_sale"] or 0
         customers = aggregation["customers"] or 0
 
-        data = [{
-            "name": self.shop.name,
-            "order_amount": orders.count(),
-            "customers": customers,
-            "customer_avg_sale": self.shop.create_price(customer_avg_sale).as_rounded().value,
-            "total_sales": self.shop.create_price(total_sales_value).as_rounded().value,
-            "currency": self.shop.currency
-        }]
+        data = [
+            {
+                "name": self.shop.name,
+                "order_amount": orders.count(),
+                "customers": customers,
+                "customer_avg_sale": self.shop.create_price(customer_avg_sale).as_rounded().value,
+                "total_sales": self.shop.create_price(total_sales_value).as_rounded().value,
+                "currency": self.shop.currency,
+            }
+        ]
         return self.get_return_data(data)

@@ -18,7 +18,7 @@ def get_simple_supplier(stock_managed=True, shop=None):
             identifier=IDENTIFIER,
             name="Simple Supplier",
             module_identifier="simple_supplier",
-            stock_managed=stock_managed
+            stock_managed=stock_managed,
         )
     if not shop:
         shop = get_default_shop()

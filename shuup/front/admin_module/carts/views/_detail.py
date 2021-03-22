@@ -13,7 +13,7 @@ from shuup.utils.importing import cached_load, load
 
 class CartDetailView(DetailView):
     model = StoredBasket
-    template_name = 'shuup/front/admin/stored_basket_detail.jinja'
+    template_name = "shuup/front/admin/stored_basket_detail.jinja"
 
     def get_queryset(self):
         qs = super(CartDetailView, self).get_queryset()
@@ -28,11 +28,7 @@ class CartDetailView(DetailView):
         if not basket_class:
             basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
 
-        basket = basket_class(
-            self.request,
-            basket_name=self.object.key,
-            shop=self.object.shop
-        )
+        basket = basket_class(self.request, basket_name=self.object.key, shop=self.object.shop)
         context["basket"] = basket
 
         sources = [

@@ -6,30 +6,30 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
-
-from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.campaigns.models import BasketCampaign, Coupon
-from shuup.campaigns.models.basket_conditions import (
-    CategoryProductsBasketCondition
-)
-from shuup.campaigns.models.basket_effects import (
-    BasketDiscountPercentage
-)
+from shuup.campaigns.models.basket_conditions import CategoryProductsBasketCondition
+from shuup.campaigns.models.basket_effects import BasketDiscountPercentage
 from shuup.core import cache
 from shuup.core.models import Category, CategoryStatus, Product
 from shuup.discounts.models import Discount
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition, wait_until_disappeared
+    click_element,
+    initialize_front_browser_test,
+    wait_until_appeared,
+    wait_until_condition,
+    wait_until_disappeared,
 )
 from shuup.testing.factories import (
-    create_product, get_default_payment_method, get_default_shipping_method,
-    get_default_shop, get_default_supplier
+    create_product,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
 )
-from shuup.testing.browser_utils import initialize_front_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -55,8 +55,7 @@ def test_coupon(browser, live_server, settings):
     get_default_payment_method()
     get_default_shipping_method()
 
-    first_category = Category.objects.create(
-        identifier="cat-1", status=CategoryStatus.VISIBLE, name="First Category")
+    first_category = Category.objects.create(identifier="cat-1", status=CategoryStatus.VISIBLE, name="First Category")
     first_category.shops.add(shop)
 
     _populate_products_form_data(CATEGORY_PRODUCT_DATA, shop, first_category)
@@ -105,10 +104,7 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
     _create_category_product_discount(first_category, shop, discount_amount)
 
     browser.reload()
-    wait_until_condition(
-        browser,
-        lambda x: str(new_price - discount_amount) in x.find_by_css(selector).first.text
-    )
+    wait_until_condition(browser, lambda x: str(new_price - discount_amount) in x.find_by_css(selector).first.text)
 
     # Go to product detail and update the price one more time
     click_element(browser, selector)
@@ -116,8 +112,8 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
     product_detail_price_selector = "#product-price-div-%s span.product-price strong" % product.id
     wait_until_appeared(browser, product_detail_price_selector)
     wait_until_condition(
-        browser,
-        lambda x: str(new_price - discount_amount) in x.find_by_css(product_detail_price_selector).first.text)
+        browser, lambda x: str(new_price - discount_amount) in x.find_by_css(product_detail_price_selector).first.text
+    )
 
     last_price = 120.53
     shop_product = product.get_shop_instance(shop)
@@ -130,7 +126,7 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
     browser.reload()
     wait_until_condition(
         browser,
-        lambda x: str(last_price - new_discount_amount) in x.find_by_css(product_detail_price_selector).first.text
+        lambda x: str(last_price - new_discount_amount) in x.find_by_css(product_detail_price_selector).first.text,
     )
 
     # Add product to basket and navigate to basket view
@@ -169,9 +165,7 @@ def _create_coupon_campaign(category, shop):
 
     coupon = Coupon.objects.create(code="couponcode", active=True)
 
-    campaign = BasketCampaign.objects.create(
-        shop=shop, public_name="test", name="test", active=True, coupon=coupon
-    )
+    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", active=True, coupon=coupon)
     campaign.conditions.add(basket_condition)
     campaign.save()
 

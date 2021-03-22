@@ -19,7 +19,7 @@ class PrintoutDeliveryExtraInformation(object):
         Override to add business logic if this module has any extra fields to add
         to the delivery printout.
         """
-        return (self.extra_fields is not None)
+        return self.extra_fields is not None
 
     @property
     def extra_fields(self):

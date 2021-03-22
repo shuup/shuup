@@ -12,14 +12,17 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.core.models import (
-    CustomCarrier, CustomPaymentProcessor, PaymentMethod, PaymentProcessor,
-    ShippingMethod, TaxClass
+    CustomCarrier,
+    CustomPaymentProcessor,
+    PaymentMethod,
+    PaymentProcessor,
+    ShippingMethod,
+    TaxClass,
 )
 
 
 class ServiceWizardForm(ShuupAdminForm):
-    service_name = forms.CharField(
-        label=_("Service name"), help_text=_("The name shown in the shop checkout process."))
+    service_name = forms.CharField(label=_("Service name"), help_text=_("The name shown in the shop checkout process."))
 
     def __init__(self, **kwargs):
         self.provider = kwargs["instance"]
@@ -37,10 +40,10 @@ class ServiceWizardForm(ShuupAdminForm):
         return self.get_shipping_method()
 
     def get_payment_method(self):
-        return (PaymentMethod.objects.filter(payment_processor=self.provider).first() if self.provider else None)
+        return PaymentMethod.objects.filter(payment_processor=self.provider).first() if self.provider else None
 
     def get_shipping_method(self):
-        return (ShippingMethod.objects.filter(carrier=self.provider).first() if self.provider else None)
+        return ShippingMethod.objects.filter(carrier=self.provider).first() if self.provider else None
 
     def save(self):
         is_new = not self.instance.pk
@@ -56,7 +59,7 @@ class ServiceWizardForm(ShuupAdminForm):
                 description=self.cleaned_data.get("service_description", ""),
                 shop=shop,
                 tax_class=TaxClass.objects.first(),
-                enabled=True
+                enabled=True,
             )
         else:
             service = self.get_service()
@@ -69,8 +72,11 @@ class ServiceWizardForm(ShuupAdminForm):
 
 class ManualShippingWizardForm(ServiceWizardForm):
     service_description = forms.CharField(
-        label=_("Instructions"), required=False, widget=forms.Textarea,
-        help_text=_("Additional instructions shown in the shop checkout process."))
+        label=_("Instructions"),
+        required=False,
+        widget=forms.Textarea,
+        help_text=_("Additional instructions shown in the shop checkout process."),
+    )
 
     def __init__(self, **kwargs):
         super(ManualShippingWizardForm, self).__init__(**kwargs)
@@ -89,8 +95,11 @@ class ManualShippingWizardForm(ServiceWizardForm):
 
 class ManualPaymentWizardForm(ServiceWizardForm):
     service_description = forms.CharField(
-        label=_("Instructions"), required=False, widget=forms.Textarea,
-        help_text=_("Additional instructions shown in the shop checkout process."))
+        label=_("Instructions"),
+        required=False,
+        widget=forms.Textarea,
+        help_text=_("Additional instructions shown in the shop checkout process."),
+    )
 
     def __init__(self, **kwargs):
         super(ManualPaymentWizardForm, self).__init__(**kwargs)

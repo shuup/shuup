@@ -19,23 +19,13 @@ from shuup.core.models import Manufacturer
 class ManufacturerListView(PicotableListView):
     model = Manufacturer
     default_columns = [
-        Column(
-            "logo",
-            _(u"Logo"),
-            display="logo",
-            class_name="text-center",
-            raw=True,
-            ordering=1,
-            sortable=False),
+        Column("logo", _("Logo"), display="logo", class_name="text-center", raw=True, ordering=1, sortable=False),
         Column(
             "name",
-            _(u"Name"),
+            _("Name"),
             sort_field="name",
             display="name",
-            filter_config=TextFilter(
-                filter_field="name",
-                placeholder=_("Filter by name...")
-            )
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         ),
     ]
     toolbar_buttons_provider_key = "manufacturer_list_toolbar_provider"

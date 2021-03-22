@@ -17,9 +17,8 @@ from shuup.utils.i18n import get_currency_name
 
 class StockAdjustmentForm(forms.Form):
     purchase_price = forms.DecimalField(
-        label=_("Purchase price per unit (%(currency_name)s)") % {
-            "currency_name": get_currency_name(settings.SHUUP_HOME_CURRENCY)
-        }
+        label=_("Purchase price per unit (%(currency_name)s)")
+        % {"currency_name": get_currency_name(settings.SHUUP_HOME_CURRENCY)}
     )
     delta = forms.DecimalField(label=_("Quantity"))
 

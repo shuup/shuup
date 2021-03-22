@@ -14,18 +14,18 @@ from shuup.campaigns.signal_handlers import update_customers_groups
 from shuup.campaigns.utils.sales_range import assign_to_group_based_on_sales, get_total_sales
 from shuup.core.models import AnonymousContact, ContactGroup, Payment, PersonContact
 from shuup.testing.factories import (
-    create_order_with_product, create_product, create_random_company,
-    create_random_person, get_default_customer_group, get_default_shop,
-    get_default_supplier
+    create_order_with_product,
+    create_product,
+    create_random_company,
+    create_random_person,
+    get_default_customer_group,
+    get_default_shop,
+    get_default_supplier,
 )
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_contact", [
-    AnonymousContact,
-    create_random_company,
-    create_random_person
-])
+@pytest.mark.parametrize("get_contact", [AnonymousContact, create_random_company, create_random_person])
 def test_sales_ranges_for_default_groups(get_contact):
     shop = get_default_shop()
     group = get_contact().get_default_group()
@@ -37,7 +37,8 @@ def test_sales_ranges_for_default_groups(get_contact):
 def create_fully_paid_order(shop, customer, supplier, product_sku, price_value):
     product = create_product(product_sku, shop=shop, supplier=supplier, default_price=price_value)
     order = create_order_with_product(
-        product=product, supplier=supplier, quantity=1, taxless_base_unit_price=price_value, shop=get_default_shop())
+        product=product, supplier=supplier, quantity=1, taxless_base_unit_price=price_value, shop=get_default_shop()
+    )
     order.customer = customer
     order.save()
     order.cache_prices()
@@ -46,8 +47,7 @@ def create_fully_paid_order(shop, customer, supplier, product_sku, price_value):
 
 def create_sales_range(group, shop, minimum, maximum):
     contact_group, _ = ContactGroup.objects.get_or_create(identifier=group, shop=shop)
-    return ContactGroupSalesRange.objects.create(
-        group=contact_group, shop=shop, min_value=minimum, max_value=maximum)
+    return ContactGroupSalesRange.objects.create(group=contact_group, shop=shop, min_value=minimum, max_value=maximum)
 
 
 @pytest.mark.django_db
@@ -60,11 +60,7 @@ def test_sales_ranges_basic():
     person = create_random_person()
     default_group.members.add(person)
     initial_group_count = person.groups.count()
-    sales_ranges = [
-        ("silver", 0, 50),
-        ("gold", 50, 100),
-        ("diamond", 100, 1000)
-    ]
+    sales_ranges = [("silver", 0, 50), ("gold", 50, 100), ("diamond", 100, 1000)]
     for identifier, min, max in sales_ranges:
         create_sales_range(identifier, shop, min, max)
 
@@ -99,11 +95,7 @@ def test_max_amount_none():
     supplier = get_default_supplier()
     person = create_random_person()
     initial_group_count = person.groups.count()
-    sales_ranges = [
-        ("silver", 0, 50),
-        ("gold", 50, None),
-        ("diamond", 100, None)
-    ]
+    sales_ranges = [("silver", 0, 50), ("gold", 50, None), ("diamond", 100, None)]
     for identifier, min, max in sales_ranges:
         create_sales_range(identifier, shop, min, max)
 
@@ -121,11 +113,7 @@ def test_sales_between_ranges():
     supplier = get_default_supplier()
     person = create_random_person()
     initial_group_count = person.groups.count()
-    sales_ranges = [
-        ("wood", 15, 0),
-        ("silver", 0, 50),
-        ("diamond", 100, None)
-    ]
+    sales_ranges = [("wood", 15, 0), ("silver", 0, 50), ("diamond", 100, None)]
     for identifier, min, max in sales_ranges:
         create_sales_range(identifier, shop, min, max)
 
@@ -155,12 +143,7 @@ def test_min_amount_is_not_included():
     supplier = get_default_supplier()
     person = create_random_person()
     initial_group_count = person.groups.count()
-    sales_ranges = [
-        ("silver", 0, 50),
-        ("gold", 50, 100),
-        ("diamond", 100, 1000),
-        ("reverse_diamond", 1000, 100)
-    ]
+    sales_ranges = [("silver", 0, 50), ("gold", 50, 100), ("diamond", 100, 1000), ("reverse_diamond", 1000, 100)]
     for identifier, min, max in sales_ranges:
         create_sales_range(identifier, shop, min, max)
 
@@ -185,11 +168,7 @@ def test_sales_ranges_around_zero():
     shop = get_default_shop()
     person = create_random_person()
     initial_group_count = person.groups.count()
-    sales_ranges = [
-        ("silver", 0, 0),
-        ("gold", 0, None),
-        ("diamond", None, 0)
-    ]
+    sales_ranges = [("silver", 0, 0), ("gold", 0, None), ("diamond", None, 0)]
     for identifier, min, max in sales_ranges:
         create_sales_range(identifier, shop, min, max)
 
@@ -208,7 +187,7 @@ def test_active_ranges():
         ("gold", None, 23),
         ("diamond", None, 0),
         ("active", 0, None),
-        (PersonContact.default_contact_group_identifier, 0, 1)  # should cause error when creating range.
+        (PersonContact.default_contact_group_identifier, 0, 1),  # should cause error when creating range.
     ]
     for identifier, min, max in sales_ranges:
         if identifier == PersonContact.default_contact_group_identifier:

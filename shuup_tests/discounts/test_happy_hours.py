@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 import pytest
 import pytz
 from django.core.exceptions import ValidationError
@@ -15,11 +14,11 @@ from django.test import override_settings
 from django.utils import timezone
 from mock import patch
 
-from shuup.utils.dates import to_timestamp
+from shuup.core.utils.price_cache import get_cached_price_info
 from shuup.discounts.models import Discount, HappyHour, TimeRange
 from shuup.testing import factories
-from shuup.core.utils.price_cache import get_cached_price_info
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.dates import to_timestamp
 from shuup.utils.i18n import format_money
 
 
@@ -40,22 +39,28 @@ def set_valid_times_condition(happy_hour, hour_start, hour_end, matching_days):
         if hour_end < hour_start:
             with pytest.raises(ValidationError):  # Valid hours has to be splitted. Admin should take care of this.
                 TimeRange.objects.create(
-                    happy_hour=happy_hour, from_hour=hour_start, to_hour=hour_end, weekday=matching_day)
+                    happy_hour=happy_hour, from_hour=hour_start, to_hour=hour_end, weekday=matching_day
+                )
 
             matching_day = int(matching_day)
-            tomorrow = (matching_day + 1 if matching_day < 6 else 0)
+            tomorrow = matching_day + 1 if matching_day < 6 else 0
             parent = TimeRange.objects.create(
                 happy_hour=happy_hour,
                 from_hour=hour_start,
                 to_hour=datetime.time(hour=23, minute=59),
-                weekday=matching_day
+                weekday=matching_day,
             )
             TimeRange.objects.create(
-                happy_hour=happy_hour, parent=parent, from_hour=datetime.time(hour=0),
-                to_hour=hour_end, weekday=tomorrow)
+                happy_hour=happy_hour,
+                parent=parent,
+                from_hour=datetime.time(hour=0),
+                to_hour=hour_end,
+                weekday=tomorrow,
+            )
         else:
             TimeRange.objects.create(
-                happy_hour=happy_hour, from_hour=hour_start, to_hour=hour_end, weekday=matching_day)
+                happy_hour=happy_hour, from_hour=hour_start, to_hour=hour_end, weekday=matching_day
+            )
 
 
 def mocked_now_basic():
@@ -293,16 +298,16 @@ def test_hour_conditions_end_before_start():
 def test_happy_hour_prices_expiration(rf):
     with override_settings(
         CACHES={
-            'default': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                'LOCATION': 'test_happy_hour_prices_bump',
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_happy_hour_prices_bump",
             }
         }
     ):
         happy_hour = init_test()
 
         # it is now: 2018-01-01 09:00 AM
-        before_happy_hour = datetime.datetime(2018, 1, 1, 9, 0, tzinfo=pytz.UTC)    # 09:00 AM
+        before_happy_hour = datetime.datetime(2018, 1, 1, 9, 0, tzinfo=pytz.UTC)  # 09:00 AM
         inside_happy_hour = datetime.datetime(2018, 1, 1, 10, 30, tzinfo=pytz.UTC)  # 10:30 AM
         after_happy_hours = datetime.datetime(2018, 1, 1, 11, 20, tzinfo=pytz.UTC)  # 11:30 AM
 

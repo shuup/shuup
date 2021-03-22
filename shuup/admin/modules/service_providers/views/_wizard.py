@@ -45,21 +45,14 @@ class ServiceWizardFormPartMixin(object):
 
         if self.request.method == "POST":
             active_providers = self.request.POST.get(self.base_name + "-providers").split(",")
-            service_provider_form_defs = list(
-                filter(
-                    lambda x: x.name in active_providers,
-                    service_provider_form_defs
-                )
-            )
+            service_provider_form_defs = list(filter(lambda x: x.name in active_providers, service_provider_form_defs))
         return [
             TemplatedWizardFormDef(
                 name=self.base_name,
                 template_name="shuup/admin/service_providers/_wizard_service_provider_base_form.jinja",
                 extra_js="shuup/admin/service_providers/_wizard_script.jinja",
                 form_class=ServiceProviderTypeForm,
-                kwargs={
-                    "label": self.provider_label
-                }
+                kwargs={"label": self.provider_label},
             )
         ] + service_provider_form_defs
 
@@ -84,6 +77,7 @@ class CarrierWizardPane(ServiceWizardFormPartMixin, WizardPane):
 
     def valid(self):
         from shuup.admin.utils.permissions import has_permission
+
         return has_permission(self.request.user, "shipping_method.edit")
 
 
@@ -99,4 +93,5 @@ class PaymentWizardPane(ServiceWizardFormPartMixin, WizardPane):
 
     def valid(self):
         from shuup.admin.utils.permissions import has_permission
+
         return has_permission(self.request.user, "payment_method.edit")

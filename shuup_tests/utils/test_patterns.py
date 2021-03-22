@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.utils.patterns import _compile_pattern, Pattern, pattern_matches
+from shuup.utils.patterns import Pattern, _compile_pattern, pattern_matches
 
 
 def ReconstitutedPattern(pat):

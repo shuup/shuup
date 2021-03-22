@@ -19,18 +19,20 @@ from shuup.core.utils.forms import RecoverPasswordForm
 class EmailAuthenticationForm(AuthenticationForm):
 
     error_messages = {
-        'invalid_login': _("Please enter a correct %(username)s and password. "
-                           "Note that both fields may be case-sensitive. "
-                           "In case of multiple accounts with the same email, only username can be used to log in."),
-        'inactive': _("This account is inactive."),
+        "invalid_login": _(
+            "Please enter a correct %(username)s and password. "
+            "Note that both fields may be case-sensitive. "
+            "In case of multiple accounts with the same email, only username can be used to log in."
+        ),
+        "inactive": _("This account is inactive."),
     }
 
     def __init__(self, *args, **kwargs):
         super(EmailAuthenticationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].label = _("Username or email address")
+        self.fields["username"].label = _("Username or email address")
 
     def clean_username(self):
-        username = self.data['username']
+        username = self.data["username"]
         user_model = get_user_model()
 
         # Note: Always search by username AND by email prevent timing attacks
@@ -54,9 +56,7 @@ class EmailAuthenticationForm(AuthenticationForm):
         password = self.cleaned_data.get("password")
 
         if username and password:
-            self.user_cache = authenticate(
-                request=self.request, username=username, password=password
-            )
+            self.user_cache = authenticate(request=self.request, username=username, password=password)
 
             # So here even with invalid login and user cache being None
             # we want to check whether the user we are trying to
@@ -94,9 +94,7 @@ class RequestPasswordForm(RecoverPasswordForm):
         user_model = get_user_model()
         username = self.cleaned_data.get("username")
         email = self.cleaned_data.get("email")
-        username_filter = {
-            "{0}__iexact".format(user_model.USERNAME_FIELD): username
-        }
+        username_filter = {"{0}__iexact".format(user_model.USERNAME_FIELD): username}
         # only staff and active users
         # only staff ( Access to Admin Panel ) and active users
         active_users = user_model.objects.filter(

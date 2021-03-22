@@ -16,8 +16,14 @@ from registration.signals import user_registered
 
 from shuup.core.fields import LanguageFormField
 from shuup.core.models import (
-    CompanyContact, get_company_contact, get_person_contact, MutableAddress,
-    PersonContact, SavedAddress, SavedAddressRole, SavedAddressStatus
+    CompanyContact,
+    MutableAddress,
+    PersonContact,
+    SavedAddress,
+    SavedAddressRole,
+    SavedAddressStatus,
+    get_company_contact,
+    get_person_contact,
 )
 from shuup.front.forms.widget import PictureDnDUploaderWidget
 from shuup.front.utils.companies import company_registration_requires_approval
@@ -33,8 +39,15 @@ class PersonContactForm(forms.ModelForm):
     class Meta:
         model = PersonContact
         fields = (
-            "first_name", "last_name", "phone", "email", "gender", "language",
-            "marketing_permission", "timezone", "picture"
+            "first_name",
+            "last_name",
+            "phone",
+            "email",
+            "gender",
+            "language",
+            "marketing_permission",
+            "timezone",
+            "picture",
         )
 
     def __init__(self, *args, **kwargs):
@@ -61,9 +74,7 @@ class PersonContactForm(forms.ModelForm):
 class CompanyContactForm(forms.ModelForm):
     class Meta:
         model = CompanyContact
-        fields = (
-            "name", "tax_number", "phone", "email", "marketing_permission", "picture"
-        )
+        fields = ("name", "tax_number", "phone", "email", "marketing_permission", "picture")
 
     def __init__(self, *args, **kwargs):
         super(CompanyContactForm, self).__init__(*args, **kwargs)
@@ -111,9 +122,9 @@ class CustomerInformationFormGroup(FormGroup):
         address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
 
         for form_name in self.address_forms:
-            self.add_form_def(form_name, address_form_class, kwargs={
-                "instance": getattr(contact, "default_%s_address" % form_name)
-            })
+            self.add_form_def(
+                form_name, address_form_class, kwargs={"instance": getattr(contact, "default_%s_address" % form_name)}
+            )
 
         self.add_form_def("contact", PersonContactForm, kwargs={"instance": contact})
 
@@ -159,7 +170,7 @@ class CompanyInformationFormGroup(FormGroup):
                 address_form_class,
                 kwargs={
                     "instance": _get_default_address_for_contact(company, "default_%s_address" % form_name, person)
-                }
+                },
             )
         self.add_form_def("contact", CompanyContactForm, kwargs={"instance": company})
 
@@ -190,8 +201,7 @@ class CompanyInformationFormGroup(FormGroup):
         # company will be created as inactive.
         if is_new and company_registration_requires_approval(self.request.shop):
             company.is_active = False
-            message = _("Company information was saved. "
-                        "Please follow the instructions sent to your email address.")
+            message = _("Company information was saved. " "Please follow the instructions sent to your email address.")
 
         messages.success(self.request, message)
         company.save()
@@ -242,8 +252,8 @@ class AddressBookFormGroup(FormGroup):
             defaults={
                 "title": saf.cleaned_data.get("title"),
                 "role": saf.cleaned_data.get("role"),
-                "status": saf.cleaned_data.get("status")
-            }
+                "status": saf.cleaned_data.get("status"),
+            },
         )
         return saved_address
 

@@ -7,9 +7,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import PercentageField
-from shuup.campaigns.models.product_effects import (
-    ProductDiscountAmount, ProductDiscountPercentage
-)
+from shuup.campaigns.models.product_effects import ProductDiscountAmount, ProductDiscountPercentage
 
 from ._base import BaseEffectModelForm
 
@@ -24,9 +22,11 @@ class ProductDiscountAmountForm(BaseEffectModelForm):
 
 class ProductDiscountPercentageForm(BaseEffectModelForm):
     discount_percentage = PercentageField(
-        max_digits=6, decimal_places=5,
+        max_digits=6,
+        decimal_places=5,
         label=_("discount percentage"),
-        help_text=_("The discount percentage for this campaign."))
+        help_text=_("The discount percentage for this campaign."),
+    )
 
     class Meta(BaseEffectModelForm.Meta):
         model = ProductDiscountPercentage

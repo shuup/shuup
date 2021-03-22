@@ -16,12 +16,13 @@ from shuup.apps.provides import override_provides
 
 def test_menu_updater():
     main_menu = extend_main_menu(MAIN_MENU)
-    assert len(list(filter(lambda x: 'entries' in x,  main_menu))) == 0
+    assert len(list(filter(lambda x: "entries" in x, main_menu))) == 0
 
-    with override_provides("admin_main_menu_updater",
-                           ["shuup.testing.admin_main_menu_updater:TestAdminMainMenuUpdater"]):
+    with override_provides(
+        "admin_main_menu_updater", ["shuup.testing.admin_main_menu_updater:TestAdminMainMenuUpdater"]
+    ):
         main_menu = extend_main_menu(MAIN_MENU)
-        assert len(list(filter(lambda x: 'entries' in x,  main_menu))) == 1
+        assert len(list(filter(lambda x: "entries" in x, main_menu))) == 1
 
 
 def test_base_menu_entry():
@@ -30,16 +31,16 @@ def test_base_menu_entry():
     # test Resolver
     assert entry.url is None
 
-    admin_url = ('shuup_admin:dashboard', (), {})
+    admin_url = ("shuup_admin:dashboard", (), {})
     entry._url = admin_url
-    assert entry.url == '/sa/'
+    assert entry.url == "/sa/"
     assert entry.original_url == admin_url
 
-    entry._url = 'shuup_admin:dashboard'
-    assert entry.url == '/sa/'
+    entry._url = "shuup_admin:dashboard"
+    assert entry.url == "/sa/"
 
-    entry._url = '/sa/'
-    assert entry.url == '/sa/'
+    entry._url = "/sa/"
+    assert entry.url == "/sa/"
 
     with pytest.raises(TypeError):
         entry._url = 1
@@ -47,6 +48,9 @@ def test_base_menu_entry():
 
     # test iterator
     assert entry.has_entries is False
-    entry.entries = [BaseMenuEntry(), BaseMenuEntry(),]
+    entry.entries = [
+        BaseMenuEntry(),
+        BaseMenuEntry(),
+    ]
     assert entry.has_entries is True
     assert len(list(e for e in entry)) == 2

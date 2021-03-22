@@ -7,10 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.notify.script import Context
 from shuup.notify.actions import AddNotification
 from shuup.notify.base import TemplatedBinding
 from shuup.notify.enums import ConstantUse
+from shuup.notify.script import Context
 
 
 def test_templated_binding_security():

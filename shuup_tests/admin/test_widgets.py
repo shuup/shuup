@@ -43,7 +43,7 @@ def test_bound_file_dnd_uploader_widget():
             "max-filesize": 10,
             "retry-chunks-limit": 100,
             "clickable": "false",
-        }
+        },
     ).render(name="foo", value=f.pk)
     soup = BeautifulSoup(widget_html)
     assert soup.select("#dropzone-dropzone"), "widget has id"

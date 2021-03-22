@@ -11,9 +11,10 @@ from shuup.apps import AppConfig
 def activate_sqlite_fk_constraint(sender, connection, **kwargs):
     """Enable integrity constraint with SQLite and not running browser tests."""
     import os
-    if connection.vendor == 'sqlite' and os.environ.get("SHUUP_BROWSER_TESTS") != "1":
+
+    if connection.vendor == "sqlite" and os.environ.get("SHUUP_BROWSER_TESTS") != "1":
         cursor = connection.cursor()
-        cursor.execute('PRAGMA foreign_keys = ON;')
+        cursor.execute("PRAGMA foreign_keys = ON;")
 
 
 class ShuupTestingAppConfig(AppConfig):
@@ -39,7 +40,7 @@ class ShuupTestingAppConfig(AppConfig):
             "shuup.testing.modules.mocker.toolbar:MockContactToolbarButton",
         ],
         "admin_contact_toolbar_action_item": [
-             "shuup.testing.modules.mocker.toolbar:MockContactToolbarActionItem",
+            "shuup.testing.modules.mocker.toolbar:MockContactToolbarActionItem",
         ],
         "admin_contact_edit_toolbar_button": [
             "shuup.testing.modules.mocker.toolbar:MockContactToolbarButton",
@@ -53,21 +54,17 @@ class ShuupTestingAppConfig(AppConfig):
         "admin_contact_section": [
             "shuup.testing.modules.mocker.sections:MockContactSection",
         ],
-        "importers": [
-            "shuup.testing.importers.DummyImporter",
-            "shuup.testing.importers.DummyFileImporter"
-        ],
+        "importers": ["shuup.testing.importers.DummyImporter", "shuup.testing.importers.DummyFileImporter"],
         "xtheme": [
             __name__ + ".themes:ShuupTestingTheme",
             __name__ + ".themes:ShuupTestingThemeWithCustomBase",
         ],
-        "pricing_module": [
-            "shuup.testing.supplier_pricing.pricing:SupplierPricingModule"
-        ],
+        "pricing_module": ["shuup.testing.supplier_pricing.pricing:SupplierPricingModule"],
     }
 
     def ready(self):
         from django.db.backends.signals import connection_created
+
         connection_created.connect(activate_sqlite_fk_constraint)
 
 

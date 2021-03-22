@@ -5,15 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import click
 import re
 from ast import BinOp, Mod, parse
-
+from sanity_utils import XNodeVisitor, find_files
 from six import text_type
 
-import click
-from sanity_utils import find_files, XNodeVisitor
-
-encoding_comment_regexp = re.compile(r'^#.+coding[=:]\s*([-\w.]+).+$', re.MULTILINE | re.I)
+encoding_comment_regexp = re.compile(r"^#.+coding[=:]\s*([-\w.]+).+$", re.MULTILINE | re.I)
 
 
 class StringVisitor(XNodeVisitor):
@@ -23,7 +21,7 @@ class StringVisitor(XNodeVisitor):
 
     def visit_Str(self, node, parents):  # noqa (N802)
         s = text_type(node.s)
-        is_being_formatted = (parents and isinstance(parents[-1], BinOp) and isinstance(parents[-1].op, Mod))
+        is_being_formatted = parents and isinstance(parents[-1], BinOp) and isinstance(parents[-1].op, Mod)
         if is_being_formatted:
             self.formattees.add(s)
             return
@@ -91,7 +89,7 @@ def gather_files(dirnames, filenames):
 @click.command()
 @click.option("-f", "--file", "filenames", type=click.Path(exists=True, dir_okay=False), multiple=True)
 @click.option("-d", "--dir", "dirnames", type=click.Path(exists=True, file_okay=False), multiple=True)
-@click.option('--fix/--no-fix', default=False)
+@click.option("--fix/--no-fix", default=False)
 def command(filenames, dirnames, fix):
     for filename in gather_files(dirnames, filenames):
         visitor = process_file(filename)

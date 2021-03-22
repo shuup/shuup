@@ -37,9 +37,9 @@ class BasketUpdateMethods(object):
         """
 
         return {
-            'q_': self.update_quantity,
-            'dq_': self.update_display_quantity,
-            'delete_': self.delete_line,
+            "q_": self.update_quantity,
+            "dq_": self.update_display_quantity,
+            "delete_": self.delete_line,
         }
 
     def delete_line(self, line, **kwargs):
@@ -54,15 +54,17 @@ class BasketUpdateMethods(object):
             shop_product = product.get_shop_instance(shop=self.request.shop)
         except ShopProduct.DoesNotExist:
             return [
-                ValidationError("Error! %s is not available in %s." % (product, self.request.shop),
-                                code="product_not_available_in_shop")
+                ValidationError(
+                    "Error! %s is not available in %s." % (product, self.request.shop),
+                    code="product_not_available_in_shop",
+                )
             ]
 
-        errors = list(shop_product.get_orderability_errors(
-            supplier=supplier,
-            customer=self.basket.customer,
-            quantity=total_product_quantity
-        ))
+        errors = list(
+            shop_product.get_orderability_errors(
+                supplier=supplier, customer=self.basket.customer, quantity=total_product_quantity
+            )
+        )
         if product.is_package_parent():
             for child_product, child_quantity in six.iteritems(product.get_package_child_to_quantity_map()):
                 child_basket_quantity = basket_quantities.get(child_product.id, 0)
@@ -73,15 +75,15 @@ class BasketUpdateMethods(object):
                     child_errors = [
                         ValidationError(
                             "Error! %s is not available in %s." % (child_product, self.request.shop),
-                            code="product_not_available_in_shop"
+                            code="product_not_available_in_shop",
                         )
                     ]
                 else:
-                    child_errors = list(shop_product.get_orderability_errors(
-                        supplier=supplier,
-                        customer=self.basket.customer,
-                        quantity=total_child_quantity
-                    ))
+                    child_errors = list(
+                        shop_product.get_orderability_errors(
+                            supplier=supplier, customer=self.basket.customer, quantity=total_child_quantity
+                        )
+                    )
                 errors.extend(child_errors)
         return errors
 
@@ -91,7 +93,7 @@ class BasketUpdateMethods(object):
         new_display_quantity = parse_decimal_string(value)
         if new_display_quantity is None:
             return False
-        basket_line = self.basket.get_basket_line(line['line_id'])
+        basket_line = self.basket.get_basket_line(line["line_id"])
         if basket_line and basket_line.product:
             unit = basket_line.shop_product.unit
             new_quantity = unit.from_display(new_display_quantity)
@@ -116,10 +118,7 @@ class BasketUpdateMethods(object):
 
         # Ensure sub-lines also get changed accordingly
         linked_lines = [line] + list(self.basket.find_lines_by_parent_line_id(line["line_id"]))
-        orderable_lines = {
-            basket_line.line_id: basket_line
-            for basket_line in self.basket.get_lines()
-        }
+        orderable_lines = {basket_line.line_id: basket_line for basket_line in self.basket.get_lines()}
 
         for linked_line in linked_lines:
             orderable_line = orderable_lines.get(linked_line["line_id"])

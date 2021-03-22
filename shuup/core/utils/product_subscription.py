@@ -4,9 +4,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from typing import Iterable, Union
-
 from django.contrib.auth import get_user_model
+from typing import Iterable, Union
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Product, Shop, Supplier
@@ -47,8 +46,9 @@ class BaseProductSubscriptionOptionProvider:
         raise NotImplementedError()
 
 
-def get_product_subscription_options(context: ProductSubscriptionContext,
-                                     **kwargs) -> Iterable[ProductSubscriptionOption]:
+def get_product_subscription_options(
+    context: ProductSubscriptionContext, **kwargs
+) -> Iterable[ProductSubscriptionOption]:
     for product_subscription_option_provider in get_provide_objects("product_subscription_option_provider"):
         if not issubclass(product_subscription_option_provider, BaseProductSubscriptionOptionProvider):
             continue

@@ -48,15 +48,12 @@ from shuup.utils import update_module_attributes
 
 from ._context import PricingContext, PricingContextable
 from ._discounts import DiscountModule, get_discount_modules
-from ._module import get_pricing_module, PricingModule
+from ._module import PricingModule, get_pricing_module
 from ._price import Price, TaxfulPrice, TaxlessPrice
 from ._price_display_options import PriceDisplayOptions
 from ._price_info import PriceInfo
 from ._priceful import Priceful
-from ._utils import (
-    get_price_info, get_price_infos, get_pricing_steps,
-    get_pricing_steps_for_products
-)
+from ._utils import get_price_info, get_price_infos, get_pricing_steps, get_pricing_steps_for_products
 
 __all__ = [
     "DiscountModule",

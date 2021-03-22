@@ -9,16 +9,17 @@ import pytest
 from django.test.utils import override_settings
 
 from shuup.core.basket import get_basket
-from shuup.core.models import get_person_contact, OrderLineType
-from shuup.utils.importing import cached_load
+from shuup.core.models import OrderLineType, get_person_contact
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.importing import cached_load
 
 CORE_BASKET_SETTINGS = dict(
     SHUUP_BASKET_ORDER_CREATOR_SPEC="shuup.core.basket.order_creator:BasketOrderCreator",
     SHUUP_BASKET_STORAGE_CLASS_SPEC="shuup.core.basket.storage:DatabaseBasketStorage",
-    SHUUP_BASKET_CLASS_SPEC="shuup.core.basket.objects:Basket"
+    SHUUP_BASKET_CLASS_SPEC="shuup.core.basket.objects:Basket",
 )
+
 
 @pytest.mark.django_db
 def test_set_customer_with_custom_basket_lines(rf):
@@ -45,7 +46,7 @@ def test_set_customer_with_custom_basket_lines(rf):
             shop=basket.shop,
             quantity=1,
             base_unit_price=base_unit_price,
-            extra={"this is purely extra": "oh is it"}
+            extra={"this is purely extra": "oh is it"},
         )
         assert cache_key != basket.get_cache_key()
         cache_key = basket.get_cache_key()

@@ -16,12 +16,14 @@ from shuup.testing.factories import get_default_shop
 
 @pytest.mark.django_db
 def test_simple_set_and_get_with_shop():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_simple_set_and_get_with_shop',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_simple_set_and_get_with_shop",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         shop = get_default_shop()
         configuration.set(shop, "answer", 42)
@@ -34,12 +36,14 @@ def test_simple_set_and_get_with_shop():
 
 @pytest.mark.django_db
 def test_simple_set_and_get_without_shop():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_simple_set_and_get_without_shop',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_simple_set_and_get_without_shop",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         configuration.set(None, "answer", 42)
         assert configuration.get(None, "answer") == 42
@@ -51,12 +55,14 @@ def test_simple_set_and_get_without_shop():
 
 @pytest.mark.django_db
 def test_simple_set_and_get_cascading():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_simple_set_and_get_cascading',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_simple_set_and_get_cascading",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         shop = get_default_shop()
         configuration.set(None, "answer", 42)
@@ -79,12 +85,14 @@ def test_simple_set_and_get_cascading():
 
 @pytest.mark.django_db
 def test_configuration_gets_saved():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_gets_saved',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_gets_saved",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         configuration.set(None, "x", 1)
         assert configuration.get(None, "x") == 1
@@ -98,12 +106,14 @@ def test_configuration_gets_saved():
 
 @pytest.mark.django_db
 def test_configuration_set_and_get():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_set_and_get',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_set_and_get",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         shop = get_default_shop()
         test_conf_data = {"data": "test"}
@@ -117,12 +127,14 @@ def test_configuration_set_and_get():
 
 @pytest.mark.django_db
 def test_configuration_update():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_update',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_update",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         shop = get_default_shop()
         configuration.set(shop, "key1", {"data": "test1"})
@@ -138,12 +150,14 @@ def test_configuration_update():
 
 @pytest.mark.django_db
 def test_global_configurations():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_global_configurations',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_global_configurations",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         shop = get_default_shop()
         configuration.set(None, "key1", {"data": "test1"})
@@ -169,12 +183,14 @@ def test_global_configurations():
 
 @pytest.mark.django_db
 def test_configuration_cache():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
 
         shop = get_default_shop()

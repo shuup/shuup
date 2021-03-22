@@ -14,6 +14,7 @@ class TaskNotSerializableError(Exception):
     """
     Raised when the task can't be serialized.
     """
+
     pass
 
 

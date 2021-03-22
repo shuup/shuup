@@ -4,14 +4,14 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import os
-import re
-import sys
 import token
 import tokenize
 
 import django.conf
+import os
+import re
 import six
+import sys
 
 import shuup.apps
 
@@ -20,33 +20,33 @@ if six.PY3:
     FILE_READ_KWARGS = {"mode": "r", "encoding": "utf-8"}
 
 _TOKEN_MAP = dict(((k, v) for (v, k) in token.tok_name.items()))
-COMMENT_TOKEN = _TOKEN_MAP['COMMENT']
+COMMENT_TOKEN = _TOKEN_MAP["COMMENT"]
 
 
-def get_known_settings_documentation(order_by='app', only_changed=False):
+def get_known_settings_documentation(order_by="app", only_changed=False):
     def orderer(setting):
-        if order_by == 'app':
-            return (setting['app_name'], setting['name'])
-        elif order_by == 'name':
-            return setting['name']
+        if order_by == "app":
+            return (setting["app_name"], setting["name"])
+        elif order_by == "name":
+            return setting["name"]
 
     known_settings = get_known_settings_with_comments()
 
     doc_items = []
     sorted_settings = sorted(known_settings, key=orderer)
     for setting in sorted_settings:
-        default_value = setting['default']
-        current_value = getattr(django.conf.settings, setting['name'])
+        default_value = setting["default"]
+        current_value = getattr(django.conf.settings, setting["name"])
         if only_changed and default_value == current_value:
             continue
-        title = '{} (from {})'.format(setting['name'], setting['app_name'])
-        doc = (setting['comment'] or 'Undocumented').strip()
-        indented_doc = '\n    '.join(('    ' + doc).splitlines()).rstrip()
-        default = '    Default value: {!r}'.format(default_value)
-        current = '    Current value: {!r}'.format(current_value)
-        blocks = [title, indented_doc, '', default, current]
-        doc_items.append('\n'.join(blocks))
-    return '\n\n'.join(doc_items)
+        title = "{} (from {})".format(setting["name"], setting["app_name"])
+        doc = (setting["comment"] or "Undocumented").strip()
+        indented_doc = "\n    ".join(("    " + doc).splitlines()).rstrip()
+        default = "    Default value: {!r}".format(default_value)
+        current = "    Current value: {!r}".format(current_value)
+        blocks = [title, indented_doc, "", default, current]
+        doc_items.append("\n".join(blocks))
+    return "\n\n".join(doc_items)
 
 
 def get_known_settings_with_comments():
@@ -75,8 +75,8 @@ def _get_comments_before_assignments(module_name, names):
     :rtype: dict[str,str]
     """
     module = sys.modules.get(module_name)
-    module_pyc_file = getattr(module, '__file__', '')
-    module_py_file = re.sub('.py[cdo]?$', '.py', module_pyc_file)
+    module_pyc_file = getattr(module, "__file__", "")
+    module_py_file = re.sub(".py[cdo]?$", ".py", module_pyc_file)
     if not os.path.exists(module_py_file):
         return {}
 
@@ -86,19 +86,15 @@ def _get_comments_before_assignments(module_name, names):
     name_assign_tokens = [
         (tokens[i - 1][1], i - 1)  # (name, position)
         for (i, t) in enumerate(tokens)
-        if i > 0 and t[0:2] == (token.OP, '=') and
-        tokens[i - 1][0] == token.NAME and
-        tokens[i - 1][1] in names]
+        if i > 0 and t[0:2] == (token.OP, "=") and tokens[i - 1][0] == token.NAME and tokens[i - 1][1] in names
+    ]
 
     def get_comment_before(pos):
         p = pos
         while p >= 0 and tokens[p][0] != token.NEWLINE:
             p -= 1
-        return '\n'.join(
-            re.sub('^#: ?', '', x[1])
-            for x in tokens[(p + 1):pos]
-            if x[0] == COMMENT_TOKEN and x[1].startswith('#:'))
+        return "\n".join(
+            re.sub("^#: ?", "", x[1]) for x in tokens[(p + 1) : pos] if x[0] == COMMENT_TOKEN and x[1].startswith("#:")
+        )
 
-    return dict(
-        (name, get_comment_before(pos))
-        for (name, pos) in name_assign_tokens)
+    return dict((name, get_comment_before(pos)) for (name, pos) in name_assign_tokens)

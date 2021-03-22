@@ -7,8 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 
 from .blocks import (
-    DashboardBlock, DashboardChartBlock, DashboardContentBlock,
-    DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
+    DashboardBlock,
+    DashboardChartBlock,
+    DashboardContentBlock,
+    DashboardMoneyBlock,
+    DashboardNumberBlock,
+    DashboardValueBlock,
 )
 from .charts import BarChart, ChartDataType, ChartType, MixedChart
 from .utils import get_activity

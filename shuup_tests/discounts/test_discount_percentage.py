@@ -6,9 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
-import random
-
 import pytest
+import random
 
 from shuup.discounts.models import Discount
 from shuup.testing import factories
@@ -33,28 +32,30 @@ def test_discount_amount(rf):
     assert product.get_price_info(request).price == request.shop.create_price(7)
 
     # Let's add higher discount amount for this discount
-    discount_amount = decimal.Decimal(random.randrange(300, 800))/100
+    discount_amount = decimal.Decimal(random.randrange(300, 800)) / 100
     discount.discount_amount_value = discount_amount
     discount.save()
     assert product.get_price_info(request).price == request.shop.create_price(original_price - discount_amount)
 
     # Let's make discount percentage between 80% to 90%
-    discount_percentage = decimal.Decimal(random.randrange(80, 90))/100
+    discount_percentage = decimal.Decimal(random.randrange(80, 90)) / 100
     discount.discount_percentage = discount_percentage
     discount.save()
-    assert product.get_price_info(
-        request).price == request.shop.create_price(original_price - original_price * discount_percentage)
+    assert product.get_price_info(request).price == request.shop.create_price(
+        original_price - original_price * discount_percentage
+    )
 
     # Let's add separate discount for 90% - 100% discount
-    discount_percentage = decimal.Decimal(random.randrange(90, 100))/100
+    discount_percentage = decimal.Decimal(random.randrange(90, 100)) / 100
     discount = Discount.objects.create(active=True, product=product, discount_percentage=discount_percentage)
     discount.shops.add(shop)
-    assert product.get_price_info(
-        request).price == request.shop.create_price(original_price - original_price * discount_percentage)
+    assert product.get_price_info(request).price == request.shop.create_price(
+        original_price - original_price * discount_percentage
+    )
 
     # Finally let's make sure the minimum price value for shop product is honored
     shop_product = product.get_shop_instance(shop)
-    min_price = decimal.Decimal(random.randrange(501, 701))/100
+    min_price = decimal.Decimal(random.randrange(501, 701)) / 100
     shop_product.minimum_price_value = min_price
     shop_product.save()
     assert product.get_price_info(request).price == request.shop.create_price(min_price)

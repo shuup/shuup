@@ -12,9 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
-from shuup.admin.utils.views import (
-    add_create_or_change_message, CreateOrUpdateView
-)
+from shuup.admin.utils.views import CreateOrUpdateView, add_create_or_change_message
 from shuup.apps.provides import get_identifier_to_object_map
 from shuup.notify.admin_module import SCRIPT_TEMPLATES_PROVIDE_CATEGORY
 from shuup.notify.admin_module.forms import ScriptForm
@@ -50,25 +48,31 @@ class ScriptEditView(CreateOrUpdateView):
                             text=_("Edit Template"),
                             icon="fa fa-pencil-square-o",
                             extra_css_class="btn-primary",
-                            url=reverse("shuup_admin:notify.script-template-edit", kwargs={"pk": self.object.pk})
+                            url=reverse("shuup_admin:notify.script-template-edit", kwargs={"pk": self.object.pk}),
                         )
                     )
 
-            buttons.insert(0, URLActionButton(
-                text=edit_button_title,
-                icon="fa fa-pencil",
-                extra_css_class="btn-primary",
-                url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk})
-            ))
+            buttons.insert(
+                0,
+                URLActionButton(
+                    text=edit_button_title,
+                    icon="fa fa-pencil",
+                    extra_css_class="btn-primary",
+                    url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk}),
+                ),
+            )
 
-            buttons.insert(1, PostActionButton(
-                post_url=reverse("shuup_admin:notify.script.delete", kwargs={"pk": self.object.pk}),
-                text=_("Delete"),
-                icon="fa fa-trash",
-                extra_css_class="btn-danger",
-                confirm=_('Are you sure you wish to delete "%s" notification?') % self.object,
-                required_permissions=("notify.script.delete",)
-            ))
+            buttons.insert(
+                1,
+                PostActionButton(
+                    post_url=reverse("shuup_admin:notify.script.delete", kwargs={"pk": self.object.pk}),
+                    text=_("Delete"),
+                    icon="fa fa-trash",
+                    extra_css_class="btn-danger",
+                    confirm=_('Are you sure you wish to delete "%s" notification?') % self.object,
+                    required_permissions=("notify.script.delete",),
+                ),
+            )
 
             context["toolbar"] = Toolbar(buttons, view=self)
         return context
@@ -79,7 +83,7 @@ class ScriptEditView(CreateOrUpdateView):
         return kwargs
 
     def form_valid(self, form):
-        is_new = (not self.object.pk)
+        is_new = not self.object.pk
         wf = form.save()
         if is_new:
             return redirect("shuup_admin:notify.script.edit-content", pk=wf.pk)

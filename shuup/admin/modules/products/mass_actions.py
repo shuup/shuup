@@ -14,9 +14,7 @@ from six import string_types
 from shuup.admin.modules.products.views.list import ProductListView
 from shuup.admin.modules.settings.view_settings import ViewSettings
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.picotable import (
-    PicotableFileMassAction, PicotableMassAction, PicotableRedirectMassAction
-)
+from shuup.admin.utils.picotable import PicotableFileMassAction, PicotableMassAction, PicotableRedirectMassAction
 from shuup.core.models import ShopProduct, ShopProductVisibility
 from shuup.core.utils import context_cache
 from shuup.utils.django_compat import reverse
@@ -67,9 +65,9 @@ class FileResponseAction(PicotableFileMassAction):
             query = Q(pk__in=ids, shop=shop)
 
         view_settings = ViewSettings(ShopProduct, ProductListView.default_columns, ProductListView)
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="products.csv"'
-        writer = csv.writer(response, delimiter=";", encoding='utf-8')
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="products.csv"'
+        writer = csv.writer(response, delimiter=";", encoding="utf-8")
         writer.writerow([col.title for col in view_settings.columns])
         for shop_product in ShopProduct.objects.filter(query):
             row = []

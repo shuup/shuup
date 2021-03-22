@@ -8,7 +8,6 @@ from __future__ import unicode_literals
 
 import decimal
 import os
-
 import six
 from django.db.models import ForeignKey, ManyToManyField, Q
 from django.utils.text import slugify
@@ -16,13 +15,20 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.permissions import has_permission
 from shuup.core.models import (
-    MediaFile, Product, ProductMedia, ProductMediaKind, ProductMode,
-    ProductType, ProductVariationVariable, ProductVariationVariableValue,
-    SalesUnit, ShopProduct, Supplier, TaxClass
+    MediaFile,
+    Product,
+    ProductMedia,
+    ProductMediaKind,
+    ProductMode,
+    ProductType,
+    ProductVariationVariable,
+    ProductVariationVariableValue,
+    SalesUnit,
+    ShopProduct,
+    Supplier,
+    TaxClass,
 )
-from shuup.importer.importing import (
-    DataImporter, ImporterExampleFile, ImportMetaBase
-)
+from shuup.importer.importing import DataImporter, ImporterExampleFile, ImportMetaBase
 from shuup.importer.utils import fold_mapping_name
 from shuup.utils.django_compat import force_text
 from shuup.utils.djangoenv import has_installed
@@ -46,18 +52,21 @@ class ProductMetaBase(ImportMetaBase):
         "variation_value_2": ["variation value 2"],
         "variation_value_3": ["variation value 3"],
         "variation_value_4": ["variation value 4"],
-        "manufacturer": ["mfgr"]
+        "manufacturer": ["mfgr"],
     }
 
     fields_to_skip = ["ignore", "shop_primary_image", "primary_image"]
 
     post_save_handlers = {
         "handle_variations": [
-            "parent_sku", "variation_value_1", "variation_value_2",
-            "variation_value_3", "variation value 4"
+            "parent_sku",
+            "variation_value_1",
+            "variation_value_2",
+            "variation_value_3",
+            "variation value 4",
         ],
         "handle_stocks": ["qty"],
-        "handle_images": ["image", "media"]
+        "handle_images": ["image", "media"],
     }
 
     def handle_variations(self, fields, sess):  # noqa (C901)
@@ -72,8 +81,7 @@ class ProductMetaBase(ImportMetaBase):
             return
 
         parent_product = Product.objects.filter(
-            sku=parent_sku,
-            variation_parent__isnull=True  # prevent linking to another child
+            sku=parent_sku, variation_parent__isnull=True  # prevent linking to another child
         )
         if product.pk:
             parent_product = parent_product.exclude(pk=product.pk)
@@ -132,10 +140,11 @@ class ProductMetaBase(ImportMetaBase):
         img_path, img_name = os.path.split(image_source)
 
         # fetch all images that are candidates using the file name
-        images_candidate = list(MediaFile.objects.filter(
-            Q(shops=shop),
-            Q(file__original_filename__iexact=img_name) | Q(file__name__iexact=img_name)
-        ).distinct())
+        images_candidate = list(
+            MediaFile.objects.filter(
+                Q(shops=shop), Q(file__original_filename__iexact=img_name) | Q(file__name__iexact=img_name)
+            ).distinct()
+        )
 
         image = None
 
@@ -160,11 +169,7 @@ class ProductMetaBase(ImportMetaBase):
             product_media = ProductMedia.objects.filter(product=product, file=image.file, shops=shop).first()
             if not product_media:
                 product_media = ProductMedia(
-                    product=product,
-                    kind=ProductMediaKind.IMAGE,
-                    enabled=True,
-                    public=True,
-                    file=image.file
+                    product=product, kind=ProductMediaKind.IMAGE, enabled=True, public=True, file=image.file
                 )
 
         if product_media:
@@ -311,7 +316,11 @@ class ProductMetaBase(ImportMetaBase):
                     continue
 
                 if field_name in [
-                    "suppliers", "visibility_groups", "shipping_methods", "payment_methods", "categories"
+                    "suppliers",
+                    "visibility_groups",
+                    "shipping_methods",
+                    "payment_methods",
+                    "categories",
                 ]:
                     getattr(shop_product, field_name).set(value)
                 else:
@@ -365,7 +374,7 @@ class ProductMetaBase(ImportMetaBase):
         data = {
             "type_id": ProductType.objects.values_list("pk", flat=True).first(),
             "tax_class_id": TaxClass.objects.values_list("pk", flat=True).first(),
-            "sales_unit_id": SalesUnit.objects.values_list("pk", flat=True).first()
+            "sales_unit_id": SalesUnit.objects.values_list("pk", flat=True).first(),
         }
         return data
 
@@ -382,42 +391,36 @@ class ProductImporter(DataImporter):
         return [Product, ShopProduct]
 
     example_files = [
+        ImporterExampleFile("product_sample_import.xls", ("application/vnd.ms-excel", "application/excel")),
         ImporterExampleFile(
-            "product_sample_import.xls",
-            ("application/vnd.ms-excel", "application/excel")
+            "product_sample_import.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         ),
         ImporterExampleFile(
-            "product_sample_import.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        ),
-        ImporterExampleFile(
-            "product_sample_complex_import.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            "product_sample_complex_import.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         ),
         ImporterExampleFile(
             "product_sample_import_with_images.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         ),
         ImporterExampleFile(
             "product_sample_import_with_variations.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         ),
-        ImporterExampleFile(
-            "product_sample_import.csv",
-            "text/csv"
-        )
+        ImporterExampleFile("product_sample_import.csv", "text/csv"),
     ]
 
     @classmethod
     def get_example_file_content(cls, example_file, request):
         from shuup.default_importer.samples import get_sample_file_content
+
         return get_sample_file_content(example_file.file_name)
 
     @classmethod
     def get_help_context_data(cls, request):
         from shuup.admin.shop_provider import get_shop
         from shuup.admin.supplier_provider import get_supplier
+
         return {
             "has_media_browse_permission": has_permission(request.user, "media.browse"),
-            "supplier": get_supplier(request) or Supplier.objects.enabled(shop=get_shop(request)).first()
+            "supplier": get_supplier(request) or Supplier.objects.enabled(shop=get_shop(request)).first(),
         }

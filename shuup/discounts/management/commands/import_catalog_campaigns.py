@@ -7,30 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 import datetime
 import itertools
-
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.utils.translation import activate
 
 from shuup.admin.forms.fields import WeekdayField
 from shuup.campaigns.models import CatalogCampaign
-from shuup.campaigns.models.catalog_filters import (
-    CategoryFilter, ProductFilter
-)
-from shuup.campaigns.models.context_conditions import (
-    ContactCondition, ContactGroupCondition, HourCondition
-)
-from shuup.campaigns.models.product_effects import (
-    ProductDiscountAmount, ProductDiscountPercentage
-)
-from shuup.core.models import (
-    Category, CompanyContact, ContactGroup, PersonContact, Product
-)
+from shuup.campaigns.models.catalog_filters import CategoryFilter, ProductFilter
+from shuup.campaigns.models.context_conditions import ContactCondition, ContactGroupCondition, HourCondition
+from shuup.campaigns.models.product_effects import ProductDiscountAmount, ProductDiscountPercentage
+from shuup.core.models import Category, CompanyContact, ContactGroup, PersonContact, Product
 from shuup.discounts.models import Discount, HappyHour, TimeRange
 
 
 class Command(BaseCommand):
-
     def handle(self, *args, **options):
         activate(settings.PARLER_DEFAULT_LANGUAGE_CODE)
 
@@ -65,14 +55,11 @@ class Command(BaseCommand):
                     product.pk if product else 0,
                     category.pk if category else 0,
                     contact.pk if contact else 0,
-                    contact_group.pk if contact_group else 0
+                    contact_group.pk if contact_group else 0,
                 )
-                data.update({
-                    "product": product,
-                    "category": category,
-                    "contact": contact,
-                    "contact_group": contact_group
-                })
+                data.update(
+                    {"product": product, "category": category, "contact": contact, "contact_group": contact_group}
+                )
 
                 discount, created = Discount.objects.get_or_create(identifier=identifier, defaults=data)
                 discount.shops.set([campaign.shop])
@@ -101,32 +88,32 @@ def _get_data_from_campaign(campaign):  # noqa
             time_ranges = []
             for valid_day in condition.days.split(","):
                 if condition.hour_end < condition.hour_start:
-                    time_ranges.append({
-                        "from_hour": condition.hour_start,
-                        "to_hour": datetime.time(hour=23, minute=59),
-                        "weekday": int(valid_day)
-                    })
-                    time_ranges.append({
-                        "continuation": True,
-                        "from_hour": datetime.time(hour=0),
-                        "to_hour": condition.hour_end,
-                        "weekday": (int(valid_day) + 1 if int(valid_day) < 6 else 0)
-                    })
+                    time_ranges.append(
+                        {
+                            "from_hour": condition.hour_start,
+                            "to_hour": datetime.time(hour=23, minute=59),
+                            "weekday": int(valid_day),
+                        }
+                    )
+                    time_ranges.append(
+                        {
+                            "continuation": True,
+                            "from_hour": datetime.time(hour=0),
+                            "to_hour": condition.hour_end,
+                            "weekday": (int(valid_day) + 1 if int(valid_day) < 6 else 0),
+                        }
+                    )
                 else:
-                    time_ranges.append({
-                        "from_hour": condition.hour_start,
-                        "to_hour": condition.hour_end,
-                        "weekday": int(valid_day)
-                    })
+                    time_ranges.append(
+                        {"from_hour": condition.hour_start, "to_hour": condition.hour_end, "weekday": int(valid_day)}
+                    )
 
-            happy_hours.append((
-                "%s %s-%s" % (
-                    _get_weekdays_in_labels(condition.days),
-                    condition.hour_start,
-                    condition.hour_end
-                ),
-                time_ranges
-            ))
+            happy_hours.append(
+                (
+                    "%s %s-%s" % (_get_weekdays_in_labels(condition.days), condition.hour_start, condition.hour_end),
+                    time_ranges,
+                )
+            )
 
     for filter in campaign.filters.all():
         if isinstance(filter, ProductFilter):
@@ -136,13 +123,9 @@ def _get_data_from_campaign(campaign):  # noqa
 
     for effect in campaign.effects.all():
         if isinstance(effect, ProductDiscountAmount):
-            data.update({
-                "discount_amount_value": effect.discount_amount
-            })
+            data.update({"discount_amount_value": effect.discount_amount})
         elif isinstance(effect, ProductDiscountPercentage):
-            data.update({
-                "discount_percentage": effect.discount_percentage
-            })
+            data.update({"discount_percentage": effect.discount_percentage})
 
     return data, categories, contact_groups, contacts, products, happy_hours
 

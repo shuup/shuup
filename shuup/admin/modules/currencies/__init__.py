@@ -23,7 +23,7 @@ class CurrencyModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^currencies",
             view_template="shuup.admin.modules.currencies.views.Currency%sView",
-            name_template="currency.%s"
+            name_template="currency.%s",
         )
 
     def get_menu_entries(self, request):
@@ -33,7 +33,7 @@ class CurrencyModule(AdminModule):
                 icon="fa fa-money",
                 url="shuup_admin:currency.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=2
+                ordering=2,
             ),
         ]
 

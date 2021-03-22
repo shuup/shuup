@@ -14,8 +14,13 @@ from django.utils import timezone
 import shuup.core.models
 from shuup.admin.urls import login
 from shuup.core.models import (
-    AnonymousContact, CompanyContact, Contact, get_company_contact,
-    get_person_contact, PersonContact, Shop
+    AnonymousContact,
+    CompanyContact,
+    Contact,
+    PersonContact,
+    Shop,
+    get_company_contact,
+    get_person_contact,
 )
 from shuup.front.middleware import ShuupFrontMiddleware
 from shuup.front.views.index import IndexView
@@ -30,7 +35,7 @@ __all__ = ("regular_user",)  # noqa
 
 def get_unprocessed_request():
     request = get_request()
-    for attrname in ['shop', 'person', 'customer', 'basket']:
+    for attrname in ["shop", "person", "customer", "basket"]:
         assert not hasattr(request, attrname)
     return request
 
@@ -111,16 +116,14 @@ def test_timezone_setting(regular_user, admin_user):
     second_request = get_unprocessed_request()
     request.user = regular_user
     second_request.user = admin_user
-    user_tz = ('US/Hawaii' if settings.TIME_ZONE != "US/Hawaii" else "Europe/Stockholm")
+    user_tz = "US/Hawaii" if settings.TIME_ZONE != "US/Hawaii" else "Europe/Stockholm"
     original_tz = timezone.get_current_timezone_name()
-
 
     assert timezone.get_current_timezone_name() == settings.TIME_ZONE
     mw.process_request(request)
 
     assert timezone.get_current_timezone_name() == settings.TIME_ZONE
     assert request.TIME_ZONE == settings.TIME_ZONE
-
 
     # Test the users timezone
     person = get_person_contact(regular_user)

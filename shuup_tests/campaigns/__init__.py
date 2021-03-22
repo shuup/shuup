@@ -6,10 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import activate
 
-from shuup.testing.factories import (
-    create_random_person, get_default_customer_group, get_payment_method,
-    get_shop
-)
+from shuup.testing.factories import create_random_person, get_default_customer_group, get_payment_method, get_shop
 from shuup.testing.utils import apply_request_middleware
 
 

@@ -37,7 +37,7 @@ class Anonymizer(object):
         "birth_date": "none_value",
         "data": "none_value",
         "email": "null_email",
-        "username": "random_username"
+        "username": "random_username",
     }
 
     def random_string(self, len=8):

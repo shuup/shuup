@@ -14,9 +14,7 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django_jinja.views.generic import DetailView
 
-from shuup.admin.form_part import (
-    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
-)
+from shuup.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
@@ -37,23 +35,21 @@ class PageForm(MultiLanguageModelForm):
     class Meta:
         model = Page
         fields = [
-            'title',
-            'url',
-            'content',
-            'available_from',
-            'available_to',
-            'identifier',
-            'visible_in_menu',
-            'parent',
-            'template_name',
-            'list_children_on_page',
-            'show_child_timestamps',
-            'render_title',
-            'available_permission_groups'
+            "title",
+            "url",
+            "content",
+            "available_from",
+            "available_to",
+            "identifier",
+            "visible_in_menu",
+            "parent",
+            "template_name",
+            "list_children_on_page",
+            "show_child_timestamps",
+            "render_title",
+            "available_permission_groups",
         ]
-        widgets = {
-            "content": TextEditorWidget(attrs={"data-height": 500, "data-noresize": "true"})
-        }
+        widgets = {"content": TextEditorWidget(attrs={"data-height": 500, "data-noresize": "true"})}
 
     def __init__(self, **kwargs):
         self.request = kwargs.pop("request")
@@ -67,7 +63,7 @@ class PageForm(MultiLanguageModelForm):
             choices=[
                 (simple_cms_template.template_path, simple_cms_template.name)
                 for simple_cms_template in get_provide_objects("simple_cms_template")
-            ]
+            ],
         )
 
     def clean(self):
@@ -96,15 +92,14 @@ class PageForm(MultiLanguageModelForm):
                             self.add_error(field_name, ValidationError(_("URL already exists."), code="invalid_url"))
                         if value in urls:
                             self.add_error(
-                                field_name, ValidationError(_("URL must be unique."), code="invalid_unique_url"))
+                                field_name, ValidationError(_("URL must be unique."), code="invalid_unique_url")
+                            )
                         urls.append(value)
                     continue
                 self.add_error(
                     field_name,
-                    _("%(label)s is required when any %(language)s field is filled.") % {
-                        "label": self.fields[field_name].label,
-                        "language": get_language_name(language)
-                    }
+                    _("%(label)s is required when any %(language)s field is filled.")
+                    % {"label": self.fields[field_name].label, "language": get_language_name(language)},
                 )
 
         if not something_filled:
@@ -170,11 +165,7 @@ class PageBaseFormPart(FormPart):
             PageForm,
             template_name="shuup/simple_cms/admin/_edit_base_page_form.jinja",
             required=True,
-            kwargs={
-                "instance": self.object,
-                "languages": settings.LANGUAGES,
-                "request": self.request
-            }
+            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request},
         )
 
     def form_valid(self, form):
@@ -188,7 +179,9 @@ class PageBaseFormPart(FormPart):
 class PageEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     model = Page
     template_name = "shuup/simple_cms/admin/edit.jinja"
-    base_form_part_classes = [PageBaseFormPart, ]
+    base_form_part_classes = [
+        PageBaseFormPart,
+    ]
     context_object_name = "page"
     form_part_class_provide_key = "admin_page_form_part"
     add_form_errors_as_messages = True
@@ -216,26 +209,23 @@ class PageListView(PicotableListView):
     default_columns = [
         Column(
             "title",
-            _(u"Title"),
+            _("Title"),
             sort_field="translations__title",
             display="title",
             linked=True,
-            filter_config=TextFilter(
-                operator="startswith",
-                filter_field="translations__title"
-            )
+            filter_config=TextFilter(operator="startswith", filter_field="translations__title"),
         ),
-        Column("available_from", _(u"Available since")),
-        Column("available_to", _(u"Available until")),
-        Column("created_by", _(u"Created by")),
-        Column("created_on", _(u"Date created")),
+        Column("available_from", _("Available since")),
+        Column("available_to", _("Available until")),
+        Column("created_by", _("Created by")),
+        Column("created_on", _("Date created")),
     ]
 
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % (instance or _("Page")), "class": "header"},
-            {"title": _(u"Available since"), "text": item.get("available_from")},
-            {"title": _(u"Available until"), "text": item.get("available_to")} if instance.available_to else None
+            {"title": _("Available since"), "text": item.get("available_from")},
+            {"title": _("Available until"), "text": item.get("available_to")} if instance.available_to else None,
         ]
 
     def get_queryset(self):
@@ -261,5 +251,5 @@ class PageDeleteView(DetailView):
     def post(self, request, *args, **kwargs):
         page = self.get_object()
         page.soft_delete(user=request.user)
-        messages.success(request, _(u"%s has been marked deleted.") % page)
+        messages.success(request, _("%s has been marked deleted.") % page)
         return HttpResponseRedirect(self.get_success_url())

@@ -8,8 +8,7 @@
 from shuup.core.models import OrderLineType
 
 
-def update_order_line_from_product(
-        pricing_context, order_line, product, quantity=1, supplier=None):
+def update_order_line_from_product(pricing_context, order_line, product, quantity=1, supplier=None):
     """
     Update OrderLine data from a product.
 

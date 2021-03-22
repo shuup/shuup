@@ -8,18 +8,13 @@
 from __future__ import unicode_literals
 
 import random
-
 from babel.dates import format_date
 from django.http.response import HttpResponse
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.base import (
-    Activity, AdminModule, MenuEntry, Notification, SearchResult
-)
-from shuup.admin.dashboard import (
-    DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
-)
+from shuup.admin.base import Activity, AdminModule, MenuEntry, Notification, SearchResult
+from shuup.admin.dashboard import DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
 from shuup.admin.utils.urls import admin_url
 from shuup.testing.text_data import random_title
 from shuup.utils.http import get_client_ip
@@ -58,8 +53,9 @@ class DemoModule(AdminModule):
                 text=random_title(),
                 icon="fa %s" % random.choice(["fa-flash", "fa-folder", "fa-eye", "fa-dollar", "fa-paw", "fa-cloud"]),
                 url="https://google.com/",
-                category="Test %d" % random.randint(1, 6)
-            ) for x in range(30)
+                category="Test %d" % random.randint(1, 6),
+            )
+            for x in range(30)
         ]
 
     def get_search_results(self, request, query):

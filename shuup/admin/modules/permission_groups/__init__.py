@@ -21,7 +21,7 @@ class PermissionGroupModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^permission-groups",
             view_template="shuup.admin.modules.permission_groups.views.PermissionGroup%sView",
-            name_template="permission_group.%s"
+            name_template="permission_group.%s",
         )
 
     def get_menu_entries(self, request):
@@ -31,7 +31,7 @@ class PermissionGroupModule(AdminModule):
                 icon="fa fa-users",
                 url="shuup_admin:permission_group.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=3
+                ordering=3,
             )
         ]
 

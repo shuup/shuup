@@ -12,9 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.urls import admin_url
-from shuup.core.telemetry import (
-    is_in_grace_period, is_opt_out, is_telemetry_enabled
-)
+from shuup.core.telemetry import is_in_grace_period, is_opt_out, is_telemetry_enabled
 
 
 class SystemModule(AdminModule):
@@ -23,21 +21,25 @@ class SystemModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^system/telemetry/$",
-                "shuup.admin.modules.system.views.telemetry.TelemetryView",
-                name="telemetry"
+                "^system/telemetry/$", "shuup.admin.modules.system.views.telemetry.TelemetryView", name="telemetry"
             )
         ]
 
     def get_menu_entries(self, request):
-        return [e for e in [
-            MenuEntry(
-                text=_("Telemetry"),
-                icon="fa fa-tachometer",
-                url="shuup_admin:telemetry",
-                category=SETTINGS_MENU_CATEGORY,
-            ) if is_telemetry_enabled() else None,
-        ] if e]
+        return [
+            e
+            for e in [
+                MenuEntry(
+                    text=_("Telemetry"),
+                    icon="fa fa-tachometer",
+                    url="shuup_admin:telemetry",
+                    category=SETTINGS_MENU_CATEGORY,
+                )
+                if is_telemetry_enabled()
+                else None,
+            ]
+            if e
+        ]
 
     def get_notifications(self, request):
         if is_telemetry_enabled() and is_in_grace_period() and not is_opt_out():
@@ -45,5 +47,5 @@ class SystemModule(AdminModule):
                 _("Statistics will be periodically sent to Shuup.com after 24 hours. Click here for more information."),
                 title=_("Telemetry"),
                 kind="info",
-                url="shuup_admin:telemetry"
+                url="shuup_admin:telemetry",
             )

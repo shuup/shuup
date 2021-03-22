@@ -7,9 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import (
-    Shipment, ShipmentProduct, ShipmentStatus, ShipmentType
-)
+from shuup.core.models import Shipment, ShipmentProduct, ShipmentStatus, ShipmentType
 from shuup.testing.factories import create_product, get_default_shop
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 

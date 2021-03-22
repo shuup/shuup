@@ -6,13 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import (
-    get_person_contact, AnonymousContact, ContactGroup, ProductVisibility
-)
+from shuup.core.models import AnonymousContact, ContactGroup, ProductVisibility, get_person_contact
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
-from shuup.testing.factories import (
-    create_product, get_default_product, get_default_shop
-)
+from shuup.testing.factories import create_product, get_default_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
 
@@ -24,6 +20,7 @@ def init_test(request, shop, prices):
     for child in children:
         child.link_to_parent(parent)
     return parent
+
 
 @pytest.mark.django_db
 def test_simple_product_works(rf):
@@ -37,7 +34,7 @@ def test_simple_product_works(rf):
 
 @pytest.mark.django_db
 def test_cheapest_price_found(rf):
-    prices = [100,20,50,80,90]
+    prices = [100, 20, 50, 80, 90]
 
     shop = get_default_shop()
     request = rf.get("/")
@@ -53,7 +50,7 @@ def test_cheapest_price_found(rf):
 
 @pytest.mark.django_db
 def test_correct_range_found(rf):
-    prices = [100,20,50,80,90]
+    prices = [100, 20, 50, 80, 90]
 
     shop = get_default_shop()
     request = rf.get("/")
@@ -129,4 +126,3 @@ def test_cheapest_price_per_customer(rf, regular_user):
     request.shop = shop
     request.customer = regular_contact
     assert parent.get_cheapest_child_price(request) == price(20)
-

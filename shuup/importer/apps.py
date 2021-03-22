@@ -18,7 +18,5 @@ class AppConfig(shuup.apps.AppConfig):
     label = "importer"
 
     provides = {
-        "admin_module": [
-            "shuup.importer.admin_module:ImportAdminModule"
-        ],
+        "admin_module": ["shuup.importer.admin_module:ImportAdminModule"],
     }

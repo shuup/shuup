@@ -21,8 +21,7 @@ class FrontPageErrorHandler(ErrorPageHandler):
     @classmethod
     def can_handle_error(cls, request, error_status):
         # we can't handle static or media files
-        if (request.path.startswith(settings.STATIC_URL) or
-                request.path.startswith(settings.MEDIA_URL)):
+        if request.path.startswith(settings.STATIC_URL) or request.path.startswith(settings.MEDIA_URL):
             return False
 
         # Front will handle everything else, for now

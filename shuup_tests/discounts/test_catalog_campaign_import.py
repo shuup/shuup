@@ -7,21 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 import datetime
 import decimal
-
 import pytest
-
 from django.core.management import call_command
 
 from shuup.campaigns.models import CatalogCampaign
-from shuup.campaigns.models.catalog_filters import (
-    CategoryFilter, ProductFilter
-)
-from shuup.campaigns.models.context_conditions import (
-    ContactCondition, ContactGroupCondition, HourCondition
-)
-from shuup.campaigns.models.product_effects import (
-    ProductDiscountAmount, ProductDiscountPercentage
-)
+from shuup.campaigns.models.catalog_filters import CategoryFilter, ProductFilter
+from shuup.campaigns.models.context_conditions import ContactCondition, ContactGroupCondition, HourCondition
+from shuup.campaigns.models.product_effects import ProductDiscountAmount, ProductDiscountPercentage
 from shuup.discounts.models import Discount, HappyHour, TimeRange
 from shuup.testing import factories
 
@@ -50,26 +42,25 @@ def test_catalog_campaign_sync():
     happy_hour1_start = datetime.time(21)
     happy_hour1_end = datetime.time(3)
     happy_hour1_condition = HourCondition.objects.create(
-        days=happy_hour1_weekdays, hour_start=happy_hour1_start, hour_end=happy_hour1_end)
+        days=happy_hour1_weekdays, hour_start=happy_hour1_start, hour_end=happy_hour1_end
+    )
 
     happy_hour2_weekdays = "2,6"  # Wed, Sun
     happy_hour2_start = datetime.time(14)
     happy_hour2_end = datetime.time(16)
     happy_hour2_condition = HourCondition.objects.create(
-        days=happy_hour2_weekdays, hour_start=happy_hour2_start, hour_end=happy_hour2_end)
+        days=happy_hour2_weekdays, hour_start=happy_hour2_start, hour_end=happy_hour2_end
+    )
 
     discount_amount_value = 50
     discount_percentage = decimal.Decimal("0.35")
-    _create_catalog_campaign_for_products(
-        shop, [product1], discount_amount_value, happy_hour1_condition)
-    _create_catalog_campaign_for_products(
-        shop, [product2, product3], discount_amount_value)
-    _create_catalog_campaign_for_category(
-        shop, category, discount_percentage)
-    _create_catalog_campaign_for_contact(
-        shop, product1, contact1, discount_amount_value)
+    _create_catalog_campaign_for_products(shop, [product1], discount_amount_value, happy_hour1_condition)
+    _create_catalog_campaign_for_products(shop, [product2, product3], discount_amount_value)
+    _create_catalog_campaign_for_category(shop, category, discount_percentage)
+    _create_catalog_campaign_for_contact(shop, product1, contact1, discount_amount_value)
     _create_catalog_campaign_for_contact_group(
-        shop, [product1, product2, product3], contact_group, discount_percentage, happy_hour2_condition)
+        shop, [product1, product2, product3], contact_group, discount_percentage, happy_hour2_condition
+    )
 
     call_command("import_catalog_campaigns", *[], **{})
 
@@ -91,41 +82,49 @@ def test_catalog_campaign_sync():
 
     # Let's go through all our 8 discounts to make sure all is good
     first_discount = Discount.objects.filter(
-        product=product1, category__isnull=True, contact__isnull=True, contact_group__isnull=True).first()
+        product=product1, category__isnull=True, contact__isnull=True, contact_group__isnull=True
+    ).first()
     assert first_discount.happy_hours.count() == 1
     assert first_discount.discount_amount_value == discount_amount_value
 
     second_discount = Discount.objects.filter(
-        product=product2, category__isnull=True, contact__isnull=True, contact_group__isnull=True).first()
+        product=product2, category__isnull=True, contact__isnull=True, contact_group__isnull=True
+    ).first()
     assert second_discount.happy_hours.count() == 0
     assert second_discount.discount_amount_value == discount_amount_value
 
     third_discount = Discount.objects.filter(
-        product=product3, category__isnull=True, contact__isnull=True, contact_group__isnull=True).first()
+        product=product3, category__isnull=True, contact__isnull=True, contact_group__isnull=True
+    ).first()
     assert third_discount.happy_hours.count() == 0
     assert third_discount.discount_amount_value == discount_amount_value
 
     category_discount = Discount.objects.filter(
-        product__isnull=True, category=category, contact__isnull=True, contact_group__isnull=True).first()
+        product__isnull=True, category=category, contact__isnull=True, contact_group__isnull=True
+    ).first()
     assert category_discount.happy_hours.count() == 0
     assert category_discount.discount_percentage == discount_percentage
 
     contact_discount = Discount.objects.filter(
-        product=product1, category__isnull=True, contact=contact1, contact_group__isnull=True).first()
+        product=product1, category__isnull=True, contact=contact1, contact_group__isnull=True
+    ).first()
     assert contact_discount.discount_amount_value == discount_amount_value
 
     product1_contact_group_discount = Discount.objects.filter(
-        product=product1, category__isnull=True, contact__isnull=True, contact_group=contact_group).first()
+        product=product1, category__isnull=True, contact__isnull=True, contact_group=contact_group
+    ).first()
     assert product1_contact_group_discount.happy_hours.count() == 1
     assert product1_contact_group_discount.discount_percentage == discount_percentage
 
     product2_contact_group_discount = Discount.objects.filter(
-        product=product2, category__isnull=True, contact__isnull=True, contact_group=contact_group).first()
+        product=product2, category__isnull=True, contact__isnull=True, contact_group=contact_group
+    ).first()
     assert product2_contact_group_discount.happy_hours.count() == 1
     assert product2_contact_group_discount.discount_percentage == discount_percentage
 
     product3_contact_group_discount = Discount.objects.filter(
-        product=product3, category__isnull=True, contact__isnull=True, contact_group=contact_group).first()
+        product=product3, category__isnull=True, contact__isnull=True, contact_group=contact_group
+    ).first()
     assert product3_contact_group_discount.happy_hours.count() == 1
     assert product3_contact_group_discount.discount_percentage == discount_percentage
 
@@ -167,7 +166,9 @@ def _create_catalog_campaign_for_contact(shop, product, contact, discount_amount
     return campaign
 
 
-def _create_catalog_campaign_for_contact_group(shop, products, contact_group, discount_percentage, happy_hour_condition):
+def _create_catalog_campaign_for_contact_group(
+    shop, products, contact_group, discount_percentage, happy_hour_condition
+):
     campaign = CatalogCampaign.objects.create(active=True, shop=shop)
     product_filter = ProductFilter.objects.create()
     for product in products:

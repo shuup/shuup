@@ -7,19 +7,23 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import (
-    CategoryStatus, ProductCrossSell, ProductCrossSellType
-)
+from shuup.core.models import CategoryStatus, ProductCrossSell, ProductCrossSellType
 from shuup.testing.factories import (
-    CategoryFactory, create_product, get_default_category, get_default_shop,
-    get_default_supplier
+    CategoryFactory,
+    create_product,
+    get_default_category,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.xtheme._theme import get_current_theme, override_current_theme_class
 from shuup.xtheme.layout import LayoutCell
 from shuup.xtheme.plugins.products_async import (
-    HighlightType, ProductCrossSellsPlugin, ProductHighlightPlugin,
-    ProductSelectionPlugin, ProductsFromCategoryPlugin
+    HighlightType,
+    ProductCrossSellsPlugin,
+    ProductHighlightPlugin,
+    ProductSelectionPlugin,
+    ProductsFromCategoryPlugin,
 )
 from shuup.xtheme.views.forms import LayoutCellFormGroup
 from shuup_tests.front.fixtures import get_jinja_context
@@ -37,10 +41,8 @@ def get_context(rf, customer=None, product=None, is_ajax=True):
         request.META["HTTP_X_REQUESTED_WITH"] = "XMLHttpRequest"
     vars = {"request": request}
     if product:
-        vars.update({
-            "product": product
-        })
-    
+        vars.update({"product": product})
+
     if is_ajax:
         assert request.is_ajax()
     return get_jinja_context(**vars)
@@ -53,16 +55,22 @@ def check_expected_product_count(url, expected_count):
     assert len(soup.findAll("div", {"class": "product-box"})) == expected_count
 
 
-@pytest.mark.parametrize("highlight_type,", [
-    (HighlightType.NEWEST.value),
-    (HighlightType.RANDOM.value),
-    (HighlightType.NEWEST.value),
-    (HighlightType.RANDOM.value),
-    (HighlightType.BEST_SELLING.value),
-    ("notvalid_type")
-])
+@pytest.mark.parametrize(
+    "highlight_type,",
+    [
+        (HighlightType.NEWEST.value),
+        (HighlightType.RANDOM.value),
+        (HighlightType.NEWEST.value),
+        (HighlightType.RANDOM.value),
+        (HighlightType.BEST_SELLING.value),
+        ("notvalid_type"),
+    ],
+)
 @pytest.mark.django_db
-def test_product_hightlight_plugin(rf, highlight_type,):
+def test_product_hightlight_plugin(
+    rf,
+    highlight_type,
+):
     shop = get_default_shop()
     supplier = get_default_supplier()
     p1 = create_product("p1", shop, supplier, "10")
@@ -74,11 +82,7 @@ def test_product_hightlight_plugin(rf, highlight_type,):
     sp4.purchasable = False
     sp4.save()
 
-    plugin = ProductHighlightPlugin({
-        "type": highlight_type,
-        "count": 4,
-        "cache_timeout": 120
-    })
+    plugin = ProductHighlightPlugin({"type": highlight_type, "count": 4, "cache_timeout": 120})
     plugin_context = plugin.get_context_data(get_context(rf, is_ajax=False))
     context_products = plugin_context["products"]
 
@@ -112,10 +116,9 @@ def test_product_selection_plugin(rf):
     sp2 = p2.get_shop_instance(shop)
     sp3 = p3.get_shop_instance(shop)
 
-    plugin = ProductSelectionPlugin({
-        "products": [sp1.product.pk, sp2.product.pk, sp3.product.pk],
-        "cache_timeout": 120
-    })
+    plugin = ProductSelectionPlugin(
+        {"products": [sp1.product.pk, sp2.product.pk, sp3.product.pk], "cache_timeout": 120}
+    )
     plugin_context = plugin.get_context_data(get_context(rf, is_ajax=False))
     context_products = plugin_context["products"]
 
@@ -145,11 +148,11 @@ def test_product_selection_plugin(rf):
                 "general-cell_width": "8",
                 "general-cell_align": "pull-right",
                 "plugin-products": [p1.pk, p2.pk],
-                "plugin-cache_timeout": 120
+                "plugin-cache_timeout": 120,
             },
             layout_cell=cell,
             theme=theme,
-            request=apply_request_middleware(rf.get("/"))
+            request=apply_request_middleware(rf.get("/")),
         )
         assert lcfg.is_valid()
         lcfg.save()
@@ -177,10 +180,7 @@ def test_product_from_category_plugin(rf):
     sp2.categories.add(category1)
     sp3.categories.add(category2)
 
-    plugin = ProductsFromCategoryPlugin({
-        "category": category1.pk,
-        "cache_timeout": 120
-    })
+    plugin = ProductsFromCategoryPlugin({"category": category1.pk, "cache_timeout": 120})
     plugin_context = plugin.get_context_data(get_context(rf, is_ajax=False))
     context_products = plugin_context["products"]
 
@@ -209,11 +209,11 @@ def test_product_from_category_plugin(rf):
                 "general-cell_align": "pull-right",
                 "plugin-count": 4,
                 "plugin-category": category2.pk,
-                "plugin-cache_timeout": 3600
+                "plugin-cache_timeout": 3600,
             },
             layout_cell=cell,
             theme=theme,
-            request=apply_request_middleware(rf.get("/"))
+            request=apply_request_middleware(rf.get("/")),
         )
         assert lcfg.is_valid()
         lcfg.save()
@@ -235,7 +235,7 @@ def test_cross_sell_plugin_renders(rf):
     assert ProductCrossSell.objects.filter(product1=product, type=type).count() == 1
 
     context = get_context(rf, product=product)
-    rendered  = ProductCrossSellsPlugin({"type": type}).render(context)
+    rendered = ProductCrossSellsPlugin({"type": type}).render(context)
     assert computed.sku in rendered
 
     plugin = ProductCrossSellsPlugin({"type": type, "cache_timeout": 120})
@@ -257,30 +257,30 @@ def test_cross_sell_plugin_accepts_initial_config_as_string_or_enum():
 @pytest.mark.django_db
 def test_cross_sell_plugin_with_invalid_type(rf):
     plugin = ProductCrossSellsPlugin({"type": "foobar"})
-    assert plugin.config['type'] == ProductCrossSellType.RELATED
+    assert plugin.config["type"] == ProductCrossSellType.RELATED
 
     context = get_context(rf)
-    plugin.config['type'] = 'foobar'
-    context_data = plugin.get_context_data({'request': context["request"]})
-    assert context_data['data_url'] == "/"
+    plugin.config["type"] = "foobar"
+    context_data = plugin.get_context_data({"request": context["request"]})
+    assert context_data["data_url"] == "/"
 
 
 @pytest.mark.django_db
 def test_cross_sell_plugin_with_invalid_type_2(rf):
     plugin = ProductCrossSellsPlugin({"type": None})
-    assert plugin.config['type'] == None
+    assert plugin.config["type"] == None
 
     context = get_context(rf)
-    context_data = plugin.get_context_data({'request': context["request"]})
-    assert context_data['data_url'] == "/"
+    context_data = plugin.get_context_data({"request": context["request"]})
+    assert context_data["data_url"] == "/"
 
 
 @pytest.mark.django_db
 def test_cross_sell_plugin_with_product_that_does_not_exists(rf):
     plugin = ProductCrossSellsPlugin({"type": None})
-    assert plugin.config['type'] == None
+    assert plugin.config["type"] == None
 
     context = get_context(rf)
     plugin.config["product"] = "1111"
-    context_data = plugin.get_context_data({'request': context["request"]})
-    assert context_data['data_url'] == "/"
+    context_data = plugin.get_context_data({"request": context["request"]})
+    assert context_data["data_url"] == "/"

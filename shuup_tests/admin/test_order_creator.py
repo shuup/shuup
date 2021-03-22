@@ -9,25 +9,28 @@ from __future__ import unicode_literals
 
 import decimal
 import json
-
 import pytest
 from django.test import RequestFactory
 from django.utils import translation
 from django.utils.encoding import force_text
 
-from shuup.admin.modules.orders.views.edit import (
-    encode_address, encode_method, OrderEditView
-)
-from shuup.core.models import (
-    Order, OrderLineType, ShopProductVisibility, Tax, TaxClass
-)
+from shuup.admin.modules.orders.views.edit import OrderEditView, encode_address, encode_method
+from shuup.core.models import Order, OrderLineType, ShopProductVisibility, Tax, TaxClass
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
-    create_empty_order, create_order_with_product, create_product,
-    create_random_company, create_random_order, create_random_person,
-    get_default_customer_group, get_default_payment_method,
-    get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_initial_order_status, UserFactory
+    UserFactory,
+    create_empty_order,
+    create_order_with_product,
+    create_product,
+    create_random_company,
+    create_random_order,
+    create_random_person,
+    get_default_customer_group,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_initial_order_status,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.i18n import format_money
@@ -43,64 +46,79 @@ def get_frontend_order_state(contact, valid_lines=True):
     """
     translation.activate("en")
     shop = get_default_shop()
-    tax, created = Tax.objects.get_or_create(code="test_code", defaults={"rate": decimal.Decimal("0.20"),
-                                                                         "name": "Default"})
+    tax, created = Tax.objects.get_or_create(
+        code="test_code", defaults={"rate": decimal.Decimal("0.20"), "name": "Default"}
+    )
     tax_class, created = TaxClass.objects.get_or_create(identifier="test_tax_class", defaults={"name": "Default"})
     rule, created = TaxRule.objects.get_or_create(tax=tax)
     rule.tax_classes.add(tax_class)
     rule.save()
     supplier = get_default_supplier()
-    product = create_product(
-        sku=printable_gibberish(),
-        supplier=supplier,
-        shop=shop
-    )
+    product = create_product(sku=printable_gibberish(), supplier=supplier, shop=shop)
     product.tax_class = tax_class
     product.save()
     if valid_lines:
         lines = [
             {
-                "id": "x", "type": "product", "product": {"id": product.id},
-                'supplier': {'name': supplier.name, 'id': supplier.id}, "quantity": "32", "baseUnitPrice": 50
+                "id": "x",
+                "type": "product",
+                "product": {"id": product.id},
+                "supplier": {"name": supplier.name, "id": supplier.id},
+                "quantity": "32",
+                "baseUnitPrice": 50,
             },
             {
-                "id": "y", "type": "other", "sku": "hello", "text": "A greeting",
-                "supplier": {"name": supplier.name, "id": supplier.id}, "quantity": 1, "unitPrice": "5.5",
+                "id": "y",
+                "type": "other",
+                "sku": "hello",
+                "text": "A greeting",
+                "supplier": {"name": supplier.name, "id": supplier.id},
+                "quantity": 1,
+                "unitPrice": "5.5",
             },
             {
-                "id": "z", "type": "text", "text": "This was an order!",
-                "supplier": {"name": supplier.name, "id": supplier.id}, "quantity": 0,
+                "id": "z",
+                "type": "text",
+                "text": "This was an order!",
+                "supplier": {"name": supplier.name, "id": supplier.id},
+                "quantity": 0,
             },
         ]
     else:
         unshopped_product = create_product(sku=printable_gibberish(), supplier=supplier)
-        not_visible_product = create_product(
-            sku=printable_gibberish(),
-            supplier=supplier,
-            shop=shop
-        )
+        not_visible_product = create_product(sku=printable_gibberish(), supplier=supplier, shop=shop)
         not_visible_shop_product = not_visible_product.get_shop_instance(shop)
         not_visible_shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
         not_visible_shop_product.save()
         lines = [
-            {"id": "x", "type": "product", 'supplier': {'name': supplier.name, 'id': supplier.id}},  # no product?
+            {"id": "x", "type": "product", "supplier": {"name": supplier.name, "id": supplier.id}},  # no product?
             {
-                "id": "x", "type": "product", "product": {"id": unshopped_product.id},
-                'supplier': {'name': supplier.name, 'id': supplier.id}
+                "id": "x",
+                "type": "product",
+                "product": {"id": unshopped_product.id},
+                "supplier": {"name": supplier.name, "id": supplier.id},
             },  # not in this shop?
             {
-                "id": "y", "type": "product", "product": {"id": -product.id},
-                'supplier': {'name': supplier.name, 'id': supplier.id}
+                "id": "y",
+                "type": "product",
+                "product": {"id": -product.id},
+                "supplier": {"name": supplier.name, "id": supplier.id},
             },  # invalid product?
             {
-                "id": "z", "type": "other", "quantity": 1, "unitPrice": "q",
-                'supplier': {'name': supplier.name, 'id': supplier.id}
+                "id": "z",
+                "type": "other",
+                "quantity": 1,
+                "unitPrice": "q",
+                "supplier": {"name": supplier.name, "id": supplier.id},
             },  # what's that price?
             {
-                "id": "rr", "type": "product", "quantity": 1, "product": {"id": not_visible_product.id},
-                'supplier': {'name': supplier.name, 'id': supplier.id}
+                "id": "rr",
+                "type": "product",
+                "quantity": 1,
+                "product": {"id": not_visible_product.id},
+                "supplier": {"name": supplier.name, "id": supplier.id},
             },  # not visible
-            {"id": "y", "type": "product", "product": {"id": product.id}} # no supplier
+            {"id": "y", "type": "product", "product": {"id": product.id}},  # no supplier
         ]
     state = {
         "customer": {
@@ -118,21 +136,22 @@ def get_frontend_order_state(contact, valid_lines=True):
                 "id": shop.id,
                 "name": shop.name,
                 "currency": shop.currency,
-                "priceIncludeTaxes": shop.prices_include_tax
+                "priceIncludeTaxes": shop.prices_include_tax,
             }
-        }
+        },
     }
     return state
 
 
 def get_frontend_request_for_command(state, command, user):
     json_data = json.dumps({"state": state})
-    return apply_request_middleware(RequestFactory().post(
-        "/",
-        data=json_data,
-        content_type="application/json; charset=UTF-8",
-        QUERY_STRING="command=%s" % command
-    ), user=user, skip_session=True)
+    return apply_request_middleware(
+        RequestFactory().post(
+            "/", data=json_data, content_type="application/json; charset=UTF-8", QUERY_STRING="command=%s" % command
+        ),
+        user=user,
+        skip_session=True,
+    )
 
 
 def get_order_from_state(state, admin_user):
@@ -254,12 +273,9 @@ def test_order_creator_view_invalid_command(rf, admin_user):
 def test_order_creator_product_data(rf, admin_user):
     shop = get_default_shop()
     product = create_product(sku=printable_gibberish(), supplier=get_default_supplier(), shop=shop)
-    request = apply_request_middleware(rf.get("/", {
-        "command": "product_data",
-        "shop_id": shop.id,
-        "id": product.id,
-        "quantity": 42
-    }), user=admin_user)
+    request = apply_request_middleware(
+        rf.get("/", {"command": "product_data", "shop_id": shop.id, "id": product.id, "quantity": 42}), user=admin_user
+    )
     response = OrderEditView.as_view()(request)
     assert_contains(response, "taxClass")
     assert_contains(response, "sku")
@@ -273,10 +289,7 @@ def test_order_creator_product_data(rf, admin_user):
 def test_order_creator_customer_data(rf, admin_user):
     get_default_shop()
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
-    request = apply_request_middleware(rf.get("/", {
-        "command": "customer_data",
-        "id": contact.id
-    }), user=admin_user)
+    request = apply_request_middleware(rf.get("/", {"command": "customer_data", "id": contact.id}), user=admin_user)
     response = OrderEditView.as_view()(request)
     assert_contains(response, "name")
     assert_contains(response, contact.name)
@@ -309,7 +322,7 @@ def test_person_contact_creation(rf, admin_user):
         "billingAddress": encode_address(contact.default_billing_address),
         "shipToBillingAddress": True,
         "saveAddress": True,
-        "isCompany": False
+        "isCompany": False,
     }
     order = get_order_from_state(state, admin_user)
     assert order.lines.count() == 5
@@ -335,7 +348,7 @@ def test_company_contact_creation(rf, admin_user):
         "billingAddress": encode_address(contact.default_billing_address),
         "shipToBillingAddress": True,
         "saveAddress": True,
-        "isCompany": True
+        "isCompany": True,
     }
     order = get_order_from_state(state, admin_user)
     assert order.lines.count() == 5
@@ -416,16 +429,9 @@ def test_order_creator_customer_details(rf, admin_user):
     contact.groups.add(group)
     contact.company_memberships.add(company)
     contact.save()
-    product = create_product(
-        sku=printable_gibberish(),
-        supplier=get_default_supplier(),
-        shop=shop
-    )
+    product = create_product(sku=printable_gibberish(), supplier=get_default_supplier(), shop=shop)
     order = create_random_order(contact, products=[product])
-    request = apply_request_middleware(rf.get("/", {
-        "command": "customer_details",
-        "id": contact.id
-    }), user=admin_user)
+    request = apply_request_middleware(rf.get("/", {"command": "customer_details", "id": contact.id}), user=admin_user)
     response = OrderEditView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
 
@@ -451,11 +457,7 @@ def test_order_creator_customer_details(rf, admin_user):
 def test_edit_view_with_anonymous_contact(rf, admin_user):
     shop = get_default_shop()
     supplier = get_default_supplier()
-    product = create_product(
-        sku=printable_gibberish(),
-        supplier=supplier,
-        shop=shop
-    )
+    product = create_product(sku=printable_gibberish(), supplier=supplier, shop=shop)
     order = create_order_with_product(product, supplier, 1, 10, shop=shop)
     order.save()
     assert not order.customer

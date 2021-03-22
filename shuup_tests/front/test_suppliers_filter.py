@@ -10,15 +10,9 @@ from django.test import override_settings
 
 from shuup.core import cache, shop_provider
 from shuup.core.models import Supplier
-from shuup.front.forms.product_list_modifiers import (
-    CommaSeparatedListField
-)
-from shuup.front.forms.product_list_supplier_modifier import (
-    SupplierProductListFilter
-)
-from shuup.front.utils.sorts_and_filters import (
-    get_configuration, set_configuration
-)
+from shuup.front.forms.product_list_modifiers import CommaSeparatedListField
+from shuup.front.forms.product_list_supplier_modifier import SupplierProductListFilter
+from shuup.front.utils.sorts_and_filters import get_configuration, set_configuration
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 
@@ -58,9 +52,7 @@ def test_suppliers_filter_get_fields(rf):
         assert isinstance(form_field, forms.ModelChoiceField)
 
         configuration = get_configuration(shop, category)
-        configuration.update({
-            SupplierProductListFilter.enable_multiselect_key: True
-        })
+        configuration.update({SupplierProductListFilter.enable_multiselect_key: True})
 
         set_configuration(shop, category, configuration)
         form_field = SupplierProductListFilter().get_fields(request, category)[0][1]

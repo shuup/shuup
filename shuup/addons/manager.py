@@ -8,7 +8,6 @@ from __future__ import unicode_literals
 
 import codecs
 import os
-
 from pkg_resources import WorkingSet
 
 
@@ -21,7 +20,7 @@ def get_addons_from_entry_points():
     # regardless of whether the current cached working set has changed.
     # (The working set will change if addons are installed.)
 
-    for entry_point in WorkingSet().iter_entry_points(group='shuup.addon'):
+    for entry_point in WorkingSet().iter_entry_points(group="shuup.addon"):
         addons.add(entry_point.name)
     return addons
 

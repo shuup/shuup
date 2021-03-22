@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 import logging
 from collections import defaultdict
-
 from django import forms
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -40,13 +39,16 @@ class MethodWidget(forms.Widget):
 
     def render(self, name, value, attrs=None, renderer=None):
         return mark_safe(
-            render_to_string("shuup/front/checkout/method_choice.jinja", {
-                "field_name": self.field_name,
-                "grouped_methods": _get_methods_grouped_by_service_provider(self.choices),
-                "current_value": value,
-                "basket": self.basket,
-                "request": self.request
-            })
+            render_to_string(
+                "shuup/front/checkout/method_choice.jinja",
+                {
+                    "field_name": self.field_name,
+                    "grouped_methods": _get_methods_grouped_by_service_provider(self.choices),
+                    "current_value": value,
+                    "basket": self.basket,
+                    "request": self.request,
+                },
+            )
         )
 
 
@@ -72,14 +74,14 @@ class MethodsForm(forms.Form):
         self.fields["shipping_method"] = forms.ModelChoiceField(
             queryset=ShippingMethod.objects.all(),
             widget=MethodWidget(),
-            label=_('shipping method'),
-            required=configuration.get(self.shop, SHIPPING_METHOD_REQUIRED_CONFIG_KEY, True)
+            label=_("shipping method"),
+            required=configuration.get(self.shop, SHIPPING_METHOD_REQUIRED_CONFIG_KEY, True),
         )
         self.fields["payment_method"] = forms.ModelChoiceField(
             queryset=PaymentMethod.objects.all(),
             widget=MethodWidget(),
-            label=_('payment method'),
-            required=configuration.get(self.shop, PAYMENT_METHOD_REQUIRED_CONFIG_KEY, True)
+            label=_("payment method"),
+            required=configuration.get(self.shop, PAYMENT_METHOD_REQUIRED_CONFIG_KEY, True),
         )
         self.limit_method_fields()
 
@@ -101,7 +103,7 @@ class MethodsForm(forms.Form):
 
 class MethodsPhase(CheckoutPhaseViewMixin, FormView):
     identifier = "methods"
-    title = _(u"Shipping & Payment")
+    title = _("Shipping & Payment")
     template_name = "shuup/front/checkout/methods.jinja"
     form_class = MethodsForm
 
@@ -214,7 +216,7 @@ class _MethodDependentCheckoutPhase(CheckoutPhaseViewMixin):
     @property
     def title(self):
         phase_obj = self.get_method_checkout_phase_object()
-        return (phase_obj.title if phase_obj else "")
+        return phase_obj.title if phase_obj else ""
 
     def dispatch(self, request, *args, **kwargs):
         # This should never be called if the object doesn't exist, hence no checks

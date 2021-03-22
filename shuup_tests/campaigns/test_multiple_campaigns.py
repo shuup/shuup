@@ -5,29 +5,18 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from decimal import Decimal
-
 import pytest
-
+from decimal import Decimal
 from django.test import override_settings
 from django.test.client import RequestFactory
 
-from shuup.campaigns.models import (
-    BasketCampaign, BasketLineEffect, CatalogCampaign
-)
-from shuup.campaigns.models.basket_conditions import (
-    CategoryProductsBasketCondition, ComparisonOperator
-)
-from shuup.campaigns.models.basket_line_effects import (
-    DiscountFromCategoryProducts, DiscountFromProduct
-)
+from shuup.campaigns.models import BasketCampaign, BasketLineEffect, CatalogCampaign
+from shuup.campaigns.models.basket_conditions import CategoryProductsBasketCondition, ComparisonOperator
+from shuup.campaigns.models.basket_line_effects import DiscountFromCategoryProducts, DiscountFromProduct
 from shuup.campaigns.models.catalog_filters import ProductFilter
 from shuup.campaigns.models.product_effects import ProductDiscountPercentage
 from shuup.front.basket import get_basket
-from shuup.testing.factories import (
-    create_product, get_default_category, get_default_supplier,
-    get_shipping_method
-)
+from shuup.testing.factories import create_product, get_default_category, get_default_supplier, get_shipping_method
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
 
@@ -94,7 +83,9 @@ def test_multiple_campaigns_cheapest_price():
 
     assert basket.total_price == expected_total
     # add new effect
-    effect = DiscountFromCategoryProducts.objects.create(category=category, campaign=basket_campaign, discount_amount=discount_amount_value)
+    effect = DiscountFromCategoryProducts.objects.create(
+        category=category, campaign=basket_campaign, discount_amount=discount_amount_value
+    )
     assert basket.total_price == expected_total
 
     effect.discount_amount = total_discount_amount
