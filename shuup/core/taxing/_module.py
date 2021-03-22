@@ -7,6 +7,7 @@
 import abc
 from collections import defaultdict
 from itertools import chain
+from typing import TYPE_CHECKING, Union
 
 import six
 from django.conf import settings
@@ -23,6 +24,10 @@ from shuup.utils.money import Money
 
 from ._context import TaxingContext
 from .utils import get_tax_class_proportions
+
+if TYPE_CHECKING:
+    from shuup.core.models import Order
+    from shuup.core.order_creator import OrderSource
 
 
 def get_tax_module():
@@ -66,23 +71,44 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         customer = context_data.get("customer")
         customer_tax_group = (
             context_data.get("customer_tax_group") or
-            (customer.tax_group if customer else None))
+            (customer.tax_group if customer else None)
+        )
         customer_tax_number = (
             context_data.get("customer_tax_number") or
-            getattr(customer, "tax_number", None))
+            getattr(customer, "tax_number", None)
+        )
         location = (
             context_data.get("location") or
             context_data.get("shipping_address") or
-            (customer.default_shipping_address if customer else None))
+            (customer.default_shipping_address if customer else None) or
+            context_data.get("billing_address") or
+            (customer.default_billing_address if customer else None)
+        )
         return self.taxing_context_class(
             customer_tax_group=customer_tax_group,
             customer_tax_number=customer_tax_number,
             location=location,
         )
 
-    def get_context_from_order_source(self, source):
-        return self.get_context_from_data(
-            customer=source.customer, location=source.shipping_address)
+    def get_context_from_order_source(self, source: "Union[OrderSource, Order]"):
+        from shuup.core.models import Order
+        from shuup.core.order_creator import OrderSource
+
+        if isinstance(source, OrderSource):
+            if source.has_shippable_lines():
+                location = source.shipping_address
+            else:
+                location = source.billing_address
+
+        elif isinstance(source, Order):
+            from shuup.core.models import ShippingMode
+            # if there is some line that is shippable, use the shipping address
+            if source.lines.products().filter(product__shipping_mode=ShippingMode.SHIPPED).exists():
+                location = source.shipping_address
+            else:
+                location = source.billing_address
+
+        return self.get_context_from_data(customer=source.customer, location=location)
 
     def add_taxes(self, source, lines):
         """

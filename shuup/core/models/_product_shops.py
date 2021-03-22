@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import warnings
-
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -309,9 +307,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                     code="product_not_visible_to_group"
                 )
 
-        # TODO: Remove from Shuup 2.0
         for receiver, response in get_visibility_errors.send(ShopProduct, shop_product=self, customer=customer):
-            warnings.warn("Warning! Visibility errors through signals are deprecated.", DeprecationWarning)
             for error in response:
                 yield error
 
@@ -363,11 +359,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         for error in self.get_supplier_errors(supplier, customer, quantity, ignore_minimum):
             yield error
 
-        # TODO: Remove from Shuup 2.0
         for receiver, response in get_orderability_errors.send(
             ShopProduct, shop_product=self, customer=customer, supplier=supplier, quantity=quantity
         ):
-            warnings.warn("Warning! Orderability errors through signals are deprecated.", DeprecationWarning)
             for error in response:
                 yield error
 

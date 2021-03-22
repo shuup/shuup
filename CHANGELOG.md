@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.5.0] - 2021-03-22
+
+### Changed
+
+- Front: Add so `basket.get_final_lines(with_taxes=True)` gets called after selecting shipping- and payment method.
+  Reason for this is so all the taxes gets calculated before end customers fills in their payment details
+- Core: undeprecate signals for ShopProduct model
+
 ### Added
 
 - Core: add attribute in Carrier model to control whether to manage shipments using default behavior
@@ -15,6 +23,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Notify: Fix so there is no 500 error when accessing EmailTemplate settings page
+- Taxes: fallback location to billing address when shipping address is not available
 - Importer: Ignore rows without any data
 
 ## [2.4.0] - 2021-03-02
