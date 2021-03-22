@@ -57,12 +57,9 @@ Natural Language :: Finnish
 Natural Language :: Japanese
 Natural Language :: Portuguese (Brazilian)
 Programming Language :: JavaScript
-Programming Language :: Python :: 2
-Programming Language :: Python :: 2.7
-Programming Language :: Python :: 3
-Programming Language :: Python :: 3.4
-Programming Language :: Python :: 3.5
 Programming Language :: Python :: 3.6
+Programming Language :: Python :: 3.7
+Programming Language :: Python :: 3.8
 Topic :: Internet :: WWW/HTTP :: Dynamic Content
 Topic :: Internet :: WWW/HTTP :: Site Management
 Topic :: Office/Business
@@ -116,24 +113,19 @@ REQUIRES = [
 ]
 
 
-REQUIRES_FOR_PYTHON2_ONLY = [
-    'pillow>=3.4.2,<4'
-]
-
 EXTRAS_REQUIRE = {
-    ':python_version=="2.7"': REQUIRES_FOR_PYTHON2_ONLY,
     'docs': [
         'Sphinx>=1.3,<2',
     ],
     'testing': utils.get_test_requirements_from_tox_ini(TOPDIR),
     'coding-style': [
-        'flake8>3,<4',
-        'isort>4.3,<5',
+        'black==20.8b1',
+        'isort==5.6.4',
+        'flake8==3.8.4'
     ],
 }
 EXTRAS_REQUIRE['everything'] = list(
-    set(sum(EXTRAS_REQUIRE.values(), [])) -  # All extras, but not...
-    set(REQUIRES_FOR_PYTHON2_ONLY)  # the Python 2 compatibility things
+    set(sum(EXTRAS_REQUIRE.values(), []))
 )
 
 

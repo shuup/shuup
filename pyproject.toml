@@ -1,0 +1,3 @@
+[tool.black]
+exclude = "migrations/.*"
+line_length = 120
