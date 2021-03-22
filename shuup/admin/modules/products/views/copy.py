@@ -25,8 +25,12 @@ class ProductCopyView(DetailView):
         current_supplier = None if request.user.is_superuser else get_supplier(request)
         cloner = cached_load("SHUUP_ADMIN_PRODUCT_CLONER")(request.shop, current_supplier)
         copied_shop_product = cloner.clone_product(shop_product=shop_product)
-        messages.success(request, _("Product %s copy successfull.") % copied_shop_product.product)
-        if request.user.is_superuser:
-            return HttpResponseRedirect(get_model_url(copied_shop_product, shop=request.shop))
-        else:
-            return HttpResponseRedirect(reverse("shuup_admin:shuup_multivendor.products_edit", kwargs={"pk":copied_shop_product.id}))
+        messages.success(
+            request,
+            _("{product_name} was successfully copied".format(product_name=copied_shop_product.product))
+        )
+        if request.GET.get("next"):
+            next_url = request.GET.get("next").replace("00", str(copied_shop_product.pk))
+            return HttpResponseRedirect(next_url)
+
+        return HttpResponseRedirect(get_model_url(copied_shop_product, shop=request.shop))
