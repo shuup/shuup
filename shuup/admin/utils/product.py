@@ -29,11 +29,15 @@ class ProductCloner():
         new_product.name = ("{name} - Copy").format(name=product.name)
         new_product.save()
 
-        # Change the name so it will automatically create a translation record
-        for trans in product.translations.all()[1:]:
+        for trans in product.translations.all():
             trans_product_data = get_data_dict(trans)
             trans_product_data['master'] = new_product
-            Product._parler_meta.get_model_by_related_name('translations').objects.create(**trans_product_data)
+            new_trans = Product._parler_meta.get_model_by_related_name('translations').objects.get_or_create(
+                language_code=trans.language_code, master=new_product)[0]
+            for (key, value) in trans_product_data.items():
+                setattr(new_trans, key, value)
+
+            new_trans.save()
 
         # Clone shop_product
         new_shop_product = copy_model_instance(shop_product)

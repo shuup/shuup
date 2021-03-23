@@ -29,8 +29,5 @@ class ProductCopyView(DetailView):
             request,
             _("{product_name} was successfully copied".format(product_name=copied_shop_product.product))
         )
-        if request.GET.get("next"):
-            next_url = request.GET.get("next").replace("00", str(copied_shop_product.pk))
-            return HttpResponseRedirect(next_url)
 
         return HttpResponseRedirect(get_model_url(copied_shop_product, shop=request.shop))
