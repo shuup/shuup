@@ -29,7 +29,7 @@ class AdminMenuArrangeView(TemplateView):
     Retrieve menus from configuration or display default
     """
     template_name = "shuup/admin/menu/arrange.jinja"
-    success_url = reverse_lazy('shuup_admin:menu.arrange_supplier')
+    success_url = reverse_lazy('shuup_admin:menu.arrange')
     reset_url = reverse_lazy('shuup_admin:menu.reset')
 
     def get_context_data(self, **kwargs):
