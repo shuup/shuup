@@ -125,7 +125,6 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
 
         # force recalculate lines
         self.basket.uncache()
-        self.basket.get_final_lines(with_taxes=True)
 
     def get_form_kwargs(self):
         kwargs = super(MethodsPhase, self).get_form_kwargs()
@@ -144,9 +143,11 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
 
             self.storage[storage_key] = value
 
+        # For some tax calculations we need this to get processed beforehand
+        self.process()
+        self.basket.save()
+        self.basket.calculate_taxes(force_recalculate=True)
         if form.has_changed():
-            self.process()
-            self.basket.save()
             self.basket.storage.add_log_entry(self.basket, _("Saved services."))
 
         return super(MethodsPhase, self).form_valid(form)
