@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Fix 'Customize Your Admin Menu' redirecting to the supplier specific edit page on saving.
+
 ## [2.5.0] - 2021-03-22
 
 ### Changed
