@@ -17,7 +17,7 @@ django_polymorphic==2.1.2  # via django-filer, shuup
 django-registration-redux==2.7  # via shuup
 django-reversion==3.0.5   # via shuup
 django-timezone-field==3.1  # via shuup
-djangorestframework==3.11  # via shuup
+djangorestframework==3.11.2  # via shuup
 docutils==0.16            # via sphinx
 easy-thumbnails==2.7.1    # via django-filer
 et-xmlfile==1.0.1         # via openpyxl
