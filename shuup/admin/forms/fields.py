@@ -97,7 +97,6 @@ class Select2MultipleField(Field):
             attrs.update({"search-mode": self.search_mode})
         if not self.required:
             attrs["data-allow-clear"] = "true"
-        print(attrs)
         return attrs
 
 
